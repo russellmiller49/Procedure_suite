@@ -1,0 +1,1021 @@
+[
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: Bronchoscopy Suite\nPROCEDURE: Flexible bronchoscopy with bronchoalveolar lavage (BAL)\nINDICATION: 64-year-old female with non-resolving right lower lobe pneumonia despite broad-spectrum antibiotics.\n\nSEDATION / MONITORING:\nModerate sedation with IV fentanyl and midazolam, titrated to comfort. Continuous pulse oximetry, ECG, and noninvasive blood pressure monitoring. Supplemental O2 via nasal cannula.\n\nPROCEDURE DESCRIPTION:\nAfter topical lidocaine to the oropharynx, a flexible bronchoscope was advanced through the mouth in the native airway. Vocal cords, trachea, and main bronchi were inspected to subsegmental level. No endobronchial mass or foreign body was seen. Copious mucopurulent secretions were present in the right lower lobe (RLL) bronchus; these were suctioned.\nBAL was performed in the RLL posterior segment with four 30 mL aliquots of sterile saline (total 120 mL), with approximately 60 mL of turbid return. Samples sent for cell count/differential, bacterial culture, fungal culture, AFB smear/culture, and cytology.\nNo biopsies, brushings, navigation, or EBUS were performed.\n\nCOMPLICATIONS:\nNone. Oxygen saturation remained >92% throughout. No bleeding beyond scant blood-tinged secretions.\n\nPOST-PROCEDURE PLAN:\nObserve in PACU then discharge home if stable. Continue antibiotics. Follow up CT chest in 8 weeks or sooner if clinical status worsens.",
+    "cpt_codes": [
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00123",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 64,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Non-resolving right lower lobe pneumonia in an immunocompromised host.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Bacterial pneumonia without endobronchial mass.",
+      "cpt_codes": [
+        31624
+      ],
+      "institution_name": "Synthetic University Hospital",
+      "disposition": "Outpatient discharge",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Outpatient pulmonary follow-up in 4 weeks.",
+        "Repeat CT chest in 8 weeks to document resolution."
+      ],
+      "evidence": {
+        "procedure_date": "Date line at top of note ([REDACTED]).",
+        "primary_indication": "Indication section explicitly states non-resolving right lower lobe pneumonia.",
+        "sedation_type": "Sedation section documents moderate sedation with fentanyl and midazolam.",
+        "airway_type": "Procedure description notes bronchoscope advanced via mouth in the native airway without ETT.",
+        "cpt_codes": "Procedure description includes flexible bronchoscopy with BAL only, without biopsies or navigation."
+      },
+      "providers": {
+        "attending_name": "Alex Johnson, MD",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Flexible bronchoscopy with bronchoalveolar lavage (BAL) for pneumonia. No biopsy or other intervention.",
+      "cpt_summary": [
+        {
+          "code": "31624",
+          "units": 1,
+          "role": "bronchoscopy_bal",
+          "facility_rvu_2025": 4.24,
+          "estimated_facility_payment_2025": 137.0
+        }
+      ],
+      "total_facility_rvu_2025": 4.24,
+      "estimated_total_facility_payment_2025": 137.0,
+      "comments": [
+        "31624 is the correct code for BAL.",
+        "Diagnostic bronchoscopy (31622) is bundled."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: ICU bedside\nPROCEDURE: Flexible bronchoscopy with therapeutic aspiration of secretions\nINDICATION: 71-year-old male with severe COPD and mucus plugging causing complete left lower lobe collapse on chest radiograph.\n\nSEDATION / MONITORING:\nModerate sedation with IV fentanyl and midazolam. Continuous cardiorespiratory monitoring and supplemental oxygen via high-flow nasal cannula. Native airway maintained.\n\nBRONCHOSCOPIC FINDINGS / INTERVENTION:\nFlexible bronchoscope introduced orally with topical lidocaine. Diffuse mucus plugging noted in the left mainstem and left lower lobe bronchi with no discrete mass or foreign body. No biopsies, brushings, or BAL performed.\n\nTherapeutic aspiration was performed with repeated suctioning and intermittent instillation of warm saline until large mucus casts were removed. After clearance, the left lower lobe bronchus was widely patent with visible subsegmental airways. No bleeding beyond trace mucosal oozing.\n\nCOMPLICATIONS:\nNone. Transient desaturations to 88% improved with suctioning, recruitment, and increased FiO2.\n\nPLAN:\nContinue aggressive pulmonary toilet and bronchodilators. Repeat chest radiograph this afternoon to confirm re-expansion of the left lower lobe.",
+    "cpt_codes": [
+      31645
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00124",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 71,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Left lower lobe collapse due to mucus plugging in severe COPD.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Mucus plugging with reversible atelectasis; no endobronchial tumor.",
+      "cpt_codes": [
+        31645
+      ],
+      "institution_name": "Synthetic University Hospital",
+      "disposition": "ICU admission",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Repeat chest radiograph same day to confirm re-expansion.",
+        "Continue ICU-level respiratory support and pulmonary hygiene."
+      ],
+      "evidence": {
+        "primary_indication": "Indication states complete LLL collapse from mucus plugging.",
+        "sedation_type": "Sedation section documents moderate sedation with fentanyl and midazolam.",
+        "airway_type": "Procedure notes bronchoscope advanced in the native airway; no ETT or tracheostomy mentioned.",
+        "cpt_codes": "Therapeutic aspiration with saline instillation and suctioning is described without diagnostic biopsies or BAL."
+      },
+      "providers": {
+        "attending_name": "Priya Shah, MD",
+        "fellow_name": null,
+        "assistant_name": "Respiratory therapist",
+        "assistant_role": "RT",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31645"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Therapeutic aspiration of secretions for lobar collapse/mucus plugging.",
+      "cpt_summary": [
+        {
+          "code": "31645",
+          "units": 1,
+          "role": "therapeutic_aspiration_initial",
+          "facility_rvu_2025": 4.47,
+          "estimated_facility_payment_2025": 145.0
+        }
+      ],
+      "total_facility_rvu_2025": 4.47,
+      "estimated_total_facility_payment_2025": 145.0,
+      "comments": [
+        "31645 covers initial therapeutic aspiration.",
+        "No other procedures performed."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: OR\nPROCEDURE: Rigid bronchoscopy with removal of foreign body\nINDICATION: 5-year-old male with acute onset cough and wheeze after choking on peanuts; radiograph with hyperinflation of right lung.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with orotracheal intubation. Rigid pediatric bronchoscope introduced through the ETT under direct visualization.\n\nFINDINGS / INTERVENTION:\nA tan organic foreign body consistent with a peanut fragment was lodged in the right mainstem bronchus with surrounding granulation tissue. No intrinsic tumor.\n\nUsing rigid forceps passed through the bronchoscope, the peanut and several smaller fragments were grasped and removed in multiple passes. Therapeutic suctioning cleared residual debris. Final inspection confirmed a patent right mainstem bronchus with visible segmental bronchi and no residual foreign material.\n\nNo BAL, biopsies, or EBUS were performed.\n\nCOMPLICATIONS:\nNone. No significant bleeding or desaturation events.\n\nDISPOSITION / PLAN:\nExtubated in OR and transferred to PACU in stable condition. Planned overnight floor observation with pulse oximetry and bronchodilator therapy as needed.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00125",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 5,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Suspected bronchial foreign body after choking episode.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Right mainstem bronchial foreign body (peanut) successfully removed.",
+      "cpt_codes": [
+        31635
+      ],
+      "institution_name": "Synthetic Children’s Hospital",
+      "disposition": "Floor admission",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": "peanut",
+      "fb_tool_used": [
+        "rigid forceps",
+        "suction catheter"
+      ],
+      "fb_removal_success": true,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Overnight observation with pulse oximetry.",
+        "Outpatient pediatric pulmonology follow-up in 2 weeks."
+      ],
+      "evidence": {
+        "primary_indication": "Indication section describes choking on peanuts with right lung hyperinflation.",
+        "sedation_type": "Note documents general anesthesia in the OR.",
+        "airway_type": "Rigid bronchoscopy performed through an orotracheal tube.",
+        "fb_object_type": "Findings specify a peanut fragment in the right mainstem bronchus.",
+        "cpt_codes": "Procedure describes rigid bronchoscopy with foreign body removal, without biopsies or BAL."
+      },
+      "providers": {
+        "attending_name": "Michael Evans, MD",
+        "fellow_name": null,
+        "assistant_name": "Anesthesia resident",
+        "assistant_role": "Anesthesia",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31635"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Rigid bronchoscopy with removal of foreign body (peanut).",
+      "cpt_summary": [
+        {
+          "code": "31635",
+          "units": 1,
+          "role": "foreign_body_removal",
+          "facility_rvu_2025": 5.54,
+          "estimated_facility_payment_2025": 179.0
+        }
+      ],
+      "total_facility_rvu_2025": 5.54,
+      "estimated_total_facility_payment_2025": 179.0,
+      "comments": [
+        "31635 correctly describes foreign body removal."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: Endoscopy Suite\nPROCEDURE: Linear EBUS bronchoscopy with transbronchial needle aspiration (TBNA) of mediastinal lymph nodes\nINDICATION: 67-year-old male with biopsy-proven left lower lobe adenocarcinoma requiring mediastinal staging prior to surgical resection.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation. Standard ASA monitoring.\n\nEBUS PROCEDURE:\nAn EBUS bronchoscope was advanced via the ETT. Systematic survey of mediastinal and hilar nodes was performed. Station 4R (1.1 cm) and station 7 (1.5 cm) were sampled with a 21G needle, 3 passes per station. On-site cytology was present; ROSE for station 7 was positive for malignant cells, station 4R negative.\nNo additional nodal stations were sampled. No peripheral EBUS or navigation bronchoscopy was performed.\n\nCOMPLICATIONS:\nNone. No significant bleeding or hypoxemia.\n\nPLAN:\nProceed with multidisciplinary tumor board review. Patient likely candidate for lobectomy with mediastinal lymph node dissection given limited nodal involvement.",
+    "cpt_codes": [
+      31652
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00126",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Mediastinal staging for left lower lobe lung adenocarcinoma.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "EBUS-TBNA positive for malignant cells in station 7; station 4R negative.",
+      "cpt_codes": [
+        31652
+      ],
+      "institution_name": "Synthetic Cancer Center",
+      "disposition": "Outpatient discharge",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "21G EBUS needle"
+      ],
+      "follow_up_plan": [
+        "Present case at tumor board.",
+        "Refer to thoracic surgery for resection planning."
+      ],
+      "evidence": {
+        "primary_indication": "Indication states biopsy-proven LLL adenocarcinoma requiring mediastinal staging.",
+        "sedation_type": "General anesthesia documented in anesthesia section.",
+        "airway_type": "EBUS bronchoscope advanced via endotracheal tube.",
+        "cpt_codes": "Procedure describes EBUS sampling of 2 nodal stations (4R and 7) without peripheral EBUS or navigation, consistent with 31652."
+      },
+      "providers": {
+        "attending_name": "Rachel Kim, MD",
+        "fellow_name": "Pulmonary fellow",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31652"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "EBUS-TBNA of 2 stations (4R, 7).",
+      "cpt_summary": [
+        {
+          "code": "31652",
+          "units": 1,
+          "role": "ebus_1_2_stations",
+          "facility_rvu_2025": 6.96,
+          "estimated_facility_payment_2025": 225.0
+        }
+      ],
+      "total_facility_rvu_2025": 6.96,
+      "estimated_total_facility_payment_2025": 225.0,
+      "comments": [
+        "Sampling of 1-2 nodal stations maps to 31652."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: Hybrid bronchoscopy suite\nPROCEDURE: Ion robotic navigation bronchoscopy with radial EBUS and transbronchial lung biopsy of right upper lobe (RUL) nodule\nINDICATION: 72-year-old female with a 1.5 cm spiculated RUL pulmonary nodule, PET-avid, no enlarged mediastinal nodes.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation.\n\nPROCEDURE SUMMARY (checklist style):\n- Navigation platform: Ion robotic bronchoscopy\n- Guidance: Pre-procedure CT loaded; virtual plan created to RUL apical segment nodule.\n- Robotic scope advanced to target per navigational plan.\n- Radial EBUS probe used: Concentric solid lesion pattern obtained.\n- Imaging confirmation: Cone beam CT showed tool-in-lesion.\n- Sampling tools: Transbronchial forceps biopsies (6 passes), brushings (2 passes), BAL (60 mL instilled, 30 mL return).\n- No EBUS mediastinal staging performed.\n\nNo immediate complications. Fluoroscopy showed no pneumothorax. Minimal bleeding controlled with cold saline.\n\nPLAN:\nObserve in PACU then home same day. Arrange oncology and surgical consultations pending pathology.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00127",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 72,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "PET-avid 1.5 cm right upper lobe pulmonary nodule without enlarged mediastinal nodes.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "RUL nodule; ROSE suspicious for non-small cell lung carcinoma.",
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "institution_name": "Synthetic University Hospital",
+      "disposition": "Outpatient discharge",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": "Ion robotic bronchoscopy",
+      "nav_rebus_used": true,
+      "nav_imaging_verification": "Cone Beam CT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "brush"
+      ],
+      "follow_up_plan": [
+        "Oncology and thoracic surgery consultation after final pathology.",
+        "Follow-up chest CT per oncology recommendations."
+      ],
+      "evidence": {
+        "nav_platform": "Checklist explicitly lists Ion robotic bronchoscopy as the navigation platform.",
+        "nav_rebus_used": "Checklist states radial EBUS was used with concentric solid lesion pattern.",
+        "nav_imaging_verification": "Cone beam CT confirmation documented in checklist.",
+        "cpt_codes": "Robotic navigation, peripheral EBUS, and transbronchial lung biopsy are all described without mediastinal staging."
+      },
+      "providers": {
+        "attending_name": "Laura Nguyen, MD",
+        "fellow_name": "IP fellow",
+        "assistant_name": "Radiology tech",
+        "assistant_role": "CBCT support",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31628",
+        "31654"
+      ],
+      "invalid_codes": [
+        "31627"
+      ]
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Robotic navigation (Ion) with radial EBUS and transbronchial biopsy of RUL nodule.",
+      "cpt_summary": [
+        {
+          "code": "31628",
+          "units": 1,
+          "role": "transbronchial_biopsy_parenchymal",
+          "facility_rvu_2025": 5.53,
+          "estimated_facility_payment_2025": 179.0
+        },
+        {
+          "code": "31627",
+          "units": 1,
+          "role": "navigation_add_on",
+          "facility_rvu_2025": 3.07,
+          "estimated_facility_payment_2025": 99.0
+        },
+        {
+          "code": "31654",
+          "units": 1,
+          "role": "radial_ebus_add_on",
+          "facility_rvu_2025": 2.11,
+          "estimated_facility_payment_2025": 68.0
+        }
+      ],
+      "total_facility_rvu_2025": 10.71,
+      "estimated_total_facility_payment_2025": 346.0,
+      "comments": [
+        "Added 31627 for electromagnetic/robotic navigation documentation.",
+        "31628 is the primary code for parenchymal biopsy.",
+        "31654 covers the radial EBUS component."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: Bronchoscopy Suite\nPROCEDURE: Bronchoscopy with balloon occlusion assessment of collateral ventilation (Chartis) for bronchoscopic lung volume reduction candidate\nINDICATION: 68-year-old female with GOLD IV COPD, hyperinflation, and heterogeneous emphysema being evaluated for endobronchial valve therapy.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal tube.\n\nPROCEDURE SUMMARY:\nFlexible bronchoscope advanced via ETT. A balloon catheter was sequentially positioned in the segmental bronchi of the left upper lobe (LUL) and left lower lobe (LLL). Chartis measurements showed persistent airflow and lack of complete flow cessation in all tested segments, consistent with significant collateral ventilation.\n\nNo endobronchial valves were placed. No biopsies, BAL, navigation, or EBUS performed.\n\nCOMPLICATIONS:\nNone.\n\nPLAN:\nPatient [REDACTED] a candidate for valve-based BLVR due to positive collateral ventilation. Continue maximal inhaler therapy, pulmonary rehabilitation, and evaluate for lung transplant referral.",
+    "cpt_codes": [
+      31634
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00128",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 68,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Collateral ventilation assessment prior to possible bronchoscopic lung volume reduction.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Significant collateral ventilation; not a candidate for valve-based BLVR.",
+      "cpt_codes": [
+        31634
+      ],
+      "institution_name": "Synthetic University Hospital",
+      "disposition": "Outpatient discharge",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": 0,
+      "blvr_cv_assessment_method": "Chartis balloon occlusion",
+      "blvr_chartis_result": "Collateral ventilation present in all tested segments.",
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Optimize inhaler regimen and pulmonary rehabilitation.",
+        "Evaluate for lung transplant candidacy."
+      ],
+      "evidence": {
+        "primary_indication": "Indication explicitly states evaluation for valve therapy with collateral ventilation assessment.",
+        "blvr_cv_assessment_method": "Procedure summary describes balloon catheter positioning with Chartis measurements.",
+        "blvr_chartis_result": "Chartis measurements are documented as showing persistent flow in all tested segments.",
+        "cpt_codes": "Balloon occlusion assessment only, with no valve placement documented, supports 31634 alone."
+      },
+      "providers": {
+        "attending_name": "Jordan Lee, MD",
+        "fellow_name": null,
+        "assistant_name": "RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31634"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Bronchoscopic Chartis assessment only. No valve placement.",
+      "cpt_summary": [
+        {
+          "code": "31634",
+          "units": 1,
+          "role": "chartis_assessment",
+          "facility_rvu_2025": 5.63,
+          "estimated_facility_payment_2025": 182.0
+        }
+      ],
+      "total_facility_rvu_2025": 5.63,
+      "estimated_total_facility_payment_2025": 182.0,
+      "comments": [
+        "31634 is correct for balloon occlusion assessment without concurrent valve placement."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: Hybrid bronchoscopy suite\nPROCEDURE: Bronchoscopic lung volume reduction with endobronchial valve placement, left upper lobe\nINDICATION: 73-year-old male with heterogeneous emphysema and hyperinflation, dyspnea despite maximal medical therapy; prior Chartis assessment negative for collateral ventilation in the left upper lobe.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with endotracheal intubation.\n\nPROCEDURE SUMMARY:\nFlexible bronchoscope advanced via ETT. Left upper lobe anatomy inspected; no endobronchial lesions. Three Zephyr valves were placed in the LUL segmental bronchi using standard delivery catheters (apicoposterior, anterior, and lingular segments). Chartis data from a prior session confirmed absent collateral ventilation, so repeat balloon occlusion was not performed.\n\nNo biopsies, BAL, navigation, or EBUS were performed.\n\nPost-placement inspection showed good valve position with complete occlusion of treated segments and no evidence of migration.\n\nCOMPLICATIONS:\nNone intra-procedure. Immediate post-procedure chest radiograph without pneumothorax.\n\nPLAN:\nAdmit to monitored bed. Daily chest radiographs for 72 hours. Outpatient follow-up in 6 weeks with spirometry.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00129",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 73,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Bronchoscopic lung volume reduction for severe heterogeneous emphysema.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Successful endobronchial valve placement in the left upper lobe for BLVR.",
+      "cpt_codes": [
+        31647
+      ],
+      "institution_name": "Synthetic University Hospital",
+      "disposition": "Floor admission",
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": "LUL",
+      "blvr_valve_type": "Zephyr",
+      "blvr_number_of_valves": 3,
+      "blvr_cv_assessment_method": "Prior Chartis assessment",
+      "blvr_chartis_result": "Collateral ventilation absent in target lobe on prior study.",
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Monitored admission with serial chest radiographs for 72 hours.",
+        "Clinic follow-up in 6 weeks with spirometry and 6-minute walk."
+      ],
+      "evidence": {
+        "primary_indication": "Indication describes BLVR for heterogeneous emphysema with prior Chartis evaluation.",
+        "blvr_target_lobe": "Procedure notes valve placement in the LUL segmental bronchi.",
+        "blvr_valve_type": "Zephyr valves explicitly mentioned.",
+        "blvr_number_of_valves": "Three valves documented (apicoposterior, anterior, lingular).",
+        "cpt_codes": "Endobronchial valve placement in one lobe with multiple valves supports 31647 + 31651."
+      },
+      "providers": {
+        "attending_name": "Nina Patel, MD",
+        "fellow_name": "IP fellow",
+        "assistant_name": "Scrub nurse",
+        "assistant_role": "Procedure support",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31647"
+      ],
+      "invalid_codes": [
+        "31651"
+      ]
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "BLVR with 3 Zephyr valves placed in the LUL. Single lobe treated.",
+      "cpt_summary": [
+        {
+          "code": "31647",
+          "units": 1,
+          "role": "blvr_initial_lobe",
+          "facility_rvu_2025": 12.05,
+          "estimated_facility_payment_2025": 390.0
+        }
+      ],
+      "total_facility_rvu_2025": 12.05,
+      "estimated_total_facility_payment_2025": 390.0,
+      "comments": [
+        "31647 covers valve placement in the initial lobe regardless of the number of valves.",
+        "31651 is only for additional *lobes*, not additional valves/segments in the same lobe."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: Procedure Room\nPROCEDURE: Ultrasound-guided tunneled pleural catheter (TPC) placement, right hemithorax\nINDICATION: 59-year-old female with metastatic breast cancer and recurrent right malignant pleural effusion causing dyspnea despite multiple thoracenteses.\n\nANESTHESIA:\nModerate sedation with IV midazolam and fentanyl. Local anesthesia with lidocaine at entry and exit sites.\n\nPROCEDURE DESCRIPTION:\nPoint-of-care ultrasound confirmed a large free-flowing right pleural effusion without loculations. Under real-time ultrasound guidance, an entry site was chosen in the right mid-axillary line. After guidewire placement and tunnel creation, a tunneled pleural catheter was advanced and positioned in the right pleural space. Catheter position confirmed by free flow of pleural fluid and ultrasound.\n\nA total of 1.5 L of serosanguinous fluid was drained slowly. No talc or other sclerosing agent was instilled.\n\nCOMPLICATIONS:\nNone. Post-procedure chest radiograph showed good catheter position and no large pneumothorax.\n\nPLAN:\nTeach patient and caregiver home drainage protocol. Drain to dryness once daily for the first week, then as needed. Arrange home health nursing and oncology follow-up.",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00130",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 59,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Recurrent right malignant pleural effusion from metastatic breast cancer.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Right malignant pleural effusion managed with tunneled pleural catheter placement.",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Synthetic University Hospital",
+      "disposition": "Outpatient discharge",
+      "pleural_procedure_type": "Tunneled Catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Home health-assisted drainage with written protocol.",
+        "Oncology follow-up within 2 weeks."
+      ],
+      "evidence": {
+        "pleural_procedure_type": "Procedure description details a tunneled pleural catheter with subcutaneous tunnel.",
+        "pleural_guidance": "Ultrasound is explicitly described for site selection and placement.",
+        "sedation_type": "Moderate sedation with midazolam and fentanyl documented.",
+        "cpt_codes": "Single tunneled pleural catheter insertion without pleurodesis corresponds to 32550."
+      },
+      "providers": {
+        "attending_name": "Sophia Allen, MD",
+        "fellow_name": null,
+        "assistant_name": "Bedside RN",
+        "assistant_role": "Nursing",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Placement of tunneled pleural catheter (TPC/IPC).",
+      "cpt_summary": [
+        {
+          "code": "32550",
+          "units": 1,
+          "role": "ipc_placement",
+          "facility_rvu_2025": 5.88,
+          "estimated_facility_payment_2025": 190.0
+        }
+      ],
+      "total_facility_rvu_2025": 5.88,
+      "estimated_total_facility_payment_2025": 190.0,
+      "comments": [
+        "32550 includes tunneling and cuff placement."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: Procedure Room\nPROCEDURE: Ultrasound-guided therapeutic thoracentesis, left\nINDICATION: 66-year-old male with new moderate left pleural effusion and dyspnea; suspected parapneumonic effusion.\n\nANESTHESIA:\nLocal anesthesia with lidocaine; no systemic sedation (patient cooperative).\n\nPROCEDURE DESCRIPTION:\nPoint-of-care ultrasound demonstrated a moderate free-flowing anechoic effusion on the left without septations. Under sterile conditions, the left posterior axillary line was marked. After local infiltration, a thoracentesis catheter was advanced into the pleural space with ultrasound guidance.\n\nA total of 1.2 L of clear yellow fluid was removed and sent for cell count, Gram stain and culture, pH, LDH, protein, and cytology. The catheter was then removed and a dressing applied.\n\nCOMPLICATIONS:\nNone. No cough, chest pain, or air aspiration. Post-procedure chest radiograph showed interval decrease in effusion without pneumothorax.\n\nPLAN:\nResume antibiotics. Review pleural fluid studies to differentiate transudate vs exudate. Outpatient pulmonary follow-up in 1–2 weeks.",
+    "cpt_codes": [
+      32555
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00131",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 66,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Symptomatic left pleural effusion in setting of pneumonia.",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Left pleural effusion, fluid sent for diagnostic studies.",
+      "cpt_codes": [
+        32555
+      ],
+      "institution_name": "Synthetic Community Hospital",
+      "disposition": "Outpatient discharge",
+      "pleural_procedure_type": "Thoracentesis",
+      "pleural_guidance": "Ultrasound",
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Review pleural fluid data when available.",
+        "Outpatient pulmonary follow-up in 1–2 weeks."
+      ],
+      "evidence": {
+        "pleural_procedure_type": "Procedure description clearly states therapeutic thoracentesis.",
+        "pleural_guidance": "Ultrasound guidance is documented in the description.",
+        "sedation_type": "Anesthesia section notes local lidocaine only with no systemic sedation.",
+        "cpt_codes": "Single ultrasound-guided thoracentesis without catheter tunneling corresponds to 32555."
+      },
+      "providers": {
+        "attending_name": "David Chen, MD",
+        "fellow_name": null,
+        "assistant_name": "Ultrasound technician",
+        "assistant_role": "Imaging support",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "32555"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Ultrasound-guided thoracentesis.",
+      "cpt_summary": [
+        {
+          "code": "32555",
+          "units": 1,
+          "role": "thoracentesis_with_imaging",
+          "facility_rvu_2025": 3.19,
+          "estimated_facility_payment_2025": 103.0
+        }
+      ],
+      "total_facility_rvu_2025": 3.19,
+      "estimated_total_facility_payment_2025": 103.0,
+      "comments": [
+        "32555 is correct for thoracentesis with imaging guidance."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]   MRN: [REDACTED]   DOB: [REDACTED]\nDATE: [REDACTED]   LOCATION: OR\nPROCEDURE: Medical thoracoscopy with talc poudrage pleurodesis, left\nINDICATION: 74-year-old male with recurrent left malignant pleural effusion from non–small cell lung cancer, symptomatic despite prior thoracenteses.\n\nANESTHESIA / AIRWAY:\nGeneral anesthesia with single-lumen endotracheal tube and lung isolation via bronchial blocker.\n\nPROCEDURE DESCRIPTION:\nPatient [REDACTED] right lateral decubitus position. After entry into the left pleural space in the mid-axillary line, a rigid medical thoracoscope was introduced. Diffuse pleural nodularity was seen over the parietal pleura; multiple biopsies were obtained. Approximately 1.8 L of serosanguinous fluid was evacuated.\n\nTalc poudrage pleurodesis was then performed with insufflation of 4 g of sterile talc over the parietal pleura under thoracoscopic visualization. A 24 Fr chest tube was placed at the conclusion of the case and connected to suction.\n\nCOMPLICATIONS:\nNone intra-procedure.\n\nPLAN:\nAdmit to floor. Maintain chest tube to -20 cmH2O suction overnight, then water seal if output and air leak allow. Daily chest radiographs until tube removal.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "patient_mrn": "BRN00132",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 74,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Recurrent left malignant pleural effusion requiring definitive pleurodesis.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Diffuse malignant pleural disease with successful talc pleurodesis.",
+      "cpt_codes": [
+        32650
+      ],
+      "institution_name": "Synthetic Cancer Center",
+      "disposition": "Floor admission",
+      "pleural_procedure_type": "Medical Thoracoscopy",
+      "pleural_guidance": "Ultrasound",
+      "pleurodesis_performed": true,
+      "pleurodesis_agent": "Talc poudrage",
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "nav_platform": null,
+      "nav_rebus_used": false,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "follow_up_plan": [
+        "Floor admission with chest tube to suction then water seal.",
+        "Daily chest radiographs until tube removal and stability confirmed."
+      ],
+      "evidence": {
+        "pleural_procedure_type": "Procedure notes rigid medical thoracoscopy with biopsies.",
+        "pleurodesis_performed": "Talc poudrage pleurodesis is explicitly described.",
+        "pleurodesis_agent": "Four grams of sterile talc are specified.",
+        "cpt_codes": "Thoracoscopy with biopsy and pleurodesis in the same session corresponds to 32650."
+      },
+      "providers": {
+        "attending_name": "Isabella Moore, MD",
+        "fellow_name": "Pulmonary fellow",
+        "assistant_name": "Scrub tech",
+        "assistant_role": "Thoracoscopy support",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-06T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry_extra.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "32650"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": null,
+      "patch_date": null,
+      "changes": [],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "ip_coding_knowledge_version": "2.7",
+      "coder_confidence": "high",
+      "note_summary": "Medical thoracoscopy with biopsy and talc pleurodesis.",
+      "cpt_summary": [
+        {
+          "code": "32650",
+          "units": 1,
+          "role": "thoracoscopy_pleurodesis",
+          "facility_rvu_2025": 15.0,
+          "estimated_facility_payment_2025": 485.0
+        }
+      ],
+      "total_facility_rvu_2025": 15.0,
+      "estimated_total_facility_payment_2025": 485.0,
+      "comments": [
+        "32650 (thoracoscopy with pleurodesis) typically bundles 32601/32604 (diagnostic/biopsy) when performed in the same session on the same side."
+      ]
+    }
+  }
+]

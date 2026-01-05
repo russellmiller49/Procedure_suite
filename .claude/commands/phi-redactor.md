@@ -26,7 +26,13 @@ Apply Veto Layer (protectedVeto.js)
     ↓
 Final Overlap Resolution
     ↓
-Final Detections
+Final Detections (red highlighting)
+    ↓
+Manual Additions (amber highlighting) ← User selects text + clicks "Add"
+    ↓
+Apply Redactions → [REDACTED] placeholders
+    ↓
+Submit to Server → Formatted Results Display
 ```
 
 ## Key Files
@@ -298,6 +304,104 @@ make audit-phi-client
 make gold-eval
 ```
 
+## Manual Redaction Feature
+
+Users can add redactions for PHI missed by auto-detection:
+
+1. **Select text** in the Monaco editor
+2. **Choose entity type** from dropdown:
+   - Patient Name (default)
+   - MRN / ID
+   - Date
+   - Phone
+   - Location
+   - Other
+3. **Click "Add" button**
+
+### Visual Distinction
+| Source | Highlighting | Sidebar Tag |
+|--------|--------------|-------------|
+| Auto-detected (ML/Regex) | Red background | `ner` or `regex_*` |
+| Manual addition | Amber/yellow background | `manual` |
+
+### Key Code Locations
+```javascript
+// In app.js - Selection tracking
+editor.onDidChangeCursorSelection((e) => {
+  currentSelection = e.selection.isEmpty() ? null : e.selection;
+  addRedactionBtn.disabled = !currentSelection || running;
+});
+
+// In app.js - Add button handler
+addRedactionBtn.addEventListener("click", () => {
+  const newDetection = {
+    id: `manual_${Date.now()}_...`,
+    label: entityTypeSelect.value,  // e.g., "PATIENT"
+    source: "manual",
+    score: 1.0,
+    // ...
+  };
+  detections.push(newDetection);
+  renderDetections();
+});
+```
+
+### CSS Classes
+- `.phi-detection-manual` - Amber highlighting for Monaco decorations
+- `.pill.source-manual` - Amber pill styling in sidebar
+
+---
+
+## Formatted Results Display
+
+After submitting a scrubbed note, the UI renders structured results:
+
+### Status Banner
+| State | Color | Condition |
+|-------|-------|-----------|
+| Success | Green | `needs_manual_review=false` and no `audit_warnings` |
+| Warning | Yellow | `audit_warnings` array has items |
+| Error | Red | `needs_manual_review=true` |
+
+### CPT Codes Table
+Displays data from `suggestions[]` and `per_code_billing[]`:
+- Code, Description, Confidence %, RVU, Payment
+- Totals row with `total_work_rvu` and `estimated_payment`
+
+### Registry Summary
+Recursively extracts ALL non-null fields from `registry` response:
+- Nested paths: `linear_ebus.performed` → "Linear Ebus → Performed"
+- Skips: `null`, `undefined`, `false`, empty arrays
+- Formats: booleans → "Yes"/"No", arrays → comma-joined
+
+### Key Functions
+```javascript
+renderResults(data)           // Main entry - banner, CPT, registry
+renderCPTTable(data)          // CPT codes with billing lookup
+renderRegistrySummary(registry)  // Recursive field extraction
+```
+
+### HTML Structure
+```html
+<div id="resultsContainer">
+  <div id="statusBanner" class="status-banner hidden"></div>
+  <div id="cptTable" class="result-section hidden">
+    <h3>CPT Codes</h3>
+    <table id="cptTableBody"></table>
+  </div>
+  <div id="registrySummary" class="result-section hidden">
+    <h3>Registry Data</h3>
+    <table id="registryTableBody"></table>
+  </div>
+  <details class="raw-json-toggle">
+    <summary>View Raw JSON</summary>
+    <pre id="serverResponse"></pre>
+  </details>
+</div>
+```
+
+---
+
 ### Smoke Test Checklist
 Paste this in the UI at `/ui/phi_redactor/`:
 
@@ -316,9 +420,24 @@ using Pentax EB-1990i scope. Follow-up in 1-2wks.
 Pathology showed adenocarcinoma at station 7.
 ```
 
-**Expected:**
+**Expected Detection:**
 - REDACTED: "John Smith", "12345678", "01/15/1960"
 - NOT REDACTED: "Dr. Laura Brennan", "Dr. Miguel Santos", "4R", "7", "11L", "intubated", "EB-1990i", "1-2wks", "adenocarcinoma"
+
+**Test Manual Redaction:**
+1. Select "adenocarcinoma" in the editor
+2. Verify "Add" button becomes enabled
+3. Select entity type "Other" from dropdown
+4. Click "Add" - verify amber highlighting appears
+5. Check sidebar shows detection with "manual" source
+
+**Test Formatted Results:**
+1. Click "Apply redactions"
+2. Click "Submit scrubbed note"
+3. Verify status banner appears (green/yellow/red)
+4. Verify CPT Codes table shows codes with RVU/Payment
+5. Verify Registry Data table shows extracted fields
+6. Expand "View Raw JSON" to see full response
 
 ## Common Patterns to Remember
 

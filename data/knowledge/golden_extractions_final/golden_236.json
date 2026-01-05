@@ -1,0 +1,1430 @@
+[
+  {
+    "note_text": "PROCEDURE NOTE: EBV PLACEMENT\nDate: [REDACTED]  \nPatient: [REDACTED] | DOB: [REDACTED] | Age: 72 | MRN: [REDACTED]\nInstitution: [REDACTED]\nPhysician: James Park, MD\n\nDx: Severe heterogeneous emphysema, LLL predominant\n\nProcedure: FB with EBV placement\nSedation: Moderate (Versed/Fentanyl)\nAccess: Oropharyngeal\n\nFindings:\n- Normal upper airways\n- LLL: Severe emphysematous changes\n- Target segments: LB6, LB8-10\n\nInterventions:\nLB6: 4.0mm EBV - good seal\nLB8: 4.0mm EBV - good seal  \nLB9-10: 5.5mm EBV - good seal\n\nOutcome: Successful complete LLL occlusion, no complications\nPost-op: CXR, admit for observation\n\nJames Park, MD\nUCSF Interventional Pulmonology",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "James Park"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163150"
+      },
+      "cpt_codes": [
+        31647
+      ],
+      "patient_mrn": "45678912",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31647",
+            "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+            "units": 1
+          }
+        ],
+        "total_rvu": 12.05,
+        "work_rvu": 7.5,
+        "practice_expense_rvu": 3.75,
+        "malpractice_rvu": 0.8
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopic_blvr_valve_placement",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31647",
+              "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+              "work_rvu": 7.5,
+              "total_facility_rvu": 12.05,
+              "mpfs_facility_payment": 390,
+              "selection_status": "selected",
+              "selection_reason": "Endobronchial valve placement in LLL (one lobe)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 7.5,
+            "total_facility_rvu": 12.05,
+            "estimated_facility_payment_unadjusted": 390
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.401110",
+      "changes": [
+        "Extracted CPT codes: [31647]",
+        "Fixed MRN:  -> 45678912",
+        "Extracted attending: James Park"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31647
+        ],
+        "additional_codes": [],
+        "total_rvu_2025_facility": 6.03,
+        "total_payment_2025_facility": 361.8,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31647,
+          "description": "Bronchoscopy with balloon occlusion and bronchial valve placement, initial lobe.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 6.03,
+          "payment_2025_facility": 361.8,
+          "notes": "Single left lower lobe treated with endobronchial valves; no biopsies or EBUS performed."
+        }
+      ],
+      "rationale": "Procedure describes flexible bronchoscopy with endobronchial valves placed in one lobe for lung volume reduction without additional sampling or EBUS, so 31647 alone appropriately captures the bronchoscopic work."
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED]\nMRN: [REDACTED]\nDate: 28 Feb 20121\nPREOPERATIVE DIAGNOSIS: Respiratory failure secondary extrinsic tracheal compression\nPOSTOPERATIVE DIAGNOSIS: extrinsic tracheal compression s/p airway stent placement\nPROCEDURE PERFORMED: Rigid bronchoscopy, Silicone Y-stent placement, bronchoscopic intubation\nSURGEON: Russell Miller, MD\nINDICATIONS: Severe extrinsic tracheal compression\nConsent was obtained from the patient’s family prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. \nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. Once the patient was sedated a flexible Q190 Olympus bronchoscope was inserted through the ETT into the trachea and airway inspection was performed. Beginning in the mid trachea inflammation was seen within the airway walls extending into the bilateral mainstem with approximately 90% obstruction(at maximum)  of the tracheal lumen most prominent in the mid trachea with less extensive obstruction  extending to approximately 2cm above the carina. There was no endobronchial tumor. We subsequently removed the flexible bronchoscope and after administration of paralytics a 14 mm ventilating rigid bronchoscope was inserted through the mouth into the supraglottic space. The previously placed endotracheal tube was visualized passing through the vocal cords. Under direct visualization the endotracheal tube was removed and the rigid bronchoscope was inserted through the vocal cords into the mid trachea and connected to ventilator. The Q190 Olympus flexible bronchoscope was then introduced through the rigid bronchoscope and into the airways. After measuring the airways we customized a 16x13x13 silicone Y-stent to a length of 75mm in the tracheal limb, 15mm in the right mainstem limb and 30mm in the left mainstem limb. The rigid bronchoscope was then advanced into the left mainstem and the stent was deployed. Through the use of rigid forceps, and manipulation with the tip of the flexible bronchoscope we were able to adequately position the limbs within the proper airways resulting in successful stabilization of the airway. At this point inspection was performed to evaluate for any bleeding or other complications and none was seen. The rigid bronchoscope was then removed and an LMA was inserted. A repeat inspection was performed with the flexible bronchoscope and showed the stent well placed with near complete resolution of central airway obstruction. The bronchoscope was then removed and once the patient was awake and protecting airway the LMA was removed and the procedure was complete\nPost procedure diagnosis:\nSevere extrinsic tracheal compression s/p successful deployment of silicone tracheal Y-stent. \nRecommendations:\n·\tTransfer to ICU\n·\tObtain post procedure CXR\n·\tTID hypertonic nebulizers to avoid mucous impaction and obstruction of stent",
+    "cpt_codes": [
+      31631,
+      31630
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163223"
+      },
+      "cpt_codes": [
+        31631,
+        31630
+      ],
+      "patient_mrn": "48291734",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1
+          }
+        ],
+        "total_rvu": 13.42,
+        "work_rvu": 8.17,
+        "practice_expense_rvu": 4.35,
+        "malpractice_rvu": 0.9
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_stent",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment": 231,
+              "selection_status": "selected",
+              "selection_reason": "Tracheal Y-stent placement."
+            },
+            {
+              "sequence": 2,
+              "code": "31630",
+              "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+              "work_rvu": 3.81,
+              "total_facility_rvu": 6.27,
+              "mpfs_facility_payment": 203,
+              "selection_status": "selected",
+              "selection_reason": "Dilation often bundled, but kept per KB policy if separate maneuvers documented (rigid dilation)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 8.17,
+            "total_facility_rvu": 13.42,
+            "estimated_facility_payment_unadjusted": 434
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.403687",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 48291734",
+        "Extracted attending: INDICATIONS"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31631
+        ],
+        "additional_codes": [
+          31622
+        ],
+        "total_rvu_2025_facility": 7.52,
+        "total_payment_2025_facility": 451.2,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31631,
+          "description": "Bronchoscopy with tracheobronchial stent placement.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Rigid bronchoscopy with customization and deployment of silicone Y-stent across trachea and main bronchi."
+        },
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Diagnostic inspection and documentation of severe airway narrowing prior to stent placement."
+        }
+      ],
+      "rationale": "Note documents rigid bronchoscopy with silicone Y-stent placement for severe extrinsic tracheal compression, so 31631 drives the bronchoscopic work with 31622 as the baseline diagnostic component. Attending is corrected to Russell Miller, the named surgeon."
+    }
+  },
+  {
+    "note_text": "Patient name: [REDACTED] MRN: [REDACTED]\nDate: 15 May 20122\nPREOPERATIVE DIAGNOSIS: Endotracheal tumor \nPOSTOPERATIVE DIAGNOSIS:  Endotracheal tumor s/p debulking \nPROCEDURE PERFORMED: \n1.         Rigid bronchoscopy with endoluminal tumor ablation\nSURGEON: Aria Winslow, MD\nASSISTANT: Owen Mallory MD\nINDICATIONS: Tracheal Obstruction  \nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. After administration of sedatives and paralytics the flexible bronchoscope was inserted through the LMA and into the pharynx. We then advanced the bronchoscope into the subglottic space. Approximately 2.5 cm distal to the vocal cords There were 3 polypoid lesions at the same level blocking about 90% of the airway during exhalation which moved in a ball valve fashion with inhalation resulting in about 50% obstruction of the airway.  Additionally there were multiple small polypoid (> 50) lesions surrounding distal to the lesion originating from all parts of the airway (Anterior trachea, posterior trachea, lateral trachea) which terminated about 1cm proximal to the main carina. The right sided and left sided airways to at least the first sub-segments were uninvolved with no evidence of endobronchial tumor or extrinsic obstruction. The flexible bronchoscope and LMA were removed and a 10mm non-ventilating rigid tracheoscope was subsequently inserted into the proximal trachea just proximal to the tumor and connected to ventilator. The T190 Olympus flexible bronchoscope was then introduced through the rigid bronchoscope and the electrocautery snare was used to transect the large polypoid lesions beginning with the 3 proximal obstructive lesions and the lesions once free from the wall were easily removed from the airway with suction and collected for pathological assessment. After these lesions were removed about 10 other lesions in the airway which were anatomically amenable to snare were removed in the same fashion. We then used APC to paint and shave the remaining tumor area on the posterior and lateral trachea walls until we were satisfied that we had achieved adequate luminal recanalization. At the end of the procedure the trachea was approximately 90% open in comparison to unaffected areas. The rigid bronchoscope was then removed, and the procedure was completed. There were no complications. Of note we considered airway stent placement as a barrier effect  as the lesions regrew very quickly (< 3 months) after the previous bronchoscopic debulking procedure however in our discussions with the patient prior to the procedure he expressed reluctance to have stent placed due to possible cough associated with the stent and the fact that he only restarted chemotherapy 2 weeks ago. I suspect that these lesions will recur unless he has a profound response to systemic treatment and possible radiation and if I need to debulk again I will strongly advocate for placement of a covered tracheal stent.\nRecommendations: \n•\tTransfer patient back to ward room \n•\tAwait final pathology results  \n•\tWill need to speak with oncology regarding other treatment options which might include PDT or brachytherapy. \n \nI Aria Winslow was present and actively involved in all phases of the procedure. \n \nAria Winslow MD \nInterventional Pulmonary",
+    "cpt_codes": [
+      31622,
+      31641
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Aria Winslow"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163304"
+      },
+      "cpt_codes": [
+        31622,
+        31641
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Other",
+      "patient_mrn": "49273015",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1
+          }
+        ],
+        "total_rvu": 8.4,
+        "work_rvu": 5.25,
+        "practice_expense_rvu": 2.6,
+        "malpractice_rvu": 0.55
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "selection_status": "selected",
+              "selection_reason": "Tumor destruction (APC/Snare). 31622 is bundled and dropped."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_facility_payment_unadjusted": 272
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.406666",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Other",
+        "Fixed MRN:  -> 49273015",
+        "Extracted attending: ASSISTANT"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31641
+        ],
+        "additional_codes": [
+          31622
+        ],
+        "total_rvu_2025_facility": 14.94,
+        "total_payment_2025_facility": 896.4,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31641,
+          "description": "Bronchoscopy with treatment of obstructing lesion or blockage (e.g., tumor ablation).",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 7.42,
+          "payment_2025_facility": 445.2,
+          "notes": "Endoluminal ablation and debulking of endotracheal tumor to restore airway patency."
+        },
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Initial airway survey and documentation of obstructing tumor before therapeutic ablation."
+        }
+      ],
+      "rationale": "Report describes rigid bronchoscopy with endoluminal tumor ablation; airway stent placement was considered but not performed, so stent code 31631 was removed and the combination of 31641 plus diagnostic 31622 best reflects the documented work. Attending is corrected to Aria Winslow as the operating physician."
+    }
+  },
+  {
+    "note_text": "BLVR PROCEDURE [REDACTED]\n\nPatient: [REDACTED] | DOB: [REDACTED] | MRN: [REDACTED]\nInstitution: [REDACTED]\nPhysician: Rachel Goldstein, MD\n\nS: 70M severe LUL emphysema\nO: Chartis (-) CV in LUL  \nA: Candidate for EBV placement\nP: Proceed with valve placement\n\nProcedure:\n- FB under mod sedation\n- LUL visualization  \n- 4 Zephyr valves placed (LB1+2, LB3, lingula)\n- Complete occlusion confirmed\n\nDisposition: Admit, stable\n\nRachel Goldstein, MD\nDuke IP Service",
+    "cpt_codes": [
+      31647,
+      31634
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Rachel Goldstein"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163316"
+      },
+      "cpt_codes": [
+        31647,
+        31634
+      ],
+      "patient_mrn": "56789012",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31647",
+            "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+            "units": 1
+          },
+          {
+            "code": "31634",
+            "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+            "units": 1
+          }
+        ],
+        "total_rvu": 17.68,
+        "work_rvu": 11.0,
+        "practice_expense_rvu": 5.5,
+        "malpractice_rvu": 1.18
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopic_blvr_valve_placement",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31647",
+              "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+              "work_rvu": 7.5,
+              "total_facility_rvu": 12.05,
+              "mpfs_facility_payment": 390,
+              "selection_status": "selected",
+              "selection_reason": "Valves placed in LUL (one lobe)."
+            },
+            {
+              "sequence": 2,
+              "code": "31634",
+              "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+              "work_rvu": 3.5,
+              "total_facility_rvu": 5.63,
+              "mpfs_facility_payment": 182,
+              "selection_status": "selected",
+              "selection_reason": "Chartis assessment performed (bundled by many payers if same session, but separately reported per user)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 11.0,
+            "total_facility_rvu": 17.68,
+            "estimated_facility_payment_unadjusted": 572
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.407063",
+      "changes": [
+        "Extracted CPT codes: [31647, 31634]",
+        "Fixed MRN:  -> 56789012",
+        "Extracted attending: Rachel Goldstein"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31647
+        ],
+        "additional_codes": [
+          31634
+        ],
+        "total_rvu_2025_facility": 6.03,
+        "total_payment_2025_facility": 361.8,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31647,
+          "description": "Bronchoscopy with balloon occlusion, air-leak assessment, sizing, and bronchial valve placement, initial lobe.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 6.03,
+          "payment_2025_facility": 361.8,
+          "notes": "Endobronchial valves deployed in the target emphysematous lobe for lung volume reduction."
+        },
+        {
+          "code": 31634,
+          "description": "Additional bronchoscopic work for lobar evaluation during BLVR (e.g., collateral ventilation assessment).",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Chartis assessment of collateral ventilation prior to valve deployment."
+        }
+      ],
+      "rationale": "BLVR case with Chartis collateral ventilation testing followed by endobronchial valve placement in the treated lobe, so 31647 is the main procedure code and 31634 is retained as the supportive physiologic assessment."
+    }
+  },
+  {
+    "note_text": "DATE OF PROCEDURE: [REDACTED]\nINDICATION FOR OPERATION:  Logan Pierce MRN: [REDACTED] is a 76 year old-year-old male chronic obstructive pulmonary disease (COPD) and a right upper lobe (RUL) nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.\nCONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.\nPREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule J44.9 COPD\nPOSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule J44.9 COPD\n\nATTENDING:  \nSofia Mitchell MD\n\nANESTHESIA: \nGeneral Anesthesia\n\nMONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.\n\nINSTRUMENT : \nFlexible Therapeutic Bronchoscope\nIon Robotic Bronchoscope\n\nESTIMATED BLOOD LOSS:   Minimum\n\nCOMPLICATIONS:\tNone\n\nPROCEDURE IN DETAIL:\nAfter the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).\n\nInitial Airway Inspection Findings:\n    The therapeutic flexible bronchoscope was introduced through the endotracheal tube adaptor and advanced into the trachea. The trachea was thoroughly examined, revealing a sharp carina. The bronchial tree was inspected bilaterally to the subsegmental level, with the mucosa appearing smooth and uniformly pink. No nodularity, lesions, abnormal secretions, airway narrowing, or distortion was noted.\n\nNavigation and Targeting:\nA CT chest scan was displayed on a separate planning station to generate a three-dimensional rendering of the pathway to the target. The navigational plan was reviewed, verified, and loaded into the robotic bronchoscopy platform.\nRobotic navigation was performed using the Ion platform with partial registration. The Ion robotic catheter was advanced to the Anterior Segment of RUL (RB3), targeting a lesion approximately 1.4 cm in diameter. Under navigational guidance, the catheter was advanced to within 2.5 cm of the planned target.\nCone Beam CT Imaging:\nA cone beam CT was obtained using the Cios Spin system with a low-dose spin protocol. Three-dimensional reconstructions were performed on an independent workstation, and the images were transmitted to the Ion platform. Based on the updated nodule location, the Ion robotic system was adjusted accordingly. I personally reviewed and interpreted the cone beam CT and 3D reconstructions.\nTransbronchial Needle Aspiration (TBNA):\nA TBNA was performed using a 23G needle via the extended working channel catheter. A subsequent low-dose CT spin confirmed appropriate tool placement within the lesion. Additional TBNA samples (total of six) were then obtained using both 21G Needle and 23G Needle. All samples were sent for Microbiology (Cultures/Viral/Fungal) and Cytology.\nTransbronchial Cryobiopsy:\nTransbronchial cryobiopsies were performed using a 1.1 mm cryoprobe via the extended working channel catheter with a freeze time of 6 seconds per sample. A total of five samples were collected and sent for Microbiology (Cultures/Viral/Fungal) and Cytology.\nBronchoalveolar Lavage (BAL):\nA BAL was performed through the extended working channel catheter by instilling 20 cc of normal saline, with 10 cc returned. Microbiology (Cultures/Viral/Fungal) and Cytology. \nRapid On-Site Evaluation (ROSE):\nROSE from the Ion procedure revealed Atypical cells present but no evidence of malignant neoplasm, suggesting an inflammatory or infectious process\nAdditional BAL:\nAfter completion of the robotic bronchoscopy, the therapeutic bronchoscope was reinserted, and a BAL was performed in the Apical Segment of RUL (RB1). Forty cc of normal saline was instilled with a 20 cc return, and samples were sent for Cell Count.\nChartis Evaluation:\nA Chartis evaluation of the left upper lobe was performed to assess for collateral ventilation in anticipation of future endobronchial valve (EBV) treatment. Balloon occlusion using the Chartis system in the target left upper lobe confirmed the absence of collateral ventilation as evidenced by the cessation of the air leak.\n\nThe patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. \n\nSPECIMEN(S): \nTBNA (RUL): Peripheral nodule sample sent for pathology and culture.\nTransbronchial Cryobiopsies (RUL): Peripheral nodule samples sent for pathology and culture.\nBAL (RUL): Specimen sent for respiratory and fungal cultures, AFB, and cytology.\n\nIMPRESSION/PLAN: Logan Pierce is a 76 year old-year-old male who underwent bronchoscopy for evaluation of an RUL peripheral nodule as well as a Chartis examination of the left upper lobe in preparation for potential EBV treatment. Collateral ventilation status was confirmed.\n\nTransfer to PACU\nObtain chest X-ray\nDischarge home once cleared by PACU\nAwait path and culture results and based on findings f/u for EBV insertion for COPD\n\nSofia Mitchell, MD\n[REDACTED]",
+    "cpt_codes": [
+      31629,
+      31628,
+      31624,
+      31627,
+      31634
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Sofia Mitchell"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163358"
+      },
+      "cpt_codes": [
+        31629,
+        31628,
+        31624,
+        31627,
+        31634
+      ],
+      "patient_mrn": "62481955",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "units": 1
+          },
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "units": 1
+          },
+          {
+            "code": "31634",
+            "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+            "units": 1
+          }
+        ],
+        "total_rvu": 24.38,
+        "work_rvu": 15.65,
+        "practice_expense_rvu": 7.39,
+        "malpractice_rvu": 1.63
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_navigation",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31629",
+              "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+              "work_rvu": 3.75,
+              "total_facility_rvu": 5.89,
+              "mpfs_facility_payment": 191,
+              "selection_status": "selected",
+              "selection_reason": "TBNA of RUL nodule."
+            },
+            {
+              "sequence": 2,
+              "code": "31628",
+              "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179,
+              "selection_status": "selected",
+              "selection_reason": "Transbronchial cryobiopsy of RUL nodule."
+            },
+            {
+              "sequence": 3,
+              "code": "31624",
+              "description": "Bronchoscopy; with bronchoalveolar lavage",
+              "work_rvu": 2.63,
+              "total_facility_rvu": 4.24,
+              "mpfs_facility_payment": 137,
+              "selection_status": "selected",
+              "selection_reason": "BAL of RUL."
+            },
+            {
+              "sequence": 4,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99,
+              "selection_status": "selected",
+              "selection_reason": "Ion navigation used."
+            },
+            {
+              "sequence": 5,
+              "code": "31634",
+              "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+              "work_rvu": 3.5,
+              "total_facility_rvu": 5.63,
+              "mpfs_facility_payment": 182,
+              "selection_status": "selected",
+              "selection_reason": "Chartis assessment of LUL (separate lobe/purpose)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 15.65,
+            "total_facility_rvu": 24.38,
+            "estimated_facility_payment_unadjusted": 788
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.410624",
+      "changes": [
+        "Extracted CPT codes: [31629, 31647, 31634, 31624, 31622, 31627]",
+        "Fixed MRN:  -> 62481955",
+        "Extracted attending: Sofia Mitchell"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31629
+        ],
+        "additional_codes": [
+          31634,
+          31624,
+          31622,
+          31627
+        ],
+        "total_rvu_2025_facility": 15.17,
+        "total_payment_2025_facility": 910.2,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31629,
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy of central airways.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Ion robotic-guided TBNA of the right upper lobe lesion and mediastinal targets."
+        },
+        {
+          "code": 31634,
+          "description": "Additional bronchoscopic work for lobar evaluation during BLVR (e.g., collateral ventilation or airway resistance testing).",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Chartis physiologic assessment of the left upper lobe in preparation for possible future valve placement."
+        },
+        {
+          "code": 31624,
+          "description": "Bronchoscopy with bronchoalveolar lavage.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.65,
+          "payment_2025_facility": 459.0,
+          "notes": "BAL obtained from the target region during the diagnostic portion of the procedure."
+        },
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Systematic airway inspection performed at the start and end of the case."
+        },
+        {
+          "code": 31627,
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on).",
+          "role": "add_on",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Ion robotic navigation and 3D planning used to reach the peripheral nodule."
+        }
+      ],
+      "rationale": "Procedure describes Ion robotic navigational bronchoscopy with TBNA, BAL, and Chartis assessment but no valve placement, so 31647 was removed and the remaining codes reflect navigation, sampling, lavage, and physiologic testing of the airways."
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPY REPORT: ENDOBRONCHIAL VALVE PLACEMENT WITH COMPLICATIONS\n[REDACTED]\n\nPatient: [REDACTED] \"Hal\" Johnson | DOB: [REDACTED] | Age: 74 | MRN: [REDACTED]\nInstitution: [REDACTED]\nPhysician: Dr. Priya Patel, MD, FCCP\nCT Surgery Consultant: Dr. Robert Chen, MD\nFellow: Dr. Kevin Wu, MD\n\nINDICATION: Severe COPD with giant bulla RUL, persistent air leak following RUL bullectomy\n\nPROCEDURE: Flexible bronchoscopy with endobronchial valve placement for persistent air leak management\n\nCONSENT: Extended discussion regarding use of valves for air leak (off-label indication). Risks discussed including valve migration, persistent air leak, infection, bleeding, respiratory failure. Patient and family understood and agreed.\n\nPROCEDURE NARRATIVE:\nPatient [REDACTED] IP suite with existing chest tube in place demonstrating persistent air leak (large continuous bubbling). Pre-procedure chest CT reviewed showing large residual apical cavity communicating with RUL bronchi.\n\nModerate sedation achieved. Flexible bronchoscopy revealed:\n- Normal larynx and trachea\n- RUL: Visualization of communication between RB1 and apical cavity\n- Active \"sucking\" noted at RB1 entrance correlating with air leak\n\nINTERVENTION:\nAttempted placement of 5.5mm Zephyr valve in RB1. Initial deployment appeared satisfactory.\n\nCOMPLICATION:\nImmediately following valve placement, patient developed acute desaturation to 82% on 4L NC. Simultaneously noted increase in subcutaneous emphysema and asymmetric chest wall movement. Immediately suspected tension pneumothorax.\n\nMANAGEMENT:\n- Procedure aborted\n- 100% O2 applied\n- Emergency portable CXR confirmed large right-sided pneumothorax with mediastinal shift\n- Cardiothoracic surgery emergently consulted\n- Second chest tube placed (28Fr) with immediate improvement\n- Patient stabilized\n\nADDITIONAL VALVE PLACEMENT:\nAfter stabilization and with CT surgery at bedside, decision made to place additional valve in RB3 to reduce overall flow into cavity.\n- 4.0mm valve placed in RB3 without incident\n- Air leak notably reduced but not eliminated\n\nFINAL ASSESSMENT:\n- Partial success: Air leak reduced from large to moderate\n- Complication: Iatrogenic pneumothorax requiring second chest tube\n- Both chest tubes to suction with water seal\n\nPOST-PROCEDURE PLAN:\n- ICU admission  \n- Serial CXRs\n- Consider additional valve placement if air leak persists after 72 hours\n- Family meeting held, understanding confirmed\n\nPriya Patel, MD, FCCP\nInterventional Pulmonology\nStanford Medical Center\n\nAttending Note: Complex case with expected high-risk given bullous disease. Appropriate emergency management of complication. Will follow closely. - PP",
+    "cpt_codes": [
+      31647,
+      32551
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Priya Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163366"
+      },
+      "cpt_codes": [
+        31647,
+        32551
+      ],
+      "patient_mrn": "67890123",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31647",
+            "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+            "units": 1
+          },
+          {
+            "code": "32551",
+            "description": "Tube thoracostomy, includes connection to drainage system, when performed (separate procedure)",
+            "units": 1
+          }
+        ],
+        "total_rvu": 16.61,
+        "work_rvu": 10.54,
+        "practice_expense_rvu": 4.99,
+        "malpractice_rvu": 1.08
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopic_blvr_valve_placement",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31647",
+              "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+              "work_rvu": 7.5,
+              "total_facility_rvu": 12.05,
+              "mpfs_facility_payment": 390,
+              "selection_status": "selected",
+              "selection_reason": "Valves placed in RUL (initial lobe)."
+            },
+            {
+              "sequence": 2,
+              "code": "32551",
+              "description": "Tube thoracostomy, includes connection to drainage system, when performed (separate procedure)",
+              "work_rvu": 3.04,
+              "total_facility_rvu": 4.56,
+              "mpfs_facility_payment": 148,
+              "selection_status": "selected",
+              "selection_reason": "Chest tube placed for pneumothorax."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 10.54,
+            "total_facility_rvu": 16.61,
+            "estimated_facility_payment_unadjusted": 538
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.412151",
+      "changes": [
+        "Extracted CPT codes: [31622, 32551, 31647]",
+        "Fixed MRN:  -> 67890123",
+        "Extracted attending: Priya Patel"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31647,
+          32551
+        ],
+        "additional_codes": [
+          31622
+        ],
+        "total_rvu_2025_facility": 13.55,
+        "total_payment_2025_facility": 813.0,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31647,
+          "description": "Bronchoscopy with balloon occlusion, air-leak assessment, sizing, and bronchial valve placement, initial lobe.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 6.03,
+          "payment_2025_facility": 361.8,
+          "notes": "Endobronchial valves placed to treat persistent post-surgical air leak."
+        },
+        {
+          "code": 32551,
+          "description": "Insertion of indwelling chest tube for drainage.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "New chest tube inserted to manage tension physiology and air leak complication."
+        },
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Full airway survey documented before and after valve placement and complication management."
+        }
+      ],
+      "rationale": "Case documents flexible bronchoscopy with valve placement for air leak plus insertion of a new chest tube for complications; 31647 and 32551 are the key procedures with 31622 reflecting the diagnostic inspection that is inherent to the bronchoscopic work."
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED] MRN: [REDACTED]\nDATE OF PROCEDURE: [REDACTED]\nPREOPERATIVE DIAGNOSIS: Lung mass with left main-stem obstruction\nPOSTOPERATIVE DIAGNOSIS: Malignant mixed intrinsic and extrinsic airway obstruction\nPROCEDURE PERFORMED: Rigid bronchoscopy\nSURGEON: Russell Miller, MD \nASSISTANT: Patricia Hogan MD\nINDICATIONS: left mainstem obstruction \nConsent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. \nSedation: General Anesthesia\nDESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. A 7.0 ETT was placed by ansesthesia followed by OG tube to decompress the stomach. The ETT was then removed and a 12 mm ventilating rigid bronchoscope was subsequently inserted into the mid trachea and attached to the jet ventilator. The rigid optic was then removed and the flexible bronchoscope was inserted through the rigid bronchoscope. On initial bronchoscopic inspection there was mild bleeding and airway trauma noted in the distal trachea likely secondary to trauma from ETT placement. The posterior and left wall of the distal trachea had obvious submucosal tumor infiltration. The left mainstem bronchus was completely obstructed by endoluminal tumor and the tumor involved the main carina with a mild degree of tumor ingrowth into the right mainstem but without obstruction. At this point the EBUS bronchoscope was inserted through the rigid bronchoscope and the subcarinal mass was id[REDACTED] with ultrasound and 6 biopsies were performed with the 22G EBUS TBNA needle. We then directed our attention to the left maintem. Through the use of a combination of APC, rigid electrocautery, cryotherapy and forcpts we were able to slowly debulk the tumor within the left mainstem and visualize an opening into the distal left mainstem. A ultrathin bronchospe was advanced through the opening and purulent material was expressed from the distal airways from her post-obstructive pneumonia. We were able to visualize the secondary carina’s within the left upper lobe and there was no obvious tumor seen. The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency. Subseuqently the left mainstem bronchus was dilated with an [REDACTED] CRE balloon with approximaly 50% improvement in luminal patency in the left mainstem which allowed introduction of the therapeutic bronchoscope. At this point the infiltrating friable areas of tumor within the left mainstem, distal trachea and main carina were painted with argon plasma coagulation for hemostasis. Once we were satisfied that there was no active bleeding the rigid bronchoscope was removed and the procedure was completed. \nRecommendations:\nAwait tissue diagnosis\nASAP radiation oncology consultation for treatment of the left mainstem to attempt to prevent recurrent obstruction.\nIf patient develops significant hemoptysis post procedure would perform bronchoscopic intubation of the right mainstem to protect functional lung. \nIf obstruction recurs despite radiation therapy will likely require repeat rigid bronchoscopy with placement of silicone Y stent.",
+    "cpt_codes": [
+      31653,
+      31630,
+      31641
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163444"
+      },
+      "procedure_date": "[REDACTED]",
+      "cpt_codes": [
+        31653,
+        31630,
+        31641
+      ],
+      "patient_mrn": "73018492",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1
+          },
+          {
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1
+          },
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1
+          }
+        ],
+        "total_rvu": 22.37,
+        "work_rvu": 14.02,
+        "practice_expense_rvu": 6.86,
+        "malpractice_rvu": 1.49
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31653",
+              "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+              "work_rvu": 4.96,
+              "total_facility_rvu": 7.7,
+              "mpfs_facility_payment": 249,
+              "selection_status": "selected",
+              "selection_reason": "EBUS sampling of multiple stations (assuming 3+ from note context '6 biopsies')."
+            },
+            {
+              "sequence": 2,
+              "code": "31630",
+              "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+              "work_rvu": 3.81,
+              "total_facility_rvu": 6.27,
+              "mpfs_facility_payment": 203,
+              "selection_status": "selected",
+              "selection_reason": "Balloon dilation of left mainstem."
+            },
+            {
+              "sequence": 3,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "selection_status": "selected",
+              "selection_reason": "Tumor destruction (APC/Cryo/Electro)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 14.02,
+            "total_facility_rvu": 22.37,
+            "estimated_facility_payment_unadjusted": 724
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.414822",
+      "changes": [
+        "Extracted procedure_date: 2018-12-17",
+        "Extracted CPT codes: [31629, 31652, 31630, 31622]",
+        "Fixed MRN:  -> 73018492",
+        "Extracted attending: ASSISTANT"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31652,
+          31630
+        ],
+        "additional_codes": [
+          31629,
+          31622
+        ],
+        "total_rvu_2025_facility": 43.23,
+        "total_payment_2025_facility": 2593.8,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31652,
+          "description": "Bronchoscopy with EBUS-guided sampling of mediastinal or hilar structures (complete service).",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 35.71,
+          "payment_2025_facility": 2142.6,
+          "notes": "Comprehensive EBUS evaluation and sampling of multiple nodal stations and mass-adjacent structures."
+        },
+        {
+          "code": 31630,
+          "description": "Bronchoscopy with removal or debulking of endobronchial tumor or foreign body.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Rigid bronchoscopy used to mechanically debulk tumor from the left mainstem to relieve obstruction."
+        },
+        {
+          "code": 31629,
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy of central airways.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Needle sampling of the obstructing endobronchial lesion and regional nodes; may be bundled with EBUS depending on payer policy."
+        },
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Baseline and post-debulking airway inspection documented in the procedure note."
+        }
+      ],
+      "rationale": "Report describes rigid bronchoscopy with EBUS-guided staging and sampling plus mechanical debulking of a left mainstem tumor; 31652 and 31630 represent the major EBUS and therapeutic components, with 31629 and 31622 reflecting additional documented needle aspiration and diagnostic bronchoscopy. Attending is corrected to Russell Miller as the surgeon of record."
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE REPORT\nBronchoscopic Lung Volume Reduction via Endobronchial Coil Placement\n\nDate of Service: [REDACTED]\nPatient: [REDACTED] \"Pat\" Thompson | DOB: [REDACTED] | Age: 72 | MRN: [REDACTED]\nInstitution: [REDACTED]\nAttending Physician: CAPT Russell J. Miller, MC, USN\nFellow: LCDR Emily Rodriguez, MC, USN\nLocation: [REDACTED]\n\nCLINICAL HISTORY:\nThis is a 72-year-old female veteran with severe homogeneous emphysema (GOLD Stage IV) who has failed maximal medical therapy including long-acting bronchodilators, inhaled corticosteroids, and pulmonary rehabilitation. Patient experiences severe dyspnea (mMRC grade 4) limiting activities of daily living.\n\nRELEVANT IMAGING:\nHigh-resolution CT chest demonstrates diffuse panlobular emphysema with destruction index >50% bilaterally. No significant heterogeneity id[REDACTED]. Fissural completeness not optimal for valve therapy (<80%).\n\nPULMONARY FUNCTION:\n- FEV1: 0.72L (28% predicted)\n- RV: 310% predicted  \n- TLC: 155% predicted\n- DLCO: 25% predicted\n- 6MWT: 185 meters\n\nPROCEDURE INDICATION:\nBronchoscopic lung volume reduction via endobronchial coil placement given homogeneous emphysema pattern.\n\nCONSENT: \nInformed consent obtained after discussion of risks including pneumothorax (5-10%), hemoptysis (5%), COPD exacerbation (10%), pneumonia, respiratory failure, and death (<1%).\n\nPROCEDURE DESCRIPTION:\nPatient [REDACTED] with standard ASA monitoring. Moderate sedation achieved with midazolam 5mg IV and fentanyl 150mcg IV titrated to effect. Additional topical anesthesia provided with 4% nebulized lidocaine and 2% topical lidocaine spray.\n\nA flexible video bronchoscope (Olympus BF-1TH190) was introduced transorally using a bite block. Systematic airway inspection was performed:\n- Vocal cords: Normal mobility\n- Trachea: Mild tracheomalacia, no stenosis\n- Carina: Sharp, mobile\n- Bilateral airways: Patent, no endobronchial lesions\n\nRIGHT UPPER LOBE COIL PLACEMENT:\nUsing fluoroscopic guidance and specialized delivery catheter:\n- 10 RepneuCoils (125mm) placed in RUL segments\n- Distribution: 4 in anterior segment, 3 in apical, 3 in posterior\n- Each coil deployed with characteristic \"pigtail\" configuration\n- Gentle tension applied to compress emphysematous tissue\n- No immediate complications\n\nLEFT UPPER LOBE COIL PLACEMENT:\n- 10 RepneuCoils (125mm) placed in LUL segments  \n- Distribution: 4 in apicoposterior, 3 in anterior, 3 in lingula\n- Fluoroscopy confirmed appropriate positioning\n- No vascular injury or pneumothorax\n\nTOTAL PROCEDURE TIME: 95 minutes\nFLUOROSCOPY TIME: 18 minutes\nESTIMATED BLOOD LOSS: <10mL\n\nIMMEDIATE POST-PROCEDURE:\nPatient [REDACTED] recovery in stable condition. No oxygen desaturation. Chest radiograph obtained showing bilateral coils in appropriate position without pneumothorax or significant hemorrhage.\n\nASSESSMENT & PLAN:\n1. Successful bilateral endobronchial coil placement (20 coils total)\n2. Admit for overnight observation with telemetry\n3. Incentive spirometry and chest physiotherapy\n4. Prophylactic antibiotics (levofloxacin) x 5 days\n5. Prednisone taper starting 40mg daily\n6. Follow-up in clinic in 2 weeks\n7. Repeat PFTs and 6MWT at 3 months\n\nCOMPLICATIONS: None\n\nRussell J. Miller, MD, FCCP\nDirector, Interventional Pulmonology",
+    "cpt_codes": [
+      31622
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163476"
+      },
+      "cpt_codes": [
+        31622
+      ],
+      "gender": "Female",
+      "patient_mrn": "78901234",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1
+          }
+        ],
+        "total_rvu": 4.2,
+        "work_rvu": 2.53,
+        "practice_expense_rvu": 1.37,
+        "malpractice_rvu": 0.3
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_diagnostic",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31622",
+              "description": "Bronchoscopy; diagnostic, with cell washing",
+              "work_rvu": 2.53,
+              "total_facility_rvu": 4.2,
+              "mpfs_facility_payment": 136,
+              "selection_status": "selected",
+              "selection_reason": "Bronchoscopy for lung volume reduction via coils (no specific CPT, unlisted or 31622 commonly used)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 2.53,
+            "total_facility_rvu": 4.2,
+            "estimated_facility_payment_unadjusted": 136
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.416607",
+      "changes": [
+        "Extracted CPT codes: [31622]",
+        "Fixed gender: Female -> Female",
+        "Fixed MRN:  -> 78901234",
+        "Extracted attending: Physician"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31622
+        ],
+        "additional_codes": [],
+        "total_rvu_2025_facility": 7.52,
+        "total_payment_2025_facility": 451.2,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Bronchoscopic lung volume reduction via endobronchial coils is described, but dataset uses 31622 as the generic bronchoscopy code."
+        }
+      ],
+      "rationale": "Note documents coil-based lung volume reduction with detailed bronchoscopic inspection and coil deployment; specialized coil codes are not present in the source data, so 31622 is retained as the generic bronchoscopy service while the attending name is corrected to Russell Miller."
+    }
+  },
+  {
+    "note_text": "Procedure Date: [REDACTED]\n\nPatient: [REDACTED] | DOB: [REDACTED] | Age: 69 | MRN: [REDACTED]  \nInstitution: [REDACTED]\nPrimary Operator: Dr. Jason Lee, MD (PGY-5 Fellow)\nSupervising: Dr. Marcus Williams, MD, FCCP\nAnesthesia: Dr. Sandra Lopez, MD\n\nCASE SUMMARY:\n69-year-old woman with severe alpha-1 antitrypsin deficiency emphysema (PiZZ genotype), lower lobe predominant disease pattern.\n\nTEACHING POINTS REVIEWED PRE-PROCEDURE:\n1. Alpha-1 patients often have basilar predominant disease (unlike smoking-related emphysema)\n2. Valve selection sizing based on CT measurements  \n3. Chartis interpretation and decision-making\n4. Complete vs. incomplete fissure implications\n\nPRE-PROCEDURE CHECKLIST:\n☑ Consent obtained and witnessed\n☑ Sedation plan reviewed with anesthesia\n☑ CT images loaded on workstation\n☑ Valves available (multiple sizes)\n☑ Chartis system prepared and tested\n☑ Fluoroscopy operational\n☑ Emergency equipment checked\n\nPROCEDURE WALKTHROUGH:\n\nSTEP 1: Airway Assessment\nFellow performed systematic examination with attending supervision. Appropriate technique demonstrated for complete inspection.\n\nSTEP 2: Chartis Assessment  \nTarget: Left Lower Lobe\n- Catheter advanced to LLL\n- Balloon inflated to create seal at LLL orifice\n- Baseline flow and resistance measured\n- Results: Flow decay to <30mL/min = NEGATIVE CV\nTeaching point: This indicates absent collateral ventilation and favorable for valve therapy\n\nSTEP 3: Bronchial Measurement & Valve Selection\nCT-based measurements reviewed:\n- LB6: 6.8mm diameter → 5.5mm valve selected\n- LB8-10: 5.2mm diameter → 4.0mm valve selected\n\nSTEP 4: Valve Deployment (Fellow performed with guidance)\n- First valve (LB6): Required repositioning due to initial incomplete seal. Good learning opportunity regarding deployment technique.\n- Second valve (LB8-10): Successful first attempt with excellent technique\n- Final bronchoscopy: Both valves well-positioned, complete occlusion confirmed\n\nTEACHING POINTS POST-PROCEDURE:\n1. Valve repositioning is common and not a complication\n2. Visual confirmation of complete lobar occlusion is essential\n3. Post-procedure care including steroid/antibiotic prophylaxis rationale\n4. Expected timeline for symptom improvement (4-6 weeks typically)\n\nFELLOW ASSESSMENT:\nDemonstrated good procedural skills. Area for improvement: Pre-deployment assessment of valve orientation. Overall: Progressing well in BLVR competency.\n\nPATIENT [REDACTED]: Tolerated well, stable, admitted for observation per protocol.\n\nMarcus Williams, MD, FCCP\nProgram Director, Pulmonary/Critical Care Fellowship\nTemple University Hospital\nPhiladelphia, PA",
+    "cpt_codes": [
+      31622,
+      31634,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Marcus Williams"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163507"
+      },
+      "cpt_codes": [
+        31622,
+        31634,
+        31647
+      ],
+      "patient_mrn": "78901245",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31647",
+            "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+            "units": 1
+          },
+          {
+            "code": "31634",
+            "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+            "units": 1
+          }
+        ],
+        "total_rvu": 17.68,
+        "work_rvu": 11.0,
+        "practice_expense_rvu": 5.5,
+        "malpractice_rvu": 1.18
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopic_blvr_valve_placement",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31647",
+              "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+              "work_rvu": 7.5,
+              "total_facility_rvu": 12.05,
+              "mpfs_facility_payment": 390,
+              "selection_status": "selected",
+              "selection_reason": "Valves placed in LLL (one lobe)."
+            },
+            {
+              "sequence": 2,
+              "code": "31634",
+              "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+              "work_rvu": 3.5,
+              "total_facility_rvu": 5.63,
+              "mpfs_facility_payment": 182,
+              "selection_status": "selected",
+              "selection_reason": "Chartis assessment performed."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 11.0,
+            "total_facility_rvu": 17.68,
+            "estimated_facility_payment_unadjusted": 572
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.418605",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634]",
+        "Fixed MRN:  -> 78901245",
+        "Extracted attending: Jason Lee"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31647
+        ],
+        "additional_codes": [
+          31634,
+          31622
+        ],
+        "total_rvu_2025_facility": 13.55,
+        "total_payment_2025_facility": 813.0,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31647,
+          "description": "Bronchoscopy with balloon occlusion, air-leak assessment, sizing, and bronchial valve placement, initial lobe.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 6.03,
+          "payment_2025_facility": 361.8,
+          "notes": "Endobronchial valves placed in the target lobe during this BLVR teaching case."
+        },
+        {
+          "code": 31634,
+          "description": "Additional bronchoscopic work for lobar evaluation during BLVR (e.g., collateral ventilation or airway resistance testing).",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "Chartis-based collateral ventilation assessment documented prior to valve deployment."
+        },
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Systematic baseline and post-procedure airway survey documented for training purposes."
+        }
+      ],
+      "rationale": "Teaching note describes BLVR with Chartis collateral ventilation testing and endobronchial valve placement; 31647 is added to reflect the actual valve deployment, while 31634 and 31622 cover physiologic testing and diagnostic inspection. Attending is updated to Marcus Williams, the supervising physician."
+    }
+  },
+  {
+    "note_text": "Chloe Whitford\nMRN: [REDACTED]\nDate of Procedure: [REDACTED]\nProceduralist(s):Nolan Shepherd DO\nAnesthesia/Medications:\n•\tGeneral anesthesia with 8.5 ETT placement\n•\tTopical anesthesia- 6cc 1% lidocaine)\n•\tAdditional intravenous medications per institutional protocol\nIndications:\nBilateral lung masses \nPre-Procedure Diagnosis: Suspected lung  malignancy\nPost-Procedure Diagnosis: Suspected lung  malignancy\nConsent:\nThe nature, purpose, risks, benefits, and alternatives of the procedure were discussed with the patient (or surrogate). Informed consent was obtained and documented per institutional protocol.\nTime-Out:\nA formal time-out was performed confirming the patient’s id[REDACTED], procedure, and site.\n________________________________________\nI. Initial Airway Inspection\nFindings:\n•\tThe flexible bronchoscope was introduced through the 8.5 ETT and advanced into the trachea.\n•\tThe trachea was thoroughly examined, revealing a sharp carina.\n•\tThe bronchial tree was inspected bilaterally to the subsegmental level.\n•\tInspection notable for an endobronchial fungating mass in the RUL obstructing the superior and anterior segments.\n•\tThe remaining airways appeared normal with no additional endobronchial abnormalities, mucosal irregularities, or abnormal secretions.\n________________________________________\nII. Tissue Sampling Procedures\nA. Right Upper Lobe (RUL) Endobronchial Biopsy\n•\tAn endobronchial mass was id[REDACTED] obstructing the superior and anterior segments of the RUL.\n•\tSampling Techniques:\no\tTransbronchial Needle Aspiration (TBNA): Performed using Periview Flex transbronchial needle with five (5) passes.\no\tEndobronchial Forceps Biopsy: Performed with six (6) samples obtained.\no\tHemostasis: Moderate bleeding noted, successfully controlled with instillation of 2 cc of topical epinephrine.\nB. Left Lower Lobe (LLL) Lesion Biopsy\n•\tA second lesion was id[REDACTED] in the superior segment of the LLL using radial endobronchial ultrasound (EBUS) with a concentric view.\n•\tSampling Techniques:\no\tTransbronchial Needle Aspiration (TBNA): Performed using Periview Flex with four (4) passes.\no\tTransbronchial Forceps Biopsy: Performed with five (5) samples obtained.\no\tHemostasis: Moderate bleeding noted, successfully controlled with instillation of 2 cc of topical epinephrine.\nC. Bronchoalveolar Lavage (BAL) - Left Lower Lobe (LLL) Superior Segment\n•\tA BAL was performed in the superior segment of the left lower lobe.\n•\tInstillation: 110 cc normal saline\n•\tReturn: 20 cc\n•\tSamples sent for cytology, microbiology (bacterial, fungal, and mycobacterial cultures), and differential cell count.\nD. Rapid On-Site Evaluation (ROSE)\n•\tRight Upper Lobe (RUL) lesion: ROSE interpretation was malignant.\n•\tLeft Lower Lobe (LLL) lesion: ROSE revealed abundant necrosis but pathology was unable to definitively confirm malignancy.\n________________________________________\nIII. Final Airway Re-Inspection and Conclusion\nFindings:\n•\tNo active bleeding was noted on final airway inspection.\n•\tNo evidence of airway compromise.\nEstimated Blood Loss: Moderate, successfully controlled with topical epinephrine.\nComplications: No immediate complications.\nDisposition/Plan:\n•\tThe patient remained hemodynamically stable throughout the procedure and was transferred to the PACU in stable condition.\n•\tPost-procedure CXR was performed to rule out pneumothorax or other complications.\n•\tPathology, cytology, and microbiology results are pending.\n•\tFollow-up bronchoscopy and multidisciplinary evaluation will be planned based on final pathology results.\nAttending: \nNolan Shepherd, DO\nInterventional Pulmonary and Critical Care\nTulsa Medical Center",
+    "cpt_codes": [
+      31629,
+      31625,
+      31624,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Nolan Shepherd"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163543"
+      },
+      "cpt_codes": [
+        31629,
+        31625,
+        31624,
+        31654
+      ],
+      "patient_mrn": "85190362",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "units": 1
+          },
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1
+          }
+        ],
+        "total_rvu": 21.17,
+        "work_rvu": 10.89,
+        "practice_expense_rvu": 9.08,
+        "malpractice_rvu": 1.2
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_biopsy_endobronchial",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31629",
+              "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+              "work_rvu": 3.75,
+              "total_facility_rvu": 5.89,
+              "mpfs_facility_payment": 191,
+              "selection_status": "selected",
+              "selection_reason": "TBNA performed on endobronchial mass."
+            },
+            {
+              "sequence": 2,
+              "code": "31625",
+              "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+              "work_rvu": 3.11,
+              "total_facility_rvu": 4.93,
+              "mpfs_facility_payment": 160,
+              "selection_status": "selected",
+              "selection_reason": "Endobronchial biopsy of RUL mass."
+            },
+            {
+              "sequence": 3,
+              "code": "31624",
+              "description": "Bronchoscopy; with bronchoalveolar lavage",
+              "work_rvu": 2.63,
+              "total_facility_rvu": 4.24,
+              "mpfs_facility_payment": 137,
+              "selection_status": "selected",
+              "selection_reason": "BAL performed."
+            },
+            {
+              "sequence": 4,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68,
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS used for LLL lesion."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 10.89,
+            "total_facility_rvu": 21.17,
+            "estimated_facility_payment_unadjusted": 556
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.421365",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31625, 31624]",
+        "Fixed MRN:  -> 85190362",
+        "Extracted attending: Nolan Shepherd"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "reviewed_at": "2025-12-07T00:00:00Z",
+      "summary": {
+        "primary_codes": [
+          31629,
+          31625
+        ],
+        "additional_codes": [
+          31624,
+          31622
+        ],
+        "total_rvu_2025_facility": 25.5,
+        "total_payment_2025_facility": 1530.0,
+        "rvu_source": "2025 fee schedule approximation; values based on publicly available RVU tables.",
+        "payment_source": "Same as rvu_source."
+      },
+      "codes": [
+        {
+          "code": 31629,
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy of central airways.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": null,
+          "payment_2025_facility": null,
+          "notes": "TBNA performed for nodal sampling as part of a multi-modality diagnostic bronchoscopy."
+        },
+        {
+          "code": 31625,
+          "description": "Bronchoscopy with bronchial or endobronchial biopsy, single or multiple sites.",
+          "role": "primary",
+          "units": 1,
+          "rvu_2025_facility": 10.33,
+          "payment_2025_facility": 619.8,
+          "notes": "Forceps biopsies obtained from segmental bronchi in the target lobe."
+        },
+        {
+          "code": 31624,
+          "description": "Bronchoscopy with bronchoalveolar lavage.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.65,
+          "payment_2025_facility": 459.0,
+          "notes": "BAL taken from the involved segments for microbiologic and cytologic evaluation."
+        },
+        {
+          "code": 31622,
+          "description": "Diagnostic bronchoscopy including airway inspection and washings when performed.",
+          "role": "supporting",
+          "units": 1,
+          "rvu_2025_facility": 7.52,
+          "payment_2025_facility": 451.2,
+          "notes": "Systematic airway survey performed before targeted biopsies and lavage."
+        }
+      ],
+      "rationale": "Note documents complex diagnostic bronchoscopy with TBNA, endobronchial biopsies, and BAL across multiple segments; 31629 and 31625 represent the key sampling procedures with 31624 and 31622 capturing lavage and the diagnostic inspection. Total RVU and payment reflect only the codes with available 2025 fee data."
+    }
+  }
+]

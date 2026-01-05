@@ -1,0 +1,575 @@
+[
+  {
+    "note_text": "TEACHING CASE - BRONCHOSCOPY WITH FELLOW PARTICIPATION\n\nPatient: [REDACTED] | MRN: [REDACTED] | DOB: [REDACTED]\n\nTEAM:\nAttending: [De-id[REDACTED] per protocol]\nFellow: [De-id[REDACTED] per protocol]\nROSE Technician: [De-id[REDACTED] per protocol]\n\nINDICATION: Mediastinal staging, LUL adenocarcinoma\n\nEDUCATIONAL OBJECTIVES FOR FELLOW:\n1. Systematic N3→N2→N1 EBUS evaluation\n2. ROSE interpretation and real-time decision-making\n3. Optimal needle pass technique\n4. Management of technical challenges\n\nSEDATION: Moderate (midazolam 3mg, fentanyl 75mcg), Ramsay 3",
+    "cpt_codes": [
+      31622
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164768"
+      },
+      "cpt_codes": [
+        31622
+      ],
+      "patient_mrn": "TT9482L"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.514014",
+      "changes": [
+        "Extracted CPT codes: [31622]",
+        "Fixed MRN:  -> TT9482L"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1956-12-11)"
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31622
+      ],
+      "cpt_summary": [
+        {
+          "code": "31622",
+          "description": "Diagnostic bronchoscopy",
+          "facility_rvu_2025": 4.2,
+          "facility_payment_2025": 136.0
+        }
+      ],
+      "total_facility_rvu_2025": 4.2,
+      "total_facility_payment_2025": 136.0,
+      "rationale": [
+        "Teaching case documentation lists objectives but lacks specific procedure findings or sampling details.",
+        "31622 is the minimal supportable code for a flexible bronchoscopy."
+      ]
+    }
+  },
+  {
+    "note_text": "TELEPHONE CONSULTATION PROCEDURE NOTE\n\nFROM: Bronchoscopy Suite\nTO: Referring Physician (Dr. Adams)\nRE: Patient Kevin Brown, MRN [REDACTED], DOB [REDACTED]\nDATE: [REDACTED] 15:30\n\nCalled to discuss procedure results for your patient who underwent EBUS-TBNA today.\n\nBRIEF SUMMARY:\n66M with RUL mass underwent combined EBUS staging and endobronchial biopsy under moderate sedation (midazolam 3mg + fentanyl 100mcg, Ramsay 3, vitals stable throughout).\n\nEBUS RESULTS:\n- Station 4R (12mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 7 (15mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 10R (8mm): 3 passes, ROSE benign\n\nSystematic N3→N2→N1 evaluation completed with full photodocumentation.\n\nTUMOR BIOPSY:\nPrimary RUL endobronchial component biopsied (×6 specimens). Adequate tissue obtained.\n\nSTAGING:\nAppears to be N2 disease (multi-station involvement at levels 4R and 7).\nMolecular testing sent from station 4R sample - should have results in 7-10 days.\n\nCOMPLICATIONS:\nNone. Patient tolerated well and discharged home stable.\n\nNEXT STEPS:\n1. Final pathology in 3-5 days\n2. Molecular results in 7-10 days\n3. Recommend tumor board discussion\n4. Patient follow-up in your clinic next week per discussion\n\nWill send formal typed report tomorrow. Feel free to call with questions.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Adams"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164786"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "VV8374M"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.515213",
+      "changes": [
+        "Fixed procedure_date: 1958-09-14 -> 2024-10-27",
+        "Extracted CPT codes: [31653, 31629, 31625, 31622]",
+        "Extracted EBUS stations: ['10R', '4R', '7']",
+        "Fixed MRN:  -> VV8374M",
+        "Extracted attending: Adams"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653,
+        31625
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        },
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with endobronchial biopsy",
+          "facility_rvu_2025": 4.93,
+          "facility_payment_2025": 160.0
+        }
+      ],
+      "total_facility_rvu_2025": 12.63,
+      "total_facility_payment_2025": 409.0,
+      "rationale": [
+        "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653.",
+        "Endobronchial biopsy of the RUL mass supports 31625."
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURAL FLEXIBLE BRONCHOSCOPY WITH EBUS-TBNA\n\nPATIENT: [Nancy Rodriguez]\nMRN: [WW-8372-Q]\nDOB: [[REDACTED]]\nDATE: [[REDACTED]]\n\nCLINICAL INDICATION: [Mediastinal staging for right lower lobe adenocarcinoma]\n\nSEDATION:\nType: [Moderate]\nMedications: [Midazolam 3mg IV, Fentanyl 75mcg IV]\nMaximum Ramsay: [3]\nMonitoring: [BP q5min, continuous SpO2]\nVitals: [Stable - BP 118-132/68-78, SpO2 96-99%]\n\nEBUS-TBNA FINDINGS:\n\nSystematic Evaluation: [Yes] N3→N2→N1 sequence\n\nStation [4R]: Size [13mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [7]: Size [19mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [10R]: Size [8mm], Passes [3], ROSE [Adequate-benign], PET [Negative]\n\nPhotodocumentation: [Complete]\nMolecular Testing: [Sent from station 4R]\n\nCOMPLICATIONS: [None]\n\nDIAGNOSTIC IMPRESSION: [N2 disease confirmed, multi-station involvement]\n\nFOLLOW-UP PLAN: [MDT discussion, neoadjuvant therapy consideration]",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164805"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "4R",
+        "7",
+        "10R"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7",
+        "10R"
+      ]
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.516304",
+      "changes": [
+        "Fixed procedure_date: 1955-04-15 -> 2024-10-25",
+        "Extracted CPT codes: [31629, 31622, 31652]",
+        "Extracted EBUS stations: ['4R']"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "Systematic EBUS-TBNA of stations 4R, 7, and 10R supports 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED] / MRN: [REDACTED] / Date of Birth: [REDACTED]\n\nIndication → RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)\n\nDeep sedation: Propofol infusion 50-75 mcg/kg/min\nRamsay 4, airway maintained with LMA\nMonitoring: Continuous BP via arterial line, SpO2, ETCO2\n\nTechnology: Cone beam CT integrated with EM navigation system\n\nProcedure:\n1. Initial CBCT acquired for registration\n2. EM navigation tracking deployed\n3. Target: RUL posterior segment nodule\n4. Guide sheath advanced under EM + fluoroscopic guidance\n5. Radial EBUS: Concentric pattern confirmed ✓\n6. Sampling completed\n7. CBCT repeated to confirm sheath position and check for pneumothorax\n\nFluoroscopy metrics:\n- Time: 4.8 minutes\n- DAP: 178 cGy*cm² (including CBCT)\n\nSamples:\n- Needle aspiration ×2\n- Forceps biopsy ×4\n- Brush cytology ×2\n\nTool-in-lesion: CONFIRMED\nLocalization success: YES\nProtocol adherent: YES\n\nPost-procedure CBCT: No pneumothorax id[REDACTED]\n\nNo complications. Patient recovered smoothly, discharged after 2 hours.",
+    "cpt_codes": [
+      31629,
+      31628,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164823"
+      },
+      "cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654
+      ],
+      "lesion_size_mm": 19.0,
+      "patient_mrn": "XL9284P"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.517345",
+      "changes": [
+        "Extracted CPT codes: [31654, 31623, 31627]",
+        "Extracted lesion_size_mm: 19.0",
+        "Fixed MRN:  -> XL9284P"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1961-11-22)"
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31629,
+        31628,
+        31627,
+        31654
+      ],
+      "cpt_summary": [
+        {
+          "code": "31629",
+          "description": "Bronchoscopy with TBNA",
+          "facility_rvu_2025": 5.89,
+          "facility_payment_2025": 191.0
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy",
+          "facility_rvu_2025": 5.53,
+          "facility_payment_2025": 179.0
+        },
+        {
+          "code": "31627",
+          "description": "Navigational bronchoscopy (add-on)",
+          "facility_rvu_2025": 3.07,
+          "facility_payment_2025": 99.0
+        },
+        {
+          "code": "31654",
+          "description": "Peripheral EBUS (add-on)",
+          "facility_rvu_2025": 2.11,
+          "facility_payment_2025": 68.0
+        }
+      ],
+      "total_facility_rvu_2025": 16.6,
+      "total_facility_payment_2025": 537.0,
+      "rationale": [
+        "Replaced 31623 (brush) with 31628 (TBLB) and 31629 (TBNA) as the note explicitly documents 'Needle aspirate x2' and 'Forceps biopsy x4' of the peripheral nodule.",
+        "Retained 31627 (Nav) and 31654 (Radial EBUS) for the localization work."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT [REDACTED]\n│ Field                  │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Name                   │ William Taylor                          │\n│ MRN                    │ XX-8473-MM                              │\n│ DOB                    │ [REDACTED]                              │\n│ Procedure Date         │ [REDACTED]                              │\n│ Indication             │ Peripheral LLL nodule 16mm              │\n\nSEDATION [REDACTED]\n│ Parameter              │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Type                   │ Deep sedation                           │\n│ Agent 1                │ Propofol infusion 50-100 mcg/kg/min    │\n│ Airway                 │ LMA                                      │\n│ Max Ramsay             │ 4                                        │\n│ BP Monitoring          │ Every 5 minutes                         │\n│ SpO2                   │ Continuous (maintained 95-98%)          │\n\nNAVIGATION [REDACTED]\n│ Parameter              │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ System                 │ Electromagnetic                         │\n│ Target                 │ LLL superior segment                    │\n│ Registration           │ Successful                              │\n│ Tool-in-Lesion         │ Confirmed (radial EBUS concentric)     │\n│ Fluoroscopy Time       │ 4.7 minutes                             │\n│ DAP                    │ 182 cGy*cm²                             │\n\nSAMPLING [REDACTED]\n│ Sample Type            │ Quantity                                 │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Needle aspirate        │ 3                                        │\n│ Forceps biopsy         │ 4                                        │\n│ Brush cytology         │ 2                                        │\n\nOUTCOME [REDACTED]\n│ Metric                 │ Status                                   │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Localization Success   │ YES                                      │\n│ Protocol Adherent      │ YES                                      │\n│ Complications          │ None                                     │\n│ Post-XR Pneumothorax   │ No                                       │",
+    "cpt_codes": [
+      31654,
+      31623,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164854"
+      },
+      "cpt_codes": [
+        31654,
+        31623,
+        31627
+      ],
+      "lesion_size_mm": 16.0
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.519773",
+      "changes": [
+        "Fixed procedure_date: 1959-08-17 -> 2024-10-20",
+        "Extracted CPT codes: [31654, 31623, 31627]",
+        "Extracted lesion_size_mm: 16.0"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA of 5 stations (2R, 4R, 4L, 7, 10R) supports 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED]\nMRN [REDACTED]\nDOB: [REDACTED]\n\nCLINICAL: Staging for centrally located NSCLC, extensive mediastinal involvement on imaging\n\nSedation approach: Moderate sedation, midazolam 4mg + fentanyl 100mcg\nRamsay score peaked at 3\nBP monitoring every 5 minutes, continuous pulse oximetry maintained >94%\n\nEBUS-TBNA findings:\nSystematic mediastinal evaluation performed.\n\nStation 2R: 11mm, 3 passes, PET+, ROSE+ for malignancy\nStation 4R: 15mm, 4 passes, PET+, ROSE+ for malignancy\nStation 4L: 12mm, 4 passes, PET+, ROSE+ for malignancy\nStation 7: 24mm, 5 passes, PET+, ROSE+ for malignancy\nStation 10R: 9mm, 3 passes, PET+, ROSE+ for malignancy\n\nAll nodes with adequate cellularity. Molecular testing panels sent from stations 4R and 7.\nComplete photodocumentation of accessible stations archived.\n\nNo procedural complications. Patient hemodynamically stable throughout.\n\nIMPRESSION: Extensive N2/N3 disease confirmed. Adequate tissue for complete molecular characterization obtained.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164868"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "XY4829"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.520688",
+      "changes": [
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['10R', '2R', '4L', '4R', '7']",
+        "Fixed MRN:  -> XY4829"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1960-06-25)"
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA of 4 stations (4R, 4L, 7, 11R) supports 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient Name: [REDACTED]\nMedical Record: [REDACTED]\nDate of Birth: [REDACTED]\nProcedure: [REDACTED]\n\nClinical context: 53F with bilateral hilar lymphadenopathy on CXR, concern for sarcoidosis vs lymphoma\n\nConscious sedation: Versed 2mg, Fentanyl 50mcg - patient remained conversant, Ramsay 2-3\nVital signs: SpO2 98-100% RA, BP q10min stable 120s-130s/70s-80s\n\nEBUS-TBNA performed:\n→ Station 4R (14mm) - 3 passes - ROSE shows non-necrotizing granulomas\n→ Station 4L (16mm) - 3 passes - ROSE consistent with granulomatous inflammation\n→ Station 7 (20mm) - 4 passes - ROSE adequate, similar findings\n→ Station 11R (9mm) - 3 passes - ROSE adequate\n\nAll samples adequate for flow cytometry and microbiological culture sent.\n\nNo complications. Patient tolerated well. Discharge home same day.\n\nAssessment: Adequate tissue obtained for sarcoidosis vs lymphoma differentiation.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164882"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "11R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "11R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "ZX1847QP"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.521588",
+      "changes": [
+        "Fixed procedure_date: 1971-05-30 -> 2024-10-08",
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['11R', '4L', '4R', '7']",
+        "Fixed MRN:  -> ZX1847QP"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "final_cpt_codes": [
+        31653
+      ],
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "EBUS-TBNA, 3+ nodal stations",
+          "facility_rvu_2025": 7.7,
+          "facility_payment_2025": 249.0
+        }
+      ],
+      "total_facility_rvu_2025": 7.7,
+      "total_facility_payment_2025": 249.0,
+      "rationale": [
+        "EBUS-TBNA of 3 stations (4R, 7, 11R) supports 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED] / MRN: [REDACTED] / Birth: [REDACTED]\n\nINDICATION: Mediastinal staging, RUL NSCLC\n\nSedation: Moderate (midazolam/fentanyl), Ramsay 3, monitoring q5min\n\nEBUS-TBNA performed with systematic approach (N3→N2→N1):\n\nStation 4R (11mm, PET+):\n- Pass 1: ROSE - insufficient cellularity\n- Pass 2: ROSE - insufficient cellularity\n- Pass 3: ROSE - insufficient cellularity\n- Pass 4: ROSE - finally adequate, benign lymphocytes seen\n- Pass 5: ROSE - adequate\n→ 5 total passes needed for adequacy\n\nStation 7 (15mm, PET+):\n- Passes 1-3: ROSE adequate immediately, positive for malignancy\n\nStation 11R (7mm, PET-):\n- Passes 1-3: ROSE adequate\n\nALL NODES ADEQUATE: Yes (eventually, though station 4R required extra passes)\nMOLECULAR SUCCESS: Yes, tissue sent from station 7\n\nSystematic sequence used: Yes\nPhotodocumentation completed: Yes\n\nNo complications.\n\nImpression: N2 disease confirmed (station 7). Station 4R benign despite PET avidity. Adequate tissue for molecular testing obtained.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": null,
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164897"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "ZZ4829Q"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.522656",
+      "changes": [
+        "Extracted CPT codes: [31629, 31653]",
+        "Extracted EBUS stations: ['11R', '4R', '7']",
+        "Fixed MRN:  -> ZZ4829Q"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1956-07-19)"
+      ]
+    },
+    "coding_review": {
+      "section_1_cpt_summary": {
+        "final_cpt_codes": [
+          "31653"
+        ],
+        "dropped_cpt_codes": [
+          "31629"
+        ],
+        "primary_family": "bronchoscopy_ebus_linear",
+        "other_families": [],
+        "comment": "EBUS-TBNA staging for RUL NSCLC with three nodal stations; linear EBUS code 31653 alone is appropriate."
+      },
+      "section_2_financial_2025": {
+        "calendar_year": 2025,
+        "fee_schedule_name": "physician_2025_airway",
+        "code_lines": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy with EBUS-TBNA of three or more nodal stations",
+            "is_add_on": false,
+            "total_facility_rvu_2025": 7.7,
+            "mpfs_facility_payment_2025": 252
+          }
+        ],
+        "totals": {
+          "total_facility_rvu_2025": 7.7,
+          "total_facility_payment_2025": 252,
+          "note": "Totals mirror other multi-station EBUS cases using 2025 Medicare facility values."
+        }
+      },
+      "section_3_rationale": {
+        "overall_assessment": "EBUS-TBNA of 4R, 7, and 11R is accurately represented by 31653, with conventional TBNA code 31629 dropped.",
+        "per_code": {
+          "31653": "Three nodal stations (4R, 7, 11R) undergo EBUS-TBNA with detailed pass counts and ROSE results, satisfying requirements for 31653."
+        },
+        "documentation_gaps": [
+          "No documentation of separate conventional TBNA; 31629 is removed.",
+          "Procedure date is not documented separate from DOB; registry procedure_date is set to null.",
+          "Sedation timing and independent observer are not documented; no sedation CPTs are assigned."
+        ]
+      }
+    }
+  }
+]

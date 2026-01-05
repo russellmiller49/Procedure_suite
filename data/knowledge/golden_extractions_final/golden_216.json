@@ -1,0 +1,2066 @@
+[
+  {
+    "note_text": "Patient: [REDACTED] | ID: [REDACTED] | Birth Date: [REDACTED]\nDate of Service: [REDACTED] | Time: 10:30 AM\n\nChief Indication: RUL mass with mediastinal LAD, diagnostic + staging\n\nHPI: 61F, 35 pack-year smoker (active), presents with 3-month history of cough and right-sided chest discomfort. CT chest shows 3.2cm RUL mass with bulky mediastinal lymphadenopathy. PET-CT reveals primary lesion SUV 9.4, multiple N2 stations PET-avid (4R, 7, 2R).\n\nProcedure Performed:\n1. EBUS-TBNA for staging\n2. Flexible bronchoscopy with endobronchial biopsy\n\nAnesthesia: Moderate sedation\n- Midazolam 3mg IV + Fentanyl 75mcg IV\n- Ramsay sedation scale: 3 (responds to commands)\n- Monitoring: BP q5min (stable 125-135/72-85), continuous SpO2 (96-99%)\n\nProcedure Details:\n\nEBUS Component:\nSystematic mediastinal evaluation following N3→N2→N1 protocol.\n\nStation 2R (12mm):\n- 4 passes with 22G needle\n- ROSE: Positive for malignant cells\n- PET+\n\nStation 4R (18mm):\n- 5 passes (extra for molecular)\n- ROSE: Positive for malignant cells\n- PET+\n- Sent for NGS panel\n\nStation 7 (21mm):\n- 4 passes\n- ROSE: Positive for malignant cells\n- PET+\n\nStation 10R (9mm):\n- 3 passes\n- ROSE: Adequate, benign\n\nComplete photodocumentation of accessible stations performed ✓\n\nBronchoscopy Component:\nExamination of airways revealed mass effect from RUL tumor with partial narrowing of RUL bronchus (~40%). Multiple forceps biopsies obtained from tumor (n=6). Brush cytology x2 also performed.\n\nModerate bleeding from biopsy sites controlled with topical epinephrine 1:20,000 + iced saline lavage.\n\nAssessment:\n- N2/N3 disease confirmed (multi-level, multi-station)\n- Primary tumor biopsied\n- Adequate tissue for histologic diagnosis and molecular profiling\n- Stage IIIB (clinical)\n\nComplications:\n- Moderate airway bleeding (controlled, no intervention required beyond topical measures)\n- Severity: Moderate\n\nPlan:\n- Multidisciplinary tumor board presentation\n- Await molecular results (EGFR, ALK, ROS1, PD-L1)\n- Likely concurrent chemoradiation vs neoadjuvant approach\n\nPatient [REDACTED]: Stable, discharged after 2 hours",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "RR-3847-P",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 61,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "RUL mass with mediastinal LAD, diagnostic + staging",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "evidence": {
+        "procedure_date": "Patient: [REDACTED] | ID: [REDACTED] | Birth Date: [REDACTED]",
+        "patient_age": "HPI: 61F, 35 pack-year smoker (active), presents with 3-month history of cough and right-sided chest discomfort. CT chest shows 3.2cm RUL mass with bulky mediastinal lymphadenopathy. PET-CT reveals primary lesion SUV 9.4, multiple N2 stations PET-avid (4R, 7, 2R).",
+        "gender": "HPI: 61F, 35 pack-year smoker (active), presents with 3-month history of cough and right-sided chest discomfort. CT chest shows 3.2cm RUL mass with bulky mediastinal lymphadenopathy. PET-CT reveals primary lesion SUV 9.4, multiple N2 stations PET-avid (4R, 7, 2R).",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "Chief Indication: RUL mass with mediastinal LAD, diagnostic + staging",
+        "sedation_type": "moderate sedation",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "Multidisciplinary tumor board presentation",
+        "Await molecular results (EGFR, ALK, ROS1, PD-L1)",
+        "Likely concurrent chemoradiation vs neoadjuvant approach"
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "forceps",
+        "needle",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157838"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31651",
+        "31631",
+        "31625"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "POTENTIAL_CONCATENATION: Found 2 patient headers"
+    ],
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.115863",
+      "changes": [
+        "Fixed procedure_date: 1963-06-28 -> 2024-10-22",
+        "Extracted EBUS stations: ['10R', '2R', '4R', '7']"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS and bronchoscopy note for Jennifer Wang, DOS 10/22/2024.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of stations 2R, 4R, 7, and 10R (4 stations)."
+        },
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s).",
+          "category": "bronchoscopy_biopsy_endobronchial",
+          "units": 1,
+          "facility_total_rvus_2025": 4.93,
+          "facility_mpfs_payment_2025": 160.0,
+          "bundling_or_modifier_notes": "Supported by forceps biopsy of the RUL tumor. Distinct from the nodal sampling."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.63,
+        "total_facility_mpfs_payment": 409.0,
+        "computation_notes": "Sum of 31653 + 31625."
+      },
+      "rationale": [
+        "Code selection: EBUS-TBNA of 4 stations supports 31653. Endobronchial biopsy of the primary mass supports 31625.",
+        "Bundling: 31625 is generally payable with 31653 when performed on a separate lesion (primary tumor vs nodes)."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED] | MRN# [REDACTED] | Born: [REDACTED]\n\nINDICATION: RLL 21mm solid nodule with clear bronchus sign on CT, PET SUV 4.8\n\nANESTHESIA: Moderate sedation, midazolam 3mg + fentanyl 75mcg\nRamsay 3 throughout, monitoring BP q5min, SpO2 continuous\n\nTECHNIQUE: Traditional bronchoscopy (no navigation system needed due to bronchus sign)\n\nProcedure:\n- Thin bronchoscope advanced to RLL\n- Bronchus sign followed to nodule location\n- Lesion visualized endobronchially as subtle mucosal irregularity\n- Radial EBUS probe: Solid eccentric pattern consistent with lesion\n- Fluoroscopy used for confirmation: 3.1 minutes, DAP 124 cGy*cm²\n\nSampling performed:\n- Transbronchial needle aspiration ×3 (22G Wang needle)\n- Transbronchial forceps biopsy ×5\n- Brush cytology ×2\n- Additional forceps biopsies ×3 for molecular testing\n\nTool approach successful, diagnostic yield anticipated given direct visualization\n\nComplications: Minor self-limited bleeding after forceps biopsies, resolved with gentle suction\n\nPost-procedure: CXR showed small basilar atelectasis, no PTX. Patient stable, discharged.",
+    "cpt_codes": [
+      31628,
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "TK9472",
+      "procedure_date": null,
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "RLL 21mm solid nodule with clear bronchus sign on CT, PET SUV 4.8",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31628,
+        31629,
+        31654
+      ],
+      "evidence": {
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "INDICATION: RLL 21mm solid nodule with clear bronchus sign on CT, PET SUV 4.8",
+        "sedation_type": "moderate sedation",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "Fluoroscopy",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "forceps",
+        "needle",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": "Fluoroscopy",
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": 3.1,
+      "radiation_dap_gycm2": 124.0,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157860"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31631",
+        "31629",
+        "31652",
+        "31628",
+        "31654"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
+      "changes": [
+        "Standardized MRN format."
+      ],
+      "warnings": [
+        "NCCI bundling issue: 31628 and 31629 performed on the same lesion."
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Bronchoscopy note for Mark Thompson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "NCCI Policy Manual Chapter 5"
+      ],
+      "per_code": [
+        {
+          "code": "31629",
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s).",
+          "category": "bronchoscopy_tbna",
+          "units": 1,
+          "facility_total_rvus_2025": 5.89,
+          "facility_mpfs_payment_2025": 191.0,
+          "bundling_or_modifier_notes": "High-value primary. Supported by TBNA of RLL nodule."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe.",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "NCCI Alert: 31628 and 31629 on the *same lesion* are typically bundled. 31629 is higher valued. Both listed to reflect tools used, but payer may deny one."
+        },
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) (add-on).",
+          "category": "bronchoscopy_ebus_radial",
+          "units": 1,
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by radial EBUS verification of the nodule."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 13.53,
+        "total_facility_mpfs_payment": 438.0,
+        "computation_notes": "Sum of all codes. Actual payment may be lower if 31628 is bundled."
+      },
+      "rationale": [
+        "Procedure: Navigation-assisted (via fluoroscopy/REBUS) sampling of RLL nodule.",
+        "Codes: 31654 for REBUS. 31629 (TBNA) and 31628 (TBLB) both performed on same lesion. NCCI typically allows only one biopsy method per lesion; documentation supports both, but billing both risks denial."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED] | MRN: [REDACTED] | DOB: [REDACTED]\n\nPROBLEM LIST:\n#1 Mediastinal lymphadenopathy - needs tissue diagnosis\n#2 History of breast cancer (2019) - in remission\n#3 Chronic kidney disease stage 3\n\nSUBJECT[REDACTED]: 70F referred for EBUS evaluation of mediastinal nodes found on surveillance CT. Denies chest pain, hemoptysis, dyspnea. No PET scan performed due to renal dysfunction.\n\nOBJECTIVE:\nProcedure: EBUS-TBNA\nSedation: Moderate (midazolam 2mg, fentanyl 50mcg) - limited doses due to CKD\nRamsay: 3\nVitals: Stable throughout, BP 128-142/75-82, SpO2 96-99% on RA\n\nFindings:\n- Station 2R: 8mm, sampled x3, ROSE shows metastatic adenocarcinoma consistent with breast primary\n- Station 4R: 12mm, sampled x4, ROSE positive for metastatic carcinoma\n- Station 7: 9mm, sampled x3, ROSE positive for metastatic carcinoma\n\nSystematic evaluation performed. All accessible stations photographed.\n\nASSESSMENT:\n#1 Mediastinal lymphadenopathy - metastatic breast cancer confirmed\n#2 Breast cancer - recurrent disease, N2/N3 nodal involvement\n#3 CKD - tolerated sedation without issues\n\nPLAN:\n#1 Oncology referral for systemic therapy planning\n#2 Molecular profiling from station 4R sample\n#3 F/u renal function post-procedure\n\nComplications: None",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "TT6849",
+      "procedure_date": null,
+      "patient_age": 70,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Not specified",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653
+      ],
+      "evidence": {
+        "patient_age": "SUBJECT[REDACTED]: 70F referred for EBUS evaluation of mediastinal nodes found on surveillance CT. Denies chest pain, hemoptysis, dyspnea. No PET scan performed due to renal dysfunction.",
+        "gender": "SUBJECT[REDACTED]: 70F referred for EBUS evaluation of mediastinal nodes found on surveillance CT. Denies chest pain, hemoptysis, dyspnea. No PET scan performed due to renal dysfunction.",
+        "dob": "Patient: [REDACTED] | MRN: [REDACTED] | DOB: [REDACTED]",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "sedation_type": "opioid/benzo sedation (treated as Moderate)",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "#1 Oncology referral for systemic therapy planning",
+        "#2 Molecular profiling from station 4R sample",
+        "#3 F/u renal function post-procedure"
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157881"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31653"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.117012",
+      "changes": [
+        "Extracted EBUS stations: ['2R', '4R', '7']",
+        "Fixed MRN: TT-6849 -> TT6849"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1954-12-05)"
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS note for Sandra Lopez.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of stations 2R, 4R, and 7."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Straightforward EBUS-TBNA of 3 stations (2R, 4R, 7). 31653 is the correct code."
+      ]
+    }
+  },
+  {
+    "note_text": "TEACHING CASE - BRONCHOSCOPY WITH FELLOW PARTICIPATION\n\nPatient: [REDACTED] | MRN: [REDACTED] | DOB: [REDACTED]\n\nTEAM:\nAttending: [De-id[REDACTED] per protocol]\nFellow: [De-id[REDACTED] per protocol]\nROSE Technician: [De-id[REDACTED] per protocol]\n\nINDICATION: Mediastinal staging, LUL adenocarcinoma\n\nEDUCATIONAL OBJECTIVES FOR FELLOW:\n1. Systematic N3→N2→N1 EBUS evaluation\n2. ROSE interpretation and real-time decision-making\n3. Optimal needle pass technique\n4. Management of technical challenges\n\nSEDATION: Moderate (midazolam 3mg, fentanyl 75mcg), Ramsay 3",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "TT9482L",
+      "procedure_date": null,
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Mediastinal staging, LUL adenocarcinoma",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653
+      ],
+      "evidence": {
+        "dob": "Patient: [REDACTED] | MRN: [REDACTED] | DOB: [REDACTED]",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "INDICATION: Mediastinal staging, LUL adenocarcinoma",
+        "sedation_type": "opioid/benzo sedation (treated as Moderate)",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [
+        "needle"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157899"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31653"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
+      "changes": [
+        "Standardized MRN."
+      ],
+      "warnings": [
+        "Documentation truncated: specific EBUS stations not listed in text, but code 31653 requires 3+."
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Teaching case for Donald Martinez.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Code retained based on registry metadata claiming 3+ stations, though note text provided is truncated."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Teaching case indicated as systematic N3->N2->N1 evaluation. Assuming 3+ stations were sampled as per the assigned code 31653."
+      ]
+    }
+  },
+  {
+    "note_text": "TELEPHONE CONSULTATION PROCEDURE NOTE\n\nFROM: Bronchoscopy Suite\nTO: Referring Physician (Dr. Adams)\nRE: Patient Kevin Brown, MRN [REDACTED], DOB [REDACTED]\nDATE: [REDACTED] 15:30\n\nCalled to discuss procedure results for your patient who underwent EBUS-TBNA today.\n\nBRIEF SUMMARY:\n66M with RUL mass underwent combined EBUS staging and endobronchial biopsy under moderate sedation (midazolam 3mg + fentanyl 100mcg, Ramsay 3, vitals stable throughout).\n\nEBUS RESULTS:\n- Station 4R (12mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 7 (15mm): 4 passes, preliminary ROSE positive for adenocarcinoma, PET+\n- Station 10R (8mm): 3 passes, ROSE benign\n\nSystematic N3→N2→N1 evaluation completed with full photodocumentation.\n\nTUMOR BIOPSY:\nPrimary RUL endobronchial component biopsied (×6 specimens). Adequate tissue obtained.\n\nSTAGING:\nAppears to be N2 disease (multi-station involvement at levels 4R and 7).\nMolecular testing sent from station 4R sample - should have results in 7-10 days.\n\nCOMPLICATIONS:\nNone. Patient tolerated well and discharged home stable.\n\nNEXT STEPS:\n1. Final pathology in 3-5 days\n2. Molecular results in 7-10 days\n3. Recommend tumor board discussion\n4. Patient follow-up in your clinic next week per discussion\n\nWill send formal typed report tomorrow. Feel free to call with questions.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "patient_mrn": "VV8374M",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 66,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Not specified",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "evidence": {
+        "procedure_date": "DATE: [REDACTED] 15:30",
+        "patient_age": "66M with RUL mass underwent combined EBUS staging and endobronchial biopsy under moderate sedation (midazolam 3mg + fentanyl 100mcg, Ramsay 3, vitals stable throughout).",
+        "gender": "66M with RUL mass underwent combined EBUS staging and endobronchial biopsy under moderate sedation (midazolam 3mg + fentanyl 100mcg, Ramsay 3, vitals stable throughout).",
+        "dob": "RE: Patient Kevin Brown, MRN [REDACTED], DOB [REDACTED]",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "sedation_type": "moderate sedation",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "4. Patient follow-up in your clinic next week per discussion"
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "4R",
+        "7"
+      ],
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157905"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31651",
+        "31631",
+        "31625"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.117706",
+      "changes": [
+        "Extracted EBUS stations: ['10R', '4R', '7']",
+        "Fixed MRN: VV-8374-M -> VV8374M"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Telephone consultation note for Kevin Brown.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Supported by stations 4R, 7, 10R."
+        },
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s).",
+          "category": "bronchoscopy_biopsy_endobronchial",
+          "units": 1,
+          "facility_total_rvus_2025": 4.93,
+          "facility_mpfs_payment_2025": 160.0,
+          "bundling_or_modifier_notes": "Supported by biopsy of RUL endobronchial component."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.63,
+        "total_facility_mpfs_payment": 409.0,
+        "computation_notes": "Sum of 31653 + 31625."
+      },
+      "rationale": [
+        "Documentation confirms EBUS staging of 3 stations and separate endobronchial biopsy."
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURAL FLEXIBLE BRONCHOSCOPY WITH EBUS-TBNA\n\nPATIENT: [Nancy Rodriguez]\nMRN: [WW-8372-Q]\nDOB: [[REDACTED]]\nDATE: [[REDACTED]]\n\nCLINICAL INDICATION: [Mediastinal staging for right lower lobe adenocarcinoma]\n\nSEDATION:\nType: [Moderate]\nMedications: [Midazolam 3mg IV, Fentanyl 75mcg IV]\nMaximum Ramsay: [3]\nMonitoring: [BP q5min, continuous SpO2]\nVitals: [Stable - BP 118-132/68-78, SpO2 96-99%]\n\nEBUS-TBNA FINDINGS:\n\nSystematic Evaluation: [Yes] N3→N2→N1 sequence\n\nStation [4R]: Size [13mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [7]: Size [19mm], Passes [4], ROSE [Positive-malignant], PET [Positive]\nStation [10R]: Size [8mm], Passes [3], ROSE [Adequate-benign], PET [Negative]\n\nPhotodocumentation: [Complete]\nMolecular Testing: [Sent from station 4R]\n\nCOMPLICATIONS: [None]\n\nDIAGNOSTIC IMPRESSION: [N2 disease confirmed, multi-station involvement]\n\nFOLLOW-UP PLAN: [MDT discussion, neoadjuvant therapy consideration]",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "WW8372Q",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 69,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "[Mediastinal staging for right lower lobe adenocarcinoma]",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653
+      ],
+      "evidence": {
+        "procedure_date": "DATE: [[REDACTED]]",
+        "dob": "DOB: [[REDACTED]]",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "CLINICAL INDICATION: [Mediastinal staging for right lower lobe adenocarcinoma]",
+        "sedation_type": "opioid/benzo sedation (treated as Moderate)",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "FOLLOW-UP PLAN: [MDT discussion, neoadjuvant therapy consideration]"
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": [
+        "4R",
+        "7",
+        "10R"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7",
+        "10R"
+      ],
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157911"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31653"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
+      "changes": [
+        "Corrected extracted EBUS stations (Registry missed 7 and 10R).",
+        "Standardized MRN."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS note for Nancy Rodriguez.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of 4R, 7, and 10R."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Confirmed sampling of 3 stations. 31653 is appropriate."
+      ]
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED] / MRN: [REDACTED] / Date of Birth: [REDACTED]\n\nIndication → RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)\n\nDeep sedation: Propofol infusion 50-75 mcg/kg/min\nRamsay 4, airway maintained with LMA\nMonitoring: Continuous BP via arterial line, SpO2, ETCO2\n\nTechnology: Cone beam CT integrated with EM navigation system\n\nProcedure:\n1. Initial CBCT acquired for registration\n2. EM navigation tracking deployed\n3. Target: RUL posterior segment nodule\n4. Guide sheath advanced under EM + fluoroscopic guidance\n5. Radial EBUS: Concentric pattern confirmed ✓\n6. Sampling completed\n7. CBCT repeated to confirm sheath position and check for pneumothorax\n\nFluoroscopy metrics:\n- Time: 4.8 minutes\n- DAP: 178 cGy*cm² (including CBCT)\n\nSamples:\n- Needle aspiration ×2\n- Forceps biopsy ×4\n- Brush cytology ×2\n\nTool-in-lesion: CONFIRMED\nLocalization success: YES\nProtocol adherent: YES\n\nPost-procedure CBCT: No pneumothorax id[REDACTED]\n\nNo complications. Patient recovered smoothly, discharged after 2 hours.",
+    "cpt_codes": [
+      31627,
+      31654,
+      31629,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "XL9284P",
+      "procedure_date": null,
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Indication → RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)",
+      "sedation_type": "Deep",
+      "airway_type": "LMA",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31627,
+        31654,
+        31629,
+        31628
+      ],
+      "evidence": {
+        "procedure_date": "Name: [REDACTED] / MRN: [REDACTED] / Date of Birth: [REDACTED]",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "Indication → RUL peripheral nodule 19mm, part-solid, indeterminate on PET (SUV 2.1)",
+        "sedation_type": "deep or MAC sedation",
+        "airway_type": "LMA mentioned"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": "Ion Robotic",
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Cone Beam CT",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "needle",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": 19.0,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157978"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31627",
+        "31654",
+        "31629",
+        "31628"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
+      "changes": [
+        "Standardized MRN."
+      ],
+      "warnings": [
+        "NCCI bundling issue: 31628 and 31629 performed on the same lesion."
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Robotic bronchoscopy note for Paul Anderson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31629",
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s).",
+          "category": "bronchoscopy_tbna",
+          "units": 1,
+          "facility_total_rvus_2025": 5.89,
+          "facility_mpfs_payment_2025": 191.0,
+          "bundling_or_modifier_notes": "Primary biopsy code."
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on).",
+          "category": "bronchoscopy_navigation",
+          "units": 1,
+          "facility_total_rvus_2025": 3.07,
+          "facility_mpfs_payment_2025": 99.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by use of EM navigation/Ion."
+        },
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) (add-on).",
+          "category": "bronchoscopy_ebus_radial",
+          "units": 1,
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on. Supported by REBUS check."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe.",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Bundled into 31629 if same lesion per NCCI. Listed for completeness."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 16.6,
+        "total_facility_mpfs_payment": 537.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Navigation bronchoscopy with both needle and forceps biopsies of a peripheral nodule. All add-ons (31627, 31654) supported."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT [REDACTED]\n│ Field                  │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Name                   │ William Taylor                          │\n│ MRN                    │ XX-8473-MM                              │\n│ DOB                    │ [REDACTED]                              │\n│ Procedure Date         │ [REDACTED]                              │\n│ Indication             │ Peripheral LLL nodule 16mm              │\n\nSEDATION [REDACTED]\n│ Parameter              │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Type                   │ Deep sedation                           │\n│ Agent 1                │ Propofol infusion 50-100 mcg/kg/min    │\n│ Airway                 │ LMA                                      │\n│ Max Ramsay             │ 4                                        │\n│ BP Monitoring          │ Every 5 minutes                         │\n│ SpO2                   │ Continuous (maintained 95-98%)          │\n\nNAVIGATION [REDACTED]\n│ Parameter              │ Value                                    │\n├────────────────────────┼─────────────────────────────────────────┤\n│ System                 │ Electromagnetic                         │\n│ Target                 │ LLL superior segment                    │\n│ Registration           │ Successful                              │\n│ Tool-in-Lesion         │ Confirmed (radial EBUS concentric)     │\n│ Fluoroscopy Time       │ 4.7 minutes                             │\n│ DAP                    │ 182 cGy*cm²                             │\n\nSAMPLING [REDACTED]\n│ Sample Type            │ Quantity                                 │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Needle aspirate        │ 3                                        │\n│ Forceps biopsy         │ 4                                        │\n│ Brush cytology         │ 2                                        │\n\nOUTCOME [REDACTED]\n│ Metric                 │ Status                                   │\n├────────────────────────┼─────────────────────────────────────────┤\n│ Localization Success   │ YES                                      │\n│ Protocol Adherent      │ YES                                      │\n│ Complications          │ None                                     │\n│ Post-XR Pneumothorax   │ No                                       │",
+    "cpt_codes": [
+      31627,
+      31654,
+      31629,
+      31628
+    ],
+    "registry_entry": {
+      "patient_mrn": "XX8473MM",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "│ Indication             │ Peripheral LLL nodule 16mm              │",
+      "sedation_type": "Deep",
+      "airway_type": "LMA",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31627,
+        31654,
+        31629,
+        31628
+      ],
+      "evidence": {
+        "procedure_date": "│ Procedure Date         │ [REDACTED]                              │",
+        "dob": "│ DOB                    │ [REDACTED]                              │",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "primary_indication": "│ Indication             │ Peripheral LLL nodule 16mm              │",
+        "sedation_type": "deep or MAC sedation",
+        "airway_type": "LMA mentioned"
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "O2",
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": "Ion Robotic",
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "forceps",
+        "needle",
+        "brush"
+      ],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": 16.0,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.157996"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31627",
+        "31654",
+        "31629",
+        "31628"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T22:45:00Z",
+      "changes": [
+        "Standardized MRN."
+      ],
+      "warnings": [
+        "NCCI bundling issue: 31628 and 31629 performed on the same lesion."
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Robotic bronchoscopy note for William Taylor.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31629",
+          "description": "Bronchoscopy with transbronchial needle aspiration biopsy(s).",
+          "category": "bronchoscopy_tbna",
+          "units": 1,
+          "facility_total_rvus_2025": 5.89,
+          "facility_mpfs_payment_2025": 191.0,
+          "bundling_or_modifier_notes": "Primary biopsy code."
+        },
+        {
+          "code": "31627",
+          "description": "Bronchoscopy with computer-assisted, image-guided navigation (add-on).",
+          "category": "bronchoscopy_navigation",
+          "units": 1,
+          "facility_total_rvus_2025": 3.07,
+          "facility_mpfs_payment_2025": 99.0,
+          "bundling_or_modifier_notes": "Add-on."
+        },
+        {
+          "code": "31654",
+          "description": "EBUS for peripheral lesion(s) (add-on).",
+          "category": "bronchoscopy_ebus_radial",
+          "units": 1,
+          "facility_total_rvus_2025": 2.11,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Add-on."
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy(s), single lobe.",
+          "category": "bronchoscopy_biopsy_parenchymal",
+          "units": 1,
+          "facility_total_rvus_2025": 5.53,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Bundled into 31629 if same lesion."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 16.6,
+        "total_facility_mpfs_payment": 537.0,
+        "computation_notes": "Sum of all codes."
+      },
+      "rationale": [
+        "Navigation bronchoscopy with both needle and forceps biopsies of a peripheral nodule."
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED]\nMRN [REDACTED]\nDOB: [REDACTED]\n\nCLINICAL: Staging for centrally located NSCLC, extensive mediastinal involvement on imaging\n\nSedation approach: Moderate sedation, midazolam 4mg + fentanyl 100mcg\nRamsay score peaked at 3\nBP monitoring every 5 minutes, continuous pulse oximetry maintained >94%\n\nEBUS-TBNA findings:\nSystematic mediastinal evaluation performed.\n\nStation 2R: 11mm, 3 passes, PET+, ROSE+ for malignancy\nStation 4R: 15mm, 4 passes, PET+, ROSE+ for malignancy\nStation 4L: 12mm, 4 passes, PET+, ROSE+ for malignancy\nStation 7: 24mm, 5 passes, PET+, ROSE+ for malignancy\nStation 10R: 9mm, 3 passes, PET+, ROSE+ for malignancy\n\nAll nodes with adequate cellularity. Molecular testing panels sent from stations 4R and 7.\nComplete photodocumentation of accessible stations archived.\n\nNo procedural complications. Patient hemodynamically stable throughout.\n\nIMPRESSION: Extensive N2/N3 disease confirmed. Adequate tissue for complete molecular characterization obtained.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "XY4829",
+      "procedure_date": null,
+      "patient_age": 65,
+      "gender": "Other",
+      "asa_class": 3,
+      "primary_indication": "Not specified",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653
+      ],
+      "evidence": {
+        "dob": "DOB: [REDACTED]",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "sedation_type": "moderate sedation",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": true,
+      "ebus_systematic_staging": true,
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "4L",
+        "7",
+        "10R"
+      ],
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Malignant",
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.158025"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31653"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.120087",
+      "changes": [
+        "Fixed MRN: XY-4829 -> XY4829"
+      ],
+      "warnings": [
+        "Could not extract valid procedure date (was 1960-06-25)"
+      ]
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-06",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "EBUS note for Henderson.",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations.",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Supported by sampling of 4 stations (from previous context)."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.7,
+        "total_facility_mpfs_payment": 249.0,
+        "computation_notes": "Single code."
+      },
+      "rationale": [
+        "Standard EBUS-TBNA of 3+ stations."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient Name: [REDACTED]\nMedical Record: [REDACTED]\nDate of Birth: [REDACTED]\nProcedure: [REDACTED]\n\nClinical context: 53F with bilateral hilar lymphadenopathy on CXR, concern for sarcoidosis vs lymphoma\n\nConscious sedation: Versed 2mg, Fentanyl 50mcg - patient remained conversant, Ramsay 2-3\nVital signs: SpO2 98-100% RA, BP q10min stable 120s-130s/70s-80s\n\nEBUS-TBNA performed:\n→ Station 4R (14mm) - 3 passes - ROSE shows non-necrotizing granulomas\n→ Station 4L (16mm) - 3 passes - ROSE consistent with granulomatous inflammation\n→ Station 7 (20mm) - 4 passes - ROSE adequate, similar findings\n→ Station 11R (9mm) - 3 passes - ROSE adequate\n\nAll samples adequate for flow cytometry and microbiological culture sent.\n\nNo complications. Patient tolerated well. Discharge home same day.\n\nAssessment: Adequate tissue obtained for sarcoidosis vs lymphoma differentiation.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "patient_mrn": "ZX1847QP",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 53,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Not specified",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31653
+      ],
+      "evidence": {
+        "procedure_date": "Procedure: [REDACTED]",
+        "patient_age": "Clinical context: 53F with bilateral hilar lymphadenopathy on CXR, concern for sarcoidosis vs lymphoma",
+        "gender": "Clinical context: 53F with bilateral hilar lymphadenopathy on CXR, concern for sarcoidosis vs lymphoma",
+        "asa_class": "Defaulted to ASA 3 (not explicitly documented)",
+        "sedation_type": "opioid/benzo sedation (treated as Moderate)",
+        "airway_type": "default Native (no airway device mentioned)"
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": null,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": null,
+      "institution_name": null,
+      "procedure_setting": null,
+      "anticoag_status": null,
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": null,
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": null,
+      "airway_device_size": null,
+      "ventilation_mode": null,
+      "anesthesia_agents": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": [
+        "11R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "11R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": null,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": null,
+      "ebus_stations_detail": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_cv_assessment_method": null,
+      "blvr_chartis_result": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "bronch_indication": null,
+      "bronch_location_lobe": null,
+      "bronch_location_segment": null,
+      "bronch_guidance": null,
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": null,
+      "ebl_ml": null,
+      "hypoxia_respiratory_failure": null,
+      "fluoro_time_min": null,
+      "radiation_dap_gycm2": null,
+      "ablation_complication_immediate": null,
+      "providers": {
+        "attending_name": "Unknown",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": null
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-01T15:40:50.158051"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31653"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.120387",
+      "changes": [
+        "Fixed procedure_date: 1971-05-30 -> 2024-10-08",
+        "Extracted EBUS stations: ['11R', '4L', '4R', '7']",
+        "Fixed MRN: ZX-1847-QP -> ZX1847QP"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_version": "1.0.0",
+      "knowledge_base_version": "2.7",
+      "mpfs_year": 2025,
+      "facility_totals": {
+        "total_facility_rvu": 7.7,
+        "total_mpfs_facility_payment": 252
+      },
+      "cpt_summary": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "units": 1,
+          "primary": true,
+          "add_on": false,
+          "total_facility_rvu": 7.7,
+          "mpfs_facility_payment": 252
+        }
+      ],
+      "rationale": {
+        "note_level": "Moderate-sedation EBUS-TBNA with sampling of stations 4R, 4L, 7 and 11R for evaluation of sarcoidosis versus lymphoma.",
+        "per_code": {
+          "31653": "Four nodal stations sampled using linear EBUS with adequate tissue for granulomatous/inflammatory workup."
+        },
+        "bundling_considerations": "No bronchial biopsies or peripheral lesion work are documented; 31653 alone is appropriate."
+      }
+    }
+  }
+]

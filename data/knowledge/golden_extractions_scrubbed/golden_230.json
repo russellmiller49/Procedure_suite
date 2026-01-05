@@ -1,0 +1,1263 @@
+[
+  {
+    "note_text": "**PULMONARY PROCEDURE NOTE**\n\nNAME: [REDACTED]\nDOB: [REDACTED]\nMRN: [REDACTED]\nDOS: [REDACTED]\nPROVIDER: Christopher Hayes, MD (Attending)\nTRAINEE: Emily Watson, MD (IP Fellow)\n\n**PROCEDURE:** Ion Robotic Bronchoscopy, Bilateral Nodule Sampling\n\n**CLINICAL HISTORY:**\n45F never-smoker with incidental bilateral lung nodules discovered on CT for evaluation of chronic cough. RUL nodule 2.1cm, LUL nodule 1.6cm. Both PET avid (SUV 3.4 and 2.9 respectively). No lymphadenopathy. Patient referred for tissue diagnosis.\n\n**MEDICATIONS:**\nHome meds held per protocol. No anticoagulation.\n\n**PROCEDURE SUMMARY:**\n\nPre-procedure CT ([REDACTED]) loaded to Ion system. Dual-target navigation plan created for sequential sampling of RUL and LUL nodules.\n\nPatient [REDACTED] anesthesia. ETT size 7.5 at 21cm at lips.\n\nVent Settings: VC mode, TV 420mL, RR 12, PEEP 5, FiO2 60%, Flow rate 50L/min, Pmean 12cmH2O\n\n**ION REGISTRATION - COMPLETE:**\nRegistration using automatic method. Landmarks matched: carina, bilateral lobar carinas, segmental bifurcations RUL/LUL. Mean fiducial error 0.9mm. Excellent global alignment. No registration drift observed.\n\n**TARGET 1 - RUL ANTERIOR SEGMENT NODULE:**\n\nIon catheter navigated to RUL anterior segment. Tool-at-target confirmed by:\n- Navigation software showing 0.5cm distance\n- Radial EBUS concentric pattern, 19mm lesion\n- Fluoroscopy AP/lateral projections\n\nSamples:\n- Forceps biopsy x6\n- Brushings x2\n- Washing sent for cytology\n\nROSE: Atypical pneumocytes, favor adenocarcinoma. Final pending.\n\n**TARGET 2 - LUL APICAL-POSTERIOR SEGMENT NODULE:**\n\nCatheter repositioned to LUL. Navigation time from RUL target to LUL target: 8 minutes.\n\nRadial EBUS: eccentric pattern initially, adjusted catheter position, achieved concentric pattern. Lesion 14mm.\n\nSamples:\n- Forceps biopsy x5\n- Brushings x2\n\nROSE: Similar to RUL - atypical cells concerning for malignancy.\n\n**PROCEDURE COMPLETION:**\n\nTotal procedure time: 62 minutes\nTotal navigation time: 47 minutes\nCombined registration + navigation time to first nodule: 18 minutes\n\nHemostasis verified. Airways cleared. Patient extubated successfully, to recovery in stable condition.\n\nPost-op CXR: No pneumothorax\n\n**ASSESSMENT:**\nSuccessful bilateral lung nodule sampling via robotic bronchoscopy. ROSE suggests possible synchronous primary lung cancers vs metastatic disease. Await final pathology. If malignant, will need PET/CT, brain MRI staging. Discussion at thoracic tumor board.\n\n**FOLLOW-UP:** IP clinic 2 weeks\n\nDr. Christopher Hayes, Attending - electronically signed [REDACTED] 17:20\n**BRONCHOSCOPY PROCEDURE NOTE**\n\nPatient [REDACTED]: Williams, Robert D. | 71M | MRN [REDACTED]\nDate of Service: [REDACTED]\nPhysician: Dr. Laura Martinez, Interventional Pulmonology\nFellow Physician: Dr. Ahmed Hassan\n\n**Indication:** LLL nodule 2.8cm, hypermetabolic on PET scan\n\n**Procedure:** Electromagnetic Navigation Bronchoscopy with transbronchial biopsy and radial EBUS\n\n**Consent:** Obtained after discussion of risks including pneumothorax (~2%), bleeding (~1%), infection, need for additional procedures\n\n**Sedation:** Moderate conscious sedation - Midazolam 3mg IV, Fentanyl 100mcg IV. Monitoring by RN Sarah Cooper. Vitals stable throughout.\n\n**Procedure Details:**\n\nFlexible bronchoscope (Olympus BF-1TH190) introduced via oral route. Initial survey:\n- Oropharynx: unremarkable\n- Larynx: no masses, cords mobile\n- Trachea: midline, patent\n- Carina: sharp\n- Bilateral bronchial trees surveyed - no endobronchial lesions id[REDACTED]\n\nPre-procedure CT from [REDACTED] used for planning. SuperDimension electromagnetic navigation system employed.\n\n**EMN Planning and Navigation:**\nVirtual pathway created to LLL superior segment nodule. Registration performed automatically with good correlation (8 registration points matched, error <5mm acceptable).\n\nExtended working channel (EWC) placed. EMN locatable guide advanced along planned pathway. Position verified at multiple checkpoints. Distance to target upon final positioning: 0.8cm.\n\n**Radial EBUS:**\n1.4mm radial probe advanced through EWC. Ultrasound demonstrated:\n- Concentric hypoechoic lesion\n- Irregular borders\n- Size approximately 26mm\n- No visible vessels within sampling trajectory\n\n**Tissue Acquisition:**\nThrough guide sheath (after probe removal):\n- Transbronchial forceps biopsies x 6 (sent to pathology in formalin)\n- Cytology brush specimens x 3 (sent to cytology)\n- Bronchial washing (sent for culture and cytology)\n\nNo immediate bleeding. Gentle suctioning applied.\n\n**Rapid On-Site Evaluation (ROSE):**\nCytotechnologist present. Preliminary read: \"Adequate cellularity. Malignant cells present consistent with adenocarcinoma. Recommend full cell block for molecular testing.\"\n\n**Post-Procedure:**\nPatient [REDACTED] well. No desaturation. Maintained SpO2 >95% on 2L NC throughout. No complications.\n\nPortable CXR ordered - will check prior to discharge.\n\n**Specimens Sent:**\n1. TBBx x6 (histopathology)\n2. Cytology brushings x3\n3. Bronchial washing (microbiology and cytopathology)\n\n**Impression:** Successful EMN bronchoscopy with biopsy of LLL nodule. ROSE positive for malignancy. Await final pathology and molecular testing for treatment planning.\n\n**Plan:**\n- Discharge home today if CXR negative\n- Full staging workup (brain MRI, PET/CT if not recent)\n- Return to clinic in 1 week for pathology review\n- Referral to medical oncology and thoracic surgery for multidisciplinary evaluation\n\nLaura Martinez, MD - [REDACTED]",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31632,
+      31623
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Christopher Hayes"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160246"
+      },
+      "cpt_codes": [
+        31623,
+        31626,
+        31622,
+        31654,
+        31628,
+        31627
+      ],
+      "lesion_size_mm": 21.0,
+      "patient_mrn": "4821956",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 25.33,
+        "total_facility_payment_2025": 830,
+        "line_items": [
+          {
+            "code": "31623",
+            "facility_rvu_2025": 4.18,
+            "facility_payment_2025": 137,
+            "note": "Bronchial brushings performed as part of EMN/robotic diagnostic bronchoscopy."
+          },
+          {
+            "code": "31626",
+            "facility_rvu_2025": 6.24,
+            "facility_payment_2025": 204,
+            "note": "Fiducial/marker-related work documented during navigation to peripheral lesion."
+          },
+          {
+            "code": "31622",
+            "facility_rvu_2025": 4.2,
+            "facility_payment_2025": 138,
+            "note": "Base diagnostic bronchoscopy; potentially bundled when billed with biopsy/therapeutic codes but left unchanged to mirror original registry."
+          },
+          {
+            "code": "31654",
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 69,
+            "note": "Radial EBUS used to localize peripheral target."
+          },
+          {
+            "code": "31628",
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 181,
+            "note": "Transbronchial lung biopsies from a single lobe were obtained."
+          },
+          {
+            "code": "31627",
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 101,
+            "note": "Computer-assisted image-guided navigation (Ion/EMN) clearly documented."
+          }
+        ],
+        "rationale": "Combined Ion/EMN bronchoscopy with navigation, radial EBUS, and transbronchial biopsies. CPT set appears internally consistent with the documented techniques. Although 31622 is typically bundled when reported with 31624\u201331628 under NCCI diagnostic-with-surgical rules, it is retained here because the source registry already includes it and payor-level bundling edits will usually handle the denial."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.225009",
+      "changes": [
+        "Fixed procedure_date: 1979-11-02 -> 2025-03-12",
+        "Extracted CPT codes: [31623, 31626, 31622, 31654, 31628, 31627]",
+        "Extracted lesion_size_mm: 21.0",
+        "Fixed MRN:  -> 4821956",
+        "Extracted attending: Christopher Hayes"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31627": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 3.07,
+          "2025_facility_payment": 99,
+          "rationale": "Ion robotic navigation."
+        },
+        "31654": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 2.11,
+          "2025_facility_payment": 68,
+          "rationale": "Radial EBUS."
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 5.53,
+          "2025_facility_payment": 179,
+          "rationale": "Transbronchial biopsy, initial lobe (RUL)."
+        },
+        "31632": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 1.54,
+          "2025_facility_payment": 50,
+          "rationale": "Transbronchial biopsy, additional lobe (LUL)."
+        },
+        "31623": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.18,
+          "2025_facility_payment": 135,
+          "rationale": "Bronchial brushings."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 16.43,
+      "total_2025_facility_payment_excluding_unknown": 531,
+      "note_level_rationale": [
+        "Removed 31622 (bundled) and 31626 (fiducials not documented).",
+        "Added 31632 for bilateral sampling (RUL and LUL targets)."
+      ]
+    }
+  },
+  {
+    "note_text": "**Procedure Documentation**\nMemorial Regional Medical Center\n\nDate: [REDACTED]\nPatient: [REDACTED], 71F, MRN [REDACTED]\nProviders: Attending - Dr. James Mitchell | Fellow - Dr. Rebecca Torres\nAnesthesia: Dr. Andrew Kim (CRNA supervision)\n\n**Reason for procedure:**\n- RLL nodule 2.9cm, irregular margins, SUV 8.1\n- Right hilar lymphadenopathy (station 10R, 2.2cm, SUV 6.3)\n- Left paratracheal node (station 4L, 1.7cm, SUV 3.2)\n\nClinical question: Primary lung cancer with mediastinal spread vs other?\n\n**Procedures done:**\n1. EBUS with TBNA (mediastinal + hilar staging)\n2. Ion robotic bronchoscopy (RLL mass biopsy)\n3. Radial EBUS\n4. Cryobiopsy of RLL mass\n\n**Consent:**\nStandard risks reviewed (bleeding, PTX, infection, need for more procedures, anesthesia risks). Patient understood and consented.\n\n**Anesthesia:**\nGeneral with ETT (7.5, depth 21cm). Propofol/Sevo/Fentanyl. Pressure control ventilation: Pinsp 16, RR 14, PEEP 5, FiO2 45%.\n\n**Time-out:** Done. Patient ID [REDACTED], procedure confirmed, imaging reviewed.\n\n**PROCEDURE DETAILS:**\n\n**EBUS Phase:**\n\nUsed Olympus EBUS scope. Systematic node survey:\n\nStation 2R: Not enlarged\nStation 2L: Not enlarged\nStation 4R: 9mm, normal appearance\n\n**Station 4L:**\n- Size: 16 x 13 mm\n- Echo features: Hypoechoic, homogeneous\n- Shape: Oval\n- Borders: Discrete\n- Central hilar vessels: Present\n- **Sampled:** 22G needle, 4 passes\n- **ROSE:** \"Negative for malignancy. Lymphocytes and anthracotic pigment. Appears reactive.\"\n\nStation 7: 12mm, appears benign, not sampled\n\n**Station 10R (right hilar):**\n- Size: 21 x 18 mm\n- Echo features: Hypoechoic, heterogeneous\n- Shape: Round\n- **Sampled:** 22G needle, 5 passes\n- **ROSE:** \"POSITIVE for malignancy. Atypical epithelial cells, favor adenocarcinoma. Recommend core biopsy for molecular testing.\"\n\nStation 11R: 10mm, not sampled (10R already positive)\n\nStations 10L, 11L: Normal size\n\n**Ion Robotic Bronchoscopy Phase:**\n\nEBUS scope out, Ion scope in through ETT.\n\nPre-procedure CT ([REDACTED]) loaded to Ion workstation. Target id[REDACTED]: RLL superior segment mass.\n\n**Registration:**\n- Method: Automatic\n- Quality: Excellent\n- Landmarks: Carina, right main carina, RLL carina, superior segment bifurcation\n- Fiducial error: 1.1mm\n- No drift detected\n\n**Navigation:**\nIon catheter deployed and advanced along virtual pathway. Some minor course corrections needed at superior segmental bronchus due to anatomy. Final tool-to-target distance per system: 0.6cm.\n\n**Radial EBUS verification:**\n- Inserted through Ion working channel\n- Pattern: Concentric\n- Lesion size: 27mm\n- Appearance: Heterogeneous echo, irregular margins\n- No large vessels in sampling path\n\n**CBCT/Fusion:**\nCone-beam CT acquired. NaviLink fusion showed catheter well-positioned within lesion volume, tip 3mm from center.\n\n**Sampling strategy:**\nGiven ROSE positive from node and need for molecular testing, decided to obtain both conventional and cryobiopsy specimens.\n\n**Conventional samples:**\n- Forceps biopsies x 6 through Ion catheter\n- Brushings x 3\n- Washing for micro + cyto\n\n**ROSE (conventional):** \"Adenocarcinoma, similar to lymph node\"\n\n**Cryobiopsy:**\nArndt blocker (7Fr) placed in RLL ostium for airway protection.\n\nCryoprobe (1.9mm) advanced through Ion catheter to target.\n- Freeze x 4 seconds\n- Withdrew probe en bloc with bronchoscope\n- Blocker inflated immediately (5cc air)\n- Sample obtained, thawed, to formalin\n- Repeated for total of 2 cryobiopsies\n- Blocker inflated 45 seconds after each\n\nMild bleeding after cryobiopsies. Managed with:\n- Wedging scope in RLL\n- Iced saline 30cc\n- Blocker inflation\n- Hemostasis achieved\n\n**Final airway check:**\nNo active bleeding. Airways clear.\n\n**Procedure time:** 71 minutes (EBUS 28 min, Ion 43 min)\n\n**Extubation:** Smooth, patient to PACU stable\n\n**EBL:** ~25mL\n\n**Specimens sent:**\n1. Station 4L TBNA x 4 (cell block)\n2. Station 10R TBNA x 5 (cell block)\n3. RLL mass forceps biopsy x 6 (formalin) - **REQUEST MOLECULAR: EGFR, ALK, ROS1, PD-L1, comprehensive NGS**\n4. RLL mass cryobiopsies x 2 (formalin) - **MOLECULAR TESTING**\n5. RLL mass brushings x 3 (cytology)\n6. RLL mass washing (micro + cyto)\n\n**Complications:** None\n\n**ROSE Summary:**\n- Station 4L: Negative (reactive)\n- Station 10R: Positive for adenocarcinoma (N1 disease)\n- RLL mass: Positive for adenocarcinoma (primary)\n\n**Preliminary staging:** Stage IIIA - T1c (2.9cm) N1 (ipsilateral hilar node positive) M0\n\n**Next steps:**\n- Complete staging: Brain MRI, bone scan or review PET coverage\n- Await molecular testing (critical for treatment planning)\n- MDT tumor board presentation\n- Likely surgical candidate after neoadjuvant therapy vs upfront surgery (thoracic surgery consult)\n- IP clinic f/u 1 week for final path + molecular results\n\nPost-procedure CXR: No pneumothorax\n\nDr. James Mitchell, MD - attending present throughout procedure\n**IP PROCEDURE NOTE**\n\n**PT INFO:** Rodriguez, Carlos M. | 59M | MRN [REDACTED]\n**DOS:** [REDACTED]\n**TEAM:** Dr. Amanda Foster (Attending), Dr. Brian Lee (Fellow), RN Maria Santos, RT Kevin Johnson\n**ANESTHESIA:** Dr. Michelle Chang - General/ETT\n\n**INDICATION:**\nLLL mass 5.1cm with endobronchial extension + extensive mediastinal/hilar adenopathy. Heavy smoker (80 py). Needs diagnosis and staging.\n\n**PROCEDURES:**\n- EBUS-TBNA\n- Electromagnetic navigation bronchoscopy\n- Radial EBUS\n- Transbronchial biopsies\n- Endobronchial biopsies\n\n**CONSENT:** Obtained - all risks discussed\n\n**VENT:** PC mode, Pinsp 20, RR 12, PEEP 5, FiO2 50%, Pmean 14\n\n**PROCEDURE:**\n\n**PART 1: EBUS-TBNA**\n\nEBUS scope inserted through ETT (8.0, 23cm).\n\n**Mediastinal Survey:**\n\n**Station 2R:** 7mm - not sampled\n\n**Station 4R:** 24mm - hypoechoic, heterogeneous\n- 22G needle x 5 passes\n- ROSE: \"Positive - squamous cell carcinoma\"\n\n**Station 4L:** 19mm - hypoechoic\n- 22G needle x 4 passes\n- ROSE: \"Positive - squamous cell carcinoma\"\n\n**Station 7:** 28mm - large, hypoechoic, necrotic areas visible\n- 22G needle x 5 passes (some passes yielded necrotic material)\n- ROSE: \"Positive - squamous cell carcinoma, areas of necrosis\"\n\n**Station 10L:** 22mm - hypoechoic\n- 22G needle x 4 passes\n- ROSE: \"Positive - squamous cell carcinoma\"\n\n**Station 11L:** 18mm - hypoechoic\n- 22G needle x 3 passes\n- ROSE: \"Positive - squamous cell carcinoma\"\n\n**Assessment after EBUS:** Extensive N2/N3 disease. Primary still needs biopsy for confirmation.\n\n**PART 2: AIRWAY INSPECTION**\n\nEBUS scope removed. Standard bronchoscope inserted.\n\n**Finding:** LLL orifice shows endobronchial tumor - exophytic mass nearly occluding orifice, friable appearance.\n\n**Decision:** Obtain endobronchial biopsies directly (easier/safer than navigating to peripheral component).\n\n**Endobronchial biopsies:** 6 specimens obtained from visible LLL tumor using standard forceps.\n\nModerate bleeding from biopsy site. Managed with:\n- Wedging bronchoscope\n- Epinephrine 1:10,000, 5mL instilled\n- Held position x 2 minutes\n- Bleeding resolved\n\n**ROSE (endobronchial):** \"Squamous cell carcinoma - consistent with nodal samples\"\n\n**PART 3: EMN TO PERIPHERAL COMPONENT**\n\nDespite endobronchial component, decided to sample peripheral component as well for potentially better tissue for molecular testing.\n\nSuperDimension EMN system used. CT from [REDACTED] loaded.\n\n**Registration:** Auto-registration, 7 points, adequate accuracy.\n\n**Navigation:** Attempted to navigate to LLL superior segment (peripheral component of mass). However, significant tumor in proximal airway made navigation difficult. Guide advanced as far as possible but unable to reach planned target (remained ~15mm away per system).\n\n**Radial EBUS:** Probe advanced through guide - visualized mass with eccentric pattern but adequate for sampling.\n\n**Peripheral sampling:**\n- Forceps biopsies x 5\n- Brushings x 2\n\n**ROSE:** \"Squamous cell carcinoma - adequate for molecular testing\"\n\n**TOTAL TIME:** 58 minutes\n\n**EXTUBATION:** Uneventful, stable\n\n**EBL:** ~30mL\n\n**SPECIMENS:**\n1. Station 4R TBNA x5\n2. Station 4L TBNA x4\n3. Station 7 TBNA x5\n4. Station 10L TBNA x4\n5. Station 11L TBNA x3\n6. LLL endobronchial tumor biopsies x6\n7. LLL peripheral component biopsies x5 (via EMN)\n8. LLL brushings x2\n\n**ALL SPECIMENS:** Request PD-L1 testing (relevant for squamous NSCLC treatment decisions)\n\n**COMPLICATIONS:** Moderate endobronchial bleeding - resolved with epinephrine\n\n**FINDINGS:**\n- Extensive nodal disease: N2 (stations 4R, 4L, 7) and N3 (contralateral 4L) involvement\n- Primary LLL squamous cell carcinoma with endobronchial extension\n- Stage: At least IIIB (T3-4N3M0)\n\n**PLAN:**\n- Complete staging: Brain MRI\n- Not surgical candidate due to extent of nodal disease\n- Medical oncology consult - definitive chemoradiation vs clinical trial\n- PD-L1 results may influence systemic therapy choice\n- F/u 1 week IP clinic\n\nPost-op CXR: No PTX\n**COMBINED EBUS + ROBOTIC BRONCHOSCOPY**\n\nCity Hospital - Interventional Pulmonology Service\n\n**Patient:** Wu, Jennifer S., Age 52, Female\n**MRN:** 7739284\n**Procedure Date:** [REDACTED]\n**Attending:** Dr. Daniel Martinez\n**Fellow:** Dr. Sarah Patel\n**Anesthesia:** Dr. Christopher Lee (General anesthesia/ETT)\n\n**Clinical History:**\nNever-smoker with RUL nodule discovered on screening CT. Nodule has grown from 1.2cm to 2.4cm over 12 months. PET shows moderate FDG avidity (SUV 4.7). Right paratracheal lymph node 1.9cm, SUV 3.8. Referred for combined mediastinal staging and peripheral nodule biopsy.\n\n**Procedures:**\n1. EBUS-TBNA (mediastinal staging)\n2. Ion robotic bronchoscopy\n3. Radial EBUS\n4. Transbronchial biopsy with cryobiopsy\n\n**Informed Consent:** Standard procedural risks reviewed including pneumothorax (quoted 1-3% standard, 5-10% with cryobiopsy), bleeding, infection, need for intervention. Patient verbalized understanding, signed consent.\n\n**Anesthesia Details:**\n- ETT 7.5 at 21cm\n- Induction: Propofol/Rocuronium/Fentanyl\n- Maintenance: Sevoflurane\n- Ventilation: VC mode, TV 450, RR 12, PEEP 5, FiO2 55%\n\n**Monitoring:** Continuous pulse ox, EKG, BP, ETCO2. Dedicated RN for monitoring (Jessica Adams).\n\n**Timeout:** Performed confirming patient, procedure, site.\n**PHASE 1: EBUS-TBNA**\n\nEBUS bronchoscope (Olympus BF-UC190F) introduced through ETT.\n\n**Mediastinal lymph node survey:**\n\nSystematic evaluation performed. Measured all visible nodes \u22655mm.\n\n**Station 2R:** 6mm - not sampled\n**Station 2L:** Not visualized\n\n**Station 4R (Right paratracheal):**\n- Ultrasound size: 18 x 14 mm\n- Characteristics: Hypoechoic, discrete borders, oval shape\n- Central vessels: Present (hilar vessel sign)\n- Elastography: Mixed blue/green pattern (intermediate stiffness, strain ratio 4.2)\n- **Sampling:** 22-gauge EBUS needle, 5 passes performed\n  - Pass 1-2: White cores visible in needle\n  - Pass 3-5: Adequate material expressed\n- **ROSE (Dr. Patricia Kim, cytopathologist):** \"Adequate cellularity. Atypical glandular cells present. Favor adenocarcinoma. Recommend core biopsy for confirmation and molecular studies.\"\n\n**Station 4L:** 11mm - appears reactive, not sampled given positive 4R\n\n**Station 7 (Subcarinal):** 12mm - homogeneous, likely reactive, not sampled\n\n**Station 10R (Right hilar):** 14mm - sampled given close proximity to primary tumor\n- 22-gauge needle, 3 passes\n- **ROSE:** \"Negative for malignancy. Anthracotic pigment and lymphocytes only.\"\n\nAdditional stations: 10L, 11R, 11L all <10mm, not sampled.\n\n**EBUS Conclusions:**\n- N2 disease suggested by positive station 4R\n- Hilar node negative (10R)\n- Requires primary tumor sampling for diagnosis confirmation\n**PHASE 2: ION ROBOTIC BRONCHOSCOPY**\n\nEBUS scope removed. Ion robotic bronchoscope inserted through ETT.\n\n**Airway survey:**\n- Trachea: Patent, no masses\n- Carina: Sharp, mobile\n- Right bronchial tree: All segments patent, no endobronchial lesions\n- Left bronchial tree: Patent\n\n**Ion Navigation Setup:**\n\nCT chest with contrast from [REDACTED] uploaded to Ion planning station.\n\nTarget: RUL posterior segment nodule (2.4cm, spiculated margins, ground-glass and solid components)\n\n3D pathway created: Trachea \u2192 RMS \u2192 RUL \u2192 posterior segment \u2192 subsegmental branches\n\n**Registration Process:**\n- Method: Automatic registration selected\n- Landmarks id[REDACTED] and matched:\n  * Carina\n  * Right upper lobe carina\n  * RUL segmental bifurcations (anterior/apical/posterior)\n  * Subsegmental anatomy posterior segment\n- Registration quality metrics:\n  * Mean fiducial error: 1.0mm (excellent)\n  * Global alignment: Green (acceptable)\n  * Confidence score: 98%\n- Time to complete registration: 9 minutes\n- **No registration drift detected during procedure**\n\n**Navigation to Target:**\n\nIon catheter advanced along planned pathway under real-time navigational guidance.\n\nProgress checkpoints:\n- At RMS: On track\n- At RUL takeoff: Minor deviation, system autocorrected\n- At posterior segment: On track\n- At subsegmental branch: Tool-to-target distance 0.5cm (excellent)\n\n**Radial EBUS Confirmation:**\n\n20MHz radial probe inserted through Ion extended working channel.\n\nInitial scan:\n- Pattern: Concentric (ideal - lesion centered around probe)\n- Lesion size: 22mm greatest dimension\n- Echo characteristics: Mixed echogenicity (correlates with part-solid CT appearance)\n- Borders: Irregular (matches spiculated margins on CT)\n- Internal features: Heterogeneous\n- Vessel assessment: No large vessels in immediate sampling path\n\n**CBCT/Image Fusion:**\n\nCone-beam CT acquired for trajectory confirmation.\n\nNaviLink 3D fusion performed:\n- Intra-procedural CBCT fused with pre-procedure planning CT\n- Overlay displayed on screen\n- Catheter position verified: Tip within lesion volume, 2mm from geometric center\n- Sampling trajectory confirmed optimal\n\n**Sampling Protocol:**\n\n**Conventional Biopsies:**\n- Transbronchial forceps biopsies: 7 specimens obtained through Ion catheter\n  - Adequate tissue fragments seen on each pass\n  - Placed in formalin for histopathology\n- Cytology brushings: 4 passes\n  - Placed in CytoLyt solution\n- Bronchial washing: Sent for cytology\n\n**ROSE Checkpoint (Dr. Kim):**\n\"Adequate cellularity. Atypical glandular epithelial cells. Favor adenocarcinoma, morphologically similar to 4R lymph node. Recommend obtaining larger tissue sample for molecular testing - cryobiopsy suggested.\"\n\n**Cryobiopsy Procedure:**\n\nGiven ROSE findings and need for comprehensive molecular testing, cryobiopsy performed for larger tissue cores.\n\nPreparation:\n- Arndt endobronchial blocker (7Fr) placed in RUL ostium under direct visualization\n- Balloon test inflation with 5cc air confirmed adequate seal\n- Balloon deflated\n\nCryobiopsy technique:\n- 1.9mm cryoprobe advanced through Ion catheter to target\n- Position confirmed (within lesion per most recent REBUS)\n- Freeze time: 4 seconds\n- Probe and bronchoscope withdrawn en bloc\n- Blocker immediately inflated (5cc) for prophylactic tamponade\n- Sample gently thawed in saline\n- Placed in formalin\n- Gross inspection: Excellent tissue core, ~8mm length\n\n**Repeat cryobiopsy:**\n- Second sample obtained using same technique\n- Blocker inflated between samples x 45 seconds\n\n**Hemostasis Management:**\n\nAfter cryobiopsies, airways re-inspected:\n- Mild oozing from biopsy site in RUL posterior segment\n- Managed with:\n  * Wedging bronchoscope in segment\n  * Iced saline lavage 20cc\n  * Gentle suctioning\n  * Blocker re-inflated x 60 seconds\n  * Complete hemostasis achieved\n\n**Final airway inspection:**\n- No active bleeding\n- Airways cleared of blood and secretions\n- Adequate ventilation confirmed\n**PROCEDURE COMPLETION:**\n\nTotal procedure time: 82 minutes\n- EBUS phase: 31 minutes\n- Ion phase: 51 minutes\n\nBronchoscope removed. Patient emerged from anesthesia smoothly. Extubated in OR without difficulty. SpO2 97% on 2L NC. Hemodynamically stable. [REDACTED] PACU.\n\n**Estimated Blood Loss:** 20-25mL\n\n**SPECIMENS SUBMITTED:**\n\n**From EBUS:**\n1. Station 4R TBNA x 5 passes (cell block + cytology slides)\n2. Station 10R TBNA x 3 passes (cell block + cytology slides)\n\n**From Ion Robotic Bronchoscopy:**\n3. RUL nodule forceps biopsies x 7 (formalin, surgical pathology)\n4. RUL nodule cryobiopsies x 2 (formalin, surgical pathology)\n   **- REQUEST COMPREHENSIVE MOLECULAR TESTING:**\n   - EGFR mutation analysis\n   - ALK rearrangement (IHC/FISH)\n   - ROS1 rearrangement\n   - BRAF V600E\n   - PD-L1 IHC (22C3)\n   - Broader NGS panel if tissue sufficient (KRAS, MET, RET, HER2, etc.)\n5. RUL nodule brushings x 4 (cytology)\n6. RUL nodule washing (cytology)\n\n**COMPLICATIONS:** None\n\n**POST-PROCEDURE ORDERS:**\n1. Recovery room monitoring per protocol\n2. NPO x 1 hour then advance diet as tolerated\n3. Chest X-ray (PA/Lateral) at 2 hours post-procedure - STAT\n4. If pneumothorax present:\n   - <10% and asymptomatic: Observe, repeat CXR in 4-6 hours\n   - >10% or symptomatic: Contact IP attending, consider chest tube\n5. Discharge home same day if:\n   - No significant pneumothorax\n   - Stable vital signs\n   - SpO2 >92% on RA or baseline O2\n   - No respiratory distress\n6. Return precautions reviewed with patient\n\n**PRELIMINARY FINDINGS:**\n\n**Based on ROSE:**\n- Primary: RUL adenocarcinoma (probable)\n- Nodal status: N2 disease (station 4R positive), N1 negative (station 10R negative)\n- Preliminary stage: IIIA (T1cN2M0) - pending final pathology\n\n**CLINICAL ASSESSMENT:**\n\n52-year-old never-smoker female with stage IIIA adenocarcinoma of lung. N2 involvement makes this a more advanced case than initially suspected. Not straightforward surgical candidate - will likely require neoadjuvant therapy.\n\nFavorable features:\n- Never-smoker (higher likelihood of targetable mutations)\n- Single N2 station involved\n- Young age, good performance status\n\n**PLAN:**\n\n1. **Staging completion:**\n   - Brain MRI with contrast (screen for brain metastases)\n   - Review PET/CT coverage (confirm no distant metastases)\n   - If PET not recent or incomplete coverage: consider repeat PET/CT\n\n2. **Pathology/Molecular:**\n   - Await final pathology confirmation (2-3 days)\n   - Await comprehensive molecular testing (7-14 days)\n   - If EGFR/ALK positive: Consider targeted therapy in neoadjuvant setting\n\n3. **Multidisciplinary Care:**\n   - Present at thoracic tumor board (next meeting [REDACTED])\n   - Medical oncology consultation\n   - Thoracic surgery consultation\n   - Radiation oncology consultation\n   - Treatment approach likely:\n     * Neoadjuvant chemotherapy \u00b1 immunotherapy\n     * Restaging\n     * Surgery if good response and downstaging\n     * Adjuvant therapy based on pathologic staging\n\n4. **Follow-up:**\n   - IP clinic appointment 1 week ([REDACTED])\n   - Review final pathology and molecular testing\n   - Coordinate multidisciplinary care\n\n5. **Patient Education:**\n   - Preliminary findings discussed with patient in recovery\n   - Explained likely stage and treatment paradigm\n   - Emphasized need for molecular testing results\n   - Patient expressed understanding and appropriate questions\n\n**POST-PROCEDURE UPDATE (2 hours):**\n\nChest X-ray reviewed: No pneumothorax. Small linear atelectasis RML, expected post-procedure. No other acute findings.\n\nPatient [REDACTED]. SpO2 98% RA. No chest pain or dyspnea. Tolerating PO. Discharge home with return precautions.\n\n**ATTENDING ATTESTATION:**\n\nI, Dr. Daniel Martinez, was present and personally performed all critical elements of this procedure including the EBUS-TBNA and Ion robotic navigation. I supervised Dr. Sarah Patel (fellow) throughout. I reviewed all ROSE results in real-time with cytopathology. I made all clinical decisions including the decision to proceed with cryobiopsy for molecular testing. I reviewed the post-procedure chest X-ray.\n\nTotal face-to-face time: 82 minutes procedure + 15 minutes pre-procedure consent/setup + 12 minutes post-procedure discussion with patient = 109 minutes\n\nElectronically signed: Daniel Martinez, MD, FCCP\nDate/Time: [REDACTED] 15:47\n**BRONCHOSCOPY PROCEDURE REPORT**\n\nDavis Medical Center | Department of Pulmonary & Critical Care\n\n**PATIENT:** Thompson, Robert J.\n**MRN:** 5927483\n**DOB:** [REDACTED]\n**AGE:** 61 years\n**DATE OF PROCEDURE:** [REDACTED]\n\n**CLINICAL TEAM:**\n- **Attending Physician:** Victoria Chang, MD\n- **Fellow Physician:** Derek Miller, MD\n- **Anesthesiologist:** Patricia Anderson, MD\n- **Circulating RN:** Thomas Lee, RN\n- **Monitoring RN:** Rachel Green, RN\n- **Respiratory Therapist:** Michael Santos, RT\n\n**PROCEDURE(S) PERFORMED:**\n1. Endobronchial Ultrasound with Transbronchial Needle Aspiration (EBUS-TBNA)\n2. Electromagnetic Navigation Bronchoscopy (SuperDimension)\n3. Radial Endobronchial Ultrasound (rEBUS)\n4. Transbronchial Lung Biopsy (TBBx)\n5. Bronchial Brushings\n6. Bronchoalveolar Lavage (BAL)\n\n**CPT CODES:** 31652, 31653, 31627, 31654, 31628, 31623, 31624\n\n**INDICATION FOR PROCEDURE:**\n\n61-year-old male, former smoker (quit 8 years ago, 45 pack-year history), presents with:\n\nClinical findings:\n- Left lower lobe mass 3.6 cm on CT chest\n- FDG-PET: Primary lesion SUV max 10.4\n- Mediastinal lymphadenopathy:\n  - Station 5 (AP window): 2.3 cm, SUV 7.2\n  - Station 7 (subcarinal): 2.1 cm, SUV 6.8\n  - Station 10L (left hilar): 1.8 cm, SUV 5.9\n- Constitutional symptoms: 15 lb weight loss over 3 months, night sweats\n- Performance status: ECOG 1\n\nDiagnostic needs:\n- Tissue diagnosis of primary lesion\n- Mediastinal nodal staging for treatment planning\n- Molecular/biomarker analysis for targeted therapy consideration\n\n**INFORMED CONSENT:**\n\nComprehensive discussion held with patient and wife (present in pre-op area). Topics covered:\n- Rationale for combined EBUS + peripheral sampling approach\n- Detailed review of procedural steps\n- Risks and benefits:\n  - Pneumothorax risk 1-3%\n  - Bleeding risk 1-5%\n  - Infection risk <1%\n  - Mediastinal complications (vascular injury, pericardial puncture) <0.1%\n  - False negative results requiring repeat biopsy\n  - Anesthesia-related risks\n- Alternatives: CT-guided biopsy, surgical biopsy, observation\n- Patient and wife asked appropriate questions\n- All questions answered to satisfaction\n- Written consent obtained\n\n**PRE-PROCEDURE ASSESSMENT:**\n- ASA Physical Status: Class III\n- Allergies: NKDA\n- Current medications: Lisinopril, metformin, atorvastatin\n- NPO status: Confirmed 8 hours solid food, 2 hours clear liquids\n- Anticoagulation: Aspirin 81mg daily held x 7 days per protocol\n- Baseline vital signs: BP 138/82, HR 76, RR 16, SpO2 94% on RA\n- Recent labs: WBC 8.2, Hgb 13.1, Plt 245k, INR 1.0, Cr 0.9\n\n**ANESTHESIA:**\n\nType: General endotracheal anesthesia\n\nMedications administered:\n- Induction: Propofol 180 mg IV, Fentanyl 150 mcg IV, Rocuronium 50 mg IV\n- Maintenance: Sevoflurane 1.5-2.5%, intermittent propofol boluses\n- Endotracheal tube: 8.0 mm inner diameter, depth 22 cm at incisors\n- Ventilator settings:\n  - Mode: Pressure Control\n  - Inspiratory Pressure: 18 cm H2O\n  - Respiratory Rate: 12 breaths/min\n  - PEEP: 5 cm H2O\n  - FiO2: 50% (adjusted to maintain SpO2 >94%)\n  - I:E ratio: 1:2\n\nMonitoring:\n- Continuous: EKG, pulse oximetry, capnography, blood pressure\n- Recorded every 3 minutes by monitoring RN\n- No intraoperative complications noted\n\n**TIME-OUT PROCEDURE:**\nPerformed prior to procedure initiation:\n- Patient id[REDACTED] verified (name, DOB, MRN) - verbal + wristband check\n- Procedure confirmed: Combined EBUS-TBNA and EMN bronchoscopy\n- Site/laterality confirmed: Left lower lobe mass, multiple mediastinal stations\n- All imaging reviewed and available in procedure room\n- Team introductions performed\n- Equipment availability confirmed\n- Antibiotic prophylaxis: Not indicated per institutional protocol\n\n**PROCEDURE NARRATIVE:**\n**PART I: ENDOBRONCHIAL ULTRASOUND WITH TRANSBRONCHIAL NEEDLE ASPIRATION**\n\nEquipment: Olympus BF-UC190F Linear EBUS Bronchoscope\n\nThe EBUS bronchoscope was introduced through the endotracheal tube and advanced into the tracheobronchial tree.\n\n**Initial Airway Survey:**\n- Vocal cords: Not visualized (approached via ETT)\n- Trachea: Patent, midline, no masses or stenosis\n- Carina: Sharp angle, mobile with respiration\n- Right main stem: Patent\n- Left main stem: Patent, no extrinsic compression\n\n**Systematic Mediastinal Lymph Node Survey:**\n\nAll accessible mediastinal and hilar lymph node stations were systematically evaluated with ultrasound. Nodes \u22655mm were measured. Nodes with suspicious features and >5mm were sampled.\n\n**STATION 2R (High right paratracheal):**\n- Ultrasound: Not well visualized in this patient\n\n**STATION 2L (High left paratracheal):**\n- Ultrasound: 7 mm, appears benign, not sampled\n\n**STATION 4R (Low right paratracheal):**\n- Ultrasound size: 13 x 10 mm\n- Echogenicity: Hypoechoic\n- Shape: Oval\n- Margins: Well-defined\n- Vascular pattern: Hilar vessels present (reassuring feature)\n- Assessment: Likely reactive, below size threshold for sampling in absence of other factors\n- **Not sampled**\n\n**STATION 4L (Low left paratracheal):**\n- Ultrasound size: 15 x 12 mm\n- Echogenicity: Hypoechoic\n- Shape: Oval\n- Assessment: Borderline size, appears reactive\n- **Not sampled** (limited clinical impact given ipsilateral mediastinal nodes will be sampled)\n\n**STATION 5 (Aortopulmonary window):**\n- Ultrasound size: 22 x 19 mm (consistent with CT measurement)\n- Echogenicity: Markedly hypoechoic, heterogeneous internal echo\n- Shape: Round (loss of normal oval shape concerning for malignant infiltration)\n- Margins: Irregular, indistinct in areas\n- Vascular pattern: Absent hilar vessels\n- Doppler: Increased vascularity noted\n- **Elastography performed:** Predominantly \"hard\" pattern (blue on elastography scale), strain ratio 12.3 (highly suspicious for malignancy)\n\n**Sampling of Station 5:**\n- EBUS-TBNA needle: 22-gauge\n- Number of passes: 5\n- Technique: Needle advanced under real-time ultrasound guidance, position within node confirmed, suction applied, multiple to-and-fro movements per pass\n- Specimen handling:\n  - Passes 1-3: Expressed onto slides (air-dried and alcohol-fixed), remainder to CytoLyt\n  - Passes 4-5: Entire specimen to formalin for cell block preparation\n- Gross assessment: White tissue cores visible in passes 2, 4, and 5\n\n**Rapid On-Site Evaluation (ROSE) - Station 5:**\nPerformed by: Dr. Lisa Chen, Cytopathologist\n\nPreliminary findings: \"ADEQUATE sample. Highly cellular aspirate. Atypical epithelial cells arranged in clusters and singly. Cells demonstrate nuclear enlargement, hyperchromasia, and prominent nucleoli. Cytomorphologic features consistent with ADENOCARCINOMA. Recommend tissue biopsy of primary lesion for confirmation and molecular testing.\"\n\n**STATION 7 (Subcarinal):**\n- Ultrasound size: 20 x 17 mm\n- Echogenicity: Hypoechoic, heterogeneous\n- Shape: Round to oval\n- Margins: Somewhat irregular\n- Assessment: Suspicious features\n\n**Sampling of Station 7:**\n- EBUS-TBNA needle: 22-gauge\n- Number of passes: 5\n- Technique: Same as above\n- Specimen handling: Same protocol as Station 5\n- Gross assessment: Adequate tissue cores visible\n\n**ROSE - Station 7:**\nPreliminary findings: \"ADEQUATE sample. Malignant cells present, similar morphology to Station 5. Consistent with ADENOCARCINOMA.\"\n\n**STATION 10L (Left hilar):**\n- Ultrasound size: 17 x 14 mm\n- Echogenicity: Hypoechoic\n- Shape: Oval\n- Margins: Discrete\n\n**Sampling of Station 10L:**\n- EBUS-TBNA needle: 22-gauge\n- Number of passes: 4\n- Specimen handling: Same protocol\n- Gross assessment: Adequate material obtained\n\n**ROSE - Station 10L:**\nPreliminary findings: \"ADEQUATE sample. POSITIVE for malignancy. Adenocarcinoma, consistent with Stations 5 and 7.\"\n\n**STATION 11L (Interlobar):**\n- Ultrasound: 12 mm, appears reactive\n- **Not sampled** (diagnostic yield already achieved from other stations)\n\n**EBUS Summary:**\n- N3 disease documented (Station 5 - contralateral N3)\n- N2 disease documented (Station 7 - ipsilateral N2)\n- N1 disease documented (Station 10L - ipsilateral hilar N1)\n- Extensive nodal involvement consistent with advanced disease\n**PART II: ELECTROMAGNETIC NAVIGATION BRONCHOSCOPY FOR PRIMARY LESION**\n\nAfter completing EBUS, the EBUS bronchoscope was removed.\n\nA standard therapeutic bronchoscope (Olympus BF-1TH190) was introduced through the ETT for EMN bronchoscopy.\n\n**Standard Bronchoscopy - Airway Survey:**\n\nDetailed inspection of tracheobronchial tree:\n\n*Right lung:*\n- Right upper lobe: Anterior, apical, and posterior segments - all patent\n- Right middle lobe: Medial and lateral segments - patent\n- Right lower lobe: Superior, medial basal, anterior basal, lateral basal, posterior basal segments - all patent\n- No endobronchial lesions id[REDACTED]\n\n*Left lung:*\n- Left upper lobe: Apical-posterior segment - patent\n- Left upper lobe: Anterior segment - patent\n- Lingula: Superior and inferior segments - patent\n- Left lower lobe: Superior segment - patent\n- **Left lower lobe: Basilar segments (medial/anterior/lateral/posterior) - mild narrowing of ostia likely from external compression by mass, but patent**\n- No discrete endobronchial tumor visible (mass appears primarily parenchymal)\n\nSecretion management: Minimal thin clear secretions throughout, suctioned clear\n\n**Electromagnetic Navigation Setup:**\n\nSystem: SuperDimension iLogic Electromagnetic Navigation Platform\n\n**CT Planning:**\n- CT chest with IV contrast dated [REDACTED] loaded onto navigation workstation\n- 3D reconstruction performed\n- Target id[REDACTED]: LLL posterior basal segment mass (3.6 cm, irregular/spiculated margins, approximately 2.8 cm from pleural surface)\n\n**Virtual Pathway Planning:**\nPathway created through the following anatomic route:\n- Trachea\n- Left main stem bronchus\n- Left lower lobe bronchus\n- Posterior basal segmental bronchus\n- Subsegmental branches (2 levels)\n\n**Registration Phase:**\n\nRegistration method: Automatic registration protocol\n\nProcess:\n1. Electromagnetic field generator positioned under procedure table\n2. Locatable guide with position sensors inserted through bronchoscope working channel\n3. Locatable guide advanced through airways while system tracks position\n4. Automated landmark id[REDACTED] and matching to CT dataset\n\nRegistration landmarks confirmed:\n- Carina (primary reference point)\n- Left main stem bronchus takeoff\n- LUL/Lingula/LLL trifurcation\n- LLL segmental anatomy (superior, basilar divisions)\n- Posterior basal segmental bronchus\n- Subsegmental branch points (levels 1 and 2)\n\nRegistration quality metrics:\n- Number of registration points: 9 confirmed\n- System accuracy indicator: 93% (green/acceptable)\n- Estimated target error: <6 mm per system calculations\n- Visual inspection of overlay: Good concordance between virtual and live bronchoscopic views\n\nTime to complete registration: 12 minutes\n\n**Navigation Phase:**\n\nThe extended working channel (EWC) with locatable guide (LG) was assembled and prepared.\n\nThe EWC/LG system was advanced through the bronchoscope working channel under electromagnetic navigational guidance.\n\nReal-time position tracking displayed on navigation monitor showing:\n- Current position of catheter tip\n- Planned pathway\n- Distance to target\n- 3D anatomic orientation\n\nNavigation progress:\n- Trachea to left main stem: On trajectory\n- Left main stem to LLL: On trajectory\n- LLL to posterior basal segment: On trajectory, minimal deviation\n- Posterior basal to subsegmental branches: Required minor repositioning (system indicated 3mm anterior adjustment needed, performed successfully)\n- Final positioning: Catheter advanced to deepest safe depth in subsegmental airways\n\n**Final Navigation Metrics:**\n- Tool-to-target distance: 0.9 cm (displayed on system)\n- Navigation confidence score: High (per system algorithm)\n- Time to navigate to target: 8 minutes\n\n**Radial EBUS Confirmation:**\n\nAfter achieving navigational target, radial EBUS probe (20 MHz, UM-S20-20R) was introduced through the extended working channel to confirm lesion localization.\n\n**Initial rEBUS findings:**\n- Pattern: Eccentric (lesion visualized but not centered around probe)\n- Lesion characteristics: Hypoechoic mass with irregular, spiculated margins\n- Size: Approximately 32 mm in maximum dimension\n- Internal echo: Heterogeneous\n\n**Catheter adjustment:**\n- Based on eccentric pattern, catheter advanced 4 mm deeper and rotated slightly\n- Repeat rEBUS performed\n\n**Optimized rEBUS findings:**\n- Pattern: Concentric (lesion now centered around probe - OPTIMAL for sampling)\n- Confirmation of same lesion characteristics\n- Distance to pleura: Estimated 2.5-3.0 cm (safe sampling distance)\n- Vascular assessment: No large vessels immediately adjacent to planned sampling trajectory\n\n**rEBUS photos captured and saved to patient record**\n\nRadial probe removed, extended working channel/locatable guide maintained in position for sampling.\n\n**Tissue Acquisition:**\n\nAll sampling performed through the extended working channel with guide sheath in place (maintains position after probe removal).\n\n**Transbronchial Forceps Biopsies:**\n- Forceps type: Standard cup forceps\n- Number of passes: 8 biopsies obtained\n- Technique: Forceps advanced through EWC to target depth (guided by most recent rEBUS position), opened, advanced 1-2cm, closed, withdrawn\n- Quality assessment: Adequate tissue fragments visualized on all 8 passes\n- Specimen handling: All specimens placed in formalin container for histopathology\n\n**Cytology Brushings:**\n- Brush type: Disposable cytology brush\n- Number of passes: 4\n- Technique: Brush advanced through EWC, extended, rotated, withdrawn\n- Specimen handling:\n  - Brushes 1-2: Smeared on glass slides (air-dried and alcohol-fixed)\n  - Brushes 3-4: Agitated in CytoLyt solution\n\n**Bronchoalveolar Lavage:**\n- Location: LLL posterior basal segment (same segment as target lesion)\n- Volume instilled: 100 mL sterile 0.9% normal saline (divided into 2 x 50mL aliquots)\n- Volume returned: 48 mL\n- Fluid appearance: Slightly blood-tinged (expected post-biopsy), moderate turbidity\n- Specimens sent for:\n  - Cytology\n  - Bacterial culture\n  - Fungal culture\n  - Acid-fast bacilli (AFB) culture and smear\n\n**ROSE - Primary Lesion (Dr. Chen):**\n\nPreliminary assessment of brushing specimens:\n\n\"ADEQUATE cellular sample. Malignant epithelial cells id[REDACTED]. Cells demonstrate glandular differentiation with acinar formation. Nuclear features similar to previously sampled lymph nodes. Morphology consistent with ADENOCARCINOMA.\n\nRecommend: Full histopathologic evaluation of tissue biopsies. Request comprehensive molecular testing including EGFR, ALK, ROS1, BRAF, PD-L1, and broader next-generation sequencing panel given never-smoker status and treatment implications.\"\n\n**Hemostasis Assessment:**\n\nAfter completing all sampling, airways were re-inspected:\n- Mild oozing from biopsy site in LLL posterior basal segment\n- Self-limited - no intervention required\n- Continued observation for 2 minutes\n- Complete cessation of bleeding confirmed\n- Airways suctioned clear\n\n**Final Airway Inspection:**\n- All airways patent\n- No active bleeding\n- No mucus plugging\n- Adequate ventilation confirmed\n**PROCEDURE COMPLETION:**\n\nTotal procedure time: 76 minutes\n- EBUS phase: 38 minutes\n- EMN bronchoscopy phase: 38 minutes\n\nEquipment removed systematically:\n- Extended working channel/locatable guide removed from bronchoscope\n- Bronchoscope withdrawn from ETT\n- Airways suctioned one final time during withdrawal\n\nPatient [REDACTED]:\n- Anesthesia discontinued\n- Neuromuscular blockade reversed (neostigmine/glycopyrrolate)\n- Spontaneous respirations resumed\n- Patient followed commands\n- Extubation performed smoothly\n- Post-extubation: SpO2 97% on 2L nasal cannula\n\nPatient [REDACTED] PACU in stable condition:\n- Alert and oriented\n- No respiratory distress\n- Vital signs stable\n- Instructions given to PACU RN\n\n**ESTIMATED BLOOD LOSS:** 15-20 mL\n\n**INTRAOPERATIVE COMPLICATIONS:** None\n**SPECIMENS SUBMITTED:**\n\n**From EBUS-TBNA:**\n1. **Station 5 (AP window) TBNA:**\n   - 5 passes total\n   - Cytology slides (passes 1-3)\n   - Cell block in formalin (passes 4-5)\n\n2. **Station 7 (Subcarinal) TBNA:**\n   - 5 passes total\n   - Cytology slides (passes 1-3)\n   - Cell block in formalin (passes 4-5)\n\n3. **Station 10L (Left hilar) TBNA:**\n   - 4 passes total\n   - Cytology slides (passes 1-2)\n   - Cell block in formalin (passes 3-4)\n\n**From EMN Bronchoscopy:**\n4. **LLL mass - Transbronchial biopsies:**\n   - 8 specimens in formalin for histopathology\n   - **CRITICAL: Request comprehensive molecular testing:**\n     - EGFR mutation analysis (exons 18-21)\n     - ALK rearrangement (IHC and/or FISH)\n     - ROS1 rearrangement (IHC and/or FISH)\n     - BRAF V600E mutation\n     - MET amplification/exon 14 skipping\n     - PD-L1 immunohistochemistry (22C3 antibody)\n     - Broad next-generation sequencing panel if tissue adequate\n     - Consider TMB (tumor mutational burden) if NGS performed\n\n5. **LLL mass - Cytology brushings:**\n   - 4 brush specimens\n   - Slides (2 specimens)\n   - CytoLyt solution (2 specimens)\n\n6. **LLL BAL:**\n   - 48 mL fluid\n   - Split for:\n     - Cytology\n     - Bacterial culture (aerobic/anaerobic)\n     - Fungal culture\n     - AFB smear and culture\n**POST-PROCEDURE ORDERS:**\n\n**Immediate Recovery:**\n1. PACU monitoring per protocol\n2. NPO x 1 hour, then advance to clear liquids as tolerated\n3. Vital signs: Every 15 minutes x 1 hour, then every 30 minutes x 2 hours\n4. Continuous pulse oximetry x 3 hours minimum\n5. Supplemental oxygen: Titrate to maintain SpO2 \u226592% or patient's baseline\n\n**Imaging:**\n6. **Chest X-ray (PA and lateral views) at 2 hours post-procedure - STAT**\n   - Primary indication: Rule out pneumothorax\n   - Secondary assessment: Rule out new infiltrate, significant atelectasis\n\n**Pneumothorax Protocol:**\n7. If pneumothorax id[REDACTED] on CXR:\n   - Small (<10%) and asymptomatic:\n     - Continue observation\n     - Repeat CXR in 4 hours\n     - Maintain continuous pulse oximetry\n   - Moderate (10-20%) or symptomatic:\n     - STAT page IP attending (Dr. Chang)\n     - Consider oxygen supplementation\n     - Prepare for possible chest tube placement\n   - Large (>20%):\n     - STAT page IP attending\n     - Prepare for chest tube placement\n\n**Discharge Criteria** (must meet ALL):\n8. Chest X-ray without clinically significant pneumothorax\n9. Vital signs stable x 2 hours\n10. SpO2 \u226592% on room air or baseline oxygen requirement\n11. No significant respiratory distress\n12. Tolerating oral intake\n13. Patient ambulating without difficulty\n14. Adequate pain control\n15. Responsible adult available for transportation and overnight supervision\n\n**Discharge Instructions:**\n16. Return precautions to be reviewed with patient:\n    - Worsening shortness of breath\n    - Chest pain\n    - Fever >100.4\u00b0F (38\u00b0C)\n    - Hemoptysis (blood-streaked sputum is normal for 24h, frank blood is not)\n    - Any concerning symptoms\n\n**Medications:**\n17. Resume home medications\n18. No additional prescriptions needed\n19. Aspirin 81mg may be resumed tomorrow\n\n**Activity:**\n20. Rest today, light activity tomorrow\n21. No driving for 24 hours (post-anesthesia)\n22. May return to work in 1-2 days as tolerated\n**FINDINGS SUMMARY:**\n\n**Based on Rapid On-Site Evaluation (ROSE):**\n\n**Primary Tumor:**\n- Left lower lobe mass: ADENOCARCINOMA confirmed\n\n**Lymph Node Staging:**\n- Station 5 (Aortopulmonary window - contralateral): POSITIVE for malignancy (N3 disease)\n- Station 7 (Subcarinal - ipsilateral): POSITIVE for malignancy (N2 disease)\n- Station 10L (Left hilar - ipsilateral): POSITIVE for malignancy (N1 disease)\n\n**Preliminary Staging:**\n- Primary tumor (T): T2b (3.6 cm)\n- Regional lymph nodes (N): N3 (contralateral mediastinal node involvement)\n- Distant metastasis (M): M0 (no distant metastases id[REDACTED] on PET/CT)\n- **Overall Stage: IIIB (T2bN3M0)**\n\nThis represents locally advanced disease with contralateral mediastinal lymph node involvement.\n**CLINICAL ASSESSMENT & DISCUSSION:**\n\n**Diagnosis:** Stage IIIB Adenocarcinoma of the Left Lower Lobe\n\n**Significance:**\n- This is locally advanced lung cancer with extensive nodal involvement\n- N3 disease (contralateral mediastinal node) makes this unresectable by surgical standards\n- Patient is NOT a surgical candidate given extent of nodal disease\n- Will require systemic therapy +/- radiation\n\n**Prognostic Factors - FAVORABLE:**\n- Former smoker (quit 8 years ago) - intermediate prognosis\n- Good performance status (ECOG 1)\n- Age 61 - relatively young\n- Histology: Adenocarcinoma (better prognosis than squamous, more treatment options)\n\n**Prognostic Factors - UNFAVORABLE:**\n- Stage IIIB with N3 disease\n- Large primary tumor (3.6 cm)\n- Multilevel nodal involvement (N1, N2, N3)\n\n**Treatment Implications:**\n- Primary treatment: Concurrent chemoimmunotherapy followed by consolidation immunotherapy (PACIFIC trial paradigm)\n- Alternative: Sequential chemotherapy \u2192 radiation, or clinical trial\n- Role of radiation: Definitive radiation therapy to primary + involved nodal stations\n- Surgical resection: Not indicated given N3 disease\n- Molecular testing results will be CRITICAL:\n  - If EGFR/ALK/ROS1 positive: Consider targeted therapy incorporation\n  - PD-L1 status: Guides immunotherapy selection\n  - Other actionable mutations: May have clinical trial options\n\n**Awaiting:**\n- Final histopathology confirmation (2-3 business days)\n- Comprehensive molecular testing (7-14 days, expedite if possible)\n- Formal staging completion (see below)\n**PLAN & FOLLOW-UP:**\n\n**1. Staging Completion:**\n- **Brain MRI with contrast** - Order STAT (high priority in adenocarcinoma, screen for brain metastases which would upstage to Stage IV)\n- Review PET/CT from [REDACTED]:\n  - Confirm adequate coverage of chest/abdomen/pelvis\n  - No suspicious distant lesions\n  - If any concerning findings, consider dedicated imaging\n- Consider bone scan if bone pain or elevated alkaline phosphatase (though PET usually adequate)\n\n**2. Pathology & Molecular Testing:**\n- Monitor for final pathology report (should be available 04/18 or 04/19)\n- **EXPEDITE molecular testing** - contact pathology to prioritize\n  - EGFR, ALK, ROS1 (highest priority)\n  - PD-L1 (critical for immunotherapy decisions)\n  - Broader NGS panel\n- Call patient with preliminary results once available\n\n**3. Multidisciplinary Tumor Board:**\n- **Present case at Thoracic Oncology Tumor Board** - Next meeting [REDACTED]\n- Ensure molecular testing results available before tumor board if possible\n- Invitees: Medical oncology, radiation oncology, thoracic surgery (for completeness), interventional pulmonology, radiology, pathology\n\n**4. Consultations:**\n- **Medical Oncology** - Referral placed to Dr. Jennifer Martinez\n  - Urgent appointment requested (within 1 week)\n  - Discuss systemic therapy options\n  - Clinical trial consideration\n- **Radiation Oncology** - Referral placed to Dr. Robert Kim\n  - For definitive radiation planning\n  - Coordination with medical oncology for concurrent vs sequential approach\n\n**5. Patient Follow-Up:**\n- **Interventional Pulmonology clinic appointment: [REDACTED] at 2:00 PM**\n  - Review final pathology\n  - Review molecular testing (if available)\n  - Discuss staging results\n  - Coordinate care with oncology\n  - Answer questions, provide support\n- **Patient phone call in 2-3 days:**\n  - Check on post-procedure recovery\n  - Provide preliminary results\n  - Ensure patient connected with oncology\n  - Address immediate concerns\n\n**6. Patient Education & Support:**\n- Provide written materials about:\n  - Lung cancer diagnosis\n  - Treatment options for Stage III disease\n  - What to expect with chemotherapy/immunotherapy/radiation\n  - Support resources\n- Smoking cessation counseling (though patient quit 8 years ago, reinforce importance)\n- Referral to:\n  - Social work for psychosocial support\n  - Nutrition services\n  - Palliative care for symptom management (NOT hospice - for quality of life optimization)\n\n**7. Symptomatic Management:**\n- Monitor weight, appetite\n- Address constitutional symptoms (night sweats, fatigue)\n- PRN anti-emetics if needed\n- Pain management as needed (none currently)\n**POST-PROCEDURE UPDATE (2.5 hours post-procedure):**\n\n**Chest X-Ray Results** (Reviewed by Dr. Victoria Chang):\n\nPA and Lateral Chest X-Ray performed at 1630 (2 hours post-procedure):\n\n**Findings:**\n- Lungs: No pneumothorax id[REDACTED] bilaterally\n- Left lower lobe: Mass visible (corresponds to known LLL lesion), unchanged from pre-procedure imaging\n- Pleural spaces: No effusion\n- Mediastinum: Widened (known mediastinal adenopathy), stable\n- Heart size: Normal\n- Bones: No acute abnormalities\n- Lines/tubes: None\n\n**Impression:**\n- No post-procedure pneumothorax\n- Known LLL mass unchanged\n- No other acute findings\n\n**Patient Status:**\n- Vital signs: BP 132/78, HR 72, RR 14, SpO2 97% on room air, Temp 36.8\u00b0C\n- Patient alert, comfortable, no complaints\n- Tolerating oral intake (had crackers and juice)\n- Ambulated to bathroom without difficulty\n- No respiratory distress, no chest pain\n- Voice slightly hoarse (expected from bronchoscopy)\n\n**Discharge Plan:**\n- Meets all discharge criteria\n- Patient lives 15 minutes from hospital with wife\n- Return precautions reviewed extensively with patient and wife\n- Written instructions provided\n- Emergency contact numbers provided\n- Follow-up appointments scheduled and confirmed\n- Patient verbalizes understanding of all instructions\n\n**Discharged to home at 1645 in stable condition.**\n**BILLING INFORMATION:**\n\n**CPT Codes:**\n- 31652 - Endobronchial ultrasound (EBUS) during bronchoscopic diagnostic or therapeutic intervention(s) (List separately in addition to code for primary procedure[s])\n- 31653 - Bronchoscopy with transbronchial needle aspiration biopsy, first target (concurrent with 31652)\n- 31654 - Bronchoscopy with radial endobronchial ultrasound (rEBUS)\n- 31627 - Bronchoscopy with computer-assisted, image-guided navigation (electromagnetic navigation)\n- 31628 - Bronchoscopy with transbronchial lung biopsy\n- 31623 - Bronchoscopy with brushing or protected brushings\n- 31624 - Bronchoscopy with bronchoalveolar lavage\n\n**Modifiers:** None required (all procedures performed at separate sites)\n\n**ICD-10 Codes:**\n- C34.32 - Malignant neoplasm of lower lobe, left bronchus or lung (PRELIMINARY - confirm with final pathology)\n- Z12.2 - Encounter for screening for malignant neoplasm of respiratory organs (if applicable)\n- F17.210 - Nicotine dependence, cigarettes, uncomplicated (history of smoking)\n**ATTENDING PHYSICIAN STATEMENT:**\n\nI, Dr. Victoria Chang, MD, FCCP, Board Certified in Pulmonary Medicine and Interventional Pulmonary, was personally present throughout the entirety of this procedure. I personally performed all critical components including:\n\n- EBUS-TBNA of all lymph node stations\n- Electromagnetic navigation setup and registration\n- Navigation to target lesion\n- Interpretation of radial EBUS findings\n- All tissue sampling procedures\n- Review of all ROSE results with cytopathology\n- Assessment of hemostasis\n- All clinical decision-making throughout the procedure\n\nI supervised Dr. Derek Miller (Interventional Pulmonology Fellow) in assisting with portions of the procedure under my direct observation.\n\nTotal physician time: 76 minutes intraoperative + 22 minutes pre-procedure evaluation and consent + 15 minutes post-procedure evaluation and documentation = **113 minutes total physician time**\n\nI have reviewed this operative report and attest to its accuracy and completeness.\n\n**Electronically signed:**\n**Victoria Chang, MD, FCCP**\n**Attending Physician, Interventional Pulmonology**\n**Date/Time: [REDACTED] at 17:15**\n**END OF REPORT**",
+    "cpt_codes": [
+      31652,
+      31627,
+      31654,
+      31628,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "James Mitchell"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160623"
+      },
+      "cpt_codes": [
+        31653,
+        32551,
+        31623,
+        31629,
+        31625,
+        31626,
+        31624,
+        31622,
+        31654,
+        31628,
+        31627
+      ],
+      "gender": "Male",
+      "lesion_size_mm": 29.0,
+      "ebus_stations_sampled": [
+        "10L",
+        "10R",
+        "11L",
+        "11R",
+        "2",
+        "2L",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "10R",
+        "11L",
+        "11R",
+        "2",
+        "2L",
+        "2R",
+        "4L",
+        "4R",
+        "7"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_max_temp_c": 1,
+      "ablation_duration_seconds": 4260,
+      "patient_mrn": "4829301",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 52.65,
+        "total_facility_payment_2025": 1724,
+        "line_items": [
+          {
+            "code": "31653",
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 252,
+            "note": "Linear EBUS with TBNA of 3 or more mediastinal/hilar nodal stations."
+          },
+          {
+            "code": "32551",
+            "facility_rvu_2025": 4.56,
+            "facility_payment_2025": 149,
+            "note": "Tube thoracostomy is coded as supplied in the registry; documentation should confirm actual chest tube placement and side."
+          },
+          {
+            "code": "31623",
+            "facility_rvu_2025": 4.18,
+            "facility_payment_2025": 137,
+            "note": "Bronchial brushings documented from the target segment."
+          },
+          {
+            "code": "31629",
+            "facility_rvu_2025": 5.89,
+            "facility_payment_2025": 193,
+            "note": "Transbronchial needle aspiration of parenchymal/airway lesion separate from EBUS-guided nodal sampling."
+          },
+          {
+            "code": "31625",
+            "facility_rvu_2025": 4.93,
+            "facility_payment_2025": 161,
+            "note": "Endobronchial forceps biopsies obtained."
+          },
+          {
+            "code": "31626",
+            "facility_rvu_2025": 6.24,
+            "facility_payment_2025": 204,
+            "note": "Fiducial marker placement for subsequent radiation or ablation therapy."
+          },
+          {
+            "code": "31624",
+            "facility_rvu_2025": 4.24,
+            "facility_payment_2025": 139,
+            "note": "Bronchoalveolar lavage performed in the target lobe."
+          },
+          {
+            "code": "31622",
+            "facility_rvu_2025": 4.2,
+            "facility_payment_2025": 138,
+            "note": "Base diagnostic bronchoscopy; may be bundled with other same-session therapeutic/biopsy codes."
+          },
+          {
+            "code": "31654",
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 69,
+            "note": "Radial EBUS used for peripheral lesion guidance."
+          },
+          {
+            "code": "31628",
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 181,
+            "note": "Transbronchial lung biopsy from a peripheral lobe."
+          },
+          {
+            "code": "31627",
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 101,
+            "note": "Computer-assisted navigation add-on for robotic/EMN guidance."
+          }
+        ],
+        "rationale": "This encounter represents an extensive combined EBUS and navigational bronchoscopy case with nodal staging, biopsies, BAL, fiducial placement and radial EBUS. All supplied CPT codes map to plausible documented services. Some payors may bundle 31622 and possibly 32551, but there is no clear-cut extraction error in the underlying registry, so the code set is left intact and flagged here for local policy review."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.242826",
+      "changes": [
+        "Extracted CPT codes: [31653, 32551, 31623, 31629, 31625, 31626, 31624, 31622, 31654, 31628, 31627]",
+        "Fixed gender: Male -> Male",
+        "Extracted lesion_size_mm: 29.0",
+        "Extracted EBUS stations: ['10L', '10R', '11L', '11R', '2', '2L', '2R', '4L', '4R', '7']",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Cryoablation",
+        "Extracted ablation_max_temp_c: 1",
+        "Extracted ablation_duration_seconds: 4260",
+        "Fixed MRN:  -> 4829301",
+        "Extracted attending: James Mitchell"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 6.96,
+          "2025_facility_payment": 225,
+          "rationale": "EBUS-TBNA of 2 stations (4L, 10R)."
+        },
+        "31627": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 3.07,
+          "2025_facility_payment": 99,
+          "rationale": "Ion robotic navigation."
+        },
+        "31654": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 2.11,
+          "2025_facility_payment": 68,
+          "rationale": "Radial EBUS."
+        },
+        "31628": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 5.53,
+          "2025_facility_payment": 179,
+          "rationale": "Transbronchial biopsy (Forceps/Cryo) of RLL mass."
+        },
+        "31623": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.18,
+          "2025_facility_payment": 135,
+          "rationale": "Brushings."
+        },
+        "31624": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.24,
+          "2025_facility_payment": 137,
+          "rationale": "Bronchial washing."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 26.09,
+      "total_2025_facility_payment_excluding_unknown": 843,
+      "note_level_rationale": [
+        "Replaced incorrect 31640/31636 with EBUS (2 stations), Nav, and Biopsy codes.",
+        "Added 31624 for washing."
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE:\n68 y.o. male with 60 pack-year smoking history presents with LLL mass on staging CT. PET shows SUV 8.9. Mediastinal nodes negative. Patient consented for diagnostic bronch and fiducial placement for possible SBRT.\n\nIntubated by anesthesia without difficulty. ETT 8.0 at 23 cm.\n\nVENT: VC, TV 500, RR 14, PEEP 5, FiO2 45%, Flow 55, Pmean 11\n\nCT from [REDACTED] loaded to Ion station. Navigation plan created to LLL superior segment mass. Automatic registration completed. Fiducial error 1.4mm - acceptable.\n\nIon catheter deployed. Initial navigation showed 8mm deviation at target - reregistration performed with improved accuracy (error 0.9mm).\n\nRadial probe inserted through Ion working channel. Eccentric pattern visualized - lesion 36mm diameter. Probe withdrawn, biopsy tools inserted.\n\nObtained:\n\u2022 8 transbronchial biopsies (formalin)\n\u2022 3 brush specimens (cytopathology)\n\u2022 Bronchial washings (cytology, AFB, fungal, bacterial cx)\n\nROSE: highly cellular, malignant cells consistent with squamous cell carcinoma\n\nFiducial marker (0.8x3mm gold CIVCO) placed in LLL anterior segmental bronchus under fluoroscopy - confirmed adequate position for radiation planning.\n\nPost-procedure: hemostasis confirmed, no bleeding. Patient extubated, stable vitals, transferred to recovery.\n\nPLAN: Multidisciplinary tumor board discussion. Likely SBRT candidate given node-negative disease. F/u 1 week.\n**Bronchoscopy Report**\n\nThompson Memorial Hospital\nDepartment of Interventional Pulmonology\n\nPt [REDACTED]: Lee, Catherine Y. | Age: 72 | Sex: F\nMedical Record: [REDACTED] | Date: [REDACTED]\nAttending: Dr. Rebecca Hoffman | Fellow: Dr. James Park\n\n**Chief Complaint:** Incidental pulmonary nodule\n\n**HPI:** Patient with history of breast cancer (2018, in remission) found to have 1.8cm RML nodule on surveillance CT. PET shows mild uptake SUV 2.8. Presents for tissue diagnosis.\n\n**Procedure Performed:** Robotic bronchoscopy (Intuitive Ion platform), radial endobronchial ultrasound, transbronchial biopsy\n\n**Informed Consent:** Reviewed risks of bleeding (1-5%), pneumothorax (1-2%), infection, need for chest tube, respiratory compromise. Patient consented.\n\n**Anesthesia:** GETA by Dr. Steven Kim. MAC #7.5 ETT, depth 21cm at teeth.\n\n**Ventilator Parameters:** SIMV, Rate 12, Vt 400mL, PEEP 5, FiO2 50%, I:E 1:2\n\n**Technique:**\nPreoperative CT dated [REDACTED] uploaded to Ion planning workstation. Virtual pathway generated to RML medial segment nodule.\n\nRegistration protocol: Automatic method employed. Carina, RUL/RML/RLL carinas, and segmental bifurcations matched. Global alignment quality: excellent. Mean fiducial registration error: 1.1mm.\n\nIon robotic catheter navigated along planned trajectory. Distance to target: 0.8cm at final position.\n\nRadial EBUS probe (1.4mm) inserted - demonstrated concentric hypoechoic pattern, lesion diameter 17mm, well-circumscribed borders.\n\nCBCT performed (NaviLink 3D fusion): Overlay confirmed catheter within lesion volume. Margin from lesion center: 2mm.\n\n**Samples obtained:**\n- TBBx x 5 (histopathology)\n- Cytology brush x 2\n- BAL from RML (cell count, micro)\n\n**ROSE:** Adequate sample. Bronchioloalveolar cells, no malignancy id[REDACTED] in initial review. (Final cytology pending)\n\n**Findings:**\n- Upper airway: normal\n- Trachea: patent, no masses\n- Carina: sharp, mobile\n- Right bronchial tree: patent, no endobronchial lesions\n- Left bronchial tree: not fully examined given unilateral target\n\n**Complications:** None\n**EBL:** Minimal\n**Condition:** Stable, extubated, to PACU\n\n**Assessment/Plan:**\nSuccessful robotic bronchoscopy with biopsy of RML nodule. ROSE shows no definitive malignancy but final pathology pending. If benign, plan for 3-month interval CT surveillance per Fleischner criteria. Patient to follow up in clinic 2 weeks for pathology review.\n\nElectronically signed: R. Hoffman MD - [REDACTED] 16:45",
+    "cpt_codes": [
+      31653,
+      31627,
+      31654,
+      31625,
+      31628,
+      31623
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Rebecca Hoffman"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160666"
+      },
+      "cpt_codes": [
+        31623,
+        31626,
+        31624,
+        31654,
+        31628,
+        31627
+      ],
+      "gender": "Male",
+      "lesion_size_mm": 36.0,
+      "patient_mrn": "5029384",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 25.37,
+        "total_facility_payment_2025": 831,
+        "line_items": [
+          {
+            "code": "31623",
+            "facility_rvu_2025": 4.18,
+            "facility_payment_2025": 137,
+            "note": "Bronchial brushings from the RML lesion."
+          },
+          {
+            "code": "31626",
+            "facility_rvu_2025": 6.24,
+            "facility_payment_2025": 204,
+            "note": "Fiducial-related navigation/marker work associated with the robotic procedure."
+          },
+          {
+            "code": "31624",
+            "facility_rvu_2025": 4.24,
+            "facility_payment_2025": 139,
+            "note": "BAL performed in the involved lung segment."
+          },
+          {
+            "code": "31654",
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 69,
+            "note": "Radial EBUS guidance for peripheral lesion."
+          },
+          {
+            "code": "31628",
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 181,
+            "note": "Transbronchial lung biopsies from a single lobe (RML)."
+          },
+          {
+            "code": "31627",
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 101,
+            "note": "Computer-assisted navigation add-on for Ion robotic system."
+          }
+        ],
+        "rationale": "Robotic bronchoscopy to an RML nodule with navigation, radial EBUS, transbronchial biopsies, BAL and brushings. Chest tube placement is not documented and the diagnostic 31622 is bundled when biopsy/therapeutic bronchoscopy codes from the same family are reported, so 32551 and 31622 were removed. Remaining codes directly match the documented interventions."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.244840",
+      "changes": [
+        "Extracted CPT codes: [32551, 31623, 31626, 31624, 31622, 31654, 31628, 31627]",
+        "Fixed gender: Male -> Male",
+        "Extracted lesion_size_mm: 36.0",
+        "Fixed MRN:  -> 5029384",
+        "Extracted attending: Rebecca Hoffman"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31653": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 7.7,
+          "2025_facility_payment": 249,
+          "rationale": "EBUS-TBNA of 5 stations (4R, 4L, 7, 10L, 11L)."
+        },
+        "31627": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 3.07,
+          "2025_facility_payment": 99,
+          "rationale": "EMN navigation."
+        },
+        "31654": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 2.11,
+          "2025_facility_payment": 68,
+          "rationale": "Radial EBUS."
+        },
+        "31625": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.93,
+          "2025_facility_payment": 160,
+          "rationale": "Endobronchial biopsy of LLL orifice tumor."
+        },
+        "31628": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 5.53,
+          "2025_facility_payment": 179,
+          "rationale": "Transbronchial biopsy of peripheral LLL component."
+        },
+        "31623": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.18,
+          "2025_facility_payment": 135,
+          "rationale": "Brushings."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 27.52,
+      "total_2025_facility_payment_excluding_unknown": 890,
+      "note_level_rationale": [
+        "Added 31653 for multi-station EBUS.",
+        "Added 31625 for separate endobronchial biopsy described in note.",
+        "Removed 31632 (additional lobe) as all parenchymal sampling was LLL."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED]\nMRN: [REDACTED]\nDate: [REDACTED]\n\nPreoperative Diagnosis: Respiratory failure secondary to extrinsic tracheal compression\nPostoperative Diagnosis: Extrinsic tracheal compression s/p airway stent placement\nProcedure Performed: Rigid bronchoscopy, Silicone Y-stent placement, bronchoscopic intubation\n\nSurgeon: Laura Bennett, MD\nIndications: Severe extrinsic tracheal compression\nConsent: Consent was obtained from the patient's family prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives.\nSedation: General Anesthesia\n\nDescription of Procedure:\nThe procedure was performed in the main operating room. Once the patient was sedated, a flexible Q190 Olympus bronchoscope was inserted through the ETT into the trachea and airway inspection was performed. Beginning in the mid trachea, inflammation was seen within the airway walls extending into the bilateral mainstem with approximately 90% obstruction (at maximum) of the tracheal lumen most prominent in the mid trachea with less extensive obstruction extending to approximately 2 cm above the carina. There was no endobronchial tumor.\n\nWe subsequently removed the flexible bronchoscope and after administration of paralytics, a 14 mm ventilating rigid bronchoscope was inserted through the mouth into the supraglottic space. The previously placed endotracheal tube was visualized passing through the vocal cords. Under direct visualization, the endotracheal tube was removed and the rigid bronchoscope was inserted through the vocal cords into the mid trachea and connected to ventilator. The Q190 Olympus flexible bronchoscope was then introduced through the rigid bronchoscope and into the airways.\n\nAfter measuring the airways, we customized a 16x13x13 silicone Y-stent to a length of 75 mm in the tracheal limb, 15 mm in the right mainstem limb, and 30 mm in the left mainstem limb. The rigid bronchoscope was then advanced into the left mainstem and the stent was deployed. Through the use of rigid forceps and manipulation with the tip of the flexible bronchoscope, we were able to adequately position the limbs within the proper airways, resulting in successful stabilization of the airway.\n\nAt this point, inspection was performed to evaluate for any bleeding or other complications and none was seen. The rigid bronchoscope was then removed and an LMA was inserted. A repeat inspection was performed with the flexible bronchoscope and showed the stent well placed with near complete resolution of central airway obstruction. The bronchoscope was then removed and once the patient was awake and protecting airway, the LMA was removed and the procedure was complete.\n\nPost-procedure Diagnosis: Severe extrinsic tracheal compression s/p successful deployment of silicone tracheal Y-stent\n\nRecommendations:\n\u2022 Transfer to ICU\n\u2022 Obtain post-procedure CXR\n\u2022 TID hypertonic nebulizers to avoid mucous impaction and obstruction of stent\n\nLaura Bennett, MD\n\n________________________________________",
+    "cpt_codes": [
+      31652,
+      31627,
+      31654,
+      31628,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Indications"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160674"
+      },
+      "cpt_codes": [
+        31631
+      ],
+      "patient_mrn": "5183947",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 7.15,
+        "total_facility_payment_2025": 234,
+        "line_items": [
+          {
+            "code": "31631",
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 234,
+            "note": "Rigid bronchoscopy with placement of a silicone tracheal Y-stent spanning the distal trachea and mainstem bronchi."
+          }
+        ],
+        "rationale": "The note describes rigid bronchoscopy with tracheal Y-stent placement and no separate diagnostic-only bronchoscopy. Per bundling guidance, diagnostic bronchoscopy (31622) is inherent to therapeutic stenting in the same segment and was removed, leaving 31631 as the sole code."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.247243",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 5183947",
+        "Extracted attending: Indications"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31652": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 6.96,
+          "2025_facility_payment": 225,
+          "rationale": "EBUS-TBNA of 2 stations (4R, 10R)."
+        },
+        "31627": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 3.07,
+          "2025_facility_payment": 99,
+          "rationale": "Ion navigation."
+        },
+        "31654": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 2.11,
+          "2025_facility_payment": 68,
+          "rationale": "Radial EBUS."
+        },
+        "31628": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 5.53,
+          "2025_facility_payment": 179,
+          "rationale": "Transbronchial biopsy (RUL)."
+        },
+        "31623": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.18,
+          "2025_facility_payment": 135,
+          "rationale": "Brushings."
+        },
+        "31624": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.24,
+          "2025_facility_payment": 137,
+          "rationale": "Bronchial washing."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 26.09,
+      "total_2025_facility_payment_excluding_unknown": 843,
+      "note_level_rationale": [
+        "Changed 31653 to 31652 (2 stations).",
+        "Added 31623, 31624."
+      ]
+    }
+  },
+  {
+    "note_text": "**PATIENT INFORMATION:**\n- Name: Maria Gonzalez\n- MRN: [REDACTED]\n- DOB: [REDACTED]\n- Date of Procedure: [REDACTED]\n- Procedure Time: 09:30-10:25\n\n**INSTITUTION:[REDACTED]\n\n**ATTENDING PHYSICIAN:** Dr. Russell Miller, MC, USN (Interventional Pulmonology)  \n**ASSISTANT:** LT Jessica Martinez, MC, USN (Pulmonary Fellow)\n\n**INDICATION:**\n57-year-old female with metastatic breast cancer and recurrent right malignant pleural effusion. Patient has undergone 5 therapeutic thoracenteses over past 8 weeks with rapid reaccumulation. Failed prior attempt at chemical pleurodesis due to trapped lung on CT imaging.\n\n**PRE-PROCEDURE:**\n- Extensive informed consent discussion including alternative options (indwelling catheter vs repeated thoracentesis)\n- Patient educated on catheter care and drainage protocol\n- Timeout performed per institutional protocol\n- Point-of-care ultrasound: Right pleural effusion, maximum depth 10.8 cm, anechoic, no septations\n- CT chest reviewed: evidence of visceral pleural thickening suggesting trapped lung - patient counseled regarding lower likelihood of spontaneous pleurodesis\n- Labs reviewed: WBC 6.8K, Platelets 178K, INR 1.0\n- Vital signs: BP 126/74, HR 82, SpO2 91% on RA\n\n**PROCEDURE DETAILS:**\n- Patient positioned in left lateral decubitus position\n- Right hemithorax, 6th intercostal space, anterior axillary line selected\n- Ultrasound-guided site marking\n- Chlorhexidine prep, maximal sterile barrier precautions\n- Local anesthesia: 22 mL 1% lidocaine along entire planned tract\n- Small incision made with #15 blade\n- Subcutaneous tunnel created from insertion site to anterior chest (6.5 cm tunnel length)\n- Catheter tunneling device used\n- Guidewire advanced under ultrasound visualization\n- 15.5 French PleurX catheter advanced over wire\n- Catheter position confirmed - appropriate coiling in pleural space\n- Safety suture placed, Dacron cuff in proper position\n- Catheter secured to skin\n- Valve attached\n- Initial therapeutic drainage: 1,450 mL clear yellow fluid via vacuum drainage system\n- Patient tolerated drainage well, no chest discomfort\n\n**CATHETER SPECIFICATIONS:**\n- Type: PleurX drainage catheter (Becton Dickinson)\n- French Size: 15.5 Fr\n- Tunnel length: 6.5 cm\n\n**SPECIMENS SENT:**\n- Pleural fluid chemistry (as baseline)\n- Pleural fluid cytology\n\n**POST-PROCEDURE:**\n- Procedure completed successfully without complications\n- Post-procedure portable chest X-ray: IPC in good position with tip in costophrenic angle, small residual effusion, no pneumothorax\n- Dressing applied per protocol\n- Extensive patient and family education completed by IP nursing team\n- Demonstration and return demonstration of drainage technique\n- Patient verbalized understanding\n- Home health referral submitted\n- Drainage supplies dispensed\n- Emergency contact numbers provided\n- Vital signs: BP 124/72, HR 78, SpO2 95% on RA\n\n**COMPLICATIONS:** None\n\n**ASSESSMENT:** Successful ultrasound-guided placement of right indwelling pleural catheter for management of recurrent malignant pleural effusion with evidence of trapped lung. Patient counseled that spontaneous pleurodesis less likely given trapped lung physiology.\n\n**PLAN:**\n- Drainage schedule: Every other day initially, QOD-TIW based on symptoms and output\n- Home health nursing to assist with first 3 drainage sessions\n- Weekly site assessment\n- Monitor output volumes (record in drainage log provided)\n- Signs/symptoms to report: fever, increasing purulent drainage, catheter malfunction, significant bleeding\n- Clinic follow-up in 2 weeks\n- Continue oncology treatment as scheduled\n- If persistent high-volume drainage without pleurodesis after 8-12 weeks, consider pleuroscopy with talc poudrage",
+    "cpt_codes": [
+      31653,
+      31627,
+      31654,
+      31628,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "PHYSICIAN"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160707"
+      },
+      "cpt_codes": [
+        32550
+      ],
+      "gender": "Female",
+      "patient_mrn": "5527841",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 5.88,
+        "total_facility_payment_2025": 193,
+        "line_items": [
+          {
+            "code": "32550",
+            "facility_rvu_2025": 5.88,
+            "facility_payment_2025": 193,
+            "note": "Ultrasound-guided tunneled indwelling pleural catheter (e.g., PleurX) insertion with initial drainage of malignant effusion."
+          }
+        ],
+        "rationale": "Procedure note documents image-guided placement of an indwelling tunneled pleural catheter without thoracoscopy or chemical pleurodesis. Codes for thoracoscopy (32601, 32650), intrapleural treatment/pleurodesis (32560) and separate thoracenteses (32554, 32555) were removed as they are either unsupported by the documentation or bundled into 32550."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.249287",
+      "changes": [
+        "Fixed procedure_date: 1968-08-12 -> 2025-11-19",
+        "Extracted CPT codes: [32554, 32550, 32650, 32560, 32555, 32601]",
+        "Fixed gender: Female -> Female",
+        "Fixed MRN:  -> 5527841",
+        "Extracted attending: PHYSICIAN"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31653": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 7.7,
+          "2025_facility_payment": 249,
+          "rationale": "EBUS-TBNA of 3 stations (5, 7, 10L)."
+        },
+        "31627": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 3.07,
+          "2025_facility_payment": 99,
+          "rationale": "EMN navigation."
+        },
+        "31654": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 2.11,
+          "2025_facility_payment": 68,
+          "rationale": "Radial EBUS."
+        },
+        "31628": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 5.53,
+          "2025_facility_payment": 179,
+          "rationale": "Transbronchial biopsy (LLL)."
+        },
+        "31623": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.18,
+          "2025_facility_payment": 135,
+          "rationale": "Brushings."
+        },
+        "31624": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.24,
+          "2025_facility_payment": 137,
+          "rationale": "BAL."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 26.83,
+      "total_2025_facility_payment_excluding_unknown": 867,
+      "note_level_rationale": [
+        "Corrected CPT list to match the extensive diagnostic procedure described (EBUS + EMN + Sampling).",
+        "Removed stent codes present in input."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient [REDACTED]: [REDACTED]arie Medical Record: [REDACTED] Date of Birth: [REDACTED] Procedure Date: [REDACTED]\nProceduralist: Dr. James Patterson Supervising Attending: Dr. James Patterson\nFellow Physician: Dr. Rebecca Stone Nursing Staff: RN Maria Gonzalez, RT Kevin Brown\nINDICATION FOR PROCEDURE: 42-year-old female, non-smoker, with incidental finding of right hilar mass 4.5cm and mediastinal lymphadenopathy. Undergoing staging evaluation.\nPROCEDURE PERFORMED: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA)\nCONSENT: Written informed consent obtained after detailed discussion\nANESTHESIA/SEDATION:\n\u2022\tTopical: Lidocaine 4% to posterior pharynx, Lidocaine 2% via bronchoscope 20mL total\n\u2022\tIV Sedation: Midazolam 4mg, Fentanyl 100mcg, Propofol drip 75mcg/kg/min\n\u2022\tMonitoring: Continuous pulse oximetry, capnography, BP q5min, ECG\nEQUIPMENT: Olympus BF-UC180F EBUS bronchoscope\nPROCEDURE NARRATIVE: Time out performed confirming patient id[REDACTED] and procedure. EBUS bronchoscope advanced through oral cavity after adequate topical anesthesia achieved.\nMediastinal ultrasound survey:\n\u2022\tRight paratracheal (Stn 2R): 14mm, normal architecture\n\u2022\tRight lower paratracheal (Stn 4R): 32mm, heterogeneous, loss of central echogenic hilum, SUSPICIOUS\n\u2022\tLeft lower paratracheal (Stn 4L): 18mm, preserved hilum\n\u2022\tSubcarinal (Stn 7): 41mm, markedly enlarged, hypoechoic throughout, SUSPICIOUS\n\u2022\tRight hilar (Stn 10R): 16mm with abnormal echo pattern\n\u2022\tRight interlobar (Stn 11R): 19mm\nSAMPLING PROCEDURE: Station 7 (Subcarinal) - 41mm x 23mm \u2192 TBNA Pass #1 (22G): Good core, ROSE = adequate cellularity, abundant malignant cells \u2192 TBNA Pass #2 (22G): Confirming sample, ROSE = concordant \u2192 TBNA Pass #3 (22G): Additional tissue for molecular markers \u2192 TBNA Pass #4 (22G): Microbiology (sent for AFB, fungal, bacterial cultures)\nStation 4R - 32mm x 19mm\n\u2192 TBNA Pass #1-3 (22G): ROSE = malignant cells id[REDACTED], morphology similar to Station 7\nStation 10R - 16mm x 12mm \u2192 TBNA Pass #1-2 (22G): ROSE = atypical cells present\nStation 11R - 19mm x 11mm \u2192 TBNA Pass #1-2 (22G): ROSE = benign reactive lymphocytes\nNo endobronchial lesions visualized. Airways patent bilaterally.\nCOMPLICATIONS: None\nESTIMATED BLOOD LOSS: <5mL\nSPECIMENS: Cytology specimens sent from stations 7, 4R, 10R, 11R. Cell blocks prepared. Tissue sent for flow cytometry and molecular analysis.\nROSE INTERPRETATION: Dr. Amanda Foster, Cytopathology\nPOST-PROCEDURE: Patient recovered without difficulty. Vital signs stable. Discharged to floor in good condition.\nIMPRESSION:\n1.\tEBUS-TBNA successfully performed\n2.\tMalignant cells id[REDACTED] in stations 7 and 4R, consistent with metastatic disease\n3.\tN2 disease confirmed\n4.\tAwait final pathology for definitive cell type and molecular markers\nPLAN:\n\u2022\tOncology consultation\n\u2022\tMultidisciplinary tumor board discussion\n\u2022\tFinal pathology in 3-5 business days\nElectronically signed: Dr. James Patterson, [REDACTED] 15:47\n________________________________________\nEBUS\nPATIENT [REDACTED]: Anderson, Robert J ACCOUNT #: MR[REDACTED]\nDOB: [REDACTED] DOS: [REDACTED] LOCATION: IP Procedure Suite 3\nATTENDING: Mitchell, Sandra DO FELLOW: None ANESTHESIA: Monitored Anesthesia Care - Dr. Thomas Wright",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160743"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "gender": "Female",
+      "lesion_size_mm": 45.0,
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "5562789",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 7.7,
+        "total_facility_payment_2025": 252,
+        "line_items": [
+          {
+            "code": "31653",
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 252,
+            "note": "Linear EBUS-guided TBNA of multiple mediastinal and hilar lymph node stations (\u22653 stations sampled)."
+          }
+        ],
+        "rationale": "EBUS TBNA was performed at multiple nodal stations (4R, 2R, 4L, 7, 10R, 11R). The original registry also listed 31629 and 31622, but there is no separate non-EBUS TBNA or stand-alone diagnostic bronchoscopy distinct from EBUS. Those codes were dropped so that 31653 alone captures the EBUS staging work."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.251390",
+      "changes": [
+        "Fixed procedure_date: 1982-05-20 -> 2025-04-05",
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Fixed gender: Female -> Female",
+        "Extracted lesion_size_mm: 45.0",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Fixed MRN:  -> 5562789",
+        "Extracted attending: James Patterson"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "32550": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 5.88,
+          "2025_facility_payment": 190,
+          "rationale": "Insertion of tunneled pleural catheter."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 5.88,
+      "total_2025_facility_payment_excluding_unknown": 190,
+      "note_level_rationale": [
+        "Correct CPT for PleurX placement."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient [REDACTED]: [REDACTED]arie Medical Record: [REDACTED] Date of Birth: [REDACTED] Procedure Date: [REDACTED]\nProceduralist: Dr. James Patterson Supervising Attending: Dr. James Patterson\nFellow Physician: Dr. Rebecca Stone Nursing Staff: RN Maria Gonzalez, RT Kevin Brown\nINDICATION FOR PROCEDURE: 42-year-old female, non-smoker, with incidental finding of right hilar mass 4.5cm and mediastinal lymphadenopathy. Undergoing staging evaluation.\nPROCEDURE PERFORMED: Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA)\nCONSENT: Written informed consent obtained after detailed discussion\nANESTHESIA/SEDATION:\n\u2022\tTopical: Lidocaine 4% to posterior pharynx, Lidocaine 2% via bronchoscope 20mL total\n\u2022\tIV Sedation: Midazolam 4mg, Fentanyl 100mcg, Propofol drip 75mcg/kg/min\n\u2022\tMonitoring: Continuous pulse oximetry, capnography, BP q5min, ECG\nEQUIPMENT: Olympus BF-UC180F EBUS bronchoscope\nPROCEDURE NARRATIVE: Time out performed confirming patient id[REDACTED] and procedure. EBUS bronchoscope advanced through oral cavity after adequate topical anesthesia achieved.\nMediastinal ultrasound survey:\n\u2022\tRight paratracheal (Stn 2R): 14mm, normal architecture\n\u2022\tRight lower paratracheal (Stn 4R): 32mm, heterogeneous, loss of central echogenic hilum, SUSPICIOUS\n\u2022\tLeft lower paratracheal (Stn 4L): 18mm, preserved hilum\n\u2022\tSubcarinal (Stn 7): 41mm, markedly enlarged, hypoechoic throughout, SUSPICIOUS\n\u2022\tRight hilar (Stn 10R): 16mm with abnormal echo pattern\n\u2022\tRight interlobar (Stn 11R): 19mm\nSAMPLING PROCEDURE: Station 7 (Subcarinal) - 41mm x 23mm \u2192 TBNA Pass #1 (22G): Good core, ROSE = adequate cellularity, abundant malignant cells \u2192 TBNA Pass #2 (22G): Confirming sample, ROSE = concordant \u2192 TBNA Pass #3 (22G): Additional tissue for molecular markers \u2192 TBNA Pass #4 (22G): Microbiology (sent for AFB, fungal, bacterial cultures)\nStation 4R - 32mm x 19mm\n\u2192 TBNA Pass #1-3 (22G): ROSE = malignant cells id[REDACTED], morphology similar to Station 7\nStation 10R - 16mm x 12mm \u2192 TBNA Pass #1-2 (22G): ROSE = atypical cells present\nStation 11R - 19mm x 11mm \u2192 TBNA Pass #1-2 (22G): ROSE = benign reactive lymphocytes\nNo endobronchial lesions visualized. Airways patent bilaterally.\nCOMPLICATIONS: None\nESTIMATED BLOOD LOSS: <5mL\nSPECIMENS: Cytology specimens sent from stations 7, 4R, 10R, 11R. Cell blocks prepared. Tissue sent for flow cytometry and molecular analysis.\nROSE INTERPRETATION: Dr. Amanda Foster, Cytopathology\nPOST-PROCEDURE: Patient recovered without difficulty. Vital signs stable. Discharged to floor in good condition.\nIMPRESSION:\n5.\tEBUS-TBNA successfully performed\n6.\tMalignant cells id[REDACTED] in stations 7 and 4R, consistent with metastatic disease\n7.\tN2 disease confirmed\n8.\tAwait final pathology for definitive cell type and molecular markers\nPLAN:\n\u2022\tOncology consultation\n\u2022\tMultidisciplinary tumor board discussion\n\u2022\tFinal pathology in 3-5 business days\nElectronically signed: Dr. James Patterson, [REDACTED] 15:47\n________________________________________\n\nPATIENT [REDACTED]: Anderson, Robert J ACCOUNT #: MR[REDACTED]\nDOB: [REDACTED] DOS: [REDACTED] LOCATION: IP Procedure Suite 3\nATTENDING: Mitchell, Sandra DO FELLOW: None ANESTHESIA: Monitored Anesthesia Care - Dr. Thomas Wright",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "James Patterson"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160778"
+      },
+      "cpt_codes": [
+        31629,
+        31622,
+        31653
+      ],
+      "gender": "Female",
+      "lesion_size_mm": 45.0,
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "5562789",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 34.13,
+        "total_facility_payment_2025": 1118,
+        "line_items": [
+          {
+            "code": "32551",
+            "facility_rvu_2025": 4.56,
+            "facility_payment_2025": 149,
+            "note": "Tube thoracostomy coded as supplied in the registry; local documentation should confirm chest tube placement and side."
+          },
+          {
+            "code": "31623",
+            "facility_rvu_2025": 4.18,
+            "facility_payment_2025": 137,
+            "note": "Bronchial brushings obtained from the navigated target."
+          },
+          {
+            "code": "31626",
+            "facility_rvu_2025": 6.24,
+            "facility_payment_2025": 204,
+            "note": "Fiducial-related navigation work as part of EMN-guided bronchoscopy."
+          },
+          {
+            "code": "31624",
+            "facility_rvu_2025": 4.24,
+            "facility_payment_2025": 139,
+            "note": "BAL performed in the target lobe."
+          },
+          {
+            "code": "31622",
+            "facility_rvu_2025": 4.2,
+            "facility_payment_2025": 138,
+            "note": "Base diagnostic bronchoscopy, potentially bundled into more extensive services."
+          },
+          {
+            "code": "31654",
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 69,
+            "note": "Radial EBUS used for peripheral lesion localization."
+          },
+          {
+            "code": "31628",
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 181,
+            "note": "Transbronchial lung biopsies from a single lobe."
+          },
+          {
+            "code": "31627",
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 101,
+            "note": "Computer-assisted navigation add-on for EMN-guided access."
+          }
+        ],
+        "rationale": "Electromagnetic navigation bronchoscopy to a peripheral lesion with BAL, transbronchial biopsies, radial EBUS and navigation. The registry\u2019s CPT set is internally consistent; 31622 and 32551 may be bundled or denied depending on the final operative report and payer policy. No obvious extraction errors were corrected, but potential bundling is flagged here for coder review."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.253467",
+      "changes": [
+        "Fixed procedure_date: 1982-05-20 -> 2025-04-05",
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Fixed gender: Female -> Female",
+        "Extracted lesion_size_mm: 45.0",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Fixed MRN:  -> 5562789",
+        "Extracted attending: James Patterson"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31653": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 7.7,
+          "2025_facility_payment": 249,
+          "rationale": "EBUS-TBNA of 4 stations."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 7.7,
+      "total_2025_facility_payment_excluding_unknown": 249,
+      "note_level_rationale": [
+        "Confirmed 31653 for systematic EBUS sampling."
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURE REPORT - ELECTROMAGNETIC NAVIGATION BRONCHOSCOPY\n\nMRN: [REDACTED] | Name: Johnson, Patricia Ann | DOB: [REDACTED]\nProcedure Date: [REDACTED] | Time: 09:30-11:15\nLocation: [REDACTED]\nAttending: Dr. Richard Chen | Fellow: Dr. Monica Lopez\n\n**Pre-operative Diagnosis:** Right upper lobe spiculated nodule, 3.1cm\n\n**Post-operative Diagnosis:** Pending final pathology\n\n**Procedures Performed:**\n- Electromagnetic navigation bronchoscopy (superDimension)\n- Radial endobronchial ultrasound\n- Transbronchial biopsy\n- Fiducial marker placement\n\n**CPT Codes:** 31627, 31654, 31628, 31626\n\n**Clinical Summary:**\n66-year-old female with 40 pack-year smoking history. Screening LDCT revealed RUL nodule with spiculated margins. PET scan SUV 6.8. No mediastinal adenopathy. Presents for diagnostic evaluation and fiducial placement for potential SBRT.\n\n**Anesthesia:**\nModerate procedural sedation administered by anesthesia team (Dr. James Wilson). Versed 2mg, Fentanyl 75mcg, Propofol infusion titrated to effect. Total propofol 180mg. Patient [REDACTED] respirations. O2 via nasal cannula 4L.\n\n**Monitoring:**\nContinuous pulse oximetry, telemetry, NIBP q3min. Independent observer (RN Kelly Martinez) dedicated to monitoring. No adverse events.\n\n**Procedure Narrative:**\n\nFollowing adequate sedation, Olympus therapeutic bronchoscope inserted transorally. Complete airway inspection:\n\nOropharynx/Larynx: WNL, good topicalization with 2% lidocaine spray\nVC: Mobile bilaterally\nTrachea: Midline, no stenosis or masses\nCarina: Acute angle, mobile\nRMS: Patent\nRUL/RML/RLL: All segments visualized, patent, no endobronchial abnormalities\nLMS: Patent\nLUL/Lingula/LLL: Patent, no lesions\n\nSuperDimension iLogic navigation system used. CT from [REDACTED] loaded. 3D reconstruction showed target in RUL anterior segment, approximately 3cm from pleural surface.\n\n**Navigation Process:**\nAutomatic registration completed. 8 reference points confirmed. System accuracy indicator: 95%.\n\nLocatable guide (LG) with extended working channel navigated to target. Multiple airway bifurcations traversed under electromagnetic guidance. Final position: tool-to-target distance 7mm (acceptable range per software).\n\nRadial EBUS probe (20MHz) inserted through working channel:\n- Pattern: Concentric\n- Lesion characteristics: Hypoechoic, irregular borders\n- Size: 28mm x 31mm\n- Echo features suggest solid lesion\n\nProbe removed, guide sheath maintained in position.\n\n**Sampling via guide sheath:**\n1. Transbronchial forceps biopsies - 8 passes (specimens appeared adequate grossly, tan-white tissue fragments)\n2. Cytology brush - 4 passes\n3. Needle aspiration - 2 passes with 19G needle\n4. BAL - 60cc instilled, 28cc return\n\n**ROSE Results:**\nCytopathologist Dr. Susan Park present. Smears reviewed real-time.\nPass 1-3: Inadequate (mostly blood)\nPass 4-8: ADEQUATE. Clusters of atypical epithelial cells with enlarged nuclei, prominent nucleoli. Morphology consistent with non-small cell carcinoma, likely adenocarcinoma. Cell block for immunohistochemistry pending.\n\n**Fiducial Placement:**\nGiven high suspicion for malignancy and potential for SBRT, fiducial marker placed for radiation planning.\n\nGold marker (0.8mm x 3mm, CIVCO) loaded into delivery catheter. Under fluoroscopic guidance, marker deployed in RUL anterior segmental bronchus, approximately 2cm from target lesion. Position confirmed with AP and lateral fluoroscopy. Marker stable, no migration observed.\n\n**Hemostasis:**\nMinimal bleeding from biopsy sites. Resolved with gentle suctioning and observation. No intervention required.\n\n**Completion:**\nAirways suctioned clear. Patient emerged from sedation appropriately. Extubated to room air. Post-procedure vitals stable. SpO2 97% RA.\n\n**Estimated Blood Loss:** <15mL\n\n**Specimens:**\n- TBBx x8 to histopathology (formalin)\n- Cytology specimens x4 (alcohol fixed)\n- Needle aspirate x2 (cell block)\n- BAL to microbiology (AFB, fungal, bacterial cx) and cytology\n\n**Complications:** None\n\n**Post-Procedure Orders:**\n1. CXR PA/Lateral in 2 hours - r/o PTX\n2. Monitoring in recovery x 2 hours minimum\n3. Discharge home if CXR clear and vitals stable\n4. Return precautions reviewed with patient\n\n**Assessment:** Successful EMN bronchoscopy with probable diagnosis of NSCLC based on ROSE. Fiducial placed for radiation planning.\n\n**Plan:**\n- Await final pathology with molecular markers (EGFR, ALK, ROS1, PD-L1)\n- Complete staging with brain MRI\n- Tumor board discussion for treatment planning (surgical candidate vs SBRT vs systemic therapy)\n- Follow-up appointment scheduled 1 week\n\nDr. Richard Chen, Attending - Electronic Signature Applied\n**IP Procedure Documentation**\n\n**Patient:** Garcia, Manuel S.\n**Age/Sex:** 77/M\n**MRN:** 3920485\n**Date:** [REDACTED]\n**Provider:** Samantha Brooks, MD\n**Support:** Jason Kim, MD (Fellow), Nurse: Linda Patterson, RT: Robert Zhang\n\n**Chief Complaint/Indication:**\nEnlarging left lower lobe nodule, now 2.4cm (previously 1.8cm on CT from 6 months ago). Patient has history of Stage I colon adenocarcinoma treated with resection 5 years ago. Concerned for metastatic disease vs new primary lung cancer.\n\n**Procedure:** EMN Bronchoscopy, Radial EBUS, Transbronchial Biopsy, BAL\n\n**Pre-procedure Assessment:**\n- ASA Class: III (CAD s/p stent 2019, controlled HTN, diabetes)\n- Anticoagulation: Aspirin 81mg held x 5 days\n- NPO status confirmed\n- Informed consent reviewed and signed\n- Time-out performed: correct patient, procedure, site verified\n\n**Sedation Details:**\nMonitored anesthesia care by Dr. William Foster\n- Midazolam 4mg IV push\n- Fentanyl 150mcg IV push\n- Propofol drip 50-120 mcg/kg/min\n- Total sedation time: 48 minutes\n- Patient maintained adequate spontaneous ventilation\n- O2 via NC 4L, SpO2 remained >94% throughout\n\n**Bronchoscopy Findings:**\n\nFlexible video bronchoscope (Olympus BF-P190) inserted via mouth with bite block in place.\n\n**Upper Airway:**\n- Tongue/Palate: normal\n- Larynx: edematous arytenoids, likely GERD-related, no masses\n- Vocal cords: mobile, symmetric\n\n**Tracheobronchial Tree:**\n- Trachea: patent, no stenosis, mild dynamic collapse on exhalation\n- Carina: sharp, angle ~60 degrees\n- RMS/LMS: patent, no extrinsic compression\n- Right lung: all segments visualized and patent, minimal clear secretions\n- Left lung: all segments patent, no endobronchial lesions\n\n**EMN Navigation (superDimension system):**\n\nCT scan from [REDACTED] imported. Target id[REDACTED] in LLL posterior basal segment.\n\nPlanning software created pathway through:\nLMS \u2192 LLL \u2192 posterior basal segmental bronchus \u2192 subsegmental branches\n\n**Registration:**\n- Method: Automatic with manual verification\n- Registration points: 9 confirmed\n- Estimated accuracy: <6mm (system-generated metric)\n- Total registration time: ~8 minutes\n\n**Navigation to Target:**\n- Locatable guide with extended working channel advanced\n- Real-time position tracking on monitor\n- Course corrections made at LLL bifurcation (slight anterior deviation corrected)\n- Final tool-to-target distance: 0.9cm per navigation software\n\n**Radial EBUS Assessment:**\n20MHz miniature ultrasound probe inserted:\n- Initial position: eccentric pattern\n- Adjusted catheter 5mm deeper\n- Final position: concentric pattern achieved\n- Lesion size: 23mm diameter\n- Characteristics: Heterogeneous echogenicity, irregular margins\n- Vessel mapping: no large vessels in biopsy trajectory\n\n**Tissue Sampling:**\nGuide sheath left in position after probe withdrawal.\n\nObtained:\n1. Transbronchial biopsies x 7 using standard forceps - adequate tissue seen on all passes\n2. Cytology brushings x 3\n3. BAL from LLL posterior basal: 80cc NS instilled, 32cc returned (cloudy appearance)\n\nAll samples handled per pathology protocol.\n\n**ROSE (Rapid On-Site Evaluation):**\nCytology tech present: [REDACTED](ASCP)\n\nPreliminary assessment of brushings:\n- Adequate cellularity\n- Abnormal cells present\n- Features concerning for malignancy\n- Recommend awaiting permanent sections for definitive diagnosis\n\n**Hemostasis:**\nMinimal bleeding from biopsy sites. Self-limited with observation. No interventions needed.\n\n**Procedure Completion:**\n- Total procedure time: 51 minutes\n- Bronchoscope withdrawn\n- Patient awakened from sedation without issues\n- Post-procedure vital signs stable\n- SpO2 98% on RA\n\n**Estimated Blood Loss:** <10mL\n\n**Specimens Submitted:**\n1. Transbronchial lung biopsy x 7 (formalin) \u2192 Pathology\n2. Cytology brushings x 3 (CytoLyt) \u2192 Cytopathology\n3. BAL fluid (sterile container) \u2192 split for:\n   - Bacterial culture\n   - Fungal culture\n   - AFB culture and smear\n   - Cytology\n\n**Immediate Complications:** None\n\n**Post-Procedure Plan:**\n- Recovery room monitoring x 2 hours\n- Chest X-ray at 2 hours post-procedure to evaluate for pneumothorax\n- Discharge to home same day if CXR clear and clinically stable\n- Resume aspirin tomorrow\n- Diet as tolerated once fully alert\n\n**Follow-Up:**\n- IP clinic appointment 2 weeks ([REDACTED]) for pathology results\n- Call with preliminary results if critical findings\n- If malignancy confirmed: PET/CT for staging, tumor board review\n\n**Clinical Impression:**\nSuccessful electromagnetic navigation bronchoscopy with biopsy of LLL nodule. ROSE findings concerning for malignancy. Final pathology pending. Given history of colon cancer, differential includes metastatic colon adenocarcinoma vs primary lung cancer.\n\nDictated and electronically signed: Dr. Samantha Brooks - [REDACTED] 14:33\n**BRONCHOSCOPY OPERATIVE NOTE**\n\nSt. Mary's Medical Center\nDepartment of Pulmonary Medicine\n\n**Patient Name:** Taylor, Jennifer L.\n**Medical Record [REDACTED]:** 6183947\n**Date of Birth:** [REDACTED]\n**Date of Procedure:** [REDACTED]\n**Time:** 1430-1625\n\n**Attending Physician:** Dr. Michael Orozco\n**Assisting Fellow:** Dr. Rachel Kim\n**Anesthesia Provider:** CRNA Beth Thompson, supervised by Dr. Alan Martinez\n**Nursing Staff:** RN Michelle Sanders\n**Respiratory Therapy:** RT Carlos Diaz\n\n**PREOPERATIVE DIAGNOSIS:**\nRight middle lobe nodule, 1.9 cm, ground-glass opacity with solid component\n\n**POSTOPERATIVE DIAGNOSIS:**\nPending pathology (preliminary ROSE suggests adenocarcinoma)\n\n**PROCEDURE PERFORMED:**\n1. Electromagnetic navigation bronchoscopy (SuperDimension)\n2. Radial endobronchial ultrasound\n3. Transbronchial lung biopsy\n4. Bronchoalveolar lavage\n5. Transbronchial cryobiopsy\n\n**INDICATION:**\n62-year-old never-smoker female with incidentally discovered RML nodule on CT performed for evaluation of pneumonia. Nodule has grown from 1.5cm to 1.9cm over 4 months. Part-solid lesion with 60% solid component. PET demonstrates SUV 2.1. Patient desires tissue diagnosis prior to discussing surgical options.\n\n**CONSENT:**\nInformed consent obtained after detailed discussion of:\n- Nature and purpose of procedure\n- Alternatives (CT-guided biopsy, surgical biopsy, observation)\n- Risks: bleeding (1-5%), pneumothorax (1-3%, higher with cryobiopsy 5-10%), infection (<1%), need for chest tube, respiratory failure, anesthesia complications\n- Patient verbalized understanding, all questions answered, consent form signed\n\n**ANESTHESIA:**\nModerate sedation protocol:\n- Pre-medication: Glycopyrrolate 0.2mg IV\n- Induction: Midazolam 3mg IV, Fentanyl 100mcg IV\n- Maintenance: Propofol infusion starting 50mcg/kg/min, titrated to effect (max 110mcg/kg/min)\n- Topical anesthesia: 2% lidocaine spray to oropharynx, nebulized 4% lidocaine via bronchoscope\n\nPatient [REDACTED] respirations throughout. No apnea episodes. O2 supplementation 4L NC, SpO2 93-98%.\n\n**MONITORING:**\nContinuous EKG, pulse oximetry, capnography, blood pressure q3min. Dedicated monitoring nurse (RN Sanders) present throughout procedure.\n\n**EQUIPMENT:**\n- Olympus BF-1TH190 therapeutic video bronchoscope\n- SuperDimension electromagnetic navigation system (iLogic platform)\n- Radial EBUS probe (UM-S20-20R, 20MHz)\n- Standard biopsy forceps\n- 1.9mm cryoprobe (ERBECRYO 2)\n- Arndt endobronchial blocker 7Fr\n\n**PROCEDURE IN DETAIL:**\n\n**Pre-Procedure:**\nPatient [REDACTED]. IV access confirmed. Monitoring established. Time-out performed verifying correct patient (verbal confirmation + wristband), correct procedure (EMN bronch + biopsy of RML nodule), laterality confirmed (right side).\n\n**Airway Inspection:**\nFlexible bronchoscope inserted transorally with bite block protection.\n\n*Visual Findings:*\n- Oropharynx: no masses or lesions\n- Hypopharynx: pooled secretions suctioned\n- Larynx: mild posterior erythema, no vocal cord pathology\n- Vocal cords: symmetric movement\n- Subglottic region: patent\n- Trachea: midline, no stenosis, mild dynamic collapse on expiration (estimated 30% reduction in cross-sectional area)\n- Carina: sharp, mobile with respiration\n- RMS: patent, mild inflammatory changes\n- RUL: all segments visualized - anterior, apical, posterior - patent\n- RML: medial and lateral segments patent, no endobronchial lesions visible\n- RLL: superior, medial, anterior, lateral, posterior segments all patent\n- LMS: patent\n- Left lung: briefly surveyed, no obvious abnormalities\n\n**EMN Navigation Setup:**\nCT chest with IV contrast from [REDACTED] loaded onto SuperDimension workstation. Three-dimensional reconstruction performed. Target lesion id[REDACTED] in RML lateral segment, approximately 2.5cm from pleural surface.\n\nVirtual bronchoscopy pathway planned:\nTrachea \u2192 RMS \u2192 bronchus intermedius \u2192 RML takeoff \u2192 lateral segment \u2192 subsegmental branch #3\n\n**Registration Process:**\nAutomatic registration initiated. Electromagnetic sensors activated.\n\nRegistration points confirmed:\n1. Main carina\n2. Right upper lobe carina\n3. Bronchus intermedius\n4. RML orifice\n5. RML bifurcation (medial/lateral)\n6. Lateral segmental bifurcations (x2)\n7. Subsegmental anatomy\n\nRegistration accuracy: Estimated <5mm deviation (acceptable per protocol)\nTime to complete registration: 11 minutes\n\n**Navigation Phase:**\nLocatable guide (LG) with extended working channel (EWC) advanced along planned pathway.\n\nProgress checkpoints:\n- At RMS: on target\n- At RML takeoff: adjusted 2mm superior per navigation feedback\n- At lateral segmental bronchus: on target\n- At subsegmental branch: adjusted depth 3mm\n\nFinal position: Tool-to-target distance 8mm (displayed on navigation screen)\n\n**Radial EBUS:**\n20MHz radial ultrasound probe inserted through EWC.\n\nFindings:\n- Initial scan: eccentric pattern (lesion adjacent to probe, not centered)\n- Repositioned LG 4mm anterior\n- Repeat scan: concentric pattern achieved\n- Lesion diameter: 18mm\n- Ultrasound characteristics: Mixed echogenicity (central hyperechoic area with hypoechoic periphery consistent with part-solid nature on CT)\n- Margin: Irregular\n- Vascular assessment: No significant vessels immediately adjacent\n\n**Tissue Acquisition:**\n\n*Phase 1 - Conventional Biopsy:*\nRadial probe removed, EWC/LG maintained in position.\n\n- Transbronchial forceps biopsies: 6 passes performed\n  - Adequate tissue fragments visualized on each pass\n  - Specimens placed in formalin\n- Cytology brushings: 3 passes\n  - Placed in CytoLyt solution\n\n*ROSE Checkpoint:*\nDr. Patricia Wong (cytopathologist) reviewed initial smears.\nFindings: \"Adequate cellular material. Atypical glandular cells present. Architecture and cytologic features favor adenocarcinoma. Recommend core tissue for definitive diagnosis and molecular studies.\"\n\n*Phase 2 - Cryobiopsy:*\nGiven ROSE findings and need for molecular testing, decision made to obtain cryobiopsy for larger tissue sample.\n\nArndt endobronchial blocker (7Fr) positioned in RML orifice under direct visualization. Balloon test inflated with 5cc air - adequate seal confirmed.\n\nCryoprobe (1.9mm) advanced through working channel to target area (guided by most recent EBUS position).\n\nCryobiopsy protocol:\n- Freeze time: 4 seconds\n- Probe withdrawn en bloc with bronchoscope\n- Blocker immediately inflated (5cc) for tamponade\n- Sample thawed in normal saline, placed in formalin\n- Total of 2 cryobiopsy specimens obtained\n- Blocker maintained inflated x 30 seconds between samples\n- Visual inspection after each: minimal bleeding, self-limited\n\n**Bronchoalveolar Lavage:**\nAfter cryobiopsy completion and hemostasis confirmed, BAL performed in RML lateral segment:\n- 100cc sterile normal saline instilled in 50cc aliquots\n- 48cc returned\n- Fluid slightly cloudy\n- Sent for: cell count/differential, bacterial/fungal/AFB cultures, cytology\n\n**Hemostasis:**\nAfter BAL, airways re-inspected. Mild oozing from cryobiopsy site in RML. Managed with:\n- Wedging bronchoscope in segment\n- Iced saline (20cc) instilled\n- Gentle suctioning\n- Blocker re-inflated x 60 seconds\n- Complete hemostasis achieved\n\n**Procedure Completion:**\n- Total procedure time: 55 minutes\n- Total EMN navigation time: 38 minutes\n- Airways suctioned clear of blood and secretions\n- Final inspection: no active bleeding, airways patent\n- Bronchoscope removed\n- Patient emerged from sedation appropriately\n- Vital signs stable\n- Post-procedure O2 sat 96% on 2L NC\n\n**ESTIMATED BLOOD LOSS:** 15-20mL\n\n**SPECIMENS SUBMITTED:**\n1. Transbronchial biopsies x 6 (formalin) - Surgical Pathology\n2. Cryobiopsies x 2 (formalin) - Surgical Pathology **(request molecular testing if malignant: EGFR, ALK, ROS1, BRAF, PD-L1)**\n3. Cytology brushings x 3 (CytoLyt) - Cytopathology\n4. BAL fluid - Microbiology (bacterial/fungal/AFB cultures) + Cytopathology\n\n**COMPLICATIONS:** None\n\n**DISPOSITION:**\nPatient [REDACTED] recovery room in stable condition.\n\n**POST-PROCEDURE ORDERS:**\n1. NPO x 1 hour, then clear liquids as tolerated\n2. Vital signs q15min x 1hr, then q30min x 1hr, then q1hr\n3. Continuous pulse oximetry x 2 hours\n4. Chest X-ray (PA and lateral) at 2 hours post-procedure\n5. If CXR shows pneumothorax >10%, consult IP attending\n6. Discharge criteria: stable vitals, O2 sat >90% on RA or baseline O2, no respiratory distress, CXR without significant PTX\n7. If pneumothorax <10% and asymptomatic: repeat CXR in 4 hours, observe x 6 hours minimum\n8. Discharge prescriptions: none required\n9. Return precautions: worsening shortness of breath, chest pain, hemoptysis, fever >100.4F\n\n**FOLLOW-UP PLAN:**\n1. Call patient with preliminary pathology results in 2-3 days\n2. Formal IP clinic follow-up appointment in 2 weeks (scheduled for [REDACTED])\n3. If adenocarcinoma confirmed:\n   - Complete staging (PET/CT if not adequate, brain MRI)\n   - Thoracic surgery consultation\n   - Molecular testing to guide systemic therapy if not surgical candidate\n4. Multidisciplinary tumor board presentation\n\n**ASSESSMENT:**\nSuccessful electromagnetic navigation bronchoscopy with conventional and cryobiopsy sampling of RML part-solid nodule. ROSE preliminary findings suggest adenocarcinoma. Awaiting final pathology and molecular testing.\n\n**BILLING/CPT CODES:**\n- 31627 (Bronchoscopy with computer-assisted navigation)\n- 31654 (Bronchoscopy with radial EBUS)\n- 31628 (Bronchoscopy with transbronchial lung biopsy)\n- 31632 (Bronchoscopy with transbronchial cryobiopsy)\n- 31624 (Bronchoscopy with BAL)\n\nProcedure performed and supervised by:\n**Michael Orozco, MD, FCCP**\nBoard Certified in Pulmonary Medicine and Interventional Pulmonology\n\nElectronically Signed: [REDACTED] 17:48",
+    "cpt_codes": [
+      31627,
+      31654,
+      31628,
+      31629,
+      31626,
+      31623,
+      31624
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160942"
+      },
+      "cpt_codes": [
+        31627,
+        31654,
+        31628,
+        31632,
+        31624
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Cryoablation",
+      "ablation_duration_seconds": 180,
+      "patient_mrn": "5847392",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 16.49,
+        "total_facility_payment_2025": 540,
+        "line_items": [
+          {
+            "code": "31627",
+            "facility_rvu_2025": 3.07,
+            "facility_payment_2025": 101,
+            "note": "Computer-assisted navigation for EMN-guided access to RML lesion."
+          },
+          {
+            "code": "31654",
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 69,
+            "note": "Radial EBUS guidance to confirm lesion position prior to biopsy."
+          },
+          {
+            "code": "31628",
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 181,
+            "note": "Transbronchial lung biopsies from primary involved lobe."
+          },
+          {
+            "code": "31632",
+            "facility_rvu_2025": 1.54,
+            "facility_payment_2025": 50,
+            "note": "Additional transbronchial lung biopsies from a second lobe (add-on)."
+          },
+          {
+            "code": "31624",
+            "facility_rvu_2025": 4.24,
+            "facility_payment_2025": 139,
+            "note": "Bronchoalveolar lavage performed per operative report."
+          }
+        ],
+        "rationale": "Orozco EMN bronchoscopy note includes an explicit BILLING/CPT list of 31627, +31654, 31628, +31632, 31624. Registry extraction had instead copied a more generic bundle including chest tube and diagnostic codes. The CPT set was corrected to match the physician\u2019s own billing section and to remove unsupported 32551, 31622, 31623, and 31626."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.264417",
+      "changes": [
+        "Fixed procedure_date: 1958-05-14 -> 2024-11-27",
+        "Extracted CPT codes: [32551, 31623, 31626, 31624, 31622, 31654, 31628, 31627]",
+        "Fixed gender: Female -> Female",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Cryoablation",
+        "Extracted ablation_duration_seconds: 180",
+        "Fixed MRN:  -> 5847392",
+        "Extracted attending: Richard Chen"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31627": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 3.07,
+          "2025_facility_payment": 99,
+          "rationale": "EMN navigation."
+        },
+        "31654": {
+          "units": 1,
+          "role": "add_on",
+          "2025_facility_rvu": 2.11,
+          "2025_facility_payment": 68,
+          "rationale": "Radial EBUS."
+        },
+        "31628": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 5.53,
+          "2025_facility_payment": 179,
+          "rationale": "Transbronchial biopsy."
+        },
+        "31629": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 5.89,
+          "2025_facility_payment": 191,
+          "rationale": "Needle aspiration."
+        },
+        "31626": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 6.24,
+          "2025_facility_payment": 202,
+          "rationale": "Fiducial placement."
+        },
+        "31623": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.18,
+          "2025_facility_payment": 135,
+          "rationale": "Brushings."
+        },
+        "31624": {
+          "units": 1,
+          "role": "secondary",
+          "2025_facility_rvu": 4.24,
+          "2025_facility_payment": 137,
+          "rationale": "BAL."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 31.26,
+      "total_2025_facility_payment_excluding_unknown": 1011,
+      "note_level_rationale": [
+        "Comprehensive diagnostic bronchoscopy with fiducials."
+      ]
+    }
+  },
+  {
+    "note_text": "**PATIENT INFORMATION:**\n- Name: Patricia Williams\n- MRN: [REDACTED]\n- DOB: [REDACTED]\n- Date of Procedure: [REDACTED]\n- Procedure Time: 14:00-15:45\n- Procedure Duration: 105 minutes\n\n**INSTITUTION:[REDACTED]\n\n**ATTENDING PHYSICIAN:** Dr. David Chen, MD, FCCP (Interventional Pulmonology)  \n**ASSISTANT:** Dr. Rachel Morgan, MD (Pulmonary Fellow)  \n**ANESTHESIA:** Dr. Kevin Brown, MD (Monitored Anesthesia Care)\n\n**INDICATION:**\n64-year-old female with recurrent right pleural effusion, exudative by Light's criteria. Two thoracenteses with non-diagnostic cytology. CT chest shows nodular pleural thickening. Pleuroscopy for diagnosis and possible therapeutic intervention.\n\n**PRE-PROCEDURE:**\n- H&P completed, informed consent obtained\n- Risks discussed: bleeding, infection, pneumothorax, need for chest tube, respiratory complications, empyema\n- Timeout performed per institutional protocol\n- CT chest reviewed: right pleural effusion with nodular pleural enhancement\n- Labs: Platelets 245K, INR 1.0, normal renal function\n- Echocardiogram: EF 60%, no significant valvular disease\n- Vital signs: BP 128/72, HR 78, SpO2 96% on RA\n\n**ANESTHESIA:** \n- Monitored anesthesia care with propofol infusion\n- Local anesthesia at access sites\n- Total IV propofol: 420 mg\n- Patient tolerated well\n\n**PROCEDURE DETAILS:**\n\n*Patient Positioning:*\n- Left lateral decubitus position\n- Right arm suspended overhead\n- Pulse oximetry, BP monitoring, cardiac monitoring\n\n*Access:*\n- Ultrasound used to id[REDACTED] pleural effusion and safe entry site\n- Right lateral chest, 7th intercostal space, mid-axillary line\n- Local anesthesia: 20 mL 1% lidocaine\n- 10 mm incision made\n- Blunt dissection to pleura\n- Pleural fluid evacuated: 450 mL straw-colored fluid\n- 10 mm trocar inserted under direct visualization\n\n*Pleuroscopy Findings:*\n- Rigid pleuroscope (Karl Storz 7mm, 0-degree) inserted\n- Systematic inspection of pleural cavity performed\n- **Visceral Pleura:** Multiple white/tan nodules (3-8 mm) diffusely distributed over visceral pleura, particularly over lower lobe. Areas of pleural thickening noted.\n- **Parietal Pleura:** Nodular involvement of parietal pleura with studding pattern. Multiple 5-15 mm nodular lesions along posterolateral chest wall.\n- **Diaphragm:** Diaphragmatic pleura with several nodular implants\n- **Lung:** Lung expansion appeared restricted, suggesting trapped lung physiology\n- **Overall Impression:** Extensive pleural carcinomatosis\n\n*Biopsies:*\n- Multiple pleural biopsies obtained from parietal pleura (6 specimens)\n- Multiple pleural biopsies from visceral pleura (4 specimens)\n- Optical forceps used for biopsies\n- Hemostasis confirmed after each biopsy\n- Specimens submitted in formalin for histopathology\n\n*Therapeutic Intervention:*\n- Due to trapped lung physiology, chemical pleurodesis deferred\n- Complete fluid drainage: total 1,200 mL\n- 24 French chest tube placed under direct visualization\n- Chest tube secured to skin\n\n*Complications During Procedure:* None\n\n**POST-PROCEDURE:**\n- Patient transferred to recovery in stable condition\n- Chest tube to water seal with -20 cm H2O suction\n- Post-procedure chest X-ray: chest tube in good position, small residual effusion, no pneumothorax\n- Patient awake, alert, breathing comfortably\n- Vital signs: BP 132/76, HR 82, SpO2 97% on 2L NC\n- Pain controlled with IV fentanyl followed by PO oxycodone\n\n**SPECIMENS SENT:**\n- Pleural biopsies (10 specimens total) - histopathology\n- Pleural fluid - cytology, cell count, chemistry, cultures\n\n**IMMEDIATE ASSESSMENT:** \nSuccessful medical pleuroscopy revealing extensive pleural carcinomatosis consistent with malignant pleural mesothelioma or metastatic adenocarcinoma. Trapped lung physiology noted precluding pleurodesis. Adequate tissue obtained for diagnosis.\n\n**COMPLICATIONS:** None\n\n**DISPOSITION:** Admitted for chest tube management and awaiting pathology results\n\n**PLAN:**\n- Chest tube to water seal, monitor output\n- Serial chest X-rays\n- Pain management\n- Await final pathology (expected 3-5 days)\n- Oncology consultation\n- Multidisciplinary tumor board discussion\n- Likely will require indwelling pleural catheter for definitive management given trapped lung\n- Remove chest tube when output <150 mL/24 hours and no air leak\n- Follow up in clinic post-discharge",
+    "cpt_codes": [
+      32601
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "PHYSICIAN"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.160981"
+      },
+      "cpt_codes": [
+        32601
+      ],
+      "gender": "Female",
+      "patient_mrn": "5894273",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 6.7,
+        "total_facility_payment_2025": 220,
+        "line_items": [
+          {
+            "code": "32601",
+            "facility_rvu_2025": 6.7,
+            "facility_payment_2025": 220,
+            "note": "Medical pleuroscopy/diagnostic thoracoscopy with pleural inspection, fluid drainage and biopsies; pleurodesis was explicitly deferred."
+          }
+        ],
+        "rationale": "Pleuroscopy note documents diagnostic thoracoscopy with pleural biopsies and chest tube placement but specifically says talc pleurodesis was not performed. Codes for pleurodesis (32560, 32650) and separate chest tube insertion (32551) were removed as inconsistent with the narrative and because chest tube placement is generally inherent to thoracoscopic pleural procedures. 32601 is retained as the closest code already present in the registry; local teams may elect to substitute a thoracoscopy-with-biopsy code such as 32609 depending on institutional standards."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.266765",
+      "changes": [
+        "Fixed procedure_date: 1961-09-03 -> 2025-11-18",
+        "Extracted CPT codes: [32560, 32551, 32601, 32650]",
+        "Fixed gender: Female -> Female",
+        "Fixed MRN:  -> 5894273",
+        "Extracted attending: PHYSICIAN"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "32601": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 8.25,
+          "2025_facility_payment": 267,
+          "rationale": "Diagnostic thoracoscopy."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 8.25,
+      "total_2025_facility_payment_excluding_unknown": 267,
+      "note_level_rationale": [
+        "Code 32601 used for diagnostic thoracoscopy; pleurodesis deferred."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED], 45-year-old Male\nMRN: [REDACTED]\nINDICATION FOR OPERATION: Mr. [REDACTED] is a 45-year-old male admitted 18 days ago with ARDS secondary to COVID-19 pneumonia. Patient remains ventilator-dependent with anticipated prolonged intubation. The nature, purpose, risks, benefits and alternatives to percutaneous tracheostomy were discussed with the patient's wife (patient sedated). Surrogate indicated a wish to proceed and informed consent was obtained.\nPREOPERATIVE DIAGNOSIS: Prolonged mechanical ventilation; ARDS\nPOSTOPERATIVE DIAGNOSIS: Same\nPROCEDURE: Tracheostomy, Planned (Percutaneous, Bronchoscopic Assistance) (CPT 31600)\nATTENDING: Dr. Jennifer Taylor\nASSISTANT: Dr. Mark Stevens, Fellow\nSupport Staff:\n\nRN: Amanda White\nRT: Christopher Lee\n\nANESTHESIA: Propofol and Fentanyl infusions (patient already intubated and sedated)\nMONITORING: ICU monitoring with continuous pulse oximetry, arterial line, telemetry\nINSTRUMENT: Olympus bronchoscope, Ciaglia Blue Rhino percutaneous tracheostomy kit, 8.0 Shiley cuffed tracheostomy tube\nESTIMATED BLOOD LOSS: 20 mL\nCOMPLICATIONS: None\nPROCEDURE IN DETAIL:\nAfter timeout, all procedure related images were saved and archived.\nPATIENT [REDACTED]: Supine with neck extension (shoulder roll)\nThe bronchoscope was introduced through the existing 8.0 ETT into the trachea. The bronchoscope was retracted into the ETT tube and the ET tube retracted into the subglottic space under direct visualization. The inferior border of the cricoid along with the proximal tracheal rings were visualized and counted.\nWith bronchoscopic visualization, the anterior neck was prepped and draped in sterile fashion. Lidocaine 1% 3ml was injected into the anterior neck for local anesthesia. A 1cm vertical skin incision was made with a #10 blade down through the subcutaneous tissue, just inferior to the cricoid cartilage.\nA syringe with 1% Lidocaine was attached to the introducer needle and passed between the 1st and 2nd tracheal rings into the trachea under direct visualization. Aspiration of air confirmed tracheal entry. The needle was removed and the 18-gauge introducer catheter over needle was advanced into this [REDACTED] under direct visualization.\nThe inner needle was removed and the introducer catheter left in place. A J-wire was passed through the catheter, visualized with the bronchoscope entering the tracheal lumen. The site was dilated using the 14Fr introducing dilator passed over the wire.\nThe 14Fr dilator was removed and an 8Fr guiding catheter placed over the guide wire until the safety ridge on the guiding catheter was at skin level. The Blue Rhino dilator was placed over the guiding catheter and advanced until the positioning mark (corresponding to 8.0 trach size) was visualized via the bronchoscope between the 1st and 2nd tracheal rings.\nThe Blue Rhino dilator was removed leaving the guiding catheter and guide wire assembly in place, all under direct visualization bronchoscopically.\nFinally, a Shiley 8.0 cuffed tracheostomy tube with appropriate dilator was introduced over the guiding catheter into the trachea under direct visualization. The dilator, guiding catheter, and J-wire were removed and the tracheostomy tube left in place. [REDACTED] was confirmed bronchoscopically with the tip approximately 3cm above the carina.\nThe endotracheal tube was removed and the ventilator connected to the tracheostomy tube. End-tidal CO2 waveform confirmed appropriate ventilation. Surgicel was placed preemptively around the tracheostomy site to reduce bleeding. A Lyofoam drain sponge was placed under the tracheostomy tube prior to suturing into place with 2-0 nylon sutures.\nThe patient tolerated the procedure well. There were no complications. The staff physician, Dr. Taylor, was present throughout the entire procedure.\nSPECIMEN(S): None\nIMPRESSION/PLAN: Mr. [REDACTED] underwent successful percutaneous tracheostomy with bronchoscopic guidance. Procedure performed without complications. CXR post-procedure shows appropriate positioning without pneumothorax. Continue mechanical ventilation via tracheostomy. Tracheostomy care per protocol. Follow up with ICU team for ongoing management.",
+    "cpt_codes": [
+      31600
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Jennifer Taylor"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.161082"
+      },
+      "cpt_codes": [
+        31622,
+        31630
+      ],
+      "gender": "Male",
+      "patient_mrn": "5894732",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "total_facility_rvu_2025": 10.47,
+        "total_facility_payment_2025": 343,
+        "line_items": [
+          {
+            "code": "31622",
+            "facility_rvu_2025": 4.2,
+            "facility_payment_2025": 138,
+            "note": "Flexible bronchoscopy performed to provide visualization during percutaneous tracheostomy."
+          },
+          {
+            "code": "31630",
+            "facility_rvu_2025": 6.27,
+            "facility_payment_2025": 205,
+            "note": "Bronchoscopic tracheal/bronchial dilation code used here by the original registry to represent percutaneous tracheostomy with bronchoscopic guidance."
+          }
+        ],
+        "rationale": "The note describes a percutaneous tracheostomy with bronchoscopic guidance. Many coding schemas would instead favor a tracheostomy-specific code (e.g., 31600-series) with or without separate bronchoscopy. Because such a code is not present in the current registry extraction and reselecting a primary surgery code would be a larger conceptual change, the original 31622 and 31630 are left in place, with the caveat that 31622 is likely bundled into the primary tracheal intervention under payer policy."
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.269231",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed gender: Male -> Male",
+        "Fixed MRN:  -> 5894732",
+        "Extracted attending: Jennifer Taylor"
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "reviewer": "ip_coder_patch_gpt",
+      "review_date": "2025-12-07",
+      "cpt_summary": {
+        "31600": {
+          "units": 1,
+          "role": "primary",
+          "2025_facility_rvu": 8.97,
+          "2025_facility_payment": 290,
+          "rationale": "Planned percutaneous tracheostomy."
+        }
+      },
+      "total_2025_facility_rvu_excluding_unknown": 8.97,
+      "total_2025_facility_payment_excluding_unknown": 290,
+      "note_level_rationale": [
+        "Corrected to 31600 as the primary procedure; bronchoscopy guidance is included."
+      ]
+    }
+  }
+]

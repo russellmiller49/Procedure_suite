@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2025-12-28T18:24:13-08:00`
-Git: `v19` @ `7acb08e`
+Generated: `2026-01-03T15:42:29-07:00`
+Git: `v19` @ `d0f5e89`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -68,6 +68,14 @@ Git: `v19` @ `7acb08e`
     - archive/README.md
   - artifacts/
     - artifacts/phi_distilbert_ner/
+      - artifacts/phi_distilbert_ner/checkpoint-1090/
+        - artifacts/phi_distilbert_ner/checkpoint-1090/config.json
+        - artifacts/phi_distilbert_ner/checkpoint-1090/model.safetensors
+        - artifacts/phi_distilbert_ner/checkpoint-1090/special_tokens_map.json
+        - artifacts/phi_distilbert_ner/checkpoint-1090/tokenizer.json
+        - artifacts/phi_distilbert_ner/checkpoint-1090/tokenizer_config.json
+        - artifacts/phi_distilbert_ner/checkpoint-1090/trainer_state.json
+        - artifacts/phi_distilbert_ner/checkpoint-1090/vocab.txt
       - artifacts/phi_distilbert_ner/checkpoint-200/
         - artifacts/phi_distilbert_ner/checkpoint-200/config.json
         - artifacts/phi_distilbert_ner/checkpoint-200/model.safetensors
@@ -76,14 +84,6 @@ Git: `v19` @ `7acb08e`
         - artifacts/phi_distilbert_ner/checkpoint-200/tokenizer_config.json
         - artifacts/phi_distilbert_ner/checkpoint-200/trainer_state.json
         - artifacts/phi_distilbert_ner/checkpoint-200/vocab.txt
-      - artifacts/phi_distilbert_ner/checkpoint-300/
-        - artifacts/phi_distilbert_ner/checkpoint-300/config.json
-        - artifacts/phi_distilbert_ner/checkpoint-300/model.safetensors
-        - artifacts/phi_distilbert_ner/checkpoint-300/special_tokens_map.json
-        - artifacts/phi_distilbert_ner/checkpoint-300/tokenizer.json
-        - artifacts/phi_distilbert_ner/checkpoint-300/tokenizer_config.json
-        - artifacts/phi_distilbert_ner/checkpoint-300/trainer_state.json
-        - artifacts/phi_distilbert_ner/checkpoint-300/vocab.txt
       - artifacts/phi_distilbert_ner/audit_gold_report.json
       - artifacts/phi_distilbert_ner/audit_report.json
       - artifacts/phi_distilbert_ner/config.json
@@ -2745,6 +2745,8 @@ Git: `v19` @ `7acb08e`
       - scripts/phi_test_node/results.txt
       - scripts/phi_test_node/test_phi_redaction.mjs
       - scripts/phi_test_node/test_union_mode.mjs
+    - scripts/align_synthetic_names.py
+    - scripts/apply_platinum_redactions.py
     - scripts/audit_model_fp.py
     - scripts/build_hard_negative_patch.py
     - scripts/build_model_agnostic_phi_spans.py
@@ -2767,6 +2769,7 @@ Git: `v19` @ `7acb08e`
     - scripts/export_phi_gold_standard.py
     - scripts/export_phi_model_for_transformersjs.py
     - scripts/fit_thresholds_from_eval.py
+    - scripts/fix_registry_hallucinations.py
     - scripts/generate_addon_templates.py
     - scripts/generate_gitingest.py
     - scripts/generate_synthetic_phi_data.py
@@ -3717,6 +3720,59 @@ The veto layer runs AFTER detection to filter false positives:
    - PHI highlights for patient/DOB/phone/address
    - Must-not-redact items are NOT highlighted
 
+### Manual Redaction Feature
+
+Users can add redactions for PHI missed by auto-detection:
+
+1. Select text in the Monaco editor
+2. Choose entity type from dropdown (Patient Name, MRN/ID, Date, Phone, Location, Other)
+3. Click "Add" button
+
+**Visual distinction:**
+- **Auto-detected PHI**: Red highlighting
+- **Manual additions**: Amber/yellow highlighting
+
+**UI Components:**
+- `entityTypeSelect` - Dropdown for entity type selection
+- `addRedactionBtn` - "Add" button (enabled only when text is selected)
+- Manual detections appear in sidebar with "manual" source tag
+
+**Key files:**
+- `modules/api/static/phi_redactor/app.js` - Selection tracking + Add button logic
+- `modules/api/static/phi_redactor/styles.css` - `.phi-detection-manual` styling
+
+### Formatted Results Display
+
+After submitting a scrubbed note, the UI displays formatted results instead of raw JSON:
+
+**Status Banner:**
+- **Green**: High confidence extraction, no review needed
+- **Yellow**: Audit warnings present, review recommended
+- **Red**: Manual review required
+
+**CPT Codes Table:**
+| Column | Description |
+|--------|-------------|
+| Code | CPT code (e.g., 31653) |
+| Description | Procedure description |
+| Confidence | Model confidence % |
+| RVU | Work relative value units |
+| Payment | Estimated facility payment |
+
+**Registry Summary:**
+- Shows ALL non-null fields from `registry` response
+- Nested objects displayed with " → " path notation (e.g., "Linear Ebus → Stations Sampled")
+- Skips `null`, `false` booleans, and empty arrays
+- `snake_case` converted to Title Case
+
+**Raw JSON:**
+- Collapsible `<details>` section for full response inspection
+
+**Key functions in app.js:**
+- `renderResults(data)` - Main entry point
+- `renderCPTTable(data)` - CPT codes table rendering
+- `renderRegistrySummary(registry)` - Recursive registry field extraction
+
 ### Troubleshooting (0 detections / empty output)
 
 If the UI returns **0 detections** on obvious PHI:
@@ -3769,6 +3825,27 @@ python scripts/sanitize_platinum_spans.py
 ```
 **Output:** `data/ml_training/phi_platinum_spans_CLEANED.jsonl`
 **Workflow:** build → optional sanitize → train (align char spans to tokenizer outputs).
+
+### Platinum Apply (Golden JSONs → Training-Ready Scrubbed/Final)
+
+Apply platinum spans back onto the Golden JSONs to produce PHI-safe registry training data:
+
+```bash
+make platinum-final      # platinum-cycle + institution cleanup
+
+# (Equivalent step-by-step)
+make platinum-build       # data/ml_training/phi_platinum_spans.jsonl
+make platinum-sanitize    # data/ml_training/phi_platinum_spans_CLEANED.jsonl
+make platinum-apply       # data/knowledge/golden_extractions_scrubbed/
+python scripts/fix_registry_hallucinations.py \
+  --input-dir data/knowledge/golden_extractions_scrubbed \
+  --output-dir data/knowledge/golden_extractions_final
+```
+
+**Notes:**
+- `scripts/apply_platinum_redactions.py` scrubs both `note_text` and `registry_entry.evidence`, standardizes all placeholders to `[REDACTED]`, and never redacts physician/provider names (e.g., `Dr. Green`).
+- `scripts/fix_registry_hallucinations.py` cleans hallucinated/contaminated `registry_entry.institution_name` values (anatomy/date leakage) and writes a final cleaned dataset.
+- `scripts/align_synthetic_names.py` is optional, but if you run it (it edits `note_text`), you must rebuild spans afterward (char offsets will change).
 
 **Provider policy:** default is `drop` (name-like spans in provider contexts are removed).
 
@@ -4721,7 +4798,7 @@ pydantic-settings>=2.0.0
 ### `Makefile`
 ```
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -4854,6 +4931,12 @@ export-phi-client-model-quant:
 		--model-dir artifacts/phi_distilbert_ner \
 		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner \
 		--quantize
+
+export-phi-client-model-quant-static:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
+		--model-dir artifacts/phi_distilbert_ner \
+		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner \
+		--quantize --static-quantize
 
 build-phi-platinum:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
@@ -5042,6 +5125,72 @@ gold-finetune:
 gold-incremental: gold-export gold-split gold-finetune gold-audit
 	@echo "Incremental gold update complete."
 
+# ==============================================================================
+# Platinum PHI Workflow (Registry ML Preprocessing)
+# ==============================================================================
+# Generates high-quality PHI-scrubbed training data for Registry Model.
+# Platinum = Hybrid Redactor (ML+Regex) → char spans → apply [REDACTED] to golden JSONs
+
+PLATINUM_SPANS_FILE ?= data/ml_training/phi_platinum_spans.jsonl
+PLATINUM_SPANS_CLEANED ?= data/ml_training/phi_platinum_spans_CLEANED.jsonl
+PLATINUM_INPUT_DIR ?= data/knowledge/golden_extractions
+PLATINUM_OUTPUT_DIR ?= data/knowledge/golden_extractions_scrubbed
+PLATINUM_FINAL_DIR ?= data/knowledge/golden_extractions_final
+
+# Test run (small batch to validate pipeline)
+platinum-test:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
+		--in-dir $(PLATINUM_INPUT_DIR) \
+		--out $(PLATINUM_SPANS_FILE) \
+		--limit-notes 100
+	@echo "Test run complete. Check $(PLATINUM_SPANS_FILE) for span output."
+
+# Build full platinum spans (all notes)
+platinum-build:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
+		--in-dir $(PLATINUM_INPUT_DIR) \
+		--out $(PLATINUM_SPANS_FILE) \
+		--limit-notes 0
+	@echo "Platinum spans built: $(PLATINUM_SPANS_FILE)"
+
+# Sanitize platinum spans (post-hoc cleanup)
+platinum-sanitize:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/sanitize_platinum_spans.py \
+		--in $(PLATINUM_SPANS_FILE) \
+		--out $(PLATINUM_SPANS_CLEANED)
+	@echo "Sanitized spans: $(PLATINUM_SPANS_CLEANED)"
+
+# Apply redactions to create scrubbed golden JSONs
+platinum-apply:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/apply_platinum_redactions.py \
+		--spans $(PLATINUM_SPANS_CLEANED) \
+		--input-dir $(PLATINUM_INPUT_DIR) \
+		--output-dir $(PLATINUM_OUTPUT_DIR)
+	@echo "Scrubbed golden JSONs: $(PLATINUM_OUTPUT_DIR)"
+
+# Dry run (show what would be done without writing files)
+platinum-apply-dry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/apply_platinum_redactions.py \
+		--spans $(PLATINUM_SPANS_CLEANED) \
+		--input-dir $(PLATINUM_INPUT_DIR) \
+		--output-dir $(PLATINUM_OUTPUT_DIR) \
+		--dry-run
+
+# Full platinum cycle: build → sanitize → apply
+platinum-cycle: platinum-build platinum-sanitize platinum-apply
+	@echo "----------------------------------------------------------------"
+	@echo "SUCCESS: Scrubbed Golden JSONs are ready."
+	@echo "Location: $(PLATINUM_OUTPUT_DIR)"
+	@echo "Next: Use scrubbed data for registry ML training"
+	@echo "----------------------------------------------------------------"
+
+# Post-processing: clean hallucinated institution fields and write final output set
+platinum-final: platinum-cycle
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/fix_registry_hallucinations.py \
+		--input-dir $(PLATINUM_OUTPUT_DIR) \
+		--output-dir $(PLATINUM_FINAL_DIR)
+	@echo "Final cleaned Golden JSONs: $(PLATINUM_FINAL_DIR)"
+
 pull-model-pytorch:
 	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
 
@@ -5112,7 +5261,8 @@ help:
 	@echo "  finetune-phi-client-hardneg - Finetune model on hard negatives (MPS w/ gradient accumulation)"
 	@echo "  finetune-phi-client-hardneg-cpu - Finetune on CPU (slower but reliable fallback)"
 	@echo "  export-phi-client-model - Export client-side ONNX bundle (unquantized) for transformers.js"
-	@echo "  export-phi-client-model-quant - Export client-side ONNX bundle + INT8 quantized model"
+	@echo "  export-phi-client-model-quant - Export client-side ONNX bundle + INT8 quantized model (dynamic)"
+	@echo "  export-phi-client-model-quant-static - Export client-side ONNX bundle + INT8 quantized model (static, smaller)"
 	@echo "  prodigy-prepare - Prepare batch for Prodigy annotation (PRODIGY_COUNT=100)"
 	@echo "  prodigy-annotate - Launch Prodigy annotation UI (PRODIGY_DATASET=phi_corrections)"
 	@echo "  prodigy-export  - Export Prodigy corrections to training format"
@@ -5131,6 +5281,14 @@ help:
 	@echo "  gold-eval      - Evaluate metrics on gold test set"
 	@echo "  gold-cycle     - Full workflow: export → split → train → audit → eval"
 	@echo "  gold-incremental - Incremental: export → split → finetune → audit"
+	@echo ""
+	@echo "Platinum PHI Workflow (Registry ML Preprocessing):"
+	@echo "  platinum-test  - Test run on 100 notes to validate pipeline"
+	@echo "  platinum-build - Build full platinum spans from all golden JSONs"
+	@echo "  platinum-sanitize - Post-hoc cleanup of platinum spans"
+	@echo "  platinum-apply - Apply [REDACTED] to golden JSONs"
+	@echo "  platinum-apply-dry - Dry run (show what would be done)"
+	@echo "  platinum-cycle - Full workflow: build → sanitize → apply"
 	@echo ""
 	@echo "  autopatch      - Generate patches for registry cleaning"
 	@echo "  autocommit     - Git commit generated files"
@@ -9570,6 +9728,44 @@ python scripts/scrub_golden_jsons.py \
   --report-path artifacts/redactions.jsonl
 ```
 
+### Platinum Redaction Pipeline (Golden → Scrubbed/Final)
+
+For registry ML training data, use the **Platinum** workflow (hybrid redactor → character spans → applied redactions).
+
+**Key behavior:**
+- Scrubs both `note_text` **and** `registry_entry.evidence` to prevent PHI leakage
+- Standardizes all PHI placeholders to the single token: `[REDACTED]`
+- Does **not** redact physician/provider names (e.g., `Dr. Stevens`)
+
+**Run the pipeline (recommended):**
+```bash
+make platinum-final
+```
+This produces:
+- `data/knowledge/golden_extractions_scrubbed/` (PHI-scrubbed)
+- `data/knowledge/golden_extractions_final/` (scrubbed + institution cleanup)
+
+**Or run step-by-step:**
+```bash
+make platinum-build      # data/ml_training/phi_platinum_spans.jsonl
+make platinum-sanitize   # data/ml_training/phi_platinum_spans_CLEANED.jsonl
+make platinum-apply      # data/knowledge/golden_extractions_scrubbed/
+python scripts/fix_registry_hallucinations.py \
+  --input-dir data/knowledge/golden_extractions_scrubbed \
+  --output-dir data/knowledge/golden_extractions_final
+```
+
+**Optional: align synthetic names before building spans**
+```bash
+python scripts/align_synthetic_names.py \
+  --input-dir data/knowledge/golden_extractions \
+  --output-dir data/knowledge/golden_extractions_aligned
+```
+If you use the aligned directory, point the pipeline at it:
+```bash
+PLATINUM_INPUT_DIR=data/knowledge/golden_extractions_aligned make platinum-cycle
+```
+
 ### PHI Model Training with Prodigy
 
 Use Prodigy for iterative PHI model improvement:
@@ -9731,4 +9927,5 @@ http://localhost:8000/ui/phi_redactor/
 *Last updated: December 2025*
 ## Generate slim branch
 python scripts/create_slim_branch.py --source v19 --target slim-review --force
+
 ```

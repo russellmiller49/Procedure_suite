@@ -1,0 +1,1357 @@
+[
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchoscopic lung volume reduction with endobronchial valve placement, left upper lobe.\nPatient: [REDACTED], 67-year-old male with severe heterogeneous emphysema and hyperinflation despite maximal medical therapy and pulmonary rehabilitation.\nAnesthesia: General anesthesia with endotracheal intubation (8.0 mm ETT).\nIndication: Symptomatic severe COPD/emphysema with upper-lobe\u2013predominant disease and hyperinflation, candidate for bronchoscopic lung volume reduction.\nPre-procedure imaging and physiology: High-resolution CT with severe LUL-predominant emphysema and intact left oblique fissure (>95% completeness). Quantitative perfusion with relatively preserved perfusion to contralateral lung. Baseline FEV1 32% predicted, RV 210% predicted.\nCollateral ventilation assessment: Chartis balloon catheter deployed in the left upper lobe bronchus showed rapid flow decay to zero with plateau, consistent with absence of collateral ventilation.\nProcedure details: Under general anesthesia, a therapeutic flexible bronchoscope was advanced through the ETT. The left bronchial tree was inspected and the LUL bronchus id[REDACTED]. Chartis measurements were obtained as above. A delivery catheter was then advanced, and four Zephyr endobronchial valves were placed sequentially in the apicoposterior, anterior, and lingular segmental bronchi to completely occlude the LUL. Valve positions were confirmed bronchoscopically and with fluoroscopy. After several minutes, there was visible reduction in LUL ventilation with improved excursion of the left hemidiaphragm.\nComplications: Minimal self-limited oozing at one segmental orifice controlled with cold saline. No hypoxemia, hemodynamic instability, or immediate pneumothorax.\nDisposition: Extubated in the bronchoscopy suite and transferred to step-down unit for post-BLVR monitoring with serial CXRs and telemetry.\nPlan: Monitor for post-procedure pneumothorax for at least 72 hours. Continue bronchodilators and pulmonary rehab. Repeat spirometry and 6MWT at 3 months to assess response.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP2026030",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Coastal Emphysema Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "Aspirin only",
+      "anticoag_held_preprocedure": false,
+      "primary_indication": "Bronchoscopic lung volume reduction for severe heterogeneous emphysema with LUL hyperinflation",
+      "radiographic_findings": "Severe upper-lobe\u2013predominant emphysema with left upper lobe hyperinflation and intact oblique fissure",
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Maximal inhaler therapy, pulmonary rehabilitation, long-term oxygen therapy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0",
+      "ventilation_mode": "Volume control ventilation with low tidal volume strategy",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "ebus_photodocumentation_complete": true,
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Fluoroscopy confirming valve positions and reduced ventilation to LUL",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_target_lobe": "Left upper lobe",
+      "blvr_cv_assessment_method": "Chartis balloon catheter",
+      "blvr_chartis_result": "No collateral ventilation",
+      "blvr_valve_type": "Zephyr",
+      "blvr_number_of_valves": 4,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Endobronchial valve placement for bronchoscopic lung volume reduction",
+      "bronch_location_lobe": "Left upper lobe",
+      "bronch_location_segment": "Apicoposterior and anterior segmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy with fluoroscopic guidance and Chartis assessment",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Minor oozing at one segmental orifice controlled with cold saline",
+      "ebl_ml": 5,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 8.0,
+      "radiation_dap_gycm2": 2.5,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe heterogeneous emphysema status post BLVR with successful LUL valve placement and early target lobe collapse",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": [
+        "Telemetry and continuous oximetry for 72 hours",
+        "Daily CXR for 3 days to assess for pneumothorax and target lobe atelectasis",
+        "Outpatient PFTs and 6MWT at 3 months",
+        "Pulmonary rehabilitation to continue"
+      ],
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Melissa Hart, MD",
+        "fellow_name": "LT Daniel Chu, MD",
+        "assistant_name": "Sara Lopez, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T10:15:00Z"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31647",
+          "final_codes": [
+            "31647"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31647": "Bronchoscopy with balloon occlusion, Chartis assessment, and insertion of multiple bronchial valves in a single initial lobe (LUL) for lung volume reduction."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 9.5,
+          "facility_total_payment": 311,
+          "per_code": {
+            "31647": {
+              "facility_rvu": 9.5,
+              "facility_payment": 311
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json (airway/BLVR fee schedule, facility setting)"
+        },
+        "overall_assessment": "Single-lobe BLVR with valve insertion only; no additional lobes or separate diagnostic procedures are coded."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31647",
+            "description": "Bronch w/valve init",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 12.05,
+        "work_rvu": 7.5,
+        "practice_expense_rvu": 3.75,
+        "malpractice_rvu": 0.8
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31647",
+        "final_codes": [
+          "31647"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31647": "Bronchoscopy with placement of endobronchial valves in the initial lobe (Left Upper Lobe)."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 12.05,
+        "facility_total_payment": 390,
+        "per_code": {
+          "31647": {
+            "facility_rvu": 12.05,
+            "facility_payment": 390
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7.json (CMS 2025 PFS Final Rule)"
+      },
+      "overall_assessment": "Unilateral BLVR in a single lobe. 31647 encompasses the Chartis assessment when performed in the same session/lobe."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T10:15:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31647; total_work_rvu=7.5, total_rvu=12.05 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchoscopic lung volume reduction with endobronchial valve placement, right upper lobe.\nPatient: [REDACTED], 63-year-old female with severe COPD and upper-lobe\u2013predominant emphysema refractory to optimal medical management.\nAnesthesia: General anesthesia with laryngeal mask airway (size 4 LMA).\nIndication: Symptomatic severe emphysema with marked RUL hyperinflation and exercise limitation despite guideline-directed COPD therapy.\nPre-procedure imaging and physiology: CT chest demonstrating severe heterogeneous emphysema with RUL-predominant disease and intact minor fissure. Perfusion scan with relative preservation of perfusion to contralateral lung. Baseline FEV1 29% predicted, DLCO 35% predicted.\nCollateral ventilation assessment: Chartis assessment performed in the RUL bronchus demonstrated rapid flow decline to zero with stable plateau, consistent with absence of collateral ventilation.\nProcedure details: A therapeutic flexible bronchoscope was advanced via the LMA. The right bronchial tree was inspected and the RUL bronchus cannulated. Chartis assessment confirmed suitability for BLVR. Three Zephyr endobronchial valves were then deployed in the apical, posterior, and anterior segmental bronchi. Valve positions were verified bronchoscopically and fluoroscopically. After several minutes of observation, there was decreased ventilation to the RUL and modest mediastinal shift toward the treated side, without hemodynamic compromise.\nComplications: No significant bleeding. Transient mild hypoxemia during valve deployment, resolved with increased FiO2 and recruitment maneuvers. No immediate pneumothorax on post-procedure CXR.\nDisposition: Recovered in PACU and admitted to monitored bed for routine post-BLVR observation.\nPlan: Serial chest radiographs x 3 days, bronchodilators and incentive spirometry, outpatient PFTs at 3 months, and follow-up in BLVR clinic.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP2026031",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Midwest Lung Institute",
+      "procedure_setting": "Operating room",
+      "patient_age": 63,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Bronchoscopic lung volume reduction for severe upper-lobe\u2013predominant emphysema with RUL hyperinflation",
+      "radiographic_findings": "Severe heterogeneous emphysema with right upper lobe hyperinflation and intact minor fissure",
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Optimized inhaler regimen, pulmonary rehabilitation, long-term oxygen therapy",
+      "sedation_type": "General",
+      "airway_type": "LMA",
+      "airway_device_size": "4",
+      "ventilation_mode": "Pressure control ventilation via LMA",
+      "anesthesia_agents": "Propofol, fentanyl, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "ebus_photodocumentation_complete": true,
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Fluoroscopy and immediate post-procedure CXR confirming valve positions and no pneumothorax",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_target_lobe": "Right upper lobe",
+      "blvr_cv_assessment_method": "Chartis balloon occlusion",
+      "blvr_chartis_result": "No collateral ventilation",
+      "blvr_valve_type": "Zephyr",
+      "blvr_number_of_valves": 3,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "BLVR with endobronchial valve placement",
+      "bronch_location_lobe": "Right upper lobe",
+      "bronch_location_segment": "Apical, posterior, and anterior segmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy with fluoroscopy and Chartis assessment",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Transient mild hypoxemia corrected with increased FiO2 and recruitment",
+      "ebl_ml": 3,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 7.0,
+      "radiation_dap_gycm2": 2.1,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe emphysema status post successful RUL BLVR with three valves and no immediate pneumothorax",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": [
+        "Monitored bed with continuous pulse oximetry for 48\u201372 hours",
+        "Daily chest radiograph x 3 days",
+        "Outpatient BLVR clinic visit at 4\u20136 weeks",
+        "PFTs at 3 months to quantify improvement"
+      ],
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CAPT Jonathan Wells, MD",
+        "fellow_name": "LT Emily Navarro, MD",
+        "assistant_name": "Brian Young, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T10:20:00Z"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31647",
+          "final_codes": [
+            "31647"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31647": "Bronchoscopy with balloon occlusion and valve insertion in a single initial lobe (RUL) with Chartis assessment; no additional lobes treated."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 9.5,
+          "facility_total_payment": 311,
+          "per_code": {
+            "31647": {
+              "facility_rvu": 9.5,
+              "facility_payment": 311
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json (facility BLVR schedule)"
+        },
+        "overall_assessment": "Unilateral BLVR with valve insertion only; 31647 alone appropriately captures the bronchoscopic work."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31647",
+            "description": "Bronch w/valve init",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 12.05,
+        "work_rvu": 7.5,
+        "practice_expense_rvu": 3.75,
+        "malpractice_rvu": 0.8
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31647",
+        "final_codes": [
+          "31647"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31647": "Bronchoscopy with placement of endobronchial valves in the initial lobe (Right Upper Lobe)."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 12.05,
+        "facility_total_payment": 390,
+        "per_code": {
+          "31647": {
+            "facility_rvu": 12.05,
+            "facility_payment": 390
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7.json (CMS 2025 PFS Final Rule)"
+      },
+      "overall_assessment": "Unilateral BLVR in a single lobe. Correctly coded as 31647."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T10:20:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31647; total_work_rvu=7.5, total_rvu=12.05 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Flexible bronchoscopy with removal of endobronchial valves, right upper lobe, for post-BLVR pneumothorax.\nPatient: [REDACTED], 70-year-old male with severe emphysema status post RUL BLVR 5 days prior.\nAnesthesia: General anesthesia with endotracheal intubation (8.0 mm ETT).\nIndication: Large right pneumothorax with persistent air leak and incomplete lung re-expansion despite chest tube drainage following recent RUL bronchial valve placement.\nBackground: The patient underwent RUL BLVR with three valves 5 days ago. On day 2 post-procedure, he developed a large right pneumothorax requiring chest tube placement. Despite appropriate chest tube position and suction, there was ongoing air leak and incomplete expansion of the RUL.\nProcedure details: Under general anesthesia, a therapeutic bronchoscope was advanced through the ETT. The right bronchial tree was inspected. Three Zephyr valves were visualized in the RUL segmental bronchi with good seating. Given the persistent pneumothorax and continuous air leak, all three valves were removed sequentially using dedicated valve retrieval forceps. Each valve was grasped, collapsed, and withdrawn through the bronchoscope without difficulty. The underlying segmental bronchi were patent with mild mucosal edema but no active bleeding.\nComplications: Mild oozing from one segmental takeoff controlled with topical epinephrine and cold saline. No immediate worsening of pneumothorax on post-procedure CXR; chest tube remained in place.\nDisposition: Returned to step-down unit with chest tube on suction. Air leak decreased after valve removal.\nPlan: Daily chest radiographs and monitoring of chest tube output and air leak. Consider chest tube removal once lung fully expanded and air leak resolves. No further BLVR planned on the right side.",
+    "cpt_codes": [
+      31648
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP2026032",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Coastal Emphysema Center",
+      "procedure_setting": "Operating room",
+      "patient_age": 70,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Valve removal for large right pneumothorax with persistent air leak after RUL BLVR",
+      "radiographic_findings": "Large right pneumothorax with incompletely expanded RUL despite chest tube on suction",
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "RUL BLVR with three Zephyr valves 5 days prior; right chest tube in place",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "8.0",
+      "ventilation_mode": "Volume control ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "ebus_photodocumentation_complete": true,
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Pre- and post-procedure CXR confirming pneumothorax size and valve removal",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_target_lobe": "Right upper lobe",
+      "blvr_cv_assessment_method": "Chartis (prior BLVR procedure)",
+      "blvr_chartis_result": "No collateral ventilation (prior assessment)",
+      "blvr_valve_type": "Zephyr (removed)",
+      "blvr_number_of_valves": 0,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": "Right",
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Endobronchial valve removal for BLVR-related pneumothorax",
+      "bronch_location_lobe": "Right upper lobe",
+      "bronch_location_segment": "Apical, posterior, and anterior segmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy with fluoroscopic confirmation of valve removal",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": "Valves retained for device log; mucus sent for culture",
+      "bronch_immediate_complications": "Mild oozing controlled with topical epinephrine and cold saline",
+      "ebl_ml": 10,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube and valve removal",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 4.0,
+      "radiation_dap_gycm2": 1.2,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Post-BLVR right pneumothorax with persistent air leak, improved after RUL valve removal",
+      "molecular_testing_requested": false,
+      "disposition": "Step-down admission",
+      "follow_up_plan": [
+        "Daily chest radiographs until pneumothorax resolves",
+        "Remove chest tube once air leak has ceased and lung fully expanded",
+        "Resume COPD optimization and pulmonary rehab",
+        "Avoid further BLVR on right side; consider contralateral evaluation if clinically appropriate"
+      ],
+      "cpt_codes": [
+        31648
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Natalie Owens, MD",
+        "fellow_name": "LT Michael Patel, MD",
+        "assistant_name": "Julia Green, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T10:25:00Z"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31648",
+          "final_codes": [
+            "31648"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31648": "Bronchoscopy with removal of bronchial valve(s) from an initial lobe (RUL) in the setting of post-BLVR pneumothorax; no additional lobes treated."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.2,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31648": {
+              "facility_rvu": 6.2,
+              "facility_payment": 203
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json (facility BLVR schedule)"
+        },
+        "overall_assessment": "Valve removal from a single lobe for complication management; 31648 alone appropriately captures the billed work."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31648",
+            "description": "Bronch valve removal",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 6.44,
+        "work_rvu": 4.0,
+        "practice_expense_rvu": 2.0,
+        "malpractice_rvu": 0.44
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31648",
+        "final_codes": [
+          "31648"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31648": "Bronchoscopy with removal of bronchial valves from the initial lobe (Right Upper Lobe) for pneumothorax management."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 6.44,
+        "facility_total_payment": 208,
+        "per_code": {
+          "31648": {
+            "facility_rvu": 6.44,
+            "facility_payment": 208
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7.json (CMS 2025 PFS Final Rule)"
+      },
+      "overall_assessment": "Correctly coded as 31648 for valve removal."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T10:25:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31648; total_work_rvu=4.0, total_rvu=6.44 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Flexible bronchoscopy with removal of endobronchial valves, left lower lobe, for delayed post-BLVR pneumothorax.\nPatient: [REDACTED], 59-year-old female with severe emphysema status post LLL BLVR 2 weeks prior.\nAnesthesia: General anesthesia with endotracheal intubation (7.5 mm ETT).\nIndication: Recurrent symptomatic left pneumothorax with persistent air leak and incomplete lung expansion despite appropriately positioned chest tube following recent LLL BLVR.\nBackground: The patient underwent LLL BLVR with four valves 14 days ago. She was discharged after an uncomplicated initial hospital course. She re-presented with pleuritic chest pain and dyspnea; CXR showed a moderate left pneumothorax, and a chest tube was placed. After several days on suction, there was persistent air leak and failure of the LLL to re-expand.\nProcedure details: Under general anesthesia, a therapeutic bronchoscope was advanced through the ETT. The left bronchial tree was inspected. Four Zephyr valves were visualized in the basilar and superior segmental bronchi of the LLL. Given the persistent air leak, all four valves were removed sequentially using valve retrieval forceps. Each valve was collapsed and withdrawn through the scope without difficulty. The underlying bronchi demonstrated mild inflammatory changes but no purulence.\nComplications: No significant bleeding. Oxygenation and hemodynamics remained stable. Post-procedure CXR showed improved LLL expansion with the chest tube in place and no increase in pneumothorax size.\nDisposition: Returned to telemetry floor with chest tube to -20 cm H2O suction.\nPlan: Daily chest radiographs; trial of water seal once air leak decreases; chest tube removal when lung fully expanded. No further BLVR planned for the LLL.",
+    "cpt_codes": [
+      31648
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP2026033",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Midwest Lung Institute",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 59,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "Apixaban for atrial fibrillation",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Valve removal for recurrent left pneumothorax with persistent air leak after LLL BLVR",
+      "radiographic_findings": "Moderate left pneumothorax with incompletely expanded LLL and chest tube in place",
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "LLL BLVR with four Zephyr valves 2 weeks prior; left chest tube placed for recurrent pneumothorax",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "airway_device_size": "7.5",
+      "ventilation_mode": "Volume control ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "ebus_photodocumentation_complete": true,
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Serial CXRs before and after valve removal confirming improved LLL expansion",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_target_lobe": "Left lower lobe",
+      "blvr_cv_assessment_method": "Chartis (prior BLVR procedure)",
+      "blvr_chartis_result": "No collateral ventilation (prior assessment)",
+      "blvr_valve_type": "Zephyr (removed)",
+      "blvr_number_of_valves": 0,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": "Chest tube under ultrasound guidance (prior to bronchoscopy)",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Endobronchial valve removal for delayed BLVR-related pneumothorax",
+      "bronch_location_lobe": "Left lower lobe",
+      "bronch_location_segment": "Superior and basilar segmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy with fluoroscopic confirmation",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "None",
+      "ebl_ml": 5,
+      "bleeding_severity": "None",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Chest tube and valve removal",
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 3.5,
+      "radiation_dap_gycm2": 1.0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Recurrent left pneumothorax with persistent air leak after LLL BLVR, improved after valve removal",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": [
+        "Daily CXRs to confirm progressive LLL expansion",
+        "Trial of water seal when air leak decreases",
+        "Chest tube removal once lung fully expanded and no air leak for 24 hours",
+        "Return to COPD clinic for long-term management; no further BLVR on LLL"
+      ],
+      "cpt_codes": [
+        31648
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Jason Hill, MD",
+        "fellow_name": "LT Sarah Kim, MD",
+        "assistant_name": "Olivia Shaw, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T10:30:00Z"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31648",
+          "final_codes": [
+            "31648"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31648": "Bronchoscopy with removal of bronchial valve(s) from an initial lobe (LLL) for management of delayed BLVR-related pneumothorax."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.2,
+          "facility_total_payment": 203,
+          "per_code": {
+            "31648": {
+              "facility_rvu": 6.2,
+              "facility_payment": 203
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json (facility BLVR schedule)"
+        },
+        "overall_assessment": "Single-lobe valve removal for BLVR complication; 31648 alone captures the procedure."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31648",
+            "description": "Bronch valve removal",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 6.44,
+        "work_rvu": 4.0,
+        "practice_expense_rvu": 2.0,
+        "malpractice_rvu": 0.44
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31648",
+        "final_codes": [
+          "31648"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31648": "Bronchoscopy with removal of bronchial valves from the initial lobe (Left Lower Lobe) for delayed pneumothorax."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 6.44,
+        "facility_total_payment": 208,
+        "per_code": {
+          "31648": {
+            "facility_rvu": 6.44,
+            "facility_payment": 208
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7.json (CMS 2025 PFS Final Rule)"
+      },
+      "overall_assessment": "Correctly coded as 31648 for valve removal."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T10:30:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31648; total_work_rvu=4.0, total_rvu=6.44 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Flexible bronchoscopy with adjustment and replacement of endobronchial valves, right upper lobe.\nPatient: [REDACTED], 65-year-old male with severe COPD status post RUL BLVR 6 weeks prior.\nAnesthesia: Monitored anesthesia care with propofol and dexmedetomidine; LMA (size 4) airway.\nIndication: Suboptimal lobar volume reduction and persistent RUL ventilation on imaging and physiology despite prior valve placement, suggesting malposition or incomplete occlusion of segmental bronchi.\nBackground: The patient underwent RUL BLVR with three Zephyr valves 6 weeks ago. Follow-up CT at 6 weeks showed only partial RUL volume reduction with persistent aeration of one segment. Spirometry demonstrated modest FEV1 improvement but persistent hyperinflation.\nProcedure details: Under MAC with LMA, a therapeutic bronchoscope was advanced. The three existing valves were visualized in the RUL apical, posterior, and anterior segmental bronchi. The apical and anterior valves appeared well seated; the posterior valve was slightly proximal with visible ventilation around the valve. The posterior valve was removed using valve retrieval forceps (collapsed and withdrawn through the scope). A new, slightly larger Zephyr valve was then deployed more distally in the posterior segmental bronchus to achieve complete occlusion. A small amount of mucus around the apical valve was suctioned, and the apical valve was briefly removed and reinserted in a slightly more distal position to optimize seal. Final inspection showed all RUL segmental orifices fully occluded with valves in stable position.\nComplications: Minimal mucosal oozing controlled with cold saline. No hypoxemia or hemodynamic instability.\nDisposition: Observed in PACU and discharged to the floor on supplemental oxygen.\nPlan: Repeat CT chest in 6\u20138 weeks to reassess RUL volume reduction and fissure completeness, repeat PFTs at 3 months, and close clinical follow-up in BLVR clinic.",
+    "cpt_codes": [
+      31648,
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP2026034",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Coastal Emphysema Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 65,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Adjustment and replacement of RUL endobronchial valves for suboptimal lobar volume reduction after BLVR",
+      "radiographic_findings": "CT showing only partial RUL volume reduction with persistent aeration of posterior segment 6 weeks post-BLVR",
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "RUL BLVR with three Zephyr valves 6 weeks prior",
+      "sedation_type": "MAC",
+      "airway_type": "LMA",
+      "airway_device_size": "4",
+      "ventilation_mode": "Spontaneous/assisted ventilation via LMA",
+      "anesthesia_agents": "Propofol, dexmedetomidine, topical lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "ebus_photodocumentation_complete": true,
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Follow-up CT planned to document improved volume reduction after adjustment",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_target_lobe": "Right upper lobe",
+      "blvr_cv_assessment_method": "Chartis (prior BLVR procedure)",
+      "blvr_chartis_result": "No collateral ventilation (prior assessment)",
+      "blvr_valve_type": "Zephyr",
+      "blvr_number_of_valves": 3,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Endobronchial valve adjustment and replacement for suboptimal BLVR response",
+      "bronch_location_lobe": "Right upper lobe",
+      "bronch_location_segment": "Apical, posterior, and anterior segmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy under MAC with targeted valve removal and replacement",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Minor mucosal oozing controlled with cold saline",
+      "ebl_ml": 5,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 2.5,
+      "radiation_dap_gycm2": 0.7,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Suboptimal RUL volume reduction due to partially malpositioned valve, improved after valve adjustment and replacement",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": [
+        "Overnight observation with continuous pulse oximetry",
+        "CT chest in 6\u20138 weeks to reassess lobar volume reduction",
+        "PFTs at 3 months",
+        "BLVR clinic follow-up to determine long-term response"
+      ],
+      "cpt_codes": [
+        31648,
+        31647
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CAPT Laura Simmons, MD",
+        "fellow_name": "LT Andre Lewis, MD",
+        "assistant_name": "Angela Scott, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T10:35:00Z"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31647",
+          "final_codes": [
+            "31648",
+            "31647"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31648": "Bronchoscopy with removal of one or more bronchial valves from the initial treated lobe (RUL) to correct malposition.",
+            "31647": "Bronchoscopy with balloon occlusion/assessment and reinsertion of bronchial valve(s) in the same initial lobe to optimize lobar occlusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.7,
+          "facility_total_payment": 514,
+          "per_code": {
+            "31648": {
+              "facility_rvu": 6.2,
+              "facility_payment": 203
+            },
+            "31647": {
+              "facility_rvu": 9.5,
+              "facility_payment": 311
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json (facility BLVR schedule)"
+        },
+        "overall_assessment": "Combined removal and reinsertion of valves in a single initial lobe; 31648 and 31647 together model the adjustment and replacement work."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31648",
+            "description": "Bronch valve removal",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31647",
+            "description": "Bronch w/valve init",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 18.49,
+        "work_rvu": 11.5,
+        "practice_expense_rvu": 5.75,
+        "malpractice_rvu": 1.24
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31647",
+        "final_codes": [
+          "31648",
+          "31647"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31648": "Removal of malpositioned valve(s) from the Right Upper Lobe.",
+          "31647": "Placement of replacement valve(s) in the Right Upper Lobe (initial lobe)."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 18.49,
+        "facility_total_payment": 598,
+        "per_code": {
+          "31648": {
+            "facility_rvu": 6.44,
+            "facility_payment": 208
+          },
+          "31647": {
+            "facility_rvu": 12.05,
+            "facility_payment": 390
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7.json (CMS 2025 PFS Final Rule)"
+      },
+      "overall_assessment": "Valve exchange involves both removal and placement. Both 31648 and 31647 are supported when distinct work is performed."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T10:35:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31648, 31647; total_work_rvu=11.5, total_rvu=18.49 (facility)."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Flexible bronchoscopy with replacement of expectorated endobronchial valve and optimization of valve set, left upper lobe.\nPatient: [REDACTED], 61-year-old female with severe heterogeneous emphysema status post LUL BLVR 3 months prior.\nSedation: Moderate sedation with midazolam and fentanyl; native airway with bite block.\nIndication: Suspected valve loss after the patient reported coughing up an endobronchial valve at home, with subsequent increase in dyspnea and decline in exercise tolerance.\nBackground: The patient underwent LUL BLVR with four Zephyr valves 3 months earlier with good initial response. Over the past 2 weeks, she noted increased cough and exertional dyspnea and brought an expectorated valve to clinic. Spirometry showed loss of some of the initial FEV1 gain; CT demonstrated partial re-aeration of an LUL segment.\nProcedure details: Under moderate sedation, a flexible bronchoscope was advanced through the mouth with bite block. The left bronchial tree was inspected. In the LUL, two valves were seen in stable position; one segmental bronchus (apicoposterior) was open without a valve, and one valve in the anterior segment appeared slightly proximal with visible ventilation around the frame. The proximal anterior valve was removed with retrieval forceps, collapsed, and withdrawn. A new Zephyr valve was deployed more distally in the anterior segment to achieve complete occlusion. A second new valve was then deployed in the apicoposterior segment to replace the expectorated valve. Final inspection showed three LUL segmental bronchi fully occluded with valves in stable positions.\nComplications: None. No significant bleeding or hypoxemia.\nDisposition: Observed for 2 hours post-procedure in bronchoscopy recovery and discharged home on baseline oxygen.\nPlan: Clinic follow-up in 4\u20136 weeks with spirometry and symptom assessment; repeat CT at 3 months if clinically indicated.",
+    "cpt_codes": [
+      31648,
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "IP2026035",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Midwest Lung Institute",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 61,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Valve replacement and optimization after expectoration of one LUL BLVR valve and recurrent symptoms",
+      "radiographic_findings": "CT showing partial re-aeration of one LUL segment with otherwise reduced lobar volume after prior BLVR",
+      "lesion_size_mm": null,
+      "lesion_location": null,
+      "pet_suv_max": null,
+      "pet_avid": null,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "LUL BLVR with four Zephyr valves 3 months prior; one valve reportedly expectorated",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation with supplemental oxygen",
+      "anesthesia_agents": "Midazolam, fentanyl, topical lidocaine",
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "ebus_photodocumentation_complete": true,
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": "Pre-procedure CT demonstrating open segment; post-procedure imaging planned if clinically indicated",
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": [],
+      "nav_cryobiopsy_for_nodule": null,
+      "cao_primary_modality": null,
+      "cao_tumor_location": null,
+      "cao_obstruction_pre_pct": null,
+      "cao_obstruction_post_pct": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "blvr_target_lobe": "Left upper lobe",
+      "blvr_cv_assessment_method": "Chartis (prior BLVR procedure)",
+      "blvr_chartis_result": "No collateral ventilation (prior assessment)",
+      "blvr_valve_type": "Zephyr",
+      "blvr_number_of_valves": 3,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_device_name": null,
+      "ablation_power_watts": null,
+      "ablation_duration_seconds": null,
+      "ablation_max_temp_c": null,
+      "ablation_margin_assessed": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleural_thoracoscopy_findings": null,
+      "pleurodesis_performed": null,
+      "pleurodesis_agent": null,
+      "bronch_indication": "Endobronchial valve replacement and optimization after valve loss",
+      "bronch_location_lobe": "Left upper lobe",
+      "bronch_location_segment": "Apicoposterior and anterior segmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy under moderate sedation with valve removal and redeployment",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "None",
+      "ebl_ml": 3,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0.0,
+      "radiation_dap_gycm2": 0.0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Loss of one BLVR valve with recurrent symptoms, improved after LUL valve replacement and optimization",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": [
+        "Clinic follow-up in 4\u20136 weeks with spirometry",
+        "CT chest at 3 months if symptoms or PFTs suggest suboptimal response",
+        "Ongoing COPD management and pulmonary rehabilitation"
+      ],
+      "cpt_codes": [
+        31648,
+        31647
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "LCDR Hannah Blake, MD",
+        "fellow_name": null,
+        "assistant_name": "Diana Ross, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T10:40:00Z"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31647",
+          "final_codes": [
+            "31648",
+            "31647"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31648": "Bronchoscopy with removal of a malpositioned LUL valve prior to redeployment.",
+            "31647": "Bronchoscopy with insertion of new valves in the initial lobe (LUL) to replace an expectorated valve and optimize occlusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.7,
+          "facility_total_payment": 514,
+          "per_code": {
+            "31648": {
+              "facility_rvu": 6.2,
+              "facility_payment": 203
+            },
+            "31647": {
+              "facility_rvu": 9.5,
+              "facility_payment": 311
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_8.json (facility BLVR schedule)"
+        },
+        "overall_assessment": "Valve revision case involving removal of a malpositioned valve and insertion of new valves in the same lobe; combination of 31648 and 31647 is appropriate."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31648",
+            "description": "Bronch valve removal",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          },
+          {
+            "code": "31647",
+            "description": "Bronch w/valve init",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 18.49,
+        "work_rvu": 11.5,
+        "practice_expense_rvu": 5.75,
+        "malpractice_rvu": 1.24
+      }
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31647",
+        "final_codes": [
+          "31648",
+          "31647"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31648": "Removal of a malpositioned valve in the Left Upper Lobe.",
+          "31647": "Placement of replacement valves in the Left Upper Lobe (initial lobe)."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 18.49,
+        "facility_total_payment": 598,
+        "per_code": {
+          "31648": {
+            "facility_rvu": 6.44,
+            "facility_payment": 208
+          },
+          "31647": {
+            "facility_rvu": 12.05,
+            "facility_payment": 390
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7.json (CMS 2025 PFS Final Rule)"
+      },
+      "overall_assessment": "Valve exchange coded as 31648 (removal) + 31647 (placement) covers the complete revision procedure."
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T10:40:00Z",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31648, 31647; total_work_rvu=11.5, total_rvu=18.49 (facility)."
+      ],
+      "warnings": []
+    }
+  }
+]

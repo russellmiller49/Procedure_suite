@@ -1,0 +1,1970 @@
+[
+  {
+    "note_text": "PATIENT: 68-year-old female.\n\nINDICATION: Hemoptysis and CT chest showing a 3.5 cm right mainstem bronchial mass concerning for lung cancer.\n\nPROCEDURE: Flexible bronchoscopy performed under general anesthesia via oral endotracheal tube. Vocal cords and trachea were normal. A friable, obstructing, exophytic tumor was visualized in the right mainstem bronchus with contact bleeding. Multiple endobronchial forceps biopsies were obtained from the right mainstem tumor for histology with good hemostasis after iced saline and brief suctioning. Additional protected brushings were performed from the same lesion for cytology. No BAL, transbronchial lung biopsy, TBNA, EBUS, or therapeutic tumor debulking was performed. Estimated blood loss was <10 mL. The patient was extubated in the procedure room and discharged from PACU in stable condition.",
+    "cpt_codes": [
+      31625,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB001",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 68,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Hemoptysis and central right mainstem mass concerning for lung cancer",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Endobronchial squamous cell carcinoma of the right mainstem bronchus",
+      "cpt_codes": [
+        31625,
+        31623
+      ],
+      "evidence": {
+        "procedure_date": "Procedure header documents date [REDACTED].",
+        "primary_indication": "INDICATION section describes hemoptysis and a right mainstem mass on CT.",
+        "sedation_type": "Bronchoscopy performed under general anesthesia.",
+        "airway_type": "Oral endotracheal tube used for airway control.",
+        "cpt_31625": "Multiple endobronchial forceps biopsies were obtained from the right mainstem tumor.",
+        "cpt_31623": "Protected brushings were performed from the same endobronchial lesion for cytology."
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 10,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Oncology referral and staging workup.",
+      "providers": {
+        "attending_name": "Attending_Alpha",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31625",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard bronchoscopy case with endobronchial biopsies and brushings; no automated patches applied."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31625",
+            "modifier": null,
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31623",
+            "modifier": null,
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31625",
+            "work_rvu": 3.11,
+            "total_facility_rvu": 4.93,
+            "est_facility_payment": 161,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31623",
+            "work_rvu": 2.63,
+            "total_facility_rvu": 4.18,
+            "est_facility_payment": 137,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 5.74,
+          "total_facility_rvu": 9.11,
+          "est_facility_payment": 298
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31625",
+          "31623"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "advanced_sampling_bundles_31622",
+            "description": "When advanced sampling such as endobronchial biopsy or brushing is performed, 31622 (diagnostic bronchoscopy) is not reported separately in the same session.",
+            "primary_code": "31625",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "31625 is selected as the primary bronchoscopy code because multiple endobronchial forceps biopsies were obtained from a right mainstem tumor.",
+          "31623 is added because protected brushings were separately documented and sent for cytology from the same lesion.",
+          "A separate diagnostic bronchoscopy code 31622 is not billed because the diagnostic evaluation is inherent to the biopsy and brushing services per advanced sampling bundling rules."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Flexible bronchoscopy for hemoptysis (SYNB001)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with bronchial or endobronchial biopsy(s)",
+          "category": "bronchoscopy_biopsy_endobronchial",
+          "units": 1,
+          "facility_total_rvus_2025": 4.93,
+          "facility_mpfs_payment_2025": 160.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by endobronchial forceps biopsies of right mainstem tumor."
+        },
+        {
+          "code": "31623",
+          "description": "Bronchoscopy with brushing or protected brushings",
+          "category": "bronchoscopy_diagnostic",
+          "units": 1,
+          "facility_total_rvus_2025": 4.18,
+          "facility_mpfs_payment_2025": 135.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by protected brushings. May be bundled by some payers if performed on the same lesion without a modifier, but separately listed in CPT."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 9.11,
+        "total_facility_mpfs_payment": 295.0,
+        "computation_notes": "Sum of 31625 and 31623."
+      },
+      "rationale": [
+        "Bronchoscopy with endobronchial biopsy (31625) and protected specimen brushings (31623) performed on a right mainstem mass.",
+        "Diagnostic bronchoscopy (31622) is bundled into the therapeutic codes."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 45-year-old male.\n\nINDICATION: Acute cough and unilateral wheeze after choking on a nut; CT with obstructing endobronchial foreign body in the right mainstem bronchus.\n\nPROCEDURE: Flexible bronchoscopy performed with moderate sedation and spontaneous breathing through the native airway. A hard organic foreign body was visualized lodged in the right mainstem bronchus with surrounding edema but no active bleeding. The foreign body was grasped with forceps and removed en bloc through the bronchoscope without fragmentation. Airways were reinspected and no residual material was seen. No BAL, brushings, biopsies, EBUS, or stent placement was performed. The patient tolerated the procedure well without desaturation and was discharged home from PACU.",
+    "cpt_codes": [
+      31635
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB002",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 45,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Suspected endobronchial foreign body with unilateral wheeze",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Endobronchial foreign body removed from right mainstem bronchus",
+      "cpt_codes": [
+        31635
+      ],
+      "evidence": {
+        "procedure_date": "Procedure header documents date [REDACTED].",
+        "primary_indication": "INDICATION notes choking episode and CT showing right mainstem foreign body.",
+        "sedation_type": "Procedure done with moderate sedation and preserved spontaneous respirations.",
+        "airway_type": "Bronchoscopy performed via the native airway without an endotracheal tube.",
+        "cpt_31635": "A hard organic foreign body was grasped and removed en bloc from the right mainstem bronchus."
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Short-term clinic follow-up and repeat chest imaging as needed.",
+      "providers": {
+        "attending_name": "Attending_Beta",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31635"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for bronchoscopic foreign body removal; no automated patches applied."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31635",
+            "modifier": null,
+            "description": "Bronchoscopy; with removal of foreign body",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31635",
+            "work_rvu": 3.42,
+            "total_facility_rvu": 5.54,
+            "est_facility_payment": 181,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 3.42,
+          "total_facility_rvu": 5.54,
+          "est_facility_payment": 181
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31635"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "description": "When a therapeutic bronchoscopy service such as foreign body removal is performed, the diagnostic bronchoscopy component is not billed separately as 31622.",
+            "primary_code": "31635",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "31635 is selected because a discrete endobronchial foreign body was identified and removed under direct bronchoscopic visualization.",
+          "No brushings, biopsies, or BAL were performed; advanced sampling codes are therefore not indicated.",
+          "Per diagnostic-with-surgical rules, a separate diagnostic bronchoscopy code 31622 is not reported."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Foreign body removal bronchoscopy (SYNB002)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31635",
+          "description": "Bronchoscopy with removal of foreign body",
+          "category": "bronchoscopy_foreign_body",
+          "units": 1,
+          "facility_total_rvus_2025": 5.54,
+          "facility_mpfs_payment_2025": 179.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by removal of hard organic foreign body."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 5.54,
+        "total_facility_mpfs_payment": 179.0,
+        "computation_notes": "Single code 31635."
+      },
+      "rationale": [
+        "Procedure was dedicated foreign body removal (31635).",
+        "No other therapeutic or diagnostic interventions were performed."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 62-year-old male with suspected lung cancer.\n\nINDICATION: PET-avid right lower paratracheal lymphadenopathy (station 4R) requiring mediastinal staging.\n\nPROCEDURE: Linear EBUS bronchoscopy performed under general anesthesia via oral ETT. The 4R lymph node measured approximately 12 mm short axis with heterogeneous echotexture and no Doppler vessels. Using a 22-gauge EBUS needle, three passes were obtained from station 4R with good cytologic material seen on ROSE, consistent with malignant cells. No additional nodal stations were sampled. No conventional TBNA, radial EBUS, navigation bronchoscopy, or parenchymal biopsy was performed. The patient was extubated in the operating room and transferred to PACU in stable condition.",
+    "cpt_codes": [
+      31652
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB003",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 62,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Mediastinal lymphadenopathy requiring EBUS staging",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "EBUS-TBNA of 4R with malignant cells consistent with lung carcinoma",
+      "cpt_codes": [
+        31652
+      ],
+      "evidence": {
+        "procedure_date": "Date [REDACTED] is documented in the procedure header.",
+        "primary_indication": "Indication notes PET-avid 4R lymph node requiring staging.",
+        "sedation_type": "Procedure described as linear EBUS under general anesthesia.",
+        "airway_type": "Oral endotracheal tube used for airway control.",
+        "cpt_31652": "Linear EBUS with three needle passes from a single station 4R without sampling of other nodal stations."
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": true,
+      "ebus_scope_brand": "Olympus linear EBUS",
+      "ebus_stations_sampled": [
+        "4R"
+      ],
+      "ebus_needle_gauge": 22,
+      "ebus_needle_type": "Standard FNA",
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Malignant",
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 3,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Thoracic oncology clinic for definitive staging and treatment planning.",
+      "providers": {
+        "attending_name": "Attending_Gamma",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31652"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for limited-station linear EBUS sampling (1-2 stations)."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31652",
+            "modifier": null,
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31652",
+            "work_rvu": 4.46,
+            "total_facility_rvu": 6.96,
+            "est_facility_payment": 228,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 4.46,
+          "total_facility_rvu": 6.96,
+          "est_facility_payment": 228
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31652"
+        ],
+        "dropped_codes": [
+          "31629"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "tbna_with_ebus_tbna",
+            "description": "Conventional TBNA (31629) is not billed in addition to EBUS TBNA when the same nodal station is sampled with EBUS guidance.",
+            "primary_code": "31652",
+            "dropped_codes": [
+              "31629"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "31652 is chosen because only a single mediastinal station (4R) was sampled with linear EBUS and multiple needle passes.",
+          "Conventional TBNA was not performed; 31629 is not supported and would be bundled under EBUS TBNA if attempted at the same station.",
+          "No radial EBUS, navigation, or parenchymal biopsies were documented, so no additional bronchoscopy codes are assigned."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Linear EBUS 1-2 stations (SYNB003)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy with EBUS sampling, 1-2 nodal stations",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 6.96,
+          "facility_mpfs_payment_2025": 225.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of a single station (4R)."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 6.96,
+        "total_facility_mpfs_payment": 225.0,
+        "computation_notes": "Single code 31652."
+      },
+      "rationale": [
+        "Linear EBUS with sampling of one nodal station (4R) maps to 31652.",
+        "No other stations sampled."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 71-year-old female with suspected stage III lung cancer.\n\nINDICATION: PET-avid mediastinal and hilar adenopathy (stations 4R, 7, and 11R) requiring comprehensive EBUS staging.\n\nPROCEDURE: Linear EBUS bronchoscopy performed under general anesthesia with ETT. Systematic nodal survey was performed. Enlarged nodes were seen at stations 4R (15 mm), 7 (18 mm), and 11R (10 mm). Using a 22-gauge EBUS needle, three passes were obtained from each of the three stations for a total of nine passes. ROSE showed malignant cells in 4R and 7 and adequate lymphocytes in 11R. A bronchoalveolar lavage was then performed in the right lower lobe for microbiology and cytology. No transbronchial biopsies, radial EBUS, or navigational bronchoscopy were performed. The patient tolerated the procedure well without complications.",
+    "cpt_codes": [
+      31653,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB004",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 71,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "PET-avid mediastinal and hilar lymphadenopathy requiring systematic EBUS staging",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "EBUS-TBNA with malignant cells in 4R and 7, benign 11R; BAL pending",
+      "cpt_codes": [
+        31653,
+        31624
+      ],
+      "evidence": {
+        "procedure_date": "Procedure date [REDACTED] documented in the header.",
+        "primary_indication": "Indication describes PET-avid mediastinal and hilar nodes and need for staging.",
+        "sedation_type": "Procedure performed under general anesthesia with an endotracheal tube.",
+        "cpt_31653": "Three nodal stations (4R, 7, 11R) sampled with multiple passes each using linear EBUS.",
+        "cpt_31624": "Bronchoalveolar lavage performed in the right lower lobe for microbiology and cytology."
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": true,
+      "ebus_scope_brand": "Olympus linear EBUS",
+      "ebus_stations_sampled": [
+        "4R",
+        "7",
+        "11R"
+      ],
+      "ebus_needle_gauge": 22,
+      "ebus_needle_type": "Standard FNA",
+      "ebus_systematic_staging": true,
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Malignant",
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Multidisciplinary tumor board review and definitive oncologic therapy.",
+      "providers": {
+        "attending_name": "Attending_Delta",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31653",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for multi-station EBUS with BAL."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "modifier": null,
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31624",
+            "modifier": null,
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31653",
+            "work_rvu": 4.96,
+            "total_facility_rvu": 7.7,
+            "est_facility_payment": 252,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31624",
+            "work_rvu": 2.63,
+            "total_facility_rvu": 4.24,
+            "est_facility_payment": 139,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 7.59,
+          "total_facility_rvu": 11.94,
+          "est_facility_payment": 391
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31653",
+          "31624"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "ebus_bundling",
+            "description": "EBUS sampling of multiple nodal stations is captured with a single EBUS code based on the number of stations sampled.",
+            "primary_code": "31653",
+            "dropped_codes": []
+          },
+          {
+            "rule_id": "advanced_sampling_bundles_31622",
+            "description": "When advanced sampling or staging procedures are performed, 31622 is not separately billed.",
+            "primary_code": "31653",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "Three nodal stations (4R, 7, 11R) were sampled with linear EBUS, supporting 31653 for 3 or more stations.",
+          "A bronchoalveolar lavage was separately documented after staging, supporting an additional 31624.",
+          "Diagnostic bronchoscopy is not separately reported because it is inherent in the EBUS staging and BAL services."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Linear EBUS 3+ stations + BAL (SYNB004)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy with EBUS sampling, 3 or more nodal stations",
+          "category": "bronchoscopy_ebus_linear",
+          "units": 1,
+          "facility_total_rvus_2025": 7.7,
+          "facility_mpfs_payment_2025": 249.0,
+          "bundling_or_modifier_notes": "Primary code. Supported by sampling of 4R, 7, and 11R."
+        },
+        {
+          "code": "31624",
+          "description": "Bronchoscopy with bronchoalveolar lavage",
+          "category": "bronchoscopy_diagnostic",
+          "units": 1,
+          "facility_total_rvus_2025": 4.24,
+          "facility_mpfs_payment_2025": 137.0,
+          "bundling_or_modifier_notes": "Separately payable. Supported by RLL BAL performed for microbiology."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 11.94,
+        "total_facility_mpfs_payment": 386.0,
+        "computation_notes": "Sum of 31653 and 31624."
+      },
+      "rationale": [
+        "EBUS-TBNA of 3 stations supports 31653.",
+        "Separate BAL (31624) is documented and billable in addition to EBUS."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 64-year-old male with central airway obstruction from endobronchial tumor.\n\nINDICATION: Progressive dyspnea and post-obstructive pneumonia due to a right mainstem endobronchial mass.\n\nPROCEDURE: Rigid and flexible bronchoscopy under general anesthesia. A friable intraluminal tumor was seen nearly occluding the right mainstem bronchus. Therapeutic aspiration and suctioning were used to clear copious purulent secretions. Balloon dilation was performed to facilitate stent placement. A covered metallic bronchial stent was deployed across the right mainstem bronchus with good expansion and restoration of lumen. No BLVR valves, BAL, transbronchial biopsies, or EBUS were performed. The patient remained ventilated via ETT post procedure and was admitted to the ICU.",
+    "cpt_codes": [
+      31636,
+      31645
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB005",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 64,
+      "gender": "Male",
+      "asa_class": 4,
+      "primary_indication": "Central airway obstruction from right mainstem tumor with post-obstructive pneumonia",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignant right mainstem obstruction treated with covered bronchial stent",
+      "cpt_codes": [
+        31636,
+        31645
+      ],
+      "evidence": {
+        "procedure_date": "Procedure header lists [REDACTED] as the bronchoscopy date.",
+        "primary_indication": "Indication documents central airway obstruction from right mainstem tumor.",
+        "sedation_type": "Rigid and flexible bronchoscopy under general anesthesia.",
+        "cpt_31636": "A covered metallic bronchial stent was deployed across the right mainstem bronchus.",
+        "cpt_31645": "Therapeutic aspiration used to clear copious purulent secretions from the obstructed airway."
+      },
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": "SEMS - Covered",
+      "stent_deployment_method": "Bronchoscopic deployment with balloon dilation",
+      "stent_diameter_mm": 12.0,
+      "stent_location": "Right mainstem",
+      "ebl_ml": 50,
+      "hypoxia_respiratory_failure": true,
+      "follow_up_plan": "ICU monitoring with planned interval bronchoscopy to assess stent patency.",
+      "providers": {
+        "attending_name": "Attending_Epsilon",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31636",
+        "31645"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for airway stent placement with therapeutic aspiration in malignant CAO."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31636",
+            "modifier": null,
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31645",
+            "modifier": null,
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31636",
+            "work_rvu": 4.3,
+            "total_facility_rvu": 6.85,
+            "est_facility_payment": 224,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31645",
+            "work_rvu": 2.78,
+            "total_facility_rvu": 4.47,
+            "est_facility_payment": 146,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 7.08,
+          "total_facility_rvu": 11.32,
+          "est_facility_payment": 370
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31636",
+          "31645"
+        ],
+        "dropped_codes": [
+          "31622",
+          "31630"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "stent_dilation_same_segment",
+            "description": "Balloon dilation in the same segment as bronchial stent placement is considered integral to the stent service and not separately coded.",
+            "primary_code": "31636",
+            "dropped_codes": [
+              "31630"
+            ]
+          },
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "description": "Diagnostic bronchoscopy is bundled into therapeutic bronchoscopy procedures.",
+            "primary_code": "31636",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "31636 is selected for placement of a covered metallic stent in the right mainstem bronchus to relieve malignant obstruction.",
+          "Therapeutic aspiration for copious purulent secretions supports adding 31645.",
+          "Balloon dilation performed solely to facilitate stent deployment is bundled into 31636, and diagnostic bronchoscopy 31622 is not separately billed."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Airway stent placement (SYNB005)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31636",
+          "description": "Bronchoscopy with placement of bronchial stent(s), initial bronchus",
+          "category": "bronchoscopy_therapeutic_stent",
+          "units": 1,
+          "facility_total_rvus_2025": 6.85,
+          "facility_mpfs_payment_2025": 222.0,
+          "bundling_or_modifier_notes": "Primary code. Placement of covered stent in right mainstem. Includes dilation (31630)."
+        },
+        {
+          "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration of tracheobronchial tree, initial",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 4.47,
+          "facility_mpfs_payment_2025": 145.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by clearance of copious purulent secretions."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 11.32,
+        "total_facility_mpfs_payment": 367.0,
+        "computation_notes": "Sum of 31636 and 31645."
+      },
+      "rationale": [
+        "Bronchial stent placement (31636) for malignant obstruction.",
+        "Therapeutic aspiration (31645) for purulent secretions is distinct and separately billable."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 69-year-old female with advanced emphysema.\n\nINDICATION: Severe heterogeneous upper-lobe–predominant emphysema with hyperinflation and persistent dyspnea despite maximal medical therapy; candidate for bronchoscopic lung volume reduction.\n\nPROCEDURE: Flexible bronchoscopy under general anesthesia via ETT. The right upper lobe airways were carefully inspected. Four Zephyr endobronchial valves were placed sequentially into segmental bronchi of the right upper lobe using the manufacturer deployment catheter, with good seating and immediate lobar collapse on fluoroscopy. No valves were placed in other lobes. No Chartis measurements, BAL, transbronchial biopsies, or EBUS procedures were performed during this session. The patient was extubated in PACU and admitted to telemetry for post-BLVR monitoring.",
+    "cpt_codes": [
+      31647
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB006",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 69,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Bronchoscopic lung volume reduction for severe upper-lobe–predominant emphysema",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Successful BLVR with Zephyr valves in the right upper lobe",
+      "cpt_codes": [
+        31647
+      ],
+      "evidence": {
+        "procedure_date": "Procedure header documents BLVR on [REDACTED].",
+        "primary_indication": "Indication notes severe heterogeneous emphysema and BLVR candidacy.",
+        "cpt_31647": "Four Zephyr endobronchial valves were deployed in right upper lobe segmental bronchi as part of BLVR.",
+        "blvr_target_lobe": "Text specifies valve placement only in the right upper lobe."
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": "RUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Standard BLVR pneumothorax surveillance with chest imaging and symptom monitoring.",
+      "providers": {
+        "attending_name": "Attending_Zeta",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31647"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for BLVR valve placement in a single lobe."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31647",
+            "modifier": null,
+            "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31647",
+            "work_rvu": 7.5,
+            "total_facility_rvu": 12.05,
+            "est_facility_payment": 395,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 7.5,
+          "total_facility_rvu": 12.05,
+          "est_facility_payment": 395
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31647"
+        ],
+        "dropped_codes": [
+          "31622",
+          "31634"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "chartis_bundling",
+            "description": "When valve placement is performed at the same session, Chartis collateral ventilation assessment may be bundled into the BLVR service rather than billed separately.",
+            "primary_code": "31647",
+            "dropped_codes": [
+              "31634"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "31647 is appropriate because endobronchial valves were placed in a single target lobe (right upper lobe) during a BLVR procedure.",
+          "No valves were placed in additional lobes, so a BLVR add-on code is not reported.",
+          "Chartis measurements were not performed during this session, and diagnostic bronchoscopy 31622 is not coded separately."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "BLVR valve placement (SYNB006)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31647",
+          "description": "Bronchoscopy with endobronchial valve placement, initial bronchus",
+          "category": "bronchoscopic_blvr_valve_placement",
+          "units": 1,
+          "facility_total_rvus_2025": 12.05,
+          "facility_mpfs_payment_2025": 390.0,
+          "bundling_or_modifier_notes": "Primary code. Placement of 4 valves in RUL (single lobe)."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 12.05,
+        "total_facility_mpfs_payment": 390.0,
+        "computation_notes": "Single code 31647."
+      },
+      "rationale": [
+        "BLVR with valves placed in a single lobe (RUL) maps to 31647.",
+        "No additional lobes treated, so +31651 is not applicable."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 72-year-old male with prior BLVR in the right upper lobe.\n\nINDICATION: Recurrent pneumonia and persistent cough attributed to migrated and occlusive right upper lobe valves; planned valve removal and airway toileting.\n\nPROCEDURE: Flexible bronchoscopy under general anesthesia via ETT. Four previously placed Zephyr valves were visualized in the right upper lobe segmental bronchi, with one partially migrated. All four valves were removed using the manufacturer retrieval forceps without complication. Extensive therapeutic aspiration and suctioning were performed to clear thick, purulent secretions from the right upper lobe and bronchus intermedius. No new valves were placed, and no biopsies, BAL, or EBUS procedures were performed. The patient was extubated and admitted for IV antibiotics.",
+    "cpt_codes": [
+      31648,
+      31645
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB007",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 72,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Removal of malfunctioning BLVR valves and airway toileting for recurrent pneumonia",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Successful removal of endobronchial valves with improved airway clearance",
+      "cpt_codes": [
+        31648,
+        31645
+      ],
+      "evidence": {
+        "procedure_date": "Valve removal documented on [REDACTED].",
+        "primary_indication": "Indication references migrated right upper lobe valves and recurrent pneumonia.",
+        "cpt_31648": "All previously placed Zephyr valves in the right upper lobe were removed using retrieval forceps.",
+        "cpt_31645": "Extensive therapeutic aspiration and suctioning cleared thick purulent secretions."
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleural_side": null,
+      "pleural_intercostal_space": null,
+      "pleural_opening_pressure_measured": null,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": "RUL",
+      "blvr_valve_type": "Zephyr (Pulmonx)",
+      "blvr_number_of_valves": 4,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 10,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Monitor for recurrent infection and reassess need for further lung volume reduction.",
+      "providers": {
+        "attending_name": "Attending_Eta",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "31648",
+        "31645"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for BLVR valve removal with therapeutic aspiration."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "31648",
+            "modifier": null,
+            "description": "Bronchoscopy; with removal of endobronchial valve(s), initial bronchus",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31645",
+            "modifier": null,
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "31648",
+            "work_rvu": 4.0,
+            "total_facility_rvu": 6.44,
+            "est_facility_payment": 211,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "31645",
+            "work_rvu": 2.78,
+            "total_facility_rvu": 4.47,
+            "est_facility_payment": 146,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 6.78,
+          "total_facility_rvu": 10.91,
+          "est_facility_payment": 357
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "31648",
+          "31645"
+        ],
+        "dropped_codes": [
+          "31622"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "description": "Diagnostic bronchoscopy is considered inherent in therapeutic bronchoscopic procedures such as valve removal and airway toileting.",
+            "primary_code": "31648",
+            "dropped_codes": [
+              "31622"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "31648 captures removal of previously placed endobronchial valves in a single bronchus.",
+          "Extensive therapeutic aspiration for copious secretions justifies an additional 31645.",
+          "A separate diagnostic bronchoscopy is not coded given the primarily therapeutic intent."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "BLVR valve removal (SYNB007)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "31648",
+          "description": "Bronchoscopy with removal of endobronchial valve(s), initial bronchus",
+          "category": "bronchoscopic_blvr_valve_removal",
+          "units": 1,
+          "facility_total_rvus_2025": 6.44,
+          "facility_mpfs_payment_2025": 208.0,
+          "bundling_or_modifier_notes": "Primary code. Removal of 4 valves from RUL."
+        },
+        {
+          "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration of tracheobronchial tree, initial",
+          "category": "bronchoscopy_therapeutic_airway_tumor",
+          "units": 1,
+          "facility_total_rvus_2025": 4.47,
+          "facility_mpfs_payment_2025": 145.0,
+          "bundling_or_modifier_notes": "Secondary code. Aspiration of thick purulent secretions (post-obstructive)."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 10.91,
+        "total_facility_mpfs_payment": 353.0,
+        "computation_notes": "Sum of 31648 and 31645."
+      },
+      "rationale": [
+        "Removal of valves from one lobe (31648).",
+        "Therapeutic aspiration of secretions (31645) is distinct and significant."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 60-year-old female with recurrent unilateral pleural effusion.\n\nINDICATION: Symptomatic right pleural effusion of unclear etiology; diagnostic and therapeutic thoracentesis planned.\n\nPROCEDURE: At the bedside with the patient sitting, the right posterior hemithorax was imaged with ultrasound showing a large anechoic effusion without loculations. After marking an appropriate site, the skin was prepped and draped, and local anesthetic was infiltrated. A single thoracentesis needle and catheter were advanced into the pleural space without complication. Approximately 1,500 mL of serous fluid was removed with symptomatic relief. Opening pressure was not formally measured. No ultrasound guidance code, chest tube placement, tunneled catheter, or thoracoscopy was performed. Post-procedure lung sliding was preserved clinically and on ultrasound.",
+    "cpt_codes": [
+      32554
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB008",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 60,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Recurrent right pleural effusion requiring diagnostic and therapeutic thoracentesis",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Large right pleural effusion drained; fluid studies pending",
+      "cpt_codes": [
+        32554
+      ],
+      "evidence": {
+        "procedure_date": "Progress note documents thoracentesis on [REDACTED].",
+        "primary_indication": "Indication states symptomatic right pleural effusion of unclear etiology.",
+        "pleural_procedure_type": "Narrative describes a single thoracentesis with needle and catheter.",
+        "pleural_volume_drained_ml": "Approximately 1,500 mL of serous fluid was removed.",
+        "cpt_32554": "Thoracentesis performed without separate imaging guidance code."
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": "Thoracentesis",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "Right posterior 7th intercostal space, mid-scapular line",
+      "pleural_opening_pressure_measured": false,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": "Serous",
+      "pleural_volume_drained_ml": 1500,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 2,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Outpatient follow-up with pleural fluid studies and repeat imaging as needed.",
+      "providers": {
+        "attending_name": "Attending_Theta",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "32554"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for thoracentesis without separately reportable imaging guidance."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "32554",
+            "modifier": null,
+            "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; without imaging guidance",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "32554",
+            "work_rvu": 1.82,
+            "total_facility_rvu": 2.6,
+            "est_facility_payment": 85,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 1.82,
+          "total_facility_rvu": 2.6,
+          "est_facility_payment": 85
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "32554"
+        ],
+        "dropped_codes": [
+          "71045"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "pleural_post_procedure_imaging",
+            "description": "Routine post-procedure chest radiographs after thoracentesis are typically not separately billed when performed for confirmation only.",
+            "primary_code": "32554",
+            "dropped_codes": [
+              "71045"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "32554 is chosen because the procedure is described as a thoracentesis without separate, billable imaging guidance.",
+          "Ultrasound was used to localize the effusion, but there is no distinct, independently reportable imaging interpretation documented.",
+          "Chest imaging performed for confirmation only is not coded separately per pleural imaging rules."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "Thoracentesis without guidance code (SYNB008)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "32554",
+          "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; without imaging guidance",
+          "category": "thoracentesis",
+          "units": 1,
+          "facility_total_rvus_2025": 2.6,
+          "facility_mpfs_payment_2025": 84.0,
+          "bundling_or_modifier_notes": "Primary code. Selected because documentation states 'No ultrasound guidance code... was performed' despite US use for marking."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 2.6,
+        "total_facility_mpfs_payment": 84.0,
+        "computation_notes": "Single code 32554."
+      },
+      "rationale": [
+        "Thoracentesis performed. While US was used for marking, the note explicitly excludes billing for US guidance, supporting 32554."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 66-year-old male with complicated parapneumonic effusion.\n\nINDICATION: Loculated right pleural effusion with residual collections after chest tube drainage; planned tunneled catheter placement and intrapleural fibrinolytic therapy.\n\nPROCEDURE: Under ultrasound guidance, a right lateral chest wall entry site was selected and anesthetized. A tunneled indwelling pleural catheter with cuff was placed into the largest loculated collection and connected to drainage bottles, with good flow of serosanguinous fluid. Approximately 800 mL was removed at the time of placement. Through the newly placed catheter, a single dose of tPA and DNase was instilled and allowed to dwell per institutional protocol. No additional thoracentesis, thoracoscopy, or chest tube was placed. The patient tolerated the procedure well and was admitted for further intrapleural therapy.",
+    "cpt_codes": [
+      32550,
+      32561
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB009",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 66,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Complicated parapneumonic effusion requiring tunneled catheter and fibrinolytics",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Indwelling tunneled pleural catheter placed with first-day intrapleural fibrinolytic instillation",
+      "cpt_codes": [
+        32550,
+        32561
+      ],
+      "evidence": {
+        "procedure_date": "Procedure documented on [REDACTED].",
+        "primary_indication": "Loculated parapneumonic effusion with residual collections after chest tube.",
+        "cpt_32550": "A tunneled indwelling pleural catheter with cuff was placed under ultrasound guidance.",
+        "cpt_32561": "A first-day dose of tPA/DNase was instilled via the chest catheter for fibrinolysis."
+      },
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "pleural_procedure_type": "Tunneled Catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "Right lateral 5th intercostal space",
+      "pleural_opening_pressure_measured": false,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 800,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Serial intrapleural fibrinolytic instillations and catheter drainage until radiographic improvement.",
+      "providers": {
+        "attending_name": "Attending_Iota",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "32550",
+        "32561"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for tunneled pleural catheter placement with first-day fibrinolytic instillation."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "32550",
+            "modifier": null,
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "32561",
+            "modifier": null,
+            "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "32550",
+            "work_rvu": 3.92,
+            "total_facility_rvu": 5.88,
+            "est_facility_payment": 193,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "32561",
+            "work_rvu": 1.39,
+            "total_facility_rvu": 2.09,
+            "est_facility_payment": 68,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 5.31,
+          "total_facility_rvu": 7.97,
+          "est_facility_payment": 261
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "32550",
+          "32561"
+        ],
+        "dropped_codes": [
+          "32554"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "thoracentesis_with_ipc",
+            "description": "Separate thoracentesis is not billed when the primary intent is tunneled catheter placement and drainage through that catheter.",
+            "primary_code": "32550",
+            "dropped_codes": [
+              "32554"
+            ]
+          }
+        ],
+        "narrative_paragraphs": [
+          "32550 is selected because a tunneled, indwelling pleural catheter with cuff was placed for ongoing drainage.",
+          "First-day intrapleural fibrinolytic instillation via the catheter supports adding 32561.",
+          "A separate thoracentesis code is not used because drainage occurred through the newly placed catheter, which is captured by 32550."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "IPC placement with fibrinolytics (SYNB009)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "32550",
+          "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+          "category": "tunneled_pleural_catheter_placement",
+          "units": 1,
+          "facility_total_rvus_2025": 5.88,
+          "facility_mpfs_payment_2025": 190.0,
+          "bundling_or_modifier_notes": "Primary code."
+        },
+        {
+          "code": "32561",
+          "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+          "category": "pleural_intrapleural_treatment",
+          "units": 1,
+          "facility_total_rvus_2025": 2.09,
+          "facility_mpfs_payment_2025": 68.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by tPA/DNase instillation."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 7.97,
+        "total_facility_mpfs_payment": 258.0,
+        "computation_notes": "Sum of 32550 and 32561."
+      },
+      "rationale": [
+        "Placement of IPC (32550).",
+        "Concurrent first-day fibrinolytic instillation (32561)."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: 63-year-old female with a peripheral right lower lobe lung nodule.\n\nINDICATION: 2.1 cm peripheral right lower lobe nodule requiring tissue diagnosis; not amenable to bronchoscopic sampling.\n\nPROCEDURE: CT-guided percutaneous core needle biopsy of the right lower lobe nodule was performed in the prone position. Multiple 18-gauge core samples were obtained and sent for histology and culture. Immediately after the biopsy, the patient developed dyspnea and right-sided pleuritic chest pain. CT and bedside ultrasound confirmed a moderate right pneumothorax. A large-bore chest tube was placed in the right anterior axillary line, connected to a water seal drainage system with good air evacuation. The patient was admitted for chest tube management. No concurrent bronchoscopy or thoracentesis was performed.",
+    "cpt_codes": [
+      32408,
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNB010",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 63,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "CT-guided percutaneous biopsy of a peripheral right lower lobe lung nodule",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "CT-guided core needle biopsy of RLL nodule complicated by iatrogenic pneumothorax requiring chest tube",
+      "cpt_codes": [
+        32408,
+        32551
+      ],
+      "evidence": {
+        "procedure_date": "Biopsy and chest tube placement documented on [REDACTED].",
+        "primary_indication": "Indication describes a 2.1 cm peripheral right lower lobe nodule needing tissue diagnosis.",
+        "cpt_32408": "CT-guided core needle biopsy of the right lower lobe nodule with multiple cores obtained.",
+        "cpt_32551": "Subsequent moderate right pneumothorax treated with placement of a chest tube connected to a drainage system."
+      },
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pneumothorax_intervention": "Tube thoracostomy with water-seal drainage system",
+      "pleural_procedure_type": "Tube Thoracostomy",
+      "pleural_guidance": "CT and ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": "Right anterior 4th intercostal space",
+      "pleural_opening_pressure_measured": false,
+      "pleural_opening_pressure_cmh2o": null,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "ebus_photodocumentation_complete": null,
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": null,
+      "ebus_rose_available": null,
+      "ebus_rose_result": null,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_location": null,
+      "ebl_ml": 20,
+      "hypoxia_respiratory_failure": false,
+      "follow_up_plan": "Hospital[REDACTED]",
+      "providers": {
+        "attending_name": "Attending_Kappa",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-07T00:00:00"
+      }
+    },
+    "source_file": "synthetic_notes_with_registry.v2_8_additions.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [
+        "32408",
+        "32551"
+      ],
+      "invalid_codes": []
+    },
+    "data_quality_flags": [
+      "SYNTHETIC_NOTE"
+    ],
+    "patch_metadata": {
+      "patched": false,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Synthetic gold standard case for percutaneous lung biopsy complicated by pneumothorax requiring chest tube."
+      ],
+      "warnings": []
+    },
+    "coding_support": {
+      "version": "1.0.0",
+      "rate_schedule": "physician_2025",
+      "section_1_coding_summary": {
+        "rows": [
+          {
+            "cpt_code": "32408",
+            "modifier": null,
+            "description": "Core needle biopsy, lung or mediastinum, percutaneous, including imaging guidance",
+            "units": 1,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "32551",
+            "modifier": null,
+            "description": "Tube thoracostomy, includes connection to drainage system, when performed (separate procedure)",
+            "units": 1,
+            "is_add_on": false
+          }
+        ]
+      },
+      "section_2_financial_analysis": {
+        "rows": [
+          {
+            "cpt_code": "32408",
+            "work_rvu": 3.18,
+            "total_facility_rvu": 4.75,
+            "est_facility_payment": 156,
+            "is_add_on": false
+          },
+          {
+            "cpt_code": "32551",
+            "work_rvu": 3.04,
+            "total_facility_rvu": 4.56,
+            "est_facility_payment": 149,
+            "is_add_on": false
+          }
+        ],
+        "totals": {
+          "work_rvu": 6.22,
+          "total_facility_rvu": 9.31,
+          "est_facility_payment": 305
+        },
+        "notes": [
+          "Values based on 2025 Medicare national averages from ip_coding_billing.v2_7 fee_schedules (facility).",
+          "Totals do not account for MPPR, sequestration, or geographic adjustments."
+        ]
+      },
+      "section_3_rationale": {
+        "selected_codes": [
+          "32408",
+          "32551"
+        ],
+        "dropped_codes": [
+          "32554"
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "tube_thoracostomy_separate_procedure",
+            "description": "Tube thoracostomy can be reported separately from the primary procedure when performed to treat a complication such as pneumothorax.",
+            "primary_code": "32551",
+            "dropped_codes": []
+          }
+        ],
+        "narrative_paragraphs": [
+          "32408 is selected for CT-guided core needle biopsy of the right lower lobe nodule with imaging guidance included.",
+          "An iatrogenic pneumothorax treated with chest tube placement supports coding 32551 as a separately reportable procedure.",
+          "No thoracentesis code is billed; the pleural intervention is fully captured by the tube thoracostomy code."
+        ]
+      }
+    },
+    "coding_review": {
+      "reviewer": "IP-Coder-Patch-GPT",
+      "review_date": "2025-12-07",
+      "coding_system_version": "ip_coding_billing.v2_7",
+      "source_note_citation": "CT-guided biopsy and chest tube (SYNB010)",
+      "knowledge_citations": [
+        "IP coding & billing knowledge base v2.7",
+        "2025 MPFS facility RVUs"
+      ],
+      "per_code": [
+        {
+          "code": "32408",
+          "description": "Core needle biopsy, lung or mediastinum, percutaneous, including imaging guidance",
+          "category": "ttna_percutaneous_lung_biopsy",
+          "units": 1,
+          "facility_total_rvus_2025": 4.75,
+          "facility_mpfs_payment_2025": 154.0,
+          "bundling_or_modifier_notes": "Primary biopsy code."
+        },
+        {
+          "code": "32551",
+          "description": "Tube thoracostomy, includes connection to drainage system, when performed (separate procedure)",
+          "category": "tube_thoracostomy",
+          "units": 1,
+          "facility_total_rvus_2025": 4.56,
+          "facility_mpfs_payment_2025": 148.0,
+          "bundling_or_modifier_notes": "Secondary code. Supported by chest tube placement for pneumothorax."
+        }
+      ],
+      "totals_2025_facility": {
+        "total_facility_rvus": 9.31,
+        "total_facility_mpfs_payment": 302.0,
+        "computation_notes": "Sum of 32408 and 32551."
+      },
+      "rationale": [
+        "Percutaneous core biopsy (32408).",
+        "Complication (pneumothorax) required separate tube thoracostomy (32551), which is separately billable."
+      ]
+    }
+  }
+]

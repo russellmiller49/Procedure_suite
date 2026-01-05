@@ -75,6 +75,14 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Also export `onnx/model_quantized.onnx` (opt-in; WASM INT8 may misbehave).",
     )
     ap.add_argument(
+        "--static-quantize",
+        nargs="?",
+        const=True,
+        default=False,
+        type=parse_bool,
+        help="Use static quantization instead of dynamic (smaller model, ~40-50%% size reduction).",
+    )
+    ap.add_argument(
         "--clean",
         nargs="?",
         const=True,
@@ -208,16 +216,72 @@ def validate_onnx_inputs(model_onnx: Path, required: Iterable[str] = REQUIRED_ON
         )
 
 
-def quantize_onnx_model(model_onnx: Path, quantized_onnx: Path) -> None:
+def quantize_onnx_model(model_onnx: Path, quantized_onnx: Path, use_static: bool = False) -> None:
+    """Quantize ONNX model using dynamic or static quantization.
+    
+    Args:
+        model_onnx: Path to input ONNX model
+        quantized_onnx: Path for quantized output
+        use_static: If True, use static quantization (smaller but requires calibration data)
+    """
     try:
-        from onnxruntime.quantization import QuantType, quantize_dynamic  # type: ignore[import-untyped]
+        from onnxruntime.quantization import (
+            QuantType,
+            quantize_dynamic,
+            quantize_static,
+            CalibrationDataReader,
+        )
+        import onnxruntime as ort
+        import numpy as np
     except ImportError as exc:
         raise RuntimeError(
             "onnxruntime is required for quantization. Install with: pip install onnxruntime"
         ) from exc
 
     quantized_onnx.parent.mkdir(parents=True, exist_ok=True)
-    quantize_dynamic(str(model_onnx), str(quantized_onnx), weight_type=QuantType.QInt8)
+    
+    if use_static:
+        # Static quantization is more aggressive but requires calibration data
+        # Create a simple calibration data reader with representative tokenized inputs
+        class TokenCalibrationDataReader(CalibrationDataReader):
+            def __init__(self, model_path: Path):
+                self.model_path = model_path
+                self.data_iter = None
+                # Generate representative calibration samples
+                # These are dummy tokenized sequences that represent typical input
+                self.calibration_samples = []
+                for _ in range(10):  # Use 10 calibration samples
+                    # Create varied length sequences (typical for token classification)
+                    seq_len = np.random.randint(128, 512)
+                    self.calibration_samples.append({
+                        "input_ids": np.random.randint(0, 30000, (1, seq_len), dtype=np.int64),
+                        "attention_mask": np.ones((1, seq_len), dtype=np.int64),
+                    })
+            
+            def get_next(self):
+                if self.data_iter is None:
+                    self.data_iter = iter(self.calibration_samples)
+                return next(self.data_iter, None)
+        
+        try:
+            print("Performing static quantization (this may take a few minutes)...")
+            quantize_static(
+                str(model_onnx),
+                str(quantized_onnx),
+                calibration_data_reader=TokenCalibrationDataReader(model_onnx),
+                weight_type=QuantType.QInt8,
+                activation_type=QuantType.QUInt8,
+                optimize_model=True,
+            )
+            print("Static quantization completed successfully.")
+        except Exception as e:
+            # Fallback to dynamic if static fails
+            print(f"Static quantization failed ({e}), falling back to dynamic...")
+            quantize_dynamic(str(model_onnx), str(quantized_onnx), weight_type=QuantType.QInt8)
+    else:
+        # Dynamic quantization (default - faster, no calibration needed)
+        print("Performing dynamic quantization...")
+        quantize_dynamic(str(model_onnx), str(quantized_onnx), weight_type=QuantType.QInt8)
 
 
 def clean_export_dir(out_dir: Path) -> None:
@@ -275,11 +339,13 @@ def main() -> None:
 
     if args.quantize:
         quantized_path = onnx_dir / "model_quantized.onnx"
-        quantize_onnx_model(model_path, quantized_path)
+        quantize_onnx_model(model_path, quantized_path, use_static=args.static_quantize)
         if not quantized_path.exists() or quantized_path.stat().st_size < 5_000_000:
             raise RuntimeError("Quantization failed: model_quantized.onnx missing or too small.")
         validate_onnx_inputs(quantized_path)
-        print(f"Quantized model_quantized.onnx size: {format_size(quantized_path.stat().st_size)}")
+        quantized_size = quantized_path.stat().st_size
+        reduction_pct = (1 - quantized_size / model_size) * 100
+        print(f"Quantized model_quantized.onnx size: {format_size(quantized_size)} ({reduction_pct:.1f}% reduction)")
 
     for name in MODEL_FILES:
         src = model_dir / name

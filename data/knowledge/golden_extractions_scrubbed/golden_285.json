@@ -1,0 +1,1699 @@
+[
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. David Wilson\nFellow: Dr. Alex Chen (PGY-5)\n\nIndication: Lung-RADS 4B nodule\nTarget: 26mm nodule in Lingula\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPRVC\t13\t293\t8\t80\t5\t17\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the Lingula (LB4) based on the pre-operative CT navigational plan. Registration accuracy: 2.1mm.\n\nOnce in the target vicinity, a Tool-in-Lesion Tomosynthesis (TiLT+) sweep was performed using the C-arm. The system generated an updated intra-operative 3D volume, revealing a 1.8cm divergence between the pre-op CT target and the actual lesion location due to patient positioning.\n\nThe augmented reality target was updated on the navigation screen to match real-time anatomy. Intra-operative tomosynthesis (TiLT) performed to update target location and correct for divergence.\n\nThe scope was adjusted to align with the corrected TiLT target. Confirmation of tool position was verified using the augmented fluoroscopy overlay provided by the TiLT system.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Adjacent.\n\nTransbronchial needle aspiration performed with 22G needle. 5 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 4 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nROSE Result: Malignant cells id[REDACTED], consistent with squamous cell carcinoma\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nWilson, MD",
+    "cpt_codes": [
+      31629,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "3243612",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 74,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Lung-RADS 4B nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": "UCSF Medical Center[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic + TiLT tomosynthesis",
+      "nav_registration_error_mm": 2.1,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "TiLT+ tomosynthesis",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Transbronchial forceps",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 26,
+      "lesion_location": "Lingula - Superior Lingula",
+      "bronch_location_lobe": "Lingula",
+      "bronch_location_segment": "LB4",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS + TiLT+",
+      "bronch_num_tbbx": 4,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Malignant cells id[REDACTED], consistent with squamous cell carcinoma",
+      "providers": {
+        "attending_name": "Wilson",
+        "fellow_name": "Dr. Alex Chen",
+        "assistant_name": "John Taylor, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530180"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31629": "TBNA of Lingula nodule (5 passes).",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation with TiLT+.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.25,
+          "facility_total_payment": 493.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (TBLB) as bundled with 31629 (TBNA) on same lesion."
+      },
+      "nav_tilt_divergence_cm": 1.8,
+      "nav_tilt_divergence_reason": "patient [REDACTED]",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 15.25,
+        "work_rvu": 10.05,
+        "practice_expense_rvu": 4.1,
+        "malpractice_rvu": 1.1
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: CDR Patricia Davis, MD\nFellow: Dr. Kevin Patel (PGY-5)\n\nIndication: Pulmonary nodule in patient with prior malignancy\nTarget: 11mm nodule in LLL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nVCV\t13\t387\t13\t80\t5\t23\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the LLL (LB7+8) based on the pre-operative CT navigational plan. Registration accuracy: 3.5mm.\n\nOnce in the target vicinity, a Tool-in-Lesion Tomosynthesis (TiLT+) sweep was performed using the C-arm. The system generated an updated intra-operative 3D volume, revealing a 1.3cm divergence between the pre-op CT target and the actual lesion location due to atelectasis.\n\nThe augmented reality target was updated on the navigation screen to match real-time anatomy. Intra-operative tomosynthesis (TiLT) performed to update target location and correct for divergence.\n\nThe scope was adjusted to align with the corrected TiLT target. Confirmation of tool position was verified using the augmented fluoroscopy overlay provided by the TiLT system.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Adjacent.\n\nTransbronchial needle aspiration performed with 22G needle. 5 passes obtained. Samples sent for Cytology and Cell block.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nROSE Result: Granulomatous inflammation\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nDavis, MD",
+    "cpt_codes": [
+      31629,
+      31627,
+      31654,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "9864901",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 64,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Pulmonary nodule in patient with prior malignancy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31627,
+        31654,
+        31623
+      ],
+      "institution_name": "VA San Diego Healthcare System[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic + TiLT tomosynthesis",
+      "nav_registration_error_mm": 3.5,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "TiLT+ tomosynthesis",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 11,
+      "lesion_location": "LLL - Anteromedial-Basal Segment of LLL",
+      "bronch_location_lobe": "LLL",
+      "bronch_location_segment": "LB7+8",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS + TiLT+",
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Granulomatous inflammation",
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": "Dr. Kevin Patel",
+        "assistant_name": "Charles Campbell, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530280"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of LLL nodule.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation with TiLT+.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.25,
+          "facility_total_payment": 493.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Codes correct as documented."
+      },
+      "nav_tilt_divergence_cm": 1.3,
+      "nav_tilt_divergence_reason": "atelectasis",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 15.25,
+        "work_rvu": 10.05,
+        "practice_expense_rvu": 4.1,
+        "malpractice_rvu": 1.1
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31627",
+        "31654",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. James Rodriguez\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Suspicious nodule with high Brock score\nTarget: 9mm nodule in RLL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPCV\t10\t342\t16\t80\t8\t20\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the RLL (RB6) based on the pre-operative CT navigational plan. Registration accuracy: 3.8mm.\n\nOnce in the target vicinity, a Tool-in-Lesion Tomosynthesis (TiLT+) sweep was performed using the C-arm. The system generated an updated intra-operative 3D volume, revealing a 1.7cm divergence between the pre-op CT target and the actual lesion location due to atelectasis.\n\nThe augmented reality target was updated on the navigation screen to match real-time anatomy. Intra-operative tomosynthesis (TiLT) performed to update target location and correct for divergence.\n\nThe scope was adjusted to align with the corrected TiLT target. Confirmation of tool position was verified using the augmented fluoroscopy overlay provided by the TiLT system.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Concentric.\n\nTransbronchial needle aspiration performed with 22G needle. 7 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 4 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nGold fiducial marker placed under TiLT-augmented fluoroscopic guidance for SBRT planning.\n\nROSE Result: Atypical cells present, suspicious for malignancy\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nRodriguez, MD",
+    "cpt_codes": [
+      31629,
+      31626,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "1391425",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 67,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Suspicious nodule with high Brock score",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31626,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": "UCSF Medical Center[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic + TiLT tomosynthesis",
+      "nav_registration_error_mm": 3.8,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "TiLT+ tomosynthesis",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Transbronchial forceps",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 9,
+      "lesion_location": "RLL - Superior Segment of RLL",
+      "bronch_location_lobe": "RLL",
+      "bronch_location_segment": "RB6",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS + TiLT+",
+      "bronch_num_tbbx": 4,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Atypical cells present, suspicious for malignancy",
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": "Dr. Lauren Walsh",
+        "assistant_name": "Donald Ramirez, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530358"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31626",
+          "final_codes": [
+            "31626",
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31626": "Placement of fiducial marker.",
+            "31629": "TBNA of RLL nodule.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation with TiLT+.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 21.49,
+          "facility_total_payment": 695.0,
+          "per_code": {
+            "31626": {
+              "facility_rvu": 6.24,
+              "facility_payment": 202
+            },
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (bundled with 31629 on same site). Retained 31626 (distinct service)."
+      },
+      "nav_tilt_divergence_cm": 1.7,
+      "nav_tilt_divergence_reason": "atelectasis",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31626",
+            "description": "Bronchoscopy w/markers",
+            "units": 1
+          },
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 21.49,
+        "work_rvu": 13.96,
+        "practice_expense_rvu": 6.03,
+        "malpractice_rvu": 1.5
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623",
+        "31626"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Lisa Anderson\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Lung-RADS 4X nodule\nTarget: 22mm nodule in LUL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPCV\t11\t392\t9\t80\t6\t16\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the LUL (LB1+2) based on the pre-operative CT navigational plan. Registration accuracy: 2.3mm.\n\nOnce in the target vicinity, a Tool-in-Lesion Tomosynthesis (TiLT+) sweep was performed using the C-arm. The system generated an updated intra-operative 3D volume, revealing a 1.5cm divergence between the pre-op CT target and the actual lesion location due to respiratory motion.\n\nThe augmented reality target was updated on the navigation screen to match real-time anatomy. Intra-operative tomosynthesis (TiLT) performed to update target location and correct for divergence.\n\nThe scope was adjusted to align with the corrected TiLT target. Confirmation of tool position was verified using the augmented fluoroscopy overlay provided by the TiLT system.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Eccentric.\n\nTransbronchial needle aspiration performed with 21G needle. 5 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 7 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nGold fiducial marker placed under TiLT-augmented fluoroscopic guidance for SBRT planning.\n\nROSE Result: Lymphocytes and benign cells, adequate for evaluation\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nAnderson, MD",
+    "cpt_codes": [
+      31629,
+      31626,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "2472138",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 82,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Lung-RADS 4X nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31626,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": "Cleveland Clinic[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic + TiLT tomosynthesis",
+      "nav_registration_error_mm": 2.3,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Eccentric",
+      "nav_imaging_verification": "TiLT+ tomosynthesis",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "21G needle",
+        "Transbronchial forceps",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 22,
+      "lesion_location": "LUL - Apicoposterior Segment of LUL",
+      "bronch_location_lobe": "LUL",
+      "bronch_location_segment": "LB1+2",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS + TiLT+",
+      "bronch_num_tbbx": 7,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Lymphocytes and benign cells, adequate for evaluation",
+      "providers": {
+        "attending_name": "Anderson",
+        "fellow_name": "Dr. Lauren Walsh",
+        "assistant_name": "Jason Flores, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530412"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31626",
+          "final_codes": [
+            "31626",
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31626": "Placement of fiducial marker.",
+            "31629": "TBNA of LUL nodule.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation with TiLT+.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 21.49,
+          "facility_total_payment": 695.0,
+          "per_code": {
+            "31626": {
+              "facility_rvu": 6.24,
+              "facility_payment": 202
+            },
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (bundled with 31629 on same site)."
+      },
+      "nav_tilt_divergence_cm": 1.5,
+      "nav_tilt_divergence_reason": "respiratory motion",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31626",
+            "description": "Bronchoscopy w/markers",
+            "units": 1
+          },
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 21.49,
+        "work_rvu": 13.96,
+        "practice_expense_rvu": 6.03,
+        "malpractice_rvu": 1.5
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623",
+        "31626"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Sarah Williams\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Multiple pulmonary nodules - dominant lesion biopsy\nTarget: 25mm nodule in RLL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPCV\t10\t309\t11\t80\t5\t21\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the RLL (RB9) based on the pre-operative CT navigational plan. Registration accuracy: 2.9mm.\n\nOnce in the target vicinity, a Tool-in-Lesion Tomosynthesis (TiLT+) sweep was performed using the C-arm. The system generated an updated intra-operative 3D volume, revealing a 1.5cm divergence between the pre-op CT target and the actual lesion location due to respiratory motion.\n\nThe augmented reality target was updated on the navigation screen to match real-time anatomy. Intra-operative tomosynthesis (TiLT) performed to update target location and correct for divergence.\n\nThe scope was adjusted to align with the corrected TiLT target. Confirmation of tool position was verified using the augmented fluoroscopy overlay provided by the TiLT system.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Adjacent.\n\nTransbronchial needle aspiration performed with 22G needle. 5 passes obtained. Samples sent for Cytology and Cell block.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nROSE Result: No evidence of malignant neoplasm\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nWilliams, MD",
+    "cpt_codes": [
+      31629,
+      31627,
+      31654,
+      31623
+    ],
+    "registry_entry": {
+      "patient_mrn": "9283505",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 80,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Multiple pulmonary nodules - dominant lesion biopsy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31627,
+        31654,
+        31623
+      ],
+      "institution_name": "Johns Hopkins Hospital, Baltimore, MD",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic + TiLT tomosynthesis",
+      "nav_registration_error_mm": 2.9,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "TiLT+ tomosynthesis",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 25,
+      "lesion_location": "RLL - Lateral-Basal Segment of RLL",
+      "bronch_location_lobe": "RLL",
+      "bronch_location_segment": "RB9",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS + TiLT+",
+      "bronch_num_tbbx": null,
+      "bronch_tbbx_tool": null,
+      "ebus_rose_available": true,
+      "ebus_rose_result": "No evidence of malignant neoplasm",
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": "LT Michelle Torres, MD",
+        "assistant_name": "Kevin Wright, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530469"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31629": "TBNA of RLL nodule.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation with TiLT+.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.25,
+          "facility_total_payment": 493.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Codes correct as documented."
+      },
+      "nav_tilt_divergence_cm": 1.5,
+      "nav_tilt_divergence_reason": "respiratory motion",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 15.25,
+        "work_rvu": 10.05,
+        "practice_expense_rvu": 4.1,
+        "malpractice_rvu": 1.1
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31627",
+        "31654",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Amanda Garcia\nFellow: Dr. Maria Santos (PGY-6)\n\nIndication: PET-avid lung nodule\nTarget: 31mm nodule in RML\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPCV\t10\t363\t10\t100\t5\t18\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the RML (RB4) based on the pre-operative CT navigational plan. Registration accuracy: 2.1mm.\n\nFluoroscopic guidance used to confirm scope position relative to target. Navigation alignment confirmed.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Concentric.\n\nTransbronchial needle aspiration performed with 21G needle. 6 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 4 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nROSE Result: Atypical cells, cannot exclude malignancy\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nGarcia, MD",
+    "cpt_codes": [
+      31629,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "5951047",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 68,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "PET-avid lung nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": "Scripps Memorial Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 2.1,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "21G needle",
+        "Transbronchial forceps",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 31,
+      "lesion_location": "RML - Lateral Segment of RML",
+      "bronch_location_lobe": "RML",
+      "bronch_location_segment": "RB4",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS",
+      "bronch_num_tbbx": 4,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Atypical cells, cannot exclude malignancy",
+      "providers": {
+        "attending_name": "Garcia",
+        "fellow_name": "Dr. Maria Santos",
+        "assistant_name": "Donald White, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530608"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31629": "TBNA of RML nodule.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.25,
+          "facility_total_payment": 493.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (bundled with 31629 on same site)."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 15.25,
+        "work_rvu": 10.05,
+        "practice_expense_rvu": 4.1,
+        "malpractice_rvu": 1.1
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. David Wilson\n\nIndication: Multiple pulmonary nodules - dominant lesion biopsy\nTarget: 24mm nodule in RUL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nVCV\t11\t345\t10\t80\t6\t24\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the RUL (RB2) based on the pre-operative CT navigational plan. Registration accuracy: 3.2mm.\n\nFluoroscopic guidance used to confirm scope position relative to target. Navigation alignment confirmed.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Adjacent.\n\nTransbronchial needle aspiration performed with 21G needle. 6 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 4 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nROSE Result: Granulomatous inflammation\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nWilson, MD",
+    "cpt_codes": [
+      31629,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "8497122",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 71,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Multiple pulmonary nodules - dominant lesion biopsy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Pending final pathology",
+      "cpt_codes": [
+        31629,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": "UCSF Medical Center[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 3.2,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "Fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "21G needle",
+        "Transbronchial forceps",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 24,
+      "lesion_location": "RUL - Posterior Segment of RUL",
+      "bronch_location_lobe": "RUL",
+      "bronch_location_segment": "RB2",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS",
+      "bronch_num_tbbx": 4,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Granulomatous inflammation",
+      "providers": {
+        "attending_name": "Wilson",
+        "fellow_name": null,
+        "assistant_name": "Edward Walker, RT",
+        "assistant_role": "RT",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530669"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31629": "TBNA of RUL nodule.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 15.25,
+          "facility_total_payment": 493.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (bundled with 31629 on same site)."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 15.25,
+        "work_rvu": 10.05,
+        "practice_expense_rvu": 4.1,
+        "malpractice_rvu": 1.1
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. James Rodriguez\nFellow: Dr. Maria Santos (PGY-6)\n\nIndication: Peripheral pulmonary nodule\nTarget: 31mm nodule in RLL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nVCV\t14\t374\t12\t80\t5\t17\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the RLL (RB9) based on the pre-operative CT navigational plan. Registration accuracy: 2.3mm.\n\nOnce in the target vicinity, a Tool-in-Lesion Tomosynthesis (TiLT+) sweep was performed using the C-arm. The system generated an updated intra-operative 3D volume, revealing a 1.8cm divergence between the pre-op CT target and the actual lesion location due to patient positioning.\n\nThe augmented reality target was updated on the navigation screen to match real-time anatomy. Intra-operative tomosynthesis (TiLT) performed to update target location and correct for divergence.\n\nThe scope was adjusted to align with the corrected TiLT target. Confirmation of tool position was verified using the augmented fluoroscopy overlay provided by the TiLT system.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Concentric.\n\nTransbronchial needle aspiration performed with 21G needle. 6 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 5 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nGold fiducial marker placed under TiLT-augmented fluoroscopic guidance for SBRT planning.\n\nROSE Result: Malignant cells id[REDACTED], consistent with squamous cell carcinoma\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nRodriguez, MD",
+    "cpt_codes": [
+      31629,
+      31626,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "3865622",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 59,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Peripheral pulmonary nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31626,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": "Duke University Hospital[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic + TiLT tomosynthesis",
+      "nav_registration_error_mm": 2.3,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "TiLT+ tomosynthesis",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "21G needle",
+        "Transbronchial forceps",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 31,
+      "lesion_location": "RLL - Lateral-Basal Segment of RLL",
+      "bronch_location_lobe": "RLL",
+      "bronch_location_segment": "RB9",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS + TiLT+",
+      "bronch_num_tbbx": 5,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Malignant cells id[REDACTED], consistent with squamous cell carcinoma",
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": "Dr. Maria Santos",
+        "assistant_name": "Andrew Nelson, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530739"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31626",
+          "final_codes": [
+            "31626",
+            "31629",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31626": "Placement of fiducial marker.",
+            "31629": "TBNA of RLL nodule.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation with TiLT+.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 21.49,
+          "facility_total_payment": 695.0,
+          "per_code": {
+            "31626": {
+              "facility_rvu": 6.24,
+              "facility_payment": 202
+            },
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (bundled with 31629 on same site)."
+      },
+      "nav_tilt_divergence_cm": 1.8,
+      "nav_tilt_divergence_reason": "patient [REDACTED]",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31626",
+            "description": "Bronchoscopy w/markers",
+            "units": 1
+          },
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 21.49,
+        "work_rvu": 13.96,
+        "practice_expense_rvu": 6.03,
+        "malpractice_rvu": 1.5
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623",
+        "31626"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Michael Chen\n\nIndication: Peripheral pulmonary nodule\nTarget: 9mm nodule in RLL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPCV\t13\t399\t17\t80\t8\t17\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the RLL (RB10) based on the pre-operative CT navigational plan. Registration accuracy: 2.1mm.\n\nFluoroscopic guidance used to confirm scope position relative to target. Navigation alignment confirmed.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Concentric.\n\nTransbronchial needle aspiration performed with 22G needle. 4 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 6 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nCytology brushings obtained. Samples sent for Cytology.\n\nBronchoalveolar lavage performed at target segment. 40mL instilled, 12mL return. Sent for Cytology and Culture.\n\nROSE Result: No evidence of malignant neoplasm\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nChen, MD",
+    "cpt_codes": [
+      31629,
+      31624,
+      31623,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "204940",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 60,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Peripheral pulmonary nodule",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31624,
+        31623,
+        31627,
+        31654
+      ],
+      "institution_name": "Johns Hopkins Hospital, Baltimore, MD",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic",
+      "nav_registration_error_mm": 2.1,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Concentric",
+      "nav_imaging_verification": "Fluoroscopy",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Transbronchial forceps",
+        "Cytology brush"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 9,
+      "lesion_location": "RLL - Posterior-Basal Segment of RLL",
+      "bronch_location_lobe": "RLL",
+      "bronch_location_segment": "RB10",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS",
+      "bronch_num_tbbx": 6,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "No evidence of malignant neoplasm",
+      "providers": {
+        "attending_name": "Chen",
+        "fellow_name": null,
+        "assistant_name": "David Campbell, RT",
+        "assistant_role": "RT",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530820"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31629",
+          "final_codes": [
+            "31629",
+            "31624",
+            "31623",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31629": "TBNA of RLL nodule.",
+            "31624": "BAL performed at target segment.",
+            "31623": "Cytology brushings.",
+            "+31627": "Galaxy robotic navigation.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 19.49,
+          "facility_total_payment": 630.0,
+          "per_code": {
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            },
+            "31623": {
+              "facility_rvu": 4.18,
+              "facility_payment": 135
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (bundled with 31629 on same site). Retained 31624 (BAL)."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy w/bal",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy w/brush",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 19.49,
+        "work_rvu": 12.68,
+        "practice_expense_rvu": 5.41,
+        "malpractice_rvu": 1.4
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31623",
+        "31624"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Amanda Garcia\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Multiple pulmonary nodules - dominant lesion biopsy\nTarget: 22mm nodule in RLL\n\nPROCEDURE:\n\nAfter successful induction of general anesthesia, a timeout was performed. ETT secured in good position.\n\nInitial Airway Inspection:\nTrachea normal caliber, carina sharp. Bilateral airways inspected to subsegmental level. No endobronchial lesions. Minimal secretions cleared.\n\nVentilation Parameters:\nMode\tRR\tTV\tPEEP\tFiO2\tFlow Rate\tPmean\nPRVC\t10\t375\t12\t80\t8\t24\n\nThe single-use disposable Noah Galaxy bronchoscope was introduced into the airway. Navigational registration was performed using the electromagnetic field generator placed beneath the patient.\n\nThe scope was navigated to the approximate target location in the RLL (RB10) based on the pre-operative CT navigational plan. Registration accuracy: 3.2mm.\n\nOnce in the target vicinity, a Tool-in-Lesion Tomosynthesis (TiLT+) sweep was performed using the C-arm. The system generated an updated intra-operative 3D volume, revealing a 2.3cm divergence between the pre-op CT target and the actual lesion location due to atelectasis.\n\nThe augmented reality target was updated on the navigation screen to match real-time anatomy. Intra-operative tomosynthesis (TiLT) performed to update target location and correct for divergence.\n\nThe scope was adjusted to align with the corrected TiLT target. Confirmation of tool position was verified using the augmented fluoroscopy overlay provided by the TiLT system.\n\nRadial EBUS performed to confirm lesion location. rEBUS view: Adjacent.\n\nTransbronchial needle aspiration performed with 22G needle. 4 passes obtained. Samples sent for Cytology and Cell block.\n\nTransbronchial forceps biopsy performed. 4 specimens obtained under fluoroscopic guidance with TiLT overlay. Samples sent for Surgical Pathology.\n\nBronchoalveolar lavage performed at target segment. 40mL instilled, 16mL return. Sent for Cytology and Culture.\n\nGold fiducial marker placed under TiLT-augmented fluoroscopic guidance for SBRT planning.\n\nROSE Result: Suspicious for non-small cell carcinoma\n\nFinal airway inspection performed - no significant bleeding or complications. The disposable Galaxy scope was removed and discarded at the end of the case.\n\nPatient [REDACTED] well. No immediate complications.\n\nDISPOSITION: Recovery, post-procedure CXR, discharge if stable.\nFollow-up: Results conference in 5-7 days.\n\nGarcia, MD",
+    "cpt_codes": [
+      31629,
+      31626,
+      31624,
+      31627,
+      31654
+    ],
+    "registry_entry": {
+      "patient_mrn": "459598",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Multiple pulmonary nodules - dominant lesion biopsy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy suspected",
+      "cpt_codes": [
+        31629,
+        31626,
+        31624,
+        31627,
+        31654
+      ],
+      "institution_name": "Northwestern Memorial Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "nav_platform": "Galaxy (Noah Medical)",
+      "nav_registration_method": "Electromagnetic + TiLT tomosynthesis",
+      "nav_registration_error_mm": 3.2,
+      "nav_rebus_used": true,
+      "nav_rebus_view": "Adjacent",
+      "nav_imaging_verification": "TiLT+ tomosynthesis",
+      "nav_tool_in_lesion": true,
+      "nav_sampling_tools": [
+        "22G needle",
+        "Transbronchial forceps"
+      ],
+      "nav_cryobiopsy_for_nodule": false,
+      "lesion_size_mm": 22,
+      "lesion_location": "RLL - Posterior-Basal Segment of RLL",
+      "bronch_location_lobe": "RLL",
+      "bronch_location_segment": "RB10",
+      "bronch_guidance": "Galaxy robotic navigation + rEBUS + TiLT+",
+      "bronch_num_tbbx": 4,
+      "bronch_tbbx_tool": "Transbronchial forceps",
+      "ebus_rose_available": true,
+      "ebus_rose_result": "Suspicious for non-small cell carcinoma",
+      "providers": {
+        "attending_name": "Garcia",
+        "fellow_name": "Dr. Lauren Walsh",
+        "assistant_name": "Matthew Nelson, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T11:35:32.530877"
+      },
+      "coding_review": {
+        "review_version": "1.0.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31626",
+          "final_codes": [
+            "31626",
+            "31629",
+            "31624",
+            "+31627",
+            "+31654"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31626": "Placement of fiducial marker.",
+            "31629": "TBNA of RLL nodule.",
+            "31624": "BAL performed at target.",
+            "+31627": "Galaxy robotic navigation with TiLT+.",
+            "+31654": "Radial EBUS localization."
+          },
+          "coding_decision": "corrected_bundling"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 21.55,
+          "facility_total_payment": 697.0,
+          "per_code": {
+            "31626": {
+              "facility_rvu": 6.24,
+              "facility_payment": 202
+            },
+            "31629": {
+              "facility_rvu": 5.89,
+              "facility_payment": 191
+            },
+            "31624": {
+              "facility_rvu": 4.24,
+              "facility_payment": 137
+            },
+            "+31627": {
+              "facility_rvu": 3.07,
+              "facility_payment": 99
+            },
+            "+31654": {
+              "facility_rvu": 2.11,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Dropped 31628 (bundled with 31629 on same site)."
+      },
+      "nav_tilt_divergence_cm": 2.3,
+      "nav_tilt_divergence_reason": "atelectasis",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31626",
+            "description": "Bronchoscopy w/markers",
+            "units": 1
+          },
+          {
+            "code": "31629",
+            "description": "Bronch w/tbna",
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy w/bal",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy w/nav",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "Bronch ebus periph",
+            "units": 1
+          }
+        ],
+        "total_rvu": 21.55,
+        "work_rvu": 13.96,
+        "practice_expense_rvu": 6.09,
+        "malpractice_rvu": 1.5
+      }
+    },
+    "source_file": "synthetic_galaxy_robotic_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629",
+        "31628",
+        "31627",
+        "31654",
+        "31624",
+        "31626"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-07T07:14:04",
+      "changes": [
+        "Dropped 31628 (bundled with 31629 on same site)",
+        "Populated billing object with 2025 Facility RVUs"
+      ]
+    }
+  }
+]

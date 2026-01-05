@@ -1,0 +1,1301 @@
+[
+  {
+    "note_text": "PATIENT: [REDACTED], 68-year-old Male\nMRN: [REDACTED]\nDATE: [REDACTED]\nATTENDING: Dr. Priya Desai\nFELLOW: Dr. Michael Anders\nPROCEDURE: Flexible bronchoscopy with conventional transbronchial needle aspiration (TBNA) of subcarinal lymph node (station 7) using Wang needle (CPT 31629)\nINDICATION: Right lower lobe lung mass with PET-avid subcarinal lymphadenopathy, mediastinal staging for suspected non-small cell lung cancer.\n\nANESTHESIA/SEDATION: Moderate sedation with intravenous midazolam and fentanyl administered by the bronchoscopy team. Topical 1% lidocaine applied to the oropharynx and vocal cords. The patient maintained spontaneous ventilation via native airway with supplemental oxygen by nasal cannula.\n\nPROCEDURE DESCRIPTION:\nAfter a time-out and confirmation of consent, a flexible adult bronchoscope was introduced orally with a bite block. The vocal cords were mobile and normal in appearance. The trachea and main carina were normal with mild extrinsic impression at the subcarinal region but no endobronchial tumor. The right and left bronchial trees were inspected to the subsegmental level without obstructing lesions.\n\nCONVENTIONAL TBNA (WANG NEEDLE):\nA 21-gauge Wang transbronchial aspiration needle was passed through the working channel. Using anatomic landmarks only (no EBUS or ultrasound), multiple passes were made through the bronchial wall just proximal to the main carina targeting the subcarinal (station 7) lymph node seen on imaging (short-axis 15 mm). Four needle passes were performed with suction applied on each pass, yielding blood-tinged material with visible tissue fragments.\n\nROSE: An on-site cytotechnologist was present. Rapid on-site evaluation showed abundant lymphocytes with clusters of malignant epithelial cells, consistent with metastatic carcinoma. Adequacy was confirmed after the third pass; a fourth pass was performed for cell block and ancillary studies.\n\nSPECIMENS:\nStation 7 conventional TBNA x4 passes, submitted for cytology, cell block, and flow cytometry with reflex molecular studies if malignant.\n\nCOMPLICATIONS: Minimal oozing at the puncture site resolved with suction and cold saline. No significant bleeding, hypoxia, or hemodynamic instability. No linear EBUS, radial EBUS, or navigational bronchoscopy was used at any point; this was a purely conventional blind Wang needle TBNA.\n\nDISPOSITION/PLAN:\nThe patient was monitored in the bronchoscopy recovery area and discharged home in stable condition. Final cytology, cell block, and molecular profiling from station 7 will be reviewed at multidisciplinary tumor board. Further management (surgical resection versus chemoradiation or systemic therapy) will be based on complete staging results.",
+    "cpt_codes": [
+      31629
+    ],
+    "registry_entry": {
+      "patient_mrn": "1904501",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 68,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "68-year-old male with right lower lobe lung mass and PET-avid subcarinal (station 7) lymph node undergoing mediastinal staging.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31629
+      ],
+      "evidence": {
+        "attending_name": "ATTENDING: Dr. Priya Desai",
+        "patient_age": "PATIENT: [REDACTED], 68-year-old Male",
+        "gender": "PATIENT: [REDACTED], 68-year-old Male",
+        "primary_indication": "INDICATION: Mediastinal staging for suspected non-small cell lung cancer with PET-avid station 7 node.",
+        "sedation_type": "Moderate sedation with midazolam and fentanyl.",
+        "airway_type": "Native airway with bite block; no ETT or LMA documented."
+      },
+      "institution_name": "Valley Thoracic Center",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "Await final cytology, cell block, and molecular profiling from station 7 TBNA; follow up in clinic in 1 week and discuss at tumor board."
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": null,
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": false,
+      "procedure_setting": null,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": "CT and PET-CT demonstrate a 3.5 cm right lower lobe mass with a 15 mm PET-avid subcarinal lymph node (SUV 9.0).",
+      "lesion_size_mm": 15,
+      "lesion_location": "Subcarinal lymph node (station 7)",
+      "pet_suv_max": 9.0,
+      "pet_avid": true,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "No prior chemotherapy or radiation.",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation",
+      "anesthesia_agents": "Midazolam, fentanyl, topical lidocaine.",
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "bronch_indication": "Mediastinal staging via conventional TBNA of subcarinal node; no EBUS available.",
+      "bronch_location_lobe": "Mediastinum",
+      "bronch_location_segment": "Station 7 (subcarinal)",
+      "bronch_guidance": "Anatomic landmarks only; no EBUS.",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "None beyond minimal oozing at puncture site.",
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0.0,
+      "radiation_dap_gycm2": 0.0,
+      "ablation_complication_immediate": null,
+      "procedures_performed": {
+        "tbna_conventional": {
+          "performed": true,
+          "stations_sampled": [
+            "7"
+          ],
+          "needle_gauge": 21,
+          "passes_per_station": 4
+        },
+        "linear_ebus": {
+          "performed": false
+        },
+        "radial_ebus": {
+          "performed": false
+        }
+      },
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "TBNA",
+            "location": "Station 7 (subcarinal)",
+            "container_count": 2,
+            "sent_for": [
+              "Cytology",
+              "Cell block",
+              "Flow cytometry"
+            ]
+          }
+        ],
+        "rose_result": "Adequate - malignant",
+        "specimen_adequacy": "Adequate"
+      },
+      "providers": {
+        "attending_name": "Dr. Priya Desai",
+        "attending_npi": null,
+        "fellow_name": "Dr. Michael Anders",
+        "fellow_pgy_level": 5,
+        "assistant_name": "Alexis James",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 5.89,
+        "work_rvu": 3.75,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.4
+      }
+    },
+    "source_file": "synthetic_tbna_conventional_wang_with_registry_v2_8.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629; total_work_rvu=3.75, total_rvu=5.89 (facility)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31629",
+        "final_codes": [
+          "31629"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31629": "Confirmed conventional TBNA (Wang needle) without EBUS."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 5.89,
+        "facility_total_payment": 191,
+        "per_code": {
+          "31629": {
+            "facility_rvu": 5.89,
+            "facility_payment": 191
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7 fee_schedules.physician_2025_airway (facility setting)"
+      },
+      "overall_assessment": "Correctly coded as conventional TBNA (31629)."
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED], 62-year-old Female\nMRN: [REDACTED]\nDATE: [REDACTED]\nATTENDING: Dr. Daniel Romero\nFELLOW: Dr. Hannah Nguyen\nPROCEDURE: Flexible bronchoscopy with conventional transbronchial needle aspiration (TBNA) of subcarinal lymph node (station 7) using Wang needle (CPT 31629)\nINDICATION: Centrally located left upper lobe mass with enlarged subcarinal lymph node on PET-CT, mediastinal staging prior to definitive therapy.\n\nANESTHESIA/SEDATION: General anesthesia with endotracheal intubation provided by Anesthesiology. Size 8.0 ETT secured. The patient was ventilated mechanically throughout the procedure.\n\nPROCEDURE DESCRIPTION:\nAfter standard pre-procedure checks and a surgical time-out, a flexible adult bronchoscope was introduced through the endotracheal tube. The vocal cords and proximal trachea were normal. The main carina was sharp with mild external impression posteriorly. No intraluminal tumor was seen in either mainstem bronchus. Segmental bronchi in both lungs were free of obstructing lesions.\n\nCONVENTIONAL TBNA (WANG NEEDLE):\nA 22-gauge Wang TBNA needle was advanced through the bronchoscope working channel. Using anatomic landmarks only (no EBUS system available in the OR), the subcarinal (station 7) lymph node was targeted by puncturing the bronchial wall just proximal and slightly posterior to the main carina. Three needle passes were performed with suction. Each pass yielded blood-tinged material with visible tissue cores.\n\nROSE: On-site cytology was available. Rapid evaluation demonstrated cellular samples with lymphocytes and malignant epithelial cells compatible with metastatic non-small cell lung carcinoma. Adequacy was confirmed after the second pass; a third pass was obtained for additional cell block material.\n\nSPECIMENS:\nStation 7 conventional TBNA x3 passes submitted for cytology, cell block, and PD-L1/molecular profiling as indicated.\n\nCOMPLICATIONS: No significant bleeding, hypoxia, or arrhythmia. No EBUS, radial probe, or navigational bronchoscopy was used; this was a purely conventional blind Wang needle TBNA.\n\nDISPOSITION/PLAN:\nThe patient was extubated in the OR and transferred to the PACU in stable condition. She will follow up in thoracic oncology clinic within 1 week to review final pathology and discuss resection versus combined-modality therapy.",
+    "cpt_codes": [
+      31629
+    ],
+    "registry_entry": {
+      "patient_mrn": "1904502",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 62,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "62-year-old female with central lung mass and enlarged subcarinal node undergoing mediastinal staging.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31629
+      ],
+      "evidence": {
+        "attending_name": "ATTENDING: Dr. Daniel Romero",
+        "patient_age": "PATIENT: [REDACTED], 62-year-old Female",
+        "gender": "PATIENT: [REDACTED], 62-year-old Female",
+        "primary_indication": "Central lung mass with PET-avid subcarinal node; mediastinal staging bronchoscopy.",
+        "sedation_type": "General anesthesia with endotracheal tube.",
+        "airway_type": "ETT explicitly documented."
+      },
+      "institution_name": "Summit Lung Institute",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "Review final cytology, cell block, and molecular results at thoracic tumor board; plan surgical resection versus chemoradiation depending on nodal stage."
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": null,
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": false,
+      "procedure_setting": null,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": "PET-CT shows centrally located left upper lobe mass with PET-avid station 7 lymph node.",
+      "lesion_size_mm": 14,
+      "lesion_location": "Subcarinal lymph node (station 7)",
+      "pet_suv_max": 8.5,
+      "pet_avid": true,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "No prior systemic therapy.",
+      "airway_device_size": "8.0",
+      "ventilation_mode": "Controlled ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium; topical lidocaine.",
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "bronch_indication": "Mediastinal staging via conventional TBNA of station 7; no EBUS used.",
+      "bronch_location_lobe": "Mediastinum",
+      "bronch_location_segment": "Station 7 (subcarinal)",
+      "bronch_guidance": "Anatomic landmarks only; no ultrasound guidance.",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "No immediate complications.",
+      "ebl_ml": 3,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0.0,
+      "radiation_dap_gycm2": 0.0,
+      "ablation_complication_immediate": null,
+      "procedures_performed": {
+        "tbna_conventional": {
+          "performed": true,
+          "stations_sampled": [
+            "7"
+          ],
+          "needle_gauge": 22,
+          "passes_per_station": 3
+        },
+        "linear_ebus": {
+          "performed": false
+        },
+        "radial_ebus": {
+          "performed": false
+        }
+      },
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "TBNA",
+            "location": "Station 7 (subcarinal)",
+            "container_count": 2,
+            "sent_for": [
+              "Cytology",
+              "Cell block",
+              "PD-L1",
+              "Molecular/NGS"
+            ]
+          }
+        ],
+        "rose_result": "Adequate - malignant",
+        "specimen_adequacy": "Adequate"
+      },
+      "providers": {
+        "attending_name": "Dr. Daniel Romero",
+        "attending_npi": null,
+        "fellow_name": "Dr. Hannah Nguyen",
+        "fellow_pgy_level": 5,
+        "assistant_name": "Jordan Lee",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 5.89,
+        "work_rvu": 3.75,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.4
+      }
+    },
+    "source_file": "synthetic_tbna_conventional_wang_with_registry_v2_8.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629; total_work_rvu=3.75, total_rvu=5.89 (facility)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31629",
+        "final_codes": [
+          "31629"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31629": "Confirmed conventional TBNA (Wang needle) without EBUS."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 5.89,
+        "facility_total_payment": 191,
+        "per_code": {
+          "31629": {
+            "facility_rvu": 5.89,
+            "facility_payment": 191
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7 fee_schedules.physician_2025_airway (facility setting)"
+      },
+      "overall_assessment": "Correctly coded as conventional TBNA (31629)."
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED], 59-year-old Male\nMRN: [REDACTED]\nDATE: [REDACTED]\nATTENDING: Dr. Melissa Grant\nFELLOW: Dr. Ravi Kulkarni\nPROCEDURE: Flexible bronchoscopy with conventional transbronchial needle aspiration (TBNA) of left lower paratracheal lymph node (station 4L) using Wang needle (CPT 31629)\nINDICATION: Isolated mediastinal lymphadenopathy (station 4L, 1.6 cm short axis) in a patient with progressive dyspnea and bilateral hilar fullness; evaluation for sarcoidosis versus lymphoma.\n\nANESTHESIA/SEDATION: Moderate sedation with intravenous midazolam and fentanyl. Topical 1% lidocaine to nasopharynx, vocal cords, and trachea. The patient breathed spontaneously via native airway with supplemental oxygen.\n\nPROCEDURE DESCRIPTION:\nAfter informed consent and a procedural time-out, a flexible adult bronchoscope was introduced orally. The upper airway, vocal cords, and trachea were normal. The main carina was sharp. The right bronchial tree was normal. On the left, there was mild extrinsic impression on the distal left mainstem corresponding to the paratracheal lymph node but no mucosal lesion.\n\nCONVENTIONAL TBNA (WANG NEEDLE):\nA 21-gauge Wang TBNA needle was advanced through the bronchoscope. Using anatomic landmarks without EBUS guidance, the left lower paratracheal (station 4L) lymph node was targeted via the medial wall of the distal trachea just above the left mainstem origin. Four needle passes were performed with suction. Aspirates contained blood-tinged material with small whitish tissue fragments.\n\nROSE: Cytotechnologist present for on-site evaluation. ROSE demonstrated abundant benign lymphocytes with well-formed non-necrotizing granulomas. No malignant cells were seen. Adequacy was confirmed after the second pass; two additional passes were obtained for culture and cell block.\n\nSPECIMENS:\nStation 4L conventional TBNA x4 passes submitted for cytology, cell block, AFB/fungal cultures, and flow cytometry.\n\nCOMPLICATIONS: No significant bleeding, hypoxia, or hemodynamic instability. No linear or radial EBUS, navigation, or fluoroscopy was used; this was a blind conventional Wang needle TBNA.\n\nDISPOSITION/PLAN:\nThe patient recovered uneventfully in the bronchoscopy suite and was discharged home. If final pathology confirms non-necrotizing granulomatous inflammation, findings will be discussed with rheumatology for sarcoidosis management; if lymphoma is id[REDACTED], oncology referral will be arranged.",
+    "cpt_codes": [
+      31629
+    ],
+    "registry_entry": {
+      "patient_mrn": "1904503",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Isolated PET-avid left lower paratracheal (4L) lymphadenopathy; evaluation for sarcoidosis versus lymphoma.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        31629
+      ],
+      "evidence": {
+        "attending_name": "ATTENDING: Dr. Melissa Grant",
+        "patient_age": "PATIENT: [REDACTED], 59-year-old Male",
+        "gender": "PATIENT: [REDACTED], 59-year-old Male",
+        "primary_indication": "INDICATION: Isolated 4L lymphadenopathy with bilateral hilar fullness; rule out sarcoidosis versus lymphoma.",
+        "sedation_type": "Moderate sedation with midazolam and fentanyl.",
+        "airway_type": "Native airway described; no artificial airway mentioned."
+      },
+      "institution_name": "Metro Pulmonary Center",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "If non-necrotizing granulomas confirmed, coordinate sarcoidosis management with rheumatology.",
+        "If lymphoma id[REDACTED], refer to hematology/oncology for staging and treatment."
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": null,
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": false,
+      "procedure_setting": null,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": "CT chest with enlarged left lower paratracheal lymph node (16 mm) and bilateral hilar prominence; no dominant lung mass.",
+      "lesion_size_mm": 16,
+      "lesion_location": "Left lower paratracheal lymph node (station 4L)",
+      "pet_suv_max": 6.5,
+      "pet_avid": true,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "No prior immunosuppression or chemotherapy.",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation",
+      "anesthesia_agents": "Midazolam, fentanyl, topical lidocaine.",
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "bronch_indication": "Isolated 4L mediastinal lymph node sampling with conventional TBNA (no EBUS).",
+      "bronch_location_lobe": "Mediastinum",
+      "bronch_location_segment": "Station 4L (left lower paratracheal)",
+      "bronch_guidance": "Anatomic landmarks only; no EBUS or fluoroscopy.",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "No immediate complications.",
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0.0,
+      "radiation_dap_gycm2": 0.0,
+      "ablation_complication_immediate": null,
+      "procedures_performed": {
+        "tbna_conventional": {
+          "performed": true,
+          "stations_sampled": [
+            "4L"
+          ],
+          "needle_gauge": 21,
+          "passes_per_station": 4
+        },
+        "linear_ebus": {
+          "performed": false
+        },
+        "radial_ebus": {
+          "performed": false
+        }
+      },
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "TBNA",
+            "location": "Station 4L (left lower paratracheal)",
+            "container_count": 2,
+            "sent_for": [
+              "Cytology",
+              "Cell block",
+              "AFB",
+              "Fungal",
+              "Flow cytometry"
+            ]
+          }
+        ],
+        "rose_result": "Adequate - granulomas",
+        "specimen_adequacy": "Adequate"
+      },
+      "providers": {
+        "attending_name": "Dr. Melissa Grant",
+        "attending_npi": null,
+        "fellow_name": "Dr. Ravi Kulkarni",
+        "fellow_pgy_level": 4,
+        "assistant_name": "Nora Patel",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 5.89,
+        "work_rvu": 3.75,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.4
+      }
+    },
+    "source_file": "synthetic_tbna_conventional_wang_with_registry_v2_8.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629; total_work_rvu=3.75, total_rvu=5.89 (facility)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31629",
+        "final_codes": [
+          "31629"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31629": "Confirmed conventional TBNA (Wang needle) without EBUS."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 5.89,
+        "facility_total_payment": 191,
+        "per_code": {
+          "31629": {
+            "facility_rvu": 5.89,
+            "facility_payment": 191
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7 fee_schedules.physician_2025_airway (facility setting)"
+      },
+      "overall_assessment": "Correctly coded as conventional TBNA (31629)."
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED], 71-year-old Female\nMRN: [REDACTED]\nDATE: [REDACTED]\nATTENDING: Dr. Jason Li\nFELLOW: Dr. Sofia Martinez\nPROCEDURE: Flexible bronchoscopy with conventional transbronchial needle aspiration (TBNA) of left lower paratracheal lymph node (station 4L) using Wang needle (CPT 31629)\nINDICATION: History of breast cancer with new PET-avid 4L mediastinal lymphadenopathy; tissue diagnosis requested to distinguish metastatic disease from granulomatous inflammation.\n\nANESTHESIA/SEDATION: General anesthesia with endotracheal intubation (7.5 ETT). Anesthesiology provided induction with propofol and rocuronium; patient mechanically ventilated throughout.\n\nPROCEDURE DESCRIPTION:\nAfter pre-procedural verification and a time-out, a flexible bronchoscope was advanced through the endotracheal tube. The trachea and main carina were normal. The right bronchial tree was normal. On the left, there was subtle extrinsic narrowing of the distal trachea just above the carina and mild impression on the proximal left mainstem bronchus; mucosa was intact.\n\nCONVENTIONAL TBNA (WANG NEEDLE):\nA 22-gauge Wang TBNA needle was introduced via the bronchoscope. Using anatomic landmarks (no EBUS available in this OR), the left lower paratracheal (4L) node was sampled by puncturing the medial wall of the distal trachea above the left mainstem origin. Three passes were performed with suction. Aspirates contained blood-tinged material with tissue fragments.\n\nROSE: Rapid on-site cytology was available. ROSE revealed lymphoid tissue with atypical epithelial cells; findings were suspicious for metastatic carcinoma and deemed adequate for diagnosis. Additional material was set aside for cell block and immunohistochemistry.\n\nSPECIMENS:\nStation 4L conventional TBNA x3 passes submitted for cytology, cell block, and immunohistochemical staining.\n\nCOMPLICATIONS: No significant bleeding, airway compromise, or hemodynamic instability. No linear EBUS, radial EBUS, or navigational bronchoscopy was performed; this was purely a blind Wang needle TBNA.\n\nDISPOSITION/PLAN:\nThe patient was extubated in the OR and transferred to PACU in stable condition. Final pathology will be correlated with prior breast cancer histology. If metastatic disease is confirmed, systemic therapy options will be discussed with oncology; if benign, further workup for granulomatous disease will be considered.",
+    "cpt_codes": [
+      31629
+    ],
+    "registry_entry": {
+      "patient_mrn": "1904504",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 71,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "PET-avid left lower paratracheal (4L) node in a patient with prior breast cancer; rule out mediastinal metastasis.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31629
+      ],
+      "evidence": {
+        "attending_name": "ATTENDING: Dr. Jason Li",
+        "patient_age": "PATIENT: [REDACTED], 71-year-old Female",
+        "gender": "PATIENT: [REDACTED], 71-year-old Female",
+        "primary_indication": "INDICATION: PET-avid 4L mediastinal lymphadenopathy in the setting of prior breast cancer.",
+        "sedation_type": "General anesthesia with endotracheal intubation.",
+        "airway_type": "ETT explicitly documented."
+      },
+      "institution_name": "Harborview Cancer Center",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "Correlate station 4L TBNA pathology with prior breast cancer histology; discuss systemic therapy if metastatic disease confirmed.",
+        "If benign or granulomatous, pursue alternative etiologies for mediastinal lymphadenopathy."
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": null,
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": false,
+      "procedure_setting": null,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": "PET-CT with intensely avid 4L node; lungs without dominant parenchymal lesion.",
+      "lesion_size_mm": 18,
+      "lesion_location": "Left lower paratracheal lymph node (station 4L)",
+      "pet_suv_max": 10.2,
+      "pet_avid": true,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Prior breast-conserving surgery and chemotherapy; no thoracic radiation.",
+      "airway_device_size": "7.5",
+      "ventilation_mode": "Controlled ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium; volatile agent per anesthesia record.",
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "bronch_indication": "Mediastinal lymph node sampling of 4L using conventional TBNA only (no EBUS).",
+      "bronch_location_lobe": "Mediastinum",
+      "bronch_location_segment": "Station 4L (left lower paratracheal)",
+      "bronch_guidance": "Anatomic landmarks only; no ultrasound or navigation.",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "No immediate complications.",
+      "ebl_ml": 2,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0.0,
+      "radiation_dap_gycm2": 0.0,
+      "ablation_complication_immediate": null,
+      "procedures_performed": {
+        "tbna_conventional": {
+          "performed": true,
+          "stations_sampled": [
+            "4L"
+          ],
+          "needle_gauge": 22,
+          "passes_per_station": 3
+        },
+        "linear_ebus": {
+          "performed": false
+        },
+        "radial_ebus": {
+          "performed": false
+        }
+      },
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "TBNA",
+            "location": "Station 4L (left lower paratracheal)",
+            "container_count": 2,
+            "sent_for": [
+              "Cytology",
+              "Cell block",
+              "Histology",
+              "PD-L1"
+            ]
+          }
+        ],
+        "rose_result": "Adequate - malignant",
+        "specimen_adequacy": "Adequate"
+      },
+      "providers": {
+        "attending_name": "Dr. Jason Li",
+        "attending_npi": null,
+        "fellow_name": "Dr. Sofia Martinez",
+        "fellow_pgy_level": 6,
+        "assistant_name": "Brian Collins",
+        "assistant_role": "RT",
+        "trainee_present": true,
+        "rose_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 5.89,
+        "work_rvu": 3.75,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.4
+      }
+    },
+    "source_file": "synthetic_tbna_conventional_wang_with_registry_v2_8.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629; total_work_rvu=3.75, total_rvu=5.89 (facility)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31629",
+        "final_codes": [
+          "31629"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31629": "Confirmed conventional TBNA (Wang needle) without EBUS."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 5.89,
+        "facility_total_payment": 191,
+        "per_code": {
+          "31629": {
+            "facility_rvu": 5.89,
+            "facility_payment": 191
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7 fee_schedules.physician_2025_airway (facility setting)"
+      },
+      "overall_assessment": "Correctly coded as conventional TBNA (31629)."
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED], 64-year-old Male\nMRN: [REDACTED]\nDATE: [REDACTED]\nATTENDING: Dr. Angela Moore\nFELLOW: Dr. David Shah\nPROCEDURE: Flexible bronchoscopy with conventional transbronchial needle aspiration (TBNA) of right lower paratracheal lymph node (station 4R) using Wang needle (CPT 31629)\nINDICATION: Right upper lobe lung mass with PET-avid right lower paratracheal (4R) lymph node; mediastinal staging for suspected non-small cell lung cancer.\n\nANESTHESIA/SEDATION: Moderate sedation with IV midazolam and fentanyl. Topical lidocaine applied to upper airway. The patient breathed spontaneously via native airway with supplemental oxygen.\n\nPROCEDURE DESCRIPTION:\nAfter time-out and confirmation of consent, a flexible bronchoscope was advanced orally. The larynx and trachea were normal. The main carina was sharp. The right mainstem bronchus showed mild external impression along its medial wall consistent with the known 4R node; mucosa was intact. The remainder of the bronchial tree was free of obstructing lesions.\n\nCONVENTIONAL TBNA (WANG NEEDLE):\nA 21-gauge Wang TBNA needle was introduced through the bronchoscope. Using anatomic landmarks (no EBUS), the right lower paratracheal (station 4R) node was targeted from the distal trachea and proximal right mainstem bronchus. Three passes were made with suction applied. Aspirates contained blood-tinged material with visible tissue fragments.\n\nROSE: On-site cytology was available. ROSE demonstrated malignant epithelial cells compatible with non-small cell lung carcinoma in a lymphoid background, confirming adequacy after the second pass. A third pass was obtained for cell block.\n\nSPECIMENS:\nStation 4R conventional TBNA x3 passes submitted for cytology and cell block with reflex molecular studies.\n\nCOMPLICATIONS: Minimal self-limited bleeding from the puncture site; no hypoxia or arrhythmia. No linear EBUS, radial EBUS, or navigation was performed; this was conventional blind Wang needle TBNA.\n\nDISPOSITION/PLAN:\nThe patient recovered uneventfully in the bronchoscopy recovery area and was discharged home. Staging will be finalized once cytology and imaging are integrated; case to be presented at lung tumor board for definitive treatment planning.",
+    "cpt_codes": [
+      31629
+    ],
+    "registry_entry": {
+      "patient_mrn": "1904505",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 64,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Right upper lobe mass with PET-avid right lower paratracheal (4R) node; mediastinal staging.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31629
+      ],
+      "evidence": {
+        "attending_name": "ATTENDING: Dr. Angela Moore",
+        "patient_age": "PATIENT: [REDACTED], 64-year-old Male",
+        "gender": "PATIENT: [REDACTED], 64-year-old Male",
+        "primary_indication": "INDICATION: RUL lung mass with PET-avid 4R node; mediastinal staging intended.",
+        "sedation_type": "Moderate sedation (midazolam and fentanyl).",
+        "airway_type": "Native airway, no endotracheal tube documented."
+      },
+      "institution_name": "Riverside Thoracic Clinic",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "Present at multidisciplinary lung tumor board once final cytology and imaging review are complete to determine definitive therapy."
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": null,
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": false,
+      "procedure_setting": null,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": "PET-CT with RUL mass and FDG-avid 4R node; no additional mediastinal disease.",
+      "lesion_size_mm": 13,
+      "lesion_location": "Right lower paratracheal lymph node (station 4R)",
+      "pet_suv_max": 8.9,
+      "pet_avid": true,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "No prior oncologic therapy.",
+      "airway_device_size": null,
+      "ventilation_mode": "Spontaneous ventilation",
+      "anesthesia_agents": "Midazolam, fentanyl, topical lidocaine.",
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "bronch_indication": "Mediastinal staging via conventional TBNA of station 4R; no EBUS.",
+      "bronch_location_lobe": "Mediastinum",
+      "bronch_location_segment": "Station 4R (right lower paratracheal)",
+      "bronch_guidance": "Anatomic landmarks only; no ultrasound.",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Minimal self-limited bleeding.",
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0.0,
+      "radiation_dap_gycm2": 0.0,
+      "ablation_complication_immediate": null,
+      "procedures_performed": {
+        "tbna_conventional": {
+          "performed": true,
+          "stations_sampled": [
+            "4R"
+          ],
+          "needle_gauge": 21,
+          "passes_per_station": 3
+        },
+        "linear_ebus": {
+          "performed": false
+        },
+        "radial_ebus": {
+          "performed": false
+        }
+      },
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "TBNA",
+            "location": "Station 4R (right lower paratracheal)",
+            "container_count": 2,
+            "sent_for": [
+              "Cytology",
+              "Cell block",
+              "Molecular/NGS",
+              "PD-L1"
+            ]
+          }
+        ],
+        "rose_result": "Adequate - malignant",
+        "specimen_adequacy": "Adequate"
+      },
+      "providers": {
+        "attending_name": "Dr. Angela Moore",
+        "attending_npi": null,
+        "fellow_name": "Dr. David Shah",
+        "fellow_pgy_level": 5,
+        "assistant_name": "Emily Ross",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 5.89,
+        "work_rvu": 3.75,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.4
+      }
+    },
+    "source_file": "synthetic_tbna_conventional_wang_with_registry_v2_8.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629; total_work_rvu=3.75, total_rvu=5.89 (facility)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31629",
+        "final_codes": [
+          "31629"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31629": "Confirmed conventional TBNA (Wang needle) without EBUS."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 5.89,
+        "facility_total_payment": 191,
+        "per_code": {
+          "31629": {
+            "facility_rvu": 5.89,
+            "facility_payment": 191
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7 fee_schedules.physician_2025_airway (facility setting)"
+      },
+      "overall_assessment": "Correctly coded as conventional TBNA (31629)."
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED], 73-year-old Female\nMRN: [REDACTED]\nDATE: [REDACTED]\nATTENDING: Dr. Nathan Cole\nFELLOW: Dr. Lina Chen\nPROCEDURE: Flexible bronchoscopy with conventional transbronchial needle aspiration (TBNA) of right lower paratracheal lymph node (station 4R) using Wang needle (CPT 31629)\nINDICATION: PET-avid right lower paratracheal (4R) lymph node in a patient with known right upper lobe adenocarcinoma; confirmation of N2 disease prior to definitive therapy.\n\nANESTHESIA/SEDATION: General anesthesia with 8.0 ETT. Anesthesiology provided induction with propofol and rocuronium; patient mechanically ventilated throughout.\n\nPROCEDURE DESCRIPTION:\nFollowing a formal time-out, a flexible bronchoscope was advanced through the endotracheal tube. The trachea and main carina appeared normal. The right mainstem bronchus showed minimal extrinsic impression along its medial wall. No endobronchial tumor or secretions were seen in either lung.\n\nCONVENTIONAL TBNA (WANG NEEDLE):\nA 22-gauge Wang TBNA needle was passed through the bronchoscope working channel. Under anatomic landmark guidance only (no EBUS system used), the right lower paratracheal (4R) node was sampled via the distal trachea and proximal right mainstem bronchus. Four aspiration passes were performed with suction. All passes yielded blood-tinged material with tissue fragments adequate for cytology and cell block.\n\nROSE: Rapid on-site evaluation by cytology demonstrated metastatic adenocarcinoma in a lymphoid background, confirming N2 involvement. Adequacy was established after the second pass; additional passes were dedicated to cell block and molecular testing.\n\nSPECIMENS:\nStation 4R conventional TBNA x4 passes submitted for cytology, cell block, immunohistochemistry, and molecular profiling.\n\nCOMPLICATIONS: No significant bleeding or hypoxia. No linear EBUS, radial probe, or navigation was used; this was conventional blind Wang needle TBNA.\n\nDISPOSITION/PLAN:\nThe patient was extubated in the OR and transferred to PACU in stable condition. Results will be reviewed with thoracic surgery and medical oncology; given confirmed N2 disease, multimodality therapy rather than primary surgery is anticipated.",
+    "cpt_codes": [
+      31629
+    ],
+    "registry_entry": {
+      "patient_mrn": "1904506",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 73,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Known right upper lobe adenocarcinoma with PET-avid 4R node; confirm N2 mediastinal involvement.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31629
+      ],
+      "evidence": {
+        "attending_name": "ATTENDING: Dr. Nathan Cole",
+        "patient_age": "PATIENT: [REDACTED], 73-year-old Female",
+        "gender": "PATIENT: [REDACTED], 73-year-old Female",
+        "primary_indication": "INDICATION: Right upper lobe adenocarcinoma with PET-avid 4R node; mediastinal restaging.",
+        "sedation_type": "General anesthesia documented.",
+        "airway_type": "ETT used for airway control."
+      },
+      "institution_name": "Midwest Comprehensive Cancer Center",
+      "molecular_testing_requested": true,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "pleural_procedure_type": null,
+      "pleural_guidance": null,
+      "pleurodesis_performed": false,
+      "pleurodesis_agent": null,
+      "blvr_target_lobe": null,
+      "blvr_valve_type": null,
+      "blvr_number_of_valves": null,
+      "wll_volume_instilled_l": null,
+      "wll_volume_returned_l": null,
+      "wll_dlt_used": null,
+      "fb_object_type": null,
+      "fb_tool_used": [],
+      "fb_removal_success": null,
+      "bt_lobe_treated": null,
+      "bt_activation_count": null,
+      "follow_up_plan": [
+        "Discuss at multidisciplinary tumor board; anticipate multimodality therapy for N2 disease rather than upfront surgery."
+      ],
+      "nav_platform": null,
+      "nav_registration_method": null,
+      "nav_registration_error_mm": null,
+      "nav_rebus_used": null,
+      "nav_rebus_view": null,
+      "nav_imaging_verification": null,
+      "nav_tool_in_lesion": null,
+      "nav_sampling_tools": null,
+      "nav_cryobiopsy_for_nodule": null,
+      "sedation_reversal_given": false,
+      "sedation_reversal_agent": null,
+      "ebus_photodocumentation_complete": false,
+      "procedure_setting": null,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "radiographic_findings": "PET-CT with RUL primary and intensely FDG-avid 4R node; no additional mediastinal disease.",
+      "lesion_size_mm": 17,
+      "lesion_location": "Right lower paratracheal lymph node (station 4R)",
+      "pet_suv_max": 11.3,
+      "pet_avid": true,
+      "bronchus_sign_present": null,
+      "cao_location": null,
+      "prior_therapy": "Completed lobar resection workup; no prior mediastinal radiation.",
+      "airway_device_size": "8.0",
+      "ventilation_mode": "Controlled ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium; sevoflurane maintenance.",
+      "ebus_scope_brand": null,
+      "ebus_stations_sampled": null,
+      "linear_ebus_stations": null,
+      "ebus_needle_gauge": null,
+      "ebus_needle_type": null,
+      "ebus_systematic_staging": false,
+      "ebus_rose_available": false,
+      "ebus_rose_result": null,
+      "ebus_elastography_used": false,
+      "ebus_elastography_pattern": null,
+      "ebus_intranodal_forceps_used": false,
+      "ebus_stations_detail": null,
+      "bronch_indication": "Conventional TBNA of 4R to confirm N2 disease; no EBUS performed.",
+      "bronch_location_lobe": "Mediastinum",
+      "bronch_location_segment": "Station 4R (right lower paratracheal)",
+      "bronch_guidance": "Anatomic landmarks only; no ultrasound.",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "No immediate complications.",
+      "ebl_ml": 3,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0.0,
+      "radiation_dap_gycm2": 0.0,
+      "ablation_complication_immediate": null,
+      "procedures_performed": {
+        "tbna_conventional": {
+          "performed": true,
+          "stations_sampled": [
+            "4R"
+          ],
+          "needle_gauge": 22,
+          "passes_per_station": 4
+        },
+        "linear_ebus": {
+          "performed": false
+        },
+        "radial_ebus": {
+          "performed": false
+        }
+      },
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "TBNA",
+            "location": "Station 4R (right lower paratracheal)",
+            "container_count": 2,
+            "sent_for": [
+              "Cytology",
+              "Cell block",
+              "Histology",
+              "Molecular/NGS",
+              "PD-L1"
+            ]
+          }
+        ],
+        "rose_result": "Adequate - malignant",
+        "specimen_adequacy": "Adequate"
+      },
+      "providers": {
+        "attending_name": "Dr. Nathan Cole",
+        "attending_npi": null,
+        "fellow_name": "Dr. Lina Chen",
+        "fellow_pgy_level": 5,
+        "assistant_name": "Sarah Young",
+        "assistant_role": "RN",
+        "trainee_present": true,
+        "rose_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "0.4.0",
+        "generated_at": "2025-12-08T00:00:00Z"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "modifier": null,
+            "modifiers": null,
+            "units": 1
+          }
+        ],
+        "icd10_codes": null,
+        "total_rvu": 5.89,
+        "work_rvu": 3.75,
+        "practice_expense_rvu": 1.74,
+        "malpractice_rvu": 0.4
+      }
+    },
+    "source_file": "synthetic_tbna_conventional_wang_with_registry_v2_8.jsonl",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31629"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Populated registry_entry.billing from ip_coding_billing.v2_7 for CPT codes 31629; total_work_rvu=3.75, total_rvu=5.89 (facility)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_version": "1.1.0",
+      "review_date": "2025-12-08",
+      "reviewer": "IP_Coder_Patch_GPT",
+      "cpt_summary": {
+        "primary_code": "31629",
+        "final_codes": [
+          "31629"
+        ],
+        "modifiers": [],
+        "changes_made": false,
+        "code_rationales": {
+          "31629": "Confirmed conventional TBNA (Wang needle) without EBUS."
+        },
+        "coding_decision": "as_documented"
+      },
+      "rvu_summary_2025": {
+        "facility_total_rvu": 5.89,
+        "facility_total_payment": 191,
+        "per_code": {
+          "31629": {
+            "facility_rvu": 5.89,
+            "facility_payment": 191
+          }
+        },
+        "rvu_source": "ip_coding_billing.v2_7 fee_schedules.physician_2025_airway (facility setting)"
+      },
+      "overall_assessment": "Correctly coded as conventional TBNA (31629)."
+    }
+  }
+]

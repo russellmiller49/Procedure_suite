@@ -1,0 +1,735 @@
+[
+  {
+    "note_text": "DATE OF PROCEDURE: [REDACTED]\n \nCC Referred Physician:  Van Dyke, Dick, MD\n9500 Campus Point Dr\nMC 7381\nHollywood,  CA [REDACTED]\n \nINDICATION FOR OPERATION:  Mohammad Alkrad is a 29 year old-year-old male who presents with tracheal stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.\n \nCONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.\n \nPREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified\n \nPOSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified\n \nPROCEDURE:  \n31645 Therapeutic aspiration initial episode\n31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)\n \nATTENDING:  \nDick Van Dyke MD\n \nASSISTANT:   Greg Trembley MD\n \nSupport Staff: \nRN: Camina Cabahug\nRT: Frank Fellers\n \nANESTHESIA: \nGeneral Anesthesia\n \nMONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.\n \nINSTRUMENT : \nFlexible Therapeutic Bronchoscope\n \nESTIMATED BLOOD LOSS:   Minimum\n \nCOMPLICATIONS:    None\n \nPROCEDURE IN DETAIL:\nAfter the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. \n \nPATIENT [REDACTED]: . \n \nInitial Airway Inspection Findings:\n \nThe laryngeal mask airway is in good [REDACTED].\nPharynx: Not assessed due to bronchoscopy introduction through LMA.\nLarynx: Not fully assessed due to bronchoscopy introduction through LMA.\nVocal Cords: Normal without mass/lesions\nTrachea: Tracheal stent in place with slight granulation tissue and the anterior and posterior aspect of the proximal stent. Mild thick yellow mucus within the stent\nMain Carina: Sharp\nRight Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.\nLeft Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.\nMucosa: Normal.\nSecretions: As described above.  \n \nGRANULATION TISSUE AT THE PROXIMAL STENT\n\n \n\n \nSuccessful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. \n \nThe 2.4mm cryoprobe was used to treat the anterior granulation tissue with 30 second freeze-thaw cycles (total of 4 cycles).\n \nThe granulation tissue at the posterior trachea was treated with the 2.4mm cryoprobe in which tissue was frozen to the probe and removed en bloc with the bronchoscope.\n \nIn sum, the granulation tissue at Subglottic was treated with the following modalities:\n \nModality\tTools\tSetting/Mode\tDuration\tResults\nCryoprobe\t2.4mm Cryoprobe\tN/A\t30 second freeze/thaw cycles\tExcellent tissue destruction\n \nMild oozing/bleeding was noted and treated with cold saline.\n \nLastly, mucus/secretions were removed from within the stent using a combination of saline flushes and cytology brush.\n \nAREAS OF GRANULATION  TISSUE TREATMENT AT THE CONCLUSION OF THE PROCEDURE\n\n \nSTENT AT THE CONCLUSION OF THE PROCEDURE\n\n \n \nThe patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and Transported to the recovery room in stable condition. \n \nSPECIMEN(S): \n--Tracheal tumor/granulation tissue removed with cryoprobe\n \nIMPRESSION/PLAN: Mohammad Alkrad is a 29 year old-year-old male who presents for bronchoscopy for evaluation of tracheal stenosis. Granulation tissue at the anterior and posterior aspects of the proximal tracheal stent were treated with cryoprobe with excellent tissue debulking.\n \n--Post procedure CXR\n--Follow up path results\n--Patient to follow up in outpatient IP clinic to go over results and next steps\n \n \nGreg Daniel Trembley, MD\n[REDACTED]",
+    "cpt_codes": [
+      31641,
+      31645
+    ],
+    "registry_entry": {
+      "patient_mrn": "NOT_FOUND",
+      "procedure_date": "[REDACTED]",
+      "procedure_start_time": null,
+      "procedure_end_time": null,
+      "procedure_duration_minutes": null,
+      "providers": {
+        "attending_name": "Dick Van Dyke, MD",
+        "attending_npi": null,
+        "fellow_name": null,
+        "assistant_name": "Greg Trembley, MD",
+        "assistant_role": "Resident",
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 29,
+        "gender": "Male",
+        "height_cm": null,
+        "weight_kg": null,
+        "bmi": null,
+        "smoking_status": null,
+        "pack_years": null
+      },
+      "clinical_context": {
+        "asa_class": null,
+        "primary_indication": "Tracheal stenosis",
+        "indication_category": "Airway Obstruction",
+        "radiographic_findings": null,
+        "lesion_size_mm": null,
+        "lesion_location": null,
+        "pet_avidity": null,
+        "suv_max": null,
+        "bronchus_sign": null
+      },
+      "procedure_setting": {
+        "location": "OR",
+        "patient_position": null,
+        "airway_type": "LMA",
+        "ett_size": null
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": null,
+        "paralytic_used": null,
+        "reversal_given": null,
+        "reversal_agent": null,
+        "start_time": null,
+        "end_time": null,
+        "intraservice_minutes": null
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Flexible Therapeutic Bronchoscope",
+        "fluoroscopy_used": false,
+        "fluoroscopy_time_seconds": null,
+        "fluoroscopy_dose_mgy": null,
+        "navigation_platform": "None",
+        "cbct_used": false,
+        "augmented_fluoroscopy": false
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Tracheal stent in place with slight granulation tissue at anterior and posterior proximal stent. Mild thick yellow mucus within stent. Normal proximal airways otherwise.",
+          "airway_abnormalities": [
+            "Granulation tissue",
+            "Secretions",
+            "Stent"
+          ]
+        },
+        "therapeutic_aspiration": {
+          "performed": true,
+          "material": "Mucus plug",
+          "location": "Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius, Left Mainstem, Carina, Lobar Carinas"
+        },
+        "airway_stent": {
+          "performed": true,
+          "action": "Assessment only",
+          "stent_type": null,
+          "location": "Trachea",
+          "indication": "Benign stenosis",
+          "deployment_successful": null
+        },
+        "cryotherapy": {
+          "performed": true,
+          "indication": "Granulation tissue",
+          "probe_size_mm": 2.4,
+          "location": "Trachea - proximal (Subglottic)",
+          "freeze_cycles": 4
+        }
+      },
+      "granular_data": {
+        "cao_interventions_detail": [
+          {
+            "location": "Trachea - proximal",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Benign - granulation",
+            "modalities_applied": [
+              {
+                "modality": "Cryotherapy - contact",
+                "freeze_time_seconds": 30,
+                "number_of_applications": 4
+              },
+              {
+                "modality": "Cryoextraction"
+              },
+              {
+                "modality": "Suctioning"
+              }
+            ],
+            "hemostasis_required": true,
+            "hemostasis_methods": [
+              "Cold saline"
+            ],
+            "secretions_present": true,
+            "secretions_drained": true,
+            "stent_placed_at_site": true,
+            "notes": "Granulation tissue at anterior and posterior aspect of proximal stent treated with cryoprobe. Tissue frozen to probe and removed en bloc."
+          }
+        ],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Other",
+            "source_location": "Trachea - proximal",
+            "collection_tool": "Cryoprobe",
+            "specimen_count": 1,
+            "destinations": [
+              "Histology/Surgical pathology"
+            ],
+            "notes": "Tracheal tumor/granulation tissue removed with cryoprobe"
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifier": null
+          },
+          {
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1,
+            "modifier": "59"
+          }
+        ],
+        "icd10_codes": [
+          "J98.09"
+        ],
+        "total_rvu": 12.87,
+        "work_rvu": 8.03
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T14:32:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy, rigid or flexible; with tumor destruction by ablative energy (cryotherapy)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Destruction of granulation tissue in proximal trachea using cryoprobe.",
+              "note_spans": [
+                {
+                  "snippet": "2.4mm cryoprobe was used to treat the anterior granulation tissue... Excellent tissue destruction"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "31645",
+              "description": "Bronchoscopy, rigid or flexible; with therapeutic aspiration of tracheobronchial tree, initial",
+              "units": 1,
+              "modifier": "59",
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Therapeutic aspiration of distal airways (RMB, BI, LMB) distinct from proximal tracheal destruction.",
+              "note_spans": [
+                {
+                  "snippet": "Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem... from mucus"
+                }
+              ]
+            },
+            {
+              "sequence": 3,
+              "code": "31622",
+              "description": "Bronchoscopy, diagnostic",
+              "role": "bundled_only",
+              "selection_status": "dropped",
+              "selection_reason": "Bundled into surgical bronchoscopy (31641)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "units": 1,
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "is_primary": true
+            },
+            {
+              "code": "31645",
+              "units": 1,
+              "work_rvu": 2.78,
+              "total_facility_rvu": 4.47,
+              "mpfs_facility_payment": 145,
+              "is_primary": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.03,
+            "total_facility_rvu": 12.87,
+            "estimated_facility_payment_unadjusted": 417
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Supported by documentation of cryotherapy destruction of granulation tissue in the subglottic/proximal trachea.",
+              "rule_refs": [
+                "31640_vs_31641_same_site"
+              ]
+            },
+            {
+              "code": "31645",
+              "summary": "Supported by therapeutic aspiration of mucus from distal airways. distinct from the site of cryotherapy (proximal trachea), allowing modifier 59."
+            }
+          ],
+          "rules_applied": [
+            {
+              "rule_id": "diagnostic_with_surgical",
+              "description": "Diagnostic bronchoscopy bundled with therapeutic codes.",
+              "outcome": "dropped",
+              "codes_affected": [
+                "31622"
+              ]
+            }
+          ]
+        }
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-18T07:45:16",
+        "created_by": "IP-Registry-Gold-Gen",
+        "notes": "Extracted from clinical note. No MRN [REDACTED] in source text.",
+        "evidence": {
+          "source_document_date": "[REDACTED]"
+        }
+      }
+    }
+  },
+  {
+    "note_text": "ATE OF PROCEDURE: [REDACTED]\n \nCC Referred Physician:  Self, Referred\nNo address on file\n \nINDICATION FOR OPERATION:  Tyler Scott Luna is a 37 year old-year-old male who presents with tumor obstruction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.\n \nCONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.\n \nPREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified\n \nPOSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified\n \nPROCEDURE:  \n31645 Therapeutic aspiration initial episode\n31624 Dx bronchoscope/lavage (BAL)    \n31636 Dilate and bronchial stent initial bronchus\n31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)\n \n \nATTENDING:  \nDuane Johnson MD PhD\n \nASSISTANT:   Emily Muller MD\n \nSupport Staff: \nRN: Victor Vicente\nRT: Maribel Mosquera and Gene Smith\n \nANESTHESIA: \nGeneral Anesthesia\n \nMONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.\n \nINSTRUMENT : \nRigid Bronchoscope\nFlexible Therapeutic Bronchoscope\n \nESTIMATED BLOOD LOSS:   None\n \nCOMPLICATIONS:    None\n \nPROCEDURE IN DETAIL:\nAfter the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. \n \nPATIENT [REDACTED]: . \n \nInitial Airway Inspection Findings:\nSuccessful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. \n \nRigid Black ventilating scope was used to intubate the patient. \n \nEndobronchial obstruction at Left Mainstem  (100% obstruction) was treated with the following modalities:\n \nModality\tTools\tSetting/Mode\tDuration\tResults\nElectrocautery\tKnife \tPreciSect\t10 secs\tremoved\nMicrowave\tmini\t90oC\t2min, 1.5min\tablated\n \nPrior to treatment, affected airway was note to be 0% patent.  After treatment, the airway was 100% patent. \n \nSuccessful therapeutic aspiration was performed to clean out the LLL and LUL subsegments from mucus. \n \nThe following stent (bonastent 10x20) was placed in the LLL basal subsegment to the LC2; jailing LB6 (origin of the tumor). \n \nBronchial alveolar lavage was performed at Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5).  Instilled 20 cc of NS, suction returned with 10 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).\n \n \nThe patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and Transported to the recovery room in stable condition. \n \nSPECIMEN(S): \nTumor from LMS\nBAL\n \nIMPRESSION/PLAN: Tyler Scott Luna is a 37 year old-year-old male who presents for bronchoscopy for endobronchial obstruction.\n- f/u in clinic \n- f/u in 4-6 weeks post for stent check\n- start stent hydration protocol\n \nDuane Johnson , MD, PhD\n[REDACTED]",
+    "cpt_codes": [
+      31641,
+      31636,
+      31645,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Duane Johnson MD PhD",
+        "assistant_name": "Emily Muller MD",
+        "assistant_role": "Fellow",
+        "trainee_present": true,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 37,
+        "gender": "Male"
+      },
+      "clinical_context": {
+        "primary_indication": "Tumor obstruction",
+        "indication_category": "Airway Obstruction",
+        "lesion_location": "Left Mainstem",
+        "asa_class": null
+      },
+      "procedure_setting": {
+        "location": "OR",
+        "airway_type": "Native"
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": null
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "navigation_platform": "None"
+      },
+      "procedures_performed": {
+        "rigid_bronchoscopy": {
+          "performed": true,
+          "indication": "Access and ventilation for obstruction management"
+        },
+        "therapeutic_aspiration": {
+          "performed": true,
+          "material": "Mucus",
+          "location": "Right Mainstem, Bronchus Intermedius, Left Mainstem, LLL, LUL"
+        },
+        "thermal_ablation": {
+          "performed": true,
+          "modality": "Electrocautery",
+          "location": "Left Mainstem",
+          "indication": "Tumor debulking"
+        },
+        "peripheral_ablation": {
+          "performed": true,
+          "modality": "Microwave",
+          "target_location": "Left Mainstem",
+          "ablation_duration_seconds": 210,
+          "number_of_ablations": 2
+        },
+        "airway_stent": {
+          "performed": true,
+          "action": "Placement",
+          "stent_type": "SEMS - Covered",
+          "stent_brand": "Bonastent",
+          "diameter_mm": 10,
+          "length_mm": 20,
+          "location": "Other",
+          "indication": "Malignant obstruction",
+          "deployment_successful": true
+        },
+        "bal": {
+          "performed": true,
+          "location": "Lingula (LB4/LB5)",
+          "volume_instilled_ml": 20,
+          "volume_recovered_ml": 10,
+          "appearance": null
+        }
+      },
+      "granular_data": {
+        "cao_interventions_detail": [
+          {
+            "location": "LMS",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Malignant - primary lung",
+            "pre_obstruction_pct": 100,
+            "post_obstruction_pct": 0,
+            "modalities_applied": [
+              {
+                "modality": "Electrocautery - knife",
+                "duration_seconds": 10
+              },
+              {
+                "modality": "Laser",
+                "number_of_applications": 2
+              }
+            ],
+            "notes": "Microwave ablation also used (90C for 2min, 1.5min). 100% patent post-treatment."
+          }
+        ],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Endobronchial biopsy",
+            "source_location": "Left Mainstem",
+            "collection_tool": "Electrocautery Knife/Forceps",
+            "destinations": [
+              "Histology/Surgical pathology"
+            ],
+            "notes": "Tumor from LMS (removed via electrocautery)"
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "BAL",
+            "source_location": "Lingula (LB4, LB5)",
+            "destinations": [
+              "Microbiology"
+            ],
+            "notes": "Sent for Cultures/Viral/Fungal"
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "modifier": "XS",
+            "units": 1
+          },
+          {
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "modifier": "XS",
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "modifier": "XS",
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J98.09"
+        ],
+        "total_rvu": 23.96
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T14:32:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy with tumor destruction (LMS)",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Tumor destruction in Left Mainstem using electrocautery and microwave.",
+              "note_spans": [
+                {
+                  "snippet": "Endobronchial obstruction at Left Mainstem... treated with... Electrocautery... Microwave... ablated"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "31636",
+              "description": "Bronchoscopy with bronchial stent placement (LLL)",
+              "units": 1,
+              "modifier": "XS",
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Stent placement in LLL basal segment, distinct from LMS destruction.",
+              "note_spans": [
+                {
+                  "snippet": "stent (bonastent 10x20) was placed in the LLL basal subsegment"
+                }
+              ]
+            },
+            {
+              "sequence": 3,
+              "code": "31645",
+              "description": "Bronchoscopy with therapeutic aspiration (RMS/BI/LUL)",
+              "units": 1,
+              "modifier": "XS",
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Aspiration of Right Mainstem, Bronchus Intermedius, and LUL, distinct from LMS/LLL interventions.",
+              "note_spans": [
+                {
+                  "snippet": "aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius"
+                }
+              ]
+            },
+            {
+              "sequence": 4,
+              "code": "31624",
+              "description": "Bronchoscopy with BAL (Lingula)",
+              "units": 1,
+              "modifier": "XS",
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "BAL in Lingula, distinct from other therapeutic sites.",
+              "note_spans": [
+                {
+                  "snippet": "Bronchial alveolar lavage was performed at Superior Segment of Lingula"
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "units": 1,
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "is_primary": true
+            },
+            {
+              "code": "31636",
+              "units": 1,
+              "work_rvu": 4.3,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222,
+              "is_primary": false
+            },
+            {
+              "code": "31645",
+              "units": 1,
+              "work_rvu": 2.78,
+              "total_facility_rvu": 4.47,
+              "mpfs_facility_payment": 145,
+              "is_primary": false
+            },
+            {
+              "code": "31624",
+              "units": 1,
+              "work_rvu": 2.63,
+              "total_facility_rvu": 4.24,
+              "mpfs_facility_payment": 137,
+              "is_primary": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 14.96,
+            "total_facility_rvu": 23.96,
+            "estimated_facility_payment_unadjusted": 776
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary code for tumor destruction in Left Mainstem."
+            },
+            {
+              "code": "31636",
+              "summary": "Stenting of LLL basal segment; distinct anatomic structure from LMS ablation allowing unbundling."
+            },
+            {
+              "code": "31645",
+              "summary": "Therapeutic aspiration of contralateral (Right) airways and LUL supports separate reporting."
+            },
+            {
+              "code": "31624",
+              "summary": "BAL of Lingula is anatomically distinct."
+            }
+          ]
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "notes": "Patient name [REDACTED] Luna. Note specifies 'Self, Referred'. Bonastent is a covered Nitinol stent."
+      }
+    }
+  },
+  {
+    "note_text": "DATE OF PROCEDURE: [REDACTED]\n \nCC Referred Physician:  Provider, Not In System, MD\nNo address on file\n \nINDICATION FOR OPERATION:  Andres Flores Luna is a 63 year old-year-old male who presents with respiratory failure.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.\n \nCONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.\n \nPREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure\n \nPOSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure\n \nPROCEDURE:  \n31600 Incision of windpipe (perc trach)\n76536 Ultrasound of Neck\n \n22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)\n \nIP UCSD CODE MOD DETAILS: \nUnusual Procedure:\nThis patient required a procedure when anatomy was challenging due to limited neck mobility. This made for a narrow window to perform the procedure and required four additional attending physicians to assist with the case. This resulted in >40% increased work due to Increased intensity, Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 31600 Incision of windpipe (perc trach). \n \nATTENDING:  \nJacob Perry MD\n \nASSISTANT:   Christina Johnson MD and Emily Muller MD\n \nSupport Staff: \nRN: Lyndsey Lohan and Victor Vicente\nRT: Mandy Malone\n \nMONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.\n \nESTIMATED BLOOD LOSS:   Minimum\n \nCOMPLICATIONS:    None\n \nPROCEDURE IN DETAIL:\nAfter the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. \n \nPATIENT [REDACTED]: . \n \nInitial Airway Inspection Findings:\n \nNeck Ultrasound was performed to evaluate for any abnormal vessel, mass, structures at the site of percutaneous tracheostomy.  There were no significant vessels/mass were noted overlying the tracheostomy site on examination from the laryngeal prominence to the sternal notch.  \n \nThe bronchoscope was retracted into the ETT tube and the ET tube retracted into the subglottic space under direct visualization.  The inferior border of the cricoid along with the proximal tracheal rings were visualized.  Next, the anterior neck was prepped and draped in the usual sterile fashion.  \n \nThere were issues with the ventilator, so manual bagging of the patient was performed. \n \nLidocaine 1% 3ml ml was injected into the anterior neck.  A 1 cm incision was made horizontally with a #10 blade down through the subcutaneous tissue, just inferior to the cricoid cartilage.  A syringe with 1% Lidocaine was then attached to the introducer needle and passed between the 1st and 2nd tracheal rings and into the trachea under direct visualization.  This needle was removed and the 18 gauge introducer catheter over needle was then advanced into this [REDACTED] under direct visualization.   The inner needle was removed and the introducer catheter left in place.  Next, a J-wire was passed through the catheter, also visualized with the bronchoscope.  The site was then dilated using the 14Fr introducing dilator passed over the wire.  \n \nThe 14 Fr dilator was then removed from the guide wire and an 8 Fr guiding catheter placed over the guide wire until the safety ridge on the guiding catheter was at skin level.  The White Rhino dilator was placed over the guiding catheter until the positioning mark was visualized via the bronchoscope.  The White Rhino dilator was then removed leaving the guiding catheter and guide wire assembly in place, all under direct visualization bronchoscopically.\n \nFinally a Portex 7.0 cuffed tracheostomy tube with appropriate dilator was introduced over the guiding catheter into the trachea under direct visualization.  The dilator, guiding catheter, and J-wire were then removed and the tracheostomy tube left in place.  This was confirmed to be in good [REDACTED] bronchoscopically.  The Endotracheal tube was then removed and the ventilator connected to the tracheostomy tube.   A Lyofoam drain sponge was placed under the tracheostomy tube prior to suturing into place.  The patient tolerated the procedure well.  There were no complications. The staff physician was present throughout the entire procedure. \n \n \nThe patient tolerated the procedure well.  There were no immediate complications.  \n \nSPECIMEN(S): \nNone\n \nIMPRESSION/PLAN: Andres Flores Luna is a 63 year old-year-old male who presents for bronchoscopy for respiratory failure.\n \n-Suture removal in ~7 days\n-First tracheostomy change in ~10 days\n \nJacob M Perry, MD\n[REDACTED]",
+    "cpt_codes": [
+      31600,
+      76536
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jacob Perry MD",
+        "assistant_name": "Christina Johnson MD and Emily Muller MD",
+        "assistant_role": "Resident",
+        "trainee_present": true
+      },
+      "patient_demographics": {
+        "age_years": 63,
+        "gender": "Male"
+      },
+      "clinical_context": {
+        "primary_indication": "Respiratory Failure",
+        "indication_category": "Airway Obstruction",
+        "asa_class": null
+      },
+      "procedure_setting": {
+        "location": "Bedside",
+        "airway_type": "Tracheostomy"
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist"
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": false
+        }
+      },
+      "granular_data": {
+        "linear_ebus_stations_detail": [],
+        "navigation_targets": [],
+        "blvr_valve_placements": [],
+        "cryobiopsy_sites": [],
+        "thoracoscopy_findings_detail": [],
+        "specimens_collected": []
+      },
+      "complications": {
+        "any_complication": false,
+        "other_complication_details": "Issues with ventilator required manual bagging; procedure noted as no complications otherwise."
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "preliminary_diagnosis": "Respiratory Failure",
+        "disposition": "ICU admission",
+        "follow_up_plan_text": "Suture removal in ~7 days. First tracheostomy change in ~10 days."
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31600",
+            "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
+            "modifier": "22",
+            "units": 1
+          },
+          {
+            "code": "76536",
+            "description": "Ultrasound, soft tissues of head and neck (eg, thyroid, parathyroid, parotid), real time with image documentation",
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J96.90"
+        ],
+        "total_rvu": 8.97,
+        "work_rvu": 5.56
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T14:32:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "tracheostomy",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31600",
+              "description": "Planned tracheostomy, stand-alone open airway creation (age >= 2 years)",
+              "units": 1,
+              "modifier": "22",
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Percutaneous tracheostomy. Modifier 22 applied for significant increased work due to challenging anatomy and need for multiple attendings.",
+              "note_spans": [
+                {
+                  "snippet": "anatomy was challenging due to limited neck mobility... resulted in >40% increased work"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "76536",
+              "description": "Ultrasound, soft tissues of head and neck",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Diagnostic ultrasound of neck soft tissues to evaluate vessels/structures prior to procedure.",
+              "note_spans": [
+                {
+                  "snippet": "Neck Ultrasound was performed to evaluate for any abnormal vessel... mass"
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31600",
+              "units": 1,
+              "work_rvu": 5.56,
+              "total_facility_rvu": 8.97,
+              "mpfs_facility_payment": 290,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 5.56,
+            "total_facility_rvu": 8.97,
+            "estimated_facility_payment_unadjusted": 290
+          },
+          "notes": "76536 RVUs not available in knowledge base; excluded from totals. Modifier 22 may result in increased payment upon review."
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31600",
+              "summary": "Percutaneous tracheostomy. 22 modifier supported by explicit documentation of >40% increased work/intensity."
+            },
+            {
+              "code": "76536",
+              "summary": "Diagnostic ultrasound of neck; distinct from bundled ultrasound guidance (76942). Reported based on specific documentation of vessel/mass evaluation."
+            }
+          ]
+        }
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-18T07:55:00Z",
+        "updated_at": "2025-12-18T07:55:00Z",
+        "created_by": "IP-Registry-Gold-Gen"
+      }
+    }
+  }
+]

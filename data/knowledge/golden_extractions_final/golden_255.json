@@ -1,0 +1,825 @@
+[
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: CDR Patricia Davis, MD\n\nIndication: Thyroid cancer with tracheal compression\nPre-procedure obstruction: ~79% Trachea\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of trachea stenosis performed.\nAirway measured and Novatech Silicone - Dumon stent (12x60mm) deployed in Trachea.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~11%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nDavis, MD",
+    "cpt_codes": [
+      31631
+    ],
+    "registry_entry": {
+      "patient_mrn": "2297743",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 78,
+      "gender": "Female",
+      "asa_class": 4,
+      "primary_indication": "Thyroid cancer with tracheal compression",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31631
+      ],
+      "institution_name": "University of Michigan Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "stent_type": "Silicone - Dumon",
+      "stent_diameter_mm": 12,
+      "stent_length_mm": 60,
+      "stent_location": "Trachea",
+      "cao_location": "trachea",
+      "cao_obstruction_pre_pct": 79,
+      "cao_obstruction_post_pct": 11,
+      "cao_primary_modality": "Stent placement",
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": null,
+        "assistant_name": "Kathleen Davis, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.300725"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31631",
+          "final_codes": [
+            "31631"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31631": "Bronch w/tracheal stent (Tracheal Stent)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231,
+          "per_code": {
+            "31631": {
+              "facility_rvu": 7.15,
+              "facility_payment": 231
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 7.15."
+      }
+    },
+    "source_file": "synthetic_stent_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31631",
+        "31630"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Lisa Anderson\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Squamous cell carcinoma with airway compromise\nPre-procedure obstruction: ~91% Right mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of RMS stenosis performed.\nAirway measured and Novatech Silicone - Dumon stent (20x50mm) deployed in Right mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~4%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nAnderson, MD",
+    "cpt_codes": [
+      31636
+    ],
+    "registry_entry": {
+      "patient_mrn": "7607199",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 62,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Squamous cell carcinoma with airway compromise",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31636
+      ],
+      "institution_name": "MD Anderson Cancer Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "stent_type": "Silicone - Dumon",
+      "stent_diameter_mm": 20,
+      "stent_length_mm": 50,
+      "stent_location": "Right mainstem",
+      "cao_location": "RMS",
+      "cao_obstruction_pre_pct": 91,
+      "cao_obstruction_post_pct": 4,
+      "cao_primary_modality": "Stent placement",
+      "providers": {
+        "attending_name": "Anderson",
+        "fellow_name": "LT Michelle Torres, MD",
+        "assistant_name": "Lisa Robinson, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.300902"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31636",
+          "final_codes": [
+            "31636"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31636": "Bronch w/bronch stent (Bronchial Stent)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.85,
+          "facility_total_payment": 222,
+          "per_code": {
+            "31636": {
+              "facility_rvu": 6.85,
+              "facility_payment": 222
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 6.85."
+      }
+    },
+    "source_file": "synthetic_stent_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31636",
+        "31630"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Amanda Garcia\nFellow: Dr. James Liu (PGY-5)\n\nIndication: Primary lung adenocarcinoma with CAO\nPre-procedure obstruction: ~72% Right mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of RMS stenosis performed.\nAirway measured and Aero SEMS - Covered stent (16x30mm) deployed in Right mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~8%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nGarcia, MD",
+    "cpt_codes": [
+      31636
+    ],
+    "registry_entry": {
+      "patient_mrn": "8164763",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 71,
+      "gender": "Female",
+      "asa_class": 4,
+      "primary_indication": "Primary lung adenocarcinoma with CAO",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31636
+      ],
+      "institution_name": "Cleveland Clinic[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "stent_type": "SEMS - Covered",
+      "stent_diameter_mm": 16,
+      "stent_length_mm": 30,
+      "stent_location": "Right mainstem",
+      "cao_location": "RMS",
+      "cao_obstruction_pre_pct": 72,
+      "cao_obstruction_post_pct": 8,
+      "cao_primary_modality": "Stent placement",
+      "providers": {
+        "attending_name": "Garcia",
+        "fellow_name": "Dr. James Liu",
+        "assistant_name": "Karen Taylor, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.300783"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31636",
+          "final_codes": [
+            "31636"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31636": "Bronch w/bronch stent (Bronchial Stent)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.85,
+          "facility_total_payment": 222,
+          "per_code": {
+            "31636": {
+              "facility_rvu": 6.85,
+              "facility_payment": 222
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 6.85."
+      }
+    },
+    "source_file": "synthetic_stent_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31636",
+        "31630"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Christopher Brown\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~78% obstruction at RLL orifice\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor id[REDACTED] at RLL orifice.\nApc (argon plasma coagulation) performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~18% residual obstruction.\nEBL: ~50mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nBrown, MD",
+    "cpt_codes": [
+      31641
+    ],
+    "registry_entry": {
+      "patient_mrn": "4390529",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 51,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant central airway obstruction",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641
+      ],
+      "institution_name": "UC San Diego Health[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "cao_location": "RLL orifice",
+      "cao_obstruction_pre_pct": 78,
+      "cao_obstruction_post_pct": 18,
+      "cao_primary_modality": "APC (argon plasma coagulation)",
+      "ebl_ml": 50,
+      "providers": {
+        "attending_name": "Brown",
+        "fellow_name": "Dr. Lauren Walsh",
+        "assistant_name": "Stephanie Anderson, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301392"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31641": "Bronch w/tumor destruct (Destruction/Ablation)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 8.4."
+      }
+    },
+    "source_file": "synthetic_debulking_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31640",
+        "31641"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. James Rodriguez\nFellow: Dr. Kevin Patel (PGY-5)\n\nIndication: Squamous cell carcinoma with airway compromise\nPre-procedure obstruction: ~93% Left mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nAirway measured and Aero SEMS - Covered stent (16x30mm) deployed in Left mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~8%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nRodriguez, MD",
+    "cpt_codes": [
+      31636
+    ],
+    "registry_entry": {
+      "patient_mrn": "8436280",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 69,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Squamous cell carcinoma with airway compromise",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31636
+      ],
+      "institution_name": "Cedars-Sinai Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "stent_type": "SEMS - Covered",
+      "stent_diameter_mm": 16,
+      "stent_length_mm": 30,
+      "stent_location": "Left mainstem",
+      "cao_location": "LMS",
+      "cao_obstruction_pre_pct": 93,
+      "cao_obstruction_post_pct": 8,
+      "cao_primary_modality": "Stent placement",
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": "Dr. Kevin Patel",
+        "assistant_name": "Deborah Carter, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.300819"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31636",
+          "final_codes": [
+            "31636"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31636": "Bronch w/bronch stent (Bronchial Stent)"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.85,
+          "facility_total_payment": 222,
+          "per_code": {
+            "31636": {
+              "facility_rvu": 6.85,
+              "facility_payment": 222
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 6.85."
+      }
+    },
+    "source_file": "synthetic_stent_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31636"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Michael Chen\n\nIndication: Primary lung adenocarcinoma with CAO\nPre-procedure: ~74% obstruction at BI\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor id[REDACTED] at BI.\nRigid bronchoscopy debulking with biopsy forceps performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nPost-procedure: ~12% residual obstruction.\nEBL: ~75mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nChen, MD",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "4229850",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 71,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Primary lung adenocarcinoma with CAO",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31640
+      ],
+      "institution_name": "VA San Diego Healthcare System[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "cao_location": "BI",
+      "cao_obstruction_pre_pct": 74,
+      "cao_obstruction_post_pct": 12,
+      "cao_primary_modality": "rigid bronchoscopy debulking with biopsy forceps",
+      "ebl_ml": 75,
+      "providers": {
+        "attending_name": "Chen",
+        "fellow_name": null,
+        "assistant_name": "Rebecca Davis, RT",
+        "assistant_role": "RT",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301201"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31640",
+          "final_codes": [
+            "31640"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31640": "Bronch w/tumor excision (Excision)"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.23,
+          "facility_total_payment": 234,
+          "per_code": {
+            "31640": {
+              "facility_rvu": 7.23,
+              "facility_payment": 234
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 7.23."
+      }
+    },
+    "source_file": "synthetic_debulking_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31640"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Sarah Williams\nFellow: Dr. Lauren Walsh (PGY-6)\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~66% obstruction at RMS\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor id[REDACTED] at RMS.\nCryoextraction performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nBalloon dilation performed for residual stenosis.\nPost-procedure: ~17% residual obstruction.\nEBL: ~200mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nWilliams, MD",
+    "cpt_codes": [
+      31641
+    ],
+    "registry_entry": {
+      "patient_mrn": "1587446",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 70,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant central airway obstruction",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641
+      ],
+      "institution_name": "Memorial Sloan Kettering[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "cao_location": "RMS",
+      "cao_obstruction_pre_pct": 66,
+      "cao_obstruction_post_pct": 17,
+      "cao_primary_modality": "cryoextraction",
+      "ebl_ml": 200,
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": "Dr. Lauren Walsh",
+        "assistant_name": "Betty Rodriguez, RT",
+        "assistant_role": "RT",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301591"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31641": "Bronch w/tumor destruct (Destruction/Ablation)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 8.4."
+      }
+    },
+    "source_file": "synthetic_debulking_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31640",
+        "31641",
+        "31630"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: LCDR John Park, MD\nFellow: LT Michelle Torres, MD (PGY-5)\n\nIndication: Esophageal cancer with tracheal invasion\nPre-procedure obstruction: ~86% Right mainstem\n\nPROCEDURE:\nUnder general anesthesia with jet ventilation, rigid bronchoscopy performed.\nSequential balloon dilation of RMS stenosis performed.\nAirway measured and Novatech Silicone - Dumon stent (20x30mm) deployed in Right mainstem.\nStent position confirmed with good expansion and patency.\nPost-procedure obstruction: ~21%\nNo complications. EBL minimal.\n\nDISPOSITION: Recovery then floor admission for overnight observation.\nF/U: Clinic in 4-6 weeks with repeat bronchoscopy.\n\nPark, MD",
+    "cpt_codes": [
+      31636
+    ],
+    "registry_entry": {
+      "patient_mrn": "2721803",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 51,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Esophageal cancer with tracheal invasion",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31636
+      ],
+      "institution_name": "VA San Diego Healthcare System[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "stent_type": "Silicone - Dumon",
+      "stent_diameter_mm": 20,
+      "stent_length_mm": 30,
+      "stent_location": "Right mainstem",
+      "cao_location": "RMS",
+      "cao_obstruction_pre_pct": 86,
+      "cao_obstruction_post_pct": 21,
+      "cao_primary_modality": "Stent placement",
+      "providers": {
+        "attending_name": "Park",
+        "fellow_name": "LT Michelle Torres, MD",
+        "assistant_name": "Dorothy Taylor, RN",
+        "assistant_role": "RN",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.300646"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31636",
+          "final_codes": [
+            "31636"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31636": "Bronch w/bronch stent (Bronchial Stent)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 6.85,
+          "facility_total_payment": 222,
+          "per_code": {
+            "31636": {
+              "facility_rvu": 6.85,
+              "facility_payment": 222
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 6.85."
+      }
+    },
+    "source_file": "synthetic_stent_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31636",
+        "31630"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Amanda Garcia\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~73% obstruction at RUL orifice\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor id[REDACTED] at RUL orifice.\nLaser ablation performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nAdditional APC/laser used for hemostasis and tumor base ablation.\nPost-procedure: ~39% residual obstruction.\nEBL: ~150mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nGarcia, MD",
+    "cpt_codes": [
+      31641
+    ],
+    "registry_entry": {
+      "patient_mrn": "8889157",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 75,
+      "gender": "Male",
+      "asa_class": 4,
+      "primary_indication": "Malignant central airway obstruction",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31641
+      ],
+      "institution_name": "UCSF Medical Center[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "cao_location": "RUL orifice",
+      "cao_obstruction_pre_pct": 73,
+      "cao_obstruction_post_pct": 39,
+      "cao_primary_modality": "laser ablation",
+      "ebl_ml": 150,
+      "providers": {
+        "attending_name": "Garcia",
+        "fellow_name": null,
+        "assistant_name": "Kimberly Miller, RT",
+        "assistant_role": "RT",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301539"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31641",
+          "final_codes": [
+            "31641"
+          ],
+          "modifiers": [],
+          "changes_made": true,
+          "code_rationales": {
+            "31641": "Bronch w/tumor destruct (Destruction/Ablation)"
+          },
+          "coding_decision": "adjusted"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 8.4,
+          "facility_total_payment": 272,
+          "per_code": {
+            "31641": {
+              "facility_rvu": 8.4,
+              "facility_payment": 272
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 8.4."
+      }
+    },
+    "source_file": "synthetic_debulking_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31640",
+        "31641"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Mark Taylor\n\nIndication: Malignant central airway obstruction\nPre-procedure: ~60% obstruction at RMS\n\nPROCEDURE:\nUnder general anesthesia, rigid bronchoscopy performed.\nEndobronchial tumor id[REDACTED] at RMS.\nLaser ablation performed with sequential tumor removal.\nMultiple passes performed to achieve maximal debulking.\nPost-procedure: ~35% residual obstruction.\nEBL: ~150mL. Hemostasis achieved.\nSpecimens sent for histology.\n\nDISPOSITION: Recovery then ICU observation overnight.\nPlan: Consider stent if re-obstruction. Oncology f/u.\n\nTaylor, MD",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "5018184",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 66,
+      "gender": "Male",
+      "asa_class": 4,
+      "primary_indication": "Malignant central airway obstruction",
+      "sedation_type": "General",
+      "airway_type": "Rigid bronchoscope",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        31640
+      ],
+      "institution_name": "VA San Diego Healthcare System[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "cao_location": "RMS",
+      "cao_obstruction_pre_pct": 60,
+      "cao_obstruction_post_pct": 35,
+      "cao_primary_modality": "laser ablation",
+      "ebl_ml": 150,
+      "providers": {
+        "attending_name": "Taylor",
+        "fellow_name": null,
+        "assistant_name": "Margaret Carter, RT",
+        "assistant_role": "RT",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301309"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "31640",
+          "final_codes": [
+            "31640"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "31640": "Bronch w/tumor excision (Excision)"
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 7.23,
+          "facility_total_payment": 234,
+          "per_code": {
+            "31640": {
+              "facility_rvu": 7.23,
+              "facility_payment": 234
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Verified therapeutic bronchoscopy codes. Total Facility RVU: 7.23."
+      }
+    },
+    "source_file": "synthetic_debulking_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31640"
+      ],
+      "invalid_codes": []
+    }
+  }
+]

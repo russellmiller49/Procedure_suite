@@ -1,0 +1,2128 @@
+[
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. James Rodriguez\n\nDx: Right-sided complex parapneumonic effusion with loculations\nProcedure: Intrapleural fibrinolytic instillation via indwelling pleural catheter - Day 1\n\nHx: 67F with right-sided pneumonia complicated by loculated parapneumonic effusion. 14Fr chest tube placed [REDACTED], draining poorly with persistent loculations on CT. Decision made to initiate intrapleural fibrinolytic therapy.\n\nProcedure: Under sterile technique, 10mg tPA and 5mg DNase mixed in 50mL NS instilled via existing pleural catheter. Catheter clamped for 2 hours, then opened to drainage. Patient tolerated well. No chest pain, no respiratory distress.\n\nPlan: Continue tPA/DNase BID x 3 days. Repeat imaging in 48hrs. Monitor drainage output.\n\nJ. Rodriguez MD",
+    "cpt_codes": [
+      32561
+    ],
+    "registry_entry": {
+      "patient_mrn": "789234",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 67,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Complex parapneumonic effusion with loculations",
+      "indication_category": "Empyema/Parapneumonic",
+      "sedation_type": "Local Only",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        32561
+      ],
+      "institution_name": "University Medical Center, Philadelphia, PA",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient - floor",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Fibrinolytic Instillation",
+      "pleural_side": "Right",
+      "pleural_guidance": "None",
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "fibrinolytic_therapy": {
+          "performed": true,
+          "agents": [
+            "tPA",
+            "DNase"
+          ],
+          "tpa_dose_mg": 10,
+          "dnase_dose_mg": 5,
+          "indication": "Complex parapneumonic",
+          "number_of_doses": 1,
+          "day_of_therapy": 1
+        },
+        "ipc": {
+          "performed": false,
+          "action": "Fibrinolytic instillation",
+          "side": "Right",
+          "catheter_brand": null,
+          "indication": null
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32561",
+          "final_codes": [
+            "32561"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32561": "Instillation of fibrinolytic agent (tPA/DNase) via existing chest tube/catheter, initial day of therapy."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 2.09,
+          "facility_total_payment": 68,
+          "per_code": {
+            "32561": {
+              "work_rvu": 1.39,
+              "pe_rvu": 0.57,
+              "mp_rvu": 0.13,
+              "facility_rvu": 2.09,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as first day of fibrinolytic therapy."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32561",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED] (76 years old)\nDate of Service: [REDACTED]\nLocation: [REDACTED]\nAttending: Dr. Sarah Kim, MD - Interventional Pulmonology\n\nIndication: Empyema with multiple septations, post-pneumonia\n\nHistory: 76M with DM2, recent hospitalization for CAP now with empyema. Pigtail catheter placed 12/02. Minimal output despite appropriate positioning. CT shows multiloculated collection.\n\nProcedure: Instillation of fibrinolytic via indwelling pleural catheter (Day 1)\nUsing sterile technique, pleural catheter flushed with 10mL saline. Then instilled:\n- tPA 10mg in 30mL NS\n- DNase 5mg in 30mL NS\nTotal dwell time: 2 hours\nCatheter unclamped to water seal.\n\nPatient [REDACTED]. No pain. No fever. Will continue q12h dosing.\n\nS. Kim, MD",
+    "cpt_codes": [
+      32561
+    ],
+    "registry_entry": {
+      "patient_mrn": "456123",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 76,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Empyema with multiple septations",
+      "indication_category": "Empyema/Parapneumonic",
+      "sedation_type": "Local Only",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        32561
+      ],
+      "institution_name": "Memorial Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient - floor",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Fibrinolytic Instillation",
+      "pleural_side": "Left",
+      "pleural_guidance": "None",
+      "providers": {
+        "attending_name": "Kim",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "fibrinolytic_therapy": {
+          "performed": true,
+          "agents": [
+            "tPA",
+            "DNase"
+          ],
+          "tpa_dose_mg": 10,
+          "dnase_dose_mg": 5,
+          "indication": "Empyema",
+          "number_of_doses": 1,
+          "day_of_therapy": 1
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32561",
+          "final_codes": [
+            "32561"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32561": "Instillation of fibrinolytic agent via indwelling pleural catheter, Day 1."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 2.09,
+          "facility_total_payment": 68,
+          "per_code": {
+            "32561": {
+              "work_rvu": 1.39,
+              "pe_rvu": 0.57,
+              "mp_rvu": 0.13,
+              "facility_rvu": 2.09,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32561",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Michael Thompson\n\nDx: Malignant pleural effusion with loculations, breast CA metastatic\nProcedure: Fibrinolytic agent instillation via PleurX catheter, Day 1\n\nHx: 63F with metastatic breast cancer, symptomatic loculated left MPE. PleurX placed 2 weeks ago, output has decreased significantly with ultrasound showing multiple septations.\n\nProcedure Details:\n- PleurX catheter confirmed patent with flush\n- Instilled 10mg alteplase in 50mL saline\n- Catheter clamped 1.5 hours\n- Released to gravity drainage\n- 450mL serosanguinous fluid drained over next 4 hours\n\nNo complications. Patient comfortable. Continue daily instillations.\n\nM. Thompson MD",
+    "cpt_codes": [
+      32561
+    ],
+    "registry_entry": {
+      "patient_mrn": "234567",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 63,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion with loculations",
+      "indication_category": "Pleural Effusion - Therapeutic",
+      "sedation_type": "Local Only",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32561
+      ],
+      "institution_name": "St. Luke's Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Fibrinolytic Instillation",
+      "pleural_side": "Left",
+      "pleural_guidance": "None",
+      "pleural_volume_drained_ml": 450,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "providers": {
+        "attending_name": "Thompson",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "fibrinolytic_therapy": {
+          "performed": true,
+          "agents": [
+            "tPA"
+          ],
+          "tpa_dose_mg": 10,
+          "indication": "Malignant effusion",
+          "number_of_doses": 1,
+          "day_of_therapy": 1
+        },
+        "ipc": {
+          "performed": false,
+          "action": "Fibrinolytic instillation",
+          "side": "Left",
+          "catheter_brand": "PleurX",
+          "indication": "Malignant effusion"
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32561",
+          "final_codes": [
+            "32561"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32561": "Fibrinolytic instillation (alteplase) via PleurX catheter, Day 1."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 2.09,
+          "facility_total_payment": 68,
+          "per_code": {
+            "32561": {
+              "work_rvu": 1.39,
+              "pe_rvu": 0.57,
+              "mp_rvu": 0.13,
+              "facility_rvu": 2.09,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32561",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\nPhysician: Dr. Amanda Foster, Interventional Pulmonology\nFellow: Dr. Kevin Park, PGY-5\n\nIndication: Organized hemothorax post-trauma, inadequate drainage\n\nBackground: 54M s/p MVC with traumatic hemothorax. Chest tube placed at OSH 5 days ago. Transfer for IP evaluation due to persistent opacity. CT shows organized hemothorax with extensive fibrin stranding.\n\nProcedure: Intrapleural fibrinolytic administration - Day 1\nAfter confirming tube patency with 20mL saline flush, we instilled:\n- Alteplase (tPA) 10mg in 30mL NS\n- Dornase alfa (DNase) 5mg in 30mL NS\nSequential instillation with 30-minute interval.\nCatheter clamped for 2 hours total dwell.\nOpened to -20cmH2O suction.\n\nImmediate output: 200mL dark bloody fluid within first hour.\nPatient [REDACTED]. O2 sat 96% on 2L NC.\n\nPlan: BID dosing x 3 days, then reassess with CT.\n\nA. Foster, MD / K. Park, MD",
+    "cpt_codes": [
+      32561
+    ],
+    "registry_entry": {
+      "patient_mrn": "891234",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 54,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Organized hemothorax post-trauma",
+      "indication_category": "Other",
+      "sedation_type": "Local Only",
+      "final_diagnosis_prelim": "Other",
+      "cpt_codes": [
+        32561
+      ],
+      "institution_name": "Cleveland Clinic[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient - floor",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Fibrinolytic Instillation",
+      "pleural_side": "Right",
+      "pleural_guidance": "None",
+      "pleural_volume_drained_ml": 200,
+      "pleural_fluid_appearance": "Bloody",
+      "providers": {
+        "attending_name": "Foster",
+        "fellow_name": "Park",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true,
+        "fellow_pgy_level": 5
+      },
+      "pleural_procedures": {
+        "fibrinolytic_therapy": {
+          "performed": true,
+          "agents": [
+            "tPA",
+            "DNase"
+          ],
+          "tpa_dose_mg": 10,
+          "dnase_dose_mg": 5,
+          "indication": "Hemothorax",
+          "number_of_doses": 1,
+          "day_of_therapy": 1
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32561",
+          "final_codes": [
+            "32561"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32561": "Intrapleural fibrinolytic administration (tPA/DNase) via chest tube, Day 1."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 2.09,
+          "facility_total_payment": 68,
+          "per_code": {
+            "32561": {
+              "work_rvu": 1.39,
+              "pe_rvu": 0.57,
+              "mp_rvu": 0.13,
+              "facility_rvu": 2.09,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32561",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Robert Lee\n\nDx: Stage IV NSCLC with recurrent loculated left MPE\nProcedure: Fibrinolytic instillation via IPC, Day 1\n\nHx: 70F with NSCLC, left PleurX in place x 3 months. Recent US shows multiple new septations with decreased output despite symptomatic dyspnea and recurrent effusion on imaging.\n\nProcedure:\nPatient [REDACTED]. PleurX site cleaned. Catheter flushed - patent.\nInstilled 10mg tPA + 5mg DNase in 100mL NS.\nCatheter clamped. Patient repositioned side-to-side over 2hr dwell period.\nDrained 850mL straw-colored fluid after unclamping.\n\nNo complications. Patient reports improved breathing. SpO2 94% on RA vs 89% pre-procedure.\n\nContinue daily x 3 days, f/u in clinic 1 week.\n\nR. Lee MD",
+    "cpt_codes": [
+      32561
+    ],
+    "registry_entry": {
+      "patient_mrn": "567890",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 70,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Stage IV NSCLC with recurrent loculated MPE",
+      "indication_category": "Pleural Effusion - Therapeutic",
+      "sedation_type": "Local Only",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32561
+      ],
+      "institution_name": "UCSF Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Fibrinolytic Instillation",
+      "pleural_side": "Left",
+      "pleural_guidance": "None",
+      "pleural_volume_drained_ml": 850,
+      "pleural_fluid_appearance": "Serous/Clear",
+      "providers": {
+        "attending_name": "Lee",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "fibrinolytic_therapy": {
+          "performed": true,
+          "agents": [
+            "tPA",
+            "DNase"
+          ],
+          "tpa_dose_mg": 10,
+          "dnase_dose_mg": 5,
+          "indication": "Malignant effusion",
+          "number_of_doses": 1,
+          "day_of_therapy": 1
+        },
+        "ipc": {
+          "performed": false,
+          "action": "Fibrinolytic instillation",
+          "side": "Left",
+          "catheter_brand": "PleurX",
+          "indication": "Malignant effusion"
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32561",
+          "final_codes": [
+            "32561"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32561": "Fibrinolytic instillation via IPC, Day 1."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 2.09,
+          "facility_total_payment": 68,
+          "per_code": {
+            "32561": {
+              "work_rvu": 1.39,
+              "pe_rvu": 0.57,
+              "mp_rvu": 0.13,
+              "facility_rvu": 2.09,
+              "facility_payment": 68
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32561",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "OPERATIVE REPORT\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED] (65 years old)\nDate of Service: [REDACTED]\nLocation: [REDACTED]\n\nSurgeons:\nAttending: Dr. Elizabeth Warren, MD - Thoracic Surgery\nAssistant: Dr. Michael Chen, MD - Thoracic Surgery Fellow\n\nAnesthesia: General endotracheal anesthesia\nAnesthesiologist: Dr. Peter Williams, MD\n\nPreoperative Diagnosis: Mediastinal mass, suspected thymoma\n\nPostoperative Diagnosis: Anterior mediastinal mass - thymoma confirmed\n\nProcedure: Video-assisted thoracoscopic surgery (VATS) with excision of mediastinal lesion\n\nIndications: 65-year-old male with incidentally discovered 4.2cm anterior mediastinal mass on CT chest. PET showed mild FDG uptake (SUV 3.2). MRI confirmed well-circumscribed anterior mediastinal lesion. Patient elected for surgical excision.\n\nProcedure Details:\nPatient [REDACTED] supine position with left side elevated 30 degrees. Double-lumen ETT placed. General anesthesia induced. Left chest prepped and draped in sterile fashion.\n\nThree port placements:\n- 10mm camera port, 5th intercostal space, anterior axillary line\n- 5mm working port, 3rd intercostal space, mid-clavicular line\n- 5mm working port, 7th intercostal space, anterior axillary line\n\nThoracoscope introduced. Pleural space inspected - no effusion, no adhesions. Anterior mediastinum visualized with well-encapsulated mass arising from thymic tissue. Careful dissection performed using harmonic scalpel, separating mass from pericardium and left innominate vein. All margins appeared grossly clear. Specimen removed via endo-bag through enlarged camera port.\n\nHemostasis confirmed. Single 24Fr chest tube placed. Lung re-expanded under direct visualization. Ports closed in layers.\n\nSpecimen: 4.5 x 3.8 x 3.2 cm encapsulated mass, sent for permanent pathology.\n\nEBL: 75mL\nComplications: None\nDisposition: To PACU in stable condition\n\nE. Warren, MD",
+    "cpt_codes": [
+      "32662"
+    ],
+    "registry_entry": {
+      "patient_mrn": "123789",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 65,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Anterior mediastinal mass, suspected thymoma",
+      "indication_category": "Other",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        "32662"
+      ],
+      "institution_name": "Johns Hopkins Hospital, Baltimore, MD",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "ebl_ml": 75,
+      "pneumothorax": false,
+      "procedure_duration_minutes": 145,
+      "providers": {
+        "attending_name": "Warren",
+        "fellow_name": "Chen",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "pleural_procedures": {
+        "medical_thoracoscopy": {
+          "performed": true,
+          "side": "Left",
+          "scope_type": "Rigid",
+          "anesthesia_type": "General",
+          "findings": "Well-encapsulated anterior mediastinal mass, no pleural disease",
+          "biopsies_taken": false,
+          "adhesiolysis_performed": false
+        }
+      },
+      "thoracoscopy_details": {
+        "approach": "VATS three-port",
+        "port_placements": [
+          "5th ICS anterior axillary",
+          "3rd ICS mid-clavicular",
+          "7th ICS anterior axillary"
+        ],
+        "lesion_location": "Anterior mediastinum",
+        "lesion_size_cm": 4.2,
+        "procedure_type": "Excision of mediastinal lesion",
+        "specimen_extracted": true,
+        "extraction_method": "Endo-bag",
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 24
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Other",
+            "source_location": "Anterior mediastinum - thymic mass",
+            "specimen_count": 1,
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32662",
+          "final_codes": [
+            "32662"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32662": "VATS with complete excision of mediastinal tumor (thymoma). Original code 32608 (bilateral wedge resection) was incorrect for mediastinal mass excision."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": null,
+          "facility_total_payment": null,
+          "per_code": {
+            "32662": {
+              "work_rvu": null,
+              "facility_rvu": null,
+              "facility_payment": null
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json (Code missing from KB snippet)"
+        },
+        "overall_assessment": "Corrected from 32608 to 32662 (VATS excision of mediastinal cyst/tumor/mass). RVU data not available in provided KB."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32608 to 32662"
+      ]
+    }
+  },
+  {
+    "note_text": "OPERATIVE NOTE\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\n\nAttending Surgeon: Dr. Richard Chang, MD\nFirst Assistant: Dr. Amy Liu, MD (Fellow)\nAnesthesia: Dr. James Morrison, MD\n\nPreop Dx: Right posterior mediastinal mass, neurogenic tumor suspected\nPostop Dx: Posterior mediastinal schwannoma, completely excised\n\nProcedure: Video-assisted thoracoscopic excision of posterior mediastinal tumor\n\nOperative Details:\n\nAfter induction of general anesthesia with double-lumen intubation, patient positioned in left lateral decubitus. Right chest prepared. Single-lung ventilation initiated.\n\nPort placement:\n- 12mm camera port at 7th ICS, posterior axillary line\n- 5mm instrument port at 5th ICS, mid-axillary line  \n- 5mm instrument port at 9th ICS, posterior axillary line\n\nInspection revealed 3.5cm encapsulated mass arising from posterior mediastinum at T6-T7 level, consistent with nerve sheath tumor. Overlying pleura incised. Tumor carefully dissected from intercostal nerve using bipolar cautery and blunt dissection. Nerve of origin transected proximally and distally with clear margins. Specimen placed in retrieval bag and extracted through enlarged camera port incision.\n\nNo CSF leak id[REDACTED]. Hemostasis achieved. 28Fr chest tube placed. Lung fully re-expanded. Wound closed.\n\nSpecimen: 3.7 x 3.2 x 2.8 cm encapsulated tumor to pathology.\n\nEBL: 50mL\nComplications: None\n\nR. Chang, MD",
+    "cpt_codes": [
+      "32662"
+    ],
+    "registry_entry": {
+      "patient_mrn": "345678",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 57,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Right posterior mediastinal mass, neurogenic tumor",
+      "indication_category": "Other",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        "32662"
+      ],
+      "institution_name": "Memorial Sloan Kettering Cancer Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "ebl_ml": 50,
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Chang",
+        "fellow_name": "Liu",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "thoracoscopy_details": {
+        "approach": "VATS three-port",
+        "lesion_location": "Posterior mediastinum T6-T7",
+        "lesion_size_cm": 3.5,
+        "procedure_type": "Excision of mediastinal lesion",
+        "specimen_extracted": true,
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 28
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Other",
+            "source_location": "Posterior mediastinum - schwannoma",
+            "specimen_count": 1,
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32662",
+          "final_codes": [
+            "32662"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32662": "VATS excision of posterior mediastinal tumor (schwannoma). Original code 32608 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": null,
+          "facility_total_payment": null,
+          "per_code": {
+            "32662": {
+              "work_rvu": null,
+              "facility_rvu": null,
+              "facility_payment": null
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json (Code missing from KB snippet)"
+        },
+        "overall_assessment": "Corrected from 32608 to 32662. RVU data not available in provided KB."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32608 to 32662"
+      ]
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED] (73 years old)\nDate: [REDACTED]\nFacility: [REDACTED]\n\nProcedure: VATS Excision of Mediastinal Cyst\n\nSurgeon: Dr. Patricia Hayes, MD - Thoracic Surgery\nAnesthesia: General (DLT)\n\nIndication: 73M with symptomatic 6cm middle mediastinal cyst causing dysphagia and chest discomfort. MRI suggests bronchogenic cyst.\n\nTechnique:\nRight lateral decubitus. Standard three-port VATS approach. 30-degree thoracoscope inserted. Large cystic lesion id[REDACTED] in middle mediastinum, closely abutting the esophagus and right mainstem bronchus. Cyst aspirated - clear mucinous fluid. Cyst wall dissected carefully from esophagus and airway using combination of sharp and blunt dissection. Complete excision achieved without violation of esophagus or airway.\n\nFinal specimen: 5.8 x 5.2 cm cyst with thickened wall.\n\nChest tube placed. Full lung expansion confirmed. Patient extubated and transferred to recovery.\n\nEBL: 40mL\nNo complications.\n\nP. Hayes MD",
+    "cpt_codes": [
+      "32662"
+    ],
+    "registry_entry": {
+      "patient_mrn": "789456",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 73,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Symptomatic middle mediastinal cyst (bronchogenic)",
+      "indication_category": "Other",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        "32662"
+      ],
+      "institution_name": "UCLA Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "ebl_ml": 40,
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Hayes",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "thoracoscopy_details": {
+        "approach": "VATS three-port",
+        "lesion_location": "Middle mediastinum",
+        "lesion_size_cm": 6.0,
+        "procedure_type": "Excision of mediastinal cyst",
+        "cyst_aspirated": true,
+        "cyst_fluid": "Clear mucinous",
+        "specimen_extracted": true,
+        "chest_tube_placed": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32662",
+          "final_codes": [
+            "32662"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32662": "VATS excision of mediastinal cyst (bronchogenic). Original code 32608 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": null,
+          "facility_total_payment": null,
+          "per_code": {
+            "32662": {
+              "work_rvu": null,
+              "facility_rvu": null,
+              "facility_payment": null
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json (Code missing from KB snippet)"
+        },
+        "overall_assessment": "Corrected from 32608 to 32662. RVU data not available in provided KB."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32608 to 32662"
+      ]
+    }
+  },
+  {
+    "note_text": "OPERATIVE REPORT\n\nPatient Name: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED]\nDate of Surgery: [REDACTED]\nLocation: [REDACTED]\n\nPrimary Surgeon: Dr. William Thompson, MD\nResident: Dr. Jason Park, MD, PGY-4\nAnesthesiologist: Dr. Susan Miller, MD\n\nPreoperative Diagnosis: Anterior mediastinal mass, possible lymphoma\nPostoperative Diagnosis: Anterior mediastinal mass - consistent with Hodgkin lymphoma on frozen section\n\nProcedure Performed: Thoracoscopy with excision of anterior mediastinal mass\n\nAnesthesia: General endotracheal anesthesia with single-lung ventilation\n\nDescription:\nThe patient is a 50-year-old woman presenting with anterior mediastinal mass discovered on workup for chest tightness. CT and PET demonstrated 5.5cm heterogeneous anterior mediastinal mass with moderate FDG uptake. Core needle biopsy was non-diagnostic. Surgical excision for tissue diagnosis requested by oncology.\n\nPatient [REDACTED] anesthesia. Left lateral decubitus position. Right chest entered via three ports as described. Thoracoscopy revealed 5.5cm mass in anterior mediastinum with lobulated appearance and involvement of thymic tissue. Mass dissected from surrounding structures including pericardium and superior vena cava with care. Complete excision achieved. Specimen extracted in bag.\n\nFrozen section: Consistent with classical Hodgkin lymphoma.\n\nHemostasis confirmed. 24Fr Blake drain placed. Lung re-expanded. Incisions closed.\n\nEBL: 100mL\nSpecimen: 6.0 x 5.2 x 4.0 cm mediastinal mass to permanent pathology\nComplications: None\n\nW. Thompson, MD",
+    "cpt_codes": [
+      "32662"
+    ],
+    "registry_entry": {
+      "patient_mrn": "234890",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 50,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Anterior mediastinal mass, possible lymphoma",
+      "indication_category": "Mediastinal Lymphadenopathy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        "32662"
+      ],
+      "institution_name": "Northwestern Memorial Hospital[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "ebl_ml": 100,
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Thompson",
+        "fellow_name": null,
+        "assistant_name": "Park",
+        "assistant_role": "Resident",
+        "trainee_present": true
+      },
+      "thoracoscopy_details": {
+        "approach": "VATS three-port",
+        "lesion_location": "Anterior mediastinum",
+        "lesion_size_cm": 5.5,
+        "procedure_type": "Excision of mediastinal lesion",
+        "frozen_section": true,
+        "frozen_section_result": "Classical Hodgkin lymphoma",
+        "specimen_extracted": true,
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 24
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Other",
+            "source_location": "Anterior mediastinum",
+            "specimen_count": 1,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "Flow cytometry"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32662",
+          "final_codes": [
+            "32662"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32662": "VATS excision of anterior mediastinal mass (Hodgkin lymphoma). Original code 32608 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": null,
+          "facility_total_payment": null,
+          "per_code": {
+            "32662": {
+              "work_rvu": null,
+              "facility_rvu": null,
+              "facility_payment": null
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json (Code missing from KB snippet)"
+        },
+        "overall_assessment": "Corrected from 32608 to 32662. RVU data not available in provided KB."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32608 to 32662"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Catherine Bell\n\nDx: Superior mediastinal lipoma causing SVC compression symptoms\nProcedure: VATS excision of mediastinal tumor\n\nHx: 60M with 3-month history of facial swelling and arm edema. CT showed 7cm superior mediastinal mass with fat density. Lipoma confirmed on MRI. Due to symptomatic SVC compression, surgical excision recommended.\n\nProcedure:\nGeneral anesthesia, right lateral decubitus. Three-port right VATS. Large fatty tumor id[REDACTED] in superior mediastinum, compressing but not invading SVC. Meticulous dissection performed around great vessels. Tumor completely excised in one piece using endoscopic retrieval bag. SVC decompressed with visible improvement in venous caliber.\n\nSpecimen: 7.2 x 6.5 x 4.8 cm encapsulated fatty mass.\nEBL: 60mL\nChest tube placed. No complications.\n\nC. Bell MD",
+    "cpt_codes": [
+      "32662"
+    ],
+    "registry_entry": {
+      "patient_mrn": "567234",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 60,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Superior mediastinal lipoma with SVC compression",
+      "indication_category": "Other",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        "32662"
+      ],
+      "institution_name": "Duke University Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "ebl_ml": 60,
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Bell",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "thoracoscopy_details": {
+        "approach": "VATS three-port",
+        "lesion_location": "Superior mediastinum",
+        "lesion_size_cm": 7.0,
+        "procedure_type": "Excision of mediastinal lesion",
+        "specimen_extracted": true,
+        "chest_tube_placed": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32662",
+          "final_codes": [
+            "32662"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32662": "VATS excision of superior mediastinal tumor (lipoma). Original code 32608 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": null,
+          "facility_total_payment": null,
+          "per_code": {
+            "32662": {
+              "work_rvu": null,
+              "facility_rvu": null,
+              "facility_payment": null
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json (Code missing from KB snippet)"
+        },
+        "overall_assessment": "Corrected from 32608 to 32662. RVU data not available in provided KB."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32608 to 32662"
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED] (67 years old)\nDate: [REDACTED]\nLocation: [REDACTED]\n\nAttending: Dr. Andrew Scott, MD - Interventional Pulmonology\nFellow: Dr. Michelle Adams, MD - IP Fellow\n\nIndication: Mediastinal lymphadenopathy with non-diagnostic EBUS, concern for sarcoidosis vs lymphoma\n\nProcedure: Medical thoracoscopy with diagnostic biopsy of mediastinal lymph nodes\n\nAnesthesia: Moderate sedation with local anesthesia\n\nTechnique:\nPatient [REDACTED] lateral decubitus position. After local anesthesia with 1% lidocaine, a single 1cm incision made in 5th intercostal space, mid-axillary line. Trocar inserted and semi-rigid pleuroscope (LTF-160) introduced.\n\nFindings:\n- Normal visceral and parietal pleura\n- Enlarged station 7 lymph node visible through mediastinal pleura\n- Multiple enlarged lymph nodes in aortopulmonary window\n\nProcedure:\nUsing blunt dissection, mediastinal pleura opened over the subcarinal region. Multiple biopsies (x6) obtained from enlarged station 7 node using rigid biopsy forceps. Additional biopsies (x4) from AP window nodes. All specimens sent for permanent pathology, flow cytometry, and AFB/fungal cultures.\n\nNo bleeding complications. 20Fr chest tube placed. Patient tolerated procedure well.\n\nA. Scott, MD / M. Adams, MD",
+    "cpt_codes": [
+      "32606"
+    ],
+    "registry_entry": {
+      "patient_mrn": "890123",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 67,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Mediastinal lymphadenopathy, sarcoidosis vs lymphoma",
+      "indication_category": "Mediastinal Lymphadenopathy",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Indeterminate",
+      "cpt_codes": [
+        "32606"
+      ],
+      "institution_name": "Mayo Clinic[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Inpatient observation",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Scott",
+        "fellow_name": "Adams",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "pleural_procedures": {
+        "medical_thoracoscopy": {
+          "performed": true,
+          "side": "Right",
+          "scope_type": "Semi-rigid",
+          "anesthesia_type": "Local with sedation",
+          "findings": "Normal pleura, enlarged mediastinal lymph nodes at station 7 and AP window",
+          "biopsies_taken": true,
+          "number_of_biopsies": 10,
+          "adhesiolysis_performed": false
+        }
+      },
+      "thoracoscopy_details": {
+        "approach": "Single port medical thoracoscopy",
+        "scope_model": "LTF-160",
+        "target": "Mediastinal lymph nodes",
+        "stations_biopsied": [
+          "7",
+          "5"
+        ],
+        "biopsy_method": "Rigid forceps",
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 20
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Station 7 lymph node",
+            "specimen_count": 6,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "Flow cytometry",
+              "AFB culture",
+              "Fungal culture"
+            ]
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "AP window lymph node",
+            "specimen_count": 4,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "Flow cytometry"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32606",
+          "final_codes": [
+            "32606"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32606": "Medical thoracoscopy with biopsy of mediastinal lymph nodes (station 7, AP window). Original code 32604 (pericardial biopsy) was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 14.25,
+          "facility_total_payment": 461,
+          "per_code": {
+            "32606": {
+              "work_rvu": 9.5,
+              "pe_rvu": 3.88,
+              "mp_rvu": 0.87,
+              "facility_rvu": 14.25,
+              "facility_payment": 461
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Corrected from 32604 to 32606."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32604 to 32606",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Jennifer Walsh\n\nDx: Bulky mediastinal lymphadenopathy, prior non-diagnostic bronchoscopy\nProcedure: Thoracoscopy with mediastinal lymph node biopsy\n\nHx: 55M with bilateral hilar and mediastinal adenopathy on CT. EBUS-TBNA showed granulomatous inflammation but insufficient tissue for definitive diagnosis. Sarcoidosis vs. lymphoma remains on differential.\n\nProcedure:\nModerate sedation. Right lateral decubitus. Single-incision thoracoscopy at 6th ICS MAL. Flex-rigid scope inserted. Pleural space normal. Mediastinal pleura over station 4R and 7 opened. Multiple deep biopsies obtained using insulated-tip forceps:\n- Station 4R: 5 specimens\n- Station 7: 5 specimens\n\nExcellent tissue cores obtained. Sent for path, flow, TB workup.\n\nHemostasis with electrocautery. 14Fr pigtail catheter placed. No pneumothorax on completion imaging.\n\nPatient [REDACTED]. Will admit for observation overnight.\n\nJ. Walsh MD",
+    "cpt_codes": [
+      "32606"
+    ],
+    "registry_entry": {
+      "patient_mrn": "456789",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 55,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Bulky mediastinal lymphadenopathy, non-diagnostic bronchoscopy",
+      "indication_category": "Mediastinal Lymphadenopathy",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Indeterminate",
+      "cpt_codes": [
+        "32606"
+      ],
+      "institution_name": "Brigham and Women's Hospital[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Inpatient observation",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Walsh",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "medical_thoracoscopy": {
+          "performed": true,
+          "side": "Right",
+          "scope_type": "Flex-rigid",
+          "anesthesia_type": "Local with sedation",
+          "findings": "Normal pleural space, enlarged mediastinal lymph nodes",
+          "biopsies_taken": true,
+          "number_of_biopsies": 10
+        }
+      },
+      "thoracoscopy_details": {
+        "approach": "Single port medical thoracoscopy",
+        "target": "Mediastinal lymph nodes",
+        "stations_biopsied": [
+          "4R",
+          "7"
+        ],
+        "biopsy_method": "Insulated-tip forceps",
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 14,
+        "chest_tube_type": "Pigtail"
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Station 4R",
+            "specimen_count": 5,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "Flow cytometry",
+              "AFB culture"
+            ]
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Station 7",
+            "specimen_count": 5,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "Flow cytometry"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32606",
+          "final_codes": [
+            "32606"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32606": "Thoracoscopy with mediastinal lymph node biopsy (4R, 7). Original code 32604 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 14.25,
+          "facility_total_payment": 461,
+          "per_code": {
+            "32606": {
+              "work_rvu": 9.5,
+              "pe_rvu": 3.88,
+              "mp_rvu": 0.87,
+              "facility_rvu": 14.25,
+              "facility_payment": 461
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Corrected from 32604 to 32606."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32604 to 32606",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\n\nAttending Physician: Dr. David Chen, MD - Interventional Pulmonology\n\nIndication: Anterior mediastinal mass with suspected thymic pathology; biopsy for diagnosis prior to treatment planning\n\nProcedure: Thoracoscopy with diagnostic biopsy of mediastinal lesion\n\nAnesthesia: General anesthesia with LMA\n\nDetails:\n62-year-old female with 3.5cm anterior mediastinal mass noted on staging CT for newly diagnosed breast cancer. PET shows mild uptake. Concern for thymoma vs lymphoma vs metastatic disease.\n\nPatient [REDACTED] anesthesia. Right lateral decubitus position. Left chest entered via single 2cm incision at 4th ICS anterior axillary line. 5mm 30-degree thoracoscope introduced.\n\nFindings: Anterior mediastinal mass visible through mediastinal pleura, approximately 3.5cm, encapsulated appearance. No pleural studding or effusion.\n\nBiopsy: Mediastinal pleura incised. Multiple deep forceps biopsies (x8) obtained from lesion. Tissue appears solid and pale. Specimens sent for frozen and permanent pathology.\n\nFrozen section: Thymic tissue with features suggestive of thymoma; final pending.\n\nSmall 14Fr chest tube placed. Lung re-expanded. Patient extubated and taken to recovery in stable condition.\n\nD. Chen, MD",
+    "cpt_codes": [
+      "32606"
+    ],
+    "registry_entry": {
+      "patient_mrn": "678901",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 62,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Anterior mediastinal mass, suspected thymic pathology",
+      "indication_category": "Other",
+      "sedation_type": "General",
+      "airway_type": "LMA",
+      "final_diagnosis_prelim": "Indeterminate",
+      "cpt_codes": [
+        "32606"
+      ],
+      "institution_name": "Stanford Health Care[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient observation",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Chen",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "medical_thoracoscopy": {
+          "performed": true,
+          "side": "Left",
+          "scope_type": "Rigid",
+          "anesthesia_type": "General",
+          "findings": "Anterior mediastinal mass, encapsulated, no pleural disease",
+          "biopsies_taken": true,
+          "number_of_biopsies": 8
+        }
+      },
+      "thoracoscopy_details": {
+        "approach": "Single port thoracoscopy",
+        "lesion_location": "Anterior mediastinum",
+        "lesion_size_cm": 3.5,
+        "biopsy_only": true,
+        "frozen_section": true,
+        "frozen_section_result": "Thymic tissue, suggestive of thymoma",
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 14
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Anterior mediastinal mass",
+            "specimen_count": 8,
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32606",
+          "final_codes": [
+            "32606"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32606": "Thoracoscopy with diagnostic biopsy of anterior mediastinal mass (thymic tissue). Original code 32604 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 14.25,
+          "facility_total_payment": 461,
+          "per_code": {
+            "32606": {
+              "work_rvu": 9.5,
+              "pe_rvu": 3.88,
+              "mp_rvu": 0.87,
+              "facility_rvu": 14.25,
+              "facility_payment": 461
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Corrected from 32604 to 32606."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32604 to 32606",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Lisa Park\n\nDx: Suspected sarcoidosis with extensive mediastinal and hilar adenopathy\nProcedure: Thoracoscopy with mediastinal node sampling\n\nHx: 70M with fatigue, dry cough. CT showed bilateral hilar and mediastinal adenopathy. Bronchoscopy with EBUS limited by poor access to enlarged nodes. Decision made for thoracoscopic sampling.\n\nProcedure:\nModerate sedation with propofol/fentanyl. Right lateral decubitus. Standard thoracoscopic entry 5th ICS. Normal pleural surfaces. Mediastinal pleura over paratracheal region opened. Large 2.5cm node id[REDACTED] at station 4R. Multiple punch biopsies (x6) obtained with excellent tissue.\n\nAdditional sampling from subcarinal region (station 7, x4 biopsies).\n\nNo significant bleeding. 16Fr chest tube placed. Patient tolerated well.\n\nSpecimens to path for H&E, AFB, fungal stains, and polarized light.\n\nL. Park MD",
+    "cpt_codes": [
+      "32606"
+    ],
+    "registry_entry": {
+      "patient_mrn": "789012",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 70,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Suspected sarcoidosis with extensive adenopathy",
+      "indication_category": "Mediastinal Lymphadenopathy",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Indeterminate",
+      "cpt_codes": [
+        "32606"
+      ],
+      "institution_name": "University of Michigan Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient observation",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Park",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "medical_thoracoscopy": {
+          "performed": true,
+          "side": "Right",
+          "scope_type": "Semi-rigid",
+          "anesthesia_type": "Local with sedation",
+          "findings": "Normal pleural surfaces, enlarged mediastinal lymph nodes",
+          "biopsies_taken": true,
+          "number_of_biopsies": 10
+        }
+      },
+      "thoracoscopy_details": {
+        "approach": "Single port medical thoracoscopy",
+        "stations_biopsied": [
+          "4R",
+          "7"
+        ],
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 16
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Station 4R lymph node",
+            "specimen_count": 6,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "AFB culture",
+              "Fungal culture"
+            ]
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Station 7 lymph node",
+            "specimen_count": 4,
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32606",
+          "final_codes": [
+            "32606"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32606": "Thoracoscopy with mediastinal lymph node sampling (4R, 7). Original code 32604 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 14.25,
+          "facility_total_payment": 461,
+          "per_code": {
+            "32606": {
+              "work_rvu": 9.5,
+              "pe_rvu": 3.88,
+              "mp_rvu": 0.87,
+              "facility_rvu": 14.25,
+              "facility_payment": 461
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Corrected from 32604 to 32606."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32604 to 32606",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "THORACOSCOPY NOTE\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\n\nPhysician: Dr. Mark Stevens, MD - Interventional Pulmonology\nFellow: Dr. Rachel Kim, MD - PGY-6\n\nProcedure: Thoracoscopy with mediastinal biopsy\n\nIndication: 47F with new diagnosis of cervical lymphadenopathy, now with CT showing extensive mediastinal adenopathy. Core biopsy of cervical node non-diagnostic. Need mediastinal tissue for diagnosis.\n\nAnesthesia: General (ETT)\n\nDescription:\nGeneral anesthesia induced. Patient in left lateral decubitus. Right thoracoscopy via three-port technique:\n- Camera port 7th ICS mid-axillary\n- Working ports 5th and 9th ICS\n\nFindings:\n- Large confluent nodal mass in the right paratracheal region\n- Subcarinal adenopathy\n- No pleural effusion or nodules\n\nBiopsies:\n- Station 4R: 8 large biopsies with excellent tissue cores\n- Station 7: 6 biopsies\nSpecimens sent fresh to pathology for touch preps and permanent sections. Additional tissue for flow cytometry and molecular studies.\n\n24Fr chest tube placed. Full lung expansion confirmed.\n\nNo complications. Patient extubated and to PACU.\n\nM. Stevens, MD / R. Kim, MD",
+    "cpt_codes": [
+      "32606"
+    ],
+    "registry_entry": {
+      "patient_mrn": "345012",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 47,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Extensive mediastinal lymphadenopathy, need for tissue diagnosis",
+      "indication_category": "Mediastinal Lymphadenopathy",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "final_diagnosis_prelim": "Indeterminate",
+      "cpt_codes": [
+        "32606"
+      ],
+      "institution_name": "Cedars-Sinai Medical Center[REDACTED]",
+      "molecular_testing_requested": true,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "providers": {
+        "attending_name": "Stevens",
+        "fellow_name": "Kim",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true,
+        "fellow_pgy_level": 6
+      },
+      "pleural_procedures": {
+        "medical_thoracoscopy": {
+          "performed": true,
+          "side": "Right",
+          "scope_type": "Rigid",
+          "anesthesia_type": "General",
+          "findings": "Large confluent nodal mass right paratracheal, subcarinal adenopathy, no pleural disease",
+          "biopsies_taken": true,
+          "number_of_biopsies": 14
+        }
+      },
+      "thoracoscopy_details": {
+        "approach": "Three-port VATS",
+        "stations_biopsied": [
+          "4R",
+          "7"
+        ],
+        "biopsy_method": "Forceps",
+        "chest_tube_placed": true,
+        "chest_tube_size_fr": 24
+      },
+      "granular_data": {
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Station 4R",
+            "specimen_count": 8,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "Flow cytometry",
+              "Molecular/NGS"
+            ]
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "Pleural biopsy",
+            "source_location": "Station 7",
+            "specimen_count": 6,
+            "destinations": [
+              "Histology/Surgical pathology",
+              "Flow cytometry"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32606",
+          "final_codes": [
+            "32606"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32606": "Thoracoscopy with mediastinal biopsy (stations 4R, 7). Original code 32604 was incorrect."
+          },
+          "coding_decision": "correction_applied"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 14.25,
+          "facility_total_payment": 461,
+          "per_code": {
+            "32606": {
+              "work_rvu": 9.5,
+              "pe_rvu": 3.88,
+              "mp_rvu": 0.87,
+              "facility_rvu": 14.25,
+              "facility_payment": 461
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Corrected from 32604 to 32606."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Corrected CPT from 32604 to 32606",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Susan Phillips\n\nDx: Large symptomatic right pleural effusion, suspected malignancy\nProcedure: Thoracentesis with insertion of indwelling pleural drainage catheter\n\nHx: 64M former smoker with new right-sided pleural effusion. CT shows large effusion with nodular pleural thickening. Presents with progressive dyspnea over 2 weeks.\n\nProcedure:\nPosition: Seated upright leaning forward on bedside table.\nSite: Right posterior chest, 8th ICS at posterior axillary line.\nAnesthesia: 1% lidocaine local anesthesia.\nGuidance: Ultrasound used to id[REDACTED] pocket and mark entry point.\n\nUsing Seldinger technique, 14Fr pleural drainage catheter inserted. Initial return of 200mL sanguineous fluid; catheter connected to drainage bag. Total drainage: 1800mL serosanguinous fluid over 30 minutes.\n\nFluid sent for: Cell count, chemistry, cytology, cultures.\n\nPatient [REDACTED] relief of dyspnea. SpO2 improved 88% to 94% on RA. No pneumothorax on post-procedure CXR.\n\nPlan: Admit for drainage monitoring. Consider PleurX if malignant.\n\nS. Phillips MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "901234",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 64,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Large symptomatic right pleural effusion, suspected malignancy",
+      "indication_category": "Pleural Effusion - Diagnostic",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Indeterminate",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "Mount Sinai Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Catheter Insertion",
+      "pleural_side": "Right",
+      "pleural_guidance": "Ultrasound",
+      "pleural_volume_drained_ml": 1800,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "providers": {
+        "attending_name": "Phillips",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "thoracentesis": {
+          "performed": true,
+          "side": "Right",
+          "guidance": "Ultrasound",
+          "indication": "Both",
+          "fluid_appearance": "Serosanguinous",
+          "volume_removed_ml": 1800
+        },
+        "chest_tube": {
+          "performed": true,
+          "action": "Insertion",
+          "side": "Right",
+          "indication": "Effusion drainage",
+          "tube_type": "Pigtail",
+          "tube_size_fr": 14,
+          "guidance": "Ultrasound"
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32556": "Pleural drainage with indwelling catheter insertion, without real-time imaging guidance."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "work_rvu": 2.5,
+              "pe_rvu": 0.83,
+              "mp_rvu": 0.29,
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded. Ultrasound used for marking only."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32556",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED] (78 years old)\nDate: [REDACTED]\nLocation: [REDACTED]\n\nAttending: Dr. Robert Kim, MD - Pulmonary/Critical Care\nResident: Dr. Emily Chen, MD - PGY-3\n\nIndication: Recurrent large left pleural effusion, CHF with hepatic hydrothorax\n\nProcedure: Thoracentesis with catheter aspiration\n\nDetails:\n78F with CHF and cirrhosis presenting with recurrent left pleural effusion causing dyspnea. This is her 4th thoracentesis in 3 months. Not a candidate for TIPS.\n\nPatient [REDACTED]. Left posterolateral chest, 7th ICS id[REDACTED]. Sterile prep and drape. Local anesthesia with 10mL 1% lidocaine.\n\nUsing Seldinger technique without imaging guidance, 12Fr pigtail catheter inserted into pleural space. Immediate return of transudative-appearing clear yellow fluid. Total of 2100mL drained over 45 minutes. Patient asked to stop due to chest tightness and cough.\n\nPost-procedure SpO2 96% on RA (baseline 91% on 2L). Marked improvement in dyspnea. CXR shows lung re-expansion, no pneumothorax.\n\nFluid: Transudate per Light's criteria.\n\nPlan: Discuss IPC placement at next recurrence.\n\nR. Kim, MD / E. Chen, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "234567",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 78,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Recurrent pleural effusion, CHF with hepatic hydrothorax",
+      "indication_category": "Pleural Effusion - Therapeutic",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "Mass General Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Catheter Aspiration",
+      "pleural_side": "Left",
+      "pleural_guidance": "None/Landmark",
+      "pleural_volume_drained_ml": 2100,
+      "pleural_fluid_appearance": "Serous/Clear",
+      "providers": {
+        "attending_name": "Kim",
+        "fellow_name": null,
+        "assistant_name": "Chen",
+        "assistant_role": "Resident",
+        "trainee_present": true
+      },
+      "pleural_procedures": {
+        "thoracentesis": {
+          "performed": true,
+          "side": "Left",
+          "guidance": "None/Landmark",
+          "indication": "Therapeutic",
+          "fluid_appearance": "Serous/Clear",
+          "volume_removed_ml": 2100
+        },
+        "chest_tube": {
+          "performed": true,
+          "action": "Insertion",
+          "side": "Left",
+          "indication": "Effusion drainage",
+          "tube_type": "Pigtail",
+          "tube_size_fr": 12,
+          "guidance": "None"
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32556": "Thoracentesis with catheter aspiration without imaging guidance."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "work_rvu": 2.5,
+              "pe_rvu": 0.83,
+              "mp_rvu": 0.29,
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32556",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Patricia Lee\n\nDx: Right parapneumonic effusion\nProcedure: Thoracentesis with catheter drainage\n\nHx: 67M admitted with CAP complicated by moderate right pleural effusion. Initial thoracentesis 2 days ago showed complicated parapneumonic effusion. Persistent effusion with fever, decision made for catheter drainage.\n\nProcedure:\nPatient [REDACTED] at bedside. Right posterolateral chest, 7th ICS posterior axillary line. Standard sterile prep. Local anesthesia with lidocaine.\n\nWithout imaging guidance, 14Fr pigtail catheter placed using Seldinger technique. Immediate return of turbid yellow-green fluid. 900mL drained during procedure. Catheter sutured and connected to underwater seal drainage.\n\nFluid analysis: pH 7.15, glucose 35, LDH 1250 - consistent with complicated parapneumonic/early empyema.\n\nNo pneumothorax on bedside ultrasound. Patient comfortable.\n\nPlan: Continuous drainage. If inadequate, will consider fibrinolytics vs thoracoscopy.\n\nP. Lee MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "456890",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Right parapneumonic effusion, complicated",
+      "indication_category": "Empyema/Parapneumonic",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "University of Chicago Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient - floor",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Catheter Insertion",
+      "pleural_side": "Right",
+      "pleural_guidance": "None/Landmark",
+      "pleural_volume_drained_ml": 900,
+      "pleural_fluid_appearance": "Purulent",
+      "providers": {
+        "attending_name": "Lee",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "thoracentesis": {
+          "performed": true,
+          "side": "Right",
+          "guidance": "None/Landmark",
+          "indication": "Both",
+          "fluid_appearance": "Purulent",
+          "volume_removed_ml": 900
+        },
+        "chest_tube": {
+          "performed": true,
+          "action": "Insertion",
+          "side": "Right",
+          "indication": "Empyema",
+          "tube_type": "Pigtail",
+          "tube_size_fr": 14,
+          "guidance": "None"
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32556": "Thoracentesis with catheter drainage, without imaging guidance."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "work_rvu": 2.5,
+              "pe_rvu": 0.83,
+              "mp_rvu": 0.29,
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32556",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE\n\nPatient: [REDACTED]\nMRN: [REDACTED]\nDOB: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\n\nPhysician: Dr. Michael Wang, MD\nFellow: Dr. Sarah Thompson, MD - Pulmonary Fellow\n\nIndication: Large left-sided malignant pleural effusion, mesothelioma\n\nProcedure: Thoracentesis with catheter aspiration\n\nDetails:\n71-year-old female with known epithelioid mesothelioma, presenting with increasing dyspnea and large left effusion on imaging. Not candidate for IPC at this time due to ongoing chemotherapy.\n\nWith patient sitting at bedside, left posterolateral chest prepped. 8th intercostal space, posterior axillary line chosen based on percussion and prior imaging (no US available at bedside).\n\nLocal anesthesia administered. Using Seldinger technique, 12Fr drainage catheter placed. Bloody fluid immediately returned. 1500mL serosanguinous fluid removed over 40 minutes. Drainage stopped when patient developed cough.\n\nPatient [REDACTED] improvement in breathing. Post-procedure vitals stable. Catheter removed at completion of procedure.\n\nFluid sent for cytology confirmation.\n\nM. Wang, MD / S. Thompson, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "567123",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 71,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Large left malignant pleural effusion, mesothelioma",
+      "indication_category": "Pleural Effusion - Therapeutic",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignancy",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "NYU Langone Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Catheter Aspiration",
+      "pleural_side": "Left",
+      "pleural_guidance": "None/Landmark",
+      "pleural_volume_drained_ml": 1500,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "providers": {
+        "attending_name": "Wang",
+        "fellow_name": "Thompson",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "pleural_procedures": {
+        "thoracentesis": {
+          "performed": true,
+          "side": "Left",
+          "guidance": "None/Landmark",
+          "indication": "Therapeutic",
+          "fluid_appearance": "Serosanguinous",
+          "volume_removed_ml": 1500
+        },
+        "chest_tube": {
+          "performed": true,
+          "action": "Insertion",
+          "side": "Left",
+          "indication": "Effusion drainage",
+          "tube_type": "Pigtail",
+          "tube_size_fr": 12,
+          "guidance": "None"
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32556": "Thoracentesis with catheter aspiration without imaging guidance."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "work_rvu": 2.5,
+              "pe_rvu": 0.83,
+              "mp_rvu": 0.29,
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32556",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Amanda Foster\n\nDx: Post-cardiac surgery pleural effusion, right\nProcedure: Thoracentesis with catheter insertion\n\nHx: 59M s/p CABG 3 weeks ago, now with large right pleural effusion causing dyspnea. Effusion confirmed transudate on prior tap. Persistent accumulation.\n\nProcedure:\nPatient [REDACTED]. Right chest, 7th ICS at mid-axillary line. Sterile prep. Lidocaine local anesthesia.\n\nWithout ultrasound (not available), 14Fr pigtail catheter inserted using standard technique. Serous yellow fluid encountered. Total 2350mL drained over 50 minutes with serial manometry demonstrating pleural elastance 12 cm H2O/L (no trapped lung).\n\nNo complications. Patient much improved. CXR confirms lung expansion, no PTX.\n\nCatheter left in place attached to bulb suction for ongoing drainage. Reassess tomorrow for removal.\n\nA. Foster MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "678234",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Post-cardiac surgery pleural effusion",
+      "indication_category": "Pleural Effusion - Therapeutic",
+      "sedation_type": "Local Only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Benign",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "Emory University Hospital, Atlanta, GA",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient - floor",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Catheter Insertion",
+      "pleural_side": "Right",
+      "pleural_guidance": "None/Landmark",
+      "pleural_volume_drained_ml": 2350,
+      "pleural_fluid_appearance": "Serous/Clear",
+      "pleural_opening_pressure_measured": true,
+      "providers": {
+        "attending_name": "Foster",
+        "fellow_name": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false
+      },
+      "pleural_procedures": {
+        "thoracentesis": {
+          "performed": true,
+          "side": "Right",
+          "guidance": "None/Landmark",
+          "indication": "Therapeutic",
+          "fluid_appearance": "Serous/Clear",
+          "volume_removed_ml": 2350,
+          "manometry_performed": true
+        },
+        "chest_tube": {
+          "performed": true,
+          "action": "Insertion",
+          "side": "Right",
+          "indication": "Effusion drainage",
+          "tube_type": "Pigtail",
+          "tube_size_fr": 14,
+          "guidance": "None"
+        }
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-09T10:00:00.000000"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP-Coder-Patch-GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "code_rationales": {
+            "32556": "Thoracentesis with catheter insertion, without imaging guidance."
+          },
+          "coding_decision": "verified_correct"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "work_rvu": 2.5,
+              "pe_rvu": 0.83,
+              "mp_rvu": 0.29,
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded."
+      }
+    },
+    "source_file": "synthetic_notes_requested_cpts.json",
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-09T14:00:00",
+      "changes": [
+        "Verified CPT 32556",
+        "Updated RVU data from v2.7 KB"
+      ]
+    }
+  }
+]

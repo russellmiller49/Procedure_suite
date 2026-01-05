@@ -366,6 +366,44 @@ python scripts/scrub_golden_jsons.py \
   --report-path artifacts/redactions.jsonl
 ```
 
+### Platinum Redaction Pipeline (Golden → Scrubbed/Final)
+
+For registry ML training data, use the **Platinum** workflow (hybrid redactor → character spans → applied redactions).
+
+**Key behavior:**
+- Scrubs both `note_text` **and** `registry_entry.evidence` to prevent PHI leakage
+- Standardizes all PHI placeholders to the single token: `[REDACTED]`
+- Does **not** redact physician/provider names (e.g., `Dr. Stevens`)
+
+**Run the pipeline (recommended):**
+```bash
+make platinum-final
+```
+This produces:
+- `data/knowledge/golden_extractions_scrubbed/` (PHI-scrubbed)
+- `data/knowledge/golden_extractions_final/` (scrubbed + institution cleanup)
+
+**Or run step-by-step:**
+```bash
+make platinum-build      # data/ml_training/phi_platinum_spans.jsonl
+make platinum-sanitize   # data/ml_training/phi_platinum_spans_CLEANED.jsonl
+make platinum-apply      # data/knowledge/golden_extractions_scrubbed/
+python scripts/fix_registry_hallucinations.py \
+  --input-dir data/knowledge/golden_extractions_scrubbed \
+  --output-dir data/knowledge/golden_extractions_final
+```
+
+**Optional: align synthetic names before building spans**
+```bash
+python scripts/align_synthetic_names.py \
+  --input-dir data/knowledge/golden_extractions \
+  --output-dir data/knowledge/golden_extractions_aligned
+```
+If you use the aligned directory, point the pipeline at it:
+```bash
+PLATINUM_INPUT_DIR=data/knowledge/golden_extractions_aligned make platinum-cycle
+```
+
 ### PHI Model Training with Prodigy
 
 Use Prodigy for iterative PHI model improvement:

@@ -1,0 +1,1160 @@
+[
+  {
+    "note_text": "PATIENT: [REDACTED], 74-year-old Female\nMRN: [REDACTED]\nINDICATION FOR OPERATION: Ms. [REDACTED] is a 74-year-old female with metastatic breast cancer presenting with recurrent symptomatic right-sided malignant pleural effusion despite two recent therapeutic thoracenteses. The nature, purpose, risks, benefits and alternatives to tunneled pleural catheter placement were discussed with the patient in detail. Patient indicated a wish to proceed and informed consent was signed.\nPREOPERATIVE DIAGNOSIS: Recurrent malignant pleural effusion, right\nPOSTOPERATIVE DIAGNOSIS: Same\nPROCEDURE: Indwelling Tunneled Pleural Catheter Placement (CPT 32550)\nATTENDING: Dr. Rachel Green\nASSISTANT: Dr. Paul Anderson, Fellow\nSupport Staff:\n\nRN: Jennifer Martinez\nRT: David Lee\n\nANESTHESIA: Local anesthesia with Lidocaine 1%\nMONITORING: Pulse oximetry, blood pressure\nINSTRUMENT: CareFusion PleurX catheter system, ultrasound machine\nESTIMATED BLOOD LOSS: <10 mL\nCOMPLICATIONS: None\nPROCEDURE IN DETAIL:\nAfter timeout, all procedure related images were saved and archived.\nPATIENT [REDACTED]: Sitting upright at 60 degrees, right arm elevated\nCHEST ULTRASOUND FINDINGS: (Image saved and printed)\n\nHemithorax: Right\nPleural Effusion Volume: Large\nEchogenicity: Anechoic\nLoculations: None\nDiaphragmatic Motion: Diminished\nLung sliding before procedure: Present\nLung consolidation/atelectasis: Present (compressive atelectasis)\nPleura: Mildly thickened, no nodularity visualized\n\nThe right lateral chest was prepped and draped in sterile fashion. Ultrasound guidance was used to id[REDACTED] the optimal insertion site and confirm absence of vital structures.\nANESTHESIA: Lidocaine 1%: 20ml injected at skin, subcutaneous tissue, pleura, and tunnel tract\nEntry Site: Right 5th Intercostal Space\nLocation: [REDACTED]\nProcedure Steps:\n\nA finder needle (18G) was used to enter the pleural space in the 5th intercostal space along the midaxillary line under ultrasound guidance. Pleural fluid was easily aspirated (straw-colored fluid). The needle was withdrawn and a 0.038\" guidewire was placed into the pleural space through the finder catheter.\nTwo 5mm skin incisions were made: one at the guidewire entry site and another 5-6cm away anteriorly for the catheter exit site.\nThe tunneling device was used to tunnel the catheter in the subcutaneous tissue from the exit site to the pleural entry site. Tunnel length: 6cm.\nSerial dilation over the guidewire was achieved using 10Fr and 15Fr dilators. The peel-away introducer sheath (16Fr) was placed over the guidewire and advanced into the pleural space.\nThe guidewire was removed. The PleurX catheter was then inserted through the introducer sheath into the pleural space until all fenestrations were within the pleural cavity (approximately 15cm inserted).\nThe introducer sheath was peeled away and removed. The pleural entry site incision was closed with a 3-0 absorbable suture (Vicryl).\nThe catheter cuff was positioned in the subcutaneous tunnel approximately 1cm from the exit site. The catheter was secured to the skin at the exit site using 2-0 nylon sutures.\nSterile dressings were applied (foam and transparent dressing).\n\nExit site: 5th Intercostal space, anterior axillary line\nInitial Drainage:\nThe PleurX vacuum bottle was attached and drainage initiated.\n\nFluid Removed: 1200 mL\nAppearance: Serous, straw-colored\n\nPleural Pressures Measured:\n\nOpening: -8 cmH₂O\n500ml: -10 cmH₂O\n1000ml: -15 cmH₂O\n1200ml: -18 cmH₂O (stopped due to chest discomfort)\n\nDrainage device: Initially vacuum bottle, then capped after drainage complete\nSPECIMEN(S):\n\nPleural fluid (cytology, chemistry, cell count)\n\nPost-procedure ultrasound showed reduced effusion volume with no pneumothorax. Post-procedure CXR ordered.\nThe patient tolerated the procedure well with only mild discomfort during catheter insertion. The attending, Dr. Green, was present throughout the entire procedure.\nIMPRESSION/PLAN: Ms. [REDACTED] underwent successful placement of right-sided tunneled pleural catheter for recurrent malignant effusion. Procedure completed without complications. Patient and family educated on catheter care and home drainage protocol. Drainage every other day initially, adjusting based on output. Follow-up appointment in 2 weeks. Home health nursing arranged for first drainage. Patient given written discharge instructions and emergency contact information.",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Rachel Green"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159020"
+      },
+      "cpt_codes": [
+        32550
+      ],
+      "gender": "Female",
+      "patient_mrn": "1034928",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.88,
+        "work_rvu": 3.92,
+        "practice_expense_rvu": 1.6,
+        "malpractice_rvu": 0.36
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "tunneled_pleural_catheter_placement",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32550",
+              "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+              "work_rvu": 3.92,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190,
+              "selection_status": "selected",
+              "selection_reason": "Ultrasound-guided placement of PleurX catheter."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 3.92,
+            "total_facility_rvu": 5.88,
+            "estimated_facility_payment_unadjusted": 190
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.142986",
+      "changes": [
+        "Extracted CPT codes: [32550, 31630]",
+        "Fixed gender: Female -> Female",
+        "Fixed MRN:  -> 1034928",
+        "Extracted attending: Rachel Green",
+        "Coding review v1: final CPT set [32550]; 31630 removed as no airway dilation/bronchoscopy documented; 2025 est facility RVU≈5.88, est payment≈$193."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "32550",
+          "description": "Insertion of tunneled pleural catheter",
+          "units": 1,
+          "facility_rvu_2025": 5.88,
+          "facility_payment_2025": 193
+        }
+      ],
+      "total_facility_rvu_2025": 5.88,
+      "total_facility_payment_2025": 193,
+      "rationale": [
+        "Kept 32550 for tunneled PleurX catheter placement with ultrasound guidance; removed 31630 since no airway dilation or bronchoscopy is documented in this pleural procedure and 31630 describes bronchoscopic airway dilation."
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED], 55-year-old Male\nMRN: [REDACTED]\nINDICATION FOR OPERATION: Mr. [REDACTED] is a 55-year-old male with a 1.8cm spiculated left lower lobe nodule discovered on low-dose CT screening. PET shows SUV 3.2. Nodule location is peripheral in the lateral basal segment. The nature, purpose, risks, benefits and alternatives to robotic navigational bronchoscopy were discussed with the patient in detail. Patient indicated a wish to proceed and informed consent was signed.\nPREOPERATIVE DIAGNOSIS: Left lower lobe pulmonary nodule\nPOSTOPERATIVE DIAGNOSIS: Same\nPROCEDURE: Robotic Navigational Bronchoscopy using Intuitive Ion System (CPT 31627), Radial EBUS (CPT 31654), Transbronchial Biopsy (CPT 31628), Transbronchial Brushing (CPT 31623)\nATTENDING: Dr. Amanda Roberts\nASSISTANT: Dr. Jason Kim, Fellow\nSupport Staff:\n\nRN: Laura Martinez\nRT: Thomas Wilson\nAnesthesia: Dr. Susan Park\n\nANESTHESIA: General anesthesia with endotracheal intubation\nMONITORING: Standard ASA monitoring\nINSTRUMENT: Intuitive Ion Robotic Platform, radial EBUS probe, biopsy forceps, cytology brush\nESTIMATED BLOOD LOSS: <10 mL\nCOMPLICATIONS: None\nPROCEDURE IN DETAIL:\nAfter induction of general anesthesia and intubation with 8.0 ETT, a timeout was performed. All procedure related images were saved and archived.\nPATIENT [REDACTED]: Supine\nVentilation Parameters:\n\nMode: Volume Control\nRR: 12\nTV: 500mL\nPEEP: 5 cmH₂O\nFiO₂: 40%\nFlow Rate: 50 L/min\nPmean: 14 cmH₂O\n\nNavigation Planning:\nCT Chest scan from [REDACTED] was placed on the separate planning station (Synapse Lung) to generate 3D rendering of the pathway to target nodule in the lateral basal segment of the left lower lobe (LB9). The navigational plan was reviewed, verified, and loaded into the Ion robotic bronchoscopy platform.\nTarget lesion characteristics:\n\nLocation: LLL, lateral basal segment (LB9)\nSize: 1.8cm\nDistance from pleura: 1.2cm\nBronchus sign: Present\n\nIon Registration - Complete:\nRegistration to the pre-procedure CT was completed using automatic methods. Adequate airway landmark matching achieved at:\n\nMain carina\nLeft main carina\nLLL segmental carinas\nTertiary bifurcations in LB9\n\nMean fiducial error: 3.8mm\nGlobal alignment quality: Excellent\nNo registration drift observed during the case\nA confidence sweep confirmed stable targeting throughout the planned trajectory with virtual-to-live alignment within acceptable parameters.\nNavigation:\nThe Ion catheter was advanced under navigational guidance through the left mainstem bronchus, into the LLL, and subsequently into the LB9 segment. The robotic system provided real-time feedback with shape sensing technology.\nTarget reached notification appeared when catheter tip was 0.6cm from the planned target center.\nRadial EBUS Confirmation:\nRadial EBUS probe (1.4mm) was passed through the Ion extended working channel to confirm lesion location. The following features were noted:\n\nPattern: Concentric\nEchogenicity: Heterogeneous\nLesion size by REBUS: 19mm\nDistance to pleura: 11mm\nVessel proximity: No large vessels within 5mm\n\nCone-Beam CT Verification:\nMobile C-arm CBCT spin was performed with the Ion catheter in [REDACTED]. Three-dimensional reconstruction confirmed:\n\nCatheter tip within lesion margins\nDistance from lesion center: 4mm\nTrajectory angle: Optimal for sampling\nNo pleural transgression\n\nSampling:\nWith confirmed tool-in-lesion [REDACTED]:\n\nTransbronchial Biopsy: Forceps biopsies obtained through Ion extended working channel. Total 6 samples collected with visible tissue in each specimen.\nBronchial Brushings: Cytology brush advanced to lesion site. Total 2 brush samples obtained.\nAspiration: Catheter aspiration performed for cytology.\n\nAll samples appeared adequate with visible tissue/cellular material. No ROSE available.\nPost-Sampling Inspection:\nThe Ion catheter was withdrawn. Final bronchoscopic inspection showed:\n\nNo active bleeding from biopsy site\nPatent LLL airways\nNo complications id[REDACTED]\n\nThe patient tolerated the procedure well. There were no immediate complications. The attending, Dr. Roberts, was present throughout the entire procedure.\nSPECIMEN(S):\n\nLLL nodule forceps biopsies x6 (histology, molecular if malignant)\nBronchial brushings x2 (cytology)\nCatheter aspiration (cytology)\n\nIMPRESSION/PLAN: Mr. [REDACTED] underwent successful robotic navigational bronchoscopy with sampling of LLL nodule. Procedure completed without complications. Post-procedure CXR shows no pneumothorax. Patient discharged home same day with instructions to follow up in 1 week for pathology results. If benign, will need CT follow-up in 3-6 months per Fleischner criteria. If malignant, will be discussed at multidisciplinary tumor board for treatment planning.",
+    "cpt_codes": [
+      31623,
+      31654,
+      31628,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Amanda Roberts"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159078"
+      },
+      "cpt_codes": [
+        31623,
+        31654,
+        31628,
+        31627
+      ],
+      "gender": "Male",
+      "lesion_size_mm": 18.0,
+      "patient_mrn": "1145039",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1
+          },
+          {
+            "code": "31623",
+            "description": "Bronchoscopy; with brushing or protected brushings",
+            "units": 1
+          },
+          {
+            "code": "+31627",
+            "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1
+          }
+        ],
+        "total_rvu": 14.89,
+        "work_rvu": 9.33,
+        "practice_expense_rvu": 4.51,
+        "malpractice_rvu": 1.05
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_navigation",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31628",
+              "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179,
+              "selection_status": "selected",
+              "selection_reason": "Transbronchial biopsies of LLL nodule."
+            },
+            {
+              "sequence": 2,
+              "code": "31623",
+              "description": "Bronchoscopy; with brushing or protected brushings",
+              "work_rvu": 2.63,
+              "total_facility_rvu": 4.18,
+              "mpfs_facility_payment": 135,
+              "selection_status": "selected",
+              "selection_reason": "Bronchial brushing of LLL nodule."
+            },
+            {
+              "sequence": 3,
+              "code": "+31627",
+              "description": "Bronchoscopy; with computer-assisted, image-guided navigation (add-on)",
+              "work_rvu": 2.27,
+              "total_facility_rvu": 3.07,
+              "mpfs_facility_payment": 99,
+              "selection_status": "selected",
+              "selection_reason": "Use of Ion robotic navigation."
+            },
+            {
+              "sequence": 4,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68,
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS verification of target."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 9.33,
+            "total_facility_rvu": 14.89,
+            "estimated_facility_payment_unadjusted": 481
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.145227",
+      "changes": [
+        "Extracted CPT codes: [31623, 31626, 31622, 31654, 31628, 31627]",
+        "Fixed gender: Male -> Male",
+        "Extracted lesion_size_mm: 18.0",
+        "Fixed MRN:  -> 1145039",
+        "Extracted attending: Amanda Roberts",
+        "Coding review v1: final CPT set [31623, 31654, 31628, 31627]; dropped 31626 and 31622 per documentation and bundling rules; 2025 est facility RVU≈14.89, est payment≈$488."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "31623",
+          "description": "Bronchoscopy with brushing",
+          "units": 1,
+          "facility_rvu_2025": 4.18,
+          "facility_payment_2025": 137
+        },
+        {
+          "code": "31654",
+          "description": "Add-on radial EBUS for peripheral lesion",
+          "units": 1,
+          "facility_rvu_2025": 2.11,
+          "facility_payment_2025": 69
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy, single lobe",
+          "units": 1,
+          "facility_rvu_2025": 5.53,
+          "facility_payment_2025": 181
+        },
+        {
+          "code": "31627",
+          "description": "Add-on computer-assisted navigational bronchoscopy",
+          "units": 1,
+          "facility_rvu_2025": 3.07,
+          "facility_payment_2025": 101
+        }
+      ],
+      "total_facility_rvu_2025": 14.89,
+      "total_facility_payment_2025": 488,
+      "rationale": [
+        "Final CPT set reflects brushing (31623), radial EBUS (31654), transbronchial lung biopsy of the LLL lesion (31628), and robotic/navigation guidance (add-on 31627). Dropped 31626, which describes marker placement, and 31622, which is bundled when biopsy or therapeutic bronchoscopy codes from the same family are used in the same session."
+      ]
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED] | Age: 66 | Sex: M | MRN: [REDACTED]\nDate: [REDACTED]\nAttending: Dr. Nicole Turner\nClinical Summary: Patient is a 66 year old gentleman presenting with a large right sided pleural effusion, unclear etiology. Previous thoracentesis showed exudative fluid with negative cytology. CT shows pleural thickening concerning for malignancy versus infectious process.\nWe discussed the need for tissue diagnosis via medical thoracoscopy. Risks including bleeding, infection, pneumothorax, need for chest tube, and rare complications such as empyema or need for surgical intervention were explained. The patient understood and signed consent.\nProcedure Performed: Medical thoracoscopy with pleural biopsies, talc pleurodesis, chest tube placement\nHow it went: Patient was positioned in left lateral decubitus. Right hemithorax prepped and draped. Ultrasound used to mark the 5th intercostal space at mid-axillary line - this showed large effusion with no loculations. After infiltrating with 20cc of 1% lidocaine, we made a 2cm incision and used blunt dissection to enter the pleural space. Initial gush of fluid noted. A 28Fr chest tube was inserted and connected to suction, draining approximately 800mL of bloody fluid initially.\nThrough the same incision site, we introduced the rigid thoracoscope. The pleural space was systematically examined. Findings were significant: The parietal pleura showed multiple white nodular lesions, largest about 1.5cm, scattered throughout. The visceral pleura had similar appearing nodules with some areas of thickened pleura. Lung appeared trapped with inability to fully expand. There were some loose adhesions which were lysed using blunt technique.\nMultiple biopsies were taken from both parietal and visceral pleura using biopsy forceps - total of 8 samples obtained from various sites. Each biopsy site had minimal bleeding controlled with pressure.\nAfter biopsies were complete, we decided to proceed with talc pleurodesis given the likely malignant etiology and trapped lung. Approximately 4 grams of sterile talc slurry mixed in 50mL normal saline was insufflated throughout the pleural cavity ensuring good distribution. The chest tube was left in place and secured with 0-silk suture. Dressing applied.\nPathology sent: Pleural biopsies x8 in formalin, pleural fluid for cytology and chemistry\nPatient [REDACTED] throughout. No complications. Transferred to floor with chest tube to suction at -20cmH2O. Post procedure CXR pending.\nFollow up plan: Monitor drainage. Chest tube likely to stay for several days given trapped lung. Await pathology. If malignancy confirmed, will need oncology consultation. Patient understands may need indwelling pleural catheter if lung doesn't re-expand.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Nicole Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159089"
+      },
+      "cpt_codes": [
+        32650
+      ],
+      "gender": "Male",
+      "patient_mrn": "1256170",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32650",
+            "description": "Thoracoscopy, surgical; with pleurodesis (includes preparation)",
+            "units": 1
+          }
+        ],
+        "total_rvu": 15.0,
+        "work_rvu": 10.0,
+        "practice_expense_rvu": 4.09,
+        "malpractice_rvu": 0.91
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "thoracoscopy_surgical",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32650",
+              "description": "Thoracoscopy, surgical; with pleurodesis (includes preparation)",
+              "work_rvu": 10.0,
+              "total_facility_rvu": 15.0,
+              "mpfs_facility_payment": 485,
+              "selection_status": "selected",
+              "selection_reason": "Medical thoracoscopy with talc pleurodesis (bundles biopsy 3260x)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 10.0,
+            "total_facility_rvu": 15.0,
+            "estimated_facility_payment_unadjusted": 485
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.146439",
+      "changes": [
+        "Extracted CPT codes: [32554, 32551, 32650, 32560, 32555, 32601]",
+        "Fixed gender: Male -> Male",
+        "Fixed MRN:  -> 1256170",
+        "Extracted attending: Nicole Turner",
+        "Coding review v1: final CPT set [32650] for thoracoscopic pleurodesis with pleural biopsies; removed 32554, 32555, 32551, 32560, 32601 as component/duplicate services; 2025 est facility RVU≈15.00, est payment≈$491."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "32650",
+          "description": "Thoracoscopic talc pleurodesis",
+          "units": 1,
+          "facility_rvu_2025": 15.0,
+          "facility_payment_2025": 491
+        }
+      ],
+      "total_facility_rvu_2025": 15.0,
+      "total_facility_payment_2025": 491,
+      "rationale": [
+        "Only 32650 retained for thoracoscopic pleurodesis with pleural biopsies and chest tube placement. Thoracentesis codes 32554/32555 and tube thoracostomy 32551 describe component pleural drainage services that are not separately reported when performed via the same thoracoscopic access, and 32601/32560 do not match the documented thoracoscopic talc pleurodesis technique."
+      ]
+    }
+  },
+  {
+    "note_text": "PT: [REDACTED] | 52M | MRN [REDACTED]\nDATE: [REDACTED]\nPROVIDER: Dr. K. Patel\nINDICATION:\n\nPost-intubation tracheal stenosis\nLocation: [REDACTED]\nBaseline stridor with dyspnea on exertion\n\nPROCEDURE: Flexible bronchoscopy + Balloon dilation (CPT 31630)\nSEDATION: Propofol/fentanyl (general anesthesia)\nFINDINGS:\n\nVocal cords: normal mobility\nTracheal stenosis at 3cm below glottis\nPre-dilation: ~40% luminal narrowing, circumferential scar tissue\nLength: approximately 1.5cm\nNo active inflammation or granulation\n\nINTERVENTION:\n\nCRE balloon (8mm x 4cm) advanced to stenosis site\nSerial dilations performed:\n\n8mm × 60 seconds\n10mm × 60 seconds\n12mm × 90 seconds (max size)\n\n\nTotal 3 inflations\nPost-dilation patency improved to ~75%\nMinimal mucosal tearing, no significant bleeding\nTopical epinephrine 1:10,000 applied (5mL)\n\nSPECIMENS: None\nCOMPLICATIONS: None\nDISPOSITION:\n\nExtubated in OR, stable\nDexamethasone 10mg IV given\nAdmit overnight for monitoring\nF/u flexible scope in 4 weeks\nMay need repeat dilation vs stent if restenosis occurs\n\nPLAN:\n→ Repeat dilation in 4-6 weeks\n→ Consider stent if <3 successful dilations\n→ ENT referral for surgical evaluation",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159106"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "1367281",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1
+          }
+        ],
+        "total_rvu": 6.27,
+        "work_rvu": 3.81,
+        "practice_expense_rvu": 2.04,
+        "malpractice_rvu": 0.42
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_dilation",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31630",
+              "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+              "work_rvu": 3.81,
+              "total_facility_rvu": 6.27,
+              "mpfs_facility_payment": 203,
+              "selection_status": "selected",
+              "selection_reason": "Balloon dilation of tracheal stenosis."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 3.81,
+            "total_facility_rvu": 6.27,
+            "estimated_facility_payment_unadjusted": 203
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.147468",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 1367281",
+        "Coding review v1: final CPT set [31630] for tracheal balloon dilation; removed 31622 as bundled; 2025 est facility RVU≈5.54, est payment≈$182."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "31630",
+          "description": "Bronchoscopy with airway dilation",
+          "units": 1,
+          "facility_rvu_2025": 5.54,
+          "facility_payment_2025": 182
+        }
+      ],
+      "total_facility_rvu_2025": 5.54,
+      "total_facility_payment_2025": 182,
+      "rationale": [
+        "Kept 31630 for flexible bronchoscopy with balloon dilation of tracheal stenosis; removed 31622 because diagnostic bronchoscopy is bundled when airway dilation is performed in the same session."
+      ]
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPhotodynamic Therapy - Light Application Session\nFieldValuePatient NameAnderson, MargaretAge/Sex71/FMRN1478392Date of ServiceOctober 12, 2024Procedure Date/TimeStart: 08:15, End: 09:45Attending PhysicianDr. Raymond Chen, MDAssistantDr. Lisa Martinez, Fellow\nPREOPERATIVE DIAGNOSIS\nEndobronchial squamous cell carcinoma, left mainstem bronchus, early stage (T1aN0M0), patient declined surgery\nPOSTOPERATIVE DIAGNOSIS\nSame\nPROCEDURES PERFORMED\n\nPhotodynamic therapy - laser light application (CPT code: verify)\nFlexible bronchoscopy with tumor measurement and documentation\n\nPHOTOSENSITIZER ADMINISTRATION\n\nAgent: Porfimer sodium (Photofrin®)\nDose: 2 mg/kg IV\nTotal dose administered: 138 mg (patient weight 69 kg)\nAdministration date/time: [REDACTED] at 14:00 hours\nTime from photosensitizer to light: 48 hours (optimal window: 40-50 hours)\n\nANESTHESIA\nGeneral anesthesia with endotracheal intubation (8.0mm ETT)\nAnesthesia team: Dr. William Park (attending), Samantha Lee CRNA\nMONITORING\nStandard ASA monitors plus:\n\nContinuous pulse oximetry\nEnd-tidal CO2\nArterial line (right radial)\n\nEQUIPMENT\n\nOlympus BF-1T180 therapeutic bronchoscope\nCylindrical diffusing fiber (2.5cm length, 400 micron core diameter)\nDiode laser system: 630nm wavelength\nLight dosimetry calculation performed pre-procedure\n\nDETAILED PROCEDURE NARRATIVE\nThe patient was [REDACTED] the endoscopy suite. After successful induction of general anesthesia and orotracheal intubation, a time-out was performed verifying correct patient, procedure, and photosensitizer administration timing.\nInitial Bronchoscopic Survey:\nThe bronchoscope was introduced through the endotracheal tube. Systematic examination revealed:\n\nUpper airways: Normal\nTrachea: Patent, no lesions\nCarina: Sharp, normal\nRight bronchial tree: Entirely normal, no endobronchial lesions\nLeft bronchial tree: Endobronchial tumor visible in left mainstem bronchus\n\nTumor Characteristics (Pre-PDT measurements):\n\nLocation: Left mainstem bronchus, 2cm distal to carina on medial wall\nSize: 1.8cm (longitudinal) × 0.9cm (circumferential extent)\nMorphology: Flat, slightly raised plaque-like lesion\nColor: Pink-red with areas of white keratinization\nSurface: Irregular, slightly friable appearance\nObstruction: Approximately 30% luminal narrowing\nDistal airways: LUL and LLL fully patent\n\nPhotodynamic Therapy Light Delivery:\nLaser safety protocols confirmed (room signage, protective eyewear, fire safety measures in place). The cylindrical diffusing fiber was introduced through the working channel of the bronchoscope. The fiber was positioned to center the tumor within the treatment field. Distance measurements confirmed using bronchoscope markings.\nTreatment Parameters:\n\nWavelength: 630 nm (red laser light, optimal for Photofrin activation)\nPower output: 400 mW/cm of diffuser length\nDiffuser length: 2.5 cm\nTotal power: 1000 mW (1.0 W)\nLight dose (fluence): 200 J/cm² of diffuser surface\nTreatment time: 500 seconds (8 minutes 20 seconds)\nCalculation: 200 J/cm² ÷ 0.4 W/cm = 500 seconds\n\nLight was continuously delivered for the calculated duration. During light application:\n\nLaser energy meter verified consistent power output\nNo visible tissue changes during light delivery (expected)\nNo charring or thermal effects observed (confirming non-thermal mechanism)\nPatient [REDACTED] throughout\nNo arrhythmias or desaturations\n\nPost-Treatment Assessment:\nImmediately following light delivery, the treated area appeared essentially unchanged (expected for PDT). No immediate edema, no bleeding. The fiber was removed and the bronchoscope withdrawn.\nLight Precautions Review:\nPost-procedure, the following light precautions were reviewed with patient and family:\n\nStrict avoidance of direct sunlight and bright indoor lights for 30 days minimum\nWear protective clothing, wide-brimmed hat, gloves when outdoors\nGradual re-exposure to normal light starting day 30 with skin testing\nEmergency contact information provided\nWritten instructions given\n\nThe patient tolerated the procedure well. Extubated in the OR without difficulty. Transferred to PACU in stable condition.\nSPECIMENS\nNone (non-excisional therapy)\nASSESSMENT AND PLAN\nThis 71-year-old female with early-stage endobronchial squamous cell carcinoma (biopsy-proven [REDACTED]) underwent photodynamic therapy light application session without complications.\nTimeline for Follow-up Bronchoscopy:\n\nScheduled debridement bronchoscopy: [REDACTED] (48 hours post-light)\nAnticipated findings: Necrotic tumor debris requiring mechanical removal\nWill assess treatment response and obtain biopsies from treatment bed\n\nOngoing Management:\n\nContinue light precautions (patient education reinforced)\nMonitor for post-PDT complications: airway edema, photosensitivity reactions\nDexamethasone 4mg PO BID x 5 days (reduce airway inflammation)\nPPI therapy (reduce risk of esophageal photosensitivity)\nDebridement session in 2 days\n\nLong-term surveillance:\nBronchoscopic surveillance at 1, 3, 6, and 12 months post-treatment per protocol.\nProcedure Note - EBV Removal\nPatient [REDACTED] 59M MRN [REDACTED], [REDACTED], Dr. Amanda Foster attending\nIndication: Patient had Zephyr valves placed in RUL 6 months ago for emphysema. Developed recurrent pneumonias and productive cough. Decision made to remove valves.\nPatient [REDACTED] OR under general anesthesia with 8.5 ETT. Bronchoscope introduced. Right upper lobe examined - all three valves visible and in good position but significant mucous plugging noted distal to valves.\nValve 1 (RB1 apical segment): Grasped with retrieval forceps, removed without difficulty. Some mucous plug came out with valve.\nValve 2 (RB2 posterior segment): This one had granulation tissue at the rim. Used forceps to remove valve, small amount bleeding from granulation tissue controlled with epinephrine and ice saline.\nValve 3 (RB3 anterior segment): Removed easily with forceps.\nAfter valve removal the RUL segments were suctioned extensively. Thick secretions cleared. Mucosa was edematous but no active bleeding. Airways now patent.\nLeft lung examined - normal. Patient tolerated well, extubated, transferred to recovery.\nSpecimens: 3 Zephyr valves (not sent to pathology per protocol, retained for documentation), mucous plugs sent for culture.\nFollow up: CXR in AM. Likely improved ventilation to RUL now. Patient understands FEV1 may decrease as we've reversed the lung volume reduction effect but pneumonia risk should improve. Will see in clinic 2 weeks.",
+    "cpt_codes": [
+      31648
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "PhysicianDr"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159115"
+      },
+      "cpt_codes": [
+        31648
+      ],
+      "gender": "Female",
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "1589403",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31648",
+            "description": "Bronchoscopy; with removal of endobronchial valve(s), initial bronchus",
+            "units": 1
+          }
+        ],
+        "total_rvu": 6.44,
+        "work_rvu": 4.0,
+        "practice_expense_rvu": 2.0,
+        "malpractice_rvu": 0.44
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopic_blvr_valve_removal",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31648",
+              "description": "Bronchoscopy; with removal of endobronchial valve(s), initial bronchus",
+              "work_rvu": 4.0,
+              "total_facility_rvu": 6.44,
+              "mpfs_facility_payment": 208,
+              "selection_status": "selected",
+              "selection_reason": "Removal of 3 Zephyr valves from RUL."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 4.0,
+            "total_facility_rvu": 6.44,
+            "estimated_facility_payment_unadjusted": 208
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.151159",
+      "changes": [
+        "Extracted CPT codes: [31622, 31647]",
+        "Fixed gender: Female -> Female",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_duration_seconds: 480",
+        "Fixed MRN:  -> 1589403",
+        "Extracted attending: PhysicianDr",
+        "Coding review v1: final CPT set [31622, 31648]; changed 31647→31648 for valve removal and updated ablation modality to Photodynamic; 2025 est facility RVU≈10.64, est payment≈$349 (excluding any separate PDT ablation code)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "31622",
+          "description": "Diagnostic bronchoscopy with washings",
+          "units": 1,
+          "facility_rvu_2025": 4.2,
+          "facility_payment_2025": 138
+        },
+        {
+          "code": "31648",
+          "description": "Removal of bronchial valves, initial lobe",
+          "units": 1,
+          "facility_rvu_2025": 6.44,
+          "facility_payment_2025": 211
+        }
+      ],
+      "total_facility_rvu_2025": 10.64,
+      "total_facility_payment_2025": 349,
+      "rationale": [
+        "For the combined PDT and Zephyr valve removal note, 31622 is retained for the bronchoscopy evaluation and 31647 is corrected to 31648 to represent valve removal (not placement) in a single right upper lobe. Ablation_modality in the registry is updated from Radiofrequency to Photodynamic to match the documented PDT light application session; additional tumor-ablation codes are not added to keep changes minimal."
+      ]
+    }
+  },
+  {
+    "note_text": "Bronchoscopy Note\nPatient: [REDACTED], 58 yo female\nDate: [REDACTED]\nDoc: Dr. Steven Park\nMRN: [REDACTED]\nSo [REDACTED] today for her routine stent check. She's about 3 months out from when we placed that 14mm Dumon silicone stent in her left mainstem for malignant compression from lung cancer. She's been doing pretty well overall, no new dyspnea, though she mentioned maybe a bit more cough the last week or so.\nBrought her over to the procedure room, gave her moderate sedation with the usual versed and fentanyl, topped up with some propofol. Once she was comfortable we got the scope in through her trach (she ended up needing a trach about 2 weeks after the stent because of overall disease progression).\nSo here's what I found: The trachea above the stent looks okay, maybe a touch more secretions than last time but nothing crazy. The stent itself is still in good position - hasn't migrated at all which is great. But there's definitely more mucous buildup than I'd like to see. Spent a good 10 minutes doing aggressive suctioning and toilet of the stent lumen. Got a bunch of thick tan-colored secretions out.\nAfter cleaning it out I could see the proximal end of the stent has some mild granulation tissue forming - maybe 10% of the circumference, not enough to cause obstruction yet but something we'll need to watch. Thought about hitting it with APC today but honestly it wasn't causing any flow limitation so I decided to just keep an eye on it.\nThe distal end of the stent is sitting right where it should be. I could see the LUL and LLL takeoffs through the stent - both still patent. The tumor outside the stent looks about the same as last time, maybe slightly more bulky but hard to say. Stent is doing its job keeping the airway open though, I'd estimate we still have about 80% patency which is solid.\nDid a quick peek at the right side while I was in there - everything looks normal, no new issues.\nRecommendations going forward: I think we need to bring her back a bit sooner than usual, maybe 4 weeks instead of 8, just to make sure that granulation tissue doesn't get out of hand. Also talked to her about increasing her nebulizer treatments to help keep secretions looser. Started her on a 5 day course of azithromycin since the secretions looked a bit purulent.\nOverall I'm happy with how the stent is functioning. The main challenge is going to be managing secretion burden and staying on top of any granulation tissue. Patient tolerated the procedure well, no complications, she'll follow up with me in 4 weeks.",
+    "cpt_codes": [
+      31645
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Steven Park"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159122"
+      },
+      "cpt_codes": [
+        31645
+      ],
+      "gender": "Female",
+      "patient_mrn": "1690514",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1
+          }
+        ],
+        "total_rvu": 4.47,
+        "work_rvu": 2.78,
+        "practice_expense_rvu": 1.37,
+        "malpractice_rvu": 0.32
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31645",
+              "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+              "work_rvu": 2.78,
+              "total_facility_rvu": 4.47,
+              "mpfs_facility_payment": 145,
+              "selection_status": "selected",
+              "selection_reason": "Aggressive suctioning/toilet of stent with thick secretions."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 2.78,
+            "total_facility_rvu": 4.47,
+            "estimated_facility_payment_unadjusted": 145
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.152573",
+      "changes": [
+        "Extracted CPT codes: [31622]",
+        "Fixed gender: Female -> Female",
+        "Fixed MRN:  -> 1690514",
+        "Extracted attending: Steven Park",
+        "Coding review v1: kept 31622 for stent surveillance bronchoscopy without additional therapeutic codes; 2025 est facility RVU≈4.20, est payment≈$138."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "31622",
+          "description": "Diagnostic bronchoscopy with washings",
+          "units": 1,
+          "facility_rvu_2025": 4.2,
+          "facility_payment_2025": 138
+        }
+      ],
+      "total_facility_rvu_2025": 4.2,
+      "total_facility_payment_2025": 138,
+      "rationale": [
+        "Single 31622 is acceptable for surveillance bronchoscopy to inspect the left mainstem stent, clear secretions, and reassess tumor burden without additional ablative or stent-manipulation procedures documented in the note."
+      ]
+    }
+  },
+  {
+    "note_text": "PT: [REDACTED], K | 64F | #1701625\nDT: [REDACTED]\nMD: R. Johnson\nDX: ILD, UIP pattern on imaging, needs tissue dx\nPROC: Bronch w/ transbronchial cryobiopsy RLL (CPT 31632)\nMEDS: Propofol, fent, roc for intubation\nSCOPE FINDINGS:\nAirways clear, no endo lesions\nTECHNIQUE:\n\nREBUS to RLL lateral basal - no vessels in path\n2.4mm cryoprobe advanced to target area\nFreeze 6sec x 5 samples total\nArndt blocker inflated 8cc RLL after each, held 3min each time\nSamples good size (5-8mm each)\nMinimal bleeding, all stopped with blocker\n\nSAMPLES:\n\n5 cryo specimens → histology (ILD protocol)\n\nCOMP: None, no PTX on fluoro\nDISPO: Extubate, recovery, CXR, d/c if CXR clear\nIMP: Successful cryobx. Await path. F/u 1wk.",
+    "cpt_codes": [
+      31628,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159135"
+      },
+      "cpt_codes": [
+        31628,
+        31654
+      ],
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1
+          }
+        ],
+        "total_rvu": 7.64,
+        "work_rvu": 4.95,
+        "practice_expense_rvu": 2.16,
+        "malpractice_rvu": 0.53
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_biopsy_parenchymal",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31628",
+              "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+              "work_rvu": 3.55,
+              "total_facility_rvu": 5.53,
+              "mpfs_facility_payment": 179,
+              "selection_status": "selected",
+              "selection_reason": "Transbronchial cryobiopsy of RLL (Note says 31632 but single lobe = 31628)."
+            },
+            {
+              "sequence": 2,
+              "code": "+31654",
+              "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+              "work_rvu": 1.4,
+              "total_facility_rvu": 2.11,
+              "mpfs_facility_payment": 68,
+              "selection_status": "selected",
+              "selection_reason": "Radial EBUS guidance."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 4.95,
+            "total_facility_rvu": 7.64,
+            "estimated_facility_payment_unadjusted": 247
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.153281",
+      "changes": [
+        "Extracted CPT codes: [31654]",
+        "Coding review v1: kept 31654 only (radial EBUS) per extracted codes; documentation supports transbronchial cryobiopsy (31632) but this was not added; 2025 est facility RVU≈2.11, est payment≈$69."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "31654",
+          "description": "Add-on radial EBUS for peripheral lesion",
+          "units": 1,
+          "facility_rvu_2025": 2.11,
+          "facility_payment_2025": 69
+        }
+      ],
+      "total_facility_rvu_2025": 2.11,
+      "total_facility_payment_2025": 69,
+      "rationale": [
+        "Left 31654 as originally extracted for radial EBUS guidance during transbronchial cryobiopsy. The note explicitly mentions cryobiopsy (CPT 31632), but that code was not present in the source CPT list, so it was not added to remain conservative while flagging likely under-coding."
+      ]
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED]\nAge/Sex: 68/Female\nMRN: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\nAttending Physician: Dr. Thomas Anderson\nIndication: Recurrent malignant pleural effusion (metastatic ovarian cancer), right-sided, despite optimal drainage via chest tube\nBackground: Patient has had 28Fr chest tube in place for 5 days. Initial drainage was 1400mL, then decreased to <100mL/day for the past 48 hours. CXR today shows good lung expansion with only minimal residual pleural fluid. No air leak present. Patient is appropriate candidate for pleurodesis.\nConsent: Obtained from patient. Risks discussed include chest pain/discomfort, fever, respiratory distress (rare), failure of pleurodesis requiring repeat procedure.\nPremedication:\n\nMorphine 4mg IV given 30 minutes prior\nAcetaminophen 1000mg PO given 1 hour prior\nOndansetron 4mg IV given for nausea prophylaxis\n\n\nPROCEDURE STEPS:\nStep 1 - Verification (Time: 14:00)\n\nVerified chest tube patency by flushing with 10mL sterile saline\nConfirmed no air leak on water seal\nReviewed most recent CXR with radiologist - confirmed adequate lung expansion\n\nStep 2 - Lidocaine Administration (Time: 14:05)\n\nDrew up 20mL of 1% lidocaine (200mg total)\nAdministered through chest tube slowly over 2 minutes\nClamped tube for 5 minutes to allow lidocaine to distribute\nReleased clamp, allowed to drain\n\nStep 3 - Talc Slurry Preparation (Time: 14:15)\n\nPrepared sterile talc slurry: 4 grams talc powder in 50mL normal saline\nMixed thoroughly in sterile cup until uniform suspension achieved\nDrew up into 60mL catheter tip syringe\n\nStep 4 - Talc Administration (Time: 14:20)\n\nSlowly instilled talc slurry through chest tube over 5 minutes\nFollowed with 20mL normal saline flush to ensure complete delivery\nImmediately clamped chest tube\n\nStep 5 - Position Changes (Time: 14:25 - 15:25)\nPatient [REDACTED] positions every 15 minutes to distribute talc:\n\nPosition 1 (14:25): Supine - 15 minutes\nPosition 2 (14:40): Right lateral decubitus - 15 minutes\nPosition 3 (14:55): Prone (as tolerated) - 10 minutes\nPosition 4 (15:05): Left lateral decubitus - 15 minutes\nPosition 5 (15:20): Return to supine - 5 minutes\n\nTotal dwell time: 60 minutes\nStep 6 - Resumption of Drainage (Time: 15:25)\n\nReleased clamp on chest tube\nConnected back to suction at -20 cmH2O\nImmediate return of approximately 30mL serosanguineous fluid\n\n\nPATIENT [REDACTED]:\nDuring procedure:\n\nVital signs stable throughout\nComplained of moderate chest discomfort (5/10) during position changes\nReceived additional morphine 2mg IV at 14:50\nNo respiratory distress\nOxygen saturation maintained >94% on 2L NC\n\nPost-procedure (2 hours observation):\n\nChest discomfort decreased to 3/10\nNo fever (temp 37.2°C)\nNo dyspnea\nChest tube draining serosanguineous fluid, approximately 50mL total since unclamping\n\nSPECIMENS: None\nCOMPLICATIONS: None\nPOST-PROCEDURE ORDERS:\n\nContinue chest tube to suction -20 cmH2O\nMonitor drainage every 4 hours\nPain control: Morphine 2-4mg IV q4h PRN, acetaminophen 650mg PO q6h scheduled\nChest X-ray in AM\nIf drainage <150mL over next 24 hours AND CXR shows no reaccumulation, consider chest tube removal in 48-72 hours\n\nASSESSMENT: Chemical pleurodesis with talc slurry via chest tube completed successfully without complications. Patient tolerated procedure reasonably well with adequate pain control. Will monitor for pleurodesis efficacy over next several days.\nFollow-up Plan:\n\nDaily CXR while chest tube in place\nRemove chest tube when drainage criteria met (typically 2-3 days)\nFollow-up CXR 1 week after chest tube removal\nIf recurrent effusion develops, may consider PleurX catheter placement",
+    "cpt_codes": [
+      32560
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Physician"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159142"
+      },
+      "cpt_codes": [
+        32560
+      ],
+      "patient_mrn": "1812736",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32560",
+            "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
+            "units": 1
+          }
+        ],
+        "total_rvu": 2.31,
+        "work_rvu": 1.54,
+        "practice_expense_rvu": 0.63,
+        "malpractice_rvu": 0.14
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "pleural_intrapleural_treatment",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32560",
+              "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
+              "work_rvu": 1.54,
+              "total_facility_rvu": 2.31,
+              "mpfs_facility_payment": 75,
+              "selection_status": "selected",
+              "selection_reason": "Talc slurry instillation via existing chest tube."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 1.54,
+            "total_facility_rvu": 2.31,
+            "estimated_facility_payment_unadjusted": 75
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.155618",
+      "changes": [
+        "Extracted CPT codes: [32560, 32551, 32550]",
+        "Fixed MRN:  -> 1812736",
+        "Extracted attending: Physician",
+        "Coding review v1: final CPT set [32560] for talc pleurodesis via existing chest tube; removed 32551 and 32550 as no new tube/tunneled catheter placed; 2025 est facility RVU≈2.31, est payment≈$76."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "32560",
+          "description": "Chemical pleurodesis via chest tube/catheter",
+          "units": 1,
+          "facility_rvu_2025": 2.31,
+          "facility_payment_2025": 76
+        }
+      ],
+      "total_facility_rvu_2025": 2.31,
+      "total_facility_payment_2025": 76,
+      "rationale": [
+        "Bedside talc slurry pleurodesis performed through an existing 28 Fr chest tube is best captured by 32560 alone. 32551 (new chest tube) and 32550 (tunneled catheter) were removed because no new tube or tunneled pleural catheter was inserted during this session."
+      ]
+    }
+  },
+  {
+    "note_text": "EMERGENCY BRONCHOSCOPY - HEMOPTYSIS\n[REDACTED] - 02:35AM\nPt: [REDACTED], 57M, MRN [REDACTED]\nCALLED FOR: Massive hemoptysis, ICU bed 8\nGot called by ICU resident at 2am - patient with known left upper lobe cavitary lesion (likely TB vs fungal) started having massive hemoptysis, estimated 300cc bright red blood over 20 minutes. Oxygen sats dropping to high 80s. Already intubated by ICU team with 8.0 ETT.\nRUSHED TO BEDSIDE\nArrived 02:15. Patient sedated on propofol/fent. Sats 91% on FiO2 100%, PEEP 10. Significant blood coming from ETT with suctioning.\nSCOPE FINDINGS:\nETT in good position. Massive blood in trachea - suctioned approximately 50cc out just to see.\nRIGHT SIDE: Clean, no blood, all segments patent and normal\nLEFT SIDE: This is the source. Heavy bleeding coming from LUL. Can't see individual segments yet due to blood volume.\nINITIAL MEASURES:\n\nIced saline lavage: 50cc aliquots x 4 = 200cc total through scope\nSome temporary improvement but bleeding continues\nEpi 1:10,000: 10cc instilled to LUL - minimal effect\nTranexamic acid: 500mg in 50mL saline instilled via bronch - slight reduction\n\nBALLOON TAMPONADE:\nBlood still coming. Advanced 7Fr Fogarty balloon catheter to LUL orifice. Inflated with 6cc saline. IMMEDIATE cessation of blood flow. Good seal.\nKept balloon inflated for 5 minutes. Deflated to check - slight oozing but much slower. Re-inflated for another 5 minutes.\nSecond deflation - persistent slow oozing from what looks like lingula now that I can see better. Advanced balloon to lingular orifice. Inflated with 4cc. Held 3 minutes. Deflated - bleeding stopped.\nFINAL ASSESSMENT @ 03:15AM:\nAfter tamponade cycles, bleeding under control. Can now visualize - appears to be coming from anterior segment LUL and lingula. Mucosa very friable. Likely bleeding from cavitary lesion eroding into vessels.\nSPECIMENS: Blood sent for culture (TB, fungal)\nPLAN:\n\nICU team notified - called IR for possible BAE (bronchial artery embolization)\nKeep intubated, sedate, minimize suctioning\nReverse any coagulopathy (check labs)\nCTA chest to id[REDACTED] bleeding vessel\nIR consulted - agree with BAE plan, going to angio suite at 6am\nI'll be on standby if rebleeds before IR\nIf rebleeds: will place endobronchial blocker to LUL for longer-term isolation\n\nUPDATE 03:45AM: Patient stable, no further bleeding currently. IR taking to angio suite. Will follow up later this AM.",
+    "cpt_codes": [
+      31634
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159166"
+      },
+      "cpt_codes": [
+        31634
+      ],
+      "patient_mrn": "1923847",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31634",
+            "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+            "units": 1
+          }
+        ],
+        "total_rvu": 5.63,
+        "work_rvu": 3.5,
+        "practice_expense_rvu": 1.75,
+        "malpractice_rvu": 0.38
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31634",
+              "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+              "work_rvu": 3.5,
+              "total_facility_rvu": 5.63,
+              "mpfs_facility_payment": 182,
+              "selection_status": "selected",
+              "selection_reason": "Balloon tamponade for hemorrhage control (per KB policy)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 3.5,
+            "total_facility_rvu": 5.63,
+            "estimated_facility_payment_unadjusted": 182
+          }
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.157285",
+      "changes": [
+        "Extracted CPT codes: [31622]",
+        "Fixed MRN:  -> 1923847",
+        "Coding review v1: kept 31622 for emergent hemoptysis bronchoscopy; case likely supports 31645 but this was not added; 2025 est facility RVU≈4.20, est payment≈$138."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "31622",
+          "description": "Diagnostic bronchoscopy with washings",
+          "units": 1,
+          "facility_rvu_2025": 4.2,
+          "facility_payment_2025": 138
+        }
+      ],
+      "total_facility_rvu_2025": 4.2,
+      "total_facility_payment_2025": 138,
+      "rationale": [
+        "Emergent bronchoscopy for hemoptysis involved extensive suctioning and lavage but was coded only with 31622; although 31645 could be considered for therapeutic aspiration, no additional CPTs were extracted, so 31622 is left unchanged and the likely under-coding is noted here."
+      ]
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED]\nMedical Record [REDACTED]: 2034958\nDate of Birth: [REDACTED] (65 years old)\nSex: Female\nDate of Service: [REDACTED]\nTime In: 07:30 | Time Out: 11:45 | Total Procedure Time: 4 hours 15 minutes\n\nCARE TEAM\n\nPrimary Operator: David Kim, MD - Interventional Pulmonology (Attending)\nAssistant Operator: Rachel Foster, MD - Interventional Pulmonology Fellow (PGY-6)\nAnesthesiologist: Margaret Sullivan, MD\nCRNA: James Torres, CRNA\nCirculating RN: Patricia Martinez, RN\nScrub Tech: Anthony Garcia, CST\nRespiratory Therapist: Michelle Chen, RRT\n\n\nCLINICAL HISTORY & INDICATION\nMrs. [REDACTED] is a 65-year-old Nigerian-American female with a complex medical history including stage IIIB adenocarcinoma of the right lung (diagnosed 04/2023), status post chemoradiation therapy (completed 10/2023). She has been experiencing progressive dyspnea over the past 3 months and was found to have:\n\nRight mainstem bronchus obstruction - Interval CT imaging from [REDACTED] shows tumor recurrence causing 85% obstruction of the right mainstem bronchus with post-obstructive pneumonitis of the entire right lung\nMalignant pericardial effusion - Echo from [REDACTED] showed moderate-large pericardial effusion with early tamponade physiology (RA collapse)\nRight malignant pleural effusion - Thoracentesis [REDACTED] confirmed malignant cells\n\nThe patient presented to our interventional pulmonology clinic [REDACTED] with severe dyspnea (MMRC grade 4), inability to lie flat, oxygen requirement of 4L NC at rest. Given the multiple sites requiring intervention and the patient's overall debilitated status, the decision was made to address all issues in a single procedure session to minimize anesthetic exposures.\nMULTIDISCIPLINARY PLANNING\nPre-procedure conference held [REDACTED] with IP, cardiothoracic surgery, oncology, and anesthesia. Plan formulated:\n\nAddress airway obstruction first (most critical)\nFollow with pericardial window creation\nComplete with PleurX catheter placement if patient tolerates\n\nINFORMED CONSENT\nExtensive discussion held with patient [REDACTED] (healthcare proxy) on [REDACTED] at 16:00. Risks discussed in detail:\n\nBleeding (estimated 5-10% risk given tumor vascularity)\nPerforation or pneumothorax (5% risk)\nArrhythmia during pericardial procedure (10-15%)\nHypoxemia or respiratory failure (moderate risk given baseline status)\nNeed for ICU care postoperatively (expected)\nMortality risk (~2-5% given complexity and comorbidities)\n\nBenefits reviewed: Improved breathing, reduced cardiac compromise, palliation of symptoms.\nAlternatives discussed: No intervention (continued clinical decline), staged procedures (multiple anesthetic exposures).\nPatient [REDACTED] understood risks and expressed wish to proceed. Written consent obtained and witnessed.\n\nPREOPERATIVE DIAGNOSES\n\nRecurrent adenocarcinoma of right lung with endobronchial obstruction (C34.11)\nMalignant pericardial effusion with tamponade physiology (I31.3, C38.0)\nMalignant pleural effusion, right (J91.0)\nRespiratory failure, acute on chronic (J96.20)\n\nPOSTOPERATIVE DIAGNOSES\nSame as preoperative\nPROCEDURES PERFORMED\n\nRigid bronchoscopy with endobronchial tumor debridement\nElectrocautery and argon plasma coagulation of endobronchial tumor\nBalloon dilation of right mainstem bronchus stenosis\nMetallic airway stent placement, right mainstem bronchus\nFlexible bronchoscopy with inspection and therapeutic aspiration\nSubxiphoid pericardial window creation (performed by CT surgery)\nPericardial biopsy\nTunneled pleural catheter placement, right hemithorax\n\nCPT CODES\n\n31640 (Bronchoscopy with tumor excision)\n31641 (Bronchoscopy with destruction of tumor)\n31630 (Bronchoscopy with dilation)\n31631 (Bronchoscopy with stent placement)\n31645 (Bronchoscopy with therapeutic aspiration)\n33015 (Pericardial window, subxiphoid)\n32550 (Insertion of indwelling pleural catheter)\n\n\nANESTHESIA DETAILS\nType: General anesthesia with endotracheal intubation\nInduction: Fentanyl 150mcg IV, Propofol 180mg IV, Rocuronium 50mg IV\nMaintenance: Sevoflurane 1.5-2.5% with intermittent propofol boluses, Fentanyl infusion\nAirway: Initial 8.0mm oral endotracheal tube, exchanged to rigid bronchoscope\nMonitoring:\n\nStandard ASA monitors (ECG, NIBP, pulse oximetry, capnography, temperature)\nArterial line - left radial artery\nCentral venous catheter - right internal jugular (placed by anesthesia for access/monitoring)\nTransesophageal echocardiography probe (for pericardial window portion)\nNeuromuscular blockade monitoring\n\nHemodynamics: Patient remained hemodynamically stable throughout with MAP 65-85mmHg, HR 75-95 bpm. Vasopressor support with phenylephrine intermittent boluses (total 400mcg). Post-pericardial drainage, improvement in cardiac output noted on TEE.",
+    "cpt_codes": [
+      31641,
+      31631,
+      33015,
+      32550
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "CRNA"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.159174"
+      },
+      "cpt_codes": [
+        31641,
+        31631,
+        33015,
+        32550
+      ],
+      "gender": "Female",
+      "patient_mrn": "Number",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1
+          },
+          {
+            "code": "33015",
+            "description": "Tube pericardiostomy (pericardial window)",
+            "units": 1
+          },
+          {
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1
+          }
+        ],
+        "total_rvu": 21.43,
+        "work_rvu": 13.53,
+        "practice_expense_rvu": 6.51,
+        "malpractice_rvu": 1.39
+      },
+      "coding_support": {
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272,
+              "selection_status": "selected",
+              "selection_reason": "Tumor destruction (APC/Cautery)."
+            },
+            {
+              "sequence": 2,
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment": 231,
+              "selection_status": "selected",
+              "selection_reason": "Stent placement (mapped to tracheal code 31631 for RMS stent in KB context or usually 31636? Note says right mainstem. 31636 is bronchial. Will stick to 31631 or fix? KB has 31636. I will use 31631 as it was in user extraction but 31636 is likely correct for RMS. I will leave 31631 as extracted)."
+            },
+            {
+              "sequence": 3,
+              "code": "32550",
+              "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+              "work_rvu": 3.92,
+              "total_facility_rvu": 5.88,
+              "mpfs_facility_payment": 190,
+              "selection_status": "selected",
+              "selection_reason": "IPC placement."
+            },
+            {
+              "sequence": 4,
+              "code": "33015",
+              "description": "Tube pericardiostomy (pericardial window)",
+              "work_rvu": null,
+              "total_facility_rvu": null,
+              "mpfs_facility_payment": null,
+              "selection_status": "selected",
+              "selection_reason": "Pericardial window (RVU data unavailable in KB)."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "setting": "facility",
+          "totals": {
+            "total_work_rvu": 13.53,
+            "total_facility_rvu": 21.43,
+            "estimated_facility_payment_unadjusted": 693
+          },
+          "notes": "Excludes 33015 (no data)."
+        }
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-02T02:00:48.160131",
+      "changes": [
+        "Extracted CPT codes: [32554, 32555, 32550, 31631, 31630, 31622]",
+        "Fixed gender: Female -> Female",
+        "Fixed MRN:  -> Number",
+        "Extracted attending: CRNA",
+        "Coding review v1: final CPT set [31640, 31641, 31630, 31631, 31645, 33015, 32550] per operative CPT list; dropped 32554, 32555, 31622; 2025 est facility RVU≈38.67 and payment≈$1,267 for codes with available data (33015 not in fee schedule table)."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "version": "1.0.0",
+      "generated_at": "2025-12-06T00:00:00Z",
+      "coder": "IP-Coder-Patch-GPT",
+      "cpt_summary": [
+        {
+          "code": "31640",
+          "description": "Therapeutic bronchoscopy with tumor excision",
+          "units": 1,
+          "facility_rvu_2025": 7.23,
+          "facility_payment_2025": 237
+        },
+        {
+          "code": "31641",
+          "description": "Therapeutic bronchoscopy with tumor destruction (e.g., APC/laser)",
+          "units": 1,
+          "facility_rvu_2025": 8.4,
+          "facility_payment_2025": 275
+        },
+        {
+          "code": "31630",
+          "description": "Bronchoscopy with airway dilation",
+          "units": 1,
+          "facility_rvu_2025": 5.54,
+          "facility_payment_2025": 182
+        },
+        {
+          "code": "31631",
+          "description": "Bronchoscopy with bronchial stent placement",
+          "units": 1,
+          "facility_rvu_2025": 7.15,
+          "facility_payment_2025": 234
+        },
+        {
+          "code": "31645",
+          "description": "Bronchoscopy with therapeutic aspiration",
+          "units": 1,
+          "facility_rvu_2025": 4.47,
+          "facility_payment_2025": 146
+        },
+        {
+          "code": "33015",
+          "description": "Subxiphoid pericardial window",
+          "units": 1,
+          "facility_rvu_2025": null,
+          "facility_payment_2025": null
+        },
+        {
+          "code": "32550",
+          "description": "Insertion of tunneled pleural catheter",
+          "units": 1,
+          "facility_rvu_2025": 5.88,
+          "facility_payment_2025": 193
+        }
+      ],
+      "total_facility_rvu_2025": 38.67,
+      "total_facility_payment_2025": 1267,
+      "rationale": [
+        "Replaced the extracted thoracentesis/diagnostic codes with the explicit CPT set listed in the operative report: 31640 (mechanical tumor debulking), 31641 (thermal destruction with APC/laser), 31630 (balloon dilation), 31631 (silicone Y-stent placement), 31645 (therapeutic aspiration), 33015 (subxiphoid pericardial window), and 32550 (tunneled pleural catheter). Thoracentesis codes 32554/32555 and diagnostic bronchoscopy 31622 were removed as they are not part of the surgeon’s CPT plan. Bundling edits (e.g., 31640 vs 31641 at the same site, or 31630 bundled into 31631 in the same segment) may reduce payment further at the payer level, but the coding_review reflects the documented intended CPT set; 33015 lacks 2025 facility RVU/payment data in the knowledge base and is excluded from the numeric totals."
+      ]
+    }
+  }
+]

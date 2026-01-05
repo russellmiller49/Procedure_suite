@@ -1,0 +1,1229 @@
+[
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 72/M\nDate: [REDACTED]\nIndication: Malignant distal tracheal obstruction from squamous cell carcinoma with dyspnea and stridor.\nProcedure: Rigid bronchoscopy with mechanical dilation and placement of silicone tracheal stent.\nAnesthesia: General anesthesia with jet ventilation via rigid bronchoscope provided by Anesthesia.\nFindings: Approximately 80% circumferential narrowing of the distal trachea over 2 cm with friable endobronchial tumor; right mainstem partially compressed by tumor bulk.\nIntervention: Tumor was gently cored with the rigid barrel and suctioned to establish a lumen, followed by serial balloon dilation up to 14 mm. Over a guidewire a 14 x 40 mm straight silicone tracheal stent was deployed across the stenosis and positioned ~2 cm above the carina. Post-deployment the airway lumen was widely patent with about 20% residual narrowing.\nComplications: Mild oozing controlled with topical epinephrine and iced saline; no hypoxia or pneumothorax.\nDisposition: Patient remained intubated and was transported to the ICU in stable condition for overnight airway observation.",
+    "cpt_codes": [
+      31631
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0001",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 72,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "On apixaban",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Malignant distal tracheal obstruction from squamous cell carcinoma",
+      "radiographic_findings": "CT chest with 80% distal tracheal narrowing and partial right mainstem collapse",
+      "sedation_type": "General",
+      "airway_type": "Rigid",
+      "ventilation_mode": "Jet ventilation",
+      "anesthesia_agents": "Propofol, rocuronium, sevoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Distal trachea",
+      "cao_obstruction_pre_pct": 80,
+      "cao_obstruction_post_pct": 20,
+      "stent_type": "Silicone straight tracheal stent",
+      "stent_deployment_method": "Rigid bronchoscopy over guidewire after balloon dilation",
+      "stent_diameter_mm": 14,
+      "stent_length_mm": 40,
+      "stent_location": "Distal trachea 2 cm above carina",
+      "bronch_indication": "Malignant central airway obstruction",
+      "bronch_location_lobe": "Trachea",
+      "bronch_location_segment": "Distal trachea",
+      "bronch_guidance": "Rigid and flexible bronchoscopy under fluoroscopy",
+      "bronch_immediate_complications": "Mild bleeding controlled with topical epinephrine and cold saline",
+      "ebl_ml": 25,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Endobronchial squamous cell carcinoma with distal tracheal obstruction",
+      "molecular_testing_requested": true,
+      "disposition": "ICU admission",
+      "follow_up_plan": "ICU monitoring overnight; CT chest and surveillance bronchoscopy in 4 weeks.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "role": "primary"
+          }
+        ],
+        "total_rvu": 7.15,
+        "work_rvu": 4.36,
+        "practice_expense_rvu": 2.31,
+        "malpractice_rvu": 0.48
+      },
+      "cpt_codes": [
+        31631
+      ],
+      "providers": {
+        "attending_name": "Dr. Allen Rivera",
+        "fellow_name": "Dr. Priya Nair",
+        "assistant_name": "Jordan Smith, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "role": "primary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31631",
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment": 231
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.36,
+            "total_facility_rvu": 7.15,
+            "estimated_facility_payment_unadjusted": 231
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31631",
+              "summary": "Primary service for placement of a silicone tracheal stent.",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Mechanical dilation (31630) performed at the same site is bundled into stent placement."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 64/F\nDate: [REDACTED]\nIndication: Symptomatic right mainstem bronchial obstruction from locally advanced right upper lobe squamous cell carcinoma.\nProcedure: Rigid and flexible bronchoscopy with mechanical dilation and placement of a right mainstem bronchial stent.\nAnesthesia: General anesthesia with ETT; anesthesia provided by separate anesthesia service.\nFindings: About 90% eccentric narrowing of the proximal right mainstem bronchus from intraluminal tumor and extrinsic compression; mucosa friable with contact bleeding.\nIntervention: Tumor bulk was gently debulked mechanically using the rigid barrel and suction. A guidewire was passed into the right lower lobe and the ETT exchanged to a rigid bronchoscope. Serial balloon dilations to 12 mm were performed. A 12 x 40 mm self-expanding metallic stent was deployed in the right mainstem under fluoroscopic and bronchoscopic visualization with good expansion and coverage of the lesion. Residual narrowing estimated at 20%.\nComplications: Mild bleeding controlled with iced saline; no sustained desaturation or arrhythmia.\nDisposition: Extubated in OR and transferred to PACU, then surgical floor in stable condition.",
+    "cpt_codes": [
+      31636
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0002",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 64,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Malignant right mainstem bronchial obstruction from squamous cell carcinoma",
+      "radiographic_findings": "CT chest with near-complete right mainstem occlusion and right lung collapse",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Right mainstem bronchus",
+      "cao_obstruction_pre_pct": 90,
+      "cao_obstruction_post_pct": 20,
+      "stent_type": "Self-expanding metallic bronchial stent",
+      "stent_deployment_method": "Rigid bronchoscopy with guidewire and fluoroscopic guidance",
+      "stent_diameter_mm": 12,
+      "stent_length_mm": 40,
+      "stent_location": "Proximal right mainstem bronchus",
+      "bronch_indication": "Malignant central airway obstruction",
+      "bronch_location_lobe": "Right mainstem",
+      "bronch_location_segment": "Proximal right mainstem",
+      "bronch_guidance": "Rigid and flexible bronchoscopy under fluoroscopy",
+      "bronch_immediate_complications": "Mild contact bleeding only",
+      "ebl_ml": 20,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Locally advanced squamous cell carcinoma causing right mainstem obstruction",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Post-op CXR; repeat bronchoscopy in 6 weeks to assess stent position and tumor response.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "role": "primary"
+          }
+        ],
+        "total_rvu": 6.85,
+        "work_rvu": 4.3,
+        "practice_expense_rvu": 2.1,
+        "malpractice_rvu": 0.45
+      },
+      "cpt_codes": [
+        31636
+      ],
+      "providers": {
+        "attending_name": "Dr. Lisa Wong",
+        "fellow_name": "Dr. Nathan Cole",
+        "assistant_name": "Emily Turner, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31636",
+              "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+              "role": "primary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31636",
+              "work_rvu": 4.3,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.3,
+            "total_facility_rvu": 6.85,
+            "estimated_facility_payment_unadjusted": 222
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31636",
+              "summary": "Placement of a self-expanding metallic stent in the right mainstem bronchus.",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Dilation and minimal debulking to facilitate stent placement are bundled."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 69/M\nDate: [REDACTED]\nIndication: Combined distal tracheal and right mainstem obstruction from bulky non-small cell lung cancer with progressive dyspnea.\nProcedure: Rigid bronchoscopy with tracheal and right mainstem bronchial stent placement after limited mechanical debulking.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: 70% circumferential narrowing of the distal trachea and separate 80% narrowing of the proximal right mainstem bronchus from tumor and external compression.\nIntervention: Limited mechanical debulking with the rigid barrel and suction was performed to open both segments. A 14 x 40 mm straight silicone tracheal stent was deployed across the distal tracheal lesion. A separate 12 x 30 mm metallic stent was then placed in the right mainstem bronchus under fluoroscopic guidance. Both stents were well positioned with brisk air entry to the right lung; residual narrowing <20% in both locations.\nComplications: No major bleeding; transient desaturation to high 80s resolved with recruitment maneuvers.\nDisposition: Extubated in OR and transferred to PACU in stable condition, then ICU for overnight monitoring.",
+    "cpt_codes": [
+      31631,
+      31636
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0003",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 69,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "On clopidogrel",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Combined distal tracheal and right mainstem malignant obstruction",
+      "radiographic_findings": "CT chest: bulky carinal mass with distal tracheal and right mainstem narrowing",
+      "sedation_type": "General",
+      "airway_type": "Rigid",
+      "ventilation_mode": "Jet ventilation",
+      "anesthesia_agents": "Propofol, remifentanil, rocuronium, sevoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Distal trachea and right mainstem bronchus",
+      "cao_obstruction_pre_pct": 80,
+      "cao_obstruction_post_pct": 15,
+      "stent_type": "Silicone tracheal stent and metallic bronchial stent",
+      "stent_deployment_method": "Sequential rigid bronchoscopy with guidewire and balloon dilation",
+      "stent_diameter_mm": 14,
+      "stent_length_mm": 40,
+      "stent_location": "Distal trachea and proximal right mainstem",
+      "bronch_indication": "Malignant central airway obstruction at distal trachea and right mainstem",
+      "bronch_location_lobe": "Trachea/right mainstem",
+      "bronch_location_segment": "Distal trachea and proximal right mainstem",
+      "bronch_guidance": "Rigid bronchoscopy under fluoroscopy",
+      "bronch_immediate_complications": "Transient desaturation, no persistent hypoxia",
+      "ebl_ml": 30,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Locally advanced non-small cell lung cancer with carinal involvement",
+      "molecular_testing_requested": true,
+      "disposition": "ICU admission",
+      "follow_up_plan": "ICU overnight; repeat bronchoscopy in 4\u20136 weeks for stent surveillance and tumor reassessment.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "role": "primary"
+          },
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "role": "secondary"
+          }
+        ],
+        "total_rvu": 14.0,
+        "work_rvu": 8.66,
+        "practice_expense_rvu": 4.41,
+        "malpractice_rvu": 0.93
+      },
+      "cpt_codes": [
+        31631,
+        31636
+      ],
+      "providers": {
+        "attending_name": "Dr. Michael Hart",
+        "fellow_name": "Dr. Jenna Li",
+        "assistant_name": "Carlos Ramirez, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "role": "primary",
+              "units": 1
+            },
+            {
+              "code": "31636",
+              "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+              "role": "secondary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31631",
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment": 231
+            },
+            {
+              "code": "31636",
+              "work_rvu": 4.3,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 8.66,
+            "total_facility_rvu": 14.0,
+            "estimated_facility_payment_unadjusted": 453
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31631",
+              "summary": "Silicone stent placed in the distal trachea.",
+              "qa_flags": []
+            },
+            {
+              "code": "31636",
+              "summary": "Metallic stent placed in the right mainstem bronchus (separate site).",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Distinct anatomic sites (trachea vs right mainstem) support reporting both stent codes."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 61/F\nDate: [REDACTED]\nIndication: Malignant obstruction of left mainstem and left lower lobe bronchus with dyspnea at rest.\nProcedure: Rigid and flexible bronchoscopy with mechanical dilation and placement of stents in left mainstem and left lower lobe bronchus.\nAnesthesia: General anesthesia with ETT, anesthesia by separate service.\nFindings: About 85% narrowing of the left mainstem and 80% narrowing at the origin of the left lower lobe bronchus from tumor and extrinsic compression; copious secretions.\nIntervention: Mechanical debulking with the rigid barrel and suction restored a small lumen. Balloon dilation to 12 mm in the left mainstem followed by deployment of a 12 x 40 mm metallic stent. A second 10 x 30 mm metallic stent was placed in the left lower lobe bronchus as an extension. Final appearance showed <20% residual narrowing and markedly improved ventilation.\nComplications: Brief bleeding <30 mL, controlled with iced saline; no hypoxia.\nDisposition: Extubated in OR and discharged to surgical ICU in stable condition.",
+    "cpt_codes": [
+      31636,
+      31637
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0004",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 61,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "On aspirin",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Malignant left mainstem and left lower lobe bronchial obstruction",
+      "radiographic_findings": "CT chest: left mainstem cutoff with post-obstructive atelectasis of left lower lobe",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Left mainstem and left lower lobe bronchus",
+      "cao_obstruction_pre_pct": 85,
+      "cao_obstruction_post_pct": 15,
+      "stent_type": "Self-expanding metallic bronchial stents",
+      "stent_deployment_method": "Rigid bronchoscopy with balloon dilation and wire-guided deployment",
+      "stent_diameter_mm": 12,
+      "stent_length_mm": 40,
+      "stent_location": "Left mainstem and left lower lobe bronchus",
+      "bronch_indication": "Malignant central airway obstruction",
+      "bronch_location_lobe": "Left lung",
+      "bronch_location_segment": "Left mainstem and LLL bronchus",
+      "bronch_guidance": "Rigid bronchoscopy with fluoroscopy",
+      "bronch_immediate_complications": "Mild self-limited bleeding",
+      "ebl_ml": 30,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Stage III NSCLC with left central airway involvement",
+      "molecular_testing_requested": true,
+      "disposition": "ICU admission",
+      "follow_up_plan": "ICU overnight; repeat bronchoscopy in 4\u20136 weeks for stent check and secretion clearance.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "role": "primary"
+          },
+          {
+            "code": "31637",
+            "description": "Bronchoscopy; each additional major bronchus stented (add-on)",
+            "units": 1,
+            "role": "add_on"
+          }
+        ],
+        "total_rvu": 9.26,
+        "work_rvu": 5.88,
+        "practice_expense_rvu": 2.75,
+        "malpractice_rvu": 0.63
+      },
+      "cpt_codes": [
+        31636,
+        31637
+      ],
+      "providers": {
+        "attending_name": "Dr. Sophia Kim",
+        "fellow_name": "Dr. Omar Reyes",
+        "assistant_name": "Patricia Long, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31636",
+              "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+              "role": "primary",
+              "units": 1
+            },
+            {
+              "code": "31637",
+              "description": "Bronchoscopy; each additional major bronchus stented (add-on)",
+              "role": "add_on",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31636",
+              "work_rvu": 4.3,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": "31637",
+              "work_rvu": 1.58,
+              "total_facility_rvu": 2.41,
+              "mpfs_facility_payment": 78
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 5.88,
+            "total_facility_rvu": 9.26,
+            "estimated_facility_payment_unadjusted": 300
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31636",
+              "summary": "Initial bronchial stent placed in the left mainstem.",
+              "qa_flags": []
+            },
+            {
+              "code": "31637",
+              "summary": "Additional stent placed in the left lower lobe bronchus (separate major bronchus).",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": []
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 58/M\nDate: [REDACTED]\nIndication: Benign post-intubation distal tracheal stenosis with exertional dyspnea and biphasic stridor.\nProcedure: Rigid and flexible bronchoscopy with tracheal balloon dilation and silicone stent placement.\nAnesthesia: General anesthesia with ETT; anesthesia team present.\nFindings: Short-segment circumferential fibrotic ring in distal trachea causing ~75% narrowing; no mass lesion.\nIntervention: Serial balloon dilations up to 12 mm were performed across the stenosis. A 12 x 30 mm straight silicone stent was deployed across the narrowed segment and positioned just above the carina. Post-procedure lumen appeared widely patent with residual narrowing <20%.\nComplications: No significant bleeding; no hypoxia or hemodynamic instability.\nDisposition: Extubated in the OR and discharged to step-down unit in stable condition.",
+    "cpt_codes": [
+      31631
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0005",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 58,
+      "gender": "Male",
+      "asa_class": 2,
+      "anticoag_status": "No anticoagulation",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Benign post-intubation distal tracheal stenosis",
+      "radiographic_findings": "CT neck/chest with short-segment distal tracheal narrowing, no mass",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Distal trachea (benign fibrotic stenosis)",
+      "cao_obstruction_pre_pct": 75,
+      "cao_obstruction_post_pct": 15,
+      "stent_type": "Silicone straight tracheal stent",
+      "stent_deployment_method": "Rigid bronchoscopy with balloon dilation and guidewire",
+      "stent_diameter_mm": 12,
+      "stent_length_mm": 30,
+      "stent_location": "Distal trachea above carina",
+      "bronch_indication": "Benign central airway stenosis",
+      "bronch_location_lobe": "Trachea",
+      "bronch_location_segment": "Distal trachea",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "bronch_immediate_complications": "None",
+      "ebl_ml": 5,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Benign post-intubation tracheal stenosis",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Repeat bronchoscopy in 4 weeks for stent assessment and possible downsizing.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "role": "primary"
+          }
+        ],
+        "total_rvu": 7.15,
+        "work_rvu": 4.36,
+        "practice_expense_rvu": 2.31,
+        "malpractice_rvu": 0.48
+      },
+      "cpt_codes": [
+        31631
+      ],
+      "providers": {
+        "attending_name": "Dr. Hannah Blake",
+        "fellow_name": "Dr. Victor Singh",
+        "assistant_name": "Megan O'Neil, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "role": "primary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31631",
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment": 231
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.36,
+            "total_facility_rvu": 7.15,
+            "estimated_facility_payment_unadjusted": 231
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31631",
+              "summary": "Silicone stent placed for benign tracheal stenosis.",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Dilation (31630) is bundled into stent placement at the same site."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 63/M\nDate: [REDACTED]\nIndication: Left mainstem bronchial anastomotic stricture after left lung transplant with dyspnea and wheeze.\nProcedure: Flexible and rigid bronchoscopy with balloon dilation and placement of a left mainstem bronchial stent.\nAnesthesia: General anesthesia with ETT; anesthesia care by transplant anesthesia team.\nFindings: Concentric fibrotic narrowing at the bronchial anastomosis resulting in ~70% narrowing; mild mucosal edema; no mass.\nIntervention: Balloon dilation to 10 and then 12 mm was performed across the stricture. A 12 x 30 mm self-expanding metallic stent was deployed in the left mainstem across the anastomosis under fluoroscopic guidance. Airway lumen improved with <20% residual narrowing and symmetric ventilation.\nComplications: No significant bleeding; no hypoxia or hemodynamic instability.\nDisposition: Extubated in OR and returned to cardiothoracic ICU for routine post-transplant monitoring.",
+    "cpt_codes": [
+      31636
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0006",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 63,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "On tacrolimus, no anticoagulant",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Left mainstem post-transplant bronchial anastomotic stricture",
+      "radiographic_findings": "CT chest with focal narrowing at left mainstem anastomosis and air trapping",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Left mainstem bronchus (benign anastomotic stricture)",
+      "cao_obstruction_pre_pct": 70,
+      "cao_obstruction_post_pct": 15,
+      "stent_type": "Self-expanding metallic bronchial stent",
+      "stent_deployment_method": "Flexible bronchoscopy over guidewire under fluoroscopy",
+      "stent_diameter_mm": 12,
+      "stent_length_mm": 30,
+      "stent_location": "Left mainstem/anastomosis",
+      "bronch_indication": "Benign post-transplant bronchial anastomotic stenosis",
+      "bronch_location_lobe": "Left lung",
+      "bronch_location_segment": "Left mainstem",
+      "bronch_guidance": "Flexible bronchoscopy with fluoroscopic guidance",
+      "bronch_immediate_complications": "None",
+      "ebl_ml": 5,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Benign left mainstem anastomotic stenosis after lung transplantation",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "follow_up_plan": "Repeat bronchoscopy in 2\u20134 weeks; consider stent removal if lumen remains adequate.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "role": "primary"
+          }
+        ],
+        "total_rvu": 6.85,
+        "work_rvu": 4.3,
+        "practice_expense_rvu": 2.1,
+        "malpractice_rvu": 0.45
+      },
+      "cpt_codes": [
+        31636
+      ],
+      "providers": {
+        "attending_name": "Dr. Daniel Cho",
+        "fellow_name": "Dr. Laura Nguyen",
+        "assistant_name": "Andre Miller, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31636",
+              "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+              "role": "primary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31636",
+              "work_rvu": 4.3,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.3,
+            "total_facility_rvu": 6.85,
+            "estimated_facility_payment_unadjusted": 222
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31636",
+              "summary": "Metallic stent placed in the left mainstem bronchus.",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Dilation (31630) performed at the same site is bundled."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 55/F\nDate: [REDACTED]\nIndication: Bilateral bronchial anastomotic strictures after bilateral lung transplant with exertional dyspnea.\nProcedure: Flexible bronchoscopy with balloon dilation and bilateral bronchial stent placement (right and left mainstem).\nAnesthesia: General anesthesia with ETT; anesthesia team present.\nFindings: Approximately 60\u201370% concentric narrowing at both right and left mainstem bronchial anastomoses; no mass; mild mucus plugging.\nIntervention: Balloon dilation to 10 and 12 mm was performed at each anastomosis. A 12 x 30 mm metallic stent was deployed in the right mainstem (initial bronchus), followed by placement of a 12 x 30 mm metallic stent in the left mainstem as an additional major bronchus. Final lumen on both sides showed <20% residual narrowing with symmetric ventilation.\nComplications: Minimal bleeding; no hypoxia.\nDisposition: Extubated in OR and admitted to cardiothoracic ICU.",
+    "cpt_codes": [
+      31636,
+      31637
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0007",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 55,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "On tacrolimus and prednisone, no anticoagulant",
+      "anticoag_held_preprocedure": null,
+      "primary_indication": "Bilateral post-transplant mainstem bronchial anastomotic strictures",
+      "radiographic_findings": "CT chest: symmetric narrowing of both mainstem anastomoses with mild air trapping",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "ventilation_mode": "Volume control",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, isoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Right and left mainstem bronchi (benign anastomotic strictures)",
+      "cao_obstruction_pre_pct": 70,
+      "cao_obstruction_post_pct": 15,
+      "stent_type": "Self-expanding metallic bronchial stents",
+      "stent_deployment_method": "Flexible bronchoscopy with balloon dilation and guidewire",
+      "stent_diameter_mm": 12,
+      "stent_length_mm": 30,
+      "stent_location": "Right and left mainstem at bronchial anastomoses",
+      "bronch_indication": "Post-transplant mainstem bronchial stenoses",
+      "bronch_location_lobe": "Bilateral mainstem bronchi",
+      "bronch_location_segment": "Right and left mainstem",
+      "bronch_guidance": "Flexible bronchoscopy under fluoroscopy",
+      "bronch_immediate_complications": "None",
+      "ebl_ml": 10,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Benign bilateral mainstem anastomotic stenosis after bilateral lung transplant",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "follow_up_plan": "ICU overnight; repeat bronchoscopy in 4 weeks for stent assessment and secretion clearance.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31636",
+            "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+            "units": 1,
+            "role": "primary"
+          },
+          {
+            "code": "31637",
+            "description": "Bronchoscopy; each additional major bronchus stented (add-on)",
+            "units": 1,
+            "role": "add_on"
+          }
+        ],
+        "total_rvu": 9.26,
+        "work_rvu": 5.88,
+        "practice_expense_rvu": 2.75,
+        "malpractice_rvu": 0.63
+      },
+      "cpt_codes": [
+        31636,
+        31637
+      ],
+      "providers": {
+        "attending_name": "Dr. Emily Carter",
+        "fellow_name": "Dr. Jamal Price",
+        "assistant_name": "Renee Howard, RN",
+        "assistant_role": "Procedure nurse",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31636",
+              "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+              "role": "primary",
+              "units": 1
+            },
+            {
+              "code": "31637",
+              "description": "Bronchoscopy; each additional major bronchus stented (add-on)",
+              "role": "add_on",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31636",
+              "work_rvu": 4.3,
+              "total_facility_rvu": 6.85,
+              "mpfs_facility_payment": 222
+            },
+            {
+              "code": "31637",
+              "work_rvu": 1.58,
+              "total_facility_rvu": 2.41,
+              "mpfs_facility_payment": 78
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 5.88,
+            "total_facility_rvu": 9.26,
+            "estimated_facility_payment_unadjusted": 300
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31636",
+              "summary": "Initial stent placement in the right mainstem bronchus.",
+              "qa_flags": []
+            },
+            {
+              "code": "31637",
+              "summary": "Additional stent placement in the left mainstem bronchus.",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Bilateral mainstem stenting supports initial + additional code."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 49/F\nDate: [REDACTED]\nIndication: Extrinsic tracheal compression from mediastinal lymphoma with progressive stridor.\nProcedure: Rigid bronchoscopy with mechanical dilation and silicone tracheal stent placement.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Long-segment mid to distal tracheal narrowing (~65% reduction in lumen) from external compression; mucosa intact.\nIntervention: Gentle mechanical dilatation with the rigid barrel and serial balloon inflations up to 13 mm restored tracheal caliber. A 13 x 50 mm silicone tracheal stent was deployed spanning the compressed segment. Post-placement, tracheal lumen was widely patent with minimal residual narrowing and improved airflow.\nComplications: None immediate.\nDisposition: Extubated in OR and admitted to oncology floor for ongoing lymphoma management.",
+    "cpt_codes": [
+      31631
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0008",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 49,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "On prophylactic enoxaparin",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Tracheal compression from mediastinal lymphoma with symptomatic airway compromise",
+      "radiographic_findings": "CT chest: bulky mediastinal adenopathy compressing mid and distal trachea",
+      "sedation_type": "General",
+      "airway_type": "Rigid",
+      "ventilation_mode": "Jet ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "cao_primary_modality": "Stent placement",
+      "cao_tumor_location": "Mid and distal trachea (extrinsic compression)",
+      "cao_obstruction_pre_pct": 65,
+      "cao_obstruction_post_pct": 10,
+      "stent_type": "Silicone tracheal stent",
+      "stent_deployment_method": "Rigid bronchoscopy with balloon dilation",
+      "stent_diameter_mm": 13,
+      "stent_length_mm": 50,
+      "stent_location": "Mid to distal trachea",
+      "bronch_indication": "Central airway compromise from mediastinal lymphoma",
+      "bronch_location_lobe": "Trachea",
+      "bronch_location_segment": "Mid and distal trachea",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "bronch_immediate_complications": "None",
+      "ebl_ml": 5,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Tracheal compression from mediastinal non-Hodgkin lymphoma",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Repeat bronchoscopy in 4\u20136 weeks or sooner if respiratory symptoms recur.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "role": "primary"
+          }
+        ],
+        "total_rvu": 7.15,
+        "work_rvu": 4.36,
+        "practice_expense_rvu": 2.31,
+        "malpractice_rvu": 0.48
+      },
+      "cpt_codes": [
+        31631
+      ],
+      "providers": {
+        "attending_name": "Dr. Patrice Long",
+        "fellow_name": "Dr. Marco Alvarez",
+        "assistant_name": "Dana West, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31631",
+              "description": "Bronchoscopy; with placement of tracheal stent(s)",
+              "role": "primary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31631",
+              "work_rvu": 4.36,
+              "total_facility_rvu": 7.15,
+              "mpfs_facility_payment": 231
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.36,
+            "total_facility_rvu": 7.15,
+            "estimated_facility_payment_unadjusted": 231
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31631",
+              "summary": "Placement of silicone tracheal stent for extrinsic compression.",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": []
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 59/M\nDate: [REDACTED]\nIndication: Critical right mainstem endobronchial tumor causing dyspnea at rest and right lung collapse.\nProcedure: Rigid bronchoscopy with mechanical debulking of right mainstem tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia service present.\nFindings: Friable exophytic squamous cell carcinoma arising from the medial wall of the proximal right mainstem bronchus causing ~90% occlusion; copious blood-tinged secretions.\nIntervention: The tumor was mechanically debulked using rigid coring, suction, and forceps. A microdebrider was then used to excise residual tumor until the airway lumen was restored. Multiple tumor fragments were removed with suction and forceps and sent for pathology. Final lumen showed approximately 30% residual narrowing with improved airflow to the right lung; no stent placed.\nComplications: Transient moderate bleeding controlled with iced saline and dilute epinephrine; no hemodynamic instability.\nDisposition: Patient remained intubated and was transferred to the ICU for overnight monitoring.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0009",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 59,
+      "gender": "Male",
+      "asa_class": 3,
+      "anticoag_status": "On apixaban",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Critical right mainstem obstruction from endobronchial squamous cell carcinoma",
+      "radiographic_findings": "CT chest: right mainstem cutoff with complete right lung collapse",
+      "sedation_type": "General",
+      "airway_type": "Rigid",
+      "ventilation_mode": "Jet ventilation",
+      "anesthesia_agents": "Propofol, remifentanil, rocuronium, sevoflurane",
+      "cao_primary_modality": "Mechanical debulking",
+      "cao_tumor_location": "Proximal right mainstem bronchus",
+      "cao_obstruction_pre_pct": 90,
+      "cao_obstruction_post_pct": 30,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "bronch_indication": "Malignant central airway obstruction",
+      "bronch_location_lobe": "Right lung",
+      "bronch_location_segment": "Proximal right mainstem",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "bronch_immediate_complications": "Moderate bleeding, controlled with topical measures",
+      "ebl_ml": 80,
+      "bleeding_severity": "Moderate (50\u2013200mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Endobronchial squamous cell carcinoma of right mainstem bronchus",
+      "molecular_testing_requested": true,
+      "disposition": "ICU admission",
+      "follow_up_plan": "ICU observation; repeat bronchoscopy in 48\u201372 hours to reassess airway and consider stent placement.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31640",
+            "description": "Bronchoscopy; with excision of tumor",
+            "units": 1,
+            "role": "primary"
+          }
+        ],
+        "total_rvu": 7.23,
+        "work_rvu": 4.5,
+        "practice_expense_rvu": 2.25,
+        "malpractice_rvu": 0.48
+      },
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Jason Bell",
+        "fellow_name": "Dr. Aisha Rahman",
+        "assistant_name": "Tyler James, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "role": "primary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31640",
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "mpfs_facility_payment": 234
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "estimated_facility_payment_unadjusted": 234
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Supported by mechanical debulking/excision of right mainstem tumor (rigid coring, forceps).",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": []
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\nPatient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 71/F\nDate: [REDACTED]\nIndication: Mid-tracheal endobronchial mass from adenoid cystic carcinoma with progressive dyspnea.\nProcedure: Rigid bronchoscopy with mechanical debulking of tracheal tumor.\nAnesthesia: General anesthesia with rigid bronchoscopy; anesthesia team present.\nFindings: Broad-based tracheal mass on posterior wall at T3 level causing ~70% lumen compromise; no distal involvement.\nIntervention: Tumor was resected using rigid coring, snare resection of the bulk, and microdebrider to shave residual tissue. Multiple tumor fragments were removed and sent for histology. Final airway lumen showed approximately 20% residual narrowing without immediate need for stent.\nComplications: Mild bleeding controlled with iced saline; no desaturation or pneumothorax.\nDisposition: Extubated in OR and discharged to step-down unit.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "SYNIP0010",
+      "procedure_date": "[REDACTED]",
+      "procedure_setting": "OR",
+      "patient_age": 71,
+      "gender": "Female",
+      "asa_class": 3,
+      "anticoag_status": "On low-dose aspirin",
+      "anticoag_held_preprocedure": true,
+      "primary_indication": "Mid-tracheal endobronchial mass from adenoid cystic carcinoma",
+      "radiographic_findings": "CT chest/neck: focal mid-tracheal mass with airway narrowing, no distant obstruction",
+      "sedation_type": "General",
+      "airway_type": "Rigid",
+      "ventilation_mode": "Jet ventilation",
+      "anesthesia_agents": "Propofol, fentanyl, rocuronium, sevoflurane",
+      "cao_primary_modality": "Mechanical debulking",
+      "cao_tumor_location": "Mid trachea",
+      "cao_obstruction_pre_pct": 70,
+      "cao_obstruction_post_pct": 20,
+      "stent_type": null,
+      "stent_deployment_method": null,
+      "stent_diameter_mm": null,
+      "stent_length_mm": null,
+      "stent_location": null,
+      "bronch_indication": "Malignant central airway obstruction",
+      "bronch_location_lobe": "Trachea",
+      "bronch_location_segment": "Mid trachea",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "bronch_immediate_complications": "Mild bleeding only",
+      "ebl_ml": 40,
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Tracheal adenoid cystic carcinoma, debulked",
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Post-op CT and radiation oncology consultation; repeat bronchoscopy in 6\u20138 weeks.",
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31640",
+            "description": "Bronchoscopy; with excision of tumor",
+            "units": 1,
+            "role": "primary"
+          }
+        ],
+        "total_rvu": 7.23,
+        "work_rvu": 4.5,
+        "practice_expense_rvu": 2.25,
+        "malpractice_rvu": 0.48
+      },
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Rachel Pierce",
+        "fellow_name": null,
+        "assistant_name": "Noah Flores, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "0.5.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "coding_support": {
+        "coding_summary": {
+          "lines": [
+            {
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "role": "primary",
+              "units": 1
+            }
+          ]
+        },
+        "financial_analysis": {
+          "rvu_source": "ip_coding_billing.v2_7",
+          "year": 2025,
+          "conversion_factor": 32.3562,
+          "per_code": [
+            {
+              "code": "31640",
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "mpfs_facility_payment": 234
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "estimated_facility_payment_unadjusted": 234
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Supported by resection and debulking of tracheal mass.",
+              "qa_flags": []
+            }
+          ],
+          "global_comments": []
+        }
+      }
+    }
+  }
+]

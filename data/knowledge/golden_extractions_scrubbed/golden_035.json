@@ -1,0 +1,3986 @@
+[
+  {
+    "note_text": "Procedure: EBUS-TBNA.\nNodes Sampled: 7, 4R, 10R, 11R.\nFindings: Stations 7, 4R, 10R positive for Adenocarcinoma. 11R benign.\nTechnique: 22G needle, multiple passes. ROSE confirmed malignancy.\nDx: Stage IIIC (N3 disease).\nPlan: Oncology referral.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 66,
+      "patient_mrn": "UNKNOWN_syn_1"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 1,
+      "generated_name": "James Wilson",
+      "generation_date": "2025-12-09T09:20:09.498314"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: The patient presented for mediastinal staging. The airway was inspected and found to be patent. A linear array EBUS bronchoscope was utilized to systematically survey the mediastinum. Lymphadenopathy was id[REDACTED] at stations 7 (35mm), 4R (27mm), and 10R (16mm). Transbronchial needle aspiration was performed under real-time ultrasound guidance. Rapid On-Site Evaluation (ROSE) confirmed adenocarcinoma in stations 7, 4R, and 10R. Station 11R was sampled and found to be benign. The findings are consistent with N3 disease.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 67,
+      "patient_mrn": "UNKNOWN_syn_2"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 2,
+      "generated_name": "Robert Taylor",
+      "generation_date": "2025-12-09T09:20:09.498349"
+    }
+  },
+  {
+    "note_text": "Coding Summary:\n- 31653 (EBUS-TBNA, 3+ stations): Biopsies taken from Stations 7, 4R, 10R, and 11R.\n- Medical Necessity: Staging of lung cancer.\n- Technique: Ultrasound guidance used for all needle passes. Images saved to PACS.\n- Pathology: Malignancy confirmed in 3 stations.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 67,
+      "patient_mrn": "UNKNOWN_syn_3"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 3,
+      "generated_name": "William Anderson",
+      "generation_date": "2025-12-09T09:20:09.498375"
+    }
+  },
+  {
+    "note_text": "Resident Note\nAttending: Dr. Turner\nProcedure: EBUS\nSteps:\n1. Scope inserted.\n2. Examined stations 7, 4R, 10R, 11R.\n3. Station 7 was huge (35mm). Biopsied x4.\n4. Biopsied 4R and 10R. All positive for cancer.\n5. 11R was negative.\nPlan: Patient has N3 disease. Not surgical. Needs chemo/rads.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 66,
+      "patient_mrn": "UNKNOWN_syn_4"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 4,
+      "generated_name": "David Thomas",
+      "generation_date": "2025-12-09T09:20:09.498399"
+    }
+  },
+  {
+    "note_text": "Procedure note EBUS TBNA sedation with propofol airway looked ok went down to station 7 it was big 35 by 23 mm stuck it 4 times ROSE said cancer adenocarcinoma. Then went to 4R and 10R both positive too. 11R was negative. So looks like extensive spread N3 disease. Patient tolerated well no bleeding.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 68,
+      "patient_mrn": "UNKNOWN_syn_5"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 5,
+      "generated_name": "Richard Martinez",
+      "generation_date": "2025-12-09T09:20:09.498420"
+    }
+  },
+  {
+    "note_text": "Endobronchial ultrasound-guided transbronchial needle aspiration was performed. The EBUS scope was introduced. Lymph node stations 7, 4R, 10R, and 11R were id[REDACTED] and sampled. Real-time ultrasound guidance was used for all aspirations. Cytopathology confirmed adenocarcinoma in stations 7, 4R, and 10R. Station 11R showed benign lymphocytes. The procedure was completed without complications.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 71,
+      "patient_mrn": "UNKNOWN_syn_6"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 6,
+      "generated_name": "Joseph Hernandez",
+      "generation_date": "2025-12-09T09:20:09.498443"
+    }
+  },
+  {
+    "note_text": "[Indication]\nMediastinal lymphadenopathy, staging.\n[Anesthesia]\nGeneral, LMA.\n[Description]\nEBUS-TBNA performed on stations 7, 4R, 10R, 11R. ROSE confirmed adenocarcinoma in 7, 4R, 10R.\n[Plan]\nRefer to Oncology for Stage IIIC management.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 65,
+      "patient_mrn": "UNKNOWN_syn_7"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 7,
+      "generated_name": "Charles Lopez",
+      "generation_date": "2025-12-09T09:20:09.498463"
+    }
+  },
+  {
+    "note_text": "The patient was brought to the bronchoscopy suite for staging of suspected lung cancer. We utilized an EBUS scope to visualize the mediastinal lymph nodes. We found significant enlargement in the subcarinal (Station 7) and right paratracheal (Station 4R) areas. Needles samples were taken from these, as well as the hilar nodes. The preliminary pathology results unfortunately confirmed adenocarcinoma in the mediastinal and hilar nodes, indicating N3 disease. The patient recovered well from the sedation.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 71,
+      "patient_mrn": "UNKNOWN_syn_8"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 8,
+      "generated_name": "Thomas Gonzalez",
+      "generation_date": "2025-12-09T09:20:09.498482"
+    }
+  },
+  {
+    "note_text": "Procedure: Endosonographic needle extraction.\nTarget: Mediastinal and hilar nodes.\nAction: Stations 7, 4R, 10R, and 11R were visualized. Aspiration was executed. \nResult: Malignant cells harvested from 7, 4R, and 10R. 11R yielded benign tissue.\nOutcome: Staging upgraded to N3.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lawrence Turner"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162714"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "11R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA performed on 4 stations (4R, 7, 10R, 11R) with ROSE."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 71,
+      "patient_mrn": "UNKNOWN_syn_9"
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31629, 31622, 31653]",
+        "Extracted EBUS stations: ['10R', '11R', '4R', '7']",
+        "Extracted attending: Sarah Martinez",
+        "Coder review: updated attending to Lawrence Turner, removed 31629 and 31622 so EBUS staging is billed with 31653 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 0,
+      "style_type": 9,
+      "generated_name": "Christopher Clark",
+      "generation_date": "2025-12-09T09:20:09.498502"
+    }
+  },
+  {
+    "note_text": "Procedure: BLVR RUL.\nIndication: Severe emphysema, CV negative.\nAction: 3 Zephyr valves placed in RB1 (4.0), RB2 (4.0), RB3 (5.5).\nResult: Total lobar occlusion. No air leak.\nPlan: Admit for obs.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 68
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 1,
+      "generated_name": "John King",
+      "generation_date": "2025-12-09T09:20:09.498527"
+    }
+  },
+  {
+    "note_text": "OPERATIVE REPORT: Mr. [REDACTED] presented for elective bronchoscopic lung volume reduction. Pre-procedural Chartis assessment confirmed the absence of collateral ventilation in the Right Upper Lobe (RUL). Using a flexible bronchoscope, the RUL segmental anatomy was id[REDACTED]. Three Zephyr endobronchial valves were deployed: a 4.0mm valve in RB1, a 4.0mm valve in RB2, and a 5.5mm valve in RB3. Bronchoscopic inspection confirmed optimal seating and complete lobar occlusion.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 69
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 2,
+      "generated_name": "Michael Scott",
+      "generation_date": "2025-12-09T09:20:09.498548"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "CPT 31647 (Bronchoscopy with placement of bronchial valves, initial lobe).\n- Site: Right Upper Lobe.\n- Devices: 3 Zephyr Valves.\n- Assessment: Chartis utilized to rule out collateral ventilation (bundled).\n- Outcome: Complete occlusion achieved.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 3,
+      "generated_name": "David Green",
+      "generation_date": "2025-12-09T09:20:09.498566"
+    }
+  },
+  {
+    "note_text": "Procedure: Valve Placement (BLVR)\nAttending: Dr. Thompson\nSteps:\n1. Airway inspection. RUL selected.\n2. Chartis negative (good for valves).\n3. Sized airways.\n4. Placed valves in RB1, RB2, RB3.\n5. Checked for leaks - none.\nPlan: CXR to check for pneumothorax.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 65
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 4,
+      "generated_name": "James Baker",
+      "generation_date": "2025-12-09T09:20:09.498584"
+    }
+  },
+  {
+    "note_text": "We did the lung volume reduction on Mr [REDACTED] today for his emphysema right upper lobe. Chartis balloon showed no collateral ventilation so we proceeded. Put in three valves total two 4s and one 5.5. They fit good no leaks. RUL looks closed off. Patient woke up fine sending to recovery.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 69
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 5,
+      "generated_name": "Robert Adams",
+      "generation_date": "2025-12-09T09:20:09.498604"
+    }
+  },
+  {
+    "note_text": "Bronchoscopic lung volume reduction with endobronchial valve placement. The right upper lobe was targeted for treatment of severe emphysema. Chartis assessment confirmed the absence of collateral ventilation. Three Zephyr valves were deployed in the apical, posterior, and anterior segments of the RUL. Visual inspection confirmed appropriate placement and lobar occlusion. There were no immediate complications.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 70
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 6,
+      "generated_name": "William Nelson",
+      "generation_date": "2025-12-09T09:20:09.498622"
+    }
+  },
+  {
+    "note_text": "[Indication]\nSevere emphysema, RUL target.\n[Anesthesia]\nModerate Sedation.\n[Description]\nChartis: CV Negative. Valves placed: RB1, RB2, RB3. Total occlusion confirmed.\n[Plan]\nOvernight observation. CXR protocol.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 7,
+      "generated_name": "Richard Hill",
+      "generation_date": "2025-12-09T09:20:09.498641"
+    }
+  },
+  {
+    "note_text": "[REDACTED] a procedure to help with his severe emphysema. We targeted the right upper lobe of his lung. After confirming that the lobe was isolated using a balloon catheter, we placed three one-way valves into the airways leading to that lobe. These valves will allow air to escape but not enter, hopefully reducing the size of the lobe and helping him breathe better. Everything went smoothly and the valves are sitting perfectly.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 8,
+      "generated_name": "Joseph Ramirez",
+      "generation_date": "2025-12-09T09:20:09.498661"
+    }
+  },
+  {
+    "note_text": "Procedure: Endobronchial prosthesis implantation.\nTarget: Right Upper Lobe.\nAction: Collateral ventilation was ruled out. Three occlusion devices were deployed in the segmental bronchi. \nResult: Complete lobar isolation observed.",
+    "cpt_codes": [
+      31622,
+      31647
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Jennifer Martinez"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162884"
+      },
+      "cpt_codes": [
+        31622,
+        31647
+      ],
+      "patient_mrn": "12345678_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 10R) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 70
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31634, 31647]",
+        "Fixed MRN:  -> 12345678",
+        "Extracted attending: Jennifer Martinez",
+        "Coder review: removed bundled Chartis code 31634 so BLVR case is coded with 31622 and 31647, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 2,
+      "style_type": 9,
+      "generated_name": "Charles Campbell",
+      "generation_date": "2025-12-09T09:20:09.498678"
+    }
+  },
+  {
+    "note_text": "Dx: Subglottic stenosis (GPA).\nProcedure: Dilation + Radial cuts.\nFindings: 5cm stenotic segment, 60% obstruction.\nAction: \n- CRE balloon dilation (12-15mm).\n- Electrocautery radial incisions.\n- Repeat dilation.\nResult: Airway patent, bronchoscope passes easily.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 44
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 1,
+      "generated_name": "Sarah Mitchell",
+      "generation_date": "2025-12-09T09:20:09.498699"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: The patient with Granulomatosis with Polyangiitis presented with complex tracheal and bronchial stenosis. A 5cm long-segment stenosis was id[REDACTED] starting 3cm below the vocal cords (60% obstruction). To restore patency, radial incisions were made using an electrocautery knife to release stricture bands. This was followed by serial balloon dilation using CRE balloons sized 12mm to 15mm. Post-procedure inspection revealed significant improvement in luminal diameter.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 46
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 2,
+      "generated_name": "Jessica Roberts",
+      "generation_date": "2025-12-09T09:20:09.498718"
+    }
+  },
+  {
+    "note_text": "Code: 31630 (Bronchoscopy with dilation/relief of stenosis).\nTechnique: Combined modality using electrocautery knife for incisions and CRE balloon for mechanical dilation.\nSite: Trachea and bilateral lower lobe segments.\nIndication: Symptomatic stenosis refractory to medical management.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 43
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 3,
+      "generated_name": "Emily Carter",
+      "generation_date": "2025-12-09T09:20:09.498734"
+    }
+  },
+  {
+    "note_text": "Procedure: Airway Dilation\nResident: Dr. Miller\nPatient: [REDACTED]\nSteps:\n1. Id[REDACTED] long tracheal stenosis.\n2. Dilated with CRE balloon.\n3. Used cautery knife to cut scar bands.\n4. Dilated RLL and LLL segments.\n5. Airway looks much better now.\nPlan: PACU.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 43
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 4,
+      "generated_name": "Ashley Phillips",
+      "generation_date": "2025-12-09T09:20:09.498752"
+    }
+  },
+  {
+    "note_text": "Ava Harrington here for her tracheal stenosis she has wegeners. We looked down and saw the narrowing about 3cm below cords. Used the balloon to stretch it out then the knife to cut the tight bands. Also did some work on the lower lobes right and left. Everything is open now scope goes through easy. No bleeding.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 47
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 5,
+      "generated_name": "Michelle Evans",
+      "generation_date": "2025-12-09T09:20:09.498772"
+    }
+  },
+  {
+    "note_text": "Flexible bronchoscopy with radial knife incisions and balloon dilatation. The patient has a history of Granulomatosis with polyangiitis causing multi-level stenosis. A 5cm tracheal stenosis was id[REDACTED]. Serial dilations were performed with 12-15mm balloons. Radial incisions were made with an electrocautery knife to facilitate expansion. Similar interventions were performed on the RLL and LLL segmental bronchi. Excellent anatomical result achieved.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 47
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 6,
+      "generated_name": "Amanda Turner",
+      "generation_date": "2025-12-09T09:20:09.498790"
+    }
+  },
+  {
+    "note_text": "[Indication]\nTracheal/Bronchial Stenosis (GPA).\n[Anesthesia]\nGeneral, LMA.\n[Description]\nLong segment tracheal stenosis dilated and incised. Bilateral lower lobe strictures dilated. Patency restored.\n[Plan]\nPRN follow-up.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 42
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 7,
+      "generated_name": "Melissa Torres",
+      "generation_date": "2025-12-09T09:20:09.498810"
+    }
+  },
+  {
+    "note_text": "[REDACTED] for treatment of her airway narrowing caused by her autoimmune condition. Under general anesthesia, we found a significant narrowing in her windpipe and lower airways. We used a combination of a small knife to make relief cuts in the scar tissue and balloons to stretch the airways open. By the end of the procedure, the airways were significantly more open, which should improve her breathing.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 43
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 8,
+      "generated_name": "Stephanie Parker",
+      "generation_date": "2025-12-09T09:20:09.498827"
+    }
+  },
+  {
+    "note_text": "Procedure: Endoscopic recanalization.\nPathology: Fibrotic strictures.\nAction: Radial incisions were executed on the scar tissue. Pneumatic dilation was performed to expand the lumen.\nResult: Restoration of airway caliber.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Russell Miller"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162919"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "patient_mrn": "15984377_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.7,
+            "facility_payment_2025": 249,
+            "rationale": "EBUS-TBNA of 3 stations (4R, 7, 11L) supports 31653."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.7,
+          "facility_total_payment": 249
+        }
+      },
+      "patient_age": 46
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31630]",
+        "Fixed MRN:  -> 15984377",
+        "Extracted attending: INDICATIONS",
+        "Coder review: set attending to Russell Miller, dropped bundled diagnostic bronchoscopy 31622, kept 31630 only for complex airway dilation, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 3,
+      "style_type": 9,
+      "generated_name": "Nicole Collins",
+      "generation_date": "2025-12-09T09:20:09.498845"
+    }
+  },
+  {
+    "note_text": "Indication: Malignant airway obstruction (Esophageal CA).\nFindings: Distal trachea 20% patent. LMS 100% occluded. RMS 30% patent.\nProcedure: Rigid bronchoscopy.\n- Tumor debulking (APC/Cryo).\n- Silicone Y-Stent (15x12x12) placed.\nResult: Airways 90% patent through stent.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 61
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 1,
+      "generated_name": "Daniel Edwards",
+      "generation_date": "2025-12-09T09:20:09.498869"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: The patient presented with critical malignant central airway obstruction. Rigid bronchoscopy was initiated. Extensive tumor infiltration was noted at the carina, completely occluding the Left Mainstem (LMS). Mechanical debulking and APC were utilized to re-establish a lumen. A customized 15x12x12mm silicone Y-stent was deployed to scaffold the airway. Post-deployment, the trachea and both mainstems demonstrated >90% patency.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 65
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 2,
+      "generated_name": "Matthew Stewart",
+      "generation_date": "2025-12-09T09:20:09.498893"
+    }
+  },
+  {
+    "note_text": "Codes: \n- 31636 (Stent placement, bronchial)\n- 31641 (Tumor destruction/debulking)\nRationale: Critical obstruction required mechanical debulking prior to stent placement. A silicone Y-stent was placed covering the trachea and both mainstems.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 65
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 3,
+      "generated_name": "Anthony Flores",
+      "generation_date": "2025-12-09T09:20:09.498928"
+    }
+  },
+  {
+    "note_text": "Procedure: Rigid Bronch + Y-Stent\nPt: [REDACTED]\nSteps:\n1. 12mm Rigid scope inserted.\n2. Tumor debulked with APC and suction.\n3. Measured for Y-stent.\n4. Inserted silicone Y-stent (blind pass technique).\n5. Adjusted with forceps.\n6. Airway open now.\nPlan: ICU, humidified air.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 59
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 4,
+      "generated_name": "Mark Morris",
+      "generation_date": "2025-12-09T09:20:09.498951"
+    }
+  },
+  {
+    "note_text": "Ethan Calder with the esophageal cancer compressing the airway. We took him to the OR for a stent. Rigid scope went in. Debulked a lot of tumor at the carina left side was totally shut. Put in a Y stent silicone type. Had to push it past cords blindly then grab it with forceps. It sat perfectly. Airways look great now. ICU for monitoring.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 62
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 5,
+      "generated_name": "Donald Nguyen",
+      "generation_date": "2025-12-09T09:20:09.498971"
+    }
+  },
+  {
+    "note_text": "Rigid bronchoscopy with tumor debulking and silicone Y-stent placement. Significant malignant obstruction of the distal trachea and mainstem bronchi was id[REDACTED]. Tumor was debulked using APC and cryotherapy. A 15x12x12 silicone Y-stent was customized and deployed. Post-procedure inspection confirmed excellent stent position and patency of bilateral mainstems.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 61
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 6,
+      "generated_name": "Steven Murphy",
+      "generation_date": "2025-12-09T09:20:09.498994"
+    }
+  },
+  {
+    "note_text": "[Indication]\nMalignant Central Airway Obstruction.\n[Anesthesia]\nGeneral, Jet Ventilation.\n[Description]\nRigid bronchoscopy. Tumor debulked (APC/Cryo). Silicone Y-Stent placed. Patency restored to >90%.\n[Plan]\nICU, Saline nebs.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 64
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 7,
+      "generated_name": "Paul Rivera",
+      "generation_date": "2025-12-09T09:20:09.499015"
+    }
+  },
+  {
+    "note_text": "[REDACTED] from severe difficulty breathing due to a tumor blocking his main airways. We performed a rigid bronchoscopy to clear the blockage. After removing a significant amount of tumor tissue using heat and freezing probes, we placed a Y-shaped silicone stent. This stent props open his windpipe and branches to both lungs. We were very pleased to see his airways were 90% open after the stent was in place.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 59
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 8,
+      "generated_name": "Andrew Cook",
+      "generation_date": "2025-12-09T09:20:09.499034"
+    }
+  },
+  {
+    "note_text": "Procedure: Rigid endoscopy with tumor ablation and prosthetic scaffolding.\nProblem: Carinal neoplastic infiltration.\nAction: Tissue was excised. A bifurcated silicone prosthesis was inserted.\nResult: Luminal integrity restored.",
+    "cpt_codes": [
+      "31628",
+      "31654"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Maya Ellington"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.162951"
+      },
+      "cpt_codes": [
+        31622,
+        31631,
+        "31654"
+      ],
+      "patient_mrn": "20578149_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 5.53,
+            "facility_payment_2025": 179,
+            "rationale": "Radial EBUS-guided TBLB of RML nodule."
+          },
+          {
+            "code": "+31654",
+            "description": "EBUS for peripheral lesion(s) during bronchoscopic intervention(s) (add-on)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 2.11,
+            "facility_payment_2025": 68,
+            "rationale": "Radial EBUS used for peripheral lesion localization."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.64,
+          "facility_total_payment": 247
+        }
+      },
+      "patient_age": 64
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 20578149",
+        "Extracted attending: INDICATIONS",
+        "Coder review: corrected attending to Maya Ellington and added registry_entry.coding_review summarizing 31622 and 31631 with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 4,
+      "style_type": 9,
+      "generated_name": "Joshua Rogers",
+      "generation_date": "2025-12-09T09:20:09.499055"
+    }
+  },
+  {
+    "note_text": "Indication: Stent migration/infection.\nFindings: Stent migrated to RMS, obstructing LMS. Purulent secretions.\nProcedure: Rigid bronchoscopy.\n- Stent grasped and removed en bloc.\n- Airways irrigated.\nResult: Patent airways, mucosal inflammation. TE fistula visible (covered by esophageal stent).",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_1",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 1,
+      "generated_name": "Gary Bennett",
+      "generation_date": "2025-12-09T09:20:09.499075"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: The patient presented with a migrated, infected airway stent. Rigid bronchoscopy revealed the tracheal stent had telescoped and migrated into the right mainstem, occluding the left. The stent was successfully grasped and extracted using rigid forceps. Copious purulent secretions were evacuated from the post-obstructive left lung. Inspection revealed an underlying TE fistula, adequately covered by the esophageal stent.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_2",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 62
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 2,
+      "generated_name": "Jacob Wood",
+      "generation_date": "2025-12-09T09:20:09.499096"
+    }
+  },
+  {
+    "note_text": "Code: 31638 (Bronchoscopy with removal of foreign body/stent).\nComplexity: Required rigid bronchoscopy and heavy forceps due to stent incarceration and migration.\nMedical Necessity: Stent migration causing complete obstruction of LMS and infection.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_3",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 65
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 3,
+      "generated_name": "Nicholas Barnes",
+      "generation_date": "2025-12-09T09:20:09.499123"
+    }
+  },
+  {
+    "note_text": "Procedure: Stent Removal\nResident: Dr. Gallegos\nSteps:\n1. Rigid scope inserted.\n2. Stent found migrated into RMS.\n3. Tons of pus behind it.\n4. Grabbed stent with rigid forceps.\n5. Pulled everything out.\n6. Cleaned up the airway.\nPlan: Antibiotics for pneumonia.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_4",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 63
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 4,
+      "generated_name": "Eric Ross",
+      "generation_date": "2025-12-09T09:20:09.499141"
+    }
+  },
+  {
+    "note_text": "Daniel Conley here for stent removal. The old stent slid down and blocked the left lung. It was nasty full of pus. We went in with the rigid scope grabbed the edge of the stent and pulled the whole thing out. Suctioned out a lot of infection. The fistula looks covered by the esophageal stent so thats good. Sending him to PACU.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_5",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 63
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 5,
+      "generated_name": "Stephen Henderson",
+      "generation_date": "2025-12-09T09:20:09.499160"
+    }
+  },
+  {
+    "note_text": "Rigid bronchoscopy for airway stent removal. The patient presented with stent migration and infection. The stent was visualized in the right mainstem bronchus. Using rigid forceps, the stent was grasped and removed. Post-obstructive purulence was evacuated from the left mainstem. The underlying airway was erythematous but patent. The TE fistula appeared covered by the esophageal stent.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_6",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 6,
+      "generated_name": "Larry Coleman",
+      "generation_date": "2025-12-09T09:20:09.499178"
+    }
+  },
+  {
+    "note_text": "[Indication]\nStent migration, infection.\n[Anesthesia]\nGeneral.\n[Description]\nRigid bronchoscopy. Migrated stent removed via forceps. Purulent secretions cleared. TE fistula assessed.\n[Plan]\nAntibiotics, observation.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_7",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 65
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 7,
+      "generated_name": "Justin Jenkins",
+      "generation_date": "2025-12-09T09:20:09.499196"
+    }
+  },
+  {
+    "note_text": "[REDACTED] airway stent removed because it had moved out of place and caused an infection. Using a rigid metal tube, we reached the stent which had slipped into his right lung. We carefully pulled it out. Once it was gone, we were able to clear out a lot of infected fluid from his left lung, which had been blocked. His airways look irritated but open now.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_8",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 62
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 8,
+      "generated_name": "Scott Perry",
+      "generation_date": "2025-12-09T09:20:09.499213"
+    }
+  },
+  {
+    "note_text": "Procedure: Endoscopic prosthesis extraction.\nIndication: Device displacement.\nAction: The migrated prosthesis was secured and withdrawn using rigid instrumentation. Purulent exudate was evacuated.\nResult: Airway obstruction resolved.",
+    "cpt_codes": [
+      31638
+    ],
+    "registry_entry": {
+      "providers": {
+        "attending_name": "Mikie Gallegos"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163049"
+      },
+      "cpt_codes": [
+        31638
+      ],
+      "patient_mrn": "30921342_syn_9",
+      "procedure_date": "[REDACTED]",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Stent placement in trachea; includes dilation."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 7.15,
+          "facility_total_payment": 231
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Extracted CPT codes: [31622, 31631]",
+        "Fixed MRN:  -> 30921342",
+        "Extracted attending: INDICATIONS",
+        "Coder review: added procedure_date 2024-02-02, set attending to Mikie Gallegos, changed stent code from 31631 to 31638 for stent removal and dropped bundled 31622, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 7,
+      "style_type": 9,
+      "generated_name": "Brandon Powell",
+      "generation_date": "2025-12-09T09:20:09.499230"
+    }
+  },
+  {
+    "note_text": "Procedure: Bronchoscopic Thermal Vapor Ablation (BTVA).\nTarget: RUL (RB3, RB1).\nAction: InterVapor catheter placed. 14 calories total delivered.\nResult: Good vapor delivery. No complications.\nPlan: ICU admission, prophylactic antibiotics.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 1,
+      "generated_name": "Frank Bryant",
+      "generation_date": "2025-12-09T09:20:09.499254"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: The patient with severe emphysema underwent bronchoscopic thermal vapor ablation. The Right Upper Lobe was selected based on collateral ventilation status. The InterVapor catheter was navigated to the anterior (RB3) and apical (RB1) segments. A total of 14 calories of thermal energy were delivered (8 cal to RB3, 6 cal to RB1). Fluoroscopy confirmed accurate catheter placement and vapor containment. The patient tolerated the procedure without adverse events.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 2,
+      "generated_name": "Gregory Alexander",
+      "generation_date": "2025-12-09T09:20:09.499278"
+    }
+  },
+  {
+    "note_text": "Code: 31641 (Destruction of tumor/tissue, bronchoscopic).\nTechnique: Thermal vapor ablation of emphysematous tissue.\nTarget: Right Upper Lobe.\nDosage: 14 Calories total.\nNote: This is a distinct modality from valve placement.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 63
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 3,
+      "generated_name": "Raymond Russell",
+      "generation_date": "2025-12-09T09:20:09.499314"
+    }
+  },
+  {
+    "note_text": "Procedure: Vapor Ablation (InterVapor)\nAttending: Dr. Chen\nSteps:\n1. Navigated to RUL.\n2. Treated RB3 with 8 calories.\n3. Treated RB1 with 6 calories.\n4. Verified with fluoro.\n5. No bleeding.\nPlan: Watch for inflammatory response/fever.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 68
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 4,
+      "generated_name": "Patrick Griffin",
+      "generation_date": "2025-12-09T09:20:09.499340"
+    }
+  },
+  {
+    "note_text": "George Martinez here for the vapor treatment for his COPD. We did the RUL today. Used the steam catheter put 8 calories in the front segment and 6 in the top one. Vapor went in good seen on xray. Patient is stable. He needs antibiotics and prednisone for the inflammation coming up.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 5,
+      "generated_name": "Jack Diaz",
+      "generation_date": "2025-12-09T09:20:09.499362"
+    }
+  },
+  {
+    "note_text": "Bronchoscopic thermal vapor ablation. The right upper lobe was targeted for lung volume reduction. The vapor catheter was positioned in the RUL anterior and apical segments. Thermal energy was delivered as calculated. Fluoroscopy confirmed appropriate vapor delivery. The procedure was uncomplicated.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 62
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 6,
+      "generated_name": "Dennis Hayes",
+      "generation_date": "2025-12-09T09:20:09.499386"
+    }
+  },
+  {
+    "note_text": "[Indication]\nSevere Emphysema, RUL target (CV+).\n[Anesthesia]\nMAC/LMA.\n[Description]\nBTVA to RUL. RB3: 8 cal. RB1: 6 cal. Vapor delivery confirmed.\n[Plan]\nICU, Prednisone, Antibiotics.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 65
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 7,
+      "generated_name": "Jerry Myers",
+      "generation_date": "2025-12-09T09:20:09.499409"
+    }
+  },
+  {
+    "note_text": "[REDACTED] a steam treatment for his emphysema today. Since his lung anatomy wasn't right for valves, we used thermal vapor to treat the diseased parts of his right upper lung. We delivered the vapor to two specific segments. This will cause that tissue to scar down and shrink over the next few months, which should help him breathe better. He needs to stay in the hospital for monitoring as this causes a deliberate inflammation.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 67
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 8,
+      "generated_name": "Tyler Ford",
+      "generation_date": "2025-12-09T09:20:09.499431"
+    }
+  },
+  {
+    "note_text": "Procedure: Endobronchial thermal therapy.\nTarget: Emphysematous lung tissue.\nAction: Vapor energy was administered to the RUL segments. \nResult: Tissue ablation initiated.\nPost-op: Inflammatory modulation protocol.",
+    "cpt_codes": [
+      "31641",
+      "31631"
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Lisa Chen"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.163137"
+      },
+      "cpt_codes": [
+        "31641",
+        "31631"
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": "Thermal vapor",
+      "ablation_max_temp_c": 72,
+      "patient_mrn": "34567890_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_summary": [
+          {
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "modifiers": [],
+            "primary": true,
+            "facility_rvu_2025": 8.4,
+            "facility_payment_2025": 272,
+            "rationale": "Mechanical and APC debulking of tumor."
+          },
+          {
+            "code": "31631",
+            "description": "Bronchoscopy; with placement of tracheal stent(s)",
+            "units": 1,
+            "modifiers": [],
+            "primary": false,
+            "facility_rvu_2025": 7.15,
+            "facility_payment_2025": 231,
+            "rationale": "Placement of Y-stent (tracheal stent)."
+          }
+        ],
+        "rvus_and_payments_2025": {
+          "facility_total_rvu": 15.55,
+          "facility_total_payment": 503
+        }
+      },
+      "patient_age": 66
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.2.0",
+      "patch_date": "2025-12-07T00:00:00",
+      "changes": [
+        "Fixed procedure_date: 1959-03-19 -> 2024-09-14",
+        "Extracted CPT codes: [31622, 31641]",
+        "Extracted ablation_peripheral_performed: True",
+        "Extracted ablation_modality: Radiofrequency",
+        "Extracted ablation_max_temp_c: 72",
+        "Fixed MRN:  -> 34567890",
+        "Extracted attending: Michael Roberts",
+        "Coder review: changed attending to Lisa Chen, updated ablation_modality to Thermal vapor, removed bundled diagnostic bronchoscopy 31622 so case is coded with 31641 only, and added registry_entry.coding_review with 2025 facility RVUs and payments."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_035.json",
+      "original_index": 9,
+      "style_type": 9,
+      "generated_name": "Aaron Hamilton",
+      "generation_date": "2025-12-09T09:20:09.499453"
+    }
+  }
+]

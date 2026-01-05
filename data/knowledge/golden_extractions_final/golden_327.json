@@ -1,0 +1,1461 @@
+[
+  {
+    "note_text": "Date of Service: [REDACTED] 1600 Patient: Washington, Jamal (MRN [REDACTED]) Attending Physician: Van Dyke, Dick, MD Service: Pulmonary / Critical Care \nINTERVENTIONAL PULMONOLOGY OPERATIVE REPORT 1 Happy Street Dr, Hollywood, CA92110\nINDICATION FOR OPERATION: Jamal Washington is a 38 year-old male who presents with Empyema. The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Instillation of agents for fibrinolysis (initial) were discussed with the patient in detail. Patient indicated a wish to proceed with procedure and informed consent was signed. \nPREOPERATIVE DIAGNOSIS: Empyema POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. \nPROCEDURE:\n•\t76604 Ultrasound, chest (includes mediastinum), real time with image documentation \n•\t32561 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); initial day \nASSISTANT: Emily Torres MD RN: bedside RN Mark O'Conner MONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure. \nPROCEDURE IN DETAIL: PATIENT POSITION: ☐ Supine ☑ Sitting ☐ Lateral Decubitus: ☐ Right ☐ Left \nCHEST ULTRASOUND FINDINGS: Hemithorax: ☐ Right ☑ Left Pleural Effusion: ☑ Volume: ☐ None ☐ Minimal ☐ Small ☑ Moderate ☐ Large ☑ Echogenicity: ☐ Anechoic ☐ Hypoechoic ☐ Isoechoic ☑ Hyperechoic ☑ Loculations: ☐ None ☐ Thin ☑ Thick ☑ Diaphragmatic Motion: ☑ Normal ☐ Diminished ☐ Absent \nLung: Lung sliding before procedure: ☑ Present ☐ Absent Lung consolidation/atelectasis: ☑ Present ☐ Absent Pleura: ☐ Normal ☑ Thick ☐ Nodular \nDate of chest tube insertion: [REDACTED] Side: Left ☑ 10 mg/5 mg tPA/Dnase \nCOMPLICATIONS: ☑ None \nIMPRESSION/PLAN: Jamal Washington is a 38 year-old male who presents for Chest Ultrasound and Instillation of agents for fibrinolysis (initial). The patient tolerated the procedure well. There were no immediate complications. DISPOSITION: Nursing Unit [] dwell for 1 hour [] chest tube to suction",
+    "cpt_codes": [
+      32561,
+      76604
+    ],
+    "registry_entry": {
+      "patient_mrn": "2343423",
+      "procedure_date": "[REDACTED]",
+      "procedure_start_time": "16:00",
+      "providers": {
+        "attending_name": "Van Dyke, Dick, MD",
+        "assistant_name": "Emily Torres MD",
+        "assistant_role": "Resident"
+      },
+      "patient_demographics": {
+        "age_years": 38,
+        "gender": "Male"
+      },
+      "clinical_context": {
+        "primary_indication": "Empyema",
+        "indication_category": "Empyema/Parapneumonic",
+        "radiographic_findings": "Moderate, hyperechoic pleural effusion with thick loculations on left side; lung consolidation/atelectasis present"
+      },
+      "procedure_setting": {
+        "patient_position": "Sitting"
+      },
+      "procedures_performed": {
+        "fibrinolytic_therapy": {
+          "performed": true,
+          "agents": [
+            "tPA",
+            "DNase"
+          ],
+          "tpa_dose_mg": 10,
+          "dnase_dose_mg": 5,
+          "indication": "Empyema",
+          "number_of_doses": 1
+        }
+      },
+      "pleural_procedures": {
+        "fibrinolytic_therapy": {
+          "performed": true,
+          "agents": [
+            "tPA",
+            "DNase"
+          ],
+          "tpa_dose_mg": 10,
+          "dnase_dose_mg": 5,
+          "indication": "Empyema",
+          "number_of_doses": 1
+        }
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": []
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "preliminary_diagnosis": "Empyema",
+        "disposition": "Already inpatient - return to floor",
+        "follow_up_plan_text": "dwell for 1 hour, chest tube to suction"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32561",
+            "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+            "units": 1
+          },
+          {
+            "code": "76604",
+            "modifier": "26",
+            "description": "Ultrasound, chest, real time with image documentation",
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J86.9"
+        ],
+        "total_rvu": 2.94,
+        "work_rvu": 1.99
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T16:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "pleural_intrapleural_treatment",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32561",
+              "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Therapeutic instillation of tPA/DNase for empyema (initial day).",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Instillation of agents for fibrinolysis (initial)... 10 mg/5 mg tPA/Dnase"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "76604",
+              "modifier": "26",
+              "description": "Ultrasound, chest, real time with image documentation",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Diagnostic ultrasound evaluating loculations and echogenicity; distinct from guidance.",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "CHEST ULTRASOUND FINDINGS... Echogenicity: Hyperechoic... Loculations: Thick"
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32561",
+              "units": 1,
+              "work_rvu": 1.39,
+              "total_facility_rvu": 2.09,
+              "mpfs_facility_payment": 68.0,
+              "rvu_source_path": "fee_schedules.physician_2025_pleural.codes.32561"
+            },
+            {
+              "code": "76604",
+              "units": 1,
+              "work_rvu": 0.6,
+              "total_facility_rvu": 0.85,
+              "mpfs_facility_payment": 27.0,
+              "rvu_source_path": "estimated_cms_2025"
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 1.99,
+            "total_facility_rvu": 2.94,
+            "estimated_facility_payment_unadjusted": 95.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32561",
+              "summary": "Supported by documentation of initial day fibrinolytic instillation via existing chest tube."
+            },
+            {
+              "code": "76604",
+              "summary": "Supported by detailed diagnostic findings (hyperechoic, thick loculations) requiring interpretation. Modifier 26 indicates professional component."
+            }
+          ],
+          "global_comments": [
+            "Chest tube insertion (32551) not reported as tube was placed on prior date (12/15)."
+          ]
+        }
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-18T07:44:10",
+        "created_by": "IP-Registry-Gold-Gen"
+      }
+    }
+  },
+  {
+    "note_text": "Date of Service: [REDACTED] 1320 Patient: Perry, Priya (MRN [REDACTED]) Attending Physician: Van Dyke, Dick, MD Service: Pulmonary / Critical Care \nINTERVENTIONAL PULMONOLOGY OPERATIVE REPORT 1 Happy Street Dr, Hollywood, CA92110\nINDICATION FOR OPERATION: Priya Perry is a 72 year-old female who presents with Hemothorax (Organizing). The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Instillation of agents for fibrinolysis (initial) were discussed with the patient in detail. Patient indicated a wish to proceed with procedure and informed consent was signed. \nPREOPERATIVE DIAGNOSIS: Hemothorax (Organizing) POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. \nPROCEDURE:\n•\t76604 Ultrasound, chest (includes mediastinum), real time with image documentation \n•\t32561 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); initial day \nASSISTANT: Lucas Graham MD RN: bedside RN Sarah Jenkins MONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure. \nPROCEDURE IN DETAIL: PATIENT POSITION: ☐ Supine ☐ Sitting ☑ Lateral Decubitus: ☐ Right ☑ Left \nCHEST ULTRASOUND FINDINGS: Hemithorax: ☑ Right ☐ Left Pleural Effusion: ☑ Volume: ☐ None ☐ Minimal ☐ Small ☑ Moderate ☐ Large ☑ Echogenicity: ☐ Anechoic ☑ Hypoechoic ☐ Isoechoic ☐ Hyperechoic ☑ Loculations: ☐ None ☑ Thin ☐ Thick ☑ Diaphragmatic Motion: ☑ Normal ☐ Diminished ☐ Absent \nLung: Lung sliding before procedure: ☑ Present ☐ Absent Lung consolidation/atelectasis: ☑ Present ☐ Absent Pleura: ☑ Normal ☐ Thick ☐ Nodular \nDate of chest tube insertion: [REDACTED] Side: Right ☑ 10 mg/5 mg tPA/Dnase \nCOMPLICATIONS: ☑ None \nIMPRESSION/PLAN: Priya Perry is a 72 year-old female who presents for Chest Ultrasound and Instillation of agents for fibrinolysis (initial). The patient tolerated the procedure well. There were no immediate complications. DISPOSITION: Nursing Unit [] dwell for 1 hour [] chest tube to suction",
+    "cpt_codes": [
+      32561,
+      76604
+    ],
+    "registry_entry": {
+      "patient_mrn": "88291032",
+      "procedure_date": "[REDACTED]",
+      "procedure_start_time": "13:20",
+      "procedure_duration_minutes": null,
+      "providers": {
+        "attending_name": "Van Dyke, Dick, MD",
+        "assistant_name": "Lucas Graham MD",
+        "assistant_role": "Resident",
+        "rose_present": false,
+        "trainee_present": true
+      },
+      "patient_demographics": {
+        "age_years": 72,
+        "gender": "Female",
+        "height_cm": null,
+        "weight_kg": null,
+        "bmi": null,
+        "smoking_status": null
+      },
+      "clinical_context": {
+        "primary_indication": "Hemothorax (Organizing)",
+        "indication_category": "Empyema/Parapneumonic",
+        "radiographic_findings": "Right hemothorax, organizing with loculations"
+      },
+      "procedure_setting": {
+        "location": "Bedside",
+        "patient_position": "Lateral Decubitus - Left",
+        "airway_type": "Native"
+      },
+      "sedation": {
+        "type": "None",
+        "anesthesia_provider": "None"
+      },
+      "procedures_performed": {
+        "pleural_procedures": {
+          "fibrinolytic_therapy": {
+            "performed": true,
+            "agents": [
+              "tPA",
+              "DNase"
+            ],
+            "tpa_dose_mg": 10.0,
+            "dnase_dose_mg": 5.0,
+            "indication": "Hemothorax",
+            "number_of_doses": 1
+          },
+          "chest_tube": {
+            "performed": false,
+            "action": "Insertion",
+            "indication": "Hemothorax"
+          }
+        }
+      },
+      "granular_data": {},
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32561",
+            "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+            "units": 1
+          },
+          {
+            "code": "76604",
+            "modifier": "26",
+            "description": "Ultrasound, chest, real time with image documentation",
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J94.2",
+          "J86.0"
+        ],
+        "total_rvu": 2.94,
+        "work_rvu": 1.99
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T16:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "pleural_intrapleural_treatment",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32561",
+              "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Therapeutic instillation of tPA/DNase for hemothorax (initial day).",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Instillation... initial day... 10 mg/5 mg tPA/Dnase"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "76604",
+              "modifier": "26",
+              "description": "Ultrasound, chest, real time with image documentation",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Diagnostic ultrasound evaluating loculations and echogenicity.",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "CHEST ULTRASOUND FINDINGS... Hyperechoic... Thick Loculations"
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32561",
+              "units": 1,
+              "work_rvu": 1.39,
+              "total_facility_rvu": 2.09,
+              "mpfs_facility_payment": 68.0,
+              "rvu_source_path": "fee_schedules.physician_2025_pleural.codes.32561"
+            },
+            {
+              "code": "76604",
+              "units": 1,
+              "work_rvu": 0.6,
+              "total_facility_rvu": 0.85,
+              "mpfs_facility_payment": 27.0,
+              "rvu_source_path": "estimated_cms_2025"
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 1.99,
+            "total_facility_rvu": 2.94,
+            "estimated_facility_payment_unadjusted": 95.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32561",
+              "summary": "Supported by documentation of tPA/DNase instillation via existing tube."
+            },
+            {
+              "code": "76604",
+              "summary": "Supported by documentation of diagnostic findings (loculated hemothorax)."
+            }
+          ]
+        }
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-19T13:45:00Z",
+        "created_by": "IP-Registry-Golden-Gen"
+      }
+    }
+  },
+  {
+    "note_text": "Date of Service: [REDACTED] 0845 Patient: O'Malley, Sean (MRN [REDACTED]) Attending Physician: Miller, Russell J, MD Service: Pulmonary / Critical Care \nINTERVENTIONAL PULMONOLOGY OPERATIVE REPORT 1 Happy Street Dr, Hollywood, CA92110\nINDICATION FOR OPERATION: Sean O'Malley is a 50 year-old male who presents with Complex Septated Effusion. The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Instillation of agents for fibrinolysis (initial) were discussed with the patient in detail. Patient indicated a wish to proceed with procedure and informed consent was signed. \nPREOPERATIVE DIAGNOSIS: Complex Septated Effusion POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. \nPROCEDURE:\n•\t76604 Ultrasound, chest (includes mediastinum), real time with image documentation \n•\t32561 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); initial day \nASSISTANT: Rebecca Lin MD RN: bedside RN Thomas Anderson MONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure. \nPROCEDURE IN DETAIL: PATIENT POSITION: ☑ Supine ☐ Sitting ☐ Lateral Decubitus: ☐ Right ☐ Left \nCHEST ULTRASOUND FINDINGS: Hemithorax: ☐ Right ☑ Left Pleural Effusion: ☑ Volume: ☐ None ☐ Minimal ☐ Small ☐ Moderate ☑ Large ☑ Echogenicity: ☐ Anechoic ☐ Hypoechoic ☑ Isoechoic ☐ Hyperechoic ☑ Loculations: ☐ None ☐ Thin ☑ Thick ☑ Diaphragmatic Motion: ☐ Normal ☑ Diminished ☐ Absent \nLung: Lung sliding before procedure: ☑ Present ☐ Absent Lung consolidation/atelectasis: ☑ Present ☐ Absent Pleura: ☐ Normal ☑ Thick ☐ Nodular \nDate of chest tube insertion: [REDACTED] Side: Left ☑ 10 mg/5 mg tPA/Dnase \nCOMPLICATIONS: ☑ None \nIMPRESSION/PLAN: Sean O'Malley is a 50 year-old male who presents for Chest Ultrasound and Instillation of agents for fibrinolysis (initial). The patient tolerated the procedure well. There were no immediate complications. DISPOSITION: Nursing Unit [] dwell for 1 hour [] chest tube to suction",
+    "cpt_codes": [
+      32561,
+      76604
+    ],
+    "registry_entry": {
+      "patient_mrn": "2323422",
+      "procedure_date": "[REDACTED]",
+      "procedure_start_time": "08:45",
+      "providers": {
+        "attending_name": "Miller, Russell J",
+        "assistant_name": "Rebecca Lin",
+        "assistant_role": "Resident",
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 50,
+        "gender": "Male"
+      },
+      "clinical_context": {
+        "primary_indication": "Complex Septated Effusion",
+        "indication_category": "Empyema/Parapneumonic",
+        "radiographic_findings": "Left pleural effusion: Large volume, isoechoic echogenicity, thick loculations. Diminished diaphragmatic motion. Lung sliding present.",
+        "lesion_location": "Left Hemithorax"
+      },
+      "procedure_setting": {
+        "location": "Bedside",
+        "patient_position": "Supine",
+        "airway_type": "Native"
+      },
+      "sedation": {
+        "type": "None",
+        "anesthesia_provider": "None"
+      },
+      "procedures_performed": {
+        "pleural_procedures": {
+          "fibrinolytic_therapy": {
+            "performed": true,
+            "agents": [
+              "tPA",
+              "DNase"
+            ],
+            "tpa_dose_mg": 10.0,
+            "dnase_dose_mg": 5.0,
+            "indication": "Complex parapneumonic",
+            "number_of_doses": 1
+          }
+        }
+      },
+      "equipment": {
+        "fluoroscopy_used": false
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": []
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "preliminary_diagnosis": "Complex Septated Effusion",
+        "disposition": "Already inpatient - return to floor",
+        "follow_up_plan_text": "Nursing Unit, dwell for 1 hour, chest tube to suction"
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "32561",
+            "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+            "units": 1
+          },
+          {
+            "code": "76604",
+            "modifier": "26",
+            "description": "Ultrasound, chest, real time with image documentation",
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J86.0"
+        ],
+        "total_rvu": 2.94,
+        "work_rvu": 1.99
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T16:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "pleural_intrapleural_treatment",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "32561",
+              "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Therapeutic instillation of tPA/DNase for complex effusion (initial day).",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Instillation... initial day... 10 mg/5 mg tPA/Dnase"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "76604",
+              "modifier": "26",
+              "description": "Ultrasound, chest, real time with image documentation",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Diagnostic ultrasound evaluating loculations and echogenicity.",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "CHEST ULTRASOUND FINDINGS... Isoechoic... Thick Loculations"
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_pleural",
+          "rvu_source": "cms_rvus.pleural",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "32561",
+              "units": 1,
+              "work_rvu": 1.39,
+              "total_facility_rvu": 2.09,
+              "mpfs_facility_payment": 68.0,
+              "rvu_source_path": "fee_schedules.physician_2025_pleural.codes.32561"
+            },
+            {
+              "code": "76604",
+              "units": 1,
+              "work_rvu": 0.6,
+              "total_facility_rvu": 0.85,
+              "mpfs_facility_payment": 27.0,
+              "rvu_source_path": "estimated_cms_2025"
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 1.99,
+            "total_facility_rvu": 2.94,
+            "estimated_facility_payment_unadjusted": 95.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "32561",
+              "summary": "Supported by documentation of tPA/DNase instillation via existing tube."
+            },
+            {
+              "code": "76604",
+              "summary": "Supported by documentation of diagnostic findings (complex septated effusion)."
+            }
+          ]
+        }
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-20T09:00:00Z",
+        "notes": "Chest tube inserted [REDACTED]."
+      }
+    }
+  },
+  {
+    "note_text": "DATE OF PROCEDURE: [REDACTED]\n \nCC Referred Physician:  Duane Johnson, MD, PhD\n1 Happy Street\n# 1244\nHollywood,  CA [REDACTED]\n \nINDICATION FOR OPERATION:  Nina Hill is a 85 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.\n \nCONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.\n \nPREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified\n \nPOSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified\n \nPROCEDURE:  \n31645 Therapeutic aspiration initial episode\n31624 Dx bronchoscope/lavage (BAL)    \n31625 Endobronchial Biopsy(s)\n31630 Balloon dilation\n \n \nATTENDING:  \nDuane Johnson MD PhD\n \nASSISTANT:   none\n \nSupport Staff: \nRN: Lyndsey Elmer\nRT: Mandy Malone\n \nANESTHESIA: \nGeneral Anesthesia\n \nMONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.\n \nINSTRUMENT : \nDisposable Bronchoscope\n \nESTIMATED BLOOD LOSS:   None\n \nCOMPLICATIONS:    None\n \nPROCEDURE IN DETAIL:\nAfter the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. \n \nPATIENT [REDACTED]: . \n \nInitial Airway Inspection Findings:\nSuccessful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. \n \nEndobronchial biopsy was performed at Bronchus Intermedius .  Two areas were biopsied with NBI guidance.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.\n \nStents are in good [REDACTED].  The (iCAST 7x16) was noted in the right lower airway.  (iCAST 5x16) was noted in the right middle lobe airway. \n \nBronchial alveolar lavage was performed at RLL.  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).\n \nBalloon dilation was performed at RB2 orifice.  5mm mustang balloon was used to perform dilation to 5mm at the RB2.  Total 3 inflations with dilation time of 60 seconds each.\n \nThe patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and Transported to the recovery room in stable condition. \n \nSPECIMEN(S): \nEBBX\nBAL RLL\n \nIMPRESSION/PLAN: Nira Kaplan is a 85 year old-year-old female who presents for bronchoscopy for airway narrowing.\n- f/u in clinic\n- f/u in 12 weeks for bronch evaluation of stent\n \nDuane Johnson , MD, PhD\n[REDACTED]",
+    "cpt_codes": [
+      31630,
+      31625,
+      31645,
+      31624
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "[REDACTED]",
+      "procedure_start_time": null,
+      "procedure_end_time": null,
+      "procedure_duration_minutes": null,
+      "providers": {
+        "attending_name": "Duane Johnson, MD, PhD",
+        "attending_npi": null,
+        "fellow_name": null,
+        "fellow_pgy_level": null,
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 85,
+        "gender": "Female",
+        "height_cm": null,
+        "weight_kg": null,
+        "bmi": null,
+        "smoking_status": null,
+        "pack_years": null
+      },
+      "clinical_context": {
+        "asa_class": null,
+        "primary_indication": "Airway stenosis",
+        "indication_category": "Stricture/Stenosis",
+        "radiographic_findings": null,
+        "lesion_size_mm": null,
+        "lesion_location": null,
+        "pet_avidity": null,
+        "suv_max": null,
+        "bronchus_sign": null
+      },
+      "procedure_setting": {
+        "location": "Bronchoscopy Suite",
+        "patient_position": null,
+        "airway_type": "Native",
+        "ett_size": null
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": null,
+        "paralytic_used": null,
+        "reversal_given": null,
+        "reversal_agent": null,
+        "reversal_agent_other": null,
+        "start_time": null,
+        "end_time": null,
+        "intraservice_minutes": null
+      },
+      "equipment": {
+        "bronchoscope_type": "Single-use",
+        "bronchoscope_model": "Disposable Bronchoscope",
+        "bronchoscope_outer_diameter_mm": null,
+        "fluoroscopy_used": false,
+        "fluoroscopy_time_seconds": null,
+        "fluoroscopy_dose_mgy": null,
+        "navigation_platform": "None",
+        "cbct_used": false,
+        "augmented_fluoroscopy": false
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius, and Left Mainstem from mucus. Stents are in good position. The (iCAST 7x16) was noted in the right lower airway. (iCAST 5x16) was noted in the right middle lobe airway.",
+          "airway_abnormalities": [
+            "Secretions",
+            "Stenosis"
+          ]
+        },
+        "bal": {
+          "performed": true,
+          "location": "RLL",
+          "volume_instilled_ml": 40.0,
+          "volume_recovered_ml": 15.0,
+          "appearance": null
+        },
+        "bronchial_wash": {
+          "performed": false,
+          "location": null
+        },
+        "brushings": {
+          "performed": false,
+          "locations": null,
+          "brush_type": null
+        },
+        "endobronchial_biopsy": {
+          "performed": true,
+          "locations": [
+            "Bronchus Intermedius"
+          ],
+          "number_of_samples": 2,
+          "forceps_type": "Standard"
+        },
+        "tbna_conventional": {
+          "performed": false,
+          "stations_sampled": null,
+          "needle_gauge": null,
+          "passes_per_station": null
+        },
+        "linear_ebus": {
+          "performed": false,
+          "stations_sampled": null,
+          "stations_planned": null,
+          "stations_detail": null,
+          "needle_gauge": null,
+          "needle_type": null,
+          "passes_per_station": null,
+          "elastography_used": null,
+          "elastography_pattern": null,
+          "doppler_used": null,
+          "photodocumentation_complete": null
+        },
+        "radial_ebus": {
+          "performed": false,
+          "probe_position": null,
+          "guide_sheath_used": null,
+          "guide_sheath_size": null
+        },
+        "navigational_bronchoscopy": {
+          "performed": false,
+          "target_reached": null,
+          "divergence_mm": null,
+          "tool_in_lesion_confirmed": null,
+          "confirmation_method": null,
+          "sampling_tools_used": null,
+          "number_of_biopsies": null
+        },
+        "transbronchial_biopsy": {
+          "performed": false,
+          "locations": null,
+          "number_of_samples": null,
+          "forceps_type": null,
+          "cryoprobe_size_mm": null
+        },
+        "transbronchial_cryobiopsy": {
+          "performed": false,
+          "indication": null,
+          "probe_size_mm": null,
+          "freeze_time_seconds": null,
+          "locations_biopsied": null,
+          "number_of_samples": null,
+          "blocker_used": null,
+          "blocker_type": null
+        },
+        "therapeutic_aspiration": {
+          "performed": true,
+          "material": "Mucus plug",
+          "location": "Right Mainstem, Bronchus Intermedius, Left Mainstem"
+        },
+        "foreign_body_removal": {
+          "performed": false,
+          "foreign_body_type": null,
+          "location": null,
+          "retrieval_tool": null,
+          "successful": null,
+          "rigid_bronchoscopy_required": null
+        },
+        "airway_dilation": {
+          "performed": true,
+          "location": "RB2 orifice",
+          "etiology": "Other",
+          "method": "Balloon",
+          "balloon_diameter_mm": 5.0,
+          "pre_dilation_diameter_mm": null,
+          "post_dilation_diameter_mm": 5.0
+        },
+        "airway_stent": {
+          "performed": true,
+          "action": "Assessment only",
+          "stent_type": "Covered",
+          "stent_brand": "iCAST",
+          "diameter_mm": 7.0,
+          "length_mm": 16.0,
+          "location": "Other",
+          "indication": "Other",
+          "deployment_successful": null
+        },
+        "thermal_ablation": {
+          "performed": false,
+          "modality": null,
+          "location": null,
+          "indication": null,
+          "power_setting_watts": null,
+          "apc_flow_rate": null
+        },
+        "mechanical_debulking": {
+          "performed": false,
+          "method": null,
+          "location": null
+        },
+        "cryotherapy": {
+          "performed": false,
+          "indication": null,
+          "probe_size_mm": null,
+          "location": null,
+          "freeze_cycles": null
+        },
+        "photodocumentation_complete": null,
+        "photodynamic_therapy": {
+          "performed": false,
+          "photosensitizer": null,
+          "location": null,
+          "energy_delivered_joules": null
+        },
+        "brachytherapy_catheter": {
+          "performed": false,
+          "location": null,
+          "catheter_placed": null
+        },
+        "blvr": {
+          "performed": false,
+          "procedure_type": null,
+          "target_lobe": null,
+          "valve_type": null,
+          "valve_sizes": null,
+          "number_of_valves": null,
+          "segments_treated": null,
+          "collateral_ventilation_assessment": null,
+          "target_lobe_volume_ml": null,
+          "heterogeneity_index": null
+        },
+        "peripheral_ablation": {
+          "performed": false,
+          "modality": null,
+          "device_name": null,
+          "device_manufacturer": null,
+          "target_location": null,
+          "lesion_size_mm": null,
+          "ablation_duration_seconds": null,
+          "power_setting": null,
+          "number_of_ablations": null,
+          "margin_assessed": null,
+          "margin_assessment_method": null,
+          "immediate_imaging_result": null
+        },
+        "bronchial_thermoplasty": {
+          "performed": false,
+          "session_number": null,
+          "areas_treated": null,
+          "number_of_activations": null
+        },
+        "whole_lung_lavage": {
+          "performed": false,
+          "side": null,
+          "total_volume_liters": null,
+          "cycles": null,
+          "indication": null
+        },
+        "rigid_bronchoscopy": {
+          "performed": false,
+          "rigid_scope_size": null,
+          "indication": null,
+          "jet_ventilation_used": null
+        }
+      },
+      "pleural_procedures": {
+        "thoracentesis": {
+          "performed": false,
+          "side": null,
+          "guidance": null,
+          "indication": null,
+          "fluid_appearance": null,
+          "volume_removed_ml": null,
+          "manometry_performed": null,
+          "opening_pressure_cmh2o": null,
+          "closing_pressure_cmh2o": null
+        },
+        "chest_tube": {
+          "performed": false,
+          "action": null,
+          "side": null,
+          "indication": null,
+          "tube_type": null,
+          "tube_size_fr": null,
+          "guidance": null
+        },
+        "ipc": {
+          "performed": false,
+          "action": null,
+          "side": null,
+          "catheter_brand": null,
+          "indication": null,
+          "tunneled": null
+        },
+        "medical_thoracoscopy": {
+          "performed": false,
+          "side": null,
+          "scope_type": null,
+          "anesthesia_type": null,
+          "findings": null,
+          "biopsies_taken": null,
+          "number_of_biopsies": null,
+          "adhesiolysis_performed": null
+        },
+        "pleurodesis": {
+          "performed": false,
+          "method": null,
+          "agent": null,
+          "talc_dose_grams": null,
+          "indication": null
+        },
+        "pleural_biopsy": {
+          "performed": false,
+          "side": null,
+          "guidance": null,
+          "needle_type": null,
+          "number_of_samples": null
+        },
+        "fibrinolytic_therapy": {
+          "performed": false,
+          "agents": null,
+          "tpa_dose_mg": null,
+          "dnase_dose_mg": null,
+          "indication": null,
+          "number_of_doses": null
+        }
+      },
+      "specimens": {
+        "specimens_collected": [
+          {
+            "type": "Endobronchial biopsy",
+            "location": "Bronchus Intermedius",
+            "container_count": 2,
+            "sent_for": [
+              "Microbiology",
+              "Other"
+            ]
+          },
+          {
+            "type": "BAL",
+            "location": "RLL",
+            "container_count": 1,
+            "sent_for": [
+              "Microbiology"
+            ]
+          }
+        ],
+        "rose_result": "Not performed",
+        "specimen_adequacy": null
+      },
+      "complications": {
+        "any_complication": false,
+        "complication_list": [],
+        "bleeding": null,
+        "pneumothorax": null,
+        "respiratory": null,
+        "other_complication_details": null
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "procedure_aborted_reason": null,
+        "preliminary_diagnosis": "Airway narrowing/stenosis",
+        "preliminary_staging": null,
+        "disposition": "Outpatient discharge",
+        "discharge_time": null,
+        "follow_up_imaging_ordered": false,
+        "follow_up_imaging_type": null,
+        "follow_up_plan_text": "f/u in clinic; f/u in 12 weeks for bronch evaluation of stent",
+        "follow_up_actions": [
+          {
+            "action_type": "Clinic visit - IP",
+            "timeframe": "not specified",
+            "notes": "f/u in clinic"
+          },
+          {
+            "action_type": "Repeat bronchoscopy",
+            "timeframe": "12 weeks",
+            "notes": "evaluation of stent"
+          }
+        ]
+      },
+      "pathology_results": {
+        "final_diagnosis": null,
+        "final_staging": null,
+        "histology": null,
+        "molecular_markers": null,
+        "pdl1_tps_percent": null,
+        "microbiology_results": null,
+        "pathology_result_date": null
+      },
+      "granular_data": {
+        "linear_ebus_stations_detail": null,
+        "navigation_targets": null,
+        "cao_interventions_detail": [
+          {
+            "location": "RUL",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Other",
+            "length_mm": null,
+            "pre_obstruction_pct": null,
+            "post_obstruction_pct": null,
+            "pre_diameter_mm": null,
+            "post_diameter_mm": 5.0,
+            "modalities_applied": [
+              {
+                "modality": "Balloon dilation",
+                "power_setting_watts": null,
+                "apc_flow_rate_lpm": null,
+                "balloon_diameter_mm": 5.0,
+                "balloon_pressure_atm": null,
+                "freeze_time_seconds": null,
+                "number_of_applications": 3,
+                "duration_seconds": 60
+              }
+            ],
+            "hemostasis_required": false,
+            "hemostasis_methods": null,
+            "secretions_present": null,
+            "secretions_drained": null,
+            "stent_placed_at_site": false,
+            "notes": "Balloon dilation at RB2 orifice (RUL posterior segment) using 5mm mustang balloon."
+          }
+        ],
+        "blvr_valve_placements": null,
+        "blvr_chartis_measurements": null,
+        "cryobiopsy_sites": null,
+        "thoracoscopy_findings_detail": null,
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Endobronchial biopsy",
+            "source_location": "Bronchus Intermedius",
+            "collection_tool": "NBI guidance",
+            "specimen_count": 2,
+            "specimen_adequacy": null,
+            "destinations": [
+              "Bacterial culture",
+              "Fungal culture",
+              "Viral studies",
+              "Histology/Surgical pathology"
+            ],
+            "rose_performed": false,
+            "rose_result": null,
+            "final_pathology_diagnosis": null,
+            "molecular_markers": null,
+            "notes": "Two areas biopsied"
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "BAL",
+            "source_location": "RLL",
+            "collection_tool": null,
+            "specimen_count": 1,
+            "specimen_adequacy": "Adequate",
+            "destinations": [
+              "Bacterial culture",
+              "Fungal culture",
+              "Viral studies"
+            ],
+            "rose_performed": false,
+            "rose_result": null,
+            "final_pathology_diagnosis": null,
+            "molecular_markers": null,
+            "notes": "40cc instilled, 15cc returned"
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation",
+            "units": 1
+          },
+          {
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "units": 1
+          },
+          {
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1
+          },
+          {
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J98.09"
+        ],
+        "total_rvu": 19.91,
+        "work_rvu": 12.33
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T16:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31630",
+              "description": "Bronchoscopy; with tracheal/bronchial dilation",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Highest valued procedure. Balloon dilation at RB2 orifice (RUL).",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Balloon dilation was performed at RB2 orifice"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "31625",
+              "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Endobronchial biopsy at Bronchus Intermedius. Distinct from dilation site (RB2).",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Endobronchial biopsy was performed at Bronchus Intermedius"
+                }
+              ]
+            },
+            {
+              "sequence": 3,
+              "code": "31645",
+              "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "Therapeutic aspiration of mucus from RMS, BI, LMS. Distinct purpose from dilation.",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Successful therapeutic aspiration... clean out Right Mainstem, Bronchus Intermedius, and Left Mainstem"
+                }
+              ]
+            },
+            {
+              "sequence": 4,
+              "code": "31624",
+              "description": "Bronchoscopy; with bronchoalveolar lavage",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "selected",
+              "selection_reason": "BAL at RLL. Distinct site from dilation (RB2) and biopsy (BI).",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Bronchial alveolar lavage was performed at RLL"
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31630",
+              "units": 1,
+              "work_rvu": 3.81,
+              "total_facility_rvu": 6.27,
+              "mpfs_facility_payment": 203.0,
+              "is_primary": true
+            },
+            {
+              "code": "31625",
+              "units": 1,
+              "work_rvu": 3.11,
+              "total_facility_rvu": 4.93,
+              "mpfs_facility_payment": 160.0,
+              "is_primary": false
+            },
+            {
+              "code": "31645",
+              "units": 1,
+              "work_rvu": 2.78,
+              "total_facility_rvu": 4.47,
+              "mpfs_facility_payment": 145.0,
+              "is_primary": false
+            },
+            {
+              "code": "31624",
+              "units": 1,
+              "work_rvu": 2.63,
+              "total_facility_rvu": 4.24,
+              "mpfs_facility_payment": 137.0,
+              "is_primary": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 12.33,
+            "total_facility_rvu": 19.91,
+            "estimated_facility_payment_unadjusted": 645.0,
+            "estimated_facility_payment_after_mppr": 424.0
+          },
+          "mppr_assumptions": "Primary 31630 @100%. Others reduced by 50% of difference from base 31622 (Work ~2.53, Facility ~4.20). Estimated Total: $203 + (~$148) + (~$140) + (~$137 - 50% red). Approx $424."
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31630",
+              "summary": "Primary code for balloon dilation of RB2."
+            },
+            {
+              "code": "31625",
+              "summary": "Separate procedure for biopsy of Bronchus Intermedius (distinct from RB2)."
+            },
+            {
+              "code": "31645",
+              "summary": "Therapeutic aspiration of multiple airways for mucus plugging; supported as distinct."
+            },
+            {
+              "code": "31624",
+              "summary": "BAL of RLL; distinct anatomic site from dilation and biopsy."
+            }
+          ],
+          "global_comments": [
+            "Multiple Endoscopy Rule applies. 31630 is primary.",
+            "Stents inspected but not manipulated; no stent codes."
+          ]
+        }
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_at": "2025-12-18T00:00:00Z",
+        "created_by": "IP-Registry-Golden-Gen",
+        "updated_at": "2025-12-18T00:00:00Z",
+        "updated_by": "IP-Registry-Golden-Gen",
+        "verified_by": null,
+        "verification_date": null,
+        "notes": "Patient name [REDACTED]: Header 'Nina Hill' vs Impression 'Nira Kaplan'. Used 'Nina Hill'. MRN not present in note, marked UNKNOWN.",
+        "evidence": null
+      }
+    }
+  },
+  {
+    "note_text": "DATE OF PROCEDURE: [REDACTED]\n \nCC Referred Physician:  Duane Johnson, MD, PhD\n1 Happy Street\n# 1244\nHollywood,  CA [REDACTED]\n \nINDICATION FOR OPERATION:  Arvin T Hsu is a 49 year old-year-old adult who presents with RPP.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.\n \nCONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.\n \nPREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified\n \nPOSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified\n \n1899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)\n31645 Therapeutic aspiration initial episode\n31625 Endobronchial Biopsy(s)\n31630 Balloon dilation\n31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)\n \n22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure\n \nIP UCSD CODE MOD DETAILS: \nUnusual Procedure (22 MODIFIER):\nThis patient required multiple forms of ablative therapy (soft coag and cryotherapy) to multiple different structures, including glottis, infraglottis, subglottis, and tracheal structures. This resulted in >50% increased work due to Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: \n31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)\n \n \nATTENDING:  Duane Johnson MD PhD\nASSISTANT:   none\n \nSupport Staff: \nRN: Maribel Dean\nRT: Maribel Mosquera and Gene Smith\n \nANESTHESIA: \nGeneral Anesthesia\n \nMONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.\n \nINSTRUMENT : \nRigid Tracheoscope\nFlexible Therapeutic Bronchoscope\n \nPROCEDURE IN DETAIL:\nA timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.  LMA placed.\n \nThe Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords and larynx.\n \nInitial Airway Inspection Findings:\nVocal cords with appropriate adduction/abduction.\n \nLarge patch of papillomas at anterior commissure of larynx and right vocal cord.\n \nProximal trachea with focal area of spiraling tissue creating a focal area of mild stenosis - about 20% stenosis prior to treatment.  Able to easily traverse area of mild stenosis with therapeutic bronchoscope without issue.\n \nAssessment of right airways revealed normal anatomic branching to first subsegmental level.  Otherwise no evidence of mass, lesions, bleeding or other endobronchial pathology.\n \nAssessment of left airways revealed normal anatomic branching to first subsegmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology  \n \nVC papilloma are treated with combination of cryospray, electro-cautery (PreciSect/softcoag), and mechanically debulking. \n \nEndobronchial papillomatous tumors at proximal trachea, subglottic region, infraglottic region, left vocal fold, and anterior commissure were treated with the following modalities. \n \nThe base of all patch sites were treated with cryotherapy.\n \nModality\tTools\tSetting/Mode\tDuration\tResults\nCryospray\t2.3 mm catheter\tNormal flow, Freeze\t5 sec burst\tTumor frozen, 5 sites 3-5 treatment each\n \n \nEndobronchial tumor and coagulated debris was noted and excised with mechanical debridement using alligator forceps. Send to path and microbiology.\n \nRigid tracheoscope was used to dilate the proximal tracheal obstruction.  Mechanically coring through the tumor.  Black non-ventilating scope was used to perform dilation to 12 mm at the Trachea (Proximal 1/3).  Total 2 inflations with dilation time of 300 seconds each.\n  \nCryospray was done at the tumor site proximal trachea for 2 different sites.  Total 3-5 treatments with 5 seconds of freeze at Normal flow was completed for both sides.   \n \nPrior to treatment, proximal trachea airway was note to be 40% patent.  After treatment, the airway was 90% patent. \n \nThroughout the procedure, careful attention was paid to suction any secretions and blood to prevent it falling into the distal trachea or more distal airways.\n \nResidual secretions and blood were suctioned to clear.  Video imaging obtained and saved.  Bronchoscope removed.\n \nThe patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient had airway device removed in the operating room and Transported to the recovery room in stable condition.\n \nESTIMATED BLOOD LOSS:   Trivial\nCOMPLICATIONS:    None\n \nSPECIMEN(S): \nTrachea biopsy:  Pathology\n \n \nIMPRESSION/PLAN: Arvin T Hsu is a 49 year old-year-old adult who presents for bronchoscopy for blation of papillomatous tumors in the context of recurrent respiratory papillomatosis.\n \n-Recommend repeat bronchoscopy in 4-6 weeks to reassess recurrence of papillomas and consideration of additional treatment.\n \n \n \nDuane Johnson , MD, PhD\n[REDACTED]",
+    "cpt_codes": [
+      31641
+    ],
+    "registry_entry": {
+      "patient_mrn": "UNKNOWN",
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Duane Johnson, MD, PhD",
+        "assistant_name": "None",
+        "assistant_role": null,
+        "trainee_present": false,
+        "rose_present": false
+      },
+      "patient_demographics": {
+        "age_years": 49,
+        "gender": "Male",
+        "smoking_status": "Unknown"
+      },
+      "clinical_context": {
+        "primary_indication": "Recurrent Respiratory Papillomatosis (RPP)",
+        "indication_category": "Airway Obstruction",
+        "asa_class": null,
+        "radiographic_findings": null
+      },
+      "procedure_setting": {
+        "location": "Bronchoscopy Suite",
+        "airway_type": "LMA"
+      },
+      "sedation": {
+        "type": "General",
+        "anesthesia_provider": "Anesthesiologist",
+        "agents_used": null,
+        "start_time": null,
+        "end_time": null
+      },
+      "equipment": {
+        "bronchoscope_type": "Therapeutic",
+        "bronchoscope_model": "Flexible Therapeutic Bronchoscope, Rigid Tracheoscope",
+        "fluoroscopy_used": false,
+        "navigation_platform": "None"
+      },
+      "procedures_performed": {
+        "diagnostic_bronchoscopy": {
+          "performed": true,
+          "inspection_findings": "Vocal cords with appropriate adduction/abduction. Large patch of papillomas at anterior commissure of larynx and right vocal cord. Proximal trachea with focal area of spiraling tissue creating mild stenosis.",
+          "airway_abnormalities": [
+            "Endobronchial lesion",
+            "Stenosis"
+          ]
+        },
+        "thermal_ablation": {
+          "performed": true,
+          "modality": "Electrocautery",
+          "location": "Proximal trachea, Larynx",
+          "indication": "Tumor debulking"
+        },
+        "mechanical_debulking": {
+          "performed": true,
+          "method": "Rigid coring",
+          "location": "Proximal trachea"
+        },
+        "cryotherapy": {
+          "performed": true,
+          "indication": "Tumor debulking",
+          "probe_size_mm": 2.4,
+          "location": "Proximal trachea, Larynx",
+          "freeze_cycles": 3
+        },
+        "airway_dilation": {
+          "performed": true,
+          "location": "Proximal trachea",
+          "etiology": "Benign - other",
+          "method": "Rigid bronchoscope",
+          "post_dilation_diameter_mm": 12.0
+        },
+        "therapeutic_aspiration": {
+          "performed": true,
+          "material": "Blood/clot",
+          "location": "Airways"
+        },
+        "endobronchial_biopsy": {
+          "performed": true,
+          "locations": [
+            "Proximal trachea"
+          ],
+          "number_of_samples": 1,
+          "forceps_type": "Standard"
+        }
+      },
+      "granular_data": {
+        "cao_interventions_detail": [
+          {
+            "location": "Trachea - proximal",
+            "obstruction_type": "Intraluminal",
+            "etiology": "Benign - other",
+            "pre_obstruction_pct": 60,
+            "post_obstruction_pct": 10,
+            "modalities_applied": [
+              {
+                "modality": "Cryotherapy - spray",
+                "freeze_time_seconds": 5,
+                "number_of_applications": 5
+              },
+              {
+                "modality": "Electrocautery - probe"
+              },
+              {
+                "modality": "Mechanical debulking"
+              },
+              {
+                "modality": "Rigid coring"
+              }
+            ],
+            "hemostasis_required": false,
+            "notes": "Papillomatous tumors treated. Rigid dilation to 12mm performed."
+          }
+        ],
+        "specimens_collected": [
+          {
+            "specimen_number": 1,
+            "source_procedure": "Endobronchial biopsy",
+            "source_location": "Proximal trachea",
+            "collection_tool": "Alligator forceps",
+            "destinations": [
+              "Histology/Surgical pathology"
+            ]
+          },
+          {
+            "specimen_number": 2,
+            "source_procedure": "Other",
+            "source_location": "Proximal trachea",
+            "collection_tool": "Debridement",
+            "destinations": [
+              "Microbiology"
+            ],
+            "notes": "Coagulated debris sent for micro"
+          }
+        ]
+      },
+      "outcomes": {
+        "procedure_completed": true,
+        "preliminary_diagnosis": "Recurrent Respiratory Papillomatosis",
+        "disposition": "Outpatient discharge",
+        "follow_up_plan_text": "Repeat bronchoscopy in 4-6 weeks",
+        "follow_up_actions": [
+          {
+            "action_type": "Repeat bronchoscopy",
+            "timeframe": "4-6 weeks"
+          }
+        ]
+      },
+      "billing": {
+        "cpt_codes": [
+          {
+            "code": "31641",
+            "modifier": "22",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1
+          }
+        ],
+        "icd10_codes": [
+          "J98.09"
+        ],
+        "total_rvu": 8.4,
+        "work_rvu": 5.25
+      },
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-18T16:00:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.9",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31641",
+              "modifier": "22",
+              "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Primary ablation of papillomas at multiple sites (larynx, trachea). Modifier 22 for increased complexity supported by note.",
+              "note_spans": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "snippet": "Endobronchial papillomatous tumors... treated... Cryospray... electro-cautery"
+                }
+              ]
+            },
+            {
+              "sequence": 2,
+              "code": "31630",
+              "description": "Bronchoscopy; with tracheal/bronchial dilation",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "dropped",
+              "selection_reason": "Bundled: Rigid dilation of proximal trachea is integral to destruction/relief of stenosis (31641) at the same site."
+            },
+            {
+              "sequence": 3,
+              "code": "31625",
+              "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "dropped",
+              "selection_reason": "Bundled: Biopsy of lesion subsequently destroyed at same session."
+            },
+            {
+              "sequence": 4,
+              "code": "31645",
+              "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree",
+              "units": 1,
+              "role": "secondary",
+              "selection_status": "dropped",
+              "selection_reason": "Bundled: Aspiration of secretions/debris generated during procedure."
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31641",
+              "units": 1,
+              "work_rvu": 5.25,
+              "total_facility_rvu": 8.4,
+              "mpfs_facility_payment": 272.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_facility_payment_unadjusted": 272.0
+          },
+          "notes": "Modifier 22 may result in additional payment upon review; base payment shown."
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31641",
+              "summary": "Primary therapeutic code for multi-modal destruction (cryo, cautery) of papillomas. Modifier 22 justified by extensive work."
+            }
+          ],
+          "global_comments": [
+            "Dilation (31630) and Biopsy (31625) at same site as destruction (31641) are bundled.",
+            "Therapeutic aspiration (31645) integral to debris clearance during destruction."
+          ]
+        }
+      },
+      "metadata": {
+        "schema_version": "2.0.0",
+        "data_entry_status": "Complete",
+        "created_by": "IP-Registry-Gold-Gen",
+        "notes": "Modifier 22 justification included in coding support."
+      }
+    }
+  }
+]

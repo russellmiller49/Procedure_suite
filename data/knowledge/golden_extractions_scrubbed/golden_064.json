@@ -1,0 +1,5267 @@
+[
+  {
+    "note_id": "TBA-001",
+    "note_text": "Procedure: Nav bronchoscopy (Illumisite) w/ microwave ablation.\n- Target: 18mm RLL posterior basal nodule.\n- Action: Navigated to lesion. Confirmed w/ CBCT. Emprint catheter placed.\n- Ablation: 10 min at standard power.\n- Result: Ground-glass ablation zone, 6mm margin. No pneumothorax.\n- Plan: Discharge home.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 1,
+      "generated_name": "Arthur Dent",
+      "generation_date": "2025-12-09T09:22:27.328766"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "OPERATIVE REPORT: The patient presented with a biopsy-proven, PET-avid nodule in the right lower lobe posterior basal segment. Under general anesthesia, electromagnetic navigation bronchoscopy utilizing the Illumisite platform was performed. Following registration and tomosynthesis correction, the lesion was targeted. An Emprint microwave ablation catheter was precisely positioned under cone-beam CT guidance. A single cycle of microwave energy was delivered for 10 minutes. Post-ablation imaging confirmed a concentric ablation zone with adequate oncologic margins. The patient remained hemodynamically stable throughout.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 2,
+      "generated_name": "Ford Prefect",
+      "generation_date": "2025-12-09T09:22:27.328794"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "CPT 31641 (Bronchoscopy with destruction of tumor) and 31627 (Navigation Bronchoscopy). The procedure utilized electromagnetic navigation to access a peripheral RLL lesion. Cone-beam CT (CBCT) verified tool-in-lesion. Microwave ablation (Emprint system) was the modality of destruction, applied for 10 minutes to achieve tumor necrosis. Medical necessity: Nonsurgical candidate with early-stage malignancy.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 3,
+      "generated_name": "Zaphod Beeblebrox",
+      "generation_date": "2025-12-09T09:22:27.328811"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "Procedure: RLL Microwave Ablation\nAttending: Dr. Rivera\nSteps:\n1. GA, 8.5 ETT.\n2. Navigated to RLL posterior basal segment using Illumisite.\n3. Used CBCT to confirm needle/catheter placement.\n4. Advanced Emprint catheter.\n5. Ablated for 10 mins.\n6. Post-op CBCT showed good margin.\nNo complications. Extubated to PACU.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 4,
+      "generated_name": "Tricia McMillan",
+      "generation_date": "2025-12-09T09:22:27.328825"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "patient with rll nodule here for ablation. used the illumisite nav system. got out to the posterior basal segment. verified with the cone beam ct looks good. put the emprint needle in ran it for 10 minutes. margin looked like 6mm on the scan after. no pneumo seen. patient woke up fine sent to recovery.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 5,
+      "generated_name": "Slartibartfast",
+      "generation_date": "2025-12-09T09:22:27.328837"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "The patient was brought to the hybrid OR for ablation of an 18 mm RLL nodule. General anesthesia was induced. Using the Illumisite navigation system, we accessed the posterior basal segment. Cone-beam CT confirmed the catheter was centered in the lesion. We performed a 10-minute microwave ablation using the Emprint system. Final imaging showed a 6 mm circumferential margin. The patient tolerated the procedure well without complications.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 6,
+      "generated_name": "Marvin Android",
+      "generation_date": "2025-12-09T09:22:27.328848"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "[Indication]\nHigh-risk stage IA NSCLC, RLL posterior basal segment.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nNavigated to RLL. CBCT confirmed position. 10-min microwave ablation delivered via Emprint. 6mm margin achieved. No bleeding.\n[Plan]\nDischarge today. CT in 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 7,
+      "generated_name": "Eddie Computer",
+      "generation_date": "2025-12-09T09:22:27.328861"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "Dr. Rivera performed a microwave ablation on a right lower lobe nodule today. Using the Illumisite navigation system, the team guided a catheter to the posterior basal segment. Cone-beam CT scans ensured the tip was right inside the 18 mm tumor. They applied microwave energy for 10 minutes, creating a zone of treated tissue that extended well past the tumor edges. The patient woke up smoothly and is set to go home later today.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 8,
+      "generated_name": "Fook Shooter",
+      "generation_date": "2025-12-09T09:22:27.328872"
+    }
+  },
+  {
+    "note_id": "TBA-001",
+    "note_text": "Indication: Local control of RLL neoplasm.\nProcedure: Electromagnetic guidance with thermal destruction.\nAction: The device was steered to the posterior basal segment. Tomosynthesis validated the location. The Emprint probe was inserted, and thermal energy was administered for 10 minutes. Post-treatment imaging verified a sufficient ablation zone.\nOutcome: Successful tumor necrosis.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 0,
+      "style_type": 9,
+      "generated_name": "Lunkwill Programmer",
+      "generation_date": "2025-12-09T09:22:27.328883"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "Procedure: Robotic Bronchoscopy (Ion) w/ Microwave Ablation.\n- Target: 12mm RUL apical nodule.\n- Guidance: Shape-sensing robotic nav + Cios Spin 3D C-arm.\n- Action: Overlapping ablations (8 min + 6 min) w/ Emprint.\n- Result: 7mm margin achieved.\n- Plan: Admit overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 1,
+      "generated_name": "Luke Skywalker",
+      "generation_date": "2025-12-09T09:22:27.328896"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "OPERATIVE NARRATIVE: This patient with a solitary RUL apical nodule and prior lobectomy underwent robotic-assisted bronchoscopy. The Ion endoluminal system facilitated navigation to the ninth-generation airway. Intraoperative 3D fluoroscopy (Cios Spin) verified tool-in-lesion status. To ensure complete eradication of the 12 mm lesion, two overlapping microwave ablation cycles were delivered. Post-procedural imaging demonstrated a confluent ablation zone exceeding the target volume. Hemostasis was secured.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 2,
+      "generated_name": "Han Solo",
+      "generation_date": "2025-12-09T09:22:27.328907"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "Primary Code: 31641 (Destruction of tumor, RUL). Add-on: 31627 (Navigation). The service involved robotic assistance (Ion platform) to navigate to a peripheral apical lesion. 3D rotational fluoroscopy was used for target verification. Microwave energy was applied in two cycles to destroy the tumor. The complexity of the robotic navigation supports the add-on code.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 3,
+      "generated_name": "Leia Organa",
+      "generation_date": "2025-12-09T09:22:27.328918"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "Resident Note\nPt: [REDACTED]-002\nProc: Robotic Nav + MWA (RUL)\n1. Ion robot docked.\n2. Navigated to apical RUL nodule.\n3. 3D Spin scan confirmed position.\n4. Emprint catheter placed.\n5. Ablated x2 (8 min, 6 min).\n6. Final spin showed good coverage.\nPlan: Admit for obs (prior lobectomy).",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 4,
+      "generated_name": "Obi-Wan Kenobi",
+      "generation_date": "2025-12-09T09:22:27.328928"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "rul nodule ablation with the ion robot. drove the robot out to the apical segment. used the cios spin for the 3d pic. confirmed we were in the nodule. did two burns 8 mins and 6 mins to make sure we got it all. margin looked big enough like 7mm. minimal bleeding. admitting overnight just to be safe.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 5,
+      "generated_name": "Anakin Skywalker",
+      "generation_date": "2025-12-09T09:22:27.328939"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "Under general anesthesia, the Ion robotic system was used to navigate to a 12 mm nodule in the RUL apical segment. Cios Spin 3D imaging confirmed the catheter position. We performed two overlapping microwave ablations using the Emprint catheter to ensure adequate margins. Post-ablation imaging showed a 7 mm margin. The patient was extubated and transferred to the floor for overnight observation.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 6,
+      "generated_name": "Padme Amidala",
+      "generation_date": "2025-12-09T09:22:27.328953"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "[Indication]\nMetachronous stage IA adenocarcinoma, RUL.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nRobotic navigation to apical segment. 3D C-arm confirmation. Double microwave ablation (8+6 min). 7mm margin obtained. No pneumothorax.\n[Plan]\nAdmit overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 7,
+      "generated_name": "Mace Windu",
+      "generation_date": "2025-12-09T09:22:27.328964"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "Using the Ion robotic system, we successfully treated a small nodule in the top of the right lung. We steered the flexible robot arm deep into the airways and used a 3D X-ray spin to confirm we were on target. We then applied microwave heat twice to destroy the tumor and a rim of healthy tissue around it. The final scan showed excellent coverage of the cancer.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 8,
+      "generated_name": "Qui-Gon Jinn",
+      "generation_date": "2025-12-09T09:22:27.328974"
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "Indication: RUL lesion eradication.\nProcedure: Robotic-assisted guidance with thermal necrosis.\nAction: The robotic scop was piloted to the apical target. 3D imaging verified alignment. Two cycles of thermal energy were deployed. The treatment volume encompassed the lesion with adequate boundaries.\nOutcome: Effective local therapy.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 1,
+      "style_type": 9,
+      "generated_name": "Lando Calrissian",
+      "generation_date": "2025-12-09T09:22:27.328984"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 24mm RLL superior segment nodule.\n- Action: Navigated w/ Illumisite. CBCT confirmation.\n- Ablation: Two burns (10 min + 7 min) w/ retraction.\n- Complication: Small apical pneumothorax, conservative mgmt.\n- Plan: Discharge POD#1.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 1,
+      "generated_name": "James Kirk",
+      "generation_date": "2025-12-09T09:22:27.328996"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "OPERATIVE SUMMARY: The patient presented for palliative local control of a 2.4 cm RLL superior segment neoplasm. Electromagnetic navigation utilizing the Illumisite platform guided the catheter to the lesion, confirmed by tomosynthesis and cone-beam CT. To accommodate the lesion's longitudinal axis, two sequential microwave ablations were delivered with interval catheter retraction. Post-procedural imaging revealed a comprehensive ablation zone but noted a small, asymptomatic apical pneumothorax not requiring thoracostomy.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 2,
+      "generated_name": "Spock Vulcan",
+      "generation_date": "2025-12-09T09:22:27.329009"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "Code 31641 (Destruction of tumor, RLL). Code 31627 (Navigation). Procedure utilized Illumisite EM navigation and CBCT guidance. A 2.4 cm lesion required a composite ablation (10 min and 7 min) to achieve margins. A small pneumothorax occurred but did not require chest tube insertion (no separate code for management of complication unless significant).",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 3,
+      "generated_name": "Leonard McCoy",
+      "generation_date": "2025-12-09T09:22:27.329019"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "Procedure: RLL MWA\nStaff: Dr. Patel\n1. Navigated to RLL superior segment.\n2. Updated nodule position with tomo.\n3. Two ablations: 10 min then 7 min pullback.\n4. CBCT showed good zone.\n5. Noted small PTX on final scan, stable.\nPlan: Obs overnight, CXR series.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 4,
+      "generated_name": "Montgomery Scott",
+      "generation_date": "2025-12-09T09:22:27.329030"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "ablation of rll superior nodule big one 24mm. illumisite nav used. had to adjust for divergence. did two burns 10 mins and 7 mins pulling back a bit. looks like we got it all 5mm margin. tiny pneumo at the apex pt feels fine no tube needed. discharge tomorrow.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 5,
+      "generated_name": "Hikaru Sulu",
+      "generation_date": "2025-12-09T09:22:27.329042"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "Electromagnetic navigation bronchoscopy was performed to target a 24 mm nodule in the RLL superior segment. Using cone-beam CT guidance, we positioned the microwave catheter. Two overlapping ablations were performed to cover the lesion length. Post-ablation imaging confirmed good margins but revealed a small apical pneumothorax. The patient remained stable and was observed overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 6,
+      "generated_name": "Pavel Chekov",
+      "generation_date": "2025-12-09T09:22:27.329052"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "[Indication]\nInoperable RLL superior segment CA.\n[Anesthesia]\nGeneral, 8.0 ETT.\n[Description]\nNavigated to lesion. Two sequential ablations (10+7 min) performed. 5-6mm margin achieved. Small asymptomatic pneumothorax noted.\n[Plan]\nMonitor overnight, serial CXRs.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 7,
+      "generated_name": "Nyota Uhura",
+      "generation_date": "2025-12-09T09:22:27.329062"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "We treated a 2.4 cm tumor in the right lower lung using a microwave catheter. Because the tumor was large, we burned it in two steps, pulling the catheter back slightly to extend the treatment zone. The follow-up scan showed we successfully covered the tumor, though we did spot a small air leak (pneumothorax) which is stable and doesn't need a tube. We'll watch him overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 8,
+      "generated_name": "Christine Chapel",
+      "generation_date": "2025-12-09T09:22:27.329073"
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "Indication: RLL malignancy treatment.\nProcedure: Electromagnetic steering with thermal ablation.\nAction: The device was guided to the superior segment. Two cycles of energy were administered with catheter repositioning. A resultant pneumothorax was observed but deemed non-critical.\nOutcome: Lesion destroyed, conservative management for PTX.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 2,
+      "style_type": 9,
+      "generated_name": "Janice Rand",
+      "generation_date": "2025-12-09T09:22:27.329085"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "Procedure: Nav Bronch, Cryobiopsy, MWA.\n- Target: 16mm LLL lateral basal nodule.\n- Action: Radial EBUS confirmation. Cryobiopsy x2 (Adeno CA). MWA 10 min.\n- Result: 5mm margin, mild hemorrhage.\n- Plan: Admit overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 1,
+      "generated_name": "Frodo Baggins",
+      "generation_date": "2025-12-09T09:22:27.329098"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "OPERATIVE REPORT: The patient underwent a combined diagnostic and therapeutic procedure for a peripheral LLL nodule. Electromagnetic navigation and radial EBUS localized the lesion. Transbronchial cryobiopsy provided a diagnosis of adenocarcinoma via frozen section. Subsequently, an Emprint microwave catheter was deployed. A single 10-minute ablation resulted in a ground-glass opacity enveloping the biopsy cavity. Mild perilesional hemorrhage was noted and controlled.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 2,
+      "generated_name": "Samwise Gamgee",
+      "generation_date": "2025-12-09T09:22:27.329111"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "Codes: 31641 (Destruction LLL), 31627 (Nav), 31654 (REBUS). Note: 31628 (Biopsy) is bundled into 31641 per NCCI edits when performed at the same site. The procedure involved navigation, radial EBUS confirmation, diagnostic cryobiopsy, and immediate therapeutic microwave ablation of the confirmed malignancy.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 3,
+      "generated_name": "Meriadoc Brandybuck",
+      "generation_date": "2025-12-09T09:22:27.329123"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "Resident Note\nPt: [REDACTED]-004\nProc: Dx Cryo + MWA (LLL)\n1. Nav to LLL lateral basal.\n2. REBUS verified lesion.\n3. Cryobiopsy x2 -> Adeno CA confirmed.\n4. MWA catheter placed.\n5. Ablated 10 min.\n6. Minor bleeding controlled w/ ice.\nPlan: Admit.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 4,
+      "generated_name": "Peregrin Took",
+      "generation_date": "2025-12-09T09:22:27.329138"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "lll nodule frozen section case. nav bronch used. radial ebus saw the lesion. took cryo biopsies path said cancer. went ahead and ablated it 10 minutes. some bleeding from the biopsy made the scan a bit fuzzy but margin looks ok. iced saline stopped the bleeding. admit.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 5,
+      "generated_name": "Aragorn Elessar",
+      "generation_date": "2025-12-09T09:22:27.329150"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "Combined biopsy and ablation performed for 16 mm LLL nodule. Navigation and radial EBUS located the target. Cryobiopsy confirmed adenocarcinoma. We proceeded to microwave ablation for 10 minutes. Cone-beam CT showed the ablation zone covered the biopsy site. Mild hemorrhage was controlled. Patient stable.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 6,
+      "generated_name": "Legolas Greenleaf",
+      "generation_date": "2025-12-09T09:22:27.329162"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "[Indication]\nLLL nodule, dx and tx.\n[Anesthesia]\nGeneral.\n[Description]\nNav/REBUS loc. Cryobiopsy: Adenocarcinoma. MWA: 10 min burn. 5mm margin. Mild hemorrhage controlled.\n[Plan]\nAdmit for observation.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 7,
+      "generated_name": "Gimli Gloin",
+      "generation_date": "2025-12-09T09:22:27.329174"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "This was a 'one-stop' procedure for a spot in the left lower lung. First, we navigated to the spot and took biopsies using a freezing probe, which confirmed cancer right there in the room. We immediately switched gears and used a microwave probe to burn the tumor away for 10 minutes. There was a little bleeding from the biopsy, but the final scan showed we effectively treated the area.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 8,
+      "generated_name": "Boromir Denethor",
+      "generation_date": "2025-12-09T09:22:27.329185"
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "Indication: LLL lesion diagnosis and eradication.\nProcedure: Navigation with cryo-sampling and thermal necrosis.\nAction: Radial ultrasound localized the target. Tissue was sampled and malignancy confirmed. Thermal energy was delivered for 10 minutes. Hemostasis was secured.\nOutcome: Simultaneous diagnosis and treatment.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 3,
+      "style_type": 9,
+      "generated_name": "Gandalf Grey",
+      "generation_date": "2025-12-09T09:22:27.329198"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "Procedure: Nav Bronch w/ Double MWA.\n- Target: 25mm RML lateral nodule.\n- Action: Navigated w/ Illumisite. 10 min burn (medial margin thin). Repositioned. 8 min burn.\n- Result: Fused ablation zone, 6mm margin.\n- Plan: Cardiac monitoring overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 1,
+      "generated_name": "Harry Potter",
+      "generation_date": "2025-12-09T09:22:27.329209"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "OPERATIVE NARRATIVE: A 2.5 cm neoplasm in the RML lateral segment was targeted for ablation. Utilizing the Illumisite navigation system and cone-beam CT, the lesion was accessed. An initial 10-minute microwave ablation was deemed insufficient regarding the medial margin. Consequently, the catheter was repositioned medially, and a secondary 8-minute ablation was delivered. The final fused ablation zone provided adequate circumferential coverage.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 2,
+      "generated_name": "Ron Weasley",
+      "generation_date": "2025-12-09T09:22:27.329220"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "Code 31641 (Destruction of tumor, RML) and 31627 (Navigation). Despite two separate burns, 31641 is reported once per lobe/lesion. Navigation utilizing Illumisite and CBCT was integral. The procedure involved repositioning to ensure adequate margins for a large (2.5cm) lesion.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 3,
+      "generated_name": "Hermione Granger",
+      "generation_date": "2025-12-09T09:22:27.329230"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "Procedure: RML MWA\nStaff: Dr. Alvarez\n1. Nav to RML lateral.\n2. Burn 1: 10 mins. CT showed thin medial margin.\n3. Repositioned catheter.\n4. Burn 2: 8 mins.\n5. CT showed fused zone 6mm margin.\nPt [REDACTED] -> cardiac monitor overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 4,
+      "generated_name": "Albus Dumbledore",
+      "generation_date": "2025-12-09T09:22:27.329240"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "rml nodule 25mm. navigated out there. did a 10 minute burn first but the margin wasn't great medially. moved the catheter over a bit and did another 8 minutes. now it looks solid 6mm margin all around. no bleeding. keeping him overnight for heart monitoring.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 5,
+      "generated_name": "Severus Snape",
+      "generation_date": "2025-12-09T09:22:27.329252"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "Microwave ablation of a 25 mm RML nodule. Navigation was successful. The first 10-minute ablation left a narrow medial margin. We repositioned the catheter and performed a second 8-minute ablation. The two zones fused to create a 6 mm margin. Airway patent. Patient extubated and stable.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 6,
+      "generated_name": "Minerva McGonagall",
+      "generation_date": "2025-12-09T09:22:27.329264"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "[Indication]\n25mm RML nodule, poor surgical candidate.\n[Anesthesia]\nGeneral, 8.5 ETT.\n[Description]\nNavigated to lesion. Two ablations (10 min + 8 min) required for coverage. Fused zone achieved 6mm margin. No complications.\n[Plan]\nAdmit for cardiac monitoring.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 7,
+      "generated_name": "Rubeus Hagrid",
+      "generation_date": "2025-12-09T09:22:27.329275"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "We treated a fairly large tumor (2.5 cm) in the middle lobe of the right lung. The first burn covered most of it, but the scan showed we needed to get closer to the inner edge. We adjusted our catheter and burned again for 8 minutes. The two treatment areas merged perfectly to destroy the whole tumor with a safe margin.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 8,
+      "generated_name": "Sirius Black",
+      "generation_date": "2025-12-09T09:22:27.329286"
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "Indication: RML tumor control.\nProcedure: Electromagnetic guidance with multi-cycle thermal destruction.\nAction: Initial energy delivery was insufficient medially. The probe was adjusted. A supplementary cycle was administered. The resultant necrosis volume was verified by imaging.\nOutcome: Complete lesion coverage.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 4,
+      "style_type": 9,
+      "generated_name": "Remus Lupin",
+      "generation_date": "2025-12-09T09:22:27.329297"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 9mm LLL superior GGO.\n- Action: Navigated to segment. CBCT confirmed position. Two burns (6 min + 5 min) w/o repositioning.\n- Result: Spherical ablation zone, 5-6mm margin.\n- Plan: Discharge today.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 1,
+      "generated_name": "Tony Stark",
+      "generation_date": "2025-12-09T09:22:27.329309"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "OPERATIVE REPORT: The patient presented with a high-risk ground-glass opacity in the LLL superior segment. Electromagnetic navigation bronchoscopy facilitated access. Given the lesion's subsolid nature, cone-beam CT was crucial for localization. The Emprint catheter was positioned, and two short-duration microwave ablations (6 and 5 minutes) were delivered sequentially to prevent parenchymal overheating while ensuring sterility. Post-ablation imaging confirmed a spherical treatment zone centered on the target.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 2,
+      "generated_name": "Steve Rogers",
+      "generation_date": "2025-12-09T09:22:27.329321"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "Code 31641 (Destruction, LLL) and 31627 (Navigation). Indication: GGO (likely adenocarcinoma). Technique: Navigation to a peripheral subsolid lesion requiring CBCT for visualization. Two ablation cycles were used for a single small lesion to ensure margin without repositioning (protocol driven).",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 3,
+      "generated_name": "Bruce Banner",
+      "generation_date": "2025-12-09T09:22:27.329332"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "Procedure: MWA for GGO\nAttending: Dr. Osei\n1. Nav to LLL superior.\n2. CBCT to see GGO.\n3. Emprint cath placed.\n4. Ablated 6 min then 5 min.\n5. Good margin on final scan.\nNo bleeding. Pt going home.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 4,
+      "generated_name": "Thor Odinson",
+      "generation_date": "2025-12-09T09:22:27.329342"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "small ggo in lll superior segment. hard to see but nav got us there. cone beam confirmed it. did two short burns 6 and 5 mins just to be sure. ablation zone looks perfect nice ball shape. no bleeding or pneumo. discharge later today.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 5,
+      "generated_name": "Natasha Romanoff",
+      "generation_date": "2025-12-09T09:22:27.329354"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "Ablation of 9 mm LLL ground-glass nodule. Navigation and cone-beam CT used for localization. We performed two sequential ablations of 6 and 5 minutes to treat the lesion. The ablation zone was spherical with a 5-6 mm margin. No complications occurred. Discharged same day.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 6,
+      "generated_name": "Clint Barton",
+      "generation_date": "2025-12-09T09:22:27.329366"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "[Indication]\n9mm LLL superior GGO.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to GGO. Confirmed w/ CBCT. MWA x2 (6+5 min). Spherical zone created. 5-6mm margin. No complications.\n[Plan]\nDischarge.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 7,
+      "generated_name": "Nick Fury",
+      "generation_date": "2025-12-09T09:22:27.329378"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "This patient had a hazy 'ground-glass' spot in the left lower lung. These are tricky to see, so we used a special CT scan in the operating room to guide us. Once in place, we used two short bursts of microwave energy to destroy the spot. The final picture showed a perfect ball of treated tissue right where the nodule was.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 8,
+      "generated_name": "Maria Hill",
+      "generation_date": "2025-12-09T09:22:27.329389"
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "Indication: Subsolid pulmonary lesion.\nProcedure: Guided endoscopy with thermal eradication.\nAction: The target was localized via tomosynthesis. Two energy cycles were applied. The ablation volume encompassed the opacity with adequate boundaries.\nResult: Effective focal therapy.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 5,
+      "style_type": 9,
+      "generated_name": "Phil Coulson",
+      "generation_date": "2025-12-09T09:22:27.329400"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "Procedure: Robotic Bronchoscopy (Monarch) w/ MWA.\n- Target: 20mm RUL apical posterior nodule.\n- Action: Robotic nav to lesion. Flex microwave catheter used. Two burns (8+7 min).\n- Result: 6mm margin, nerves preserved.\n- Plan: Admit overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 1,
+      "generated_name": "Bruce Wayne",
+      "generation_date": "2025-12-09T09:22:27.329411"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "OPERATIVE NARRATIVE: A robotic-assisted bronchoscopy was performed using the Monarch platform to address a 20 mm apical posterior RUL nodule. The robotic sheath provided stability for the advancement of a flexible microwave catheter. Cone-beam CT verified alignment. Two overlapping ablations were performed to ensure margins while sparing the brachial plexus and chest wall. Post-ablation imaging confirmed precise energy delivery and adequate margins.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 2,
+      "generated_name": "Clark Kent",
+      "generation_date": "2025-12-09T09:22:27.329421"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "Codes: 31641 (Destruction RUL) and 31627 (Navigation). Technology: Monarch robotic platform and Neuwave Flex catheter. The procedure required robotic navigation to a difficult apical location. Multiple overlapping burns were used to treat the 2cm lesion. Medical necessity: High-risk patient (CKD, frailty).",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 3,
+      "generated_name": "Diana Prince",
+      "generation_date": "2025-12-09T09:22:27.329431"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "Procedure: Robotic MWA (Monarch)\nStaff: Dr. Yamada\n1. Driven robot to RUL apical post.\n2. Confirmed w/ CBCT.\n3. Advanced Neuwave flex catheter.\n4. Ablated 8 min then 7 min.\n5. Good margin, away from chest wall.\nAdmit for obs.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 4,
+      "generated_name": "Barry Allen",
+      "generation_date": "2025-12-09T09:22:27.329443"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "rul apical nodule tricky spot. used the monarch robot to hold steady. flex microwave cath went right in. did two burns 8 and 7 mins. stayed away from the nerves. scan looks good 6mm margin. admitting because patient is frail.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 5,
+      "generated_name": "Arthur Curry",
+      "generation_date": "2025-12-09T09:22:27.329453"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "Robotic bronchoscopy with microwave ablation for RUL apical nodule. Monarch system used for navigation. Neuwave Flex catheter placed. Two overlapping ablations (8 and 7 min) delivered. Good margins achieved avoiding apical structures. Patient stable, admitted for observation.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 6,
+      "generated_name": "Victor Stone",
+      "generation_date": "2025-12-09T09:22:27.329463"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "[Indication]\n20mm RUL apical posterior nodule.\n[Anesthesia]\nGeneral.\n[Description]\nRobotic nav (Monarch). Flex MWA catheter. Two burns (8+7 min). 6mm margin. No nerve injury.\n[Plan]\nAdmit.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 7,
+      "generated_name": "Hal Jordan",
+      "generation_date": "2025-12-09T09:22:27.329473"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "We used the Monarch robot to reach a tumor tucked way up in the top of the right lung. The robot held steady while we passed a flexible microwave wire into the tumor. We burned it twice to be sure, carefully avoiding the nerves near the top of the chest. The treatment area looks excellent.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 8,
+      "generated_name": "Oliver Queen",
+      "generation_date": "2025-12-09T09:22:27.329485"
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "Indication: Apical pulmonary neoplasm.\nProcedure: Robotic endoscopy with thermal destruction.\nAction: The robotic arm was anchored in the target airway. A flexible probe delivered two cycles of thermal energy. Imaging confirmed lesion necrosis and structural preservation.\nOutcome: Safe apical ablation.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 6,
+      "style_type": 9,
+      "generated_name": "Dinah Lance",
+      "generation_date": "2025-12-09T09:22:27.329495"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "Procedure: Nav Bronch w/ MWA (Cios Spin).\n- Target: 18mm LLL basal nodule (near diaphragm).\n- Action: Navigated w/ Illumisite. 3D spin verification. Two burns (10+5 min).\n- Result: 5-6mm margin, diaphragm spared.\n- Plan: Admit (monitor liver/volume).",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 1,
+      "generated_name": "Peter Parker",
+      "generation_date": "2025-12-09T09:22:27.329506"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "OPERATIVE REPORT: The patient, with significant hepatic comorbidity, underwent ablation of a juxta-diaphragmatic LLL nodule. Electromagnetic navigation combined with mobile 3D C-arm (Cios Spin) guidance ensured precise catheter placement. The Emprint catheter was positioned to avoid thermal injury to the diaphragm. A stepped ablation protocol (10 and 5 minutes) was utilized. Final imaging demonstrated a circumferential ablation zone with a safe margin from the diaphragmatic surface.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 2,
+      "generated_name": "Mary Jane Watson",
+      "generation_date": "2025-12-09T09:22:27.329516"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "Code 31641 (Destruction LLL) and 31627 (Navigation). Technique involved complex imaging (Cios Spin cone-beam) to safely treat a lesion near the diaphragm. Transbronchial needle was used to tunnel into parenchyma. Two ablation cycles delivered. 31627 justified by EM navigation usage.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 3,
+      "generated_name": "Harry Osborn",
+      "generation_date": "2025-12-09T09:22:27.329527"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "Procedure: LLL MWA\nStaff: Dr. Silva\n1. Nav to LLL basal.\n2. Cios Spin spin to verify.\n3. Tunneled into lesion.\n4. Ablated 10 min then 5 min.\n5. Final spin: good margin, no diaphragm injury.\nAdmit for liver monitoring.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 4,
+      "generated_name": "May Parker",
+      "generation_date": "2025-12-09T09:22:27.329537"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "lll nodule right on the diaphragm. liver patient. used illumisite and the cios spin. punched out to the nodule. did 10 mins then 5 mins. kept it away from the diaphragm. margin looks solid. admitting to check liver function.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 5,
+      "generated_name": "Ben Parker",
+      "generation_date": "2025-12-09T09:22:27.329548"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "Ablation of 18 mm LLL basal nodule using Illumisite and Cios Spin 3D imaging. Catheter positioned 1 cm past lesion center. Ablation performed for 10 and 5 minutes. Final scan showed good margins sparing the diaphragm. No pneumothorax. Patient admitted.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 6,
+      "generated_name": "Gwen Stacy",
+      "generation_date": "2025-12-09T09:22:27.329557"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "[Indication]\n18mm LLL basal nodule, cirrhosis.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to LLL. Cios Spin guidance. Tunneled to lesion. MWA x2 (10+5 min). Diaphragm spared.\n[Plan]\nAdmit overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 7,
+      "generated_name": "Flash Thompson",
+      "generation_date": "2025-12-09T09:22:27.329568"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "This patient had a tumor sitting right on top of the diaphragm, which was risky because of his liver condition. We used a 3D X-ray spinner in the room to guide our tools precisely. We carefully burned the tumor in two stages to avoid damaging the diaphragm. The final check showed we destroyed the tumor while keeping the diaphragm safe.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 8,
+      "generated_name": "J. Jonah Jameson",
+      "generation_date": "2025-12-09T09:22:27.329578"
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "Indication: Juxta-diaphragmatic lesion.\nProcedure: Guided endoscopy with thermal ablation.\nAction: 3D fluoroscopy verified probe placement. Energy was delivered in two phases. The ablation zone excluded the diaphragm.\nOutcome: Safe lesion necrosis.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 7,
+      "style_type": 9,
+      "generated_name": "Robbie Robertson",
+      "generation_date": "2025-12-09T09:22:27.329587"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 15mm Lingular nodule (solitary lung).\n- Action: Single 8 min burn at standard power.\n- Result: 5mm margin. No desaturation.\n- Plan: Step-down unit.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 1,
+      "generated_name": "Walter White",
+      "generation_date": "2025-12-09T09:22:27.329599"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "OPERATIVE NARRATIVE: This patient, status post right pneumonectomy, presented with a new nodule in the lingula. Lung-preserving microwave ablation was elected. Under general anesthesia with protective ventilation, the lesion was targeted via electromagnetic navigation. A single 8-minute ablation was performed to minimize parenchymal impact while ensuring oncologic efficacy. Cone-beam CT confirmed complete tumor coverage with adequate margins. The patient maintained adequate oxygenation throughout.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 2,
+      "generated_name": "Jesse Pinkman",
+      "generation_date": "2025-12-09T09:22:27.329610"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "Code 31641 (Destruction LUL) and 31627 (Navigation). Special consideration: Procedure performed on a single lung (post-pneumonectomy). Navigation and CBCT were critical for precision. A single 8-minute ablation was sufficient for the 1.5 cm lesion.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 3,
+      "generated_name": "Skyler White",
+      "generation_date": "2025-12-09T09:22:27.329620"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "Procedure: Lingula MWA (Single Lung)\nAttending: Dr. Nguyen\n1. Nav to lingula.\n2. Confirmed w/ CBCT.\n3. One 8 min ablation.\n4. Good coverage on scan.\nPt [REDACTED], no desats. To Step-down.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 4,
+      "generated_name": "Hank Schrader",
+      "generation_date": "2025-12-09T09:22:27.329630"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "patient [REDACTED] one lung. nodule in the lingula. carefully navigated there. used the cone beam. did one 8 minute burn didn't want to overdo it. scan showed we got it with a 5mm rim. oxygen stayed good. step down unit for watch.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 5,
+      "generated_name": "Marie Schrader",
+      "generation_date": "2025-12-09T09:22:27.329641"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "Microwave ablation of 15 mm lingular nodule in a post-pneumonectomy patient. Navigation and cone-beam CT used. Single 8-minute ablation performed. 5 mm margin achieved. No respiratory compromise. Patient extubated to high-flow O2.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 6,
+      "generated_name": "Saul Goodman",
+      "generation_date": "2025-12-09T09:22:27.329651"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "[Indication]\n15mm Lingular nodule, single lung.\n[Anesthesia]\nGeneral, protective vent.\n[Description]\nNavigated to lingula. Single 8-min MWA. 5mm margin. No desaturation.\n[Plan]\nStep-down unit.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 7,
+      "generated_name": "Mike Ehrmantraut",
+      "generation_date": "2025-12-09T09:22:27.329663"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "Since this patient only has one lung, we had to be extremely careful. We navigated to the small tumor in the lingula and performed a quick, single 8-minute burn. This successfully destroyed the tumor with a safe margin without taking out too much healthy lung tissue. The patient breathed well throughout the procedure.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 8,
+      "generated_name": "Gustavo Fring",
+      "generation_date": "2025-12-09T09:22:27.329674"
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "Indication: Solitary lung neoplasm.\nProcedure: Electromagnetic navigation with focal ablation.\nAction: The probe was guided to the lingula. A single cycle of thermal energy was delivered. Imaging verified lesion encasement.\nResult: Tumor destroyed, function preserved.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 8,
+      "style_type": 9,
+      "generated_name": "Todd Alquist",
+      "generation_date": "2025-12-09T09:22:27.329685"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "Procedure: Nav Bronch w/ MWA + Vapor.\n- Target: 19mm RLL superior nodule + STAS.\n- Action: 10 min MWA. Vapor delivered to adjacent segment.\n- Result: Extended ablation zone covering STAS.\n- Plan: Admit (expect fever).",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 1,
+      "generated_name": "Jon Snow",
+      "generation_date": "2025-12-09T09:22:27.329696"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "OPERATIVE REPORT: The patient presented with a RLL nodule exhibiting imaging features of spread-through-airspaces (STAS). A multimodal ablation strategy was employed. First, electromagnetic navigation guided a 10-minute microwave ablation of the primary nodule. Subsequently, to address the locoregional risk, bronchoscopic thermal vapor ablation was applied to the surrounding segmental airways. Post-procedure imaging confirmed a composite ablation zone incorporating both the primary tumor and the adjacent parenchyma.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 2,
+      "generated_name": "Daenerys Targaryen",
+      "generation_date": "2025-12-09T09:22:27.329707"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "Code 31641 (Destruction RLL) and 31627 (Navigation). Although two modalities (microwave and vapor) were used, they treated the same primary lesion/lobe, so 31641 is reported once. Navigation facilitated access. Vapor was an adjunct for extended margins.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 3,
+      "generated_name": "Tyrion Lannister",
+      "generation_date": "2025-12-09T09:22:27.329719"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "Procedure: Combined MWA + Vapor\nStaff: Dr. Rossi\n1. Nav to RLL superior.\n2. MWA 10 mins for nodule.\n3. Vapor catheter placed adjacent.\n4. Vapor delivered for STAS coverage.\n5. CT showed big ablation zone.\nWatch for fever. Admit.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 4,
+      "generated_name": "Jaime Lannister",
+      "generation_date": "2025-12-09T09:22:27.329731"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "complex nodule with spread in rll. did the microwave first for 10 minutes. then used the steam vapor catheter to cook the surrounding area. final scan looks like a huge ground glass area covering everything. patient ok expecting some fever. admit.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 5,
+      "generated_name": "Cersei Lannister",
+      "generation_date": "2025-12-09T09:22:27.329741"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "Multimodal ablation for 19 mm RLL nodule with STAS. Navigation used. 10-minute microwave ablation performed for the core lesion. Thermal vapor ablation was then delivered to the adjacent segment to extend margins. Post-op scan showed extensive coverage. Patient stable.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 6,
+      "generated_name": "Sansa Stark",
+      "generation_date": "2025-12-09T09:22:27.329750"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "[Indication]\n19mm RLL nodule w/ STAS.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to RLL. 10-min MWA performed. Adjunct vapor ablation delivered. Extended ablation zone achieved.\n[Plan]\nAdmit.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 7,
+      "generated_name": "Arya Stark",
+      "generation_date": "2025-12-09T09:22:27.329760"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "We treated a tumor in the right lower lung that looked like it was spreading into the surrounding air sacs. First, we burned the main tumor with microwaves. Then, we used a special steam catheter to treat the lung tissue around it, ensuring we caught any microscopic spreading cells. The final scan showed a large, effective treatment area.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 8,
+      "generated_name": "Bran Stark",
+      "generation_date": "2025-12-09T09:22:27.329772"
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "Indication: Invasive pulmonary adenocarcinoma.\nProcedure: Navigation with hybrid thermal destruction.\nAction: The core lesion was ablated with microwave energy. The periphery was treated with thermal vapor. Imaging confirmed an extended necrosis volume.\nOutcome: Expanded margin achieved.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 9,
+      "style_type": 9,
+      "generated_name": "Theon Greyjoy",
+      "generation_date": "2025-12-09T09:22:27.329783"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "Procedure: Nav Bronch w/ RFA.\n- Target: 17mm RLL medial basal met.\n- Action: Cooled RFA catheter. 12 min burn.\n- Result: Sharp ablation zone, 5mm margin.\n- Plan: Discharge 6 hrs.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 1,
+      "generated_name": "Rick Grimes",
+      "generation_date": "2025-12-09T09:22:27.329793"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "OPERATIVE NARRATIVE: A solitary colorectal metastasis in the RLL medial basal segment was targeted for local control. Utilizing electromagnetic navigation and pre-procedural planning, a cooled radiofrequency ablation (RFA) catheter was guided to the lesion center. Verification was achieved via cone-beam CT. A single 12-minute cycle of radiofrequency energy was delivered. Post-ablation imaging demonstrated a well-demarcated zone of necrosis with clear margins.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 2,
+      "generated_name": "Daryl Dixon",
+      "generation_date": "2025-12-09T09:22:27.329810"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "Code 31641 (Destruction RLL) and 31627 (Navigation). Method: Radiofrequency Ablation (RFA). Navigation and CBCT were used for placement. A cooled RFA probe was used to deliver a 12-minute treatment cycle. Appropriate for metastatic disease control.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 3,
+      "generated_name": "Carol Peletier",
+      "generation_date": "2025-12-09T09:22:27.329821"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "Procedure: RLL RFA\nAttending: Dr. Malik\n1. Nav to medial basal RLL.\n2. Confirmed w/ CBCT.\n3. Cooled RFA probe placed.\n4. 12 min ablation.\n5. Good zone on scan.\nNo complications. D/C today.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 4,
+      "generated_name": "Maggie Greene",
+      "generation_date": "2025-12-09T09:22:27.329831"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "colorectal met in rll. used the nav system to get there. put the rfa catheter in. did a 12 minute burn with the cooling on. scan after showed a nice sharp circle around the tumor. no bleeding. sending home later.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 5,
+      "generated_name": "Glenn Rhee",
+      "generation_date": "2025-12-09T09:22:27.329843"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "Navigation bronchoscopy for RLL colorectal metastasis. Cooled RFA catheter positioned in the medial basal segment. 12-minute ablation performed. Cone-beam CT confirmed good margins. Airway intact. Discharged same day.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 6,
+      "generated_name": "Michonne Hawthorne",
+      "generation_date": "2025-12-09T09:22:27.329853"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "[Indication]\nRLL colorectal metastasis.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to medial basal. Cooled RFA delivered (12 min). 5mm margin. No pneumothorax.\n[Plan]\nDischarge in 6 hours.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 7,
+      "generated_name": "Carl Grimes",
+      "generation_date": "2025-12-09T09:22:27.329864"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "We treated a single metastatic spot from colon cancer in the right lower lung. Using navigation, we placed a radiofrequency probe right in the middle of the spot. We ran it for 12 minutes with cooling to protect the airway walls. The final scan showed a clean sphere of treated tissue around the tumor.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 8,
+      "generated_name": "Negan Smith",
+      "generation_date": "2025-12-09T09:22:27.329873"
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "Indication: Pulmonary metastasis.\nProcedure: Guided endoscopy with radiofrequency necrosis.\nAction: The probe was navigated to the target. Radiofrequency energy was applied for 12 minutes. Imaging verified the ablation boundary.\nOutcome: Local control achieved.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 10,
+      "style_type": 9,
+      "generated_name": "Eugene Porter",
+      "generation_date": "2025-12-09T09:22:27.329883"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "Procedure: Nav Bronch, REBUS, RFA.\n- Target: 22mm LUL posterior nodule (near vessel).\n- Action: Radial EBUS verified vessel. Cooled RFA x2 (8 min each) w/ rotation.\n- Result: Lesion encased, vessel spared.\n- Plan: Admit overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 1,
+      "generated_name": "Michael Scott",
+      "generation_date": "2025-12-09T09:22:27.329894"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "OPERATIVE REPORT: The patient presented with a high-risk LUL posterior segment nodule adjacent to vascular structures. Electromagnetic navigation and radial EBUS facilitated safe access and confirmed the relationship to the vessel. A cooled radiofrequency ablation (RFA) catheter was deployed. To avoid vascular injury while ensuring coverage, two overlapping 8-minute cycles were delivered with catheter rotation. Post-ablation imaging confirmed lesion destruction with vascular preservation.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 2,
+      "generated_name": "Jim Halpert",
+      "generation_date": "2025-12-09T09:22:27.329907"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "Codes: 31641 (Destruction LUL), 31627 (Navigation), 31654 (REBUS). Radial EBUS was utilized to confirm lesion eccentricity and vascular proximity. RFA was the modality of choice. Two cycles were performed to shape the ablation zone away from the vessel.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 3,
+      "generated_name": "Pam Beesly",
+      "generation_date": "2025-12-09T09:22:27.329917"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "Procedure: LUL RFA\nStaff: Dr. Hart\n1. Nav to LUL posterior.\n2. REBUS: lesion next to vessel.\n3. RFA catheter placed.\n4. Two 8 min burns, rotated cath.\n5. CT: good burn, vessel ok.\nAdmit for obs.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 4,
+      "generated_name": "Dwight Schrute",
+      "generation_date": "2025-12-09T09:22:27.329927"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "lul nodule close to a vessel. used nav and radial ebus to see it. decided on rfa. did two 8 minute burns rotating the catheter so we didn't hit the vessel. scan looks good tumor covered vessel fine. admit.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 5,
+      "generated_name": "Angela Martin",
+      "generation_date": "2025-12-09T09:22:27.329938"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "Ablation of 22 mm LUL nodule near vessel. Navigation and REBUS used. Cooled RFA performed in two 8-minute cycles with rotation. Ablation zone encased lesion without vascular injury. Patient stable.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 6,
+      "generated_name": "Kevin Malone",
+      "generation_date": "2025-12-09T09:22:27.329949"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "[Indication]\n22mm LUL nodule, vascular proximity.\n[Anesthesia]\nGeneral.\n[Description]\nNav/REBUS guidance. Cooled RFA x2 (8 min). Vessel spared. 6mm margin.\n[Plan]\nAdmit.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 7,
+      "generated_name": "Oscar Martinez",
+      "generation_date": "2025-12-09T09:22:27.329962"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "We treated a tumor in the left upper lung that was very close to a blood vessel. We used ultrasound to see exactly where the vessel was. Then, using a cooled radiofrequency probe, we carefully burned the tumor in two steps, rotating the probe to shape the burn area away from the vessel. The tumor is destroyed, and the vessel is fine.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 8,
+      "generated_name": "Stanley Hudson",
+      "generation_date": "2025-12-09T09:22:27.329972"
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "Indication: Perivascular neoplasm.\nProcedure: Navigation with ultrasound and radiofrequency ablation.\nAction: Radial ultrasound defined the vascular margin. Two energy cycles were delivered with repositioning. The ablation zone excluded the major vessel.\nResult: Safe perivascular ablation.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 11,
+      "style_type": 9,
+      "generated_name": "Phyllis Lapin",
+      "generation_date": "2025-12-09T09:22:27.329983"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "Procedure: Nav Bronch w/ PEF (Trial).\n- Target: 14mm RLL lateral basal nodule.\n- Action: Investigational PEF catheter. Biphasic pulses delivered.\n- Result: Nonthermal ablation zone. No arrhythmia.\n- Plan: Telemetry overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 1,
+      "generated_name": "Leslie Knope",
+      "generation_date": "2025-12-09T09:22:27.329995"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "OPERATIVE NARRATIVE: As part of an early feasibility trial, the patient underwent pulsed electric field (PEF) ablation of an RLL nodule. Navigation bronchoscopy guided the investigational catheter to the target. Following confirmation, a protocol-defined series of nonthermal biphasic pulses was delivered. No thermal rise was recorded. Post-procedure imaging demonstrated a sharply demarcated treatment effect without collateral damage. The patient tolerated the procedure without arrhythmia.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 2,
+      "generated_name": "Ron Swanson",
+      "generation_date": "2025-12-09T09:22:27.330005"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "Codes: 31641 (Destruction RLL) and 31627 (Navigation). Modality: Pulsed Electric Field (PEF) - Investigational/Trial context. 31641 captures the destruction service regardless of energy source (thermal vs non-thermal) provided destruction occurs. Navigation verified placement.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 3,
+      "generated_name": "Tom Haverford",
+      "generation_date": "2025-12-09T09:22:27.330016"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "Procedure: PEF Ablation Trial\nAttending: Dr. Romero\n1. Nav to RLL lateral basal.\n2. Placed study catheter.\n3. Delivered PEF pulses per protocol.\n4. No temp spike.\n5. CT showed good zone.\nTelemetry overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 4,
+      "generated_name": "April Ludgate",
+      "generation_date": "2025-12-09T09:22:27.330026"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "patient [REDACTED] pef trial. rll nodule. got there with nav. put the special cath in. fired the pulses. no heat generated. scan showed a clean ablation zone. heart rhythm stayed fine. admit for telemetry per protocol.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 5,
+      "generated_name": "Andy Dwyer",
+      "generation_date": "2025-12-09T09:22:27.330036"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "Investigational PEF ablation of 14 mm RLL nodule. Navigation used. Catheter placed. Biphasic electric pulses delivered. No thermal effect. Sharply demarcated zone achieved. No arrhythmia. Patient monitored overnight.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 6,
+      "generated_name": "Ben Wyatt",
+      "generation_date": "2025-12-09T09:22:27.330046"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "[Indication]\nTrial: PEF ablation of RLL nodule.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to lesion. PEF pulses delivered. Nonthermal ablation achieved. No arrhythmia.\n[Plan]\nTelemetry admission.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 7,
+      "generated_name": "Chris Traeger",
+      "generation_date": "2025-12-09T09:22:27.330056"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "This patient is in a clinical trial for a new type of ablation using electric pulses instead of heat. We navigated to the tumor in the right lower lung and delivered the pulses. The treatment created a precise zone of treated tissue without heating up the lung. The patient's heart rhythm remained normal throughout.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 8,
+      "generated_name": "Ann Perkins",
+      "generation_date": "2025-12-09T09:22:27.330065"
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "Indication: Clinical trial enrollment.\nProcedure: Navigation with pulsed electric field application.\nAction: The investigational probe was positioned. Non-thermal electric pulses were administered. Imaging verified the treatment effect.\nOutcome: Successful non-thermal ablation.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 12,
+      "style_type": 9,
+      "generated_name": "Donna Meagle",
+      "generation_date": "2025-12-09T09:22:27.330078"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "Procedure: Nav Bronch w/ MWA x2.\n- Targets: 14mm RUL & 11mm RLL nodules.\n- Action: RUL burn (8 min). RLL burn (6 min).\n- Result: Both ablated, no overlap.\n- Plan: Admit (bilateral treatment).",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 1,
+      "generated_name": "Sherlock Holmes",
+      "generation_date": "2025-12-09T09:22:27.330094"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "OPERATIVE REPORT: The patient presented with synchronous primary lung cancers in the RUL and RLL. A staged single-session ablation strategy was executed. Navigation bronchoscopy first targeted the RUL posterior segment nodule, which was ablated for 8 minutes. The system was then redirected to the RLL superior segment, where a 6-minute ablation was performed. Cone-beam CT confirmed independent, adequate ablation zones for both lesions.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 2,
+      "generated_name": "John Watson",
+      "generation_date": "2025-12-09T09:22:27.330111"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "Codes: 31641 (Destruction RUL), 31641-59 (Destruction RLL), 31627 (Navigation). Procedure involved treating two separate lesions in separate lobes (Right Upper and Right Lower). Code 31641 is reported twice; the second instance requires modifier -59 (or -XS) to denote a separate anatomic location.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 3,
+      "generated_name": "Mycroft Holmes",
+      "generation_date": "2025-12-09T09:22:27.330123"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "Procedure: Double MWA (RUL + RLL)\nStaff: Dr. Ahmed\n1. Nav to RUL post. Burned 8 min.\n2. Nav to RLL sup. Burned 6 min.\n3. Final CT: both lesions covered.\nNo complications.\nAdmit due to multi-lobar treatment.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 4,
+      "generated_name": "Greg Lestrade",
+      "generation_date": "2025-12-09T09:22:27.330137"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "two spots to treat rul and rll. did the upper one first 8 minutes. moved down to the lower one did 6 minutes. scan showed good burns on both. no bleeding. admitting overnight since we did two spots.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 5,
+      "generated_name": "Molly Hooper",
+      "generation_date": "2025-12-09T09:22:27.330149"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "Bilateral lobar ablation for synchronous nodules. RUL nodule ablated for 8 minutes. RLL nodule ablated for 6 minutes. Navigation used for both. Final scan showed discrete ablation zones. Patient stable.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 6,
+      "generated_name": "Mrs. Hudson",
+      "generation_date": "2025-12-09T09:22:27.330160"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "[Indication]\nSynchronous RUL and RLL nodules.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to RUL -> 8 min MWA. Navigated to RLL -> 6 min MWA. Both lesions ablated. No pneumothorax.\n[Plan]\nAdmit.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 7,
+      "generated_name": "Irene Adler",
+      "generation_date": "2025-12-09T09:22:27.330171"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "This patient had two separate lung cancers on the right side: one in the upper lobe and one in the lower lobe. We treated both in the same session. We started with the upper one, burning it for 8 minutes, then moved to the lower one for a 6-minute burn. Both tumors are now destroyed, and he's staying overnight for observation.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 8,
+      "generated_name": "Jim Moriarty",
+      "generation_date": "2025-12-09T09:22:27.330182"
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "Indication: Multifocal malignancy.\nProcedure: Navigation with multi-lobar thermal destruction.\nAction: The RUL lesion was ablated. The device was repositioned to the RLL. The second lesion was ablated. Imaging verified dual necrosis zones.\nResult: Synchronous tumors treated.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 13,
+      "style_type": 9,
+      "generated_name": "Mary Morstan",
+      "generation_date": "2025-12-09T09:22:27.330193"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "Procedure: Nav Bronch w/ MWA.\n- Target: 21mm LLL superior nodule (Prior LVRS/Emphysema).\n- Action: 10 min burn. Repositioned. 5 min burn.\n- Result: 6mm margin.\n- Plan: Obs 23hr.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 1,
+      "generated_name": "Homer Simpson",
+      "generation_date": "2025-12-09T09:22:27.330204"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "OPERATIVE NARRATIVE: A patient with severe emphysema and prior lung volume reduction surgery presented for ablation of an LLL superior segment nodule. Navigational bronchoscopy was utilized. An initial 10-minute ablation resulted in a narrow posterolateral margin. To ensure safety and efficacy in this compromised lung, the catheter was repositioned, and a supplementary 5-minute ablation was delivered. Final imaging confirmed a robust margin.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 2,
+      "generated_name": "Marge Simpson",
+      "generation_date": "2025-12-09T09:22:27.330215"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "Codes: 31641 (Destruction LLL) and 31627 (Navigation). Context: Patient has altered anatomy (prior LVRS) and severe emphysema, necessitating careful planning. Two burns were required for one lesion to achieve margins; billed as single unit of 31641.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 3,
+      "generated_name": "Bart Simpson",
+      "generation_date": "2025-12-09T09:22:27.330227"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "Procedure: LLL MWA (Post-LVRS)\nAttending: Dr. Shah\n1. Nav to LLL superior.\n2. Initial burn 10 min. Margin thin.\n3. Adjusted cath.\n4. Second burn 5 min.\n5. Good margin now.\nObs 23hr due to COPD.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 4,
+      "generated_name": "Lisa Simpson",
+      "generation_date": "2025-12-09T09:22:27.330237"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "lll nodule in a bad lung prior surgery. navigated in. did 10 minutes first. margin looked tight. moved it a bit and did 5 more. looks good now. keeping him 23 hours to watch breathing.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 5,
+      "generated_name": "Maggie Simpson",
+      "generation_date": "2025-12-09T09:22:27.330247"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "Microwave ablation of 21 mm LLL nodule in patient with prior LVRS. Navigation used. Two ablations (10 and 5 min) performed to ensure posterolateral margin. Final margin 6 mm. No pneumothorax. 23-hour observation.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 6,
+      "generated_name": "Ned Flanders",
+      "generation_date": "2025-12-09T09:22:27.330256"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "[Indication]\n21mm LLL nodule, severe COPD/prior LVRS.\n[Anesthesia]\nGeneral.\n[Description]\nNavigated to LLL. MWA x2 (10+5 min). Good margin achieved. No air leak.\n[Plan]\n23hr observation.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 7,
+      "generated_name": "Moe Szyslak",
+      "generation_date": "2025-12-09T09:22:27.330267"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "This patient has very poor lungs and previous lung surgery, so we had to be precise. We targeted a 2.1 cm tumor in the left lower lobe. The first burn was good but missed a tiny edge, so we adjusted and burned it again for 5 minutes. We achieved a safe margin all around and will watch him closely for a day.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 8,
+      "generated_name": "Barney Gumble",
+      "generation_date": "2025-12-09T09:22:27.330278"
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "Indication: Malignancy in compromised lung.\nProcedure: Navigation with multi-phase thermal ablation.\nAction: Initial energy delivery left a narrow margin. Probe repositioned. Supplementary energy delivered. Imaging confirmed safe, complete necrosis.\nOutcome: Successful ablation.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_064.json",
+      "original_index": 14,
+      "style_type": 9,
+      "generated_name": "Seymour Skinner",
+      "generation_date": "2025-12-09T09:22:27.330342"
+    }
+  }
+]

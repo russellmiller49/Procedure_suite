@@ -1,0 +1,482 @@
+[
+  {
+    "note_id": "TBA-001",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. A. Rivera\nAssistants: Pulmonary fellow; bronchoscopy nurse; radiology technologist.\n\nPre-procedure diagnosis: 18 mm PET-avid right lower lobe posterior basal segment nodule in a patient with severe COPD, clinical stage IA non-small cell lung cancer, high surgical risk.\nPost-procedure diagnosis: Same.\nIndication: Local control of early-stage lung cancer in a nonsurgical candidate via transbronchial microwave ablation.\nAnesthesia: General anesthesia with 8.5 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy (Illumisite platform) with cone-beam CT guidance in a hybrid operating room.\n2. Transbronchial microwave ablation of right lower lobe nodule using Emprint catheter.\n\nProcedure description: After induction of general anesthesia and endotracheal intubation, a therapeutic bronchoscope was advanced to the right lower lobe. The pre-procedural CT scan was loaded into the Illumisite navigation software and a target pathway to the posterior basal segment nodule was planned. Peripheral navigation achieved a bullseye view of the lesion after tomosynthesis-based correction of CT-to-body divergence. A CrossCountry needle was advanced approximately 1 cm beyond the lesion center under fluoroscopic and cone-beam CT guidance. The extended working channel was kept in position and an Emprint microwave ablation catheter was advanced until the ablation center was aligned with the lesion. A single 10-minute ablation at standard lung protocol power was delivered. Immediate cone-beam CT demonstrated a concentric ground-glass ablation zone with a minimal circumferential margin of approximately 6 mm. Repeat bronchoscopy showed no active bleeding and patent segmental airways.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate. No pneumothorax on fluoroscopy.\nDisposition: Extubated in the operating room and observed in the post-anesthesia care unit, then discharged home the same day with a plan for surveillance CT at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS usage documented (Nav+CBCT only)."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-002",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. L. Chen\nAssistants: Interventional pulmonology fellow; anesthesia team; radiology technologist.\n\nPre-procedure diagnosis: 12 mm part-solid right upper lobe apical segment ground-glass nodule in a patient with prior left upper lobectomy for adenocarcinoma.\nPost-procedure diagnosis: Same.\nIndication: Parenchyma-sparing local therapy for presumed metachronous stage IA adenocarcinoma in a patient with reduced pulmonary reserve.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Robotic-assisted navigation bronchoscopy (Ion platform) with integrated Cios Spin mobile 3D C-arm guidance.\n2. Transbronchial microwave ablation of right upper lobe apical nodule using Emprint catheter.\n\nProcedure description: Following induction of general anesthesia, the Ion robotic bronchoscope was docked and advanced toward the planned pathway to the apical segment nodule. Shape-sensing navigation allowed precise catheter steering to the ninth-generation airway. A Cios Spin 3D rotational scan was obtained and registered, confirming the nodule position and updating the navigation plan. A flexible transbronchial needle was advanced into the lesion under fluoroscopic and 3D overlay guidance, followed by placement of the extended working channel 1 cm beyond the lesion center. The Emprint catheter was introduced and two overlapping ablations (8 minutes and 6 minutes) were delivered to cover the lesion and ensure at least a 5 mm margin. Post-ablation Cios Spin images demonstrated a confluent ablation zone with a minimal margin of approximately 7 mm circumferentially. Repeat bronchoscopic inspection showed no significant bleeding or mucus plugging.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate. No pneumothorax on fluoroscopy.\nDisposition: Extubated in the operating room and admitted overnight for observation given prior contralateral lobectomy; planned follow-up CT in 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: Robotic navigation used C-arm/fluoroscopy, no EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-003",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. N. Patel\nAssistants: Pulmonary fellow; radiology technologist; circulating nurse.\n\nPre-procedure diagnosis: 24 mm solid right lower lobe superior segment nodule in a patient with prior stereotactic body radiotherapy to the left lower lobe; PET-avid without nodal disease.\nPost-procedure diagnosis: Same.\nIndication: Local treatment of presumed primary lung cancer in a medically inoperable patient.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy (Illumisite platform) with cone-beam CT guidance.\n2. Transbronchial microwave ablation of right lower lobe superior segment nodule using Emprint catheter.\n\nProcedure description: After endotracheal intubation, the navigation bronchoscope was advanced to the right lower lobe. The Illumisite system was used to register the pre-procedural CT and plan a pathway to the superior segment lesion. Initial navigation demonstrated CT-to-body divergence; a tomosynthesis acquisition was performed and the nodule position was updated. A CrossCountry needle was advanced into the lesion, and the extended working channel was positioned 1 cm beyond the nodule center. Two sequential ablations (10 minutes and 7 minutes) were performed with slight retraction of the catheter between ablations to elongate the ablation zone. Cone-beam CT confirmed an elongated ablation zone encompassing the 2.4 cm lesion with an approximate minimal margin of 5 to 6 mm. A small right apical pneumothorax was seen on the post-ablation scan, without hemodynamic compromise.\n\nEstimated blood loss: <10 mL.\nComplications: Small asymptomatic right pneumothorax managed conservatively with supplemental oxygen and observation; no chest tube required.\nDisposition: Extubated in the operating room, monitored overnight with serial chest radiographs; discharged home on post-procedure day 1 with follow-up CT in 6 to 8 weeks.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-004",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. S. Moreno\nAssistants: Interventional pulmonology fellow; cytopathology technologist; radiology technologist.\n\nPre-procedure diagnosis: 16 mm peripheral left lower lobe lateral basal segment nodule with intermediate pre-test probability of malignancy.\nPost-procedure diagnosis: Adenocarcinoma of the lung based on frozen-section biopsy.\nIndication: Same-session diagnosis and local treatment of a peripheral lung cancer in a patient with cardiomyopathy and prohibitive surgical risk.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with radial EBUS confirmation.\n2. Transbronchial cryobiopsy of left lower lobe nodule with frozen-section analysis.\n3. Transbronchial microwave ablation of left lower lobe nodule using Emprint catheter.\n\nProcedure description: The navigation bronchoscope was advanced to the left lower lobe following registration of the planning CT. Radial EBUS demonstrated a concentric hypoechoic lesion. Two transbronchial cryobiopsies were obtained and submitted for frozen section, which confirmed invasive adenocarcinoma. Perilesional hemorrhage caused mild blurring of the lesion margins on fluoroscopy. A CrossCountry needle was then advanced into the lesion and an extended working channel placed. An Emprint catheter was introduced and a single 10-minute ablation performed. Post-ablation cone-beam CT showed a ground-glass ablation zone encompassing the biopsy cavity with an estimated minimal margin of approximately 5 mm, though interpretation was limited by hemorrhage-related opacities. Bronchoscopy at the end of the case demonstrated oozing in the lateral basal subsegment, which resolved with suctioning and topical iced saline.\n\nEstimated blood loss: 20 mL.\nComplications: Mild, self-limited perilesional hemorrhage; no pneumothorax.\nDisposition: Extubated in the operating room and admitted overnight for observation; oncology follow-up arranged with surveillance CT at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        },
+        "rubric_audit": {
+          "31628": "Bundled: Diagnostic biopsy (cryobiopsy) at the same site as destruction (31641) is bundled per NCCI Chapter 5."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-005",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. J. Alvarez\nAssistants: Pulmonary fellow; bronchoscopy nurse; radiology technologist.\n\nPre-procedure diagnosis: 25 mm solid right middle lobe lateral segment nodule in a patient with severe coronary artery disease and limited exercise tolerance.\nPost-procedure diagnosis: Same.\nIndication: Local tumor control for presumed stage IA lung cancer using transbronchial ablation in a poor surgical candidate.\nAnesthesia: General anesthesia with 8.5 mm endotracheal tube; ASA class IV.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy (Illumisite) with cone-beam CT guidance.\n2. Double transbronchial microwave ablation of right middle lobe nodule using Emprint catheter.\n\nProcedure description: After induction and intubation, the navigation bronchoscope was advanced along the pre-planned pathway to the lateral segment. Illumisite-based fluoroscopic navigation and tomosynthesis correction were used to align the extended working channel with the lesion. A CrossCountry needle was deployed and the tract dilated. The Emprint catheter was advanced and an initial 10-minute ablation was performed. Cone-beam CT showed adequate ablation but only a 3 mm minimal margin on the medial aspect. The catheter and extended working channel were repositioned slightly medial, and a second 8-minute ablation was delivered. Repeat cone-beam CT demonstrated a fused ablation zone with a minimal margin of approximately 6 mm circumferentially. Airways remained patent on inspection.\n\nEstimated blood loss: <10 mL.\nComplications: None immediate.\nDisposition: Extubated in the operating room and admitted overnight for cardiac monitoring; discharge planned on post-procedure day 1 with follow-up CT at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RML)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-006",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. K. Osei\nAssistants: Interventional pulmonology fellow; anesthesia team; radiology technologist.\n\nPre-procedure diagnosis: 9 mm pure ground-glass nodule in the superior segment of the left lower lobe in a patient with advanced emphysema and prior contralateral segmentectomy.\nPost-procedure diagnosis: Same.\nIndication: Parenchyma-sparing local ablation of a high-risk ground-glass lesion in a patient not suitable for repeat resection.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with cone-beam CT confirmation.\n2. Transbronchial microwave ablation of left lower lobe superior segment nodule using Emprint catheter.\n\nProcedure description: Following induction and intubation, the bronchoscope was advanced to the left lower lobe. Navigation bronchoscopy guided the catheter to the superior segment airway. A cone-beam CT acquisition confirmed the position of the extended working channel tip relative to the subtle ground-glass lesion. The extended working channel was advanced slightly beyond the lesion center and the Emprint catheter deployed. Given the small lesion size, two shorter ablations (6 minutes and 5 minutes) at standard power were delivered without repositioning. Post-ablation cone-beam CT showed a spherical ablation zone centered on the lesion with an estimated minimal margin of 5 to 6 mm. No significant parenchymal hemorrhage or airway compromise was seen.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate. No pneumothorax.\nDisposition: Extubated in the operating room and observed for 6 hours in the recovery unit; discharged the same day with follow-up CT planned at 6 months and ongoing surveillance as per lung cancer screening protocol.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-007",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. M. Yamada\nAssistants: Pulmonary fellow; radiology technologist; circulating nurse.\n\nPre-procedure diagnosis: 20 mm right upper lobe apical posterior segment nodule abutting the lung apex in a patient with chronic kidney disease and frailty.\nPost-procedure diagnosis: Same.\nIndication: Local tumor control via transbronchial ablation to avoid the risks of percutaneous access to the lung apex.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Robotic-assisted navigation bronchoscopy (Monarch platform) with cone-beam CT guidance in a hybrid operating room.\n2. Transbronchial microwave ablation of right upper lobe apical posterior segment nodule using Neuwave Flex microwave catheter.\n\nProcedure description: After induction, the Monarch robotic bronchoscope was navigated to the apical posterior subsegment using electromagnetic guidance and the virtual pathway. Stabilization of the outer sheath allowed precise advancement of the inner scope into the target bronchus. A peripheral lesion view was obtained on the navigation display, and cone-beam CT confirmed catheter alignment with the nodule. A flexible microwave catheter was advanced through the working channel into the lesion. Two overlapping ablations (8 minutes and 7 minutes) were delivered to ensure appropriate coverage given the lesion size. Post-ablation cone-beam CT demonstrated a well-centered ablation zone with a minimal margin of approximately 6 mm away from the chest wall and brachial plexus. Bronchoscopic inspection showed no significant bleeding.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate.\nDisposition: Extubated in the operating room and admitted overnight due to comorbidities; plan for follow-up CT in 3 months and multidisciplinary tumor board review.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-008",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. R. Silva\nAssistants: Interventional pulmonology fellow; radiology technologist; bronchoscopy nurse.\n\nPre-procedure diagnosis: 18 mm left lower lobe basal segment nodule adjacent to the diaphragm in a patient with cirrhosis and portal hypertension.\nPost-procedure diagnosis: Same.\nIndication: Local treatment of a presumed primary lung cancer while avoiding percutaneous access near the diaphragm and liver.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy using Illumisite platform.\n2. Mobile 3D C-arm (Cios Spin) cone-beam CT guidance.\n3. Transbronchial microwave ablation of left lower lobe basal segment nodule using Emprint catheter.\n\nProcedure description: The navigation bronchoscope was advanced to the left lower lobe following CT-based registration. An initial Cios Spin acquisition confirmed nodule position and allowed updated navigation planning. The extended working channel tip was advanced to the basal segment bronchus and then into the parenchyma using a transbronchial needle. A second 3D acquisition verified that the catheter tip was 1 cm beyond the lesion center, accounting for the proximal ablation center of the Emprint catheter. Two sequential ablations (10 minutes and 5 minutes) were performed without catheter rotation. A final cone-beam CT demonstrated a circumferential ablation zone surrounding the lesion with a minimal margin of approximately 5 to 6 mm away from the diaphragm. No pleural effusion or pneumothorax was seen.\n\nEstimated blood loss: <10 mL.\nComplications: None immediate.\nDisposition: Extubated in the operating room and admitted overnight for monitoring of hepatic function and volume status; follow-up CT arranged at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-009",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. C. Nguyen\nAssistants: Interventional pulmonology fellow; anesthesia team; radiology technologist.\n\nPre-procedure diagnosis: 15 mm left upper lobe lingular segment nodule in a patient status post right pneumonectomy for prior squamous cell carcinoma.\nPost-procedure diagnosis: Same.\nIndication: Lung-preserving local therapy for a new contralateral lesion in a single-lung patient.\nAnesthesia: General anesthesia with 7.5 mm endotracheal tube; lung-protective ventilation; ASA class IV.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with cone-beam CT confirmation.\n2. Transbronchial microwave ablation of left upper lobe lingular nodule using Emprint catheter.\n\nProcedure description: Following careful induction and low tidal-volume ventilation, the bronchoscope was advanced through the single-lumen endotracheal tube to the lingula. Navigation bronchoscopy and fluoroscopic tomosynthesis were used to align the extended working channel with the lesion. A transbronchial needle created a parenchymal tract, and the Emprint catheter was advanced. Because of the patient’s limited reserve, a single 8-minute ablation at standard power was chosen, minimizing procedure time while still targeting an adequate ablation zone. Cone-beam CT confirmed coverage of the 1.5 cm lesion with an estimated minimal margin of approximately 5 mm. No significant desaturation occurred during the case.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate.\nDisposition: Extubated in the operating room to high-flow nasal cannula, monitored in a step-down unit overnight; plan for early follow-up CT at 6 weeks given prior pneumonectomy and limited functional reserve.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-010",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. E. Rossi\nAssistants: Pulmonary fellow; radiology technologist; bronchoscopy nurse.\n\nPre-procedure diagnosis: 19 mm part-solid right lower lobe superior segment nodule with adjacent spread-through-airspaces on CT.\nPost-procedure diagnosis: Same.\nIndication: Local ablation of early lung adenocarcinoma with extended parenchymal margin in a nonsurgical candidate.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with cone-beam CT guidance.\n2. Transbronchial microwave ablation of right lower lobe superior segment nodule using Emprint catheter.\n3. Adjunct bronchoscopic thermal vapor ablation to the surrounding segment.\n\nProcedure description: Navigation bronchoscopy was used to reach the superior segment bronchus. A cone-beam CT acquisition confirmed catheter position. An Emprint catheter was positioned appropriately, and a 10-minute microwave ablation was delivered, yielding a well-centered ablation zone with an approximate 5 mm margin. To address suspected microscopic spread beyond the visible nodule, a dedicated vapor catheter was then positioned in the adjacent segmental airway, and thermal vapor energy was delivered to the surrounding lung parenchyma per manufacturer protocol. Post-treatment cone-beam CT demonstrated an extended area of ground-glass change enveloping the primary ablation zone and adjacent spread-through-airspaces. Airways remained patent on bronchoscopy.\n\nEstimated blood loss: <5 mL.\nComplications: Transient post-procedural fever expected from vapor ablation; no pneumothorax.\nDisposition: Extubated in the operating room and admitted for overnight observation with antipyretic therapy; follow-up CT planned at 3 and 12 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave + Vapor ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "Multiple Methods": "Use 31641 once for destruction in the same lobe, covering both microwave and vapor modalities."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-011",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. H. Malik\nAssistants: Interventional pulmonology fellow; anesthesia team; radiology technologist.\n\nPre-procedure diagnosis: 17 mm solid right lower lobe medial basal segment nodule in a patient with oligometastatic colorectal cancer.\nPost-procedure diagnosis: Same.\nIndication: Local control of a solitary pulmonary metastasis in the setting of controlled systemic disease.\nAnesthesia: General anesthesia with 8.5 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with cone-beam CT.\n2. Transbronchial radiofrequency ablation of right lower lobe nodule using cooled RFA catheter.\n\nProcedure description: After induction and intubation, the navigation bronchoscope was guided to the medial basal segment. A pre-procedural cone-beam CT set was used for planning. A bronchoscopy-guided cooled RFA catheter was positioned in the center of the lesion via an extended working channel, with position confirmed by fluoroscopy and repeat cone-beam CT. Radiofrequency energy was delivered in a single 12-minute application using a cooled system to limit airway injury. Post-ablation cone-beam CT revealed a sharply marginated ablation zone surrounding the lesion with an estimated minimal margin of approximately 5 mm, without pleural disruption. Bronchoscopy showed mild mucosal erythema but no charring.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate; no pneumothorax or pleural effusion.\nDisposition: Extubated in the operating room and discharged home after 6 hours of observation, with oncology follow-up and CT at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-012",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. P. Hart\nAssistants: Interventional pulmonology fellow; bronchoscopy nurse; radiology technologist.\n\nPre-procedure diagnosis: 22 mm left upper lobe posterior segment nodule in close proximity to segmental vessels.\nPost-procedure diagnosis: Same.\nIndication: Local tumor control via transbronchial radiofrequency ablation in a high-risk surgical patient.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with radial EBUS confirmation.\n2. Transbronchial cooled radiofrequency ablation of left upper lobe nodule.\n\nProcedure description: The navigation bronchoscope was used to reach the posterior segment bronchus, and radial EBUS confirmed an eccentric lesion adjacent to a vessel. A cooled RFA catheter was positioned within the nodule under fluoroscopic guidance. Energy was applied in two overlapping 8-minute cycles with catheter rotation between cycles to avoid hot spots near the vessel. Interval cone-beam CT showed a uniform ablation zone encasing the lesion with preservation of nearby major vessels. Final imaging demonstrated an approximate 6 mm minimal margin around the nodule. Endoscopic inspection showed no significant bleeding or airway compromise.\n\nEstimated blood loss: <10 mL.\nComplications: None immediate.\nDisposition: Extubated in the operating room and admitted overnight for observation; scheduled follow-up CT and multidisciplinary discussion at tumor board.",
+    "cpt_codes": [
+      "31641",
+      "31627",
+      "31654"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (RFA, LUL)",
+          "31627: Navigation bronchoscopy (Add-on)",
+          "31654: Radial EBUS for peripheral lesion (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          },
+          "31654": {
+            "work_rvu": 1.4,
+            "total_facility_rvu": 2.11,
+            "estimated_payment": 68
+          }
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-013",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. V. Romero\nAssistants: Interventional pulmonology fellow; anesthesia team; radiology technologist.\n\nPre-procedure diagnosis: 14 mm right lower lobe lateral basal segment nodule in a patient undergoing an early feasibility trial of pulsed electric field (PEF) ablation.\nPost-procedure diagnosis: Same.\nIndication: Focal nonthermal ablation of an early-stage lung cancer as part of a clinical trial in a nonsurgical candidate.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with cone-beam CT confirmation.\n2. Transbronchial pulsed electric field ablation of right lower lobe nodule using investigational PEF catheter.\n\nProcedure description: After standard induction, the navigation bronchoscope was advanced to the target segment. The investigational PEF catheter was introduced via an extended working channel after CT-to-body divergence correction. Cone-beam CT confirmed the catheter centered within the lesion. A series of biphasic pulsed electric field deliveries were performed per trial protocol, with multiple short pulses at pre-specified amplitudes and frequencies. No temperature rise was detected on the catheter thermistor. Post-treatment cone-beam CT showed a sharply demarcated ablation zone around the lesion without pleural disruption. Airways proximal to the treatment site appeared intact.\n\nEstimated blood loss: <5 mL.\nComplications: None immediate; no arrhythmia or hemodynamic instability during pulse delivery.\nDisposition: Extubated in the operating room and monitored overnight on telemetry per protocol; follow-up imaging and trial visits scheduled.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (PEF ablation, RLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-014",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. G. Ahmed\nAssistants: Interventional pulmonology fellow; bronchoscopy nurse; radiology technologist.\n\nPre-procedure diagnosis: Two synchronous lung nodules: 14 mm right upper lobe posterior segment and 11 mm right lower lobe superior segment, both PET-avid, in a patient with COPD and limited pulmonary reserve.\nPost-procedure diagnosis: Same.\nIndication: Staged local ablation of multifocal early lung cancers in a nonsurgical candidate.\nAnesthesia: General anesthesia with 8.5 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with cone-beam CT guidance.\n2. Transbronchial microwave ablation of right upper lobe posterior segment nodule using Emprint catheter.\n3. Transbronchial microwave ablation of right lower lobe superior segment nodule using Emprint catheter.\n\nProcedure description: After induction, navigation bronchoscopy targeted the right upper lobe lesion first. A CrossCountry needle and extended working channel were positioned into the lesion and a single 8-minute ablation was delivered. Cone-beam CT confirmed an adequate ablation zone with an estimated 5 mm margin. The catheter and bronchoscope were then redirected to the right lower lobe superior segment. Following similar navigation and tract creation, a 6-minute ablation was delivered to the smaller lesion. A combined cone-beam CT demonstrated discrete ablation zones covering both nodules without overlap and without pleural disruption.\n\nEstimated blood loss: <10 mL.\nComplications: None immediate.\nDisposition: Extubated in the operating room and admitted overnight given bilateral parenchymal treatment in a single session; follow-up CT arranged at 3 months to assess both ablation sites.",
+    "cpt_codes": [
+      "31641",
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, RUL)",
+          "31641-59: Bronchoscopy with destruction of tumor (Microwave ablation, RLL; separate lobe)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented.",
+          "31641 x2": "Reported twice for distinct lesions in separate lobes (RUL and RLL)."
+        }
+      }
+    }
+  },
+  {
+    "note_id": "TBA-015",
+    "note_text": "Interventional Pulmonology Procedure Note\nPatient ID: [REDACTED]\nDate of procedure: [REDACTED]\nAttending physician: Dr. D. Shah\nAssistants: Interventional pulmonology fellow; bronchoscopy nurse; radiology technologist.\n\nPre-procedure diagnosis: 21 mm left lower lobe superior segment nodule in a patient with severe COPD and prior lung volume reduction surgery.\nPost-procedure diagnosis: Same.\nIndication: Local ablation of presumed primary lung cancer while preserving remaining lung parenchyma.\nAnesthesia: General anesthesia with 8.0 mm endotracheal tube; ASA class III.\n\nProcedures performed:\n1. Electromagnetic navigation bronchoscopy with cone-beam CT guidance.\n2. Transbronchial microwave ablation of left lower lobe superior segment nodule using Emprint catheter.\n\nProcedure description: Following induction and intubation, navigation bronchoscopy was used to reach the superior segment bronchus. After CT-to-body divergence correction with tomosynthesis, a transbronchial needle was advanced into the lesion and the extended working channel positioned. A 10-minute microwave ablation was delivered. Cone-beam CT revealed an ablation zone encompassing the lesion but with a narrow posterolateral margin of approximately 3 mm. Given emphysematous parenchyma and prior surgery, a second shorter (5-minute) ablation was delivered with slight catheter repositioning posterolaterally. Final imaging demonstrated a more symmetric ablation zone with a minimal margin of approximately 6 mm. Airways appeared patent on bronchoscopy.\n\nEstimated blood loss: <10 mL.\nComplications: None immediate.\nDisposition: Extubated in the operating room and observed for 23 hours due to underlying lung disease; follow-up CT and pulmonary function testing planned at 3 months.",
+    "cpt_codes": [
+      "31641",
+      "31627"
+    ],
+    "registry_entry": {
+      "coding_review": {
+        "coding_summary": [
+          "31641: Bronchoscopy with destruction of tumor (Microwave ablation, LLL)",
+          "31627: Navigation bronchoscopy (Add-on)"
+        ],
+        "financial_analysis": {
+          "31641": {
+            "work_rvu": 5.25,
+            "total_facility_rvu": 8.4,
+            "estimated_payment": 272
+          },
+          "31627": {
+            "work_rvu": 2.27,
+            "total_facility_rvu": 3.07,
+            "estimated_payment": 99
+          }
+        },
+        "rubric_audit": {
+          "31654": "Dropped: No EBUS documented."
+        }
+      }
+    }
+  }
+]

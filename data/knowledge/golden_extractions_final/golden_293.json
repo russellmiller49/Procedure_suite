@@ -1,0 +1,2346 @@
+[
+  {
+    "category": "32552 - Removal of indwelling pleural catheter",
+    "cases": [
+      {
+        "note_text": "PATIENT: Margaret Chen || MRN: 8847291 || DOB: 04/22/1951 (73 y/o F)\nDate: 12/03/2025 || Location: University Medical Center, Denver, CO\nAttending: Dr. James Morrison, MD - Interventional Pulmonology\n\nINDICATION: Patient with history of metastatic ovarian cancer s/p right PleurX catheter placement 4 months ago for recurrent malignant pleural effusion. Drainage has decreased to <50mL per session over the past 3 weeks. CT chest from 11/28/2025 demonstrates near-complete resolution of right pleural effusion with evidence of pleurodesis. Patient referred for IPC removal.\n\nPROCEDURE: Removal of indwelling tunneled pleural catheter (CPT 32552)\n\nANESTHESIA: Local anesthesia with 1% lidocaine (10mL)\n\nPROCEDURE DETAILS:\nThe patient was positioned in the left lateral decubitus position. The right lateral chest wall was prepped and draped in sterile fashion. The catheter exit site was identified. Local anesthesia was infiltrated along the subcutaneous tunnel tract. A small incision was made at the catheter exit site extending along the tunnel. The cuff was identified approximately 2cm from the exit site within the subcutaneous tissue. Using blunt dissection, the cuff was freed from surrounding tissue. The catheter was then withdrawn smoothly from the pleural space. The tract was inspected and hemostasis confirmed. The incision was closed with 3-0 nylon sutures. Sterile dressing applied.\n\nFINDINGS:\n- PleurX catheter removed intact with cuff\n- No purulent drainage or signs of infection\n- Minimal serous fluid at tract site\n- Total catheter length: 28cm\n\nCOMPLICATIONS: None\nEBL: <5mL\n\nPOST-PROCEDURE:\n- Post-procedure CXR obtained - no pneumothorax\n- Patient tolerated procedure well\n- Discharge home with wound care instructions\n- Follow-up in 2 weeks with repeat CXR\n\nDr. James Morrison, MD",
+        "cpt_codes": [
+          32552
+        ],
+        "registry_entry": {
+          "patient_mrn": "8847291",
+          "procedure_date": "2025-12-03",
+          "procedure_duration_minutes": 25,
+          "providers": {
+            "attending_name": "Morrison, James"
+          },
+          "patient_demographics": {
+            "age_years": 73,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "IPC removal due to spontaneous pleurodesis",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "ipc": {
+              "performed": true,
+              "action": "Removal",
+              "side": "Right",
+              "catheter_brand": "PleurX",
+              "indication": "Malignant effusion"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32552",
+              "final_codes": [
+                "32552"
+              ],
+              "code_rationales": {
+                "32552": "Removal of indwelling tunneled pleural catheter (PleurX) with cuff."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 3.8,
+              "facility_total_payment": 123,
+              "per_code": {
+                "32552": {
+                  "work_rvu": 2.53,
+                  "total_facility_rvu": 3.8,
+                  "facility_payment": 123
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32552",
+            "final_codes": [
+              "32552"
+            ],
+            "code_rationales": {
+              "32552": "Removal of indwelling tunneled pleural catheter with cuff."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 3.8,
+            "facility_total_payment": 123,
+            "per_code": {
+              "32552": {
+                "work_rvu": 2.53,
+                "total_facility_rvu": 3.8,
+                "facility_payment": 123
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: Robert Williams || MRN: 9923847 || DOB: 08/15/1948\nDate: 12/05/2025 || Bronch Suite, Memorial Hospital, Phoenix, AZ\nMD: Dr. Elena Rodriguez\n\nDx: CHF with hepatic hydrothorax s/p left PleurX 6 months ago, now with evidence of autopleurodesis\n\nProcedure: Removal of tunneled pleural catheter, left\n\nConsent obtained. Local anesthesia with lido 1% 15mL. Patient positioned right lateral decubitus. Exit site identified left posterior axillary line. Tunnel tract anesthetized. Incision made, cuff dissected free. Catheter withdrawn completely - 26cm total length. Wound closed 3-0 Vicryl. Tegaderm applied.\n\nCatheter removed intact. No complications. Post-procedure US: no PTX, minimal residual fluid. Pt stable, discharged home.\n\nF/U 1 week.\n\nE. Rodriguez, MD",
+        "cpt_codes": [
+          32552
+        ],
+        "registry_entry": {
+          "patient_mrn": "9923847",
+          "procedure_date": "2025-12-05",
+          "procedure_duration_minutes": 20,
+          "providers": {
+            "attending_name": "Rodriguez, Elena"
+          },
+          "patient_demographics": {
+            "age_years": 77,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "IPC removal - autopleurodesis achieved",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "ipc": {
+              "performed": true,
+              "action": "Removal",
+              "side": "Left",
+              "catheter_brand": "PleurX",
+              "indication": "Hepatic hydrothorax"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32552",
+              "final_codes": [
+                "32552"
+              ],
+              "code_rationales": {
+                "32552": "Removal of indwelling tunneled pleural catheter."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 3.8,
+              "facility_total_payment": 123,
+              "per_code": {
+                "32552": {
+                  "work_rvu": 2.53,
+                  "total_facility_rvu": 3.8,
+                  "facility_payment": 123
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32552",
+            "final_codes": [
+              "32552"
+            ],
+            "code_rationales": {
+              "32552": "Removal of indwelling tunneled pleural catheter from left hemithorax."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 3.8,
+            "facility_total_payment": 123,
+            "per_code": {
+              "32552": {
+                "work_rvu": 2.53,
+                "total_facility_rvu": 3.8,
+                "facility_payment": 123
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "PROCEDURE NOTE\n\nPatient: Susan Thompson\nMRN: 1156723\nDOB: 11/30/1962 (63F)\nDate of Service: 12/07/2025\nLocation: Outpatient Procedure Center, Seattle, WA\n\nAttending Physician: Dr. Michael Park, MD\nFellow: Dr. Amanda Liu, PGY-6\n\nPre-procedure Diagnosis: Right malignant pleural effusion secondary to NSCLC, s/p PleurX catheter placement 5 months ago with successful pleurodesis\n\nProcedure Performed: Removal of indwelling tunneled pleural catheter, right (32552)\n\nIndication: Mrs. Thompson is a 63-year-old woman with stage IV NSCLC who underwent right PleurX catheter placement 5 months ago. Output has been <30mL for the past month. CT shows resolution of effusion with pleural symphysis.\n\nAnesthesia: Local with 1% lidocaine 12mL\n\nProcedure Details:\nTimeout performed. Patient positioned in left lateral decubitus. Right lateral chest prepped and draped. Exit site at 6th intercostal space, mid-axillary line identified. Local anesthesia infiltrated along tunnel tract. 2cm incision made at exit site. Blunt dissection to mobilize cuff. Gentle traction applied and catheter removed smoothly. Total length 27cm. Wound closed with 4-0 Monocryl. Steri-strips applied.\n\nComplications: None\nEBL: Minimal\n\nPost-procedure: Bedside ultrasound - no pneumothorax, no significant pleural fluid.\n\nDisposition: Discharged home\nFollow-up: Oncology in 2 weeks, IP clinic PRN\n\nMichael Park, MD",
+        "cpt_codes": [
+          32552
+        ],
+        "registry_entry": {
+          "patient_mrn": "1156723",
+          "procedure_date": "2025-12-07",
+          "procedure_duration_minutes": 30,
+          "providers": {
+            "attending_name": "Park, Michael",
+            "fellow_name": "Liu, Amanda",
+            "fellow_pgy_level": 6
+          },
+          "patient_demographics": {
+            "age_years": 63,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "IPC removal - successful pleurodesis in NSCLC patient",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "ipc": {
+              "performed": true,
+              "action": "Removal",
+              "side": "Right",
+              "catheter_brand": "PleurX",
+              "indication": "Malignant effusion"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32552",
+              "final_codes": [
+                "32552"
+              ],
+              "code_rationales": {
+                "32552": "Removal of indwelling tunneled pleural catheter."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 3.8,
+              "facility_total_payment": 123,
+              "per_code": {
+                "32552": {
+                  "work_rvu": 2.53,
+                  "total_facility_rvu": 3.8,
+                  "facility_payment": 123
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32552",
+            "final_codes": [
+              "32552"
+            ],
+            "code_rationales": {
+              "32552": "Removal of right-sided indwelling tunneled pleural catheter."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 3.8,
+            "facility_total_payment": 123,
+            "per_code": {
+              "32552": {
+                "work_rvu": 2.53,
+                "total_facility_rvu": 3.8,
+                "facility_payment": 123
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "category": "32554 - Thoracentesis without imaging guidance",
+    "cases": [
+      {
+        "note_text": "PROCEDURE NOTE\n\nPatient: David Kim || MRN: 7734892 || DOB: 02/14/1955 (70M)\nDate: 12/04/2025 || ICU, City General Hospital, Boston, MA\nAttending: Dr. Sarah Johnson, MD\n\nIndication: Large left pleural effusion in patient with decompensated heart failure causing respiratory distress. Urgent therapeutic thoracentesis requested.\n\nProcedure: Thoracentesis, aspiration of pleural space, without imaging guidance (32554)\n\nAnesthesia: Local - 1% lidocaine 8mL\n\nTechnique:\nPatient positioned sitting upright at bedside. Physical exam demonstrated dullness to percussion and decreased breath sounds at left base extending to mid-scapula. Entry site selected at 8th intercostal space, posterior axillary line based on percussion findings. Skin prepped with chlorhexidine and draped. Local anesthesia infiltrated. 18G needle advanced over superior aspect of 9th rib while aspirating. Pleural fluid obtained at 4cm depth. Catheter advanced, needle withdrawn. 1800mL straw-colored fluid removed by gravity and gentle aspiration. Procedure stopped due to patient cough. Catheter removed. Pressure dressing applied.\n\nFindings:\n- Fluid appearance: Clear, straw-colored\n- Volume removed: 1800mL\n\nComplications: None\n\nPost-procedure: Patient reports significant improvement in dyspnea. SpO2 improved from 88% to 95% on 2L NC.\n\nDr. Sarah Johnson, MD",
+        "cpt_codes": [
+          32554
+        ],
+        "registry_entry": {
+          "patient_mrn": "7734892",
+          "procedure_date": "2025-12-04",
+          "procedure_duration_minutes": 20,
+          "providers": {
+            "attending_name": "Johnson, Sarah"
+          },
+          "patient_demographics": {
+            "age_years": 70,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 4,
+            "primary_indication": "Large left pleural effusion causing respiratory distress in decompensated CHF",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "thoracentesis": {
+              "performed": true,
+              "side": "Left",
+              "guidance": "None/Landmark",
+              "indication": "Therapeutic",
+              "fluid_appearance": "Serous/Clear",
+              "volume_removed_ml": 1800
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32554",
+              "final_codes": [
+                "32554"
+              ],
+              "code_rationales": {
+                "32554": "Therapeutic thoracentesis without imaging guidance."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 2.6,
+              "facility_total_payment": 84,
+              "per_code": {
+                "32554": {
+                  "work_rvu": 1.82,
+                  "total_facility_rvu": 2.6,
+                  "facility_payment": 84
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32554",
+            "final_codes": [
+              "32554"
+            ],
+            "code_rationales": {
+              "32554": "Thoracentesis performed without imaging guidance using physical exam landmarks."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 2.6,
+            "facility_total_payment": 84,
+            "per_code": {
+              "32554": {
+                "work_rvu": 1.82,
+                "total_facility_rvu": 2.6,
+                "facility_payment": 84
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: Helen Martinez, 68F || MRN: 2298341\nDate: 12/06/2025 || Floor 7 West, Riverside Hospital\nMD: Dr. Kevin O'Brien\n\nDx: New right pleural effusion, etiology unknown. R/O malignancy vs parapneumonic.\n\nProcedure: Diagnostic thoracentesis without imaging guidance (32554)\n\nPhysical exam: Dullness to percussion R base to angle of scapula. Decreased breath sounds. Entry site selected R 9th ICS, mid-scapular line.\n\nLido 1% 10mL local. 22G needle inserted, pleural fluid obtained at 3cm. 50mL bloody fluid withdrawn for diagnostic studies.\n\nFluid sent: cytology, cell count, protein, LDH, glucose, pH, cultures\n\nAppearance: Serosanguinous\nVolume: 50mL (diagnostic only)\n\nNo complications. Post-procedure exam: breath sounds unchanged, no crepitus.\n\nImpression: Diagnostic thoracentesis completed. Await cytology and chemistry for Light's criteria.\n\nK. O'Brien, MD",
+        "cpt_codes": [
+          32554
+        ],
+        "registry_entry": {
+          "patient_mrn": "2298341",
+          "procedure_date": "2025-12-06",
+          "procedure_duration_minutes": 15,
+          "providers": {
+            "attending_name": "O'Brien, Kevin"
+          },
+          "patient_demographics": {
+            "age_years": 68,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "New right pleural effusion of unknown etiology - diagnostic workup",
+            "indication_category": "Pleural Effusion - Diagnostic"
+          },
+          "pleural_procedures": {
+            "thoracentesis": {
+              "performed": true,
+              "side": "Right",
+              "guidance": "None/Landmark",
+              "indication": "Diagnostic",
+              "fluid_appearance": "Serosanguinous",
+              "volume_removed_ml": 50
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32554",
+              "final_codes": [
+                "32554"
+              ],
+              "code_rationales": {
+                "32554": "Diagnostic thoracentesis without imaging guidance."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 2.6,
+              "facility_total_payment": 84,
+              "per_code": {
+                "32554": {
+                  "work_rvu": 1.82,
+                  "total_facility_rvu": 2.6,
+                  "facility_payment": 84
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32554",
+            "final_codes": [
+              "32554"
+            ],
+            "code_rationales": {
+              "32554": "Diagnostic thoracentesis using physical examination landmarks without imaging guidance."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 2.6,
+            "facility_total_payment": 84,
+            "per_code": {
+              "32554": {
+                "work_rvu": 1.82,
+                "total_facility_rvu": 2.6,
+                "facility_payment": 84
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "THORACENTESIS NOTE\n\nPatient: William Foster\nMRN: 3384756\nDOB: 06/08/1960 (65 y/o Male)\nDate: 12/08/2025\nLocation: Emergency Department, Valley Medical Center\n\nAttending: Dr. Lisa Chang, Pulmonology\n\nClinical Indication: Patient presents with 2-week history of progressive dyspnea. Known history of cirrhosis (Child-Pugh B). Chest X-ray shows large right pleural effusion. Hepatic hydrothorax suspected.\n\nProcedure: Thoracentesis, needle aspiration of pleural space, without imaging guidance (CPT 32554)\n\nTechnique:\nPatient positioned sitting at edge of bed leaning forward. Physical examination confirmed dullness to percussion throughout right hemithorax. Skin marked at 7th intercostal space, posterior axillary line. Sterile prep. 1% lidocaine 10mL infiltrated. 18-gauge catheter-over-needle introduced, aspirating during advancement. Pleural space entered at 5cm depth. Catheter advanced, needle removed. Fluid drained by gravity. Total 2200mL removed over 25 minutes. Catheter removed.\n\nFluid Analysis:\n- Appearance: Clear, straw-colored\n- Volume: 2200mL\n\nComplications: None. Patient denied chest pain, no cough during procedure.\n\nPost-procedure Assessment:\n- Breath sounds improved on right\n- SpO2 97% on room air (pre-procedure 91%)\n\nImpression: Successful therapeutic thoracentesis. Await SAAG for hepatic hydrothorax confirmation.\n\nDr. Lisa Chang, MD",
+        "cpt_codes": [
+          32554
+        ],
+        "registry_entry": {
+          "patient_mrn": "3384756",
+          "procedure_date": "2025-12-08",
+          "procedure_duration_minutes": 35,
+          "providers": {
+            "attending_name": "Chang, Lisa"
+          },
+          "patient_demographics": {
+            "age_years": 65,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Large right pleural effusion - suspected hepatic hydrothorax",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "thoracentesis": {
+              "performed": true,
+              "side": "Right",
+              "guidance": "None/Landmark",
+              "indication": "Both",
+              "fluid_appearance": "Serous/Clear",
+              "volume_removed_ml": 2200
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32554",
+              "final_codes": [
+                "32554"
+              ],
+              "code_rationales": {
+                "32554": "Therapeutic thoracentesis without imaging guidance."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 2.6,
+              "facility_total_payment": 84,
+              "per_code": {
+                "32554": {
+                  "work_rvu": 1.82,
+                  "total_facility_rvu": 2.6,
+                  "facility_payment": 84
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32554",
+            "final_codes": [
+              "32554"
+            ],
+            "code_rationales": {
+              "32554": "Thoracentesis performed using physical examination landmarks without imaging guidance. Large volume therapeutic drainage (2200mL)."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 2.6,
+            "facility_total_payment": 84,
+            "per_code": {
+              "32554": {
+                "work_rvu": 1.82,
+                "total_facility_rvu": 2.6,
+                "facility_payment": 84
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "category": "32560 - Chemical pleurodesis",
+    "cases": [
+      {
+        "note_text": "PROCEDURE NOTE\n\nPatient: Dorothy Adams || MRN: 4492817 || DOB: 03/22/1949 (76F)\nDate: 12/03/2025 || Inpatient, Northwestern Memorial Hospital, Chicago, IL\nAttending: Dr. Richard Thompson, MD - Interventional Pulmonology\n\nIndication: Recurrent symptomatic right malignant pleural effusion secondary to breast cancer. Patient has required 3 therapeutic thoracenteses in past 6 weeks. After multidisciplinary discussion, patient elected chemical pleurodesis over tunneled pleural catheter.\n\nProcedure: Instillation of talc slurry via chest tube for pleurodesis (CPT 32560)\n\nPre-procedure: Small-bore chest tube (14Fr pigtail) was placed 2 days ago and has drained 2800mL total. CXR today shows near-complete drainage with lung re-expansion. Output now <100mL/24h.\n\nPleurodesis Procedure:\nPatient positioned supine. Existing chest tube function confirmed with respiratory swing. Tube flushed with 20mL normal saline. Premixed talc slurry (4g talc in 50mL NS) warmed to body temperature. Slurry instilled via chest tube over 3 minutes. Tube flushed with 20mL NS. Tube clamped for 1 hour. Patient rotated to different positions every 15 minutes to distribute talc. After 1 hour, tube unclamped to suction at -20cmH2O.\n\nTalc Dose: 4 grams\n\nComplications: Patient experienced moderate pleuritic chest pain during instillation requiring IV morphine 4mg.\n\nPost-procedure Plan:\n- Continue chest tube to suction\n- Monitor output\n- CXR daily\n- Remove tube when output <150mL/24h\n\nDr. Richard Thompson, MD",
+        "cpt_codes": [
+          32560
+        ],
+        "registry_entry": {
+          "patient_mrn": "4492817",
+          "procedure_date": "2025-12-03",
+          "procedure_duration_minutes": 75,
+          "providers": {
+            "attending_name": "Thompson, Richard"
+          },
+          "patient_demographics": {
+            "age_years": 76,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Recurrent symptomatic malignant pleural effusion - pleurodesis for palliation",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "pleurodesis": {
+              "performed": true,
+              "method": "Chemical - slurry",
+              "agent": "Talc",
+              "talc_dose_grams": 4,
+              "indication": "Malignant effusion"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32560",
+              "final_codes": [
+                "32560"
+              ],
+              "code_rationales": {
+                "32560": "Instillation of talc slurry via chest tube for pleurodesis."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 2.31,
+              "facility_total_payment": 75,
+              "per_code": {
+                "32560": {
+                  "work_rvu": 1.54,
+                  "total_facility_rvu": 2.31,
+                  "facility_payment": 75
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32560",
+            "final_codes": [
+              "32560"
+            ],
+            "code_rationales": {
+              "32560": "Instillation of talc slurry (4g) via existing chest tube for chemical pleurodesis."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 2.31,
+            "facility_total_payment": 75,
+            "per_code": {
+              "32560": {
+                "work_rvu": 1.54,
+                "total_facility_rvu": 2.31,
+                "facility_payment": 75
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: George Patterson || MRN: 5573928 || DOB: 09/17/1952 (73M)\nDate: 12/05/2025 || Inpatient 6 South, Metro General\nMD: Dr. Angela White\n\nDx: Recurrent L pneumothorax s/p VATS wedge resection, persistent air leak\n\nProcedure: Chemical pleurodesis with doxycycline via chest tube (32560)\n\nBackground: 73yo M with COPD and spontaneous L PTX. S/P VATS wedge resection 1 week ago with persistent air leak despite chest tube. Thoracic surgery requested chemical pleurodesis.\n\nProcedure:\nExisting 24Fr chest tube in place, functioning. Doxycycline 500mg dissolved in 50mL NS plus 10mL 1% lidocaine. Solution instilled via chest tube. Tube clamped x 2 hours with position changes q30 min. Tube returned to suction.\n\nAgent: Doxycycline 500mg\n\nComplications: Mild chest discomfort, managed with PO acetaminophen\n\nPlan: Continue chest tube to suction, monitor air leak, repeat CXR tomorrow\n\nA. White, MD",
+        "cpt_codes": [
+          32560
+        ],
+        "registry_entry": {
+          "patient_mrn": "5573928",
+          "procedure_date": "2025-12-05",
+          "procedure_duration_minutes": 135,
+          "providers": {
+            "attending_name": "White, Angela"
+          },
+          "patient_demographics": {
+            "age_years": 73,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Persistent air leak post-VATS wedge resection for spontaneous pneumothorax",
+            "indication_category": "Pneumothorax Management"
+          },
+          "pleural_procedures": {
+            "pleurodesis": {
+              "performed": true,
+              "method": "Chemical - slurry",
+              "agent": "Doxycycline",
+              "indication": "Recurrent pneumothorax"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32560",
+              "final_codes": [
+                "32560"
+              ],
+              "code_rationales": {
+                "32560": "Chemical pleurodesis with doxycycline."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 2.31,
+              "facility_total_payment": 75,
+              "per_code": {
+                "32560": {
+                  "work_rvu": 1.54,
+                  "total_facility_rvu": 2.31,
+                  "facility_payment": 75
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32560",
+            "final_codes": [
+              "32560"
+            ],
+            "code_rationales": {
+              "32560": "Instillation of doxycycline solution via chest tube for chemical pleurodesis to treat persistent air leak."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 2.31,
+            "facility_total_payment": 75,
+            "per_code": {
+              "32560": {
+                "work_rvu": 1.54,
+                "total_facility_rvu": 2.31,
+                "facility_payment": 75
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "PLEURODESIS PROCEDURE NOTE\n\nPatient: Evelyn Richardson\nMRN: 6684039\nDOB: 12/01/1946 (79 y/o F)\nDate of Service: 12/07/2025\nLocation: Inpatient Oncology, University Hospital, San Francisco\n\nAttending: Dr. Brian Lee, MD - Interventional Pulmonology\nFellow: Dr. Priya Patel, PGY-7\n\nIndication: Mrs. Richardson is a 79-year-old woman with stage IV epithelial ovarian cancer with recurrent bilateral malignant pleural effusions. Decision made for left-sided talc pleurodesis.\n\nPre-procedure: Left 12Fr pigtail catheter placed yesterday. Total output 1600mL. Today's CXR shows adequate drainage with lung re-expansion.\n\nProcedure Performed: Instillation of talc slurry via chest tube for chemical pleurodesis (CPT 32560)\n\nTechnique:\nConsent verified. Patient positioned semi-recumbent. Pre-medication: morphine 4mg IV, ondansetron 4mg IV. Sterile talc 5g mixed with 100mL warmed NS. Slurry instilled slowly over 5 minutes via chest tube. Tube flushed with 20mL NS. Tube clamped. Patient rotated through positions every 15 minutes for total dwell time of 90 minutes. Tube then placed to water seal, then suction at -20cmH2O.\n\nAgent: Talc 5g in 100mL NS (slurry)\nDwell Time: 90 minutes with position changes\n\nComplications: Mild pleuritic discomfort. Temperature 37.8C 4 hours post-procedure.\n\nBrian Lee, MD",
+        "cpt_codes": [
+          32560
+        ],
+        "registry_entry": {
+          "patient_mrn": "6684039",
+          "procedure_date": "2025-12-07",
+          "procedure_duration_minutes": 135,
+          "providers": {
+            "attending_name": "Lee, Brian",
+            "fellow_name": "Patel, Priya",
+            "fellow_pgy_level": 7
+          },
+          "patient_demographics": {
+            "age_years": 79,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Recurrent left malignant pleural effusion - chemical pleurodesis",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "pleurodesis": {
+              "performed": true,
+              "method": "Chemical - slurry",
+              "agent": "Talc",
+              "talc_dose_grams": 5,
+              "indication": "Malignant effusion"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32560",
+              "final_codes": [
+                "32560"
+              ],
+              "code_rationales": {
+                "32560": "Instillation of talc slurry for pleurodesis."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 2.31,
+              "facility_total_payment": 75,
+              "per_code": {
+                "32560": {
+                  "work_rvu": 1.54,
+                  "total_facility_rvu": 2.31,
+                  "facility_payment": 75
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32560",
+            "final_codes": [
+              "32560"
+            ],
+            "code_rationales": {
+              "32560": "Instillation of talc slurry (5g) via chest tube for chemical pleurodesis of left malignant pleural effusion."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 2.31,
+            "facility_total_payment": 75,
+            "per_code": {
+              "32560": {
+                "work_rvu": 1.54,
+                "total_facility_rvu": 2.31,
+                "facility_payment": 75
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "category": "+31632 - Bronchoscopy with transbronchial lung biopsy, additional lobe (add-on)",
+    "cases": [
+      {
+        "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nPatient: James Wilson || MRN: 7795140 || DOB: 05/14/1958 (67M)\nDate: 12/04/2025 || OR 3, Academic Medical Center, Philadelphia, PA\nAttending: Dr. Nancy Chen, MD\nFellow: Dr. Steven Marks, PGY-6\n\nIndication: Evaluation of bilateral lung nodules. CT shows 1.8cm RUL nodule and 1.2cm LUL nodule. Both PET-avid. Bronchoscopy with transbronchial biopsies of both lobes planned.\n\nProcedure:\n- Flexible bronchoscopy with bronchoalveolar lavage (31624)\n- Transbronchial lung biopsy, RUL - single lobe (31628)\n- Transbronchial lung biopsy, LUL - additional lobe (+31632)\n- Computer-assisted navigation (+31627)\n\nAnesthesia: General anesthesia, 7.5 ETT\n\nProcedure Details:\nBronchoscope introduced through ETT. Airways inspected - no endobronchial lesions. Navigation system (Ion) registered.\n\nRUL Target (primary lesion):\nNavigated to RUL apical segment. R-EBUS confirmed target. Forceps biopsies x6 obtained. Minimal bleeding.\n\nLUL Target (additional lobe):\nNavigated to LUL anterior segment. R-EBUS confirmed lesion. Forceps biopsies x5 obtained from second lobe. Mild bleeding, resolved.\n\nBAL: 100mL NS to RUL, 60mL returned.\n\nFluoroscopy: 2.4 minutes total\n\nComplications: None. Post-procedure CXR: No pneumothorax.\n\nNancy Chen, MD",
+        "cpt_codes": [
+          31624,
+          31628,
+          31632,
+          31627
+        ],
+        "registry_entry": {
+          "patient_mrn": "7795140",
+          "procedure_date": "2025-12-04",
+          "procedure_duration_minutes": 75,
+          "providers": {
+            "attending_name": "Chen, Nancy",
+            "fellow_name": "Marks, Steven",
+            "fellow_pgy_level": 6
+          },
+          "patient_demographics": {
+            "age_years": 67,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Bilateral PET-avid lung nodules requiring tissue diagnosis",
+            "indication_category": "Lung Nodule Evaluation"
+          },
+          "equipment": {
+            "navigation_platform": "Ion"
+          },
+          "procedures_performed": {
+            "transbronchial_biopsy": {
+              "performed": true,
+              "lobes_biopsied": [
+                "RUL",
+                "LUL"
+              ]
+            },
+            "bal": {
+              "performed": true,
+              "location": "RUL"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31628",
+              "final_codes": [
+                "31628",
+                "+31632",
+                "+31627",
+                "31624"
+              ],
+              "code_rationales": {
+                "31628": "TBLB first lobe (RUL).",
+                "+31632": "TBLB additional lobe (LUL).",
+                "+31627": "Navigation add-on.",
+                "31624": "BAL performed in RUL."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 14.38,
+              "facility_total_payment": 465,
+              "per_code": {
+                "31628": {
+                  "work_rvu": 3.55,
+                  "total_facility_rvu": 5.53,
+                  "facility_payment": 179
+                },
+                "+31632": {
+                  "work_rvu": 1.0,
+                  "total_facility_rvu": 1.54,
+                  "facility_payment": 50
+                },
+                "+31627": {
+                  "work_rvu": 2.27,
+                  "total_facility_rvu": 3.07,
+                  "facility_payment": 99
+                },
+                "31624": {
+                  "work_rvu": 2.63,
+                  "total_facility_rvu": 4.24,
+                  "facility_payment": 137
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31628",
+            "final_codes": [
+              "31624",
+              "31628",
+              "+31632",
+              "+31627"
+            ],
+            "code_rationales": {
+              "31624": "BAL performed in RUL.",
+              "31628": "Transbronchial lung biopsy of first lobe (RUL).",
+              "+31632": "Transbronchial lung biopsy of additional lobe (LUL).",
+              "+31627": "Computer-assisted navigation used."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 13.08,
+            "facility_total_payment": 423,
+            "per_code": {
+              "31624": {
+                "total_facility_rvu": 4.24,
+                "facility_payment": 137
+              },
+              "31628": {
+                "total_facility_rvu": 5.53,
+                "facility_payment": 179
+              },
+              "+31632": {
+                "total_facility_rvu": 1.54,
+                "facility_payment": 50
+              },
+              "+31627": {
+                "total_facility_rvu": 3.07,
+                "facility_payment": 99
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: Maria Santos, 58F || MRN: 8806251\nDate: 12/06/2025 || Bronch Suite, St. Luke's Medical Center\nMD: Dr. Robert Kim\n\nDx: Diffuse pulmonary infiltrates, r/o hypersensitivity pneumonitis vs drug-induced lung disease\n\nProcedure: Bronchoscopy with BAL and transbronchial biopsies of multiple lobes\n- 31624 - BAL\n- 31628 - TBLB, RML (first lobe)\n- +31632 - TBLB, RLL (additional lobe)\n- +31632 - TBLB, LLL (additional lobe)\n\nSedation: Moderate (versed 4mg, fentanyl 100mcg)\n\nFindings:\n- Normal airways throughout\n- BAL to RML: 150mL in, 95mL return\n- TBLB RML x5 - first lobe\n- TBLB RLL x4 - second lobe (add-on)\n- TBLB LLL x4 - third lobe (add-on)\n\nNo significant bleeding. Fluoroscopy 1.8 min.\n\nPost-procedure: CXR clear, no PTX.\n\nR. Kim, MD",
+        "cpt_codes": [
+          31624,
+          31628,
+          31632,
+          31632
+        ],
+        "registry_entry": {
+          "patient_mrn": "8806251",
+          "procedure_date": "2025-12-06",
+          "procedure_duration_minutes": 45,
+          "providers": {
+            "attending_name": "Kim, Robert"
+          },
+          "patient_demographics": {
+            "age_years": 58,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 2,
+            "primary_indication": "Diffuse pulmonary infiltrates - evaluate for HP vs drug-induced lung disease",
+            "indication_category": "ILD Evaluation"
+          },
+          "procedures_performed": {
+            "transbronchial_biopsy": {
+              "performed": true,
+              "lobes_biopsied": [
+                "RML",
+                "RLL",
+                "LLL"
+              ]
+            },
+            "bal": {
+              "performed": true,
+              "location": "RML"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31628",
+              "final_codes": [
+                "31628",
+                "+31632",
+                "+31632",
+                "31624"
+              ],
+              "code_rationales": {
+                "31628": "TBLB first lobe (RML).",
+                "+31632": "TBLB additional lobe (RLL and LLL).",
+                "31624": "BAL RML."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 12.85,
+              "facility_total_payment": 416,
+              "per_code": {
+                "31628": {
+                  "work_rvu": 3.55,
+                  "total_facility_rvu": 5.53,
+                  "facility_payment": 179
+                },
+                "+31632": {
+                  "work_rvu": 1.0,
+                  "total_facility_rvu": 1.54,
+                  "facility_payment": 50
+                },
+                "31624": {
+                  "work_rvu": 2.63,
+                  "total_facility_rvu": 4.24,
+                  "facility_payment": 137
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31628",
+            "final_codes": [
+              "31624",
+              "31628",
+              "+31632",
+              "+31632"
+            ],
+            "code_rationales": {
+              "31624": "BAL performed in RML.",
+              "31628": "Transbronchial lung biopsy first lobe (RML).",
+              "+31632 (x2)": "Two additional lobes biopsied (RLL and LLL)."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 12.85,
+            "facility_total_payment": 416,
+            "per_code": {
+              "31624": {
+                "total_facility_rvu": 4.24,
+                "facility_payment": 137
+              },
+              "31628": {
+                "total_facility_rvu": 5.53,
+                "facility_payment": 179
+              },
+              "+31632 (x2)": {
+                "total_facility_rvu": 3.08,
+                "facility_payment": 100
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "BRONCHOSCOPY NOTE\n\nPatient: Thomas Brown\nMRN: 9917362\nDOB: 01/28/1965 (60M)\nDate: 12/08/2025\nLocation: Bronchoscopy Suite, Cleveland Clinic\n\nAttending: Dr. Jennifer Adams, MD\n\nIndication: 60-year-old male kidney transplant recipient with bilateral pulmonary nodules and infiltrates. Concern for opportunistic infection vs PTLD.\n\nProcedures:\n1. Bronchoscopy with BAL (31624)\n2. Transbronchial lung biopsy, RUL - first lobe (31628)\n3. Transbronchial lung biopsy, LUL - additional lobe (+31632)\n\nAnesthesia: General, LMA\n\nProcedure Details:\nAirways normal. No endobronchial lesions.\n\nBAL: RUL, 120mL NS instilled, 70mL returned.\n\nTBLB RUL (first lobe): 6 forceps biopsies. Adequate tissue. Mild bleeding.\nTBLB LUL (additional lobe): 5 forceps biopsies. Minimal bleeding.\n\nFluoroscopy time: 2.1 minutes\n\nSpecimens to surgical pathology; BAL to cytology, fungal/AFB cultures, viral studies, PJP DFA.\n\nComplications: None\nPost-procedure CXR: No pneumothorax\n\nJennifer Adams, MD",
+        "cpt_codes": [
+          31624,
+          31628,
+          31632
+        ],
+        "registry_entry": {
+          "patient_mrn": "9917362",
+          "procedure_date": "2025-12-08",
+          "procedure_duration_minutes": 50,
+          "providers": {
+            "attending_name": "Adams, Jennifer"
+          },
+          "patient_demographics": {
+            "age_years": 60,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Bilateral pulmonary infiltrates in immunocompromised transplant patient",
+            "indication_category": "Infection Workup"
+          },
+          "procedures_performed": {
+            "transbronchial_biopsy": {
+              "performed": true,
+              "lobes_biopsied": [
+                "RUL",
+                "LUL"
+              ]
+            },
+            "bal": {
+              "performed": true,
+              "location": "RUL"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31628",
+              "final_codes": [
+                "31628",
+                "+31632",
+                "31624"
+              ],
+              "code_rationales": {
+                "31628": "TBLB first lobe.",
+                "+31632": "TBLB additional lobe.",
+                "31624": "BAL."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 11.31,
+              "facility_total_payment": 366,
+              "per_code": {
+                "31628": {
+                  "work_rvu": 3.55,
+                  "total_facility_rvu": 5.53,
+                  "facility_payment": 179
+                },
+                "+31632": {
+                  "work_rvu": 1.0,
+                  "total_facility_rvu": 1.54,
+                  "facility_payment": 50
+                },
+                "31624": {
+                  "work_rvu": 2.63,
+                  "total_facility_rvu": 4.24,
+                  "facility_payment": 137
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31628",
+            "final_codes": [
+              "31624",
+              "31628",
+              "+31632"
+            ],
+            "code_rationales": {
+              "31624": "BAL for comprehensive infectious workup.",
+              "31628": "Transbronchial lung biopsy of first lobe (RUL).",
+              "+31632": "Transbronchial lung biopsy of additional lobe (LUL)."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 11.31,
+            "facility_total_payment": 366,
+            "per_code": {
+              "31624": {
+                "total_facility_rvu": 4.24,
+                "facility_payment": 137
+              },
+              "31628": {
+                "total_facility_rvu": 5.53,
+                "facility_payment": 179
+              },
+              "+31632": {
+                "total_facility_rvu": 1.54,
+                "facility_payment": 50
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "category": "+31633 - Bronchoscopy with transbronchial needle aspiration biopsy, additional lobe (add-on)",
+    "cases": [
+      {
+        "note_text": "EBUS BRONCHOSCOPY NOTE\n\nPatient: Linda Chang || MRN: 1028374 || DOB: 08/19/1956 (69F)\nDate: 12/03/2025 || OR 2, University Hospital, Los Angeles\nAttending: Dr. William Harris, MD\nFellow: Dr. Samantha Lee, PGY-6\n\nIndication: 69yo female with RUL adenocarcinoma. PET-CT shows mediastinal lymphadenopathy (stations 4R, 7, 4L) and separate LUL nodule. EBUS-TBNA for staging plus conventional TBNA of parenchymal targets.\n\nProcedures:\n- EBUS-TBNA, 3+ nodal stations (31653)\n- Conventional TBNA from RUL mass - first lobe (31629)\n- TBNA additional lobe - LUL nodule (+31633)\n\nAnesthesia: General, 8.0 ETT\n\nProcedure Details:\nEBUS scope introduced. Systematic nodal sampling:\n- Station 4R: 3 passes, ROSE positive for malignancy\n- Station 7: 3 passes, ROSE positive for malignancy\n- Station 4L: 3 passes, ROSE lymphocytes only\n\nConventional TBNA:\n- RUL mass: 5 passes through RB1 using 22G needle (first parenchymal target)\n- LUL nodule: 3 passes through LB3 using 22G needle (additional lobe)\n\nStaging: Clinical N2 disease confirmed\n\nWilliam Harris, MD",
+        "cpt_codes": [
+          31653,
+          31629,
+          31633
+        ],
+        "registry_entry": {
+          "patient_mrn": "1028374",
+          "procedure_date": "2025-12-03",
+          "procedure_duration_minutes": 90,
+          "providers": {
+            "attending_name": "Harris, William",
+            "fellow_name": "Lee, Samantha",
+            "fellow_pgy_level": 6
+          },
+          "patient_demographics": {
+            "age_years": 69,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Staging of RUL adenocarcinoma with mediastinal lymphadenopathy",
+            "indication_category": "Lung Cancer Staging"
+          },
+          "procedures_performed": {
+            "linear_ebus": {
+              "performed": true,
+              "stations_sampled": [
+                "4R",
+                "7",
+                "4L"
+              ]
+            },
+            "conventional_tbna": {
+              "performed": true,
+              "targets": [
+                {
+                  "lobe": "RUL"
+                },
+                {
+                  "lobe": "LUL"
+                }
+              ]
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31653",
+              "final_codes": [
+                "31653",
+                "31629",
+                "+31633"
+              ],
+              "code_rationales": {
+                "31653": "EBUS-TBNA 3+ stations.",
+                "31629": "Conventional TBNA of parenchymal mass (RUL).",
+                "+31633": "TBNA additional lobe (LUL nodule)."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 15.59,
+              "facility_total_payment": 505,
+              "per_code": {
+                "31653": {
+                  "work_rvu": 4.96,
+                  "total_facility_rvu": 7.7,
+                  "facility_payment": 249
+                },
+                "31629": {
+                  "work_rvu": 3.75,
+                  "total_facility_rvu": 5.89,
+                  "facility_payment": 191
+                },
+                "+31633": {
+                  "work_rvu": 1.35,
+                  "total_facility_rvu": 2.0,
+                  "facility_payment": 65
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31653",
+            "final_codes": [
+              "31653",
+              "31629",
+              "+31633"
+            ],
+            "code_rationales": {
+              "31653": "EBUS-TBNA of 3 nodal stations.",
+              "31629": "Conventional TBNA of RUL parenchymal mass - first lobe.",
+              "+31633": "TBNA of additional lobe (LUL nodule)."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 15.59,
+            "facility_total_payment": 504,
+            "per_code": {
+              "31653": {
+                "total_facility_rvu": 7.7,
+                "facility_payment": 249
+              },
+              "31629": {
+                "total_facility_rvu": 5.89,
+                "facility_payment": 191
+              },
+              "+31633": {
+                "total_facility_rvu": 2.0,
+                "facility_payment": 65
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: Anthony Garcia, 72M || MRN: 2139485\nDate: 12/05/2025 || Endoscopy Suite\nMD: Dr. Patricia Moore\n\nDx: Bilateral lung masses - staging needed\n\nProcedure: Bronchoscopy with TBNA of bilateral lung masses\n- 31629 - TBNA first lobe (RLL mass)\n- +31633 - TBNA additional lobe (LUL mass)\n- 31624 - BAL\n\nGA via LMA. Airways inspected - normal.\n\nTBNA RLL (first lobe): Large mass visible. 22G needle x5 passes. ROSE: malignant cells.\nTBNA LUL (additional lobe): 22G needle x4 passes. ROSE: suspicious for malignancy.\nBAL: LUL 100mL in, 55mL out.\n\nFluoroscopy: 3.2 min total\n\nNo complications. CXR negative for PTX.\n\nP. Moore, MD",
+        "cpt_codes": [
+          31629,
+          31633,
+          31624
+        ],
+        "registry_entry": {
+          "patient_mrn": "2139485",
+          "procedure_date": "2025-12-05",
+          "procedure_duration_minutes": 60,
+          "providers": {
+            "attending_name": "Moore, Patricia"
+          },
+          "patient_demographics": {
+            "age_years": 72,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Bilateral lung masses requiring tissue diagnosis",
+            "indication_category": "Lung Cancer Diagnosis"
+          },
+          "procedures_performed": {
+            "conventional_tbna": {
+              "performed": true,
+              "targets": [
+                {
+                  "lobe": "RLL"
+                },
+                {
+                  "lobe": "LUL"
+                }
+              ]
+            },
+            "bal": {
+              "performed": true,
+              "location": "LUL"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31629",
+              "final_codes": [
+                "31629",
+                "+31633",
+                "31624"
+              ],
+              "code_rationales": {
+                "31629": "TBNA first lobe (RLL).",
+                "+31633": "TBNA additional lobe (LUL).",
+                "31624": "BAL."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 12.13,
+              "facility_total_payment": 393,
+              "per_code": {
+                "31629": {
+                  "work_rvu": 3.75,
+                  "total_facility_rvu": 5.89,
+                  "facility_payment": 191
+                },
+                "+31633": {
+                  "work_rvu": 1.35,
+                  "total_facility_rvu": 2.0,
+                  "facility_payment": 65
+                },
+                "31624": {
+                  "work_rvu": 2.63,
+                  "total_facility_rvu": 4.24,
+                  "facility_payment": 137
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31629",
+            "final_codes": [
+              "31629",
+              "+31633",
+              "31624"
+            ],
+            "code_rationales": {
+              "31629": "Conventional TBNA of first lobe (RLL mass).",
+              "+31633": "TBNA of additional lobe (LUL mass).",
+              "31624": "BAL performed in LUL."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 12.13,
+            "facility_total_payment": 392,
+            "per_code": {
+              "31629": {
+                "total_facility_rvu": 5.89,
+                "facility_payment": 191
+              },
+              "+31633": {
+                "total_facility_rvu": 2.0,
+                "facility_payment": 65
+              },
+              "31624": {
+                "total_facility_rvu": 4.24,
+                "facility_payment": 137
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "BRONCHOSCOPY WITH NAVIGATION AND TBNA\n\nPatient: Barbara White\nMRN: 3240596\nDOB: 04/12/1959 (66F)\nDate: 12/07/2025\nLocation: Main OR, Emory University Hospital\n\nAttending: Dr. David Park, MD\nFellow: Dr. Rachel Green, PGY-7\n\nIndication: 66-year-old female with suspicious 2.5cm LUL nodule and separate 1.8cm RML nodule. Both mildly FDG-avid on PET.\n\nProcedures:\n1. Bronchoscopy with BAL (31624)\n2. Bronchoscopy with transbronchial needle aspiration, first lobe - LUL (31629)\n3. Bronchoscopy with transbronchial needle aspiration, additional lobe - RML (+31633)\n4. Computer-assisted navigation (+31627)\n\nAnesthesia: General anesthesia, 7.5mm ETT\n\nProcedure Details:\nNavigation system (superDimension) registered.\n\nLUL Target (Primary): 22G TBNA needle x5 passes. ROSE: Atypical cells, favor neoplasm.\nRML Target (Additional Lobe): 22G TBNA needle x4 passes. ROSE: Atypical cells present.\nBAL: LUL, 100mL instilled, 65mL returned.\n\nFluoroscopy time: 2.8 minutes\n\nComplications: None. Minimal bleeding.\n\nDavid Park, MD",
+        "cpt_codes": [
+          31624,
+          31629,
+          31633,
+          31627
+        ],
+        "registry_entry": {
+          "patient_mrn": "3240596",
+          "procedure_date": "2025-12-07",
+          "procedure_duration_minutes": 75,
+          "providers": {
+            "attending_name": "Park, David",
+            "fellow_name": "Green, Rachel",
+            "fellow_pgy_level": 7
+          },
+          "patient_demographics": {
+            "age_years": 66,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 2,
+            "primary_indication": "Bilateral pulmonary nodules requiring tissue diagnosis",
+            "indication_category": "Lung Nodule Evaluation"
+          },
+          "equipment": {
+            "navigation_platform": "superDimension"
+          },
+          "procedures_performed": {
+            "conventional_tbna": {
+              "performed": true,
+              "navigation_used": true,
+              "targets": [
+                {
+                  "lobe": "LUL"
+                },
+                {
+                  "lobe": "RML"
+                }
+              ]
+            },
+            "bal": {
+              "performed": true,
+              "location": "LUL"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31629",
+              "final_codes": [
+                "31629",
+                "+31633",
+                "+31627",
+                "31624"
+              ],
+              "code_rationales": {
+                "31629": "TBNA first lobe.",
+                "+31633": "TBNA additional lobe.",
+                "+31627": "Navigation.",
+                "31624": "BAL."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 15.2,
+              "facility_total_payment": 492,
+              "per_code": {
+                "31629": {
+                  "work_rvu": 3.75,
+                  "total_facility_rvu": 5.89,
+                  "facility_payment": 191
+                },
+                "+31633": {
+                  "work_rvu": 1.35,
+                  "total_facility_rvu": 2.0,
+                  "facility_payment": 65
+                },
+                "+31627": {
+                  "work_rvu": 2.27,
+                  "total_facility_rvu": 3.07,
+                  "facility_payment": 99
+                },
+                "31624": {
+                  "work_rvu": 2.63,
+                  "total_facility_rvu": 4.24,
+                  "facility_payment": 137
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31629",
+            "final_codes": [
+              "31624",
+              "31629",
+              "+31633",
+              "+31627"
+            ],
+            "code_rationales": {
+              "31624": "BAL performed in LUL.",
+              "31629": "TBNA of first lobe (LUL nodule) with navigation.",
+              "+31633": "TBNA of additional lobe (RML nodule).",
+              "+31627": "Computer-assisted navigation used."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 15.2,
+            "facility_total_payment": 492,
+            "per_code": {
+              "31624": {
+                "total_facility_rvu": 4.24,
+                "facility_payment": 137
+              },
+              "31629": {
+                "total_facility_rvu": 5.89,
+                "facility_payment": 191
+              },
+              "+31633": {
+                "total_facility_rvu": 2.0,
+                "facility_payment": 65
+              },
+              "+31627": {
+                "total_facility_rvu": 3.07,
+                "facility_payment": 99
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "category": "+31651 - Bronchoscopy with endobronchial valve placement, each additional bronchus (add-on)",
+    "cases": [
+      {
+        "note_text": "BLVR VALVE PLACEMENT PROCEDURE NOTE\n\nPatient: Harold Johnson || MRN: 4351628 || DOB: 11/03/1952 (73M)\nDate: 12/04/2025 || Hybrid OR, National Jewish Health, Denver\nAttending: Dr. Sarah Mitchell, MD\n\nIndication: 73-year-old male with severe heterogeneous emphysema. FEV1 28% predicted. Target lobe: LUL. Pre-procedure Chartis CV-negative. Candidate for Zephyr valve BLVR.\n\nProcedures:\n1. Bronchoscopy with endobronchial valve placement, initial bronchus (31647)\n2. Bronchoscopy with endobronchial valve placement, each additional bronchus x3 (+31651 x3)\n\nAnesthesia: General, 8.0 ETT\n\nValve Placements:\n1. LB1+2 (apicoposterior): Zephyr 5.5 valve, good seal (Initial)\n2. LB3 (anterior): Zephyr 4.0 valve, seal confirmed (Add-on #1)\n3. LB4 (superior lingula): Zephyr 5.5 valve, seal confirmed (Add-on #2)\n4. LB5 (inferior lingula): Zephyr 4.0-LP valve, seal confirmed (Add-on #3)\n\nTotal valves placed: 4 Zephyr valves in LUL\n\nPost-placement: All valves well-seated with complete lobar occlusion.\n\nComplications: None\n\nSarah Mitchell, MD",
+        "cpt_codes": [
+          31647,
+          31651,
+          31651,
+          31651
+        ],
+        "registry_entry": {
+          "patient_mrn": "4351628",
+          "procedure_date": "2025-12-04",
+          "procedure_duration_minutes": 90,
+          "providers": {
+            "attending_name": "Mitchell, Sarah"
+          },
+          "patient_demographics": {
+            "age_years": 73,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Severe heterogeneous emphysema - BLVR candidate with CV-negative LUL",
+            "indication_category": "BLVR Treatment"
+          },
+          "procedures_performed": {
+            "blvr": {
+              "performed": true,
+              "procedure_type": "Valve placement",
+              "target_lobe": "LUL",
+              "valve_type": "Zephyr (Pulmonx)",
+              "number_of_valves": 4,
+              "segments_treated": [
+                "LB1+2",
+                "LB3",
+                "LB4",
+                "LB5"
+              ]
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31647",
+              "final_codes": [
+                "31647",
+                "+31651",
+                "+31651",
+                "+31651"
+              ],
+              "code_rationales": {
+                "31647": "Valve placement initial lobe.",
+                "+31651": "Valve placement additional lobe (x3)."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 23.39,
+              "facility_total_payment": 756,
+              "per_code": {
+                "31647": {
+                  "work_rvu": 7.5,
+                  "total_facility_rvu": 12.05,
+                  "facility_payment": 390
+                },
+                "+31651": {
+                  "work_rvu": 2.5,
+                  "total_facility_rvu": 3.78,
+                  "facility_payment": 122
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31647",
+            "final_codes": [
+              "31647",
+              "+31651",
+              "+31651",
+              "+31651"
+            ],
+            "code_rationales": {
+              "31647": "Endobronchial valve placement, initial bronchus (LB1+2).",
+              "+31651 (x3)": "Three additional valves placed in LB3, LB4, and LB5."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 23.39,
+            "facility_total_payment": 756,
+            "per_code": {
+              "31647": {
+                "total_facility_rvu": 12.05,
+                "facility_payment": 390
+              },
+              "+31651 (x3)": {
+                "total_facility_rvu": 11.34,
+                "facility_payment": 366
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: Carol Thompson, 68F || MRN: 5462739\nDate: 12/06/2025 || OR 5, Temple University Hospital\nMD: Dr. Michael Rodriguez\n\nDx: Severe COPD with heterogeneous emphysema, RUL target\n\nPre-op: Chartis CV-negative RUL. Fissure intact. FEV1 32%.\n\nProcedure: BLVR Zephyr valve placement\n- 31647 - Initial valve, RB1\n- +31651 x2 - Additional valves, RB2 and RB3\n\nGA, 8.0 ETT.\n\n1. RB1 (apical): 6mm airway, Zephyr 6.0 - INITIAL\n2. RB2 (posterior): 5mm airway, Zephyr 5.5 - ADD-ON #1\n3. RB3 (anterior): 4.5mm airway, Zephyr 4.0 - ADD-ON #2\n\nTotal: 3 valves placed, complete RUL occlusion.\n\nNo complications. CXR: RUL atelectasis, no PTX.\n\nM. Rodriguez, MD",
+        "cpt_codes": [
+          31647,
+          31651,
+          31651
+        ],
+        "registry_entry": {
+          "patient_mrn": "5462739",
+          "procedure_date": "2025-12-06",
+          "procedure_duration_minutes": 75,
+          "providers": {
+            "attending_name": "Rodriguez, Michael"
+          },
+          "patient_demographics": {
+            "age_years": 68,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Severe COPD with heterogeneous emphysema - BLVR RUL treatment",
+            "indication_category": "BLVR Treatment"
+          },
+          "procedures_performed": {
+            "blvr": {
+              "performed": true,
+              "procedure_type": "Valve placement",
+              "target_lobe": "RUL",
+              "valve_type": "Zephyr (Pulmonx)",
+              "number_of_valves": 3,
+              "segments_treated": [
+                "RB1",
+                "RB2",
+                "RB3"
+              ]
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31647",
+              "final_codes": [
+                "31647",
+                "+31651",
+                "+31651"
+              ],
+              "code_rationales": {
+                "31647": "Valve placement initial lobe.",
+                "+31651": "Valve placement additional lobe (x2)."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 19.61,
+              "facility_total_payment": 634,
+              "per_code": {
+                "31647": {
+                  "work_rvu": 7.5,
+                  "total_facility_rvu": 12.05,
+                  "facility_payment": 390
+                },
+                "+31651": {
+                  "work_rvu": 2.5,
+                  "total_facility_rvu": 3.78,
+                  "facility_payment": 122
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31647",
+            "final_codes": [
+              "31647",
+              "+31651",
+              "+31651"
+            ],
+            "code_rationales": {
+              "31647": "Endobronchial valve placement, initial bronchus (RB1).",
+              "+31651 (x2)": "Two additional valves placed in RB2 and RB3."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 19.61,
+            "facility_total_payment": 634,
+            "per_code": {
+              "31647": {
+                "total_facility_rvu": 12.05,
+                "facility_payment": 390
+              },
+              "+31651 (x2)": {
+                "total_facility_rvu": 7.56,
+                "facility_payment": 244
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "BLVR PROCEDURE NOTE\n\nPatient: Robert Davis\nMRN: 6573840\nDOB: 07/25/1954 (71 y/o M)\nDate: 12/08/2025\nLocation: Advanced Bronchoscopy Suite, UCSF Medical Center\n\nAttending: Dr. Jennifer Walsh, MD\nFellow: Dr. Kevin Patel, PGY-6\n\nIndication: Severe heterogeneous emphysema with hyperinflation. FEV1 25%, RV 250%. Target: LLL based on StratX analysis. Prior Chartis confirmed CV-negative.\n\nProcedures:\n1. Bronchoscopy with endobronchial valve placement, initial bronchus - LB6 (31647)\n2. Bronchoscopy with valve placement, additional bronchus - LB8 (+31651)\n3. Bronchoscopy with valve placement, additional bronchus - LB9 (+31651)\n4. Bronchoscopy with valve placement, additional bronchus - LB10 (+31651)\n\nAnesthesia: General, 8.0 ETT, jet ventilation standby\n\nValve Deployments:\n1. LB6 (superior): Zephyr 5.5 valve (Initial)\n2. LB8 (anteromedial basal): Zephyr 5.5 valve (Add-on)\n3. LB9 (lateral basal): Zephyr 4.0 valve (Add-on)\n4. LB10 (posterior basal): Zephyr 6.0 valve (Add-on)\n\nTotal valves: 4 Zephyr valves in LLL. Complete lobar occlusion confirmed.\n\nComplications: None\n\nJennifer Walsh, MD",
+        "cpt_codes": [
+          31647,
+          31651,
+          31651,
+          31651
+        ],
+        "registry_entry": {
+          "patient_mrn": "6573840",
+          "procedure_date": "2025-12-08",
+          "procedure_duration_minutes": 90,
+          "providers": {
+            "attending_name": "Walsh, Jennifer",
+            "fellow_name": "Patel, Kevin",
+            "fellow_pgy_level": 6
+          },
+          "patient_demographics": {
+            "age_years": 71,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Severe heterogeneous emphysema - BLVR LLL treatment",
+            "indication_category": "BLVR Treatment"
+          },
+          "procedures_performed": {
+            "blvr": {
+              "performed": true,
+              "procedure_type": "Valve placement",
+              "target_lobe": "LLL",
+              "valve_type": "Zephyr (Pulmonx)",
+              "number_of_valves": 4,
+              "segments_treated": [
+                "LB6",
+                "LB8",
+                "LB9",
+                "LB10"
+              ]
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31647",
+              "final_codes": [
+                "31647",
+                "+31651",
+                "+31651",
+                "+31651"
+              ],
+              "code_rationales": {
+                "31647": "Valve placement initial lobe.",
+                "+31651": "Valve placement additional lobe (x3)."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 23.39,
+              "facility_total_payment": 756,
+              "per_code": {
+                "31647": {
+                  "work_rvu": 7.5,
+                  "total_facility_rvu": 12.05,
+                  "facility_payment": 390
+                },
+                "+31651": {
+                  "work_rvu": 2.5,
+                  "total_facility_rvu": 3.78,
+                  "facility_payment": 122
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31647",
+            "final_codes": [
+              "31647",
+              "+31651",
+              "+31651",
+              "+31651"
+            ],
+            "code_rationales": {
+              "31647": "Endobronchial valve placement, initial bronchus (LB6).",
+              "+31651 (x3)": "Three additional valves placed in LB8, LB9, and LB10."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 23.39,
+            "facility_total_payment": 756,
+            "per_code": {
+              "31647": {
+                "total_facility_rvu": 12.05,
+                "facility_payment": 390
+              },
+              "+31651 (x3)": {
+                "total_facility_rvu": 11.34,
+                "facility_payment": 366
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "category": "32557 - Pleural drainage with catheter insertion and imaging guidance",
+    "cases": [
+      {
+        "note_text": "PLEURAL DRAINAGE PROCEDURE NOTE\n\nPatient: Patricia Moore || MRN: 7684951 || DOB: 09/22/1958 (67F)\nDate: 12/03/2025 || IR Suite, Johns Hopkins Hospital, Baltimore\nAttending: Dr. Andrew Kim, MD\n\nIndication: Complex parapneumonic effusion on right. CT shows loculated effusion. Requires image-guided drainage catheter placement.\n\nProcedure: Percutaneous pleural drainage with insertion of indwelling catheter, with imaging guidance (CPT 32557)\n\nAnesthesia: Local with 1% lidocaine 15mL + Moderate sedation (midazolam 2mg, fentanyl 50mcg)\n\nTechnique:\nPatient positioned left lateral decubitus. Real-time ultrasound used. Entry site: right 7th ICS, posterior axillary line. Local anesthesia infiltrated under US guidance. 18G access needle advanced into fluid under continuous US. Guide wire placed. Tract dilated. 14Fr pigtail catheter placed and connected to drainage system.\n\nInitial Drainage:\n- Volume: 850mL\n- Appearance: Turbid, yellow-brown\n\nPost-procedure ultrasound: Catheter well-positioned, significant reduction in effusion, no PTX.\n\nComplications: None\n\nAndrew Kim, MD",
+        "cpt_codes": [
+          32557
+        ],
+        "registry_entry": {
+          "patient_mrn": "7684951",
+          "procedure_date": "2025-12-03",
+          "procedure_duration_minutes": 45,
+          "providers": {
+            "attending_name": "Kim, Andrew"
+          },
+          "patient_demographics": {
+            "age_years": 67,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Complex parapneumonic effusion requiring image-guided drainage",
+            "indication_category": "Empyema/Parapneumonic"
+          },
+          "pleural_procedures": {
+            "chest_tube": {
+              "performed": true,
+              "action": "Insertion",
+              "side": "Right",
+              "indication": "Effusion drainage",
+              "tube_type": "Pigtail",
+              "tube_size_fr": 14,
+              "guidance": "Ultrasound"
+            },
+            "thoracentesis": {
+              "performed": true,
+              "guidance": "Ultrasound",
+              "volume_removed_ml": 850
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32557",
+              "final_codes": [
+                "32557"
+              ],
+              "code_rationales": {
+                "32557": "Image-guided pleural drainage with catheter."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 4.5,
+              "facility_total_payment": 146,
+              "per_code": {
+                "32557": {
+                  "work_rvu": 3.12,
+                  "total_facility_rvu": 4.5,
+                  "facility_payment": 146
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32557",
+            "final_codes": [
+              "32557"
+            ],
+            "code_rationales": {
+              "32557": "Pleural drainage with percutaneous insertion of indwelling catheter under ultrasound guidance."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 4.5,
+            "facility_total_payment": 146,
+            "per_code": {
+              "32557": {
+                "work_rvu": 3.12,
+                "total_facility_rvu": 4.5,
+                "facility_payment": 146
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: Richard Brown, 74M || MRN: 8795062\nDate: 12/05/2025 || ICU, Metro Hospital\nMD: Dr. Laura Martinez\n\nDx: Left empyema with respiratory failure\n\nProcedure: Ultrasound-guided pleural drainage catheter placement (32557)\n\nUrgent procedure. US showed large loculated L effusion. Entry: L 6th ICS, mid-axillary line. Lido 1% 12mL. Patient already intubated, propofol infusion.\n\nUnder real-time US, 18G needle into effusion, wire placed, dilated to 14Fr, pigtail catheter inserted.\n\nInitial output: 1100mL frank pus. Sent for Gram stain, cultures.\n\nPlan: Intrapleural tPA/DNase protocol. ID and thoracic surgery consulted.\n\nL. Martinez, MD",
+        "cpt_codes": [
+          32557
+        ],
+        "registry_entry": {
+          "patient_mrn": "8795062",
+          "procedure_date": "2025-12-05",
+          "procedure_duration_minutes": 40,
+          "providers": {
+            "attending_name": "Martinez, Laura"
+          },
+          "patient_demographics": {
+            "age_years": 74,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 4,
+            "primary_indication": "Left empyema with respiratory failure",
+            "indication_category": "Empyema/Parapneumonic"
+          },
+          "pleural_procedures": {
+            "chest_tube": {
+              "performed": true,
+              "action": "Insertion",
+              "side": "Left",
+              "indication": "Empyema",
+              "tube_type": "Pigtail",
+              "tube_size_fr": 14,
+              "guidance": "Ultrasound"
+            },
+            "thoracentesis": {
+              "performed": true,
+              "guidance": "Ultrasound",
+              "fluid_appearance": "Purulent",
+              "volume_removed_ml": 1100
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32557",
+              "final_codes": [
+                "32557"
+              ],
+              "code_rationales": {
+                "32557": "Ultrasound-guided pleural drainage with catheter."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 4.5,
+              "facility_total_payment": 146,
+              "per_code": {
+                "32557": {
+                  "work_rvu": 3.12,
+                  "total_facility_rvu": 4.5,
+                  "facility_payment": 146
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32557",
+            "final_codes": [
+              "32557"
+            ],
+            "code_rationales": {
+              "32557": "Percutaneous pleural drainage with insertion of indwelling catheter under ultrasound guidance for empyema."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 4.5,
+            "facility_total_payment": 146,
+            "per_code": {
+              "32557": {
+                "work_rvu": 3.12,
+                "total_facility_rvu": 4.5,
+                "facility_payment": 146
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "PLEURAL CATHETER INSERTION NOTE\n\nPatient: Nancy Wilson\nMRN: 9806173\nDOB: 02/14/1962 (63 y/o F)\nDate: 12/07/2025\nLocation: IR Suite, Mass General Hospital\n\nAttending: Dr. Christopher Lee, MD\nFellow: Dr. Amy Chen, PGY-6\n\nIndication: Large right malignant pleural effusion causing dyspnea. Therapeutic drainage with temporary catheter.\n\nProcedure: Pleural drainage with insertion of indwelling catheter, with imaging guidance (CPT 32557)\n\nAnesthesia: Local + moderate sedation (midazolam 3mg, fentanyl 75mcg)\n\nTechnique:\nUS-guided. Entry: Right 8th ICS, mid-axillary line. Under continuous US, access needle into effusion, guidewire placed, tract dilated, 12Fr multipurpose drainage catheter inserted.\n\nDrainage:\n- Total volume: 2400mL (stopped due to patient discomfort)\n- Appearance: Serosanguinous\n\nPleural Pressures (manometry):\n- Opening: -2 cmH2O\n- At 2400mL: -22 cmH2O\n\nPost-procedure: Marked reduction in effusion, no PTX.\n\nComplications: Chest tightness during drainage, resolved after stopping.\n\nChristopher Lee, MD",
+        "cpt_codes": [
+          32557
+        ],
+        "registry_entry": {
+          "patient_mrn": "9806173",
+          "procedure_date": "2025-12-07",
+          "procedure_duration_minutes": 60,
+          "providers": {
+            "attending_name": "Lee, Christopher",
+            "fellow_name": "Chen, Amy",
+            "fellow_pgy_level": 6
+          },
+          "patient_demographics": {
+            "age_years": 63,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Large symptomatic malignant pleural effusion",
+            "indication_category": "Pleural Effusion - Therapeutic"
+          },
+          "pleural_procedures": {
+            "chest_tube": {
+              "performed": true,
+              "action": "Insertion",
+              "side": "Right",
+              "indication": "Effusion drainage",
+              "tube_type": "Pigtail",
+              "tube_size_fr": 12,
+              "guidance": "Ultrasound"
+            },
+            "thoracentesis": {
+              "performed": true,
+              "guidance": "Ultrasound",
+              "volume_removed_ml": 2400,
+              "manometry_performed": true,
+              "opening_pressure_cmh2o": -2,
+              "closing_pressure_cmh2o": -22
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "32557",
+              "final_codes": [
+                "32557"
+              ],
+              "code_rationales": {
+                "32557": "Pleural drainage with indwelling catheter and manometry."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 4.5,
+              "facility_total_payment": 146,
+              "per_code": {
+                "32557": {
+                  "work_rvu": 3.12,
+                  "total_facility_rvu": 4.5,
+                  "facility_payment": 146
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "32557",
+            "final_codes": [
+              "32557"
+            ],
+            "code_rationales": {
+              "32557": "Pleural drainage with insertion of indwelling catheter under real-time ultrasound guidance with manometry."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 4.5,
+            "facility_total_payment": 146,
+            "per_code": {
+              "32557": {
+                "work_rvu": 3.12,
+                "total_facility_rvu": 4.5,
+                "facility_payment": 146
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "category": "31638 - Bronchoscopy with revision or removal of stent",
+    "cases": [
+      {
+        "note_text": "BRONCHOSCOPY - STENT REVISION NOTE\n\nPatient: Frank Anderson || MRN: 1917284 || DOB: 04/18/1957 (68M)\nDate: 12/03/2025 || OR 2, Cleveland Clinic\nAttending: Dr. Thomas Chen, MD\nFellow: Dr. Jessica Kim, PGY-7\n\nIndication: History of left mainstem bronchus adenocarcinoma s/p Ultraflex SEMS (covered) placed 6 months ago. Now with dyspnea. CT shows stent migration with proximal end protruding into distal trachea.\n\nProcedure: Bronchoscopy with revision of bronchial stent (CPT 31638)\n\nAnesthesia: General, jet ventilation via rigid bronchoscope\n\nProcedure Details:\nRigid bronchoscopy performed. Findings: migrated covered SEMS with proximal end extending 1cm into distal trachea. Granulation tissue at proximal stent edge.\n\nStent Revision:\n1. Granulation tissue debrided with rigid bronchoscope\n2. Grasping forceps engaged proximal stent edge\n3. Stent repositioned distally, back into left mainstem\n4. Confirmed appropriate positioning with proximal edge just distal to carina\n5. Flexible bronchoscope: stent lumen patent throughout\n\nPost-revision: Stent patent, well-positioned. Airway patency restored.\n\nComplications: None\n\nThomas Chen, MD",
+        "cpt_codes": [
+          31638
+        ],
+        "registry_entry": {
+          "patient_mrn": "1917284",
+          "procedure_date": "2025-12-03",
+          "procedure_duration_minutes": 60,
+          "providers": {
+            "attending_name": "Chen, Thomas",
+            "fellow_name": "Kim, Jessica",
+            "fellow_pgy_level": 7
+          },
+          "patient_demographics": {
+            "age_years": 68,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Migrated LMS stent causing airway obstruction - stent revision",
+            "indication_category": "Stent Management"
+          },
+          "procedures_performed": {
+            "rigid_bronchoscopy": {
+              "performed": true
+            },
+            "airway_stent": {
+              "performed": true,
+              "action": "Revision/Repositioning",
+              "stent_type": "SEMS - Covered",
+              "stent_brand": "Ultraflex",
+              "location": "Left mainstem"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31638",
+              "final_codes": [
+                "31638"
+              ],
+              "code_rationales": {
+                "31638": "Revision of migrated stent."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 7.76,
+              "facility_total_payment": 251,
+              "per_code": {
+                "31638": {
+                  "work_rvu": 4.88,
+                  "total_facility_rvu": 7.76,
+                  "facility_payment": 251
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31638",
+            "final_codes": [
+              "31638"
+            ],
+            "code_rationales": {
+              "31638": "Bronchoscopy with revision of tracheal/bronchial stent. Migrated SEMS repositioned from distal trachea back into left mainstem bronchus."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 7.76,
+            "facility_total_payment": 251,
+            "per_code": {
+              "31638": {
+                "work_rvu": 4.88,
+                "total_facility_rvu": 7.76,
+                "facility_payment": 251
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "Pt: Sandra Martinez, 71F || MRN: 2028395\nDate: 12/05/2025 || Hybrid OR, Mount Sinai\nMD: Dr. Robert Williams\n\nDx: Tracheal stenosis s/p Dumon silicone stent placement 2 years ago, now with granulation tissue causing obstruction\n\nProcedure: Rigid bronchoscopy with stent removal (31638)\n\nGA, rigid bronch. Dumon stent in mid-trachea with significant granulation tissue at both ends causing ~70% obstruction.\n\nProcedure:\n1. Granulation tissue ablated with APC at proximal and distal stent margins\n2. Silicone stent grasped with alligator forceps\n3. Stent removed intact through rigid bronchoscope\n4. Trachea inspected - ~30% residual narrowing\n5. Decision made to not replace stent given improvement\n\nStent removed: Dumon silicone, 14mm x 40mm, intact\n\nComplications: Moderate bleeding from granulation tissue, controlled with APC.\n\nR. Williams, MD",
+        "cpt_codes": [
+          31638
+        ],
+        "registry_entry": {
+          "patient_mrn": "2028395",
+          "procedure_date": "2025-12-05",
+          "procedure_duration_minutes": 75,
+          "providers": {
+            "attending_name": "Williams, Robert"
+          },
+          "patient_demographics": {
+            "age_years": 71,
+            "gender": "Female"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Granulation tissue obstructing tracheal stent - stent removal indicated",
+            "indication_category": "Stent Management"
+          },
+          "procedures_performed": {
+            "rigid_bronchoscopy": {
+              "performed": true
+            },
+            "airway_stent": {
+              "performed": true,
+              "action": "Removal",
+              "stent_type": "Silicone - Dumon",
+              "diameter_mm": 14,
+              "length_mm": 40,
+              "location": "Trachea"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31638",
+              "final_codes": [
+                "31638"
+              ],
+              "code_rationales": {
+                "31638": "Removal of tracheal stent."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 7.76,
+              "facility_total_payment": 251,
+              "per_code": {
+                "31638": {
+                  "work_rvu": 4.88,
+                  "total_facility_rvu": 7.76,
+                  "facility_payment": 251
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31638",
+            "final_codes": [
+              "31638"
+            ],
+            "code_rationales": {
+              "31638": "Bronchoscopy with removal of tracheal stent (Dumon silicone). Includes granulation tissue ablation as part of stent removal."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 7.76,
+            "facility_total_payment": 251,
+            "per_code": {
+              "31638": {
+                "work_rvu": 4.88,
+                "total_facility_rvu": 7.76,
+                "facility_payment": 251
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      },
+      {
+        "note_text": "BRONCHOSCOPY - STENT MANAGEMENT NOTE\n\nPatient: William Taylor\nMRN: 3139506\nDOB: 08/30/1960 (65 y/o M)\nDate: 12/08/2025\nLocation: OR 5, UCLA Medical Center\n\nAttending: Dr. Michelle Park, MD\nFellow: Dr. Daniel Cho, PGY-6\n\nIndication: Prior Y-stent placement for malignant airway obstruction from esophageal cancer. Now with mucus plugging and stent dysfunction.\n\nProcedures:\n1. Bronchoscopy with revision of tracheal/bronchial stent (31638)\n2. Bronchoscopy with therapeutic aspiration (31645)\n\nAnesthesia: General with jet ventilation\n\nProcedure Details:\nRigid bronchoscopy. Y-stent (Dumon silicone) visualized in carina.\n\nFindings:\n- Significant mucus plugging within all three limbs\n- Left limb: Near-complete obstruction\n- Stent position appropriate, no migration\n- Mild granulation tissue at distal edges\n\nIntervention:\n1. Therapeutic aspiration of copious thick mucus\n2. Stent revision - forceps to remove adherent mucus plaques\n3. Saline lavage through stent lumens\n4. Granulation tissue cauterized with electrocautery\n5. All three stent limbs now patent\n\nComplications: None. Minimal bleeding from granulation cautery.\n\nMichelle Park, MD",
+        "cpt_codes": [
+          31641,
+          31645
+        ],
+        "registry_entry": {
+          "patient_mrn": "3139506",
+          "procedure_date": "2025-12-08",
+          "procedure_duration_minutes": 75,
+          "providers": {
+            "attending_name": "Park, Michelle",
+            "fellow_name": "Cho, Daniel",
+            "fellow_pgy_level": 6
+          },
+          "patient_demographics": {
+            "age_years": 65,
+            "gender": "Male"
+          },
+          "clinical_context": {
+            "asa_class": 3,
+            "primary_indication": "Y-stent mucus plugging causing airway obstruction - stent revision",
+            "indication_category": "Stent Management"
+          },
+          "procedures_performed": {
+            "rigid_bronchoscopy": {
+              "performed": true
+            },
+            "airway_stent": {
+              "performed": true,
+              "action": "Revision/Repositioning",
+              "stent_type": "Y-Stent",
+              "stent_brand": "Dumon",
+              "location": "Carina (Y)"
+            },
+            "therapeutic_aspiration": {
+              "performed": true,
+              "material": "Mucus plug"
+            }
+          },
+          "coding_review": {
+            "cpt_summary": {
+              "primary_code": "31641",
+              "final_codes": [
+                "31641",
+                "31645"
+              ],
+              "code_rationales": {
+                "31641": "Cautery of granulation tissue (relief of stenosis); 31638 (revision) not supported as stent was not moved.",
+                "31645": "Therapeutic aspiration of mucus."
+              }
+            },
+            "rvu_summary_2025": {
+              "facility_total_rvu": 12.87,
+              "facility_total_payment": 417,
+              "per_code": {
+                "31641": {
+                  "work_rvu": 5.25,
+                  "total_facility_rvu": 8.4,
+                  "facility_payment": 272
+                },
+                "31645": {
+                  "work_rvu": 2.78,
+                  "total_facility_rvu": 4.47,
+                  "facility_payment": 145
+                }
+              },
+              "conversion_factor": 32.3562,
+              "rvu_source": "CMS 2025 PFS Final Rule"
+            }
+          }
+        },
+        "coding_review": {
+          "cpt_summary": {
+            "primary_code": "31638",
+            "final_codes": [
+              "31638",
+              "31645"
+            ],
+            "code_rationales": {
+              "31638": "Bronchoscopy with revision of tracheal/bronchial stent (Y-stent). Function restored without replacement.",
+              "31645": "Therapeutic aspiration - copious thick mucus aspirated as distinct therapeutic service."
+            }
+          },
+          "rvu_summary_2025": {
+            "facility_total_rvu": 12.23,
+            "facility_total_payment": 396,
+            "per_code": {
+              "31638": {
+                "total_facility_rvu": 7.76,
+                "facility_payment": 251
+              },
+              "31645": {
+                "total_facility_rvu": 4.47,
+                "facility_payment": 145
+              }
+            },
+            "conversion_factor": 32.3562,
+            "rvu_source": "CMS 2025 PFS Final Rule"
+          }
+        }
+      }
+    ]
+  }
+]

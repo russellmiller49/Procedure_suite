@@ -503,6 +503,59 @@ The veto layer runs AFTER detection to filter false positives:
    - PHI highlights for patient/DOB/phone/address
    - Must-not-redact items are NOT highlighted
 
+### Manual Redaction Feature
+
+Users can add redactions for PHI missed by auto-detection:
+
+1. Select text in the Monaco editor
+2. Choose entity type from dropdown (Patient Name, MRN/ID, Date, Phone, Location, Other)
+3. Click "Add" button
+
+**Visual distinction:**
+- **Auto-detected PHI**: Red highlighting
+- **Manual additions**: Amber/yellow highlighting
+
+**UI Components:**
+- `entityTypeSelect` - Dropdown for entity type selection
+- `addRedactionBtn` - "Add" button (enabled only when text is selected)
+- Manual detections appear in sidebar with "manual" source tag
+
+**Key files:**
+- `modules/api/static/phi_redactor/app.js` - Selection tracking + Add button logic
+- `modules/api/static/phi_redactor/styles.css` - `.phi-detection-manual` styling
+
+### Formatted Results Display
+
+After submitting a scrubbed note, the UI displays formatted results instead of raw JSON:
+
+**Status Banner:**
+- **Green**: High confidence extraction, no review needed
+- **Yellow**: Audit warnings present, review recommended
+- **Red**: Manual review required
+
+**CPT Codes Table:**
+| Column | Description |
+|--------|-------------|
+| Code | CPT code (e.g., 31653) |
+| Description | Procedure description |
+| Confidence | Model confidence % |
+| RVU | Work relative value units |
+| Payment | Estimated facility payment |
+
+**Registry Summary:**
+- Shows ALL non-null fields from `registry` response
+- Nested objects displayed with " → " path notation (e.g., "Linear Ebus → Stations Sampled")
+- Skips `null`, `false` booleans, and empty arrays
+- `snake_case` converted to Title Case
+
+**Raw JSON:**
+- Collapsible `<details>` section for full response inspection
+
+**Key functions in app.js:**
+- `renderResults(data)` - Main entry point
+- `renderCPTTable(data)` - CPT codes table rendering
+- `renderRegistrySummary(registry)` - Recursive registry field extraction
+
 ### Troubleshooting (0 detections / empty output)
 
 If the UI returns **0 detections** on obvious PHI:
@@ -555,6 +608,27 @@ python scripts/sanitize_platinum_spans.py
 ```
 **Output:** `data/ml_training/phi_platinum_spans_CLEANED.jsonl`
 **Workflow:** build → optional sanitize → train (align char spans to tokenizer outputs).
+
+### Platinum Apply (Golden JSONs → Training-Ready Scrubbed/Final)
+
+Apply platinum spans back onto the Golden JSONs to produce PHI-safe registry training data:
+
+```bash
+make platinum-final      # platinum-cycle + institution cleanup
+
+# (Equivalent step-by-step)
+make platinum-build       # data/ml_training/phi_platinum_spans.jsonl
+make platinum-sanitize    # data/ml_training/phi_platinum_spans_CLEANED.jsonl
+make platinum-apply       # data/knowledge/golden_extractions_scrubbed/
+python scripts/fix_registry_hallucinations.py \
+  --input-dir data/knowledge/golden_extractions_scrubbed \
+  --output-dir data/knowledge/golden_extractions_final
+```
+
+**Notes:**
+- `scripts/apply_platinum_redactions.py` scrubs both `note_text` and `registry_entry.evidence`, standardizes all placeholders to `[REDACTED]`, and never redacts physician/provider names (e.g., `Dr. Green`).
+- `scripts/fix_registry_hallucinations.py` cleans hallucinated/contaminated `registry_entry.institution_name` values (anatomy/date leakage) and writes a final cleaned dataset.
+- `scripts/align_synthetic_names.py` is optional, but if you run it (it edits `note_text`), you must rebuild spans afterward (char offsets will change).
 
 **Provider policy:** default is `drop` (name-like spans in provider contexts are removed).
 

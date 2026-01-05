@@ -1,0 +1,2462 @@
+[
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Emily Thompson\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nReal-time ultrasound used throughout procedure.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1464mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nThompson, MD",
+    "cpt_codes": [
+      32557
+    ],
+    "registry_entry": {
+      "patient_mrn": "9632574",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 65,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Malignant pleural effusion - breast cancer",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32557
+      ],
+      "institution_name": "University of Michigan Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 8,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1464,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Thompson",
+        "fellow_name": null,
+        "assistant_name": "Ashley Walker, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302594"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32557",
+          "final_codes": [
+            "32557"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32557": "Ultrasound-guided pleural drainage catheter (10Fr) placement via Seldinger technique."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.5,
+          "facility_total_payment": 146,
+          "per_code": {
+            "32557": {
+              "facility_rvu": 4.5,
+              "facility_payment": 146
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32557 given ultrasound guidance and catheter technique."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32557"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Rachel Kim\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2300mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nKim, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "1211095",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 62,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion - unknown primary",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Johns Hopkins Hospital, Baltimore, MD",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 2300,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Kim",
+        "fellow_name": null,
+        "assistant_name": "Ashley Gonzalez, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301813"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Aspira) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion; imaging guidance is bundled."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Michael Chen\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nReal-time ultrasound used throughout procedure.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1405mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nChen, MD",
+    "cpt_codes": [
+      32557
+    ],
+    "registry_entry": {
+      "patient_mrn": "2187061",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 55,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Complicated parapneumonic effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pleural effusion",
+      "cpt_codes": [
+        32557
+      ],
+      "institution_name": "Memorial Sloan Kettering[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1405,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Chen",
+        "fellow_name": null,
+        "assistant_name": "Jennifer Rodriguez, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302533"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32557",
+          "final_codes": [
+            "32557"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32557": "Ultrasound-guided pleural drainage catheter (10Fr) placement for complicated effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.5,
+          "facility_total_payment": 146,
+          "per_code": {
+            "32557": {
+              "facility_rvu": 4.5,
+              "facility_payment": 146
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32557 given ultrasound guidance and catheter technique."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32557"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: CAPT Russell Miller, MD\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nReal-time ultrasound used throughout procedure.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 12Fr pigtail catheter inserted.\n1531mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nMiller, MD",
+    "cpt_codes": [
+      32557
+    ],
+    "registry_entry": {
+      "patient_mrn": "4928776",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 57,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Complicated parapneumonic effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pleural effusion",
+      "cpt_codes": [
+        32557
+      ],
+      "institution_name": "Cedars-Sinai Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 7,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1531,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Miller",
+        "fellow_name": null,
+        "assistant_name": "Lisa Campbell, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302498"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32557",
+          "final_codes": [
+            "32557"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32557": "Ultrasound-guided pleural drainage catheter (12Fr) placement."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.5,
+          "facility_total_payment": 146,
+          "per_code": {
+            "32557": {
+              "facility_rvu": 4.5,
+              "facility_payment": 146
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32557 given ultrasound guidance and catheter technique."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32557"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Emily Thompson\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 1686mL turbid fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nThompson, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "9377497",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 53,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Complicated parapneumonic effusion",
+      "sedation_type": "Local only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Effusion",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "Scripps Memorial Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1686,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Thompson",
+        "fellow_name": null,
+        "assistant_name": "Matthew Baker, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302053"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (28Fr) via blunt dissection technique."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for large-bore chest tube placement via blunt dissection."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Christopher Brown\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1905mL straw-colored fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nBrown, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "4808058",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 76,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Malignant pleural effusion - unknown primary",
+      "sedation_type": "Local with sedation",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Sharp Memorial Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 7,
+      "pleural_fluid_appearance": "Straw-colored",
+      "pleural_volume_drained_ml": 1905,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Brown",
+        "fellow_name": null,
+        "assistant_name": "Betty Johnson, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301870"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Aspira) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. James Rodriguez\n\nIndication: Parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 4th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nImmediate drainage: 1202mL straw-colored fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "8968470",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 31,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Parapneumonic effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Effusion",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "Johns Hopkins Hospital, Baltimore, MD",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 4,
+      "pleural_fluid_appearance": "Straw-colored",
+      "pleural_volume_drained_ml": 1202,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": null,
+        "assistant_name": "Larry Smith, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302419"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (24Fr) via blunt dissection."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for blunt dissection chest tube placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Sarah Williams\n\nIndication: Recurrent symptomatic malignant effusion\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1126mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nWilliams, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "3477246",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 57,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Recurrent symptomatic malignant effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "University of Michigan Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 7,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1126,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": null,
+        "assistant_name": "Susan Martin, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301899"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Aspira) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: 7/24/1951\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Emily Thompson\n\nIndication: Malignant pleural effusion - unknown primary\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1381mL straw-colored fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nThompson, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "1672478",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 74,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Malignant pleural effusion - unknown primary",
+      "sedation_type": "Local with sedation",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Cleveland Clinic[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Straw-colored",
+      "pleural_volume_drained_ml": 1381,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Thompson",
+        "fellow_name": null,
+        "assistant_name": "Barbara Adams, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301787"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Rocket) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Mark Taylor\n\nIndication: Parapneumonic effusion\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nImmediate drainage: 828mL turbid fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nTaylor, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "6657106",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 66,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Parapneumonic effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Effusion",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "Cedars-Sinai Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 828,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Taylor",
+        "fellow_name": null,
+        "assistant_name": "Richard Mitchell, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302394"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (24Fr) via blunt dissection."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for blunt dissection chest tube placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Rachel Kim\n\nIndication: Hepatic hydrothorax\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n996mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nKim, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "4652232",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 48,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Hepatic hydrothorax",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pleural effusion",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "Johns Hopkins Hospital, Baltimore, MD",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Anatomic landmarks",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 996,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Kim",
+        "fellow_name": null,
+        "assistant_name": "Shirley White, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302839"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32556": "Pleural drainage catheter (14Fr) placement without imaging guidance."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32556 as no ultrasound guidance was documented for this catheter placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32556"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: CDR Patricia Davis, MD\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 6th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 670mL serosanguinous fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nDavis, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "3343329",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 69,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Complicated parapneumonic effusion",
+      "sedation_type": "Local only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Effusion",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "UCSF Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 670,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": null,
+        "assistant_name": "Steven Lewis, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302334"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (28Fr) via blunt dissection."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for blunt dissection chest tube placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: CDR Patricia Davis, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2055mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nDavis, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "1080868",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 66,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion - NSCLC",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Massachusetts General Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 2055,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": null,
+        "assistant_name": "Deborah Nguyen, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301845"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Rocket) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Sarah Williams\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1400mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nWilliams, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "7954504",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 44,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Complicated parapneumonic effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pleural effusion",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "UC San Diego Health[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Anatomic landmarks",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 7,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1400,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Williams",
+        "fellow_name": null,
+        "assistant_name": "Margaret Torres, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302863"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32556": "Pleural drainage catheter (10Fr) placement without imaging guidance."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32556 (no ultrasound guidance documented)."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32556"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Amanda Garcia\n\nIndication: Iatrogenic pneumothorax post-procedure\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 24Fr chest tube inserted.\nRush of air upon entry. Tube fogging noted.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: ICU admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nGarcia, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "4673789",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 63,
+      "gender": "Male",
+      "asa_class": 4,
+      "primary_indication": "Iatrogenic pneumothorax post-procedure",
+      "sedation_type": "Local only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pneumothorax",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "Cleveland Clinic[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": null,
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Garcia",
+        "fellow_name": null,
+        "assistant_name": "Matthew Davis, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302363"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (24Fr) via blunt dissection for pneumothorax."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for chest tube placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: LCDR John Park, MD\n\nIndication: Malignant pleural effusion - mesothelioma\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1817mL bloody fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nPark, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "8147797",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 77,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion - mesothelioma",
+      "sedation_type": "Local with sedation",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "MD Anderson Cancer Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Bloody",
+      "pleural_volume_drained_ml": 1817,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Park",
+        "fellow_name": null,
+        "assistant_name": "Sandra Green, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301932"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Aspira) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Mark Taylor\n\nIndication: Complicated parapneumonic effusion\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nReal-time ultrasound used throughout procedure.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 8Fr pigtail catheter inserted.\n1310mL bloody fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nTaylor, MD",
+    "cpt_codes": [
+      32557
+    ],
+    "registry_entry": {
+      "patient_mrn": "7486613",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 52,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Complicated parapneumonic effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pleural effusion",
+      "cpt_codes": [
+        32557
+      ],
+      "institution_name": "University of Michigan Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 8,
+      "pleural_fluid_appearance": "Bloody",
+      "pleural_volume_drained_ml": 1310,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Taylor",
+        "fellow_name": null,
+        "assistant_name": "Angela Rivera, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302562"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32557",
+          "final_codes": [
+            "32557"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32557": "Ultrasound-guided pleural drainage catheter (8Fr) placement."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.5,
+          "facility_total_payment": 146,
+          "per_code": {
+            "32557": {
+              "facility_rvu": 4.5,
+              "facility_payment": 146
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32557 given ultrasound guidance and catheter technique."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32557"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. James Rodriguez\n\nIndication: Empyema\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nImmediate drainage: 792mL loculated fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "5709732",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 41,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Empyema",
+      "sedation_type": "Local only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Infectious",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "Massachusetts General Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Loculated",
+      "pleural_volume_drained_ml": 792,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": null,
+        "assistant_name": "Justin King, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302450"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (28Fr) via blunt dissection for empyema."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for chest tube placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Lisa Anderson\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 8Fr pigtail catheter inserted.\n1337mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nAnderson, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "7522392",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 46,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion - breast cancer",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "Massachusetts General Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Anatomic landmarks",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 7,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1337,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Anderson",
+        "fellow_name": null,
+        "assistant_name": "Stephanie Martin, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302730"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32556": "Pleural drainage catheter (8Fr) placement without imaging guidance."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32556 (no ultrasound guidance documented)."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32556"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Lisa Anderson\n\nIndication: Complicated parapneumonic effusion\nSide: Left\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nBedside ultrasound confirmed effusion without septations.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 32Fr chest tube inserted.\nImmediate drainage: 1587mL serosanguinous fluid.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: Floor admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nAnderson, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "3560623",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 53,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Complicated parapneumonic effusion",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Effusion",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "MD Anderson Cancer Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 1587,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Anderson",
+        "fellow_name": null,
+        "assistant_name": "Anthony Taylor, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302024"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (32Fr) via blunt dissection."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for large-bore chest tube placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Rachel Kim\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Left\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Left side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 2104mL serosanguinous fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nKim, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "447155",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 65,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion - NSCLC",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Sharp Memorial Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 2104,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Kim",
+        "fellow_name": null,
+        "assistant_name": "Barbara Martin, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301750"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Aspira) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. James Rodriguez\n\nIndication: Malignant pleural effusion - ovarian cancer\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1323mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nRodriguez, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "8497817",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 53,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Malignant pleural effusion - ovarian cancer",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Cleveland Clinic[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 7,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1323,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": null,
+        "assistant_name": "Elizabeth Harris, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301687"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Rocket) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: 7/22/1952\nDate: [REDACTED] || Location: [REDACTED]\nMD: CAPT Russell Miller, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Left\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Left side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nRocket tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1221mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nMiller, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "9266882",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 73,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion - NSCLC",
+      "sedation_type": "Local with sedation",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Memorial Sloan Kettering[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1221,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Miller",
+        "fellow_name": null,
+        "assistant_name": "Dorothy Sanchez, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301957"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Rocket) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Michael Chen\n\nIndication: Hepatic hydrothorax\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nReal-time ultrasound used throughout procedure.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n1011mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nChen, MD",
+    "cpt_codes": [
+      32557
+    ],
+    "registry_entry": {
+      "patient_mrn": "3392649",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 72,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Hepatic hydrothorax",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pleural effusion",
+      "cpt_codes": [
+        32557
+      ],
+      "institution_name": "UC San Diego Health[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1011,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Chen",
+        "fellow_name": null,
+        "assistant_name": "Angela Young, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302650"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32557",
+          "final_codes": [
+            "32557"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32557": "Ultrasound-guided pleural drainage catheter (14Fr) placement."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.5,
+          "facility_total_payment": 146,
+          "per_code": {
+            "32557": {
+              "facility_rvu": 4.5,
+              "facility_payment": 146
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32557 given ultrasound guidance and catheter technique."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32557"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: CDR Patricia Davis, MD\n\nIndication: Malignant pleural effusion - NSCLC\nSide: Right\n\nPROCEDURE: Ultrasound-guided Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nReal-time ultrasound used throughout procedure.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n604mL serosanguinous fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nDavis, MD",
+    "cpt_codes": [
+      32557
+    ],
+    "registry_entry": {
+      "patient_mrn": "3388681",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 75,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Malignant pleural effusion - NSCLC",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32557
+      ],
+      "institution_name": "University of Michigan Hospital[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Serosanguinous",
+      "pleural_volume_drained_ml": 604,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Davis",
+        "fellow_name": null,
+        "assistant_name": "Emily Harris, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302623"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32557",
+          "final_codes": [
+            "32557"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32557": "Ultrasound-guided pleural drainage catheter (10Fr) placement."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.5,
+          "facility_total_payment": 146,
+          "per_code": {
+            "32557": {
+              "facility_rvu": 4.5,
+              "facility_payment": 146
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32557 given ultrasound guidance and catheter technique."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32557"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. James Rodriguez\n\nIndication: Traumatic pneumothorax\nSide: Right\n\nPROCEDURE: Tube Thoracostomy\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide accessible.\nSite: 5th intercostal space, anterior to mid-axillary line.\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nBlunt dissection technique. 28Fr chest tube inserted.\nRush of air upon entry. Tube fogging noted.\nTube secured with sutures. Connected to Pleur-evac at -20cmH2O.\nCXR obtained - tube in good position.\n\nDISPOSITION: ICU admission.\nPlan: Daily CXR, assess for tube removal criteria.\n\nRodriguez, MD",
+    "cpt_codes": [
+      32551
+    ],
+    "registry_entry": {
+      "patient_mrn": "6816714",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 46,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Traumatic pneumothorax",
+      "sedation_type": "Local only",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pneumothorax",
+      "cpt_codes": [
+        32551
+      ],
+      "institution_name": "Memorial Sloan Kettering[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": true,
+      "pleural_procedure_type": "Tube thoracostomy",
+      "pleural_guidance": null,
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": null,
+      "pleural_volume_drained_ml": null,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Rodriguez",
+        "fellow_name": null,
+        "assistant_name": "David Moore, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301990"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32551",
+          "final_codes": [
+            "32551"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32551": "Tube thoracostomy (28Fr) via blunt dissection for pneumothorax."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 4.56,
+          "facility_total_payment": 148,
+          "per_code": {
+            "32551": {
+              "facility_rvu": 4.56,
+              "facility_payment": 148
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32551 for chest tube placement."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32551"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Jennifer Lee\n\nIndication: Malignant pleural effusion - breast cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 10Fr pigtail catheter inserted.\n1599mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nLee, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "2992994",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 47,
+      "gender": "Female",
+      "asa_class": 2,
+      "primary_indication": "Malignant pleural effusion - breast cancer",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "MD Anderson Cancer Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Anatomic landmarks",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 5,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1599,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Lee",
+        "fellow_name": null,
+        "assistant_name": "Sharon Lopez, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302704"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32556": "Pleural drainage catheter (10Fr) placement without imaging guidance."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32556 (no ultrasound guidance documented)."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32556"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Michael Chen\n\nIndication: Malignant pleural effusion - mesothelioma\nSide: Right\n\nPROCEDURE: Tunneled Pleural Catheter Insertion\nInformed consent obtained. Timeout performed.\nPatient positioned lateral decubitus, Right side up.\nPreprocedure ultrasound confirmed large free-flowing effusion.\nSite [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nAspira tunneled pleural catheter kit used.\nSubcutaneous tunnel created. Pleural space entered with Seldinger technique.\nCatheter advanced and position confirmed. 1865mL turbid fluid drained.\nCatheter secured with sutures. Sterile dressing applied.\nCXR obtained - catheter in good position, lung re-expanded.\n\nDISPOSITION: Home with drainage supplies. Teaching provided.\nF/U: Clinic 1-2 weeks, drain PRN for symptoms.\n\nChen, MD",
+    "cpt_codes": [
+      32550
+    ],
+    "registry_entry": {
+      "patient_mrn": "9309538",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 84,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Malignant pleural effusion - mesothelioma",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32550
+      ],
+      "institution_name": "Memorial Sloan Kettering[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "IPC insertion",
+      "pleural_guidance": "Ultrasound",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 1865,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Chen",
+        "fellow_name": null,
+        "assistant_name": "Jessica Wright, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.301721"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32550",
+          "final_codes": [
+            "32550"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32550": "Insertion of tunneled pleural catheter (Aspira) for malignant effusion."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 5.88,
+          "facility_total_payment": 190,
+          "per_code": {
+            "32550": {
+              "facility_rvu": 5.88,
+              "facility_payment": 190
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32550 for IPC insertion."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32550"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: LCDR John Park, MD\n\nIndication: Empyema\nSide: Right\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 12Fr pigtail catheter inserted.\n895mL turbid fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nPark, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "5032180",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Empyema",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Pleural effusion",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "Memorial Sloan Kettering[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Anatomic landmarks",
+      "pleural_side": "Right",
+      "pleural_intercostal_space": 7,
+      "pleural_fluid_appearance": "Turbid",
+      "pleural_volume_drained_ml": 895,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Park",
+        "fellow_name": null,
+        "assistant_name": "Linda Walker, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302675"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32556": "Pleural drainage catheter (12Fr) placement without imaging guidance."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32556 (no ultrasound guidance documented)."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32556"
+      ],
+      "invalid_codes": []
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nMD: Dr. Jennifer Lee\n\nIndication: Malignant pleural effusion - ovarian cancer\nSide: Left\n\nPROCEDURE: Pleural Drainage Catheter Placement\nInformed consent obtained. Timeout performed.\nPatient [REDACTED]ide up.\nSite: [REDACTED]\nSterile prep and drape. Local anesthesia with 1% lidocaine.\nSeldinger technique used. 14Fr pigtail catheter inserted.\n1231mL straw-colored fluid drained.\nCatheter secured. Connected to drainage system.\nPost-procedure CXR: catheter in appropriate position, no PTX.\n\nDISPOSITION: Floor admission for continued drainage.\nPlan: Daily output monitoring, reassess in 48-72h.\n\nLee, MD",
+    "cpt_codes": [
+      32556
+    ],
+    "registry_entry": {
+      "patient_mrn": "2912934",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 46,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Malignant pleural effusion - ovarian cancer",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "final_diagnosis_prelim": "Malignant pleural effusion",
+      "cpt_codes": [
+        32556
+      ],
+      "institution_name": "Aurora Medical Center[REDACTED]",
+      "molecular_testing_requested": false,
+      "disposition": "Inpatient admission",
+      "bleeding_severity": "Mild",
+      "pneumothorax": false,
+      "pleural_procedure_type": "Pigtail catheter",
+      "pleural_guidance": "Anatomic landmarks",
+      "pleural_side": "Left",
+      "pleural_intercostal_space": 6,
+      "pleural_fluid_appearance": "Straw-colored",
+      "pleural_volume_drained_ml": 1231,
+      "pleurodesis_performed": false,
+      "providers": {
+        "attending_name": "Lee",
+        "fellow_name": null,
+        "assistant_name": "Amy Jones, RN",
+        "assistant_role": "RN",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.8.0",
+        "generated_at": "2025-12-07T09:19:49.302806"
+      },
+      "coding_review": {
+        "review_version": "1.1.0",
+        "review_date": "[REDACTED]",
+        "reviewer": "IP_Coder_Patch_GPT",
+        "cpt_summary": {
+          "primary_code": "32556",
+          "final_codes": [
+            "32556"
+          ],
+          "modifiers": [],
+          "changes_made": false,
+          "code_rationales": {
+            "32556": "Pleural drainage catheter (14Fr) placement without imaging guidance."
+          },
+          "coding_decision": "as_documented"
+        },
+        "rvu_summary_2025": {
+          "facility_total_rvu": 3.62,
+          "facility_total_payment": 117,
+          "per_code": {
+            "32556": {
+              "facility_rvu": 3.62,
+              "facility_payment": 117
+            }
+          },
+          "rvu_source": "ip_coding_billing.v2_7.json"
+        },
+        "overall_assessment": "Correctly coded as 32556 (no ultrasound guidance documented)."
+      }
+    },
+    "source_file": "synthetic_pleural_notes.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "32556"
+      ],
+      "invalid_codes": []
+    }
+  }
+]

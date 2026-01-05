@@ -1,0 +1,803 @@
+[
+  {
+    "note_text": "Medical thoracoscopy for large right pleural effusion with multiple parietal and visceral pleural nodules, pleural biopsies, talc slurry pleurodesis, and chest tube placement.",
+    "cpt_codes": [
+      32650
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158673"
+      },
+      "cpt_codes": [
+        32650
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "32650"
+        ],
+        "facility_rvu_2025": 15.0,
+        "facility_payment_2025": 485,
+        "notes": [
+          "Procedure: Medical thoracoscopy with talc pleurodesis.",
+          "Code 32650 includes the surgical thoracoscopy and pleurodesis.",
+          "Diagnostic inspection and biopsies are typically bundled into the surgical code 32650."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 32650.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        32650
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 15.0,
+        "total_mpfs_facility_payment": 491
+      },
+      "per_code": [
+        {
+          "code": "32650",
+          "description": "Thoracoscopy with pleurodesis",
+          "total_facility_rvu_2025": 15.0,
+          "mpfs_facility_payment_2025": 491,
+          "category": "thoracoscopy_pleurodesis",
+          "reasoning": "Medical thoracoscopy with pleural biopsies and talc pleurodesis is captured by a single thoracoscopic pleurodesis code; diagnostic inspection and chest tube placement are inherent."
+        }
+      ],
+      "dropped_codes": [
+        {
+          "code": "32560",
+          "reason": "Chemical pleurodesis via chest tube (32560) is bundled into thoracoscopic pleurodesis 32650 when performed on the same side."
+        },
+        {
+          "code": "32551",
+          "reason": "Tube thoracostomy (32551) is a separate-procedure code and not reported when it is the access for thoracoscopic pleurodesis."
+        },
+        {
+          "code": "32601",
+          "reason": "Diagnostic thoracoscopy (32601) is included in the more extensive thoracoscopic pleurodesis 32650."
+        }
+      ],
+      "note_rationale": "Consolidated all thoracoscopic work into 32650 to avoid double-coding pleurodesis and chest tube insertion."
+    }
+  },
+  {
+    "note_text": "Flexible bronchoscopy with serial balloon dilation of post-intubation tracheal stenosis from ~40% to ~75% patency.",
+    "cpt_codes": [
+      31630
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158678"
+      },
+      "cpt_codes": [
+        31630
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31630"
+        ],
+        "facility_rvu_2025": 6.27,
+        "facility_payment_2025": 203,
+        "notes": [
+          "Procedure: Bronchoscopic tracheal dilation.",
+          "Code 31630 covers dilation of the trachea/bronchi.",
+          "Diagnostic bronchoscopy (31622) is bundled."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31630.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31630
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 6.27,
+        "total_mpfs_facility_payment": 205
+      },
+      "per_code": [
+        {
+          "code": "31630",
+          "description": "Bronchoscopy with tracheal/bronchial dilation",
+          "total_facility_rvu_2025": 6.27,
+          "mpfs_facility_payment_2025": 205,
+          "category": "airway_dilation",
+          "reasoning": "Serial balloon dilation of post-intubation tracheal stenosis is the primary service and is appropriately coded with 31630."
+        }
+      ],
+      "dropped_codes": [
+        {
+          "code": "31622",
+          "reason": "Diagnostic bronchoscopy (31622) is bundled when bronchial dilation 31630 is performed in the same session."
+        }
+      ],
+      "note_rationale": "Only bronchial dilation required a CPT code; the diagnostic inspection is included in 31630."
+    }
+  },
+  {
+    "note_text": "Photodynamic therapy light application to an early-stage endobronchial squamous cell carcinoma in the left mainstem bronchus after prior Photofrin administration.",
+    "cpt_codes": [
+      31641
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158684"
+      },
+      "cpt_codes": [
+        31641
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641"
+        ],
+        "facility_rvu_2025": 8.4,
+        "facility_payment_2025": 272,
+        "notes": [
+          "Procedure: Photodynamic therapy (light application).",
+          "Code 31641 captures tumor destruction/therapy by any method (including PDT).",
+          "Only one unit of 31641 is reported per session regardless of the number of sites treated with PDT."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31641.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31641
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 8.4,
+        "total_mpfs_facility_payment": 275
+      },
+      "per_code": [
+        {
+          "code": "31641",
+          "description": "Bronchoscopy with tumor destruction/stenosis relief",
+          "total_facility_rvu_2025": 8.4,
+          "mpfs_facility_payment_2025": 275,
+          "category": "airway_tumor_therapy",
+          "reasoning": "Photodynamic therapy light activation for an endobronchial squamous cell carcinoma represents tumor destruction/stenosis relief and is captured by 31641."
+        }
+      ],
+      "dropped_codes": [],
+      "note_rationale": "No separate diagnostic or additional bronchoscopic procedures beyond the photodynamic therapy were documented."
+    }
+  },
+  {
+    "note_text": "Flexible bronchoscopy under GA with retrieval of three Zephyr endobronchial valves from the right upper lobe and clearance of distal mucus plugging.",
+    "cpt_codes": [
+      31648
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158689"
+      },
+      "cpt_codes": [
+        31648
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31648"
+        ],
+        "facility_rvu_2025": 6.44,
+        "facility_payment_2025": 208,
+        "notes": [
+          "Procedure: Removal of endobronchial valves.",
+          "Code 31648 covers removal of valves from the initial lobe (RUL).",
+          "Even though 3 valves were removed, they are from the same lobe, so 31648 x1 is appropriate."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31648.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31648
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 6.44,
+        "total_mpfs_facility_payment": 211
+      },
+      "per_code": [
+        {
+          "code": "31648",
+          "description": "Bronchoscopy with valve removal",
+          "total_facility_rvu_2025": 6.44,
+          "mpfs_facility_payment_2025": 211,
+          "category": "blvr_valve_removal",
+          "reasoning": "The procedure describes retrieval of existing Zephyr valves from the right upper lobe; 31648 is the specific code for bronchial valve removal and includes bronchoscopic inspection and suctioning."
+        }
+      ],
+      "dropped_codes": [
+        {
+          "code": "31622",
+          "reason": "Diagnostic bronchoscopy is inherent to valve removal and is not separately reported absent a distinct diagnostic session."
+        },
+        {
+          "code": "31647",
+          "reason": "31647 describes bronchial valve placement, not removal; the documentation clearly describes valve retrieval."
+        }
+      ],
+      "note_rationale": "Simplified coding to the dedicated valve removal code 31648, which best matches the documented work."
+    }
+  },
+  {
+    "note_text": "Flexible bronchoscopy via tracheostomy for Dumon stent surveillance with extensive suctioning and clearance of thick secretions from the left mainstem stent lumen.",
+    "cpt_codes": [
+      31645
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158694"
+      },
+      "cpt_codes": [
+        31645
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31645"
+        ],
+        "facility_rvu_2025": 4.47,
+        "facility_payment_2025": 145,
+        "notes": [
+          "Procedure: Stent surveillance with extensive suctioning.",
+          "Changed 31622 (Diagnostic) to 31645 (Therapeutic aspiration) because 'extensive suctioning and clearance of thick secretions' supports therapeutic work beyond simple inspection."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Upgraded CPT from 31622 to 31645 based on 'extensive suctioning'.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31622
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 4.2,
+        "total_mpfs_facility_payment": 138
+      },
+      "per_code": [
+        {
+          "code": "31622",
+          "description": "Diagnostic bronchoscopy",
+          "total_facility_rvu_2025": 4.2,
+          "mpfs_facility_payment_2025": 138,
+          "category": "bronchoscopy_diagnostic",
+          "reasoning": "Surveillance bronchoscopy through a tracheostomy for Dumon stent inspection with suctioning of secretions fits a diagnostic bronchoscopy; no stent placement, removal, or dilation is documented."
+        }
+      ],
+      "dropped_codes": [],
+      "note_rationale": "Stent surveillance and secretion clearance are integral to diagnostic bronchoscopy and do not require separate CPT codes."
+    }
+  },
+  {
+    "note_text": "Bronchoscopy with REBUS-guided transbronchial cryobiopsy of the right lower lobe (5 samples) for ILD workup using an Arndt blocker for bleeding control.",
+    "cpt_codes": [
+      31628,
+      31654
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158700"
+      },
+      "cpt_codes": [
+        31628,
+        31654
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654"
+        ],
+        "facility_rvu_2025": 7.64,
+        "facility_payment_2025": 247,
+        "notes": [
+          "Procedure: Transbronchial cryobiopsy with Radial EBUS.",
+          "Code 31628 (TBLB) captures the parenchymal biopsy.",
+          "Code +31654 captures the Radial EBUS guidance.",
+          "Arndt blocker use is bundled."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPTs 31628, 31654.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31628,
+        31654
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 7.64,
+        "total_mpfs_facility_payment": 250
+      },
+      "per_code": [
+        {
+          "code": "31628",
+          "description": "Bronchoscopy with transbronchial lung biopsy, single lobe",
+          "total_facility_rvu_2025": 5.53,
+          "mpfs_facility_payment_2025": 181,
+          "category": "tblb_parenchymal",
+          "reasoning": "Transbronchial cryobiopsy of the right lower lobe with multiple samples is coded as a single-lobe transbronchial lung biopsy."
+        },
+        {
+          "code": "+31654",
+          "description": "Radial EBUS for peripheral lesion(s) during bronchoscopy (add-on)",
+          "total_facility_rvu_2025": 2.11,
+          "mpfs_facility_payment_2025": 69,
+          "category": "radial_ebus_add_on",
+          "reasoning": "REBUS (radial EBUS) guidance for peripheral sampling is appropriately captured by add-on code +31654."
+        }
+      ],
+      "dropped_codes": [
+        {
+          "code": "31622",
+          "reason": "Diagnostic bronchoscopy 31622 is bundled when a more extensive transbronchial lung biopsy service (31628) is performed in the same session."
+        }
+      ],
+      "note_rationale": "Final coding reflects both the transbronchial lung cryobiopsy and the documented radial EBUS guidance without separately billing the diagnostic component."
+    }
+  },
+  {
+    "note_text": "Bedside talc slurry pleurodesis via existing large-bore chest tube for right malignant pleural effusion with position changes for talc distribution.",
+    "cpt_codes": [
+      32560
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158705"
+      },
+      "cpt_codes": [
+        32560
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "32560"
+        ],
+        "facility_rvu_2025": 2.31,
+        "facility_payment_2025": 75,
+        "notes": [
+          "Procedure: Bedside chemical pleurodesis via existing tube.",
+          "Code 32560 accurately describes instillation of a pleurodesis agent via chest tube."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 32560.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        32560
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 2.31,
+        "total_mpfs_facility_payment": 76
+      },
+      "per_code": [
+        {
+          "code": "32560",
+          "description": "Chemical pleurodesis via chest tube/catheter",
+          "total_facility_rvu_2025": 2.31,
+          "mpfs_facility_payment_2025": 76,
+          "category": "pleural_pleurodesis",
+          "reasoning": "Talc slurry instilled through an existing large-bore chest tube for malignant effusion is exactly described by 32560."
+        }
+      ],
+      "dropped_codes": [
+        {
+          "code": "32551",
+          "reason": "Tube thoracostomy (32551) requires new chest tube placement; the note specifies pleurodesis through an existing tube with no new insertion."
+        }
+      ],
+      "note_rationale": "Only chemical pleurodesis was performed at this encounter; chest tube management is included in 32560."
+    }
+  },
+  {
+    "note_text": "Emergency bedside bronchoscopy for massive hemoptysis localizing bleeding to the left upper lobe and lingula with iced saline, topical epinephrine, tranexamic acid, and Fogarty balloon tamponade.",
+    "cpt_codes": [
+      31634
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158712"
+      },
+      "cpt_codes": [
+        31634
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31634"
+        ],
+        "facility_rvu_2025": 5.63,
+        "facility_payment_2025": 182,
+        "notes": [
+          "Procedure: Hemoptysis control with balloon tamponade.",
+          "Changed 31622 to 31634. While 31634 is often for Chartis, its definition 'balloon occlusion... and documentation' applies to balloon tamponade for hemorrhage control.",
+          "31634 is the specific code for balloon occlusion."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Replaced 31622 with 31634 (Balloon Occlusion) for hemoptysis tamponade.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31622
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 4.2,
+        "total_mpfs_facility_payment": 138
+      },
+      "per_code": [
+        {
+          "code": "31622",
+          "description": "Diagnostic bronchoscopy",
+          "total_facility_rvu_2025": 4.2,
+          "mpfs_facility_payment_2025": 138,
+          "category": "bronchoscopy_diagnostic",
+          "reasoning": "Emergency bedside bronchoscopy to localize bleeding with saline, topical vasoconstrictors, tranexamic acid, and balloon tamponade is captured as a diagnostic bronchoscopy with hemostatic maneuvers included."
+        }
+      ],
+      "dropped_codes": [],
+      "note_rationale": "There is no distinct tumor ablation, stent placement, or biopsy to justify additional bronchoscopy codes beyond 31622."
+    }
+  },
+  {
+    "note_text": "Complex hybrid-OR case with rigid bronchoscopy for right mainstem tumor debulking, balloon dilation, metallic stent placement, extensive suctioning of post-obstructive secretions, pericardial window by CT surgery, and right PleurX catheter placement.",
+    "cpt_codes": [
+      31636,
+      31641,
+      32550
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158719"
+      },
+      "cpt_codes": [
+        31636,
+        31641,
+        32550
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31636",
+          "31641",
+          "32550"
+        ],
+        "facility_rvu_2025": 21.13,
+        "facility_payment_2025": 684,
+        "notes": [
+          "Procedure: Rigid bronchoscopy with tumor debulking, stent (RMS), and IPC.",
+          "31636: Bronchial Stent (Right Mainstem is bronchial, not tracheal 31631).",
+          "31641: Tumor debulking/destruction.",
+          "32550: PleurX catheter.",
+          "Replaced 31631 (Tracheal) with 31636 (Bronchial) + 31641."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected Stent code 31631 -> 31636 (Mainstem is bronchial).",
+        "Added 31641 for debulking.",
+        "Verified 32550.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31631,
+        32550
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 13.03,
+        "total_mpfs_facility_payment": 427
+      },
+      "per_code": [
+        {
+          "code": "31631",
+          "description": "Bronchoscopy with tracheobronchial stent placement",
+          "total_facility_rvu_2025": 7.15,
+          "mpfs_facility_payment_2025": 234,
+          "category": "airway_stent",
+          "reasoning": "Rigid bronchoscopy with tumor debulking, balloon dilation, and metallic stent placement in the right mainstem bronchus is best represented by 31631; dilation of the same segment is inherent."
+        },
+        {
+          "code": "32550",
+          "description": "Insertion of indwelling tunneled pleural catheter",
+          "total_facility_rvu_2025": 5.88,
+          "mpfs_facility_payment_2025": 193,
+          "category": "pleural_catheter",
+          "reasoning": "Placement of a right PleurX catheter is coded with 32550."
+        }
+      ],
+      "dropped_codes": [
+        {
+          "code": "31622",
+          "reason": "Diagnostic bronchoscopy is bundled when therapeutic stent placement 31631 is performed in the same session."
+        },
+        {
+          "code": "31630",
+          "reason": "Balloon dilation in the same mainstem segment as stent placement is bundled into 31631 under the stent-dilation-same-segment rule."
+        }
+      ],
+      "note_rationale": "Final coding focuses on the major airway stent procedure and separate tunneled pleural catheter placement; tumor debulking and dilation are integral to stent placement."
+    }
+  },
+  {
+    "note_text": "Diagnostic bronchoscopy with bronchoalveolar lavage of the left lower lobe for pneumonia evaluation; no endobronchial lesions seen.",
+    "cpt_codes": [
+      31624
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.158724"
+      },
+      "cpt_codes": [
+        31624
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31624"
+        ],
+        "facility_rvu_2025": 4.24,
+        "facility_payment_2025": 137,
+        "notes": [
+          "Procedure: Diagnostic BAL.",
+          "Code 31624 covers bronchoscopy with BAL.",
+          "31622 is bundled."
+        ]
+      }
+    },
+    "source_file": "synthetic_CPT_corrected.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31624.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "coding_review": {
+      "review_metadata": {
+        "review_version": "1.0.0",
+        "review_date": "2025-12-06",
+        "knowledge_base_version": "ip_coding_billing.v2_7"
+      },
+      "final_cpt_codes": [
+        31624
+      ],
+      "totals_2025": {
+        "total_facility_rvu": 4.24,
+        "total_mpfs_facility_payment": 139
+      },
+      "per_code": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy with bronchoalveolar lavage",
+          "total_facility_rvu_2025": 4.24,
+          "mpfs_facility_payment_2025": 139,
+          "category": "bronchoscopy_diagnostic",
+          "reasoning": "Diagnostic bronchoscopy with BAL of the left lower lobe for pneumonia evaluation is appropriately coded with 31624."
+        }
+      ],
+      "dropped_codes": [
+        {
+          "code": "31622",
+          "reason": "31624 already includes the diagnostic bronchoscopy work; 31622 should not be reported in addition for the same session."
+        }
+      ],
+      "note_rationale": "No biopsies, EBUS, or stents were documented; the only distinct service is diagnostic BAL."
+    }
+  }
+]

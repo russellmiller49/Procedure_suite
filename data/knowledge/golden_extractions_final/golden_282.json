@@ -1,0 +1,1102 @@
+[
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nPatient: [REDACTED], 67-year-old male\nMRN: [REDACTED]\nDate of Procedure: [REDACTED]\nLocation: [REDACTED]\nAttending: Dr. Laura Brennan\nAssistant: Dr. Miguel Santos (IP fellow)\n\nPre-procedure Diagnosis:\nMalignant central airway obstruction of the left mainstem bronchus from biopsy-proven squamous cell carcinoma.\n\nPost-procedure Diagnosis:\nSame.\n\nProcedure Performed:\nRigid bronchoscopy with mechanical debulking of endobronchial tumor (CPT 31640).\n\nAnesthesia / Airway:\nGeneral anesthesia with neuromuscular blockade. Patient intubated with size 12 rigid bronchoscope; intermittent jet ventilation provided through the bronchoscope barrel. ASA class III.\n\nFindings:\nExophytic, friable tumor arising from the medial wall of the left mainstem bronchus, extending 2.5 cm distal to the carina and causing approximately 90% luminal obstruction with distal mucus plugging. Right-sided airways patent.\n\nInterventions:\nThe bevel of the rigid bronchoscope was used to perform repeated rigid coring and mechanical debulking passes through the tumor. Large pieces of tumor were removed with forceps and suction. A microdebrider was then introduced through the rigid scope to further debulk residual tumor until the lumen was widely patent. Overall, the tumor was debulked in piecemeal fashion with clear mechanical debulking and excision of obstructing tissue. No thermal ablation was used.\n\nHemostasis:\nMild oozing from the tumor base controlled with cold saline irrigation and topical epinephrine. No APC or laser therapy required.\n\nEstimated Blood Loss:\n25 mL.\n\nComplications:\nNone immediate. No hypoxia or hemodynamic instability.\n\nPost-procedure Airway Status:\nFinal left mainstem obstruction estimated at <20% with good visualization of segmental bronchi and restoration of airflow.\n\nDisposition:\nExtubated in the OR without difficulty and transferred to the ICU for overnight monitoring given high tumor burden and recent pneumonia.\n\nPlan:\nPost-procedure chest radiograph; resume systemic therapy per oncology; repeat bronchoscopy as needed for recurrent obstruction.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-001",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 67,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Malignant central airway obstruction of the left mainstem bronchus from squamous cell carcinoma.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "CT chest with left mainstem endobronchial mass causing near-complete obstruction and distal atelectasis.",
+      "lesion_size_mm": 25.0,
+      "lesion_location": "Left mainstem bronchus",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "Horizon University Medical Center",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Therapeutic bronchoscopy for malignant left mainstem obstruction.",
+      "bronch_location_lobe": "Left mainstem",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 25,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Endobronchial squamous cell carcinoma causing critical left mainstem obstruction.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Laura Brennan",
+        "fellow_name": "Dr. Miguel Santos",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (rigid coring, microdebrider) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (rigid coring, microdebrider) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nPatient: [REDACTED], 58-year-old female\nMRN: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\nAttending: Dr. James Porter\n\nIndication:\nProgressive dyspnea and stridor due to benign post-intubation granulation tissue causing distal tracheal stenosis.\n\nPre-/Post-procedure Diagnosis:\nBenign distal tracheal obstruction from post-intubation granulation tissue.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of obstructing granulation tissue (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation with IV midazolam and fentanyl; topical lidocaine. Native airway with oral bite block. ASA class III.\n\nFindings:\nAt 2 cm above the carina there was circumferential granulation tissue and nodular scar narrowing the distal trachea to approximately 70% obstruction. No discrete mass elsewhere. Distal mainstem bronchi patent.\n\nInterventions:\nUsing large alligator forceps through the flexible bronchoscope, multiple passes of mechanical debulking were performed, removing friable granulation tissue in piecemeal fashion. Snare resection was then used to excise a central fibrotic band. The stenotic ring was mechanically disrupted, and the tracheal lumen opened significantly. No balloon dilation or thermal ablation was used. The note explicitly reflects mechanical debulking and snare resection of the obstructing lesion consistent with CPT 31640.\n\nHemostasis / Complications:\nMinor oozing controlled with cold saline; no significant bleeding. No desaturations or arrhythmias.\n\nEBL:\nApproximately 10 mL.\n\nDisposition:\nObserved for 2 hours in recovery and discharged home on inhaled corticosteroid and PPI. Follow-up bronchoscopy planned in 6–8 weeks to assess for recurrent stenosis.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-002",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 58,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Symptomatic distal tracheal obstruction from post-intubation granulation tissue.",
+      "indication_category": "Stricture/Stenosis",
+      "radiographic_findings": "CT neck/chest showing focal distal tracheal narrowing with soft tissue thickening.",
+      "lesion_size_mm": 18.0,
+      "lesion_location": "Distal trachea",
+      "sedation_type": "Moderate",
+      "airway_type": "Native",
+      "institution_name": "Lakeside Pulmonary Hospital",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Mechanical debulking of benign distal tracheal stenosis.",
+      "bronch_location_lobe": "Distal trachea",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "ebl_ml": 10,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Benign post-intubation granulation tissue causing distal tracheal stenosis.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. James Porter",
+        "fellow_name": null,
+        "assistant_name": "Kelly Moore, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (forceps, snare) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (forceps, snare) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nPatient: [REDACTED], 72-year-old male\nMRN: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\nAttending: Dr. Priyanka Rao\nAssistant: Dr. Eric Williams (Fellow)\n\nIndication:\nRecurrent hemoptysis and dyspnea due to carinal mass from small cell lung cancer with near-complete obstruction of the left mainstem bronchus.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of carinal and left mainstem tumor (CPT 31640).\n\nAnesthesia / Airway:\nGeneral anesthesia, rigid bronchoscope with jet ventilation. ASA class IV.\n\nFindings:\nFriable, circumferential tumor involving the main carina and extending into the proximal left mainstem causing approximately 85–90% obstruction with clot burden. Right mainstem lumen narrowed <20%.\n\nInterventions:\nOld clot was suctioned from the left mainstem. The rigid bronchoscope bevel was then used for aggressive rigid coring of the exophytic tumor at the carina and into the left mainstem. Multiple large tumor fragments were removed using forceps and suction. Subsequent passes with the microdebrider further debulked residual tissue. Overall, the tumor was mechanically debulked and excised in piecemeal fashion until the left mainstem lumen was restored to ~30% residual narrowing. No radiofrequency ablation, PDT, or cryotherapy was used.\n\nHemostasis:\nBrisk bleeding during initial debulking controlled with topical epinephrine and brief balloon tamponade; no blood products required.\n\nEBL:\nApproximate blood loss 80 mL.\n\nComplications:\nTransient hypotension responsive to vasopressor bolus. No sustained hypoxia.\n\nDisposition:\nRemained intubated post-procedure and transferred to ICU for ventilatory support and close monitoring. Oncology notified for expedited systemic therapy planning.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-003",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 72,
+      "gender": "Male",
+      "asa_class": 4,
+      "primary_indication": "Malignant carinal mass with left mainstem obstruction from small cell lung carcinoma.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "CT chest with carinal mass and left mainstem occlusion with post-obstructive collapse.",
+      "lesion_size_mm": 30.0,
+      "lesion_location": "Carina and proximal left mainstem",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "Metropolitan Cancer Center",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Therapeutic rigid bronchoscopy with mechanical debulking of carinal tumor.",
+      "bronch_location_lobe": "Carina/left mainstem",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 80,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Extensive small cell carcinoma involving carina and left mainstem with critical airway obstruction.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Priyanka Rao",
+        "fellow_name": "Dr. Eric Williams",
+        "assistant_name": "Jamie Cole, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (rigid coring, microdebrider) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (rigid coring, microdebrider) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE – MECHANICAL DEBULKING\n\nPatient: [REDACTED], 63-year-old female\nMRN: [REDACTED]\nDate: [REDACTED]\nSite: [REDACTED]\nAttending: Dr. Daniel Kim\n\nIndication:\nRight mainstem endobronchial metastasis from renal cell carcinoma with progressive dyspnea and wheeze.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of right mainstem tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia, rigid bronchoscope, pressure-controlled ventilation. ASA class III.\n\nFindings:\nPolypoid, highly vascular tumor arising from lateral wall of the right mainstem, extending 1.5 cm distal to the carina and narrowing the lumen to approximately 80%. Distal lobar airways partially collapsed but reachable after debulking.\n\nIntervention Details:\nInitial inspection performed with flexible bronchoscope through the rigid barrel. After mapping, rigid coring of the tumor was performed with the bevel of the scope. Forceps debulking removed multiple tumor fragments. Final passes were made with a microdebrider to smooth the tumor base, achieving effective mechanical debulking and tumor resection without any ablative energy. No balloon dilation used.\n\nHemostasis:\nMinor oozing treated with cold saline and 1:10,000 epinephrine. No APC or laser.\n\nEBL:\n30 mL.\n\nComplications:\nNone. Oxygen saturation remained >94% throughout.\n\nPost-procedure Course:\nRight mainstem lumen improved to about 70–80% patency with good ventilation to all lobes. Patient extubated and taken to recovery in stable condition.\n\nPlan:\nResume systemic therapy; repeat bronchoscopy if symptoms recur.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-004",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 63,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Symptomatic right mainstem obstruction from metastatic renal cell carcinoma.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "CT chest showing right mainstem endobronchial lesion with partial right lung collapse.",
+      "lesion_size_mm": 20.0,
+      "lesion_location": "Right mainstem bronchus",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "Northside Thoracic Institute",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Rigid bronchoscopy with mechanical debulking of right mainstem metastasis.",
+      "bronch_location_lobe": "Right mainstem",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 30,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Metastatic renal cell carcinoma to right mainstem bronchus causing central airway obstruction.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Daniel Kim",
+        "fellow_name": null,
+        "assistant_name": "Alex Jones, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (rigid coring, forceps, microdebrider) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (rigid coring, forceps, microdebrider) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY – RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING\n\nPatient: [REDACTED], 69-year-old male\nMRN: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\nAttending: Dr. Melissa Wong\n\nIndication:\nFixed stridor and exertional dyspnea from proximal tracheal mass thought to represent adenoid cystic carcinoma.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking and excision of proximal tracheal tumor (CPT 31640).\n\nAnesthesia / Airway:\nGeneral anesthesia with rigid tracheoscope, jet ventilation. ASA class III.\n\nFindings:\nSmooth, submucosal-appearing tumor arising from posterior wall of the proximal trachea, approximately 3 cm below the vocal cords, protruding into the lumen and causing ~75% obstruction.\n\nInterventions:\nTumor was grasped with rigid forceps and removed in several pieces. Additional mechanical debulking with the rigid bronchoscope bevel and forceps was used to shave down the residual lesion flush with the wall. A snare loop was used to perform final snare resection of a pedunculated component. No electrocautery, PDT, or cryotherapy was applied. Lumen diameter improved and air leak was unobstructed.\n\nHemostasis:\nMinimal oozing controlled with cold saline. No significant bleeding.\n\nEBL:\n<10 mL.\n\nComplications:\nNone.\n\nDisposition and Plan:\nExtubated in the OR and taken to PACU in stable condition. Pathology specimens sent for histology. Plan for definitive radiation once diagnosis confirmed.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-005",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 69,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Symptomatic proximal tracheal mass suspicious for adenoid cystic carcinoma.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "CT neck with intraluminal proximal tracheal mass and airflow limitation.",
+      "lesion_size_mm": 22.0,
+      "lesion_location": "Proximal trachea",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "Valley Regional Medical Center",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Rigid bronchoscopy with mechanical debulking and snare resection of proximal tracheal tumor.",
+      "bronch_location_lobe": "Proximal trachea",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 5,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Suspected adenoid cystic carcinoma of proximal trachea (final pathology pending).",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Melissa Wong",
+        "fellow_name": null,
+        "assistant_name": "Jordan Ellis, RN",
+        "assistant_role": "Circulating nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (forceps, snare) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (forceps, snare) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPY NOTE – MECHANICAL DEBULKING OF BRONCHUS INTERMEDIUS MASS\n\nPatient: [REDACTED], 54-year-old female\nMRN: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\nAttending: Dr. Omar Rahman\n\nIndication:\nCentral airway obstruction of the bronchus intermedius from endobronchial adenocarcinoma with recurrent post-obstructive pneumonia.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of bronchus intermedius tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid coring with microdebrider. ASA class III.\n\nFindings:\nFriable, exophytic tumor arising from the bronchus intermedius, narrowing the lumen to ~85% with purulent secretions in the right lower lobe bronchi.\n\nInterventions:\nSecretions were suctioned and lavage performed. Rigid coring and mechanical debulking were then done using the rigid bronchoscope bevel. A microdebrider was advanced through the rigid scope to further debulk the tumor. Tumor was debulked in piecemeal fashion until the bronchus intermedius lumen was approximately 60–70% open with good visualization of RML and RLL takeoffs. No laser, APC, PDT, or cryotherapy performed.\n\nHemostasis:\nMild oozing at the tumor base, controlled with topical epinephrine and brief tamponade with the rigid scope.\n\nEBL:\n35 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated and transferred to the floor for overnight observation and IV antibiotics.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-006",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 54,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Bronchus intermedius obstruction from endobronchial adenocarcinoma with recurrent post-obstructive pneumonia.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "CT chest with mass in bronchus intermedius and right lower lobe consolidation.",
+      "lesion_size_mm": 28.0,
+      "lesion_location": "Bronchus intermedius",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "Coastal Lung Center",
+      "molecular_testing_requested": true,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Rigid bronchoscopy with mechanical debulking of bronchus intermedius tumor.",
+      "bronch_location_lobe": "Bronchus intermedius",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 35,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Endobronchial adenocarcinoma of the bronchus intermedius with post-obstructive pneumonia.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Omar Rahman",
+        "fellow_name": "Dr. Nina Lopez",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (rigid coring, microdebrider) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (rigid coring, microdebrider) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE\n\nPatient: [REDACTED], 61-year-old male\nMRN: [REDACTED]\nDate: [REDACTED]\nInstitution: [REDACTED]\nAttending: Dr. Rachel Stone\n\nIndication:\nWorsening wheeze and recurrent collapse of left lower lobe from endobronchial carcinoid in the left lower lobe bronchus.\n\nProcedure:\nFlexible bronchoscopy with mechanical debulking of endobronchial carcinoid tumor (CPT 31640).\n\nAnesthesia / Sedation:\nModerate sedation with propofol infusion and fentanyl; LMA airway. ASA class II.\n\nFindings:\nRounded, vascular, pedunculated mass originating from the origin of the left lower lobe bronchus, causing approximately 70% obstruction.\n\nIntervention:\nThe tumor stalk was grasped with biopsy forceps and snare resection was performed at its base. Additional mechanical debulking with forceps removed residual tumor fragments until the lumen was largely free of tumor. No electrocautery, laser, or cryotherapy delivered. Mechanical excision and debulking of the obstructing carcinoid was clearly documented.\n\nHemostasis:\nBrief oozing treated with cold saline; no significant bleeding.\n\nEBL:\n15 mL.\n\nComplications:\nNone immediate.\n\nDisposition:\nObserved for 4 hours and then discharged home. Follow-up CT and surveillance bronchoscopy planned in 3 months.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-007",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 61,
+      "gender": "Male",
+      "asa_class": 2,
+      "primary_indication": "Endobronchial carcinoid causing obstruction of the left lower lobe bronchus.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "CT chest with left lower lobe endobronchial lesion and distal air trapping.",
+      "lesion_size_mm": 16.0,
+      "lesion_location": "Left lower lobe bronchus",
+      "sedation_type": "Moderate",
+      "airway_type": "LMA",
+      "institution_name": "Summit Medical Center",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Flexible bronchoscopy with snare resection and mechanical debulking of carcinoid.",
+      "bronch_location_lobe": "Left lower lobe",
+      "bronch_location_segment": "Basal segments",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "ebl_ml": 15,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Endobronchial typical carcinoid tumor of the left lower lobe bronchus.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Rachel Stone",
+        "fellow_name": null,
+        "assistant_name": "Sam Lee, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (snare, forceps) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (snare, forceps) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "RIGID BRONCHOSCOPY WITH MECHANICAL DEBULKING – OPERATIVE REPORT\n\nPatient: [REDACTED], 49-year-old female\nMRN: [REDACTED]\nDate: [REDACTED]\nHospital: [REDACTED]\nAttending: Dr. Jonathan Miles\n\nIndication:\nMalignant central airway obstruction from left mainstem squamous cell carcinoma with acute hypoxic respiratory failure.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of left mainstem tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope with jet ventilation. ASA class IV.\n\nFindings:\nBulky, friable tumor filling the left mainstem lumen with 95% obstruction, copious mucus, and collapse of left lung. Right airway normal.\n\nInterventions:\nAfter suctioning secretions, rigid coring was performed repeatedly through the tumor using the rigid bronchoscope bevel. Large tumor chunks were removed with forceps. A microdebrider was used for fine mechanical debulking until the airway lumen was sufficiently re-opened. Tumor debulking and excision were entirely mechanical; no ablative energy (laser, RFA, PDT, or cryotherapy) was used.\n\nHemostasis:\nModerate oozing controlled with topical epinephrine and short periods of tamponade. No transfusion.\n\nEBL:\n60 mL.\n\nComplications:\nNone aside from transient desaturation to 88% during initial rigid coring, improved with recruitment.\n\nDisposition:\nRemained intubated post-procedure and transported to ICU. Post-procedure chest radiograph showed re-expansion of the left lung.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-008",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 49,
+      "gender": "Female",
+      "asa_class": 4,
+      "primary_indication": "Critical left mainstem obstruction from squamous cell carcinoma with acute respiratory failure.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "Near-complete left lung collapse with obstructing left mainstem mass.",
+      "lesion_size_mm": 35.0,
+      "lesion_location": "Left mainstem bronchus",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "East Bay Medical Center",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Emergent rigid bronchoscopy with mechanical debulking of left mainstem tumor.",
+      "bronch_location_lobe": "Left mainstem",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 60,
+      "hypoxia_respiratory_failure": true,
+      "final_diagnosis_prelim": "Bulky endobronchial squamous cell carcinoma of the left mainstem.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Jonathan Miles",
+        "fellow_name": "Dr. Sofia Ruiz",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (rigid coring, forceps, microdebrider) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (rigid coring, forceps, microdebrider) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE – MECHANICAL DEBULKING\n\nPatient: [REDACTED], 76-year-old male\nMRN: [REDACTED]\nDate: [REDACTED]\nLocation: [REDACTED]\nAttending: Dr. Helena Grant\n\nIndication:\nHemoptysis and dyspnea due to right mainstem endobronchial squamous cell carcinoma.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of right mainstem tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope with controlled ventilation. ASA class III.\n\nFindings:\nUlcerated, friable tumor occupying ~70% of the right mainstem lumen with clot burden. Distal lobar branches visible but narrowed.\n\nInterventions:\nClot and secretions suctioned. Rigid coring performed with the rigid scope to mechanically debulk the tumor. Forceps debulking removed residual fragments. A microdebrider was then used to further debulk and smooth the tumor base. Tumor debulked mechanically until lumen patency improved to ~60–70%. No ablative modalities applied.\n\nHemostasis:\nModerate oozing controlled with cold saline and dilute epinephrine.\n\nEBL:\n50 mL.\n\nDisposition:\nExtubated in the OR and transferred to step-down unit for observation overnight.\n\nPlan:\nRepeat bronchoscopy in 6–8 weeks or earlier if recurrent hemoptysis.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-009",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 76,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Right mainstem squamous cell carcinoma with symptomatic central airway obstruction.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "Right mainstem endobronchial lesion with partial right lung collapse.",
+      "lesion_size_mm": 26.0,
+      "lesion_location": "Right mainstem bronchus",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "Central Veterans Hospital",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Moderate (50-200mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Rigid bronchoscopy with mechanical debulking of right mainstem tumor.",
+      "bronch_location_lobe": "Right mainstem",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 50,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Endobronchial squamous cell carcinoma of the right mainstem bronchus.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Helena Grant",
+        "fellow_name": null,
+        "assistant_name": "Mark Allen, RT",
+        "assistant_role": "Respiratory therapist",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (rigid coring, forceps, microdebrider) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (rigid coring, forceps, microdebrider) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  },
+  {
+    "note_text": "BRONCHOSCOPY PROCEDURE NOTE\n\nPatient: [REDACTED], 65-year-old female\nMRN: [REDACTED]\nDate: [REDACTED]\nInstitution: [REDACTED]\nAttending: Dr. Andrew Fields\n\nIndication:\nLeft mainstem obstruction from metastatic breast cancer with progressive dyspnea and cough.\n\nProcedure:\nRigid bronchoscopy with mechanical debulking of metastatic tumor (CPT 31640).\n\nAnesthesia:\nGeneral anesthesia; rigid bronchoscope, ASA class III.\n\nFindings:\nIrregular, nodular tumor on the lateral wall of the left mainstem bronchus, causing ~80% obstruction with distal atelectasis.\n\nInterventions:\nMechanical debulking performed using the rigid bronchoscope bevel, followed by forceps debulking. Snare resection was used to remove a pedunculated portion of tumor. The procedure explicitly consisted of tumor excision and mechanical debulking without any thermal ablation. Final lumen patency approximated 60% with visible segmental orifices.\n\nHemostasis:\nControlled with cold saline; no significant bleeding.\n\nEBL:\n20 mL.\n\nComplications:\nNone.\n\nDisposition:\nExtubated, monitored in PACU, then admitted to oncology floor.",
+    "cpt_codes": [
+      31640
+    ],
+    "registry_entry": {
+      "patient_mrn": "S31640-010",
+      "procedure_date": "[REDACTED]",
+      "patient_age": 65,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Left mainstem obstruction due to metastatic breast carcinoma.",
+      "indication_category": "Airway Obstruction",
+      "radiographic_findings": "CT chest showing left mainstem soft tissue lesion with distal volume loss.",
+      "lesion_size_mm": 24.0,
+      "lesion_location": "Left mainstem bronchus",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "institution_name": "Midtown Academic Hospital",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "bleeding_severity": "Mild (<50mL)",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "bronch_indication": "Rigid bronchoscopy with snare resection and mechanical debulking of metastatic left mainstem tumor.",
+      "bronch_location_lobe": "Left mainstem",
+      "bronch_location_segment": "Central airway",
+      "bronch_guidance": "Rigid bronchoscopy",
+      "ebl_ml": 20,
+      "hypoxia_respiratory_failure": false,
+      "final_diagnosis_prelim": "Metastatic breast carcinoma to left mainstem bronchus with central airway obstruction.",
+      "cpt_codes": [
+        31640
+      ],
+      "providers": {
+        "attending_name": "Dr. Andrew Fields",
+        "fellow_name": "Dr. Lila Desai",
+        "assistant_name": null,
+        "assistant_role": null,
+        "trainee_present": true
+      },
+      "metadata": {
+        "data_entry_status": "Complete",
+        "version": "2.0.0",
+        "generated_at": "2025-12-07T00:00:00"
+      },
+      "evidence": null,
+      "coding_support": {
+        "version": "coding_support.v1",
+        "generated_at": "2025-12-07T06:33:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2.7",
+        "coding_summary": {
+          "primary_family": "bronchoscopy_therapeutic_airway_tumor",
+          "lines": [
+            {
+              "sequence": 1,
+              "code": "31640",
+              "description": "Bronchoscopy; with excision of tumor",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Documentation supports mechanical debulking/excision (forceps, snare) without thermal ablation.",
+              "is_add_on": false,
+              "source": "model"
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "physician_2025_airway",
+          "rvu_source": "cms_rvus.bronchoscopy",
+          "conversion_factor": 32.3562,
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31640",
+              "units": 1,
+              "work_rvu": 4.5,
+              "total_facility_rvu": 7.23,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 234.0,
+              "mpfs_nonfacility_payment": 0.0,
+              "is_primary": true
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.5,
+            "total_facility_rvu": 7.23,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 234.0,
+            "estimated_nonfacility_payment_unadjusted": 0.0
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31640",
+              "summary": "Kept. Supported by explicit description of mechanical excision (forceps, snare) and absence of thermal ablation.",
+              "qa_flags": []
+            }
+          ],
+          "rules_applied": [],
+          "global_comments": [
+            "Procedure involved purely mechanical debulking; CPT 31640 is appropriate."
+          ]
+        }
+      }
+    }
+  }
+]

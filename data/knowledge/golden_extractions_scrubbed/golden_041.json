@@ -1,0 +1,5911 @@
+[
+  {
+    "note_text": "Indication: LUL 1.9cm SCC. Protocol PULSE-LUNG.\nAnesthesia: GA.\nProcedure: ENB to LUL apicoposterior. rEBUS confirmed. PFA catheter placement. 3 cycles 1500V.\nFindings: Increased echogenicity post-ablation. No thermal damage.\nComplications: None.\nPlan: Protocol follow-up.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 1,
+      "generated_name": "Alice Brown",
+      "generated_age": 58,
+      "generation_date": "2025-12-09T09:20:23.237956"
+    }
+  },
+  {
+    "note_text": "OPERATIVE NARRATIVE: [REDACTED], a 58-year-old female enrolled in the PULSE-LUNG Phase II trial, underwent bronchoscopic Pulsed Field Ablation (PFA) for a biopsy-proven squamous cell carcinoma in the left upper lobe. Under general anesthesia, the lesion was localized via electromagnetic navigation and radial EBUS. The investigational FarapulsePulm catheter was deployed. Irreversible electroporation was delivered in three cycles of 1500V pulses. Post-ablation imaging demonstrated cellular disruption consistent with successful non-thermal ablation. The patient tolerated the procedure without arrhythmia or hemodynamic instability.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 2,
+      "generated_name": "Martha Jones",
+      "generated_age": 55,
+      "generation_date": "2025-12-09T09:20:23.237990"
+    }
+  },
+  {
+    "note_text": "CPT Coding: 31641 (Bronchoscopic destruction of tumor - Investigational PFA).\nGuidance: 31627 (ENB), 31654 (Radial EBUS).\nDevice: FarapulsePulm PFA catheter.\nDetails: Non-thermal energy, 1500V, 3 cycles.\nTarget: LUL Peripheral Nodule.\nStatus: Clinical Trial (IDE #BR-PFA-2024-017).",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 3,
+      "generated_name": "Kelly Davis",
+      "generated_age": 59,
+      "generation_date": "2025-12-09T09:20:23.238013"
+    }
+  },
+  {
+    "note_text": "Procedure Note\nAttending: Dr. Patel\nPatient: [REDACTED]\nProcedure: PFA of LUL nodule\nSteps:\n1. GA/ETT.\n2. Navigated to LUL apicoposterior segment.\n3. Confirmed with rEBUS.\n4. Inserted PFA catheter.\n5. Delivered 3 cycles of pulsed energy (1500V).\n6. Monitored impedance - good delivery.\n7. Extubated stable.\nNote: No arrhythmias observed.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 4,
+      "generated_name": "Joan Miller",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238033"
+    }
+  },
+  {
+    "note_text": "janet williams here for the research study pulsed field ablation. she has squamous cell in the lul. we put her to sleep used the nav system to find the spot. put the special catheter in and zapped it 3 times with the electric pulses. no heat damage which is good. heart rhythm stayed fine. patient woke up ok going to follow the study protocol for scans.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 5,
+      "generated_name": "Diane Wilson",
+      "generated_age": 57,
+      "generation_date": "2025-12-09T09:20:23.238053"
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED] DATE OF PROCEDURE: [REDACTED] INSTITUTION: [REDACTED]",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 6,
+      "generated_name": "Frances Moore",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238071"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 3,
+      "entity_types": [
+        "MRN",
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nLUL SCC, 1.9cm. PULSE-LUNG Trial candidate.\n[Anesthesia]\nGeneral Anesthesia.\n[Description]\nENB and rEBUS localization. PFA delivered (1500V x 3 cycles). Non-thermal ablation confirmed via rEBUS changes.\n[Plan]\nCT at 48 hours. Long-term registry.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 7,
+      "generated_name": "Gloria Taylor",
+      "generated_age": 57,
+      "generation_date": "2025-12-09T09:20:23.238088"
+    }
+  },
+  {
+    "note_text": "[REDACTED] our PFA clinical trial today to treat her left upper lobe tumor. We used electromagnetic navigation to guide the specialized catheter to the site. Instead of heat, we used high-voltage electrical pulses to destroy the tumor cells. The procedure went perfectly according to protocol, and we saw immediate signs on the ultrasound that the tissue was treated. Her heart rhythm remained stable throughout.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 8,
+      "generated_name": "Evelyn Anderson",
+      "generated_age": 57,
+      "generation_date": "2025-12-09T09:20:23.238107"
+    }
+  },
+  {
+    "note_text": "Subject: [REDACTED] Procedure: Bronchoscopic Pulsed Field Ablation (PFA). Methodology: General anesthesia. ENB performed. Target: LUL apicoposterior segment. Radial EBUS verification. Novel PFA catheter advanced. Ablation Parameters: Voltage 1500 V. Energy delivery: Non-thermal. Outcomes: Successfully completed per protocol. No arrhythmias observed. Disposition: Research protocol follow-up.",
+    "cpt_codes": [
+      31641,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {
+        "attending_name": "Richard Patel"
+      },
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164570"
+      },
+      "cpt_codes": [
+        31641,
+        31654,
+        31627
+      ],
+      "ablation_peripheral_performed": true,
+      "ablation_modality": null,
+      "patient_mrn": "PFA2025447_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31654",
+          "31627"
+        ],
+        "facility_rvu_2025": 13.58,
+        "facility_payment_2025": 446,
+        "notes": [
+          "Investigational Pulsed Field Ablation (PFA) of peripheral nodule.",
+          "31641 (Tumor destruction) used as proxy for ablation.",
+          "31654 (Radial EBUS) and 31627 (Nav) supported."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Cleared incorrect ablation_modality (Microwave -> null/PFA).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 0,
+      "style_type": 9,
+      "generated_name": "Rose Thomas",
+      "generated_age": 57,
+      "generation_date": "2025-12-09T09:20:23.238124"
+    }
+  },
+  {
+    "note_text": "Indication: RML collapse.\nFindings: Exophytic tumor obstructing RML.\nAction: Forceps biopsy x6. Wash.\nComp: Moderate bleeding, controlled with epi/iced saline.\nImpression: Endobronchial tumor.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_1",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 1,
+      "generated_name": "Linda Wu",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.238144"
+    }
+  },
+  {
+    "note_text": "PROCEDURE REPORT: Ms. [REDACTED] presented for evaluation of right middle lobe collapse. Bronchoscopy revealed a near-complete obstruction of the RML bronchus by a necrotic, exophytic mass. Diagnostic sampling was performed via forceps biopsy and bronchial lavage. Hemostasis was achieved using topical vasoconstrictors after moderate hemorrhage was encountered.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_2",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 2,
+      "generated_name": "Susan Chang",
+      "generated_age": 66,
+      "generation_date": "2025-12-09T09:20:23.238162"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "Code: 31625 (Bronchoscopy with endobronchial biopsy).\nSite: Right Middle Lobe Bronchus.\nPathology: Exophytic tumor.\nSampling: 6 forceps biopsies.\nNote: Bronchial wash (31622) performed but bundled. 31623 (Brush) not performed.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_3",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 3,
+      "generated_name": "Patricia Liu",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.238180"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: Bronchoscopy\n- Local anesthesia.\n- Airway: RML obstructed by tumor.\n- Biopsy: 6 bites taken from RML mass.\n- Bleeding: Moderate, stopped with epi.\n- Lavage collected.\n- Patient stable.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_4",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 4,
+      "generated_name": "Nancy Yang",
+      "generated_age": 66,
+      "generation_date": "2025-12-09T09:20:23.238196"
+    }
+  },
+  {
+    "note_text": "patient [REDACTED] date of birth 1962. indication rml collapse. topical lidocaine used patient awake. rml is blocked by a tumor looks necrotic. took about 6 biopsies bleeding was moderate so we used epinephrine and cold saline. rll and left side looked normal. lavage sent for cytology. tolerated well.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_5",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 5,
+      "generated_name": "Karen Huang",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.238213"
+    }
+  },
+  {
+    "note_text": "[START RECORDING 14:32] Patient name is Elizabeth Chen, medical record Papa Lima dash four eight two nine dash Quebec, date of birth November twenty-third nineteen sixty-two. [14:33] Indication is evaluation of right middle lobe collapse with concern for endobronchial obstruction. [14:34] Topical anesthesia achieved with nebulized lidocaine four percent followed by transtracheal injection of two percent lidocaine... [Rest of text]",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_6",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 6,
+      "generated_name": "Betty Lin",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.238228"
+    }
+  },
+  {
+    "note_text": "[Indication]\nRML collapse, rule out obstruction.\n[Anesthesia]\nTopical Lidocaine.\n[Description]\nRML obstructed by exophytic tumor. Biopsy x6 and Lavage performed. Bleeding controlled.\n[Plan]\nPathology pending.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_7",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 7,
+      "generated_name": "Helen Zhao",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.238244"
+    }
+  },
+  {
+    "note_text": "We examined [REDACTED] investigate why her right middle lung was collapsed. We found a tumor blocking the airway to that section. We took six biopsy samples from the mass. There was some bleeding, which is common with these tumors, but we stopped it with medication. We also washed the area to collect cells for analysis.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_8",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 8,
+      "generated_name": "Sandra Xu",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238263"
+    }
+  },
+  {
+    "note_text": "Patient name [REDACTED] Chen. Indication is evaluation of right middle lobe collapse. Right middle lobe bronchus displays near complete obstruction by an exophytic tumor. Multiple forceps biopsies acquired from the tumor. Moderate hemorrhage encountered, controlled with topical epinephrine. Bronchial lavage acquired from RML. Patient tolerated well.",
+    "cpt_codes": [
+      31625
+    ],
+    "registry_entry": {
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164610"
+      },
+      "ablation_peripheral_performed": false,
+      "ablation_modality": null,
+      "ablation_duration_seconds": null,
+      "patient_mrn": "PL4829Q_syn_9",
+      "cpt_codes": [
+        31625
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31625"
+        ],
+        "facility_rvu_2025": 4.93,
+        "facility_payment_2025": 161,
+        "notes": [
+          "Endobronchial biopsy (31625).",
+          "Bronchial wash (31622) is bundled.",
+          "No ablation performed (biopsy bleeding controlled)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed spurious ablation data.",
+        "Removed 31623 (Wash bundled into 31625).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 1,
+      "style_type": 9,
+      "generated_name": "Donna Ho",
+      "generated_age": 65,
+      "generation_date": "2025-12-09T09:20:23.238280"
+    }
+  },
+  {
+    "note_text": "Emergency Bronchoscopy.\nIndication: Central airway obstruction (RML).\nEvent: Massive hemoptysis (300mL) during debulking.\nAction: Hemostasis (blocker/epi). Stent placed (14x40mm).\nDispo: ICU, intubated.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 1,
+      "generated_name": "Carol Park",
+      "generated_age": 71,
+      "generation_date": "2025-12-09T09:20:23.238297"
+    }
+  },
+  {
+    "note_text": "OPERATIVE SUMMARY: Ms. [REDACTED] underwent therapeutic bronchoscopy for RML tumor debulking. The procedure was complicated by massive hemoptysis estimated at 300mL. Hemodynamic stability was maintained while hemostasis was achieved using a bronchial blocker and iced saline. A 14x40mm silicone stent was deployed to secure the airway and tamponade the bleeding vessel. The patient was transferred to the MICU intubated for monitoring.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 2,
+      "generated_name": "Ruth Choi",
+      "generated_age": 67,
+      "generation_date": "2025-12-09T09:20:23.238315"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "Codes: 31641 (Tumor destruction), 31636 (Stent placement - bronchial).\nContext: Complex therapeutic bronchoscopy.\nComplication: Severe hemorrhage requiring tamponade.\nDevice: Silicone stent 14x40mm.\nDisposition: Critical care.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 3,
+      "generated_name": "Sharon Lee",
+      "generated_age": 71,
+      "generation_date": "2025-12-09T09:20:23.238332"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: Therapeutic Bronchoscopy\n- RML tumor debulking started.\n- Massive bleeding occurred.\n- Blocked RML, used epi/ice.\n- Placed silicone stent.\n- Bleeding stopped.\n- Patient remains intubated in ICU.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 4,
+      "generated_name": "Michelle Han",
+      "generated_age": 73,
+      "generation_date": "2025-12-09T09:20:23.238349"
+    }
+  },
+  {
+    "note_text": "barbara kim 69 female therapeutic bronch for rml obstruction. started debulking with apc and cautery then massive bleeding started like 300ml. scary moment. put a blocker in and used ice. put a stent in 14 by 40 silicone. bleeding stopped. keep her asleep in the icu check blood counts.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 5,
+      "generated_name": "Laura Jung",
+      "generated_age": 70,
+      "generation_date": "2025-12-09T09:20:23.238365"
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED] | MR: [REDACTED] | DOB: [REDACTED] | AGE: 69 PROCEDURE: Therapeutic bronchoscopy - central airway obstruction AIRWAY: General anesthesia, ETT 7.5, maintained throughout INTERVENTION PERFORMED: - RML tumor debulking (electrocautery + APC) - Massive hemoptysis during procedure (est. 300mL) - Controlled with: epi, iced saline, blocker in RML - Silicone stent 14x40mm placed... [Rest of text]",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 6,
+      "generated_name": "Sarah Kang",
+      "generated_age": 71,
+      "generation_date": "2025-12-09T09:20:23.238382"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nRML Tumor Obstruction.\n[Anesthesia]\nGeneral, ETT.\n[Description]\nDebulking initiated. Complicated by massive hemoptysis. Hemostasis achieved. Silicone stent placed (14x40mm).\n[Plan]\nMICU admission. Mechanical ventilation.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 7,
+      "generated_name": "Kimberly Yoon",
+      "generated_age": 70,
+      "generation_date": "2025-12-09T09:20:23.238398"
+    }
+  },
+  {
+    "note_text": "[REDACTED] intended to clear a tumor blocking her right middle airway. During the removal process, she experienced severe bleeding. We acted quickly to block the area and apply cold saline to stop the flow. We then placed a silicone stent to keep the airway open and put pressure on the bleeding site. She is currently stable but remains on a ventilator in the ICU for close watching.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 8,
+      "generated_name": "Deborah Shin",
+      "generated_age": 72,
+      "generation_date": "2025-12-09T09:20:23.238413"
+    }
+  },
+  {
+    "note_text": "Pt: [REDACTED]. PROCEDURE: Therapeutic bronchoscopy. INTERVENTION EXECUTED: RML tumor debulking. Massive hemoptysis during procedure. Controlled with: epi, iced saline, blocker in RML. Silicone stent 14x40mm deployed. COMPLICATION: MAJOR AIRWAY HEMORRHAGE. CURRENT STATUS: Still intubated, sedated. TRANSFERRED TO: MICU.",
+    "cpt_codes": [
+      31641,
+      31636
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164625"
+      },
+      "cpt_codes": [
+        31641,
+        31636
+      ],
+      "patient_mrn": "PP8473_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31641",
+          "31636"
+        ],
+        "facility_rvu_2025": 15.55,
+        "facility_payment_2025": 503,
+        "notes": [
+          "Tumor destruction (31641).",
+          "Bronchial stent (31636) - RML location.",
+          "Corrected from 31631 (Tracheal)."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Corrected Stent code 31631 -> 31636.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 2,
+      "style_type": 9,
+      "generated_name": "Jessica Lim",
+      "generated_age": 70,
+      "generation_date": "2025-12-09T09:20:23.238438"
+    }
+  },
+  {
+    "note_text": "Indication: 14mm LLL nodule.\nTechnique: ENB attempted. Failed to visualize lesion (no rEBUS signal).\nAction: Aborted nav. Blind biopsy x3 and brush x1 performed.\nResult: Nondiagnostic likely.\nPlan: CT biopsy or VATS.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 1,
+      "generated_name": "Cynthia Black",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238454"
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE: [REDACTED] electromagnetic navigation for a small LLL nodule. Despite extensive maneuvering and fluoroscopy (12.4 min), the radial EBUS probe failed to confirm a tool-in-lesion position. The navigation component was aborted. Blind transbronchial biopsies were obtained from the anatomical segment of interest. The patient was advised regarding the low likelihood of diagnostic yield.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 2,
+      "generated_name": "Kathleen Green",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.238470"
+    }
+  },
+  {
+    "note_text": "Codes: 31628 (Transbronchial biopsy), 31627 (Nav - attempted), 31654 (rEBUS - attempted).\nModifier: None (procedure performed, just unsuccessful localization).\nFluoro time: 12.4 min.\nOutcome: Localization failed.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 3,
+      "generated_name": "Amy Gray",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238486"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: Attempted ENB\n- Navigated to LLL.\n- Could not find lesion with rEBUS.\n- Tried for 45 mins.\n- Decided to do blind biopsies instead.\n- Forceps x3, Brush x1.\n- No pneumo.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 4,
+      "generated_name": "Shirley Brown",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.238505"
+    }
+  },
+  {
+    "note_text": "[REDACTED] here for nav bronch lll nodule 14mm. tried to find it with the magnet system but couldnt get the radial ebus to show the concentric ring. tried for like 45 mins lots of fluoro. gave up on the nav and just took some blind bites with the forceps. probably wont get a diagnosis. discussed vats with her.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 5,
+      "generated_name": "Angela Clark",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.238521"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED] | MED REC: [REDACTED] | DOB: [REDACTED] INDICATION: LLL peripheral nodule 14mm, no clear bronchus sign, PET SUV 2.8 (indeterminate) ANESTHESIA: Moderate sedation protocol Midazolam 3mg, fentanyl 100mcg Ramsay 3 achieved, stable throughout PROCEDURE ATTEMPTED: Electromagnetic navigation system set up CT registration performed Target: LLL anteromedial segment nodule... [Rest of text]",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 6,
+      "generated_name": "Helen Lewis",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.238538"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "MRN",
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nLLL Nodule 14mm.\n[Anesthesia]\nModerate Sedation.\n[Description]\nENB localization attempted but failed (no rEBUS signal). Blind TBBx x3 and Brush x1 performed. No complications.\n[Plan]\nSurveillance or Surgical Biopsy.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 7,
+      "generated_name": "Anna Walker",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238553"
+    }
+  },
+  {
+    "note_text": "We tried to biopsy [REDACTED] nodule using the navigation system. Unfortunately, the anatomy was difficult, and we couldn't confirm the exact location with our ultrasound probe despite trying for 45 minutes. We took some samples from the general area, but we explained to her that we might not have hit the target. We may need to consider a needle biopsy or surgery next.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 8,
+      "generated_name": "Brenda Hall",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.238568"
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]. INDICATION: LLL peripheral nodule. PROCEDURE ATTEMPTED: Electromagnetic navigation system configured. Navigation attempt: Guide sheath advanced. Radial EBUS probe deployed - NO concentric pattern visualized. Unable to verify tool-in-lesion. Decision: Procedure aborted due to inability to localize. Sampling performed anyway (blind): Forceps biopsies x3. Brush cytology x1.",
+    "cpt_codes": [
+      31628,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164642"
+      },
+      "cpt_codes": [
+        31628,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 14.0,
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31628",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 10.71,
+        "facility_payment_2025": 351,
+        "notes": [
+          "Blind sampling after failed nav: 31628 (Biopsy).",
+          "Equipment used (Nav + REBUS) supports add-ons despite failure to confirm.",
+          "Removed 31623 (Brush) as bundled/minor."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Corrected CPTs (31628 primary).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 3,
+      "style_type": 9,
+      "generated_name": "Pamela Allen",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.238585"
+    }
+  },
+  {
+    "note_text": "Indication: RLL nodule + Adenopathy.\nEBUS: 4R(9mm) Pos, 7(11mm) Pos.\nENB: RLL 18mm nodule. rEBUS confirmed.\nSampling: TBNA x2, TBBx x3, Brush x2.\nResult: N2 disease + Primary sampled.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 1,
+      "generated_name": "Mary Zhang",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.238607"
+    }
+  },
+  {
+    "note_text": "OPERATIVE REPORT: Ms. [REDACTED] underwent combined staging and diagnostic bronchoscopy. EBUS-TBNA of stations 4R and 7 confirmed N2 nodal involvement (ROSE positive). Following this, electromagnetic navigation was used to localize an 18mm RLL lateral segment nodule. Tool-in-lesion was confirmed via radial EBUS. Transbronchial needle aspiration and forceps biopsies were obtained from the primary lesion.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 2,
+      "generated_name": "Patricia Wang",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.238625"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "Codes: 31652 (EBUS 2 stations), 31629 (Peripheral TBNA), 31654 (rEBUS), 31627 (Nav).\nEBUS: 4R, 7.\nPeripheral: RLL mass (TBNA, Forceps, Brush).\nDiagnosis: Stage IIIB NSCLC.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 3,
+      "generated_name": "Jennifer Li",
+      "generated_age": 59,
+      "generation_date": "2025-12-09T09:20:23.238646"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: Staging EBUS + ENB\n- Deep sedation.\n- EBUS: Sampled 4R and 7. Both malignant.\n- ENB: Navigated to RLL nodule.\n- Confirmed with rEBUS.\n- Took needle, forceps, and brush samples.\n- Bleeding controlled.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 4,
+      "generated_name": "Linda Zhou",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238664"
+    }
+  },
+  {
+    "note_text": "sarah chen 67 female smoker rll mass and nodes. deep sedation propofol. did ebus first 4r and 7 both positive for cancer. then did navigation to the rll mass. radial ebus confirmed it. took 2 needle passes 3 biopsies and 2 brushes. moderate bleeding stopped with epi. discharged stable.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 5,
+      "generated_name": "Elizabeth Chen",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.238682"
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED] | MRN# [REDACTED] | Birth: [REDACTED] Pre-procedure: 67yo former smoker with RLL peripheral nodule 18mm, no bronchus sign on CT. PET shows SUV 4.2. Anesthesia: Deep sedation - propofol infusion 75-100mcg/kg/min, Ramsay 4-5, BP q5min, SpO2 continuous Part 1 - EBUS staging for PET+ N2 nodes: Station 4R (9mm SA) - 4x passes, ROSE+, PET+ Station 7 (11mm SA) - 3x passes, ROSE+, PET+ Molecular testing sent from station 4R sample... [Rest of text]",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 6,
+      "generated_name": "Barbara Wu",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.238703"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "MRN",
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nRLL mass, mediastinal LAD.\n[Anesthesia]\nDeep Sedation.\n[Description]\nEBUS-TBNA of 4R and 7 (Both Positive). ENB to RLL mass. TBNA/TBBx/Brush performed. Bleeding controlled.\n[Plan]\nChemoradiation.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 7,
+      "generated_name": "Susan Liu",
+      "generated_age": 58,
+      "generation_date": "2025-12-09T09:20:23.238720"
+    }
+  },
+  {
+    "note_text": "We performed a two-part procedure for Ms. [REDACTED]. First, we used EBUS to check the lymph nodes in the center of her chest; stations 4R and 7 both showed cancer cells. Second, we used the navigation system to reach the main tumor in her right lower lung and took several biopsy samples. This confirms the cancer has spread to the lymph nodes (Stage IIIB), so we will discuss chemotherapy and radiation.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 8,
+      "generated_name": "Jessica Yang",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.238738"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "Name: [REDACTED]. Chief Indication: RUL mass with mediastinal LAD. Procedure Performed: 1. EBUS-TBNA for staging. 2. Flexible bronchoscopy with endobronchial biopsy. EBUS Component: Systematic mediastinal evaluation. Station 4R: 5 passes, ROSE Positive. Station 7: 4 passes, ROSE Positive. Bronchoscopy Component: Examination revealed mass effect. Multiple forceps biopsies obtained. Assessment: N2/N3 disease verified.",
+    "cpt_codes": [
+      31652,
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164656"
+      },
+      "cpt_codes": [
+        31652,
+        31629,
+        31654,
+        31627
+      ],
+      "lesion_size_mm": 18.0,
+      "ebus_stations_sampled": [
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "PX2947B_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31652",
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 18.03,
+        "facility_payment_2025": 591,
+        "notes": [
+          "EBUS (2 stations) -> 31652.",
+          "Peripheral TBNA (31629) primary for nodule.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Optimized CPTs (31629 primary biopsy).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 4,
+      "style_type": 9,
+      "generated_name": "Sarah Huang",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.238756"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "Indication: 17mm LLL nodule.\nNav: ENB + rEBUS (concentric).\nSamples: TBNA x3, TBBx x5, Brush x2.\nComp: Small apical PTX (15%). Stable.\nDispo: Discharge with follow-up CXR.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 1,
+      "generated_name": "John Kim",
+      "generated_age": 65,
+      "generation_date": "2025-12-09T09:20:23.238775"
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE: [REDACTED] navigation bronchoscopy for a 17mm LLL nodule. Localization was achieved after repositioning, confirmed by a concentric rEBUS view. Systematic sampling included TBNA, forceps biopsy, and brushing. Post-procedure radiography revealed a 15% apical pneumothorax. The patient remained asymptomatic with stable vitals. Conservative management was elected, and the patient was discharged with close radiographic follow-up.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 2,
+      "generated_name": "David Park",
+      "generated_age": 65,
+      "generation_date": "2025-12-09T09:20:23.238792"
+    }
+  },
+  {
+    "note_text": "Codes: 31629 (TBNA), 31654 (rEBUS), 31627 (Nav).\nBiopsies: 3 needle, 5 forceps, 2 brush.\nAdverse Event: Pneumothorax (J93.81) - Observation only.\nFluoro time: 7.2 min.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 3,
+      "generated_name": "Robert Choi",
+      "generated_age": 65,
+      "generation_date": "2025-12-09T09:20:23.238809"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: ENB\n- Deep sedation.\n- Navigated to LLL superior segment.\n- rEBUS concentric.\n- Samples: Needle, Forceps, Brush.\n- Complication: Small pneumo on CXR.\n- Patient stable, sent home.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 4,
+      "generated_name": "Michael Lee",
+      "generated_age": 64,
+      "generation_date": "2025-12-09T09:20:23.238824"
+    }
+  },
+  {
+    "note_text": "case c-847 martin lee. enb for lll nodule 17mm. used superdimension system. had to reposition to get good ebus view but got it eventually. took needle biopsy forceps and brush. xray showed a small pneumothorax about 15 percent. he felt fine so we didnt put a tube in. sent him home will check xray tomorrow.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 5,
+      "generated_name": "William Han",
+      "generated_age": 67,
+      "generation_date": "2025-12-09T09:20:23.238841"
+    }
+  },
+  {
+    "note_text": "CASE PRESENTATION: Complex Navigation Bronchoscopy PATIENT DEMOGRAPHICS: A 64-year-old male (Case ID: [REDACTED], Synthetic Name: Martin Lee, MRN: [REDACTED], DOB: [REDACTED]) former smoker with 45 pack-year history presented with an incidentally discovered left lower lobe peripheral pulmonary nodule. IMAGING CHARACTERISTICS: Computed tomography demonstrated a 17mm solid nodule in the left lower lobe superior segment without clear bronchus sign... [Rest of text]",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 6,
+      "generated_name": "Richard Jung",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.238859"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "MRN",
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nLLL Nodule 17mm.\n[Anesthesia]\nDeep Sedation.\n[Description]\nENB to LLL. rEBUS confirmed. TBNA x3, TBBx x5, Brush x2. Small PTX noted post-op.\n[Plan]\nConservative management of PTX. Discharge.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 7,
+      "generated_name": "Joseph Kang",
+      "generated_age": 66,
+      "generation_date": "2025-12-09T09:20:23.238877"
+    }
+  },
+  {
+    "note_text": "[REDACTED] a navigation bronchoscopy for a spot in his lower left lung. We successfully located the 17mm nodule using the electromagnetic system and confirmed it with ultrasound. We took multiple samples. Afterward, the chest x-ray showed a small lung collapse (pneumothorax). Since he had no symptoms and his oxygen levels were good, we decided he didn't need a chest tube and could go home with a follow-up x-ray scheduled.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 8,
+      "generated_name": "Thomas Yoon",
+      "generated_age": 65,
+      "generation_date": "2025-12-09T09:20:23.238893"
+    }
+  },
+  {
+    "note_text": "CASE PRESENTATION: Complex Navigation Bronchoscopy. PROCEDURAL APPROACH: Electromagnetic navigation bronchoscopy was selected. Technical Details: The electromagnetic navigation system was employed. The extended working channel was advanced. Radial endobronchial ultrasound probe deployment demonstrated concentric echogenic pattern. Sampling Protocol: Transbronchial needle aspiration: 3 passes. Transbronchial forceps biopsy: 5 specimens. COMPLICATIONS: Small apical pneumothorax id[REDACTED]. Conservative management elected.",
+    "cpt_codes": [
+      31629,
+      31654,
+      31627
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164686"
+      },
+      "cpt_codes": [
+        31629,
+        31654,
+        31627
+      ],
+      "gender": "Male",
+      "patient_mrn": "QQ8473R_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654",
+          "+31627"
+        ],
+        "facility_rvu_2025": 11.07,
+        "facility_payment_2025": 363,
+        "notes": [
+          "Peripheral TBNA (31629) primary.",
+          "Bundled 31628/31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Consolidated biopsy codes.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 5,
+      "style_type": 9,
+      "generated_name": "Charles Shin",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.238909"
+    }
+  },
+  {
+    "note_text": "Indication: Staging LLL Adeno.\nEBUS: 4R(10mm)+, 7(19mm)+, 10L(8mm)-.\nEvent: Over-sedation post-op.\nAction: Flumazenil 0.2mg IV.\nResult: Aroused, stable. D/C after 3hr.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 1,
+      "generated_name": "Margaret Rodriguez",
+      "generated_age": 68,
+      "generation_date": "2025-12-09T09:20:23.238928"
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE: [REDACTED]-TBNA for staging of LLL adenocarcinoma. Lymph node stations 4R and 7 were sampled and confirmed malignant (N3 disease relative to LLL primary). Station 10L was benign. In the recovery phase, the patient exhibited prolonged sedation and bradypnea. Flumazenil was administered with immediate positive effect. She was monitored for an extended period before discharge.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 2,
+      "generated_name": "Dorothy Martinez",
+      "generated_age": 67,
+      "generation_date": "2025-12-09T09:20:23.238946"
+    }
+  },
+  {
+    "note_text": "Code: 31653 (EBUS 3 stations).\nDiagnosis: LLL Adenocarcinoma.\nNodes: 4R, 7, 10L.\nDrug: Flumazenil used for reversal.\nPathology: Metastatic adenocarcinoma in 4R/7.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 3,
+      "generated_name": "Lisa Hernandez",
+      "generated_age": 65,
+      "generation_date": "2025-12-09T09:20:23.238962"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: EBUS\n- Sampled 4R, 7, 10L.\n- ROSE positive for cancer in 4R and 7.\n- Patient too sleepy in PACU.\n- Gave Flumazenil.\n- Woke up fine.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 4,
+      "generated_name": "Nancy Lopez",
+      "generated_age": 64,
+      "generation_date": "2025-12-09T09:20:23.238979"
+    }
+  },
+  {
+    "note_text": "helen garcia for ebus staging. gave midazolam and fentanyl. did the exam 4r and 7 were positive for cancer 10l negative. after the procedure she was really groggy breathing slow. had to give flumazenil to wake her up. she came around quick. kept her a bit longer to make sure she didnt get sleepy again.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 5,
+      "generated_name": "Karen Gonzalez",
+      "generated_age": 69,
+      "generation_date": "2025-12-09T09:20:23.238995"
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED] / ID: [REDACTED] / DATE OF BIRTH: [REDACTED] INDICATION: Mediastinal staging for LLL adenocarcinoma SEDATION: Moderate sedation protocol initiated Midazolam 4mg IV (given incrementally) Fentanyl 125mcg IV total dose Target Ramsay 3-4 achieved EBUS PROCEDURE: Systematic N3->N2->N1 evaluation - Station 4R (10mm): 4 passes, PET+, ROSE positive for metastatic adenocarcinoma - Station 7 (19mm): 4 passes, PET+, ROSE positive for metastatic adenocarcinoma... [Rest of text]",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 6,
+      "generated_name": "Betty Perez",
+      "generated_age": 68,
+      "generation_date": "2025-12-09T09:20:23.239011"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nStaging LLL Ca.\n[Anesthesia]\nModerate Sedation.\n[Description]\nEBUS-TBNA 4R, 7, 10L. N3 disease confirmed. Post-op sedation required reversal with Flumazenil.\n[Plan]\nOncology.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 7,
+      "generated_name": "Helen Sanchez",
+      "generated_age": 68,
+      "generation_date": "2025-12-09T09:20:23.239029"
+    }
+  },
+  {
+    "note_text": "[REDACTED] for her lung cancer. We found that the cancer had spread to the lymph nodes on the right side (4R) and the center (7), which is important for her treatment plan. After the procedure, she was very slow to wake up and her breathing was shallow, so we gave her a medication called Flumazenil to reverse the sedation. She woke up immediately and went home safely after extra monitoring.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 8,
+      "generated_name": "Sandra Ramirez",
+      "generated_age": 68,
+      "generation_date": "2025-12-09T09:20:23.239044"
+    }
+  },
+  {
+    "note_text": "PATIENT: [REDACTED]. INDICATION: Mediastinal staging. EBUS PROCEDURE: Systematic evaluation. Station 4R: 4 passes, ROSE positive. Station 7: 4 passes, ROSE positive. Station 10L: 3 passes, ROSE benign. COMPLICATION: Patient remained overly sedated. FLUMAZENIL administered. Immediate improvement in alertness. No other adverse events.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164702"
+      },
+      "ebus_stations_sampled": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10L",
+        "4R",
+        "7"
+      ],
+      "cpt_codes": [
+        31653
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS-TBNA 3+ stations (4R, 7, 10L) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 6,
+      "style_type": 9,
+      "generated_name": "Donna Torres",
+      "generated_age": 66,
+      "generation_date": "2025-12-09T09:20:23.239062"
+    }
+  },
+  {
+    "note_text": "Indication: RUL mass, staging.\nEBUS: 2R, 4R, 7 (All Positive). 10R Benign.\nBronch: RUL mass biopsy x6.\nResult: Stage IIIB.\nComp: Mod bleeding, controlled.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 1,
+      "generated_name": "Carol Li",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.239082"
+    }
+  },
+  {
+    "note_text": "OPERATIVE REPORT: [REDACTED] diagnostic and staging bronchoscopy. EBUS-TBNA confirmed multi-station N2/N3 disease (Stations 2R, 4R, 7 positive). The bronchoscope was then used to visualize and biopsy a large RUL mass causing partial obstruction. Adequate tissue was obtained for molecular profiling. Hemostasis was secured with topical epinephrine.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 2,
+      "generated_name": "Ruth Zhou",
+      "generated_age": 64,
+      "generation_date": "2025-12-09T09:20:23.239102"
+    }
+  },
+  {
+    "note_text": "Codes: 31653 (EBUS 4 stations), 31625 (Bronchial biopsy).\nSites: 2R, 4R, 7, 10R (EBUS); RUL (Biopsy).\nDiagnosis: Lung Ca, Stage IIIB.\nNote: High complexity staging and diagnosis.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 3,
+      "generated_name": "Sharon Chen",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.239122"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: EBUS + Biopsy\n- EBUS: 2R, 4R, 7, 10R.\n- ROSE pos in 2R, 4R, 7.\n- Bronchoscopy: Biopsied RUL mass.\n- Bleeding required epi.\n- Plan: Chemoradiation.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 4,
+      "generated_name": "Michelle Wu",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.239142"
+    }
+  },
+  {
+    "note_text": "[REDACTED] 61 female rul mass. did ebus first. 2r 4r and 7 all cancer. 10r was ok. then looked at the rul mass it was blocking the airway a bit. took 6 biopsies and brushed it. bleeding was moderate used iced saline. confirmed stage 3b. need molecular markers.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 5,
+      "generated_name": "Laura Liu",
+      "generated_age": 65,
+      "generation_date": "2025-12-09T09:20:23.239161"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 1,
+      "entity_types": [
+        "PERSON"
+      ]
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED] | ID: [REDACTED] | Birth Date: [REDACTED] Date of Service: [REDACTED] | Time: 10:30 AM Chief Indication: RUL mass with mediastinal LAD, diagnostic + staging HPI: 61F, 35 pack-year smoker (active), presents with 3-month history of cough and right-sided chest discomfort. CT chest shows 3.2cm RUL mass with bulky mediastinal lymphadenopathy. PET-CT reveals primary lesion SUV 9.4, multiple N2 stations PET-avid (4R, 7, 2R). Procedure Performed: 1. EBUS-TBNA for staging 2. Flexible bronchoscopy with endobronchial biopsy... [Rest of text]",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 6,
+      "generated_name": "Sarah Yang",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.239179"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "DATE_TIME",
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nRUL Mass, Staging.\n[Anesthesia]\nModerate Sedation.\n[Description]\nEBUS-TBNA 2R, 4R, 7, 10R. Malignancy in mediastinal nodes. Endobronchial biopsy of RUL mass. Bleeding controlled.\n[Plan]\nOncology.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 7,
+      "generated_name": "Kimberly Huang",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.239199"
+    }
+  },
+  {
+    "note_text": "We performed a comprehensive procedure for [REDACTED] her lung mass and check the lymph nodes. The EBUS portion showed extensive spread to the lymph nodes (2R, 4R, and 7). We also biopsied the main tumor in the right upper lobe. This confirms advanced stage disease (IIIB). We managed some bleeding during the biopsy, and she recovered well.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 8,
+      "generated_name": "Deborah Lin",
+      "generated_age": 59,
+      "generation_date": "2025-12-09T09:20:23.239218"
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED]. Chief Indication: RUL mass with mediastinal LAD. Procedure Performed: EBUS-TBNA for staging. Flexible bronchoscopy with endobronchial biopsy. EBUS Component: Station 2R: 4 passes, ROSE Positive. Station 4R: 5 passes, ROSE Positive. Station 7: 4 passes, ROSE Positive. Station 10R: 3 passes, ROSE benign. Bronchoscopy Component: Examination revealed mass effect. Multiple forceps biopsies acquired. Assessment: N2/N3 disease verified.",
+    "cpt_codes": [
+      31653,
+      31625
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164725"
+      },
+      "cpt_codes": [
+        31653,
+        31625
+      ],
+      "ebus_stations_sampled": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "10R",
+        "2R",
+        "4R",
+        "7"
+      ],
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653",
+          "31625"
+        ],
+        "facility_rvu_2025": 12.63,
+        "facility_payment_2025": 413,
+        "notes": [
+          "EBUS 4 stations -> 31653.",
+          "Endobronchial biopsy (RUL Mass) -> 31625.",
+          "Bundled 31623."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Removed 31623 (bundled).",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 7,
+      "style_type": 9,
+      "generated_name": "Jessica Zhao",
+      "generated_age": 63,
+      "generation_date": "2025-12-09T09:20:23.239237"
+    }
+  },
+  {
+    "note_text": "Indication: RLL 21mm nodule, bronchus sign+.\nTechnique: Traditional bronch (no nav). Fluoroscopy used.\nSampling: TBNA x3, TBBx x8, Brush x2.\nResult: Lesion visualized. Diagnostic yield high.\nComp: Minor bleeding.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 1,
+      "generated_name": "Christopher Harris",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.239256"
+    }
+  },
+  {
+    "note_text": "PROCEDURE NOTE: [REDACTED] bronchoscopy for an RLL nodule. Due to a positive bronchus sign, traditional thin bronchoscopy was utilized without electromagnetic navigation. The lesion was visualized endobronchially and confirmed with radial EBUS. Transbronchial needle aspiration and forceps biopsies were performed under fluoroscopic guidance. Tolerance was excellent.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 2,
+      "generated_name": "Daniel Clark",
+      "generated_age": 62,
+      "generation_date": "2025-12-09T09:20:23.239273"
+    }
+  },
+  {
+    "note_text": "Codes: 31629 (TBNA), 31654 (rEBUS).\nNote: No 31627 (Nav) charged - traditional approach used.\nBiopsy: RLL nodule.\nFluoroscopy time: 3.1 min.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 3,
+      "generated_name": "Paul Lewis",
+      "generated_age": 59,
+      "generation_date": "2025-12-09T09:20:23.239290"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: Bronchoscopy\n- RLL nodule with bronchus sign.\n- Went down with thin scope.\n- Saw the lesion.\n- Confirmed with rEBUS.\n- Needle and forceps biopsies taken.\n- No navigation needed.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 4,
+      "generated_name": "Mark Robinson",
+      "generated_age": 58,
+      "generation_date": "2025-12-09T09:20:23.239386"
+    }
+  },
+  {
+    "note_text": "mark thompson rll nodule. saw a bronchus sign on ct so didnt use the superdimension. just went down there and saw the mucosal irregularity. radial ebus confirmed it was solid. took needle aspirates and forceps biopsies. simple procedure no complications. discharged home.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 5,
+      "generated_name": "Donald Walker",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.239405"
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED] | MRN# [REDACTED] | Born: [REDACTED] INDICATION: RLL 21mm solid nodule with clear bronchus sign on CT, PET SUV 4.8 ANESTHESIA: Moderate sedation, midazolam 3mg + fentanyl 75mcg Ramsay 3 throughout, monitoring BP q5min, SpO2 continuous TECHNIQUE: Traditional bronchoscopy (no navigation system needed due to bronchus sign) Procedure: - Thin bronchoscope advanced to RLL - Bronchus sign followed to nodule location - Lesion visualized endobronchially as subtle mucosal irregularity... [Rest of text]",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 6,
+      "generated_name": "George Young",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.239423"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "MRN",
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nRLL Nodule 21mm.\n[Anesthesia]\nModerate Sedation.\n[Description]\nTraditional bronchoscopy to RLL. Lesion visualized. rEBUS confirmed. TBNA and TBBx performed. No Nav used.\n[Plan]\nDischarge.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 7,
+      "generated_name": "Kenneth Allen",
+      "generated_age": 61,
+      "generation_date": "2025-12-09T09:20:23.239440"
+    }
+  },
+  {
+    "note_text": "[REDACTED] a nodule in his right lower lung that had a clear airway leading to it, so we didn't need the advanced navigation system. We guided the scope directly to the spot, confirmed it with ultrasound, and took samples with a needle and forceps. He had a little bleeding that stopped on its own, and he went home shortly after.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 8,
+      "generated_name": "Steven King",
+      "generated_age": 60,
+      "generation_date": "2025-12-09T09:20:23.239458"
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED]. INDICATION: RLL 21mm solid nodule. TECHNIQUE: Traditional bronchoscopy. Procedure: Thin bronchoscope advanced to RLL. Lesion visualized endobronchially. Radial EBUS probe: Solid eccentric pattern. Sampling performed: Transbronchial needle aspiration x3. Transbronchial forceps biopsy x5. Brush cytology x2. Complications: Minor self-limited hemorrhage.",
+    "cpt_codes": [
+      31629,
+      31654
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164739"
+      },
+      "cpt_codes": [
+        31629,
+        31654
+      ],
+      "patient_mrn": "TK9472_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31629",
+          "+31654"
+        ],
+        "facility_rvu_2025": 8.0,
+        "facility_payment_2025": 262,
+        "notes": [
+          "Traditional bronch with REBUS (31654).",
+          "No Navigation (31627) used.",
+          "TBNA (31629) primary biopsy."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Removed 31627 (Nav explicitly not used).",
+        "Consolidated biopsies.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 8,
+      "style_type": 9,
+      "generated_name": "Edward Wright",
+      "generated_age": 58,
+      "generation_date": "2025-12-09T09:20:23.239475"
+    }
+  },
+  {
+    "note_text": "Indication: Hx Breast CA, Adenopathy.\nEBUS: 2R, 4R, 7.\nResult: All positive for metastatic breast adenocarcinoma.\nPlan: Oncology for systemic therapy.\nLimit: No PET (CKD).",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_1",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 1,
+      "generated_name": "Alice Martinez",
+      "generated_age": 72,
+      "generation_date": "2025-12-09T09:20:23.239496"
+    }
+  },
+  {
+    "note_text": "PROCEDURE REPORT: [REDACTED], with a history of breast cancer and CKD, presented for evaluation of mediastinal lymphadenopathy. EBUS-TBNA was performed on stations 2R, 4R, and 7. Rapid on-site evaluation was consistent with metastatic adenocarcinoma of breast origin in all sampled stations. Sedation was titrated carefully due to renal dysfunction. The patient remained stable.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_2",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 2,
+      "generated_name": "Martha Hernandez",
+      "generated_age": 70,
+      "generation_date": "2025-12-09T09:20:23.239513"
+    }
+  },
+  {
+    "note_text": "Code: 31653 (EBUS 3 stations).\nPathology: Metastatic Breast Cancer.\nStations: 2R, 4R, 7.\nComorbidities: CKD Stage 3 (modified sedation).\nAdequacy: Confirmed.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_3",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 3,
+      "generated_name": "Kelly Lopez",
+      "generated_age": 74,
+      "generation_date": "2025-12-09T09:20:23.239531"
+    }
+  },
+  {
+    "note_text": "Resident Note\nPatient: [REDACTED]\nProcedure: EBUS\n- History of breast cancer.\n- Sampled 2R, 4R, 7.\n- ROSE showed breast cancer cells.\n- Used lower sedation dose because of kidneys.\n- No issues.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_4",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 4,
+      "generated_name": "Joan Gonzalez",
+      "generated_age": 70,
+      "generation_date": "2025-12-09T09:20:23.239552"
+    }
+  },
+  {
+    "note_text": "sandra lopez 70 female hx breast cancer. kidney disease so no pet scan. did ebus to check lymph nodes. 2r 4r and 7 all looked like cancer on the slide breast origin. reduced fentanyl dose for her kidneys. vitals good. referred back to oncology for chemo.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_5",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 5,
+      "generated_name": "Diane Perez",
+      "generated_age": 71,
+      "generation_date": "2025-12-09T09:20:23.239568"
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED] | MRN: [REDACTED] | DOB: [REDACTED] PROBLEM LIST: #1 Mediastinal lymphadenopathy - needs tissue diagnosis #2 History of breast cancer (2019) - in remission #3 Chronic kidney disease stage 3 SUBJECTIVE: 70F referred for EBUS evaluation of mediastinal nodes found on surveillance CT. Denies chest pain, hemoptysis, dyspnea. No PET scan performed due to renal dysfunction. OBJECTIVE: Procedure: EBUS-TBNA Sedation: Moderate (midazolam 2mg, fentanyl 50mcg) - limited doses due to CKD... [Rest of text]",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_6",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 6,
+      "generated_name": "Frances Sanchez",
+      "generated_age": 69,
+      "generation_date": "2025-12-09T09:20:23.239585"
+    },
+    "scrub_metadata": {
+      "entities_redacted": 2,
+      "entity_types": [
+        "MRN",
+        "DATE_TIME"
+      ]
+    }
+  },
+  {
+    "note_text": "[Indication]\nMediastinal adenopathy, hx Breast CA.\n[Anesthesia]\nModerate Sedation (Renal dosing).\n[Description]\nEBUS-TBNA 2R, 4R, 7. Metastatic breast CA confirmed.\n[Plan]\nOncology.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_7",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 7,
+      "generated_name": "Gloria Ramirez",
+      "generated_age": 68,
+      "generation_date": "2025-12-09T09:20:23.239603"
+    }
+  },
+  {
+    "note_text": "[REDACTED] a history of breast cancer and kidney disease. We performed an EBUS to check swollen lymph nodes in her chest. We sampled stations 2R, 4R, and 7. Unfortunately, all showed cells consistent with breast cancer returning. We used a lower dose of sedation because of her kidneys, and she tolerated the procedure very well.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_8",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 8,
+      "generated_name": "Evelyn Torres",
+      "generated_age": 70,
+      "generation_date": "2025-12-09T09:20:23.239619"
+    }
+  },
+  {
+    "note_text": "Patient: [REDACTED]. PROBLEM LIST: Mediastinal lymphadenopathy. History of breast cancer. Chronic kidney disease stage 3. OBJECTIVE: Procedure: EBUS-TBNA. Sedation: Moderate. Findings: Station 2R: sampled x3, ROSE displays metastatic adenocarcinoma. Station 4R: sampled x4, ROSE positive. Station 7: sampled x3, ROSE positive. ASSESSMENT: Metastatic breast cancer verified.",
+    "cpt_codes": [
+      31653
+    ],
+    "registry_entry": {
+      "procedure_date": "[REDACTED]",
+      "providers": {},
+      "metadata": {
+        "generated_at": "2025-12-01T15:40:50.164756"
+      },
+      "cpt_codes": [
+        31653
+      ],
+      "ebus_stations_sampled": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "linear_ebus_stations": [
+        "2R",
+        "4R",
+        "7"
+      ],
+      "patient_mrn": "TT6849_syn_9",
+      "coding_review": {
+        "reviewer": "IP-Coder-Patch-GPT",
+        "review_date": "[REDACTED]",
+        "cpt_codes": [
+          "31653"
+        ],
+        "facility_rvu_2025": 7.7,
+        "facility_payment_2025": 252,
+        "notes": [
+          "EBUS 3 stations (2R, 4R, 7) -> 31653."
+        ]
+      }
+    },
+    "source_file": "synthetic_notes_with_CPT.csv",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.7",
+      "valid_codes": [],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.1.0",
+      "patch_date": "2025-12-06T12:00:00Z",
+      "changes": [
+        "Fixed MRN.",
+        "Verified CPT 31653.",
+        "Added coding_review."
+      ],
+      "warnings": []
+    },
+    "synthetic_metadata": {
+      "source_file": "golden_extractions/consolidated_verified_notes_v2_8_part_041.json",
+      "original_index": 9,
+      "style_type": 9,
+      "generated_name": "Rose Flores",
+      "generated_age": 73,
+      "generation_date": "2025-12-09T09:20:23.239637"
+    }
+  }
+]

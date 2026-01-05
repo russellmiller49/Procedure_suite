@@ -1,0 +1,1144 @@
+[
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 1 treating right lower lobe.\nPatient: [REDACTED], 44-year-old female with severe persistent asthma on maximal inhaler therapy and frequent exacerbations.\nSedation: Moderate sedation with midazolam and fentanyl; native airway with supplemental oxygen by nasal cannula.\nProcedure details: Flexible bronchoscope advanced through the oropharynx to inspect the tracheobronchial tree. Bronchial thermoplasty catheter deployed to segmental and subsegmental branches of the right lower lobe. Approximately 52 radiofrequency activations were delivered with good contact and visible airway wall blanching. Secretions were suctioned; no biopsies or lavage were performed.\nComplications: Mild transient wheezing and cough during activations without desaturation or hemodynamic instability.\nDisposition: Observed in the bronchoscopy recovery area for 4 hours, then discharged home on a prednisone burst and continuation of high-dose ICS/LABA and LAMA.",
+    "cpt_codes": [
+      31660
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 1 treating right lower lobe.\nPatient: [REDACTED], 44-year-old female with severe persistent asthma on maximal inhaler therapy and frequent exacerbations.\nSedation: Moderate sedation with midazolam and fentanyl; native airway with supplemental oxygen by nasal cannula.\nProcedure details: Flexible bronchoscope advanced through the oropharynx to inspect the tracheobronchial tree. Bronchial thermoplasty catheter deployed to segmental and subsegmental branches of the right lower lobe. Approximately 52 radiofrequency activations were delivered with good contact and visible airway wall blanching. Secretions were suctioned; no biopsies or lavage were performed.\nComplications: Mild transient wheezing and cough during activations without desaturation or hemodynamic instability.\nDisposition: Observed in the bronchoscopy recovery area for 4 hours, then discharged home on a prednisone burst and continuation of high-dose ICS/LABA and LAMA.",
+      "patient_mrn": "BT2025001",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 44,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma on maximal inhaler therapy with frequent exacerbations.",
+      "indication_category": "Asthma",
+      "pre_op_status": "Dyspnea on exertion and nocturnal symptoms 4 nights per week despite high-dose ICS/LABA and LAMA.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native airway",
+      "bronch_indication": "Bronchial thermoplasty session 1 for severe asthma",
+      "bronch_location_lobe": "Right lower lobe",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Mild wheezing and cough during catheter activations; no desaturation.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma treated with bronchial thermoplasty session 1 (right lower lobe).",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": "Return in 3 weeks for bronchial thermoplasty session 2 (left lower lobe).",
+      "bt_lobe_treated": "Right lower lobe",
+      "bt_activation_count": 52,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 4,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 10,
+      "bt_exacerbation_since_last_session": false,
+      "cpt_codes": [
+        31660
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Melissa Grant, MD",
+        "fellow_name": null,
+        "assistant_name": "Jordan Lee, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "generated_at": "2025-12-08T00:00:00Z",
+        "generator": "ip_coding_review.gpt-5.1",
+        "knowledge_base_version": "ip_coding_billing.v2_8",
+        "coding_summary": {
+          "primary_family": null,
+          "lines": [
+            {
+              "code": "31660",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "First bronchial thermoplasty session limited to the right lower lobe in a patient with severe asthma.",
+              "family_key": null,
+              "is_add_on": false,
+              "source": "ip_coding_billing.v2_8 physician_2025_airway + note documentation",
+              "note_spans": [
+                "Bronchial thermoplasty catheter deployed to segmental and subsegmental branches of the right lower lobe. Approximately 52 radiofrequency activations were delivered."
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "facility_rvu": 5.97,
+              "nonfacility_rvu": 0.0,
+              "facility_payment": 193,
+              "nonfacility_payment": 0,
+              "notes": "2025 facility RVUs and MPFS national payment for a single thermoplasty lobe derived from ip_coding_billing.v2_8.",
+              "is_add_on": false
+            }
+          ],
+          "total_work_rvu": 4.0,
+          "total_facility_rvu": 5.97,
+          "total_nonfacility_rvu": 0.0,
+          "estimated_professional_payment": 193,
+          "notes": "Totals reflect one unit of 31660; no additional lobes or bronchoscopic CPT codes modeled for this encounter."
+        },
+        "coding_rationale": {
+          "bullets": [
+            "Procedure description documents bronchial thermoplasty confined to the right lower lobe with multiple catheter activations.",
+            "No diagnostic sampling, EBUS, ablation, or airway stent placement is described, so only 31660 is selected."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 1 treating right lower lobe.\nPatient: [REDACTED], 50-year-old male with severe persistent asthma uncontrolled despite high-dose ICS/LABA, LAMA, and biologic therapy.\nAnesthesia: General anesthesia with endotracheal intubation.\nProcedure details: After induction of general anesthesia, a flexible bronchoscope was passed through the endotracheal tube. The bronchial thermoplasty catheter was sequentially positioned in segmental and subsegmental right lower lobe bronchi. Forty-nine activations were delivered respecting manufacturer-specified temperature and cycle duration. Airways were inspected post-treatment and noted to be patent without endobronchial lesions.\nComplications: No significant intra-procedural bronchospasm, bleeding, or hypoxemia.\nDisposition: Extubated in the procedure room, monitored for 4 hours, and discharged home with a steroid taper and unchanged controller regimen.",
+    "cpt_codes": [
+      31660
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 1 treating right lower lobe.\nPatient: [REDACTED], 50-year-old male with severe persistent asthma uncontrolled despite high-dose ICS/LABA, LAMA, and biologic therapy.\nAnesthesia: General anesthesia with endotracheal intubation.\nProcedure details: After induction of general anesthesia, a flexible bronchoscope was passed through the endotracheal tube. The bronchial thermoplasty catheter was sequentially positioned in segmental and subsegmental right lower lobe bronchi. Forty-nine activations were delivered respecting manufacturer-specified temperature and cycle duration. Airways were inspected post-treatment and noted to be patent without endobronchial lesions.\nComplications: No significant intra-procedural bronchospasm, bleeding, or hypoxemia.\nDisposition: Extubated in the procedure room, monitored for 4 hours, and discharged home with a steroid taper and unchanged controller regimen.",
+      "patient_mrn": "BT2025002",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 50,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma with poor control despite high-dose ICS/LABA, LAMA, and biologic therapy.",
+      "indication_category": "Asthma",
+      "pre_op_status": "Frequent nocturnal symptoms and ED visits despite guideline-directed therapy.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "bronch_indication": "Bronchial thermoplasty session 1 for severe asthma",
+      "bronch_location_lobe": "Right lower lobe",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "No significant bronchospasm, bleeding, or hypoxemia.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma treated with bronchial thermoplasty session 1 (right lower lobe).",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": "Return in 2 to 3 weeks for bronchial thermoplasty session 2 (left lower lobe).",
+      "bt_lobe_treated": "Right lower lobe",
+      "bt_activation_count": 49,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 5,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 15,
+      "bt_exacerbation_since_last_session": false,
+      "cpt_codes": [
+        31660
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Jason Hill, MD",
+        "fellow_name": null,
+        "assistant_name": "Rachel Kim, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "generated_at": "2025-12-08T00:00:00Z",
+        "generator": "ip_coding_review.gpt-5.1",
+        "knowledge_base_version": "ip_coding_billing.v2_8",
+        "coding_summary": {
+          "primary_family": null,
+          "lines": [
+            {
+              "code": "31660",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Single-lobe bronchial thermoplasty confined to the right lower lobe under general anesthesia.",
+              "family_key": null,
+              "is_add_on": false,
+              "source": "ip_coding_billing.v2_8 physician_2025_airway + note documentation",
+              "note_spans": [
+                "The bronchial thermoplasty catheter was sequentially positioned in segmental and subsegmental right lower lobe bronchi. Forty-nine activations were delivered."
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "facility_rvu": 5.97,
+              "nonfacility_rvu": 0.0,
+              "facility_payment": 193,
+              "nonfacility_payment": 0,
+              "notes": "Standard 2025 facility RVU and MPFS payment for single-lobe bronchial thermoplasty from ip_coding_billing.v2_8.",
+              "is_add_on": false
+            }
+          ],
+          "total_work_rvu": 4.0,
+          "total_facility_rvu": 5.97,
+          "total_nonfacility_rvu": 0.0,
+          "estimated_professional_payment": 193,
+          "notes": "Single 31660 billed for right lower lobe thermoplasty; no additional thermoplasty or bronchoscopy codes modeled."
+        },
+        "coding_rationale": {
+          "bullets": [
+            "Note documents bronchial thermoplasty limited to the right lower lobe without additional diagnostic or therapeutic bronchoscopic procedures.",
+            "31660 accurately captures single-lobe bronchial thermoplasty; no evidence supports additional airway or pleural CPT codes."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 2 treating left lower lobe.\nPatient: [REDACTED], 44-year-old female with severe persistent asthma status post successful right lower lobe thermoplasty 3 weeks prior.\nSedation: Monitored anesthesia care with propofol infusion; native airway with nasal cannula oxygen.\nProcedure details: Flexible bronchoscope advanced to the left lower lobe. The thermoplasty catheter was advanced into segmental and subsegmental branches, and 48 activations were delivered evenly throughout the left lower lobe. No lavage, biopsy, or additional interventions were performed.\nComplications: No significant bronchospasm, bleeding, or hypoxemia.\nDisposition: Recovered uneventfully in the bronchoscopy suite and discharged home after 4 hours of observation with continuation of controller therapy.",
+    "cpt_codes": [
+      31660
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 2 treating left lower lobe.\nPatient: [REDACTED], 44-year-old female with severe persistent asthma status post successful right lower lobe thermoplasty 3 weeks prior.\nSedation: Monitored anesthesia care with propofol infusion; native airway with nasal cannula oxygen.\nProcedure details: Flexible bronchoscope advanced to the left lower lobe. The thermoplasty catheter was advanced into segmental and subsegmental branches, and 48 activations were delivered evenly throughout the left lower lobe. No lavage, biopsy, or additional interventions were performed.\nComplications: No significant bronchospasm, bleeding, or hypoxemia.\nDisposition: Recovered uneventfully in the bronchoscopy suite and discharged home after 4 hours of observation with continuation of controller therapy.",
+      "patient_mrn": "BT2025001",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 44,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma undergoing staged bronchial thermoplasty.",
+      "indication_category": "Asthma",
+      "pre_op_status": "Improved control after RLL thermoplasty but persistent dyspnea and exacerbations.",
+      "sedation_type": "MAC",
+      "airway_type": "Native airway",
+      "bronch_indication": "Bronchial thermoplasty session 2 for severe asthma",
+      "bronch_location_lobe": "Left lower lobe",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "No significant bronchospasm, bleeding, or hypoxemia.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma treated with bronchial thermoplasty session 2 (left lower lobe).",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": "Return in 3 weeks for bronchial thermoplasty session 3 (bilateral upper lobes).",
+      "bt_lobe_treated": "Left lower lobe",
+      "bt_activation_count": 48,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 4,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 10,
+      "bt_exacerbation_since_last_session": false,
+      "cpt_codes": [
+        31660
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Melissa Grant, MD",
+        "fellow_name": null,
+        "assistant_name": "Jordan Lee, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "generated_at": "2025-12-08T00:00:00Z",
+        "generator": "ip_coding_review.gpt-5.1",
+        "knowledge_base_version": "ip_coding_billing.v2_8",
+        "coding_summary": {
+          "primary_family": null,
+          "lines": [
+            {
+              "code": "31660",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Second bronchial thermoplasty session limited to the left lower lobe with documented catheter activations.",
+              "family_key": null,
+              "is_add_on": false,
+              "source": "ip_coding_billing.v2_8 physician_2025_airway + note documentation",
+              "note_spans": [
+                "The thermoplasty catheter was advanced into segmental and subsegmental branches, and 48 activations were delivered evenly throughout the left lower lobe."
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "facility_rvu": 5.97,
+              "nonfacility_rvu": 0.0,
+              "facility_payment": 193,
+              "nonfacility_payment": 0,
+              "notes": "Same 2025 airway thermoplasty values as other single-lobe sessions using ip_coding_billing.v2_8.",
+              "is_add_on": false
+            }
+          ],
+          "total_work_rvu": 4.0,
+          "total_facility_rvu": 5.97,
+          "total_nonfacility_rvu": 0.0,
+          "estimated_professional_payment": 193,
+          "notes": "Session 2 uses a single 31660 for left lower lobe thermoplasty; prior RLL session is a separate encounter."
+        },
+        "coding_rationale": {
+          "bullets": [
+            "Documentation describes bronchial thermoplasty in the left lower lobe only with no additional bronchoscopic procedures.",
+            "Using 31660 once for this single-lobe thermoplasty session is consistent with internal thermoplasty coding guidance."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 2 treating left lower lobe.\nPatient: [REDACTED], 50-year-old male with severe persistent asthma following prior right lower lobe thermoplasty.\nAnesthesia: General anesthesia with endotracheal tube.\nProcedure details: Under general anesthesia, flexible bronchoscopy was performed via the endotracheal tube. The bronchial thermoplasty catheter was positioned in the left lower lobe segmental and subsegmental bronchi. Fifty activations were delivered with adequate contact and no visual evidence of airway injury. No lavage or biopsies were obtained.\nComplications: None beyond expected post-procedure cough.\nDisposition: Extubated in the procedure suite and discharged home the same day after routine monitoring.",
+    "cpt_codes": [
+      31660
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 2 treating left lower lobe.\nPatient: [REDACTED], 50-year-old male with severe persistent asthma following prior right lower lobe thermoplasty.\nAnesthesia: General anesthesia with endotracheal tube.\nProcedure details: Under general anesthesia, flexible bronchoscopy was performed via the endotracheal tube. The bronchial thermoplasty catheter was positioned in the left lower lobe segmental and subsegmental bronchi. Fifty activations were delivered with adequate contact and no visual evidence of airway injury. No lavage or biopsies were obtained.\nComplications: None beyond expected post-procedure cough.\nDisposition: Extubated in the procedure suite and discharged home the same day after routine monitoring.",
+      "patient_mrn": "BT2025002",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 50,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma undergoing staged bronchial thermoplasty.",
+      "indication_category": "Asthma",
+      "pre_op_status": "Persistent dyspnea and frequent exacerbations despite initiation of thermoplasty series.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "bronch_indication": "Bronchial thermoplasty session 2 for severe asthma",
+      "bronch_location_lobe": "Left lower lobe",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "None beyond expected post-procedure cough.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma treated with bronchial thermoplasty session 2 (left lower lobe).",
+      "molecular_testing_requested": false,
+      "disposition": "Outpatient discharge",
+      "follow_up_plan": "Return for final bronchial thermoplasty session targeting the upper lobes.",
+      "bt_lobe_treated": "Left lower lobe",
+      "bt_activation_count": 50,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 6,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 20,
+      "bt_exacerbation_since_last_session": false,
+      "cpt_codes": [
+        31660
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Jason Hill, MD",
+        "fellow_name": null,
+        "assistant_name": "Rachel Kim, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "generated_at": "2025-12-08T00:00:00Z",
+        "generator": "ip_coding_review.gpt-5.1",
+        "knowledge_base_version": "ip_coding_billing.v2_8",
+        "coding_summary": {
+          "primary_family": null,
+          "lines": [
+            {
+              "code": "31660",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Second thermoplasty session limited to the left lower lobe with no additional bronchoscopic work.",
+              "family_key": null,
+              "is_add_on": false,
+              "source": "ip_coding_billing.v2_8 physician_2025_airway + note documentation",
+              "note_spans": [
+                "The bronchial thermoplasty catheter was positioned in the left lower lobe segmental and subsegmental bronchi. Fifty activations were delivered."
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "facility_rvu": 5.97,
+              "nonfacility_rvu": 0.0,
+              "facility_payment": 193,
+              "nonfacility_payment": 0,
+              "notes": "Standard single-lobe thermoplasty RVU and payment profile for 2025 from ip_coding_billing.v2_8.",
+              "is_add_on": false
+            }
+          ],
+          "total_work_rvu": 4.0,
+          "total_facility_rvu": 5.97,
+          "total_nonfacility_rvu": 0.0,
+          "estimated_professional_payment": 193,
+          "notes": "No additional airway or pleural CPT codes modeled; only 31660 is billed for this encounter."
+        },
+        "coding_rationale": {
+          "bullets": [
+            "Case describes bronchial thermoplasty in a single lobe (left lower lobe) with no diagnostic biopsies, lavage, EBUS, or stent placement.",
+            "31660 is appropriate as a standalone code for a single-lobe thermoplasty session."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 3 treating bilateral upper lobes.\nPatient: [REDACTED], 44-year-old female with severe persistent asthma status post right and left lower lobe thermoplasty sessions.\nAnesthesia: General anesthesia with laryngeal mask airway.\nProcedure details: Flexible bronchoscopy performed through a laryngeal mask airway. The thermoplasty catheter was advanced sequentially to the right and left upper lobe segmental and subsegmental bronchi. A total of 60 activations were delivered (approximately 30 per upper lobe) with stable airway pressures and no visible airway trauma. No diagnostic sampling was performed.\nComplications: Mild post-procedure cough only; no bronchospasm or desaturation.\nDisposition: Recovered in the post-anesthesia care unit and admitted overnight to the pulmonary floor for routine post-thermoplasty observation.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 3 treating bilateral upper lobes.\nPatient: [REDACTED], 44-year-old female with severe persistent asthma status post right and left lower lobe thermoplasty sessions.\nAnesthesia: General anesthesia with laryngeal mask airway.\nProcedure details: Flexible bronchoscopy performed through a laryngeal mask airway. The thermoplasty catheter was advanced sequentially to the right and left upper lobe segmental and subsegmental bronchi. A total of 60 activations were delivered (approximately 30 per upper lobe) with stable airway pressures and no visible airway trauma. No diagnostic sampling was performed.\nComplications: Mild post-procedure cough only; no bronchospasm or desaturation.\nDisposition: Recovered in the post-anesthesia care unit and admitted overnight to the pulmonary floor for routine post-thermoplasty observation.",
+      "patient_mrn": "BT2025001",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 44,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma undergoing completion bronchial thermoplasty.",
+      "indication_category": "Asthma",
+      "pre_op_status": "Improved symptoms after lower lobe sessions but continued exertional dyspnea.",
+      "sedation_type": "General",
+      "airway_type": "LMA",
+      "bronch_indication": "Bronchial thermoplasty final session for severe asthma",
+      "bronch_location_lobe": "Bilateral upper lobes",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Mild postprocedure cough only.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma treated with completion bronchial thermoplasty.",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Clinic visit in 6 to 8 weeks to evaluate bronchial thermoplasty response.",
+      "bt_lobe_treated": "Bilateral upper lobes",
+      "bt_activation_count": 60,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 4,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 10,
+      "bt_exacerbation_since_last_session": false,
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Melissa Grant, MD",
+        "fellow_name": null,
+        "assistant_name": "Jordan Lee, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.1.0",
+        "generated_at": "2025-12-08T17:50:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "bronchial_thermoplasty",
+          "lines": [
+            {
+              "code": "31661",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 2 or more lobes",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Procedure treated bilateral upper lobes (2 lobes). CPT 31661 is the correct code for '2 or more lobes'.",
+              "is_add_on": false,
+              "source": "model",
+              "note_spans": [
+                {
+                  "snippet": "thermoplasty catheter was advanced sequentially to the right and left upper lobe",
+                  "start": null,
+                  "end": null
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31661",
+              "units": 1,
+              "description": "Bronchoscopy with bronchial thermoplasty, 2 or more lobes",
+              "work_rvu": 4.25,
+              "total_facility_rvu": 6.32,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 204,
+              "mpfs_nonfacility_payment": 0,
+              "is_add_on": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.25,
+            "total_facility_rvu": 6.32,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 204
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31661",
+              "summary": "Selected based on documentation of treatment in both the right and left upper lobes (2 lobes).",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Corrected code from 31660 (1 lobe) to 31661 (2 or more lobes) to reflect bilateral upper lobe treatment."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 3 treating bilateral upper lobes.\nPatient: [REDACTED], 50-year-old male with severe persistent asthma after completion of lower lobe thermoplasty sessions.\nAnesthesia: General anesthesia with endotracheal intubation.\nProcedure details: Under general anesthesia, flexible bronchoscopy was performed via endotracheal tube. The bronchial thermoplasty catheter was sequentially deployed in the right and left upper lobe segmental bronchi. Fifty-eight activations were delivered with good catheter contact and appropriate cycle times. Airways were re-inspected and remained hemostatic and patent.\nComplications: No immediate bronchospasm or significant hypoxemia.\nDisposition: Admitted overnight to the step-down unit for observation and systemic steroid taper.",
+    "cpt_codes": [
+      31661
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 3 treating bilateral upper lobes.\nPatient: [REDACTED], 50-year-old male with severe persistent asthma after completion of lower lobe thermoplasty sessions.\nAnesthesia: General anesthesia with endotracheal intubation.\nProcedure details: Under general anesthesia, flexible bronchoscopy was performed via endotracheal tube. The bronchial thermoplasty catheter was sequentially deployed in the right and left upper lobe segmental bronchi. Fifty-eight activations were delivered with good catheter contact and appropriate cycle times. Airways were re-inspected and remained hemostatic and patent.\nComplications: No immediate bronchospasm or significant hypoxemia.\nDisposition: Admitted overnight to the step-down unit for observation and systemic steroid taper.",
+      "patient_mrn": "BT2025002",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 50,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma undergoing completion bronchial thermoplasty.",
+      "indication_category": "Asthma",
+      "pre_op_status": "Persistent exacerbation risk despite prior thermoplasty sessions.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "bronch_indication": "Bronchial thermoplasty final session for severe asthma",
+      "bronch_location_lobe": "Bilateral upper lobes",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "No immediate bronchospasm or significant hypoxemia.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma treated with bronchial thermoplasty session 3 (bilateral upper lobes).",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Pulmonary clinic follow-up in 4 to 6 weeks to assess overall thermoplasty response.",
+      "bt_lobe_treated": "Bilateral upper lobes",
+      "bt_activation_count": 58,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 6,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 20,
+      "bt_exacerbation_since_last_session": false,
+      "cpt_codes": [
+        31661
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Jason Hill, MD",
+        "fellow_name": null,
+        "assistant_name": "Rachel Kim, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.1.0",
+        "generated_at": "2025-12-08T17:50:00Z",
+        "generator": "IP-Coder-Patch-GPT",
+        "knowledge_base_version": "ip_coding_billing.v2_7",
+        "coding_summary": {
+          "primary_family": "bronchial_thermoplasty",
+          "lines": [
+            {
+              "code": "31661",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 2 or more lobes",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Procedure treated bilateral upper lobes (2 lobes). CPT 31661 is the correct code for '2 or more lobes'.",
+              "is_add_on": false,
+              "source": "model",
+              "note_spans": [
+                {
+                  "snippet": "thermoplasty catheter was sequentially deployed in the right and left upper lobe segmental bronchi",
+                  "start": null,
+                  "end": null
+                }
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_7.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31661",
+              "units": 1,
+              "description": "Bronchoscopy with bronchial thermoplasty, 2 or more lobes",
+              "work_rvu": 4.25,
+              "total_facility_rvu": 6.32,
+              "total_nonfacility_rvu": 0.0,
+              "mpfs_facility_payment": 204,
+              "mpfs_nonfacility_payment": 0,
+              "is_add_on": false
+            }
+          ],
+          "totals": {
+            "total_work_rvu": 4.25,
+            "total_facility_rvu": 6.32,
+            "total_nonfacility_rvu": 0.0,
+            "estimated_facility_payment_unadjusted": 204
+          }
+        },
+        "coding_rationale": {
+          "per_code": [
+            {
+              "code": "31661",
+              "summary": "Selected based on documentation of treatment in both the right and left upper lobes (2 lobes).",
+              "rule_refs": [],
+              "qa_flags": []
+            }
+          ],
+          "global_comments": [
+            "Corrected code from 31660 (1 lobe) to 31661 (2 or more lobes) to reflect bilateral upper lobe treatment."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 2 treating left lower lobe.\nPatient: [REDACTED], 39-year-old female with severe persistent asthma and recent prednisone-dependent exacerbations.\nSedation: Moderate sedation with midazolam and fentanyl; native airway with high-flow nasal cannula.\nProcedure details: Flexible bronchoscopy performed via the oropharynx. The thermoplasty catheter was advanced to segmental and subsegmental left lower lobe bronchi. Forty-five activations were delivered; the procedure was briefly paused because of increased airway resistance and wheeze.\nComplications: Moderate intra-procedural bronchospasm with transient desaturation to 88% managed with inhaled albuterol, IV magnesium, and IV methylprednisolone. No intubation was required and saturations returned to baseline.\nDisposition: Observed overnight on the pulmonary floor with scheduled bronchodilators and systemic steroids.",
+    "cpt_codes": [
+      31660
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 2 treating left lower lobe.\nPatient: [REDACTED], 39-year-old female with severe persistent asthma and recent prednisone-dependent exacerbations.\nSedation: Moderate sedation with midazolam and fentanyl; native airway with high-flow nasal cannula.\nProcedure details: Flexible bronchoscopy performed via the oropharynx. The thermoplasty catheter was advanced to segmental and subsegmental left lower lobe bronchi. Forty-five activations were delivered; the procedure was briefly paused because of increased airway resistance and wheeze.\nComplications: Moderate intra-procedural bronchospasm with transient desaturation to 88% managed with inhaled albuterol, IV magnesium, and IV methylprednisolone. No intubation was required and saturations returned to baseline.\nDisposition: Observed overnight on the pulmonary floor with scheduled bronchodilators and systemic steroids.",
+      "patient_mrn": "BT2025003",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 39,
+      "gender": "Female",
+      "asa_class": 3,
+      "primary_indication": "Severe persistent asthma with frequent exacerbations despite maximal therapy.",
+      "indication_category": "Asthma",
+      "pre_op_status": "Steroid-dependent asthma with multiple exacerbations in the prior year.",
+      "sedation_type": "Moderate",
+      "airway_type": "Native airway",
+      "bronch_indication": "Bronchial thermoplasty session 2 for severe asthma",
+      "bronch_location_lobe": "Left lower lobe",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Moderate bronchospasm with transient hypoxemia managed medically; no intubation.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": false,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma treated with bronchial thermoplasty session 2 complicated by bronchospasm.",
+      "molecular_testing_requested": false,
+      "disposition": "Floor admission",
+      "follow_up_plan": "Pulmonary follow-up in 4 to 6 weeks to assess recovery and determine timing of completion thermoplasty.",
+      "bt_lobe_treated": "Left lower lobe",
+      "bt_activation_count": 45,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 5,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 20,
+      "bt_exacerbation_since_last_session": true,
+      "cpt_codes": [
+        31660
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Jason Hill, MD",
+        "fellow_name": null,
+        "assistant_name": "Megan Boyd, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "generated_at": "2025-12-08T00:00:00Z",
+        "generator": "ip_coding_review.gpt-5.1",
+        "knowledge_base_version": "ip_coding_billing.v2_8",
+        "coding_summary": {
+          "primary_family": null,
+          "lines": [
+            {
+              "code": "31660",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Single-lobe bronchial thermoplasty of the left lower lobe complicated by intra-procedural bronchospasm.",
+              "family_key": null,
+              "is_add_on": false,
+              "source": "ip_coding_billing.v2_8 physician_2025_airway + note documentation",
+              "note_spans": [
+                "Forty-five activations were delivered; the procedure was briefly paused because of increased airway resistance and wheeze."
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "facility_rvu": 5.97,
+              "nonfacility_rvu": 0.0,
+              "facility_payment": 193,
+              "nonfacility_payment": 0,
+              "notes": "Standard 2025 facility values for 31660 are applied despite the presence of bronchospasm, which does not change the CPT selection.",
+              "is_add_on": false
+            }
+          ],
+          "total_work_rvu": 4.0,
+          "total_facility_rvu": 5.97,
+          "total_nonfacility_rvu": 0.0,
+          "estimated_professional_payment": 193,
+          "notes": "No additional codes are modeled for bronchospasm management; care is considered inherent to the bronchial thermoplasty service."
+        },
+        "coding_rationale": {
+          "bullets": [
+            "Bronchial thermoplasty is limited to a single lobe (left lower lobe) in this encounter, consistent with 31660.",
+            "Management of intra-procedural bronchospasm (bronchodilators, IV steroids, magnesium) is considered part of the global service and does not support separate CPT codes."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 3 treating bilateral upper lobes (aborted early).\nPatient: [REDACTED], 56-year-old male with severe steroid-dependent asthma and frequent ICU admissions.\nAnesthesia: General anesthesia with endotracheal intubation.\nProcedure details: After induction of anesthesia, flexible bronchoscopy was performed via endotracheal tube. Bronchial thermoplasty catheter was positioned in the right and left upper lobe segmental bronchi. Thirty-four activations were delivered before abrupt increase in airway pressures and severe wheeze prompted early termination of the procedure.\nComplications: Severe bronchospasm with acute hypoxemic respiratory failure requiring deepening of anesthesia, continuous nebulized bronchodilators, IV epinephrine, and continued mechanical ventilation in the ICU. No significant bleeding or pneumothorax.\nDisposition: Procedure aborted; patient transported intubated to the ICU for ongoing ventilatory and bronchodilator management.",
+    "cpt_codes": [
+      31660
+    ],
+    "registry_entry": {
+      "note_text": "Interventional Pulmonology Procedure Note\nProcedure: Bronchial thermoplasty session 3 treating bilateral upper lobes (aborted early).\nPatient: [REDACTED], 56-year-old male with severe steroid-dependent asthma and frequent ICU admissions.\nAnesthesia: General anesthesia with endotracheal intubation.\nProcedure details: After induction of anesthesia, flexible bronchoscopy was performed via endotracheal tube. Bronchial thermoplasty catheter was positioned in the right and left upper lobe segmental bronchi. Thirty-four activations were delivered before abrupt increase in airway pressures and severe wheeze prompted early termination of the procedure.\nComplications: Severe bronchospasm with acute hypoxemic respiratory failure requiring deepening of anesthesia, continuous nebulized bronchodilators, IV epinephrine, and continued mechanical ventilation in the ICU. No significant bleeding or pneumothorax.\nDisposition: Procedure aborted; patient transported intubated to the ICU for ongoing ventilatory and bronchodilator management.",
+      "patient_mrn": "BT2025004",
+      "procedure_date": "[REDACTED]",
+      "institution_name": "Tri-Service Pulmonary Center",
+      "procedure_setting": "Bronchoscopy suite",
+      "patient_age": 56,
+      "gender": "Male",
+      "asa_class": 3,
+      "primary_indication": "Severe steroid-dependent asthma with prior ICU admissions for status asthmaticus.",
+      "indication_category": "Asthma",
+      "pre_op_status": "High-risk asthma with recent hospitalization requiring systemic steroids and noninvasive ventilation.",
+      "sedation_type": "General",
+      "airway_type": "ETT",
+      "bronch_indication": "Bronchial thermoplasty final session for severe asthma",
+      "bronch_location_lobe": "Bilateral upper lobes",
+      "bronch_location_segment": "Segmental and subsegmental bronchi",
+      "bronch_guidance": "Flexible bronchoscopy",
+      "bronch_num_tbbx": 0,
+      "bronch_tbbx_tool": null,
+      "bronch_specimen_tests": null,
+      "bronch_immediate_complications": "Severe bronchospasm with acute respiratory failure requiring ongoing mechanical ventilation and ICU admission; thermoplasty stopped early.",
+      "ebl_ml": 0,
+      "bleeding_severity": "None",
+      "pneumothorax": false,
+      "pneumothorax_intervention": null,
+      "hypoxia_respiratory_failure": true,
+      "fluoro_time_min": 0,
+      "radiation_dap_gycm2": 0,
+      "ablation_complication_immediate": null,
+      "final_diagnosis_prelim": "Severe asthma with bronchial thermoplasty session 3 aborted due to severe bronchospasm and respiratory failure.",
+      "molecular_testing_requested": false,
+      "disposition": "ICU admission",
+      "follow_up_plan": "Completion thermoplasty deferred; follow-up in asthma clinic after recovery from ICU stay.",
+      "bt_lobe_treated": "Bilateral upper lobes",
+      "bt_activation_count": 34,
+      "bt_system": "Alair",
+      "bt_indication": "Severe persistent asthma",
+      "bt_num_exacerbations_prior_year": 7,
+      "bt_maintenance_oral_steroid": true,
+      "bt_maintenance_oral_steroid_dose_mg": 30,
+      "bt_exacerbation_since_last_session": true,
+      "cpt_codes": [
+        31660
+      ],
+      "evidence": null,
+      "providers": {
+        "attending_name": "CDR Jason Hill, MD",
+        "fellow_name": null,
+        "assistant_name": "Megan Boyd, RN",
+        "assistant_role": "Sedation nurse",
+        "trainee_present": false
+      },
+      "metadata": {
+        "data_entry_status": "complete",
+        "version": "1.0",
+        "generated_at": "2025-12-08T00:00:00"
+      },
+      "coding_support": {
+        "version": "1.0.0",
+        "generated_at": "2025-12-08T00:00:00Z",
+        "generator": "ip_coding_review.gpt-5.1",
+        "knowledge_base_version": "ip_coding_billing.v2_8",
+        "coding_summary": {
+          "primary_family": null,
+          "lines": [
+            {
+              "code": "31660",
+              "modifier": null,
+              "modifiers": null,
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "units": 1,
+              "role": "primary",
+              "selection_status": "selected",
+              "selection_reason": "Bronchial thermoplasty targeting both upper lobes aborted early because of severe bronchospasm; single 31660 still captures the attempted thermoplasty.",
+              "family_key": null,
+              "is_add_on": false,
+              "source": "ip_coding_billing.v2_8 physician_2025_airway + note documentation",
+              "note_spans": [
+                "Thirty-four activations were delivered before abrupt increase in airway pressures and severe wheeze prompted early termination of the procedure."
+              ]
+            }
+          ]
+        },
+        "financial_analysis": {
+          "calendar_year": 2025,
+          "fee_schedule_name": "Medicare Physician Fee Schedule",
+          "rvu_source": "ip_coding_billing.v2_8.fee_schedules.physician_2025_airway",
+          "setting": "facility",
+          "per_code": [
+            {
+              "code": "31660",
+              "description": "Bronchoscopy with bronchial thermoplasty, 1 lobe",
+              "work_rvu": 4.0,
+              "facility_rvu": 5.97,
+              "nonfacility_rvu": 0.0,
+              "facility_payment": 193,
+              "nonfacility_payment": 0,
+              "notes": "Full 31660 RVUs and payment are modeled, as the procedure was initiated and complex bronchospasm management occurred during the same session.",
+              "is_add_on": false
+            }
+          ],
+          "total_work_rvu": 4.0,
+          "total_facility_rvu": 5.97,
+          "total_nonfacility_rvu": 0.0,
+          "estimated_professional_payment": 193,
+          "notes": "No separate critical care or bronchoscopy codes are modeled; ICU management is considered outside the registry episode-level calculation."
+        },
+        "coding_rationale": {
+          "bullets": [
+            "Thermoplasty was initiated in both upper lobes with multiple activations prior to early termination, which supports reporting 31660 for the attempted service.",
+            "Severe bronchospasm and ICU admission represent complications of the procedure and ongoing critical care, not distinct bronchoscopic CPT services for coding purposes in this registry context."
+          ]
+        }
+      }
+    },
+    "source_file": "synthetic_bt_notes_v2_8.json",
+    "cpt_verification_errors": [],
+    "cpt_validation_metadata": {
+      "golden_knowledge_version": "2.8",
+      "valid_codes": [
+        "31660"
+      ],
+      "invalid_codes": []
+    },
+    "patch_metadata": {
+      "patched": true,
+      "patch_version": "1.0.0",
+      "patch_date": "2025-12-08T00:00:00",
+      "changes": [
+        "Synthetic bronchial thermoplasty registry note with coding_support generated using ip_coding_billing.v2_8."
+      ],
+      "warnings": []
+    }
+  }
+]
