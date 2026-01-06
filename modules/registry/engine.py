@@ -1560,6 +1560,29 @@ class RegistryEngine:
             else:
                 procedures[name] = payload
 
+        # Conventional TBNA (31629) and transbronchial biopsy (31628) frequently appear
+        # in sampling bullets; seed them explicitly when documented.
+        if re.search(r"\btbna\b", lowered) and not re.search(
+            r"\b(?:no|not|without)\b[^.\n]{0,40}\btbna\b",
+            lowered,
+        ):
+            _set_if_missing("tbna_conventional", {"performed": True})
+
+        has_tblb = bool(re.search(r"\btblb\b", lowered) or re.search(r"transbronchial\s+lung\s+biops", lowered))
+        has_cryo = bool(re.search(r"cryo\s*biops|cryobiops", lowered))
+        biopsy_negated = bool(
+            re.search(r"\b(?:no|not|without)\b[^.\n]{0,60}\b(?:tblb|transbronchial)\b", lowered)
+            or re.search(r"\b(?:biops(?:y|ies)|cryobiops)\b[^.\n]{0,40}\bnot\b[^.\n]{0,40}\b(?:perform|done|obtain|take)\w*\b", lowered)
+        )
+        if (has_tblb or has_cryo) and not biopsy_negated:
+            if has_cryo:
+                _set_if_missing("transbronchial_cryobiopsy", {"performed": True})
+            else:
+                _set_if_missing("transbronchial_biopsy", {"performed": True})
+
+        if "fluoroscopy" in lowered and data.get("fluoroscopy_used") is None:
+            data["fluoroscopy_used"] = True
+
         # Therapeutic aspiration (31645)
         # Anchor on explicit phrase to avoid confusing suctioning with BAL.
         if re.search(r"\btherapeutic\s+aspiration\b", lowered) and not re.search(

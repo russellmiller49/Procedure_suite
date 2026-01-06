@@ -30,12 +30,13 @@
     "ipc",
     "medical_thoracoscopy",
     "pleurodesis",
+    "pleural_biopsy",
     "fibrinolytic_therapy"
   ],
   "split_sizes": {
-    "train": 6566,
-    "val": 1397,
-    "test": 1448
+    "train": 6714,
+    "val": 1460,
+    "test": 1436
   },
   "label_counts": {
     "diagnostic_bronchoscopy": 7601,

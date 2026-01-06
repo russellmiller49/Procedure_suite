@@ -165,7 +165,7 @@ Each output CSV contains:
 | `source_file` | Origin golden JSON file |
 | `label_source` | Extraction tier ("structured", "cpt", "keyword") |
 | `label_confidence` | Confidence score (0.60-0.95) |
-| `[30 procedure columns]` | Binary (0/1) procedure labels |
+| `[29 procedure columns]` | Binary (0/1) procedure labels |
 
 ---
 

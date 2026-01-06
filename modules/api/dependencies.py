@@ -9,6 +9,8 @@ import os
 from functools import lru_cache
 from typing import Optional
 
+from fastapi import Depends
+
 from config.settings import CoderSettings
 from modules.coder.application.coding_service import CodingService
 from modules.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
@@ -269,8 +271,9 @@ def reset_procedure_store() -> None:
         logger.debug("ProcedureStore reset")
 
 
-@lru_cache(maxsize=1)
-def get_qa_pipeline_service() -> QAPipelineService:
+def get_qa_pipeline_service(
+    coding_service: CodingService = Depends(get_coding_service),
+) -> QAPipelineService:
     """Create a fully wired QAPipelineService instance.
 
     This factory:
@@ -320,9 +323,6 @@ def get_qa_pipeline_service() -> QAPipelineService:
     )
     logger.debug("ReportingStrategy initialized")
 
-    # 6. Coding service
-    coding_service = get_coding_service()
-
     # 7. Build QAPipelineService
     service = QAPipelineService(
         registry_engine=registry_engine,
@@ -339,4 +339,5 @@ def reset_qa_pipeline_service_cache() -> None:
 
     Useful for testing or when settings change.
     """
-    get_qa_pipeline_service.cache_clear()
+    # No-op: get_qa_pipeline_service no longer caches instances.
+    return

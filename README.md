@@ -11,6 +11,7 @@ This toolkit enables:
 
 - **[Installation & Setup](docs/INSTALLATION.md)**: Setup guide for Python, spaCy models, and API keys.
 - **[User Guide](docs/USER_GUIDE.md)**: How to use the CLI tools and API endpoints.
+- **[Registry Prodigy Workflow](docs/REGISTRY_PRODIGY_WORKFLOW.md)**: Human-in-the-loop “Diamond Loop” for the registry procedure classifier.
 - **[Development Guide](docs/DEVELOPMENT.md)**: **CRITICAL** for contributors and AI Agents. Defines the system architecture and coding standards.
 - **[Architecture](docs/ARCHITECTURE.md)**: System design, module breakdown, and data flow.
 - **[Agents](docs/AGENTS.md)**: Multi-agent pipeline documentation for Parser, Summarizer, and Structurer.

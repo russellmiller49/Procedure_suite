@@ -185,25 +185,33 @@ def suggest_codes(
     require_review = is_phi_review_required()
 
     report_text = request.report_text
+    proc_uuid: uuid.UUID | None = None
     try:
         proc_uuid = uuid.UUID(proc_id)
     except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid procedure_id format")
+        proc_uuid = None
 
-    try:
-        proc = load_procedure_for_coding(phi_db, proc_uuid, require_review=require_review)
-    except PermissionError as exc:
-        logger.info(
-            "coding_phi_gated",
-            extra={"procedure_id": proc_id, "require_review": require_review, "reason": "not_reviewed"},
+    proc = None
+    if proc_uuid is not None:
+        try:
+            proc = load_procedure_for_coding(phi_db, proc_uuid, require_review=require_review)
+        except PermissionError as exc:
+            logger.info(
+                "coding_phi_gated",
+                extra={"procedure_id": proc_id, "require_review": require_review, "reason": "not_reviewed"},
+            )
+            raise HTTPException(status_code=403, detail=str(exc))
+        except ValueError as exc:
+            logger.info(
+                "coding_phi_missing",
+                extra={"procedure_id": proc_id, "require_review": require_review},
+            )
+            raise HTTPException(status_code=404, detail=str(exc))
+    elif require_review:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid procedure_id format (PHI review requires UUID procedure IDs).",
         )
-        raise HTTPException(status_code=403, detail=str(exc))
-    except ValueError as exc:
-        logger.info(
-            "coding_phi_missing",
-            extra={"procedure_id": proc_id, "require_review": require_review},
-        )
-        raise HTTPException(status_code=404, detail=str(exc))
 
     if proc is not None:
         # Always prefer scrubbed text from reviewed procedure

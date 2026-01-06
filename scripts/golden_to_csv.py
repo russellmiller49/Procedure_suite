@@ -25,7 +25,7 @@ Each CSV contains:
     - source_file: Origin golden JSON file
     - label_source: Extraction tier ("structured", "cpt", "keyword")
     - label_confidence: Confidence score (0.0-1.0)
-    - [30 boolean procedure columns]
+    - [29 boolean procedure columns]
 """
 
 from __future__ import annotations
@@ -46,9 +46,9 @@ import numpy as np
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
 from modules.ml_coder.label_hydrator import extract_labels_with_hydration
 from modules.ml_coder.registry_data_prep import deduplicate_records
+from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
 
 logging.basicConfig(
     level=logging.INFO,
@@ -59,11 +59,11 @@ logger = logging.getLogger(__name__)
 
 
 # =============================================================================
-# V2 Boolean Fields (Canonical 30 Procedure Flags)
+# V2 Boolean Fields (Canonical 29 Procedure Flags)
 # =============================================================================
-# Use authoritative list from v2_booleans.py (includes fiducial_placement)
+# Use authoritative list from v2_booleans.py
 
-ALL_PROCEDURE_FLAGS = list(PROCEDURE_BOOLEAN_FIELDS)
+ALL_PROCEDURE_FLAGS = list(REGISTRY_LABELS)
 
 # Alternate field names that map to canonical flags (V2 ↔ V3 compatibility)
 FIELD_ALIASES = {
@@ -235,13 +235,61 @@ def extract_procedures_from_registry(registry: dict[str, Any]) -> dict[str, bool
 
 
 def generate_encounter_id(file_path: Path, note_text: str) -> str:
-    """Generate a stable encounter ID for grouping.
+    """Generate a stable encounter ID for grouping (text-derived)."""
+    _ = file_path  # retained for backward-compatible signature
+    return compute_encounter_id(note_text)
 
-    Uses file path + first 100 chars of note to create a stable hash.
-    This ensures all windows from the same note stay in the same split.
-    """
-    content = f"{file_path.stem}:{note_text[:100]}"
-    return hashlib.md5(content.encode()).hexdigest()[:12]
+
+def load_human_registry_labels_csv(path: Path) -> list[dict[str, Any]]:
+    """Load a human-labeled registry CSV into record dicts for Tier-0 merge."""
+    df = pd.read_csv(path)
+    if df.empty:
+        return []
+    if "note_text" not in df.columns:
+        raise ValueError(f"Human labels CSV missing required column 'note_text': {path}")
+
+    # Ensure canonical 29 label columns exist and are {0,1}.
+    for label in ALL_PROCEDURE_FLAGS:
+        if label not in df.columns:
+            df[label] = 0
+        df[label] = pd.to_numeric(df[label], errors="coerce").fillna(0).clip(0, 1).astype(int)
+
+    if "label_confidence" not in df.columns:
+        df["label_confidence"] = 1.0
+    else:
+        df["label_confidence"] = pd.to_numeric(df["label_confidence"], errors="coerce").fillna(1.0).clip(0.0, 1.0)
+
+    if "encounter_id" not in df.columns:
+        df["encounter_id"] = df["note_text"].fillna("").astype(str).map(compute_encounter_id)
+    else:
+        df["encounter_id"] = df["encounter_id"].fillna("").astype(str)
+        missing = df["encounter_id"].str.len() == 0
+        if missing.any():
+            df.loc[missing, "encounter_id"] = df.loc[missing, "note_text"].fillna("").astype(str).map(
+                compute_encounter_id
+            )
+
+    if "source_file" not in df.columns:
+        df["source_file"] = path.name
+    else:
+        df["source_file"] = df["source_file"].fillna(path.name).astype(str)
+
+    records: list[dict[str, Any]] = []
+    for _, row in df.iterrows():
+        note_text = str(row.get("note_text") or "").strip()
+        if not note_text:
+            continue
+        record: dict[str, Any] = {
+            "note_text": note_text,
+            "encounter_id": str(row.get("encounter_id") or compute_encounter_id(note_text)),
+            "source_file": str(row.get("source_file") or path.name),
+            "label_source": "human",
+            "label_confidence": float(row.get("label_confidence") or 1.0),
+        }
+        for label in ALL_PROCEDURE_FLAGS:
+            record[label] = int(row.get(label, 0))
+        records.append(record)
+    return records
 
 
 def load_golden_json(file_path: Path) -> list[dict[str, Any]] | None:
@@ -552,6 +600,12 @@ def main():
         action="store_true",
         help="Parse and validate without writing files",
     )
+    parser.add_argument(
+        "--human-labels-csv",
+        type=Path,
+        default=None,
+        help="Optional CSV of human registry labels to merge as Tier-0 (highest priority)",
+    )
 
     args = parser.parse_args()
 
@@ -587,6 +641,16 @@ def main():
             record = extract_record(file_path, entry, stats)
             if record:
                 records.append(record)
+
+    # Tier-0 merge: human labels (highest priority) before dedup/split.
+    if args.human_labels_csv:
+        human_path = Path(args.human_labels_csv)
+        if not human_path.exists():
+            logger.error(f"Human labels CSV not found: {human_path}")
+            sys.exit(1)
+        human_records = load_human_registry_labels_csv(human_path)
+        logger.info(f"Loaded {len(human_records)} human-labeled records from {human_path}")
+        records = [*human_records, *records]
 
     # Deduplicate records
     if records:

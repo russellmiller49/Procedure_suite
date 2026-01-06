@@ -73,10 +73,18 @@ def convert_suggestion_to_code_decision(
         "evidence_verified": suggestion.evidence_verified,
     }
 
+    raw_code = suggestion.code
+    base_code = raw_code.lstrip("+")
+    display_code = base_code
+
+    # Add '+' prefix for add-on codes in legacy output
+    if kb_repo and kb_repo.is_addon_code(base_code):
+        display_code = f"+{base_code}"
+
     # Add RVU data if KB available
     rvu_data: dict = {}
     if kb_repo:
-        proc_info = kb_repo.get_procedure_info(suggestion.code)
+        proc_info = kb_repo.get_procedure_info(base_code)
         if proc_info:
             rvu_data = {
                 "work_rvu": proc_info.work_rvu,
@@ -87,7 +95,7 @@ def convert_suggestion_to_code_decision(
             context["rvu_data"] = rvu_data
 
     return CodeDecision(
-        cpt=suggestion.code,
+        cpt=display_code,
         description=suggestion.description,
         modifiers=[],  # Modifiers not tracked in CodeSuggestion
         rationale=rationale,
@@ -118,15 +126,16 @@ def convert_coding_result_to_coder_output(
     if conversion_factor is None:
         conversion_factor = CoderSettings().cms_conversion_factor
 
-    # Convert BILLABLE suggestions to CodeDecision objects.
-    # Bundled/removed/rejected suggestions must not inflate the final billed code list
-    # or financial totals.
+    # Legacy `/v1/coder/run` expects the full suggestion list in `codes`,
+    # even when a suggestion is later bundled/removed in modern billing logic.
+    # Keep financial totals restricted to billable decisions.
     codes: list[CodeDecision] = []
+    billable_codes: list[CodeDecision] = []
     for suggestion in result.suggestions:
-        if not _is_billable_suggestion(suggestion):
-            continue
         code_decision = convert_suggestion_to_code_decision(suggestion, kb_repo)
         codes.append(code_decision)
+        if _is_billable_suggestion(suggestion):
+            billable_codes.append(code_decision)
 
     # Build NCCI actions from warning notes (result-level and per-suggestion reasoning)
     ncci_actions: list[BundleDecision] = []
@@ -161,13 +170,13 @@ def convert_coding_result_to_coder_output(
 
     # Build financial summary if KB available
     financials: Optional[FinancialSummary] = None
-    if kb_repo and codes:
+    if kb_repo and billable_codes:
         per_code_billing: list[PerCodeBilling] = []
         total_work_rvu = 0.0
         total_facility_payment = 0.0
 
-        for code_decision in codes:
-            proc_info = kb_repo.get_procedure_info(code_decision.cpt)
+        for code_decision in billable_codes:
+            proc_info = kb_repo.get_procedure_info(code_decision.cpt.lstrip("+"))
             if proc_info:
                 work_rvu = proc_info.work_rvu
                 total_rvu = proc_info.total_facility_rvu

@@ -47,9 +47,6 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
 
         self._version = self._raw_data.get("version", "unknown")
 
-        # Load procedure codes from fee_schedules
-        self._load_procedures()
-
         # Load NCCI pairs
         self._load_ncci_pairs()
 
@@ -58,6 +55,9 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
 
         # Load addon codes from code_lists
         self._load_addon_codes()
+
+        # Load procedure codes from fee_schedules (needs MER + addon metadata)
+        self._load_procedures()
 
     def _load_procedures(self) -> None:
         """Load procedure information from fee_schedules section."""
@@ -152,15 +152,28 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
         """Load addon code list from code_lists section."""
         code_lists = self._raw_data.get("code_lists", {})
 
-        # Look for addon code lists
-        for list_name, codes in code_lists.items():
-            if "addon" in list_name.lower() and isinstance(codes, list):
-                self._addon_codes.update(codes)
+        # Any code explicitly prefixed with '+' in code_lists is an add-on signal,
+        # even if the underlying fee schedule uses the plain numeric code.
+        for codes in code_lists.values():
+            if not isinstance(codes, list):
+                continue
+            for code in codes:
+                if not isinstance(code, str):
+                    continue
+                if code.startswith("+"):
+                    self._addon_codes.add(code)
+                    self._addon_codes.add(code.lstrip("+"))
 
-        # Also mark codes starting with + as addons
-        for code in self._all_codes:
-            if code.startswith("+"):
+        # Preserve older behavior: treat lists named "*addon*" as add-on sources.
+        for list_name, codes in code_lists.items():
+            if "addon" not in str(list_name).lower() or not isinstance(codes, list):
+                continue
+            for code in codes:
+                if not isinstance(code, str):
+                    continue
                 self._addon_codes.add(code)
+                if code.startswith("+"):
+                    self._addon_codes.add(code.lstrip("+"))
 
     def _extract_category(self, schedule_name: str) -> str:
         """Extract category from schedule name."""

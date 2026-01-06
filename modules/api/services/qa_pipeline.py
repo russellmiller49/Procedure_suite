@@ -409,7 +409,8 @@ class QAPipelineService:
                     "confidence": s.final_confidence,
                     "source": s.source,
                     "hybrid_decision": s.hybrid_decision,
-                    "review_flag": s.review_flag,
+                    # QA schema expects a boolean; treat required/recommended as needing review.
+                    "review_flag": str(getattr(s, "review_flag", "")).lower() in ("required", "recommended"),
                 }
                 for s in result.suggestions
             ]
@@ -424,7 +425,7 @@ class QAPipelineService:
                     "kb_version": result.kb_version,
                     "policy_version": result.policy_version,
                     "model_version": result.model_version,
-                    "processing_time_ms": result.processing_time_ms,
+                    "processing_time_ms": int(result.processing_time_ms) if result.processing_time_ms is not None else None,
                 },
             )
         except Exception as e:

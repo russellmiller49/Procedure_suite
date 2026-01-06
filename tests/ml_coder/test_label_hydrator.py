@@ -259,7 +259,7 @@ class TestExtractLabelsWithHydration:
 
         result = extract_labels_with_hydration(entry)
 
-        # All 30 procedure fields should be in labels
+        # All procedure fields should be in labels
         for field in PROCEDURE_BOOLEAN_FIELDS:
             assert field in result.labels
             assert result.labels[field] in (0, 1)

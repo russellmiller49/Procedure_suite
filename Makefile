@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -235,6 +235,116 @@ prodigy-clear-unannotated:
 		--batch-file data/ml_training/prodigy_batch.jsonl \
 		--dataset $(PRODIGY_DATASET) \
 		--backup
+
+# ==============================================================================
+# Registry Prodigy Workflow (Multi-Label Classification)
+# ==============================================================================
+# Requires:
+#   make registry-prep-final (or otherwise produce registry_train/val/test.csv)
+#   and a JSONL of unlabeled notes at $(PRODIGY_REGISTRY_INPUT_FILE)
+#
+# Workflow: prepare → annotate → export → merge → retrain
+
+PRODIGY_REGISTRY_COUNT ?= 200
+PRODIGY_REGISTRY_DATASET ?= registry_corrections_v1
+PRODIGY_REGISTRY_INPUT_FILE ?= data/ml_training/registry_unlabeled_notes.jsonl
+PRODIGY_REGISTRY_STRATEGY ?= hybrid
+PRODIGY_REGISTRY_MODEL_DIR ?= data/models/registry_runtime
+
+PRODIGY_REGISTRY_BATCH_FILE ?= data/ml_training/prodigy_registry_batch.jsonl
+PRODIGY_REGISTRY_MANIFEST ?= data/ml_training/prodigy_registry_manifest.json
+PRODIGY_REGISTRY_EXPORT_CSV ?= data/ml_training/registry_prodigy_labels.csv
+PRODIGY_REGISTRY_TRAIN_AUGMENTED ?= data/ml_training/registry_train_augmented.csv
+
+prodigy-prepare-registry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry.py \
+		--input-file $(PRODIGY_REGISTRY_INPUT_FILE) \
+		--output-file $(PRODIGY_REGISTRY_BATCH_FILE) \
+		--count $(PRODIGY_REGISTRY_COUNT) \
+		--strategy $(PRODIGY_REGISTRY_STRATEGY) \
+		--model-dir $(PRODIGY_REGISTRY_MODEL_DIR) \
+		--manifest $(PRODIGY_REGISTRY_MANIFEST) \
+		--exclude-csv data/ml_training/registry_train.csv
+
+prodigy-annotate-registry:
+	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(PRODIGY_REGISTRY_DATASET) blank:en \
+		$(PRODIGY_REGISTRY_BATCH_FILE) \
+		--label $$LABELS
+
+prodigy-export-registry:
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_registry.py \
+		--dataset $(PRODIGY_REGISTRY_DATASET) \
+		--output-csv $(PRODIGY_REGISTRY_EXPORT_CSV)
+
+prodigy-merge-registry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/merge_registry_prodigy.py \
+		--base-train-csv data/ml_training/registry_train.csv \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--prodigy-csv $(PRODIGY_REGISTRY_EXPORT_CSV) \
+		--out-csv $(PRODIGY_REGISTRY_TRAIN_AUGMENTED)
+
+prodigy-retrain-registry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta.py \
+		--train-csv $(PRODIGY_REGISTRY_TRAIN_AUGMENTED) \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--output-dir data/models/roberta_registry
+
+prodigy-registry-cycle: prodigy-prepare-registry
+	@echo "Batch prepared at $(PRODIGY_REGISTRY_BATCH_FILE)"
+	@echo "Run 'make prodigy-annotate-registry' to start Prodigy UI (textcat)"
+	@echo "After annotation:"
+	@echo "  make prodigy-export-registry"
+	@echo "  make prodigy-merge-registry"
+	@echo "  make prodigy-retrain-registry"
+
+# ==============================================================================
+# Registry “Diamond Loop” targets (brief-compatible aliases)
+# ==============================================================================
+REG_PRODIGY_COUNT ?= 200
+REG_PRODIGY_DATASET ?= registry_v1
+REG_PRODIGY_INPUT_FILE ?= data/ml_training/registry_unlabeled_notes.jsonl
+REG_PRODIGY_BATCH_FILE ?= data/ml_training/registry_prodigy_batch.jsonl
+REG_PRODIGY_MANIFEST ?= data/ml_training/registry_prodigy_manifest.json
+REG_PRODIGY_MODEL_DIR ?= data/models/registry_runtime
+REG_PRODIGY_EXPORT_CSV ?= data/ml_training/registry_human.csv
+REG_PRODIGY_RESET_ARCHIVE_DIR ?= data/ml_training/_archive/registry_prodigy
+
+# Reset registry Prodigy state (batch + manifest + Prodigy dataset).
+# This is safe to run even if some files/datasets don't exist.
+registry-prodigy-reset:
+	@mkdir -p $(REG_PRODIGY_RESET_ARCHIVE_DIR)
+	@ts="$$(date +%Y%m%d_%H%M%S)"; \
+	for f in "$(REG_PRODIGY_BATCH_FILE)" "$(REG_PRODIGY_MANIFEST)"; do \
+		if [ -f "$$f" ]; then \
+			mv "$$f" "$(REG_PRODIGY_RESET_ARCHIVE_DIR)/$$(basename "$$f").$$ts"; \
+			echo "Archived $$f → $(REG_PRODIGY_RESET_ARCHIVE_DIR)/$$(basename "$$f").$$ts"; \
+		fi; \
+	done
+	@$(CONDA_ACTIVATE) && REG_PRODIGY_DATASET="$(REG_PRODIGY_DATASET)" $(PRODIGY_PYTHON) - <<'PY'\nfrom prodigy.components.db import connect\nimport os\n\nds = os.environ.get(\"REG_PRODIGY_DATASET\", \"\").strip()\nif not ds:\n    raise SystemExit(\"REG_PRODIGY_DATASET is empty\")\n\ndb = connect()\nif ds in db.datasets:\n    db.drop_dataset(ds)\n    print(f\"Dropped Prodigy dataset: {ds}\")\nelse:\n    print(f\"Prodigy dataset not found (nothing to drop): {ds}\")\nPY
+
+registry-prodigy-prepare:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry_batch.py \
+		--input-file $(REG_PRODIGY_INPUT_FILE) \
+		--output-file $(REG_PRODIGY_BATCH_FILE) \
+		--limit $(REG_PRODIGY_COUNT) \
+		--strategy disagreement \
+		--manifest $(REG_PRODIGY_MANIFEST) \
+		--seed 42 \
+		--model-dir $(REG_PRODIGY_MODEL_DIR)
+
+registry-prodigy-annotate:
+	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(REG_PRODIGY_DATASET) $(REG_PRODIGY_BATCH_FILE) \
+		--loader jsonl \
+		--label $$LABELS
+
+registry-prodigy-export:
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_registry.py \
+		--dataset $(REG_PRODIGY_DATASET) \
+		--output-csv $(REG_PRODIGY_EXPORT_CSV)
 
 # ==============================================================================
 # Gold Standard PHI Workflow (Pure Human-Verified Data)
@@ -474,6 +584,14 @@ help:
 	@echo "  prodigy-cycle   - Full Prodigy iteration workflow"
 	@echo "  prodigy-clear-unannotated - Remove unannotated examples from batch file"
 	@echo ""
+	@echo "Registry Prodigy Workflow (multi-label classification):"
+	@echo "  prodigy-prepare-registry - Prepare batch for Prodigy choice (PRODIGY_REGISTRY_COUNT=200)"
+	@echo "  prodigy-annotate-registry - Launch Prodigy UI (PRODIGY_REGISTRY_DATASET=registry_corrections_v1)"
+	@echo "  prodigy-export-registry  - Export accepted labels to CSV"
+	@echo "  prodigy-merge-registry   - Merge Prodigy labels into train split (leakage-guarded)"
+	@echo "  prodigy-retrain-registry - Retrain registry classifier on augmented train split"
+	@echo "  prodigy-registry-cycle   - Convenience: prepare + instructions"
+	@echo ""
 	@echo "Gold Standard PHI Workflow (pure human-verified data):"
 	@echo "  gold-export    - Export pure gold from Prodigy dataset"
 	@echo "  gold-split     - 80/20 train/test split with note grouping"
@@ -537,6 +655,21 @@ registry-prep:
 		--prefix $(REGISTRY_PREFIX) \
 		--min-label-count $(REGISTRY_MIN_LABEL_COUNT) \
 		--random-seed $(REGISTRY_SEED)
+
+# Full pipeline + Tier-0 merge of human labels (Diamond Loop)
+HUMAN_REGISTRY_CSV ?=
+registry-prep-with-human:
+	@if [ -z "$(HUMAN_REGISTRY_CSV)" ]; then \
+		echo "ERROR: HUMAN_REGISTRY_CSV is required (e.g. make registry-prep-with-human HUMAN_REGISTRY_CSV=/tmp/registry_human.csv)"; \
+		exit 1; \
+	fi
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+		--input-dir $(REGISTRY_INPUT_DIR) \
+		--output-dir $(REGISTRY_OUTPUT_DIR) \
+		--prefix $(REGISTRY_PREFIX) \
+		--min-label-count $(REGISTRY_MIN_LABEL_COUNT) \
+		--random-seed $(REGISTRY_SEED) \
+		--human-labels-csv $(HUMAN_REGISTRY_CSV)
 
 # Dry run (validate only)
 registry-prep-dry:

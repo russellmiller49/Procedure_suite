@@ -200,11 +200,218 @@ When using the ML-First Pipeline, you'll see:
 
 ---
 
-## ➕ Adding New Training Cases
+## 🧠 Model Improvement
 
-To improve the ML model's accuracy, you can add new training cases. Here's how:
+This section covers supported workflows for improving the repo’s ML models.
 
-### Step 1: Prepare Your Data
+### ✅ Registry Procedure Classifier (Prodigy “Diamond Loop”)
+
+This repo supports a human-in-the-loop loop for the **registry multi-label procedure classifier** using Prodigy’s `textcat` UI (multi-label `cats`) and disagreement sampling.
+
+References:
+- `docs/REGISTRY_PRODIGY_WORKFLOW.md` (the detailed “Diamond Loop” spec)
+- `docs/MAKEFILE_COMMANDS.md` (Makefile target reference)
+
+#### 0) One-time sanity check (do this first)
+
+```bash
+make lint
+make typecheck
+make test
+```
+
+#### 1) Build (or rebuild) your registry CSV splits
+
+Run the recommended “final” prep (PHI-scrubbed) to produce the standard train/val/test CSVs:
+
+```bash
+make registry-prep-final
+
+# If you need the raw (non-scrubbed) corpus for debugging:
+# make registry-prep-raw
+```
+
+You should now have:
+- `data/ml_training/registry_train.csv`
+- `data/ml_training/registry_val.csv`
+- `data/ml_training/registry_test.csv`
+
+#### 2) Train a baseline model (1 epoch smoke test)
+
+This confirms your training pipeline + artifacts are good.
+
+```bash
+python scripts/train_roberta.py \
+  --train-csv data/ml_training/registry_train.csv \
+  --val-csv data/ml_training/registry_val.csv \
+  --test-csv data/ml_training/registry_test.csv \
+  --output-dir data/models/roberta_registry \
+  --epochs 1
+```
+
+After it finishes, verify these exist:
+- `data/models/roberta_registry/thresholds.json`
+- `data/models/roberta_registry/label_order.json`
+
+If you’re deciding “local CUDA vs VM”, check now:
+
+```bash
+python -c "import torch; print('cuda:', torch.cuda.is_available()); print('mps:', hasattr(torch.backends,'mps') and torch.backends.mps.is_available())"
+```
+
+- If **cuda: True** → keep going locally (fast iteration).
+- If **cuda: False** and you’re on CPU/MPS → fine for a 1-epoch smoke test, but for real runs (3–5 epochs + repeated loops) a GPU VM will feel much better.
+
+#### 3) Create (or confirm) your unlabeled notes file for Prodigy
+
+Prodigy prep expects a JSONL where each line includes `note_text` (or `text` / `note`).
+
+Default path used by the make targets:
+- `data/ml_training/registry_unlabeled_notes.jsonl`
+
+If you already have it, skip this.
+
+#### 4) Prepare a Prodigy batch (disagreement sampling + pre-checked labels)
+
+This generates:
+- `data/ml_training/registry_prodigy_batch.jsonl`
+- `data/ml_training/registry_prodigy_manifest.json`
+
+```bash
+make registry-prodigy-prepare \
+  REG_PRODIGY_INPUT_FILE=data/ml_training/registry_unlabeled_notes.jsonl \
+  REG_PRODIGY_COUNT=200
+```
+
+#### 5) Annotate in Prodigy (checkbox UI)
+
+```bash
+make registry-prodigy-annotate REG_PRODIGY_DATASET=registry_v1
+```
+
+Notes:
+- The annotation UI is served at `http://localhost:8080` (Prodigy’s default).
+- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 29 label(s): …” you’re in the right place.
+
+##### Working across machines (Google Drive sync — safe “export/import”)
+
+Do **not** cloud-sync the raw Prodigy SQLite DB file (risk of corruption). Instead, sync by exporting/importing a JSONL snapshot to a shared Google Drive folder.
+
+Pick a single “source of truth” folder in Google Drive, e.g. `proc_suite_sync/`, and keep these inside it:
+- `prodigy/registry_v1.prodigy.jsonl` (the Prodigy dataset snapshot)
+- `diamond_loop/registry_prodigy_manifest.json` (recommended: avoids re-sampling across machines)
+- `diamond_loop/registry_unlabeled_notes.jsonl` (recommended: consistent sampling universe)
+
+###### Recommended: one-command Diamond Loop sync
+
+Use `scripts/diamond_loop_cloud_sync.py` to sync the dataset snapshot + key Diamond Loop files.
+
+**WSL + Google Drive on Windows `G:` (your setup):**
+
+```bash
+# Pull latest from Drive before annotating on this machine
+python scripts/diamond_loop_cloud_sync.py pull \
+  --dataset registry_v1 \
+  --gdrive-win-root "G:\\My Drive\\proc_suite_sync" \
+  --reset
+
+# Push back to Drive after finishing a session
+python scripts/diamond_loop_cloud_sync.py push \
+  --dataset registry_v1 \
+  --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
+```
+
+**macOS (Drive path varies by install):**
+
+```bash
+python scripts/diamond_loop_cloud_sync.py pull \
+  --dataset registry_v1 \
+  --sync-root "/path/to/GoogleDrive/proc_suite_sync" \
+  --reset
+
+python scripts/diamond_loop_cloud_sync.py push \
+  --dataset registry_v1 \
+  --sync-root "/path/to/GoogleDrive/proc_suite_sync"
+```
+
+Optional flags:
+- Add `--include-batch` to also sync `data/ml_training/registry_prodigy_batch.jsonl` (resume the exact same batch on another machine)
+- Add `--include-human` to also sync `data/ml_training/registry_human.csv`
+
+###### Manual fallback: dataset-only export/import
+
+If you prefer to sync just the Prodigy dataset snapshot file, you can use `scripts/prodigy_cloud_sync.py` directly.
+
+**Before you start annotating on a machine** (pull latest from Drive):
+
+```bash
+python scripts/prodigy_cloud_sync.py import \
+  --dataset registry_v1 \
+  --in "/path/to/GoogleDrive/proc_suite_sync/prodigy/registry_v1.prodigy.jsonl" \
+  --reset
+```
+
+**After you finish a session** (push to Drive):
+
+```bash
+python scripts/prodigy_cloud_sync.py export \
+  --dataset registry_v1 \
+  --out "/path/to/GoogleDrive/proc_suite_sync/prodigy/registry_v1.prodigy.jsonl"
+```
+
+Rules:
+- Only annotate on **one machine at a time**.
+- Always **export after** you finish a session, and **import before** you start on another machine.
+- If you rely on avoiding re-sampling, also keep `data/ml_training/registry_prodigy_manifest.json` synced alongside the dataset snapshot.
+
+Annotate as many as you can tolerate in one sitting (even 50 is enough for the first iteration).
+
+If you need to restart cleanly (wrong batch, wrong dataset, switching strategies), reset the dataset + batch/manifest:
+
+```bash
+make registry-prodigy-reset REG_PRODIGY_DATASET=registry_v1
+```
+
+#### 6) Export Prodigy annotations → a human labels CSV
+
+```bash
+make registry-prodigy-export \
+  REG_PRODIGY_DATASET=registry_v1 \
+  REG_PRODIGY_EXPORT_CSV=data/ml_training/registry_human.csv
+```
+
+#### 7) Merge human labels as Tier-0 and rebuild splits (no leakage)
+
+This is critical: merge **before splitting**.
+
+```bash
+make registry-prep-with-human HUMAN_REGISTRY_CSV=data/ml_training/registry_human.csv
+```
+
+#### 8) Retrain for real (3–5 epochs)
+
+```bash
+python scripts/train_roberta.py \
+  --train-csv data/ml_training/registry_train.csv \
+  --val-csv data/ml_training/registry_val.csv \
+  --test-csv data/ml_training/registry_test.csv \
+  --output-dir data/models/roberta_registry \
+  --epochs 5
+```
+
+#### 9) Repeat the Diamond Loop
+
+Repeat steps **4 → 8** until disagreement rate drops and metrics plateau.
+
+Notes:
+- Canonical label schema/order is `modules/ml_coder/registry_label_schema.py`.
+- Training uses `label_confidence` as a per-row loss weight when present.
+
+### ➕ CPT Coding Model: Adding Training Cases
+
+To improve the CPT model’s accuracy, you can add new training cases. Here's how:
+
+#### Step 1: Prepare Your Data
 
 Create a JSONL file with your cases. Each line should be a JSON object with:
 
@@ -224,7 +431,7 @@ Create a JSONL file with your cases. Each line should be a JSON object with:
 - `dataset`: A label for grouping (e.g., "bronchoscopy", "pleural")
 - `procedure_type`: The type of procedure (auto-detected if not provided)
 
-### Step 2: Add Cases to Training Data
+#### Step 2: Add Cases to Training Data
 
 Place your JSONL file in the training data directory:
 
@@ -233,7 +440,7 @@ Place your JSONL file in the training data directory:
 cp my_new_cases.jsonl data/training/
 ```
 
-### Step 3: Validate Your Cases
+#### Step 3: Validate Your Cases
 
 Before training, validate that your cases are properly formatted:
 
@@ -241,7 +448,7 @@ Before training, validate that your cases are properly formatted:
 python scripts/validate_training_data.py data/training/my_new_cases.jsonl
 ```
 
-### Step 4: Retrain the Model (Optional)
+#### Step 4: Retrain the Model (Optional)
 
 If you have enough new cases (50+), you can retrain the ML model:
 
@@ -250,7 +457,7 @@ If you have enough new cases (50+), you can retrain the ML model:
 python scripts/train_ml_coder.py --include data/training/my_new_cases.jsonl
 ```
 
-### Tips for Good Training Data
+#### Tips for Good Training Data
 
 1. **Diverse examples**: Include various procedure types and complexity levels
 2. **Accurate labels**: Double-check the CPT codes are correct
@@ -563,5 +770,3 @@ http://localhost:8000/ui/phi_redactor/
 ---
 
 *Last updated: December 2025*
-## Generate slim branch
-python scripts/create_slim_branch.py --source v19 --target slim-review --force

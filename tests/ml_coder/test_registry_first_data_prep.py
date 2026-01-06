@@ -194,13 +194,12 @@ class TestRegistryLabelExtractor:
         assert all(v == 0 for v in labels.values())
 
     def test_all_labels_present(self):
-        """Verify all 30 canonical labels are always returned."""
+        """Verify all 29 canonical labels are always returned."""
         extractor = RegistryLabelExtractor()
 
         labels = extractor.extract({})
 
-        # Now 30 labels including fiducial_placement
-        assert len(labels) == 30
+        assert len(labels) == 29
         assert set(labels.keys()) == set(ALL_PROCEDURE_LABELS)
 
 
@@ -446,15 +445,15 @@ class TestLabelCoverage:
 
         assert labels[canonical] == 1
 
-    def test_all_30_labels_present(self):
-        """Verify the canonical 30 labels are defined."""
-        assert len(ALL_PROCEDURE_LABELS) == 30
+    def test_all_29_labels_present(self):
+        """Verify the canonical 29 labels are defined."""
+        assert len(ALL_PROCEDURE_LABELS) == 29
 
-        # Bronchoscopy: 23 (includes fiducial_placement)
+        # Bronchoscopy: 22
         bronch_labels = [
             "diagnostic_bronchoscopy", "bal", "bronchial_wash", "brushings",
             "endobronchial_biopsy", "tbna_conventional", "linear_ebus", "radial_ebus",
-            "navigational_bronchoscopy", "fiducial_placement", "transbronchial_biopsy",
+            "navigational_bronchoscopy", "transbronchial_biopsy",
             "transbronchial_cryobiopsy", "therapeutic_aspiration", "foreign_body_removal",
             "airway_dilation", "airway_stent", "thermal_ablation", "cryotherapy", "blvr",
             "peripheral_ablation", "bronchial_thermoplasty", "whole_lung_lavage", "rigid_bronchoscopy"

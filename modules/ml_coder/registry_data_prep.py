@@ -31,13 +31,12 @@ import logging
 from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
-# Import authoritative procedure field list from v2_booleans
-from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
+from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
 
 logger = logging.getLogger(__name__)
 
@@ -45,10 +44,8 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 # Canonical Procedure Flags (V2 Schema)
 # =============================================================================
-# Use the authoritative 30-field list from v2_booleans.py.
-# This includes fiducial_placement which was missing from the old list.
-
-ALL_PROCEDURE_LABELS = list(PROCEDURE_BOOLEAN_FIELDS)
+# Canonical 29-field list (single import point for ordering).
+ALL_PROCEDURE_LABELS = list(REGISTRY_LABELS)
 
 # Legacy lists for backward compatibility
 BRONCHOSCOPY_LABELS = [
@@ -61,7 +58,6 @@ BRONCHOSCOPY_LABELS = [
     "linear_ebus",
     "radial_ebus",
     "navigational_bronchoscopy",
-    "fiducial_placement",  # Added - was missing
     "transbronchial_biopsy",
     "transbronchial_cryobiopsy",
     "therapeutic_aspiration",
@@ -111,6 +107,7 @@ LABEL_ALIASES = {
 
 # Source priority for deduplication (higher = better)
 SOURCE_PRIORITY = {
+    "human": 4,
     "structured": 3,
     "cpt": 2,
     "keyword": 1,
@@ -160,7 +157,7 @@ def deduplicate_records(
         "conflicts_by_source": defaultdict(int),
     }
 
-    for content_hash, group in groups.items():
+    for _content_hash, group in groups.items():
         if len(group) == 1:
             deduped.append(group[0])
         else:
@@ -276,10 +273,67 @@ class RegistryLabelExtractor:
         return result
 
 
-def _generate_encounter_id(source: str, text: str) -> str:
-    """Generate stable encounter ID for grouping."""
-    content = f"{source}:{text[:100]}"
-    return hashlib.md5(content.encode()).hexdigest()[:12]
+def _generate_encounter_id(text: str) -> str:
+    """Generate stable encounter ID for grouping (text-derived)."""
+    return compute_encounter_id(text)
+
+
+def _load_human_labels_csv(path: Path, labels: list[str]) -> list[dict[str, Any]]:
+    """Load a human-labeled registry CSV into record dicts for Tier-0 merge."""
+    df = pd.read_csv(path)
+    if df.empty:
+        return []
+    if "note_text" not in df.columns:
+        raise ValueError(f"Human labels CSV missing required column 'note_text': {path}")
+
+    # Normalize/ensure label columns exist and are {0,1}.
+    for label in labels:
+        if label not in df.columns:
+            df[label] = 0
+        df[label] = pd.to_numeric(df[label], errors="coerce").fillna(0).clip(0, 1).astype(int)
+
+    if "label_confidence" not in df.columns:
+        df["label_confidence"] = 1.0
+    else:
+        df["label_confidence"] = (
+            pd.to_numeric(df["label_confidence"], errors="coerce").fillna(1.0).clip(0.0, 1.0)
+        )
+
+    if "label_source" not in df.columns:
+        df["label_source"] = "human"
+    else:
+        df["label_source"] = df["label_source"].fillna("human").astype(str)
+
+    if "encounter_id" not in df.columns:
+        df["encounter_id"] = df["note_text"].fillna("").astype(str).map(_generate_encounter_id)
+    else:
+        df["encounter_id"] = df["encounter_id"].fillna("").astype(str)
+        missing = df["encounter_id"].str.len() == 0
+        if missing.any():
+            df.loc[missing, "encounter_id"] = (
+                df.loc[missing, "note_text"].fillna("").astype(str).map(_generate_encounter_id)
+            )
+
+    if "source_file" not in df.columns:
+        df["source_file"] = path.name
+    else:
+        df["source_file"] = df["source_file"].fillna(path.name).astype(str)
+
+    records: list[dict[str, Any]] = []
+    for _, row in df.iterrows():
+        note_text = str(row.get("note_text") or "").strip()
+        if not note_text:
+            continue
+        record: dict[str, Any] = {
+            "note_text": note_text,
+            "encounter_id": str(row.get("encounter_id") or _generate_encounter_id(note_text)),
+            "source_file": str(row.get("source_file") or path.name),
+            "label_source": "human",
+            "label_confidence": float(row.get("label_confidence") or 1.0),
+        }
+        record.update({label: int(row.get(label, 0)) for label in labels})
+        records.append(record)
+    return records
 
 
 def _load_golden_json(path: Path) -> list[dict] | None:
@@ -288,7 +342,7 @@ def _load_golden_json(path: Path) -> list[dict] | None:
     Returns a list of entries (handles both single dict and list formats).
     """
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             data = json.load(f)
         # Normalize to list format
         if isinstance(data, dict):
@@ -298,7 +352,7 @@ def _load_golden_json(path: Path) -> list[dict] | None:
         else:
             logger.warning(f"Unexpected data type in {path.name}: {type(data)}")
             return None
-    except (json.JSONDecodeError, IOError) as e:
+    except (json.JSONDecodeError, OSError) as e:
         logger.warning(f"Failed to load {path.name}: {e}")
         return None
 
@@ -383,13 +437,16 @@ def extract_records_from_golden_dir(
                 labels = result.labels
                 label_source = result.source
                 label_confidence = result.confidence
-                hydrated_fields = result.hydrated_fields
 
                 # Track tier statistics
                 stats[f"tier_{label_source}"] += 1
             else:
                 # Legacy extraction (deprecated)
-                registry = entry.get("registry_entry") or entry.get("registry") or entry.get("extraction")
+                registry = (
+                    entry.get("registry_entry")
+                    or entry.get("registry")
+                    or entry.get("extraction")
+                )
                 if not registry or not isinstance(registry, dict):
                     stats["skipped_no_registry"] += 1
                     continue
@@ -397,7 +454,6 @@ def extract_records_from_golden_dir(
                 labels = extractor.extract(registry)
                 label_source = "legacy"
                 label_confidence = 0.5
-                hydrated_fields = []
 
             # Require at least one positive label
             if not any(v == 1 for v in labels.values()):
@@ -407,7 +463,7 @@ def extract_records_from_golden_dir(
             # Build record with metadata
             record = {
                 "note_text": note_text,
-                "encounter_id": _generate_encounter_id(path.stem, note_text),
+                "encounter_id": _generate_encounter_id(note_text),
                 "source_file": path.name,
                 "label_source": label_source,
                 "label_confidence": label_confidence,
@@ -558,6 +614,7 @@ def filter_rare_labels(
 
 def prepare_registry_training_splits(
     golden_dir: Path | str = None,
+    human_labels_csv: Path | str | None = None,
     min_label_count: int = 5,
     train_ratio: float = 0.70,
     val_ratio: float = 0.15,
@@ -576,6 +633,7 @@ def prepare_registry_training_splits(
     Args:
         golden_dir: Directory with golden_*.json files. Defaults to
                     data/knowledge/golden_extractions_final or golden_extractions
+        human_labels_csv: Optional CSV of human labels to merge as Tier-0
         min_label_count: Minimum positive examples required per label
         train_ratio: Training set fraction (default 0.70)
         val_ratio: Validation set fraction (default 0.15)
@@ -620,6 +678,26 @@ def prepare_registry_training_splits(
     # Extract records with hydration
     records, stats = extract_records_from_golden_dir(golden_dir, use_hydration=True)
 
+    # Tier-0 merge: human labels (highest priority).
+    if human_labels_csv:
+        human_path = Path(human_labels_csv)
+        if human_path.exists():
+            human_records = _load_human_labels_csv(
+                human_path,
+                labels=ALL_PROCEDURE_LABELS,
+            )
+            if human_records:
+                logger.info(
+                    "Loaded %d human-labeled records from %s",
+                    len(human_records),
+                    human_path,
+                )
+                records = [*human_records, *records]
+                records, dedup_stats = deduplicate_records(records)
+                stats["dedup_with_human"] = dedup_stats
+        else:
+            logger.warning("Human labels CSV not found (skipping): %s", human_path)
+
     if not records:
         raise ValueError(
             f"No valid records extracted. Stats: "
@@ -643,12 +721,17 @@ def prepare_registry_training_splits(
         "empty": stats.get("tier_empty", 0),
     }
 
+    denom = max(1, total_with_labels)
     logger.info(
-        f"Label extraction tiers: "
-        f"structured={tier_stats['structured']} ({100*tier_stats['structured']/max(1,total_with_labels):.1f}%), "
-        f"cpt={tier_stats['cpt']} ({100*tier_stats['cpt']/max(1,total_with_labels):.1f}%), "
-        f"keyword={tier_stats['keyword']} ({100*tier_stats['keyword']/max(1,total_with_labels):.1f}%), "
-        f"empty={tier_stats['empty']} (skipped)"
+        "Label extraction tiers: structured=%d (%.1f%%), cpt=%d (%.1f%%), "
+        "keyword=%d (%.1f%%), empty=%d (skipped)",
+        tier_stats["structured"],
+        100 * tier_stats["structured"] / denom,
+        tier_stats["cpt"],
+        100 * tier_stats["cpt"] / denom,
+        tier_stats["keyword"],
+        100 * tier_stats["keyword"] / denom,
+        tier_stats["empty"],
     )
 
     # Log deduplication stats if present
@@ -714,6 +797,12 @@ def main():
         help="Golden extractions directory",
     )
     parser.add_argument(
+        "--human-labels-csv",
+        type=Path,
+        default=None,
+        help="Optional CSV of human registry labels to merge as Tier-0",
+    )
+    parser.add_argument(
         "--output-dir",
         type=Path,
         default=Path("data/ml_training"),
@@ -741,6 +830,7 @@ def main():
 
     train_df, val_df, test_df = prepare_registry_training_splits(
         golden_dir=args.input_dir,
+        human_labels_csv=args.human_labels_csv,
         min_label_count=args.min_count,
         random_state=args.seed,
     )

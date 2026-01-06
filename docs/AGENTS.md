@@ -4,7 +4,38 @@ This document describes the 3-agent pipeline used for structured note processing
 
 ## Overview
 
-The agents module (`modules/agents/`) implements a pipeline of three specialized agents that process procedure notes sequentially:
+The agents module (`modules/agents/`) provides **deterministic, structured note processing** that can be used in two ways:
+
+- **Focused extraction helper (used today)**: `ParserAgent` is used to segment notes and optionally “focus” extraction onto high-yield sections for deterministic registry extraction (see `modules/registry/extraction/focus.py`).
+- **Full 3-agent pipeline (available, experimental)**: `Parser → Summarizer → Structurer` via `modules/agents/run_pipeline.py`. Today, `StructurerAgent` is a placeholder and the “agents structurer” extraction mode is intentionally guarded/fallbacks to the engine.
+
+The goal is to make downstream extraction more reliable and auditable without seeding registry extraction with CPT hints when running in extraction-first mode.
+
+## Where this fits in the system
+
+The system has two major registry flows (feature-flagged):
+
+- **Hybrid-first (default)**: CPT coder → CPT→registry mapping → registry engine extraction → merge/validate.
+- **Extraction-first (feature flag)**: extract registry from raw note text (no CPT hints) → deterministic registry→CPT derivation → optional auditing/self-correction.
+
+Agents are relevant primarily to **extraction-first**:
+
+- When `PROCSUITE_PIPELINE_MODE=extraction_first` and `REGISTRY_EXTRACTION_ENGINE=agents_focus_then_engine`, the system will use `ParserAgent` to focus the note text for the deterministic engine extraction. Guardrail: auditing always uses the full raw note text.
+
+### Configuration
+
+These environment variables control whether/where agents are used:
+
+- **`PROCSUITE_PIPELINE_MODE`**: `current` (hybrid-first) or `extraction_first`
+- **`REGISTRY_EXTRACTION_ENGINE`** (only meaningful in extraction-first): `engine`, `agents_focus_then_engine`, or `agents_structurer`
+
+Notes:
+- `agents_structurer` is currently **not implemented** (it is expected to raise `NotImplementedError` and fall back to the deterministic engine).
+- CPT coding is handled by the coder module (`modules/coder/`) and is **not** produced by agents in the current architecture.
+
+## Full pipeline (conceptual)
+
+The agents module implements a pipeline of three specialized agents that process procedure notes sequentially:
 
 ```
 Raw Text → Parser → Summarizer → Structurer → Registry + Codes
@@ -30,6 +61,12 @@ modules/agents/
 └── structurer/
     └── structurer_agent.py     # StructurerAgent implementation
 ```
+
+## Current implementation status
+
+- **ParserAgent**: implemented and used for deterministic section segmentation and focusing.
+- **SummarizerAgent**: implemented, used primarily in the standalone 3-agent pipeline.
+- **StructurerAgent**: currently a placeholder that returns empty structures. It is **not** used for production registry extraction.
 
 ## Agent Contracts
 
@@ -404,4 +441,4 @@ class CustomParserAgent(ParserAgent):
 
 ---
 
-*Last updated: December 2025*
+*Last updated: January 2026*

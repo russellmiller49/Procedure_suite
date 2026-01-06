@@ -34,7 +34,6 @@ PROCEDURE_BOOLEAN_FIELDS: List[str] = [
     "linear_ebus",
     "radial_ebus",
     "navigational_bronchoscopy",
-    "fiducial_placement",
     "transbronchial_biopsy",
     "transbronchial_cryobiopsy",
     "therapeutic_aspiration",
@@ -178,22 +177,6 @@ def extract_v2_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
     # V2: nav_platform (non-null)
     if _get("nav_platform"):
         flags["navigational_bronchoscopy"] = 1
-
-    # =========================================================================
-    # FIDUCIAL PLACEMENT
-    # =========================================================================
-    # V2: Check granular_data.navigation_targets for fiducial markers
-    granular_data = _get("granular_data") or {}
-    nav_targets = granular_data.get("navigation_targets") or []
-    if isinstance(nav_targets, list):
-        for target in nav_targets:
-            if isinstance(target, dict):
-                if target.get("fiducial_marker_placed") is True:
-                    flags["fiducial_placement"] = 1
-                    break
-                if target.get("fiducial_marker_details"):
-                    flags["fiducial_placement"] = 1
-                    break
 
     # =========================================================================
     # PERIPHERAL ABLATION

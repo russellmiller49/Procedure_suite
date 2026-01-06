@@ -23,21 +23,296 @@ Registry-First Alternative:
 import glob
 import json
 import os
-import sys
-import pandas as pd
-from sklearn.model_selection import train_test_split
 from pathlib import Path
 
-# Define the boolean procedure columns found in registry_train.csv
-BOOLEAN_COLUMNS = [
-    'diagnostic_bronchoscopy', 'bal', 'bronchial_wash', 'brushings',
-    'endobronchial_biopsy', 'tbna_conventional', 'linear_ebus', 'radial_ebus',
-    'navigational_bronchoscopy', 'transbronchial_biopsy',
-    'transbronchial_cryobiopsy', 'therapeutic_aspiration',
-    'foreign_body_removal', 'airway_dilation', 'airway_stent',
-    'thermal_ablation', 'cryotherapy', 'blvr', 'peripheral_ablation',
-    'whole_lung_lavage', 'rigid_bronchoscopy', 'thoracentesis', 'chest_tube',
-    'ipc', 'medical_thoracoscopy', 'pleurodesis', 'fibrinolytic_therapy'
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+from modules.ml_coder.registry_label_schema import REGISTRY_LABELS
+from modules.ml_coder.valid_ip_codes import VALID_IP_CODES
+
+# Canonical boolean procedure columns (29) for registry training.
+BOOLEAN_COLUMNS = list(REGISTRY_LABELS)
+
+# ---------------------------------------------------------------------------
+# Legacy ML-coder data_prep public contract
+# ---------------------------------------------------------------------------
+#
+# Many callers (including tests and API code) import the following symbols from
+# `modules.ml_coder.data_prep`. A recent refactor shifted registry training code
+# into this module and broke the older ML-coder training contract.
+#
+# The functions below restore that contract while keeping the registry training
+# pipeline intact.
+
+EDGE_SOURCE_NAME = "synthetic_edge_case_notes_with_registry.jsonl"
+
+
+def _extract_codes(entry: dict) -> list[str]:
+    """
+    Backward-compatible CPT code extractor.
+
+    Preference order (when present and non-empty):
+    1) entry["coding_review"]["final_cpt_codes"] (list)
+    2) entry["coding_review"]["cpt_summary"]["final_codes"] (list)
+    3) entry["coding_review"]["cpt_summary"] keys when it's a dict keyed by code
+    4) entry["coding_review"]["cpt_summary"] list of objects with {"code": ...}
+    5) entry["cpt_codes"]
+    """
+    if not isinstance(entry, dict):
+        return []
+
+    fallback = entry.get("cpt_codes") or []
+    fallback = [str(c).strip() for c in fallback if str(c).strip()]
+
+    coding_review = entry.get("coding_review")
+    if not isinstance(coding_review, dict):
+        return fallback
+
+    final_codes = coding_review.get("final_cpt_codes")
+    if isinstance(final_codes, list) and final_codes:
+        return [str(c).strip() for c in final_codes if str(c).strip()]
+
+    cpt_summary = coding_review.get("cpt_summary")
+    if isinstance(cpt_summary, dict):
+        summary_final = cpt_summary.get("final_codes")
+        if isinstance(summary_final, list) and summary_final:
+            return [str(c).strip() for c in summary_final if str(c).strip()]
+
+        # If cpt_summary is keyed by code, return those keys.
+        keys = [str(k).strip() for k in cpt_summary.keys() if str(k).strip()]
+        if keys and all(any(ch.isdigit() for ch in k) for k in keys):
+            return keys
+
+    if isinstance(cpt_summary, list):
+        codes = []
+        for item in cpt_summary:
+            if isinstance(item, dict) and item.get("code"):
+                code = str(item["code"]).strip()
+                if code:
+                    codes.append(code)
+        if codes:
+            return codes
+
+    return fallback
+
+
+def _build_label_matrix(
+    df: pd.DataFrame,
+    code_column: str = "verified_cpt_codes",
+) -> tuple[np.ndarray, list[str]]:
+    """Build a multi-hot label matrix from a comma-separated CPT code column."""
+    if df.empty:
+        return np.zeros((0, 0), dtype=int), []
+
+    all_codes: set[str] = set()
+    parsed_rows: list[list[str]] = []
+    for value in df[code_column].fillna("").astype(str).tolist():
+        codes = [c.strip() for c in value.split(",") if c.strip()]
+        parsed_rows.append(codes)
+        all_codes.update(codes)
+
+    sorted_codes = sorted(all_codes)
+    code_to_idx = {c: i for i, c in enumerate(sorted_codes)}
+    y = np.zeros((len(df), len(sorted_codes)), dtype=int)
+    for row_idx, codes in enumerate(parsed_rows):
+        for code in codes:
+            y[row_idx, code_to_idx[code]] = 1
+
+    return y, sorted_codes
+
+
+def _enforce_encounter_grouping(
+    df: pd.DataFrame,
+    train_idx: np.ndarray,
+    test_idx: np.ndarray,
+    mrn_col: str = "patient_mrn",
+    date_col: str = "procedure_date",
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Ensure all rows from the same encounter (MRN+date) stay in a single split.
+
+    If an encounter is present in both splits, move the entire encounter to the
+    split that already contains the majority of its rows (ties go to train).
+    """
+    train_in = np.asarray(train_idx)
+    test_in = np.asarray(test_idx)
+    was_2d = train_in.ndim == 2
+
+    train_flat = set(train_in.flatten().tolist())
+    test_flat = set(test_in.flatten().tolist())
+
+    # Build encounter -> row indices mapping
+    enc_to_rows: dict[tuple[str, str], list[int]] = {}
+    for row_i, (mrn, date) in enumerate(zip(df[mrn_col].astype(str), df[date_col].astype(str))):
+        enc_to_rows.setdefault((mrn, date), []).append(row_i)
+
+    new_train: set[int] = set()
+    new_test: set[int] = set()
+
+    for rows in enc_to_rows.values():
+        in_train = sum(1 for r in rows if r in train_flat)
+        in_test = sum(1 for r in rows if r in test_flat)
+        if in_train == 0 and in_test == 0:
+            continue
+        if in_train >= in_test:
+            new_train.update(rows)
+        else:
+            new_test.update(rows)
+
+    # Defensive: ensure disjoint
+    overlap = new_train & new_test
+    if overlap:
+        new_test.difference_update(overlap)
+
+    train_out = np.array(sorted(new_train), dtype=int)
+    test_out = np.array(sorted(new_test), dtype=int)
+    if was_2d:
+        train_out = train_out.reshape(-1, 1)
+        test_out = test_out.reshape(-1, 1)
+
+    return train_out, test_out
+
+
+def _infer_label_columns(df: pd.DataFrame) -> list[str]:
+    candidate = [c for c in df.columns if str(c).startswith("label_")]
+    if candidate:
+        return candidate
+
+    metadata = {
+        "note_id",
+        "encounter_id",
+        "patient_mrn",
+        "procedure_date",
+        "source_file",
+        "text",
+        "note_text",
+        "raw_text",
+        "verified_cpt_codes",
+        "is_edge_case",
+    }
+    inferred: list[str] = []
+    for col in df.columns:
+        if col in metadata:
+            continue
+        series = df[col].dropna()
+        if series.empty:
+            continue
+        values = set(series.unique().tolist())
+        if values.issubset({0, 1, True, False}):
+            inferred.append(col)
+    return inferred
+
+
+def stratified_split(
+    df: pd.DataFrame,
+    label_columns: list[str] | None = None,
+    test_size: float = 0.2,
+    random_state: int = 42,
+):
+    """
+    Backward-compatible stratified split used by ML-coder training tests.
+
+    Returns (train_idx, test_idx, all_codes).
+    """
+    if df.empty:
+        return [], [], []
+
+    rng = np.random.RandomState(random_state)
+
+    using_code_column = "verified_cpt_codes" in df.columns and label_columns is None
+    if using_code_column:
+        y, all_codes = _build_label_matrix(df, code_column="verified_cpt_codes")
+    else:
+        if label_columns is None:
+            label_columns = _infer_label_columns(df)
+        all_codes = list(label_columns)
+        y = df[label_columns].fillna(0).astype(int).to_numpy()
+
+    X = np.arange(len(df)).reshape(-1, 1)
+    try:
+        from skmultilearn.model_selection import IterativeStratification
+
+        splitter = IterativeStratification(
+            n_splits=2,
+            order=2,
+            sample_distribution_per_fold=[test_size, 1 - test_size],
+        )
+        train_idx_arr, test_idx_arr = next(splitter.split(X, y))
+        train_idx_arr = np.asarray(train_idx_arr).reshape(-1, 1)
+        test_idx_arr = np.asarray(test_idx_arr).reshape(-1, 1)
+    except Exception:
+        indices = np.arange(len(df))
+        rng.shuffle(indices)
+        n_test = max(1, int(round(len(df) * test_size)))
+        test_idx_arr = indices[:n_test].reshape(-1, 1)
+        train_idx_arr = indices[n_test:].reshape(-1, 1)
+
+    train_idx_arr, test_idx_arr = _enforce_encounter_grouping(df, train_idx_arr, test_idx_arr)
+    return train_idx_arr.flatten().tolist(), test_idx_arr.flatten().tolist(), all_codes
+
+
+def _build_dataframe() -> pd.DataFrame:
+    """
+    Legacy hook used by `prepare_training_and_eval_splits`.
+
+    Tests monkeypatch this function; production callers should migrate to the
+    registry-first data prep pipeline.
+    """
+    return pd.DataFrame()
+
+
+def prepare_training_and_eval_splits(
+    output_dir: Path | str = "data/ml_training",
+    test_size: float = 0.2,
+    random_state: int = 42,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Create `train.csv`, `test.csv`, and `edge_cases_holdout.csv` in `output_dir`.
+    """
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    df = _build_dataframe().copy()
+    if df.empty:
+        edge_df = df.copy()
+        train_df = df.copy()
+        test_df = df.copy()
+    else:
+        if "is_edge_case" not in df.columns:
+            df["is_edge_case"] = df.get("source_file", "").astype(str) == EDGE_SOURCE_NAME
+        if "source_file" in df.columns:
+            df["is_edge_case"] = df["is_edge_case"] | (df["source_file"].astype(str) == EDGE_SOURCE_NAME)
+
+        edge_df = df[df["is_edge_case"] == True].copy()  # noqa: E712
+        main_df = df[df["is_edge_case"] == False].copy()  # noqa: E712
+
+        train_idx, test_idx, _ = stratified_split(
+            main_df,
+            label_columns=None,
+            test_size=test_size,
+            random_state=random_state,
+        )
+        train_df = main_df.iloc[train_idx].copy()
+        test_df = main_df.iloc[test_idx].copy()
+
+    train_df.to_csv(output_path / "train.csv", index=False)
+    test_df.to_csv(output_path / "test.csv", index=False)
+    edge_df.to_csv(output_path / "edge_cases_holdout.csv", index=False)
+
+    return train_df, test_df, edge_df
+
+
+__all__ = [
+    "VALID_IP_CODES",
+    "EDGE_SOURCE_NAME",
+    "_extract_codes",
+    "_build_label_matrix",
+    "_enforce_encounter_grouping",
+    "_build_dataframe",
+    "stratified_split",
+    "prepare_training_and_eval_splits",
 ]
 
 def derive_booleans_from_json(entry: dict) -> dict:
@@ -146,8 +421,7 @@ def derive_booleans_from_json(entry: dict) -> dict:
     modality = str(reg.get('ablation_modality', '')).lower()
     if 'cryo' in modality and row['peripheral_ablation'] == 0:
         row['cryotherapy'] = 1
-        # If it was caught by thermal_ablation logic above (via 31641), reset thermal if specific cryo column used?
-        # Typically datasets distinguish them. For safety, we leave thermal=1 unless strictly exclusive.
+        # Note: Cryo vs thermal can be ambiguous; we don't forcibly clear thermal_ablation here.
         # Based on CSV row 6 (Cryoablation): Peripheral=1, Thermal=0, Cryo=0 (as it's peripheral).
         # This matches the logic above (elif 31641).
     
@@ -223,7 +497,7 @@ def main():
     
     for json_file in json_files:
         try:
-            with open(json_file, 'r', encoding='utf-8') as f:
+            with open(json_file, encoding="utf-8") as f:
                 data = json.load(f)
                 # Ensure data is a list
                 if isinstance(data, dict):
@@ -295,7 +569,7 @@ if __name__ == '__main__':
 # Import the canonical boolean field list and extraction function from
 # modules/registry/v2_booleans.py for backward compatibility.
 
-from modules.registry.v2_booleans import (
+from modules.registry.v2_booleans import (  # noqa: E402, I001
     PROCEDURE_BOOLEAN_FIELDS,
     extract_v2_booleans,
 )
@@ -365,11 +639,11 @@ def _filter_rare_registry_labels(
 # Import registry-first functions for convenient access from this module.
 # These are imported last to avoid circular import issues.
 
-from .registry_data_prep import (
+from .registry_data_prep import (  # noqa: E402, F401, I001
     prepare_registry_training_splits,
     RegistryLabelExtractor,
     ALL_PROCEDURE_LABELS,
     extract_records_from_golden_dir,
-    stratified_split,
+    stratified_split as registry_stratified_split,
     filter_rare_labels,
 )

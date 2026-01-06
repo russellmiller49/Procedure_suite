@@ -152,6 +152,10 @@ modules/registry/
 
 3-agent pipeline for structured note processing.
 
+**Current usage:**
+- `ParserAgent` is used as a deterministic sectionizer and can be used to *focus* the note text for registry extraction (see `modules/registry/extraction/focus.py`).
+- The full `Parser → Summarizer → Structurer` pipeline exists, but `StructurerAgent` is currently a placeholder and is **not** used for production registry extraction.
+
 **Architecture:**
 ```
 modules/agents/

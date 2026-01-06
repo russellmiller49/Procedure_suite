@@ -507,7 +507,9 @@ async def root(request: Request) -> Any:
 
 @app.get("/health")
 async def health(request: Request) -> dict[str, bool]:
-    return {"ok": True, "ready": bool(getattr(request.app.state, "model_ready", False))}
+    # Liveness probe: keep payload stable and minimal.
+    # Readiness is exposed via `/ready`.
+    return {"ok": True}
 
 
 @app.get("/ready")
@@ -1150,7 +1152,6 @@ def _qapipeline_result_to_response(
 async def qa_run(
     payload: QARunRequest,
     request: Request,
-    _ready: None = Depends(require_ready),
     qa_service: QAPipelineService = Depends(get_qa_pipeline_service),
 ) -> QARunResponse:
     """

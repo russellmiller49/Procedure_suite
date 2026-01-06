@@ -158,23 +158,43 @@ def derive_all_codes_with_meta(
         codes.append("31624")
         rationales["31624"] = "bal.performed=true"
 
-    # Transbronchial biopsy (31628) vs with fluoroscopy (31629)
-    if _performed(_proc(record, "transbronchial_biopsy")):
-        if getattr(record, "fluoroscopy_used", None) is True:
-            codes.append("31629")
-            rationales["31629"] = "transbronchial_biopsy.performed=true and fluoroscopy_used=true"
-        else:
-            codes.append("31628")
+    # Transbronchial lung biopsy (31628) and cryobiopsy are billed under 31628,
+    # with add-on 31632 for additional lobes when documented.
+    tbbx = _proc(record, "transbronchial_biopsy")
+    cryo_tbbx = _proc(record, "transbronchial_cryobiopsy")
+    if _performed(tbbx) or _performed(cryo_tbbx):
+        codes.append("31628")
+        if _performed(tbbx):
             rationales["31628"] = "transbronchial_biopsy.performed=true"
+        else:
+            rationales["31628"] = "transbronchial_cryobiopsy.performed=true"
 
         # Additional lobe add-on (31632) requires multi-lobe locations.
-        tbbx = _proc(record, "transbronchial_biopsy")
-        locations = getattr(tbbx, "locations", None) if tbbx is not None else None
+        locations = None
+        for proc in (tbbx, cryo_tbbx):
+            if proc is None:
+                continue
+            locations = getattr(proc, "locations", None) or getattr(proc, "sites", None)
+            if locations:
+                break
         if locations:
             lobes = _lobe_tokens([str(x) for x in locations if x])
             if len(lobes) >= 2:
                 codes.append("31632")
                 rationales["31632"] = f"transbronchial_biopsy.locations spans lobes={sorted(lobes)}"
+
+    # Conventional (non-EBUS) TBNA (31629) with add-on 31633 for additional lobes.
+    tbna = _proc(record, "tbna_conventional")
+    if _performed(tbna):
+        codes.append("31629")
+        rationales["31629"] = "tbna_conventional.performed=true"
+
+        locations = getattr(tbna, "locations", None) or getattr(tbna, "sites", None)
+        if locations:
+            lobes = _lobe_tokens([str(x) for x in locations if x])
+            if len(lobes) >= 2:
+                codes.append("31633")
+                rationales["31633"] = f"tbna_conventional.locations spans lobes={sorted(lobes)}"
 
     # Linear EBUS TBNA (31652/31653) based on station count.
     if _performed(_proc(record, "linear_ebus")):

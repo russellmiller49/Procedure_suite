@@ -19,7 +19,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -39,6 +38,8 @@ from transformers import (
     get_linear_schedule_with_warmup,
 )
 
+from modules.ml_coder.registry_label_schema import REGISTRY_LABELS
+
 # ============================================================================
 # Configuration
 # ============================================================================
@@ -54,7 +55,9 @@ class TrainingConfig:
     train_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_train.csv"))
     val_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_val.csv"))
     test_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_test.csv"))
-    label_fields_json: Path = field(default_factory=lambda: Path("data/ml_training/registry_label_fields.json"))
+    label_fields_json: Path = field(
+        default_factory=lambda: Path("data/ml_training/registry_label_fields.json")
+    )
     output_dir: Path = field(default_factory=lambda: Path("data/models/roberta_registry"))
 
     # Tokenization
@@ -98,7 +101,10 @@ def load_label_fields(path: Path) -> list[str]:
     with open(path) as f:
         return json.load(f)
 
-def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[list[str], np.ndarray, list[str]]:
+def load_registry_csv(
+    path: Path,
+    required_labels: list[str] | None = None,
+) -> tuple[list[str], np.ndarray, list[str], np.ndarray]:
     """Load registry training/test CSV file.
 
     Args:
@@ -107,7 +113,7 @@ def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[li
                         If provided, returns y with columns in this specific order.
 
     Returns:
-        Tuple of (texts, labels_matrix, label_names)
+        Tuple of (texts, labels_matrix, label_names, sample_weights)
     """
     if not path.exists():
         raise FileNotFoundError(f"CSV file not found: {path}")
@@ -122,6 +128,18 @@ def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[li
 
     # Extract texts
     texts = df["note_text"].fillna("").astype(str).tolist()
+
+    # Optional per-row confidence weighting (defaults to 1.0).
+    if "label_confidence" in df.columns:
+        weights = (
+            pd.to_numeric(df["label_confidence"], errors="coerce")
+            .fillna(1.0)
+            .clip(0.0, 1.0)
+            .astype(float)
+            .to_numpy()
+        )
+    else:
+        weights = np.ones(len(df), dtype=float)
 
     # Determine Label Columns
     if required_labels:
@@ -184,7 +202,7 @@ def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[li
     y = label_df.astype(int).to_numpy()
 
     print(f"Loaded {len(texts)} samples with {len(label_cols)} labels from {path}")
-    return texts, y, label_cols
+    return texts, y, label_cols, weights.astype(np.float32)
 
 
 class HeadTailTokenizer:
@@ -273,10 +291,12 @@ class RegistryDataset(Dataset):
         self,
         texts: list[str],
         labels: np.ndarray,
+        sample_weights: np.ndarray,
         tokenizer: HeadTailTokenizer,
     ):
         self.texts = texts
         self.labels = labels
+        self.sample_weights = sample_weights
         self.tokenizer = tokenizer
 
     def __len__(self) -> int:
@@ -285,6 +305,7 @@ class RegistryDataset(Dataset):
     def __getitem__(self, idx: int) -> dict[str, torch.Tensor]:
         text = self.texts[idx]
         label = self.labels[idx]
+        weight = float(self.sample_weights[idx]) if idx < len(self.sample_weights) else 1.0
 
         encoding = self.tokenizer(text)
 
@@ -295,6 +316,7 @@ class RegistryDataset(Dataset):
             "attention_mask": encoding["attention_mask"].long(),
             # Keep labels as Float for BCEWithLogitsLoss
             "labels": torch.tensor(label, dtype=torch.float32),
+            "sample_weight": torch.tensor(weight, dtype=torch.float32),
         }
 
 
@@ -333,6 +355,7 @@ class BiomedBERTMultiLabel(nn.Module):
         input_ids: torch.Tensor,
         attention_mask: torch.Tensor,
         labels: torch.Tensor | None = None,
+        sample_weights: torch.Tensor | None = None,
     ) -> dict[str, torch.Tensor]:
         """Forward pass.
 
@@ -354,8 +377,12 @@ class BiomedBERTMultiLabel(nn.Module):
         result = {"logits": logits}
 
         if labels is not None:
-            loss_fn = nn.BCEWithLogitsLoss(pos_weight=self.pos_weight)
-            result["loss"] = loss_fn(logits, labels)
+            loss_fn = nn.BCEWithLogitsLoss(pos_weight=self.pos_weight, reduction="none")
+            loss_matrix = loss_fn(logits, labels)  # [batch, num_labels]
+            per_sample = loss_matrix.mean(dim=1)  # mean over labels
+            if sample_weights is not None:
+                per_sample = per_sample * sample_weights
+            result["loss"] = per_sample.mean()
 
         return result
 
@@ -375,7 +402,7 @@ class BiomedBERTMultiLabel(nn.Module):
             torch.save(self.pos_weight, path / "pos_weight.pt")
 
     @classmethod
-    def from_pretrained(cls, path: Path, num_labels: int) -> "BiomedBERTMultiLabel":
+    def from_pretrained(cls, path: Path, num_labels: int) -> BiomedBERTMultiLabel:
         """Load model from directory."""
         path = Path(path)
 
@@ -523,8 +550,14 @@ def compute_metrics(
         }
 
     # Identify rare classes (support < 50)
-    rare_labels = [l for l in label_names if per_label[l]["support"] < 50]
-    rare_f1 = np.mean([per_label[l]["f1"] for l in rare_labels]) if rare_labels else 0.0
+    rare_labels = [
+        label_id for label_id in label_names if per_label[label_id]["support"] < 50
+    ]
+    rare_f1 = (
+        np.mean([per_label[label_id]["f1"] for label_id in rare_labels])
+        if rare_labels
+        else 0.0
+    )
 
     return {
         "macro_f1": float(macro_f1),
@@ -564,10 +597,13 @@ def train_epoch(
         input_ids = batch["input_ids"].to(config.device)
         attention_mask = batch["attention_mask"].to(config.device)
         labels = batch["labels"].to(config.device)
+        sample_weights = batch.get("sample_weight")
+        if sample_weights is not None:
+            sample_weights = sample_weights.to(config.device)
 
         # Forward pass with mixed precision
         with torch.amp.autocast("cuda", enabled=config.fp16):
-            outputs = model(input_ids, attention_mask, labels)
+            outputs = model(input_ids, attention_mask, labels, sample_weights=sample_weights)
             loss = outputs["loss"] / config.gradient_accumulation_steps
 
         # Backward pass
@@ -613,8 +649,11 @@ def evaluate(
             input_ids = batch["input_ids"].to(config.device)
             attention_mask = batch["attention_mask"].to(config.device)
             labels = batch["labels"].to(config.device)
+            sample_weights = batch.get("sample_weight")
+            if sample_weights is not None:
+                sample_weights = sample_weights.to(config.device)
 
-            outputs = model(input_ids, attention_mask, labels)
+            outputs = model(input_ids, attention_mask, labels, sample_weights=sample_weights)
 
             probs = torch.sigmoid(outputs["logits"]).cpu().numpy()
             all_probs.append(probs)
@@ -650,12 +689,15 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     print(f"Epochs: {config.num_epochs}")
     print(f"{'=' * 60}\n")
 
-    # --- 1. Load Training Data & Infer Schema ---
+    # --- 1. Load Training Data (canonical 29-label schema) ---
     print("\nLoading training data...")
-    # Load WITHOUT preset labels to discover new columns from schema change
-    train_texts, train_labels, label_names = load_registry_csv(config.train_csv)
+    label_names = list(REGISTRY_LABELS)
+    train_texts, train_labels, _, train_weights = load_registry_csv(
+        config.train_csv,
+        required_labels=label_names,
+    )
     num_labels = len(label_names)
-    print(f"Detected {num_labels} labels from training CSV: {label_names[:5]}...")
+    print(f"Using canonical label order ({num_labels} labels): {label_names[:5]}...")
 
     # --- 2. Update Label Definition JSON ---
     # This keeps downstream scripts (quantization, inference) in sync
@@ -663,22 +705,43 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     config.label_fields_json.parent.mkdir(parents=True, exist_ok=True)
     with open(config.label_fields_json, "w") as f:
         json.dump(label_names, f, indent=2)
+    # Also emit into the model output dir for deployable bundles.
+    labels_json = json.dumps(label_names, indent=2) + "\n"
+    (config.output_dir / "registry_label_fields.json").write_text(labels_json)
+    (config.output_dir / "label_order.json").write_text(labels_json)
 
     # --- 3. Load Test Data (Enforcing Training Schema) ---
     print("\nLoading test data...")
-    test_texts, test_labels, _ = load_registry_csv(config.test_csv, required_labels=label_names)
+    test_texts, test_labels, _, test_weights = load_registry_csv(
+        config.test_csv,
+        required_labels=label_names,
+    )
     print(f"Test samples: {len(test_texts)}")
 
     # --- Load Validation Data ---
     if config.val_csv and config.val_csv.exists():
         print(f"\nLoading validation data from {config.val_csv}...")
-        val_texts, val_labels, _ = load_registry_csv(config.val_csv, required_labels=label_names)
+        val_texts, val_labels, _, val_weights = load_registry_csv(
+            config.val_csv,
+            required_labels=label_names,
+        )
         print(f"Using explicit validation set: {len(val_texts)} samples")
     else:
-        print(f"\nNo validation file found at {config.val_csv}. Performing random split ({config.val_split})...")
-        train_texts, val_texts, train_labels, val_labels = train_test_split(
+        print(
+            f"\nNo validation file found at {config.val_csv}. "
+            f"Performing random split ({config.val_split})..."
+        )
+        (
+            train_texts,
+            val_texts,
+            train_labels,
+            val_labels,
+            train_weights,
+            val_weights,
+        ) = train_test_split(
             train_texts,
             train_labels,
+            train_weights,
             test_size=config.val_split,
             random_state=42,
             stratify=None,  # Multi-label doesn't support stratify directly
@@ -709,9 +772,9 @@ def train(config: TrainingConfig) -> dict[str, Any]:
 
     # Create datasets
     print("\nCreating datasets...")
-    train_dataset = RegistryDataset(train_texts, train_labels, tokenizer)
-    val_dataset = RegistryDataset(val_texts, val_labels, tokenizer)
-    test_dataset = RegistryDataset(test_texts, test_labels, tokenizer)
+    train_dataset = RegistryDataset(train_texts, train_labels, train_weights, tokenizer)
+    val_dataset = RegistryDataset(val_texts, val_labels, val_weights, tokenizer)
+    test_dataset = RegistryDataset(test_texts, test_labels, test_weights, tokenizer)
 
     # Create dataloaders
     train_loader = DataLoader(
@@ -794,7 +857,7 @@ def train(config: TrainingConfig) -> dict[str, Any]:
         # Compute metrics with optimized thresholds
         val_metrics = compute_metrics(val_labels_arr, val_probs, thresholds, label_names)
 
-        print(f"\nValidation Results:")
+        print("\nValidation Results:")
         print(f"  Loss: {val_loss:.4f}")
         print(f"  Macro F1: {val_metrics['macro_f1']:.4f}")
         print(f"  Micro F1: {val_metrics['micro_f1']:.4f}")
@@ -804,7 +867,7 @@ def train(config: TrainingConfig) -> dict[str, Any]:
         if val_metrics["macro_f1"] > best_val_f1:
             best_val_f1 = val_metrics["macro_f1"]
             best_epoch = epoch + 1
-            print(f"\n  New best model! Saving checkpoint...")
+            print("\n  New best model! Saving checkpoint...")
 
             # Save model
             model.save_pretrained(config.output_dir)
@@ -816,6 +879,18 @@ def train(config: TrainingConfig) -> dict[str, Any]:
             thresholds_path = config.output_dir.parent / "roberta_registry_thresholds.json"
             with open(thresholds_path, "w") as f:
                 json.dump(thresholds, f, indent=2)
+
+            # Also save a bundle-friendly thresholds.json in the model dir that includes val F1.
+            thresholds_with_f1 = {
+                label: {
+                    "threshold": float(thresholds.get(label, 0.5)),
+                    "val_f1": float(val_metrics["per_label"][label]["f1"]),
+                }
+                for label in label_names
+            }
+            (config.output_dir / "thresholds.json").write_text(
+                json.dumps(thresholds_with_f1, indent=2, sort_keys=False) + "\n"
+            )
 
     print(f"\n{'=' * 60}")
     print(f"Training complete! Best epoch: {best_epoch}, Best Macro F1: {best_val_f1:.4f}")
@@ -837,7 +912,7 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     test_labels_arr, test_probs, test_loss = evaluate(model, test_loader, config)
     test_metrics = compute_metrics(test_labels_arr, test_probs, thresholds, label_names)
 
-    print(f"\nTest Set Results:")
+    print("\nTest Set Results:")
     print(f"  Loss: {test_loss:.4f}")
     print(f"  Macro F1: {test_metrics['macro_f1']:.4f}")
     print(f"  Micro F1: {test_metrics['micro_f1']:.4f}")
@@ -847,9 +922,12 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     print("\nPer-label metrics:")
     for label in label_names:
         m = test_metrics["per_label"][label]
-        print(f"  {label}: P={m['precision']:.3f} R={m['recall']:.3f} F1={m['f1']:.3f} (n={m['support']})")
+        print(
+            f"  {label}: P={m['precision']:.3f} R={m['recall']:.3f} "
+            f"F1={m['f1']:.3f} (n={m['support']})"
+        )
 
-    # Save final metrics
+    # Save final metrics (legacy location + model-dir copy for bundles)
     metrics_path = config.output_dir.parent / "roberta_registry_metrics.json"
     final_metrics = {
         "best_epoch": best_epoch,
@@ -867,8 +945,9 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     }
     with open(metrics_path, "w") as f:
         json.dump(final_metrics, f, indent=2)
+    (config.output_dir / "metrics.json").write_text(json.dumps(final_metrics, indent=2) + "\n")
 
-    print(f"\nArtifacts saved:")
+    print("\nArtifacts saved:")
     print(f"  Model: {config.output_dir}")
     print(f"  Thresholds: {thresholds_path}")
     print(f"  Metrics: {metrics_path}")

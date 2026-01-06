@@ -32,6 +32,9 @@ STOPWORDS = {
 }
 
 ID_LABELS = {"ID", "MRN", "SSN"}
+# "ID" is frequently used by models for CPT-like numeric codes and even device tokens;
+# do not exempt it from veto logic. Only preserve explicitly sensitive IDs.
+SENSITIVE_ID_LABELS = {"MRN", "SSN"}
 
 AMBIGUOUS_DEVICE_TERMS = {"cook", "king", "edwards", "young", "wang", "mark"}
 AMBIGUOUS_DEVICE_CONTEXT_PATTERNS = {
@@ -81,6 +84,10 @@ def _normalize_label(label: str) -> str:
 
 def _is_id_label(label: str) -> bool:
     return _normalize_label(label) in ID_LABELS
+
+
+def _is_sensitive_id_label(label: str) -> bool:
+    return _normalize_label(label) in SENSITIVE_ID_LABELS
 
 
 def _extract_entity_spans(tags: List[str]) -> List[Tuple[int, int, str]]:
@@ -356,7 +363,7 @@ def apply_protected_veto(
     entity_spans = _extract_entity_spans(pred_tags)
 
     for start, end, label in entity_spans:
-        if _is_id_label(label):
+        if _is_sensitive_id_label(label):
             continue
         should_drop = False
 
@@ -382,7 +389,7 @@ def apply_protected_veto(
     idx = 0
     while idx < len(tokens):
         word, end_idx = reconstruct_wordpiece(tokens, idx)
-        if _span_has_any_label(pred_tags, idx, end_idx, ID_LABELS):
+        if _span_has_any_label(pred_tags, idx, end_idx, SENSITIVE_ID_LABELS):
             idx = end_idx + 1
             continue
         norm_word = normalize(word)
@@ -403,7 +410,7 @@ def apply_protected_veto(
     for i in range(len(words) - 2):
         if words[i] in ("left", "right") and words[i + 1] in ("upper", "lower", "middle") and words[i + 2] == "lobe":
             span_indices = word_spans[i] + word_spans[i + 1] + word_spans[i + 2]
-            if _span_has_any_label(pred_tags, span_indices[0], span_indices[-1], ID_LABELS):
+            if _span_has_any_label(pred_tags, span_indices[0], span_indices[-1], SENSITIVE_ID_LABELS):
                 continue
             for j in span_indices:
                 corrected[j] = "O"
@@ -413,7 +420,7 @@ def apply_protected_veto(
         cpt = _is_stable_cpt_split(tokens, i)
         if not cpt:
             continue
-        if _span_has_any_label(pred_tags, i, i + 1, ID_LABELS):
+        if _span_has_any_label(pred_tags, i, i + 1, SENSITIVE_ID_LABELS):
             continue
         if _has_cpt_context(tokens, i, i + 1, text):
             corrected[i] = "O"
@@ -423,7 +430,7 @@ def apply_protected_veto(
     i = 0
     while i < len(tokens):
         code, end_i = _reconstruct_numeric_code(tokens, i)
-        if _span_has_any_label(pred_tags, i, end_i, ID_LABELS):
+        if _span_has_any_label(pred_tags, i, end_i, SENSITIVE_ID_LABELS):
             i = end_i + 1
             continue
         if _is_numeric_code(code) and _has_cpt_context(tokens, i, end_i, text):
@@ -436,7 +443,7 @@ def apply_protected_veto(
     # LN stations via digit+side (+ optional i/s) and station 7 context
     for i in range(len(tokens) - 1):
         if tokens[i].isdigit() and len(tokens[i]) in (1, 2) and tokens[i + 1].startswith("##"):
-            if _span_has_any_label(pred_tags, i, i + 1, ID_LABELS):
+            if _span_has_any_label(pred_tags, i, i + 1, SENSITIVE_ID_LABELS):
                 continue
             side = tokens[i + 1][2:].lower()
             if side in ("r", "l") and not _is_volume_context(tokens, i):
@@ -453,7 +460,7 @@ def apply_protected_veto(
 
     for i, tok in enumerate(tokens):
         if tok == "7" and not _is_volume_context(tokens, i):
-            if _span_has_any_label(pred_tags, i, i, ID_LABELS):
+            if _span_has_any_label(pred_tags, i, i, SENSITIVE_ID_LABELS):
                 continue
             start = max(0, i - 6)
             end = min(len(tokens), i + 7)

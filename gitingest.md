@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2026-01-05T21:50:24-08:00`
-Git: `v19` @ `b076c9f`
+Generated: `2026-01-06T07:31:58-08:00`
+Git: `fix/test-cascade-data_prep-phi` @ `6e31154`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -329,6 +329,7 @@ Git: `v19` @ `b076c9f`
       - docs/phi_review_system/README.md
     - docs/AGENTS.md
     - docs/ARCHITECTURE.md
+    - docs/CODEX_REGISTRY_DIAMOND_LOOP.md
     - docs/DEPLOY_ARCH.md
     - docs/DEPLOY_RAILWAY.md
     - docs/DEPLOYMENT.md
@@ -344,6 +345,7 @@ Git: `v19` @ `b076c9f`
     - docs/REFERENCES.md
     - docs/Registry_API.md
     - docs/Registry_ML_summary.md
+    - docs/REGISTRY_PRODIGY_WORKFLOW.md
     - docs/REPORTER_STYLE_GUIDE.md
     - docs/STRUCTURED_REPORTER.md
     - docs/USER_GUIDE.md
@@ -606,6 +608,7 @@ Git: `v19` @ `b076c9f`
       - modules/ml_coder/predictor.py
       - modules/ml_coder/preprocessing.py
       - modules/ml_coder/registry_data_prep.py
+      - modules/ml_coder/registry_label_schema.py
       - modules/ml_coder/registry_predictor.py
       - modules/ml_coder/registry_training.py
       - modules/ml_coder/self_correction.py
@@ -703,6 +706,7 @@ Git: `v19` @ `b076c9f`
       - modules/registry/inference_pytorch.py
       - modules/registry/ip_registry_improvements.md
       - modules/registry/ip_registry_schema_additions.json
+      - modules/registry/label_fields.py
       - modules/registry/model_bootstrap.py
       - modules/registry/model_runtime.py
       - modules/registry/normalization.py
@@ -2888,13 +2892,17 @@ Git: `v19` @ `b076c9f`
     - scripts/generate_gitingest.py
     - scripts/generate_synthetic_phi_data.py
     - scripts/golden_to_csv.py
+    - scripts/merge_registry_prodigy.py
     - scripts/normalize_phi_labels.py
     - scripts/patch.py
     - scripts/phi_audit.py
     - scripts/preflight.py
     - scripts/prepare_data.py
     - scripts/prodigy_export_corrections.py
+    - scripts/prodigy_export_registry.py
     - scripts/prodigy_prepare_phi_batch.py
+    - scripts/prodigy_prepare_registry.py
+    - scripts/prodigy_prepare_registry_batch.py
     - scripts/quantize_to_onnx.py
     - scripts/railway_start.sh
     - scripts/railway_start_gunicorn.sh
@@ -3018,6 +3026,7 @@ Git: `v19` @ `b076c9f`
       - tests/ml_coder/test_label_hydrator.py
       - tests/ml_coder/test_registry_data_prep.py
       - tests/ml_coder/test_registry_first_data_prep.py
+      - tests/ml_coder/test_registry_label_schema.py
       - tests/ml_coder/test_registry_predictor.py
       - tests/ml_coder/test_training_pipeline.py
     - tests/phi/
@@ -3063,6 +3072,9 @@ Git: `v19` @ `b076c9f`
     - tests/scripts/
       - tests/scripts/test_audit_model_fp_cli.py
       - tests/scripts/test_audit_model_fp_logic.py
+      - tests/scripts/test_prodigy_export_registry.py
+      - tests/scripts/test_prodigy_export_registry_file_mode.py
+      - tests/scripts/test_prodigy_prepare_registry.py
       - tests/scripts/test_train_distilbert_ner_cli.py
     - tests/unit/
       - tests/unit/.gitkeep
@@ -3163,6 +3175,7 @@ This toolkit enables:
 
 - **[Installation & Setup](docs/INSTALLATION.md)**: Setup guide for Python, spaCy models, and API keys.
 - **[User Guide](docs/USER_GUIDE.md)**: How to use the CLI tools and API endpoints.
+- **[Registry Prodigy Workflow](docs/REGISTRY_PRODIGY_WORKFLOW.md)**: Human-in-the-loop “Diamond Loop” for the registry procedure classifier.
 - **[Development Guide](docs/DEVELOPMENT.md)**: **CRITICAL** for contributors and AI Agents. Defines the system architecture and coding standards.
 - **[Architecture](docs/ARCHITECTURE.md)**: System design, module breakdown, and data flow.
 - **[Agents](docs/AGENTS.md)**: Multi-agent pipeline documentation for Parser, Summarizer, and Structurer.
@@ -3501,7 +3514,7 @@ Each output CSV contains:
 | `source_file` | Origin golden JSON file |
 | `label_source` | Extraction tier ("structured", "cpt", "keyword") |
 | `label_confidence` | Confidence score (0.60-0.95) |
-| `[30 procedure columns]` | Binary (0/1) procedure labels |
+| `[29 procedure columns]` | Binary (0/1) procedure labels |
 
 ---
 
@@ -4994,7 +5007,7 @@ pydantic-settings>=2.0.0
 ### `Makefile`
 ```
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -5230,6 +5243,116 @@ prodigy-clear-unannotated:
 		--batch-file data/ml_training/prodigy_batch.jsonl \
 		--dataset $(PRODIGY_DATASET) \
 		--backup
+
+# ==============================================================================
+# Registry Prodigy Workflow (Multi-Label Classification)
+# ==============================================================================
+# Requires:
+#   make registry-prep-final (or otherwise produce registry_train/val/test.csv)
+#   and a JSONL of unlabeled notes at $(PRODIGY_REGISTRY_INPUT_FILE)
+#
+# Workflow: prepare → annotate → export → merge → retrain
+
+PRODIGY_REGISTRY_COUNT ?= 200
+PRODIGY_REGISTRY_DATASET ?= registry_corrections_v1
+PRODIGY_REGISTRY_INPUT_FILE ?= data/ml_training/registry_unlabeled_notes.jsonl
+PRODIGY_REGISTRY_STRATEGY ?= hybrid
+PRODIGY_REGISTRY_MODEL_DIR ?= data/models/registry_runtime
+
+PRODIGY_REGISTRY_BATCH_FILE ?= data/ml_training/prodigy_registry_batch.jsonl
+PRODIGY_REGISTRY_MANIFEST ?= data/ml_training/prodigy_registry_manifest.json
+PRODIGY_REGISTRY_EXPORT_CSV ?= data/ml_training/registry_prodigy_labels.csv
+PRODIGY_REGISTRY_TRAIN_AUGMENTED ?= data/ml_training/registry_train_augmented.csv
+
+prodigy-prepare-registry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry.py \
+		--input-file $(PRODIGY_REGISTRY_INPUT_FILE) \
+		--output-file $(PRODIGY_REGISTRY_BATCH_FILE) \
+		--count $(PRODIGY_REGISTRY_COUNT) \
+		--strategy $(PRODIGY_REGISTRY_STRATEGY) \
+		--model-dir $(PRODIGY_REGISTRY_MODEL_DIR) \
+		--manifest $(PRODIGY_REGISTRY_MANIFEST) \
+		--exclude-csv data/ml_training/registry_train.csv
+
+prodigy-annotate-registry:
+	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(PRODIGY_REGISTRY_DATASET) blank:en \
+		$(PRODIGY_REGISTRY_BATCH_FILE) \
+		--label $$LABELS
+
+prodigy-export-registry:
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_registry.py \
+		--dataset $(PRODIGY_REGISTRY_DATASET) \
+		--output-csv $(PRODIGY_REGISTRY_EXPORT_CSV)
+
+prodigy-merge-registry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/merge_registry_prodigy.py \
+		--base-train-csv data/ml_training/registry_train.csv \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--prodigy-csv $(PRODIGY_REGISTRY_EXPORT_CSV) \
+		--out-csv $(PRODIGY_REGISTRY_TRAIN_AUGMENTED)
+
+prodigy-retrain-registry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta.py \
+		--train-csv $(PRODIGY_REGISTRY_TRAIN_AUGMENTED) \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--output-dir data/models/roberta_registry
+
+prodigy-registry-cycle: prodigy-prepare-registry
+	@echo "Batch prepared at $(PRODIGY_REGISTRY_BATCH_FILE)"
+	@echo "Run 'make prodigy-annotate-registry' to start Prodigy UI (textcat)"
+	@echo "After annotation:"
+	@echo "  make prodigy-export-registry"
+	@echo "  make prodigy-merge-registry"
+	@echo "  make prodigy-retrain-registry"
+
+# ==============================================================================
+# Registry “Diamond Loop” targets (brief-compatible aliases)
+# ==============================================================================
+REG_PRODIGY_COUNT ?= 200
+REG_PRODIGY_DATASET ?= registry_v1
+REG_PRODIGY_INPUT_FILE ?= data/ml_training/registry_unlabeled_notes.jsonl
+REG_PRODIGY_BATCH_FILE ?= data/ml_training/registry_prodigy_batch.jsonl
+REG_PRODIGY_MANIFEST ?= data/ml_training/registry_prodigy_manifest.json
+REG_PRODIGY_MODEL_DIR ?= data/models/registry_runtime
+REG_PRODIGY_EXPORT_CSV ?= data/ml_training/registry_human.csv
+REG_PRODIGY_RESET_ARCHIVE_DIR ?= data/ml_training/_archive/registry_prodigy
+
+# Reset registry Prodigy state (batch + manifest + Prodigy dataset).
+# This is safe to run even if some files/datasets don't exist.
+registry-prodigy-reset:
+	@mkdir -p $(REG_PRODIGY_RESET_ARCHIVE_DIR)
+	@ts="$$(date +%Y%m%d_%H%M%S)"; \
+	for f in "$(REG_PRODIGY_BATCH_FILE)" "$(REG_PRODIGY_MANIFEST)"; do \
+		if [ -f "$$f" ]; then \
+			mv "$$f" "$(REG_PRODIGY_RESET_ARCHIVE_DIR)/$$(basename "$$f").$$ts"; \
+			echo "Archived $$f → $(REG_PRODIGY_RESET_ARCHIVE_DIR)/$$(basename "$$f").$$ts"; \
+		fi; \
+	done
+	@$(CONDA_ACTIVATE) && REG_PRODIGY_DATASET="$(REG_PRODIGY_DATASET)" $(PRODIGY_PYTHON) - <<'PY'\nfrom prodigy.components.db import connect\nimport os\n\nds = os.environ.get(\"REG_PRODIGY_DATASET\", \"\").strip()\nif not ds:\n    raise SystemExit(\"REG_PRODIGY_DATASET is empty\")\n\ndb = connect()\nif ds in db.datasets:\n    db.drop_dataset(ds)\n    print(f\"Dropped Prodigy dataset: {ds}\")\nelse:\n    print(f\"Prodigy dataset not found (nothing to drop): {ds}\")\nPY
+
+registry-prodigy-prepare:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry_batch.py \
+		--input-file $(REG_PRODIGY_INPUT_FILE) \
+		--output-file $(REG_PRODIGY_BATCH_FILE) \
+		--limit $(REG_PRODIGY_COUNT) \
+		--strategy disagreement \
+		--manifest $(REG_PRODIGY_MANIFEST) \
+		--seed 42 \
+		--model-dir $(REG_PRODIGY_MODEL_DIR)
+
+registry-prodigy-annotate:
+	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(REG_PRODIGY_DATASET) $(REG_PRODIGY_BATCH_FILE) \
+		--loader jsonl \
+		--label $$LABELS
+
+registry-prodigy-export:
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_registry.py \
+		--dataset $(REG_PRODIGY_DATASET) \
+		--output-csv $(REG_PRODIGY_EXPORT_CSV)
 
 # ==============================================================================
 # Gold Standard PHI Workflow (Pure Human-Verified Data)
@@ -5469,6 +5592,14 @@ help:
 	@echo "  prodigy-cycle   - Full Prodigy iteration workflow"
 	@echo "  prodigy-clear-unannotated - Remove unannotated examples from batch file"
 	@echo ""
+	@echo "Registry Prodigy Workflow (multi-label classification):"
+	@echo "  prodigy-prepare-registry - Prepare batch for Prodigy choice (PRODIGY_REGISTRY_COUNT=200)"
+	@echo "  prodigy-annotate-registry - Launch Prodigy UI (PRODIGY_REGISTRY_DATASET=registry_corrections_v1)"
+	@echo "  prodigy-export-registry  - Export accepted labels to CSV"
+	@echo "  prodigy-merge-registry   - Merge Prodigy labels into train split (leakage-guarded)"
+	@echo "  prodigy-retrain-registry - Retrain registry classifier on augmented train split"
+	@echo "  prodigy-registry-cycle   - Convenience: prepare + instructions"
+	@echo ""
 	@echo "Gold Standard PHI Workflow (pure human-verified data):"
 	@echo "  gold-export    - Export pure gold from Prodigy dataset"
 	@echo "  gold-split     - 80/20 train/test split with note grouping"
@@ -5532,6 +5663,21 @@ registry-prep:
 		--prefix $(REGISTRY_PREFIX) \
 		--min-label-count $(REGISTRY_MIN_LABEL_COUNT) \
 		--random-seed $(REGISTRY_SEED)
+
+# Full pipeline + Tier-0 merge of human labels (Diamond Loop)
+HUMAN_REGISTRY_CSV ?=
+registry-prep-with-human:
+	@if [ -z "$(HUMAN_REGISTRY_CSV)" ]; then \
+		echo "ERROR: HUMAN_REGISTRY_CSV is required (e.g. make registry-prep-with-human HUMAN_REGISTRY_CSV=/tmp/registry_human.csv)"; \
+		exit 1; \
+	fi
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+		--input-dir $(REGISTRY_INPUT_DIR) \
+		--output-dir $(REGISTRY_OUTPUT_DIR) \
+		--prefix $(REGISTRY_PREFIX) \
+		--min-label-count $(REGISTRY_MIN_LABEL_COUNT) \
+		--random-seed $(REGISTRY_SEED) \
+		--human-labels-csv $(HUMAN_REGISTRY_CSV)
 
 # Dry run (validate only)
 registry-prep-dry:
@@ -6086,7 +6232,9 @@ async def root(request: Request) -> Any:
 
 @app.get("/health")
 async def health(request: Request) -> dict[str, bool]:
-    return {"ok": True, "ready": bool(getattr(request.app.state, "model_ready", False))}
+    # Liveness probe: keep payload stable and minimal.
+    # Readiness is exposed via `/ready`.
+    return {"ok": True}
 
 
 @app.get("/ready")
@@ -6729,7 +6877,6 @@ def _qapipeline_result_to_response(
 async def qa_run(
     payload: QARunRequest,
     request: Request,
-    _ready: None = Depends(require_ready),
     qa_service: QAPipelineService = Depends(get_qa_pipeline_service),
 ) -> QARunResponse:
     """
@@ -9256,6 +9403,10 @@ modules/registry/
 
 3-agent pipeline for structured note processing.
 
+**Current usage:**
+- `ParserAgent` is used as a deterministic sectionizer and can be used to *focus* the note text for registry extraction (see `modules/registry/extraction/focus.py`).
+- The full `Parser → Summarizer → Structurer` pipeline exists, but `StructurerAgent` is currently a placeholder and is **not** used for production registry extraction.
+
 **Architecture:**
 ```
 modules/agents/
@@ -9829,11 +9980,147 @@ When using the ML-First Pipeline, you'll see:
 
 ---
 
-## ➕ Adding New Training Cases
+## 🧠 Model Improvement
 
-To improve the ML model's accuracy, you can add new training cases. Here's how:
+This section covers supported workflows for improving the repo’s ML models.
 
-### Step 1: Prepare Your Data
+### ✅ Registry Procedure Classifier (Prodigy “Diamond Loop”)
+
+This repo supports a human-in-the-loop loop for the **registry multi-label procedure classifier** using Prodigy’s `textcat` UI (multi-label `cats`) and disagreement sampling.
+
+References:
+- `docs/REGISTRY_PRODIGY_WORKFLOW.md` (the detailed “Diamond Loop” spec)
+- `docs/MAKEFILE_COMMANDS.md` (Makefile target reference)
+
+#### 0) One-time sanity check (do this first)
+
+```bash
+make lint
+make typecheck
+make test
+```
+
+#### 1) Build (or rebuild) your registry CSV splits
+
+Run the recommended “final” prep (PHI-scrubbed) to produce the standard train/val/test CSVs:
+
+```bash
+make registry-prep-final
+
+# If you need the raw (non-scrubbed) corpus for debugging:
+# make registry-prep-raw
+```
+
+You should now have:
+- `data/ml_training/registry_train.csv`
+- `data/ml_training/registry_val.csv`
+- `data/ml_training/registry_test.csv`
+
+#### 2) Train a baseline model (1 epoch smoke test)
+
+This confirms your training pipeline + artifacts are good.
+
+```bash
+python scripts/train_roberta.py \
+  --train-csv data/ml_training/registry_train.csv \
+  --val-csv data/ml_training/registry_val.csv \
+  --test-csv data/ml_training/registry_test.csv \
+  --output-dir data/models/roberta_registry \
+  --epochs 1
+```
+
+After it finishes, verify these exist:
+- `data/models/roberta_registry/thresholds.json`
+- `data/models/roberta_registry/label_order.json`
+
+If you’re deciding “local CUDA vs VM”, check now:
+
+```bash
+python -c "import torch; print('cuda:', torch.cuda.is_available()); print('mps:', hasattr(torch.backends,'mps') and torch.backends.mps.is_available())"
+```
+
+- If **cuda: True** → keep going locally (fast iteration).
+- If **cuda: False** and you’re on CPU/MPS → fine for a 1-epoch smoke test, but for real runs (3–5 epochs + repeated loops) a GPU VM will feel much better.
+
+#### 3) Create (or confirm) your unlabeled notes file for Prodigy
+
+Prodigy prep expects a JSONL where each line includes `note_text` (or `text` / `note`).
+
+Default path used by the make targets:
+- `data/ml_training/registry_unlabeled_notes.jsonl`
+
+If you already have it, skip this.
+
+#### 4) Prepare a Prodigy batch (disagreement sampling + pre-checked labels)
+
+This generates:
+- `data/ml_training/registry_prodigy_batch.jsonl`
+- `data/ml_training/registry_prodigy_manifest.json`
+
+```bash
+make registry-prodigy-prepare \
+  REG_PRODIGY_INPUT_FILE=data/ml_training/registry_unlabeled_notes.jsonl \
+  REG_PRODIGY_COUNT=200
+```
+
+#### 5) Annotate in Prodigy (checkbox UI)
+
+```bash
+make registry-prodigy-annotate REG_PRODIGY_DATASET=registry_v1
+```
+
+Notes:
+- The annotation UI is served at `http://localhost:8080` (Prodigy’s default).
+- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 29 label(s): …” you’re in the right place.
+
+Annotate as many as you can tolerate in one sitting (even 50 is enough for the first iteration).
+
+If you need to restart cleanly (wrong batch, wrong dataset, switching strategies), reset the dataset + batch/manifest:
+
+```bash
+make registry-prodigy-reset REG_PRODIGY_DATASET=registry_v1
+```
+
+#### 6) Export Prodigy annotations → a human labels CSV
+
+```bash
+make registry-prodigy-export \
+  REG_PRODIGY_DATASET=registry_v1 \
+  REG_PRODIGY_EXPORT_CSV=data/ml_training/registry_human.csv
+```
+
+#### 7) Merge human labels as Tier-0 and rebuild splits (no leakage)
+
+This is critical: merge **before splitting**.
+
+```bash
+make registry-prep-with-human HUMAN_REGISTRY_CSV=data/ml_training/registry_human.csv
+```
+
+#### 8) Retrain for real (3–5 epochs)
+
+```bash
+python scripts/train_roberta.py \
+  --train-csv data/ml_training/registry_train.csv \
+  --val-csv data/ml_training/registry_val.csv \
+  --test-csv data/ml_training/registry_test.csv \
+  --output-dir data/models/roberta_registry \
+  --epochs 5
+```
+
+#### 9) Repeat the Diamond Loop
+
+Repeat steps **4 → 8** until disagreement rate drops and metrics plateau.
+
+Notes:
+- Canonical label schema/order is `modules/ml_coder/registry_label_schema.py`.
+- Training uses `label_confidence` as a per-row loss weight when present.
+
+### ➕ CPT Coding Model: Adding Training Cases
+
+To improve the CPT model’s accuracy, you can add new training cases. Here's how:
+
+#### Step 1: Prepare Your Data
 
 Create a JSONL file with your cases. Each line should be a JSON object with:
 
@@ -9853,7 +10140,7 @@ Create a JSONL file with your cases. Each line should be a JSON object with:
 - `dataset`: A label for grouping (e.g., "bronchoscopy", "pleural")
 - `procedure_type`: The type of procedure (auto-detected if not provided)
 
-### Step 2: Add Cases to Training Data
+#### Step 2: Add Cases to Training Data
 
 Place your JSONL file in the training data directory:
 
@@ -9862,7 +10149,7 @@ Place your JSONL file in the training data directory:
 cp my_new_cases.jsonl data/training/
 ```
 
-### Step 3: Validate Your Cases
+#### Step 3: Validate Your Cases
 
 Before training, validate that your cases are properly formatted:
 
@@ -9870,7 +10157,7 @@ Before training, validate that your cases are properly formatted:
 python scripts/validate_training_data.py data/training/my_new_cases.jsonl
 ```
 
-### Step 4: Retrain the Model (Optional)
+#### Step 4: Retrain the Model (Optional)
 
 If you have enough new cases (50+), you can retrain the ML model:
 
@@ -9879,7 +10166,7 @@ If you have enough new cases (50+), you can retrain the ML model:
 python scripts/train_ml_coder.py --include data/training/my_new_cases.jsonl
 ```
 
-### Tips for Good Training Data
+#### Tips for Good Training Data
 
 1. **Diverse examples**: Include various procedure types and complexity levels
 2. **Accurate labels**: Double-check the CPT codes are correct
@@ -10192,7 +10479,5 @@ http://localhost:8000/ui/phi_redactor/
 ---
 
 *Last updated: December 2025*
-## Generate slim branch
-python scripts/create_slim_branch.py --source v19 --target slim-review --force
 
 ```

@@ -420,6 +420,75 @@ make export-phi-client-model    # Update UI model
 make run-coder
 ```
 
+### `make registry-prep`
+**Description**: Build registry-first ML training splits from golden JSONs.
+
+**What it does**:
+- Converts `golden_*.json` files into multi-label CSV splits
+- Uses 3-tier hydration for labels (structured → CPT → keyword)
+- Writes:
+  - `data/ml_training/registry_train.csv`
+  - `data/ml_training/registry_val.csv`
+  - `data/ml_training/registry_test.csv`
+
+**Usage**:
+```bash
+make registry-prep
+make registry-prep-final   # recommended (PHI-scrubbed)
+make registry-prep-raw     # raw golden_extractions
+make registry-prep-dry     # validate only (no writes)
+```
+
+### `make registry-prep-with-human`
+**Description**: Registry prep + Tier-0 merge of human labels (Diamond Loop).
+
+**What it does**:
+- Loads a human-labeled CSV (from Prodigy export) and merges it as **Tier-0**
+  (`human > structured > cpt > keyword`)
+- Deduplicates before splitting to avoid leakage
+
+**Usage**:
+```bash
+make registry-prep-with-human HUMAN_REGISTRY_CSV=data/ml_training/registry_human.csv
+```
+
+### `make registry-prodigy-prepare`
+**Description**: Prepare a Prodigy `choice` batch for registry procedure flags (Diamond Loop).
+
+**What it does**:
+- Generates a Prodigy JSONL with checkbox options for all 29 labels
+- Pre-checks boxes using model + deterministic/CPT signals
+- Tracks a manifest to avoid re-sampling the same note
+
+**Usage**:
+```bash
+make registry-prodigy-prepare REG_PRODIGY_COUNT=200 REG_PRODIGY_INPUT_FILE=data/ml_training/registry_unlabeled_notes.jsonl
+```
+
+### `make registry-prodigy-annotate`
+**Description**: Launch Prodigy UI for registry multi-label annotation.
+
+**Usage**:
+```bash
+make registry-prodigy-annotate REG_PRODIGY_DATASET=registry_v1
+```
+
+### `make registry-prodigy-export`
+**Description**: Export Prodigy registry annotations to a training CSV.
+
+**Usage**:
+```bash
+make registry-prodigy-export REG_PRODIGY_DATASET=registry_v1 REG_PRODIGY_EXPORT_CSV=data/ml_training/registry_human.csv
+```
+
+### Legacy Registry Prodigy targets
+The Makefile also includes legacy targets that follow the same general flow:
+- `make prodigy-prepare-registry`
+- `make prodigy-annotate-registry`
+- `make prodigy-export-registry`
+- `make prodigy-merge-registry`
+- `make prodigy-retrain-registry`
+
 ### `make codex-train`
 **Description**: Run full training pipeline (CI-like flow).
 
@@ -621,6 +690,19 @@ Many make targets can be customized using environment variables:
 | `PRODIGY_DATASET` | `phi_corrections` | Prodigy dataset name |
 | `PRODIGY_INPUT_FILE` | `synthetic_phi.jsonl` | Input file for `prodigy-prepare-file` |
 | `PRODIGY_EPOCHS` | `1` | Number of epochs for `prodigy-finetune` |
+| `REGISTRY_INPUT_DIR` | `data/knowledge/golden_extractions_final` | Golden registry inputs for `registry-prep` |
+| `REGISTRY_OUTPUT_DIR` | `data/ml_training` | Output dir for registry CSV splits |
+| `REGISTRY_PREFIX` | `registry` | Output filename prefix |
+| `REGISTRY_MIN_LABEL_COUNT` | `5` | Min positives to keep a label |
+| `REGISTRY_SEED` | `42` | Registry split RNG seed |
+| `HUMAN_REGISTRY_CSV` | *(none)* | Human labels CSV for `registry-prep-with-human` |
+| `REG_PRODIGY_COUNT` | `200` | Registry Prodigy batch size |
+| `REG_PRODIGY_DATASET` | `registry_v1` | Registry Prodigy dataset name |
+| `REG_PRODIGY_INPUT_FILE` | `data/ml_training/registry_unlabeled_notes.jsonl` | Unlabeled notes JSONL for registry Prodigy |
+| `REG_PRODIGY_BATCH_FILE` | `data/ml_training/registry_prodigy_batch.jsonl` | Output Prodigy batch JSONL |
+| `REG_PRODIGY_MANIFEST` | `data/ml_training/registry_prodigy_manifest.json` | Registry Prodigy manifest (dedup) |
+| `REG_PRODIGY_MODEL_DIR` | `data/models/registry_runtime` | Optional registry runtime dir for prefill |
+| `REG_PRODIGY_EXPORT_CSV` | `data/ml_training/registry_human.csv` | Exported human labels CSV |
 
 ---
 

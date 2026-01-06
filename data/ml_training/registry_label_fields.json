@@ -18,6 +18,7 @@
   "cryotherapy",
   "blvr",
   "peripheral_ablation",
+  "bronchial_thermoplasty",
   "whole_lung_lavage",
   "rigid_bronchoscopy",
   "thoracentesis",
@@ -25,5 +26,6 @@
   "ipc",
   "medical_thoracoscopy",
   "pleurodesis",
+  "pleural_biopsy",
   "fibrinolytic_therapy"
 ]
