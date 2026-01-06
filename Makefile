@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -497,3 +497,73 @@ help:
 	@echo "  codex-train    - Full training pipeline"
 	@echo "  codex-metrics  - Run metrics over notes batch"
 	@echo "  clean          - Remove generated files"
+	@echo ""
+	@echo "Registry-First ML Data Preparation:"
+	@echo "  registry-prep       - Full pipeline: extract, split, save CSVs"
+	@echo "  registry-prep-dry   - Validate without saving files"
+	@echo "  registry-prep-final - Use PHI-scrubbed final data (recommended)"
+	@echo "  registry-prep-module - Use module integration (prepare_registry_training_splits)"
+	@echo "  test-registry-prep  - Run registry data prep tests"
+
+# ==============================================================================
+# Registry-First ML Training Data Preparation
+# ==============================================================================
+# Add these targets to your existing Makefile to enable the registry-first
+# training data workflow.
+#
+# Usage:
+#   make registry-prep          # Full pipeline: extract, split, save CSVs
+#   make registry-prep-dry      # Validate without saving files
+#   make registry-prep-final    # Use PHI-scrubbed final data
+#
+# Output files:
+#   data/ml_training/registry_train.csv
+#   data/ml_training/registry_val.csv
+#   data/ml_training/registry_test.csv
+#   data/ml_training/registry_meta.json
+
+# Configuration
+REGISTRY_INPUT_DIR ?= data/knowledge/golden_extractions_final
+REGISTRY_OUTPUT_DIR ?= data/ml_training
+REGISTRY_PREFIX ?= registry
+REGISTRY_MIN_LABEL_COUNT ?= 5
+REGISTRY_SEED ?= 42
+
+# Full pipeline
+registry-prep:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+		--input-dir $(REGISTRY_INPUT_DIR) \
+		--output-dir $(REGISTRY_OUTPUT_DIR) \
+		--prefix $(REGISTRY_PREFIX) \
+		--min-label-count $(REGISTRY_MIN_LABEL_COUNT) \
+		--random-seed $(REGISTRY_SEED)
+
+# Dry run (validate only)
+registry-prep-dry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+		--input-dir $(REGISTRY_INPUT_DIR) \
+		--output-dir $(REGISTRY_OUTPUT_DIR) \
+		--prefix $(REGISTRY_PREFIX) \
+		--dry-run
+
+# Use PHI-scrubbed final data (recommended for production)
+registry-prep-final:
+	$(MAKE) registry-prep REGISTRY_INPUT_DIR=data/knowledge/golden_extractions_final
+
+# Use raw golden extractions (for development/testing)
+registry-prep-raw:
+	$(MAKE) registry-prep REGISTRY_INPUT_DIR=data/knowledge/golden_extractions
+
+# Alternative: Use the module integration
+registry-prep-module:
+	$(CONDA_ACTIVATE) && $(PYTHON) -c " \
+from modules.ml_coder.registry_data_prep import prepare_registry_training_splits; \
+train, val, test = prepare_registry_training_splits(); \
+train.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_train.csv', index=False); \
+val.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_val.csv', index=False); \
+test.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_test.csv', index=False); \
+print(f'Train: {len(train)}, Val: {len(val)}, Test: {len(test)}')"
+
+# Test the data prep module
+test-registry-prep:
+	$(CONDA_ACTIVATE) && pytest tests/ml_coder/test_registry_first_data_prep.py -v

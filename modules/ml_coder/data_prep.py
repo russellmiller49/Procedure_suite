@@ -1,662 +1,375 @@
 """
-Data preparation module for ML coder training.
+Data preparation module for registry ML training.
 
-Builds clean training CSVs from golden JSONs with patient-level splitting
-to support Silver Standard training (Train on Synthetic+Real, Test on Real).
+Builds clean training CSVs from golden JSONs and existing registry data
+with patient-level splitting to support Silver Standard training
+(Train on Synthetic+Real, Test on Real).
 
-IMPORTANT: This module uses HYBRID LABELING to handle:
-1. CPT bundling rules (e.g., BAL bundled into biopsy codes)
-2. Schema drift between v0.4 (top-level cpt_codes) and v2.0 (nested billing)
-3. Anatomy-specific code mapping (31xxx=airway, 32xxx=pleural)
+Key design goals:
+- Single Source of Truth: In production, labels are derived using the canonical implementation.
+  Here, we map Golden JSON structured data (CPT codes + Registry Fields) into the target
+  boolean schema found in registry_train.csv.
+- Extraction-First: Uses structured evidence from JSONs as ground-truth labels for the
+  synthetic partition.
+
+Registry-First Alternative:
+  For the registry-first approach that extracts labels directly from the nested
+  registry_entry structure (rather than CPT-based derivation), use:
+
+      from modules.ml_coder.registry_data_prep import prepare_registry_training_splits
+      train_df, val_df, test_df = prepare_registry_training_splits()
 """
-
-from __future__ import annotations
 
 import glob
 import json
-import re
+import os
 import sys
-from collections import defaultdict
-from pathlib import Path
-from typing import Any, Dict, List, Set, Tuple
-
-import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from pathlib import Path
 
-# Allow running this file directly
-_REPO_ROOT = Path(__file__).resolve().parents[2]
-if str(_REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(_REPO_ROOT))
+# Define the boolean procedure columns found in registry_train.csv
+BOOLEAN_COLUMNS = [
+    'diagnostic_bronchoscopy', 'bal', 'bronchial_wash', 'brushings',
+    'endobronchial_biopsy', 'tbna_conventional', 'linear_ebus', 'radial_ebus',
+    'navigational_bronchoscopy', 'transbronchial_biopsy',
+    'transbronchial_cryobiopsy', 'therapeutic_aspiration',
+    'foreign_body_removal', 'airway_dilation', 'airway_stent',
+    'thermal_ablation', 'cryotherapy', 'blvr', 'peripheral_ablation',
+    'whole_lung_lavage', 'rigid_bronchoscopy', 'thoracentesis', 'chest_tube',
+    'ipc', 'medical_thoracoscopy', 'pleurodesis', 'fibrinolytic_therapy'
+]
 
-GOLDEN_DIR = Path("data/knowledge/golden_extractions")
-EDGE_SOURCE_NAME = "synthetic_edge_case_notes_with_registry.jsonl"
-KB_PATH = _REPO_ROOT / "data" / "knowledge" / "ip_coding_billing_v2_9.json"
-
-# Old/low-quality source files to exclude.
-EXCLUDED_SOURCE_PREFIXES = {
-    "synthetic_notes_with_CPT",       # Old CSV-based data
-    "synthetic_CPT_corrected",        # Old corrected data
-    "recovered_metadata",             # Recovery artifacts
-}
-
-
-def _load_valid_ip_codes() -> Set[str]:
+def derive_booleans_from_json(entry: dict) -> dict:
     """
-    Load VALID_IP_CODES set from the knowledge base file.
+    Derives boolean flags from a golden JSON entry using CPT codes
+    and registry_entry fields to match the registry_train.csv schema.
+    """
+    # Normalize CPT codes to a set of integers
+    raw_cpts = entry.get('cpt_codes', [])
+    cpt_codes = set()
+    for c in raw_cpts:
+        try:
+            cpt_codes.add(int(c))
+        except (ValueError, TypeError):
+            continue
+
+    reg = entry.get('registry_entry', {})
     
-    Uses scripts/code_validation.py logic to extract billable codes
-    from data/knowledge/ip_coding_billing_v2_9.json.
-    """
-    try:
-        from scripts.code_validation import build_valid_ip_codes
-        
-        if not KB_PATH.exists():
-            # Fallback: return empty set if KB file doesn't exist
-            return set()
-        
-        valid_codes, _ = build_valid_ip_codes(
-            KB_PATH,
-            keep_addon_plus=False,
-            include_reference_codes=False,
-        )
-        return valid_codes
-    except Exception as e:
-        # Fallback: return empty set on any error
-        import warnings
-        warnings.warn(f"Failed to load VALID_IP_CODES from {KB_PATH}: {e}")
-        return set()
+    # Initialize row with 0s
+    row = {col: 0 for col in BOOLEAN_COLUMNS}
+    
+    # --- Heuristic Mapping Logic based on CPTs and Registry Fields ---
 
-
-# Valid IP codes set - built from knowledge base file
-VALID_IP_CODES: Set[str] = _load_valid_ip_codes()
-
-def _is_valid_source(source_file: str) -> bool:
-    """Check if an entry's source_file is valid for ingestion."""
-    if not source_file:
-        return True
-    if source_file.startswith("(from "):
-        return True
-    for prefix in EXCLUDED_SOURCE_PREFIXES:
-        if source_file.startswith(prefix):
-            return False
-    return True
-
-
-# =============================================================================
-# HYBRID LABELING: CPT + Text Regex
-# =============================================================================
-# These functions handle CPT bundling rules and schema drift to generate
-# accurate clinical labels from billing data + procedure note text.
-
-
-def _normalize_cpt_codes(entry: Dict[str, Any]) -> Set[str]:
-    """
-    Extract and normalize CPT codes from both v0.4 and v2.0 schema formats.
-
-    Handles:
-    - v0.4: Top-level `cpt_codes` list of integers
-    - v2.0: Nested `registry_entry.billing.cpt_codes` list of objects
-
-    Returns:
-        Set of CPT code strings (e.g., {"31653", "31627", "31624"})
-    """
-    cpts_set: Set[str] = set()
-
-    # Check top-level simple list (v0.4 format)
-    if "cpt_codes" in entry and isinstance(entry["cpt_codes"], list):
-        for c in entry["cpt_codes"]:
-            if isinstance(c, (int, str)):
-                cpts_set.add(str(c))
-
-    # Check nested registry billing objects (v2.0 format)
-    registry = entry.get("registry_entry", {})
-    if isinstance(registry, dict) and "billing" in registry:
-        billing = registry["billing"]
-        if isinstance(billing, dict):
-            billing_codes = billing.get("cpt_codes", [])
-            for item in billing_codes:
-                if isinstance(item, dict):
-                    code = item.get("code", "")
-                    if code:
-                        cpts_set.add(str(code))
-                elif isinstance(item, (int, str)):
-                    cpts_set.add(str(item))
-
-    # Also check registry_entry.cpt_codes if present (some legacy formats)
-    if isinstance(registry, dict) and "cpt_codes" in registry:
-        reg_codes = registry["cpt_codes"]
-        if isinstance(reg_codes, list):
-            for c in reg_codes:
-                if isinstance(c, (int, str)):
-                    cpts_set.add(str(c))
-
-    return cpts_set
-
-
-def get_clinical_labels(entry: Dict[str, Any], text: str) -> Dict[str, int]:
-    """
-    Generate clinical labels using Hybrid Logic (CPT + Text Regex).
-
-    This handles:
-    1. CPT Bundling: Minor procedures (BAL) may be missing from billing even
-       though they were clinically performed (bundled into major procedures).
-    2. Schema Drift: Different JSON versions have different CPT code locations.
-    3. Anatomy Mismatch: Distinguishes pleural (32xxx) vs airway (31xxx) codes.
-
-    Args:
-        entry: The full entry dict from golden JSON
-        text: The procedure note text
-
-    Returns:
-        Dict mapping procedure field names to 0/1 labels
-    """
-    text_lower = text.lower() if text else ""
-    cpts_set = _normalize_cpt_codes(entry)
-
-    labels: Dict[str, int] = {}
-
-    # =========================================================================
-    # PLEURAL DETECTION (Must check first - prevents cross-contamination)
-    # =========================================================================
-    # 32xxx codes are Pleural procedures
-    is_pleural_code = any(
-        c.startswith("326") or c.startswith("325") or c.startswith("324")
-        for c in cpts_set
-    )
-    is_pleural_text = bool(re.search(
-        r"medical thoracoscopy|pleuroscopy|pleural biopsy|thoracoscopy.*biopsy|"
-        r"rigid thoracoscopy|semi-rigid thoracoscopy",
-        text_lower
-    ))
-    is_pleural_case = is_pleural_code or is_pleural_text
-
-    # --- Medical Thoracoscopy ---
-    labels["medical_thoracoscopy"] = 1 if (
-        "32601" in cpts_set or "32606" in cpts_set or "32609" in cpts_set or
-        is_pleural_text
-    ) else 0
-
-    # --- Pleural Biopsy ---
-    labels["pleural_biopsy"] = 1 if (
-        "32609" in cpts_set or
-        bool(re.search(r"pleural biopsy|biopsy.*pleura|parietal pleura.*biopsy", text_lower))
-    ) else 0
-
-    # --- Thoracentesis ---
-    labels["thoracentesis"] = 1 if (
-        "32554" in cpts_set or "32555" in cpts_set or
-        bool(re.search(r"\bthoracentesis\b|thoracentesis performed", text_lower))
-    ) else 0
-
-    # --- Chest Tube ---
-    labels["chest_tube"] = 1 if (
-        "32551" in cpts_set or
-        bool(re.search(r"chest tube|tube thoracostomy", text_lower))
-    ) else 0
-
-    # --- IPC (Tunneled Pleural Catheter) ---
-    labels["ipc"] = 1 if (
-        "32550" in cpts_set or
-        bool(re.search(r"\bipc\b|pleurx|tunneled.*catheter|tunneled pleural", text_lower))
-    ) else 0
-
-    # --- Pleurodesis ---
-    labels["pleurodesis"] = 1 if (
-        "32560" in cpts_set or
-        bool(re.search(r"pleurodesis|talc.*poudrage|chemical pleurodesis", text_lower))
-    ) else 0
-
-    # --- Fibrinolytic Therapy ---
-    labels["fibrinolytic_therapy"] = 1 if (
-        bool(re.search(r"fibrinolytic|tpa.*pleural|alteplase.*pleural|streptokinase", text_lower))
-    ) else 0
-
-    # =========================================================================
-    # BRONCHOSCOPY / AIRWAY PROCEDURES
-    # =========================================================================
-    # Only set airway labels if NOT a purely pleural case
-
-    # --- BAL (Fixing the Bundling Error) ---
-    # BAL (31624) is often bundled into biopsy codes even though it was performed
-    labels["bal"] = 1 if (
-        "31624" in cpts_set or
-        bool(re.search(r"\bbal\b|bronchoalveolar lavage|mini-bal|mini bal", text_lower))
-    ) else 0
-
-    # --- Bronchial Wash ---
-    labels["bronchial_wash"] = 1 if (
-        "31622" in cpts_set or
-        bool(re.search(r"bronchial wash|bronchial washing", text_lower))
-    ) else 0
-
-    # --- Brushings ---
-    labels["brushings"] = 1 if (
-        "31623" in cpts_set or
-        bool(re.search(r"\bbrushings?\b|bronchial brush|cytology brush", text_lower))
-    ) else 0
-
-    # --- Endobronchial Biopsy ---
-    labels["endobronchial_biopsy"] = 1 if (
-        "31625" in cpts_set or
-        bool(re.search(r"endobronchial biopsy|ebb\b|mucosal biopsy", text_lower))
-    ) and not is_pleural_case else 0
-
-    # --- Transbronchial Biopsy (Preventing Pleural Cross-Contamination) ---
-    has_tbbx_code = any(c in cpts_set for c in ["31628", "31629", "31632", "31633"])
-    has_tbbx_text = bool(re.search(
-        r"transbronchial biopsy|tbbx\b|forceps biopsy|transbronchial lung biopsy",
-        text_lower
-    ))
-    labels["transbronchial_biopsy"] = 1 if (
-        (has_tbbx_code or has_tbbx_text) and not is_pleural_case
-    ) else 0
-
-    # --- Transbronchial Cryobiopsy ---
-    labels["transbronchial_cryobiopsy"] = 1 if (
-        "31629" in cpts_set or "31633" in cpts_set or
-        bool(re.search(r"cryobiopsy|cryo.*biopsy|transbronchial cryo", text_lower))
-    ) and not is_pleural_case else 0
-
-    # --- TBNA Conventional ---
-    labels["tbna_conventional"] = 1 if (
-        "31629" in cpts_set or  # Note: 31629 can be TBNA with fluoro
-        bool(re.search(r"\btbna\b|transbronchial needle aspir", text_lower))
-    ) and not is_pleural_case else 0
-
-    # --- Linear EBUS ---
-    labels["linear_ebus"] = 1 if (
-        any(c in cpts_set for c in ["31652", "31653", "31654"]) or
-        bool(re.search(r"linear ebus|ebus-tbna|ebus tbna|endobronchial ultrasound.*tbna", text_lower))
-    ) else 0
-
-    # --- Radial EBUS ---
-    labels["radial_ebus"] = 1 if (
-        bool(re.search(r"radial ebus|r-ebus|rebus\b|radial probe", text_lower))
-    ) else 0
-
-    # --- Navigational Bronchoscopy ---
-    labels["navigational_bronchoscopy"] = 1 if (
-        "31627" in cpts_set or
-        bool(re.search(
-            r"navigation|ion\s+bronchoscopy|superDimension|monarch|"
-            r"electromagnetic navigation|emn\b|robotic bronch",
-            text_lower
-        ))
-    ) else 0
-
-    # --- Fiducial Placement ---
-    labels["fiducial_placement"] = 1 if (
-        "31626" in cpts_set or
-        bool(re.search(r"fiducial|gold marker|gold seed|fiduciary marker", text_lower))
-    ) else 0
-
-    # --- Thermal Ablation (often bundled/unbilled) ---
-    labels["thermal_ablation"] = 1 if (
-        "31641" in cpts_set or
-        bool(re.search(r"\bapc\b|argon plasma|electrocautery|thermal ablation|laser ablation", text_lower))
-    ) else 0
-
-    # --- Cryotherapy ---
-    labels["cryotherapy"] = 1 if (
-        "31641" in cpts_set or  # Can be used for cryo debulking
-        bool(re.search(r"cryotherapy|cryo.*debulk|cryospray|spray cryo", text_lower))
-    ) else 0
-
-    # --- Airway Dilation ---
-    labels["airway_dilation"] = 1 if (
-        "31630" in cpts_set or "31631" in cpts_set or
-        bool(re.search(r"balloon dilation|airway dilation|bronchial dilation|dilated.*airway", text_lower))
-    ) else 0
-
-    # --- Airway Stent ---
-    labels["airway_stent"] = 1 if (
-        "31636" in cpts_set or "31637" in cpts_set or
-        bool(re.search(r"airway stent|bronchial stent|tracheal stent|stent.*placed|dumon", text_lower))
-    ) else 0
-
-    # --- Foreign Body Removal ---
-    labels["foreign_body_removal"] = 1 if (
-        "31635" in cpts_set or
-        bool(re.search(r"foreign body|stent removal|removed.*stent|fb removal", text_lower))
-    ) else 0
-
-    # --- Therapeutic Aspiration ---
-    labels["therapeutic_aspiration"] = 1 if (
-        bool(re.search(r"therapeutic aspiration|mucus plug.*removal|clot.*aspir", text_lower))
-    ) else 0
-
-    # --- BLVR ---
-    labels["blvr"] = 1 if (
-        "31647" in cpts_set or "31651" in cpts_set or
-        bool(re.search(r"\bblvr\b|bronchoscopic lung volume reduction|valve.*placement|zephyr valve", text_lower))
-    ) else 0
-
-    # --- Peripheral Ablation ---
-    labels["peripheral_ablation"] = 1 if (
-        bool(re.search(r"peripheral ablation|microwave ablation|mwa\b|rfa\b|radiofrequency ablation", text_lower))
-    ) else 0
-
-    # --- Bronchial Thermoplasty ---
-    labels["bronchial_thermoplasty"] = 1 if (
-        "31660" in cpts_set or "31661" in cpts_set or
-        bool(re.search(r"bronchial thermoplasty|\bbt\b.*asthma|thermoplasty", text_lower))
-    ) else 0
-
-    # --- Whole Lung Lavage ---
-    labels["whole_lung_lavage"] = 1 if (
-        "31624" in cpts_set or  # Can be billed for WLL
-        bool(re.search(r"whole lung lavage|wll\b|pap.*lavage|therapeutic lavage", text_lower))
-    ) else 0
-
-    # --- Rigid Bronchoscopy ---
-    labels["rigid_bronchoscopy"] = 1 if (
-        "31622" in cpts_set or  # Base bronch code often used with rigid
-        bool(re.search(r"rigid bronchoscopy|rigid scope|rigid.*bronch", text_lower))
-    ) else 0
-
-    # =========================================================================
-    # DIAGNOSTIC BRONCHOSCOPY (Derived flag)
-    # =========================================================================
-    # Set if any bronchoscopic procedure detected AND it's not purely pleural
-    bronch_indicators = [
-        labels.get("linear_ebus", 0),
-        labels.get("radial_ebus", 0),
-        labels.get("navigational_bronchoscopy", 0),
-        labels.get("transbronchial_biopsy", 0),
-        labels.get("transbronchial_cryobiopsy", 0),
-        labels.get("blvr", 0),
-        labels.get("peripheral_ablation", 0),
-        labels.get("thermal_ablation", 0),
-        labels.get("cryotherapy", 0),
-        labels.get("airway_dilation", 0),
-        labels.get("airway_stent", 0),
-        labels.get("foreign_body_removal", 0),
-        labels.get("bronchial_thermoplasty", 0),
-        labels.get("whole_lung_lavage", 0),
-        labels.get("rigid_bronchoscopy", 0),
-        labels.get("bal", 0),
-        labels.get("bronchial_wash", 0),
-        labels.get("brushings", 0),
-        labels.get("endobronchial_biopsy", 0),
-        labels.get("tbna_conventional", 0),
-        labels.get("fiducial_placement", 0),
-        labels.get("therapeutic_aspiration", 0),
+    # 1. Diagnostic Bronchoscopy
+    # Set to 1 if specific diagnostic bronchoscopy codes are present.
+    # Note: BLVR (31647) and Therapeutic codes do not trigger this on their own.
+    diagnostic_cpts = [
+        31622, 31623, 31624, 31625, 31626, 31627, 31628, 31629, 
+        31651, 31652, 31653, 31654
     ]
+    if any(c in cpt_codes for c in diagnostic_cpts):
+        row['diagnostic_bronchoscopy'] = 1
 
-    # Also check for generic bronchoscopy CPT codes or text
-    has_bronch_code = any(c.startswith("316") for c in cpts_set)
-    has_bronch_text = bool(re.search(r"bronchoscopy|bronchoscopic", text_lower))
+    # 2. BAL (31624)
+    if 31624 in cpt_codes:
+        row['bal'] = 1
+        
+    # 3. Bronchial Wash (31622 implies basic bronch, wash often bundled)
+    if 31622 in cpt_codes:
+        row['bronchial_wash'] = 1
+        
+    # 4. Brushings (31623)
+    if 31623 in cpt_codes:
+        row['brushings'] = 1
+        
+    # 5. Endobronchial Biopsy (31625)
+    if 31625 in cpt_codes:
+        row['endobronchial_biopsy'] = 1
+        
+    # 6. Transbronchial Biopsy (31628, 31632)
+    if 31628 in cpt_codes or 31632 in cpt_codes:
+        row['transbronchial_biopsy'] = 1
 
-    labels["diagnostic_bronchoscopy"] = 1 if (
-        (any(bronch_indicators) or has_bronch_code or has_bronch_text)
-        and not (is_pleural_case and not any(bronch_indicators))
-    ) else 0
+    # 7. Linear EBUS (31651, 31652, 31653)
+    if any(c in cpt_codes for c in [31651, 31652, 31653]) or reg.get('linear_ebus_stations'):
+        row['linear_ebus'] = 1
+        
+    # 8. TBNA Conventional (31629)
+    # Logic: If 31629 is present AND Linear EBUS codes are NOT present, it is conventional.
+    if 31629 in cpt_codes:
+        if row['linear_ebus'] == 0:
+            row['tbna_conventional'] = 1
+            
+    # 9. Radial EBUS (31654)
+    if 31654 in cpt_codes or reg.get('nav_rebus_used') is True:
+        row['radial_ebus'] = 1
+        
+    # 10. Navigational Bronchoscopy (31627)
+    if 31627 in cpt_codes or reg.get('nav_platform'):
+        row['navigational_bronchoscopy'] = 1
+        
+    # 11. Transbronchial Cryobiopsy
+    # Distinct from TBBX in registry. Look for explicit registry flag or keyword.
+    if reg.get('nav_cryobiopsy_for_nodule') is True:
+        row['transbronchial_cryobiopsy'] = 1
+        
+    # 12. Therapeutic Aspiration (31645, 31646)
+    if any(c in cpt_codes for c in [31645, 31646]):
+        row['therapeutic_aspiration'] = 1
+        
+    # 13. Foreign Body Removal (31635)
+    if 31635 in cpt_codes or reg.get('fb_object_type'):
+        row['foreign_body_removal'] = 1
+        
+    # 14. Airway Dilation (31630, 31631, 31634)
+    if any(c in cpt_codes for c in [31630, 31631, 31634]):
+        row['airway_dilation'] = 1
+        
+    # 15. Airway Stent (31636, 31637, 31638)
+    if any(c in cpt_codes for c in [31636, 31637, 31638]):
+        row['airway_stent'] = 1
+        
+    # 16. Peripheral Ablation
+    # Rely on the registry flag 'ablation_peripheral_performed'
+    if reg.get('ablation_peripheral_performed') is True:
+        row['peripheral_ablation'] = 1
+        
+    # 17. Thermal Ablation (Central)
+    # 31641 is "Destruction of tumor". If not peripheral, assume central/thermal.
+    elif 31641 in cpt_codes:
+        row['thermal_ablation'] = 1
+        
+    # 18. Cryotherapy (Central)
+    # Usually implies central airway treatment if not peripheral.
+    # Check modality text.
+    modality = str(reg.get('ablation_modality', '')).lower()
+    if 'cryo' in modality and row['peripheral_ablation'] == 0:
+        row['cryotherapy'] = 1
+        # If it was caught by thermal_ablation logic above (via 31641), reset thermal if specific cryo column used?
+        # Typically datasets distinguish them. For safety, we leave thermal=1 unless strictly exclusive.
+        # Based on CSV row 6 (Cryoablation): Peripheral=1, Thermal=0, Cryo=0 (as it's peripheral).
+        # This matches the logic above (elif 31641).
+    
+    # 19. BLVR (31647-31651)
+    if any(c in cpt_codes for c in [31647, 31648, 31649, 31651]) or reg.get('blvr_valve_type'):
+        row['blvr'] = 1
+        
+    # 20. Whole Lung Lavage (32997)
+    if 32997 in cpt_codes or reg.get('wll_volume_instilled_l'):
+        row['whole_lung_lavage'] = 1
+        
+    # 21. Rigid Bronchoscopy (31600, 31601)
+    if 31600 in cpt_codes or 31601 in cpt_codes:
+        row['rigid_bronchoscopy'] = 1
+        
+    # 22. Medical Thoracoscopy (32601)
+    if 32601 in cpt_codes:
+        row['medical_thoracoscopy'] = 1
+        
+    # 23. Pleurodesis (32650)
+    if 32650 in cpt_codes or reg.get('pleurodesis_performed') is True:
+        row['pleurodesis'] = 1
+        
+    # 24. Thoracentesis (32554, 32555)
+    if 32554 in cpt_codes or 32555 in cpt_codes:
+        row['thoracentesis'] = 1
+        
+    # 25. Chest Tube (32551)
+    if 32551 in cpt_codes or str(reg.get('pleural_procedure_type')) == 'Chest Tube':
+        row['chest_tube'] = 1
 
-    return labels
+    # 26. IPC (32550)
+    if 32550 in cpt_codes:
+        row['ipc'] = 1
+        
+    # 27. Fibrinolytic Therapy (32560)
+    if 32560 in cpt_codes:
+        row['fibrinolytic_therapy'] = 1
+        
+    return row
+
+def main():
+    # 1. Load Real Data
+    real_csv_path = 'data/ml_training/registry_train.csv'
+    
+    print(f"Loading real data from {real_csv_path}...")
+    try:
+        if os.path.exists(real_csv_path):
+            df_real = pd.read_csv(real_csv_path)
+        else:
+            print(f"Warning: {real_csv_path} not found. Proceeding with empty real dataframe.")
+            df_real = pd.DataFrame(columns=['note_text'] + BOOLEAN_COLUMNS)
+    except Exception as e:
+        print(f"Error reading CSV: {e}")
+        return
+    
+    # 2. Split Real Data (Train/Test)
+    # Test set is purely Real data (Silver Standard methodology)
+    if len(df_real) > 5:
+        train_real, test_real = train_test_split(df_real, test_size=0.2, random_state=42)
+    else:
+        print("Warning: Not enough real data to split. Using all for training.")
+        train_real = df_real
+        test_real = pd.DataFrame(columns=df_real.columns)
+    
+    # 3. Load Synthetic Data (Golden JSONs)
+    synthetic_rows = []
+    # Search in the canonical golden extractions directory
+    golden_dir = Path('data/knowledge/golden_extractions_final')
+    json_files = glob.glob(str(golden_dir / 'golden_*.json'))
+    
+    print(f"Loading synthetic data from {len(json_files)} JSON files...")
+    
+    for json_file in json_files:
+        try:
+            with open(json_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                # Ensure data is a list
+                if isinstance(data, dict):
+                    data = [data]
+                    
+                for entry in data:
+                    note_text = entry.get('note_text', '')
+                    if not note_text: 
+                        continue
+                    
+                    # Derive labels from structure
+                    labels = derive_booleans_from_json(entry)
+                    
+                    row_data = {'note_text': note_text}
+                    row_data.update(labels)
+                    synthetic_rows.append(row_data)
+        except Exception as e:
+            print(f"Warning: Failed to process {json_file}: {e}")
+                
+    if synthetic_rows:
+        df_synthetic = pd.DataFrame(synthetic_rows)
+        # Fill missing columns in synthetic with 0
+        for col in BOOLEAN_COLUMNS:
+            if col not in df_synthetic.columns:
+                df_synthetic[col] = 0
+    else:
+        print("Warning: No synthetic data found.")
+        df_synthetic = pd.DataFrame(columns=['note_text'] + BOOLEAN_COLUMNS)
+
+    # 4. Combine Synthetic + Real Train
+    # Ensure column order matches
+    cols = ['note_text'] + BOOLEAN_COLUMNS
+    
+    # Filter only columns that exist (intersection of schema and df)
+    valid_cols = [c for c in cols if c in df_synthetic.columns]
+    df_synthetic = df_synthetic[valid_cols]
+    
+    # Reindex real data to ensure matching columns
+    train_real = train_real.reindex(columns=cols, fill_value=0)
+    test_real = test_real.reindex(columns=cols, fill_value=0)
+    df_synthetic = df_synthetic.reindex(columns=cols, fill_value=0)
+    
+    df_train_final = pd.concat([df_synthetic, train_real], ignore_index=True)
+    
+    # 5. Save Outputs
+    output_dir = Path("processed_data")
+    output_dir.mkdir(exist_ok=True)
+    
+    train_path = output_dir / 'train.csv'
+    test_path = output_dir / 'test.csv'
+    
+    df_train_final.to_csv(train_path, index=False)
+    test_real.to_csv(test_path, index=False)
+    
+    print("-" * 30)
+    print(f"Processed {len(df_real)} real records and {len(df_synthetic)} synthetic records.")
+    print(f"Train Set (Synthetic + 80% Real): {len(df_train_final)} rows.")
+    print(f"Test Set (20% Real):              {len(test_real)} rows.")
+    print("-" * 30)
+    print(f"Files saved to {output_dir}")
+
+if __name__ == '__main__':
+    main()
 
 
-# Registry procedure presence flags used as multi-label targets for ML.
+# =============================================================================
+# V2 Booleans Integration
+# =============================================================================
+# Import the canonical boolean field list and extraction function from
+# modules/registry/v2_booleans.py for backward compatibility.
+
 from modules.registry.v2_booleans import (
-    PROCEDURE_BOOLEAN_FIELDS as REGISTRY_TARGET_FIELDS,
-    extract_v2_booleans as _extract_v2_booleans_impl,
+    PROCEDURE_BOOLEAN_FIELDS,
+    extract_v2_booleans,
 )
 
-def _extract_registry_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
-    """Map a V2 registry entry to V3-style procedure flags."""
-    return _extract_v2_booleans_impl(entry)
+# Alias for backward compatibility with existing code
+# Keep as list (not tuple) to match original PROCEDURE_BOOLEAN_FIELDS type
+REGISTRY_TARGET_FIELDS = list(PROCEDURE_BOOLEAN_FIELDS)
 
-def _filter_rare_registry_labels(
-    labels: List[List[int]],
-    min_count: int = 5,
-) -> Tuple[List[List[int]], List[str]]:
-    """Drop registry labels that are too rare to train on."""
-    if not labels:
-        return [], []
-    label_matrix = np.array(labels)
-    label_counts = label_matrix.sum(axis=0)
-    keep_mask = label_counts >= min_count
-    kept_indices = np.where(keep_mask)[0]
-    kept_field_names = [REGISTRY_TARGET_FIELDS[i] for i in kept_indices]
-    filtered_matrix = label_matrix[:, keep_mask]
-    return filtered_matrix.tolist(), kept_field_names
 
-def _iter_golden_files() -> List[Path]:
-    """Iterate over golden extraction JSON files."""
-    patterns = [
-        str(GOLDEN_DIR / "golden_*.json"),
-        str(GOLDEN_DIR / "consolidated_verified_notes_v2_8_part_*.json"),
-        str(GOLDEN_DIR / "synthetic_*.json"),
-        str(GOLDEN_DIR / "*.jsonl")
-    ]
-    files: List[Path] = []
-    for pattern in patterns:
-        files.extend(Path(p) for p in glob.glob(pattern))
-    
-    seen: set[Path] = set()
-    unique: List[Path] = []
-    for p in files:
-        if p in seen:
-            continue
-        seen.add(p)
-        unique.append(p)
-    return unique
-
-def _flatten_entries(data: Any) -> List[Dict[str, Any]]:
-    """Flatten entries from various JSON structures."""
-    if isinstance(data, list):
-        return [e for e in data if isinstance(e, dict)]
-    elif isinstance(data, dict):
-        entries = []
-        for key, value in data.items():
-            if key == "metadata":
-                continue
-            if isinstance(value, list):
-                entries.extend([e for e in value if isinstance(e, dict)])
-        return entries
-    return []
-
-def _build_registry_dataframe(use_hybrid_labels: bool = True) -> pd.DataFrame:
-    """Build a DataFrame from all extraction files with Silver Standard metadata.
-
-    Extracts:
-    - note_text
-    - boolean procedure flags (using hybrid CPT + text approach)
-    - is_synthetic: True if note is AI-generated
-    - root_mrn: The base patient ID (groups Real + Synthetic variations)
+def _extract_registry_booleans(entry: dict) -> dict:
+    """Wrapper for extract_v2_booleans for backward compatibility.
 
     Args:
-        use_hybrid_labels: If True, use get_clinical_labels() which handles CPT
-            bundling rules and text regex fallback. If False, use only the
-            registry-based extraction (legacy behavior).
+        entry: Registry entry dictionary from golden JSON.
+
+    Returns:
+        Dict mapping field names to 0/1 values.
     """
-    rows = []
-    for file_path in _iter_golden_files():
-        try:
-            # Handle JSONL vs JSON
-            if file_path.suffix == '.jsonl':
-                with open(file_path, "r") as f:
-                    data = [json.loads(line) for line in f]
-            else:
-                with open(file_path, "r") as f:
-                    data = json.load(f)
-        except Exception as e:
-            print(f"Skipping malformed file {file_path}: {e}")
-            continue
+    return extract_v2_booleans(entry)
 
-        for entry in _flatten_entries(data):
-            text = entry.get("note_text", "")
-            source_file = entry.get("source_file", "")
 
-            if not _is_valid_source(source_file):
-                continue
+def _filter_rare_registry_labels(
+    labels: list[list[int]],
+    min_count: int = 5,
+) -> tuple[list[list[int]], list[str]]:
+    """Filter out labels with fewer than min_count positive examples.
 
-            registry = entry.get("registry_entry") or {}
-            if not text:
-                continue
+    Args:
+        labels: List of label vectors (each vector is a list of 0/1 ints).
+        min_count: Minimum positive count required to keep a label.
 
-            mrn = str(registry.get("patient_mrn", ""))
-            date = registry.get("procedure_date")
-
-            # --- ROBUST SYNTHETIC DETECTION ---
-            # 1. File name check
-            file_is_syn = "synthetic" in file_path.name.lower()
-            # 2. Source field check
-            source_is_syn = "synthetic" in str(source_file).lower()
-            # 3. MRN convention check
-            mrn_is_syn = "_syn" in mrn
-            # 4. Metadata check (present in golden_084.json)
-            meta_is_syn = "synthetic_metadata" in entry
-
-            is_synthetic = file_is_syn or source_is_syn or mrn_is_syn or meta_is_syn
-
-            # --- ROOT MRN EXTRACTION ---
-            # Extracts 'S31640-021' from 'S31640-021_syn_1' so they stay grouped
-            root_mrn = mrn.split("_syn")[0] if mrn else f"unknown_{len(rows)}"
-
-            # --- HYBRID LABELING ---
-            # Use CPT codes + text regex for robust label generation
-            if use_hybrid_labels:
-                # Hybrid approach: CPT codes + text regex (handles bundling)
-                flags = get_clinical_labels(entry, text)
-
-                # Also extract registry-based flags as fallback/supplement
-                registry_flags = _extract_registry_booleans(registry)
-
-                # Merge: prefer hybrid labels, but fill in any missing fields
-                # from registry extraction (for procedures not in hybrid logic)
-                for field in REGISTRY_TARGET_FIELDS:
-                    if field not in flags:
-                        flags[field] = registry_flags.get(field, 0)
-                    # Also set to 1 if registry extraction found it (OR logic)
-                    elif registry_flags.get(field, 0) == 1:
-                        flags[field] = 1
-            else:
-                # Legacy behavior: only registry-based extraction
-                flags = _extract_registry_booleans(registry)
-
-            row = {
-                "note_text": text,
-                "patient_mrn": mrn,
-                "root_mrn": root_mrn,
-                "procedure_date": date,
-                "source_file": source_file,
-                "is_synthetic": is_synthetic,
-                "is_edge_case": (source_file == EDGE_SOURCE_NAME),
-            }
-            row.update(flags)
-            rows.append(row)
-
-    df = pd.DataFrame(rows)
-    return df
-
-def _silver_standard_split(
-    df: pd.DataFrame,
-    test_size: float = 0.2,
-    random_state: int = 42
-) -> Tuple[np.ndarray, np.ndarray]:
+    Returns:
+        Tuple of (filtered_labels, kept_field_names).
     """
-    Perform a Patient-Level split enforcing Silver Standard logic.
-    
-    Logic:
-    1. Group by `root_mrn` (Unique Patient).
-    2. Split unique patients into Train Patients (80%) and Test Patients (20%).
-    3. Train Set = All records (Real + Synthetic) for the Train Patients.
-    4. Test Set = ONLY Real records for the Test Patients. (Synthetic records for Test Patients are dropped).
-    """
-    unique_patients = df["root_mrn"].unique()
-    
-    # Split patients, not rows, to prevent data leakage
-    train_patients, test_patients = train_test_split(
-        unique_patients, 
-        test_size=test_size, 
-        random_state=random_state
-    )
-    
-    train_patients_set = set(train_patients)
-    test_patients_set = set(test_patients)
-    
-    # Select indices
-    # Train: All records belonging to Train Patients (Real + Synthetic)
-    train_mask = df["root_mrn"].isin(train_patients_set)
-    
-    # Test: Only REAL records belonging to Test Patients
-    # This prevents the model from being evaluated on synthetic text
-    test_mask = df["root_mrn"].isin(test_patients_set) & (~df["is_synthetic"])
-    
-    return df[train_mask].index.values, df[test_mask].index.values
+    if not labels:
+        return [], []
 
-def _build_registry_label_matrix(df: pd.DataFrame, fields: List[str]) -> np.ndarray:
-    """Build multi-hot encoding matrix from registry boolean columns."""
-    y = np.zeros((len(df), len(fields)), dtype=int)
-    for i, field in enumerate(fields):
-        if field in df.columns:
-            y[:, i] = df[field].fillna(0).astype(int).values
-    return y
+    import numpy as np
 
-def prepare_registry_training_splits(
-    output_dir: Path = Path("data/ml_training"),
-    test_size: float = 0.2,
-    min_label_count: int = 5,
-) -> None:
-    """Build registry procedure presence train/test CSV splits."""
-    output_dir.mkdir(parents=True, exist_ok=True)
-    df = _build_registry_dataframe()
+    # Convert to array for easier computation
+    arr = np.array(labels)
+    n_labels = arr.shape[1] if arr.ndim > 1 else 0
 
-    print(f"Total registry entries loaded: {len(df)}")
-    if len(df) > 0:
-        print(f"  - Real: {len(df[~df['is_synthetic']])}")
-        print(f"  - Synthetic: {len(df[df['is_synthetic']])}")
+    if n_labels == 0:
+        return [], []
 
-    # Separate edge cases for holdout
-    df_main = df[~df["is_edge_case"]].reset_index(drop=True)
-    df_edge = df[df["is_edge_case"]].reset_index(drop=True)
+    # Count positives for each label
+    counts = arr.sum(axis=0)
 
-    # Build label matrix and filter rare labels
-    all_labels = _build_registry_label_matrix(df_main, REGISTRY_TARGET_FIELDS)
-    filtered_labels, kept_fields = _filter_rare_registry_labels(
-        all_labels.tolist(), min_count=min_label_count
-    )
+    # Find which labels to keep
+    keep_mask = counts >= min_count
+    kept_indices = np.where(keep_mask)[0]
 
-    print(f"Labels kept after filtering (>= {min_label_count} samples): {len(kept_fields)}")
+    # Filter labels and get field names
+    if len(kept_indices) == 0:
+        return [], []
 
-    # Perform Silver Standard Split
-    train_idx, test_idx = _silver_standard_split(
-        df_main, test_size=test_size
-    )
+    filtered = arr[:, kept_indices].tolist()
+    kept_names = [REGISTRY_TARGET_FIELDS[i] for i in kept_indices]
 
-    train_df = df_main.iloc[train_idx]
-    test_df = df_main.iloc[test_idx]
+    return filtered, kept_names
 
-    # Select output columns: note_text + kept boolean fields
-    output_columns = ["note_text"] + kept_fields
-    train_out = train_df[output_columns].copy()
-    test_out = test_df[output_columns].copy()
 
-    # Save CSVs
-    train_out.to_csv(output_dir / "registry_train.csv", index=False)
-    test_out.to_csv(output_dir / "registry_test.csv", index=False)
+# =============================================================================
+# Registry-First Data Prep Re-exports
+# =============================================================================
+# Import registry-first functions for convenient access from this module.
+# These are imported last to avoid circular import issues.
 
-    # Save kept field names for inference ordering
-    with open(output_dir / "registry_label_fields.json", "w") as f:
-        json.dump(kept_fields, f, indent=2)
-
-    # Save edge cases separately if any
-    if len(df_edge) > 0:
-        edge_out = df_edge[output_columns].copy()
-        edge_out.to_csv(output_dir / "registry_edge_cases.csv", index=False)
-
-    print(f"\n=== Registry Data Prep Summary (Silver Standard) ===")
-    print(f"Train samples: {len(train_out)} (Mixed Real + Synthetic)")
-    print(f"Test samples:  {len(test_out)} (Pure Real)")
-    print(f"Output written to: {output_dir}")
-
-    # Print per-label stats for train set
-    print(f"\nPer-label counts in train set:")
-    train_label_matrix = _build_registry_label_matrix(train_out, kept_fields)
-    train_counts = train_label_matrix.sum(axis=0)
-    for field, count in zip(kept_fields, train_counts):
-        print(f"  {field}: {count}")
-
-if __name__ == "__main__":
-    prepare_registry_training_splits()
+from .registry_data_prep import (
+    prepare_registry_training_splits,
+    RegistryLabelExtractor,
+    ALL_PROCEDURE_LABELS,
+    extract_records_from_golden_dir,
+    stratified_split,
+    filter_rare_labels,
+)

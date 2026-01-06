@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2026-01-03T15:42:29-07:00`
-Git: `v19` @ `d0f5e89`
+Generated: `2026-01-05T21:50:24-08:00`
+Git: `v19` @ `b076c9f`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -13,11 +13,11 @@ Git: `v19` @ `d0f5e89`
 
 ## Repo tree (pruned)
 ```
-- Procedure_suite/
+- proc_suite/
   - .claude/
     - .claude/commands/
       - .claude/commands/phi-redactor.md
-    - .claude/.DS_Store
+      - .claude/commands/registry-data-prep.md
     - .claude/settings.local.json
   - .github/
     - .github/workflows/
@@ -67,23 +67,80 @@ Git: `v19` @ `d0f5e89`
       - archive/scripts/verify_v4_enhancements.sh
     - archive/README.md
   - artifacts/
+    - artifacts/phi_audit/
+      - artifacts/phi_audit/20251217_211201Z.json
+      - artifacts/phi_audit/20251217_211512Z.json
+      - artifacts/phi_audit/20251217_223316Z.json
+      - artifacts/phi_audit/20251217_223841Z.json
+      - artifacts/phi_audit/20251217_224125Z.json
+      - artifacts/phi_audit/20251217_224849Z.json
+      - artifacts/phi_audit/20251218_005750Z.json
+      - artifacts/phi_audit/20251218_010431Z.json
+      - artifacts/phi_audit/20251218_010541Z.json
+      - artifacts/phi_audit/20251218_010638Z.json
+      - artifacts/phi_audit/20251218_010842Z.json
+      - artifacts/phi_audit/20251218_010958Z.json
+      - artifacts/phi_audit/20251218_012830Z.json
+      - artifacts/phi_audit/20251218_012935Z.json
+      - artifacts/phi_audit/20251218_013017Z.json
+      - artifacts/phi_audit/20251218_013059Z.json
+      - artifacts/phi_audit/20251218_013138Z.json
+      - artifacts/phi_audit/20251218_013217Z.json
+      - artifacts/phi_audit/20251218_013931Z.json
+      - artifacts/phi_audit/20251218_014012Z.json
+      - artifacts/phi_audit/20251218_014057Z.json
+      - artifacts/phi_audit/20251218_014142Z.json
+      - artifacts/phi_audit/20251218_014226Z.json
+      - artifacts/phi_audit/20251218_014424Z.json
+      - artifacts/phi_audit/20251218_014526Z.json
+      - artifacts/phi_audit/20251218_014601Z.json
+      - artifacts/phi_audit/20251218_014635Z.json
+      - artifacts/phi_audit/20251218_014719Z.json
+      - artifacts/phi_audit/20251218_021519Z.json
+      - artifacts/phi_audit/20251218_021625Z.json
+      - artifacts/phi_audit/20251218_021739Z.json
+      - artifacts/phi_audit/20251218_021828Z.json
+      - artifacts/phi_audit/20251218_021938Z.json
+      - artifacts/phi_audit/20251218_022039Z.json
+      - artifacts/phi_audit/20251218_161236Z.json
+      - artifacts/phi_audit/20251218_161332Z.json
+      - artifacts/phi_audit/20251218_161437Z.json
+      - artifacts/phi_audit/20251218_161520Z.json
+      - artifacts/phi_audit/20251218_161559Z.json
+      - artifacts/phi_audit/20251218_185222Z.json
+      - artifacts/phi_audit/20251218_185314Z.json
+      - artifacts/phi_audit/20251218_191312Z.json
+      - artifacts/phi_audit/20251218_191354Z.json
+      - artifacts/phi_audit/20251218_191626Z.json
+      - artifacts/phi_audit/20251218_203224Z.json
+      - artifacts/phi_audit/20251219_161429Z.json
+      - artifacts/phi_audit/20251219_161613Z.json
+      - artifacts/phi_audit/20251219_161710Z.json
+      - artifacts/phi_audit/20251219_161836Z.json
+      - artifacts/phi_audit/20251219_162003Z.json
+      - artifacts/phi_audit/20251219_162139Z.json
+      - artifacts/phi_audit/20251219_164515Z.json
+      - artifacts/phi_audit/20251219_165101Z.json
+      - artifacts/phi_audit/20251219_170856Z.json
+      - artifacts/phi_audit/20251219_190050Z.json
+      - artifacts/phi_audit/redaction_decisions.jsonl
     - artifacts/phi_distilbert_ner/
-      - artifacts/phi_distilbert_ner/checkpoint-1090/
-        - artifacts/phi_distilbert_ner/checkpoint-1090/config.json
-        - artifacts/phi_distilbert_ner/checkpoint-1090/model.safetensors
-        - artifacts/phi_distilbert_ner/checkpoint-1090/special_tokens_map.json
-        - artifacts/phi_distilbert_ner/checkpoint-1090/tokenizer.json
-        - artifacts/phi_distilbert_ner/checkpoint-1090/tokenizer_config.json
-        - artifacts/phi_distilbert_ner/checkpoint-1090/trainer_state.json
-        - artifacts/phi_distilbert_ner/checkpoint-1090/vocab.txt
-      - artifacts/phi_distilbert_ner/checkpoint-200/
-        - artifacts/phi_distilbert_ner/checkpoint-200/config.json
-        - artifacts/phi_distilbert_ner/checkpoint-200/model.safetensors
-        - artifacts/phi_distilbert_ner/checkpoint-200/special_tokens_map.json
-        - artifacts/phi_distilbert_ner/checkpoint-200/tokenizer.json
-        - artifacts/phi_distilbert_ner/checkpoint-200/tokenizer_config.json
-        - artifacts/phi_distilbert_ner/checkpoint-200/trainer_state.json
-        - artifacts/phi_distilbert_ner/checkpoint-200/vocab.txt
+      - artifacts/phi_distilbert_ner/checkpoint-1160/
+        - artifacts/phi_distilbert_ner/checkpoint-1160/config.json
+        - artifacts/phi_distilbert_ner/checkpoint-1160/model.safetensors
+        - artifacts/phi_distilbert_ner/checkpoint-1160/special_tokens_map.json
+        - artifacts/phi_distilbert_ner/checkpoint-1160/tokenizer.json
+        - artifacts/phi_distilbert_ner/checkpoint-1160/tokenizer_config.json
+        - artifacts/phi_distilbert_ner/checkpoint-1160/trainer_state.json
+        - artifacts/phi_distilbert_ner/checkpoint-1160/vocab.txt
+      - artifacts/phi_distilbert_ner/checkpoint-800/
+        - artifacts/phi_distilbert_ner/checkpoint-800/config.json
+        - artifacts/phi_distilbert_ner/checkpoint-800/model.safetensors
+        - artifacts/phi_distilbert_ner/checkpoint-800/special_tokens_map.json
+        - artifacts/phi_distilbert_ner/checkpoint-800/tokenizer.json
+        - artifacts/phi_distilbert_ner/checkpoint-800/tokenizer_config.json
+        - artifacts/phi_distilbert_ner/checkpoint-800/trainer_state.json
+        - artifacts/phi_distilbert_ner/checkpoint-800/vocab.txt
       - artifacts/phi_distilbert_ner/audit_gold_report.json
       - artifacts/phi_distilbert_ner/audit_report.json
       - artifacts/phi_distilbert_ner/config.json
@@ -96,7 +153,6 @@ Git: `v19` @ `d0f5e89`
       - artifacts/phi_distilbert_ner/vocab.txt
     - artifacts/phi_distilbert_ner_mps/
       - artifacts/phi_distilbert_ner_mps/label_map.json
-    - artifacts/.DS_Store
     - artifacts/redactions.jsonl
   - cms_rvu_tools/
     - cms_rvu_tools/cms_rvus_2025_ip.csv
@@ -271,7 +327,6 @@ Git: `v19` @ `d0f5e89`
         - docs/phi_review_system/frontend/PHIReviewDemo.jsx
         - docs/phi_review_system/frontend/PHIReviewEditor.jsx
       - docs/phi_review_system/README.md
-    - docs/.DS_Store
     - docs/AGENTS.md
     - docs/ARCHITECTURE.md
     - docs/DEPLOY_ARCH.md
@@ -331,7 +386,6 @@ Git: `v19` @ `d0f5e89`
           - modules/api/static/phi_redactor/vendor/
             - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/
               - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/
-              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/.DS_Store
               - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/config.json
               - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/label_map.json
               - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
@@ -339,9 +393,52 @@ Git: `v19` @ `d0f5e89`
               - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
               - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
               - modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
-            - modules/api/static/phi_redactor/vendor/.DS_Store
+            - modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/ort_config.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
+              - modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
+            - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/
+                - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/
+                  - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_bnb4.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_bnb4.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_fp16.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_fp16.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_int8.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_int8.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4f16.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_q4f16.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_quantized.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_quantized.onnx.metadata
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_uint8.onnx.lock
+                      - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/onnx/model_uint8.onnx.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/config.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/config.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/quantize_config.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/quantize_config.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/special_tokens_map.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/special_tokens_map.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer.json.metadata
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer_config.json.lock
+                    - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/download/tokenizer_config.json.metadata
+                  - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/.cache/huggingface/.gitignore
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/onnx/
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/config.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/quantize_config.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/special_tokens_map.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer.json
+              - modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer_config.json
             - modules/api/static/phi_redactor/vendor/.gitkeep
-          - modules/api/static/phi_redactor/.DS_Store
           - modules/api/static/phi_redactor/allowlist_trie.json
           - modules/api/static/phi_redactor/app.js
           - modules/api/static/phi_redactor/index.html
@@ -349,12 +446,10 @@ Git: `v19` @ `d0f5e89`
           - modules/api/static/phi_redactor/redactor.worker.js
           - modules/api/static/phi_redactor/styles.css
           - modules/api/static/phi_redactor/sw.js
-        - modules/api/static/.DS_Store
         - modules/api/static/app.js
         - modules/api/static/index.html
         - modules/api/static/phi_demo.html
         - modules/api/static/phi_demo.js
-      - modules/api/.DS_Store
       - modules/api/__init__.py
       - modules/api/coder_adapter.py
       - modules/api/dependencies.py
@@ -427,7 +522,6 @@ Git: `v19` @ `d0f5e89`
         - modules/coder/reconciliation/__init__.py
         - modules/coder/reconciliation/pipeline.py
         - modules/coder/reconciliation/reconciler.py
-      - modules/coder/.DS_Store
       - modules/coder/__init__.py
       - modules/coder/cli.py
       - modules/coder/code_families.py
@@ -508,8 +602,10 @@ Git: `v19` @ `d0f5e89`
     - modules/ml_coder/
       - modules/ml_coder/__init__.py
       - modules/ml_coder/data_prep.py
+      - modules/ml_coder/label_hydrator.py
       - modules/ml_coder/predictor.py
       - modules/ml_coder/preprocessing.py
+      - modules/ml_coder/registry_data_prep.py
       - modules/ml_coder/registry_predictor.py
       - modules/ml_coder/registry_training.py
       - modules/ml_coder/self_correction.py
@@ -531,7 +627,6 @@ Git: `v19` @ `d0f5e89`
         - modules/phi/safety/__init__.py
         - modules/phi/safety/protected_terms.py
         - modules/phi/safety/veto.py
-      - modules/phi/.DS_Store
       - modules/phi/__init__.py
       - modules/phi/db.py
       - modules/phi/models.py
@@ -667,7 +762,6 @@ Git: `v19` @ `d0f5e89`
           - modules/reporting/templates/addons/chest_tube_removal.jinja
           - modules/reporting/templates/addons/cone_beam_ct_cbct_augmented_fluoroscopy_assisted_bronchoscopy.jinja
           - modules/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
-          - modules/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
           - modules/reporting/templates/addons/ebus_guided_19_gauge_core_fine_needle_biopsy_fnb.jinja
           - modules/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
           - modules/reporting/templates/addons/ebus_tbna.jinja
@@ -761,7 +855,6 @@ Git: `v19` @ `d0f5e89`
       - modules/reporting/macro_engine.py
       - modules/reporting/metadata.py
       - modules/reporting/validation.py
-    - modules/.DS_Store
     - modules/__init__.py
   - observability/
     - observability/__init__.py
@@ -769,12 +862,18 @@ Git: `v19` @ `d0f5e89`
     - observability/logging_config.py
     - observability/metrics.py
     - observability/timing.py
+  - proc_autocode/
+    - proc_autocode/ip_kb/
+    - proc_autocode/rvu/
   - proc_kb/
     - proc_kb/ebus_config.yaml
   - proc_nlp/
     - proc_nlp/__init__.py
     - proc_nlp/normalize_proc.py
     - proc_nlp/umls_linker.py
+  - proc_registry/
+    - proc_registry/adapters/
+  - proc_report/
   - proc_schemas/
     - proc_schemas/clinical/
       - proc_schemas/clinical/__init__.py
@@ -791,6 +890,20 @@ Git: `v19` @ `d0f5e89`
     - proc_schemas/envelope_models.py
     - proc_schemas/procedure_report.py
     - proc_schemas/reasoning.py
+  - processed_data/
+    - processed_data/test.csv
+    - processed_data/train.csv
+  - Registry-First ML Data Preparation/
+    - Registry-First ML Data Preparation/golden_to_csv.py
+    - Registry-First ML Data Preparation/golden_to_csv.py:Zone.Identifier
+    - Registry-First ML Data Preparation/INTEGRATION_GUIDE.md
+    - Registry-First ML Data Preparation/INTEGRATION_GUIDE.md:Zone.Identifier
+    - Registry-First ML Data Preparation/makefile_snippet.mk
+    - Registry-First ML Data Preparation/makefile_snippet.mk:Zone.Identifier
+    - Registry-First ML Data Preparation/registry_data_prep.py
+    - Registry-First ML Data Preparation/registry_data_prep.py:Zone.Identifier
+    - Registry-First ML Data Preparation/test_registry_data_prep.py
+    - Registry-First ML Data Preparation/test_registry_data_prep.py:Zone.Identifier
   - schemas/
     - schemas/IP_Registry.json
   - scripts/
@@ -2768,11 +2881,13 @@ Git: `v19` @ `d0f5e89`
     - scripts/evaluate_cpt.py
     - scripts/export_phi_gold_standard.py
     - scripts/export_phi_model_for_transformersjs.py
+    - scripts/find_phi_failures.py
     - scripts/fit_thresholds_from_eval.py
     - scripts/fix_registry_hallucinations.py
     - scripts/generate_addon_templates.py
     - scripts/generate_gitingest.py
     - scripts/generate_synthetic_phi_data.py
+    - scripts/golden_to_csv.py
     - scripts/normalize_phi_labels.py
     - scripts/patch.py
     - scripts/phi_audit.py
@@ -2900,7 +3015,9 @@ Git: `v19` @ `d0f5e89`
       - tests/ml_coder/__init__.py
       - tests/ml_coder/test_case_difficulty.py
       - tests/ml_coder/test_data_prep.py
+      - tests/ml_coder/test_label_hydrator.py
       - tests/ml_coder/test_registry_data_prep.py
+      - tests/ml_coder/test_registry_first_data_prep.py
       - tests/ml_coder/test_registry_predictor.py
       - tests/ml_coder/test_training_pipeline.py
     - tests/phi/
@@ -2976,7 +3093,6 @@ Git: `v19` @ `d0f5e89`
       - tests/unit/test_validation_engine.py
     - tests/utils/
       - tests/utils/case_filter.py
-    - tests/.DS_Store
     - tests/conftest.py
     - tests/test_clean_ip_registry.py
     - tests/test_openai_responses_parse.py
@@ -2988,23 +3104,26 @@ Git: `v19` @ `d0f5e89`
     - Training_data/synthetic_phi_institutions.jsonl
     - Training_data/Syntheticnotes_12_27_25.txt
     - Training_data/syntheticnotes_12_27_25_expanded.jsonl
-  - .DS_Store
   - .env
-  - .env.backup
+  - .env.example
   - .gitattributes
   - .gitignore
   - .pre-commit-config.yaml
   - .setup.stamp
   - alembic.ini
+  - aws-g5-key.pem
   - CLAUDE.md
   - cpt_check.py
   - diagnose_codex.sh
+  - failures.jsonl
   - gitingest.md
   - institutions.jsonl
   - ip_golden_knowledge_v2_2.json
   - Makefile
   - new_synthetic.jsonl
   - pm3_lr2e5_e12_a0.3_t2.0run_metrics.json
+  - prodigy_annotations_export.cleaned.jsonl
+  - prodigy_annotations_export.jsonl
   - pyproject.toml
   - README.md
   - requirements-train.txt
@@ -3271,10 +3390,22 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 ### The Complete Pipeline: JSON → Trained Model
 
 ```
-Golden JSONs → modules/ml_coder/data_prep.py → train_roberta.py → ONNX Model
+Golden JSONs → registry_data_prep.py (3-tier hydration + dedup) → train_roberta.py → ONNX Model
 ```
 
-The production data preparation module handles all data extraction, cleaning, and splitting in one step with proper multi-label stratification.
+The production data preparation module uses **3-tier extraction with hydration** and **priority-based deduplication** for clean, high-quality training data.
+
+---
+
+### Quick Start (Make Commands)
+
+```bash
+make registry-prep        # Generate train/val/test CSV files
+make registry-prep-dry    # Preview extraction stats (no file writes)
+make registry-prep-module # Run via Python module interface
+```
+
+Or use the `/registry-data-prep` skill for guided execution.
 
 ---
 
@@ -3282,41 +3413,99 @@ The production data preparation module handles all data extraction, cleaning, an
 
 Add or modify your golden JSON files in:
 ```
-data/knowledge/golden_extractions/
+data/knowledge/golden_extractions_final/   # PHI-scrubbed (preferred)
+data/knowledge/golden_extractions/          # Fallback
 ```
-(e.g., add `golden_099.json`, `golden_100.json`, etc.)
 
 ---
 
 ### Step 2: Prepare Training Splits
 
-The `modules/ml_coder/data_prep.py` module provides functions for generating clean, stratified training data:
+**Using CLI script (recommended):**
+```bash
+python scripts/golden_to_csv.py \
+  --input-dir data/knowledge/golden_extractions_final \
+  --output-dir data/ml_training \
+  --prefix registry
+```
 
+**Using Python API:**
 ```python
-from modules.ml_coder.data_prep import prepare_registry_training_splits
+from modules.ml_coder.registry_data_prep import prepare_registry_training_splits
 
-# Generate train/val/test splits with proper stratification
 train_df, val_df, test_df = prepare_registry_training_splits()
 
-# Save to CSV for training
 train_df.to_csv("data/ml_training/registry_train.csv", index=False)
 val_df.to_csv("data/ml_training/registry_val.csv", index=False)
 test_df.to_csv("data/ml_training/registry_test.csv", index=False)
 ```
 
-**What this does:**
-- Scans all `golden_*.json` files in `data/knowledge/golden_extractions/`
-- Extracts procedure boolean flags using canonical `v2_booleans` module
-- Cleans and validates CPT codes (typo correction, domain filtering)
-- Applies iterative multi-label stratification (`skmultilearn`)
-- Enforces encounter-level grouping to prevent data leakage
-- Filters rare labels (< 5 examples) that can't be trained reliably
+---
+
+### 3-Tier Extraction with Hydration
+
+The pipeline extracts labels from golden JSONs using a cascading approach:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ TIER 1: Structured Extraction (confidence: 0.95)            │
+│ extract_v2_booleans(registry_entry)                         │
+│ Source: modules/registry/v2_booleans.py                     │
+└─────────────────────────────────────────────────────────────┘
+       │ (if all-zero)
+       ▼
+┌─────────────────────────────────────────────────────────────┐
+│ TIER 2: CPT-Based Derivation (confidence: 0.80)             │
+│ derive_booleans_from_json(entry)                            │
+│ Uses: cpt_codes field from golden JSON                      │
+└─────────────────────────────────────────────────────────────┘
+       │ (if still all-zero)
+       ▼
+┌─────────────────────────────────────────────────────────────┐
+│ TIER 3: Keyword Hydration (confidence: 0.60)                │
+│ hydrate_labels_from_text(note_text)                         │
+│ Uses: 40+ regex patterns with negation filtering            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Typical distribution:**
+- Tier 1 (Structured): ~79%
+- Tier 2 (CPT): ~18%
+- Tier 3 (Keyword): ~3%
+
+---
+
+### Priority-Based Deduplication
+
+When the same `note_text` appears multiple times with different labels, deduplication keeps the highest-priority source:
+
+```
+structured (priority=3) > cpt (priority=2) > keyword (priority=1)
+```
+
+**Benefits:**
+- Eliminates conflicting ground truth signals
+- Removes ~2-3% duplicate records
+- Tracks conflict statistics for quality monitoring
+
+---
+
+### Output Schema
+
+Each output CSV contains:
+
+| Column | Description |
+|--------|-------------|
+| `note_text` | Procedure note text |
+| `encounter_id` | Stable hash for encounter-level grouping |
+| `source_file` | Origin golden JSON file |
+| `label_source` | Extraction tier ("structured", "cpt", "keyword") |
+| `label_confidence` | Confidence score (0.60-0.95) |
+| `[30 procedure columns]` | Binary (0/1) procedure labels |
 
 ---
 
 ### Step 3: Train Model
-
-Run the training script:
 
 ```bash
 python scripts/train_roberta.py --batch-size 16 --epochs 5
@@ -3336,13 +3525,20 @@ python scripts/train_roberta.py \
 
 | Function | Purpose |
 |----------|---------|
-| `prepare_registry_training_splits()` | Main entry point - returns (train_df, val_df, test_df) |
-| `prepare_training_and_eval_splits()` | CPT code prediction splits |
-| `stratified_split()` | Iterative multi-label stratification with encounter grouping |
+| `prepare_registry_training_splits()` | Main entry - returns (train_df, val_df, test_df) |
+| `extract_records_from_golden_dir()` | Extract records with 3-tier hydration |
+| `deduplicate_records()` | Remove duplicates by source priority |
+| `extract_labels_with_hydration()` | Single-entry label extraction |
+| `stratified_split()` | Multi-label stratification with grouping |
 
-**Location**: `modules/ml_coder/data_prep.py`
+**Key Files:**
+- `modules/ml_coder/registry_data_prep.py` - Core data prep logic
+- `modules/ml_coder/label_hydrator.py` - 3-tier extraction + hydration
+- `scripts/golden_to_csv.py` - CLI interface
 
-**Tests**: `tests/ml_coder/test_data_prep.py`, `tests/ml_coder/test_registry_data_prep.py`
+**Tests:**
+- `tests/ml_coder/test_registry_first_data_prep.py`
+- `tests/ml_coder/test_label_hydrator.py`
 
 ---
 
@@ -4798,7 +4994,7 @@ pydantic-settings>=2.0.0
 ### `Makefile`
 ```
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final
+.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -4946,8 +5142,9 @@ build-phi-platinum:
 # Prodigy-based PHI label correction workflow
 PRODIGY_COUNT ?= 100
 PRODIGY_DATASET ?= phi_corrections
-# Prodigy is installed in system Python 3.12
-PRODIGY_PYTHON ?= /Library/Frameworks/Python.framework/Versions/3.12/bin/python3
+# Prodigy should run in the same environment as the rest of the tooling.
+# (The previous default hardcoded a macOS system Python path and breaks on Linux/WSL.)
+PRODIGY_PYTHON ?= $(PYTHON)
 
 prodigy-prepare:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_phi_batch.py \
@@ -4965,12 +5162,12 @@ prodigy-prepare-file:
 		--output data/ml_training/prodigy_batch.jsonl
 
 prodigy-annotate:
-	$(PRODIGY_PYTHON) -m prodigy ner.manual $(PRODIGY_DATASET) blank:en \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) -m prodigy ner.manual $(PRODIGY_DATASET) blank:en \
 		data/ml_training/prodigy_batch.jsonl \
 		--label PATIENT,DATE,ID,GEO,CONTACT
 
 prodigy-export:
-	$(PRODIGY_PYTHON) scripts/prodigy_export_corrections.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_corrections.py \
 		--dataset $(PRODIGY_DATASET) \
 		--merge-with data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--output data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
@@ -5046,9 +5243,9 @@ GOLD_OUTPUT_DIR ?= data/ml_training
 GOLD_MODEL_DIR ?= artifacts/phi_distilbert_ner
 
 # Export pure gold from Prodigy (no merging with old data)
-# Uses PRODIGY_PYTHON because Prodigy is installed in system Python 3.12
+# Run in the same conda env as the rest of the pipeline (WSL/Linux friendly).
 gold-export:
-	$(PRODIGY_PYTHON) scripts/export_phi_gold_standard.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/export_phi_gold_standard.py \
 		--dataset $(GOLD_DATASET) \
 		--output $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
 		--model-dir $(GOLD_MODEL_DIR)
@@ -5295,6 +5492,76 @@ help:
 	@echo "  codex-train    - Full training pipeline"
 	@echo "  codex-metrics  - Run metrics over notes batch"
 	@echo "  clean          - Remove generated files"
+	@echo ""
+	@echo "Registry-First ML Data Preparation:"
+	@echo "  registry-prep       - Full pipeline: extract, split, save CSVs"
+	@echo "  registry-prep-dry   - Validate without saving files"
+	@echo "  registry-prep-final - Use PHI-scrubbed final data (recommended)"
+	@echo "  registry-prep-module - Use module integration (prepare_registry_training_splits)"
+	@echo "  test-registry-prep  - Run registry data prep tests"
+
+# ==============================================================================
+# Registry-First ML Training Data Preparation
+# ==============================================================================
+# Add these targets to your existing Makefile to enable the registry-first
+# training data workflow.
+#
+# Usage:
+#   make registry-prep          # Full pipeline: extract, split, save CSVs
+#   make registry-prep-dry      # Validate without saving files
+#   make registry-prep-final    # Use PHI-scrubbed final data
+#
+# Output files:
+#   data/ml_training/registry_train.csv
+#   data/ml_training/registry_val.csv
+#   data/ml_training/registry_test.csv
+#   data/ml_training/registry_meta.json
+
+# Configuration
+REGISTRY_INPUT_DIR ?= data/knowledge/golden_extractions_final
+REGISTRY_OUTPUT_DIR ?= data/ml_training
+REGISTRY_PREFIX ?= registry
+REGISTRY_MIN_LABEL_COUNT ?= 5
+REGISTRY_SEED ?= 42
+
+# Full pipeline
+registry-prep:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+		--input-dir $(REGISTRY_INPUT_DIR) \
+		--output-dir $(REGISTRY_OUTPUT_DIR) \
+		--prefix $(REGISTRY_PREFIX) \
+		--min-label-count $(REGISTRY_MIN_LABEL_COUNT) \
+		--random-seed $(REGISTRY_SEED)
+
+# Dry run (validate only)
+registry-prep-dry:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+		--input-dir $(REGISTRY_INPUT_DIR) \
+		--output-dir $(REGISTRY_OUTPUT_DIR) \
+		--prefix $(REGISTRY_PREFIX) \
+		--dry-run
+
+# Use PHI-scrubbed final data (recommended for production)
+registry-prep-final:
+	$(MAKE) registry-prep REGISTRY_INPUT_DIR=data/knowledge/golden_extractions_final
+
+# Use raw golden extractions (for development/testing)
+registry-prep-raw:
+	$(MAKE) registry-prep REGISTRY_INPUT_DIR=data/knowledge/golden_extractions
+
+# Alternative: Use the module integration
+registry-prep-module:
+	$(CONDA_ACTIVATE) && $(PYTHON) -c " \
+from modules.ml_coder.registry_data_prep import prepare_registry_training_splits; \
+train, val, test = prepare_registry_training_splits(); \
+train.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_train.csv', index=False); \
+val.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_val.csv', index=False); \
+test.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_test.csv', index=False); \
+print(f'Train: {len(train)}, Val: {len(val)}, Test: {len(test)}')"
+
+# Test the data prep module
+test-registry-prep:
+	$(CONDA_ACTIVATE) && pytest tests/ml_coder/test_registry_first_data_prep.py -v
 
 ```
 

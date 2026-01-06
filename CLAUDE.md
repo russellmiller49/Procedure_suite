@@ -54,10 +54,22 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 ### The Complete Pipeline: JSON → Trained Model
 
 ```
-Golden JSONs → modules/ml_coder/data_prep.py → train_roberta.py → ONNX Model
+Golden JSONs → registry_data_prep.py (3-tier hydration + dedup) → train_roberta.py → ONNX Model
 ```
 
-The production data preparation module handles all data extraction, cleaning, and splitting in one step with proper multi-label stratification.
+The production data preparation module uses **3-tier extraction with hydration** and **priority-based deduplication** for clean, high-quality training data.
+
+---
+
+### Quick Start (Make Commands)
+
+```bash
+make registry-prep        # Generate train/val/test CSV files
+make registry-prep-dry    # Preview extraction stats (no file writes)
+make registry-prep-module # Run via Python module interface
+```
+
+Or use the `/registry-data-prep` skill for guided execution.
 
 ---
 
@@ -65,41 +77,99 @@ The production data preparation module handles all data extraction, cleaning, an
 
 Add or modify your golden JSON files in:
 ```
-data/knowledge/golden_extractions/
+data/knowledge/golden_extractions_final/   # PHI-scrubbed (preferred)
+data/knowledge/golden_extractions/          # Fallback
 ```
-(e.g., add `golden_099.json`, `golden_100.json`, etc.)
 
 ---
 
 ### Step 2: Prepare Training Splits
 
-The `modules/ml_coder/data_prep.py` module provides functions for generating clean, stratified training data:
+**Using CLI script (recommended):**
+```bash
+python scripts/golden_to_csv.py \
+  --input-dir data/knowledge/golden_extractions_final \
+  --output-dir data/ml_training \
+  --prefix registry
+```
 
+**Using Python API:**
 ```python
-from modules.ml_coder.data_prep import prepare_registry_training_splits
+from modules.ml_coder.registry_data_prep import prepare_registry_training_splits
 
-# Generate train/val/test splits with proper stratification
 train_df, val_df, test_df = prepare_registry_training_splits()
 
-# Save to CSV for training
 train_df.to_csv("data/ml_training/registry_train.csv", index=False)
 val_df.to_csv("data/ml_training/registry_val.csv", index=False)
 test_df.to_csv("data/ml_training/registry_test.csv", index=False)
 ```
 
-**What this does:**
-- Scans all `golden_*.json` files in `data/knowledge/golden_extractions/`
-- Extracts procedure boolean flags using canonical `v2_booleans` module
-- Cleans and validates CPT codes (typo correction, domain filtering)
-- Applies iterative multi-label stratification (`skmultilearn`)
-- Enforces encounter-level grouping to prevent data leakage
-- Filters rare labels (< 5 examples) that can't be trained reliably
+---
+
+### 3-Tier Extraction with Hydration
+
+The pipeline extracts labels from golden JSONs using a cascading approach:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ TIER 1: Structured Extraction (confidence: 0.95)            │
+│ extract_v2_booleans(registry_entry)                         │
+│ Source: modules/registry/v2_booleans.py                     │
+└─────────────────────────────────────────────────────────────┘
+       │ (if all-zero)
+       ▼
+┌─────────────────────────────────────────────────────────────┐
+│ TIER 2: CPT-Based Derivation (confidence: 0.80)             │
+│ derive_booleans_from_json(entry)                            │
+│ Uses: cpt_codes field from golden JSON                      │
+└─────────────────────────────────────────────────────────────┘
+       │ (if still all-zero)
+       ▼
+┌─────────────────────────────────────────────────────────────┐
+│ TIER 3: Keyword Hydration (confidence: 0.60)                │
+│ hydrate_labels_from_text(note_text)                         │
+│ Uses: 40+ regex patterns with negation filtering            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Typical distribution:**
+- Tier 1 (Structured): ~79%
+- Tier 2 (CPT): ~18%
+- Tier 3 (Keyword): ~3%
+
+---
+
+### Priority-Based Deduplication
+
+When the same `note_text` appears multiple times with different labels, deduplication keeps the highest-priority source:
+
+```
+structured (priority=3) > cpt (priority=2) > keyword (priority=1)
+```
+
+**Benefits:**
+- Eliminates conflicting ground truth signals
+- Removes ~2-3% duplicate records
+- Tracks conflict statistics for quality monitoring
+
+---
+
+### Output Schema
+
+Each output CSV contains:
+
+| Column | Description |
+|--------|-------------|
+| `note_text` | Procedure note text |
+| `encounter_id` | Stable hash for encounter-level grouping |
+| `source_file` | Origin golden JSON file |
+| `label_source` | Extraction tier ("structured", "cpt", "keyword") |
+| `label_confidence` | Confidence score (0.60-0.95) |
+| `[30 procedure columns]` | Binary (0/1) procedure labels |
 
 ---
 
 ### Step 3: Train Model
-
-Run the training script:
 
 ```bash
 python scripts/train_roberta.py --batch-size 16 --epochs 5
@@ -119,13 +189,20 @@ python scripts/train_roberta.py \
 
 | Function | Purpose |
 |----------|---------|
-| `prepare_registry_training_splits()` | Main entry point - returns (train_df, val_df, test_df) |
-| `prepare_training_and_eval_splits()` | CPT code prediction splits |
-| `stratified_split()` | Iterative multi-label stratification with encounter grouping |
+| `prepare_registry_training_splits()` | Main entry - returns (train_df, val_df, test_df) |
+| `extract_records_from_golden_dir()` | Extract records with 3-tier hydration |
+| `deduplicate_records()` | Remove duplicates by source priority |
+| `extract_labels_with_hydration()` | Single-entry label extraction |
+| `stratified_split()` | Multi-label stratification with grouping |
 
-**Location**: `modules/ml_coder/data_prep.py`
+**Key Files:**
+- `modules/ml_coder/registry_data_prep.py` - Core data prep logic
+- `modules/ml_coder/label_hydrator.py` - 3-tier extraction + hydration
+- `scripts/golden_to_csv.py` - CLI interface
 
-**Tests**: `tests/ml_coder/test_data_prep.py`, `tests/ml_coder/test_registry_data_prep.py`
+**Tests:**
+- `tests/ml_coder/test_registry_first_data_prep.py`
+- `tests/ml_coder/test_label_hydrator.py`
 
 ---
 
