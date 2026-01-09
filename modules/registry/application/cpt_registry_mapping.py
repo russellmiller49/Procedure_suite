@@ -322,6 +322,17 @@ def aggregate_registry_fields(
     if "31623" in code_set:
         procedures["brushings"] = {"performed": True}
 
+    # --- OTHER INTERVENTIONS ---
+
+    # Percutaneous tracheostomy (planned): 31600, 31601
+    # Percutaneous tracheal puncture (often part of percutaneous trach kits): 31612
+    if code_set & {"31600", "31601", "31612"}:
+        procedures["percutaneous_tracheostomy"] = {"performed": True}
+
+    # PEG insertion: 43246 (endoscopic PEG), 49440 (percutaneous gastrostomy)
+    if code_set & {"43246", "49440"}:
+        procedures["peg_insertion"] = {"performed": True}
+
     # --- PLEURAL PROCEDURES ---
 
     # Thoracentesis CPT codes:

@@ -4,7 +4,7 @@
 Rules:
 - Hard guard: refuse to merge any Prodigy example whose note_text appears in val/test.
 - Deduplicate by note_text, preferring Prodigy labels when duplicates exist.
-- Ensure output contains all 29 canonical label columns (missing columns filled with 0).
+- Ensure output contains all canonical label columns (missing columns filled with 0).
 """
 
 from __future__ import annotations
@@ -19,7 +19,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from modules.registry.label_fields import load_registry_procedure_labels
+from modules.registry.label_fields import canonical_registry_procedure_labels, load_registry_procedure_labels
+from modules.ml_coder.registry_label_constraints import apply_label_constraints
 
 logger = logging.getLogger(__name__)
 
@@ -81,13 +82,41 @@ def _require_note_text(df, path: Path) -> None:
         raise ValueError(f"Missing required column 'note_text' in {path}")
 
 
+def _apply_constraints_inplace(df, labels: list[str]) -> None:
+    """Apply deterministic label constraints after merges (avoid training skew)."""
+    if df.empty or "note_text" not in df.columns:
+        return
+
+    # Fast, unconditional implications.
+    if "transbronchial_cryobiopsy" in df.columns and "transbronchial_biopsy" in df.columns:
+        df.loc[df["transbronchial_cryobiopsy"].astype(int) == 1, "transbronchial_biopsy"] = 1
+
+    # Text-dependent normalization (only when both are positive).
+    if "bal" not in df.columns or "bronchial_wash" not in df.columns:
+        return
+    mask = (df["bal"].astype(int) == 1) & (df["bronchial_wash"].astype(int) == 1)
+    if not mask.any():
+        return
+
+    for idx in df.index[mask]:
+        row = {
+            "note_text": str(df.at[idx, "note_text"] or ""),
+            "bal": int(df.at[idx, "bal"]),
+            "bronchial_wash": int(df.at[idx, "bronchial_wash"]),
+        }
+        apply_label_constraints(row)
+        df.at[idx, "bal"] = int(row["bal"])
+        df.at[idx, "bronchial_wash"] = int(row["bronchial_wash"])
+
+
 def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
     args = parse_args(argv)
 
     labels = load_registry_procedure_labels(args.label_fields)
-    if len(labels) != 29:
-        raise ValueError(f"Expected 29 registry labels, got {len(labels)}")
+    expected = len(canonical_registry_procedure_labels())
+    if len(labels) != expected:
+        raise ValueError(f"Expected {expected} registry labels, got {len(labels)}")
 
     import pandas as pd
 
@@ -135,6 +164,8 @@ def main(argv: list[str] | None = None) -> int:
     combined.sort_values(by=["_priority"], ascending=False, inplace=True)
     merged = combined.drop_duplicates(subset=["_note_hash"], keep="first").drop(columns=["_priority", "_note_hash"])
 
+    _apply_constraints_inplace(merged, labels)
+
     # Stable column order: base cols first (plus any prodigy-only cols), then labels.
     base_cols = [c for c in train_df.columns if c not in labels and c not in {"_priority"}]
     for c in prodigy_df.columns:
@@ -153,4 +184,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

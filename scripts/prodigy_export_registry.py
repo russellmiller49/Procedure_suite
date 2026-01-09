@@ -7,7 +7,7 @@ Supports two modes:
 
 Outputs a training CSV compatible with `scripts/train_roberta.py`:
   - note_text
-  - 29 label columns (0/1)
+  - label columns (0/1) for each item in `REGISTRY_LABELS`
   - label_source="prodigy"
   - label_confidence=1.0
   - optional metadata columns (encounter_id/source_file/prodigy_dataset)

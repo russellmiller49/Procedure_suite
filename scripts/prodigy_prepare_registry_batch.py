@@ -10,8 +10,17 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import sys
 
-from scripts import prodigy_prepare_registry
+# Ensure repo root + scripts/ are importable when running as a file.
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+SCRIPTS_DIR = ROOT / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+import prodigy_prepare_registry  # noqa: E402
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -61,4 +70,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

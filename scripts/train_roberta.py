@@ -38,7 +38,13 @@ from transformers import (
     get_linear_schedule_with_warmup,
 )
 
-from modules.ml_coder.registry_label_schema import REGISTRY_LABELS
+from modules.ml_coder.distillation_io import (
+    align_teacher_logits,
+    load_teacher_logits_npz,
+    validate_label_fields_match,
+)
+from modules.ml_coder.registry_label_schema import DORMANT_LABELS, REGISTRY_LABELS, compute_encounter_id
+from modules.ml_coder.training_losses import AsymmetricLoss
 
 # ============================================================================
 # Configuration
@@ -84,6 +90,22 @@ class TrainingConfig:
     # Validation
     val_split: float = 0.1  # Split training data for threshold optimization
 
+    # Loss
+    loss: str = "bce"  # "bce" | "asl"
+    asl_gamma_neg: float = 4.0
+    asl_gamma_pos: float = 1.0
+    asl_clip: float = 0.05
+
+    # Dormant labels (exclude from ML head)
+    dormant_mode: str = "auto"  # "auto" | "schema" | "none"
+    dormant_min_positives: int = 20
+
+    # Distillation
+    teacher_logits: Path | None = None
+    distill_alpha: float = 0.5
+    distill_temp: float = 2.0
+    distill_loss: str = "mse"  # "mse" | "kl"
+
     # Logging
     logging_steps: int = 50
     eval_steps: int = 500
@@ -104,7 +126,7 @@ def load_label_fields(path: Path) -> list[str]:
 def load_registry_csv(
     path: Path,
     required_labels: list[str] | None = None,
-) -> tuple[list[str], np.ndarray, list[str], np.ndarray]:
+) -> tuple[list[str], np.ndarray, list[str], np.ndarray, list[str]]:
     """Load registry training/test CSV file.
 
     Args:
@@ -113,7 +135,7 @@ def load_registry_csv(
                         If provided, returns y with columns in this specific order.
 
     Returns:
-        Tuple of (texts, labels_matrix, label_names, sample_weights)
+        Tuple of (texts, labels_matrix, label_names, sample_weights, encounter_ids)
     """
     if not path.exists():
         raise FileNotFoundError(f"CSV file not found: {path}")
@@ -128,6 +150,15 @@ def load_registry_csv(
 
     # Extract texts
     texts = df["note_text"].fillna("").astype(str).tolist()
+
+    # Stable IDs for distillation alignment (prefer encounter_id if present).
+    if "encounter_id" in df.columns:
+        encounter_ids = df["encounter_id"].fillna("").astype(str).str.strip().tolist()
+    else:
+        encounter_ids = ["" for _ in texts]
+    for i, eid in enumerate(encounter_ids):
+        if not eid:
+            encounter_ids[i] = compute_encounter_id(texts[i])
 
     # Optional per-row confidence weighting (defaults to 1.0).
     if "label_confidence" in df.columns:
@@ -202,7 +233,7 @@ def load_registry_csv(
     y = label_df.astype(int).to_numpy()
 
     print(f"Loaded {len(texts)} samples with {len(label_cols)} labels from {path}")
-    return texts, y, label_cols, weights.astype(np.float32)
+    return texts, y, label_cols, weights.astype(np.float32), encounter_ids
 
 
 class HeadTailTokenizer:
@@ -293,11 +324,15 @@ class RegistryDataset(Dataset):
         labels: np.ndarray,
         sample_weights: np.ndarray,
         tokenizer: HeadTailTokenizer,
+        teacher_logits: np.ndarray | None = None,
+        teacher_mask: np.ndarray | None = None,
     ):
         self.texts = texts
         self.labels = labels
         self.sample_weights = sample_weights
         self.tokenizer = tokenizer
+        self.teacher_logits = teacher_logits
+        self.teacher_mask = teacher_mask
 
     def __len__(self) -> int:
         return len(self.texts)
@@ -309,7 +344,7 @@ class RegistryDataset(Dataset):
 
         encoding = self.tokenizer(text)
 
-        return {
+        item: dict[str, torch.Tensor] = {
             # Force input_ids to Long (int64) to prevent type mismatch in collation
             "input_ids": encoding["input_ids"].long(),
             # Force attention_mask to Long
@@ -318,6 +353,12 @@ class RegistryDataset(Dataset):
             "labels": torch.tensor(label, dtype=torch.float32),
             "sample_weight": torch.tensor(weight, dtype=torch.float32),
         }
+
+        if self.teacher_logits is not None and self.teacher_mask is not None:
+            item["teacher_logits"] = torch.tensor(self.teacher_logits[idx], dtype=torch.float32)
+            item["teacher_mask"] = torch.tensor(float(self.teacher_mask[idx]), dtype=torch.float32)
+
+        return item
 
 
 # ============================================================================
@@ -356,6 +397,7 @@ class BiomedBERTMultiLabel(nn.Module):
         attention_mask: torch.Tensor,
         labels: torch.Tensor | None = None,
         sample_weights: torch.Tensor | None = None,
+        loss_fn: nn.Module | None = None,
     ) -> dict[str, torch.Tensor]:
         """Forward pass.
 
@@ -377,7 +419,8 @@ class BiomedBERTMultiLabel(nn.Module):
         result = {"logits": logits}
 
         if labels is not None:
-            loss_fn = nn.BCEWithLogitsLoss(pos_weight=self.pos_weight, reduction="none")
+            if loss_fn is None:
+                loss_fn = nn.BCEWithLogitsLoss(pos_weight=self.pos_weight, reduction="none")
             loss_matrix = loss_fn(logits, labels)  # [batch, num_labels]
             per_sample = loss_matrix.mean(dim=1)  # mean over labels
             if sample_weights is not None:
@@ -571,6 +614,39 @@ def compute_metrics(
 # Training Loop
 # ============================================================================
 
+def compute_distillation_loss(
+    student_logits: torch.Tensor,
+    teacher_logits: torch.Tensor,
+    teacher_mask: torch.Tensor,
+    *,
+    temp: float,
+    loss_type: str,
+    sample_weights: torch.Tensor | None,
+    eps: float = 1e-8,
+) -> torch.Tensor:
+    """Compute per-batch distillation loss with optional masking/row weighting."""
+    t = float(temp)
+    if t <= 0:
+        raise ValueError("distill_temp must be > 0")
+
+    s_scaled = student_logits / t
+    t_scaled = teacher_logits / t
+
+    if loss_type == "mse":
+        per_label = (s_scaled - t_scaled) ** 2
+    elif loss_type == "kl":
+        p_s = torch.sigmoid(s_scaled).clamp(min=eps, max=1.0 - eps)
+        p_t = torch.sigmoid(t_scaled).clamp(min=eps, max=1.0 - eps)
+        per_label = p_t * torch.log(p_t / p_s) + (1.0 - p_t) * torch.log((1.0 - p_t) / (1.0 - p_s))
+    else:
+        raise ValueError(f"Unknown distill_loss: {loss_type}")
+
+    per_sample = per_label.mean(dim=1) * teacher_mask
+    if sample_weights is not None:
+        per_sample = per_sample * sample_weights
+    return per_sample.mean()
+
+
 def train_epoch(
     model: BiomedBERTMultiLabel,
     dataloader: DataLoader,
@@ -578,6 +654,8 @@ def train_epoch(
     scheduler: Any,
     config: TrainingConfig,
     epoch: int,
+    *,
+    loss_fn: nn.Module,
 ) -> float:
     """Train for one epoch.
 
@@ -600,11 +678,42 @@ def train_epoch(
         sample_weights = batch.get("sample_weight")
         if sample_weights is not None:
             sample_weights = sample_weights.to(config.device)
+        teacher_logits = batch.get("teacher_logits")
+        teacher_mask = batch.get("teacher_mask")
+        if teacher_logits is not None:
+            teacher_logits = teacher_logits.to(config.device)
+        if teacher_mask is not None:
+            teacher_mask = teacher_mask.to(config.device)
 
         # Forward pass with mixed precision
         with torch.amp.autocast("cuda", enabled=config.fp16):
-            outputs = model(input_ids, attention_mask, labels, sample_weights=sample_weights)
-            loss = outputs["loss"] / config.gradient_accumulation_steps
+            outputs = model(
+                input_ids,
+                attention_mask,
+                labels,
+                sample_weights=sample_weights,
+                loss_fn=loss_fn,
+            )
+            loss = outputs["loss"]
+            if teacher_logits is not None and float(config.distill_alpha) > 0.0:
+                mask = (
+                    teacher_mask
+                    if teacher_mask is not None
+                    else torch.ones((labels.shape[0],), dtype=torch.float32, device=config.device)
+                )
+                distill = compute_distillation_loss(
+                    outputs["logits"],
+                    teacher_logits,
+                    mask,
+                    temp=float(config.distill_temp),
+                    loss_type=str(config.distill_loss),
+                    sample_weights=sample_weights,
+                )
+                alpha = float(config.distill_alpha)
+                t = float(config.distill_temp)
+                loss = (1.0 - alpha) * loss + alpha * (t * t) * distill
+
+            loss = loss / config.gradient_accumulation_steps
 
         # Backward pass
         scaler.scale(loss).backward()
@@ -632,6 +741,8 @@ def evaluate(
     model: BiomedBERTMultiLabel,
     dataloader: DataLoader,
     config: TrainingConfig,
+    *,
+    loss_fn: nn.Module,
 ) -> tuple[np.ndarray, np.ndarray, float]:
     """Evaluate model and return predictions.
 
@@ -653,7 +764,13 @@ def evaluate(
             if sample_weights is not None:
                 sample_weights = sample_weights.to(config.device)
 
-            outputs = model(input_ids, attention_mask, labels, sample_weights=sample_weights)
+            outputs = model(
+                input_ids,
+                attention_mask,
+                labels,
+                sample_weights=sample_weights,
+                loss_fn=loss_fn,
+            )
 
             probs = torch.sigmoid(outputs["logits"]).cpu().numpy()
             all_probs.append(probs)
@@ -689,41 +806,40 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     print(f"Epochs: {config.num_epochs}")
     print(f"{'=' * 60}\n")
 
-    # --- 1. Load Training Data (canonical 29-label schema) ---
+    # --- 1. Load Training Data (canonical label schema) ---
     print("\nLoading training data...")
-    label_names = list(REGISTRY_LABELS)
-    train_texts, train_labels, _, train_weights = load_registry_csv(
+    schema_labels = list(REGISTRY_LABELS)
+    train_texts, train_labels_full, _, train_weights, train_ids = load_registry_csv(
         config.train_csv,
-        required_labels=label_names,
+        required_labels=schema_labels,
     )
-    num_labels = len(label_names)
-    print(f"Using canonical label order ({num_labels} labels): {label_names[:5]}...")
+    print(f"Using canonical label order ({len(schema_labels)} labels): {schema_labels[:5]}...")
 
     # --- 2. Update Label Definition JSON ---
     # This keeps downstream scripts (quantization, inference) in sync
     print(f"Updating label definition file: {config.label_fields_json}")
     config.label_fields_json.parent.mkdir(parents=True, exist_ok=True)
     with open(config.label_fields_json, "w") as f:
-        json.dump(label_names, f, indent=2)
+        json.dump(schema_labels, f, indent=2)
     # Also emit into the model output dir for deployable bundles.
-    labels_json = json.dumps(label_names, indent=2) + "\n"
+    labels_json = json.dumps(schema_labels, indent=2) + "\n"
     (config.output_dir / "registry_label_fields.json").write_text(labels_json)
     (config.output_dir / "label_order.json").write_text(labels_json)
 
     # --- 3. Load Test Data (Enforcing Training Schema) ---
     print("\nLoading test data...")
-    test_texts, test_labels, _, test_weights = load_registry_csv(
+    test_texts, test_labels_full, _, test_weights, test_ids = load_registry_csv(
         config.test_csv,
-        required_labels=label_names,
+        required_labels=schema_labels,
     )
     print(f"Test samples: {len(test_texts)}")
 
     # --- Load Validation Data ---
     if config.val_csv and config.val_csv.exists():
         print(f"\nLoading validation data from {config.val_csv}...")
-        val_texts, val_labels, _, val_weights = load_registry_csv(
+        val_texts, val_labels_full, _, val_weights, val_ids = load_registry_csv(
             config.val_csv,
-            required_labels=label_names,
+            required_labels=schema_labels,
         )
         print(f"Using explicit validation set: {len(val_texts)} samples")
     else:
@@ -734,20 +850,57 @@ def train(config: TrainingConfig) -> dict[str, Any]:
         (
             train_texts,
             val_texts,
-            train_labels,
-            val_labels,
+            train_labels_full,
+            val_labels_full,
             train_weights,
             val_weights,
+            train_ids,
+            val_ids,
         ) = train_test_split(
             train_texts,
-            train_labels,
+            train_labels_full,
             train_weights,
+            train_ids,
             test_size=config.val_split,
             random_state=42,
             stratify=None,  # Multi-label doesn't support stratify directly
         )
     print(f"Training samples: {len(train_texts)}")
     print(f"Validation samples: {len(val_texts)}")
+
+    # --- 4. Select active (non-dormant) labels for the ML head ---
+    dormant: set[str]
+    if config.dormant_mode == "schema":
+        dormant = set(DORMANT_LABELS)
+    elif config.dormant_mode == "auto":
+        dormant = set(DORMANT_LABELS)
+        min_pos = max(0, int(config.dormant_min_positives))
+        counts = train_labels_full.sum(axis=0).astype(int)
+        for label, count in zip(schema_labels, counts.tolist()):
+            if count < min_pos:
+                dormant.add(label)
+    elif config.dormant_mode == "none":
+        dormant = set()
+    else:
+        raise ValueError(f"Unknown dormant_mode: {config.dormant_mode}")
+
+    label_names = [l for l in schema_labels if l not in dormant]
+    if not label_names:
+        raise ValueError("No active labels selected; adjust dormant settings.")
+
+    active_idx = [schema_labels.index(l) for l in label_names]
+    train_labels = train_labels_full[:, active_idx]
+    val_labels = val_labels_full[:, active_idx]
+    test_labels = test_labels_full[:, active_idx]
+    num_labels = len(label_names)
+
+    print(f"\nDormant mode: {config.dormant_mode}")
+    if dormant:
+        dormant_sorted = [l for l in schema_labels if l in dormant]
+        print(f"Dormant labels (excluded from ML head): {len(dormant_sorted)}")
+        print(f"  e.g. {dormant_sorted[:10]}")
+    print(f"Active labels (ML head): {num_labels}")
+    print(f"  e.g. {label_names[:10]}")
 
     # Calculate pos_weight for class imbalance
     print("\nCalculating pos_weight for class imbalance...")
@@ -770,9 +923,29 @@ def train(config: TrainingConfig) -> dict[str, Any]:
         tail_tokens=config.tail_tokens,
     )
 
+    # Optional: distillation alignment (teacher logits for a subset of train IDs).
+    train_teacher_logits = None
+    train_teacher_mask = None
+    if config.teacher_logits is not None:
+        teacher = load_teacher_logits_npz(config.teacher_logits)
+        validate_label_fields_match(teacher.label_fields, label_names)
+        train_teacher_logits, train_teacher_mask = align_teacher_logits(train_ids, teacher, dtype=np.float32)
+        covered = float(train_teacher_mask.mean()) if train_teacher_mask.size else 0.0
+        print(
+            f"\nLoaded teacher logits from {config.teacher_logits} "
+            f"(coverage={covered:.3f}, alpha={config.distill_alpha}, temp={config.distill_temp}, loss={config.distill_loss})"
+        )
+
     # Create datasets
     print("\nCreating datasets...")
-    train_dataset = RegistryDataset(train_texts, train_labels, train_weights, tokenizer)
+    train_dataset = RegistryDataset(
+        train_texts,
+        train_labels,
+        train_weights,
+        tokenizer,
+        teacher_logits=train_teacher_logits,
+        teacher_mask=train_teacher_mask,
+    )
     val_dataset = RegistryDataset(val_texts, val_labels, val_weights, tokenizer)
     test_dataset = RegistryDataset(test_texts, test_labels, test_weights, tokenizer)
 
@@ -808,6 +981,20 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     )
     model.to(config.device)
 
+    # Loss function selection (element-wise reduction="none" to preserve per-row weighting).
+    pos_weight_device = pos_weight.to(config.device)
+    if config.loss == "bce":
+        loss_fn: nn.Module = nn.BCEWithLogitsLoss(pos_weight=pos_weight_device, reduction="none").to(config.device)
+    elif config.loss == "asl":
+        loss_fn = AsymmetricLoss(
+            gamma_neg=config.asl_gamma_neg,
+            gamma_pos=config.asl_gamma_pos,
+            clip=config.asl_clip,
+            pos_weight=pos_weight_device,
+        ).to(config.device)
+    else:
+        raise ValueError(f"Unknown loss: {config.loss}")
+
     # Count parameters
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
@@ -834,7 +1021,7 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     print(f"\nStarting training for {config.num_epochs} epochs...")
     print(f"Total steps: {total_steps}, Warmup steps: {warmup_steps}")
 
-    best_val_f1 = 0.0
+    best_val_f1 = -1.0
     best_epoch = 0
 
     for epoch in range(config.num_epochs):
@@ -843,12 +1030,12 @@ def train(config: TrainingConfig) -> dict[str, Any]:
         print(f"{'=' * 40}")
 
         # Train
-        train_loss = train_epoch(model, train_loader, optimizer, scheduler, config, epoch)
+        train_loss = train_epoch(model, train_loader, optimizer, scheduler, config, epoch, loss_fn=loss_fn)
         print(f"Training loss: {train_loss:.4f}")
 
         # Evaluate on validation set
         print("\nEvaluating on validation set...")
-        val_labels_arr, val_probs, val_loss = evaluate(model, val_loader, config)
+        val_labels_arr, val_probs, val_loss = evaluate(model, val_loader, config, loss_fn=loss_fn)
 
         # Find optimal thresholds on validation set
         print("\nOptimizing per-class thresholds...")
@@ -891,6 +1078,12 @@ def train(config: TrainingConfig) -> dict[str, Any]:
             (config.output_dir / "thresholds.json").write_text(
                 json.dumps(thresholds_with_f1, indent=2, sort_keys=False) + "\n"
             )
+            (config.output_dir / "label_fields.json").write_text(
+                json.dumps(label_names, indent=2, sort_keys=False) + "\n"
+            )
+            (config.output_dir / "dormant_labels.json").write_text(
+                json.dumps([l for l in schema_labels if l in dormant], indent=2, sort_keys=False) + "\n"
+            )
 
     print(f"\n{'=' * 60}")
     print(f"Training complete! Best epoch: {best_epoch}, Best Macro F1: {best_val_f1:.4f}")
@@ -909,7 +1102,7 @@ def train(config: TrainingConfig) -> dict[str, Any]:
         thresholds = json.load(f)
 
     # Evaluate
-    test_labels_arr, test_probs, test_loss = evaluate(model, test_loader, config)
+    test_labels_arr, test_probs, test_loss = evaluate(model, test_loader, config, loss_fn=loss_fn)
     test_metrics = compute_metrics(test_labels_arr, test_probs, thresholds, label_names)
 
     print("\nTest Set Results:")
@@ -941,6 +1134,19 @@ def train(config: TrainingConfig) -> dict[str, Any]:
             "max_length": config.max_length,
             "head_tokens": config.head_tokens,
             "tail_tokens": config.tail_tokens,
+            "loss": config.loss,
+            "asl_gamma_neg": float(config.asl_gamma_neg),
+            "asl_gamma_pos": float(config.asl_gamma_pos),
+            "asl_clip": float(config.asl_clip),
+            "dormant_mode": config.dormant_mode,
+            "dormant_min_positives": int(config.dormant_min_positives),
+            "schema_labels": schema_labels,
+            "active_labels": label_names,
+            "dormant_labels": [l for l in schema_labels if l in dormant],
+            "teacher_logits": str(config.teacher_logits) if config.teacher_logits is not None else None,
+            "distill_alpha": float(config.distill_alpha),
+            "distill_temp": float(config.distill_temp),
+            "distill_loss": str(config.distill_loss),
         },
     }
     with open(metrics_path, "w") as f:
@@ -984,11 +1190,72 @@ def train(config: TrainingConfig) -> dict[str, Any]:
     return final_metrics
 
 
-def main():
-    """Parse arguments and run training."""
-    parser = argparse.ArgumentParser(
-        description="Train BiomedBERT for registry procedure classification"
+def _load_thresholds_for_labels(path: Path, labels: list[str]) -> dict[str, float]:
+    if not path.exists():
+        return {l: 0.5 for l in labels}
+    data = json.loads(path.read_text())
+    if not isinstance(data, dict):
+        return {l: 0.5 for l in labels}
+    thresholds: dict[str, float] = {}
+    for l in labels:
+        v = data.get(l, 0.5)
+        if isinstance(v, dict) and "threshold" in v:
+            thresholds[l] = float(v["threshold"])
+        else:
+            thresholds[l] = float(v)
+    return thresholds
+
+
+def evaluate_only(model_dir: Path, config: TrainingConfig) -> dict[str, Any]:
+    label_fields_path = model_dir / "label_fields.json"
+    if not label_fields_path.exists():
+        raise SystemExit(f"Missing label_fields.json in model dir: {model_dir}")
+
+    label_names = json.loads(label_fields_path.read_text())
+    if not isinstance(label_names, list) or not all(isinstance(x, str) for x in label_names):
+        raise SystemExit(f"Invalid label_fields.json in model dir: {model_dir}")
+
+    thresholds = _load_thresholds_for_labels(model_dir / "thresholds.json", label_names)
+
+    # Load test data aligned to the model head.
+    test_texts, test_labels, _, test_weights, _ = load_registry_csv(config.test_csv, required_labels=label_names)
+
+    base_tokenizer = AutoTokenizer.from_pretrained(str((model_dir / "tokenizer") if (model_dir / "tokenizer").exists() else config.model_name))
+    tokenizer = HeadTailTokenizer(
+        base_tokenizer,
+        max_length=config.max_length,
+        head_tokens=config.head_tokens,
+        tail_tokens=config.tail_tokens,
     )
+    test_dataset = RegistryDataset(test_texts, test_labels, test_weights, tokenizer)
+    test_loader = DataLoader(
+        test_dataset,
+        batch_size=config.batch_size * 2,
+        shuffle=False,
+        num_workers=0,
+    )
+
+    model = BiomedBERTMultiLabel.from_pretrained(model_dir, num_labels=len(label_names))
+    model.to(config.device)
+
+    pos_weight = getattr(model, "pos_weight", None)
+    if isinstance(pos_weight, torch.Tensor):
+        pos_weight = pos_weight.to(config.device)
+    loss_fn: nn.Module = nn.BCEWithLogitsLoss(pos_weight=pos_weight, reduction="none").to(config.device)
+
+    test_labels_arr, test_probs, test_loss = evaluate(model, test_loader, config, loss_fn=loss_fn)
+    test_metrics = compute_metrics(test_labels_arr, test_probs, thresholds, label_names)
+
+    print("\nTest Set Results:")
+    print(f"  Loss: {test_loss:.4f}")
+    print(f"  Macro F1: {test_metrics['macro_f1']:.4f}")
+    print(f"  Micro F1: {test_metrics['micro_f1']:.4f}")
+    print(f"  Rare Class F1: {test_metrics['rare_class_f1']:.4f}")
+    return {"test_metrics": test_metrics, "thresholds": thresholds, "labels": label_names}
+
+
+def build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Train BiomedBERT for registry procedure classification")
 
     # Data paths (from modules/ml_coder/data_prep.py)
     parser.add_argument(
@@ -1049,6 +1316,39 @@ def main():
         help="HuggingFace model name",
     )
 
+    parser.add_argument(
+        "--loss",
+        choices=["bce", "asl"],
+        default="bce",
+        help="Loss function (default: bce)",
+    )
+    parser.add_argument("--asl-gamma-neg", type=float, default=4.0)
+    parser.add_argument("--asl-gamma-pos", type=float, default=1.0)
+    parser.add_argument("--asl-clip", type=float, default=0.05)
+
+    parser.add_argument(
+        "--dormant-mode",
+        choices=["auto", "schema", "none"],
+        default="auto",
+        help="Dormant label strategy (exclude ultra-rare labels from ML head)",
+    )
+    parser.add_argument(
+        "--dormant-min-positives",
+        type=int,
+        default=20,
+        help="Minimum positives required to remain active when --dormant-mode=auto",
+    )
+
+    parser.add_argument(
+        "--teacher-logits",
+        type=Path,
+        default=None,
+        help="NPZ file with teacher logits for distillation (optional)",
+    )
+    parser.add_argument("--distill-alpha", type=float, default=0.5)
+    parser.add_argument("--distill-temp", type=float, default=2.0)
+    parser.add_argument("--distill-loss", choices=["mse", "kl"], default="mse")
+
     # Evaluation only
     parser.add_argument(
         "--evaluate-only",
@@ -1061,6 +1361,12 @@ def main():
         help="Model directory for evaluation (required with --evaluate-only)",
     )
 
+    return parser
+
+
+def main():
+    """Parse arguments and run training."""
+    parser = build_arg_parser()
     args = parser.parse_args()
 
     # Create config
@@ -1074,6 +1380,16 @@ def main():
         num_epochs=args.epochs,
         learning_rate=args.lr,
         fp16=not args.no_fp16,
+        loss=str(args.loss),
+        asl_gamma_neg=float(args.asl_gamma_neg),
+        asl_gamma_pos=float(args.asl_gamma_pos),
+        asl_clip=float(args.asl_clip),
+        dormant_mode=str(args.dormant_mode),
+        dormant_min_positives=int(args.dormant_min_positives),
+        teacher_logits=args.teacher_logits,
+        distill_alpha=float(args.distill_alpha),
+        distill_temp=float(args.distill_temp),
+        distill_loss=str(args.distill_loss),
     )
 
     # Ensure output directory exists
@@ -1083,8 +1399,7 @@ def main():
     if args.evaluate_only:
         if not args.model_dir:
             parser.error("--model-dir required with --evaluate-only")
-        # TODO: Implement evaluate-only mode
-        print("Evaluate-only mode not yet implemented")
+        evaluate_only(args.model_dir, config)
     else:
         train(config)
 

@@ -1,6 +1,6 @@
 # Registry Prodigy Workflow (Diamond Loop)
 
-This repo supports a human-in-the-loop loop for improving the **registry multi-label procedure classifier** using Prodigy’s `choice` UI plus disagreement sampling.
+This repo supports a human-in-the-loop loop for improving the **registry multi-label procedure classifier** using Prodigy’s `textcat.manual` (multi-label checkbox UI) plus disagreement sampling.
 
 ## Label Schema (Single Source of Truth)
 
@@ -10,7 +10,7 @@ This repo supports a human-in-the-loop loop for improving the **registry multi-l
   - `encounter_id`
   - `label_source`
   - `label_confidence`
-  - 29 procedure label columns (see `REGISTRY_LABELS`)
+  - 32 procedure label columns (see `REGISTRY_LABELS`)
 
 ## 1) Prepare a Prodigy Batch (pre-checked labels)
 

@@ -259,7 +259,7 @@ class RegistryFlagAuditor:
                 try:
                     from scripts.train_roberta_pm3 import RoBERTaPM3MultiLabel
 
-                    num_labels = len(self._label_fields) if self._label_fields else 29
+                    num_labels = len(self._label_fields) if self._label_fields else 30
                     self._model = RoBERTaPM3MultiLabel.from_pretrained(
                         self._model_dir, num_labels
                     )
@@ -394,4 +394,3 @@ __all__ = [
     "RegistryFlagPrediction",
     "FLAG_TO_CPT_MAP",
 ]
-

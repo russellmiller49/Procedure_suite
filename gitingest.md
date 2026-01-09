@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2026-01-06T07:31:58-08:00`
-Git: `fix/test-cascade-data_prep-phi` @ `6e31154`
+Generated: `2026-01-08T14:00:44-08:00`
+Git: `V21` @ `9e71245`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -2877,6 +2877,7 @@ Git: `fix/test-cascade-data_prep-phi` @ `6e31154`
     - scripts/create_slim_branch.py
     - scripts/dev_pull_model.sh
     - scripts/devserver.sh
+    - scripts/diamond_loop_cloud_sync.py
     - scripts/discover_aws_region.sh
     - scripts/distill_phi_labels.py
     - scripts/download_piiranha_model.py
@@ -2892,17 +2893,20 @@ Git: `fix/test-cascade-data_prep-phi` @ `6e31154`
     - scripts/generate_gitingest.py
     - scripts/generate_synthetic_phi_data.py
     - scripts/golden_to_csv.py
+    - scripts/merge_registry_human_labels.py
     - scripts/merge_registry_prodigy.py
     - scripts/normalize_phi_labels.py
     - scripts/patch.py
     - scripts/phi_audit.py
     - scripts/preflight.py
     - scripts/prepare_data.py
+    - scripts/prodigy_cloud_sync.py
     - scripts/prodigy_export_corrections.py
     - scripts/prodigy_export_registry.py
     - scripts/prodigy_prepare_phi_batch.py
     - scripts/prodigy_prepare_registry.py
     - scripts/prodigy_prepare_registry_batch.py
+    - scripts/prodigy_prepare_registry_relabel_batch.py
     - scripts/quantize_to_onnx.py
     - scripts/railway_start.sh
     - scripts/railway_start_gunicorn.sh
@@ -2920,6 +2924,7 @@ Git: `fix/test-cascade-data_prep-phi` @ `6e31154`
     - scripts/train_registry_sklearn.py
     - scripts/train_roberta.py
     - scripts/train_roberta_pm3.py
+    - scripts/training.py
     - scripts/upload_registry_bundle.sh
     - scripts/validate_golden_extractions.py
     - scripts/validate_jsonschema.py
@@ -5317,8 +5322,21 @@ REG_PRODIGY_INPUT_FILE ?= data/ml_training/registry_unlabeled_notes.jsonl
 REG_PRODIGY_BATCH_FILE ?= data/ml_training/registry_prodigy_batch.jsonl
 REG_PRODIGY_MANIFEST ?= data/ml_training/registry_prodigy_manifest.json
 REG_PRODIGY_MODEL_DIR ?= data/models/registry_runtime
+REG_PRODIGY_STRATEGY ?= disagreement
+REG_PRODIGY_SEED ?= 42
 REG_PRODIGY_EXPORT_CSV ?= data/ml_training/registry_human.csv
 REG_PRODIGY_RESET_ARCHIVE_DIR ?= data/ml_training/_archive/registry_prodigy
+
+# Relabel workflow (build a review batch from an existing human CSV)
+REG_RELABEL_INPUT_CSV ?= data/ml_training/registry_human_v1_backup.csv
+REG_RELABEL_OUTPUT_FILE ?= data/ml_training/registry_rigid_review.jsonl
+REG_RELABEL_FILTER_LABEL ?= rigid_bronchoscopy
+REG_RELABEL_LIMIT ?= 0
+REG_RELABEL_PREFILL_NON_THERMAL ?= 1
+
+REG_HUMAN_BASE_CSV ?= data/ml_training/registry_human_v1_backup.csv
+REG_HUMAN_UPDATES_CSV ?= data/ml_training/registry_human_rigid_review.csv
+REG_HUMAN_OUT_CSV ?= data/ml_training/registry_human_v2.csv
 
 # Reset registry Prodigy state (batch + manifest + Prodigy dataset).
 # This is safe to run even if some files/datasets don't exist.
@@ -5338,14 +5356,29 @@ registry-prodigy-prepare:
 		--input-file $(REG_PRODIGY_INPUT_FILE) \
 		--output-file $(REG_PRODIGY_BATCH_FILE) \
 		--limit $(REG_PRODIGY_COUNT) \
-		--strategy disagreement \
+		--strategy $(REG_PRODIGY_STRATEGY) \
 		--manifest $(REG_PRODIGY_MANIFEST) \
-		--seed 42 \
+		--seed $(REG_PRODIGY_SEED) \
 		--model-dir $(REG_PRODIGY_MODEL_DIR)
+
+registry-prodigy-prepare-relabel:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry_relabel_batch.py \
+		--input-csv $(REG_RELABEL_INPUT_CSV) \
+		--output-file $(REG_RELABEL_OUTPUT_FILE) \
+		--filter-label $(REG_RELABEL_FILTER_LABEL) \
+		--limit $(REG_RELABEL_LIMIT) \
+		$(if $(filter 1,$(REG_RELABEL_PREFILL_NON_THERMAL)),--prefill-non-thermal-from-rigid,)
+
+registry-human-merge-updates:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/merge_registry_human_labels.py \
+		--base-csv $(REG_HUMAN_BASE_CSV) \
+		--updates-csv $(REG_HUMAN_UPDATES_CSV) \
+		--out-csv $(REG_HUMAN_OUT_CSV) \
+		--prefer-updates-meta
 
 registry-prodigy-annotate:
 	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
-		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(REG_PRODIGY_DATASET) $(REG_PRODIGY_BATCH_FILE) \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(REG_PRODIGY_DATASET) blank:en $(REG_PRODIGY_BATCH_FILE) \
 		--loader jsonl \
 		--label $$LABELS
 
@@ -9523,14 +9556,14 @@ Synoptic report generation from structured data.
 
 ### Registry Procedure Flags
 
-The registry uses 29 boolean procedure presence flags for ML training:
+The registry uses 30 boolean procedure presence flags for ML training:
 
-**Bronchoscopy Procedures (22):**
+**Bronchoscopy Procedures (23):**
 - diagnostic_bronchoscopy, bal, bronchial_wash, brushings
 - endobronchial_biopsy, tbna_conventional, linear_ebus, radial_ebus
 - navigational_bronchoscopy, transbronchial_biopsy, transbronchial_cryobiopsy
 - therapeutic_aspiration, foreign_body_removal, airway_dilation, airway_stent
-- thermal_ablation, cryotherapy, blvr, peripheral_ablation
+- thermal_ablation, tumor_debulking_non_thermal, cryotherapy, blvr, peripheral_ablation
 - bronchial_thermoplasty, whole_lung_lavage, rigid_bronchoscopy
 
 **Pleural Procedures (7):**
@@ -10071,7 +10104,78 @@ make registry-prodigy-annotate REG_PRODIGY_DATASET=registry_v1
 
 Notes:
 - The annotation UI is served at `http://localhost:8080` (Prodigy’s default).
-- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 29 label(s): …” you’re in the right place.
+- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 30 label(s): …” you’re in the right place.
+
+##### Working across machines (Google Drive sync — safe “export/import”)
+
+Do **not** cloud-sync the raw Prodigy SQLite DB file (risk of corruption). Instead, sync by exporting/importing a JSONL snapshot to a shared Google Drive folder.
+
+Pick a single “source of truth” folder in Google Drive, e.g. `proc_suite_sync/`, and keep these inside it:
+- `prodigy/registry_v1.prodigy.jsonl` (the Prodigy dataset snapshot)
+- `diamond_loop/registry_prodigy_manifest.json` (recommended: avoids re-sampling across machines)
+- `diamond_loop/registry_unlabeled_notes.jsonl` (recommended: consistent sampling universe)
+
+###### Recommended: one-command Diamond Loop sync
+
+Use `scripts/diamond_loop_cloud_sync.py` to sync the dataset snapshot + key Diamond Loop files.
+
+**WSL + Google Drive on Windows `G:` (your setup):**
+
+```bash
+# Pull latest from Drive before annotating on this machine
+python scripts/diamond_loop_cloud_sync.py pull \
+  --dataset registry_v1 \
+  --gdrive-win-root "G:\\My Drive\\proc_suite_sync" \
+  --reset
+
+# Push back to Drive after finishing a session
+python scripts/diamond_loop_cloud_sync.py push \
+  --dataset registry_v1 \
+  --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
+```
+
+**macOS (Drive path varies by install):**
+
+```bash
+python scripts/diamond_loop_cloud_sync.py pull \
+  --dataset registry_v1 \
+  --sync-root "/path/to/GoogleDrive/proc_suite_sync" \
+  --reset
+
+python scripts/diamond_loop_cloud_sync.py push \
+  --dataset registry_v1 \
+  --sync-root "/path/to/GoogleDrive/proc_suite_sync"
+```
+
+Optional flags:
+- Add `--include-batch` to also sync `data/ml_training/registry_prodigy_batch.jsonl` (resume the exact same batch on another machine)
+- Add `--include-human` to also sync `data/ml_training/registry_human.csv`
+
+###### Manual fallback: dataset-only export/import
+
+If you prefer to sync just the Prodigy dataset snapshot file, you can use `scripts/prodigy_cloud_sync.py` directly.
+
+**Before you start annotating on a machine** (pull latest from Drive):
+
+```bash
+python scripts/prodigy_cloud_sync.py import \
+  --dataset registry_v1 \
+  --in "/path/to/GoogleDrive/proc_suite_sync/prodigy/registry_v1.prodigy.jsonl" \
+  --reset
+```
+
+**After you finish a session** (push to Drive):
+
+```bash
+python scripts/prodigy_cloud_sync.py export \
+  --dataset registry_v1 \
+  --out "/path/to/GoogleDrive/proc_suite_sync/prodigy/registry_v1.prodigy.jsonl"
+```
+
+Rules:
+- Only annotate on **one machine at a time**.
+- Always **export after** you finish a session, and **import before** you start on another machine.
+- If you rely on avoiding re-sampling, also keep `data/ml_training/registry_prodigy_manifest.json` synced alongside the dataset snapshot.
 
 Annotate as many as you can tolerate in one sitting (even 50 is enough for the first iteration).
 

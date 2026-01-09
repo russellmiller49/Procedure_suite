@@ -291,7 +291,7 @@ make registry-prodigy-annotate REG_PRODIGY_DATASET=registry_v1
 
 Notes:
 - The annotation UI is served at `http://localhost:8080` (Prodigy’s default).
-- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 29 label(s): …” you’re in the right place.
+- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 30 label(s): …” you’re in the right place.
 
 ##### Working across machines (Google Drive sync — safe “export/import”)
 

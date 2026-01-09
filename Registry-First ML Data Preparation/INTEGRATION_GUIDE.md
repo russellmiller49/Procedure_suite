@@ -84,7 +84,7 @@ The generated CSV files have this structure:
 | `source_file` | str | Origin golden_*.json filename |
 | `diagnostic_bronchoscopy` | int | 0/1 binary label |
 | `bal` | int | 0/1 binary label |
-| ... | ... | (29 total procedure labels) |
+| ... | ... | (30 total procedure labels) |
 
 ## Key Features
 
@@ -124,7 +124,7 @@ Automatically removes labels with fewer than N positive examples:
 python golden_to_csv.py --min-label-count 5  # Default
 ```
 
-## Canonical 29 Procedure Labels
+## Canonical 30 Procedure Labels
 
 ### Bronchoscopy (22)
 - diagnostic_bronchoscopy, bal, bronchial_wash, brushings

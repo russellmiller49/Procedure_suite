@@ -37,6 +37,7 @@ import numpy as np
 import pandas as pd
 
 from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
+from modules.ml_coder.registry_label_constraints import apply_label_constraints
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,7 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 # Canonical Procedure Flags (V2 Schema)
 # =============================================================================
-# Canonical 29-field list (single import point for ordering).
+# Canonical procedure label list (single import point for ordering).
 ALL_PROCEDURE_LABELS = list(REGISTRY_LABELS)
 
 # Legacy lists for backward compatibility
@@ -332,6 +333,7 @@ def _load_human_labels_csv(path: Path, labels: list[str]) -> list[dict[str, Any]
             "label_confidence": float(row.get("label_confidence") or 1.0),
         }
         record.update({label: int(row.get(label, 0)) for label in labels})
+        apply_label_constraints(record)
         records.append(record)
     return records
 
@@ -454,6 +456,8 @@ def extract_records_from_golden_dir(
                 labels = extractor.extract(registry)
                 label_source = "legacy"
                 label_confidence = 0.5
+
+            apply_label_constraints(labels, note_text=note_text)
 
             # Require at least one positive label
             if not any(v == 1 for v in labels.values()):
@@ -625,7 +629,7 @@ def prepare_registry_training_splits(
 
     This function:
     1. Scans all golden_*.json files in the golden directory
-    2. Extracts note text and 29 boolean procedure flags
+    2. Extracts note text and 30 boolean procedure flags
     3. Filters rare labels (< min_label_count examples)
     4. Performs iterative multi-label stratification
     5. Ensures encounter-level grouping (no data leakage)

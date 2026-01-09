@@ -18,7 +18,7 @@ DEFAULT_REGISTRY_LABEL_FIELDS_PATH = Path("data/ml_training/registry_label_field
 
 
 def canonical_registry_procedure_labels() -> list[str]:
-    """Return the canonical 29-label registry procedure schema."""
+    """Return the canonical registry procedure label schema."""
     return list(PROCEDURE_BOOLEAN_FIELDS)
 
 
@@ -60,4 +60,3 @@ def load_registry_procedure_labels(
     # File is missing some labels (likely filtered/incomplete). Use canonical to
     # keep UI/training schema stable.
     return canonical
-

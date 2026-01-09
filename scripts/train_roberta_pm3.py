@@ -45,6 +45,9 @@ from transformers import (
     get_linear_schedule_with_warmup,
 )
 
+from modules.ml_coder.distillation_io import load_label_fields_json
+from modules.ml_coder.registry_label_schema import DORMANT_LABELS, REGISTRY_LABELS
+
 # ============================================================================
 # Configuration
 # ============================================================================
@@ -86,6 +89,10 @@ class TrainingConfig:
 
     # Validation
     val_split: float = 0.1
+
+    # Dormant labels (exclude from ML head)
+    dormant_mode: str = "auto"  # "auto" | "schema" | "none"
+    dormant_min_positives: int = 20
 
     # Logging
     logging_steps: int = 50
@@ -229,83 +236,146 @@ class RoBERTaPM3MultiLabel(nn.Module):
 
     @classmethod
     def from_pretrained(cls, path: Path, num_labels: int):
-        # Implementation for loading (simplified for brevity)
-        model = cls(str(path), num_labels)
-        model.classifier.load_state_dict(torch.load(path / "classifier.pt"))
+        path = Path(path)
+        pos_weight_path = path / "pos_weight.pt"
+        pos_weight = torch.load(pos_weight_path, map_location="cpu") if pos_weight_path.exists() else None
+        model = cls(str(path), num_labels, pos_weight=pos_weight)
+        classifier_path = path / "classifier.pt"
+        if classifier_path.exists():
+            model.classifier.load_state_dict(torch.load(classifier_path, map_location="cpu"))
         return model
 
 
-def train(config: TrainingConfig):
-    print(f"--- Training RoBERTa Registry Model ---")
-    
-    # 1. Load Data
-    # Prefer loading label order from JSON if available to ensure consistency
-    known_labels = load_label_fields(config.label_fields_json)
-    
-    train_texts, train_y, train_labels = load_registry_csv(config.train_csv, required_labels=known_labels or None)
-    
-    if not known_labels:
-        print(f"Inferred {len(train_labels)} labels. Saving to {config.label_fields_json}")
-        with open(config.label_fields_json, "w") as f:
-            json.dump(train_labels, f, indent=2)
-        known_labels = train_labels
+def _select_active_labels(schema_labels: list[str], train_y: np.ndarray, config: TrainingConfig) -> tuple[list[str], list[str]]:
+    dormant: set[str]
+    if config.dormant_mode == "schema":
+        dormant = set(DORMANT_LABELS)
+    elif config.dormant_mode == "auto":
+        dormant = set(DORMANT_LABELS)
+        min_pos = max(0, int(config.dormant_min_positives))
+        counts = train_y.sum(axis=0).astype(int)
+        for label, count in zip(schema_labels, counts.tolist()):
+            if count < min_pos:
+                dormant.add(label)
+    elif config.dormant_mode == "none":
+        dormant = set()
+    else:
+        raise ValueError(f"Unknown dormant_mode: {config.dormant_mode}")
 
-    print(f"Labels: {known_labels}")
+    active = [l for l in schema_labels if l not in dormant]
+    dormant_sorted = [l for l in schema_labels if l in dormant]
+    return active, dormant_sorted
 
-    # Split Validation
-    train_texts, val_texts, train_y, val_y = train_test_split(
-        train_texts, train_y, test_size=config.val_split, random_state=42
-    )
 
-    # 2. Calculate pos_weight
+def _thresholds_05(labels: list[str]) -> dict[str, float]:
+    return {l: 0.5 for l in labels}
+
+
+def _metrics_at_thresholds(
+    y_true: np.ndarray,
+    probs: np.ndarray,
+    labels: list[str],
+    thresholds: dict[str, float],
+) -> dict[str, Any]:
+    preds = np.zeros_like(probs, dtype=int)
+    for i, label in enumerate(labels):
+        preds[:, i] = (probs[:, i] >= float(thresholds.get(label, 0.5))).astype(int)
+
+    precision, recall, f1, _ = precision_recall_fscore_support(y_true, preds, average=None, zero_division=0)
+    return {
+        "macro_f1": float(np.mean(f1)),
+        "micro_f1": float(f1_score(y_true.ravel(), preds.ravel(), zero_division=0)),
+        "per_label": {
+            label: {
+                "precision": float(precision[i]),
+                "recall": float(recall[i]),
+                "f1": float(f1[i]),
+                "support": int(y_true[:, i].sum()),
+                "threshold": float(thresholds.get(label, 0.5)),
+            }
+            for i, label in enumerate(labels)
+        },
+    }
+
+
+def train(config: TrainingConfig) -> dict[str, Any]:
+    print("--- Training RoBERTa-PM3 Registry Model ---")
+
+    schema_labels = list(REGISTRY_LABELS)
+    config.label_fields_json.parent.mkdir(parents=True, exist_ok=True)
+    config.label_fields_json.write_text(json.dumps(schema_labels, indent=2) + "\n", encoding="utf-8")
+
+    train_texts, train_y_full, _ = load_registry_csv(config.train_csv, required_labels=schema_labels)
+
+    if config.val_csv and config.val_csv.exists():
+        val_texts, val_y_full, _ = load_registry_csv(config.val_csv, required_labels=schema_labels)
+    else:
+        train_texts, val_texts, train_y_full, val_y_full = train_test_split(
+            train_texts, train_y_full, test_size=config.val_split, random_state=42
+        )
+
+    test_texts, test_y_full, _ = load_registry_csv(config.test_csv, required_labels=schema_labels)
+
+    active_labels, dormant_labels = _select_active_labels(schema_labels, train_y_full, config)
+    if not active_labels:
+        raise ValueError("No active labels selected; adjust dormant settings.")
+
+    active_idx = [schema_labels.index(l) for l in active_labels]
+    train_y = train_y_full[:, active_idx]
+    val_y = val_y_full[:, active_idx]
+    test_y = test_y_full[:, active_idx]
+
+    print(f"Active labels: {len(active_labels)} | Dormant: {len(dormant_labels)}")
+
+    # pos_weight
     pos_counts = train_y.sum(axis=0)
     neg_counts = len(train_y) - pos_counts
-    # Avoid div by zero
-    pos_counts = np.maximum(pos_counts, 1) 
+    pos_counts = np.maximum(pos_counts, 1)
     weights = neg_counts / pos_counts
     weights = np.minimum(weights, config.pos_weight_cap)
     pos_weight = torch.tensor(weights, dtype=torch.float32).to(config.device)
 
-    # 3. Setup
     tokenizer = HeadTailTokenizer(
         AutoTokenizer.from_pretrained(config.model_name),
         max_length=config.max_length,
         head_tokens=config.head_tokens,
-        tail_tokens=config.tail_tokens
+        tail_tokens=config.tail_tokens,
     )
-    
+
     train_ds = RegistryDataset(train_texts, train_y, tokenizer)
     val_ds = RegistryDataset(val_texts, val_y, tokenizer)
-    
+    test_ds = RegistryDataset(test_texts, test_y, tokenizer)
+
     train_loader = DataLoader(train_ds, batch_size=config.batch_size, shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=config.batch_size)
+    test_loader = DataLoader(test_ds, batch_size=config.batch_size)
 
-    model = RoBERTaPM3MultiLabel(config.model_name, len(known_labels), pos_weight=pos_weight)
+    model = RoBERTaPM3MultiLabel(config.model_name, len(active_labels), pos_weight=pos_weight)
     model.to(config.device)
-    
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
-    scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=100, num_training_steps=len(train_loader) * config.num_epochs)
-    scaler = torch.amp.GradScaler('cuda', enabled=config.fp16)
 
-    # 4. Loop
-    best_f1 = 0
-    
+    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
+    total_steps = max(1, len(train_loader) * config.num_epochs)
+    warmup_steps = int(total_steps * config.warmup_ratio)
+    scheduler = get_linear_schedule_with_warmup(
+        optimizer, num_warmup_steps=warmup_steps, num_training_steps=total_steps
+    )
+    scaler = torch.amp.GradScaler("cuda", enabled=config.fp16)
+
+    best_f1 = -1.0
+    thresholds = _thresholds_05(active_labels)
+
     for epoch in range(config.num_epochs):
         model.train()
-        train_loss = 0
         for batch in tqdm(train_loader, desc=f"Epoch {epoch+1}"):
             batch = {k: v.to(config.device) for k, v in batch.items()}
-            
-            with torch.amp.autocast('cuda', enabled=config.fp16):
+            with torch.amp.autocast("cuda", enabled=config.fp16):
                 outputs = model(**batch)
                 loss = outputs["loss"]
-            
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
             scheduler.step()
             optimizer.zero_grad()
-            train_loss += loss.item()
 
         # Validation
         model.eval()
@@ -315,12 +385,10 @@ def train(config: TrainingConfig):
                 batch = {k: v.to(config.device) for k, v in batch.items()}
                 out = model(**batch)
                 val_probs.append(torch.sigmoid(out["logits"]).cpu().numpy())
-        
-        val_probs = np.vstack(val_probs)
-        
-        # Simple threshold check
-        val_preds = (val_probs >= 0.5).astype(int)
-        macro_f1 = f1_score(val_y, val_preds, average="macro", zero_division=0)
+        val_probs = np.vstack(val_probs) if val_probs else np.zeros((0, len(active_labels)), dtype=float)
+
+        val_metrics = _metrics_at_thresholds(val_y, val_probs, active_labels, thresholds)
+        macro_f1 = float(val_metrics["macro_f1"])
         print(f"Epoch {epoch+1} Val Macro F1: {macro_f1:.4f}")
 
         if macro_f1 > best_f1:
@@ -328,26 +396,128 @@ def train(config: TrainingConfig):
             print("Saving best model...")
             model.save_pretrained(config.output_dir)
             tokenizer.tokenizer.save_pretrained(config.output_dir / "tokenizer")
-            
-            # Save threshold metadata (simplified to 0.5 for now, full script has optimizer)
-            thresholds = {l: 0.5 for l in known_labels}
-            with open(config.output_dir / "thresholds.json", "w") as f:
-                json.dump(thresholds, f, indent=2)
 
-    print(f"Training complete. Best F1: {best_f1:.4f}")
+            (config.output_dir / "label_fields.json").write_text(json.dumps(active_labels, indent=2) + "\n")
+            (config.output_dir / "dormant_labels.json").write_text(json.dumps(dormant_labels, indent=2) + "\n")
+            (config.output_dir / "thresholds.json").write_text(json.dumps(thresholds, indent=2) + "\n")
+
+            metrics = {
+                "best_val_macro_f1": best_f1,
+                "val_metrics": val_metrics,
+                "config": {
+                    "model_name": config.model_name,
+                    "batch_size": config.batch_size,
+                    "learning_rate": config.learning_rate,
+                    "num_epochs": config.num_epochs,
+                    "loss": "bce",
+                    "schema_labels": schema_labels,
+                    "active_labels": active_labels,
+                    "dormant_labels": dormant_labels,
+                    "dormant_mode": config.dormant_mode,
+                    "dormant_min_positives": int(config.dormant_min_positives),
+                },
+            }
+            (config.output_dir / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
+
+    # Test evaluation (on best checkpoint)
+    best_model = RoBERTaPM3MultiLabel.from_pretrained(config.output_dir, num_labels=len(active_labels))
+    best_model.to(config.device)
+    best_model.eval()
+    test_probs = []
+    with torch.no_grad():
+        for batch in tqdm(test_loader, desc="Testing"):
+            batch = {k: v.to(config.device) for k, v in batch.items()}
+            out = best_model(**batch)
+            test_probs.append(torch.sigmoid(out["logits"]).cpu().numpy())
+    test_probs = np.vstack(test_probs) if test_probs else np.zeros((0, len(active_labels)), dtype=float)
+    test_metrics = _metrics_at_thresholds(test_y, test_probs, active_labels, thresholds)
+
+    metrics_path = config.output_dir / "metrics.json"
+    metrics = json.loads(metrics_path.read_text()) if metrics_path.exists() else {}
+    metrics["test_metrics"] = test_metrics
+    metrics_path.write_text(json.dumps(metrics, indent=2) + "\n")
+
+    print(f"Training complete. Best Val Macro F1: {best_f1:.4f}")
+    return metrics
+
+
+def evaluate_only(model_dir: Path, config: TrainingConfig) -> dict[str, Any]:
+    label_fields_path = model_dir / "label_fields.json"
+    if not label_fields_path.exists():
+        raise SystemExit(f"Missing label_fields.json in model dir: {model_dir}")
+    label_fields = load_label_fields_json(label_fields_path)
+
+    thresholds_path = model_dir / "thresholds.json"
+    thresholds = _thresholds_05(label_fields)
+    if thresholds_path.exists():
+        data = json.loads(thresholds_path.read_text())
+        if isinstance(data, dict):
+            thresholds = {k: float(v["threshold"] if isinstance(v, dict) and "threshold" in v else v) for k, v in data.items()}
+
+    test_texts, test_y, _ = load_registry_csv(config.test_csv, required_labels=label_fields)
+
+    tokenizer_dir = model_dir / "tokenizer"
+    tokenizer = HeadTailTokenizer(
+        AutoTokenizer.from_pretrained(str(tokenizer_dir if tokenizer_dir.exists() else model_dir)),
+        max_length=config.max_length,
+        head_tokens=config.head_tokens,
+        tail_tokens=config.tail_tokens,
+    )
+    test_ds = RegistryDataset(test_texts, test_y, tokenizer)
+    test_loader = DataLoader(test_ds, batch_size=config.batch_size)
+
+    model = RoBERTaPM3MultiLabel.from_pretrained(model_dir, num_labels=len(label_fields))
+    model.to(config.device)
+    model.eval()
+
+    probs = []
+    with torch.no_grad():
+        for batch in tqdm(test_loader, desc="Evaluating"):
+            batch = {k: v.to(config.device) for k, v in batch.items()}
+            out = model(**batch)
+            probs.append(torch.sigmoid(out["logits"]).cpu().numpy())
+    probs = np.vstack(probs) if probs else np.zeros((0, len(label_fields)), dtype=float)
+
+    metrics = _metrics_at_thresholds(test_y, probs, label_fields, thresholds)
+    out = {"test_metrics": metrics, "model_dir": str(model_dir), "labels": label_fields}
+    print(json.dumps(out["test_metrics"], indent=2))
+    return out
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--model-name", type=str, default=TrainingConfig.model_name)
+    parser.add_argument("--output-dir", type=Path, default=Path("data/models/roberta_pm3_registry"))
+    parser.add_argument("--train-csv", type=Path, default=Path("data/ml_training/registry_train.csv"))
+    parser.add_argument("--val-csv", type=Path, default=Path("data/ml_training/registry_val.csv"))
+    parser.add_argument("--test-csv", type=Path, default=Path("data/ml_training/registry_test.csv"))
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--epochs", type=int, default=5)
+    parser.add_argument("--lr", type=float, default=2e-5)
+    parser.add_argument("--no-fp16", action="store_true")
+    parser.add_argument("--dormant-mode", choices=["auto", "schema", "none"], default="auto")
+    parser.add_argument("--dormant-min-positives", type=int, default=20)
     parser.add_argument("--evaluate-only", action="store_true")
-    parser.add_argument("--model-dir", type=Path)
+    parser.add_argument("--model-dir", type=Path, help="Model directory for --evaluate-only")
     args = parser.parse_args()
-    
-    config = TrainingConfig(batch_size=args.batch_size, num_epochs=args.epochs)
-    
+
+    config = TrainingConfig(
+        model_name=args.model_name,
+        train_csv=args.train_csv,
+        val_csv=args.val_csv,
+        test_csv=args.test_csv,
+        output_dir=args.output_dir,
+        batch_size=int(args.batch_size),
+        num_epochs=int(args.epochs),
+        learning_rate=float(args.lr),
+        fp16=not bool(args.no_fp16),
+        dormant_mode=str(args.dormant_mode),
+        dormant_min_positives=int(args.dormant_min_positives),
+    )
+
     if args.evaluate_only:
-        print("Evaluation mode not fully implemented in this summary script.")
+        if not args.model_dir:
+            raise SystemExit("--model-dir is required with --evaluate-only")
+        evaluate_only(Path(args.model_dir), config)
     else:
         train(config)

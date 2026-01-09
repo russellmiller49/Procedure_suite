@@ -50,7 +50,6 @@ def test_prodigy_export_registry_writes_canonical_columns(tmp_path: Path) -> Non
     assert row["bal"] == "1"
     assert row["ipc"] == "0"
 
-    # Ensure all 29 label columns exist.
+    # Ensure all canonical label columns exist.
     for label in REGISTRY_LABELS:
         assert label in row
-

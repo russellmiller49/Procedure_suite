@@ -4,7 +4,7 @@ Successfully implemented a 5-phase project to build a multi-label ML classifier 
 Phase 1: Data Preparation & Label Engineering ✅
 What Was Done
 Located existing data: Found Golden Extraction registry data in data/knowledge/golden_extractions/ (719 entries)
-Defined target labels: Created REGISTRY_TARGET_FIELDS constant with 29 procedure boolean flags
+Defined target labels: Created REGISTRY_TARGET_FIELDS constant with canonical procedure boolean flags
 Built V2→V3 mapper: Implemented _extract_registry_booleans() function mapping legacy V2 registry fields to V3-style boolean flags
 Rare label filtering: Implemented _filter_rare_registry_labels() to drop labels with < 5 samples
 Data pipeline: Created prepare_registry_training_splits() to generate train/test CSVs

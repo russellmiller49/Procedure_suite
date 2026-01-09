@@ -194,12 +194,12 @@ class TestRegistryLabelExtractor:
         assert all(v == 0 for v in labels.values())
 
     def test_all_labels_present(self):
-        """Verify all 29 canonical labels are always returned."""
+        """Verify all canonical labels are always returned."""
         extractor = RegistryLabelExtractor()
 
         labels = extractor.extract({})
 
-        assert len(labels) == 29
+        assert len(labels) == len(ALL_PROCEDURE_LABELS)
         assert set(labels.keys()) == set(ALL_PROCEDURE_LABELS)
 
 
@@ -445,17 +445,17 @@ class TestLabelCoverage:
 
         assert labels[canonical] == 1
 
-    def test_all_29_labels_present(self):
-        """Verify the canonical 29 labels are defined."""
-        assert len(ALL_PROCEDURE_LABELS) == 29
+    def test_all_labels_present(self):
+        """Verify the canonical labels are defined."""
+        assert len(ALL_PROCEDURE_LABELS) == len(set(ALL_PROCEDURE_LABELS))
 
-        # Bronchoscopy: 22
+        # Bronchoscopy: 23
         bronch_labels = [
             "diagnostic_bronchoscopy", "bal", "bronchial_wash", "brushings",
             "endobronchial_biopsy", "tbna_conventional", "linear_ebus", "radial_ebus",
             "navigational_bronchoscopy", "transbronchial_biopsy",
             "transbronchial_cryobiopsy", "therapeutic_aspiration", "foreign_body_removal",
-            "airway_dilation", "airway_stent", "thermal_ablation", "cryotherapy", "blvr",
+            "airway_dilation", "airway_stent", "thermal_ablation", "tumor_debulking_non_thermal", "cryotherapy", "blvr",
             "peripheral_ablation", "bronchial_thermoplasty", "whole_lung_lavage", "rigid_bronchoscopy"
         ]
         for label in bronch_labels:
@@ -468,6 +468,14 @@ class TestLabelCoverage:
         ]
         for label in pleural_labels:
             assert label in ALL_PROCEDURE_LABELS, f"Missing pleural label: {label}"
+
+        # Other: 2
+        other_labels = [
+            "percutaneous_tracheostomy",
+            "peg_insertion",
+        ]
+        for label in other_labels:
+            assert label in ALL_PROCEDURE_LABELS, f"Missing other label: {label}"
 
 
 # =============================================================================

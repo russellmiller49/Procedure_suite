@@ -456,7 +456,7 @@ make registry-prep-with-human HUMAN_REGISTRY_CSV=data/ml_training/registry_human
 **Description**: Prepare a Prodigy `choice` batch for registry procedure flags (Diamond Loop).
 
 **What it does**:
-- Generates a Prodigy JSONL with checkbox options for all 29 labels
+- Generates a Prodigy JSONL with checkbox options for all canonical labels
 - Pre-checks boxes using model + deterministic/CPT signals
 - Tracks a manifest to avoid re-sampling the same note
 

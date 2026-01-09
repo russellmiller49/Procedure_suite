@@ -32,7 +32,7 @@ from sklearn.model_selection import train_test_split
 from modules.ml_coder.registry_label_schema import REGISTRY_LABELS
 from modules.ml_coder.valid_ip_codes import VALID_IP_CODES
 
-# Canonical boolean procedure columns (29) for registry training.
+# Canonical boolean procedure columns (30) for registry training.
 BOOLEAN_COLUMNS = list(REGISTRY_LABELS)
 
 # ---------------------------------------------------------------------------
@@ -432,32 +432,40 @@ def derive_booleans_from_json(entry: dict) -> dict:
     # 20. Whole Lung Lavage (32997)
     if 32997 in cpt_codes or reg.get('wll_volume_instilled_l'):
         row['whole_lung_lavage'] = 1
+
+    # 21. Percutaneous Tracheostomy (31600, 31601, 31612)
+    if any(c in cpt_codes for c in [31600, 31601, 31612]):
+        row["percutaneous_tracheostomy"] = 1
+
+    # 22. PEG Insertion (43246, 49440)
+    if any(c in cpt_codes for c in [43246, 49440]):
+        row["peg_insertion"] = 1
         
-    # 21. Rigid Bronchoscopy (31600, 31601)
+    # 23. Rigid Bronchoscopy (31600, 31601)
     if 31600 in cpt_codes or 31601 in cpt_codes:
         row['rigid_bronchoscopy'] = 1
         
-    # 22. Medical Thoracoscopy (32601)
+    # 24. Medical Thoracoscopy (32601)
     if 32601 in cpt_codes:
         row['medical_thoracoscopy'] = 1
         
-    # 23. Pleurodesis (32650)
+    # 25. Pleurodesis (32650)
     if 32650 in cpt_codes or reg.get('pleurodesis_performed') is True:
         row['pleurodesis'] = 1
         
-    # 24. Thoracentesis (32554, 32555)
+    # 26. Thoracentesis (32554, 32555)
     if 32554 in cpt_codes or 32555 in cpt_codes:
         row['thoracentesis'] = 1
         
-    # 25. Chest Tube (32551)
+    # 27. Chest Tube (32551)
     if 32551 in cpt_codes or str(reg.get('pleural_procedure_type')) == 'Chest Tube':
         row['chest_tube'] = 1
 
-    # 26. IPC (32550)
+    # 28. IPC (32550)
     if 32550 in cpt_codes:
         row['ipc'] = 1
         
-    # 27. Fibrinolytic Therapy (32560)
+    # 29. Fibrinolytic Therapy (32560)
     if 32560 in cpt_codes:
         row['fibrinolytic_therapy'] = 1
         

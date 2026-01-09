@@ -19,6 +19,7 @@ from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS, extract_v2_bo
 
 # Import CPT-based derivation function
 from .data_prep import derive_booleans_from_json
+from .registry_label_constraints import apply_label_constraints
 
 __all__ = [
     "HydratedLabels",
@@ -426,8 +427,21 @@ KEYWORD_TO_PROCEDURE_MAP: Dict[str, List[Tuple[str, float]]] = {
         ("rigid_bronchoscopy", 0.85),
         ("diagnostic_bronchoscopy", 0.9),
     ],
-    r"\b31600\b": [("rigid_bronchoscopy", 0.95)],
-    r"\b31601\b": [("rigid_bronchoscopy", 0.95)],
+    r"\b31600\b": [("rigid_bronchoscopy", 0.95), ("percutaneous_tracheostomy", 0.95)],
+    r"\b31601\b": [("rigid_bronchoscopy", 0.95), ("percutaneous_tracheostomy", 0.95)],
+
+    # =========================================================================
+    # Other Interventions
+    # =========================================================================
+    r"\bpercutaneous\s+tracheostomy\b": [("percutaneous_tracheostomy", 0.95)],
+    r"\bblue\s+rhino\b": [("percutaneous_tracheostomy", 0.9)],
+    r"\b31612\b": [("percutaneous_tracheostomy", 0.9)],
+
+    r"\bpercutaneous\s+endoscopic\s+gastrostomy\b": [("peg_insertion", 0.95)],
+    r"\bpeg\s+(tube|placement|insertion)\b": [("peg_insertion", 0.9)],
+    r"\bpeg\b": [("peg_insertion", 0.7)],
+    r"\b43246\b": [("peg_insertion", 0.95)],
+    r"\b49440\b": [("peg_insertion", 0.9)],
 
     # =========================================================================
     # Fiducial Placement
@@ -701,6 +715,7 @@ def extract_labels_with_hydration(
         labels.update(structured_labels)
 
         if any(v == 1 for v in structured_labels.values()):
+            apply_label_constraints(labels, note_text=note_text)
             return HydratedLabels(
                 labels=labels,
                 confidence=0.95,
@@ -722,6 +737,7 @@ def extract_labels_with_hydration(
                 hydrated_fields.append(field)
 
         if any(v == 1 for v in labels.values()):
+            apply_label_constraints(labels, note_text=note_text)
             return HydratedLabels(
                 labels=labels,
                 confidence=0.80,
@@ -743,6 +759,7 @@ def extract_labels_with_hydration(
         if any(v == 1 for v in labels.values()):
             # Average confidence of matched keywords
             avg_confidence = sum(keyword_scores.values()) / len(keyword_scores) if keyword_scores else 0.6
+            apply_label_constraints(labels, note_text=note_text)
             return HydratedLabels(
                 labels=labels,
                 confidence=min(0.60, avg_confidence),

@@ -15,6 +15,7 @@
   "airway_dilation",
   "airway_stent",
   "thermal_ablation",
+  "tumor_debulking_non_thermal",
   "cryotherapy",
   "blvr",
   "peripheral_ablation",
@@ -27,5 +28,7 @@
   "medical_thoracoscopy",
   "pleurodesis",
   "pleural_biopsy",
-  "fibrinolytic_therapy"
+  "fibrinolytic_therapy",
+  "percutaneous_tracheostomy",
+  "peg_insertion"
 ]

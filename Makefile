@@ -268,7 +268,7 @@ prodigy-prepare-registry:
 
 prodigy-annotate-registry:
 	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
-		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(PRODIGY_REGISTRY_DATASET) blank:en \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(PRODIGY_REGISTRY_DATASET) \
 		$(PRODIGY_REGISTRY_BATCH_FILE) \
 		--label $$LABELS
 
@@ -301,6 +301,60 @@ prodigy-registry-cycle: prodigy-prepare-registry
 	@echo "  make prodigy-retrain-registry"
 
 # ==============================================================================
+# Registry Distillation (Teacher → Student)
+# ==============================================================================
+TEACHER_MODEL_NAME ?= data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf
+TEACHER_OUTPUT_DIR ?= data/models/registry_teacher
+TEACHER_EPOCHS ?= 3
+
+TEACHER_LOGITS_IN ?= data/ml_training/registry_unlabeled_notes.jsonl
+TEACHER_LOGITS_OUT ?= data/ml_training/teacher_logits.npz
+
+DISTILL_ALPHA ?= 0.5
+DISTILL_TEMP ?= 2.0
+DISTILL_LOSS ?= mse
+STUDENT_DISTILL_OUTPUT_DIR ?= data/models/roberta_registry_distilled
+
+teacher-train:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta_pm3.py \
+		--model-name $(TEACHER_MODEL_NAME) \
+		--output-dir $(TEACHER_OUTPUT_DIR) \
+		--train-csv data/ml_training/registry_train.csv \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--epochs $(TEACHER_EPOCHS)
+
+teacher-eval:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta_pm3.py \
+		--evaluate-only \
+		--model-dir $(TEACHER_OUTPUT_DIR) \
+		--test-csv data/ml_training/registry_test.csv
+
+teacher-logits:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/generate_teacher_logits.py \
+		--model-dir $(TEACHER_OUTPUT_DIR) \
+		--input-jsonl $(TEACHER_LOGITS_IN) \
+		--out $(TEACHER_LOGITS_OUT)
+
+student-distill:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta.py \
+		--train-csv data/ml_training/registry_train.csv \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--teacher-logits $(TEACHER_LOGITS_OUT) \
+		--distill-alpha $(DISTILL_ALPHA) \
+		--distill-temp $(DISTILL_TEMP) \
+		--distill-loss $(DISTILL_LOSS) \
+		--output-dir $(STUDENT_DISTILL_OUTPUT_DIR)
+
+registry-overlap-report:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/registry_label_overlap_report.py \
+		--csv data/ml_training/registry_train.csv \
+		--csv data/ml_training/registry_val.csv \
+		--csv data/ml_training/registry_test.csv \
+		--out reports/registry_label_overlap.json
+
+# ==============================================================================
 # Registry “Diamond Loop” targets (brief-compatible aliases)
 # ==============================================================================
 REG_PRODIGY_COUNT ?= 200
@@ -309,8 +363,21 @@ REG_PRODIGY_INPUT_FILE ?= data/ml_training/registry_unlabeled_notes.jsonl
 REG_PRODIGY_BATCH_FILE ?= data/ml_training/registry_prodigy_batch.jsonl
 REG_PRODIGY_MANIFEST ?= data/ml_training/registry_prodigy_manifest.json
 REG_PRODIGY_MODEL_DIR ?= data/models/registry_runtime
+REG_PRODIGY_STRATEGY ?= disagreement
+REG_PRODIGY_SEED ?= 42
 REG_PRODIGY_EXPORT_CSV ?= data/ml_training/registry_human.csv
 REG_PRODIGY_RESET_ARCHIVE_DIR ?= data/ml_training/_archive/registry_prodigy
+
+# Relabel workflow (build a review batch from an existing human CSV)
+REG_RELABEL_INPUT_CSV ?= data/ml_training/registry_human_v1_backup.csv
+REG_RELABEL_OUTPUT_FILE ?= data/ml_training/registry_rigid_review.jsonl
+REG_RELABEL_FILTER_LABEL ?= rigid_bronchoscopy
+REG_RELABEL_LIMIT ?= 0
+REG_RELABEL_PREFILL_NON_THERMAL ?= 1
+
+REG_HUMAN_BASE_CSV ?= data/ml_training/registry_human_v1_backup.csv
+REG_HUMAN_UPDATES_CSV ?= data/ml_training/registry_human_rigid_review.csv
+REG_HUMAN_OUT_CSV ?= data/ml_training/registry_human_v2.csv
 
 # Reset registry Prodigy state (batch + manifest + Prodigy dataset).
 # This is safe to run even if some files/datasets don't exist.
@@ -330,10 +397,25 @@ registry-prodigy-prepare:
 		--input-file $(REG_PRODIGY_INPUT_FILE) \
 		--output-file $(REG_PRODIGY_BATCH_FILE) \
 		--limit $(REG_PRODIGY_COUNT) \
-		--strategy disagreement \
+		--strategy $(REG_PRODIGY_STRATEGY) \
 		--manifest $(REG_PRODIGY_MANIFEST) \
-		--seed 42 \
+		--seed $(REG_PRODIGY_SEED) \
 		--model-dir $(REG_PRODIGY_MODEL_DIR)
+
+registry-prodigy-prepare-relabel:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry_relabel_batch.py \
+		--input-csv $(REG_RELABEL_INPUT_CSV) \
+		--output-file $(REG_RELABEL_OUTPUT_FILE) \
+		--filter-label $(REG_RELABEL_FILTER_LABEL) \
+		--limit $(REG_RELABEL_LIMIT) \
+		$(if $(filter 1,$(REG_RELABEL_PREFILL_NON_THERMAL)),--prefill-non-thermal-from-rigid,)
+
+registry-human-merge-updates:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/merge_registry_human_labels.py \
+		--base-csv $(REG_HUMAN_BASE_CSV) \
+		--updates-csv $(REG_HUMAN_UPDATES_CSV) \
+		--out-csv $(REG_HUMAN_OUT_CSV) \
+		--prefer-updates-meta
 
 registry-prodigy-annotate:
 	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \

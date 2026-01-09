@@ -25,7 +25,7 @@ Each CSV contains:
     - source_file: Origin golden JSON file
     - label_source: Extraction tier ("structured", "cpt", "keyword")
     - label_confidence: Confidence score (0.0-1.0)
-    - [29 boolean procedure columns]
+    - [30 boolean procedure columns]
 """
 
 from __future__ import annotations
@@ -48,6 +48,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from modules.ml_coder.label_hydrator import extract_labels_with_hydration
 from modules.ml_coder.registry_data_prep import deduplicate_records
+from modules.ml_coder.registry_label_constraints import apply_label_constraints
 from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
 
 logging.basicConfig(
@@ -59,7 +60,7 @@ logger = logging.getLogger(__name__)
 
 
 # =============================================================================
-# V2 Boolean Fields (Canonical 29 Procedure Flags)
+# V2 Boolean Fields (Canonical 30 Procedure Flags)
 # =============================================================================
 # Use authoritative list from v2_booleans.py
 
@@ -167,7 +168,7 @@ def extract_bool_from_nested(data: dict[str, Any], path: list[str]) -> bool | No
 
 
 def extract_procedures_from_registry(registry: dict[str, Any]) -> dict[str, bool]:
-    """Extract all 29 procedure boolean flags from a registry entry.
+    """Extract all procedure boolean flags from a registry entry.
 
     Handles multiple schema versions (V2, V3) and nested structures.
 
@@ -248,7 +249,7 @@ def load_human_registry_labels_csv(path: Path) -> list[dict[str, Any]]:
     if "note_text" not in df.columns:
         raise ValueError(f"Human labels CSV missing required column 'note_text': {path}")
 
-    # Ensure canonical 29 label columns exist and are {0,1}.
+    # Ensure canonical label columns exist and are {0,1}.
     for label in ALL_PROCEDURE_FLAGS:
         if label not in df.columns:
             df[label] = 0
@@ -288,6 +289,7 @@ def load_human_registry_labels_csv(path: Path) -> list[dict[str, Any]]:
         }
         for label in ALL_PROCEDURE_FLAGS:
             record[label] = int(row.get(label, 0))
+        apply_label_constraints(record)
         records.append(record)
     return records
 
@@ -347,6 +349,9 @@ def extract_record(file_path: Path, data: dict[str, Any], stats: ExtractionStats
     labels = result.labels
     label_source = result.source
     label_confidence = result.confidence
+
+    # Normalize any contradictory supervision deterministically.
+    apply_label_constraints(labels, note_text=note_text)
 
     # Track tier statistics
     if label_source == "structured":

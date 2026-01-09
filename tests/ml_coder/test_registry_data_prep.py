@@ -333,7 +333,6 @@ class TestSharedV2BooleansModule:
             extract_v2_booleans,
         )
 
-        assert len(PROCEDURE_BOOLEAN_FIELDS) == 29
         assert PROCEDURE_BOOLEAN_FIELDS == list(REGISTRY_TARGET_FIELDS)
 
     def test_shared_module_matches_wrapper(self):
@@ -525,9 +524,11 @@ class TestRegistryTargetFieldsSchemaAlignment:
     boolean fields in the registry schema.
     """
 
-    def test_field_count_is_29(self):
-        """REGISTRY_TARGET_FIELDS should have exactly 29 procedure flags."""
-        assert len(REGISTRY_TARGET_FIELDS) == 29
+    def test_field_count_matches_canonical(self):
+        """REGISTRY_TARGET_FIELDS should match the canonical procedure flag list."""
+        from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
+
+        assert len(REGISTRY_TARGET_FIELDS) == len(PROCEDURE_BOOLEAN_FIELDS)
 
     def test_bronchoscopy_procedures_present(self):
         """All expected bronchoscopy procedures should be present."""
@@ -548,6 +549,7 @@ class TestRegistryTargetFieldsSchemaAlignment:
             "airway_dilation",
             "airway_stent",
             "thermal_ablation",
+            "tumor_debulking_non_thermal",
             "cryotherapy",
             "blvr",
             "peripheral_ablation",
@@ -571,6 +573,15 @@ class TestRegistryTargetFieldsSchemaAlignment:
         ]
         for field in expected_pleural:
             assert field in REGISTRY_TARGET_FIELDS, f"Missing pleural field: {field}"
+
+    def test_other_procedures_present(self):
+        """All expected non-bronch/non-pleural procedures should be present."""
+        expected_other = [
+            "percutaneous_tracheostomy",
+            "peg_insertion",
+        ]
+        for field in expected_other:
+            assert field in REGISTRY_TARGET_FIELDS, f"Missing other field: {field}"
 
     def test_no_non_procedure_fields(self):
         """REGISTRY_TARGET_FIELDS should not contain demographics or outcome fields."""

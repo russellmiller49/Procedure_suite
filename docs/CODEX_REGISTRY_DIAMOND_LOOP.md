@@ -28,7 +28,8 @@ After completing this plan, the repo will support:
 
 ## Critical Constraints / Non‑Negotiables
 
-- **Single Source of Truth for label schema**: one module defines the canonical 29 registry boolean flags and their ordering. No duplicated label lists in scripts/services.
+- **Single Source of Truth for label schema**: one module defines the canonical 30 registry boolean flags and their ordering. No duplicated label lists in scripts/services.
+- **Single Source of Truth for label schema**: one module defines the canonical registry boolean flags and their ordering. No duplicated label lists in scripts/services.
 - **Do not rely on LLM calls** to prepare Prodigy batches. The batch prep must be offline‑friendly.
 - **Do not change** the public API contracts unless required; add internal helpers/modules first.
 - Use repo tooling: `make test`, Ruff, mypy. Keep changes minimal and well‑tested.
@@ -47,25 +48,25 @@ Before coding, Codex should locate and read:
 
 ---
 
-## 1) Create a Canonical Registry Label Schema Module (29 flags)
+## 1) Create a Canonical Registry Label Schema Module (30 flags)
 
 ### 1.1 Add file
 Create:
 - `modules/ml_coder/registry_label_schema.py`
 
 ### 1.2 Implement exports
-- `REGISTRY_LABELS: list[str]` — **exactly 29** flags, in the canonical training order.
+- `REGISTRY_LABELS: list[str]` — canonical flags, in the canonical training order.
 - `REGISTRY_LABEL_TITLES: dict[str, str]` — human‑readable display strings for Prodigy options.
 - `def prodigy_options() -> list[dict[str, str]]` returning:
   - `[{"id": "<label_id>", "text": "<label_title>"} ...]`
 - `def validate_schema() -> None` which asserts:
-  - len == 29
+  - len == 30
   - no duplicates
   - all keys in titles match labels
   - titles are non‑empty
 
 ### 1.3 Refactor usage sites (no hard‑coded label lists)
-Update any module/script that hardcodes the 29 labels to import from `modules.ml_coder.registry_label_schema`.
+Update any module/script that hardcodes labels to import from `modules.ml_coder.registry_label_schema`.
 
 Common likely files:
 - `scripts/train_roberta.py`
@@ -77,7 +78,7 @@ Common likely files:
 Add:
 - `tests/ml_coder/test_registry_label_schema.py`
   - `test_registry_label_schema_valid()` calls `validate_schema()`
-  - `test_registry_label_schema_count()` asserts 29
+  - `test_registry_label_schema_count()` asserts 30
 
 ---
 
@@ -186,7 +187,7 @@ prodigy mark ${REG_PRODIGY_DATASET} ${REG_PRODIGY_BATCH_FILE} --view-id choice
 
 ---
 
-## 3) Registry Prodigy Export (Proggy → CSV with 29 binary columns)
+## 3) Registry Prodigy Export (Proggy → CSV with 30 binary columns)
 
 ### 3.1 Add file
 Create:
@@ -209,7 +210,7 @@ For each Prodigy record:
   - `encounter_id` (recompute the same way as prepare script)
   - `label_source="human"`
   - `label_confidence=1.0`
-  - 29 label columns from `REGISTRY_LABELS` as 0/1 (1 iff label in accept)
+  - label columns from `REGISTRY_LABELS` as 0/1 (1 iff label in accept)
 
 Deduplicate by encounter_id, keeping the latest occurrence (last write wins).
 
@@ -289,8 +290,8 @@ Add or extend:
 
 ## 6) Documentation Fixups
 
-### 6.1 Fix “30 procedure columns” → “29”
-There is a doc/table that claims “[30 procedure columns]”. Update to 29 and ideally link to `REGISTRY_LABELS` list.
+### 6.1 Keep procedure-column count in sync
+When docs mention the number of procedure label columns, keep it aligned to `REGISTRY_LABELS` (currently 30).
 
 ### 6.2 Add docs page
 Add:
@@ -366,5 +367,4 @@ python scripts/train_roberta.py --train-csv data/ml_training/registry_train.csv 
 - `scripts/train_roberta.py`
 - `modules/ml_coder/registry_data_prep.py` (Tier‑0 human merge)
 - `Makefile` (registry prodigy targets)
-- any docs mentioning “30 labels”
-
+- any docs mentioning an outdated label count

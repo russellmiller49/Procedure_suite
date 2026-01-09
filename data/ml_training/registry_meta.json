@@ -1,7 +1,7 @@
 {
   "source_dir": "data/knowledge/golden_extractions_final",
   "total_files": 238,
-  "successful_extractions": 9635,
+  "successful_extractions": 9638,
   "label_columns": [
     "diagnostic_bronchoscopy",
     "bal",
@@ -19,6 +19,7 @@
     "airway_dilation",
     "airway_stent",
     "thermal_ablation",
+    "tumor_debulking_non_thermal",
     "cryotherapy",
     "blvr",
     "peripheral_ablation",
@@ -31,15 +32,17 @@
     "medical_thoracoscopy",
     "pleurodesis",
     "pleural_biopsy",
-    "fibrinolytic_therapy"
+    "fibrinolytic_therapy",
+    "percutaneous_tracheostomy",
+    "peg_insertion"
   ],
   "split_sizes": {
-    "train": 6714,
-    "val": 1460,
-    "test": 1436
+    "train": 6830,
+    "val": 1470,
+    "test": 1463
   },
   "label_counts": {
-    "diagnostic_bronchoscopy": 7601,
+    "diagnostic_bronchoscopy": 7594,
     "peripheral_ablation": 531,
     "ipc": 347,
     "brushings": 1576,
@@ -53,7 +56,7 @@
     "therapeutic_aspiration": 463,
     "transbronchial_cryobiopsy": 516,
     "chest_tube": 421,
-    "rigid_bronchoscopy": 1003,
+    "rigid_bronchoscopy": 998,
     "bal": 748,
     "tbna_conventional": 1442,
     "linear_ebus": 2186,
@@ -63,9 +66,11 @@
     "whole_lung_lavage": 102,
     "foreign_body_removal": 232,
     "endobronchial_biopsy": 439,
+    "tumor_debulking_non_thermal": 402,
     "bronchial_thermoplasty": 162,
     "cryotherapy": 229,
     "fibrinolytic_therapy": 130,
+    "percutaneous_tracheostomy": 20,
     "bronchial_wash": 135
   },
   "random_seed": 42

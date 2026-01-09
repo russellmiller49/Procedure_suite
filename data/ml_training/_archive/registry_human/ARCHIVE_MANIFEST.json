@@ -1,0 +1,25 @@
+{
+  "archived_at": "2026-01-08T15:23:49",
+  "reason": "Consolidated into registry_human.csv (single source of truth)",
+  "master_file": "registry_human.csv",
+  "master_records_after": 495,
+  "missing_records_added": 1,
+  "archived_files": [
+    {
+      "original": "registry_human_updates.csv",
+      "archived_as": "registry_human_updates.csv.20260108_152349"
+    },
+    {
+      "original": "registry_human_v2.csv",
+      "archived_as": "registry_human_v2.csv.20260108_152349"
+    },
+    {
+      "original": "registry_human_rigid_review.csv",
+      "archived_as": "registry_human_rigid_review.csv.20260108_152349"
+    },
+    {
+      "original": "registry_human_v1_backup.csv",
+      "archived_as": "registry_human_v1_backup.csv.20260108_152349"
+    }
+  ]
+}

@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 # Canonical Procedure Flags (V2 Schema)
 # =============================================================================
-# These 29 boolean flags are the ML targets for registry-first prediction.
+# These 30 boolean flags are the ML targets for registry-first prediction.
 # See: modules/registry/v2_booleans.py for the authoritative source.
 
 BRONCHOSCOPY_LABELS = [
@@ -56,6 +56,7 @@ BRONCHOSCOPY_LABELS = [
     "airway_dilation",
     "airway_stent",
     "thermal_ablation",
+    "tumor_debulking_non_thermal",
     "cryotherapy",
     "blvr",
     "peripheral_ablation",
@@ -416,7 +417,7 @@ def prepare_registry_training_splits(
     
     This function:
     1. Scans all golden_*.json files in the golden directory
-    2. Extracts note text and 29 boolean procedure flags
+    2. Extracts note text and 30 boolean procedure flags
     3. Filters rare labels (< min_label_count examples)
     4. Performs iterative multi-label stratification
     5. Ensures encounter-level grouping (no data leakage)

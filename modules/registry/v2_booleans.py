@@ -41,6 +41,7 @@ PROCEDURE_BOOLEAN_FIELDS: List[str] = [
     "airway_dilation",
     "airway_stent",
     "thermal_ablation",
+    "tumor_debulking_non_thermal",
     "cryotherapy",
     "blvr",
     "peripheral_ablation",
@@ -55,6 +56,9 @@ PROCEDURE_BOOLEAN_FIELDS: List[str] = [
     "pleurodesis",
     "pleural_biopsy",
     "fibrinolytic_therapy",
+    # Other interventions (not part of procedures_performed/pleural_procedures in IP_Registry.json)
+    "percutaneous_tracheostomy",
+    "peg_insertion",
 ]
 
 
@@ -101,7 +105,13 @@ def extract_v2_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
         # V3 format: extract from nested structure
         for proc_name in PROCEDURE_BOOLEAN_FIELDS:
             # Check procedures_performed.<proc_name>.performed
-            proc_obj = procedures_performed.get(proc_name, {})
+            proc_key = proc_name
+            # Backward compatibility: the schema uses `mechanical_debulking` but the ML
+            # schema uses `tumor_debulking_non_thermal`.
+            if proc_name == "tumor_debulking_non_thermal" and "mechanical_debulking" in procedures_performed:
+                proc_key = "mechanical_debulking"
+
+            proc_obj = procedures_performed.get(proc_key, {})
             if isinstance(proc_obj, dict) and proc_obj.get("performed") is True:
                 flags[proc_name] = 1
 
@@ -111,10 +121,23 @@ def extract_v2_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
                 flags[proc_name] = 1
 
         # Set diagnostic_bronchoscopy if any bronch procedure was performed
-        bronch_procs = [k for k in PROCEDURE_BOOLEAN_FIELDS if k not in [
-            "thoracentesis", "chest_tube", "ipc", "medical_thoracoscopy",
-            "pleurodesis", "pleural_biopsy", "fibrinolytic_therapy", "diagnostic_bronchoscopy"
-        ]]
+        bronch_procs = [
+            k
+            for k in PROCEDURE_BOOLEAN_FIELDS
+            if k
+            not in [
+                "thoracentesis",
+                "chest_tube",
+                "ipc",
+                "medical_thoracoscopy",
+                "pleurodesis",
+                "pleural_biopsy",
+                "fibrinolytic_therapy",
+                "diagnostic_bronchoscopy",
+                "percutaneous_tracheostomy",
+                "peg_insertion",
+            ]
+        ]
         if any(flags[p] for p in bronch_procs):
             flags["diagnostic_bronchoscopy"] = 1
 
@@ -214,6 +237,8 @@ def extract_v2_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
         cao_lower = cao_modality.lower()
         if any(term in cao_lower for term in ["thermal", "electrocautery", "argon", "laser", "apc"]):
             flags["thermal_ablation"] = 1
+        if any(term in cao_lower for term in ["mechanical debulking", "rigid coring", "microdebrider"]):
+            flags["tumor_debulking_non_thermal"] = 1
         if "cryo" in cao_lower:
             flags["cryotherapy"] = 1
         if "dilation" in cao_lower or "balloon" in cao_lower:

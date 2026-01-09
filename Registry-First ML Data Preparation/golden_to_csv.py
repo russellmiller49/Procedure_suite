@@ -3,7 +3,7 @@
 Golden JSON → ML Training CSV Converter (Registry-First Method)
 
 This script converts golden_*.json files into properly stratified CSV files
-for training registry prediction models. It extracts the 29 boolean procedure
+for training registry prediction models. It extracts the 30 boolean procedure
 flags from the nested registry_entry structure.
 
 Usage:
@@ -20,7 +20,7 @@ Each CSV contains:
     - note_text: The procedure note text
     - encounter_id: Unique identifier for encounter-level grouping
     - source_file: Origin golden JSON file
-    - [29 boolean procedure columns]
+    - [30 boolean procedure columns]
 """
 
 from __future__ import annotations
@@ -47,7 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 # =============================================================================
-# V2 Boolean Fields (Canonical 29 Procedure Flags)
+# V2 Boolean Fields (Canonical 30 Procedure Flags)
 # =============================================================================
 # These are the target labels for ML training, derived from modules/registry/v2_booleans.py
 
@@ -68,6 +68,7 @@ BRONCHOSCOPY_PROCEDURES = [
     "airway_dilation",
     "airway_stent",
     "thermal_ablation",
+    "tumor_debulking_non_thermal",
     "cryotherapy",
     "blvr",
     "peripheral_ablation",
@@ -166,7 +167,7 @@ def extract_bool_from_nested(data: dict[str, Any], path: list[str]) -> bool | No
 
 
 def extract_procedures_from_registry(registry: dict[str, Any]) -> dict[str, bool]:
-    """Extract all 29 procedure boolean flags from a registry entry.
+    """Extract all procedure boolean flags from a registry entry.
     
     Handles multiple schema versions (V2, V3) and nested structures.
     

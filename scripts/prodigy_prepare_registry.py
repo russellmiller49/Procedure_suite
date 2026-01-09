@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepare a Prodigy JSONL batch for registry procedure flag annotation (multi-label).
 
-Emits Prodigy `textcat`-compatible tasks with 29 canonical registry procedure labels.
+Emits Prodigy `textcat`-compatible tasks with the canonical registry procedure labels.
 Labels are prefilled (cats set to 1) using available heuristics:
 - structured registry entry booleans (if present)
 - CPT-derived flags (if `cpt_codes` present)
@@ -349,11 +349,37 @@ class ONNXBundlePredictor(LoadedPredictor):
         return {label: float(prob) for label, prob in zip(self._model_labels, probs, strict=False)}
 
 
+class TorchBundlePredictor(LoadedPredictor):
+    def __init__(self, model_dir: Path) -> None:
+        # Lazy import so the script stays runnable without torch/transformers.
+        from modules.registry.inference_pytorch import TorchRegistryPredictor
+
+        predictor = TorchRegistryPredictor(bundle_dir=model_dir)
+        if not predictor.available:
+            raise RuntimeError("PyTorch bundle predictor unavailable")
+
+        self._predictor = predictor
+        thresholds_path = model_dir / "thresholds.json"
+        super().__init__(
+            backend="pytorch",
+            thresholds=predictor.thresholds,
+            thresholds_path=thresholds_path if thresholds_path.exists() else None,
+        )
+
+    def predict_proba(self, note_text: str) -> dict[str, float]:
+        preds = self._predictor.predict_proba(note_text)
+        return {p.field: float(p.probability) for p in preds}
+
+
 def load_predictor(model_dir: Path) -> LoadedPredictor:
     try:
         return ONNXBundlePredictor(model_dir)
     except Exception as exc:
-        logger.info("ONNX predictor unavailable (%s); falling back to sklearn", exc)
+        logger.info("ONNX predictor unavailable (%s); trying PyTorch bundle", exc)
+    try:
+        return TorchBundlePredictor(model_dir)
+    except Exception as exc:
+        logger.info("PyTorch predictor unavailable (%s); falling back to sklearn", exc)
     return SklearnPredictor()
 
 
@@ -681,6 +707,7 @@ def main(argv: list[str] | None = None) -> int:
             "cats": cats,
             "_view_id": "textcat",
             "meta": meta,
+            "config": {"exclusive": False},
         }
 
         rank_secondary = rng.random()
@@ -701,7 +728,7 @@ def main(argv: list[str] | None = None) -> int:
         for _, _, task, _ in chosen:
             cats = task.get("cats")
             if not isinstance(cats, dict) or set(cats.keys()) != set(labels):
-                raise ValueError("Task cats must contain exactly the 29 canonical labels")
+                raise ValueError("Task cats must contain exactly the canonical labels")
             for k, v in cats.items():
                 if k not in labels:
                     raise ValueError("Task cats contains unknown label")
