@@ -434,7 +434,21 @@ KEYWORD_TO_PROCEDURE_MAP: Dict[str, List[Tuple[str, float]]] = {
     # Other Interventions
     # =========================================================================
     r"\bpercutaneous\s+tracheostomy\b": [("percutaneous_tracheostomy", 0.95)],
+    r"\bpercutaneous\s+dilat\w*\s+tracheostomy\b": [("percutaneous_tracheostomy", 0.95)],
+    r"\bdilational\s+trach(?:eostomy)?\b": [("percutaneous_tracheostomy", 0.85)],
+    r"\bperc(?:utaneous)?\s+dilat\w*\s+trach(?:eostomy)?\b": [("percutaneous_tracheostomy", 0.9)],
+    r"\bperc(?:utaneous)?\s+trach(?:eostomy)?\b": [("percutaneous_tracheostomy", 0.85)],
+    r"\bbedside\s+trach(?:eostomy)?\b": [("percutaneous_tracheostomy", 0.75)],
+    r"\btrach\s*(?:\+|and|/|&)\s*peg\b": [("percutaneous_tracheostomy", 0.7), ("peg_insertion", 0.7)],
+    r"\btracheostomy\s*(?:\+|and|/|&)\s*peg\b": [("percutaneous_tracheostomy", 0.7), ("peg_insertion", 0.7)],
+    r"\btracheostomy\b[\s:,-]{0,10}\bpercutaneous\b": [("percutaneous_tracheostomy", 0.9)],
+    r"\btrach(?:eostomy)?\b[\s\S]{0,200}\b(needle|guide\s*wire|wire|dilat\w*|dilator|ett\s+withdrawn|bronch\w*)\b": [
+        ("percutaneous_tracheostomy", 0.8)
+    ],
     r"\bblue\s+rhino\b": [("percutaneous_tracheostomy", 0.9)],
+    r"\bciaglia\b": [("percutaneous_tracheostomy", 0.8)],
+    r"\bseldinger\b": [("percutaneous_tracheostomy", 0.75)],
+    r"\bshiley\s+trach(?:eostomy)?\b": [("percutaneous_tracheostomy", 0.75)],
     r"\b31612\b": [("percutaneous_tracheostomy", 0.9)],
 
     r"\bpercutaneous\s+endoscopic\s+gastrostomy\b": [("peg_insertion", 0.95)],

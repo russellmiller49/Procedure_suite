@@ -10,6 +10,9 @@ __pycache__/
 *.egg-info/
 .DS_Store
 
+# Large local artifacts
+procedure_suite_phase2.zip
+
 # API Keys and sensitive files
 *api_key*
 *API_KEY*

@@ -88,6 +88,16 @@ def apply_label_constraints(
         out[CRYO_FIELD] = 1
         out[TBB_FIELD] = 1
 
+    # --- Tumor debulking implies rigid bronchoscopy ---
+    # In the registry schema, non-thermal tumor debulking is expected to be a
+    # rigid CAO intervention in nearly all cases; keeping these aligned reduces
+    # contradictory supervision (and matches review guidance).
+    debulk = _as_int(out.get(DEBULKING_FIELD, 0))
+    rigid = _as_int(out.get(RIGID_FIELD, 0))
+    if debulk == 1 and rigid == 0:
+        out[DEBULKING_FIELD] = 1
+        out[RIGID_FIELD] = 1
+
     return out
 
 
@@ -100,4 +110,3 @@ def registry_consistency_flags(row: MutableMapping[str, Any]) -> dict[str, bool]
         "rigid_without_debulking": rigid and not debulk,
         "debulking_without_rigid": debulk and not rigid,
     }
-

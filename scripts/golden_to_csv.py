@@ -2,7 +2,8 @@
 """
 Golden JSON → ML Training CSV Converter (Registry-First Method with Hydration)
 
-This script converts golden_*.json files into properly stratified CSV files
+This script converts golden_*.json files (and optional *.jsonl note sources)
+into properly stratified CSV files
 for training registry prediction models. Uses 3-tier extraction with hydration:
 
 1. Tier 1 (Structured): extract_v2_booleans() from registry_entry (confidence 0.95)
@@ -318,6 +319,37 @@ def load_golden_json(file_path: Path) -> list[dict[str, Any]] | None:
         return None
 
 
+def load_jsonl(file_path: Path) -> list[dict[str, Any]] | None:
+    """Load a JSONL file as a list of dict entries."""
+    entries: list[dict[str, Any]] = []
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line_no, line in enumerate(f, start=1):
+                line = line.strip()
+                if not line:
+                    continue
+                obj = json.loads(line)
+                if isinstance(obj, dict):
+                    entries.append(obj)
+                    continue
+                if isinstance(obj, list):
+                    # Allow JSONL lines that contain a list of entries.
+                    for item in obj:
+                        if isinstance(item, dict):
+                            entries.append(item)
+                    continue
+                logger.warning(
+                    f"Skipping non-dict JSONL entry in {file_path.name}:{line_no} (type={type(obj).__name__})"
+                )
+        return entries
+    except json.JSONDecodeError as e:
+        logger.warning(f"JSONL parse error in {file_path.name}: {e}")
+        return None
+    except Exception as e:
+        logger.warning(f"Error loading {file_path.name}: {e}")
+        return None
+
+
 def extract_record(file_path: Path, data: dict[str, Any], stats: ExtractionStats) -> dict[str, Any] | None:
     """Extract a single training record using 3-tier hydration.
 
@@ -621,20 +653,27 @@ def main():
 
     # Find golden JSON files
     json_files = sorted(args.input_dir.glob("golden_*.json"))
-    if not json_files:
-        logger.error(f"No golden_*.json files found in {args.input_dir}")
+    jsonl_files = sorted(args.input_dir.glob("*.jsonl"))
+    if not json_files and not jsonl_files:
+        logger.error(f"No golden_*.json or *.jsonl files found in {args.input_dir}")
         sys.exit(1)
 
-    logger.info(f"Found {len(json_files)} golden JSON files in {args.input_dir}")
+    if json_files:
+        logger.info(f"Found {len(json_files)} golden JSON files in {args.input_dir}")
+    if jsonl_files:
+        logger.info(f"Found {len(jsonl_files)} JSONL files in {args.input_dir}")
 
     # Extract records
     stats = ExtractionStats()
     records = []
 
-    for file_path in json_files:
+    for file_path in [*json_files, *jsonl_files]:
         stats.total_files += 1
 
-        entries = load_golden_json(file_path)
+        if file_path.suffix == ".jsonl":
+            entries = load_jsonl(file_path)
+        else:
+            entries = load_golden_json(file_path)
         if entries is None:
             stats.parsing_errors += 1
             continue

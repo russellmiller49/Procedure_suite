@@ -3,8 +3,13 @@ import os
 
 # Paths
 files = [
-    "registry_human.csv", 
-    "data/ml_training/registry_debulking_fixes.csv"
+    # Base/master human labels (typically large)
+    "data/ml_training/registry_human_master.csv",
+    # Smaller exports can also be present; include them if available
+    "data/ml_training/registry_human.csv",
+    "data/ml_training/registry_human_updates.csv",
+    # Targeted fix batches should override everything else
+    "data/ml_training/registry_debulking_fixes.csv",
 ]
 
 dfs = []

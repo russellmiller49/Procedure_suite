@@ -13,6 +13,17 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from modules.ml_coder.registry_label_schema import REGISTRY_LABELS  # noqa: E402
+from modules.ml_coder.registry_label_constraints import apply_label_constraints  # noqa: E402
+
+
+_CONSTRAINT_LABELS = [
+    "bal",
+    "bronchial_wash",
+    "transbronchial_cryobiopsy",
+    "transbronchial_biopsy",
+    "rigid_bronchoscopy",
+    "tumor_debulking_non_thermal",
+]
 
 
 def force_merge(human_csv_path: str, target_dir: str):
@@ -28,6 +39,8 @@ def force_merge(human_csv_path: str, target_dir: str):
     if "encounter_id" not in human_df.columns:
         logger.error("Human CSV missing 'encounter_id' column. Cannot merge.")
         return
+
+    human_df["encounter_id"] = human_df["encounter_id"].astype(str).str.strip()
 
     # Clean human df: set index to encounter_id
     human_df = human_df.set_index("encounter_id")
@@ -53,6 +66,8 @@ def force_merge(human_csv_path: str, target_dir: str):
         if "encounter_id" not in split_df.columns:
             logger.warning(f"Split {split_name} missing 'encounter_id'. Skipping.")
             continue
+
+        split_df["encounter_id"] = split_df["encounter_id"].astype(str).str.strip()
             
         # Set index for alignment
         split_df = split_df.set_index("encounter_id")
@@ -78,6 +93,18 @@ def force_merge(human_csv_path: str, target_dir: str):
             else:
                 # FORCE UPDATE: Overwrite split values with human values where IDs match
                 split_df.update(human_labels[split_label_cols])
+
+                # Re-apply deterministic constraints on updated rows to avoid
+                # reintroducing known contradictions (e.g., debulking without rigid).
+                constraint_cols = [c for c in _CONSTRAINT_LABELS if c in split_df.columns]
+                if constraint_cols:
+                    for eid in common_ids.tolist():
+                        row = split_df.loc[eid]
+                        note_text = str(row.get("note_text") or "")
+                        labels = {c: int(row.get(c, 0)) for c in constraint_cols}
+                        apply_label_constraints(labels, note_text=note_text, inplace=True)
+                        for c, v in labels.items():
+                            split_df.at[eid, c] = int(v)
             
             # Count how many cells actually changed (optional debug)
             # Just logging row count is enough for now

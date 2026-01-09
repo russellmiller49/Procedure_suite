@@ -1,7 +1,7 @@
 {
   "source_dir": "data/knowledge/golden_extractions_final",
-  "total_files": 238,
-  "successful_extractions": 9638,
+  "total_files": 239,
+  "successful_extractions": 9787,
   "label_columns": [
     "diagnostic_bronchoscopy",
     "bal",
@@ -32,15 +32,16 @@
     "medical_thoracoscopy",
     "pleurodesis",
     "fibrinolytic_therapy",
-    "percutaneous_tracheostomy"
+    "percutaneous_tracheostomy",
+    "peg_insertion"
   ],
   "split_sizes": {
-    "train": 6577,
-    "val": 1407,
-    "test": 1430
+    "train": 6677,
+    "val": 1435,
+    "test": 1451
   },
   "label_counts": {
-    "diagnostic_bronchoscopy": 7594,
+    "diagnostic_bronchoscopy": 7613,
     "peripheral_ablation": 531,
     "ipc": 347,
     "brushings": 1576,
@@ -54,7 +55,7 @@
     "therapeutic_aspiration": 463,
     "transbronchial_cryobiopsy": 516,
     "chest_tube": 421,
-    "rigid_bronchoscopy": 998,
+    "rigid_bronchoscopy": 1093,
     "bal": 748,
     "tbna_conventional": 1442,
     "linear_ebus": 2186,
@@ -68,8 +69,9 @@
     "bronchial_thermoplasty": 162,
     "cryotherapy": 229,
     "fibrinolytic_therapy": 130,
-    "percutaneous_tracheostomy": 20,
-    "bronchial_wash": 125
+    "percutaneous_tracheostomy": 124,
+    "bronchial_wash": 128,
+    "peg_insertion": 99
   },
   "random_seed": 42
 }
