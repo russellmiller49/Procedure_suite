@@ -283,6 +283,18 @@ make registry-prodigy-prepare \
   REG_PRODIGY_COUNT=200
 ```
 
+##### Annotating a specific JSONL file (example)
+
+If you want to annotate a targeted file, override `REG_PRODIGY_INPUT_FILE` and give the dataset a descriptive name:
+
+```bash
+make registry-prodigy-prepare \
+  REG_PRODIGY_INPUT_FILE=data/ml_training/registry_trach_peg.jsonl \
+  REG_PRODIGY_COUNT=150
+
+make registry-prodigy-annotate REG_PRODIGY_DATASET=registry_trach_peg_v1
+```
+
 #### 5) Annotate in Prodigy (checkbox UI)
 
 ```bash
@@ -291,7 +303,7 @@ make registry-prodigy-annotate REG_PRODIGY_DATASET=registry_v1
 
 Notes:
 - The annotation UI is served at `http://localhost:8080` (Prodigy’s default).
-- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 30 label(s): …” you’re in the right place.
+- This workflow uses **`textcat.manual`** (multi-label checkboxes via `cats`), not NER. If you see “Using 32 label(s): …” you’re in the right place.
 
 ##### Working across machines (Google Drive sync — safe “export/import”)
 
@@ -374,13 +386,38 @@ make registry-prodigy-reset REG_PRODIGY_DATASET=registry_v1
 
 #### 6) Export Prodigy annotations → a human labels CSV
 
+Important:
+- Export reads **everything currently in the Prodigy dataset** and writes a fresh CSV.
+- The export **overwrites** the output path you provide (it does not append to an existing CSV file).
+
 ```bash
 make registry-prodigy-export \
   REG_PRODIGY_DATASET=registry_v1 \
   REG_PRODIGY_EXPORT_CSV=data/ml_training/registry_human.csv
 ```
 
-#### 7) Merge human labels as Tier-0 and rebuild splits (no leakage)
+#### 7) (Recommended) Keep a single “master” human CSV across iterations
+
+If you want to retain prior human labels while adding new annotation sessions/batches, use an “updates” file and merge it into your master:
+
+```bash
+# Export current dataset snapshot to an "updates" file
+make registry-prodigy-export \
+  REG_PRODIGY_DATASET=registry_v1 \
+  REG_PRODIGY_EXPORT_CSV=data/ml_training/registry_human_updates.csv
+
+# Merge updates into your master file (append new encounter_ids, override overlaps)
+make registry-human-merge-updates \
+  REG_HUMAN_BASE_CSV=data/ml_training/registry_human.csv \
+  REG_HUMAN_UPDATES_CSV=data/ml_training/registry_human_updates.csv \
+  REG_HUMAN_OUT_CSV=data/ml_training/registry_human.csv
+```
+
+Notes:
+- This works even if the updates contain **no overlapping** `encounter_id`s (common when you annotate a new batch).
+- Merge keys on `encounter_id` (computed from `note_text` when missing).
+
+#### 8) Merge human labels as Tier-0 and rebuild splits (no leakage)
 
 This is critical: merge **before splitting**.
 
@@ -388,7 +425,7 @@ This is critical: merge **before splitting**.
 make registry-prep-with-human HUMAN_REGISTRY_CSV=data/ml_training/registry_human.csv
 ```
 
-#### 8) Retrain for real (3–5 epochs)
+#### 9) Retrain for real (3–5 epochs)
 
 ```bash
 python scripts/train_roberta.py \
@@ -399,9 +436,9 @@ python scripts/train_roberta.py \
   --epochs 5
 ```
 
-#### 9) Repeat the Diamond Loop
+#### 10) Repeat the Diamond Loop
 
-Repeat steps **4 → 8** until disagreement rate drops and metrics plateau.
+Repeat steps **4 → 9** until disagreement rate drops and metrics plateau.
 
 Notes:
 - Canonical label schema/order is `modules/ml_coder/registry_label_schema.py`.

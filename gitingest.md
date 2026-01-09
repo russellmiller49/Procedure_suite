@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (curated)
 
-Generated: `2026-01-08T14:00:44-08:00`
-Git: `V21` @ `9e71245`
+Generated: `2026-01-08T16:23:38-08:00`
+Git: `V21` @ `c4d7b92`
 
 ## What this file is
 - A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.
@@ -604,16 +604,19 @@ Git: `V21` @ `9e71245`
     - modules/ml_coder/
       - modules/ml_coder/__init__.py
       - modules/ml_coder/data_prep.py
+      - modules/ml_coder/distillation_io.py
       - modules/ml_coder/label_hydrator.py
       - modules/ml_coder/predictor.py
       - modules/ml_coder/preprocessing.py
       - modules/ml_coder/registry_data_prep.py
+      - modules/ml_coder/registry_label_constraints.py
       - modules/ml_coder/registry_label_schema.py
       - modules/ml_coder/registry_predictor.py
       - modules/ml_coder/registry_training.py
       - modules/ml_coder/self_correction.py
       - modules/ml_coder/thresholds.py
       - modules/ml_coder/training.py
+      - modules/ml_coder/training_losses.py
       - modules/ml_coder/utils.py
       - modules/ml_coder/valid_ip_codes.py
     - modules/phi/
@@ -2892,6 +2895,7 @@ Git: `V21` @ `9e71245`
     - scripts/generate_addon_templates.py
     - scripts/generate_gitingest.py
     - scripts/generate_synthetic_phi_data.py
+    - scripts/generate_teacher_logits.py
     - scripts/golden_to_csv.py
     - scripts/merge_registry_human_labels.py
     - scripts/merge_registry_prodigy.py
@@ -2910,6 +2914,7 @@ Git: `V21` @ `9e71245`
     - scripts/quantize_to_onnx.py
     - scripts/railway_start.sh
     - scripts/railway_start_gunicorn.sh
+    - scripts/registry_label_overlap_report.py
     - scripts/render_report.py
     - scripts/review_llm_fallback_errors.py
     - scripts/run_coder_hybrid.py
@@ -2928,6 +2933,7 @@ Git: `V21` @ `9e71245`
     - scripts/upload_registry_bundle.sh
     - scripts/validate_golden_extractions.py
     - scripts/validate_jsonschema.py
+    - scripts/verify_registry_human_data.py
     - scripts/warm_models.py
   - tests/
     - tests/api/
@@ -2999,6 +3005,7 @@ Git: `V21` @ `9e71245`
       - tests/fixtures/therapeutic_aspiration_repeat_stay.txt
       - tests/fixtures/thora_bilateral.txt
     - tests/helpers/
+      - tests/helpers/__init__.py
       - tests/helpers/phi_asserts.py
     - tests/integration/
       - tests/integration/api/
@@ -3028,9 +3035,11 @@ Git: `V21` @ `9e71245`
       - tests/ml_coder/__init__.py
       - tests/ml_coder/test_case_difficulty.py
       - tests/ml_coder/test_data_prep.py
+      - tests/ml_coder/test_distillation_io.py
       - tests/ml_coder/test_label_hydrator.py
       - tests/ml_coder/test_registry_data_prep.py
       - tests/ml_coder/test_registry_first_data_prep.py
+      - tests/ml_coder/test_registry_label_constraints.py
       - tests/ml_coder/test_registry_label_schema.py
       - tests/ml_coder/test_registry_predictor.py
       - tests/ml_coder/test_training_pipeline.py
@@ -3081,6 +3090,7 @@ Git: `V21` @ `9e71245`
       - tests/scripts/test_prodigy_export_registry_file_mode.py
       - tests/scripts/test_prodigy_prepare_registry.py
       - tests/scripts/test_train_distilbert_ner_cli.py
+      - tests/scripts/test_train_roberta_cli.py
     - tests/unit/
       - tests/unit/.gitkeep
       - tests/unit/__init__.py
@@ -3109,7 +3119,9 @@ Git: `V21` @ `9e71245`
       - tests/unit/test_templates.py
       - tests/unit/test_validation_engine.py
     - tests/utils/
+      - tests/utils/__init__.py
       - tests/utils/case_filter.py
+    - tests/__init__.py
     - tests/conftest.py
     - tests/test_clean_ip_registry.py
     - tests/test_openai_responses_parse.py
@@ -5281,7 +5293,7 @@ prodigy-prepare-registry:
 
 prodigy-annotate-registry:
 	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
-		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(PRODIGY_REGISTRY_DATASET) blank:en \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(PRODIGY_REGISTRY_DATASET) \
 		$(PRODIGY_REGISTRY_BATCH_FILE) \
 		--label $$LABELS
 
@@ -5312,6 +5324,60 @@ prodigy-registry-cycle: prodigy-prepare-registry
 	@echo "  make prodigy-export-registry"
 	@echo "  make prodigy-merge-registry"
 	@echo "  make prodigy-retrain-registry"
+
+# ==============================================================================
+# Registry Distillation (Teacher → Student)
+# ==============================================================================
+TEACHER_MODEL_NAME ?= data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf
+TEACHER_OUTPUT_DIR ?= data/models/registry_teacher
+TEACHER_EPOCHS ?= 3
+
+TEACHER_LOGITS_IN ?= data/ml_training/registry_unlabeled_notes.jsonl
+TEACHER_LOGITS_OUT ?= data/ml_training/teacher_logits.npz
+
+DISTILL_ALPHA ?= 0.5
+DISTILL_TEMP ?= 2.0
+DISTILL_LOSS ?= mse
+STUDENT_DISTILL_OUTPUT_DIR ?= data/models/roberta_registry_distilled
+
+teacher-train:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta_pm3.py \
+		--model-name $(TEACHER_MODEL_NAME) \
+		--output-dir $(TEACHER_OUTPUT_DIR) \
+		--train-csv data/ml_training/registry_train.csv \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--epochs $(TEACHER_EPOCHS)
+
+teacher-eval:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta_pm3.py \
+		--evaluate-only \
+		--model-dir $(TEACHER_OUTPUT_DIR) \
+		--test-csv data/ml_training/registry_test.csv
+
+teacher-logits:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/generate_teacher_logits.py \
+		--model-dir $(TEACHER_OUTPUT_DIR) \
+		--input-jsonl $(TEACHER_LOGITS_IN) \
+		--out $(TEACHER_LOGITS_OUT)
+
+student-distill:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta.py \
+		--train-csv data/ml_training/registry_train.csv \
+		--val-csv data/ml_training/registry_val.csv \
+		--test-csv data/ml_training/registry_test.csv \
+		--teacher-logits $(TEACHER_LOGITS_OUT) \
+		--distill-alpha $(DISTILL_ALPHA) \
+		--distill-temp $(DISTILL_TEMP) \
+		--distill-loss $(DISTILL_LOSS) \
+		--output-dir $(STUDENT_DISTILL_OUTPUT_DIR)
+
+registry-overlap-report:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/registry_label_overlap_report.py \
+		--csv data/ml_training/registry_train.csv \
+		--csv data/ml_training/registry_val.csv \
+		--csv data/ml_training/registry_test.csv \
+		--out reports/registry_label_overlap.json
 
 # ==============================================================================
 # Registry “Diamond Loop” targets (brief-compatible aliases)
@@ -5378,7 +5444,7 @@ registry-human-merge-updates:
 
 registry-prodigy-annotate:
 	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
-		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(REG_PRODIGY_DATASET) blank:en $(REG_PRODIGY_BATCH_FILE) \
+		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(REG_PRODIGY_DATASET) $(REG_PRODIGY_BATCH_FILE) \
 		--loader jsonl \
 		--label $$LABELS
 

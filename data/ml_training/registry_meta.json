@@ -31,15 +31,13 @@
     "ipc",
     "medical_thoracoscopy",
     "pleurodesis",
-    "pleural_biopsy",
     "fibrinolytic_therapy",
-    "percutaneous_tracheostomy",
-    "peg_insertion"
+    "percutaneous_tracheostomy"
   ],
   "split_sizes": {
-    "train": 6830,
-    "val": 1470,
-    "test": 1463
+    "train": 6577,
+    "val": 1407,
+    "test": 1430
   },
   "label_counts": {
     "diagnostic_bronchoscopy": 7594,
@@ -48,7 +46,7 @@
     "brushings": 1576,
     "radial_ebus": 2520,
     "navigational_bronchoscopy": 2480,
-    "transbronchial_biopsy": 2402,
+    "transbronchial_biopsy": 2577,
     "medical_thoracoscopy": 740,
     "pleurodesis": 483,
     "airway_dilation": 454,
@@ -71,7 +69,7 @@
     "cryotherapy": 229,
     "fibrinolytic_therapy": 130,
     "percutaneous_tracheostomy": 20,
-    "bronchial_wash": 135
+    "bronchial_wash": 125
   },
   "random_seed": 42
 }

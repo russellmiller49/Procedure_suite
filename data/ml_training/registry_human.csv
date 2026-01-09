@@ -2807,7 +2807,7 @@ Transbronchial cryobiopsy in lingula. Fluoro-guided probe placement. 8 specimens
 Complications: Mild bleeding, resolved spontaneously
 Disposition: Stable, routine recovery.
 
-[REDACTED], MD",77d76d791ca75e03,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+[REDACTED], MD",77d76d791ca75e03,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "PROCEDURE NOTE
 
 Patient: [REDACTED]
@@ -2935,7 +2935,7 @@ PLAN:
 - Follow-up with [REDACTED] in clinic
 
 Electronically signed by [REDACTED], MD
-[REDACTED]",a4fabbcd1cd58a4c,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+[REDACTED]",a4fabbcd1cd58a4c,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "[REDACTED] - MRN [REDACTED]
 [REDACTED]
 
@@ -3445,7 +3445,7 @@ PLAN
 
 Procedure performed by [REDACTED], MD
 Electronically signed: [REDACTED]
-Date/Time: [REDACTED]",70ef26bb043fa76b,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Date/Time: [REDACTED]",70ef26bb043fa76b,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "OPERATIVE/PROCEDURE DICTATION
 
 PATIENT: [REDACTED]
@@ -4412,7 +4412,7 @@ PLAN
 
 Procedure performed by [REDACTED], MD
 Electronically signed: [REDACTED]
-Date/Time: [REDACTED]",48cd4d964173e10a,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Date/Time: [REDACTED]",48cd4d964173e10a,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "INTERVENTIONAL PULMONOLOGY PROCEDURE NOTE
 
 PATIENT INFORMATION
@@ -4849,7 +4849,7 @@ Follow-up: [REDACTED]
 I was present for the entire procedure. I have reviewed the documentation and agree with the findings and plan.
 
 Electronically signed by: [REDACTED], MD
-Date/Time: [REDACTED]",b549d9fc460ca4f6,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Date/Time: [REDACTED]",b549d9fc460ca4f6,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "PROCEDURE NOTE
 
 Patient: [REDACTED]
@@ -8386,7 +8386,7 @@ Findings:
 Action: Suctioned purulent secretions. Aborted debulking due to hemorrhage risk.
 Dx: Broncholith (CT confirmed).
 Complication: Small PTX.",1bc58a423e84d306,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
-"We performed a bronchoscopy to investigate the patient's chronic cough. Upon entering the airways, we noted significant inflammation, with boggy, erythematous mucosa and thick purulent secretions scattered throughout. We washed the right lower lobe and performed a formal lavage of the right middle lobe. These samples were submitted for extensive microbiological testing to rule out opportunistic infection.",8e7d105193e8f6fa,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a bronchoscopy to investigate the patient's chronic cough. Upon entering the airways, we noted significant inflammation, with boggy, erythematous mucosa and thick purulent secretions scattered throughout. We washed the right lower lobe and performed a formal lavage of the right middle lobe. These samples were submitted for extensive microbiological testing to rule out opportunistic infection.",8e7d105193e8f6fa,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "OPERATIVE REPORT: Bronchoscopic Revision of Airway Prosthesis.
 INDICATION: Dyspnea secondary to proximal migration of Left Mainstem Stent.
 PROCEDURE: Rigid bronchoscopy revealed the Ultraflex stent extending into the distal trachea. Using rigid forceps, the prosthesis was mobilized. It was successfully repositioned distally into the left mainstem bronchus. Airway patency was fully restored, and the stent is now seated appropriately.",01c5781f64b75007,registry_unlabeled_notes.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
@@ -8625,7 +8625,7 @@ Steps:
 4. Good position.
 5. Residual obs 11%.
 Plan: Floor.",be5e5ac47ebd5f90,targeted_batch.jsonl,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
-bronch for cough history of bmt airways look terrible red swollen pus everywhere did a bal in the rml and a wash in the rll sent it all off for culture gave some sedation patient did fine start flutter valve,9f86d9a16f581ca7,targeted_batch.jsonl,human,1.0,registry_v1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+bronch for cough history of bmt airways look terrible red swollen pus everywhere did a bal in the rml and a wash in the rll sent it all off for culture gave some sedation patient did fine start flutter valve,9f86d9a16f581ca7,targeted_batch.jsonl,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 "OPERATIVE REPORT
 
 INDICATION: The patient presented with radiographic evidence of right lower lobe obstruction.
@@ -9632,3 +9632,399 @@ RECOMMENDATIONS:
 Mikie Gallegos MD
 Interventional Pulmonology
 Tulsa Medical Center",8d489c167bef9fc0,,human,1.0,registry_v2_rigid_relabel,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"PREOPERATIVE DIAGNOSIS: left upper and lower lobe obstruction 
+POSTOPERATIVE DIAGNOSIS: 
+Presumed malignant obstruction of left upper and lower lobe
+PROCEDURE PERFORMED: flexible bronchoscopy with cryodebulking, electrocautery snare and APC..
+INDICATIONS: bilobar collapse  
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The trachea was normal. On the right there was a small focus of tumor just prximal to the right upper lobe at the anterior wall which was non-obstructive. The right sided airways were otherwise normal. The left mainstem was normal.  At the takeoff of the left lower lobe there was a vascular appearing endobronchial mass causing complete airway obstruction. At the takeoff of the left upper lobe there was a similar appearing vascular endobronchial lesion causing complete airway obstruction. With gentile manipulation of the tumor it was noted to bleed easily. APC was used to devascularize the superficial layer of the left upper and lower lobe tumors.  The electrocautery snare was then used to remove the prximal portion of the left upper lobe tumor after which we cold visualize distal airways. The tumor extended to just proximal to the lingual take-off and distally there did not appear to be evidence of active tumor.  Using APC we used the burn and shave method to slowly debulk the tumor as well as flexible forceps debulking of charred tumor after APC cauterization. Bleeding was moderate and resolved with topical instillation of 1:1000 TXA through the bronchoscope. After debulking in the left upper lobe we had complete opening of the lobar and segmental bronchi. We then brought our attention to the left lower lobe lesion. Using the electrocautery snare in a similar fashion we were able to debulk the proximal tumor. There was much more extensive distal tumor in the lower lobe with tumor involving multiple segmental bronchi. Using the 1.9 mm cryoprobe we are able to extract some of the tissue after which we utilized APC and flexible forceps in a similar fashion as performed in the left upper lobe to slowly debulk the tumor. We were able to open the left lower lobe orifice to approximately 70% of normal but despite our best efforts we could not completely remove the tumor due to the extent of disease and distal tumor infiltration. APC was used at the end of the procedure to paint cauterize any active oozing and once we were satisfied that no further intervention was required and that there was no evidence of active bleeding the flexible bronchoscope was removed and the case was turned over to anesthesia to recover the patient. 
+Recommendations:
+-	Transfer patient PACU
+-	Follow-up PRN if return of symptoms
+-	Treatment of metastatic foci per oncology",06d3c749b433866d,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure Note
+Patient: [REDACTED]
+Procedure: Bronchoscopy w/ Debulking
+1. General Anesthesia/LMA.
+2. Inspection: LUL and LLL obstructed by tumor.
+3. LUL: Snare used to remove proximal tumor. APC for base. Open.
+4. LLL: Snare and Cryoprobe used. APC for hemostasis. Partial opening.
+5. Hemostasis achieved with TXA.
+Plan: PACU, Oncology.",145f6b80f1f74218,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"We performed a flexible bronchoscopy to address a tumor obstructing the right mainstem bronchus. Using a cryoprobe, we performed multiple freeze-thaw cycles to adhere to and remove significant portions of the tumor. We cleared the remaining debris with forceps. The airway obstruction was reduced from 70% to approximately 20%. The patient tolerated the procedure well and will be discharged.",1b267842dd34190d,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure Note
+Patient: [REDACTED]
+Procedure: Tracheal Resection
+Steps:
+1. Anesthesia.
+2. Rigid scope insertion.
+3. Found granulation tissue anterior trachea.
+4. Snared and debrided.
+5. Suctioned fragments.
+6. Extubated.
+Plan: Discharge home.",1bbe5a39df007276,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+Raymond Scott carinal tumor. rigid bronch to open it up. mechanical debulking and APC. put in a Y stent to cover trachea and both mains. he desatted during the placement but came back up. keeping him on the vent in the ICU.,27991c90ee8dbe36,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Resident Note
+Pt: [REDACTED]
+Dx: RPP
+Procedure: Bronch w/ ablation, rigid dilation.
+Steps:
+1. LMA placed.
+2. Flex scope: Papillomas everywhere (VCs, trachea).
+3. Froze them (cryo) and burned them (cautery).
+4. Used rigid scope to core out the trachea and dilate to 12mm.
+5. Cleaned up all the debris.
+Airway looks much better (90% open).",2808143815be3cfa,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+OPERATIVE REPORT: [REDACTED] recurrent respiratory papillomatosis causing significant airway obstruction. A multimodal approach was utilized. Laryngeal and tracheal papillomas were treated with cryotherapy and electrocautery. A rigid tracheoscope was employed to mechanically debulk and dilate the proximal tracheal stenosis from an initial 40% patency to 12mm diameter. Extensive debridement of coagulated tissue was performed to ensure airway clearance. Post-procedure patency was estimated at 90%.,2d1ff550e490628e,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"[Indication]
+Airway stent occlusion in setting of malignant central airway obstruction.
+
+[Anesthesia]
+General Anesthesia via LMA.
+
+[Description]
+Therapeutic scope passed. Silicone Y-stent and RMS covered stent id[REDACTED]. Significant obstruction via inspissated mucus plugs. Mechanical and forceps debulking performed along with sodium bicarbonate lavage until stents recanalized. LUL anterior segment tumor noted (40%). Diagnostic BAL performed in LUL anterior segment.
+
+[Plan]
+Transfer to PACU. Discharge when stable.",2f949470f53d6ce7,,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure Note
+Attending: [REDACTED]
+Resident: [REDACTED]
+Indication: RLL mass.
+Steps:
+1. Time out performed.
+2. ETT placed.
+3. Scope advanced to RLL.
+4. Tumor visualized blocking basilar segments.
+5. Snare used to remove tumor.
+6. APC used to burn base.
+7. Suctioned pus from behind the blockage.
+8. Scope removed. No complications.",3088b60020e5ae37,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Flexible bronchoscopy with cryotherapy and mechanical debulking for endobronchial tumor was performed. Findings included a polypoid tumor in the right mainstem bronchus causing 70 percent obstruction. Multiple cycles of cryotherapy were applied. Residual obstruction was 20 percent. Mild oozing was controlled. The patient was discharged home.,3588a55a4703ad7c,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure Name: Bronchoscopy with endobronchial biopsy and tumor debulking
+Indications: endobronchial nodule in setting of widely metastatic disease requiring tissue diagnosis. 
+Medications: Propofol infusion via anesthesia assistance  
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. 
+Following intravenous medications the Q190 video bronchoscope was introduced through the endotracheal tube and advanced to the tracheobronchial tree. airway and tracheobronchial tree. The trachea is of normal caliber. The carina was sharp. All left sided airways were normal without endobronchial disease to the first segmental branch. The right upper and middle lobe were normal without endobronchial disease to the first segmental branch. Within the right lower lobe a polypoid  endobronchial tumor was visualized obstructing the anterior, lateral and posterior basilar segments just distal to the medial basal segment. The Q190 video bronchoscope was then removed and the T190 therapeutic bronchoscope was introduced through the ETT, and advanced to the tracheobronchial tree. Using the electrocautery snare we were able to remove the endobronchial lesion which was sent for pathological evaluation. The distal airways were noted to have purulent post-obstructive secretions which were suctioned and removed. Mild bleeding was seen at the base and using APC non-contact electrocautery we were able to cauterize this area. Post intervention the right lower lobe was approximately 90% patient.  After observing the area of interest to ensure there was no active bleeding the bronchoscope was removed and the procedure completed. 
+
+
+Complications: 
+-None 
+Estimated Blood Loss:  10 cc.
+Recommendations:
+- Transfer to PACU
+- Await biopsy results 
+- Discharge home once criteria met.",420ea2c0c03f98bf,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Flex bronch, cryo-debulking RMS.
+- Finding: 70% obstruction RMS.
+- Action: Cryoprobe activation x multiple. Mechanical removal.
+- Result: 20% residual.
+- Complication: Mild ooze.
+- Plan: Discharge home.",4472f9ceb41623f6,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"PROCEDURE: The patient underwent combined flexible and rigid bronchoscopy for the management of benign tracheal stenosis secondary to post-radiation granulation tissue. A pedunculated polypoid lesion was id[REDACTED] on the anterior tracheal wall. The lesion was resected en bloc using a snare, followed by mucosal smoothing with a microdebrider and rigid coring. The intervention successfully increased the airway caliber, leaving minimal residual irregularity.",45920a7cbbd5979a,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"DATE OF PROCEDURE: [REDACTED]
+ 
+CC Referred Physician:  Duane Johnson, MD, PhD
+1 Happy Street
+# 1244
+Hollywood,  CA [REDACTED]
+ 
+INDICATION FOR OPERATION:  Arvin T Hsu is a 49 year old-year-old adult who presents with RPP.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+1899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure (22 MODIFIER):
+This patient required multiple forms of ablative therapy (soft coag and cryotherapy) to multiple different structures, including glottis, infraglottis, subglottis, and tracheal structures. This resulted in >50% increased work due to Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ 
+ATTENDING:  Duane Johnson MD PhD
+ASSISTANT:   none
+ 
+Support Staff: 
+RN: Maribel Dean
+RT: Maribel Mosquera and Gene Smith
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Tracheoscope
+Flexible Therapeutic Bronchoscope
+ 
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.  LMA placed.
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords and larynx.
+ 
+Initial Airway Inspection Findings:
+Vocal cords with appropriate adduction/abduction.
+ 
+Large patch of papillomas at anterior commissure of larynx and right vocal cord.
+ 
+Proximal trachea with focal area of spiraling tissue creating a focal area of mild stenosis - about 20% stenosis prior to treatment.  Able to easily traverse area of mild stenosis with therapeutic bronchoscope without issue.
+ 
+Assessment of right airways revealed normal anatomic branching to first subsegmental level.  Otherwise no evidence of mass, lesions, bleeding or other endobronchial pathology.
+ 
+Assessment of left airways revealed normal anatomic branching to first subsegmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology  
+ 
+VC papilloma are treated with combination of cryospray, electro-cautery (PreciSect/softcoag), and mechanically debulking. 
+ 
+Endobronchial papillomatous tumors at proximal trachea, subglottic region, infraglottic region, left vocal fold, and anterior commissure were treated with the following modalities. 
+ 
+The base of all patch sites were treated with cryotherapy.
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Cryospray	2.3 mm catheter	Normal flow, Freeze	5 sec burst	Tumor frozen, 5 sites 3-5 treatment each
+ 
+ 
+Endobronchial tumor and coagulated debris was noted and excised with mechanical debridement using alligator forceps. Send to path and microbiology.
+ 
+Rigid tracheoscope was used to dilate the proximal tracheal obstruction.  Mechanically coring through the tumor.  Black non-ventilating scope was used to perform dilation to 12 mm at the Trachea (Proximal 1/3).  Total 2 inflations with dilation time of 300 seconds each.
+  
+Cryospray was done at the tumor site proximal trachea for 2 different sites.  Total 3-5 treatments with 5 seconds of freeze at Normal flow was completed for both sides.   
+ 
+Prior to treatment, proximal trachea airway was note to be 40% patent.  After treatment, the airway was 90% patent. 
+ 
+Throughout the procedure, careful attention was paid to suction any secretions and blood to prevent it falling into the distal trachea or more distal airways.
+ 
+Residual secretions and blood were suctioned to clear.  Video imaging obtained and saved.  Bronchoscope removed.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient had airway device removed in the operating room and Transported to the recovery room in stable condition.
+ 
+ESTIMATED BLOOD LOSS:   Trivial
+COMPLICATIONS:    None
+ 
+SPECIMEN(S): 
+Trachea biopsy:  Pathology
+ 
+ 
+IMPRESSION/PLAN: Arvin T Hsu is a 49 year old-year-old adult who presents for bronchoscopy for blation of papillomatous tumors in the context of recurrent respiratory papillomatosis.
+ 
+-Recommend repeat bronchoscopy in 4-6 weeks to reassess recurrence of papillomas and consideration of additional treatment.
+ 
+ 
+ 
+Duane Johnson , MD, PhD
+[REDACTED]",46ce90d1dae80145,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Indication: Papillomatosis.
+Therapy:
+- Destructed lesions on cords and trachea using thermal and cryo energy.
+- Expanded tracheal narrowing with rigid scope.
+- Extracted tumor debris.
+Result: Airway caliber restored.",4a3a9f3583f04cff,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Procedure: Flexible airway clearance via cryo-ablation.
+Target: Right mainstem neoplasm.
+Action: Utilized cryo-adhesion to extract tumor tissue. Mechanical removal of debris.
+Result: Restoration of airway patency.",5832b2a715b0b88e,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Billing Justification:
+- 31641-22: Bronchoscopic destruction of tumor/stenosis. Modifier 22 applied for extensive multimodal therapy (Cryo, Cautery, Mechanical) across multiple sites (Larynx, Trachea) significantly increasing time/complexity.
+- Note: Rigid dilation (31630) is bundled into 31641 at the same site. Biopsies (31625) bundled.
+Outcome: Restoration of airway.",65617a9be4e0efc4,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"OPERATIVE SUMMARY: The patient presented with complete bilobar collapse of the left lung. Under general anesthesia, flexible bronchoscopy revealed vascular endobronchial lesions obstructing both the Left Upper Lobe (LUL) and Left Lower Lobe (LLL). We employed a multimodal interventional approach. For the LUL, electrocautery snare resection and Argon Plasma Coagulation (APC) resulted in complete recanalization. The LLL lesion was more extensive; despite aggressive debulking via cryoextraction and APC, only partial (70%) patency was achieved due to distal tumor infiltration.",675e64ef25a3c413,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+Patient: [REDACTED]  MRN: [REDACTED]  Age/Sex: 67/F
+Date: [REDACTED]
+Indication: Post-radiation polypoid granulation tissue in trachea causing exertional dyspnea and cough.
+Procedure: Flexible and rigid bronchoscopy with mechanical resection of tracheal granulation tissue.
+Anesthesia: General anesthesia with ETT.
+Findings: Pedunculated polypoid tissue on anterior tracheal wall ~3 cm above carina causing ~60% narrowing; surrounding mucosa fibrotic.
+Intervention: Lesion was grasped and removed using snare resection, followed by microdebrider shaving of residual granulation and rigid coring to smooth the airway. Small fragments were suctioned and sent to pathology. Final lumen with ~15% residual narrowing; no stent placed.
+Complications: Minimal bleeding controlled with cold saline.
+Disposition: Extubated in OR and discharged to home the same day after observation.",7778affe850bc365,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid Bronch Y-Stent
+Patient: [REDACTED]
+Steps:
+1. Rigid scope inserted.
+2. Carina blocked by tumor.
+3. Cored out tumor, used APC.
+4. Placed Y-stent (Silicone).
+5. Patient desatted, bagged up.
+6. Stent looks good.
+Plan: ICU intubated.",7d6d84df49757ac1,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid oncologic debulking and Y-prosthesis insertion.
+Indication: Carinal asphyxiation syndrome.
+Action: The endobronchial mass was excised and cauterized. A bifurcated silicone stent was positioned to scaffold the carina.
+Result: Restoration of central airflow.",8ad0bcdf9e7558dd,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"PREOPERATIVE DIAGNOSIS: Malignant Central Airway Obstruction 
+POSTOPERATIVE DIAGNOSIS: Same
+INDICATIONS: Airway stent blockage 
+Sedation: General Anesthesia
+DESCRIPTION: The intervention was carried out in the bronchoscopy suite. After sedation, an LMA was placed and the therapeutic flexible bronchoscope was navigated through the vocal cords. The patient's Silicone Y-stent was seated correctly. There was substantial inspissated secretions with mild blockage of the tracheal limb, moderate blockage of the left bronchial limb and significant blockage of the right bronchial limb and the telescoping right mainstem covered metallic stent. The right upper lobe was partially blocked by the distal tip of the SEM but there was no sign of post-obstructive pneumonia. Through a combination of mechanical clearance with the bronchoscope tip, forceps extraction and use of sodium bicarbonate instillation the adhesive mucous was eliminated, with near complete reopening of the stents. Subsequently a mini lavage was conducted in the anterior segment of the left upper lobe. No bleeding was observed.",8e9eb819fffd9a75,,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure Note
+Attending: Dr. [REDACTED]
+Resident: [REDACTED]
+
+Procedure: Therapeutic Bronchoscopy
+
+Steps:
+1. Time out performed.
+2. General anesthesia induced. LMA placed.
+3. Scope inserted. Y-stent visualized.
+4. Findings: Thick mucus obstructing stents. RUL stent tip noted.
+5. Action: Aggressive suctioning and forceps removal of mucus plugs. Bicarb used.
+6. Stents cleared.
+7. Mini-BAL performed in LUL anterior segment.
+8. Scope removed. Patient stable.",9b093625332c9c6b,,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Central Airway Stenting Note
+Procedures:
+1. Rigid bronchoscopy with tumor debulking
+2. Y-shaped silicone stent placement
+Patient: [REDACTED], 69-year-old male with squamous cell carcinoma of the carina causing severe central airway obstruction.
+Anesthesia: General anesthesia with rigid bronchoscope and intermittent jet ventilation.
+Findings: Bulky endobronchial tumor involving distal trachea and extending into both mainstem bronchi causing ~80% obstruction.
+Interventions: Mechanical debulking with rigid barrel and forceps followed by argon plasma coagulation. A custom 14 x 60/40 mm silicone Y stent was deployed with the main limb in distal trachea and branches in right and left main bronchi.
+Complications: Brief desaturation during stent deployment, resolved with recruitment.
+Disposition: Remained intubated postprocedure and transferred to ICU.",9e32bff256029f5c,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+Rigid bronchoscopy was utilized to treat a complete obstruction of the bronchus intermedius. The polypoid lesion was devascularized with Nd:YAG laser and resected using a rigid coring technique. The RUL orifice was also debulked using APC. We achieved 85% patency proximally. Stent placement was deferred based on patient preference and distal tumor anatomy. The patient will follow up with oncology for systemic therapy.,a847082b864a4e4a,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid Bronch + Laser
+Patient: [REDACTED]
+Steps:
+1. General Anesthesia/Paralytics.
+2. Rigid scope (11mm).
+3. Nd:YAG laser to BI tumor.
+4. Coring with rigid scope bevel.
+5. Removed mass en-bloc.
+6. APC for residual.
+7. RUL debulked similarly.
+Plan: CXR, Oncology consult.",a8945278f7509738,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Procedure: Rigid Bronch, Laser/Coring BI.
+- Indication: BI tumor obstruction.
+- Findings: Large polypoid tumor BI (100% blocked). RUL 30% blocked.
+- Action: Nd:YAG Laser. Rigid 'apple coring'. Suction removal. APC cleanup.
+- Result: BI 85% open proximal, 60% distal. RUL 80% open.
+- Plan: No stent (patient pref). Oncology referral.",a93487c71c726001,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"The patient was placed under general anesthesia and intubated. We inserted the bronchoscope and examined the airways. The left side was clear. In the right lower lobe, a polypoid tumor was found obstructing the basilar segments. We used an electrocautery snare to resect the lesion and then applied APC to the base for cauterization. We also performed therapeutic suctioning of purulent secretions found distally. The airway is now patent.",abb3d65afb6ef3b8,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Code: 31640 (Bronchoscopy with excision of tumor/tissue).
+Pathology: Granulation tissue (Benign).
+Location: Trachea (anterior wall).
+Technique: Snare resection and Microdebrider.
+Outcome: Restoration of airway lumen from 60% obstruction to 15%.",ac4e21fb1f58bd4c,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"CPT CODING:
+- 31641: Destruction of tumor (Nd:YAG Laser, APC) in Bronchus Intermedius.
+- 31640-XS: Excision of tumor (Rigid Coring) in Right Upper Lobe/Distal BI (distinct technique/site consideration).
+Note: Documentation supports multi-modality approach (Laser vs Coring).",ae62336b7501af7d,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Indication: Tracheal granulation (post-radiation).
+Procedure: Flex/Rigid bronch, resection.
+Findings: Anterior pedunculated lesion, 60% narrowing.
+Action: Snare resection, microdebrider, rigid coring.
+Result: 15% residual. No stent.
+Disp: Home.",b161b868b96e6006,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"The patient was brought to the bronchoscopy suite for management of airway stent occlusion. Under general anesthesia, we inserted an LMA and advanced the therapeutic bronchoscope. The silicone Y-stent was in good position, but the limbs were heavily obstructed by thick, dry mucus, particularly on the right side involving the metallic stent. We proceeded to clear these obstructions using a combination of mechanical disruption, forceps removal, and sodium bicarbonate instillation. This successfully recanalized the stents. We also noted a tumor at the LUL takeoff but decided against intervention at this time. Finally, we performed a mini-BAL in the left upper lobe anterior segment before concluding the procedure.",b3338473902a22f8,,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Indication: RPP / Airway obstruction.
+Anesthesia: GA, LMA.
+Procedure:
+- Flex bronch: Papillomas at larynx, trachea.
+- Cryo/Cautery: Ablated papillomas vocal cords/trachea.
+- Rigid Bronch: Cored/dilated proximal trachea to 12mm.
+- Debridement: Removed debris.
+Result: Patency improved 40% -> 90%.",bce96a7d42438b49,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+OPERATIVE NARRATIVE: The patient underwent rigid bronchoscopy for management of a malignant polypoid obstruction in the Bronchus Intermedius (BI). The lesion was devascularized using the Nd:YAG laser. Mechanical resection was achieved via the 'apple coring' technique using the bevel of the rigid scope. Residual tumor was managed with APC. The RUL orifice was similarly treated. We successfully recanalized the proximal BI to 85%. Stent placement was withheld per patient preference and anatomical constraints.,bd13afa33b722920,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"[Indication]
+Endobronchial nodule, metastatic disease.
+[Anesthesia]
+General, ETT.
+[Description]
+RLL tumor obstructing basilar segments id[REDACTED]. Lesion removed via electrocautery snare. Base treated with APC. Purulent secretions aspirated.
+[Plan]
+Transfer to PACU. Discharge pending criteria.",c05727327cae0f52,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"PROCEDURE: Rigid Bronchoscopy, Tumor Debulking, and Y-Stent Placement.
+INDICATION: Malignant central airway obstruction.
+NARRATIVE: Large squamous cell carcinoma involving the carina was visualized. Significant debulking was achieved using mechanical coring and APC. To maintain patency of the distal trachea and both mainstems, a silicone Y-stent was deployed. Patient required recruitment post-deployment due to desaturation.
+IMPRESSION: Palliation of critical carinal obstruction.",c824656d695b0840,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Interventional Pulmonology Procedure Note
+Procedure: Flexible bronchoscopy with cryotherapy and mechanical debulking for endobronchial tumor.
+Patient: [REDACTED], 55-year-old male with endobronchial tumor in right mainstem causing moderate obstruction.
+Anesthesia: Moderate sedation with midazolam and fentanyl; native airway with bite block.
+Findings: Polypoid tumor arising from right mainstem bronchus causing approximately 70 percent obstruction.
+Intervention: Multiple cycles of cryotherapy applied using flexible cryoprobe followed by mechanical debulking with forceps and suction. Residual obstruction estimated at 20 percent. No stent placed.
+Complications: Mild oozing controlled with cold saline and epinephrine instillation. No hypoxia.
+Disposition: Recovered in bronchoscopy unit and discharged home the same day with close oncology follow-up.",c926c3ccc433fb11,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+rigid bronch case for mr [REDACTED]... had a big polyp blocking the bi... we tried the snare but it wouldnt grab so we used the laser... then used the rigid scope to core it out like an apple... pulled the whole thing out with suction... cleaned up with apc... opened it up pretty good... patient didn't want a stent so we left it as is... check xray.,cf581ab09fac5654,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"[REDACTED] scar tissue growing in her trachea after radiation treatment. We performed a bronchoscopy to remove it. We found a polyp-like growth blocking part of her airway. We used a snare tool to grab and remove it, then smoothed out the area with a microdebrider. The airway looks much clearer now, and she went home the same day.",d1e3b36404f05586,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"PROCEDURE: Flexible bronchoscopy with cryo-resection, cautery snare and APC.
+DETAILS: Vascular masses were id[REDACTED] occluding the LUL and LLL. The LUL lesion was resected via snare. The LLL lesion was extracted using a cryoprobe and ablated with APC. Hemostasis was secured. The LUL was recanalized; the LLL was partially cleared.",d36b84d0cca8849c,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"CODING SUMMARY:
+- 31641 (Destruction/Relief of Stenosis): Primary code for LLL intervention using Cryoextraction and APC to relieve obstruction.
+- 31640-XS (Tumor Excision): Secondary code for LUL intervention using Electrocautery Snare to excise a distinct tumor at a separate anatomic site.
+- 31622 Bundled.",d3c011cb56bc557a,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Central Airway Stenting Note. Procedures: Rigid bronchoscopy with tumor debulking, Y-shaped silicone stent placement. Patient: Raymond Scott. Findings: Bulky endobronchial tumor involving distal trachea and extending into both mainstem bronchi causing ~80% obstruction. Interventions: Mechanical debulking with rigid barrel and forceps followed by argon plasma coagulation. A custom 14 x 60/40 mm silicone Y stent was deployed. Disposition: Remained intubated postprocedure and transferred to ICU.",d7696e9c047de609,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"PROCEDURE: Rigid bronchoscopy with endobronchial resection.
+DETAILS: A polypoid lesion in the BI was photocoagulated with Nd:YAG and resected via coring. The RUL was also treated. 
+OUTCOME: The airway was recanalized. Stent deployment was deferred.",d87dd7079058f82f,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Codes: 31641 (Tumor Destruction), 31631 (Tracheal Stent - Y stent counts as tracheal usually, or complex).
+Note: Y-stent involves trachea and bronchi. Coding convention varies, usually primary stent code.
+Technique: Rigid coring + APC.",da029868580a9eff,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"[REDACTED] a flexible bronchoscopy to address a left lung collapse. We id[REDACTED] tumors blocking both the upper and lower lobes. For the upper lobe, we used a snare and APC to remove the mass, fully opening the airway. The lower lobe was more challenging; we used a cryoprobe and APC to remove as much tissue as possible, but the tumor extended deep into the airways. We managed to open it to about 70%. Bleeding was controlled, and the patient was sent to recovery.",da0a3c86401424ea,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Procedure bronchoscopy pt has malignant airway obstruction and the stents are clogged up. used general anesthesia and LMA. looked down and saw the y stent and the metal one in the right side they were full of thick dry mucous. The RUL is kinda blocked by the stent but no pneumonia seen. LUL has a tumor but we left it alone. spent a long time cleaning out the mucous with forceps and bicarb and the scope tip. finally got it open. did a bal in the LUL anterior seg just to check. no bleeding really. sent to pacu.,dd516dd34de4308a,,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+we did a flex bronch on mr [REDACTED] for that tumor in the right mainstem. used the cryo probe to freeze and pull chunks of it out. got it pretty open maybe 20 percent left. little bit of bleeding used some cold saline. he is going home today.,de5b3f7c401ec200,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Symptomatic tracheal granulation tissue.
+[Anesthesia]
+General, ETT.
+[Description]
+Polypoid lesion anterior trachea resected via snare and microdebrider. Rigid coring used to smooth mucosa. Airway patent.
+[Plan]
+Discharge. Follow-up 6-8 weeks.",de5f928f7b9647fa,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"OPERATIVE REPORT
+
+INDICATION: The patient presented with airway stent occlusion secondary to malignant central airway obstruction.
+
+PROCEDURE: Following the induction of general anesthesia, a therapeutic flexible bronchoscope was introduced via a laryngeal mask airway. Inspection of the tracheobronchial tree revealed the indwelling silicone Y-stent to be structurally intact. However, substantial inspissated secretions were observed, causing varying degrees of obstruction within the tracheal and bronchial limbs. The right mainstem metallic stent was also noted to be impacted. A systematic debridement was undertaken utilizing mechanical disruption with the bronchoscope tip, extraction forceps, and mucolytic lavage with sodium bicarbonate. This resulted in the restoration of patency to the stented airways. Additionally, a targeted bronchoalveolar lavage was performed in the anterior segment of the left upper lobe for microbiological assessment. The patient tolerated the procedure without immediate sequelae.",e1524f3a1f813368,,human,1.0,registry_v1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Resident Procedure Note
+Procedure: Flex Bronch w/ Cryo
+1. Moderate sedation.
+2. RMS tumor seen (70% blocked).
+3. Cryo probe used to debulk.
+4. Forceps used for cleanup.
+5. Airway now patent.
+Plan: Home today.",e6520c1cb717a5d9,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Procedure: Flex Bronch, APC, Snare, Cryo.
+- Indication: Bilobar collapse (LUL/LLL).
+- Findings: Vascular masses obstructing LUL and LLL orifices.
+- LUL: Snare excision + APC. 100% patent.
+- LLL: Snare + Cryoextraction + APC. 70% patent (distal disease).
+- EBL: Moderate, controlled w/ TXA.
+- Plan: PACU, Oncology f/u.",e76851cd9951b4c4,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Malignant carinal obstruction.
+[Anesthesia]
+General, Rigid.
+[Description]
+Tumor debulked (Core/APC). Y-Stent placed (Trachea/RMS/LMS). Airway patent.
+[Plan]
+ICU, mechanical ventilation.",e837a082897e1db8,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"We performed a rigid bronchoscopy on [REDACTED] a large tumor blocking his breathing passage. We used a laser to shrink the tumor and then used the metal tube of the scope to core it out. We removed the main chunk of the tumor and used cautery to clean up the rest. The airway is much more open now. We decided against a stent for now, as he prefers to avoid it if possible.",e950bcb006d69cbf,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Coding: 31641 (Tumor destruction, flexible). Note: No stent placed. Technique involved cryotherapy probe for debulking of malignant endobronchial lesion in Right Mainstem. Mechanical forceps used for residual cleanup.",ec68d3b323eeea52,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Recurrent Respiratory Papillomatosis, Tracheal Stenosis.
+[Anesthesia]
+General.
+[Description]
+1. Ablation (Cryo/Cautery) of laryngeal/tracheal papillomas.
+2. Rigid dilation/coring of proximal trachea to 12mm.
+3. Debridement of debris.
+[Plan]
+Repeat bronch 4-6 weeks.",ef663042c36291b3,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+op note for mr [REDACTED]... he had collapse of the left lung... went in with the scope and saw tumor in both the upper and lower lobes... used the snare to cut the top one out worked great... bottom one was harder used the cryo probe and apc to burn it... got it open maybe 70 percent but it goes deep... moderate bleeding used txa... patient stable to recovery.,f13fb013d0e6a824,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[REDACTED] a therapeutic bronchoscopy for his recurrent respiratory papillomatosis. We id[REDACTED] extensive papillomas on the vocal cords and in the proximal trachea causing stenosis. We treated these lesions using a combination of cryospray and electrocautery. We then utilized the rigid bronchoscope to mechanically core through the tracheal tumor and dilate the airway to 12mm. After removing the debris, the airway patency improved significantly from 40% to 90%.",f356ca76a0faba3a,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+arvin hsu with rpp and airway obstruction. we did a rigid and flex bronch. lots of papillomas on the cords and trachea. used cryo and cautery to kill them. then used the rigid to core it out and dilate the trachea to 12mm. took a while but we got it open from 40 percent to 90 percent. no bleeding. sent tissue to path.,f4472b2143cd48ee,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+"Procedure: Bronchoscopic resection and ablation.
+Technique: The endobronchial mass in the RLL was excised using a hot loop. The attachment site was coagulated with argon plasma. Post-obstructive exudate was aspirated from the distal bronchi. The lumen was restored to 90% caliber.",fea08d41d6de32b7,,human,1.0,registry_v1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

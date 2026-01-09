@@ -1,0 +1,22 @@
+note_text,encounter_id,source_file,label_source,label_confidence,prodigy_dataset,diagnostic_bronchoscopy,bal,bronchial_wash,brushings,endobronchial_biopsy,tbna_conventional,linear_ebus,radial_ebus,navigational_bronchoscopy,transbronchial_biopsy,transbronchial_cryobiopsy,therapeutic_aspiration,foreign_body_removal,airway_dilation,airway_stent,thermal_ablation,tumor_debulking_non_thermal,cryotherapy,blvr,peripheral_ablation,bronchial_thermoplasty,whole_lung_lavage,rigid_bronchoscopy,thoracentesis,chest_tube,ipc,medical_thoracoscopy,pleurodesis,pleural_biopsy,fibrinolytic_therapy,percutaneous_tracheostomy,peg_insertion
+"Code: 31640 (Tumor excision).
+Context: Emergent.
+Site: Distal Trachea/Carina.
+Method: Mechanical debulking (Coring/Forceps).
+Note: No stent placed due to patient stability issues.",cf08c7e5e1458f13,,human,1.0,registry_debulk_fix,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Code: 31640 (Bronchoscopy with excision of tumor/tissue).
+Pathology: Granulation tissue (Benign).
+Location: Trachea (anterior wall).
+Technique: Snare resection and Microdebrider.
+Outcome: Restoration of airway lumen from 60% obstruction to 15%.",ac4e21fb1f58bd4c,,human,1.0,registry_debulk_fix,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[REDACTED] scar tissue growing in her trachea after radiation treatment. We performed a bronchoscopy to remove it. We found a polyp-like growth blocking part of her airway. We used a snare tool to grab and remove it, then smoothed out the area with a microdebrider. The airway looks much clearer now, and she went home the same day.",d1e3b36404f05586,,human,1.0,registry_debulk_fix,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Nina Alvarez here for the tracheal granulation tissue post radiation... did a rigid and flex bronch saw the polyp on the anterior wall blocking about 60 percent used a snare to cut it off then the microdebrider to smooth it down looks good now only maybe 15 percent narrowing left no bleeding patient woke up fine going home.,33f6808fce012863,,human,1.0,registry_debulk_fix,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Post-radiation polypoid granulation tissue in trachea causing exertional dyspnea and cough. Flexible and rigid bronchoscopy with mechanical resection of tracheal granulation tissue. General anesthesia with ETT. Pedunculated polypoid tissue on anterior tracheal wall ~3 cm above carina causing ~60% narrowing; surrounding mucosa fibrotic. Lesion was grasped and removed using snare resection, followed by microdebrider shaving of residual granulation and rigid coring to smooth the airway. Small fragments were suctioned and sent to pathology. Final lumen with ~15% residual narrowing; no stent placed. Minimal bleeding controlled with cold saline. Extubated in OR and discharged to home the same day after observation.",6974fde9e2cbe424,,human,1.0,registry_debulk_fix,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"[Indication]
+Tumor obstruction Bronchus Intermedius.
+[Anesthesia]
+General Anesthesia (Rigid).
+[Description]
+Nd:YAG laser and Rigid Coring used to remove polypoid mass in BI. APC used for residuals. RUL debulked. Patency restored to 85%.
+[Plan]
+CXR. Oncology for systemic therapy.",4e9073a9744160a0,,human,1.0,registry_debulk_fix,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
