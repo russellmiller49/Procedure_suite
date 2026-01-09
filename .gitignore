@@ -61,3 +61,12 @@ artifacts/
 
 # local training artifacts
 artifacts/
+
+# Cleanup artifacts (keep these out of git)
+*:Zone.Identifier
+/failures.jsonl
+/gitingest.md
+/*.jsonl
+/pm3_*.json
+*.tar.gz
+*.zip
