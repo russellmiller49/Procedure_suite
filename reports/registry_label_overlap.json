@@ -40,33 +40,33 @@
     "peg_insertion"
   ],
   "label_counts": {
-    "diagnostic_bronchoscopy": 7424,
-    "bal": 735,
-    "bronchial_wash": 117,
-    "brushings": 1557,
-    "endobronchial_biopsy": 431,
-    "tbna_conventional": 1423,
-    "linear_ebus": 2094,
-    "radial_ebus": 2481,
-    "navigational_bronchoscopy": 2446,
-    "transbronchial_biopsy": 2543,
-    "transbronchial_cryobiopsy": 507,
-    "therapeutic_aspiration": 459,
-    "foreign_body_removal": 228,
-    "airway_dilation": 440,
-    "airway_stent": 736,
-    "thermal_ablation": 780,
-    "tumor_debulking_non_thermal": 402,
-    "cryotherapy": 229,
+    "diagnostic_bronchoscopy": 7428,
+    "bal": 733,
+    "bronchial_wash": 111,
+    "brushings": 1553,
+    "endobronchial_biopsy": 411,
+    "tbna_conventional": 1419,
+    "linear_ebus": 2097,
+    "radial_ebus": 2484,
+    "navigational_bronchoscopy": 2450,
+    "transbronchial_biopsy": 2522,
+    "transbronchial_cryobiopsy": 486,
+    "therapeutic_aspiration": 453,
+    "foreign_body_removal": 231,
+    "airway_dilation": 456,
+    "airway_stent": 725,
+    "thermal_ablation": 796,
+    "tumor_debulking_non_thermal": 405,
+    "cryotherapy": 235,
     "blvr": 401,
-    "peripheral_ablation": 515,
+    "peripheral_ablation": 503,
     "bronchial_thermoplasty": 161,
     "whole_lung_lavage": 101,
-    "rigid_bronchoscopy": 996,
+    "rigid_bronchoscopy": 1030,
     "thoracentesis": 254,
-    "chest_tube": 419,
+    "chest_tube": 417,
     "ipc": 336,
-    "medical_thoracoscopy": 737,
+    "medical_thoracoscopy": 738,
     "pleurodesis": 478,
     "pleural_biopsy": 0,
     "fibrinolytic_therapy": 129,
@@ -77,862 +77,862 @@
     {
       "a": "diagnostic_bronchoscopy",
       "b": "transbronchial_biopsy",
-      "co_count": 2543,
-      "count_a": 7424,
-      "count_b": 2543,
-      "jaccard": 0.3425052915143352,
-      "p_b_given_a": 0.3425052915143352,
+      "co_count": 2522,
+      "count_a": 7428,
+      "count_b": 2522,
+      "jaccard": 0.3383964622188041,
+      "p_b_given_a": 0.3383964622188041,
       "p_a_given_b": 1.0
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "radial_ebus",
-      "co_count": 2481,
-      "count_a": 7424,
-      "count_b": 2481,
-      "jaccard": 0.3342312872811237,
-      "p_b_given_a": 0.3342312872811237,
+      "co_count": 2484,
+      "count_a": 7428,
+      "count_b": 2484,
+      "jaccard": 0.3343587771582388,
+      "p_b_given_a": 0.3343587771582388,
       "p_a_given_b": 1.0
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "navigational_bronchoscopy",
-      "co_count": 2446,
-      "count_a": 7424,
-      "count_b": 2446,
-      "jaccard": 0.3294208197036752,
-      "p_b_given_a": 0.3294208197036752,
+      "co_count": 2450,
+      "count_a": 7428,
+      "count_b": 2450,
+      "jaccard": 0.3297442799461642,
+      "p_b_given_a": 0.3297442799461642,
       "p_a_given_b": 1.0
     },
     {
       "a": "radial_ebus",
       "b": "navigational_bronchoscopy",
-      "co_count": 2178,
-      "count_a": 2481,
-      "count_b": 2446,
-      "jaccard": 0.7991653625456442,
-      "p_b_given_a": 0.8819804260218768,
-      "p_a_given_b": 0.8948598130841121
+      "co_count": 2179,
+      "count_a": 2484,
+      "count_b": 2450,
+      "jaccard": 0.7980218636127017,
+      "p_b_given_a": 0.8815411155836688,
+      "p_a_given_b": 0.8938775510204081
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "linear_ebus",
-      "co_count": 2094,
-      "count_a": 7424,
-      "count_b": 2094,
-      "jaccard": 0.2820858187415817,
-      "p_b_given_a": 0.2820858187415817,
+      "co_count": 2097,
+      "count_a": 7428,
+      "count_b": 2097,
+      "jaccard": 0.28302249567390886,
+      "p_b_given_a": 0.28302249567390886,
       "p_a_given_b": 1.0
     },
     {
       "a": "radial_ebus",
       "b": "transbronchial_biopsy",
-      "co_count": 1882,
-      "count_a": 2481,
-      "count_b": 2543,
-      "jaccard": 0.6037391700866394,
-      "p_b_given_a": 0.7622337363270005,
-      "p_a_given_b": 0.7438202247191011
+      "co_count": 1873,
+      "count_a": 2484,
+      "count_b": 2522,
+      "jaccard": 0.602840128263857,
+      "p_b_given_a": 0.7567567567567568,
+      "p_a_given_b": 0.7477272727272727
     },
     {
       "a": "navigational_bronchoscopy",
       "b": "transbronchial_biopsy",
-      "co_count": 1727,
-      "count_a": 2446,
-      "count_b": 2543,
-      "jaccard": 0.5376486129458389,
-      "p_b_given_a": 0.7132009345794392,
-      "p_a_given_b": 0.6859550561797753
+      "co_count": 1722,
+      "count_a": 2450,
+      "count_b": 2522,
+      "jaccard": 0.5369305616983635,
+      "p_b_given_a": 0.707871720116618,
+      "p_a_given_b": 0.6897727272727273
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "brushings",
-      "co_count": 1557,
-      "count_a": 7424,
-      "count_b": 1557,
-      "jaccard": 0.20973638637675582,
-      "p_b_given_a": 0.20973638637675582,
+      "co_count": 1553,
+      "count_a": 7428,
+      "count_b": 1553,
+      "jaccard": 0.20880599884637568,
+      "p_b_given_a": 0.20880599884637568,
       "p_a_given_b": 1.0
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "tbna_conventional",
-      "co_count": 1423,
-      "count_a": 7424,
-      "count_b": 1423,
-      "jaccard": 0.19164902828554936,
-      "p_b_given_a": 0.19164902828554936,
+      "co_count": 1419,
+      "count_a": 7428,
+      "count_b": 1419,
+      "jaccard": 0.19073255143241685,
+      "p_b_given_a": 0.19073255143241685,
       "p_a_given_b": 1.0
     },
     {
       "a": "brushings",
       "b": "radial_ebus",
-      "co_count": 1418,
-      "count_a": 1557,
-      "count_b": 2481,
-      "jaccard": 0.5405994550408719,
-      "p_b_given_a": 0.9100917431192661,
-      "p_a_given_b": 0.5710995970063327
+      "co_count": 1415,
+      "count_a": 1553,
+      "count_b": 2484,
+      "jaccard": 0.5386710239651417,
+      "p_b_given_a": 0.9106813996316758,
+      "p_a_given_b": 0.5687176538240368
     },
     {
       "a": "brushings",
       "b": "navigational_bronchoscopy",
-      "co_count": 1340,
-      "count_a": 1557,
-      "count_b": 2446,
-      "jaccard": 0.5072619688004303,
-      "p_b_given_a": 0.865137614678899,
-      "p_a_given_b": 0.5508177570093458
+      "co_count": 1337,
+      "count_a": 1553,
+      "count_b": 2450,
+      "jaccard": 0.5051047823750672,
+      "p_b_given_a": 0.8655616942909761,
+      "p_a_given_b": 0.5481049562682215
     },
     {
       "a": "brushings",
       "b": "transbronchial_biopsy",
-      "co_count": 1263,
-      "count_a": 1557,
-      "count_b": 2543,
-      "jaccard": 0.4553752535496957,
-      "p_b_given_a": 0.8238532110091743,
-      "p_a_given_b": 0.5044943820224719
+      "co_count": 1260,
+      "count_a": 1553,
+      "count_b": 2522,
+      "jaccard": 0.45873910814966684,
+      "p_b_given_a": 0.8241252302025782,
+      "p_a_given_b": 0.5085227272727273
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "rigid_bronchoscopy",
-      "co_count": 977,
-      "count_a": 7424,
-      "count_b": 996,
-      "jaccard": 0.13128598848368522,
-      "p_b_given_a": 0.1316143929189917,
-      "p_a_given_b": 0.9813486370157819
+      "co_count": 1011,
+      "count_a": 7428,
+      "count_b": 1030,
+      "jaccard": 0.13693901035673187,
+      "p_b_given_a": 0.13728129205921938,
+      "p_a_given_b": 0.9821182943603851
     },
     {
       "a": "tbna_conventional",
       "b": "radial_ebus",
-      "co_count": 931,
-      "count_a": 1423,
-      "count_b": 2481,
-      "jaccard": 0.30703012912482064,
-      "p_b_given_a": 0.6445783132530121,
-      "p_a_given_b": 0.3696027633851468
+      "co_count": 926,
+      "count_a": 1419,
+      "count_b": 2484,
+      "jaccard": 0.30420248328557786,
+      "p_b_given_a": 0.6421370967741935,
+      "p_a_given_b": 0.3663024726854514
     },
     {
       "a": "tbna_conventional",
       "b": "navigational_bronchoscopy",
-      "co_count": 883,
-      "count_a": 1423,
-      "count_b": 2446,
-      "jaccard": 0.2950741272118603,
-      "p_b_given_a": 0.6194779116465864,
-      "p_a_given_b": 0.36039719626168226
+      "co_count": 878,
+      "count_a": 1419,
+      "count_b": 2450,
+      "jaccard": 0.2927411652340019,
+      "p_b_given_a": 0.6179435483870968,
+      "p_a_given_b": 0.3574344023323615
     },
     {
       "a": "tbna_conventional",
       "b": "transbronchial_biopsy",
-      "co_count": 819,
-      "count_a": 1423,
-      "count_b": 2543,
-      "jaccard": 0.2595281306715064,
-      "p_b_given_a": 0.5742971887550201,
-      "p_a_given_b": 0.32134831460674157
+      "co_count": 813,
+      "count_a": 1419,
+      "count_b": 2522,
+      "jaccard": 0.2594965675057208,
+      "p_b_given_a": 0.5715725806451613,
+      "p_a_given_b": 0.3221590909090909
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "bal",
-      "co_count": 735,
-      "count_a": 7424,
-      "count_b": 735,
-      "jaccard": 0.09890321339234173,
-      "p_b_given_a": 0.09890321339234173,
+      "co_count": 733,
+      "count_a": 7428,
+      "count_b": 733,
+      "jaccard": 0.0986348779080946,
+      "p_b_given_a": 0.0986348779080946,
       "p_a_given_b": 1.0
     },
     {
       "a": "brushings",
       "b": "tbna_conventional",
-      "co_count": 640,
-      "count_a": 1557,
-      "count_b": 1423,
-      "jaccard": 0.274282223579719,
-      "p_b_given_a": 0.41192660550458715,
-      "p_a_given_b": 0.4508032128514056
+      "co_count": 635,
+      "count_a": 1553,
+      "count_b": 1419,
+      "jaccard": 0.2725045927740355,
+      "p_b_given_a": 0.4097605893186004,
+      "p_a_given_b": 0.4485887096774194
     },
     {
       "a": "linear_ebus",
       "b": "transbronchial_biopsy",
-      "co_count": 625,
-      "count_a": 2094,
-      "count_b": 2543,
-      "jaccard": 0.1601143674052895,
-      "p_b_given_a": 0.30559345156889495,
-      "p_a_given_b": 0.251685393258427
+      "co_count": 619,
+      "count_a": 2097,
+      "count_b": 2522,
+      "jaccard": 0.16008614501076812,
+      "p_b_given_a": 0.3029891304347826,
+      "p_a_given_b": 0.2534090909090909
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "airway_stent",
-      "co_count": 624,
-      "count_a": 7424,
-      "count_b": 736,
-      "jaccard": 0.0828436018957346,
-      "p_b_given_a": 0.08408697325380027,
-      "p_a_given_b": 0.8485436893203884
+      "co_count": 613,
+      "count_a": 7428,
+      "count_b": 725,
+      "jaccard": 0.08107596135631748,
+      "p_b_given_a": 0.08229186694866372,
+      "p_a_given_b": 0.8458498023715415
     },
     {
       "a": "linear_ebus",
       "b": "radial_ebus",
-      "co_count": 607,
-      "count_a": 2094,
-      "count_b": 2481,
-      "jaccard": 0.15465032444124008,
-      "p_b_given_a": 0.29263301500682126,
-      "p_a_given_b": 0.2469775474956822
+      "co_count": 605,
+      "count_a": 2097,
+      "count_b": 2484,
+      "jaccard": 0.1537908731584621,
+      "p_b_given_a": 0.2907608695652174,
+      "p_a_given_b": 0.24611845888441633
     },
     {
       "a": "linear_ebus",
       "b": "navigational_bronchoscopy",
-      "co_count": 559,
-      "count_a": 2094,
-      "count_b": 2446,
-      "jaccard": 0.14275440489032723,
-      "p_b_given_a": 0.2708049113233288,
-      "p_a_given_b": 0.231892523364486
+      "co_count": 557,
+      "count_a": 2097,
+      "count_b": 2450,
+      "jaccard": 0.14188462916517378,
+      "p_b_given_a": 0.26902173913043476,
+      "p_a_given_b": 0.23090379008746356
     },
     {
       "a": "brushings",
       "b": "linear_ebus",
-      "co_count": 545,
-      "count_a": 1557,
-      "count_b": 2094,
-      "jaccard": 0.1773376324274528,
-      "p_b_given_a": 0.3532110091743119,
-      "p_a_given_b": 0.2626193724420191
+      "co_count": 543,
+      "count_a": 1553,
+      "count_b": 2097,
+      "jaccard": 0.1766329346826127,
+      "p_b_given_a": 0.35359116022099446,
+      "p_a_given_b": 0.2608695652173913
     },
     {
       "a": "bal",
       "b": "transbronchial_biopsy",
-      "co_count": 527,
-      "count_a": 735,
-      "count_b": 2543,
-      "jaccard": 0.19728601252609604,
-      "p_b_given_a": 0.7354085603112841,
-      "p_a_given_b": 0.21235955056179776
+      "co_count": 522,
+      "count_a": 733,
+      "count_b": 2522,
+      "jaccard": 0.19883966244725737,
+      "p_b_given_a": 0.7348927875243665,
+      "p_a_given_b": 0.21420454545454545
+    },
+    {
+      "a": "diagnostic_bronchoscopy",
+      "b": "thermal_ablation",
+      "co_count": 511,
+      "count_a": 7428,
+      "count_b": 796,
+      "jaccard": 0.06665432327346787,
+      "p_b_given_a": 0.06921745818111902,
+      "p_a_given_b": 0.6428571428571429
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "peripheral_ablation",
-      "co_count": 515,
-      "count_a": 7424,
-      "count_b": 515,
-      "jaccard": 0.0692707331152588,
-      "p_b_given_a": 0.0692707331152588,
+      "co_count": 503,
+      "count_a": 7428,
+      "count_b": 503,
+      "jaccard": 0.06710248029225149,
+      "p_b_given_a": 0.06710248029225149,
       "p_a_given_b": 1.0
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "transbronchial_cryobiopsy",
-      "co_count": 507,
-      "count_a": 7424,
-      "count_b": 507,
-      "jaccard": 0.06946315181835674,
-      "p_b_given_a": 0.06946315181835674,
+      "co_count": 486,
+      "count_a": 7428,
+      "count_b": 486,
+      "jaccard": 0.0655643145548933,
+      "p_b_given_a": 0.0655643145548933,
       "p_a_given_b": 1.0
     },
     {
       "a": "transbronchial_biopsy",
       "b": "transbronchial_cryobiopsy",
-      "co_count": 507,
-      "count_a": 2543,
-      "count_b": 507,
-      "jaccard": 0.20280898876404493,
-      "p_b_given_a": 0.20280898876404493,
+      "co_count": 486,
+      "count_a": 2522,
+      "count_b": 486,
+      "jaccard": 0.19375,
+      "p_b_given_a": 0.19375,
       "p_a_given_b": 1.0
-    },
-    {
-      "a": "diagnostic_bronchoscopy",
-      "b": "thermal_ablation",
-      "co_count": 495,
-      "count_a": 7424,
-      "count_b": 780,
-      "jaccard": 0.06410969056883453,
-      "p_b_given_a": 0.06657687127188763,
-      "p_a_given_b": 0.6336996336996337
     },
     {
       "a": "bal",
       "b": "radial_ebus",
-      "co_count": 466,
-      "count_a": 735,
-      "count_b": 2481,
-      "jaccard": 0.17607105538140022,
-      "p_b_given_a": 0.6556420233463035,
-      "p_a_given_b": 0.1940126655152562
+      "co_count": 465,
+      "count_a": 733,
+      "count_b": 2484,
+      "jaccard": 0.17597911227154048,
+      "p_b_given_a": 0.6569200779727096,
+      "p_a_given_b": 0.19378953421506612
     },
     {
       "a": "bal",
       "b": "navigational_bronchoscopy",
-      "co_count": 436,
-      "count_a": 735,
-      "count_b": 2446,
-      "jaccard": 0.16605552645364066,
-      "p_b_given_a": 0.6167315175097277,
-      "p_a_given_b": 0.18516355140186916
-    },
-    {
-      "a": "diagnostic_bronchoscopy",
-      "b": "endobronchial_biopsy",
-      "co_count": 431,
-      "count_a": 7424,
-      "count_b": 431,
-      "jaccard": 0.05811044833557822,
-      "p_b_given_a": 0.05811044833557822,
-      "p_a_given_b": 1.0
+      "co_count": 435,
+      "count_a": 733,
+      "count_b": 2450,
+      "jaccard": 0.16588173731030875,
+      "p_b_given_a": 0.6179337231968811,
+      "p_a_given_b": 0.18483965014577258
     },
     {
       "a": "bal",
       "b": "brushings",
-      "co_count": 428,
-      "count_a": 735,
-      "count_b": 1557,
-      "jaccard": 0.24052590873936583,
-      "p_b_given_a": 0.6050583657587548,
-      "p_a_given_b": 0.2853211009174312
-    },
-    {
-      "a": "radial_ebus",
-      "b": "transbronchial_cryobiopsy",
-      "co_count": 405,
-      "count_a": 2481,
-      "count_b": 507,
-      "jaccard": 0.15847598012147984,
-      "p_b_given_a": 0.1652274035693725,
-      "p_a_given_b": 0.7950138504155124
-    },
-    {
-      "a": "tbna_conventional",
-      "b": "linear_ebus",
-      "co_count": 402,
-      "count_a": 1423,
-      "count_b": 2094,
-      "jaccard": 0.13091410197519524,
-      "p_b_given_a": 0.286144578313253,
-      "p_a_given_b": 0.19440654843110505
+      "co_count": 427,
+      "count_a": 733,
+      "count_b": 1553,
+      "jaccard": 0.24145962732919254,
+      "p_b_given_a": 0.6062378167641326,
+      "p_a_given_b": 0.2863720073664825
     },
     {
       "a": "diagnostic_bronchoscopy",
-      "b": "therapeutic_aspiration",
-      "co_count": 400,
-      "count_a": 7424,
-      "count_b": 459,
-      "jaccard": 0.053455517373043146,
-      "p_b_given_a": 0.05387723686742352,
-      "p_a_given_b": 0.8722741433021807
-    },
-    {
-      "a": "navigational_bronchoscopy",
-      "b": "transbronchial_cryobiopsy",
-      "co_count": 395,
-      "count_a": 2446,
-      "count_b": 507,
-      "jaccard": 0.1574539363484087,
-      "p_b_given_a": 0.1647196261682243,
-      "p_a_given_b": 0.7811634349030471
+      "b": "endobronchial_biopsy",
+      "co_count": 411,
+      "count_a": 7428,
+      "count_b": 411,
+      "jaccard": 0.05402807152470679,
+      "p_b_given_a": 0.05402807152470679,
+      "p_a_given_b": 1.0
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "tumor_debulking_non_thermal",
-      "co_count": 394,
-      "count_a": 7424,
-      "count_b": 402,
-      "jaccard": 0.0530565167243368,
-      "p_b_given_a": 0.05310756205503175,
-      "p_a_given_b": 0.9822064056939501
+      "co_count": 402,
+      "count_a": 7428,
+      "count_b": 405,
+      "jaccard": 0.05460488367621611,
+      "p_b_given_a": 0.05460488367621611,
+      "p_a_given_b": 1.0
+    },
+    {
+      "a": "tbna_conventional",
+      "b": "linear_ebus",
+      "co_count": 401,
+      "count_a": 1419,
+      "count_b": 2097,
+      "jaccard": 0.13027522935779817,
+      "p_b_given_a": 0.2862903225806452,
+      "p_a_given_b": 0.19293478260869565
+    },
+    {
+      "a": "radial_ebus",
+      "b": "transbronchial_cryobiopsy",
+      "co_count": 396,
+      "count_a": 2484,
+      "count_b": 486,
+      "jaccard": 0.15491393670183232,
+      "p_b_given_a": 0.1604370327774583,
+      "p_a_given_b": 0.8181818181818182
+    },
+    {
+      "a": "diagnostic_bronchoscopy",
+      "b": "therapeutic_aspiration",
+      "co_count": 395,
+      "count_a": 7428,
+      "count_b": 453,
+      "jaccard": 0.05304331234497233,
+      "p_b_given_a": 0.05345125937319746,
+      "p_a_given_b": 0.8742138364779874
     },
     {
       "a": "airway_stent",
       "b": "rigid_bronchoscopy",
-      "co_count": 389,
-      "count_a": 736,
-      "count_b": 996,
-      "jaccard": 0.28662420382165604,
-      "p_b_given_a": 0.5242718446601942,
-      "p_a_given_b": 0.38737446197991393
+      "co_count": 394,
+      "count_a": 725,
+      "count_b": 1030,
+      "jaccard": 0.284375,
+      "p_b_given_a": 0.5395256916996047,
+      "p_a_given_b": 0.37551581843191195
     },
     {
       "a": "bal",
       "b": "linear_ebus",
-      "co_count": 388,
-      "count_a": 735,
-      "count_b": 2094,
-      "jaccard": 0.16333725029377202,
-      "p_b_given_a": 0.5408560311284046,
-      "p_a_given_b": 0.18963165075034105
+      "co_count": 386,
+      "count_a": 733,
+      "count_b": 2097,
+      "jaccard": 0.16217798594847777,
+      "p_b_given_a": 0.5399610136452242,
+      "p_a_given_b": 0.18817934782608695
     },
     {
-      "a": "diagnostic_bronchoscopy",
-      "b": "blvr",
-      "co_count": 338,
-      "count_a": 7424,
-      "count_b": 401,
-      "jaccard": 0.045220377790498,
-      "p_b_given_a": 0.045603232634212044,
-      "p_a_given_b": 0.8434163701067615
+      "a": "navigational_bronchoscopy",
+      "b": "transbronchial_cryobiopsy",
+      "co_count": 386,
+      "count_a": 2450,
+      "count_b": 486,
+      "jaccard": 0.1537598204264871,
+      "p_b_given_a": 0.1597667638483965,
+      "p_a_given_b": 0.8035190615835777
     },
     {
       "a": "tumor_debulking_non_thermal",
       "b": "rigid_bronchoscopy",
-      "co_count": 321,
-      "count_a": 402,
-      "count_b": 996,
-      "jaccard": 0.300531914893617,
-      "p_b_given_a": 0.8042704626334519,
-      "p_a_given_b": 0.3242467718794835
+      "co_count": 357,
+      "count_a": 405,
+      "count_b": 1030,
+      "jaccard": 0.3426294820717131,
+      "p_b_given_a": 0.9084507042253521,
+      "p_a_given_b": 0.35488308115543327
+    },
+    {
+      "a": "diagnostic_bronchoscopy",
+      "b": "blvr",
+      "co_count": 337,
+      "count_a": 7428,
+      "count_b": 401,
+      "jaccard": 0.04498665650019062,
+      "p_b_given_a": 0.04537588925206691,
+      "p_a_given_b": 0.8398576512455516
+    },
+    {
+      "a": "diagnostic_bronchoscopy",
+      "b": "airway_dilation",
+      "co_count": 323,
+      "count_a": 7428,
+      "count_b": 456,
+      "jaccard": 0.043067623724971665,
+      "p_b_given_a": 0.04383772351470871,
+      "p_a_given_b": 0.7102803738317757
     },
     {
       "a": "medical_thoracoscopy",
       "b": "pleurodesis",
       "co_count": 320,
-      "count_a": 737,
+      "count_a": 738,
       "count_b": 478,
-      "jaccard": 0.3572567783094099,
-      "p_b_given_a": 0.43410852713178294,
+      "jaccard": 0.35668789808917195,
+      "p_b_given_a": 0.4332688588007737,
       "p_a_given_b": 0.6686567164179105
-    },
-    {
-      "a": "diagnostic_bronchoscopy",
-      "b": "airway_dilation",
-      "co_count": 307,
-      "count_a": 7424,
-      "count_b": 440,
-      "jaccard": 0.04064272211720227,
-      "p_b_given_a": 0.04137002116605734,
-      "p_a_given_b": 0.698051948051948
     },
     {
       "a": "thermal_ablation",
       "b": "rigid_bronchoscopy",
-      "co_count": 233,
-      "count_a": 780,
-      "count_b": 996,
-      "jaccard": 0.15735567970204842,
-      "p_b_given_a": 0.30952380952380953,
-      "p_a_given_b": 0.242467718794835
+      "co_count": 274,
+      "count_a": 796,
+      "count_b": 1030,
+      "jaccard": 0.1883656509695291,
+      "p_b_given_a": 0.36428571428571427,
+      "p_a_given_b": 0.28060522696011003
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "cryotherapy",
-      "co_count": 229,
-      "count_a": 7424,
-      "count_b": 229,
-      "jaccard": 0.03078699249567058,
-      "p_b_given_a": 0.03078699249567058,
+      "co_count": 235,
+      "count_a": 7428,
+      "count_b": 235,
+      "jaccard": 0.03210920976735243,
+      "p_b_given_a": 0.03210920976735243,
       "p_a_given_b": 1.0
-    },
-    {
-      "a": "radial_ebus",
-      "b": "peripheral_ablation",
-      "co_count": 221,
-      "count_a": 2481,
-      "count_b": 515,
-      "jaccard": 0.08204334365325078,
-      "p_b_given_a": 0.09153713298791019,
-      "p_a_given_b": 0.44166666666666665
     },
     {
       "a": "navigational_bronchoscopy",
       "b": "peripheral_ablation",
-      "co_count": 221,
-      "count_a": 2446,
-      "count_b": 515,
-      "jaccard": 0.08311552535284893,
-      "p_b_given_a": 0.09287383177570094,
-      "p_a_given_b": 0.44166666666666665
+      "co_count": 223,
+      "count_a": 2450,
+      "count_b": 503,
+      "jaccard": 0.08460325801366264,
+      "p_b_given_a": 0.09387755102040816,
+      "p_a_given_b": 0.46131805157593125
+    },
+    {
+      "a": "radial_ebus",
+      "b": "peripheral_ablation",
+      "co_count": 220,
+      "count_a": 2484,
+      "count_b": 503,
+      "jaccard": 0.08242612752721618,
+      "p_b_given_a": 0.09143185738930419,
+      "p_a_given_b": 0.45558739255014324
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "medical_thoracoscopy",
       "co_count": 220,
-      "count_a": 7424,
-      "count_b": 737,
-      "jaccard": 0.02770282424896564,
-      "p_b_given_a": 0.029632480277082932,
-      "p_a_given_b": 0.29844961240310075
+      "count_a": 7428,
+      "count_b": 738,
+      "jaccard": 0.027677929547088427,
+      "p_b_given_a": 0.029609690444145357,
+      "p_a_given_b": 0.2978723404255319
     },
     {
       "a": "transbronchial_biopsy",
       "b": "medical_thoracoscopy",
       "co_count": 220,
-      "count_a": 2543,
-      "count_b": 737,
-      "jaccard": 0.0718954248366013,
-      "p_b_given_a": 0.08651685393258426,
-      "p_a_given_b": 0.29844961240310075
+      "count_a": 2522,
+      "count_b": 738,
+      "jaccard": 0.07253886010362694,
+      "p_b_given_a": 0.0875,
+      "p_a_given_b": 0.2978723404255319
     },
     {
       "a": "brushings",
       "b": "transbronchial_cryobiopsy",
-      "co_count": 205,
-      "count_a": 1557,
-      "count_b": 507,
-      "jaccard": 0.11787365177195686,
-      "p_b_given_a": 0.14036697247706423,
-      "p_a_given_b": 0.42382271468144045
-    },
-    {
-      "a": "thermal_ablation",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 192,
-      "count_a": 780,
-      "count_b": 402,
-      "jaccard": 0.20029027576197386,
-      "p_b_given_a": 0.25274725274725274,
-      "p_a_given_b": 0.49110320284697506
+      "co_count": 200,
+      "count_a": 1553,
+      "count_b": 486,
+      "jaccard": 0.11658841940532082,
+      "p_b_given_a": 0.13720073664825047,
+      "p_a_given_b": 0.436950146627566
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "foreign_body_removal",
-      "co_count": 191,
-      "count_a": 7424,
-      "count_b": 228,
-      "jaccard": 0.02565575339843002,
-      "p_b_given_a": 0.02578410621512411,
-      "p_a_given_b": 0.8375
+      "co_count": 194,
+      "count_a": 7428,
+      "count_b": 231,
+      "jaccard": 0.026210063133728718,
+      "p_b_given_a": 0.02634108825225918,
+      "p_a_given_b": 0.8404907975460123
     },
     {
-      "a": "therapeutic_aspiration",
-      "b": "airway_stent",
-      "co_count": 179,
-      "count_a": 459,
-      "count_b": 736,
-      "jaccard": 0.16596931659693165,
-      "p_b_given_a": 0.3707165109034268,
-      "p_a_given_b": 0.23106796116504855
+      "a": "thermal_ablation",
+      "b": "tumor_debulking_non_thermal",
+      "co_count": 189,
+      "count_a": 796,
+      "count_b": 405,
+      "jaccard": 0.192090395480226,
+      "p_b_given_a": 0.24285714285714285,
+      "p_a_given_b": 0.4788732394366197
     },
     {
       "a": "airway_stent",
       "b": "thermal_ablation",
-      "co_count": 176,
-      "count_a": 736,
-      "count_b": 780,
-      "jaccard": 0.13113006396588486,
-      "p_b_given_a": 0.23883495145631067,
-      "p_a_given_b": 0.22527472527472528
+      "co_count": 179,
+      "count_a": 725,
+      "count_b": 796,
+      "jaccard": 0.13283740701381508,
+      "p_b_given_a": 0.24703557312252963,
+      "p_a_given_b": 0.22321428571428573
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "pleurodesis",
       "co_count": 171,
-      "count_a": 7424,
+      "count_a": 7428,
       "count_b": 478,
-      "jaccard": 0.021795345400812707,
-      "p_b_given_a": 0.022705406965557052,
+      "jaccard": 0.02177925433739387,
+      "p_b_given_a": 0.022687944626033456,
       "p_a_given_b": 0.3522388059701492
     },
     {
       "a": "transbronchial_biopsy",
       "b": "pleurodesis",
       "co_count": 170,
-      "count_a": 2543,
+      "count_a": 2522,
       "count_b": 478,
-      "jaccard": 0.05855855855855856,
-      "p_b_given_a": 0.06573033707865168,
+      "jaccard": 0.05915065722952477,
+      "p_b_given_a": 0.06647727272727273,
       "p_a_given_b": 0.3492537313432836
+    },
+    {
+      "a": "therapeutic_aspiration",
+      "b": "airway_stent",
+      "co_count": 169,
+      "count_a": 453,
+      "count_b": 725,
+      "jaccard": 0.15244755244755245,
+      "p_b_given_a": 0.34276729559748426,
+      "p_a_given_b": 0.21541501976284586
+    },
+    {
+      "a": "therapeutic_aspiration",
+      "b": "rigid_bronchoscopy",
+      "co_count": 163,
+      "count_a": 453,
+      "count_b": 1030,
+      "jaccard": 0.12124463519313304,
+      "p_b_given_a": 0.3553459119496855,
+      "p_a_given_b": 0.15543328748280605
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "bronchial_thermoplasty",
       "co_count": 161,
-      "count_a": 7424,
+      "count_a": 7428,
       "count_b": 161,
-      "jaccard": 0.021743313450067348,
-      "p_b_given_a": 0.021743313450067348,
+      "jaccard": 0.02172659104018458,
+      "p_b_given_a": 0.02172659104018458,
       "p_a_given_b": 1.0
-    },
-    {
-      "a": "therapeutic_aspiration",
-      "b": "rigid_bronchoscopy",
-      "co_count": 150,
-      "count_a": 459,
-      "count_b": 996,
-      "jaccard": 0.11014176663031625,
-      "p_b_given_a": 0.3146417445482866,
-      "p_a_given_b": 0.1449067431850789
     },
     {
       "a": "navigational_bronchoscopy",
       "b": "thermal_ablation",
       "co_count": 150,
-      "count_a": 2446,
-      "count_b": 780,
-      "jaccard": 0.04440333024976873,
-      "p_b_given_a": 0.056074766355140186,
-      "p_a_given_b": 0.17582417582417584
-    },
-    {
-      "a": "endobronchial_biopsy",
-      "b": "linear_ebus",
-      "co_count": 146,
-      "count_a": 431,
-      "count_b": 2094,
-      "jaccard": 0.058682634730538925,
-      "p_b_given_a": 0.32450331125827814,
-      "p_a_given_b": 0.06684856753069578
+      "count_a": 2450,
+      "count_b": 796,
+      "jaccard": 0.04405690683799908,
+      "p_b_given_a": 0.05597667638483965,
+      "p_a_given_b": 0.17142857142857143
     },
     {
       "a": "cryotherapy",
       "b": "rigid_bronchoscopy",
-      "co_count": 142,
-      "count_a": 229,
-      "count_b": 996,
-      "jaccard": 0.13509933774834437,
-      "p_b_given_a": 0.6375,
-      "p_a_given_b": 0.14634146341463414
+      "co_count": 149,
+      "count_a": 235,
+      "count_b": 1030,
+      "jaccard": 0.14030612244897958,
+      "p_b_given_a": 0.6586826347305389,
+      "p_a_given_b": 0.15130674002751032
+    },
+    {
+      "a": "endobronchial_biopsy",
+      "b": "linear_ebus",
+      "co_count": 144,
+      "count_a": 411,
+      "count_b": 2097,
+      "jaccard": 0.05793602896801448,
+      "p_b_given_a": 0.3416370106761566,
+      "p_a_given_b": 0.06521739130434782
     },
     {
       "a": "bal",
       "b": "tbna_conventional",
-      "co_count": 137,
-      "count_a": 735,
-      "count_b": 1423,
-      "jaccard": 0.0716820440028389,
-      "p_b_given_a": 0.19649805447470817,
-      "p_a_given_b": 0.10140562248995984
+      "co_count": 136,
+      "count_a": 733,
+      "count_b": 1419,
+      "jaccard": 0.0711743772241993,
+      "p_b_given_a": 0.1949317738791423,
+      "p_a_given_b": 0.10080645161290322
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "chest_tube",
-      "co_count": 130,
-      "count_a": 7424,
-      "count_b": 419,
-      "jaccard": 0.017797552836484983,
-      "p_b_given_a": 0.01847219549740235,
-      "p_a_given_b": 0.32764505119453924
+      "co_count": 127,
+      "count_a": 7428,
+      "count_b": 417,
+      "jaccard": 0.017225412113354325,
+      "p_b_given_a": 0.01788117669678908,
+      "p_a_given_b": 0.31958762886597936
     },
     {
       "a": "linear_ebus",
       "b": "therapeutic_aspiration",
-      "co_count": 129,
-      "count_a": 2094,
-      "count_b": 459,
-      "jaccard": 0.05179517363154797,
-      "p_b_given_a": 0.06002728512960437,
-      "p_a_given_b": 0.27414330218068533
+      "co_count": 121,
+      "count_a": 2097,
+      "count_b": 453,
+      "jaccard": 0.0492379835873388,
+      "p_b_given_a": 0.057065217391304345,
+      "p_a_given_b": 0.2641509433962264
     },
     {
       "a": "bal",
       "b": "therapeutic_aspiration",
-      "co_count": 120,
-      "count_a": 735,
-      "count_b": 459,
-      "jaccard": 0.11481975967957277,
-      "p_b_given_a": 0.16731517509727625,
-      "p_a_given_b": 0.26791277258566976
+      "co_count": 113,
+      "count_a": 733,
+      "count_b": 453,
+      "jaccard": 0.11096256684491979,
+      "p_b_given_a": 0.1617933723196881,
+      "p_a_given_b": 0.2610062893081761
     },
     {
       "a": "therapeutic_aspiration",
       "b": "thermal_ablation",
-      "co_count": 119,
-      "count_a": 459,
-      "count_b": 780,
-      "jaccard": 0.11153846153846154,
-      "p_b_given_a": 0.27102803738317754,
-      "p_a_given_b": 0.15934065934065933
-    },
-    {
-      "a": "endobronchial_biopsy",
-      "b": "thermal_ablation",
-      "co_count": 117,
-      "count_a": 431,
-      "count_b": 780,
-      "jaccard": 0.11432325886990802,
-      "p_b_given_a": 0.28807947019867547,
-      "p_a_given_b": 0.15934065934065933
+      "co_count": 112,
+      "count_a": 453,
+      "count_b": 796,
+      "jaccard": 0.10025062656641603,
+      "p_b_given_a": 0.25157232704402516,
+      "p_a_given_b": 0.14285714285714285
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "bronchial_wash",
-      "co_count": 115,
-      "count_a": 7424,
-      "count_b": 117,
-      "jaccard": 0.015387574533564147,
-      "p_b_given_a": 0.01539349624783529,
-      "p_a_given_b": 0.975609756097561
-    },
-    {
-      "a": "transbronchial_biopsy",
-      "b": "peripheral_ablation",
-      "co_count": 110,
-      "count_a": 2543,
-      "count_b": 515,
-      "jaccard": 0.038834951456310676,
-      "p_b_given_a": 0.0449438202247191,
-      "p_a_given_b": 0.2222222222222222
-    },
-    {
-      "a": "endobronchial_biopsy",
-      "b": "therapeutic_aspiration",
       "co_count": 109,
-      "count_a": 431,
-      "count_b": 459,
-      "jaccard": 0.13893967093235832,
-      "p_b_given_a": 0.25165562913907286,
-      "p_a_given_b": 0.2367601246105919
+      "count_a": 7428,
+      "count_b": 111,
+      "jaccard": 0.01422256390543917,
+      "p_b_given_a": 0.014228033070563353,
+      "p_a_given_b": 0.9736842105263158
+    },
+    {
+      "a": "airway_dilation",
+      "b": "rigid_bronchoscopy",
+      "co_count": 108,
+      "count_a": 456,
+      "count_b": 1030,
+      "jaccard": 0.08376421923474664,
+      "p_b_given_a": 0.2523364485981308,
+      "p_a_given_b": 0.11141678129298486
     },
     {
       "a": "airway_dilation",
       "b": "thermal_ablation",
-      "co_count": 102,
-      "count_a": 440,
-      "count_b": 780,
-      "jaccard": 0.09067688378033206,
-      "p_b_given_a": 0.2305194805194805,
-      "p_a_given_b": 0.13003663003663005
-    },
-    {
-      "a": "tumor_debulking_non_thermal",
-      "b": "cryotherapy",
-      "co_count": 101,
-      "count_a": 402,
-      "count_b": 229,
-      "jaccard": 0.21823204419889503,
-      "p_b_given_a": 0.28113879003558717,
-      "p_a_given_b": 0.49375
+      "co_count": 105,
+      "count_a": 456,
+      "count_b": 796,
+      "jaccard": 0.09169764560099132,
+      "p_b_given_a": 0.23052959501557632,
+      "p_a_given_b": 0.13214285714285715
     },
     {
       "a": "thermal_ablation",
       "b": "cryotherapy",
-      "co_count": 101,
-      "count_a": 780,
-      "count_b": 229,
-      "jaccard": 0.11885895404120443,
-      "p_b_given_a": 0.13736263736263737,
-      "p_a_given_b": 0.46875
+      "co_count": 102,
+      "count_a": 796,
+      "count_b": 235,
+      "jaccard": 0.11846153846153847,
+      "p_b_given_a": 0.1375,
+      "p_a_given_b": 0.46107784431137727
+    },
+    {
+      "a": "transbronchial_biopsy",
+      "b": "peripheral_ablation",
+      "co_count": 102,
+      "count_a": 2522,
+      "count_b": 503,
+      "jaccard": 0.03483807654563297,
+      "p_b_given_a": 0.040340909090909094,
+      "p_a_given_b": 0.2034383954154728
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "whole_lung_lavage",
       "co_count": 101,
-      "count_a": 7424,
+      "count_a": 7428,
       "count_b": 101,
-      "jaccard": 0.01366172791995382,
-      "p_b_given_a": 0.01366172791995382,
+      "jaccard": 0.013651220919054028,
+      "p_b_given_a": 0.013651220919054028,
       "p_a_given_b": 1.0
-    },
-    {
-      "a": "therapeutic_aspiration",
-      "b": "cryotherapy",
-      "co_count": 100,
-      "count_a": 459,
-      "count_b": 229,
-      "jaccard": 0.18472906403940886,
-      "p_b_given_a": 0.2336448598130841,
-      "p_a_given_b": 0.46875
-    },
-    {
-      "a": "therapeutic_aspiration",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 100,
-      "count_a": 459,
-      "count_b": 402,
-      "jaccard": 0.14015151515151514,
-      "p_b_given_a": 0.23052959501557632,
-      "p_a_given_b": 0.26334519572953735
     },
     {
       "a": "bal",
       "b": "endobronchial_biopsy",
-      "co_count": 98,
-      "count_a": 735,
-      "count_b": 431,
-      "jaccard": 0.09090909090909091,
-      "p_b_given_a": 0.13229571984435798,
-      "p_a_given_b": 0.2251655629139073
+      "co_count": 97,
+      "count_a": 733,
+      "count_b": 411,
+      "jaccard": 0.0921595598349381,
+      "p_b_given_a": 0.13060428849902533,
+      "p_a_given_b": 0.23843416370106763
     },
     {
-      "a": "airway_stent",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 90,
-      "count_a": 736,
-      "count_b": 402,
-      "jaccard": 0.08891928864569083,
-      "p_b_given_a": 0.1262135922330097,
-      "p_a_given_b": 0.2313167259786477
-    },
-    {
-      "a": "airway_dilation",
-      "b": "rigid_bronchoscopy",
-      "co_count": 83,
-      "count_a": 440,
-      "count_b": 996,
-      "jaccard": 0.06236786469344609,
-      "p_b_given_a": 0.19155844155844157,
-      "p_a_given_b": 0.08464849354375897
-    },
-    {
-      "a": "tbna_conventional",
-      "b": "transbronchial_cryobiopsy",
-      "co_count": 80,
-      "count_a": 1423,
-      "count_b": 507,
-      "jaccard": 0.047876447876447875,
-      "p_b_given_a": 0.06224899598393574,
-      "p_a_given_b": 0.17174515235457063
-    },
-    {
-      "a": "radial_ebus",
-      "b": "therapeutic_aspiration",
-      "co_count": 80,
-      "count_a": 2481,
-      "count_b": 459,
-      "jaccard": 0.03003003003003003,
-      "p_b_given_a": 0.03454231433506045,
-      "p_a_given_b": 0.18691588785046728
+      "a": "tumor_debulking_non_thermal",
+      "b": "cryotherapy",
+      "co_count": 96,
+      "count_a": 405,
+      "count_b": 235,
+      "jaccard": 0.19946808510638298,
+      "p_b_given_a": 0.2640845070422535,
+      "p_a_given_b": 0.4491017964071856
     },
     {
       "a": "endobronchial_biopsy",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 80,
-      "count_a": 431,
-      "count_b": 402,
-      "jaccard": 0.11259541984732824,
-      "p_b_given_a": 0.19536423841059603,
-      "p_a_given_b": 0.2099644128113879
+      "b": "thermal_ablation",
+      "co_count": 94,
+      "count_a": 411,
+      "count_b": 796,
+      "jaccard": 0.08097686375321336,
+      "p_b_given_a": 0.22419928825622776,
+      "p_a_given_b": 0.1125
     },
     {
-      "a": "transbronchial_biopsy",
+      "a": "therapeutic_aspiration",
+      "b": "tumor_debulking_non_thermal",
+      "co_count": 90,
+      "count_a": 453,
+      "count_b": 405,
+      "jaccard": 0.11688311688311688,
+      "p_b_given_a": 0.19811320754716982,
+      "p_a_given_b": 0.22183098591549297
+    },
+    {
+      "a": "therapeutic_aspiration",
+      "b": "cryotherapy",
+      "co_count": 89,
+      "count_a": 453,
+      "count_b": 235,
+      "jaccard": 0.15201900237529692,
+      "p_b_given_a": 0.20125786163522014,
+      "p_a_given_b": 0.38323353293413176
+    },
+    {
+      "a": "endobronchial_biopsy",
       "b": "therapeutic_aspiration",
-      "co_count": 80,
-      "count_a": 2543,
-      "count_b": 459,
-      "jaccard": 0.02889324191968658,
-      "p_b_given_a": 0.03314606741573034,
-      "p_a_given_b": 0.1838006230529595
+      "co_count": 89,
+      "count_a": 411,
+      "count_b": 453,
+      "jaccard": 0.10720887245841035,
+      "p_b_given_a": 0.20640569395017794,
+      "p_a_given_b": 0.18238993710691823
+    },
+    {
+      "a": "airway_dilation",
+      "b": "airway_stent",
+      "co_count": 84,
+      "count_a": 456,
+      "count_b": 725,
+      "jaccard": 0.07682291666666667,
+      "p_b_given_a": 0.1838006230529595,
+      "p_a_given_b": 0.116600790513834
     },
     {
       "a": "airway_stent",
-      "b": "cryotherapy",
-      "co_count": 80,
-      "count_a": 736,
-      "count_b": 229,
-      "jaccard": 0.08695652173913043,
-      "p_b_given_a": 0.10485436893203884,
-      "p_a_given_b": 0.3375
+      "b": "tumor_debulking_non_thermal",
+      "co_count": 82,
+      "count_a": 725,
+      "count_b": 405,
+      "jaccard": 0.07923497267759563,
+      "p_b_given_a": 0.11462450592885376,
+      "p_a_given_b": 0.20422535211267606
     },
     {
       "a": "thoracentesis",
       "b": "chest_tube",
       "co_count": 79,
       "count_a": 254,
-      "count_b": 419,
-      "jaccard": 0.13221153846153846,
+      "count_b": 417,
+      "jaccard": 0.13285024154589373,
       "p_b_given_a": 0.3089887640449438,
-      "p_a_given_b": 0.18771331058020477
+      "p_a_given_b": 0.18900343642611683
     },
     {
-      "a": "transbronchial_cryobiopsy",
-      "b": "peripheral_ablation",
-      "co_count": 70,
-      "count_a": 507,
-      "count_b": 515,
-      "jaccard": 0.08095952023988005,
-      "p_b_given_a": 0.14958448753462603,
-      "p_a_given_b": 0.15
+      "a": "radial_ebus",
+      "b": "therapeutic_aspiration",
+      "co_count": 77,
+      "count_a": 2484,
+      "count_b": 453,
+      "jaccard": 0.029014507253626812,
+      "p_b_given_a": 0.03335250143760782,
+      "p_a_given_b": 0.18238993710691823
+    },
+    {
+      "a": "tbna_conventional",
+      "b": "transbronchial_cryobiopsy",
+      "co_count": 75,
+      "count_a": 1419,
+      "count_b": 486,
+      "jaccard": 0.04549019607843137,
+      "p_b_given_a": 0.05846774193548387,
+      "p_a_given_b": 0.17008797653958943
+    },
+    {
+      "a": "transbronchial_biopsy",
+      "b": "therapeutic_aspiration",
+      "co_count": 75,
+      "count_a": 2522,
+      "count_b": 453,
+      "jaccard": 0.028712871287128714,
+      "p_b_given_a": 0.03295454545454545,
+      "p_a_given_b": 0.18238993710691823
+    },
+    {
+      "a": "airway_stent",
+      "b": "cryotherapy",
+      "co_count": 73,
+      "count_a": 725,
+      "count_b": 235,
+      "jaccard": 0.07852564102564102,
+      "p_b_given_a": 0.09683794466403162,
+      "p_a_given_b": 0.2934131736526946
+    },
+    {
+      "a": "foreign_body_removal",
+      "b": "rigid_bronchoscopy",
+      "co_count": 73,
+      "count_a": 231,
+      "count_b": 1030,
+      "jaccard": 0.054502369668246446,
+      "p_b_given_a": 0.2822085889570552,
+      "p_a_given_b": 0.06327372764786796
     },
     {
       "a": "ipc",
@@ -945,1139 +945,1139 @@
       "p_a_given_b": 0.14626865671641792
     },
     {
-      "a": "airway_dilation",
-      "b": "airway_stent",
-      "co_count": 70,
-      "count_a": 440,
-      "count_b": 736,
-      "jaccard": 0.06193548387096774,
-      "p_b_given_a": 0.15584415584415584,
-      "p_a_given_b": 0.09320388349514563
-    },
-    {
-      "a": "foreign_body_removal",
-      "b": "rigid_bronchoscopy",
-      "co_count": 70,
-      "count_a": 228,
-      "count_b": 996,
-      "jaccard": 0.052825552825552825,
-      "p_b_given_a": 0.26875,
-      "p_a_given_b": 0.06169296987087518
-    },
-    {
       "a": "endobronchial_biopsy",
       "b": "transbronchial_biopsy",
-      "co_count": 68,
-      "count_a": 431,
-      "count_b": 2543,
-      "jaccard": 0.023095823095823097,
-      "p_b_given_a": 0.15562913907284767,
-      "p_a_given_b": 0.026404494382022473
+      "co_count": 67,
+      "count_a": 411,
+      "count_b": 2522,
+      "jaccard": 0.02357071213640923,
+      "p_b_given_a": 0.16725978647686832,
+      "p_a_given_b": 0.026704545454545453
     },
     {
       "a": "endobronchial_biopsy",
       "b": "radial_ebus",
-      "co_count": 67,
-      "count_a": 431,
-      "count_b": 2481,
-      "jaccard": 0.02308078273958856,
-      "p_b_given_a": 0.152317880794702,
-      "p_a_given_b": 0.02648244099021301
-    },
-    {
-      "a": "therapeutic_aspiration",
-      "b": "airway_dilation",
-      "co_count": 65,
-      "count_a": 459,
-      "count_b": 440,
-      "jaccard": 0.07521367521367521,
-      "p_b_given_a": 0.13707165109034267,
-      "p_a_given_b": 0.14285714285714285
-    },
-    {
-      "a": "transbronchial_biopsy",
-      "b": "chest_tube",
-      "co_count": 60,
-      "count_a": 2543,
-      "count_b": 419,
-      "jaccard": 0.025222551928783383,
-      "p_b_given_a": 0.028651685393258425,
-      "p_a_given_b": 0.17406143344709898
-    },
-    {
-      "a": "radial_ebus",
-      "b": "chest_tube",
-      "co_count": 60,
-      "count_a": 2481,
-      "count_b": 419,
-      "jaccard": 0.025252525252525252,
-      "p_b_given_a": 0.028785261945883708,
-      "p_a_given_b": 0.17064846416382254
-    },
-    {
-      "a": "navigational_bronchoscopy",
-      "b": "therapeutic_aspiration",
-      "co_count": 60,
-      "count_a": 2446,
-      "count_b": 459,
-      "jaccard": 0.02366565961732125,
-      "p_b_given_a": 0.027453271028037383,
-      "p_a_given_b": 0.14641744548286603
-    },
-    {
-      "a": "tbna_conventional",
-      "b": "therapeutic_aspiration",
-      "co_count": 60,
-      "count_a": 1423,
-      "count_b": 459,
-      "jaccard": 0.03619197482297404,
-      "p_b_given_a": 0.04618473895582329,
-      "p_a_given_b": 0.14330218068535824
+      "co_count": 66,
+      "count_a": 411,
+      "count_b": 2484,
+      "jaccard": 0.02330293819655522,
+      "p_b_given_a": 0.16370106761565836,
+      "p_a_given_b": 0.02645198389879241
     },
     {
       "a": "endobronchial_biopsy",
       "b": "rigid_bronchoscopy",
-      "co_count": 60,
-      "count_a": 431,
-      "count_b": 996,
-      "jaccard": 0.04497907949790795,
-      "p_b_given_a": 0.1423841059602649,
-      "p_a_given_b": 0.06169296987087518
+      "co_count": 63,
+      "count_a": 411,
+      "count_b": 1030,
+      "jaccard": 0.04672897196261682,
+      "p_b_given_a": 0.1601423487544484,
+      "p_a_given_b": 0.061898211829436035
+    },
+    {
+      "a": "transbronchial_cryobiopsy",
+      "b": "peripheral_ablation",
+      "co_count": 61,
+      "count_a": 486,
+      "count_b": 503,
+      "jaccard": 0.06976744186046512,
+      "p_b_given_a": 0.13196480938416422,
+      "p_a_given_b": 0.12893982808022922
+    },
+    {
+      "a": "therapeutic_aspiration",
+      "b": "airway_dilation",
+      "co_count": 61,
+      "count_a": 453,
+      "count_b": 456,
+      "jaccard": 0.065,
+      "p_b_given_a": 0.12264150943396226,
+      "p_a_given_b": 0.12149532710280374
+    },
+    {
+      "a": "navigational_bronchoscopy",
+      "b": "therapeutic_aspiration",
+      "co_count": 58,
+      "count_a": 2450,
+      "count_b": 453,
+      "jaccard": 0.02315047810770005,
+      "p_b_given_a": 0.026822157434402333,
+      "p_a_given_b": 0.14465408805031446
+    },
+    {
+      "a": "tbna_conventional",
+      "b": "therapeutic_aspiration",
+      "co_count": 58,
+      "count_a": 1419,
+      "count_b": 453,
+      "jaccard": 0.03557312252964427,
+      "p_b_given_a": 0.04536290322580645,
+      "p_a_given_b": 0.14150943396226415
+    },
+    {
+      "a": "endobronchial_biopsy",
+      "b": "tumor_debulking_non_thermal",
+      "co_count": 57,
+      "count_a": 411,
+      "count_b": 405,
+      "jaccard": 0.06805293005671077,
+      "p_b_given_a": 0.12811387900355872,
+      "p_a_given_b": 0.1267605633802817
+    },
+    {
+      "a": "transbronchial_biopsy",
+      "b": "chest_tube",
+      "co_count": 56,
+      "count_a": 2522,
+      "count_b": 417,
+      "jaccard": 0.023453093812375248,
+      "p_b_given_a": 0.026704545454545453,
+      "p_a_given_b": 0.16151202749140894
+    },
+    {
+      "a": "radial_ebus",
+      "b": "chest_tube",
+      "co_count": 56,
+      "count_a": 2484,
+      "count_b": 417,
+      "jaccard": 0.023185483870967742,
+      "p_b_given_a": 0.02645198389879241,
+      "p_a_given_b": 0.15807560137457044
     },
     {
       "a": "foreign_body_removal",
       "b": "airway_stent",
-      "co_count": 60,
-      "count_a": 228,
-      "count_b": 736,
-      "jaccard": 0.056338028169014086,
-      "p_b_given_a": 0.225,
-      "p_a_given_b": 0.06990291262135923
+      "co_count": 55,
+      "count_a": 231,
+      "count_b": 725,
+      "jaccard": 0.05023547880690738,
+      "p_b_given_a": 0.19631901840490798,
+      "p_a_given_b": 0.06324110671936758
     },
     {
       "a": "airway_dilation",
       "b": "tumor_debulking_non_thermal",
-      "co_count": 54,
-      "count_a": 440,
-      "count_b": 402,
-      "jaccard": 0.07090909090909091,
-      "p_b_given_a": 0.1266233766233766,
-      "p_a_given_b": 0.1387900355871886
-    },
-    {
-      "a": "navigational_bronchoscopy",
-      "b": "chest_tube",
-      "co_count": 50,
-      "count_a": 2446,
-      "count_b": 419,
-      "jaccard": 0.020875763747454174,
-      "p_b_given_a": 0.02394859813084112,
-      "p_a_given_b": 0.13993174061433447
-    },
-    {
-      "a": "peripheral_ablation",
-      "b": "chest_tube",
-      "co_count": 50,
-      "count_a": 515,
-      "count_b": 419,
-      "jaccard": 0.06351791530944625,
-      "p_b_given_a": 0.10833333333333334,
-      "p_a_given_b": 0.13310580204778158
-    },
-    {
-      "a": "linear_ebus",
-      "b": "transbronchial_cryobiopsy",
-      "co_count": 50,
-      "count_a": 2094,
-      "count_b": 507,
-      "jaccard": 0.021240916713247623,
-      "p_b_given_a": 0.02592087312414734,
-      "p_a_given_b": 0.10526315789473684
-    },
-    {
-      "a": "tbna_conventional",
-      "b": "peripheral_ablation",
-      "co_count": 50,
-      "count_a": 1423,
-      "count_b": 515,
-      "jaccard": 0.028051554207733132,
-      "p_b_given_a": 0.03714859437751004,
-      "p_a_given_b": 0.10277777777777777
+      "co_count": 52,
+      "count_a": 456,
+      "count_b": 405,
+      "jaccard": 0.06514084507042253,
+      "p_b_given_a": 0.11526479750778816,
+      "p_a_given_b": 0.13028169014084506
     },
     {
       "a": "endobronchial_biopsy",
       "b": "airway_stent",
       "co_count": 50,
-      "count_a": 431,
-      "count_b": 736,
-      "jaccard": 0.04076433121019108,
-      "p_b_given_a": 0.10596026490066225,
-      "p_a_given_b": 0.062135922330097085
+      "count_a": 411,
+      "count_b": 725,
+      "jaccard": 0.0423841059602649,
+      "p_b_given_a": 0.11387900355871886,
+      "p_a_given_b": 0.06324110671936758
     },
     {
       "a": "brushings",
       "b": "endobronchial_biopsy",
       "co_count": 49,
-      "count_a": 1557,
-      "count_b": 431,
-      "jaccard": 0.024282560706401765,
-      "p_b_given_a": 0.030275229357798167,
-      "p_a_given_b": 0.10927152317880795
+      "count_a": 1553,
+      "count_b": 411,
+      "jaccard": 0.024737631184407798,
+      "p_b_given_a": 0.03038674033149171,
+      "p_a_given_b": 0.11743772241992882
+    },
+    {
+      "a": "linear_ebus",
+      "b": "transbronchial_cryobiopsy",
+      "co_count": 48,
+      "count_a": 2097,
+      "count_b": 486,
+      "jaccard": 0.020833333333333332,
+      "p_b_given_a": 0.025135869565217392,
+      "p_a_given_b": 0.10850439882697947
     },
     {
       "a": "linear_ebus",
       "b": "thermal_ablation",
       "co_count": 48,
-      "count_a": 2094,
-      "count_b": 780,
-      "jaccard": 0.017703591299949417,
-      "p_b_given_a": 0.023874488403819918,
-      "p_a_given_b": 0.0641025641025641
+      "count_a": 2097,
+      "count_b": 796,
+      "jaccard": 0.017526289434151226,
+      "p_b_given_a": 0.02377717391304348,
+      "p_a_given_b": 0.0625
+    },
+    {
+      "a": "navigational_bronchoscopy",
+      "b": "chest_tube",
+      "co_count": 46,
+      "count_a": 2450,
+      "count_b": 417,
+      "jaccard": 0.018791264601320468,
+      "p_b_given_a": 0.021574344023323616,
+      "p_a_given_b": 0.12714776632302405
+    },
+    {
+      "a": "peripheral_ablation",
+      "b": "chest_tube",
+      "co_count": 46,
+      "count_a": 503,
+      "count_b": 417,
+      "jaccard": 0.05785123966942149,
+      "p_b_given_a": 0.10028653295128939,
+      "p_a_given_b": 0.12027491408934708
+    },
+    {
+      "a": "tbna_conventional",
+      "b": "peripheral_ablation",
+      "co_count": 45,
+      "count_a": 1419,
+      "count_b": 503,
+      "jaccard": 0.02522935779816514,
+      "p_b_given_a": 0.03326612903225806,
+      "p_a_given_b": 0.09455587392550144
     },
     {
       "a": "airway_dilation",
       "b": "cryotherapy",
-      "co_count": 44,
-      "count_a": 440,
-      "count_b": 229,
-      "jaccard": 0.07586206896551724,
-      "p_b_given_a": 0.10714285714285714,
-      "p_a_given_b": 0.20625
-    },
-    {
-      "a": "endobronchial_biopsy",
-      "b": "airway_dilation",
-      "co_count": 44,
-      "count_a": 431,
-      "count_b": 440,
-      "jaccard": 0.05172413793103448,
-      "p_b_given_a": 0.09933774834437085,
-      "p_a_given_b": 0.09740259740259741
+      "co_count": 43,
+      "count_a": 456,
+      "count_b": 235,
+      "jaccard": 0.07017543859649122,
+      "p_b_given_a": 0.09968847352024922,
+      "p_a_given_b": 0.19161676646706588
     },
     {
       "a": "bal",
       "b": "airway_dilation",
       "co_count": 41,
-      "count_a": 735,
-      "count_b": 440,
-      "jaccard": 0.033962264150943396,
-      "p_b_given_a": 0.05252918287937743,
-      "p_a_given_b": 0.08766233766233766
+      "count_a": 733,
+      "count_b": 456,
+      "jaccard": 0.03345724907063197,
+      "p_b_given_a": 0.05263157894736842,
+      "p_a_given_b": 0.08411214953271028
     },
     {
-      "a": "brushings",
-      "b": "therapeutic_aspiration",
-      "co_count": 40,
-      "count_a": 1557,
-      "count_b": 459,
-      "jaccard": 0.024691358024691357,
-      "p_b_given_a": 0.031192660550458717,
-      "p_a_given_b": 0.1059190031152648
-    },
-    {
-      "a": "brushings",
+      "a": "thermal_ablation",
       "b": "chest_tube",
       "co_count": 40,
-      "count_a": 1557,
-      "count_b": 419,
-      "jaccard": 0.025203854707190512,
-      "p_b_given_a": 0.031192660550458717,
-      "p_a_given_b": 0.11604095563139932
-    },
-    {
-      "a": "endobronchial_biopsy",
-      "b": "cryotherapy",
-      "co_count": 40,
-      "count_a": 431,
-      "count_b": 229,
-      "jaccard": 0.06944444444444445,
-      "p_b_given_a": 0.09933774834437085,
-      "p_a_given_b": 0.1875
-    },
-    {
-      "a": "transbronchial_biopsy",
-      "b": "airway_stent",
-      "co_count": 40,
-      "count_a": 2543,
-      "count_b": 736,
-      "jaccard": 0.013245033112582781,
-      "p_b_given_a": 0.016853932584269662,
-      "p_a_given_b": 0.05825242718446602
+      "count_a": 796,
+      "count_b": 417,
+      "jaccard": 0.03402187120291616,
+      "p_b_given_a": 0.05,
+      "p_a_given_b": 0.09621993127147767
     },
     {
       "a": "transbronchial_biopsy",
       "b": "blvr",
       "co_count": 40,
-      "count_a": 2543,
+      "count_a": 2522,
       "count_b": 401,
-      "jaccard": 0.01327433628318584,
-      "p_b_given_a": 0.015168539325842697,
+      "jaccard": 0.013406156901688183,
+      "p_b_given_a": 0.01534090909090909,
       "p_a_given_b": 0.09608540925266904
     },
     {
-      "a": "bal",
-      "b": "airway_stent",
-      "co_count": 40,
-      "count_a": 735,
-      "count_b": 736,
-      "jaccard": 0.0259222333000997,
-      "p_b_given_a": 0.05058365758754864,
-      "p_a_given_b": 0.05048543689320388
-    },
-    {
-      "a": "bal",
-      "b": "thermal_ablation",
-      "co_count": 40,
-      "count_a": 735,
-      "count_b": 780,
-      "jaccard": 0.025145067698259187,
-      "p_b_given_a": 0.05058365758754864,
-      "p_a_given_b": 0.047619047619047616
-    },
-    {
-      "a": "bal",
-      "b": "rigid_bronchoscopy",
-      "co_count": 40,
-      "count_a": 735,
-      "count_b": 996,
-      "jaccard": 0.021940928270042195,
-      "p_b_given_a": 0.05058365758754864,
-      "p_a_given_b": 0.03730272596843615
-    },
-    {
-      "a": "thermal_ablation",
-      "b": "chest_tube",
+      "a": "brushings",
+      "b": "therapeutic_aspiration",
       "co_count": 39,
-      "count_a": 780,
-      "count_b": 419,
-      "jaccard": 0.0332512315270936,
-      "p_b_given_a": 0.04945054945054945,
-      "p_a_given_b": 0.09215017064846416
+      "count_a": 1553,
+      "count_b": 453,
+      "jaccard": 0.024817518248175182,
+      "p_b_given_a": 0.03130755064456722,
+      "p_a_given_b": 0.1069182389937107
     },
     {
       "a": "ipc",
       "b": "medical_thoracoscopy",
       "co_count": 39,
       "count_a": 336,
-      "count_b": 737,
-      "jaccard": 0.03729281767955801,
+      "count_b": 738,
+      "jaccard": 0.037241379310344824,
       "p_b_given_a": 0.1148936170212766,
-      "p_a_given_b": 0.05232558139534884
+      "p_a_given_b": 0.05222437137330754
+    },
+    {
+      "a": "bal",
+      "b": "thermal_ablation",
+      "co_count": 39,
+      "count_a": 733,
+      "count_b": 796,
+      "jaccard": 0.02385496183206107,
+      "p_b_given_a": 0.04873294346978557,
+      "p_a_given_b": 0.044642857142857144
+    },
+    {
+      "a": "bal",
+      "b": "rigid_bronchoscopy",
+      "co_count": 39,
+      "count_a": 733,
+      "count_b": 1030,
+      "jaccard": 0.0205761316872428,
+      "p_b_given_a": 0.04873294346978557,
+      "p_a_given_b": 0.0343878954607978
     },
     {
       "a": "endobronchial_biopsy",
       "b": "tbna_conventional",
       "co_count": 38,
-      "count_a": 431,
-      "count_b": 1423,
-      "jaccard": 0.02204724409448819,
-      "p_b_given_a": 0.09271523178807947,
-      "p_a_given_b": 0.028112449799196786
+      "count_a": 411,
+      "count_b": 1419,
+      "jaccard": 0.02248995983935743,
+      "p_b_given_a": 0.099644128113879,
+      "p_a_given_b": 0.028225806451612902
+    },
+    {
+      "a": "transbronchial_biopsy",
+      "b": "airway_stent",
+      "co_count": 38,
+      "count_a": 2522,
+      "count_b": 725,
+      "jaccard": 0.012511170688114389,
+      "p_b_given_a": 0.015909090909090907,
+      "p_a_given_b": 0.05533596837944664
+    },
+    {
+      "a": "brushings",
+      "b": "chest_tube",
+      "co_count": 36,
+      "count_a": 1553,
+      "count_b": 417,
+      "jaccard": 0.022271714922048998,
+      "p_b_given_a": 0.027624309392265192,
+      "p_a_given_b": 0.10309278350515463
+    },
+    {
+      "a": "endobronchial_biopsy",
+      "b": "airway_dilation",
+      "co_count": 35,
+      "count_a": 411,
+      "count_b": 456,
+      "jaccard": 0.03614457831325301,
+      "p_b_given_a": 0.07473309608540925,
+      "p_a_given_b": 0.06542056074766354
+    },
+    {
+      "a": "bal",
+      "b": "airway_stent",
+      "co_count": 34,
+      "count_a": 733,
+      "count_b": 725,
+      "jaccard": 0.02002002002002002,
+      "p_b_given_a": 0.03898635477582846,
+      "p_a_given_b": 0.039525691699604744
     },
     {
       "a": "linear_ebus",
       "b": "airway_dilation",
+      "co_count": 33,
+      "count_a": 2097,
+      "count_b": 456,
+      "jaccard": 0.012994350282485875,
+      "p_b_given_a": 0.015625,
+      "p_a_given_b": 0.07165109034267912
+    },
+    {
+      "a": "foreign_body_removal",
+      "b": "thermal_ablation",
       "co_count": 32,
-      "count_a": 2094,
-      "count_b": 440,
-      "jaccard": 0.012557077625570776,
-      "p_b_given_a": 0.015006821282401092,
-      "p_a_given_b": 0.07142857142857142
+      "count_a": 231,
+      "count_b": 796,
+      "jaccard": 0.02844950213371266,
+      "p_b_given_a": 0.12269938650306748,
+      "p_a_given_b": 0.03571428571428571
     },
     {
       "a": "bal",
       "b": "transbronchial_cryobiopsy",
-      "co_count": 31,
-      "count_a": 735,
-      "count_b": 507,
-      "jaccard": 0.0282021151586369,
-      "p_b_given_a": 0.04669260700389105,
-      "p_a_given_b": 0.0664819944598338
-    },
-    {
-      "a": "bronchial_wash",
-      "b": "therapeutic_aspiration",
-      "co_count": 31,
-      "count_a": 117,
-      "count_b": 459,
-      "jaccard": 0.0549738219895288,
-      "p_b_given_a": 0.25609756097560976,
-      "p_a_given_b": 0.06542056074766354
-    },
-    {
-      "a": "transbronchial_cryobiopsy",
-      "b": "chest_tube",
       "co_count": 30,
-      "count_a": 507,
-      "count_b": 419,
-      "jaccard": 0.0430622009569378,
-      "p_b_given_a": 0.07479224376731301,
-      "p_a_given_b": 0.09215017064846416
-    },
-    {
-      "a": "brushings",
-      "b": "peripheral_ablation",
-      "co_count": 30,
-      "count_a": 1557,
-      "count_b": 515,
-      "jaccard": 0.018258426966292134,
-      "p_b_given_a": 0.023853211009174313,
-      "p_a_given_b": 0.07222222222222222
-    },
-    {
-      "a": "tbna_conventional",
-      "b": "chest_tube",
-      "co_count": 30,
-      "count_a": 1423,
-      "count_b": 419,
-      "jaccard": 0.01977848101265823,
-      "p_b_given_a": 0.025100401606425703,
-      "p_a_given_b": 0.08532423208191127
+      "count_a": 733,
+      "count_b": 486,
+      "jaccard": 0.02891566265060241,
+      "p_b_given_a": 0.04678362573099415,
+      "p_a_given_b": 0.07038123167155426
     },
     {
       "a": "bronchial_wash",
       "b": "endobronchial_biopsy",
       "co_count": 30,
-      "count_a": 117,
-      "count_b": 431,
-      "jaccard": 0.06371191135734072,
-      "p_b_given_a": 0.2804878048780488,
-      "p_a_given_b": 0.076158940397351
+      "count_a": 111,
+      "count_b": 411,
+      "jaccard": 0.0688622754491018,
+      "p_b_given_a": 0.3026315789473684,
+      "p_a_given_b": 0.08185053380782918
     },
     {
       "a": "tbna_conventional",
       "b": "blvr",
       "co_count": 30,
-      "count_a": 1423,
+      "count_a": 1419,
       "count_b": 401,
-      "jaccard": 0.01752988047808765,
-      "p_b_given_a": 0.02208835341365462,
+      "jaccard": 0.017585931254996003,
+      "p_b_given_a": 0.02217741935483871,
       "p_a_given_b": 0.07829181494661921
     },
     {
       "a": "navigational_bronchoscopy",
       "b": "blvr",
       "co_count": 30,
-      "count_a": 2446,
+      "count_a": 2450,
       "count_b": 401,
-      "jaccard": 0.011161846778285134,
-      "p_b_given_a": 0.012850467289719626,
+      "jaccard": 0.011144883485309016,
+      "p_b_given_a": 0.01282798833819242,
       "p_a_given_b": 0.07829181494661921
     },
     {
       "a": "transbronchial_cryobiopsy",
       "b": "blvr",
       "co_count": 30,
-      "count_a": 507,
+      "count_a": 486,
       "count_b": 401,
-      "jaccard": 0.035483870967741936,
-      "p_b_given_a": 0.060941828254847646,
+      "jaccard": 0.03666666666666667,
+      "p_b_given_a": 0.06451612903225806,
       "p_a_given_b": 0.07829181494661921
     },
     {
       "a": "linear_ebus",
       "b": "cryotherapy",
       "co_count": 30,
-      "count_a": 2094,
-      "count_b": 229,
-      "jaccard": 0.013084112149532711,
-      "p_b_given_a": 0.01432469304229195,
-      "p_a_given_b": 0.13125
-    },
-    {
-      "a": "chest_tube",
-      "b": "pleurodesis",
-      "co_count": 30,
-      "count_a": 419,
-      "count_b": 478,
-      "jaccard": 0.03459637561779242,
-      "p_b_given_a": 0.07167235494880546,
-      "p_a_given_b": 0.0626865671641791
-    },
-    {
-      "a": "bronchial_wash",
-      "b": "rigid_bronchoscopy",
-      "co_count": 30,
-      "count_a": 117,
-      "count_b": 996,
-      "jaccard": 0.026350461133069828,
-      "p_b_given_a": 0.24390243902439024,
-      "p_a_given_b": 0.028694404591104734
+      "count_a": 2097,
+      "count_b": 235,
+      "jaccard": 0.012978986402966625,
+      "p_b_given_a": 0.014266304347826086,
+      "p_a_given_b": 0.12574850299401197
     },
     {
       "a": "linear_ebus",
       "b": "rigid_bronchoscopy",
       "co_count": 30,
-      "count_a": 2094,
-      "count_b": 996,
-      "jaccard": 0.009332711152589827,
-      "p_b_given_a": 0.013642564802182811,
-      "p_a_given_b": 0.028694404591104734
+      "count_a": 2097,
+      "count_b": 1030,
+      "jaccard": 0.009641873278236915,
+      "p_b_given_a": 0.014266304347826086,
+      "p_a_given_b": 0.02888583218707015
+    },
+    {
+      "a": "chest_tube",
+      "b": "pleurodesis",
+      "co_count": 30,
+      "count_a": 417,
+      "count_b": 478,
+      "jaccard": 0.03471074380165289,
+      "p_b_given_a": 0.07216494845360824,
+      "p_a_given_b": 0.0626865671641791
+    },
+    {
+      "a": "bronchial_wash",
+      "b": "therapeutic_aspiration",
+      "co_count": 30,
+      "count_a": 111,
+      "count_b": 453,
+      "jaccard": 0.053475935828877004,
+      "p_b_given_a": 0.2631578947368421,
+      "p_a_given_b": 0.06289308176100629
+    },
+    {
+      "a": "endobronchial_biopsy",
+      "b": "cryotherapy",
+      "co_count": 30,
+      "count_a": 411,
+      "count_b": 235,
+      "jaccard": 0.04672897196261682,
+      "p_b_given_a": 0.0711743772241993,
+      "p_a_given_b": 0.11976047904191617
     },
     {
       "a": "foreign_body_removal",
       "b": "cryotherapy",
       "co_count": 30,
-      "count_a": 228,
-      "count_b": 229,
-      "jaccard": 0.06666666666666667,
-      "p_b_given_a": 0.125,
-      "p_a_given_b": 0.125
-    },
-    {
-      "a": "bal",
-      "b": "cryotherapy",
-      "co_count": 30,
-      "count_a": 735,
-      "count_b": 229,
-      "jaccard": 0.02900763358778626,
-      "p_b_given_a": 0.03696498054474708,
-      "p_a_given_b": 0.11875
+      "count_a": 231,
+      "count_b": 235,
+      "jaccard": 0.06451612903225806,
+      "p_b_given_a": 0.12269938650306748,
+      "p_a_given_b": 0.11976047904191617
     },
     {
       "a": "peripheral_ablation",
       "b": "pleurodesis",
       "co_count": 30,
-      "count_a": 515,
+      "count_a": 503,
       "count_b": 478,
-      "jaccard": 0.028106508875739646,
-      "p_b_given_a": 0.05277777777777778,
+      "jaccard": 0.02857142857142857,
+      "p_b_given_a": 0.054441260744985676,
       "p_a_given_b": 0.056716417910447764
-    },
-    {
-      "a": "bal",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 30,
-      "count_a": 735,
-      "count_b": 402,
-      "jaccard": 0.023166023166023165,
-      "p_b_given_a": 0.03501945525291829,
-      "p_a_given_b": 0.06405693950177936
-    },
-    {
-      "a": "foreign_body_removal",
-      "b": "thermal_ablation",
-      "co_count": 30,
-      "count_a": 228,
-      "count_b": 780,
-      "jaccard": 0.02616279069767442,
-      "p_b_given_a": 0.1125,
-      "p_a_given_b": 0.03296703296703297
     },
     {
       "a": "endobronchial_biopsy",
       "b": "navigational_bronchoscopy",
       "co_count": 29,
-      "count_a": 431,
-      "count_b": 2446,
-      "jaccard": 0.010030090270812437,
-      "p_b_given_a": 0.06622516556291391,
-      "p_a_given_b": 0.011682242990654205
+      "count_a": 411,
+      "count_b": 2450,
+      "jaccard": 0.010121457489878543,
+      "p_b_given_a": 0.0711743772241993,
+      "p_a_given_b": 0.011661807580174927
+    },
+    {
+      "a": "bronchial_wash",
+      "b": "rigid_bronchoscopy",
+      "co_count": 29,
+      "count_a": 111,
+      "count_b": 1030,
+      "jaccard": 0.02423469387755102,
+      "p_b_given_a": 0.25,
+      "p_a_given_b": 0.026134800550206328
     },
     {
       "a": "blvr",
       "b": "chest_tube",
       "co_count": 29,
       "count_a": 401,
-      "count_b": 419,
-      "jaccard": 0.03423423423423423,
+      "count_b": 417,
+      "jaccard": 0.034358047016274866,
       "p_b_given_a": 0.06761565836298933,
-      "p_a_given_b": 0.06484641638225255
+      "p_a_given_b": 0.06529209621993128
+    },
+    {
+      "a": "bal",
+      "b": "cryotherapy",
+      "co_count": 28,
+      "count_a": 733,
+      "count_b": 235,
+      "jaccard": 0.02564102564102564,
+      "p_b_given_a": 0.03313840155945419,
+      "p_a_given_b": 0.10179640718562874
+    },
+    {
+      "a": "bal",
+      "b": "tumor_debulking_non_thermal",
+      "co_count": 28,
+      "count_a": 733,
+      "count_b": 405,
+      "jaccard": 0.020486555697823303,
+      "p_b_given_a": 0.031189083820662766,
+      "p_a_given_b": 0.056338028169014086
+    },
+    {
+      "a": "transbronchial_cryobiopsy",
+      "b": "chest_tube",
+      "co_count": 26,
+      "count_a": 486,
+      "count_b": 417,
+      "jaccard": 0.03776683087027915,
+      "p_b_given_a": 0.06744868035190615,
+      "p_a_given_b": 0.07903780068728522
+    },
+    {
+      "a": "tbna_conventional",
+      "b": "chest_tube",
+      "co_count": 26,
+      "count_a": 1419,
+      "count_b": 417,
+      "jaccard": 0.01664025356576862,
+      "p_b_given_a": 0.021169354838709676,
+      "p_a_given_b": 0.07216494845360824
     },
     {
       "a": "bronchial_wash",
       "b": "blvr",
-      "co_count": 27,
-      "count_a": 117,
+      "co_count": 26,
+      "count_a": 111,
       "count_b": 401,
-      "jaccard": 0.05217391304347826,
-      "p_b_given_a": 0.21951219512195122,
-      "p_a_given_b": 0.06405693950177936
+      "jaccard": 0.05,
+      "p_b_given_a": 0.2236842105263158,
+      "p_a_given_b": 0.060498220640569395
     },
     {
-      "a": "transbronchial_biopsy",
-      "b": "rigid_bronchoscopy",
-      "co_count": 21,
-      "count_a": 2543,
-      "count_b": 996,
-      "jaccard": 0.00486815415821501,
-      "p_b_given_a": 0.006741573033707865,
-      "p_a_given_b": 0.01721664275466284
+      "a": "brushings",
+      "b": "peripheral_ablation",
+      "co_count": 25,
+      "count_a": 1553,
+      "count_b": 503,
+      "jaccard": 0.01485148514851485,
+      "p_b_given_a": 0.019337016574585635,
+      "p_a_given_b": 0.06017191977077364
     },
     {
-      "a": "transbronchial_cryobiopsy",
-      "b": "rigid_bronchoscopy",
+      "a": "thermal_ablation",
+      "b": "ipc",
+      "co_count": 22,
+      "count_a": 677,
+      "count_b": 286,
+      "jaccard": 0.024484536082474227,
+      "p_b_given_a": 0.033928571428571426,
+      "p_a_given_b": 0.08085106382978724
+    },
+    {
+      "a": "foreign_body_removal",
+      "b": "airway_dilation",
       "co_count": 21,
-      "count_a": 507,
-      "count_b": 996,
-      "jaccard": 0.011472275334608031,
-      "p_b_given_a": 0.0332409972299169,
-      "p_a_given_b": 0.01721664275466284
+      "count_a": 231,
+      "count_b": 456,
+      "jaccard": 0.031982942430703626,
+      "p_b_given_a": 0.09202453987730061,
+      "p_a_given_b": 0.04672897196261682
+    },
+    {
+      "a": "tumor_debulking_non_thermal",
+      "b": "chest_tube",
+      "co_count": 21,
+      "count_a": 405,
+      "count_b": 417,
+      "jaccard": 0.026785714285714284,
+      "p_b_given_a": 0.0528169014084507,
+      "p_a_given_b": 0.05154639175257732
+    },
+    {
+      "a": "rigid_bronchoscopy",
+      "b": "chest_tube",
+      "co_count": 21,
+      "count_a": 1030,
+      "count_b": 417,
+      "jaccard": 0.014955134596211365,
+      "p_b_given_a": 0.02063273727647868,
+      "p_a_given_b": 0.05154639175257732
     },
     {
       "a": "radial_ebus",
       "b": "airway_stent",
       "co_count": 20,
-      "count_a": 2481,
-      "count_b": 736,
-      "jaccard": 0.007606263982102908,
-      "p_b_given_a": 0.00978698906160046,
-      "p_a_given_b": 0.03300970873786408
+      "count_a": 2484,
+      "count_b": 725,
+      "jaccard": 0.00763016157989228,
+      "p_b_given_a": 0.0097757331799885,
+      "p_a_given_b": 0.03359683794466403
     },
     {
       "a": "bronchial_wash",
       "b": "thermal_ablation",
       "co_count": 20,
-      "count_a": 117,
-      "count_b": 780,
-      "jaccard": 0.024469820554649267,
-      "p_b_given_a": 0.18292682926829268,
-      "p_a_given_b": 0.027472527472527472
+      "count_a": 111,
+      "count_b": 796,
+      "jaccard": 0.024154589371980676,
+      "p_b_given_a": 0.19736842105263158,
+      "p_a_given_b": 0.026785714285714284
     },
     {
       "a": "bronchial_wash",
       "b": "tumor_debulking_non_thermal",
       "co_count": 20,
-      "count_a": 117,
-      "count_b": 402,
-      "jaccard": 0.04310344827586207,
-      "p_b_given_a": 0.18292682926829268,
-      "p_a_given_b": 0.05338078291814947
+      "count_a": 111,
+      "count_b": 405,
+      "jaccard": 0.043478260869565216,
+      "p_b_given_a": 0.19736842105263158,
+      "p_a_given_b": 0.0528169014084507
     },
     {
       "a": "linear_ebus",
       "b": "airway_stent",
       "co_count": 20,
-      "count_a": 2094,
-      "count_b": 736,
-      "jaccard": 0.0076297049847405905,
-      "p_b_given_a": 0.010231923601637109,
-      "p_a_given_b": 0.02912621359223301
-    },
-    {
-      "a": "linear_ebus",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 20,
-      "count_a": 2094,
-      "count_b": 402,
-      "jaccard": 0.008660508083140877,
-      "p_b_given_a": 0.010231923601637109,
-      "p_a_given_b": 0.05338078291814947
-    },
-    {
-      "a": "transbronchial_cryobiopsy",
-      "b": "therapeutic_aspiration",
-      "co_count": 20,
-      "count_a": 507,
-      "count_b": 459,
-      "jaccard": 0.022488755622188907,
-      "p_b_given_a": 0.04155124653739612,
-      "p_a_given_b": 0.04672897196261682
+      "count_a": 2097,
+      "count_b": 725,
+      "jaccard": 0.007641365257259297,
+      "p_b_given_a": 0.010190217391304348,
+      "p_a_given_b": 0.029644268774703556
     },
     {
       "a": "transbronchial_biopsy",
       "b": "foreign_body_removal",
       "co_count": 20,
-      "count_a": 2543,
-      "count_b": 228,
-      "jaccard": 0.007268951194184839,
-      "p_b_given_a": 0.007865168539325843,
-      "p_a_given_b": 0.0875
-    },
-    {
-      "a": "therapeutic_aspiration",
-      "b": "peripheral_ablation",
-      "co_count": 20,
-      "count_a": 459,
-      "count_b": 515,
-      "jaccard": 0.020989505247376312,
-      "p_b_given_a": 0.04361370716510903,
-      "p_a_given_b": 0.03888888888888889
+      "count_a": 2522,
+      "count_b": 231,
+      "jaccard": 0.007333682556312206,
+      "p_b_given_a": 0.007954545454545454,
+      "p_a_given_b": 0.08588957055214724
     },
     {
       "a": "airway_dilation",
       "b": "chest_tube",
       "co_count": 20,
-      "count_a": 440,
-      "count_b": 419,
-      "jaccard": 0.02385008517887564,
-      "p_b_given_a": 0.045454545454545456,
-      "p_a_given_b": 0.04778156996587031
-    },
-    {
-      "a": "tumor_debulking_non_thermal",
-      "b": "chest_tube",
-      "co_count": 20,
-      "count_a": 402,
-      "count_b": 419,
-      "jaccard": 0.025,
-      "p_b_given_a": 0.0498220640569395,
-      "p_a_given_b": 0.04778156996587031
-    },
-    {
-      "a": "rigid_bronchoscopy",
-      "b": "chest_tube",
-      "co_count": 20,
-      "count_a": 996,
-      "count_b": 419,
-      "jaccard": 0.014344262295081968,
-      "p_b_given_a": 0.020086083213773313,
-      "p_a_given_b": 0.04778156996587031
+      "count_a": 456,
+      "count_b": 417,
+      "jaccard": 0.023411371237458192,
+      "p_b_given_a": 0.04361370716510903,
+      "p_a_given_b": 0.048109965635738834
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "ipc",
       "co_count": 20,
-      "count_a": 7424,
+      "count_a": 7428,
       "count_b": 336,
-      "jaccard": 0.0023989665990035063,
-      "p_b_given_a": 0.0025014431402732348,
+      "jaccard": 0.002397197123363452,
+      "p_b_given_a": 0.0024995193232070756,
       "p_a_given_b": 0.05531914893617021
     },
     {
       "a": "radial_ebus",
       "b": "thermal_ablation",
       "co_count": 20,
-      "count_a": 2481,
-      "count_b": 780,
-      "jaccard": 0.005726872246696035,
-      "p_b_given_a": 0.007484168105929764,
-      "p_a_given_b": 0.023809523809523808
-    },
-    {
-      "a": "transbronchial_cryobiopsy",
-      "b": "airway_stent",
-      "co_count": 20,
-      "count_a": 507,
-      "count_b": 736,
-      "jaccard": 0.015063731170336037,
-      "p_b_given_a": 0.036011080332409975,
-      "p_a_given_b": 0.02524271844660194
-    },
-    {
-      "a": "peripheral_ablation",
-      "b": "rigid_bronchoscopy",
-      "co_count": 20,
-      "count_a": 515,
-      "count_b": 996,
-      "jaccard": 0.012452107279693486,
-      "p_b_given_a": 0.03611111111111111,
-      "p_a_given_b": 0.018651362984218076
+      "count_a": 2484,
+      "count_b": 796,
+      "jaccard": 0.005686789151356081,
+      "p_b_given_a": 0.007475560667050029,
+      "p_a_given_b": 0.023214285714285715
     },
     {
       "a": "rigid_bronchoscopy",
       "b": "ipc",
       "co_count": 20,
-      "count_a": 996,
+      "count_a": 1030,
       "count_b": 336,
-      "jaccard": 0.014145810663764961,
-      "p_b_given_a": 0.018651362984218076,
+      "jaccard": 0.0136986301369863,
+      "p_b_given_a": 0.017881705639614855,
       "p_a_given_b": 0.05531914893617021
     },
     {
       "a": "peripheral_ablation",
       "b": "medical_thoracoscopy",
       "co_count": 20,
-      "count_a": 515,
-      "count_b": 737,
-      "jaccard": 0.013888888888888888,
-      "p_b_given_a": 0.03333333333333333,
-      "p_a_given_b": 0.023255813953488372
+      "count_a": 503,
+      "count_b": 738,
+      "jaccard": 0.01405152224824356,
+      "p_b_given_a": 0.034383954154727794,
+      "p_a_given_b": 0.02321083172147002
     },
     {
-      "a": "bronchial_wash",
-      "b": "foreign_body_removal",
-      "co_count": 20,
-      "count_a": 117,
-      "count_b": 228,
-      "jaccard": 0.047619047619047616,
-      "p_b_given_a": 0.13414634146341464,
-      "p_a_given_b": 0.06875
-    },
-    {
-      "a": "bronchial_wash",
-      "b": "airway_stent",
-      "co_count": 20,
-      "count_a": 117,
-      "count_b": 736,
-      "jaccard": 0.01877133105802048,
-      "p_b_given_a": 0.13414634146341464,
-      "p_a_given_b": 0.021359223300970873
-    },
-    {
-      "a": "therapeutic_aspiration",
-      "b": "foreign_body_removal",
-      "co_count": 20,
-      "count_a": 459,
-      "count_b": 228,
-      "jaccard": 0.023404255319148935,
-      "p_b_given_a": 0.03426791277258567,
-      "p_a_given_b": 0.06875
-    },
-    {
-      "a": "thermal_ablation",
-      "b": "ipc",
+      "a": "transbronchial_cryobiopsy",
+      "b": "therapeutic_aspiration",
       "co_count": 19,
-      "count_a": 663,
-      "count_b": 286,
-      "jaccard": 0.02091503267973856,
-      "p_b_given_a": 0.029304029304029304,
-      "p_a_given_b": 0.06808510638297872
+      "count_a": 486,
+      "count_b": 453,
+      "jaccard": 0.023291925465838508,
+      "p_b_given_a": 0.04398826979472141,
+      "p_a_given_b": 0.04716981132075472
     },
     {
       "a": "linear_ebus",
-      "b": "peripheral_ablation",
+      "b": "tumor_debulking_non_thermal",
       "co_count": 19,
-      "count_a": 2094,
-      "count_b": 515,
-      "jaccard": 0.007170435741864313,
-      "p_b_given_a": 0.008867667121418827,
-      "p_a_given_b": 0.03611111111111111
-    },
-    {
-      "a": "foreign_body_removal",
-      "b": "airway_dilation",
-      "co_count": 19,
-      "count_a": 228,
-      "count_b": 440,
-      "jaccard": 0.02857142857142857,
-      "p_b_given_a": 0.08125,
-      "p_a_given_b": 0.04220779220779221
+      "count_a": 2097,
+      "count_b": 405,
+      "jaccard": 0.008036739380022962,
+      "p_b_given_a": 0.009510869565217392,
+      "p_a_given_b": 0.04929577464788732
     },
     {
       "a": "rigid_bronchoscopy",
       "b": "percutaneous_tracheostomy",
       "co_count": 19,
-      "count_a": 996,
+      "count_a": 1030,
       "count_b": 19,
-      "jaccard": 0.018651362984218076,
-      "p_b_given_a": 0.018651362984218076,
+      "jaccard": 0.017881705639614855,
+      "p_b_given_a": 0.017881705639614855,
       "p_a_given_b": 1.0
+    },
+    {
+      "a": "peripheral_ablation",
+      "b": "rigid_bronchoscopy",
+      "co_count": 19,
+      "count_a": 503,
+      "count_b": 1030,
+      "jaccard": 0.011278195488721804,
+      "p_b_given_a": 0.034383954154727794,
+      "p_a_given_b": 0.016506189821182942
+    },
+    {
+      "a": "bronchial_wash",
+      "b": "foreign_body_removal",
+      "co_count": 19,
+      "count_a": 111,
+      "count_b": 231,
+      "jaccard": 0.043668122270742356,
+      "p_b_given_a": 0.13157894736842105,
+      "p_a_given_b": 0.06134969325153374
+    },
+    {
+      "a": "bronchial_wash",
+      "b": "airway_stent",
+      "co_count": 19,
+      "count_a": 111,
+      "count_b": 725,
+      "jaccard": 0.017482517482517484,
+      "p_b_given_a": 0.13157894736842105,
+      "p_a_given_b": 0.019762845849802372
+    },
+    {
+      "a": "therapeutic_aspiration",
+      "b": "foreign_body_removal",
+      "co_count": 19,
+      "count_a": 453,
+      "count_b": 231,
+      "jaccard": 0.021231422505307854,
+      "p_b_given_a": 0.031446540880503145,
+      "p_a_given_b": 0.06134969325153374
     },
     {
       "a": "tbna_conventional",
       "b": "airway_dilation",
       "co_count": 18,
-      "count_a": 1423,
-      "count_b": 440,
-      "jaccard": 0.010069713400464756,
-      "p_b_given_a": 0.013052208835341365,
-      "p_a_given_b": 0.04220779220779221
+      "count_a": 1419,
+      "count_b": 456,
+      "jaccard": 0.01,
+      "p_b_given_a": 0.01310483870967742,
+      "p_a_given_b": 0.040498442367601244
     },
     {
       "a": "navigational_bronchoscopy",
       "b": "airway_dilation",
       "co_count": 18,
-      "count_a": 2446,
-      "count_b": 440,
-      "jaccard": 0.0064773293472845045,
-      "p_b_given_a": 0.007593457943925234,
-      "p_a_given_b": 0.04220779220779221
+      "count_a": 2450,
+      "count_b": 456,
+      "jaccard": 0.006426099851705388,
+      "p_b_given_a": 0.007580174927113703,
+      "p_a_given_b": 0.040498442367601244
     },
     {
       "a": "transbronchial_biopsy",
       "b": "airway_dilation",
       "co_count": 18,
-      "count_a": 2543,
-      "count_b": 440,
-      "jaccard": 0.006265060240963855,
-      "p_b_given_a": 0.007303370786516854,
-      "p_a_given_b": 0.04220779220779221
+      "count_a": 2522,
+      "count_b": 456,
+      "jaccard": 0.006286266924564797,
+      "p_b_given_a": 0.007386363636363636,
+      "p_a_given_b": 0.040498442367601244
     },
     {
       "a": "airway_dilation",
       "b": "blvr",
       "co_count": 18,
-      "count_a": 440,
+      "count_a": 456,
       "count_b": 401,
-      "jaccard": 0.022569444444444444,
-      "p_b_given_a": 0.04220779220779221,
+      "jaccard": 0.022071307300509338,
+      "p_b_given_a": 0.040498442367601244,
       "p_a_given_b": 0.046263345195729534
+    },
+    {
+      "a": "therapeutic_aspiration",
+      "b": "peripheral_ablation",
+      "co_count": 18,
+      "count_a": 453,
+      "count_b": 503,
+      "jaccard": 0.0183206106870229,
+      "p_b_given_a": 0.03773584905660377,
+      "p_a_given_b": 0.034383954154727794
+    },
+    {
+      "a": "transbronchial_cryobiopsy",
+      "b": "airway_stent",
+      "co_count": 18,
+      "count_a": 486,
+      "count_b": 725,
+      "jaccard": 0.013157894736842105,
+      "p_b_given_a": 0.03225806451612903,
+      "p_a_given_b": 0.021739130434782608
+    },
+    {
+      "a": "transbronchial_biopsy",
+      "b": "rigid_bronchoscopy",
+      "co_count": 18,
+      "count_a": 2522,
+      "count_b": 1030,
+      "jaccard": 0.0036319612590799033,
+      "p_b_given_a": 0.005113636363636364,
+      "p_a_given_b": 0.012379642365887207
+    },
+    {
+      "a": "transbronchial_cryobiopsy",
+      "b": "rigid_bronchoscopy",
+      "co_count": 18,
+      "count_a": 486,
+      "count_b": 1030,
+      "jaccard": 0.0084985835694051,
+      "p_b_given_a": 0.026392961876832845,
+      "p_a_given_b": 0.012379642365887207
+    },
+    {
+      "a": "linear_ebus",
+      "b": "peripheral_ablation",
+      "co_count": 16,
+      "count_a": 2097,
+      "count_b": 503,
+      "jaccard": 0.0060773480662983425,
+      "p_b_given_a": 0.007472826086956522,
+      "p_a_given_b": 0.03151862464183381
+    },
+    {
+      "a": "airway_stent",
+      "b": "ipc",
+      "co_count": 13,
+      "count_a": 614,
+      "count_b": 286,
+      "jaccard": 0.01646090534979424,
+      "p_b_given_a": 0.023715415019762844,
+      "p_a_given_b": 0.05106382978723404
     },
     {
       "a": "diagnostic_bronchoscopy",
       "b": "thoracentesis",
       "co_count": 11,
-      "count_a": 6328,
+      "count_a": 6332,
       "count_b": 216,
-      "jaccard": 0.001863932898415657,
-      "p_b_given_a": 0.0019241870309794113,
+      "jaccard": 0.0018625442354255914,
+      "p_b_given_a": 0.0019227071716977505,
       "p_a_given_b": 0.056179775280898875
     },
     {
       "a": "tbna_conventional",
       "b": "thoracentesis",
       "co_count": 11,
-      "count_a": 1210,
+      "count_a": 1207,
       "count_b": 216,
-      "jaccard": 0.00859106529209622,
-      "p_b_given_a": 0.010040160642570281,
+      "jaccard": 0.008620689655172414,
+      "p_b_given_a": 0.010080645161290322,
       "p_a_given_b": 0.056179775280898875
+    },
+    {
+      "a": "airway_dilation",
+      "b": "ipc",
+      "co_count": 11,
+      "count_a": 388,
+      "count_b": 286,
+      "jaccard": 0.016453382084095063,
+      "p_b_given_a": 0.028037383177570093,
+      "p_a_given_b": 0.03829787234042553
     },
     {
       "a": "chest_tube",
       "b": "fibrinolytic_therapy",
       "co_count": 11,
-      "count_a": 419,
+      "count_a": 417,
       "count_b": 129,
-      "jaccard": 0.021333333333333333,
-      "p_b_given_a": 0.027303754266211604,
+      "jaccard": 0.021447721179624665,
+      "p_b_given_a": 0.027491408934707903,
       "p_a_given_b": 0.08888888888888889
     },
     {
       "a": "bronchial_wash",
       "b": "airway_dilation",
       "co_count": 11,
-      "count_a": 117,
-      "count_b": 440,
-      "jaccard": 0.018276762402088774,
-      "p_b_given_a": 0.08536585365853659,
-      "p_a_given_b": 0.022727272727272728
+      "count_a": 111,
+      "count_b": 456,
+      "jaccard": 0.017948717948717947,
+      "p_b_given_a": 0.09210526315789473,
+      "p_a_given_b": 0.021806853582554516
+    },
+    {
+      "a": "chest_tube",
+      "b": "medical_thoracoscopy",
+      "co_count": 11,
+      "count_a": 417,
+      "count_b": 738,
+      "jaccard": 0.008739076154806492,
+      "p_b_given_a": 0.024054982817869417,
+      "p_a_given_b": 0.013539651837524178
     },
     {
       "a": "bronchial_wash",
       "b": "cryotherapy",
       "co_count": 10,
-      "count_a": 100,
-      "count_b": 195,
-      "jaccard": 0.03862660944206009,
-      "p_b_given_a": 0.10975609756097561,
-      "p_a_given_b": 0.05625
+      "count_a": 94,
+      "count_b": 201,
+      "jaccard": 0.038461538461538464,
+      "p_b_given_a": 0.11842105263157894,
+      "p_a_given_b": 0.05389221556886228
     },
     {
       "a": "tbna_conventional",
       "b": "airway_stent",
       "co_count": 10,
-      "count_a": 1210,
-      "count_b": 625,
-      "jaccard": 0.005992010652463382,
-      "p_b_given_a": 0.009036144578313253,
-      "p_a_given_b": 0.017475728155339806
+      "count_a": 1207,
+      "count_b": 614,
+      "jaccard": 0.006044325050369375,
+      "p_b_given_a": 0.009072580645161291,
+      "p_a_given_b": 0.017786561264822136
     },
     {
       "a": "tbna_conventional",
       "b": "medical_thoracoscopy",
       "co_count": 10,
-      "count_a": 1210,
-      "count_b": 627,
-      "jaccard": 0.005988023952095809,
-      "p_b_given_a": 0.009036144578313253,
-      "p_a_given_b": 0.01744186046511628
+      "count_a": 1207,
+      "count_b": 628,
+      "jaccard": 0.006,
+      "p_b_given_a": 0.009072580645161291,
+      "p_a_given_b": 0.017408123791102514
     },
     {
       "a": "navigational_bronchoscopy",
       "b": "airway_stent",
       "co_count": 10,
-      "count_a": 2079,
-      "count_b": 625,
-      "jaccard": 0.0040577096483318306,
-      "p_b_given_a": 0.005257009345794392,
-      "p_a_given_b": 0.017475728155339806
-    },
-    {
-      "a": "airway_stent",
-      "b": "ipc",
-      "co_count": 10,
-      "count_a": 625,
-      "count_b": 286,
-      "jaccard": 0.012145748987854251,
-      "p_b_given_a": 0.017475728155339806,
-      "p_a_given_b": 0.03829787234042553
+      "count_a": 2083,
+      "count_b": 614,
+      "jaccard": 0.00406871609403255,
+      "p_b_given_a": 0.0052478134110787176,
+      "p_a_given_b": 0.017786561264822136
     },
     {
       "a": "bal",
       "b": "blvr",
       "co_count": 10,
-      "count_a": 735,
+      "count_a": 733,
       "count_b": 401,
-      "jaccard": 0.010165184243964422,
-      "p_b_given_a": 0.01556420233463035,
+      "jaccard": 0.010178117048346057,
+      "p_b_given_a": 0.015594541910331383,
       "p_a_given_b": 0.028469750889679714
-    },
-    {
-      "a": "linear_ebus",
-      "b": "chest_tube",
-      "co_count": 10,
-      "count_a": 2094,
-      "count_b": 419,
-      "jaccard": 0.004568817818389492,
-      "p_b_given_a": 0.005457025920873124,
-      "p_a_given_b": 0.027303754266211604
-    },
-    {
-      "a": "transbronchial_biopsy",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 10,
-      "count_a": 2161,
-      "count_b": 342,
-      "jaccard": 0.003896736483195324,
-      "p_b_given_a": 0.0044943820224719105,
-      "p_a_given_b": 0.028469750889679714
-    },
-    {
-      "a": "transbronchial_biopsy",
-      "b": "cryotherapy",
-      "co_count": 10,
-      "count_a": 2161,
-      "count_b": 194,
-      "jaccard": 0.004140786749482402,
-      "p_b_given_a": 0.0044943820224719105,
-      "p_a_given_b": 0.05
-    },
-    {
-      "a": "transbronchial_cryobiopsy",
-      "b": "tumor_debulking_non_thermal",
-      "co_count": 10,
-      "count_a": 435,
-      "count_b": 342,
-      "jaccard": 0.012618296529968454,
-      "p_b_given_a": 0.0221606648199446,
-      "p_a_given_b": 0.028469750889679714
-    },
-    {
-      "a": "transbronchial_cryobiopsy",
-      "b": "cryotherapy",
-      "co_count": 10,
-      "count_a": 435,
-      "count_b": 194,
-      "jaccard": 0.015594541910331383,
-      "p_b_given_a": 0.0221606648199446,
-      "p_a_given_b": 0.05
     },
     {
       "a": "bal",
       "b": "foreign_body_removal",
       "co_count": 10,
-      "count_a": 735,
-      "count_b": 228,
-      "jaccard": 0.010494752623688156,
-      "p_b_given_a": 0.013618677042801557,
-      "p_a_given_b": 0.04375
-    },
-    {
-      "a": "bal",
-      "b": "peripheral_ablation",
-      "co_count": 10,
-      "count_a": 735,
-      "count_b": 515,
-      "jaccard": 0.008073817762399077,
-      "p_b_given_a": 0.013618677042801557,
-      "p_a_given_b": 0.019444444444444445
+      "count_a": 733,
+      "count_b": 231,
+      "jaccard": 0.01046337817638266,
+      "p_b_given_a": 0.01364522417153996,
+      "p_a_given_b": 0.04294478527607362
     },
     {
       "a": "endobronchial_biopsy",
       "b": "chest_tube",
       "co_count": 10,
-      "count_a": 431,
-      "count_b": 419,
-      "jaccard": 0.011904761904761904,
-      "p_b_given_a": 0.023178807947019868,
-      "p_a_given_b": 0.023890784982935155
-    },
-    {
-      "a": "airway_stent",
-      "b": "peripheral_ablation",
-      "co_count": 10,
-      "count_a": 736,
-      "count_b": 515,
-      "jaccard": 0.008064516129032258,
-      "p_b_given_a": 0.013592233009708738,
-      "p_a_given_b": 0.019444444444444445
-    },
-    {
-      "a": "thermal_ablation",
-      "b": "peripheral_ablation",
-      "co_count": 10,
-      "count_a": 780,
-      "count_b": 515,
-      "jaccard": 0.00778642936596218,
-      "p_b_given_a": 0.01282051282051282,
-      "p_a_given_b": 0.019444444444444445
+      "count_a": 411,
+      "count_b": 417,
+      "jaccard": 0.012389380530973451,
+      "p_b_given_a": 0.02491103202846975,
+      "p_a_given_b": 0.024054982817869417
     },
     {
       "a": "foreign_body_removal",
       "b": "tumor_debulking_non_thermal",
       "co_count": 10,
-      "count_a": 228,
-      "count_b": 402,
-      "jaccard": 0.013793103448275862,
-      "p_b_given_a": 0.0375,
-      "p_a_given_b": 0.021352313167259787
+      "count_a": 231,
+      "count_b": 405,
+      "jaccard": 0.013605442176870748,
+      "p_b_given_a": 0.03680981595092025,
+      "p_a_given_b": 0.02112676056338028
     },
     {
       "a": "blvr",
       "b": "peripheral_ablation",
       "co_count": 10,
       "count_a": 401,
-      "count_b": 515,
-      "jaccard": 0.009448818897637795,
+      "count_b": 503,
+      "jaccard": 0.009615384615384616,
       "p_b_given_a": 0.021352313167259787,
-      "p_a_given_b": 0.016666666666666666
+      "p_a_given_b": 0.017191977077363897
     },
     {
       "a": "thoracentesis",
       "b": "medical_thoracoscopy",
       "co_count": 10,
       "count_a": 254,
-      "count_b": 737,
-      "jaccard": 0.00872093023255814,
+      "count_b": 738,
+      "jaccard": 0.008708272859216255,
       "p_b_given_a": 0.033707865168539325,
-      "p_a_given_b": 0.011627906976744186
-    },
-    {
-      "a": "chest_tube",
-      "b": "medical_thoracoscopy",
-      "co_count": 10,
-      "count_a": 419,
-      "count_b": 737,
-      "jaccard": 0.007471980074719801,
-      "p_b_given_a": 0.020477815699658702,
-      "p_a_given_b": 0.011627906976744186
+      "p_a_given_b": 0.01160541586073501
     },
     {
       "a": "brushings",
       "b": "blvr",
       "co_count": 10,
-      "count_a": 1557,
+      "count_a": 1553,
       "count_b": 401,
-      "jaccard": 0.0036603221083455345,
-      "p_b_given_a": 0.0045871559633027525,
+      "jaccard": 0.003671071953010279,
+      "p_b_given_a": 0.004604051565377533,
       "p_a_given_b": 0.017793594306049824
     },
     {
-      "a": "airway_dilation",
-      "b": "ipc",
+      "a": "linear_ebus",
+      "b": "chest_tube",
       "co_count": 9,
-      "count_a": 374,
-      "count_b": 286,
-      "jaccard": 0.013059701492537313,
-      "p_b_given_a": 0.022727272727272728,
-      "p_a_given_b": 0.029787234042553193
+      "count_a": 2097,
+      "count_b": 417,
+      "jaccard": 0.003986332574031891,
+      "p_b_given_a": 0.004755434782608696,
+      "p_a_given_b": 0.024054982817869417
     },
     {
-      "a": "tbna_conventional",
-      "b": "pleurodesis",
-      "co_count": 1,
-      "count_a": 996,
-      "count_b": 335,
-      "jaccard": 0.0007518796992481203,
-      "p_b_given_a": 0.001004016064257028,
-      "p_a_given_b": 0.0029850746268656717
+      "a": "bal",
+      "b": "peripheral_ablation",
+      "co_count": 9,
+      "count_a": 733,
+      "count_b": 503,
+      "jaccard": 0.007009345794392523,
+      "p_b_given_a": 0.011695906432748537,
+      "p_a_given_b": 0.017191977077363897
     },
     {
-      "a": "thoracentesis",
-      "b": "pleurodesis",
-      "co_count": 1,
-      "count_a": 178,
-      "count_b": 335,
-      "jaccard": 0.001953125,
-      "p_b_given_a": 0.0056179775280898875,
-      "p_a_given_b": 0.0029850746268656717
+      "a": "airway_stent",
+      "b": "peripheral_ablation",
+      "co_count": 9,
+      "count_a": 725,
+      "count_b": 503,
+      "jaccard": 0.007067137809187279,
+      "p_b_given_a": 0.011857707509881422,
+      "p_a_given_b": 0.017191977077363897
+    },
+    {
+      "a": "thermal_ablation",
+      "b": "peripheral_ablation",
+      "co_count": 9,
+      "count_a": 796,
+      "count_b": 503,
+      "jaccard": 0.006644518272425249,
+      "p_b_given_a": 0.010714285714285714,
+      "p_a_given_b": 0.017191977077363897
+    },
+    {
+      "a": "cryotherapy",
+      "b": "peripheral_ablation",
+      "co_count": 7,
+      "count_a": 167,
+      "count_b": 349,
+      "jaccard": 0.0137524557956778,
+      "p_b_given_a": 0.041916167664670656,
+      "p_a_given_b": 0.02005730659025788
+    },
+    {
+      "a": "radial_ebus",
+      "b": "cryotherapy",
+      "co_count": 5,
+      "count_a": 1739,
+      "count_b": 167,
+      "jaccard": 0.0026301946344029457,
+      "p_b_given_a": 0.002875215641173088,
+      "p_a_given_b": 0.029940119760479042
+    },
+    {
+      "a": "navigational_bronchoscopy",
+      "b": "cryotherapy",
+      "co_count": 5,
+      "count_a": 1715,
+      "count_b": 167,
+      "jaccard": 0.002663825253063399,
+      "p_b_given_a": 0.0029154518950437317,
+      "p_a_given_b": 0.029940119760479042
+    },
+    {
+      "a": "tumor_debulking_non_thermal",
+      "b": "ipc",
+      "co_count": 2,
+      "count_a": 284,
+      "count_b": 235,
+      "jaccard": 0.0038684719535783366,
+      "p_b_given_a": 0.007042253521126761,
+      "p_a_given_b": 0.00851063829787234
+    },
+    {
+      "a": "transbronchial_biopsy",
+      "b": "tumor_debulking_non_thermal",
+      "co_count": 2,
+      "count_a": 382,
+      "count_b": 61,
+      "jaccard": 0.0045351473922902496,
+      "p_b_given_a": 0.005235602094240838,
+      "p_a_given_b": 0.03278688524590164
+    },
+    {
+      "a": "transbronchial_biopsy",
+      "b": "cryotherapy",
+      "co_count": 2,
+      "count_a": 382,
+      "count_b": 34,
+      "jaccard": 0.004830917874396135,
+      "p_b_given_a": 0.005235602094240838,
+      "p_a_given_b": 0.058823529411764705
     }
   ],
   "constraint_counts": {
-    "debulking_without_rigid": 81,
-    "rigid_without_debulking": 675
+    "debulking_without_rigid": 48,
+    "rigid_without_debulking": 673
   },
   "constraint_examples": {
     "debulking_without_rigid": [
@@ -2095,26 +2095,6 @@
         "encounter_id": "7cc3db7f149e7971",
         "source": "data/ml_training/registry_train.csv",
         "row_index": 929
-      },
-      {
-        "encounter_id": "c824656d695b0840",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 930
-      },
-      {
-        "encounter_id": "da029868580a9eff",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 931
-      },
-      {
-        "encounter_id": "d7696e9c047de609",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 932
-      },
-      {
-        "encounter_id": "e837a082897e1db8",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 933
       },
       {
         "encounter_id": "693fb5ecb592290f",
@@ -2155,66 +2135,6 @@
         "encounter_id": "5832b2a715b0b88e",
         "source": "data/ml_training/registry_train.csv",
         "row_index": 1090
-      },
-      {
-        "encounter_id": "bce96a7d42438b49",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3599
-      },
-      {
-        "encounter_id": "2d1ff550e490628e",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3600
-      },
-      {
-        "encounter_id": "65617a9be4e0efc4",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3601
-      },
-      {
-        "encounter_id": "2808143815be3cfa",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3602
-      },
-      {
-        "encounter_id": "f4472b2143cd48ee",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3603
-      },
-      {
-        "encounter_id": "ef663042c36291b3",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3604
-      },
-      {
-        "encounter_id": "f356ca76a0faba3a",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3605
-      },
-      {
-        "encounter_id": "4a3a9f3583f04cff",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 3606
-      },
-      {
-        "encounter_id": "b161b868b96e6006",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 4311
-      },
-      {
-        "encounter_id": "45920a7cbbd5979a",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 4312
-      },
-      {
-        "encounter_id": "1bbe5a39df007276",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 4313
-      },
-      {
-        "encounter_id": "de5f928f7b9647fa",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 4314
       },
       {
         "encounter_id": "e1524f3a1f813368",
@@ -2277,67 +2197,132 @@
         "row_index": 5792
       },
       {
-        "encounter_id": "a93487c71c726001",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5804
-      },
-      {
-        "encounter_id": "bd13afa33b722920",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5805
-      },
-      {
-        "encounter_id": "ae62336b7501af7d",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5806
-      },
-      {
-        "encounter_id": "a8945278f7509738",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5807
-      },
-      {
-        "encounter_id": "cf581ab09fac5654",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5808
-      },
-      {
-        "encounter_id": "a847082b864a4e4a",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5809
-      },
-      {
-        "encounter_id": "e950bcb006d69cbf",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5810
-      },
-      {
-        "encounter_id": "d87dd7079058f82f",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 5811
-      },
-      {
         "encounter_id": "3088b60020e5ae37",
         "source": "data/ml_training/registry_train.csv",
         "row_index": 5928
       },
       {
-        "encounter_id": "abb3d65afb6ef3b8",
+        "encounter_id": "c926c3ccc433fb11",
         "source": "data/ml_training/registry_train.csv",
-        "row_index": 5929
+        "row_index": 6139
       },
       {
-        "encounter_id": "c05727327cae0f52",
+        "encounter_id": "420ea2c0c03f98bf",
         "source": "data/ml_training/registry_train.csv",
-        "row_index": 5930
+        "row_index": 6550
+      },
+      {
+        "encounter_id": "6974fde9e2cbe424",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 0
+      },
+      {
+        "encounter_id": "4e9073a9744160a0",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1
+      },
+      {
+        "encounter_id": "956cb84c38b66d69",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 236
+      },
+      {
+        "encounter_id": "9f912285e081d9e8",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 237
+      },
+      {
+        "encounter_id": "136f22bc8cc73c17",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 909
+      },
+      {
+        "encounter_id": "7d9684abe3490b29",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1124
+      },
+      {
+        "encounter_id": "8b821ca2f3ab25f7",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1125
+      },
+      {
+        "encounter_id": "675e64ef25a3c413",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1218
+      },
+      {
+        "encounter_id": "44dced483c619b7c",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1247
+      },
+      {
+        "encounter_id": "8742fc3ebca189d3",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1248
+      },
+      {
+        "encounter_id": "76e8e0657f656f70",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1249
+      },
+      {
+        "encounter_id": "06d3c749b433866d",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1396
+      },
+      {
+        "encounter_id": "54188287d50ec785",
+        "source": "data/ml_training/registry_val.csv",
+        "row_index": 1398
+      },
+      {
+        "encounter_id": "ac4e21fb1f58bd4c",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 0
+      },
+      {
+        "encounter_id": "33f6808fce012863",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 1
+      },
+      {
+        "encounter_id": "707ac5d682483336",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 793
+      },
+      {
+        "encounter_id": "4e1d5c0ca955335b",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 1170
+      },
+      {
+        "encounter_id": "145f6b80f1f74218",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 1256
+      },
+      {
+        "encounter_id": "ae2eaf4f202617da",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 1257
+      },
+      {
+        "encounter_id": "307c29c26c563a9e",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 1283
+      },
+      {
+        "encounter_id": "1f417c6b7a47dd4c",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 1284
+      },
+      {
+        "encounter_id": "3ee5a35e03292e13",
+        "source": "data/ml_training/registry_test.csv",
+        "row_index": 1406
       }
     ],
     "rigid_without_debulking": [
-      {
-        "encounter_id": "ec17d2e811778f87",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 67
-      },
       {
         "encounter_id": "cf0a781331b5ecd7",
         "source": "data/ml_training/registry_train.csv",
@@ -2404,6 +2389,16 @@
         "row_index": 800
       },
       {
+        "encounter_id": "eb97b93312487f62",
+        "source": "data/ml_training/registry_train.csv",
+        "row_index": 1072
+      },
+      {
+        "encounter_id": "f4583fd17bed6997",
+        "source": "data/ml_training/registry_train.csv",
+        "row_index": 1081
+      },
+      {
         "encounter_id": "f91596bed767d925",
         "source": "data/ml_training/registry_train.csv",
         "row_index": 1685
@@ -2444,6 +2439,11 @@
         "row_index": 1692
       },
       {
+        "encounter_id": "efa2b70c917fc726",
+        "source": "data/ml_training/registry_train.csv",
+        "row_index": 1836
+      },
+      {
         "encounter_id": "f733a3e8d197dcfa",
         "source": "data/ml_training/registry_train.csv",
         "row_index": 2476
@@ -2467,11 +2467,6 @@
         "encounter_id": "7df71c818131fd1b",
         "source": "data/ml_training/registry_train.csv",
         "row_index": 2480
-      },
-      {
-        "encounter_id": "033666b89ceebbd0",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 2481
       },
       {
         "encounter_id": "f1e2f352bd2ed9c0",
@@ -2577,11 +2572,6 @@
         "encounter_id": "16134fec2f5e7992",
         "source": "data/ml_training/registry_train.csv",
         "row_index": 2814
-      },
-      {
-        "encounter_id": "aed6dc803bf123ca",
-        "source": "data/ml_training/registry_train.csv",
-        "row_index": 2840
       }
     ]
   }
