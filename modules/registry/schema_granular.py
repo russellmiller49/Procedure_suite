@@ -189,6 +189,7 @@ class AirwayStentProcedure(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
     performed: bool | None = None
+    airway_stent_removal: bool = False
     action: Literal[
         "Placement",
         "Removal",

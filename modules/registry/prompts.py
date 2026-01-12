@@ -32,6 +32,7 @@ Mapping reminders:
 - Disposition: phrases like "discharged home same day" → "Outpatient discharge"; "PACU" / "recovery room" → "PACU recovery"; "admitted to ICU"/"remains in ICU" → "ICU admission"; other inpatient stays → "Floor admission".
 - Pleurodesis: if talc/doxycycline/etc. are instilled with intent to scar the pleura, set pleurodesis_performed=true and pleurodesis_agent to the exact method ("Talc Slurry", "Talc Poudrage", etc.).
 - CPT codes: the `cpt_codes` array must match the final CPT selection used for billing; include add-on codes where documented.
+- Airway stents: if stent removal is documented, set procedures_performed.airway_stent.action="Removal" and procedures_performed.airway_stent.airway_stent_removal=true.
 
 Navigation / Cryobiopsy expectations:
 - For navigation/robotic or cryobiopsy cases, ALWAYS evaluate and populate `nav_rebus_used`, `nav_rebus_view`, `nav_sampling_tools`, `nav_imaging_verification`, `nav_cryobiopsy_for_nodule`, and `bronch_tbbx_tool`. Use allowed schema values (e.g., nav_imaging_verification ∈ {"Fluoroscopy","Cone-beam CT","Augmented fluoroscopy","None"}).

@@ -283,10 +283,12 @@ def aggregate_registry_fields(
     if "31627" in code_set:
         procedures["navigational_bronchoscopy"] = {"performed": True}
 
-    # Airway stent: 31636 (initial placement), 31637 (each additional)
-    if code_set & {"31636", "31637"}:
+    # Airway stent: 31636 (initial placement), 31637 (each additional), 31638 (removal)
+    if code_set & {"31636", "31637", "31638"}:
         stent = {"performed": True}
-        # Can't determine placement vs removal from CPT alone; leave action null
+        if "31638" in code_set:
+            stent["action"] = "Removal"
+            stent["airway_stent_removal"] = True
         procedures["airway_stent"] = stent
 
     # Airway dilation: 31630 (balloon), 31631 (each additional)

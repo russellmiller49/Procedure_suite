@@ -19,6 +19,7 @@ from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDe
 from modules.coder.adapters.llm.gemini_advisor import LLMAdvisorPort
 from modules.coder.adapters.ml_ranker import MLRankerPort
 from modules.coder.application.procedure_type_detector import detect_procedure_type
+from modules.domain.coding_rules import apply_mer_rules, apply_ncci_edits
 from modules.phi.ports import PHIScrubberPort
 from proc_schemas.coding import CodeSuggestion, CodingResult
 from proc_schemas.reasoning import ReasoningFields

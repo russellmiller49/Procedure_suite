@@ -15,6 +15,7 @@ from modules.registry.engine import (
     filter_inapplicable_fields,
     validate_evidence_spans,
 )
+from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
 from modules.registry.postprocess import normalize_assistant_names
 from modules.common.spans import Span
 
@@ -140,6 +141,16 @@ class TestProcedureFamilyClassification:
         families = classify_procedure_families(note)
         # Should detect DIAGNOSTIC since no interventional procedure
         assert "DIAGNOSTIC" in families or len(families) > 0
+
+    def test_stent_removal_codes_as_31638(self):
+        """Stent removal should code as 31638 (not placement)."""
+        note = "Rigid bronchoscopy with removal of silicone Y-stent."
+        engine = RegistryEngine()
+        record = engine.run(note)
+        derivation = derive_registry_to_cpt(record)
+        codes = [c.code for c in derivation.codes]
+        assert "31638" in codes
+        assert "31636" not in codes
 
 
 class TestFieldGating:

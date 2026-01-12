@@ -395,12 +395,20 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
     elif ta_data is True:
         procedures["therapeutic_aspiration"] = {"performed": True}
 
-    if data.get("stent_type") or data.get("stent_action"):
+    stent_action = data.get("stent_action")
+    stent_removal = data.get("airway_stent_removal")
+    if data.get("stent_type") or stent_action or stent_removal is True:
         stent: dict[str, Any] = {"performed": True}
         stent["stent_type"] = data.get("stent_type")
-        stent["action"] = data.get("stent_action")
+        stent["action"] = stent_action
         stent["location"] = data.get("stent_location")
         stent["size"] = data.get("stent_size")
+        if stent_removal is True:
+            stent["airway_stent_removal"] = True
+            if not stent["action"]:
+                stent["action"] = "Removal"
+        elif isinstance(stent_action, str) and "remov" in stent_action.lower():
+            stent["airway_stent_removal"] = True
         procedures["airway_stent"] = stent
 
     if data.get("blvr_target_lobe") or data.get("blvr_valve_type"):

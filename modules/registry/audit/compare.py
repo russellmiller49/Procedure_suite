@@ -17,6 +17,13 @@ def _index_preds(preds: Iterable[CodePrediction]) -> dict[str, CodePrediction]:
     return {p.cpt: p for p in preds}
 
 
+def _derived_registry_flags(derived_codes: set[str]) -> set[str]:
+    flags: set[str] = set()
+    if derived_codes & {"31652", "31653"}:
+        flags.add("linear_ebus")
+    return flags
+
+
 def build_audit_compare_report(
     *,
     derived_codes: Sequence[str],
@@ -33,6 +40,7 @@ def build_audit_compare_report(
     """
     derived_list = list(derived_codes)
     derived_set = set(derived_list)
+    derived_flag_set = _derived_registry_flags(derived_set)
 
     snapshot = AuditConfigSnapshot(
         use_buckets=cfg.use_buckets,
@@ -73,7 +81,11 @@ def build_audit_compare_report(
     audit_set = {p.cpt for p in ml_audit_codes}
     missing_in_ml = sorted(derived_set - audit_set)
 
-    missing_in_derived = [p for p in ml_audit_codes if p.cpt not in derived_set]
+    missing_in_derived = [
+        p
+        for p in ml_audit_codes
+        if p.cpt not in derived_set and p.cpt not in derived_flag_set
+    ]
 
     high_conf_omissions = [
         p
@@ -100,4 +112,3 @@ def build_audit_compare_report(
 
 
 __all__ = ["build_audit_compare_report"]
-

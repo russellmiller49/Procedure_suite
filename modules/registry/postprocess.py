@@ -1236,12 +1236,51 @@ def normalize_ebus_stations(raw: Any) -> List[str] | None:
 
     Invalid or unrecognized station names are filtered out.
     """
-    result = normalize_list_field(raw)
-    if result is None:
+    def _extract_station_candidates(text: str) -> list[str]:
+        return [
+            match.group(0)
+            for match in re.finditer(
+                r"(?:station|stn|node)?\s*(2R|2L|4R|4L|7|10R|10L|11R|11L)(?:[sSiI])?\b",
+                text,
+                re.IGNORECASE,
+            )
+        ]
+
+    candidates: list[str] = []
+    if raw is None:
         return None
+
+    if isinstance(raw, list):
+        for item in raw:
+            if item is None:
+                continue
+            text = str(item).strip()
+            if not text:
+                continue
+            hits = _extract_station_candidates(text)
+            if hits:
+                candidates.extend(hits)
+            else:
+                candidates.append(text)
+    elif isinstance(raw, str):
+        text = raw.strip()
+        if not text:
+            return None
+        hits = _extract_station_candidates(text)
+        if hits:
+            candidates = hits
+        else:
+            candidates = [item.strip() for item in text.split(",") if item.strip()]
+    else:
+        text = str(raw).strip()
+        if not text:
+            return None
+        hits = _extract_station_candidates(text)
+        candidates = hits if hits else [text]
+
     # Clean and validate station format - only include valid stations
-    normalized = []
-    for station in result:
+    normalized: list[str] = []
+    for station in candidates:
         validated = validate_station_format(station)
         if validated and validated not in normalized:
             normalized.append(validated)
@@ -2019,7 +2058,7 @@ def apply_cross_field_consistency(data: Dict[str, Any]) -> Dict[str, Any]:
             if field in result:
                 result[field] = None
     if not ({"STENT", "CAO"} & families):
-        for field in ["stent_type", "stent_location", "stent_size", "stent_action"]:
+        for field in ["stent_type", "stent_location", "stent_size", "stent_action", "airway_stent_removal"]:
             if field in result:
                 result[field] = None
 

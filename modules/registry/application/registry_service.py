@@ -25,6 +25,7 @@ from modules.registry.adapters.schema_registry import (
 )
 from modules.registry.application.cpt_registry_mapping import (
     aggregate_registry_fields,
+    aggregate_registry_fields_flat,
     aggregate_registry_hints,
 )
 from modules.registry.application.registry_builder import (
@@ -363,7 +364,7 @@ class RegistryService:
         cpt_codes = [fc.code for fc in final_codes]
 
         # Get aggregated registry fields from CPT mappings
-        registry_fields = aggregate_registry_fields(cpt_codes, version)
+        registry_fields = aggregate_registry_fields_flat(cpt_codes, version)
         hints = aggregate_registry_hints(cpt_codes)
 
         # Get the appropriate builder for this version

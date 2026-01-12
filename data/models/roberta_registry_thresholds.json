@@ -27,5 +27,7 @@
   "ipc": 0.8500000000000002,
   "medical_thoracoscopy": 0.8500000000000002,
   "pleurodesis": 0.8500000000000002,
-  "fibrinolytic_therapy": 0.7500000000000002
+  "fibrinolytic_therapy": 0.7500000000000002,
+  "percutaneous_tracheostomy": 0.5,
+  "peg_insertion": 0.5
 }

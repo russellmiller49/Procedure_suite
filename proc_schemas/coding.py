@@ -18,7 +18,7 @@ class CodeSuggestion(BaseModel):
 
     code: str
     description: str = ""
-    source: Literal["rule", "llm", "hybrid", "manual"] = "hybrid"
+    source: Literal["rule", "llm", "hybrid", "manual", "extraction_first"] = "hybrid"
     hybrid_decision: Optional[str] = None  # HybridDecision enum value
 
     rule_confidence: Optional[float] = None
@@ -60,7 +60,7 @@ class FinalCode(BaseModel):
 
     code: str
     description: str = ""
-    source: Literal["rule", "llm", "hybrid", "manual"] = "hybrid"
+    source: Literal["rule", "llm", "hybrid", "manual", "extraction_first"] = "hybrid"
 
     reasoning: ReasoningFields = Field(default_factory=ReasoningFields)
     review: Optional[ReviewAction] = None

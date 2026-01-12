@@ -68,6 +68,20 @@ def _fiducial_marker_placed(record: RegistryRecord) -> bool:
     return False
 
 
+def _stent_action_is_removal(action: Any) -> bool:
+    if action is None:
+        return False
+    text = str(action).strip().lower()
+    return bool(text) and ("remov" in text or "retriev" in text or "explant" in text or "extract" in text)
+
+
+def _stent_action_is_placement(action: Any) -> bool:
+    if action is None:
+        return False
+    text = str(action).strip().lower()
+    return bool(text) and ("placement" in text or "revision" in text or "reposition" in text)
+
+
 def _lobe_tokens(values: list[str]) -> set[str]:
     lobes: set[str] = set()
     for value in values:
@@ -240,9 +254,21 @@ def derive_all_codes_with_meta(
         rationales["31630"] = "airway_dilation.performed=true"
 
     # Airway stent
-    if _performed(_proc(record, "airway_stent")):
-        codes.append("31636")
-        rationales["31636"] = "airway_stent.performed=true"
+    stent = _proc(record, "airway_stent")
+    if stent is not None:
+        action = getattr(stent, "action", None)
+        removal_flag = getattr(stent, "airway_stent_removal", None)
+        is_removal = removal_flag is True or _stent_action_is_removal(action)
+        is_placement = _performed(stent) and not is_removal
+        if not is_placement and _stent_action_is_placement(action):
+            is_placement = True
+
+        if is_removal:
+            codes.append("31638")
+            rationales["31638"] = "airway_stent.airway_stent_removal=true or action indicates removal"
+        elif is_placement:
+            codes.append("31636")
+            rationales["31636"] = "airway_stent.performed=true and no removal flag"
 
     # Thermal ablation (tumor destruction) → 31641
     if _performed(_proc(record, "thermal_ablation")):

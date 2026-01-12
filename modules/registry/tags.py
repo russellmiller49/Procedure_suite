@@ -67,6 +67,7 @@ FIELD_APPLICABLE_TAGS: dict[str, set[str]] = {
     "stent_location": {"STENT", "CAO"},
     "stent_size": {"STENT", "CAO"},
     "stent_action": {"STENT", "CAO"},
+    "airway_stent_removal": {"STENT", "CAO"},
 
     # Pleural-specific fields
     "pleural_procedure_type": {"PLEURAL", "THORACOSCOPY"},
@@ -102,5 +103,4 @@ FIELD_APPLICABLE_TAGS: dict[str, set[str]] = {
     "cryo_freeze_time": {"CRYO_BIOPSY"},
     "cryo_specimens_count": {"CRYO_BIOPSY"},
 }
-
 

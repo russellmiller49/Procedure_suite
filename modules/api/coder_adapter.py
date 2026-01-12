@@ -27,6 +27,7 @@ _BILLABLE_HYBRID_DECISIONS = {
     "accepted_agreement",
     "accepted_hybrid",
     "kept_rule_priority",
+    "EXTRACTION_FIRST",
 }
 
 
@@ -77,8 +78,8 @@ def convert_suggestion_to_code_decision(
     base_code = raw_code.lstrip("+")
     display_code = base_code
 
-    # Add '+' prefix for add-on codes in legacy output
-    if kb_repo and kb_repo.is_addon_code(base_code):
+    # Add '+' prefix for add-on codes in legacy output (guard for stub KBs)
+    if kb_repo and callable(getattr(kb_repo, "is_addon_code", None)) and kb_repo.is_addon_code(base_code):
         display_code = f"+{base_code}"
 
     # Add RVU data if KB available
@@ -126,15 +127,13 @@ def convert_coding_result_to_coder_output(
     if conversion_factor is None:
         conversion_factor = CoderSettings().cms_conversion_factor
 
-    # Legacy `/v1/coder/run` expects the full suggestion list in `codes`,
-    # even when a suggestion is later bundled/removed in modern billing logic.
-    # Keep financial totals restricted to billable decisions.
+    # Keep legacy output restricted to billable decisions so bundled codes are excluded.
     codes: list[CodeDecision] = []
     billable_codes: list[CodeDecision] = []
     for suggestion in result.suggestions:
         code_decision = convert_suggestion_to_code_decision(suggestion, kb_repo)
-        codes.append(code_decision)
         if _is_billable_suggestion(suggestion):
+            codes.append(code_decision)
             billable_codes.append(code_decision)
 
     # Build NCCI actions from warning notes (result-level and per-suggestion reasoning)

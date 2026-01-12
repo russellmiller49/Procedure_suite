@@ -339,7 +339,7 @@ def classify_procedure_families(note_text: str) -> Set[str]:
         r"stent\s+(?:plac|deploy|insert)",
         r"(?:plac|deploy|insert).*stent",
         r"(?:silicone|metallic|hybrid|dumon|y-stent).*(?:plac|deploy|insert)",
-        r"stent.*(?:remov|retriev|exchang)(?:ed|ing)",
+        r"stent.*(?:remov|retriev|exchang)\w*",
         r"stent\s+was\s+(?:plac|deploy|insert)",
     ]
     # Exclude history-only mentions
@@ -1614,6 +1614,28 @@ class RegistryEngine:
                 except ValueError:
                     pass
             _set_if_missing("airway_dilation", dilation)
+
+        # Airway stent removal (31638)
+        removal_match = bool(
+            re.search(
+                r"\bstent\b[^.\n]{0,60}\b(?:remov\w*|retriev\w*|extract\w*|explant\w*|exchang\w*)",
+                lowered,
+            )
+            or re.search(
+                r"\b(?:remov\w*|retriev\w*|extract\w*|explant\w*|exchang\w*)\b[^.\n]{0,60}\bstent\b",
+                lowered,
+            )
+        )
+        removal_negated = bool(
+            re.search(r"\b(?:no|not|without)\b[^.\n]{0,60}\bstent\b[^.\n]{0,60}\bremov\w*", lowered)
+        )
+        removal_history = bool(
+            re.search(r"\bstent\b[^.\n]{0,40}\bremoved\b[^.\n]{0,40}\b(?:year|yr|month|day)s?\s+ago", lowered)
+            or re.search(r"\b(?:history|prior|previous)\b[^.\n]{0,80}\bstent\b", lowered)
+        )
+        if removal_match and not removal_negated and not removal_history:
+            stent_payload = {"performed": True, "action": "Removal", "airway_stent_removal": True}
+            _set_if_missing("airway_stent", stent_payload)
 
         if procedures:
             data["procedures_performed"] = procedures
