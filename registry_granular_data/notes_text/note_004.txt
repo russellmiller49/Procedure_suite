@@ -1,0 +1,73 @@
+NOTE_ID:  note_004 SOURCE_FILE: note_004.txt INDICATION FOR OPERATION:  [REDACTED]is a 71 year old-year-old female who presents with abnormal CT chest.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+32555 - pt with pleural fluid on CT and unclear source of fevers
+ 
+50 Bilateral Procedures (Procedure done on both sides of the body) and 73 Like 53, but the procedure was not started
+ 
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a bilateral procedure today when this procedure would typically be unilateral. Apply to: 31624 Dx bronchoscope/lavage (BAL)    . BAL performed in the RUL and LUL due to neutropenic fever and concern for infectious etiology or two synchronous processes
+ 
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             2 mg
+Fentanyl          75 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   15:40
+ 
+Physician/patient face-to-face anesthesia stop time:   16:04
+ 
+Total moderate sedation time was 24 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+ 
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: supine
+ 
+Initial Airway Inspection Findings:
+ 
+The bronchoscope was introduced into the mouth and advanced to the level of the vocal cords. A total of 6 mL of lidocaine was applied to the vocal cords. The bronchoscope was advanced to through the vocal cords into the trachea. The airways were examined to the subsegmental level bilaterally. 
+ 
+The RML was fishmouthed. The mucosa appeared normal.
+ 
+Successful therapeutic aspiration was performed to clean out the LB1/2 and LB3, RB1 and 2 from mucus plug. 
+ 
+Bronchial alveolar lavage was performed at Posterior Segment of RUL (RB2).  Instilled 80 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  The bronchoscope was removed
+ 
+SPECIMEN(S): 
+BAL RUL
+BAL LUL
+ 
+IMPRESSION/PLAN: [REDACTED]is a 71 year old-year-old female who presents for bronchoscopy for abnormal CT and to obtain specimens for cultures to help identify source of fever in neutropenic patient. 
+ [ ] f/u culture

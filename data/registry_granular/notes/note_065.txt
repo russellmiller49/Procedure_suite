@@ -1,0 +1,61 @@
+NOTE_ID:  note_065 SOURCE_FILE: note_065.txt INDICATION FOR OPERATION:  [REDACTED] is a 84 year old-year-old female who presents with lung mass.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31652 EBUS sampling 1 or 2 nodes
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Linear EBUS 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+EBUS-Findings
+Indications: Diagnostic
+Technique:
+All lymph node stations were assessed. Only those 5 mm or greater in short axis were sampled.
+ 
+Lymph node sizing was performed by EBUS and sampling by transbronchial needle aspiration was performed using 25-gauge Needle and 22-gauge Needle.
+ 
+Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node
+11Rs lymph node
+ 
+Overall ROSE Diagnosis: Positive for malignancy
+ 
+No immediate complications
+ 
+ 
+Lymph Nodes Evaluated:
+Site 1: The 11Rs lymph node was => 10 mm on CT and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 6 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. 
+Preliminary ROSE Cytology was reported as not adequate and suggestive of blood and bronchial cells. Final results are pending.
+ 
+Site 2: The 4R (lower paratracheal) node was => 10 mm on CT and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 8 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. 
+Preliminary ROSE Cytology was reported as adequate and suggestive of Positive for malignancy. Final results are pending.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+TBNA and TBNB station 11R and 4R
+ 
+IMPRESSION/PLAN: [REDACTED]is a 84 year old-year-old female who presents for bronchoscopy for lung mass.
+- f/u pathology

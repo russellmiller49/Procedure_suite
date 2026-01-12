@@ -1,0 +1,397 @@
+{
+  "note_id": "note_063",
+  "procedures": [
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt2",
+      "evidence": null,
+      "findings": "Mucus",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Therapeutic Aspiration",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Therapeutic Aspiration"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt3",
+      "evidence": null,
+      "findings": "Lesion",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Endobronchial Biopsy",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Endobronchial Biopsy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt4",
+      "evidence": null,
+      "findings": "Granulation tissue",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Mechanical",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Debulking"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt5",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "APC",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Thermal Ablation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt6",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": "Instilled 60cc, Return 20cc",
+      "method": "BAL",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "BAL"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt7",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Foreign Body Removal",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Foreign Body Removal"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt8",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": "12mm",
+      "method": "Balloon Dilation",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Airway Dilation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt9",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Stent Placement",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Airway Stent"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt10",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": "12mm",
+      "method": "Balloon Dilation",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Airway Dilation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt11",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": "12mm",
+      "method": "Balloon Dilation",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Airway Dilation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt12",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": "10mm",
+      "method": "Balloon Dilation",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Airway Dilation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt13",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": "10mm",
+      "method": "Balloon Dilation",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Airway Dilation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_out",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": null,
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Outcome"
+    }
+  ],
+  "schema_version": "v3",
+  "source_filename": "note_063.txt"
+}

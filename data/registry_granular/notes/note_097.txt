@@ -1,0 +1,30 @@
+NOTE_ID:  note_097 SOURCE_FILE: note_097.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with with bilateral lung transplant and complication of anastomosis dehiscence, ischemic lung injury, and bronchial stenosis.
+
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT: 
+Disposable Bronchoscope
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.
+The Disposable Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the main carina, right carina 1, and left carina 2.
+Initial Airway Inspection Findings:
+Tracheostomy tube in good position.
+Distal trachea and main carina normal.  
+RMS dehiscence continues to be healed and remains closed.
+Stable fibrinous tan exudate/granulation tissue in the donor RMS, proximal RUL bronchus, BI, overlying RML take-off, and overlying RB6 take-off.  Prior area of fullness thickness erosion/ulceration along RUL bronchus anterior wall remains fully covered by fibrinous exudate/granulation tissue.  RB1-2 normal.  RB3 mildly stenotic with swirling granulation tissue/scar forming around the segmental airway take-off.  The RML with stent (Aero 8x15mm covered metallic stent) in good position and fully patent.  Able to traverse scope in the RML stent, but not into the segmental airways.  Able to see RB4-5 from stent and these segments were fully patent.  RB6 patent.  The RLL basilar segments RB7-10 appear healthy and patent.
+LMS anastomosis intact with visible sutures - overlying granulation tissue causing mild to moderate stenosis.  Prior area of fullness thickness erosion/ulceration along LUL bronchus medial wall remains fully covered by fibrinous exudate/granulation tissue.  Lingula mild stentotic but fully patent.  Able to traverse scope into lingula.  LB1-5 are patent.  LLL bronchus and segments appear healthy.  LB6-10 are patent.
+Successful therapeutic aspiration was performed to clean out the RMS, BI, RLL, LMS, and LLL from moderate thin mucus/secretions.
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was returned to ICU in stable condition. 
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+SPECIMEN(S): 
+None
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for bronchial stenosis airway evaluation.
+-Plan for repeat bronchoscopy by IP in 2 weeks.
+-OK to restart anticoagulation.

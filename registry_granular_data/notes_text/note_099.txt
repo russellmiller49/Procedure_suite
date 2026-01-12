@@ -1,0 +1,73 @@
+NOTE_ID:  note_099 SOURCE_FILE: note_099.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with bilateral lung transplant with complication of anastomosis dehiscence, ischemic lung injury, and bronchial stenosis.  
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31637 Dilate and bronchial stent additional bronchus
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required an unusual amount of clinical expertise and use of simultaneous bronchoscopes due to the severity of the patient's profound airway injury. This resulted in >50% increased work due to Increased intensity, Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to:
+31625 Endobronchial Biopsy(s)
+31636 Dilate and bronchial stent initial bronchus
+31637 Dilate and bronchial stent additional bronchus
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal. 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Disposable Bronchoscope - Slim scope
+Disposable Bronchoscope - Regular scope
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the main carina, right carina 1, and left carina 2.
+Initial Airway Inspection Findings:
+Tracheostomy tube in good position.
+Distal trachea and main carina normal.  
+RMS dehiscence continues to be healed and remains closed.  Prior metallic hemoclip seen protruding from the posterior membrane near the RMS anastomosis site is no longer visible.
+Further fibrinous exudate/granulation tissue in the donor RMS, proximal RUL bronchus, BI, overlying RML take-off, and overlying RB6 take-off.  This fibrinous exudate/granulation tissue has become more bulky and partially obstructing these airways.  Previously seen area of fullness thickness erosion/ulceration along RUL bronchus anterior wall remains fully covered by fibrinous exudate/granulation tissue.  RB1-2 normal.  RB3 mildly stenotic with swirling granulation tissue/scar forming around the segmental airway take-off.  The RML take-off is completely sealed and obstructed by the fibrinous exudate/granulation tissue.  RB4-5 not visible.  RB6 mildly stenotic due to surrounding granulation tissue.  The RLL basilar segments appear healthy.
+LMS anastomosis intact with visible sutures - having increasing amounts of overlying granulation tissue with increasing - causing mild to moderate stenosis.  LUL bronchus with evidence of continued healing with fibrin exudates/granulation tissue.  No longer able to see underlying mediastinum/pulmonary artery along medial aspect of LUL.  This entire area continues to look improved from prior.  However, heaped granulation tissue forming around the lingula take-off and causing moderate stenosis.  LB1-5 are patent.  LLL bronchus and segments appear healthy.  LB6-10 are patent.
+Successful therapeutic aspiration was performed to clean out the RMS, BI, RLL, LMS, and LLL from thin mucus.  
+Attention turned back to completely obstructed RML bronchus.  RML completely sealed off - covered by fibrinous exudate and granulation tissue. 
+Dilation was performed at RML bronchus.  Therapeutic bronchoscope was used to perform blunt dilation to 6.2 mm at the RML bronchus.  Able to achieve patent RML airway.  Copious tan-white secretions immediately started pouring out.  
+Successful therapeutic aspiration was performed to clean out the RML from copious white-tan mucus. RB4-5 segmental airways also patent afterward.
+Bronchial alveolar lavage was performed at RML.  Instilled 40 cc of NS, suction returned with 25 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+A second slim disposable bronchoscope was advanced via oral approach into the trachea and past the tracheostomy tube cuff.  This 2nd bronchoscope assisted with dual-scope visualization during the following procedures.
+The following stent (iCast fully covered 7mm x 22mm stent) was placed successfully deployed/placed in the RML bronchus.  Balloon dilation was performed at RML bronchus stent.  8/9/10 Elation balloon was used to perform dilation to 8 mm within the full RML bronchus stent.  Total 1 inflations with dilation time of 10 seconds.  Achieving 100% patency of the RML airway.  The proximal portion of the stent was flared using blunt dilation with tip of bronchoscope, blunt forceps, and serial balloon dilations with th Elation balloon and Fogarty 7 balloon.   Balloon dilation was performed at proximal portion of RML bronchus stent.  8/9/10 Elation balloon was used to perform serial dilations to 8 mm, 9 mm, and 10 mm at the proximal portion of RML bronchus stent.  Total 5 inflations with dilation time of 5-10 seconds each. 
+Attention then turn to the stenotic lingula airway.
+The following stent (iCast fully covered 7mm x 16mm stent) was deployed in the lingula bronchus.  However, stent migrated proximally and distal edge of stent became caught on LC1, so could not be advanced back into lingula despite multiple attempts with balloon and forceps.
+Foreign body removal of iCast stent overlying lingula take-off was extracted using blunt forceps.
+Balloon dilation was performed at lingula bronchus.  8/9/10 Elation balloon was used to perform dilation to 8 mm within the lingular bronchus.  Total 2 inflations with dilation time of 30 seconds each.  Improved patency of lingula bronchus.
+Attention then turned to the bulky partially obstructing fibrinous exudate within the RMS and BI.  The slim disposable bronchoscope was withdrawn and a regular disposable bronchoscope was advanced via oral approach into the trachea and past the tracheostomy tube cuff.
+Endobronchial biopsy was performed at RMS bronchus fibrinous exudate/debris.  Portions of lesion were successfully removed.  Samples sent for tissue culture and pathology. 
+Endobronchial fibrinous exudate/debris at RMS bronchus was treated with the following modalities:
+-With first bronchoscope, the fibrinous exudate/debris was stretched away from the RMS wall.
+-With second bronchoscope, Erbe HybridKnife electrocautery was used to cut/debride the debris.  Able to excise/debride large portions of the debris/exudate in this manner.
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	Erbe HybridKnife	Effect 2, 40 Watts	1-5 second bursts	Excised large portions of RMS debris/exudate.
+Prior to treatment, affected airway was note to be 60% patent.  After treatment, the airway was 70% patent. 
+During the above tissue debridement, a very small laceration to RC1 was made.  Small amount of bleeding from this site easily controlled and stopped with direct bronchoscopic pressure and 0.2mg epinephrine.  
+Final airway exam performed.  No active bleeding present.  Residual secretions were suctioned to clear.
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was returned to ICU in stable condition. 
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+SPECIMEN(S): 
+RML bronchus BAL - cell count, cultures
+RMS bronchus exudate/debris - tissue culture, pathology.
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for airway dilation, stent placement, and airway debridement.
+-Successful dilation of RML bronchus - achieved patency.  Copious secretions behind blockage suctioned to clear.
+-RML BAL performed.
+-iCast fully covered stent (7mm x 22mm) successfully placed within RML bronchus, achieving full patency.
+-Attempted stenting of lingula bronchus with stent malposition and needed to be removed.  Additional stents of the same type were not available.  Balloon dilation of lingula bronchus performed.
+-Debridement of bulky partially obstructing fibrinous exudate/debris in the RMS bronchus.
+-Will plan for repeat bronchoscopy with airway evaluation and likely lingula stent placement early next week - likely Tues, [REDACTED] as this is the soonest desired stents will arrive.

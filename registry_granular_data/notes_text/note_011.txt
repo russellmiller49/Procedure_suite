@@ -1,0 +1,87 @@
+NOTE_ID:  note_011 SOURCE_FILE: note_011.txt INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with hemoptysis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31634 Balloon occlusion or placement of occlusive substance 
+31624 Dx bronchoscope/lavage (BAL)    
+31635 Foreign body removal
+ 
+
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required cryotherapy for removal of organized clot throughout the left-sided airways. This resulted in >100% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Diagnostic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+The tracheostomy tube is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Larynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Vocal Cords: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  Thin rusty secretions, therapeutic aspiration was done.  Cavity noted in the RB2 subsegment. 
+Left Lung Proximal Airways: Endobronchial balloon at ligula, LUL with organized clot obscuring evaluation of distal airways. Otherwise, normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology. 7Fr Ardnt blocker was noted in middle of LMS. Balloon deflated. 
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus, blood, and blood clots. 
+ 
+Blocker (foreign body) was removed under direct visualization without any additional bleeding. 
+ 
+New Uniblocker (5Fr) balloon occlusion was performed at the Left Carina (LC2) with 5 Fr Uniblocker and secured in place with the Uniblocker ventilator adaptor.
+            -Placed at the tape level at dark blue securement device
+            -Confirmed that 3cc of air was required to inflate the balloon to fully occlude the 
+LUL
+The endobronchial blocker balloon was left inflated in the LUL.  With balloon inflated, the following was performed. 
+ 
+Endobronchial clot at LUL Lingula Carina (Lc1) and Left Carina (LC2) was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Cryoprobe	1.7mm Cryoprobe	N/A	5-10 second freezes	Excellent clot removal
+ 
+After organized clot was removed from the LUL orifice.  
+ 
+When block balloon was deflated, additional fresh blood was noted coming from LB1/2.  The blocker was reinflated with 3cc of air with cessation of bleeding. 
+ 
+Bronchial alveolar lavage was performed at Posterior-Basal Segment of LLL (LB10).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications. 
+ 
+SPECIMEN(S): 
+BAL 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy for evaluation of hemoptysis, cryotherapy (cryoprobe) were used to evacuate the LUL airways of organized clot.  5 Fr Uniblocker was placed and left inflated at the LUL. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--Post procedure CXR 
+--keep blocker up till IR guided BAE 
+--repeat bronch [REDACTED] for bleeding evaluation and blocker take down

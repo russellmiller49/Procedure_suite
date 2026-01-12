@@ -1,0 +1,29 @@
+NOTE_ID:  note_035 SOURCE_FILE: note_035.txt INDICATION FOR OPERATION:  [REDACTED]is a 47 year old-year-old male who presents with Complicated Effusion.  The nature, purpose, risks, benefits and alternatives to Instillation of agents for fibrinolysis (subsequent) were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+32562 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); subsequent day
+was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+ 
+PATIENT POSITION: 
+0‌ Supine  0‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 0‌ Left 
+ 
+Date of chest tube insertion: 12/15/25 
+ 
+Side: right
+1‌  10 mg/5 mg tPA/Dnasedose #:__3__ 
+            0‌  ___mg tPA                              dose #:____ 
+0‌  Other medication:  
+ 
+COMPLICATIONS:
+0‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 47 year old-year-old male who presents for Instillation of agents for fibrinolysis (subsequent).  The patient tolerated the procedure well.  There were no immediate complications.  

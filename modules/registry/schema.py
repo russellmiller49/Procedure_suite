@@ -20,6 +20,10 @@ from modules.registry.schema_granular import (
     AirwayStentProcedure,
 )
 
+# Allow `modules.registry.schema.<submodule>` imports even though this file is a module.
+# This lets us keep backwards compatibility while adding a `modules/registry/schema/` folder.
+__path__ = [str(Path(__file__).with_name("schema"))]
+
 _SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
 
 # Optional overrides for individual fields (identified via dotted paths).

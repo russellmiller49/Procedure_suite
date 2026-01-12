@@ -1,0 +1,41 @@
+NOTE_ID:  note_110 SOURCE_FILE: note_110.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with Pleural Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Thoracentesis were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS:  Pleural Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32555 Aspirate pleura with imaging (thoracentesis)
+53 Procedure was started, but terminated before completion due to unexpected circumstances or for the patient's well being
+Local ONLY
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+PROCEDURE IN DETAIL:
+PATIENT POSITION: 
+1‌ Supine  0‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 0‌ Left 
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and printed 
+Hemithorax:   0‌ Right  1‌ Left 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  1‌ Small  0‌ Moderate  0‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  1‌ None  0‌Thin  0‌ Thick 
+Diaphragmatic Motion:  0‌ Normal  0‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   1‌ Present  0‌ Absent 
+Lung sliding post procedure:   1‌ Present  0‌ Absent 
+Lung consolidation/atelectasis: 0‌ Present  0‌  Absent 
+Pleura:  1‌ Normal  0‌ Thick  0‌ Nodular 
+Based on Ultrasound Evaluation: the small effusion was visible in the 2nd intercostal space but without an access point that would avoid the lung. There was a small window for access identified above the clavicle. 
+Insertion site prepped and draped in sterile fashion.  Thoracentesis Kit was used with 5Fr Yeuh catheter. 
+ANESTHESIA:   Lidocaine 1%: __8____ ml      Other: ______ 
+Entry Site: 
+0‌ Right ___ Intercostal Space   1‌ Left  __1st_ Intercostal Space 
+1‌ Mid-clavicular   0‌ Mid-axillary  0‌ Mid-scapular  0‌ Other: 
+After advancement of finder needle into the space under real-time US guidance, there was resistance and no fluid was aspirated despite three attempts. As such, procedure aborted 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for Chest Ultrasound and Thoracentesis LEFT.  The procedure was aborted as no fluid could be aspirated. 
+- consider CT-guided approach, though this also may be challenging unless the effusion grows further 
+DISPOSITION: ICU

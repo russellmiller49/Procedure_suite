@@ -1,0 +1,54 @@
+NOTE_ID:  note_124 SOURCE_FILE: note_124.txt PROCEDURE NOTE
+
+Pre-operative diagnosis: RLL consolidation
+
+Post-operative diagnosis: SAA
+
+Procedure: Bronchoscopy with EBUS + TBNA + lung biopsy of RLL
+
+CPT Code(s):
+CPT 31653 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 3 or more structures.
+CPT 31625 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with bronchial or endobronchial biopsy(s), single or multiple sites
+CPT 31628 Bronchoscopy with fluoroscopic guidance for transbronchial lung biopsy(s), single lobe
+
+Bronchoscopes: Olympus H190, convex EBUS
+
+Anesthesia: General per Anesthesia in addition to 6cc of 1% topical lidocaine
+
+Time out: 1349
+
+Scope in: 1350
+
+Scope out: 1501
+
+Estimated blood loss: 5cc
+
+Fluids administered: None
+
+PROCEDURE:
+
+History and physical has been performed. The risks and benefits of the procedure were discussed with the patient. All questions were answered and informed consent was obtained.
+
+Patient identification and proposed procedure were verified by the physician, anesthesia team, nurse, and pulmonary team. The patient was brought to the operating suite. Under general anesthesia, endotracheal tube was placed by anesthesiologist. The bronchoscope was introduced through an 8.5 endotracheal tube where lidocaine 1% was instilled onto trachea and airways. The tracheo-bronchial tree was then examined to at least the first subsegmental level. The endobronchial scope was then advanced in a similar fashion and mediastinal lymph nodes were identified and measured in a systematic fashion (see measurements below).
+
+Transbronchial needle aspiration was performed at enlarged nodal stations with adequate tissue confirmed by ROSE (see sizes below).
+
+Finally, inspection bronchoscopy was performed. 
+
+The procedure was accomplished without difficulty. The patient tolerated the procedure well without immediate complications.
+
+FINDINGS: The vocal cords are normal and move normally with breathing. The subglottic space is normal. The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree of bilateral lungs was examined to at least the first subsegmental level. All segmentals of the RLL appeared significantly stenotic and with nodular mucosa concerning for malignancy. Mediastinal and hilar lymph nodes were measured and sampled as below.
+
+Node stations and sizes were as follows:
+
+4L - 5.5mm, 4 passes
+4R - 6.0mm
+7 - 7.5mm, 8 passes
+11Rs - 4.9mm
+
+After nodal sampling was completed, forceps were used to biopsy the RLL. 2 samples were taken from the medial segment, 2 samples were taken from the anterior segment and 2 samples were taken from the superior segment.
+
+SPECIMENS SENT TO THE LABORATORY:
+--TBNA of 4L node station
+--TBNA of 7 node station
+-- Forceps Biopsies of the RLL (6 passes)

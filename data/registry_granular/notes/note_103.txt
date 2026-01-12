@@ -1,0 +1,34 @@
+NOTE_ID:  note_103 SOURCE_FILE: note_103.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with bilateral lung transplant with complication of anastomosis dehiscence and ischemic lung injury.
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+ANESTHESIA: Local
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Disposable Bronchoscope
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  
+The Flexible Therapeutic Bronchoscope was advanced for airway evaluation.  Endobronchial topical lidocaine applied to the main carina, RMS, BI, and LC2. 
+Initial Airway Inspection Findings:
+Distal trachea normal.  
+RMS dehiscence continues to be healed and remains closed.
+Small metallic object protruding from the posterior membrane near the RMS anastomosis site - consistent with likely hemoclip.  This is slightly more prominent than our bronchoscopy 1 week prior.
+Continues to have fibrinous exudate/desired granulation tissue in the donor RMS, proximal RUL bronchus, BI, overlying RML take-off, and overlying RB6 take-off.  All areas appear to be improved from previous.  There is some mildly heaped nonobstructing granulation tissue along the medial aspect of the right mainstem bronchus.  Previously seen area of fullness thickness erosion/ulceration along RUL bronchus anterior wall now appears to be fully covered by fibrinous exudate suggesting early healing.  This is greatly improved from 1 week ago.  RML take-off is narrowed, but able to traverse with disposable bronchoscope "regular" size.  RLL basilar segments appear healthy. Moderate secretions in BI and RLL which were suctioned to clear (therapeutic aspiration).
+LMS anastomosis intact with visible sutures and mild stenosis. LUL bronchus with evidence of continued healing with fibrin exudates/desired granulation tissue. No longer able to see underlying mediastinum/pulmonary artery along medial aspect of LUL.  This entire area continues to look improved from 1 week ag.  Lingula take-off is narrowed, but able to traverse with disposable bronochoscope "regular" size.  LLL bronchus and segments appear health.
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right-sided stent, bronchus intermedius, right lower lobe bronchus, left mainstem bronchus, left upper lobe, and left lower lobe from mild mucus.
+Bronchial alveolar lavage/secretions obtained from RLL was performed at RLL.  Instilled 20 cc of NS, suction returned with 10 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal). 
+Residual secretions suctioned to clear.  Disposable bronchoscope was removed and procedure completed.
+The patient tolerated the procedure well.  There were no immediate complications.  Patient will remain in ICU afterward.
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+SPECIMEN(S): 
+BAL of RLL - cultures/micro
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for airway evaluation, therapeutic aspiration, and removal stent.
+-Right mainstem anastomosis dehiscence remains closed.
+-Prir RUL full thickness erosion/ulceration is now covered with fibrinous exudate/granulation tissue.
+-Encourage ongoing aggressive secretion clearance practices.
+-Recommend bronchoscopic secretion clearance every 1-2 days, but will defer to transplant team's expertise.
+-Ongoing discussions with transplant team regarding timing for next IP bronchoscopy.  Replacement of stent still possible if any signs of worsening of RMS dehiscence site.

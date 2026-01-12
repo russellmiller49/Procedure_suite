@@ -1,0 +1,34 @@
+NOTE_ID:  note_123 SOURCE_FILE: note_123.txt Patient name: [REDACTED]
+
+Preoperative diagnosis: Lung cancer
+Postoperative diagnosis: same as above
+
+Procedures performed:
+CPT 31629 Flexible bronchoscopy with fluoroscopic trans-bronchial needle aspiration
+CPT 31652 bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 2 or fewer structures.
+
+Indications for the procedure: staging of malignancy
+
+Anesthesia: General anesthesia using a LMAendotracheal tube.
+
+Procedure: After obtaining informed consent from the patient, he was brought to the procedure room. A proper timeout was performed to identify the correct patient and procedure to be performed. General anesthesia was administered to the patient and he was orally intubated with a LMA by the anesthesia team. the T190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords were normal. The subglottic space was normal. The trachea was of normal caliber. The bronchial treal was anesthetized with 8cc of 1% lidocaine. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions.
+
+The UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4R, 4L, 7, 11Ri, 11Rs lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus Vizishot 2 EBUS TBNA 22 gauge needle beginning with the 4L Lymph node, followed by the 7 lymph node, 4R lymph node, and finally 11Ri lymph node. A total of at least 5 biopsies were performed in each station (see below). All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the T180 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.
+The endobronchial ultrasound scope was introduced through the tube into the airway. Endobronchial ultrasound examination of the appreciable hilar and mediastinal lymph node stations was performed. EBUS transbronchial needle aspiration (TBNA) was performed at stations_ using the Vizishot 2 22g needle. Specimens were sent for cytology examination. Rapid on site cytologic evaluation was utilized.
+
+Lymph nodes
+4R: 8mm; 7 passes
+4L: 5mm; 6 passes
+7: 10mm; 5 passes
+10R: 4mm;
+11Ri: 13mm; 5 passes
+11Rs: 10.3mm
+
+Following confirmation of hemostasis and therapeutic aspiration of all endobronchial secretions, the bronchoscope was removed. Patient tolerated the procedure well with no immediate complications. Patient was extubated and returned to recovery in good condition. Post procedure chest x-ray showed no evidence of pneumothorax.
+
+Specimens:
+Cytology
+
+EBL: minimal
+
+Bronchoscopes: Olympus Q190, UC180F EBUS

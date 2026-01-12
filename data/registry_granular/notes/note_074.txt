@@ -1,0 +1,59 @@
+NOTE_ID:  note_074 SOURCE_FILE: note_074.txt INDICATION FOR OPERATION:  [REDACTED] is a 37 year old-year-old male who presents with tumor obstruction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31636 Dilate and bronchial stent initial bronchus
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Rigid Black ventilating scope was used to intubate the patient. 
+ 
+Endobronchial obstruction at Left Mainstem  (100% obstruction) was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	Knife 	PreciSect	10 secs	removed
+Microwave	mini	90oC	2min, 1.5min	ablated
+ 
+Prior to treatment, affected airway was note to be 0% patent.  After treatment, the airway was 100% patent. 
+ 
+Successful therapeutic aspiration was performed to clean out the LLL and LUL subsegments from mucus. 
+ 
+The following stent (bonastent 10x20) was placed in the LLL basal subsegment to the LC2; jailing LB6 (origin of the tumor). 
+ 
+Bronchial alveolar lavage was performed at Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5).  Instilled 20 cc of NS, suction returned with 10 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Tumor from LMS
+BAL
+ 
+IMPRESSION/PLAN: [REDACTED] is a 37 year old-year-old male who presents for bronchoscopy for endobronchial obstruction.
+- f/u in clinic 
+- f/u in 4-6 weeks post for stent check
+- start stent hydration protocol

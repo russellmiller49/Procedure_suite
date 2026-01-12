@@ -1,0 +1,29 @@
+NOTE_ID:  note_023 SOURCE_FILE: note_023.txt INDICATION FOR OPERATION:  [REDACTED]is a 74 year old-year-old female who presents with hemoptysis after bronchoscopy.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+PREOPERATIVE DIAGNOSIS: hemoptysis
+POSTOPERATIVE DIAGNOSIS:  hemoptysis
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+ANESTHESIA: 
+Continuous sedation
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL: A timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: supine
+Initial Airway Inspection Findings:
+The bronchoscope was introduced into the ETT. The ETT is 2 cm above the main carina. The bronchial blocker was in the RLL but was mostly deflated without evidence of spill over into the other segments. 
+Successful therapeutic aspiration was performed to clean out the LLL and LMSB from mucus. 
+The balloon was was fully deflated and then removed. Then a new 7 F Ardnt bronchial blocker was replaced through the existing ETT. The blocker was positioned in the distal BI. 3 mL of air was introduced into the blocker and resulted in occlusion of the BI without occlusion of the RUL. During exchange of the bronchial blocker there was no increase in the blood seen in the RLL lateral segment. This was no aspirated due to no obvious formed clot.
+The bronchoscope was removed. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  
+SPECIMEN(S): 
+none
+IMPRESSION/PLAN: [REDACTED]is a 74 year old-year-old female who presents for bronchoscopy for hemoptysis.
+[ ] keep blocker in place at 40 cm at the connective device
+[ ] ETT at 20 cm at the front tooth
+[ ] stop paralysis once this is not effective stop fentanyl and repeat bronchoscopy at 1500 today
+[ ] family updated

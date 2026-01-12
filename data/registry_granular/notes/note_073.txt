@@ -1,0 +1,80 @@
+NOTE_ID:  note_073 SOURCE_FILE: note_073.txt INDICATION FOR OPERATION:  [REDACTED]is a 29 year old-year-old male who presents with tracheal stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31623 Dx bronchoscope/brushing    
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Not fully assessed due to bronchoscopy introduction through LMA.
+Vocal Cords: Normal without mass/lesions
+Trachea: Tracheal stent in place with slight granulation tissue and the anterior and posterior aspect of the proximal stent. Mild thick yellow mucus within the stent
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: As described above.  
+ 
+GRANULATION TISSUE AT THE PROXIMAL STENT
+ 
+ 
+ 
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+The 2.4mm cryoprobe was used to treat the anterior granulation tissue with 30 second freeze-thaw cycles (total of 4 cycles).
+ 
+The granulation tissue at the posterior trachea was treated with the 2.4mm cryoprobe in which tissue was frozen to the probe and removed en bloc with the bronchoscope.
+ 
+In sum, the granulation tissue at Subglottic was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Cryoprobe	2.4mm Cryoprobe	N/A	30 second freeze/thaw cycles	Excellent tissue destruction
+ 
+Mild oozing/bleeding was noted and treated with cold saline.
+ 
+Lastly, mucus/secretions were removed from within the stent using a combination of saline flushes and cytology brush.
+ 
+AREAS OF GRANULATION  TISSUE TREATMENT AT THE CONCLUSION OF THE PROCEDURE
+ 
+ 
+STENT AT THE CONCLUSION OF THE PROCEDURE
+ 
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--Tracheal tumor/granulation tissue removed with cryoprobe
+ 
+IMPRESSION/PLAN: [REDACTED]is a 29 year old-year-old male who presents for bronchoscopy for evaluation of tracheal stenosis. Granulation tissue at the anterior and posterior aspects of the proximal tracheal stent were treated with cryoprobe with excellent tissue debulking.
+ 
+--Post procedure CXR
+--Follow up path results
+--Patient to follow up in outpatient IP clinic to go over results and next steps
+ 

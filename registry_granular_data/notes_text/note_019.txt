@@ -1,0 +1,64 @@
+NOTE_ID:  note_019 SOURCE_FILE: note_019.txt INDICATION FOR OPERATION:  [REDACTED]is a 87 year old-year-old male who presents with Complicated Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Instillation of agents for fibrinolysis were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate provided consent.
+ 
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32561 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); initial day
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+ 
+PATIENT POSITION:  Sitting
+ 
+LEFT CHEST ULTRASOUND PROCEDURE:
+FINDINGS:
+Hemithorax:  Left
+Pleural Effusion: 
+Volume:  Minimal
+Echogenicity:  Anechoic
+Loculations:  None
+Diaphragmatic Motion:  Normal
+Lung: 
+Lung sliding before procedure:  Present
+Lung sliding post procedure:  Present
+Lung consolidation/atelectasis:  Absent
+Pleura:  Normal
+Image(s) saved and uploaded:  yes
+ 
+RIGHT CHEST ULTRASOUND PROCEDURE:
+FINDINGS:
+Hemithorax:  Right
+Pleural Effusion: 
+Volume:  Large
+Echogenicity:  Anechoic
+Loculations:  Thick
+Diaphragmatic Motion:  Diminished
+Lung: 
+Pleura:  Thick
+Image(s) saved and uploaded:  yes
+ 
+Date of chest tube insertion: 9/24/25
+ 
+Side: RIGHT
+1‌  10 mg tPA / 5 mg Dnasedose #:__1__ 
+            0‌  ___mg tPA                              dose #:____ 
+0‌  Other medication:  
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 87 year old-year-old male who presents for Chest Ultrasound and Instillation of agents for fibrinolysis.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+ 
+DISPOSITION: Home
+ 
+-1hr dwell of lytics followed by drainage with vacutainer- 400cc bloody output drained
+- pleural clinic in 10-14days for repeat lytics 
+ 
+ 

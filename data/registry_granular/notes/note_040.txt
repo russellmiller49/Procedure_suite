@@ -1,0 +1,93 @@
+NOTE_ID:  note_040 SOURCE_FILE: note_040.txt INDICATION FOR OPERATION:  [REDACTED]is a 68 year old-year-old female who presents with Recurrent Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Thoracentesis were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS:  Recurrent Effusion
+POSTOPERATIVE DIAGNOSIS: Recurrent Effusion
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32555 Aspirate pleura with imaging (thoracentesis)
+ 
+50 Bilateral Procedures (Procedure done on both sides of the body) (bilateral chest ultrasound)
+ 
+Local ONLY
+PROCEDURE IN DETAIL:
+ 
+PATIENT POSITION: 
+0‌ Supine  1‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 0‌ Left 
+ 
+LEFT CHEST ULTRASOUND FINDINGS:  1‌ Image saved and uploaded to patient's medical record
+Hemithorax:   0‌ Right  1‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  1‌ Small  0‌ Moderate  0‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  1‌ None  0‌Thin  0‌ Thick 
+Diaphragmatic Motion:  1‌ Normal  0‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   1‌ Present  0‌ Absent 
+Lung sliding post procedure:   1‌ Present  0‌ Absent 
+Lung consolidation/atelectasis: 0‌ Present  1‌  Absent 
+Pleura:  1‌ Normal  0‌ Thick  0‌ Nodular 
+ 
+ 
+ 
+RIGHT CHEST ULTRASOUND FINDINGS:  1‌ Image saved and uploaded to patient's medical record 
+Hemithorax:   1‌ Right  0‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  0‌ Small  0‌ Moderate  1‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  1‌ None  0‌Thin  0‌ Thick 
+Diaphragmatic Motion:  1‌ Normal  0‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   1‌ Present  0‌ Absent 
+Lung sliding post procedure:   1‌ Present  0‌ Absent 
+Lung consolidation/atelectasis: 1‌ Present  0‌  Absent 
+Pleura:  1‌ Normal  0‌ Thick  0‌ Nodular 
+ 
+ 
+ 
+Based on Ultrasound Evaluation, Thoracentesis is determined to be feasible and will proceed as planned. .
+ 
+Insertion site prepped and draped in sterile fashion.  Thoracentesis Kit was used. 
+ 
+ANESTHESIA:   Lidocaine 1%: 10 ml      Other: ______ 
+Entry Site: 
+1‌ Right 8th Intercostal Space   0‌ Left  ___ Intercostal Space 
+0‌ Mid-clavicular   1‌ Posterior-axillary  0‌ Mid-scapular  0‌ Other: 
+ 
+Sutured: 0‌ Yes 1‌ No 
+ 
+PROCEDURE FINDINGS: 
+Fluid Removed: 900 mL, stopped due to symptoms (coughing, complaint of dry throat)
+1‌ Serous  0‌ Serosanguinous 0‌ Bloody  0‌ Chylous 0‌ Other: 
+ 
+Drainage device:   1‌ Pleurovac    0‌ Drainage Bag  0‌ Heimlich Valve  0‌ Pneumostat  0‌ Other: 
+Suction: 1‌ No 0‌Yes, - ___ cmH20 
+ 
+RIGHT CHEST ULTRASOUND S/P THORACENTESIS
+ 
+ 
+SPECIMEN(S): 
+0‌None           1‌PH               1‌ LDH                        1‌Glucose       1‌T. Protein    1‌Cholesterol
+1‌Cell Count   1‌ ADA             0‌Triglycerides            0‌Amylase 
+1‌Gram Stain/ Culture            1‌AFB                         1‌Fungal Culture 
+1‌Cytology      0‌Flow Cytometry                               0‌Other: 
+ 
+CXR ordered: 1‌ Yes 0‌ No 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 68 year old-year-old female who presents for Chest Ultrasound and Thoracentesis.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+--Post procedure CXR
+--Follow up pleural studies
+--Continued care per primary team
+ 
+ 
+DISPOSITION: Nursing Unit
+ 

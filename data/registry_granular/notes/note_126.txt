@@ -1,0 +1,34 @@
+NOTE_ID:  note_126 SOURCE_FILE: note_126.txt Patient name: [REDACTED]
+
+Preoperative diagnosis: 1:Lung mass
+Postoperative diagnosis: same as above
+
+Procedures performed:
+CPT + 31633 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with transbronchial needle aspiration biopsy(s), each additional lobe
+CPT 31653 bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 3 or more structures.
+
+Indications for the procedure: high suspicion for malignancy staging of malignancy
+
+Anesthesia: General anesthesia using a LMA
+
+Procedure: After obtaining informed consent from the patient the patient was brought to the procedure room. A proper timeout was performed to identify the correct patient and procedure to be performed. General anesthesia was administered to the patient and_was orally intubated with a LMA by the anesthesia team. the diagnostic video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords were normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions.
+
+The convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter PET avid) were met in station 11 L, 7, 3P lymph nodes. Sampling by transbronchial needle aspiration was performed with the EBUS TBNA 21 gauge needle beginning with the 11 L lymph node, followed by the 7 lymph node, followed by the 3P lymph node. A total of at least 5 biopsies were performed in each station. ROSE evaluation yielded malignancy at station 7 and 3P. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.
+
+Lymph nodes
+3p: 4.0 mm; 4 passes
+4R: <3mm; 
+4L: 3mm; 
+7: 7.6; 7passes
+11Rs: 4.9 mm; 
+11Ri: 3.5 mm;
+11L: 5.4mm; 6of passes
+
+Following confirmation of hemostasis and therapeutic aspiration of all endobronchial secretions, the bronchoscope was removed. Patient tolerated the procedure well with no immediate complications. Patient was extubated and returned to recovery in good condition.
+
+Specimens:
+Cytology
+
+EBL: 10cc
+
+Bronchoscopes: Olympus H190, convex EBUS

@@ -1,0 +1,25 @@
+NOTE_ID:  note_122 SOURCE_FILE: note_122.txt Patient name: [REDACTED]
+Preoperative diagnosis: 1:Mediastinal mass
+Postoperative diagnosis: same as above
+
+Procedures performed:
+CPT 31654 Bronchoscope with Endobronchial Ultrasound guidance for endobronchial biopsy
+
+Indications for the procedure: Mediastinal Mass
+
+Anesthesia: General anesthesia using a LMA.
+
+Procedure: After obtaining informed consent from the patient, he was brought to the procedure room. A proper timeout was performed to identify the correct patient and procedure to be performed. General anesthesia was administered to the patient and_was orally intubated with a LMA by the anesthesia team. the T190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords were normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions.
+
+The UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The mediastinal mass was located in the 4R position. Sampling by transbronchial needle aspiration was performed with the Olympus Vizishot 2 EBUS TBNA 22 gauge needle. A total of 5 biopsies were performed. ROSE evaluation yielded pus and inflammatory cells. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the T180 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed. Patient tolerated the procedure well with no immediate complications. Patient was extubated and returned to recovery in good condition.
+
+Specimens:
+Cytology
+Bacterial culture
+Fungal culture
+Acid Fast culture
+Tissue culture
+
+EBL: minimal
+
+Bronchoscopes: Olympus Q190, UC180F EBUS

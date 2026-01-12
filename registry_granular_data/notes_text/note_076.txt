@@ -1,0 +1,30 @@
+NOTE_ID:  note_076 SOURCE_FILE: note_076.txt INDICATION FOR OPERATION:  [REDACTED]is a 41 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: . 
+Initial Airway Inspection Findings:
+Patient was already intubated for his gastric surgery with Dr. Mehtsun. 
+The endotracheal tube is in good position. The visualized portion of the trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Airway exam notable for small endobronchial nodules at distal BI as before. RML was moderately stenotic from extrinsic compression. 
+Moderate clear thick secretions bilaterally. 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Instilled 80 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+The patient tolerated the procedure well.  There were no immediate complications.  Patient was left intubated for the rest of his surgery. 
+SPECIMEN(S): 
+- RML BAL 
+IMPRESSION/PLAN: [REDACTED]is a 41 year old-year-old male who presents for bronchoscopy for bronchial stenosis.
+- f/u BAL studies
+- consult ID for pulmonary fungal infection while admitted 
+- repeat bronch in 4-6 weeks 

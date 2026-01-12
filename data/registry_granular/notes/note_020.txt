@@ -1,0 +1,47 @@
+NOTE_ID:  note_020 SOURCE_FILE: note_020.txt INDICATION FOR OPERATION:  [REDACTED]is a 59 year old-year-old male who presents with lung transplant and airway narrowing.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+Endobronchial biopsy was performed at Right Mainstem.  Lesion was successfully removed.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+BAL, EBBX
+ 
+IMPRESSION/PLAN: [REDACTED]is a 59 year old-year-old male who presents for bronchoscopy for airway stenosis.
+- f/u BAL
+- airway in good condition, need repeat bronch in 4-6 weeks. 
+ 

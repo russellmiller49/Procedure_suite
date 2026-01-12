@@ -1,0 +1,30 @@
+NOTE_ID:  note_105 SOURCE_FILE: note_105.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway evaluation and stent change.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient/surrogate in detail.  Patient/surrogate indicated a wish to proceed with surgery and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+ANESTHESIA: Local ONLY
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Lidocaine instilled into tracheostomy tube.
+Disposable bronchoscope advanced.  Lidocaine applied to main carina, RMS, BI, and LC2.  
+Initial Airway Inspection Findings:
+Frothy, non obstructing white secretions in RMS, BI, RML, RLL, LMS, LLL.
+Successful therapeutic aspiration was performed to clean out the distal trachea RMS, BI, RML, RLL, LMS, LLL from mucus.
+Uncovered metallic stent in good position - appropriately spanning from mid RMS to proximal BI, fully covering and closing the prior area of RMS anastomosis dehiscence.  Stent is intentionally "jailing off" RUL bronchus but uncovered perforations between struts allowing for ventilation of RUL; minimal secretions overlying this area.  Able to visualize RUL bronchus and RB1 & RB2 from the RMS bronchus, but unable to visualize RB3.  RUL bronchus appears to have evidence of healing with fibrin exudates/desired granulation tissue.  Stent is perhaps mildly undersized but no signs of migration nor significant granulation over struts of stent.  Continues to have significant ischemic and necrotic debris in the donor RMS, BI, overlying RML take-off, and overlying RB6 take-off.  Leading to moderate stenosis of RML bronchus.  RLL basilar segments appear healthy. 
+LMS anastomosis intact with visible sutures and mild stenosis.  LUL bronchus with evidence of healing with fibrin exudates/desired granulation tissue.  No longer able to see underlying mediastinum/pulmonary artery along medial aspect of LUL.  LLL bronchus and segments appear health.
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation patient will remain in ICU in similar condition to prior. 
+SPECIMEN(S): 
+None
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for stent exchange.
+-14x40 B.S. uncovered metallic stent in good position.
+-No plan for bronchoscopy by IP team remainder of this week unless clinical change.
+-Continue to have issues with secretion clearance.  2-3x weekly bronchoscopy clean-out may be warranted until patient becomes stronger/able to clear own secretions.  Will defer to lung transplant team's discretion/expertise.  Could be done under local anesthesia only to minimize interruptions in nutrition/PT.
+-Likely bronchoscopy by IP team early next week (likely Monday).  Discussions with primary team regarding RML bronchus dilation.
+-Possible stent exchange late next week or the following week - stent is mildly undersized, so will consider upsizing to 16x40 B.S. SEMS.

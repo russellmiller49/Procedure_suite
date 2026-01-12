@@ -1,0 +1,337 @@
+{
+  "note_id": "note_119",
+  "procedures": [
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_01",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "aspiration",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "airway_various",
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "therapeutic_aspiration"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_02",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "robotic_nav_radial_ebus",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "lung",
+        "lobe": "LLL",
+        "segment": "Anteromedial",
+        "station": null
+      },
+      "type": "navigation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_03",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "transbronchial_needle_aspiration",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "lung",
+        "lobe": "LLL",
+        "segment": null,
+        "station": null
+      },
+      "type": "biopsy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_04",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "transbronchial_cryobiopsy",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "lung",
+        "lobe": "LLL",
+        "segment": null,
+        "station": null
+      },
+      "type": "biopsy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_05",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "transbronchial_brushing",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "lung",
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "biopsy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_06",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "bronchoalveolar_lavage",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "bal"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_07",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "placement",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "fiducial_marker"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_08",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "aspiration",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "therapeutic_aspiration"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_09",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "bronchoalveolar_lavage",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "lung",
+        "lobe": "LLL",
+        "segment": null,
+        "station": null
+      },
+      "type": "bal"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_10",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "linear_ebus_tbna",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "lymph_node",
+        "lobe": null,
+        "segment": null,
+        "station": "11L"
+      },
+      "type": "ebus_tbna"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_global",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": null,
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": "none",
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "outcome"
+    }
+  ],
+  "schema_version": "v3",
+  "source_filename": "note_119.txt"
+}

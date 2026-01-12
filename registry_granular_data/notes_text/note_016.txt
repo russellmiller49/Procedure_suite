@@ -1,0 +1,76 @@
+NOTE_ID:  note_016 SOURCE_FILE: note_016.txt INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with acute respiratory failure.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy and Tracheostomy were discussed with the patient's surrogate (mother, Yvette Sese) in detail.  Patient unable to participate in discussion due to sedation and intubation. Patient's surrogate indicated a wish to proceed with surgery and informed consent was signed. 
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+76536 Ultrasound of Neck
+ 
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             4mg
+Dilaudid          6mg
+Etomidate20mg
+Rocuronium     63mg x 2
+Propofol60mcg/kg/min  
+ 
+Physician/patient face-to-face anesthesia start time:   1543
+            
+Physician/patient face-to-face anesthesia stop time:   1822
+ 
+Total moderate sedation time was 159 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by ICU RN. 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: Supine
+ 
+Neck Ultrasound was performed to evaluate for any abnormal vessel, mass, structures at the site of percutaneous tracheostomy. There were no significant vessels/mass were noted overlying the tracheostomy site on examination from the laryngeal prominence to the sternal notch. High-riding innominate artery was noted just superior to the sternal notch.
+ 
+Initial Airway Inspection Findings:
+ 
+The endotracheal tube is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through ETT.
+Larynx: Not assessed due to bronchoscopy introduction through ETT.
+Vocal Cords: Not assessed due to bronchoscopy introduction through ETT.
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Copious thick and thin, light yellow secretions/mucus throughout  
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient's endotracheal tube was removed and the patient was in stable condition. 
+ 
+SPECIMEN(S): 
+--None
+ 
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy and tracheostomy placement. See separate documentation from Dr Hudson for modified open tracheostomy. Patient tolerated the procedure well and there were no complications. 
+ 
+--Post-procedure CXR
+--Anticipate suture removal in ~7 days 
+--Anticipate trach exchange in ~10 days 
+ 

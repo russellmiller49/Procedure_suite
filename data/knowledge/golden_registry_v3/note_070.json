@@ -1,0 +1,397 @@
+{
+  "note_id": "note_070",
+  "procedures": [
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_aspiration",
+      "evidence": null,
+      "findings": "mucus",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Suction",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Therapeutic Aspiration"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_nav_nodule",
+      "evidence": null,
+      "findings": "Eccentric nodule, 1cm",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Ion, Radial EBUS, Cone Beam CT",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Navigation/Imaging"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_dilation",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Balloon",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Airway Dilation"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_tbna_nodule",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "TBNA",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "TBNA"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_tbbx_nodule",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Forceps",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "TBBX"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_cryo_nodule",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Cryoprobe",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Cryobiopsy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_brush_nodule",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Brush",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Brushing"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_bal_nodule",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": "40cc in, 15cc out",
+      "method": "Lavage",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "BAL"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_fiducial",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Placement",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "Fiducial Placement"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_ebus_11l",
+      "evidence": null,
+      "findings": "<10mm, Type 1",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Inspection only",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "EBUS Inspection"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_ebus_7",
+      "evidence": null,
+      "findings": ">=10mm, Type 2",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "TBNA",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "EBUS TBNA"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_ebus_4r",
+      "evidence": null,
+      "findings": "<10mm, Type 1",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Inspection only",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "EBUS Inspection"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_ebus_11rs",
+      "evidence": null,
+      "findings": "<10mm, Type 1",
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Inspection only",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "EBUS Inspection"
+    }
+  ],
+  "schema_version": "v3",
+  "source_filename": "note_070.txt"
+}

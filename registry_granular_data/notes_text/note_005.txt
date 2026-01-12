@@ -1,0 +1,89 @@
+NOTE_ID:  note_005 SOURCE_FILE: note_005.txt INDICATION FOR OPERATION:  [REDACTED]is a 75 year old-year-old male who presents with pleural effusion and lung infiltrates.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+ 
+32555 Aspirate pleura with imaging (thoracentesis)
+ 
+This procedure required greater than 50% of time and effort that was usually needed for a similar procedure.  (BAL in multiple areas).
+
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and printed 
+Hemithorax:   Left 
+ 
+Pleural Effusion: 
+Volume:       Large 
+Echogenicity:   Anechoic  
+Loculations:  None  
+Diaphragmatic Motion:  Normal  
+Lung: 
+Lung sliding before procedure:   Present  
+Lung sliding post procedure:   Present  
+Lung consolidation/atelectasis: Present  
+Pleura:  Normal  
+ 
+Based on Ultrasound Evaluation, Thoracentesis is determined to be feasible and will proceed as planned. .
+ 
+Insertion site prepped and draped in sterile fashion.  Thoracentesis Kit was used. 
+ 
+ANESTHESIA:   Lidocaine 1%: ___7___ ml      Other: ______ 
+Entry Site: 
+0‌ Right ___ Intercostal Space   1‌ Left  __6_ Intercostal Space 
+0‌ Mid-clavicular   0‌ Mid-axillary  1‌ Mid-scapular  0‌ Other: 
+ 
+Sutured: 0‌ Yes 0‌ No 
+ 
+PROCEDURE FINDINGS: 
+Fluid Removed: __1450___ ml 
+ Serous  
+ 
+Drainage device:  Drainage Bag  
+ 
+ 
+SPECIMEN(S): 
+‌PH              LDH                       Glucose       T. Protein    Cholesterol
+Cell Count   ‌Triglycerides            
+Gram Stain/ Culture            ‌AFB                       ‌Fungal Culture 
+Cytology      
+CXR ordered: Yes 
+ 
+Initial Airway Inspection Findings:
+Successful therapeutic aspiration was performed to clean out the Left Mainstem from mucus. 
+Bronchial alveolar lavage was performed at Superior Segment of Lingula (LB4).  Instilled 60 cc of NS, suction returned with 30 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Left pleural effusion
+BAL -  LUL and LLL
+ 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 75 year old-year-old male who presents for bronchoscopy for lavage and thoracentesis.
+- f/u BAL and PFA
+- f/u CXR
+ 

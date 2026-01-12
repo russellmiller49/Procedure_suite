@@ -1,0 +1,88 @@
+NOTE_ID:  note_067 SOURCE_FILE: note_067.txt INDICATION FOR OPERATION:  [REDACTED] is a 63 year old-year-old female who presents with pulmonary nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31629 TBNA single lobe   
+31627 Navigational Bronchoscopy (computer assisted)
+77012 Radiology / radiologic guidance for CT guided needle placement (CIOS)
+76377 3D rendering with interpretation and reporting of CT, US, Tomo modality (ION Planning Station)
+31654 Radial EBUS for peripheral lesion
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+Radial EBUS
+Ion Robotic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, and Bronchus Intermedius  from mucus. 
+ 
+ 
+CT Chest scan was placed on separate planning station to generate 3D rendering of the pathway to target.   The navigational plan was reviewed and verified.  This was then loaded into robotic bronchoscopy platform. 
+ 
+Ventilation Parameters:
+Mode	RR	TV	PEEP	FiO2	Flow Rate	Pmean
+VCV	12 	300	12	100	10	15
+ 
+RUL Mass: 
+ 
+Robotic navigation bronchoscopy was performed with Ion platform.  Partial registration was used.    Ion robotic catheter was used to engage the Anterior Segment of RUL (RB3).  Target lesion is about 4.0 cm in diameter.   Under navigational guidance the ion robotic catheter was advanced to 1.0 cm away from the planned target. 
+ 
+Needle was advanced into the lesion. Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation.  Cios Spin system was used for evaluation of nodule location.  Low dose spin was performed to acquire CT imaging.  This was passed on to Ion platform system for reconstruction and nodule location.  The 3D images was interpreted on an independent workstation (Ion).   Using the newly acquired nodule location, the Ion robotic system was adjusted to the new targeted location. I personally interpreted the cone beam CT and 3-D reconstruction. 
+ 
+Transbronchial needle aspiration was performed with 19G Needle through the extended working channel catheter.  Total 1 samples were collected.  Samples sent for Cytology.
+ 
+Radial EBUS was performed to confirm that the location of the nodule is Concentric after initial needle puncture into the lesion.  The following features were noted: continuous margin, heterogenous echotexture.
+ 
+Once a tunnel had been created into the lesion with TBNA as above, transbronchial microwave ablation was performed of the nodule as below. 
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Microwave 	Medium Antenna 	90*C	20:00 min	Transbronchial Ablation of Nodule
+ 
+ 
+Subsequently, RB2 was engaged.  And microwave catheter was placed in the lateral superior aspect of the lung mass. CBCT was done to confirm the location. 
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Microwave 	Medium Antenna 	90*C	10:00 min	Transbronchial Ablation of Nodule
+ 
+Subsequently, RB1 was engaged.  And microwave catheter was placed in the superior medial aspect of the lung mass. CBCT was done to confirm the location. 
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Microwave 	Medium Antenna 	90*C	10:00 min	Transbronchial Ablation of Nodule
+ 
+Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation.  Cios Spin system was used for evaluation of nodule location.  Low dose spin was performed to acquire CT imaging.  This was passed on to Ion platform system for reconstruction and nodule location.  The 3D images was interpreted on an independent workstation (Ion).   Using the newly acquired nodule location, the Ion robotic system was adjusted to the new targeted location. I personally interpreted the cone beam CT and 3-D reconstruction. The images confirmed tool-in-lesion. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+- RUL mass TBNA (cyto)
+ 
+ 
+IMPRESSION/PLAN: [REDACTED] is a 63 year old-year-old female who presents for bronchoscopy for lung nodules.
+RLL nodule and RUL mass underwent TBNA and MWA. 
+ 
+- f/u CXR
+- admit to medicine for observation
+- monitor for post-ablation pain 
+- start empiric abx (IV unasyn as inpatient, po moxifloxacin as an outpatient) 
+ 
+ 

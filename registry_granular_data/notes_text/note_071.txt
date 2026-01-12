@@ -1,0 +1,50 @@
+NOTE_ID:  note_071 SOURCE_FILE: note_071.txt INDICATION FOR OPERATION:  [REDACTED] is a 85 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Endobronchial biopsy was performed at Bronchus Intermedius .  Two areas were biopsied with NBI guidance.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.
+ 
+Stents are in good position.  The (iCAST 7x16) was noted in the right lower airway.  (iCAST 5x16) was noted in the right middle lobe airway. 
+ 
+Bronchial alveolar lavage was performed at RLL.  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+Balloon dilation was performed at RB2 orifice.  5mm mustang balloon was used to perform dilation to 5mm at the RB2.  Total 3 inflations with dilation time of 60 seconds each.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+EBBX
+BAL RLL
+ 
+IMPRESSION/PLAN: [REDACTED] is a 85 year old-year-old female who presents for bronchoscopy for airway narrowing.
+- f/u in clinic
+- f/u in 12 weeks for bronch evaluation of stent

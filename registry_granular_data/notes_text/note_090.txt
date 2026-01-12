@@ -1,0 +1,66 @@
+NOTE_ID:  note_090 SOURCE_FILE: note_090.txt INDICATION FOR OPERATION:  [REDACTED]is a 57 year old-year-old male who presents with bronchial stenosis.  
+
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.  LMA placed.
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords, main carina, right carina 1, and left carina 2.
+Initial Airway Examination Findings:
+Vocal Chords: Normal without mass/lesions.  Appropriate abduction.  Paralyzed so unable to assess adduction.
+Trachea: Mildy tortuous, otherwise normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: The right anastomosis site was intact with visible intact blue sutures at site; mild stenosis of right anastomosis without dehiscence. The RUL and RB1-3 were normal to segmental level. The bronchus intermedius and more distal lobes/airways are mildly rotated clockwise.  The RML bronchus with severe stenosis of ~3mm patent.  Proximal RML take-off appears OK, but areas of stenosis about halfway into the bronchus.  After dilation, patient also noted to have a second area of moderate stenosis right (~5mm) before the take-off of RB4 and RB5.  These stenoses appeared to be circumferential due to fibrotic and granulation tissue.  There was a small patch of white debris also overlying the area of stenosis.  After relief of the stenosis, there was moderate white secretions (likely mucostasis) suctioned from the RB4 and RB5 segmental airways.   Able to enter the truncus basalis with mild pressure with therapeutic bronchoscope.  RB7 is compressed and fish-mouthed.  The RLL and RB6,RB8-10 are otherwise have normal anatomic branching to segmental level.  No other evidence of mass, lesions, bleeding or other endobronchial pathology. 
+Left Lung Proximal Airways: The left anastomosis site was intact with visible intact blue sutures at site; mild stenosis of left anastomosis. The LUL bronchus and LB1-3 were normal to first subsegmental level.  The lingula is patent and LB4-5 are normal to first subsegmental level - able to traverse lingular bronchus with therapeutic bronchoscope.  LLL and LB6-10 have normal anatomic branching to segmental level.  No other evidence of mass, lesions, bleeding or other endobronchial pathology. 
+Mucosa: Normal.
+Secretions: As described above in RML.  Otherwise moderate, thin, and clear  All secretions were suctioned to clear (therapeutic aspiration). 
+RML before treatment:
+ 
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left upper lobe, left lower lobe from mucus. 
+Endobronchial biopsy was performed at white patch of tissue in RML bronchus.  Lesion was successfully removed.  Samples sent for Tissue Culture.
+Balloon dilation was performed at right middle lobe bronchus.  6/7/8 Elation balloon was used to perform dilation to 7 mm at the right middle lobe bronchus.  Total 1 inflations with dilation time of 60 seconds each. 
+ 
+Endobronchial obstruction/stenosis at right middle lobe bronchus was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Cryoprobe	1.7mm	N/A	30 second overlapping treatments	Cryotherapy overlapping treatment to areas of circumferential stenosis in the middle RML bronchus.  Led to softening of fibrotic and granulation tissue.
+Endobronchial tissue debris causing obstruction/stenosis was noted and excised with mechanical debridement using bland alligator forceps.
+Balloon dilation was performed at right middle lobe bronchus.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the right middle lobe bronchus.  Total 1 inflations with dilation time of 60 seconds each.
+Endobronchial obstruction/stenosis at right middle lobe bronchus was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Cryoprobe	1.7mm	N/A	30 second overlapping treatments	Cryotherapy overlapping treatment to areas of circumferential stenosis in the distal RML bronchus.  Led to softening of fibrotic and granulation tissue.
+Balloon dilation was performed at right middle lobe bronchus.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the right middle lobe bronchus.  Total 1 inflations with dilation time of 60 seconds each.  
+Balloon dilation was performed at right middle lobe medial segment.  6/7/8 Elation balloon was used to perform dilation to 6 mm at right middle lobe medial segment.  Total 1 inflations with dilation time of 60 seconds each.  
+Balloon dilation was performed at right middle lobe lateral segment.  6/7/8 Elation balloon was used to perform dilation to 6 mm at right middle lobe medial segment.  Total 1 inflations with dilation time of 60 seconds each. 
+Despite multiple dilations, RML bronchus continues to mildly narrow, particularly at the distal end of the bronchus.
+Trivial bleeding easily controlled with suction and saline.
+Prior to treatment, affected airway was note to be 30% patent.  After treatment, the airway was 75% patent.
+RML after treatments:
+ 
+Unable to traverse entire length of RML bronchus with therapeutic bronchoscope.  
+Hybrid bronchoscope advanced and confirmed patency of RB4 and RB5 to their respective subsegments:
+ 
+Bronchial alveolar lavage was performed at RML (Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology. 
+Residual secretions and saline suctioned to clear.
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient's LMA was removed in the operating room and transported to the recovery room in stable condition.
+ESTIMATED BLOOD LOSS:   Trivial
+COMPLICATIONS:    None
+SPECIMEN(S): 
+RML EBBx:  Culture
+RML BAL:  cell count, cultures/micro, cytology
+IMPRESSION/PLAN: [REDACTED]is a 57 year old-year-old male who presents for bronchoscopy for balloon dilation and cryotherapy for management of bronchial stenosis.
+-Repeat bronchoscopy in 2 weeks for airway evaluation, dilation, possible stent placement.  
+-Consideration of 8x20mm stent placement vs custom silicone stent placement.  Will review with other IP providers.
+-Will request that lung transplant team follow-up on EBBx culture and BAL results.

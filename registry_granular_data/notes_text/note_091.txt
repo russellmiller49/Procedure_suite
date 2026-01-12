@@ -1,0 +1,41 @@
+NOTE_ID:  note_091 SOURCE_FILE: note_091.txt INDICATION FOR OPERATION:  [REDACTED]is a 57 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: . 
+Initial Airway Inspection Findings:
+The endotracheal tube is in good position. The visualized portion of the trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Airway exam notable for mildly tortuous airways as before, intact anastomoses bilaterally. The RML orifice was ~75% narrowed with combination of weblike stenosis and pedunculated granulation tissue. Mild secretions bilaterally but with thick purulent secretions eminating from the RML. 
+Successful therapeutic aspiration was performed to clean out the Bronchus Intermedius  and RML Carina (RC2) from mucus and mucus plug. 
+Endobronchial biopsy was performed at RML.  Lesion was successfully removed.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+Balloon dilation was performed at RML.  Mustang 4mm balloon was used to perform dilation to 4 mm at the RML.  Total 1 inflations with dilation time of 60 seconds each.
+Balloon dilation was performed at RML.  Mustang 6/7/8 balloon was used to perform dilation to 6 and 7 mm at the RML.  Total 2 inflations with dilation time of 60 seconds each.
+Bronchial alveolar lavage was performed at RML.  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+Endobronchial obstruction at RML was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	1.7mm probe	 	30sec freeze thaw cycles	Ablation 
+Prior to treatment, affected airway was note to be 25% patent.  After treatment, the airway was 100% patent. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+- RML EBBx (micro)
+- RML BAL
+IMPRESSION/PLAN: [REDACTED]is a 57 year old-year-old male who presents for bronchoscopy for bronchial stenosis of the RML. Ongoing recurrence of stenosis, currently on stent holiday. Will need ongoing close vigilance of the airway due to tendency to fuse shut. 
+- f/u BAL results
+- repeat bronch in 2 weeks for dilation 

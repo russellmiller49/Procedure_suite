@@ -31,10 +31,14 @@ SECTION_HEADINGS: tuple[str, ...] = (
     "DISPOSITION",
 )
 
-SECTION_PATTERN = re.compile(
-    r"^\s*(?P<title>{})(?:\s*:)?\s*$".format("|".join(map(re.escape, SECTION_HEADINGS))),
-    re.IGNORECASE | re.MULTILINE,
-)
+def _compile_section_pattern(headings: Sequence[str]) -> re.Pattern[str]:
+    return re.compile(
+        r"^\s*(?P<title>{})(?:\s*:)?\s*$".format("|".join(map(re.escape, headings))),
+        re.IGNORECASE | re.MULTILINE,
+    )
+
+
+SECTION_PATTERN = _compile_section_pattern(SECTION_HEADINGS)
 
 
 @dataclass(slots=True)
@@ -52,6 +56,7 @@ class SectionizerService:
 
     def __init__(self, headings: Sequence[str] | None = None) -> None:
         self.headings: tuple[str, ...] = tuple(headings or SECTION_HEADINGS)
+        self._pattern = _compile_section_pattern(self.headings)
         self._nlp: Language | None = None
         self._sectionizer = None
 
@@ -92,7 +97,7 @@ class SectionizerService:
         return self._regex_sectionize(text)
 
     def _regex_sectionize(self, text: str) -> list[Section]:
-        matches = list(SECTION_PATTERN.finditer(text))
+        matches = list(self._pattern.finditer(text))
         sections: list[Section] = []
 
         if not matches:
@@ -135,4 +140,3 @@ class SectionizerService:
 
 
 __all__ = ["SECTION_HEADINGS", "Section", "SectionizerService"]
-

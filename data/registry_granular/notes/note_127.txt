@@ -1,0 +1,36 @@
+NOTE_ID:  note_127 SOURCE_FILE: note_127.txt Patient name: [REDACTED]
+
+Preoperative diagnosis: 1:DLBCL - diffuse large B cell lymphoma
+Postoperative diagnosis: same as above
+
+Procedures performed:
+31622 – Bronchoscopy, flexible, with or without fluoroscopic guidance, diagnostic
+CPT 31652 bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 2 or fewer structures.
+
+Indications for the procedure: peripheral nodule
+
+Anesthesia: General anesthesia using a #8.5 endotracheal tube.
+
+Procedure: After obtaining informed consent from the patient,_was brought to the procedure room. A proper timeout was performed to identify the correct patient and procedure to be performed. General anesthesia was administered to the patient and_was orally intubated with a 8.5 ETT by the anesthesia team. the H190 video bronchoscope was introduced through the endotracheal tube and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords were normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions.
+
+The UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 7 lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus Vizishot 2 EBUS TBNA 21 gauge needle beginning with the 7 Lymph node, 5 biopsies were performed in each station. ROSE evaluation yielded mostly nondiagnostic neutrophil/blood. Following sample from the 7 station, transvascular needle aspiration was performed of station 5 using a 21-gauge and 25-gauge needle for total of 3 passes through the pulmonary artery. Samples from station 5 appeared bloody under microscopic evaluation. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the H1 90 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.
+
+Lymph nodes
+
+7: >15mm; 6of passes
+5: 4.7 mm; 6 passes
+
+Following confirmation of hemostasis and therapeutic aspiration of all endobronchial secretions, the bronchoscope was removed. Patient tolerated the procedure well with no immediate complications. Patient was extubated and returned to recovery in good condition.
+
+Specimens:
+Cytology
+Cell count
+Bacterial culture
+Fungal culture
+Acid Fast culture
+flow cytometry
+
+EBL: minimal
+
+Bronchoscopes: Olympus H190, UC180F EBUS
+

@@ -1,0 +1,69 @@
+NOTE_ID:  note_030 SOURCE_FILE: note_030.txt INDICATION FOR OPERATION:  [REDACTED]is a 65 year old-year-old male who presents with tracheostomy change.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31899NFJ TRACHEOSTOMY CHANGE AFTER ESTABLISHMENT OF FISTULA TRACT; WITHOUT AN E/M SERVICE OR OTHER ENDOSCOPY PROCEDURE
+31615 Visualization of windpipe (Tracheobronchoscopy through established tracheostomy incision)
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             4 mg
+Fentanyl          100 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   11:50
+ 
+Physician/patient face-to-face anesthesia stop time:   12:20
+ 
+Total moderate sedation time was 30 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by RN. 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Upper airway was suctioned and cleared.  Endotracheal suctioning performed.  The cuff was deflated and the tracheostomy tube was easily removed.  The stoma appeared widely patent and no granulation tissue was immediately visualized.  The new tracheostomy tube was then placed with obturator in place.  The obturator was removed, inner cannula was placed and the cuff inflated.
+ 
+Percutaneous tracheostomy was changed from:
+Portex cuffed Trach ISO/ID size 8.0mm
+ 
+To 
+Portex cuffed Trach ISO/ID size 8.0mm
+ 
+without issue.
+ 
+Tracheobronchoscopy was performed with insertion of bronchoscope through the tracheostomy to perform airway clearance and confirm tracheostomy position. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  
+SPECIMEN(S): 
+ 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 65 year old-year-old male who presents for bronchoscopy for tracheostomy change.
+- f/u as outpatient for tracheostomy management 
+ 
+ 

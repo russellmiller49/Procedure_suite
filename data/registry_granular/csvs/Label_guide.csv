@@ -1,0 +1,37 @@
+Label,Definition,Examples,Maps To Schema Field,Notes
+ANAT_LN_STATION,Lymph node stations (IASLC map).,4R; Station 7; 11L; subcarinal; hilar,ebus.stations_sampled,"Normalize to IASLC tokens (4R, 7, 11L...)."
+ANAT_LUNG_LOC,"Lung parenchyma, lobes, or segments.",RUL; Lingula; RB1; apical segment,biopsy.location; blvr.target_lobe,Prefer canonical lobar/segment abbreviations.
+ANAT_AIRWAY,Central airway structures (non-parenchymal).,Trachea; main carina; RMB; LMB,stent.location; dilation.location,Use standard airway abbreviations.
+ANAT_PLEURA,Pleural space or chest wall boundaries.,Pleural space; chest wall; diaphragm,pleural.entry_site,Include laterality separately if detached.
+LATERALITY,Side modifiers.,Left; Right; Bilateral,(modifier),Attach to nearest anatomy/device/event when possible.
+DEV_VALVE,Endobronchial valves (implants).,Zephyr; Spiration; IBV; 4.0,blvr.valve_type,Capture brand and size/count when present.
+DEV_STENT,Airway stents (implants).,14x40mm; silicone; Ultraflex; hybrid,stent.type,Size often MEAS_SIZE; material/type here.
+DEV_CATHETER,Pleural/drainage catheters.,PleurX; IPC; 14F pigtail; chest tube,pleural.catheter_type,"If size present, also label MEAS_SIZE."
+DEV_NEEDLE,Aspiration needles (disposables).,19G; 21 gauge; 22ga; EUS needle,ebus.needle_size,Normalize to 19G/21G/22G.
+DEV_INSTRUMENT,Other transient tools.,Forceps; cytology brush; balloon; cryoprobe,procedure.device,Pair with PROC_ACTION + ANAT_* when possible.
+MEAS_SIZE,Linear dimensions (diameter/length).,2 cm; 15 mm; 3.5 x 2.0 cm,lesion.size; stent.diameter,Normalize units to mm where feasible.
+MEAS_VOL,Fluid volumes.,500 cc; 1.5 L; 10 mL,pleural.fluid_removed,Normalize to mL where feasible.
+MEAS_PRESS,Manometry readings.,-20 cmH2O; -5,pleural.manometry,Keep units.
+MEAS_COUNT,Integer counts of actions.,3 passes; 2 valves; three samples,ebus.passes_per_station,Normalize to integer; store mapping if station-specific.
+PROC_METHOD,Guidance/technology used.,EBUS; Navigational; Robotic; Fluoroscopy,procedure.navigation_type,"This is the 'how', not the action."
+PROC_ACTION,Specific intervention performed.,Biopsy; TBNA; Lavage; Ablation,procedure.type,Use for event logs; link anatomy/device.
+OBS_ROSE,ROSE result.,Malignant; lymphocytes; granulomas,ebus.rose_result,"If station-specific, link to event_id."
+OBS_LESION,Target abnormality/lesion.,Mass; nodule; infiltrate; cavity,indication,Avoid mapping historical lesions as current.
+CTX_HISTORICAL,Past-marker language.,History of; prior; status post; previous,(guardrail),Use to guardrail false positives.
+CTX_TIME,Procedure timestamps/durations.,14:00; 2:15 PM; 20 minutes,procedure.start_time; procedure.duration,Use when explicitly documented.
+OUTCOME_AIRWAY_LUMEN_PRE,Airway lumen/obstruction before intervention.,~80% obstruction; 2 mm lumen; critical stenosis,event.outcomes.airway.lumen_pre,Only when explicit pre-intervention measurement/grade stated.
+OUTCOME_AIRWAY_LUMEN_POST,Airway lumen/obstruction after intervention.,improved to ~20% obstruction; widely patent; >90% patency,event.outcomes.airway.lumen_post,Only when explicit post-intervention measurement/grade stated.
+OUTCOME_SYMPTOMS,Patient symptom/physiology response.,stridor improved; dyspnea improved; SpO? improved,event.outcomes.symptoms,Capture explicit response statements.
+OUTCOME_PLEURAL,Pleural outcome (re-expansion/trapped lung/relief).,lung re-expanded; trapped lung; symptomatic relief,event.outcomes.pleural,Capture explicit outcome language.
+OUTCOME_COMPLICATION,Immediate outcome/complication resolution.,no complications; bleeding controlled; pneumothorax treated,event.outcomes.complications,"If 'no complications', value can be 'none'."
+DEV_STENT_MATERIAL,Stent material/type descriptor.,silicone; covered metal; hybrid; Ultraflex,stent.material / stent.brand,Material/brand words; size separately.
+DEV_STENT_SIZE,Full stent size phrase.,14x40mm; 12 mm x 6 cm,stent.size,Use exact sizing string.
+DEV_CATHETER_SIZE,Catheter/drain size phrase.,14 Fr pigtail; 24 Fr chest tube; 8.5F,pleural.catheter.size_fr,Use exact phrase; normalize later.
+MEAS_AIRWAY_DIAM,Airway lumen diameter measurement.,6 mm lumen; 10 mm airway,event.measurements.airway_diameter,Distinct from stent size.
+MEAS_PLEURAL_DRAIN,Drain size measurement (Fr/F).,14 Fr; 24 Fr,pleural.device.size_fr,Use when size stated even if device separate.
+OBS_FINDING,General clinical findings (non-lesion).,erythema; secretions; inflammation; mucous plugging,findings.description,Catch-all for findings that are not distinct lesions/masses.
+MEDICATION,Medications administered during procedure.,Lidocaine; Fentanyl; Versed; Epinephrine,procedure.medications.name,Capture drug name. Dose usually captured in context or separate measure.
+SPECIMEN,Physical pathology/cytology samples collected.,cell block; core tissue; fluid; lavage fluid,pathology.specimen_type,Distinguish from the action (Biopsy) or the result (Malignant).
+MEAS_TIME,Specific duration measurements.,30 seconds; 2 minutes; 15 sec,procedure.event_duration,"Use for ablation durations or breath holds, distinct from general timestamps."
+MEAS_TEMP,Temperature readings.,37C; 98.6 F,vitals.temperature,Patient or device temperature.
+MEAS_ENERGY,Energy settings or delivery.,30 Watts; 200 Joules; 60W,procedure.energy_delivered,Common in ablation procedures.

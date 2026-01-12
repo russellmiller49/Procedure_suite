@@ -1,0 +1,405 @@
+{
+  "note_id": "note_001",
+  "procedures": [
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_01_asp",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "Suction",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "Airway",
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "therapeutic_aspiration"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [
+        "Ion",
+        "21G Needle",
+        "23G Needle",
+        "1.1mm Cryoprobe",
+        "Fiducial",
+        "Brush"
+      ],
+      "event_id": "evt_02_rul1",
+      "evidence": null,
+      "findings": [
+        "Atypical cells"
+      ],
+      "lesion": {
+        "lesion_type": "Nodule",
+        "size_mm": 8.0
+      },
+      "measurements": {},
+      "method": "Robotic Navigational Bronchoscopy",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology",
+        "Biopsy",
+        "Microbiology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "Lesion",
+        "lobe": "RUL",
+        "segment": "Apical",
+        "station": null
+      },
+      "type": "navigational_bronchoscopy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [
+        "Ion",
+        "21G Needle",
+        "23G Needle",
+        "1.1mm Cryoprobe",
+        "Fiducial",
+        "Brush"
+      ],
+      "event_id": "evt_03_rul2",
+      "evidence": null,
+      "findings": [
+        "Blood (ROSE)"
+      ],
+      "lesion": {
+        "lesion_type": "Nodule",
+        "size_mm": 11.0
+      },
+      "measurements": {},
+      "method": "Robotic Navigational Bronchoscopy",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology",
+        "Biopsy",
+        "Microbiology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "Lesion",
+        "lobe": "RUL",
+        "segment": "Apical",
+        "station": null
+      },
+      "type": "navigational_bronchoscopy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [
+        "Ion",
+        "21G Needle",
+        "23G Needle",
+        "1.1mm Cryoprobe",
+        "Fiducial",
+        "Brush"
+      ],
+      "event_id": "evt_04_rul3",
+      "evidence": null,
+      "findings": [
+        "Atypical cells"
+      ],
+      "lesion": {
+        "lesion_type": "Nodule",
+        "size_mm": 11.0
+      },
+      "measurements": {},
+      "method": "Robotic Navigational Bronchoscopy",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology",
+        "Biopsy",
+        "Microbiology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "Lesion",
+        "lobe": "RUL",
+        "segment": "Posterior",
+        "station": null
+      },
+      "type": "navigational_bronchoscopy"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_05_bal",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {
+        "instilled": "60 cc",
+        "return": "15 cc"
+      },
+      "method": "BAL",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": "RUL",
+        "segment": "Apical",
+        "station": null
+      },
+      "type": "bal"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_06_bal",
+      "evidence": null,
+      "findings": [],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {
+        "instilled": "60 cc",
+        "return": "15 cc"
+      },
+      "method": "BAL",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": "RUL",
+        "segment": "Posterior",
+        "station": null
+      },
+      "type": "bal"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_07_ebus",
+      "evidence": null,
+      "findings": [
+        "Type 2 Elastography"
+      ],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "EBUS-TBNA",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": "11L"
+      },
+      "type": "linear_ebus"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_08_ebus",
+      "evidence": null,
+      "findings": [
+        "Type 1 Elastography"
+      ],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "EBUS-TBNA",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": "7"
+      },
+      "type": "linear_ebus"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_09_ebus",
+      "evidence": null,
+      "findings": [
+        "Type 1 Elastography"
+      ],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "EBUS-TBNA",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": "11Rs"
+      },
+      "type": "linear_ebus"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [],
+      "event_id": "evt_10_ebus",
+      "evidence": null,
+      "findings": [
+        "Type 1 Elastography"
+      ],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "EBUS-TBNA",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": null,
+        "lobe": null,
+        "segment": null,
+        "station": "11Ri"
+      },
+      "type": "linear_ebus"
+    },
+    {
+      "catheter_size_fr": null,
+      "devices": [
+        "25G Needle"
+      ],
+      "event_id": "evt_11_eus",
+      "evidence": null,
+      "findings": [
+        "Lesional",
+        "Hematoma"
+      ],
+      "lesion": {
+        "lesion_type": null,
+        "size_mm": null
+      },
+      "measurements": {},
+      "method": "EUS-B FNA",
+      "outcomes": {
+        "airway_lumen_post": null,
+        "airway_lumen_pre": null,
+        "complications": null,
+        "pleural": null,
+        "symptoms": null
+      },
+      "specimens": [
+        "Cytology"
+      ],
+      "stent_material_or_brand": null,
+      "stent_size": null,
+      "target": {
+        "anatomy_type": "Left Adrenal",
+        "lobe": null,
+        "segment": null,
+        "station": null
+      },
+      "type": "eus"
+    }
+  ],
+  "schema_version": "v3",
+  "source_filename": "note_001.txt"
+}

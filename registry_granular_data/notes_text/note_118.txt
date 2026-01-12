@@ -1,0 +1,62 @@
+NOTE_ID:  note_118 SOURCE_FILE: note_118.txt INDICATION FOR OPERATION:  [REDACTED]is a 50 year old-year-old female who presents with complex airway narrowing due to tumor.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31636 Dilate and bronchial stent initial bronchus
+31637 Dilate and bronchial stent additional bronchus
+31638 Revision of tracheal/bronchial stent     
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+31637 - total of 3 bronchial stents were placed
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a Pt required placement of Y stent in the right mainstem bronchus, right upper lobe and BI due to extensive tumor infiltration and . This resulted in >100% increased work due to Increased intensity, Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: supine
+Initial Airway Inspection Findings:
+After placement of iGel by anesthesia the bronchoscope was introduced into the iGel. A total of 6 mL of lidocaine was instilled onto the vocal cords. The bronchoscope was advanced through the vocal cord into the trachea.
+The airways were examined to the subsegmental level bilaterally. The stent in the RMSB was visualized with tumor growing through the opening for the RUL. 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, and Bronchus Intermedius  from mucus. 
+The stent was in appropriate position. Cryoprobe and forceps were used for endobronchial biopsies of the tumor herniating through the stent. There was a small amount of oozing controlled with APC.  Inspection showed residual tumor obstructing the stent opening.
+The bronchoscope was able to advanced along the posterior portion of the stent between the stent and airway wall. There was visible endobronchial tumor causing mixed obstruction and blocking the RUL ostium. 
+Endobronchial obstruction at Right Mainstem and RUL ostium was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	1.1 mm	Intermittent through the stent and along the outside of the stent to free the RUL	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	1.7 mm	Intermittent with removal of the tumor herniating through the stent opening	 	 
+Prior to treatment, affected airway was note to be 0% patent.  After treatment, the airway was 25% patent. The narrowing was due to extrinsic compression from the posterior membrane. 
+The RUL was patent and a small amount of mucus was behind the obstruction. Bronchial alveolar lavage was performed at Anterior Segment of RUL (RB3).  Instilled 40 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+The fenestration of the stent and the RUL did not align and the decision was made to remove the stent/foreign body. 
+The iGel was removed and the patient was atraumatically intubated with the black rigid bronchoscope. 
+The proximal portion of the stent was grasped and two attempts were made to adjust the stent to align the fenestration and the RUL ostium. Both were unsuccessful and the proximal end of the stent was grasped and rotated. The stent and rigid bronchoscope were removed. No residual material was left in the patient.
+The tumor could not be cored and measurements were taken for Y stent - to allow for stenting of the RMSB, RUL and BI. 
+Under apnea the stent was deployed into the RMSB. Following deployment the stent was in the BI and required revision but pulling the stent up into the distal trachea, rotating 60 degrees. Using the p190 scope as stylet into the RUL the stent was advanced into BI.  The RUL limb was angled downward but using forceps (rigid and flexible) the stent was revised onto the RC1 with good position.
+Balloon dilation was performed at RUL.  10/11/12 Elation balloon was used to perform dilation to 10 mm at the RUL bronchus.  Total 1 inflations with dilation time of 10 seconds each. This resulted in seating of the stent in good position. 
+Following placement the stent was in good position and all airways were patent. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was successfully extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+BAL RUL
+EBBx RMSB tumor
+IMPRESSION/PLAN: [REDACTED]is a 50 year old-year-old female who presents for bronchoscopy for stent evaluation.
+[ ] continue stent hygeing
+[ ] f/u bronchoscopy in 1-2 weeks

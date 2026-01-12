@@ -1,0 +1,46 @@
+NOTE_ID:  note_061 SOURCE_FILE: note_061.txt INDICATION FOR OPERATION:  [REDACTED]is a 68 year old-year-old male who presents with stent evaluation.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ANESTHESIA: 
+General Anesthesia
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus and mucus plug. 
+ 
+Endobronchial obstruction at Left Mainstem was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	1.5mm	Straight. Pulse, 2	10sec	ablated
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	 	 	 	 
+ 
+Tissue was ablated. 
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 68 year old-year-old male who presents for bronchoscopy for stent evaluation.
+- repeat bronch in 6-8 weeks. 

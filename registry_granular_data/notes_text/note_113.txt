@@ -1,0 +1,64 @@
+NOTE_ID:  note_113 SOURCE_FILE: note_113.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway dehiscence and erosion in bilateral donor transplanted lungs.
+CONSENT : Obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to bronchoscopy were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate deci
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31502 Tracheotomy tube change prior to establishment of fistula tract
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+Mod 22. Pt with full thickness right lung anastomotic dehiscence that requiring increased time, intensity due to clinical condition, severity of dehiscence. > 70% effort was required for this procedure due to time, clinical condition and intensity of the procedure.
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Rigid Bronchoscope
+Rigid Tracheoscope
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Anesthesia initiated.  Endotracheal lidocaine applied through tracheostomy tube.
+A combination of Flexible Therapeutic Bronchoscope and Flexible Hybrid (Pedatric) Bronchoscope were sequentially advanced through patient's tracheostomy tube for the initial airway examination.  Topical lidocaine applied to main carina, RMS, and LMS.
+Initial Airway Inspection Findings:
+The flexible bronchoscope was introduced into the existing tracheostomy tube after induction of anesthesia. ( Upper airway was examined after lower airway inspection)
+Distal trachea appears normal.  Native proximal RMS bronchus and LMS bronchus appear largely normal.
+Right lung:
+Exuberant amount of necrotic debris extending from the RMS anastomosis site to RC1, BI, RML, and RB6.  RMS anastomosis sutures visible underlying necrotic debris.  Multiple areas of exposed cartilage noted.  At the RMS anastomotic site, there was a large area of full-thickness dehiscence at 7 o'clock, exposing the mediastinum.  Did not attempt to traverse defect.  Area of full-thickness airway erosion along RUL bronchus anterior wall - directly adjacent to RB3 take-off.  Bronchus intermedius cartilage appears fractured with excessive "accordion-like" movement of the airway with respiration.  RC2 and RML bronchus mucosa very pale.  Right truncus basalis and RLL basilar segmental airways appear somewhat healthier.
+Left lung:
+Exuberant amount of heaping necrotic debris extending from the LMS anastomosis site to LC2, LUL/lingula/LC1, and proximal LLL.  LMS anastomosis sutures visible underlying necrotic debris.  Donor distal LMS bronchus cartilage and LUL bronchus cartilage appear fractured with excessive "accordion-like" movement of the airway with respiration.  Large full-thickness erosion along anterior aspect of LUL bronchus completely exposing a large vessel (presumed branch of PA).  Left truncus basalis and LLL basilar segmental airways appear somewhat healthier.
+Successful therapeutic aspiration was performed to clean out the distal RMS, RUL, BI, RML, RLL, distal LMS, LUL/lingula, LLL from moderate, non-obstructing mucus.
+Flexible Therapeutic Bronchoscope and Flexible Hybrid (Pedatric) Bronchoscope were withdrawn.  
+A tooth or gum protector was placed. The black rigid non-ventilating tracheoscope barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid tracheoscope was advanced carefully while minimizing contact with them.  The black rigid tracheoscope was initially positioned at the subglottic space.  The tracheostomy tube cuff was deflated and trach tube ventilation stopped.  Jet ventilation was initiated through the rigid barrel and chest wall movement was confirmed.  There was a large amount of secretion build-up above the tracheostomy cuff, which was suctioned to clear.
+Tracheostomy tube was removed.  Black rigid tracheoscope was advanced into the distal trachea.  However, the tracheoscope was not long enough to intubate the RMS bronchus take-off.  Therefore, the black rigid tracheoscope was withdrawn to the subglottic space.  The tracheostomy tube was inserted again under direct visualization and secured in place.  Mechanical ventilation initiated through trachoestomy tube again.  Jet ventilation was stopped and the black rigid tracheoscope was extubated with ease.
+The black rigid ventilating bronchoscope barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid bronchoscope was advanced carefully while minimizing contact with them.  The black rigid bronchoscope was initially positioned at the subglottic space.  The tracheostomy tube cuff was deflated and trach tube ventilation stopped.  Jet ventilation was initiated through the rigid barrel and chest wall movement was confirmed.
+Tracheostomy tube was removed.  Black rigid bronchoscope was advanced into the distal trachea and then the RMS bronchus take-off.  The Flexible Therapeutic Bronchoscope and Flexible Hybrid (Pedatric) Bronchoscope were advanced through the rigid bronchoscope barrel to complete the remaining portions of the procedure.
+RC2 to MC (RMS + BI):  5.3, 5.2 cm
+RMS bronchus :  3.7 cm
+RUL bronchus:  2 cm
+BI:  2 cm
+The following stent (14 x 40 UltraFlex uncovered SEMS - proximal deploying) was advanced through the rigid bronchoscope barrel under direct bronchoscopic visualization and placed in the Right Mainstem bronchus.  During deployment of the sent the patient's oxygen saturation dropped to 88% and recovered with bag ventilation once the rigid was withdrawn.
+Balloon dilation was performed within the RMS bronchus uncovered stent.  12/13.5/15 Elation balloon was used to perform dilation to 12, 13.5, and 15mm mm within the RMS bronchus uncovered stent  Total 3 inflations with dilation time of 10-15 seconds each.
+The stent achieved complete closure of the right anastomosis dehiscence but without excessive radial pressure on the airway. This closure was visualized during bag ventilation with tidal volumes of 500-600 mL.
+Residual secretions were suctioned to clear.
+The black rigid bronchoscope was withdrawn to the subglottic space.  
+A new tracheostomy tube was inserted under direct visualization to replace the previously removed tracheostomy tube.  
+Tracheostomy tube was changed from:
+Shiley 6 cuffed Trach ISO/ID size 7.5 mm To  Shiley 6 cuffed Trach ISO/ID size 7.5 mm
+without issue.  Tracheostomy tube was secured in place.
+Mechanical ventilation initiated through trachoestomy tube again.  Jet ventilation was stopped and the black rigid bronchoscope was extubated with ease. There was no evidence or oral dental injury
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient remained on tracheostomy tube mechanical ventilation in the operating room and transported back to the ICU in stable condition. 
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+SPECIMEN(S): 
+None
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for airway evaluation.
+-Profound bilateral donor transplant lung proximal airway injury with multiple sites of full-thickness dehiscence and airway erosion exposing underlying mediastinal/hilar structures.
+-Successful placement of 14 x 40 UltraFlex uncovered metallic stent in the RMS bronchus, covering and closing the area of RMS anastomosis dehiscence.
+-Patient to return to ICU
+-Obtain post-procedure CXR
+- pt does not require stent hydration for uncovered stent
+- brother was updated at bedside after the procedure
+-Patient will need routine stent checks - will plan for at least weekly.  At the first sign of granulation tissue build-up, we will plan to replace the bare metallic stent to avoid irrecoverable incorporation of the stent into the airway.

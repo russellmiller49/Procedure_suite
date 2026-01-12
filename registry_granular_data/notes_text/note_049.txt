@@ -1,0 +1,62 @@
+NOTE_ID:  note_049 SOURCE_FILE: note_049.txt INDICATION FOR OPERATION:  [REDACTED]is a 22 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Normal.
+Vocal Cords: Normal without mass/lesions
+Trachea: Mildly tortuous
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: The distal left mainstem bronchus was noted to be slightly stenotic (~8mm). Otherwise, there was normal anatomic branching to segmental level in the LLL, noting historic obliteration of LUL.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+DISTAL LEFT MAINSTEM BRONCHUS
+ ]
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+On PEEP 0, the patient's airways were noted to have slight malacia <50% at the proximal and distal left mainstem bronchus.
+ 
+MALACIA AT PROXIMAL LMSB
+
+MALACIA AT DISTAL LMSB
+
+DISTAL LMSB WITH AND WITHOUT PEEP (left and right, respectively)
+ 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--LLL BAL (cell count, micro)
+ 
+IMPRESSION/PLAN: [REDACTED]is a 22 year old-year-old female who presents for bronchoscopy for evaluation of airway stenosis. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--Follow up BAL results
+--Repeat bronchoscopy in 4 weeks for possible dilation, stenting
+ 

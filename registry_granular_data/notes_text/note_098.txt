@@ -1,0 +1,49 @@
+NOTE_ID:  note_098 SOURCE_FILE: note_098.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: Bronchial stenosis
+POSTOPERATIVE DIAGNOSIS:  Bronchial stenosis
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31638 Revision of tracheal/bronchial stent     
+31640 Bronchoscopy with excision 
+31635 Foreign body removal
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) Due to small right mainstem diameter difficult to use therapeutic bronchoscope and at times during the case the disposable bronchoscope was introduced into the mouth and into the airway along side the therapeutic bronchoscope going through the tracheostomy tube.
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a significant amount of time and expertise to attempt dilation of stent and replace/revise stent in complicated airway with stenosis, fibrinous exudates. This resulted in >40% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31636 Dilate and bronchial stent initial bronchus. 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Initial Airway Inspection Findings:
+The bronchoscope was advanced into the existing tracheostomy tube. A total of 4 mL of 2% lidocaine was instilled onto the main carina. The airways were examined to the subsegmental level bilaterally. 
+The right anastomosis was without dehiscence but with white-yellow exudate along the anterior portion of the RMSB and extending down to the level of the RML ostium. The left anastomosis is intact with some area of granulation tissue without significant stenosis. There is white-yellow fibrinous plaque along the LMSB extending to the ostium of the lingular bronchus. 
+There is a stent in the RML extending past the ostium of the RML. The stent was in appropriate position but the distal portion did not appear to be fully extended.
+There was a moderate amount of thick, white mucus in the LLL. This was therapeutically aspirated. 
+Bronchial alveolar lavage was performed at Posterior-Basal Segment of LLL (LB10).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+Balloon dilation with CRE 8, 9, 10 balloon was performed  of the RML bronchus stent. The stent was dilated x2 to 9 mm for a total of 1 minute each dilation. The stent did not increase in diameter but appeared to be too small for the airway and migrated distally. Using the therapeutic bronchoscope via the tracheostomy stoma and disposable bronchoscope via the mouth attempt to reposition the stent into the RML bronchus with forceps. The foreign body/stent was grasped with forceps and removed en bloc from the RML via the tracheostomy stoma.  Examination of the stent showed that the stent did not dilate past 7 mm.  
+The bronchoscope was introduced into the mouth advanced along the tongue and to the level of the vocal cords. The cuff of the tracheostomy tube was partially deflated and the bronchoscope was advanced through the vocal cords into the trachea and past the tracheostomy tube. A jag wire was introduced into the RML. 
+Under direct visualization a 8 x 15 mm Aero SEM stent was deployed in to the RML bronchus. The stent was revised with forceps. Position was adequate and distal airways were patent. 
+The lingular bronchus was dilated to 8 mm with improvement in diameter was dilation
+Fibrinous/yellow-white tumor was removed with forceps at the lingular ostium and LMSB. 
+There was no evidence of active bleeding and the bronchoscope was removed. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the was transitioned to mechanical ventilation and back to his ICU room to recover. 
+SPECIMEN(S): 
+BAL - RML - cell count and culture
+Stent - for culture
+LMSB fibrinous tissue - culture and pathology
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for bronchial stenosis.
+[ ] f/u culture and pathology results
+[ ] f/u bronchoscopy in 1 week to evaluate stent and lingular bronchus
+[ ] restart bivaliruding at 18:00 today 

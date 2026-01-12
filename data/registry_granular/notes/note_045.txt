@@ -1,0 +1,71 @@
+NOTE_ID:  note_045 SOURCE_FILE: note_045.txt INDICATION FOR OPERATION:  [REDACTED]is a 67 year old-year-old male who presents with Pleural Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Thoracentesis were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS:  Pleural Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32555 Aspirate pleura with imaging (thoracentesis)
+ 
+25 Added to the E&M Encounter bill which is separate from a procedure if it is done the same day
+ 
+Local ONLY
+ 
+PROCEDURE IN DETAIL: 
+PATIENT POSITION: 
+0‌ Supine  1‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 0‌ Left 
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and printed 
+Hemithorax:   0‌ Right  1‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  0‌ Small  0‌ Moderate  1‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  1‌ Hyperechoic 
+Loculations:  0‌ None  1‌Thin  1‌ Thick 
+Diaphragmatic Motion:  0‌ Normal  1‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   0‌ Present  0‌ Absent 
+Lung sliding post procedure:   0‌ Present  0‌ Absent 
+Lung consolidation/atelectasis: 0‌ Present  0‌  Absent 
+Pleura:  0‌ Normal  1‌ Thick  0‌ Nodular 
+ 
+Based on Ultrasound Evaluation, Thoracentesis is determined to be feasible and will proceed as planned. .
+ 
+Insertion site prepped and draped in sterile fashion.  Thoracentesis Kit was used. 
+ 
+ANESTHESIA:   Lidocaine 1%: ___10___ ml      Other: ______ 
+Entry Site: 
+0‌ Right ___ Intercostal Space   1‌ Left  __6th_ Intercostal Space 
+0‌ Mid-clavicular   0‌ Mid-axillary  1‌ Mid-scapular  0‌ Other: 
+ 
+Sutured: 0‌ Yes 1‌ No 
+ 
+PROCEDURE FINDINGS: 
+Fluid Removed: __150___ ml 
+0‌ Serous  1‌ Serosanguinous 0‌ Bloody  0‌ Chylous 0‌ Other: 
+ 
+Drainage device:   0‌ Pleurovac    1‌ Drainage Bag  0‌ Heimlich Valve  0‌ Pneumostat  0‌ Other: 
+Suction: 0‌ No 0‌Yes, - ___ cmH20 
+ 
+ 
+SPECIMEN(S): 
+0‌None           0‌PH               1‌ LDH                        1‌Glucose       1‌T. Protein    1‌Cholesterol
+1‌Cell Count   0‌ ADA             0‌Triglycerides            0‌Amylase 
+1‌Gram Stain/ Culture            1‌AFB                         1‌Fungal Culture 
+1‌Cytology      0‌Flow Cytometry                               0‌Other: 
+ 
+CXR ordered: 1‌ Yes 0‌ No 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 67 year old-year-old male who presents for Chest Ultrasound and Thoracentesis.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+- f/u CXR
+- f/u studies 
+ 
+ 
+DISPOSITION: Nursing Unit

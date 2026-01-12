@@ -1,0 +1,52 @@
+NOTE_ID:  note_043 SOURCE_FILE: note_043.txt INDICATION FOR OPERATION:  [REDACTED]is a 67 year old-year-old male who presents with Complicated Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Instillation of agents for fibrinolysis (subsequent) were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32562 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); subsequent day
+ 
+PROCEDURE IN DETAIL:
+ 
+PATIENT POSITION: 
+0‌ Supine  1‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 0‌ Left 
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and uploaded to patient's medical record 
+Hemithorax:   0‌ Right  1‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  1‌ Small  0‌ Moderate  0‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  0‌ None  1‌Thin  1‌ Thick 
+Diaphragmatic Motion:  1‌ Normal  0‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   0‌ Present  1‌ Absent 
+Lung sliding post procedure:   0‌ Present  1‌ Absent 
+Lung consolidation/atelectasis: 1‌ Present  0‌  Absent 
+Pleura:  0‌ Normal  1‌ Thick  0‌ Nodular 
+ 
+ 
+ 
+Date of chest tube insertion: 12/22/2025
+ 
+Side: left
+1‌  5 mg/5 mg tPA/Dnasedose #: 2
+            0‌  ___mg tPA                              dose #:____ 
+0‌  Other medication: 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 67 year old-year-old male who presents for Chest Ultrasound and Instillation of agents for fibrinolysis (subsequent).  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+--Unclamp chest tube in 1 hour
+--Continue strict I/O
+--Continue daily CXR while chest tube in place
+--Continue nursing chest tube flushing protocol
+ 
+DISPOSITION: Nursing Unit
+ 

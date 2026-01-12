@@ -1,0 +1,92 @@
+NOTE_ID:  note_060 SOURCE_FILE: note_060.txt INDICATION FOR OPERATION:  [REDACTED]is a 32 year old-year-old male who presents with lung infiltrates.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31628 TBBX single lobe     
+31652 EBUS sampling 1 or 2 nodes
+31654 Radial EBUS for peripheral lesion
+76982 Ultrasound Elastography, First Target Lesion
+76983 Ultrasound Elastography, Additional Targets 
+76983 Ultrasound Elastography, Additional Target 2
+ 
+ 
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a EBUS lymph node forceps/cryo biopsies. This resulted in >40% increased work due to Technical difficulty of procedure and Physical and mental effort required. Apply to: 31652 EBUS sampling 1 or 2 nodes. 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Linear EBUS 
+Radial EBUS
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+NBI was used to assess the airway and nodular changes was noted. 
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+Endobronchial biopsy was performed at RUL Carina (RC1), RML Carina (RC2), and LUL Lingula Carina (Lc1).  Lesion was successfully removed.  Samples sent for Pathology.
+ 
+Radial EBUS was performed to confirm that the location of the lesion LLL is Concentric.  The following features were noted: Continuous margin .  No vessels were noted. 
+ 
+Transbronchial biopsy was performed with alligator forceps at Posterior-Basal Segment of LLL (LB10).  Total 6 samples were collected.  Samples sent for Pathology.
+ 
+EBUS-Findings
+Indications: Diagnostic
+Technique:
+All lymph node stations were assessed. Only those 5 mm or greater in short axis were sampled.
+ 
+Lymph node sizing was performed by EBUS and sampling by transbronchial needle aspiration was performed using 22-gauge Needle, 19-gauge Needle, and Cryoprobe 1.1mm.
+ 
+Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node
+4L (lower paratracheal) node
+7 (subcarinal) node
+10R lymph node
+10L lymph node
+11Rs lymph node
+11Ri lymph node
+11L lymph node
+ 
+No immediate complications
+ 
+Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. Elastography provided a semi-quantitative classification (Type 1–3), which was used to guide biopsy site selection and sampling strategy. 
+ 
+Lymph Nodes Evaluated:
+Site 1: The 7 (subcarinal) node was => 10 mm on CT and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 8 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given this heterogeneous and indeterminate appearance, TBNA was directed at representative areas to ensure comprehensive sampling and to minimize the risk of underdiagnosis.
+ 
+Site 2: The 11Rs lymph node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+Site 3: The 11L lymph node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+EBBX, TBBX
+BAL
+Station 7 - TBCBX, TBNA
+ 
+IMPRESSION/PLAN: [REDACTED]is a 32 year old-year-old male who presents for bronchoscopy for possible sarcoid.
+- f/u in clinic
+ 

@@ -1,0 +1,34 @@
+NOTE_ID:  note_112 SOURCE_FILE: note_112.txt INDICATION FOR OPERATION:  [REDACTED]is a 61 year old-year-old male who presents with bronchial dehiscence.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31615 Visualization of windpipe (Tracheobronchoscopy through established tracheostomy incision)
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+50 Bilateral Procedures (Procedure done on both sides of the body)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a bilateral procedure today when this procedure would typically be unilateral. Apply to: 31624 Dx bronchoscope/lavage (BAL)    . 
+ANESTHESIA: 
+ICU drip of fentanyl plus midazolam pushes 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Initial Airway Inspection Findings:
+The endotracheal tube is in good position. The visualized portion of the trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Inspection shows a BMS that is patent in the RMSB, partially covering the RUL but with good aeration and mucus drainage through the stent. Dehiscence at the RMSB remains entirely closed by stent. Areas of granulation tissue/ischemic mucosa remain at the distal BI/RML orifice as well as LMSB anastomosis and LUL. There are two areas of very thin mucosa/airway wall in the LUL and Lingula.  Moderate thick secretions. 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, and Carina from mucus. 
+Bronchial alveolar lavage was performed at Lateral-basal Segment of RLL (RB9).  Instilled 40 cc of NS, suction returned with 10 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+Bronchial alveolar lavage was performed at Anterior Segment of LUL (LB3).  Instilled 40 cc of NS, suction returned with 10 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+- RLL BAL
+- LUL BAL
+IMPRESSION/PLAN: [REDACTED]is a 61 year old-year-old male who presents for bronchoscopy for bronchial anastomosis dehiscence. Stent in good position and patent, mucus cleared with suction. Dehiscence remains closed by stent. Will need to pay attention to areas of thinning airway in the LUL anterior and lingula. 
+- f/u BAL studies
+- bronch for stent inspection in 1 week

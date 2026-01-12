@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from modules.registry.processing.focus import get_procedure_focus
 
 PREFERRED_SEGMENT_TYPES: tuple[str, ...] = (
     "Procedure",
@@ -107,5 +108,4 @@ def _heuristic_focus_sections(note_text: str) -> str:
     return "\n\n".join(f"{h.upper()}:\n{b}" for h, b in selected).strip()
 
 
-__all__ = ["focus_note_for_extraction"]
-
+__all__ = ["focus_note_for_extraction", "get_procedure_focus"]

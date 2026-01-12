@@ -1,0 +1,32 @@
+NOTE_ID:  note_106 SOURCE_FILE: note_106.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway evaluation and stent change.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+31636 Dilate and bronchial stent initial bronchus
+31635 Foreign body removal
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Initial Airway Inspection Findings:
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8).  Instilled 40 cc of NS, suction returned with 10 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+Boston Scientific 14x40 Bare metallic stent was removed with out issue.  
+The following stent (Boston Scientific 14x40) was placed in the Right Mainstem via direct visualization.  Dilated to 15mm x2 with elation balloon.  The stent is in good position but slightly undersized. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for stent exchange.
+- distal airway appears to be improving. 
+- minimize bronchscopy while maximize sputum clearance and decrease interruptions to nutrition and PT
+- check stent and airways once a week
+- plan for a stent exchange in 2 weeks (consider 16x40 boston sems)

@@ -1,0 +1,58 @@
+NOTE_ID:  note_050 SOURCE_FILE: note_050.txt INDICATION FOR OPERATION:  [REDACTED]is a 22 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31899NFN BRONCHOSCOPY WITH ENDOBRONCHIAL ULTRASOUND (EBUS) OF MEDIASTINAL AND/OR HILAR LYMPH NODES WITHOUT BIOPSY
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Linear EBUS 
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Normal.
+Vocal Cords: Normal without mass/lesions
+Trachea: Mildly tortuous
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: The distal left mainstem bronchus was noted to be slightly stenotic (~8mm). Otherwise, there was normal anatomic branching to segmental level in the LLL, noting historic obliteration of LUL.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+LMS stenosis was dilated with  10/11/12 Elation balloon was used to perform dilation to 10 mm at the Left Mainstem.  Total 1 inflations with dilation time of 60 seconds each.
+ 
+LUL was completely fused.  Linear ebus was used to identify the area where the prior airway was.  Needle knife was used to cut into the airway.  Serial needle 25G, 22G and 19G was used to reenforce the pathway.  Mustang balloon was used to engage the airway but was only able to pass into the airway for 1/4 of the balloon unable to dilate open the airway.  This was stopped given the inability to completely engage the LUL passage. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 22 year old-year-old female who presents for bronchoscopy for evaluation of airway stenosis. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--repeat bronch in 8 weeks
+ 

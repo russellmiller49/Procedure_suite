@@ -1,0 +1,29 @@
+NOTE_ID:  note_128 SOURCE_FILE: note_128.txt Patient name:  [REDACTED]
+
+Preoperative diagnosis: Acute hypoxemic respiratory failure; Cough; Esophageal cancer; Malignant esophageal tumor; Pneumonia
+Postoperative diagnosis: Same as above with addition of significant carcinomatosis and lymphangitic/metastatic spread of patient's malignancy causing severe and near complete obstruction primarily affecting the right lung.
+
+Procedures performed:
+31622 – Bronchoscopy, flexible, with or without fluoroscopic guidance, diagnostic
+Balloon Dilation, 31630, Bronchoscopy rigid or flexible including fluoroscopic guidance when performed; with tracheal/bronchial dilation
+
+Indications for the procedure: Acute hypoxemic respiratory failure; Cough; Esophageal cancer; Malignant esophageal tumor; Pneumonia
+
+Anesthesia: General anesthesia using a #8.5endotracheal tube.
+
+Procedure: After obtaining informed consent from the patient, the patient was brought to the procedure room. A proper timeout was performed to identify the correct patient and procedure to be performed. General anesthesia was administered.
+
+Rigid bronchoscopy was performed with an 11mm ventilating scope. The patient, however, desaturated quickly despite relatively high driving pressures on jet ventilation (to the 60s), requiring extubation. The patient was bagged to bring saturations up and we intubated with the rigid scope again, but had the same thing happen. We then intubated with an 8.5 ETT and proceeded.
+
+The T190/P190 video bronchoscope was introduced and advanced to the tracheobronchial tree. There was significant adenopathy surrounding the vocal cords; however, patent vocal cords were noted on exam with mild erythema of the trachea following advancement. Left lung without any apparent superficial abnormality, other than secretions noted in the bilateral airway. Right lung with significant swelling, edema, erythema, and nodularity noted throughout, most prominently in the right middle and right lower lobe with significant secretions aspirated and near complete obstruction and narrowing of the airways.
+
+We dilated the lower airway with an 8-9-10mm Elation balloon to better bypass the proximal tumor before assessing the distal disease. The dilation was temporary only, and collapse recurred.
+
+Unfortunately, as we advanced past the proximal tumor obstruction with the P190 flexible bronchoscope, we could see tumor infiltration extending into all of the distal subsegments, making no appropriate landing point for stenting. We decided to terminate the procedure as the airway was not salvageable.
+
+He was then taken to the ICU intubated.
+Specimens: None
+
+EBL: minimal
+
+Bronchoscopes: Diagnostic and therapeutic bronchoscope as well as rigid bronchoscope

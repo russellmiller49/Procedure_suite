@@ -1,0 +1,109 @@
+NOTE_ID:  note_015 SOURCE_FILE: note_015.txt INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with massive hemoptysis, endobronchial clot causing acute airway obstruction and worsening of acute respiratory failure.  
+ 
+CONSENT: This procedure was emergent.  Serial consent was previously obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to the procedure were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate decision-maker previously agreed to proceed with procedure.  The patient or surrogate decision-maker previously read and signed the provided consent form or provided consent over the phone. If consent was provided over the phone, then the consent was witnessed by an assisting medical professional.  
+ 
+PREOPERATIVE DIAGNOSIS: Massive hemoptysis, acute airway obstruction
+POSTOPERATIVE DIAGNOSIS:  Same
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+31899NFD BRONCHOSCOPY W/ APPLICATION OF TRANEXAMIC ACID
+31634 Balloon occlusion or placement of occlusive substance 
+31635 Foreign body removal
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP [REDACTED] CODE MOD DETAILS: Unusual Procedure (22 MODIFIER):
+This patient was exceptionally critically ill due to acute respiratory failure and requiring max ventilator and ECMO support.  Patient required extensive therapeutic aspiration and removal of clot using forceps, which required much more time, mental/physical effort, and intensity.    This resulted in >100% increased work due to Increased intensity, Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 
+31646 Therapeutic aspiration subsequent episodes
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+99153 Moderate sedation: each additional 15 minutes 
+Procedure performed under moderate sedation.  
+I took over the management of intraprocedural moderate sedation at 19:15PM.  Prior to this, it was managed by the primary ICU attending, Dr. Omar Mesarwi.
+The following medications were provided:
+Propofol gtt at 60 mcg/kg/min.
+Precedex gtt at 1.3 mcg/kg/hr.
+Fentanyl          IV 250 mcg
+Dilaudid           IV 1mg
+Physician/patient face-to-face anesthesia start time:   19:15 PM
+Physician/patient face-to-face anesthesia stop time:   20:00 PM
+Total moderate sedation time was 45 minutes.  
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by Gesicki, Killian Matthew, RN.  
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Disposable Bronchoscope
+ 
+PROCEDURE IN DETAIL:
+This was an emergency procedure due to rapid clinical decompensation with associated massive hemoptysis with endobronchial clot causing acute airway obstruction.  Sedation administered and adjusted.  Tracheostomy tube (ID 7.5mm) already in place.
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords, main carina, right carina 1, and left carina 2.
+ 
+Initial Airway Examination Findings:
+Trachea: Clot extending from the LMSB into the distal trachea without obstruction of the RMSB.  Trachea otherwise normal in anatomy.
+Main Carina: Sharp
+Right Lung Proximal Airways:  Evidence of yellow hard debris - likely pieces of fungal ball - noted in RB1.  Otherwise normal anatomic branching to the first subsegmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Large clot completely obstructing the LMSB - extending to the main carina.  LUL and LLL also completely obstructed by clot.  After extraction of clot, the LMSB and LLL were otherwise normal in anatomy without endobronchial lesions.  Incomplete assessment of LUL, as clot was not fully extracted from this area.
+Mucosa: Mildly friable.
+Secretions: Thin, blood-tinged.  All secretions were suctioned to clear (therapeutic aspiration). 
+ 
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left upper lobe, left lower lobe from blood clot and mucus. 
+
+Endobronchial obstruction due to debris/clot was mechanically excised and removed using bland alligator forceps.
+ 
+Foreign body removal of large endobronchial clot burden, which is not native to the airway, was performed.
+ 
+The was performed using the below modalities:
+-Numerous cold saline flushing to dislodge clot and control any distal bleeding.
+-Therapeutic aspiration utilizing Neptune suction.
+-Bland alligator forceps
+ 
+Able to remove all clot from the LMSB and majority of LLL and LB7/8-10.  This included a large cast of clot that was dislodged and removed from LLL truncus basalis and basilar segments.  Some partially obstructing clot remained in the LLL superior segment (LB6), which could not be extracted despite extensive time.  
+ 
+View from mid LMSB with patent LLL bronchus and partially patent LUL bronchus.
+ 
+LLL superior segment with residual partially obstructing clot:
+ 
+The LUL remained largely filled with clot, although there may be some partial ventilation occurring here based on bubbling/tidaling of clot seen.  The  LUL Aspergilloma is the suspsected source of bleed.  Therefore, LUL clot was intentionally left in place to allow to organize and prevent further bleeding from the LUL.  
+ 
+Clot remaining in LUL. 
+ 
+ 
+There was no active bleeding or pooling blood seen.  
+ 
+In hopes of preventing recurrence of active bleeding, the following endobronchial medications were instilled:
+Endobronchial epinephrine 0.4mg was instilled into the LUL - targeting LB1/2 and LB3.
+Endobronchial tranexamic acid 1000mg was instilled into the LUL - targeting LB1/2 and LB3.
+ 
+A Uniblocker 9Fr was the only bronchial blocker available.  The Uniblocker ventilator adaptor was attached to the tracheostomy tube and the the 9Fr bronchial balloon blocker balloon was guided into the distal LMSB under direct visualization (using parallel Slim disposable scope via the tracheostomy tube).  
+-The bronchial blocker balloon was inflated to fully occlude the left mainstem bronchus.
+-Placed at 25-26cm at the dark blue securement device.  Bronchial blocker secured tightly in position using this securement device.
+-Confirmed that 8cc of air was needed to adequately inflate the balloon to fully occlude the LMSB.
+The endobronchial blocker balloon was then deflated and left in the distal LMSB in case emergently needed for recurrent massive hemoptysis.
+ 
+Residual secretions, saline, and minimal blood suctioned to clear.  Bronchoscope removed.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient's respiratory status was improved.  She will remain in ICU for ongoing critical care management.
+ 
+ESTIMATED BLOOD LOSS:   Minimal active bleeding.  Large amount of organized clot removed.
+COMPLICATIONS:    None
+ 
+SPECIMEN(S): 
+None
+ 
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy for therapeutic aspiration and foreign body removal of clot.
+ 
+-Nebulized TXA.
+-Hold all AC including heparin gtt for now.
+-Keep well sedated to limit coughing.
+-Continue broad-spectrum antimicrobials.
+ 
+-Will tentatively plan for IP to repeat bronchoscopy tomorrow with therapeutic aspiration/cryoextraction of clot.
+ 
+-I remain on-call for IP overnight.  Please do not hesitate to call me if I can provide any additional assistance.
