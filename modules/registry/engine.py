@@ -680,6 +680,12 @@ class RegistryEngine:
             # normalize them so pydantic validation does not fail when building the record.
             raw_llm_evidence = llm_data.pop("evidence", None) if isinstance(llm_data, dict) else None
 
+            # Guardrail: billing/CPT codes are derived deterministically; do not trust LLM output for them.
+            if isinstance(llm_data, dict):
+                llm_data.pop("billing", None)
+                llm_data.pop("cpt_codes", None)  # legacy flat CPT list (if present)
+                llm_data.pop("coding_support", None)
+
         merged_data = self._merge_llm_and_seed(llm_data, seed_data)
 
         # Seed linear EBUS station list early so downstream normalization and heuristics can use it.
@@ -2301,13 +2307,45 @@ class RegistryEngine:
 
     @staticmethod
     def _merge_llm_and_seed(llm_data: dict[str, Any], seed_data: dict[str, Any]) -> dict[str, Any]:
-        merged = dict(llm_data)
+        """Merge deterministic seed data into LLM output.
+
+        Deterministic extractors are intended as high-precision "safety nets" and
+        must not be dropped simply because the LLM returned a non-empty parent dict
+        (e.g., procedures_performed without the key we need).
+        """
+
+        def _merge_missing(dst: Any, src: Any) -> Any:
+            # If destination is empty-ish, prefer the source.
+            if dst in (None, "", [], {}):
+                return src
+
+            # Deterministic seeds should be able to flip a boolean performed flag to True.
+            if isinstance(dst, bool) and isinstance(src, bool):
+                return dst or src
+
+            # Deep-merge dicts, filling missing/empty values recursively.
+            if isinstance(dst, dict) and isinstance(src, dict):
+                merged_dict = dict(dst)
+                for k, v in src.items():
+                    if v is None:
+                        continue
+                    if k not in merged_dict:
+                        merged_dict[k] = v
+                        continue
+                    merged_dict[k] = _merge_missing(merged_dict.get(k), v)
+                return merged_dict
+
+            # If destination is an empty list and source is non-empty, take it.
+            if isinstance(dst, list) and isinstance(src, list):
+                return src if not dst and src else dst
+
+            return dst
+
+        merged: dict[str, Any] = dict(llm_data)
         for key, value in seed_data.items():
             if value is None:
                 continue
-            existing = merged.get(key)
-            if existing in (None, "", [], {}):
-                merged[key] = value
+            merged[key] = _merge_missing(merged.get(key), value)
         return merged
 
     @staticmethod

@@ -935,6 +935,10 @@ class UnifiedExtractRequest(BaseModel):
     explain: bool = Field(
         False, description="Whether to include evidence spans in response"
     )
+    mode: str | None = Field(
+        default=None,
+        description="Optional execution mode. Use 'engine_only' to disable LLM registry extraction.",
+    )
 
 
 class UnifiedExtractResponse(BaseModel):
@@ -1050,6 +1054,18 @@ def run_unified_extraction(
     try:
         with timed("api.unified_extraction") as timing:
             # Step 1: Registry extraction
+            mode_value = (request.mode or "").strip().lower()
+            if mode_value in {"engine_only", "no_llm", "deterministic_only"}:
+                from modules.registry.engine import RegistryEngine
+                from modules.registry.extractors.noop import NoOpLLMExtractor
+
+                registry_service = RegistryService(
+                    schema_registry=registry_service.schema_registry,
+                    default_version=registry_service.default_version,
+                    hybrid_orchestrator=registry_service.hybrid_orchestrator,
+                    registry_engine=RegistryEngine(llm_extractor=NoOpLLMExtractor()),
+                )
+
             extraction_result = registry_service.extract_fields(scrubbed_text)
 
             # Step 2: Derive CPT codes from registry

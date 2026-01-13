@@ -26,12 +26,74 @@ __path__ = [str(Path(__file__).with_name("schema"))]
 
 _SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
 
+# ---------------------------------------------------------------------------
+# Granular EBUS node events (inspection vs sampling)
+# ---------------------------------------------------------------------------
+
+NodeActionType = Literal[
+    "inspected_only",  # Visual/Ultrasound only (NO needle)
+    "needle_aspiration",  # TBNA / FNA
+    "core_biopsy",  # FNB / Core needle
+    "forceps_biopsy",  # Mini-forceps / intranodal forceps
+]
+
+NodeOutcomeType = Literal[
+    "benign",
+    "malignant",
+    "suspicious",
+    "nondiagnostic",
+    "deferred_to_final_path",
+    "unknown",
+]
+
+
+class NodeInteraction(BaseModel):
+    """Represents an interaction with an EBUS lymph node station.
+
+    Distinguishes inspection-only from actual sampling.
+    """
+
+    model_config = ConfigDict(extra="ignore")
+
+    station: str
+    action: NodeActionType
+    outcome: NodeOutcomeType | None = None
+    evidence_quote: str
+
+
+class LinearEBUSProcedure(BaseModel):
+    """Custom type override for procedures_performed.linear_ebus.
+
+    Adds `node_events` for granular per-station actions while remaining
+    backward-compatible with the JSON schema fields.
+    """
+
+    model_config = ConfigDict(extra="ignore")
+
+    performed: bool | None = None
+    stations_sampled: list[str] | None = None
+    stations_planned: list[str] | None = None
+    stations_detail: list[dict[str, Any]] | None = None
+    passes_per_station: int | None = None
+    needle_gauge: str | None = None
+    needle_type: str | None = None
+    photodocumentation_complete: bool | None = None
+    elastography_used: bool | None = None
+    elastography_pattern: str | None = None
+    doppler_used: bool | None = None
+
+    node_events: list[NodeInteraction] = Field(
+        default_factory=list,
+        description="Per-station interactions, including inspected-only vs sampled actions.",
+    )
+
 # Optional overrides for individual fields (identified via dotted paths).
 CUSTOM_FIELD_TYPES: dict[tuple[str, ...], Any] = {}
 CUSTOM_FIELD_TYPES[("RegistryRecord", "pleural_procedures", "ipc")] = IPCProcedure
 CUSTOM_FIELD_TYPES[("RegistryRecord", "clinical_context")] = ClinicalContext
 CUSTOM_FIELD_TYPES[("RegistryRecord", "patient_demographics")] = PatientDemographics
 CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "airway_stent")] = AirwayStentProcedure
+CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "linear_ebus")] = LinearEBUSProcedure
 CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "linear_ebus", "stations_detail")] = list[dict[str, Any]]
 _MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
 

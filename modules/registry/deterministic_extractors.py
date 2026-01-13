@@ -333,14 +333,22 @@ def extract_bleeding_severity(note_text: str) -> Optional[str]:
     if "no bleeding" in note_lower or "no significant bleeding" in note_lower:
         return "None"
 
-    if "minimal bleeding" in note_lower or "minor bleeding" in note_lower:
+    if (
+        "minimal bleeding" in note_lower
+        or "minor bleeding" in note_lower
+        or "trace bleeding" in note_lower
+        or "scant bleeding" in note_lower
+    ):
         return "None"
 
     # Check for EBL (estimated blood loss)
-    ebl_pattern = r"(?:ebl|estimated blood loss|blood loss)[\s:]+(\d+)\s*(?:ml|cc)?"
+    ebl_pattern = r"(?:ebl|estimated blood loss|blood loss)[\s:]*<?\s*(\d+)\s*(?:ml|cc)?"
     match = re.search(ebl_pattern, note_lower)
     if match:
         ebl = int(match.group(1))
+        # Hard gate: very low EBL values are common and should not be treated as a bleeding complication.
+        if ebl < 10:
+            return "None"
         if ebl < 50:
             return "Mild (<50mL)"
         elif ebl < 200:
@@ -359,6 +367,52 @@ def extract_bleeding_severity(note_text: str) -> Optional[str]:
 
     # Default to None if not explicitly mentioned
     return "None"
+
+
+_BLEEDING_INTERVENTION_PATTERNS: list[tuple[str, str]] = [
+    ("Cold saline", r"\b(?:cold|iced)\s+saline\b"),
+    ("Epinephrine", r"\b(?:epinephrine|epi)\b"),
+    ("Balloon tamponade", r"\bballoon\s+tamponade\b"),
+    ("Electrocautery", r"\belectrocautery\b|\bcauteriz(?:e|ed|ation)\b|\bcoagulat(?:e|ed|ion)\b"),
+    ("APC", r"\bapc\b|argon\s+plasma"),
+    ("Tranexamic acid", r"\btranexamic\s+acid\b|\btxa\b"),
+    ("Bronchial blocker", r"\bbronchial\s+blocker\b|\bendobronchial\s+blocker\b"),
+    ("Transfusion", r"\btransfus(?:ion|ed)\b|\bprbc\b|\bpacked\s+red\b"),
+    ("Embolization", r"\bemboliz(?:ation|ed)\b"),
+    ("Surgery", r"\bsurgery\b|\bthoracotomy\b"),
+]
+
+
+def extract_bleeding_intervention_required(note_text: str) -> list[str] | None:
+    """Extract bleeding interventions as schema enum values.
+
+    This is intentionally conservative: it only flags bleeding as a complication
+    when an intervention to control bleeding is explicitly documented.
+    """
+    text = note_text or ""
+    lowered = text.lower()
+
+    # Explicit negations: don't infer interventions.
+    if re.search(r"\bno\s+(?:immediate\s+)?complications\b", lowered):
+        return None
+    if re.search(r"\bno\s+(?:significant\s+)?bleeding\b", lowered):
+        return None
+
+    hits: list[str] = []
+    for label, pattern in _BLEEDING_INTERVENTION_PATTERNS:
+        if re.search(pattern, text, re.IGNORECASE):
+            hits.append(label)
+
+    # Dedupe while preserving order
+    seen: set[str] = set()
+    deduped: list[str] = []
+    for item in hits:
+        if item in seen:
+            continue
+        seen.add(item)
+        deduped.append(item)
+
+    return deduped or None
 
 
 def extract_providers(note_text: str) -> Dict[str, Any]:
@@ -441,9 +495,8 @@ def extract_providers(note_text: str) -> Dict[str, Any]:
 
 # BAL detection patterns
 BAL_PATTERNS = [
-    r"\bbronchoalveolar\s+lavage\b",
+    r"\bbroncho[-\s]?alveolar\s+lavage\b",
     r"\bBAL\b(?!\s*score)",  # BAL but not "BAL score"
-    r"\blavage\b[^.\n]{0,30}(?:bronch|alveol)",
 ]
 
 # Therapeutic aspiration patterns (exclude routine suction)
@@ -514,6 +567,85 @@ def extract_therapeutic_aspiration(note_text: str) -> Dict[str, Any]:
     return {}
 
 
+def extract_endobronchial_biopsy(note_text: str) -> Dict[str, Any]:
+    """Extract endobronchial (airway) biopsy indicator.
+
+    This is distinct from transbronchial biopsy (parenchyma).
+    """
+    text_lower = (note_text or "").lower()
+
+    patterns = [
+        r"\bendobronchial\s+biops",
+        r"\bbiops(?:y|ied|ies)\b[^.\n]{0,60}\bendobronchial\b",
+        r"\blesions?\s+were\s+biopsied\b",
+    ]
+
+    for pattern in patterns:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"endobronchial_biopsy": {"performed": True}}
+
+    return {}
+
+
+def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
+    """Extract percutaneous tracheostomy indicator.
+
+    Conservative: requires explicit tracheostomy procedure language.
+    """
+    text = note_text or ""
+    text_lower = text.lower()
+
+    patterns = [
+        r"\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b",
+        r"\bperc\s+trach\b",
+        r"\btracheostomy\b[^.\n]{0,60}\b(?:performed|placed|inserted|created)\b",
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, text_lower, re.IGNORECASE)
+        if not match:
+            continue
+        negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+        if re.search(negation_check, text_lower, re.IGNORECASE):
+            continue
+
+        proc: dict[str, Any] = {"performed": True}
+        if "open" in match.group(0).lower():
+            proc["method"] = "open"
+        elif "percutaneous" in match.group(0).lower() or "perc trach" in match.group(0).lower():
+            proc["method"] = "percutaneous"
+
+        if re.search(r"\bportex\b", text_lower):
+            proc["device_name"] = "Portex"
+        elif re.search(r"\bshiley\b", text_lower):
+            proc["device_name"] = "Shiley"
+
+        return {"percutaneous_tracheostomy": proc}
+
+    return {}
+
+
+def extract_neck_ultrasound(note_text: str) -> Dict[str, Any]:
+    """Extract neck ultrasound indicator (often pre-tracheostomy vascular mapping)."""
+    text_lower = (note_text or "").lower()
+    patterns = [
+        r"\bneck\s+ultrasound\b",
+        r"\bultrasound\s+of\s+(?:the\s+)?neck\b",
+    ]
+
+    for pattern in patterns:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"neck_ultrasound": {"performed": True}}
+
+    return {}
+
+
 def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     """Run all deterministic extractors and return combined seed data.
 
@@ -561,6 +693,10 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if bleeding:
         seed_data["bleeding_severity"] = bleeding
 
+    bleeding_interventions = extract_bleeding_intervention_required(note_text)
+    if bleeding_interventions:
+        seed_data["bleeding_intervention_required"] = bleeding_interventions
+
     # Providers
     providers = extract_providers(note_text)
     # Only include provider fields that were actually extracted
@@ -579,6 +715,21 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if ta_data:
         seed_data.setdefault("procedures_performed", {}).update(ta_data)
 
+    # Endobronchial biopsy
+    ebx_data = extract_endobronchial_biopsy(note_text)
+    if ebx_data:
+        seed_data.setdefault("procedures_performed", {}).update(ebx_data)
+
+    # Percutaneous tracheostomy
+    trach_data = extract_percutaneous_tracheostomy(note_text)
+    if trach_data:
+        seed_data.setdefault("procedures_performed", {}).update(trach_data)
+
+    # Neck ultrasound
+    neck_us_data = extract_neck_ultrasound(note_text)
+    if neck_us_data:
+        seed_data.setdefault("procedures_performed", {}).update(neck_us_data)
+
     return seed_data
 
 
@@ -591,7 +742,11 @@ __all__ = [
     "extract_primary_indication",
     "extract_disposition",
     "extract_bleeding_severity",
+    "extract_bleeding_intervention_required",
     "extract_providers",
     "extract_bal",
     "extract_therapeutic_aspiration",
+    "extract_endobronchial_biopsy",
+    "extract_percutaneous_tracheostomy",
+    "extract_neck_ultrasound",
 ]

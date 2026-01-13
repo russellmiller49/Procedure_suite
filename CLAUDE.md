@@ -1087,6 +1087,7 @@ procedure-suite/
 | `GEMINI_API_KEY` | API key for Gemini LLM | Required for LLM |
 | `GEMINI_OFFLINE` | Disable LLM calls (use stubs) | `1` |
 | `REGISTRY_USE_STUB_LLM` | Use stub LLM for registry tests | `1` |
+| `PROCSUITE_SKIP_DOTENV` | Skip loading `.env` in Python (tests/offline) | `1` |
 | `OPENAI_API_KEY` | API key for OpenAI LLM | Required for OpenAI |
 | `OPENAI_MODEL` | OpenAI model to use | `gpt-4.1` |
 | `OPENAI_PRIMARY_API` | Primary API: `responses` or `chat` | `responses` |
@@ -1420,6 +1421,19 @@ The system handles this automatically with exponential backoff. To reduce 429s:
 LLM_CONCURRENCY=1
 ```
 
+**Run without any LLM calls (local workbench / debugging):**
+- Registry endpoint: send `mode: "engine_only"` to `POST /v1/registry/run` to disable the registry LLM extractor (deterministic-only).
+- Coder endpoint: send `mode: "rules_only"` to `POST /v1/coder/run` (ML-first) to disable LLM fallback (ML + rules only).
+- PHI-gated unified extraction: send `mode: "engine_only"` to `POST /api/v1/procedures/{id}/extract` to disable registry LLM extraction.
+
+The workbench UI exposes these as checkboxes in Unified/Coder/Registry mode (look for “Disable LLM…”).
+
+**Registry V3 (granular) endpoints and tooling:**
+- Offline pipeline harness:
+  - `python scripts/ingest_phase0_data.py` → writes `data/knowledge/golden_registry_v3/*.json`
+  - `python scripts/eval_registry_granular.py` → runs V3 pipeline evaluation (set `REGISTRY_USE_STUB_LLM=1` for offline)
+- API: `POST /v1/registry/v3/run` runs V3 extraction and projects back to the legacy `RegistryRecord` response shape.
+
 **Slow cold starts:**
 Check that background warmup is working:
 1. `/health` should return immediately with `"ready": false`
@@ -1455,7 +1469,7 @@ Solutions:
 
 ---
 
-*Last updated: December 26, 2025*
+*Last updated: January 2026*
 *Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
 *Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
 *Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*

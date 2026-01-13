@@ -365,6 +365,20 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
                 tblb["forceps_type"] = normalized
         procedures["transbronchial_biopsy"] = tblb
 
+    # Endobronchial biopsy (airway mucosa/lesion) - distinct from transbronchial biopsy
+    ebx_data = data.get("endobronchial_biopsy")
+    if isinstance(ebx_data, dict) and ebx_data.get("performed"):
+        ebx: dict[str, Any] = {"performed": True}
+        if ebx_data.get("locations"):
+            ebx["locations"] = ebx_data.get("locations")
+        if ebx_data.get("number_of_samples") is not None:
+            ebx["number_of_samples"] = ebx_data.get("number_of_samples")
+        if ebx_data.get("forceps_type"):
+            ebx["forceps_type"] = ebx_data.get("forceps_type")
+        procedures["endobronchial_biopsy"] = ebx
+    elif ebx_data is True:
+        procedures["endobronchial_biopsy"] = {"performed": True}
+
     if data.get("cryo_probe_size") or data.get("cryo_specimens_count"):
         cryo: dict[str, Any] = {"performed": True}
         cryo["cryoprobe_size_mm"] = data.get("cryo_probe_size")
@@ -419,6 +433,31 @@ def _build_procedures_performed(data: dict[str, Any], families: set[str]) -> dic
         blvr["segments_treated"] = data.get("blvr_segments_treated")
         blvr["collateral_ventilation_assessment"] = data.get("blvr_cv_assessment_method")
         procedures["blvr"] = blvr
+
+    # Other interventions (often appear outside bronchoscopy section)
+    trach_data = data.get("percutaneous_tracheostomy")
+    if isinstance(trach_data, dict) and trach_data.get("performed"):
+        trach: dict[str, Any] = {"performed": True}
+        if trach_data.get("method"):
+            trach["method"] = trach_data.get("method")
+        if trach_data.get("device_name"):
+            trach["device_name"] = trach_data.get("device_name")
+        if trach_data.get("size"):
+            trach["size"] = trach_data.get("size")
+        procedures["percutaneous_tracheostomy"] = trach
+    elif trach_data is True:
+        procedures["percutaneous_tracheostomy"] = {"performed": True}
+
+    neck_us_data = data.get("neck_ultrasound")
+    if isinstance(neck_us_data, dict) and neck_us_data.get("performed"):
+        us: dict[str, Any] = {"performed": True}
+        if neck_us_data.get("vessels_visualized") is not None:
+            us["vessels_visualized"] = neck_us_data.get("vessels_visualized")
+        if neck_us_data.get("findings"):
+            us["findings"] = neck_us_data.get("findings")
+        procedures["neck_ultrasound"] = us
+    elif neck_us_data is True:
+        procedures["neck_ultrasound"] = {"performed": True}
 
     return procedures
 
@@ -498,12 +537,30 @@ def _build_complications(data: dict[str, Any]) -> dict[str, Any]:
 
     # Build bleeding substructure
     bleeding_severity = data.get("bleeding_severity")
-    ebl_ml = data.get("ebl_ml")
-    if bleeding_severity or ebl_ml:
-        # Skip if value is "None" string
-        if bleeding_severity and bleeding_severity not in ("None", "none", "None/Scant"):
-            bleeding_dict: dict[str, Any] = {"occurred": True}
-            # Map severity to schema enum if needed
+    interventions_raw = data.get("bleeding_intervention_required")
+
+    intervention_list: list[str] = []
+    if isinstance(interventions_raw, list):
+        intervention_list = [str(x).strip() for x in interventions_raw if x is not None and str(x).strip()]
+    elif isinstance(interventions_raw, str) and interventions_raw.strip():
+        intervention_list = [interventions_raw.strip()]
+
+    # Evidence hard-gating for bleeding complications:
+    # Only mark bleeding occurred when an intervention to control bleeding is documented.
+    if intervention_list:
+        # De-dupe while preserving order
+        seen: set[str] = set()
+        deduped: list[str] = []
+        for item in intervention_list:
+            if item in seen:
+                continue
+            seen.add(item)
+            deduped.append(item)
+
+        bleeding_dict: dict[str, Any] = {"occurred": True, "intervention_required": deduped}
+
+        # Map severity to schema enum if provided
+        if isinstance(bleeding_severity, str) and bleeding_severity not in ("None", "none", "None/Scant"):
             severity_mapping = {
                 "Mild": "Mild (<50mL)",
                 "Moderate": "Moderate (50-200mL)",
@@ -513,9 +570,8 @@ def _build_complications(data: dict[str, Any]) -> dict[str, Any]:
                 bleeding_dict["severity"] = severity_mapping[bleeding_severity]
             elif bleeding_severity in severity_mapping.values():
                 bleeding_dict["severity"] = bleeding_severity
-            complications["bleeding"] = bleeding_dict
-        elif ebl_ml and isinstance(ebl_ml, (int, float)) and ebl_ml > 0:
-            complications["bleeding"] = {"occurred": True}
+
+        complications["bleeding"] = bleeding_dict
 
     # Build pneumothorax substructure
     pneumothorax_val = data.get("pneumothorax")

@@ -1584,6 +1584,7 @@ async function runReporterFlow(noteText) {
     const extraction = await postJSON('/v1/registry/run', {
         note: scrubbedText,
         explain: document.getElementById('registry-explain')?.checked || false,
+        mode: document.getElementById('registry-disable-llm')?.checked ? 'engine_only' : null,
     });
 
     // Step 2: validation/inference
@@ -1662,7 +1663,8 @@ async function runCoderViaPHI(text, options) {
             allow_weak_sedation_docs: options.allow_weak_sedation_docs,
             locality: options.locality,
             setting: options.setting,
-            use_ml_first: options.use_ml_first
+            use_ml_first: options.use_ml_first,
+            mode: options.mode || null
         })
     });
     if (!coderResp.ok) {
@@ -1687,7 +1689,8 @@ async function runRegistryViaPHI(text, options) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             note: scrubbedText,
-            explain: options.explain
+            explain: options.explain,
+            mode: options.mode || null
         })
     });
     if (!registryResp.ok) {
@@ -1723,7 +1726,8 @@ async function runUnifiedViaPHI(text, options) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             include_financials: options.include_financials,
-            explain: options.explain
+            explain: options.explain,
+            mode: options.mode || null
         })
     });
     if (!extractResp.ok) {
@@ -1784,7 +1788,8 @@ async function runUnifiedWithConfirmedEntities(options) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             include_financials: options.include_financials,
-            explain: options.explain
+            explain: options.explain,
+            mode: options.mode || null
         })
     });
     if (!extractResp.ok) {
@@ -1815,7 +1820,8 @@ async function run() {
             // Route through PHI workflow for unified mode
             lastResult = await runUnifiedViaPHI(text, {
                 include_financials: document.getElementById('unified-financials').checked,
-                explain: document.getElementById('unified-explain').checked
+                explain: document.getElementById('unified-explain').checked,
+                mode: document.getElementById('unified-disable-llm').checked ? 'engine_only' : null
             });
             console.log('API Response (via PHI):', lastResult);
             renderResult();
@@ -1827,7 +1833,8 @@ async function run() {
                 allow_weak_sedation_docs: document.getElementById('coder-weak-sedation').checked,
                 locality: document.getElementById('coder-locality').value || '00',
                 setting: document.getElementById('coder-setting').value || 'facility',
-                use_ml_first: document.getElementById('coder-ml-first').checked
+                use_ml_first: document.getElementById('coder-ml-first').checked,
+                mode: document.getElementById('coder-disable-llm').checked ? 'rules_only' : null
             });
             console.log('API Response (via PHI):', lastResult);
             renderResult();
@@ -1835,7 +1842,8 @@ async function run() {
         } else if (currentMode === 'registry') {
             // Route registry through PHI workflow too
             lastResult = await runRegistryViaPHI(text, {
-                explain: document.getElementById('registry-explain').checked
+                explain: document.getElementById('registry-explain').checked,
+                mode: document.getElementById('registry-disable-llm').checked ? 'engine_only' : null
             });
             console.log('API Response (via PHI):', lastResult);
             renderResult();

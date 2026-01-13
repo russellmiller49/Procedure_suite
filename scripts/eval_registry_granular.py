@@ -13,12 +13,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from modules.common.exceptions import LLMError
+from modules.registry.pipelines.v3_pipeline import run_v3_extraction
 from modules.registry.schema.ip_v3 import IPRegistryV3, ProcedureEvent
-
-
-def extract_registry_v3(note_text: str) -> IPRegistryV3:
-    _ = note_text
-    return IPRegistryV3(note_id="unknown", source_filename="unknown", procedures=[])
 
 
 def _norm(value: str | None) -> str | None:
@@ -123,6 +120,7 @@ def main() -> int:
 
     totals = ScoreResult(tp=0, fp=0, fn=0)
     evaluated = 0
+    extraction_errors = 0
 
     with errors_out.open("w", encoding="utf-8") as f:
         for gold_path in gold_paths:
@@ -143,7 +141,17 @@ def main() -> int:
                 continue
 
             note_text = note_path.read_text(encoding="utf-8", errors="replace")
-            pred = extract_registry_v3(note_text)
+            error: dict | None = None
+            try:
+                pred = run_v3_extraction(note_text)
+            except LLMError as exc:
+                extraction_errors += 1
+                error = {"type": "llm_error", "message": str(exc)[:500]}
+                pred = IPRegistryV3(note_id=gold.note_id, source_filename=gold.source_filename, procedures=[])
+            except Exception as exc:  # noqa: BLE001
+                extraction_errors += 1
+                error = {"type": type(exc).__name__, "message": str(exc)[:500]}
+                pred = IPRegistryV3(note_id=gold.note_id, source_filename=gold.source_filename, procedures=[])
             pred = pred.model_copy(update={"note_id": gold.note_id, "source_filename": gold.source_filename})
 
             score, details = scorer.score(gold, pred)
@@ -155,6 +163,7 @@ def main() -> int:
                     {
                         "note_id": gold.note_id,
                         "source_filename": gold.source_filename,
+                        "extraction_error": error,
                         "score": {"tp": score.tp, "fp": score.fp, "fn": score.fn},
                         "precision": score.precision,
                         "recall": score.recall,
@@ -167,6 +176,8 @@ def main() -> int:
     print(f"Evaluated notes: {evaluated} / {len(gold_paths)}")
     print(f"Micro precision: {totals.precision:.3f} (tp={totals.tp}, fp={totals.fp})")
     print(f"Micro recall:    {totals.recall:.3f} (tp={totals.tp}, fn={totals.fn})")
+    if extraction_errors:
+        print(f"Notes with extraction errors: {extraction_errors}")
     print(f"Wrote errors: {errors_out}")
     return 0
 

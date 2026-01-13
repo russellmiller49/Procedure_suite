@@ -56,6 +56,7 @@ CoderResponse = CoderOutput
 class RegistryRequest(BaseModel):
     note: str
     explain: bool = False
+    mode: str | None = None
 
 
 class RegistryResponse(RegistryRecord):

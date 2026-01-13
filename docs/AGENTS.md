@@ -11,6 +11,15 @@ The agents module (`modules/agents/`) provides **deterministic, structured note 
 
 The goal is to make downstream extraction more reliable and auditable without seeding registry extraction with CPT hints when running in extraction-first mode.
 
+## Registry V3 focusing (LLM input slicing)
+
+Registry V3 introduces a stricter, section-aware focusing helper used to limit what the V3 extractor sees:
+
+- **Entry point:** `modules/registry/processing/focus.py:get_procedure_focus()`
+- **Sources:** prefers `ParserAgent` segmentation, then `SectionizerService`, with a regex fallback.
+- **Target sections:** `PROCEDURE`, `FINDINGS`, `IMPRESSION`, `TECHNIQUE`, `OPERATIVE REPORT`
+- **Fail-safe:** if no target headings are found, returns the full original note text (never empty).
+
 ## Where this fits in the system
 
 The system has two major registry flows (feature-flagged):

@@ -1993,6 +1993,65 @@
               ]
             }
           }
+        },
+        "percutaneous_tracheostomy": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Percutaneous tracheostomy",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "percutaneous",
+                "open",
+                null
+              ]
+            },
+            "device_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "size": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "neck_ultrasound": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Neck ultrasound (often pre-tracheostomy vascular mapping)",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "vessels_visualized": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "findings": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
         }
       }
     },

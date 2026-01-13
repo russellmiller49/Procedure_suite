@@ -752,7 +752,7 @@ class RegistryService:
         from modules.registry.audit.compare import build_audit_compare_report
         from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
         from modules.registry.self_correction.judge import RegistryCorrectionJudge
-        from modules.registry.self_correction.keyword_guard import keyword_guard_passes
+        from modules.registry.self_correction.keyword_guard import keyword_guard_passes, scan_for_omissions
         from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
         from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
 
@@ -762,6 +762,12 @@ class RegistryService:
 
         record, extraction_warnings, meta = self.extract_record(raw_note_text)
         extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
+
+        # Omission detection: flag "silent failures" where high-value terms are present
+        # in the raw text but the corresponding registry fields are missing/false.
+        omission_warnings = scan_for_omissions(raw_note_text, record)
+        if omission_warnings:
+            extraction_warnings.extend(omission_warnings)
 
         derivation = derive_registry_to_cpt(record)
         derived_codes = [c.code for c in derivation.codes]
@@ -773,7 +779,7 @@ class RegistryService:
         audit_warnings: list[str] = []
         audit_report: AuditCompareReport | None = None
         coder_difficulty = "unknown"
-        needs_manual_review = False
+        needs_manual_review = bool(omission_warnings)
 
         if auditor_source == "raw_ml":
             from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
@@ -791,7 +797,7 @@ class RegistryService:
                 ml_case=ml_case,
                 audit_preds=audit_preds,
             )
-            needs_manual_review = bool(audit_report.high_conf_omissions)
+            needs_manual_review = needs_manual_review or bool(audit_report.high_conf_omissions)
 
             def _env_flag(name: str, default: str = "0") -> bool:
                 return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
@@ -950,6 +956,16 @@ class RegistryService:
                     f"RAW_ML_AUDIT[{bucket}]: model suggests {pred.cpt} (prob={pred.prob:.2f}), "
                     "but deterministic derivation missed it"
                 )
+
+        # Populate billing CPT codes deterministically (never from the LLM).
+        if derived_codes:
+            record_data = record.model_dump()
+            billing = record_data.get("billing")
+            if not isinstance(billing, dict):
+                billing = {}
+            billing["cpt_codes"] = [{"code": str(code)} for code in derived_codes if str(code).strip()]
+            record_data["billing"] = billing
+            record = RegistryRecord(**record_data)
 
         derivation_warnings = list(derivation.warnings)
         warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings)

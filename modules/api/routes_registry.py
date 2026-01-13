@@ -23,12 +23,17 @@ from modules.api.dependencies import get_registry_service
 from modules.api.phi_dependencies import get_phi_scrubber
 from modules.api.phi_redaction import apply_phi_redaction
 from modules.api.readiness import require_ready
+from modules.api.schemas import RegistryRequest, RegistryResponse
 from modules.infra.executors import run_cpu
 from modules.common.exceptions import LLMError
+from modules.api.normalization import simplify_billing_cpt_codes
 from modules.registry.application.registry_service import (
     RegistryService,
     RegistryExtractionResult,
 )
+from modules.registry.adapters.v3_to_v2 import project_v3_to_v2
+from modules.registry.pipelines.v3_pipeline import run_v3_extraction
+from modules.registry.summarize import add_procedure_summaries
 
 logger = logging.getLogger(__name__)
 
@@ -51,12 +56,20 @@ def _prune_none(obj: Any) -> Any:
 # ROUTER SETUP
 # =============================================================================
 
-router = APIRouter(
+# Keep a stable import name (`router`) for fastapi_app.py while allowing multiple
+# URL prefixes (legacy `/v1/*` and newer `/api/*`) from a single include.
+router = APIRouter(tags=["registry"])
+
+api_router = APIRouter(
     prefix="/api/registry",
     tags=["registry"],
-    responses={
-        500: {"description": "Internal server error"},
-    },
+    responses={500: {"description": "Internal server error"}},
+)
+
+v1_router = APIRouter(
+    prefix="/v1/registry",
+    tags=["registry"],
+    responses={500: {"description": "Internal server error"}},
 )
 
 
@@ -164,7 +177,7 @@ class RegistryExtractResponse(BaseModel):
 # =============================================================================
 
 
-@router.post(
+@api_router.post(
     "/extract",
     response_model=RegistryExtractResponse,
     response_model_exclude_none=True,
@@ -237,3 +250,31 @@ async def extract_registry_fields(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Registry extraction failed: {str(e)}",
         )
+
+
+@v1_router.post(
+    "/v3/run",
+    response_model=RegistryResponse,
+    response_model_exclude_none=True,
+)
+async def registry_run_v3(
+    req: RegistryRequest,
+    request: Request,
+    _ready: None = Depends(require_ready),
+    phi_scrubber=Depends(get_phi_scrubber),
+) -> RegistryResponse:
+    redaction = apply_phi_redaction(req.note, phi_scrubber)
+    note_text = redaction.text
+
+    v3 = await run_cpu(request.app, run_v3_extraction, note_text)
+    record = project_v3_to_v2(v3)
+
+    payload = _prune_none(record.model_dump(exclude_none=True))
+    simplify_billing_cpt_codes(payload)
+    add_procedure_summaries(payload)
+    payload["evidence"] = {}
+    return RegistryResponse.model_validate(payload)
+
+
+router.include_router(api_router)
+router.include_router(v1_router)

@@ -40,7 +40,8 @@ def extract_v3_draft(focused_text: str) -> IPRegistryV3:
         f"Focused note text:\n{focused_text}\n"
     )
 
-    llm = _resolve_llm(task="registry_v3")
+    # Use a timeout profile appropriate for registry extraction (see `_resolve_openai_timeout`).
+    llm = _resolve_llm(task="registry_extraction")
     raw = _generate_structured_json(
         llm=llm,
         system_prompt=SYSTEM_PROMPT,

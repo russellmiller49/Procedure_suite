@@ -15,6 +15,82 @@ from typing import List, Optional, Literal
 from pydantic import BaseModel, Field
 
 
+# =============================================================================
+# EBUS Node Interaction (Granular)
+# =============================================================================
+
+NodeActionType = Literal[
+    "inspected_only",       # Visual/Ultrasound only (NO needle)
+    "needle_aspiration",    # TBNA / FNA
+    "core_biopsy",          # FNB / Core needle
+    "forceps_biopsy"        # Mini-forceps
+]
+
+NodeOutcomeType = Literal[
+    "benign",
+    "malignant",
+    "suspicious",
+    "nondiagnostic",
+    "deferred_to_final_path",
+    "unknown"
+]
+
+
+class NodeInteraction(BaseModel):
+    """Represents a specific interaction with a lymph node station.
+
+    DISTINCTION: 'inspected_only' vs 'needle_aspiration' is critical.
+    """
+
+    station: str = Field(
+        ...,
+        description="The standardized lymph node station (e.g., '4R', '7', '11L').",
+    )
+    action: NodeActionType = Field(
+        ...,
+        description=(
+            "The specific action taken. Use 'inspected_only' if described as "
+            "'sized', 'viewed', or 'not biopsied'."
+        ),
+    )
+    outcome: Optional[NodeOutcomeType] = Field(
+        None,
+        description="The immediate interpretation (ROSE) or final pathology if mentioned.",
+    )
+    evidence_quote: str = Field(
+        ...,
+        description=(
+            "CRITICAL: The verbatim quote from the text proving the specific action occurred. "
+            "E.g., 'FNA of station 7 performed'."
+        ),
+    )
+
+
+class LinearEBUS(BaseModel):
+    """Linear EBUS with granular per-node events."""
+
+    performed: bool = Field(False, description="Was Linear EBUS performed?")
+    node_events: List[NodeInteraction] = Field(
+        default_factory=list,
+        description="List of all lymph node interactions, both sampled and inspected.",
+    )
+    needle_gauge: Optional[str] = Field(None, description="Size of needle used (e.g., '22G', '19G').")
+
+    @property
+    def stations_sampled(self) -> List[str]:
+        """Derived property for CPT logic (e.g. 31653 requires count >= 3)."""
+        return [
+            event.station
+            for event in self.node_events
+            if event.action in ("needle_aspiration", "core_biopsy", "forceps_biopsy")
+        ]
+
+    @property
+    def stations_inspected_only(self) -> List[str]:
+        """Derived property for reporting."""
+        return [event.station for event in self.node_events if event.action == "inspected_only"]
+
+
 class PatientInfo(BaseModel):
     """Patient demographic information."""
 

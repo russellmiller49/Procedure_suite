@@ -35,12 +35,32 @@ def _pleural(record: RegistryRecord, name: str) -> Any:
     return getattr(pleural, name, None)
 
 
-def _stations_sampled(record: RegistryRecord) -> list[str]:
+def _stations_sampled(record: RegistryRecord) -> tuple[list[str], str]:
     linear = _proc(record, "linear_ebus")
-    stations = getattr(linear, "stations_sampled", None) if linear is not None else None
+    if linear is None:
+        return ([], "none")
+
+    qualifying_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+    node_events = getattr(linear, "node_events", None)
+    if isinstance(node_events, (list, tuple)) and node_events:
+        sampled: list[str] = []
+        for event in node_events:
+            action = getattr(event, "action", None)
+            if action not in qualifying_actions:
+                continue
+            station = getattr(event, "station", None)
+            if station is None:
+                continue
+            station_clean = str(station).upper().strip()
+            if station_clean:
+                sampled.append(station_clean)
+        return (sampled, "node_events")
+
+    stations = getattr(linear, "stations_sampled", None)
     if not stations:
-        return []
-    return [str(s) for s in stations if s]
+        return ([], "none")
+
+    return ([str(s).upper().strip() for s in stations if s], "stations_sampled")
 
 
 def _navigation_targets(record: RegistryRecord) -> list[Any]:
@@ -212,16 +232,30 @@ def derive_all_codes_with_meta(
 
     # Linear EBUS TBNA (31652/31653) based on station count.
     if _performed(_proc(record, "linear_ebus")):
-        stations = _stations_sampled(record)
-        station_count = len(set(stations))
+        stations, station_source = _stations_sampled(record)
+        station_count = len(set(s for s in stations if s))
         if station_count >= 3:
             codes.append("31653")
-            rationales["31653"] = f"linear_ebus.performed=true and stations_sampled_count={station_count} (>=3)"
+            rationales["31653"] = (
+                f"linear_ebus.performed=true and sampled_station_count={station_count} (>=3) "
+                f"from {station_source}"
+            )
         elif station_count in (1, 2):
             codes.append("31652")
-            rationales["31652"] = f"linear_ebus.performed=true and stations_sampled_count={station_count} (1-2)"
+            rationales["31652"] = (
+                f"linear_ebus.performed=true and sampled_station_count={station_count} (1-2) "
+                f"from {station_source}"
+            )
         else:
-            warnings.append("linear_ebus.performed=true but stations_sampled missing; cannot derive 31652/31653")
+            if station_source == "node_events":
+                warnings.append(
+                    "linear_ebus.performed=true but node_events contains no qualifying sampling actions; "
+                    "cannot derive 31652/31653"
+                )
+            else:
+                warnings.append(
+                    "linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653"
+                )
 
     # Radial EBUS (add-on code for peripheral lesion localization)
     if _performed(_proc(record, "radial_ebus")):
@@ -305,6 +339,11 @@ def derive_all_codes_with_meta(
         if areas and len(areas) >= 2:
             codes.append("31661")
             rationales["31661"] = f"bronchial_thermoplasty.areas_treated_count={len(areas)} (>=2)"
+
+    # Percutaneous tracheostomy (performed during/around bronchoscopy cases)
+    if _performed(_proc(record, "percutaneous_tracheostomy")):
+        codes.append("31600")
+        rationales["31600"] = "percutaneous_tracheostomy.performed=true"
 
     # --- Pleural family ---
     if _performed(_pleural(record, "ipc")):

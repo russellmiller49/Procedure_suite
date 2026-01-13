@@ -7,41 +7,27 @@ import os
 from functools import lru_cache
 from pathlib import Path
 
-PROMPT_HEADER = """
-You are extracting a structured registry JSON from an interventional pulmonology procedure note.
+_SYSTEM_PROMPT_PATH = Path(__file__).parent / "registry_system_prompt.txt"
 
-Return exactly ONE JSON object (no markdown). Populate every field defined in the schema; omit nothing.
 
-REQUIRED CORE FIELDS (never drop them):
-- disposition
-- pneumothorax
-- sedation_type (allowed: General, Moderate, Local Only)
-- cpt_codes (mirror the final CPT list you infer—no placeholders)
-- pleurodesis_performed
-- pleurodesis_agent
-- bleeding_severity
-- primary_indication
-- asa_class
-- airway_type (allowed: ETT, LMA, Tracheostomy, Native, Rigid bronchoscope when explicitly used)
-- gender
+@lru_cache(maxsize=1)
+def load_system_prompt() -> str:
+    """Loads the strict auditing system prompt for registry extraction."""
+    if _SYSTEM_PROMPT_PATH.exists():
+        return _SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip()
 
-Do not leave these as null/empty if you can safely infer them from the header or procedure narrative. If the note truly lacks evidence, set the field explicitly to null rather than omitting it.
+    return (
+        "You are a strict medical auditor. "
+        "Only mark procedures as performed if there is a verbatim quote describing the action. "
+        "Distinguish strictly between 'inspected' and 'sampled' lymph nodes."
+    )
 
-Mapping reminders:
-- Sedation: "general anesthesia" or anesthesia team with airway control → "General"; "moderate/conscious sedation", midazolam/fentanyl without anesthesia team → "Moderate"; topical/local anesthetic only with no systemic sedatives → "Local Only".
-- Disposition: phrases like "discharged home same day" → "Outpatient discharge"; "PACU" / "recovery room" → "PACU recovery"; "admitted to ICU"/"remains in ICU" → "ICU admission"; other inpatient stays → "Floor admission".
-- Pleurodesis: if talc/doxycycline/etc. are instilled with intent to scar the pleura, set pleurodesis_performed=true and pleurodesis_agent to the exact method ("Talc Slurry", "Talc Poudrage", etc.).
-- CPT codes: the `cpt_codes` array must match the final CPT selection used for billing; include add-on codes where documented.
-- Airway stents: if stent removal is documented, set procedures_performed.airway_stent.action="Removal" and procedures_performed.airway_stent.airway_stent_removal=true.
 
-Navigation / Cryobiopsy expectations:
-- For navigation/robotic or cryobiopsy cases, ALWAYS evaluate and populate `nav_rebus_used`, `nav_rebus_view`, `nav_sampling_tools`, `nav_imaging_verification`, `nav_cryobiopsy_for_nodule`, and `bronch_tbbx_tool`. Use allowed schema values (e.g., nav_imaging_verification ∈ {"Fluoroscopy","Cone-beam CT","Augmented fluoroscopy","None"}).
-
-General rules:
-- Use only information about the current procedure for the primary patient; ignore appended reports for other patients.
-- Prefer clearly labeled headers for MRN/ID and procedure date.
-- If no pleural procedure is present, pleural_procedure_type and pleural_guidance should be null/empty. When a pleural procedure is documented but no guidance is mentioned, pleural_guidance may default to "blind".
-""".strip()
+PROMPT_HEADER = (
+    "Return exactly ONE JSON object (no markdown). "
+    "Populate every field listed below; use null when the note lacks explicit evidence. "
+    "Do not infer that a procedure occurred without verbatim evidence of the action."
+)
 
 _SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
 _PROMPT_CACHE: str | None = None
@@ -877,9 +863,12 @@ def _load_registry_prompt() -> str:
     instructions = _load_field_instructions()
     lines = ["Return JSON with the following fields (use null if missing):"]
     for name, text in instructions.items():
+        # Billing/CPT codes are derived deterministically downstream; do not ask the LLM to populate them.
+        if name == "billing":
+            continue
         lines.append(f'- "{name}": {text}')
 
-    _PROMPT_CACHE = f"{PROMPT_HEADER}\n\n" + "\n".join(lines)
+    _PROMPT_CACHE = f"{load_system_prompt()}\n\n{PROMPT_HEADER}\n\n" + "\n".join(lines)
     return _PROMPT_CACHE
 
 
@@ -902,8 +891,10 @@ def _load_registry_prompt_for_families(active_families_frozen: frozenset[str] | 
 
     lines = ["Return JSON with the following fields (use null if missing):"]
     for name, text in instructions.items():
+        if name == "billing":
+            continue
         lines.append(f'- "{name}": {text}')
-    return f"{PROMPT_HEADER}\n\n" + "\n".join(lines)
+    return f"{load_system_prompt()}\n\n{PROMPT_HEADER}\n\n" + "\n".join(lines)
 
 
 def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
@@ -953,7 +944,7 @@ def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
             "--- END CPT CODE GUIDANCE ---\n\n"
         )
 
-    return f"{verified_section}{prompt_text}\n\nProcedure Note:\n{note_text}\nJSON:"
+    return f"{prompt_text}{verified_section}\n\n### PROCEDURE NOTE:\n{note_text}\nJSON:"
 
 
 __all__ = ["build_registry_prompt", "FIELD_INSTRUCTIONS"]

@@ -152,6 +152,10 @@
                                 <input class="form-check-input" type="checkbox" id="unified-explain">
                                 <label class="form-check-label" for="unified-explain">Explain Extraction</label>
                             </div>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" id="unified-disable-llm">
+                                <label class="form-check-label" for="unified-disable-llm">Disable LLM (deterministic registry only)</label>
+                            </div>
                         </div>
 
                         <!-- Coder Options -->
@@ -162,6 +166,10 @@
                                     Use ML-First Pipeline
                                     <span class="badge bg-info ms-1" title="Uses SmartHybridOrchestrator with ternary classification (HIGH_CONF/GRAY_ZONE/LOW_CONF)">NEW</span>
                                 </label>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="coder-disable-llm">
+                                <label class="form-check-label" for="coder-disable-llm">Disable LLM fallback (ML + rules only)</label>
                             </div>
                             <div class="form-check form-switch mb-2">
                                 <input class="form-check-input" type="checkbox" id="coder-explain">
@@ -192,6 +200,10 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="registry-explain">
                                 <label class="form-check-label" for="registry-explain">Explain Extraction</label>
+                            </div>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" id="registry-disable-llm">
+                                <label class="form-check-label" for="registry-disable-llm">Disable LLM (deterministic only)</label>
                             </div>
                         </div>
 

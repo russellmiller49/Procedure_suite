@@ -585,13 +585,22 @@ async def coder_run(
             detail="Direct coding on raw text is disabled; submit via /v1/phi and review before coding.",
         )
 
+    mode_value = (mode or req.mode or "").strip().lower()
+
     # Check if ML-first hybrid pipeline is requested
     if req.use_ml_first:
-        return await _run_ml_first_pipeline(request, report_text, req.locality, coding_service)
+        use_llm_fallback = mode_value != "rules_only"
+        return await _run_ml_first_pipeline(
+            request,
+            report_text,
+            req.locality,
+            coding_service,
+            use_llm_fallback=use_llm_fallback,
+        )
 
     # Determine if LLM should be used based on mode
     use_llm = True
-    if mode == "rules_only" or req.mode == "rules_only":
+    if mode_value == "rules_only":
         use_llm = False
 
     # Run the coding pipeline
@@ -619,6 +628,8 @@ async def _run_ml_first_pipeline(
     report_text: str,
     locality: str,
     coding_service: CodingService,
+    *,
+    use_llm_fallback: bool = True,
 ) -> CoderResponse:
     """
     Run the ML-first hybrid pipeline (SmartHybridOrchestrator).
@@ -637,8 +648,20 @@ async def _run_ml_first_pipeline(
     from modules.coder.application.smart_hybrid_policy import build_hybrid_orchestrator
 
     def _run_hybrid() -> Any:
-        orchestrator = build_hybrid_orchestrator()
-        return orchestrator.get_codes(report_text)
+        if use_llm_fallback:
+            orchestrator = build_hybrid_orchestrator()
+            return orchestrator.get_codes(report_text)
+
+        from modules.coder.adapters.llm.noop_advisor import NoOpLLMAdvisorAdapter
+
+        orchestrator = build_hybrid_orchestrator(llm_advisor=NoOpLLMAdvisorAdapter())
+        result = orchestrator.get_codes(report_text)
+        result.metadata = dict(result.metadata or {})
+        result.metadata["llm_called"] = False
+        result.metadata["llm_disabled"] = True
+        if result.source == "hybrid_llm_fallback":
+            result.source = "ml_rules_no_llm"
+        return result
 
     result = await run_cpu(request.app, _run_hybrid)
 
@@ -736,7 +759,13 @@ async def registry_run(
     redaction = apply_phi_redaction(req.note, phi_scrubber)
     note_text = redaction.text
 
-    eng = RegistryEngine()
+    mode_value = (req.mode or "").strip().lower()
+    if mode_value in {"engine_only", "no_llm", "deterministic_only"}:
+        from modules.registry.extractors.noop import NoOpLLMExtractor
+
+        eng = RegistryEngine(llm_extractor=NoOpLLMExtractor())
+    else:
+        eng = RegistryEngine()
     result = await run_cpu(request.app, eng.run, note_text, explain=req.explain)
     if isinstance(result, tuple):
         record, evidence = result
