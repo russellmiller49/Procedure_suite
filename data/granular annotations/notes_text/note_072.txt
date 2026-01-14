@@ -1,0 +1,78 @@
+NOTE_ID:  note_072 SOURCE_FILE: note_072.txt INDICATION FOR OPERATION:  [REDACTED] is a 49 year old-year-old adult who presents with RPP.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+1899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure
+ 
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure (22 MODIFIER):
+This patient required multiple forms of ablative therapy (soft coag and cryotherapy) to multiple different structures, including glottis, infraglottis, subglottis, and tracheal structures. This resulted in >50% increased work due to Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Tracheoscope
+Flexible Therapeutic Bronchoscope
+ 
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.  LMA placed.
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords and larynx.
+ 
+Initial Airway Inspection Findings:
+Vocal cords with appropriate adduction/abduction.
+ 
+Large patch of papillomas at anterior commissure of larynx and right vocal cord.
+ 
+Proximal trachea with focal area of spiraling tissue creating a focal area of mild stenosis - about 20% stenosis prior to treatment.  Able to easily traverse area of mild stenosis with therapeutic bronchoscope without issue.
+ 
+Assessment of right airways revealed normal anatomic branching to first subsegmental level.  Otherwise no evidence of mass, lesions, bleeding or other endobronchial pathology.
+ 
+Assessment of left airways revealed normal anatomic branching to first subsegmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology  
+ 
+VC papilloma are treated with combination of cryospray, electro-cautery (PreciSect/softcoag), and mechanically debulking. 
+ 
+Endobronchial papillomatous tumors at proximal trachea, subglottic region, infraglottic region, left vocal fold, and anterior commissure were treated with the following modalities. 
+ 
+The base of all patch sites were treated with cryotherapy.
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Cryospray	2.3 mm catheter	Normal flow, Freeze	5 sec burst	Tumor frozen, 5 sites 3-5 treatment each
+ 
+ 
+Endobronchial tumor and coagulated debris was noted and excised with mechanical debridement using alligator forceps. Send to path and microbiology.
+ 
+Rigid tracheoscope was used to dilate the proximal tracheal obstruction.  Mechanically coring through the tumor.  Black non-ventilating scope was used to perform dilation to 12 mm at the Trachea (Proximal 1/3).  Total 2 inflations with dilation time of 300 seconds each.
+  
+Cryospray was done at the tumor site proximal trachea for 2 different sites.  Total 3-5 treatments with 5 seconds of freeze at Normal flow was completed for both sides.   
+ 
+Prior to treatment, proximal trachea airway was note to be 40% patent.  After treatment, the airway was 90% patent. 
+ 
+Throughout the procedure, careful attention was paid to suction any secretions and blood to prevent it falling into the distal trachea or more distal airways.
+ 
+Residual secretions and blood were suctioned to clear.  Video imaging obtained and saved.  Bronchoscope removed.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient had airway device removed in the operating room and transported to the recovery room in stable condition.
+ 
+ESTIMATED BLOOD LOSS:   Trivial
+COMPLICATIONS:    None
+ 
+SPECIMEN(S): 
+Trachea biopsy:  Pathology
+ 
+ 
+IMPRESSION/PLAN: [REDACTED] is a 49 year old-year-old adult who presents for bronchoscopy for blation of papillomatous tumors in the context of recurrent respiratory papillomatosis.
+ 
+-Recommend repeat bronchoscopy in 4-6 weeks to reassess recurrence of papillomas and consideration of additional treatment.

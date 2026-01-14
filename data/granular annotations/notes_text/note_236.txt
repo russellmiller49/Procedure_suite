@@ -1,0 +1,18 @@
+NOTE_ID:  note_236 SOURCE_FILE: note_236.txt PREOPERATIVE DIAGNOSIS: 
+1.	Bronchus-intermedius obstruction secondary to Broncholithiasis
+POSTOPERATIVE DIAGNOSIS: 
+1.	 Resolved Bronchus-intermedius obstruction 
+PROCEDURE PERFORMED: 
+1.	CPT 31640 Rigid and flexible bronchoscopy with removal of broncholith 
+2.	CPT 31641 Argon plasma coagulation for destruction of tissue.
+1.	INDICATIONS:  1.Bronchus-intermedius obstruction secondary to broncholith
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. Following intravenous medications as per the record a 12 mm ventilating rigid bronchoscope was inserted through the mouth into the distal trachea and advanced into the distal trachea before attaching the monsoon JET ventilator. Using the flexible bronchoscope airway inspection was performed. The tracheal carina was sharp. All left sided airways were normal. The right mainstem and right upper lobe were normal. In the proximal bronchus intermedius there was a 60% obstructing polypoid endobronchial mass at area of known broncholith. The rigid bronchoscope was then advanced into the right mainstem. Gentle pressure was applied to the lesion with the flexible bronchoscopy allowing the broncholith to be extracted from the airway wall and then removed with suction. This resulted in about 90% opening of the bronchus intermedius. There was some brisk bleeding which was controlled with topical ice saline and balloon tamponade. A small residual area of broncholith was seen and was extracted with flexible forceps. Argon plasma coagulation was used to cauterize and destroy the oozing, mild residual obstruction from excess tissue at the base of the lesion. Once we were satisfied that there was no residual bleeding the rigid bronchoscope was removed and the procedure complete. 
+Complications: None
+Estimated blood loss: 10cc
+Specimens: none
+Recommendations:
+- Admit to IM ward
+- Advance diet as tolerated.
+- Likely D/C in AM

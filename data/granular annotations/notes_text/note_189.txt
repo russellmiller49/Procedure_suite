@@ -1,0 +1,18 @@
+NOTE_ID:  note_189 SOURCE_FILE: note_189.txt Procedure Name: EBUS bronchoscopy, radial EBUS guided bronchoscopy
+Indications: Pulmonary nodule requiring diagnosis/staging. 
+Medications: Propofol infusion via anesthesia assistance  
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. 
+Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth. The vocal cords appeared normal. The subglottic space was normal. The trachea is of normal caliber. The carina was sharp. All left and right sided airways were normal without endobronchial disease to the first segmental branch. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 11L, station 7, 10R 11Rs lymph nodes.  Sampling by transbronchial needle aspiration was performed in these lymph nodes using an Olympus EBUSTBNA 22 gauge needle beginning at the N3 (11L) lymph nodes 711Rs10R. Further details regarding nodal size and number of samples are included in the attached EBUS procedural sheet. All samples were sent for routine cytology. Onsite path eval did not identify malignancy. We then removed the EBUS bronchoscopy and the ultrathin bronchoscope was inserted and based on anatomical knowledge advanced into the right middle lobe to the area of known nodule using radial EBUS confirmed a concentric view within the lesion. Biopsies were then performed with a variety of instruments to include peripheral needle, forceps and brush. After adequate samples were obtained the bronchoscope was removed. While emerging from anesthesia patient had large volume emesis and possible aspiration event. He was immediately placed on right side. He transiently became hypoxic but saturations improved relatively quickly. Patinet was then transferred to the PACU. X-ray was performed which right greater than left patchy opacities with increased pulmonary vasculature and interstitial markings alone with a small right apical pneumothorax. Right sided airspace opacities, although possibly representing aspiration event, are more likely related to retained saline instilled during bronchoscopy and is not unexpected. Patient was informed of pneumothorax. He was hemodynamically stable and oxygenating well. Repeat CXR 1 hour later showed no expansion of pneumothorax and decision was made to observe for expansion and not place chest tube unless he develops symptoms or has expansion of pneumothorax.
+
+Complications: 
+1.	Small left apical pneumothorax
+2.	Post procedure emesis with possible aspiration  
+Estimated Blood Loss: Less than 10 cc.
+Recommendations:
+- Admit to IM for overnight observation
+- Repeat CXR in 4 hours and then AM if not changes
+- Consider diuresis given pulmonary edema and Systolic heart failure
+- Continue to hold Plavix for now.
+- Would NOT treat with antibiotics 
+- Await final pathology  
+

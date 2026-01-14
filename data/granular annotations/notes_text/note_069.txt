@@ -1,0 +1,109 @@
+NOTE_ID:  note_069 SOURCE_FILE: note_069.txt INDICATION FOR OPERATION:  [REDACTED] is a 64 year old-year-old male who presents with bronchial stenosis related to endobronchial tumor.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation - right lower lobe bronchus (no stent placed)
+31636 Dilate and bronchial stent initial bronchus - right middle lobe bronchus (dilation and stent placement)
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure
+AND
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's 
+ 
+XS Separate Structure:
+CPT 31625 was performed at the trachea, right-sided airways (right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus) and left-sided airways (left mainstem bronchus).  The trachea, right-sided airways, and left-sided airways are separate structures - thus these should be treated as distinct services x3.
+CPT 31640 was performed at the trachea, right-sided airways (right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus) and left-sided airways (left mainstem bronchus).  The trachea, right-sided airways, and left-sided airways are separate structures - thus these should be treated as distinct services x3.
+CPT 31641 was performed at the trachea, right-sided airways (right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus) and left-sided airways (left mainstem bronchus).  The trachea, right-sided airways, and left-sided airways are separate structures - thus these should be treated as distinct services x3.
+ 
+AND
+ 
+Unusual Procedure (22 MODIFIER):
+This patient required extensive endobronchial biopsies of endobronchial tumor in/at the trachea (middle and distal trachea) and main carina, and extensive endobronchial biopsies of endobronchial tumor in the right-sided airways (right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus). 
+This patient required extensive mechanical excision of obstructing tumors in/at the trachea (middle and distal trachea) and main carina, and extensive mechanical excision of obstructing tumors in the right-sided airways (right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus).  
+This patient required extensive tumor ablation/destruction of obstructing tumors in/at the trachea (middle and distal trachea) and main carina, and extensive tumor ablation/destruction of obstructing tumors in the right-sided airways (right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus).  
+This resulted in >150% increased work due to Increased intensity, Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 
+31625 Endobronchial Biopsy(s)
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ 
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.  LMA placed.
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords, main carina, right carina 1, and left carina 2.
+ 
+Initial Airway Inspection Findings:
+Initial Airway Examination Findings:
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx:  No lesions.  
+Vocal Chords: Normal without mass/lesions.  Appropriate abduction and adduction of vocal cords.
+Extensive partially obstructing vascular endobronchial tumor and overlying white necrotic debris involving the mid-trachea, distal trachea, main carina, right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus, and left mainstem bronchus.  Most severe at the distal trachea, right mainstem bronchus and bronchus intermedius.  Extrinsic compression also contributing in the bronchus intermedius, right middle lobe, and right lower lboe.  The RML bronchus was highly stenotic and completely obstructed by tumor, debris, and mucus.   Unable to traverse with therapeutic bronchoscope initially.  Moderate stenosis of RLL RB6 and RLL truncus basalis due to tumor and extrinsic compression.
+Mucosa: Normal except at sites of endobronchial tumor.
+Secretions: Moderate, thin, and clear  All secretions were suctioned to clear (therapeutic aspiration). 
+ 
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left upper lobe, left lower lobe from mucus and overlying necrotic debris. 
+ 
+Endobronchial biopsy was performed at tumor in/at the trachea, main carina, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, and left mainstem bronchus.  This tumor was combined into a single sample labeled "trachea" endobronchial biopsy.  Lesion was successfully removed.  Samples sent for Pathology. 
+ 
+Obstructing endobronchial tumor was noted in/at the trachea, main carina, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, and left mainstem bronchus.  The obstructing tumor at the trachea, main carina, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, and left mainstem bronchus was excised with mechanical debridement using bland alligator forceps.
+ 
+Obstructing endobronchial tumor at trachea, main carina, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, and left mainstem bronchus was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+APC	1.5mm Pulmonary axial 'straight-fire' probe	forcedAPC, 0.5 LPM, Max Watts 30-40.	1-5 second bursts	Extensive tumor ablation and tumor coagulation in the trachea, main carina, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, and left mainstem bronchus.  Achieved good tumor ablation and hemostasis.
+ 
+After tumor excision/ablation able to traverse right middle lobe bronchus with a Hybrid bronchoscope and saline hydrodissection - confirmed RB4 (RML lateral segment) was patent and that RB5 (RML medial segment) appeared viable, although filled with mucus and debris.
+ 
+Balloon dilation was performed at right middle lobe bronchus stenosis.  6/7/8 Elation balloon was used to perform dilation to 7 mm at the right middle lobe bronchus stenosis.  Total 2 inflations with dilation time of 60 and 30 seconds each.  Afterward, able to traverse with therapeutic bronchoscope with moderate pressure.  Debris and mucos 
+ 
+Balloon dilation was performed at right lower lobe bronchus take-off.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the right lower lobe bronchus take-off.  Total 1 inflations with dilation time of 60 seconds each. 
+ 
+Bronchial alveolar lavage was performed at right middle lobe bronchus (Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The following stent (AEROMini 6x15mm) was placed in the right middle lobe bronchus.  Seated very well, and maintained patency of both RB4 and RB5 segments.
+ 
+Prior to treatment, the trachea was note to be 80% patent.  After treatment, the airway was 95% patent.  
+Prior to treatment, the right-sided airways (except the RML bronchus) was note to be 60% patent.  After treatment, the airway was 90% patent.  
+Prior to treatment, the RML bronchus was note to be 1% patent.  After treatment, the airway was 80% patent.  
+Prior to treatment, the left mainstem bronchus was note to be 80% patent.  After treatment, the airway was 95% patent.
+ 
+Residual secretions, saline, and blood were suctioned to clear.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient's LMA was removed in the operating room and transported to the recovery room in stable condition.
+ 
+ESTIMATED BLOOD LOSS:   Minimal
+COMPLICATIONS:    None
+ 
+SPECIMEN(S): 
+-Endobronchial biopsy (samples from trachea, main carina, right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus, and left mainstem bronchus combined into single sample titled "trachea"):  Pathology
+-RML BAL:  cell count, micro/cultures, cytology
+ 
+IMPRESSION/PLAN: [REDACTED] is a 64 year old-year-old male who presents for bronchoscopy for endobronchial tumor excision/ablation, airway dilation, and right middle lobe stent placement.
+ 
+-Extensive endobronchial tumor excision and ablation in the trachea, main carina, right mainstem bronchus, right upper lobe bronchus, bronchus intermedius, right middle lobe bronchus, and right lower lobe bronchus, and left mainstem bronchus.
+-Stent placement in RML bronchus (AEROMini 6x15mm)
+-F/u post-op CXR
+-F/u EBBx and BAL results.
+ 
+-Stent hydration/hygiene protocol:
+-QID albuterol nebulizer, hypertonic saline (3%, 4mL) nebulizer, and flutter valve regimen
+-Mucinex 1200mg  BID for mucolysis/clearance
+-This is very important to avoid stent obstruction and should be continued as long as patient has airway stent in place.
+-Please engage case management to obtain nebulizer device and medications (as above) for patient prior to discharge as patient will require this regimen as long as he has stent in place. 
+ 
+-Will need repeat bronchoscopy with airway evaluation, stent check, and likely additional tumor excision/ablation in ~3-4 weeks.  Consideration of rigid bronchoscopy with micro-debrider given extensive endobronchial tumor involvement.

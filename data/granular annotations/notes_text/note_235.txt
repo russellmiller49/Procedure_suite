@@ -1,0 +1,19 @@
+NOTE_ID:  note_235 SOURCE_FILE: note_235.txt PREOPERATIVE DIAGNOSIS: 
+1.	Bronchus-intermedius obstruction secondary to Broncholithiasis
+POSTOPERATIVE DIAGNOSIS: 
+1.	 Resolved Bronchus-intermedius obstruction 
+2.	 Mild stricture of bronchus intermedius  
+PROCEDURE PERFORMED: 
+1.	CPT 31630 Bronchoscopy with tracheal/bronchial dilation
+1.	INDICATIONS:  1.Bronchus-intermedius obstruction secondary to broncholith
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. Following intravenous medications as per the record a 12 mm ventilating rigid bronchoscope was inserted through the mouth into the distal trachea and advanced into the distal trachea before attaching the monsoon JET ventilator. Using the flexible bronchoscope airway inspection was performed. The tracheal carina was sharp. All left sided airways were normal. The right mainstem and right upper lobe were normal. In the proximal bronchus intermedius there was no evidence of recurrent broncholith, there was approximately 20% obstruction from stricturing on the medial aspect along with pinpoint healing defect associated with area of previous broncholith erosion. The rigid bronchoscope was then advanced into the right mainstem. Balloon dilatation was performed with the 12/13.5/15cm dilation dilatational balloon within the bronchus intermedius resulting in reduction of obstruction to approximately 5%. There was no significant bleeding. The rigid bronchoscope was removed and the procedure complete. 
+Complications: None
+Estimated blood loss: 1cc
+Specimens: none
+Recommendations:
+- Admit to IM ward due as patient does not have anyone locally to observe post-anesthesia 
+- Advance diet as tolerated.
+- Likely D/C in AM
+- OK to return to Japan without duty limitation. 

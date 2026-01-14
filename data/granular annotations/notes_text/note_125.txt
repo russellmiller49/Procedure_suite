@@ -1,0 +1,23 @@
+NOTE_ID:  note_125 SOURCE_FILE: note_125.txt Patient name: [REDACTED]
+
+Preoperative diagnosis: Nodular edema and trachea and bronchi
+Postoperative diagnosis: Relatively unremarkable tracheobronchial mucosa
+
+Procedures performed:
+31622: Bronchoscopy only
+
+Indications for the procedure: Potential biopsy of previously seen nodular edema of trachea
+
+Anesthesia: General anesthesia using a LMA 
+
+Procedure: After obtaining informed consent from the patient,_was brought to the procedure room. A proper timeout was performed to identify the correct patient and procedure to be performed. General anesthesia was administered to the patient and_was orally intubated with a LMA by the anesthesia team. the H190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. Sounding vocal cord, evidence of prior surgical intervention on the left posterior commissure without other masses or lesions. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions.
+
+The previously noticed nodular edema and mucosal thickening during last diagnostic bronchoscopy was not appreciated during this diagnostic bronchoscopy and therefore no biopsy samples were taken. Airways with scant mucus that was aspirated but otherwise clear.
+
+Following confirmation of hemostasis and therapeutic aspiration of all endobronchial secretions, the bronchoscope was removed. Patient tolerated the procedure well with no immediate complications. Patient was extubated and returned to recovery in good condition.
+
+Specimens: None
+
+EBL: minimal
+
+Bronchoscopes: Olympus H190

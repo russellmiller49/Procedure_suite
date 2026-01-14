@@ -1,0 +1,18 @@
+NOTE_ID:  note_169 SOURCE_FILE: note_169.txt PRE-PROCEDURE DIAGNISOS: LEFT UPPER LOBE PULMONARY NODULE
+POST- PROCEDURE DIAGNISOS: RIGHT UPPER LOBE CAVITARY PULMONARY NODULE
+PROCEDURE PERFORMED:   Flexible bronchoscopy with electromagnetic navigation under flouroscopic and EBUS guidance with transbronchial needle aspiration, Transbronchial biopsy and bronchioalveolar lavage.  
+    
+MEDICATIONS:    GA
+FINDINGS: Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T190 video bronchoscope was introduced through the laryngeal airway and advanced to the tracheobronchial tree. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. The super-dimension navigational catheter was inserted through the T190 therapeutic bronchoscope and advanced into the airway. Using navigational map we advanced the 180 degree edge catheter into the proximity of the lesion right upper lobe. Radial probe was used to attempt to confirm presence within the lesion and minor adjustments were made in positioning until a concentric US view was obtained.  Biopsies were then performed with a variety of instruments to include peripheral needle, forceps, and brush under fluoroscopic visualization. After which a mini-BAL was then performed through the super-D catheter. We then removed the therapeutic bronchoscope with super-D catheter and reinserted the diagnostic scope at which point repeat airway inspection was then performed and once we were satisfied that no bleeding occurred, the bronchoscope was removed and the procedure completed. Specimens were sent for both microbiological and cytology/histology assessment.
+
+ESTIMATED BLOOD LOSS:   None 
+COMPLICATIONS:                 None
+
+IMPRESSION:  
+- S/P bronchoscopy with biopsy and lavage.
+- Successful navigational localization and biopsy 
+RECOMMENDATIONS
+- Transfer to post-procedural unit
+- Post-procedure CXR
+- D/C home once criteria met
+- Await pathology

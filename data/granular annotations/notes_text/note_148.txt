@@ -1,0 +1,23 @@
+NOTE_ID:  note_148 SOURCE_FILE: note_148.txt Procedure: Fiberoptic bronchoscopy
+Anesthesia Type: Previously tracheostomized and sedated
+Indication: Hypoxemia
+Consent: Emergent
+Time-Out: Performed
+Pre-Procedure Diagnosis: Emergent
+Post-Procedure Diagnosis: Emergent
+Medications: Patient previously sedated
+
+Procedure Description
+
+The Olympus Q190 video bronchoscope was introduced through the tracheostomy tube and advanced into the tracheobronchial tree. A complete airway inspection was performed to at least the first subsegmental airways.
+
+The right-sided airways were unremarkable, with only mildly edematous mucosa and clear secretions. The left-sided airways were similar, with the exception of purulent secretions pooling in the superior segment of the left lower lobe. The remaining airways were patent without significant central mucus plugging.
+
+The bronchoscope was wedged into the superior segment of the left lower lobe, and bronchoalveolar lavage was performed with 60 mL of instilled saline and 20 mL of return. The bronchoscope was then withdrawn, and the procedure was completed.
+
+Estimated Blood Loss: None
+Complications: None
+Specimens Sent: Bronchoalveolar lavage, left lower lobe
+Implants: None
+
+Follow-Up: Continue ICU-level care

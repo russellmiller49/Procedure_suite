@@ -1,0 +1,67 @@
+NOTE_ID:  note_141 SOURCE_FILE: note_141.txt Preoperative Diagnosis:
+Near-complete tracheal occlusion secondary to granulation tissue and severe tracheomalacia
+
+Postoperative Diagnosis:
+Near-complete tracheal occlusion secondary to granulation tissue and severe tracheomalacia
+
+Procedure Performed:
+Rigid bronchoscopy with silicone Y-stent placement
+
+Indication:
+Near-complete tracheal obstruction requiring urgent intervention
+
+Anesthesia:
+General anesthesia
+
+Description of Procedure
+
+Informed consent was obtained from the patient prior to the procedure after discussion, in lay terms, of the indications, procedural details, risks, benefits, and alternatives. The patient acknowledged understanding and agreed to proceed.
+
+The procedure was performed in the main operating room. Initial airway inspection was performed using an ultra-slim Olympus P190 flexible bronchoscope inserted through the patient’s customized 5.5-mm tracheostomy tube. At the distal margin of the tracheostomy tube, approximately 2 cm proximal to the main carina, there was a ridge of granulation tissue occluding approximately 80% of the tracheostomy tube lumen. Distal to this obstruction, there was severe tracheobronchial malacia with near-complete collapse of the distal trachea and right mainstem bronchus, and approximately 75% obstruction of the left mainstem bronchus. The airway mucosa was diffusely erythematous and inflamed.
+
+The flexible bronchoscope and tracheostomy tube were removed, and an attempt was made to insert a 14-mm ventilating rigid bronchoscope through the tracheostomy stoma; this was unsuccessful due to the small size of the stoma. The tracheostomy tube was reinserted, and rigid bronchoscopy was then attempted via the oral route. However, the patient had severely distorted upper airway anatomy and significant edema, making visualization of the posterior pharynx and vocal cords impossible. Attempts were made to insert progressively smaller rigid bronchoscopes, down to a 6-mm scope, but these were unsuccessful due to a fixed stricture within the tracheostomy tract.
+
+At this point, otolaryngology was consulted intraoperatively for assistance with surgical extension of the tracheostomy stoma. Otolaryngology also attempted visualization of the vocal cords using suspension laryngoscopy but was unsuccessful. The tracheostomy stoma was surgically extended; however, due to extensive scar tissue and concern for injury to the anterior trachea, the stoma could not be enlarged sufficiently to accommodate a large rigid bronchoscope. It was, however, extended enough to allow insertion of smaller rigid bronchoscopes.
+
+A 6-mm rigid bronchoscope was inserted through the tracheostomy stoma and advanced to the main carina. Due to the small diameter of the scope, it was not possible to introduce usable instruments or deploy a silicone stent through the rigid bronchoscope. The decision was therefore made to deploy the smallest available silicone Y-stent (14 × 10 × 10 mm) through the tracheostomy stoma. The bronchial limbs were compressed with rigid forceps, and the stent was advanced toward the main carina under direct visualization using a flexible bronchoscope inserted through the left bronchial limb of the stent.
+
+After measurement, the tracheal limb was trimmed to 30 mm, the left bronchial limb to 20 mm, and the right bronchial limb to 10 mm. Advancement and seating of the stent were extremely challenging due to the patient’s severely narrowed airways. Multiple techniques were employed, including manipulation with rigid optical forceps, advancement using Kelly clamps by otolaryngology under direct bronchoscopic visualization, gentle balloon dilation using a CRE balloon, and eventual insertion of a slightly larger 8-mm rigid bronchoscope through the tracheostomy stoma and into the stent to help seat the bronchial limbs.
+
+During this maneuver, a small airway tear was visualized along the lateral aspect of the right mainstem bronchus, approximately 0.5 cm proximal to the right upper lobe orifice. This was felt to be caused by the distal edge of the right bronchial limb of the stent. Consideration was given to placement of a metallic stent to cover the defect; however, given concerns regarding metallic stents in benign airway disease, this was deferred.
+
+The patient received 1 gram of cefazolin intraoperatively. Thoracic surgery was consulted by phone, and based on their experience, recommended conservative management provided there was no evidence of pneumothorax. A portable chest radiograph demonstrated no pneumothorax or pneumomediastinum.
+
+The stent was slightly repositioned to optimize seating at the main carina. There was mild tenting of the distal right bronchial limb at the site of the airway tear that could not be corrected; otherwise, the stent was well seated, with resolution of distal tracheal and mainstem bronchial obstruction and patent distal airways.
+
+The patient’s tracheostomy tube was reinserted under direct visualization through the stoma and positioned within the tracheal limb of the stent, where it was secured. The procedure was then concluded, and the patient was transferred to the ICU.
+
+Postoperative Course
+
+Upon arrival in the ICU, the patient was initially stable but subsequently developed an episode of acute hypoxia with transient PaO₂ <50%, associated with difficulty ventilating. This resolved rapidly with manual bag ventilation. Flexible bronchoscopy performed through the tracheostomy tube demonstrated no significant stent obstruction, though foamy, blood-tinged secretions were present, consistent with acute pulmonary edema. A chest radiograph obtained during this event showed no pneumothorax.
+
+The patient received 20 mg of furosemide intravenously, and the condom catheter was exchanged for a Foley catheter, resulting in brisk diuresis and significant improvement in tidal volumes. Persistently elevated ventilator pressures were felt to be related in part to the small tracheostomy tube. Under bronchoscopic visualization, the tracheostomy tube was exchanged for a 7.0 Bivona tracheostomy tube, which was positioned midway within the stent. This resulted in improved airway compliance and ventilation.
+
+The patient was subsequently deemed stable. After discussion with the patient’s parents, care was transitioned to the ICU team.
+
+Complications:
+Small lateral right mainstem bronchial tear
+
+Recommendations
+
+Continue positive-pressure ventilation overnight
+
+Empiric vancomycin and piperacillin–tazobactam for 7 days to prevent infection related to airway injury
+
+Obtain noncontrast CT chest once the patient is stable enough for transport
+
+Plan for repeat bedside flexible bronchoscopy on or around 4/1/2019, or sooner if clinical concerns arise
+
+Notify the Interventional Pulmonology team immediately for any airway issues
+
+Note that the silicone stent is radiolucent and will not be visible on chest radiograph; CT or bronchoscopy should be used for evaluation of suspected stent-related complications
+
+Administer 3% saline nebulizers three times daily starting tonight and continuing while the stent remains in place to reduce secretion burden and prevent stent obstruction
+
+If tracheostomy tube removal or replacement is required, this must be performed under direct bronchoscopic visualization to ensure correct positioning within the stent and to avoid kinking or obstruction
+
+Interventional Pulmonology will continue to follow

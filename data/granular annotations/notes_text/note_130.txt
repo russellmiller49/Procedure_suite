@@ -1,0 +1,90 @@
+NOTE_ID:  note_130 SOURCE_FILE: note_130.txt Procedure Name: Bronchoscopy
+
+Indications:
+
+Known lung cancer of the right lower lobe
+
+Malignant airway disease
+
+Evaluation for mediastinal staging
+
+Anesthesia:
+General anesthesia with controlled mechanical ventilation. Topical anesthesia with 2% lidocaine to the tracheobronchial tree (9 mL). See the anesthesia record for full documentation of administered medications.
+
+Pre-Anesthesia Assessment:
+
+ASA Physical Status Classification: III (patient with severe systemic disease)
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Relevant laboratory studies and radiographic imaging were reviewed. A procedural time-out was performed prior to the intervention.
+
+Following administration of intravenous anesthetic medications and topical anesthesia to the upper airway and tracheobronchial tree, the Q180 slim video bronchoscope was introduced through the mouth via a laryngeal mask airway and advanced into the tracheobronchial tree. The UC180F convex probe EBUS bronchoscope was subsequently introduced through the mouth via the laryngeal mask airway and advanced into the tracheobronchial tree.
+
+A black rigid bronchial tube (12.0–11.0 mm) was introduced through the mouth and advanced into the tracheobronchial tree. A 0-degree, 4.0-mm rigid telescope was introduced through the rigid bronchoscope and advanced into the airway. The T180 therapeutic video bronchoscope was then introduced through the rigid bronchoscope following removal of the telescope and advanced into the tracheobronchial tree.
+
+Procedure Description and Findings
+
+Larynx:
+Normal appearance.
+
+Trachea and Carina:
+No evidence of significant pathology.
+
+Left Lung:
+No evidence of significant pathology.
+
+Right Lung:
+A nearly obstructing (>90% obstruction) endobronchial mass was identified proximally in the apical segment of the right upper lobe (B1). The lesion was not traversed.
+
+A second nearly obstructing (>90% obstruction) large endobronchial mass was identified proximally within the bronchus intermedius. This lesion was successfully traversed, allowing visualization of the distal airway.
+
+The bronchoscope was withdrawn and replaced with the EBUS bronchoscope to perform endobronchial ultrasound examination.
+
+Lymph Node Assessment
+
+Lymph node sizing and sampling were performed using endobronchial ultrasound for staging of non-small cell lung cancer. Transbronchial needle aspiration was performed using an Olympus EBUS-TBNA needle at the following stations, with specimens sent for histopathologic examination:
+
+Station 11L (interlobar): ROSE demonstrated adequate tissue. Five needle passes obtained.
+
+Station 4L (lower paratracheal): Not sampled.
+
+Station 2L (upper paratracheal): ROSE demonstrated non-diagnostic tissue. Five needle passes obtained.
+
+Station 2R (upper paratracheal): Not sampled.
+
+Station 4R (lower paratracheal): ROSE demonstrated adequate tissue. Five needle passes obtained.
+
+Station 7 (subcarinal): ROSE demonstrated adequate tissue. Five needle passes obtained.
+
+Stations 11Rs and 11Ri were not sampled due to direct invasion by the primary tumor.
+
+Therapeutic Intervention
+
+The endobronchial tumor within the right bronchus intermedius was mechanically excised using rigid bronchoscopy and rigid suction. Following tumor debulking, the right middle lobe bronchus was patent. The right lower lobe bronchi were noted to be occluded at the subsegmental level due to malignant disease.
+
+A portion of the endobronchial tumor arising from the apical segment of the right upper lobe and occluding the right upper lobe bronchus was also removed using biopsy forceps. The anterior and posterior segmental bronchi of the right upper lobe were patent; however, the apical segmental bronchus remained completely occluded.
+
+Complications
+
+No immediate complications.
+
+Estimated Blood Loss
+
+Less than 5 mL.
+
+Impression
+
+Known lung cancer of the right lower lobe
+
+Malignant endobronchial mass in the apical segment of the right upper lobe (B1)
+
+Malignant endobronchial mass in the bronchus intermedius
+
+Successful lymph node sizing and sampling via EBUS-TBNA
+
+Mechanical excision of endobronchial lesions in the bronchus intermedius and right upper lobe
+
+Post-Procedure Diagnosis
+
+Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsies
+
+The patient remained stable throughout the procedure and was transferred in good condition to the post-bronchoscopy recovery area for observation until discharge criteria were met. Preliminary findings were discussed with the patient, and follow-up with the requesting service for final pathology results was recommended.

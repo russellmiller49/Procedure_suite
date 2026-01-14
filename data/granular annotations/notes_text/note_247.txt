@@ -1,0 +1,34 @@
+NOTE_ID:  note_247 SOURCE_FILE: note_247.txt INDICATION FOR OPERATION:  Timothy Grace is a 56 year old-year-old male with cystic fibrosis who presents with a cavitary lesion in right lower lobe.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+PREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule
+POSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule
+PROCEDURE:  
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+  
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Hybrid (Pediatric) Bronchoscope
+ESTIMATED BLOOD LOSS:   Moderate
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After successful induction of anesthesia, a timeout was performed to confirm the patient’s identity, the procedure, and the location.
+Following administration of intravenous medications and topical anesthesia to the upper airway, a P190 hybrid video bronchoscope was introduced through the endotracheal tube. The trachea appeared normal. The bronchoscope was advanced to the main carina, which was noted to have a sharp angle. The scope was then directed into the left mainstem bronchus, allowing visualization of all segments and subsegments of the left upper lobe, lingula, and lower lobe; no abnormalities were identified on the left side. The bronchoscope was withdrawn to the trachea and advanced into the right mainstem bronchus. All segments and subsegments of the right upper, middle, and lower lobes were examined. Purulent material was observed emanating from the superior segment of the right lower lobe. The bronchoscope was wedged in this segment, and a bronchoalveolar lavage was performed using 60 cc of instilled saline, yielding 20 cc of return fluid. During the lavage, a cavity was visualized in the superior segment of the right lower lobe containing a well-demarcated soft tissue mass with a granular texture, consistent with a mycetoma. The right airway anatomy was notable for fusion of the apical and posterior segments in the right upper lobe; aside from the cavity, no additional masses or lesions were identified. After thorough inspection, multiple forceps biopsies were obtained from the mass within the cavity. Moderate bleeding ensued and was effectively managed with 4 cc of epinephrine, 30 cc of iced saline, and wedging of the scope in the affected segment, which successfully controlled the hemorrhage.
+The bronchoscope was removed, and the procedure was completed without further incident. The patient tolerated the procedure well, with no immediate complications. At the conclusion, he was extubated in the operating room and transferred to the post-anesthesia care unit (PACU) in stable condition.
+ 
+SPECIMEN(S): 
+BAL from right lower lobe: Sent for respiratory and fungal cultures, AFB, cytology, and galactomannan.
+Right lower lobe forceps biopsy: Sent for pathology and culture.
+ 
+IMPRESSION/PLAN: Timothy Grace is a 56 year old-year-old male who underwent bronchoscopy for evaluation of a cavitary lesion in the right lower lobe.
+•	Transfer to PACU
+•	Obtain chest X-ray
+•	Discharge home once cleared by PACU
+•	Await pathology results.
+ 

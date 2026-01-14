@@ -1,0 +1,64 @@
+NOTE_ID:  note_082 SOURCE_FILE: note_082.txt INDICATION FOR OPERATION:  [REDACTED]is a 68 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31628 TBBX single lobe     
+31632 TBBX additional lobes  
+31627 Navigational Bronchoscopy (computer assisted)
+77012 Radiology / radiologic guidance for CT guided needle placement (CIOS)
+76377 3D rendering with interpretation and reporting of CT, US, Tomo modality (ION Planning Station)
+31654 Radial EBUS for peripheral lesion
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a extensive ablation and debulking with excision along the left mainstem and left lower lobe with multiple dilations and multiple episodes of excision between other therapeutic modalities. This resulted in >90% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Radial EBUS
+Ion Robotic Bronchoscope
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   Moderate
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: . 
+Initial Airway Inspection Findings:
+The airway was inspected. The trachea and right lung were intact and appropriate to the segmental level. The left mainstem was inflamed and the left upper lobe was visualized, but the left lower lobe was again not visualized.
+CT Chest scan was placed on separate planning station to generate 3D rendering of the pathway to target.   The navigational plan was reviewed and verified.  This was then loaded into robotic bronchoscopy platform. 
+Ventilation Parameters:
+Mode	RR	TV	PEEP	FiO2	Flow Rate	Pmean
+VCV	 	300	12	100	10	15
+ 
+Robotic navigation bronchoscopy was performed with Ion platform.  Partial registration was used.    Ion robotic catheter was used to engage the left lower lobe presumed oriface.  Target lesion is about 1 cm in diameter.   Under navigational guidance the ion robotic catheter was advanced to 1.0 cm away from the planned target. 
+Radial EBUS was performed to confirm that the location of the target is not well visuzlized.  The following features were noted: soft tissue.
+Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation.  Cios Spin system was used for evaluation of target location.  Low dose spin was performed to acquire CT imaging.  This was passed on to Ion platform system for reconstruction and nodule location.  The 3D images was interpreted on an independent workstation (Ion).   Using the newly acquired nodule location, the Ion robotic system was adjusted to the new targeted location.   I personally interpreted the cone beam CT and 3-D reconstruction. 
+The target airway was visualized and targets were placed ensure optimal trajectory of the tools to open the obstructed airway.
+Transbronchial needle aspiration was performed with 19G Needle through the extended working channel catheter.  Total 2 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Cytology.
+Transbronchial biopsy was performed with precisor the extended working channel catheter.  Total 2 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.
+The robotic bronchoscope was advanced until airway lumen was visualized with the vision probe. The catheter was then drawn back and the robotic bronchoscope was disconnected. 
+The therapeutic bronchoscope was then used to clear the airway. The left lung was irrigated with saline.
+Granulation tissue and inflamed tissue was excised with the precisor, pulmonary, and large forceps. 
+Balloon dilation was performed at left lower lobe orifice.  8/9/10 Elation balloon was used to perform dilation to 10 mm at the left lower lobe orifice.  Total 1 inflations with dilation time of 60 seconds each.
+Balloon dilation was performed at left lower lobe orifice.  10/11/12 Elation balloon was used to perform dilation to 12 mm at the left lower lobe orifice.  Total 3 inflations with dilation time of 60 seconds each.
+The left upper lobe and the left lower lobe were better visualized. 
+Serial irrigation with iced saline was performed with excision of granulation tissue and blood clot/foreign body.
+The 2.5 cm microwave catheter was used to ablate the inflamed tissue for three minutes(3.5KJ and 67 degrees Celsius reached), then a pause for further and extensive excision, followed by one minute (1.3 KJ and 49 degrees Celsius reached)
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+•	Left lower lobe transbronchial needle aspiration, transbronchial forceps biopsies
+•	Left mainstem and left lower lobe biopsies
+•	Left lower lobe bronchoalveolar lavage
+IMPRESSION/PLAN: [REDACTED]is a 68 year old-year-old female who presents for bronchoscopy for airway stenosis.
+-Follow up CXR
+-Follow up bronchoscopic lab work
+-Plan for follow up bronchoscopy in ~1 week

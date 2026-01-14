@@ -1,0 +1,41 @@
+NOTE_ID:  note_139 SOURCE_FILE: note_139.txt Procedure Name: Bronchoscopy
+Indications: Multiple pulmonary nodules
+Medications: Per anesthesia record
+
+Pre-Procedure
+
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered, and informed consent was documented per institutional protocol. A history and physical examination were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+
+Following intravenous medications per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree, the T180 therapeutic video bronchoscope was introduced through the mouth via laryngeal mask airway and advanced into the tracheobronchial tree. The Q180 slim video bronchoscope was subsequently introduced via the same route.
+
+Procedure Description / Findings
+
+Post-radiation changes were noted involving the vocal cords and aryepiglottic folds. Papillomatous lesions were identified involving the right mainstem bronchus and bronchus intermedius. Abnormal mucosa was noted along the anterolateral aspect of the upper trachea, predominantly on the left side, with post-treatment changes extending to the mid-trachea. No clear papillomatous growth was identified in the distal airways.
+
+The patient is status post prior endotracheal biopsies at abnormal papillomatous lesions involving the superior segment stump, proximal bronchus intermedius, and distal bronchus intermedius. The patient is also status post intratracheal injection of cidofovir (75 mg in 15 mL) at these sites.
+
+Right Lung Abnormalities
+
+A small, barely obstructing (less than 10% luminal obstruction) 8–10 mm polypoid lesion was identified proximally in the bronchus intermedius and in the superior segment of the right lower lobe (B6).
+
+Narrow-band imaging was used for airway examination and demonstrated dotted abnormal vascular patterns in the proximal and distal bronchus intermedius. These lesions were biopsied.
+
+Complications
+
+No immediate complications.
+
+Estimated Blood Loss
+
+Minimal.
+
+Post-Procedure Diagnosis
+
+Endobronchial papillomatous lesions, status post biopsy
+
+Recommendations
+
+Follow up in clinic in 3 months.
+
+Attending Participation
+
+I was present and participated throughout the entire procedure, including non-key portions.

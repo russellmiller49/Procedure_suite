@@ -1,0 +1,13 @@
+NOTE_ID:  note_261 SOURCE_FILE: note_261.txt PREOPERATIVE DIAGNOSIS: Hemoptysis
+POSTOPERATIVE DIAGNOSIS: 
+1.	Endobronchial tumor 
+PROCEDURE PERFORMED: Therapeutic bronchoscopy with tumor debulking 
+INDICATIONS: Tumor obstruction of left lower lobe  
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient  acknowledged and gave consent. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: Following anesthetic induction and endotracheal tube insertion , the flexible bronchoscope was advanced through the ETT into the airway. On initial bronchoscopic inspection the trachea, and left lung appeared normal without evidence of endobronchial disease. The proximal right mainstem and right upper lobe were normal. In the distal right mainstem endobronchial tumor with active oozing was seen and extended into the bronchus intermedius causing near complete obstruction.  Forceps biopsy was performed of the visible endobronchial tumor and samples were placed in formalin. Next APC was used to debulk and devascularize the endobronchial tumor utilizing a “burn and shave” method. Tumor was seen within the right middle lobe causing complete obstruction and extending into the lower lobe subsegments. APC was used in a similar fashion to paint and coagulate the remaining visible endobronchial tumor. Re-establishment of patency was not complete due to the extent of distal tumor spread. Once we were satisfied that no further intervention was required, and bleeding was controlled the bronchoscope was removed and the case was turned over to anesthesia to recover the patient. 
+Recommendations:
+-	Return patient to the ICU
+-	Follow-up biopsy results
+-	Continue to monitor for evidence of recurrent hemoptysis 
+-	Initiate radiation therapy as soon as possible per oncology consultation. 

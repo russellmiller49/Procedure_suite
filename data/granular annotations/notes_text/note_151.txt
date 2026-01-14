@@ -1,0 +1,16 @@
+NOTE_ID:  note_151 SOURCE_FILE: note_151.txt Tube Thoracostomy Procedure Note
+
+Indication: Hemothorax
+
+The patient was positioned in the usual fashion and the left chest was prepped and draped in a sterile manner using chlorhexidine. Local anesthesia was achieved with a total of 10 mL of 1% lidocaine infiltrated into the skin, subcutaneous tissue, superior aspect of the rib periosteum, and parietal pleura.
+
+A 2-cm incision was made parallel to the rib in the left midaxillary line at the level of the fourth rib. Blunt dissection was carried out through the subcutaneous tissue superficial and superior to the rib down to the level of the pleura. The pleural space was entered bluntly, with immediate expression of a large volume of blood. The parietal pleural opening was then expanded bluntly, and a finger was inserted and carefully swept in all directions to confirm intrapleural placement and to assess for adhesions.
+
+A 34 French chest tube was then inserted using the operator’s finger as a guide. The tube was directed inferiorly and advanced without difficulty. Blood continued to pour from the insertion site during suturing of the tube to the skin, with approximately 1 liter of dark blood lost externally, outside of the pleurovac. The chest tube was then securely connected to a pleurovac with tape, at which time an additional approximately 1 liter of blood drained rapidly before output slowed.
+
+A sterile occlusive dressing was applied over the insertion site. A second, nonfunctional chest tube was removed, revealing a large fibrin clot completely occluding the lumen. The removal site bled briskly, and three interrupted sutures were placed, after which hemostasis was achieved.
+
+No immediate complications were noted. A post-procedure chest x-ray is pending at the time of this note.
+
+Complications: None
+Estimated Blood Loss: Approximately 2 liters

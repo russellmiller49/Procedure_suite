@@ -1,0 +1,14 @@
+NOTE_ID:  note_171 SOURCE_FILE: note_171.txt Procedure Name: EBUS bronchoscopy
+Indications: Pulmonary nodule requiring diagnosis/staging. 
+Medications: Propofol infusion via anesthesia assistance  
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. 
+Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth. The vocal cords appeared normal. The subglottic space was normal. The trachea is of normal caliber. The carina was sharp. All left sided airways were normal without endobronchial disease to the first segmental branch. The right upper and lower lobe airways were normal without endobronchial disease to the first segmental branch. Within the right middle lobe a shiny vascular obstructive endobronchial tumor was visualized within the lateral segment of the right middle lobe. The lesion was friable and bled easily with minimal manipulation. Subsequently 6 endobronchial needle biopsies of the nodule were performed. Due to bleeding from the lesion a total of 4ml of 10mg/10ml tranexamic acid was applied topically with subsequent resolution of bleeding.  The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L, station 4R, station 7 and station 11Rs lymph nodes.  Sampling by transbronchial needle aspiration was performed in these lymph nodes using an Olympus EBUSTBNA 22 gauge needle beginning at the N3 (4L) lymph nodes 74R11Rs. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet in AHLTA. All samples were sent for routine cytology. Onsite path evaluation did not identify malignancy. We then removed the EBUS bronchoscopy and inserted the therapeutic T190 Olympus bronchoscope and advanced the scope into the right middle lobe where 5 forceps endobronchial biopsies were performed. Bleeding was moderate and required intermittent mechanical tamponade with the tip of the bronchoscope. After biopsies were completed we monitored for evidence of active bleeding and none was seen. At this point the bronchoscope was removed and the procedure completed. 
+
+Complications: 
+-None 
+Estimated Blood Loss:  10 cc.
+Recommendations:
+- Transfer to PACU
+- Await biopsy results 
+- Discharge home once criteria met.
+

@@ -1,0 +1,52 @@
+NOTE_ID:  note_048 SOURCE_FILE: note_048.txt INDICATION FOR OPERATION:  [REDACTED]is a 65 year old-year-old male who presents with respiratory failure.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+After adequate sedation an iGel airway was placed by anesthesia and ventilation continued via the tracheostomy tube. There was a large amount of thick, foul smelling secretions at the level of the glottis. These were therapeutically aspirated. There was moderate edema and the true vocal cords were unable to be visualized. There is a small shelf of tissue along the 12 oclock to 2 oclock position when the tracheostomy tube enters. This does not cause significant obstruction. The cuff of the tracheostomy tube deflated the bronchoscope can easily pass the tracheostomy tube. The bronchoscope was removed and introduced into the existing tracheostomy tube.
+ 
+ 
+Successful therapeutic aspiration was performed to clean out the Supraglottic, Vocal Cord, Subglottic, Trachea (Proximal 1/3), Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and mucus plug. 
+ 
+Under direct visualization from the glottis the cuff was deflated and the tracheostomy tube was easily removed.  The stoma appeared widely patent and some granulation tissue was immediately visualized.  The new tracheostomy tube was then placed with obturator in place.  The obturator was removed, inner cannula was placed and the cuff inflated under direct visualization which confirmed occlusion of the entire trachea.
+ 
+Percutaneous tracheostomy was changed from:
+Portex cuffed Trach ISO/ID size 8.0mm suctionaid 
+To 
+Portex cuffed Trach ISO/ID size 8.0mm suctionaid 
+ 
+without issue.
+ 
+Pictures and videos were taken from the tracheostomy tube and from the mouth.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 65 year old-year-old male who presents for bronchoscopy for respiratory failure.
+ 
+-Follow up tracheostomy change in ~3 months
+- DME order for Portex 8.0 inner cannulas

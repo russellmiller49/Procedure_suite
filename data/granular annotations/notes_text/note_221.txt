@@ -1,0 +1,12 @@
+NOTE_ID:  note_221 SOURCE_FILE: note_221.txt Procedure Name: Inspection bronchoscopy with bronchial lavage
+Indications: Right lower lobe collapse and possible BP fistula
+Medications: General Anesthesia
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs 
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left sided airways were normal.  Significant pus was encountered within the right mainstem which was suctioned.  Once we’re able to better visualize the airways a 3 mm hole consistent with the BP fistula actively oozing purulent material was seen in the stump from the posterior segment of the right upper lobe.  A proximally 150 cc of gross pus was suctioned including 40 cc which was suctioned and retained in the trap for culture.  The right middle lobe stump was intact.  The superior segment of the right lower lobe was open.  The basilar segments of the right lower lobe were completely obstructed due to bronchial kink without endobronchial disease which we could not pass.  Purulent material was expressed from this area as well consistent with a postobstructive pneumonia.  CT surgery was informed of the findings and came to the room to observe the stump.  At this point retained secretions were suctioned and once we were confident that there was no evidence of active bleeding the bronchoscope was subsequently removed. 
+Complications: None 
+Estimated Blood Loss: 0
+
+Post Procedure Diagnosis:
+- Technically successful flexible bronchoscopy with bronchial wash.
+-BP fistula in the posterior segment of the right upper lobe stump.
+- After patient recovers from anesthesia we will have a discussion regarding his wishes for further therapeutic interventions.

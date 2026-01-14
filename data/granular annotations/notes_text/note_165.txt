@@ -1,0 +1,14 @@
+NOTE_ID:  note_165 SOURCE_FILE: note_165.txt PRE-PROCEDURE DIAGNISOS: pulmonary nodule 
+POST- PROCEDURE DIAGNISOS: pulmonary nodule 
+PROCEDURE PERFORMED:  
+Flexible bronchoscopy with electromagnetic navigation under flouroscopic and EBUS guidance with isocyanate green dye injection for surgical resection.
+CPT 31654 Bronchoscope with Endobronchial Ultrasound guidance for peripheral lesion
+CPT 31629 Flexible bronchoscopy with fluoroscopic trans-bronchial needle aspiration
+CPT +31627 Bronchoscopy with computer assisted image guided navigation
+INDICATIONS FOR EXAMINATION:   pulmonary nodules requiring surgical resection
+SEDATION: General Anesthesia
+FINDINGS: Following intravenous medications as per the record the patient was intubated with an 8. 5 ET tube by anesthesia. The T190 video bronchoscope was then introduced through the endotracheal tube and advanced to the tracheobronchial tree. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. The super-dimension navigational catheter was inserted through the T190 therapeutic bronchoscope and advanced into the airway. Using the navigational map created preprocedurally we advanced the 180 degree edge catheter into the proximity of the right upper lobe nodule. Radial probe was used to attempt to confirm presence within the lesion.  A super dimension needle was then inserted through the bronchoscope and 0.75 milliliters of isocyanate Green were injected just below the pleura adjacent to the nodule for planned robotic surgical resection immediately following. The bronchoscope was removed and the procedure was turned over to cardiothoracic surgery. 
+ESTIMATED BLOOD LOSS:   less than 5 cc 
+COMPLICATIONS: None
+IMPRESSION:  
+- Successful navigational bronchoscopy with ICG marking of right upper lobe peripheral pulmonary nodule

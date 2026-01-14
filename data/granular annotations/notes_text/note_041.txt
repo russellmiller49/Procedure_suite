@@ -1,0 +1,74 @@
+NOTE_ID:  note_041 SOURCE_FILE: note_041.txt INDICATION FOR OPERATION:  Recurrent Effusion.  
+ 
+PREOPERATIVE DIAGNOSIS:  Recurrent Effusion
+POSTOPERATIVE DIAGNOSIS: Recurrent Effusion
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32557 Insert catheter pleura with imaging (chest tube)
+ 
+Local ONLY
+ 
+PROCEDURE IN DETAIL:
+ 
+PATIENT POSITION: 
+0‌ Supine  0‌ Sitting   
+1‌ Lateral Decubitus:  0‌ Right 1‌ Left with right side up
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and up loaded to the epic media tab
+Hemithorax:   1‌ Right  0‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  0‌ Small  0‌ Moderate  1‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  1‌ None  0‌Thin  0‌ Thick 
+Diaphragmatic Motion:  1‌ Normal  0‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   1‌ Present  0‌ Absent 
+Lung sliding post procedure:   1‌ Present  0‌ Absent 
+Lung consolidation/atelectasis: 1‌ Present  0‌  Absent 
+Pleura:  1‌ Normal  0‌ Thick  0‌ Nodular 
+ 
+ 
+ 
+Insertion site prepped and draped in sterile fashion.
+ 
+ANESTHESIA:   Lidocaine 1%: 10 ml      Other: ______ 
+Entry Site: 
+1‌ Right 7th Intercostal Space   0‌ Left  ___ Intercostal Space 
+0‌ Mid-clavicular   1‌ Mid-axillary  0‌ Mid-scapular  0‌ Other: 
+ 
+Size:  0‌ 6Fr  0‌ 8Fr   0‌ 12FR   1‌ 14Fr  0‌ 16Fr   0‌ 18Fr  0‌ 24Fr   0‌ 32 Fr   0‌ Other: 
+Sutured: 1‌ Yes 0‌ No 
+ 
+PROCEDURE FINDINGS: 
+A  pigtail catheter was inserted using the Seldinger technique. Entry into the pleural space was confirmed with the easy removal of minimal serous appearing pleural fluid. A guidewire was inserted using the introducer needle pointed in the apical posterior direction. The introducer needle was then removed. A dilator was then inserted over the wire with a twisting motion in order to form a tract for catheter insertion. The dilator was removed and the pigtail catheter (with trochar) was advanced over the guidewire. The catheter was inserted into the chest until all catheter holes were well within the chest. The guidewire and trochar were then removed.  The tube was then attached to the collection drain apparatus and secured in place with suture and covered. 
+ 
+Fluid Removed: 1225 ml 
+1‌ Serous  0‌ Serosanguinous 0‌ Bloody  0‌ Chylous 0‌ Other: 
+ 
+Drainage device:   1‌ Pleurovac    0‌ Drainage Bag  0‌ Heimlich Valve  0‌ Pneumostat  0‌ Other: 
+Suction: 0‌ No 1‌Yes, - 20cmH20 
+ 
+ 
+SPECIMEN(S): 
+1‌None
+ 
+CXR ordered: 1‌ Yes 0‌ No 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 68 year old-year-old female who presents for Chest Ultrasound and Chest tube placement.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+--Post procedure CXR
+--Continue chest tube to -20cmH2O
+--Strict I/O
+--Daily CXR while chest tube in place
+--Nursing chest tube flushing protocol
+--Continued care per primary team
+ 
+DISPOSITION: ICU
+ 

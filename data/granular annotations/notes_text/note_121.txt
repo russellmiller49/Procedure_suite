@@ -1,0 +1,38 @@
+NOTE_ID:  note_121 SOURCE_FILE: note_121.txt Procedure Name
+
+Bronchoscopy with Endobronchial Balloon Dilation
+
+Procedure Narrative
+
+Patient name: [REDACTED]
+
+Preoperative diagnosis: Aspirated Foreign Body on Bronchus, Acquired Bronchial Stenosis
+Postoperative diagnosis: same as above
+
+Procedures performed:
+1. Flexible bronchoscopy
+2. Endobronchial Balloon Dilation
+
+Indications for the procedure: Aspirated Foreign Body on Bronchus with subsequent Acquired Bronchial Stenosis
+
+Anesthesia: General Sedation by Anesthesia Team; Topical Lidocaine 1%(10 mL total)
+
+Procedure: After obtaining informed consent from the patient, a timeout was performed to identify the correct patient and procedure to be performed.
+
+Once the patient was adequately sedated, the flexible bronchoscope was placed through the LMA. A flexible bronchoscopy was then performed. Topical Lidocaine 1% was sequentially instilled onto the Main and Secondary Carina. Examination of the airways revealed a normal Trachea and an unremarkable left side. There was no endobronchial nodularity or masses.
+
+Friable mucosa was noted from the distal Bronchus Medius to the takeoff of the RLL. There was significant granulation and scar tissue as well. The entrance to the RLL was significantly stenotic and unable to identify the opening to the Superior Segment of the RLL. Performed serial dilation with balloon dilator and after which purulent secretions were seen coming from the RLL. Performed BAL with 30cc of normal saline and 20cc of return of cloudy fluid. There was also evidence of course particulates at the RLL take off that were removed and send for pathology. RLL takeoff was still significantly stenotic and unable to pass diagnostic bronchoscope. Used APC and alligator forceps to debride scar tissue after which was able to pass the diagnostic bronchoscope. The remaining basilar segments of the RLL appeared patent.
+
+Following confirmation of hemostasis and therapeutic aspiration of all endobronchial secretions, the bronchoscope was removed. Patient tolerated the procedure well with no immediate complications.
+
+EBL: minimal
+
+Bronchoscopes: Diagnostic and Therapeutic Bronchoscopes
+
+Specimens:
+Bronchial wash
+BAL
+Cell count
+Bacterial culture
+Fungal culture
+Surgical Pathology

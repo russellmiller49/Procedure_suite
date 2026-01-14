@@ -1,0 +1,11 @@
+NOTE_ID:  note_197 SOURCE_FILE: note_197.txt PREOPERATIVE DIAGNOSIS: Diffuse parenchymal lung disease
+POSTOPERATIVE DIAGNOSIS: Diffuse parenchymal lung disease 
+PROCEDURE PERFORMED: Rigid bronchoscopy with transbronchial cryobiopsy, 
+INDICATIONS: Diffuse parenchymal lung disease
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
+Sedation: General Anesthesia
+
+DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. After receiving analgesia and paralytics the patient was bag masked and once preoxygenated a 12 mm rigid tracheoscope was inserted into the mid trachea and attached to the jet ventilator. The rigid optic was then removed and the flexible bronchoscope was inserted through the rigid bronchoscope. After inspection bronchoscopy which was unremarkable a BAL was performed in the right middle lobe. Subsequentlya Forgery balloon was inserted to the rigid bronchoscope into the anterior segment of the right lower lobe. Under fluoroscopic guidance the cryoprobe was inserted past the balloon into the lateral left lower lobe segment under fluoroscopic guidance. Once the pleural margin was reached the probe was withdrawn approximately 1 cm and the cryoprobe was activated for 4 seconds at which time the flexible bronchoscope and cryoprobe were removed en-bloc in the Fogarty balloon was inflated immediately after removal. One specimen was removed from the cryoprobe the flexible bronchoscope was reinserted and the balloon was slowly deflated to assess for distal bleeding. No blood was noted and this was repeated for a total of 6 biopsies. Once we were confident that there was no active bleeding the flexible bronchoscope was removed.  Following completion of the procedure fluoroscopic evaluation of the pleura was performed to evaluate for pneumothorax and none was seen. The rigid bronchoscope was subsequently removed once the patient was able to breathe spontaneously.
+-	Patient to PACU
+-	CXR pending
+-	Await pathological evaluation of tissue

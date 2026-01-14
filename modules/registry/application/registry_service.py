@@ -55,6 +55,7 @@ from modules.coder.application.smart_hybrid_policy import (
 )
 from modules.ml_coder.registry_predictor import RegistryMLPredictor
 from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
+from modules.coder.parallel_pathway import ParallelPathwayOrchestrator
 
 
 if TYPE_CHECKING:
@@ -727,6 +728,64 @@ class RegistryService:
             except Exception as exc:
                 warnings.append(f"Structurer failed ({exc}); falling back to engine")
                 meta["structurer_meta"] = {"status": "failed", "error": str(exc)}
+        elif extraction_engine == "parallel_ner":
+            # Parallel NER pathway: Run NER → Registry mapping → Rules + ML safety net
+            try:
+                orchestrator = ParallelPathwayOrchestrator()
+                parallel_result = orchestrator.process(note_text)
+
+                # Get record from Path A (NER → Registry → Rules)
+                path_a_details = parallel_result.path_a_result.details
+                record = path_a_details.get("record")
+
+                if record is None:
+                    # Fallback: create empty record if NER pathway failed
+                    from modules.registry.schema import RegistryRecord
+                    record = RegistryRecord()
+                    warnings.append("Parallel NER path_a produced no record; using empty record")
+
+                # Store parallel pathway metadata
+                meta["parallel_pathway"] = {
+                    "path_a": {
+                        "source": parallel_result.path_a_result.source,
+                        "codes": parallel_result.path_a_result.codes,
+                        "processing_time_ms": parallel_result.path_a_result.processing_time_ms,
+                        "ner_entity_count": path_a_details.get("ner_entity_count", 0),
+                        "stations_sampled_count": path_a_details.get("stations_sampled_count", 0),
+                    },
+                    "path_b": {
+                        "source": parallel_result.path_b_result.source,
+                        "codes": parallel_result.path_b_result.codes,
+                        "confidences": parallel_result.path_b_result.confidences,
+                        "processing_time_ms": parallel_result.path_b_result.processing_time_ms,
+                    },
+                    "final_codes": parallel_result.final_codes,
+                    "final_confidences": parallel_result.final_confidences,
+                    "needs_review": parallel_result.needs_review,
+                    "review_reasons": parallel_result.review_reasons,
+                    "total_time_ms": parallel_result.total_time_ms,
+                }
+                meta["extraction_text"] = note_text
+
+                # Apply standard postprocessing
+                record, granular_warnings = _apply_granular_up_propagation(record)
+                warnings.extend(granular_warnings)
+
+                from modules.registry.evidence.verifier import verify_evidence_integrity
+                from modules.registry.postprocess import sanitize_ebus_events
+
+                record, verifier_warnings = verify_evidence_integrity(record, note_text)
+                warnings.extend(verifier_warnings)
+                warnings.extend(sanitize_ebus_events(record, note_text))
+
+                # Add review warnings if parallel pathway flagged discrepancies
+                if parallel_result.needs_review:
+                    warnings.extend(parallel_result.review_reasons)
+
+                return record, warnings, meta
+            except Exception as exc:
+                warnings.append(f"Parallel NER pathway failed ({exc}); falling back to engine")
+                meta["parallel_pathway"] = {"status": "failed", "error": str(exc)}
         else:
             warnings.append(f"Unknown REGISTRY_EXTRACTION_ENGINE='{extraction_engine}', using engine")
 

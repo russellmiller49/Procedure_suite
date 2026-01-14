@@ -1,0 +1,10 @@
+NOTE_ID:  note_225 SOURCE_FILE: note_225.txt PREOPERATIVE DIAGNOSIS: left mainstem stem obstruction
+POSTOPERATIVE DIAGNOSIS: left lower lobe obstruction secondary to intraluminal fibrinous material.
+PROCEDURE PERFORMED: flexible bronchoscopy with cryodebulking 
+INDICATIONS: complete lobar collapse  
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The trachea and right sided airways were normal. The left mainstem stent was widely patent without evidence of obstruction.  At the takeoff of the left lower lobe just beyond surgical stump there was complete obstruction of the left lower lobe orifice secondary to adherent white waxy fibrinous tissue.  Using the 1.9 mm cryoprobe we are able to extract some of the tissue to visualize the segmental stenosis in the left lower lobe.  We then utilized flexible forceps to slowly debulk the abnormal tissue. Once we were able to pass the left lower lobe orifice there was continued areas of white necrotic tissue obstruction in the superior segment and anteriomedial segments of the left lower lobe and extending to just proximal to the basilar segments (very similar appearance and location as previous bronchoscopy). This tissue was also slowly debulked with the flexible forceps until we were able to achieve relatively preserved luminal diameter. Once we were satisfied that no further intervention was required the flexible bronchoscope was removed and the case was turned over to anesthesia to recover the patient. 
+Recommendations:
+-	Transfer patient to ward
+-	Plan for IR guided lymphangiogram on 6/20/19 to evaluate for potential plastic bronchitis.

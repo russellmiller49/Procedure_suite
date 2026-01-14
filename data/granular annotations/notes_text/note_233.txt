@@ -1,0 +1,17 @@
+NOTE_ID:  note_233 SOURCE_FILE: note_233.txt PREOPERATIVE DIAGNOSIS: 
+1.	Resolved bronchus-intermedius obstruction 
+POSTOPERATIVE DIAGNOSIS: 
+1.	 Recurrent resolved Bronchus-intermedius obstruction secondary to broncholith 
+PROCEDURE PERFORMED: 
+lexible bronchoscopy with removal of broncholith 
+1.	INDICATIONS:  Bronchus-intermedius obstruction secondary to broncholith
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: DESCRIPTION OF PROCEDURE: The procedure was performed in the bronchoscopy suite. Following intravenous medications as per the record and topical anesthesia to the upper airway, the Q190 video bronchoscope was introduced through the mouth, into the oropharynx. The oropharynx and larynx were well visualized and normal. There was normal vocal cord motion and no vocal cord lesions. Additional topical anesthesia with 1% lidocaine was applied to the larynx and subsequently throughout the tracheobronchial tree with total volume via the anesthesia record. The bronchoscope was then advanced through the larynx into the trachea. The trachea was normal appearing with minimal clear thin secretions. These were suctioned clear. The bronchoscope was then advanced to the main carina, which was sharp. The bronchoscope was then advanced into the advanced into the left main stem there were copious thin secretions which were suctioned clear. Each segment and subsegement in the left upper lobe, lingula and lower lobe was visualized. The left sided airway anatomy was normal and no specific masses or other lesions were identified throughout the tracheobronchial tree on the left.  The bronchoscope was then withdrawn into the trachea and then advanced into the right mainstem. The right mainstem and upper lobe were normal. In the proximal bronchus intermedius there was a 30% obstructing area with post treatment changes from previous APC along with a new small broncholith protruding into the airway was well as changes consistent with underlying submucosal broncholith causing mild extrinsic compression. Gentle pressure was applied to remove the necrotic post-treatment debris within the airway. The lesion was then probed with the flexible bronchoscopy allowing the broncholith to be extracted from the airway wall and then removed with flexible forceps. There wasmild bleeding which resolved with topical epinephrine. This resulted in about 80% opening of the bronchus intermedius. At this point due to the lack of secured airway and risk of bleeding with more invasive removal we decided to not further explore the area. The bronchoscope was then passed beyond the BI to inspect the right middle, right lower lobe which were normal and no specific masses or other lesions were identified  Once we were satisfied that there was no residual bleeding the rigid bronchoscope was removed and the procedure complete. 
+Complications: None
+Estimated blood loss: 5cc
+Specimens: none
+Recommendations:
+- Repeat non-con CT
+- Based on CT will likely return to OR next week for more aggressive removal of residual broncholith. 
+- Will discharge home once criteria met. 

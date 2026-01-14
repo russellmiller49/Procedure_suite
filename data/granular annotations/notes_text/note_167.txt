@@ -1,0 +1,13 @@
+NOTE_ID:  note_167 SOURCE_FILE: note_167.txt Indications: Mediastinal adenopathy in setting of known lung cancer
+Medications: General Anesthesia,
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+Following intravenous medications as per the record the Q190 video bronchoscope was introduced through the endotracheal tube and advanced to the tracheobronchial tree. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Right sided bronchial mucosa and anatomy were normal; without endobronchial lesions, and no secretions. Left proximal left mainstem was normal. There was submucosal tumor infiltration in the distal 3 cm of the left mainstem circumferentially. The left lower lobe was completely obstructed by endobronchial tumor. The left upper lobe orifice was approximately 70% obstructed with tumor and the LC1 carina was infiltrated with tumor. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 7, 4L lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus EBUSTBNA 22 gauge needle beginning with the 7 Lymph node, followed by the 4L lymph node. ROSE evaluation yielded benign lymphocytes in the station 7 and scant lymphocytes in station 4L. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.
+Decision was made to not proceed with mediastinoscopy as the left mainstem and upper lobe disease would preclude previously considered surgical resection and treatment would not be effected by the presence of N2 disease. 
+Complications: No immediate complications
+Estimated Blood Loss: 5cc
+
+Post Procedure Diagnosis:
+- Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsies.
+- The patient has remained stable and has been transferred in good condition to the post-surgical monitoring unit.
+- Will await final pathology results
+- Will present at tumor board for consideration of chemo-rads

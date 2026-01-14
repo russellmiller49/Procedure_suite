@@ -1,0 +1,69 @@
+NOTE_ID:  note_134 SOURCE_FILE: note_134.txt Procedure Name: Bronchoscopy with Endobronchial Ultrasound
+Indications: Right upper lobe mass, diagnostic
+Medications: General anesthesia; 2% lidocaine, tracheobronchial tree 10 mL
+
+Pre-Procedure
+
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered, and informed consent was documented per institutional protocol. A history and physical examination were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+
+Following intravenous medications per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree, the Q180 slim video bronchoscope was introduced through the mouth via laryngeal mask airway and advanced into the tracheobronchial tree. The UC180F convex probe EBUS bronchoscope was subsequently introduced via the same route. The patient tolerated the procedure well.
+
+Procedure Description
+
+The laryngeal mask airway was in normal position. The vocal cords moved normally with respiration. The subglottic space was normal. The trachea was of normal caliber, and the carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal, with no endobronchial lesions or secretions except as outlined below.
+
+Evidence of prior surgery was noted in the left mainstem bronchus. The bronchial stump appeared well healed.
+
+The flexible bronchoscope was withdrawn and replaced with the EBUS bronchoscope. A systematic hilar and mediastinal lymph node survey was performed.
+
+Lymph Nodes and Mass Evaluation
+
+Lymph node sizing was performed using endobronchial ultrasound. Sampling was performed using an Olympus 22-gauge EBUS-TBNA needle and sent for routine cytology.
+
+Station 4R (lower paratracheal): Measured 1.9 mm by EBUS and 2.4 mm by CT. PET negative. Ultrasound characteristics included hypoechoic, heterogeneous, irregular shape with sharp margins. This node was not biopsied due to benign ultrasound characteristics and size criteria.
+
+Station 7 (subcarinal): Measured 5.4 mm by EBUS and 4.8 mm by CT. PET negative. Ultrasound characteristics included hypoechoic, heterogeneous, irregular shape with sharp margins. This node was biopsied using a 22-gauge needle with five passes. ROSE preliminary analysis indicated adequate tissue.
+
+Station 10R (hilar): Measured 3.4 mm by EBUS and 0.1 mm by CT. PET negative. Ultrasound characteristics included hypoechoic, heterogeneous, irregular shape with sharp margins. This node was not biopsied due to benign ultrasound characteristics and size criteria.
+
+Station 11Rs: Measured 7.3 mm by EBUS and 5.4 mm by CT. PET negative. Ultrasound characteristics included hypoechoic, heterogeneous, irregular shape with sharp margins. This node was biopsied using a 22-gauge needle with five passes. ROSE preliminary analysis indicated adequate tissue.
+
+Right upper lobe mass: Measured 19 mm by EBUS and 22 mm by CT. PET positive. Ultrasound characteristics included hypoechoic, heterogeneous, irregular shape with sharp margins. This lesion was biopsied using a 22-gauge needle with eight passes. ROSE preliminary analysis indicated malignancy.
+
+All specimens were sent to cytopathology for review.
+
+Additional Sampling
+
+Fluoroscopically guided transbronchial brushings were obtained from the right upper lobe and sent for routine cytology. Two samples were obtained.
+
+Transbronchial biopsies were performed in the right upper lobe apical segment (B1) using forceps under fluoroscopic guidance. Five biopsy passes were performed, yielding five biopsy specimens, which were sent for histopathologic examination.
+
+Complications
+
+No immediate complications.
+
+Estimated Blood Loss
+
+Less than 5 mL.
+
+Impression
+
+Technically successful flexible bronchoscopy with endobronchial ultrasound-guided lymph node and mass sampling
+
+Evidence of prior left mainstem bronchial surgery with well-healed stump
+
+Transbronchial lung biopsies performed
+
+Lymph node sizing and sampling performed
+
+Fluoroscopically guided transbronchial brushings obtained
+
+Post-Procedure Diagnosis
+
+As above.
+
+The patient remained stable and was transferred in good condition to the post-bronchoscopy recovery area, where he will be observed until discharge criteria are met. Preliminary findings were discussed with the patient. Follow-up with the requesting service for final pathology results was recommended.
+
+Plan:
+
+Await cytology and histopathology results.

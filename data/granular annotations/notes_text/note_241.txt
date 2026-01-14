@@ -1,0 +1,11 @@
+NOTE_ID:  note_241 SOURCE_FILE: note_241.txt PREOPERATIVE DIAGNOSIS: Tracheal stenosis
+POSTOPERATIVE DIAGNOSIS: Complex Tracheal stenosis s/p stent placement 
+PROCEDURE PERFORMED: Tracheal self-expandable airway stent placement
+INDICATIONS: Symptomatic tracheal stenosis
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: The procedure was performed in the bronchoscopy suite. After administration of sedatives an LMA was inserted and the flexible bronchoscope was passed through the vocal cords and into the trachea. Approximately 2.5 cm distal to the vocal cords was a long segment of A-shaped stenosis measuring 3.5 cm with maximal airway obstruction of 90%.  Distal to the stenosis the mid and distal trachea appeared normal. All right and left sided airways to at least the first sub-segments were examined and normal without endobronchial disease or airway distortion. External markers were placed on the patient’s chest with fluoroscopic observation at the proximal and distal edges of the stenosis. At this point we inserted a JAG guidewire into the trachea through the flexible bronchoscope. The bronchoscope was then removed with the jagwire left in place. A 16x40 mm Ultraflex uncovered self-expandable metallic stent was then inserted over the guidewire and using the external markers positioned in proper place and then deployed. The flexible bronchoscope was re-inserted. The stent was well positioned and partially compressed externally. A 14/16.5/18 mm Elation dilatational balloon was used to dilate the stent after which the airway was approximately 90% of normal caliber.  At this point inspection was performed to evaluate for any bleeding or other complications and none was seen. The bronchoscope was removed and the procedure was completed. 
+
+Recommendations:
+- Transfer to PACU
+- Discharge once criteria met.
+- Plan for repeat evaluation and possible stent replacement in approximately 2 weeks. 

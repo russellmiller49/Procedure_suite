@@ -1,0 +1,54 @@
+NOTE_ID:  note_136 SOURCE_FILE: note_136.txt Procedure Performed:
+Flexible bronchoscopy with endobronchial ultrasound–guided transbronchial needle aspiration
+
+Indication:
+Diagnostic evaluation and mediastinal staging
+
+Medications:
+General anesthesia
+Topical anesthesia: Lidocaine 2%, 10 mL to the tracheobronchial tree
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Pertinent laboratory studies and imaging were reviewed. A procedural time-out was performed.
+
+Following administration of intravenous medications per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree, a Q180 slim video bronchoscope was introduced orally via a laryngeal mask airway and advanced into the tracheobronchial tree. Subsequently, a UC180F convex-probe EBUS bronchoscope was introduced orally via the laryngeal mask airway and advanced into the tracheobronchial tree. The patient tolerated the procedure well.
+
+Airway Examination
+
+The laryngeal mask airway was in good position. The vocal cords moved normally with respiration. The subglottic space was normal. The trachea was of normal caliber, and the carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal, with no endobronchial lesions or significant secretions. A bronchial stump was noted without evidence of recurrence.
+
+Endobronchial Ultrasound Findings and Sampling
+
+The bronchoscope was withdrawn and replaced with the EBUS bronchoscope to perform ultrasound evaluation. A systematic mediastinal and hilar lymph node survey was conducted.
+
+Lymph node sizing and sampling were performed for non–small cell lung cancer staging using an Olympus 22-gauge EBUS-TBNA needle. Samples were obtained from the following stations and sent for routine cytology:
+
+Station 4L (left lower paratracheal):
+Measured 4.6 mm by EBUS and 5 mm by CT; PET negative. On ultrasound, the lymph node appeared hypoechoic, heterogeneous, irregularly shaped, with sharp margins. The node was biopsied using a 22-gauge needle. A total of five needle passes were obtained. Rapid on-site evaluation indicated adequate tissue.
+
+Station 5 (subaortic):
+Measured 20.7 mm by EBUS and 24.1 mm by CT; PET positive. This node was accessed via the esophagus and biopsy was technically challenging. On ultrasound, the lymph node appeared hypoechoic, heterogeneous, irregularly shaped, with sharp margins. The node was biopsied using a 22-gauge needle. A total of eight needle passes were obtained. Rapid on-site evaluation was suspicious for malignancy.
+
+All samples were submitted to cytopathology for review.
+
+Complications:
+None immediate
+
+Estimated Blood Loss:
+<5 mL
+
+Post-Procedure Diagnosis:
+
+Technically successful flexible bronchoscopy with EBUS-guided transbronchial needle aspiration
+
+Normal endobronchial examination
+
+Mediastinal lymph node sampling performed
+
+Disposition:
+The patient remained stable and was transferred in good condition to the bronchoscopy recovery area, where he will be observed until discharge criteria are met. Preliminary findings were discussed with the patient. Follow-up with the requesting service for final pathology results was recommended.
+
+Recommendations:
+
+Await cytology results
+
+Consider CT-guided biopsy if EBUS sampling is nondiagnostic

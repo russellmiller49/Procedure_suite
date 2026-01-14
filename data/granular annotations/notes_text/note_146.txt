@@ -1,0 +1,75 @@
+NOTE_ID:  note_146 SOURCE_FILE: note_146.txt Procedure: Rigid and flexible bronchoscopy with endobronchial biopsy, tumor debulking, APC ablation, and silicone Y-stent placement
+Indication: Mediastinal adenopathy, diagnostic and therapeutic
+Anesthesia: General anesthesia; topical 2% lidocaine to tracheobronchial tree (10 mL)
+
+Pre-Procedure
+
+Standard informed consent and time-out performed.
+
+History/physical updated; labs and imaging reviewed.
+
+Patient tolerated induction and procedure well.
+
+Technique
+
+Rigid bronchoscopy: Black bronchial tube 12.0–11.0 via mouth with 0° 4.0-mm rigid telescope.
+
+Flexible bronchoscopy: Q180 slim and T180 therapeutic bronchoscopes passed through the rigid bronchoscope.
+
+Therapeutic tools: Electrocautery snare, XPS 3000 microdebrider, ERBE APC VIO 300D (argon plasma coagulation).
+
+Airway Findings
+
+Vocal cords: Normal mobility.
+
+Subglottis: Normal.
+
+Proximal trachea: Normal caliber.
+
+Distal trachea / carina:
+
+Mixed obstruction (extrinsic compression + endoluminal tumor) arising from the right lateral distal trachea, extending to involve the main carina and both mainstem bronchi over ~1 cm.
+
+~75% luminal occlusion in the lower trachea.
+
+Carinal mass large, friable, infiltrative, and submucosal with prominent endobronchial component.
+
+Interventions
+
+Electrocautery snare debulking of carinal mass → ~60% recanalization at carina.
+
+Resected tissue sent to pathology.
+
+Endobronchial biopsies (cup forceps) from lower trachea and carina (5 samples) sent for histopathology.
+
+Microdebrider resection of additional lower tracheal tumor → partial recanalization to ~50% of normal.
+
+APC ablation to residual tumor in the trachea, carina, left and right mainstem bronchi → post-ablation lumen ~70% of normal.
+
+Airway stenting:
+
+Silicone Y-stent (Novatec 14–10–10 mm) selected and customized (6 cm tracheal limb; 1 cm each mainstem limb).
+
+Deployed under direct vision across trachea, carina, and both mainstem bronchi.
+
+Post-stent lumen ~90% of normal; no airway orifices obstructed; final position satisfactory.
+
+Complications / Blood Loss
+
+No immediate complications.
+
+Estimated blood loss: < 5 cc.
+
+Impression
+
+Severe malignant airway obstruction at the distal trachea/carina with bilateral mainstem involvement.
+
+Technically successful rigid bronchoscopy with diagnostic biopsies, multimodal tumor debulking/ablation, and silicone Y-stent placement resulting in substantial airway patency restoration.
+
+Post-Procedure Plan
+
+Observe in post-bronchoscopy recovery until discharge criteria met.
+
+Await pathology results.
+
+Follow up with requesting/oncology service to review final histopathology and guide definitive therapy.

@@ -1,0 +1,61 @@
+NOTE_ID:  note_131 SOURCE_FILE: note_131.txt Procedure Name: Pleuroscopy
+Indication: Pleural effusion
+Anesthesia: Monitored Anesthesia Care
+
+Pre-Anesthesia Assessment
+
+ASA Physical Status: III – Patient with severe systemic disease
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A focused history and physical examination were performed and updated in the pre-procedure assessment record. Relevant laboratory studies and imaging were reviewed. A procedural time-out was performed prior to initiation.
+
+Procedure Description
+
+The patient was placed on the operating table in the lateral decubitus position with appropriate padding of pressure points. The procedural site was identified using ultrasound guidance and was sterilely prepped with chlorhexidine gluconate (Chloraprep) and draped in the usual fashion.
+
+Local Anesthesia
+
+The pleural entry site was infiltrated with 19 mL of 1% lidocaine.
+
+A 10-mm reusable primary port was placed on the right side at the 6th intercostal space along the anterior axillary line using a Veress needle technique. A 0-degree 2.0-mm pleuroscopy telescope was introduced through the incision and advanced into the pleural space, followed by a 50-degree 7.0-mm pleuroscopy optic.
+
+Pleuroscopy Findings
+
+Serous pleural effusion was present; approximately 3,000 mL was suctioned.
+
+Small white and reddish raised lesions were identified on the diaphragmatic parietal pleura.
+
+The visceral pleura appeared normal.
+
+The chest wall (parietal) pleura was hyperemic with areas of brownish discoloration.
+
+All three lobes collapsed easily and re-expanded fully with suction.
+
+Biopsy
+
+Targeted biopsies of nodular lesions on the diaphragmatic pleura were obtained using forceps (three samples) and sent for histopathologic evaluation.
+
+Additional biopsies were obtained from the brownish lesions on the chest wall pleura.
+
+A 15.5-Fr PleurX catheter was placed in the pleural space over the diaphragm.
+
+Dressing
+
+Port sites were dressed with a transparent dressing.
+
+Estimated Blood Loss
+
+Minimal
+
+Complications
+
+None immediate
+
+Impression
+
+Exudative pleural effusion with predominantly normal pleura, except for small diaphragmatic and chest wall lesions.
+
+Post-Procedure Plan
+
+The patient will be observed post-procedure until discharge criteria are met.
+
+Chest X-ray to be obtained post-procedure.

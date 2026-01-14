@@ -1,0 +1,48 @@
+NOTE_ID:  note_114 SOURCE_FILE: note_114.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway dehiscence and erosion in bilateral donor transplanted lungs.
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+Mod 22 - pt with increased time, intensity due to clinical condition. Pt on mechanical ventilation with full thickness dehiscence at right anastomosis and multiple areas of ischemia and dehiscence distally that required 40% increased effort. 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+Procedure performed under moderate sedation.  
+The following medications were provided:
+Versed             2 mg
+Fentanyl          50 mcg
+Physician/patient face-to-face anesthesia start time:   17:33
+Physician/patient face-to-face anesthesia stop time:   18:05
+Total moderate sedation time was 33 minutes.  
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by Rachel Uslan, RN. 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Sedation given, as described above.  Endotracheal lidocaine applied through tracheostomy tube.
+Disposable bronchoscope (regular size) was advanced through patient's tracheostomy tube for the procedure.  Topical lidocaine applied to main carina, RMS, and LMS.
+Initial Airway Inspection Findings:
+Distal trachea appears normal.  Native proximal RMS bronchus and LMS bronchus appear largely normal.
+Right lung:
+Exuberant amount of necrotic debris extending from the RMS anastomosis site to RC1, BI, RML, and RB6.  RMS anastomosis sutures visible underlying necrotic debris.  Multiple areas of exposed cartilage noted.  At the RMS anastomotic site, there was a large area of full-thickness dehiscence at 7 o'clock, exposing the mediastinum.  Did not attempt to tranverse defect.  Area of full-thickness airway erosion along RUL bronchus anterior wall - directly adjacent to RB3 take-off.  Bronchus intermedius cartilage appears fractured with excessive "accordion-like" movement of the airway with respiration.  RC2 and RML bronchus mucosa very pale.  Right truncus basalis and RLL basilar segmental airways appear somewhat healthier.
+Left lung:
+Exuberant amount of heaping necrotic debris extending from the LMS anastomosis site to LC2, LUL/lingula/LC1, and proximal LLL.  LMS anastomosis sutures visible underlying necrotic debris.  Donor distal LMS bronchus cartilage and LUL bronchus cartilage appear fractured with excessive "accordion-like" movement of the airway with respiration.  Large full-thickness erosion along anterior aspect of LUL bronchus completely exposing a large vessel (presumed branch of PA).  Left truncus basalis and LLL basilar segmental airways appear somewhat healthier.
+Successful therapeutic aspiration was performed to clean out the distal RMS, RUL, BI, RML, RLL, distal LMS, LUL/lingula, LLL from moderate, non-obstructing mucus. 
+Airway measurements taken in preparation of likely stent placement:
+RMS bronchus :  3.5 cm
+RUL bronchus:  2 cm
+BI:  2 cm
+RC2 to MC (RMS + BI):  5.5, 5.2 cm
+Bronchoscope removed and procedure completed.
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient remained in the ICU on trach-mechanical ventilation.   The patient was in stable condition.
+SPECIMEN(S): 
+None
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for airway evaluation.
+-Profound bilateral donor transplant lung proximal airway injury with multiple sites of full-thickness dehiscence and airway erosion exposing underlying mediastinal/hilar structures.
+-Will prepare for likely bare metallic stent placement on Fri, 9/6/2024.
+Based on measurements above, will look to have the following bare metallic stents on-hand:  14x40, 14x60, 16x40, 16x60, 14x20, 16x20.

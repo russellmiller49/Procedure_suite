@@ -1,0 +1,33 @@
+NOTE_ID:  note_095 SOURCE_FILE: note_095.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway stenosis.  
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31625 Endobronchial Biopsy(s)
+31636 Dilate and bronchial stent initial bronchus
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Initial Airway Inspection Findings:
+There were significant stenosis noted at the lingula orifice. Mild stenosis at the RMS anastomosis and BI.
+Successful therapeutic aspiration was performed to clean out the Right Mainstem and Left Mainstem from mucus. 
+Endobronchial obstruction at Right Mainstem, Bronchus Intermedius , and lingula orifice was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	Needle knife	Effect 4, 40W	2-3 sec radial cuts	At lingula, RMS
+Endobronchial biopsy was performed at Bronchus Intermedius .  Lesion was successfully removed.  Samples sent for Pathology.
+Balloon dilation was performed at Right Mainstem.  10/11/12 Elation balloon was used to perform dilation to 12 mm at the Right Mainstem.  Total 1 inflations with dilation time of 60 seconds each. Prior to treatment, affected airway was note to be 80% patent.  After treatment, the airway was 100% patent. 
+Balloon dilation was performed at lingula.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the LUL Lingula Carina (Lc1).  Total 1 inflations with dilation time of 60 seconds each.
+The following stent (aero mini 6x10) was placed in the lingula orifice. Prior to treatment, affected airway was note to be 20% patent.  After treatment, the airway was 100% patent. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+none
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for airway stenosis.
+- f/u in 2 weeks for repeat bronch

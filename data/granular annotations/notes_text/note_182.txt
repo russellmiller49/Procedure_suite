@@ -1,0 +1,31 @@
+NOTE_ID:  note_182 SOURCE_FILE: note_182.txt PRE-PROCEDURE DIAGNISOS: RIGHT UPPER LOBE PULMONARY NODULE
+POST- PROCEDURE DIAGNISOS: RIGHT UPPER LOBE PULMONARY NODULE
+PROCEDURE PERFORMED:  
+Flexible bronchoscopy with electromagnetic navigation under flouroscopic and EBUS guidance with transbronchial needle aspiration, Transbronchial biopsy and bronchioalveolar brush.  
+
+CPT 31654 Bronchoscope with Endobronchial Ultrasound guidance for peripheral lesion
+CPT 31629 Flexible bronchoscopy with fluoroscopic trans-bronchial needle aspiration
+CPT 31628 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with transbronchial lung biopsy(s), single lobe
+CPT 31623 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with brushing or protected brushings
+CPT +31624 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with bronchial alveolar lavage
+CPT +31627 Bronchoscopy with computer assisted image guided navigation
+
+INDICATIONS FOR EXAMINATION:   Left upper lobe lung nodule            
+MEDICATIONS:    GA
+Pre-operative diagnosis: Right upper lobe nodule
+Post-operative diagnosis: SAA
+Anesthesia: General per Anesthesia
+
+PROCEDURE: History and physical has been performed. The risks and benefits of the procedure were discussed with the patient. All questions were answered and informed consent was obtained. Patient identification and proposed procedure were verified by the physician, anesthesia team, nurse, and pulmonary team. Time out was performed at 0819. The bronchoscope was introduced through the laryngeal mask airway and into the trachea.  The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree of bilateral lungs was examined to at least the first subsegmental level. The right upper lobe was noted to have an anomalous inferior takeoff in addition to the anterior, apical, and posterior segments. There were no endobronchial lesions and no excessive secretions.
+ The Covidien superDimension probe was then advanced and registration was performed. The right upper lobe nodule was accessed by the anomalous segment (see below), located using electromagnetic navigation and the site confirmed with radial ultrasound. Transbronchial needle aspiration was performed under flouroscopic guidance and adequate tissue confirmed by ROSE. Multiple insturments to include transbronchoscopic needles, forceps (tranbronchial lung biopsy) and brushes were utilized. Five needle biopsies three forceps biopsies, and one needle brush biopsy were obtained in total. Finally, inspection bronchoscopy was performed and hemostasis was confirmed. The procedure was accomplished without difficulty. The patient tolerated the procedure well without immediate complications. EBL 5cc.
+
+SPECIMEN SENT TO THE LABORATORY:
+--5 needle biopsies of the right middle lobe
+--1 brush biopsies of the  right middle lobe
+--3 forceps biopsies
+
+The patient tolerated the procedure well without complications.
+
+RECOMMENDATIONS:
+-D/C From CEC when discharge criteria are met
+-Patient will be notified when biopsy results return

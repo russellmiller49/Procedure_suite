@@ -1,0 +1,24 @@
+NOTE_ID:  note_100 SOURCE_FILE: note_100.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with respiratory failure. 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+ANESTHESIA: 
+Local ONLY
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Lidocaine applied to trachea, main carina, RMS, & LMS.
+Initial Airway Inspection Findings:
+The tracheostomy tube is in good position. The visualized portion of the trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Airway exam notable for persistent pale plaque of tissue along the anterior wall of the RMSB/BI and RML orifice.   The previously seen metallic hemoclip near the RMS anastomosis posterior membrane is no longer present.  The RML orifice is now completely stenosed by overlying necrotic debris.  Unable to probe into the airway to achieve patency. The LMSB anastomosis shows mild granulation tissue and similar pale soft tissue plaque along the anterior aspect of the distal LMSB. Segmental airways on the left are widely patent. Clear secretions bilaterally. 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, and RLL and LLL from mucus. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+None
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for respiratory failure and bronchial anastomotic dehiscence and stenosis. 
+-Plan for bronchoscopy under GA for mngmnt of RML stenosis - likely excision of overlying debris, balloon dilation, and stent placement.  Likely on [REDACTED].

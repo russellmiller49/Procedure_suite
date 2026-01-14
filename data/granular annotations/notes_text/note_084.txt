@@ -1,0 +1,45 @@
+NOTE_ID:  note_084 SOURCE_FILE: note_084.txt INDICATION FOR OPERATION:  [REDACTED]is a 74 year old-year-old female who presents with ILD.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: Interstitial Lung Disease
+POSTOPERATIVE DIAGNOSIS:  Interstitial Lung Disease
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31628 TBBX single lobe     
+31654 Radial EBUS for peripheral lesion
+D/C 31899NFK BRONCHOSCOPY, RIGID OR FLEXIBLE, INCLUDING FLUOROSCOPIC GUIDANCE AND OCCLUSION BALLOON, WHEN PERFORMED; WITH BRONCHIAL, ENDOBRONCHIAL, OR TRANSBRONCHIAL CRYOBIOPSY(S), SINGLE LOBE
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a Transbronchial Cryo biopsies. This resulted in >60% increased work due to Increased intensity, Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 31628 TBBX single lobe     Pt with significant bleeding after biopsy that required blocker placement and attempt to clot blood. She continued to bleed and required admission to the ICU. Total time with blocker inflation was 24 minutes.
+ ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Radial EBUS
+ESTIMATED BLOOD LOSS:   50 cc but continued bleeding
+COMPLICATIONS:    Bleeding requiring endobronchial blocker
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: .supine
+Initial Airway Inspection Findings:
+The patient was sedated by anesthesia. Next the bronchoscope was used to fiberoptically intubate the patient with a size 7 Ardnt blocker along side the ETT. The vocal cords are normal instructure and function. After atraumatic intubation the loop of the endobronchial blocker was moved to the RLL lateral subsegment
+Evaluation of the airway was performed. There were no endobronchial lesions and the mucosa was normal. 
+Bronchial alveolar lavage was performed at Medial Segment of RML (RB5).  Instilled 40 cc of NS, suction returned with 25 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+Radial EBUS was performed to confirm there were no enlarged blood vessels in the segment of the RLL lateral segment.
+Transbronchial biopsy was performed with alligator forceps at Lateral-basal Segment of RLL (RB9).  Total 1 samples were collected.  Samples sent for Pathology. There was no bleeding after this biopsy
+Transbronchial biopsy was performed with 1.7 mm cryoprobe with a 4 second freeze. The scope and the cryoprobe were removed together at Lateral-basal Segment of RLL (RB9).  Total 1 samples were collected.  Samples sent for Pathology. Immediately after removal of the bronchoscope the balloon on the blocker was inflated with 3 cc. 
+The balloon was left inflated for a total of 2 minutes. At the time of deflation there was continued bleeding. 
+A total of 1000 mg of TXA, 2 mg epi, 5 cc iced saline were given through the end of the inflated blocker.
+Additional isolation time of 5 minutes, followed by additional 10 minutes followed by another 10 minutes.
+The ETT is at 21 cm at the front teeth and the blocker is at 29 cm at the front teeth.
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was transferred to the ICU for continued care. 
+SPECIMEN(S): 
+BAL RML 
+TBBX right lower lobe
+cryoTBBx right lower lobe
+IMPRESSION/PLAN: [REDACTED]is a 74 year old-year-old female who presents for bronchoscopy for ILD.
+[ ] transfer to ICU
+[ ] repeat bronchoscopy in ICU

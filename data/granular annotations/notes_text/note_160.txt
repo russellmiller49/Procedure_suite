@@ -1,0 +1,11 @@
+NOTE_ID:  note_160 SOURCE_FILE: note_160.txt Procedure Name: 
+1. Electromagnetic navigation bronchoscopy
+Indications: Pulmonary Nodule
+Medications: Propofol infusion via anesthesia assistance  
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. 
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The arytenoids were large with a large and floppy epiglottis. The vocal cords appeared normal. The subglottic space was normal. Tracheomalacia was noted as we advanced the scope to the carina. The carina was sharp. The right and left sided airway anatomy was normal. No evidence of endobronchial disease was seen to at least the first sub-segments.  We then removed the bronchoscope and inserted the EBUS bronchoscope into the airway. We attempted to visualize the nodule with endobronchial ultrasound but did not see the nodule with ultrasound. We then inserted the therapeutic bronchoscope for electromagnetic navigation bronchoscopy.  We were not able to get to the nodule using the navigation equipment.  After suctioning blood and secretions and once we were confident that there was no active bleeding the bronchoscope was removed and the procedure completed.
+
+Complications: None.
+Estimated Blood Loss: Less than 10 cc.  No specimens were obtained for path review.
+Post Procedure Diagnosis:
+- Discuss his case at cardiothoracic tumor board next Tuesday to determine best next step in workup

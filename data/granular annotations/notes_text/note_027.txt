@@ -1,0 +1,59 @@
+NOTE_ID:  note_027 SOURCE_FILE: note_027.txt INDICATION FOR OPERATION:  [REDACTED]is a 30 year old-year-old male who presents with Complicated Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Instillation of agents for fibrinolysis (subsequent) were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32562 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); subsequent day
+ 
+25 Added to the E&M Encounter bill which is separate from a procedure if it is done the same day
+ \
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+ 
+ 
+PATIENT POSITION: 
+1‌ Supine  0‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 0‌ Left 
+ 
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and printed 
+Hemithorax:   0‌ Right  1‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  0‌ Small  1‌ Moderate  0‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  0‌ None  1‌Thin  0‌ Thick 
+Diaphragmatic Motion:  1‌ Normal  0‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   1‌ Present  0‌ Absent 
+Lung sliding post procedure:   0‌ Present  0‌ Absent 
+Lung consolidation/atelectasis: 0‌ Present  0‌  Absent 
+Pleura:  1‌ Normal  0‌ Thick  0‌ Nodular 
+ 
+ 
+Date of chest tube insertion: 12/29
+ 
+Side: left
+1‌  10 mg/5 mg tPA/Dnasedose #:__4__ 
+            0‌  ___mg tPA                              dose #:____ 
+0‌  Other medication: 
+ 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 30 year old-year-old male who presents for Chest Ultrasound and Instillation of agents for fibrinolysis (subsequent).  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+- dwell for 1hr then unclamp and place back on suction -20cm H20, @3:00pm 
+ 
+ 
+DISPOSITION: Nursing Unit
+ 

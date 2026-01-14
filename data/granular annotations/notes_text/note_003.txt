@@ -1,0 +1,62 @@
+NOTE_ID:  note_003 SOURCE_FILE: note_003.txt 
+INDICATION FOR OPERATION:  [REDACTED]is a 23 year old-year-old female who presents with synovial cell sarcoma.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31622 Dx bronchoscope/cell washing          
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             2 mg
+Fentanyl          75 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   0959
+ 
+Physician/patient face-to-face anesthesia stop time:   1008
+ 
+Total moderate sedation time was 9 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   
+ 
+The airway was inspected and mucus was suctioned. Lidocaine was applied to the vocal cords and airway.
+ 
+The mouth and oropharynx were normal appearing. 
+ 
+The airway anatomy was normal appearing to the segmental level bilaterally.
+ 
+The previous biopsy site was inspected appeared to have healed well.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+None
+ 
+IMPRESSION/PLAN: [REDACTED]is a 23 year old-year-old female who presents for bronchoscopy for airway inspection.
+ 
+-Follow up as needed
+ 

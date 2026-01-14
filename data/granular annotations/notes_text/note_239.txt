@@ -1,0 +1,18 @@
+NOTE_ID:  note_239 SOURCE_FILE: note_239.txt PREOPERATIVE DIAGNOSIS: Tracheobronchomalacia
+POSTOPERATIVE DIAGNOSIS: Tracheobronchomalacia
+PROCEDURE PERFORMED: Rigid bronchoscopy, Silicone Y-stent removal
+INDICATIONS: Completed stent trial
+ 
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives.
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: The procedure was performed in the bronchoscopy suite. Once the patient was sedated and relaxed a 12 mm non-ventilating rigid tracheoscope was inserted through the mouth into the sublottic glottic space. A flexible Q190 Olympus bronchoscope was inserted through the tracheoscope into the trachea and airway inspection was performed. The patient’s Y stent was well placed without mucosal debris or obstruction. At the distal tip of the right limb was mild granulation tissue causing about 10% obstruction and at the distal tip of the left mild was moderate granulation tissue causing about 40% obstruction. The distal airways were widely patent.  The flexible bronchoscope was removed and the rigid optic was reinserted alongside rigid alligator forceps. The forceps were used to grasp the proximal limb of the tracheal stent and were rotated repeatedly while withdrawing the stent into the rigid bronchoscope.  The stent was subsequently removed en-bloc with the rigid bronchoscope without difficulty.  Once his stent was removed an I-gel LMA was then placed and the flexible bronchoscope was reinserted.  There was some mild erythema in the areas of the struts from the move stent however the previously covered airways appeared to be relatively normal.  At this point  the cryotherapy probe was used to perform multiple 30 second freeze thaw cycles at the areas of residual granulation tissue within the left and right mainstems. There was some mild bleeding associated with the treatment on the left requiring cold saline and 2cc of topical epinephrine. Once we were confident that the bleeding had resolved the flexible bronchoscope was removed and the procedure was completed.
+ 
+Complications: None
+EBL: 5
+ 
+Recommendations:
+-	Transfer to PACU 
+-	Discharge patient once criteria is met
+-	Due to lack of symptomatic response to stenting would not recommend consideration of tracheoplasty at this time. 
+-	Recommend continuing of non-invasive ventilation for now.
+ 

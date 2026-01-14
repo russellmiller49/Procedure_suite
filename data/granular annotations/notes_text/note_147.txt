@@ -1,0 +1,57 @@
+NOTE_ID:  note_147 SOURCE_FILE: note_147.txt Procedure Performed:
+Left-sided pleuroscopy (medical thoracoscopy) with pleural fluid drainage, pleural biopsies, and tunneled pleural catheter placement
+
+Indication:
+Pleural effusion
+
+Medications / Anesthesia:
+Monitored anesthesia care
+
+Pre-Anesthesia Assessment:
+
+ASA Class III (severe systemic disease)
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Pertinent laboratory studies and imaging were reviewed. A procedural time-out was performed.
+
+The patient was positioned in the lateral decubitus position on the operating table with pressure points appropriately padded. The patient was sterilely prepped with chlorhexidine gluconate (ChloraPrep) and draped in the usual fashion.
+
+Local Anesthesia
+
+The pleural entry site was identified using ultrasound guidance. The entry site was infiltrated with 20 mL of 1% lidocaine.
+
+Procedure Description
+
+A 10-mm reusable primary port was placed on the left side at the sixth intercostal space in the mid-axillary line using a Veress needle technique. A 10.0-mm integrated pleuroscope was introduced through the incision and advanced into the pleural space. The pleura was inspected via the primary port.
+
+A total of approximately 1,700 mL of amber-colored pleural fluid was removed.
+
+Findings
+
+The pleura demonstrated multiple areas of visible tumor studding involving the parietal pleura, visceral pleura, and lung. The left lower lobe did not appear fully expanded and was atelectatic.
+
+Biopsies
+
+Biopsies of pleural tumor studding over the diaphragm were obtained using forceps and sent for histopathological examination. A total of 11 biopsies were obtained.
+
+Pleural Catheter Placement
+
+A 15.5-French PleurX catheter was placed in the pleural space over the diaphragm.
+
+Dressing
+
+The port site was dressed with a transparent dressing.
+
+Complications:
+None immediate
+
+Estimated Blood Loss:
+Minimal
+
+Post-Procedure Diagnosis:
+Suspected pleural metastasis
+
+Post-Procedure Plan:
+
+Observe post-procedure until discharge criteria are met
+
+Obtain post-procedure chest radiograph

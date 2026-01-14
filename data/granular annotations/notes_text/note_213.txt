@@ -1,0 +1,18 @@
+NOTE_ID:  note_213 SOURCE_FILE: note_213.txt Preoperative diagnosis: Alveolar pleural fistula
+Postoperative diagnosis: same as above
+
+Procedures performed:
+1. Flexible bronchoscopy with therapeutic aspiration
+2. Endobronchial glue installation
+3. Chest tube insertion.
+
+Indications for the procedure: Prolonged chest tube airleak
+
+Anesthesia: General anesthesia
+
+Procedure: Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered, and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs 
+Following intravenous medications as per the record the patient was intubated with an 8.0 ETT by anesthesia. The T190 video bronchoscope was introduced through the mouth, via ETT and advanced to the tracheobronchial tree. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left sided airways were normal. There was mild to moderate thick secretions in the right basilar segments. Within the right upper lobe the previously placed endobronchchial valves were visualized. The apical and anterior segment size 7 endobronchial valves appeared well placed with with some surrounding mucus. The posterior size 6 valve appeared to have migrated somewhat distally and was slightly mispositioned. The chest tube was noted to not be titling and no air leak could be found despite gentle oxygen insufflation through the bronchoscope. At this point the chest tube was felt to be obstructed and was replaced over guidewire with a new 14 French Wayne pneumothorax tube with development of leak. At this point we switched to a Boston Scientific disposable bronchoscope inserted into the right upper lobe and the vena-seal saline delivery system catheter was advanced through the working channel of the bronchoscope and approximately 2 cc of bleeding was applied to seal the fistula. Following this 5 cc of the patient's blood was aspirated from central venous catheter and instilled through the bronchoscope into the right upper lobe to activate adhesive glue. Secretions were then aspirated from the bronchus intermedius and lower lobe and the bronchoscope was removed and the procedure was completed. There is initially a resolution of air leak with present tideling in the atrium however after completion of the procedure air leak returned. At this point the hope is that once the glue settles the leak will resolve however will need away to determine if procedure was successful.
+
+EBL: minimal
+
+Bronchoscopes:Olympus T190, Boston Scientific B Scope diagnostic. 

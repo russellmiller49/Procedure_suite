@@ -1,0 +1,31 @@
+NOTE_ID:  note_222 SOURCE_FILE: note_222.txt PREOPERATIVE DIAGNOSIS: Diffuse parenchymal lung disease
+POSTOPERATIVE DIAGNOSIS: Diffuse parenchymal lung disease 
+
+PROCEDURE PERFORMED: Rigid bronchoscopy with transbronchial cryobiopsy
+
+INDICATIONS: Diffuse parenchymal lung disease
+
+Consent was obtained from the patient prior to the procedure after explaining in lay terms the indications, details of the procedure, and potential risks and alternatives. The patient acknowledged and provided consent. 
+
+Sedation: General Anesthesia
+
+DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. After receiving analgesia and paralytics, the patient was mask-bagged and once preoxygenated, an 8.0 endotracheal tube was inserted bronchoscopically using an Olympus T180 therapeutic bronchoscope with an Arent enbobronchial blocker attached to the bronchoscope externally. The blocker was then advanced into the right lower lobe, and the endotracheal tube was advanced over the bronchoscope into the mid trachea and attached to the ventilator. 
+
+After an unremarkable inspection bronchoscopy, the 2.4 mm reusable ERBE cryoprobe was inserted through the past the balloon into the right lower lobe anterior segment under fluoroscopic guidance. Once the pleural margin was reached, the probe was withdrawn approximately 1 cm, and the cryoprobe was activated for 4 seconds. The flexible bronchoscope and cryoprobe were then removed en-bloc, and the endobronchial blocker balloon was immediately inflated after removal. One specimen was obtained from the cryoprobe, the flexible bronchoscope was reinserted, and the balloon was slowly deflated to assess for distal bleeding. No blood was noted, and this was repeated for a total of 5 biopsies.
+
+Cryobiopsies were then performed in the lateral segment of the right lower lobe using the same technique. After the second biopsy, significant blood was encountered when the balloon was deflated. The balloon was reinflated for 5 minutes to protect against blood soiling the airways, and 20cc of iced saline was instilled through the blocker to promote hemostasis. The balloon was released again, and bleeding was noted to have stopped. One more biopsy was completed in the segment for a total of 3. Once it was confirmed that there was no active bleeding, the flexible bronchoscope was removed.
+
+Following the completion of the procedure, fluoroscopic evaluation of the pleura was performed to assess for pneumothorax, and a moderate right-sided pneumothorax was visualized. 
+
+The right lateral chest wall was marked, prepped, and draped in the usual sterile fashion. 1% Lidocaine was used to anesthetize the skin down to the rib and along the proposed insertion path for the tube. A 20-gauge Yueh-centesis needle with a syringe attached was inserted into the pleural space under fluoroscopic visualization, with aspiration of air to verify placement. The needle was then removed, and the catheter was left in place. A guide wire was advanced into the pleural space through the catheter, and the catheter was then withdrawn. A 0.5cm incision was made through the skin, and the subcutaneous tissues were dilated. The 14Fr Wayne pigtail chest drain was inserted into the pleural space. The drain was immediately connected to a Pleur-evac. Adequate placement was confirmed by air leak and fluoroscopy. The tube was sutured in place, and a dressing was applied. 
+
+At this point, the endotracheal tube was removed, and the procedure was completed.
+
+Estimated Blood Loss: 10cc
+Complications: Pneumothorax requiring chest tube insertion
+
+Assessment and Plan:
+- Successful lung cryobiopsy complicated by pneumothorax requiring pigtail insertion
+- CXR pending
+- Admit to Internal medicine for chest tube management
+- Await pathological evaluation of tissue

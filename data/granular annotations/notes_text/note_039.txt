@@ -1,0 +1,101 @@
+NOTE_ID:  note_039 SOURCE_FILE: note_039.txt INDICATION FOR OPERATION:  is a 41 year old-year-old female who presents with endobronchial obstruction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required tumor debulking and relief of endobronchial obstruction via multiple modalities. This resulted in >100% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: Supine
+ 
+After induction of muscle relaxants, tooth or gum protector was placed. The black rigid barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid bronchoscope was advanced carefully while minimizing contact with them. Once the rigid bronchoscope was positioned at the mid-trachea, jet ventilation was initiated and chest wall movement was confirmed. 
+ 
+Initial Airway Inspection Findings:
+Vocal Cords: Normal without mass/lesions
+Trachea: Normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Right mainstem bronchus with endobronchial mass
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Moderate thick and thin light yellow mucus/secretions.  
+ 
+RIGHT MAINSTEM BRONCHUS ENDOBRONCHIAL TUMOR
+ 
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+Electrocautery snare was utilized to ensnare the endobronchial tumor and remove the brunt of the endbronchial lesion from its stalk emanating from the RUL carina (RC1). Once removed from its stalk, the cryoprobe was used to freeze/grasp the endobronchial mass and remove it en bloc with the flexible bronchoscope through the rigid bronchoscope.
+ 
+RESIDUAL TUMOR AFTER SNARE
+ 
+ 
+Next, mini microwave catheter was used to treat the residual tumor. Two applications/treatments were administered.
+ 
+A combination of cryotherapy and APC were used to remove tumor from the right upper lobe and debulk.
+ 
+In sum, the endobronchial obstruction at Right Mainstem and RUL Carina (RC1) was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	2cm Snare	EndoCut Q	3-5 second applications	Good tumor destruction/debulking
+APC	1.5mm Straightfire probe	Forced, Flow 0.5 LPM, 40W	2-3 second applications	Good tumor destruction/debulking
+Microwave	Mini antenna	1 kJ, 62⁰C
+ 
+2.5 kJ, 80⁰C	1min 20sec
+ 
+3min	Good tumor destruction/debulking
+Cryoprobe	2.4mm Cryoprobe	N/A	15-30 second freezes	Good tumor destruction/debulking
+ 
+Prior to treatment, affected airway was note to be 1% patent.  After treatment, the airway was 100% patent. 
+ 
+Bronchial alveolar lavage was performed at Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+ 
+VIEW FROM RMSB AT THE CONCLUSION OF PROCEDURE
+ 
+ 
+VIEW OF RIGHT UPPER LOBE AT THE CONCLUSION OF PROCEDURE
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--Right mainstem endobronchial tumor (path)
+--LUL BAL (cell count, cyto, micro)
+ 
+IMPRESSION/PLAN: [REDACTED]is a 41 year old-year-old female who presents for bronchoscopy for evaluation and management of right mainstem endobronchial tumor. The tumor was debulked using a combination of mechanical debridement, cryotherapy, APC, electrocautery, and microwave ablation. Total patency was restored to the right mainstem bronchus at the conclusion of the procedure. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--Post procedure CXR
+--Follow up path and BAL results
+--Recommend treatment for post-obstructive PNA if not already initiated
+--Repeat bronchoscopy with Interventional Pulmonology in 4 weeks
+ 

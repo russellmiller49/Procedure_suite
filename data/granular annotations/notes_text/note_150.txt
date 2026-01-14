@@ -1,0 +1,49 @@
+NOTE_ID:  note_150 SOURCE_FILE: note_150.txt Procedure Name: Bronchoscopy
+
+Indication: Pneumonia with hypoxia
+
+Anesthesia: Patient previously intubated and sedated
+
+Consent: Obtained by telephone from family
+
+Time-Out: Performed
+
+Pre-Procedure Diagnosis: Pneumonia
+
+Post-Procedure Diagnosis: Hypoxia
+
+Medications: Patient previously sedated
+
+Procedure Description
+
+An Olympus Q190 video bronchoscope was introduced through the previously placed endotracheal tube and advanced into the tracheobronchial tree. The tip of the endotracheal tube was confirmed to be in appropriate position, approximately 2 cm above the carina.
+
+Thick, clear, non-purulent secretions were present predominantly within the right-sided airways and were suctioned to clearance. A complete airway inspection was performed and was notable only for a small white raised endobronchial nodule in the distal bronchus intermedius.
+
+Targeted biopsy of the endobronchial nodule was performed using cupped forceps. Minimal oozing was observed following biopsy, which resolved spontaneously after a brief period.
+
+The bronchoscope was then advanced into the right middle lobe medial segment, where bronchoalveolar lavage was performed with instillation of 120 mL of saline and return of approximately 80 mL using hand suction.
+
+The bronchoscope was subsequently withdrawn, and the procedure was completed without complication.
+
+Estimated Blood Loss
+
+None
+
+Complications
+
+None
+
+Specimens Sent
+
+Bronchoalveolar lavage from the right middle lobe for standard infectious evaluation
+
+Biopsy specimen from the bronchus intermedius nodule for culture only
+
+Implants
+
+None
+
+Post-Procedure Plan
+
+Continue ICU-level care

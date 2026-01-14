@@ -1,0 +1,21 @@
+NOTE_ID:  note_163 SOURCE_FILE: note_163.txt PRE-PROCEDURE DIAGNISOS: Multiple pulmonary nodule 
+POST- PROCEDURE DIAGNISOS: Multiple pulmonary nodule 
+PROCEDURE PERFORMED:  
+Flexible bronchoscopy with electromagnetic navigation under flouroscopic and EBUS guidance with transbronchial needle aspiration, transbronchial brush and transbronchial biopsy 
+CPT 31654 Bronchoscope with Endobronchial Ultrasound guidance for peripheral lesion
+CPT 31629 Flexible bronchoscopy with fluoroscopic trans-bronchial needle aspiration
+CPT 31628 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with transbronchial lung biopsy(s), single lobe
+CPT 31623 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with brushing or protected brushings
+CPT +31627 Bronchoscopy with computer assisted image guided navigation
+INDICATIONS FOR EXAMINATION:   multiple pulmonary nodules suspicious for malignancy            
+SEDATION: General Anesthesia
+FINDINGS: Following intravenous medications as per the record the patient was intubated with an 8. 0 ET tube by anesthesia. The T190 video bronchoscope was then introduced through the endotracheal tube and advanced to the tracheobronchial tree. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. The super-dimension navigational catheter was inserted through the T190 therapeutic bronchoscope and advanced into the airway. Using the navigational map created preprocedurally we advanced the 190 degree edge catheter into the proximity of the right lower lobe nodule. Radial probe was used to attempt to confirm presence within the lesion and minor adjustments were made in positioning until a concentric US view was obtained.  Biopsies were then performed with a variety of instruments to include peripheral needle, forceps, and triple needle brush under fluoroscopic visualization. Rapid Onsite pathological evaluation was consistent with malignancy. Airway inspection was then performed to evaluate for any evidence of active bleeding and none was seen. The bronchoscope was removed and the procedure completed. Specimens were sent for cytology/histology assessment.
+ESTIMATED BLOOD LOSS:   less than 5 cc 
+COMPLICATIONS: None
+IMPRESSION:  
+- Successful navigational bronchoscopy localization and biopsy a right lower lobe nodule
+RECOMMENDATIONS
+- Transfer to post-procedural unit
+- Post-procedure CXR
+- D/C home once criteria met
+- Await pathology

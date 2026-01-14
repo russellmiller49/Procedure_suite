@@ -1,0 +1,44 @@
+NOTE_ID:  note_133 SOURCE_FILE: note_133.txt Procedure Name: Bronchoscopy
+Indications: Chronic cough; shortness of breath
+Medications: General anesthesia; 2% lidocaine, 10 mL instilled to the tracheobronchial tree
+
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered, and informed consent was documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. Following administration of intravenous medications per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree, a 0-degree 4.0-mm rigid optic was introduced through the mouth and advanced into the tracheobronchial tree. The BF-Q190 slim video bronchoscope was then introduced through the rigid bronchoscope after removal of the telescope and advanced into the tracheobronchial tree. The BF-1TH190 therapeutic video bronchoscope was subsequently introduced in a similar fashion. The patient tolerated the procedure well.
+
+Procedure Description:
+
+The patient was brought to the bronchoscopy suite, where a time-out was performed and radiographic imaging was reviewed prior to the procedure. Intravenous anesthesia was administered under the direction of Dr. Sarkis. Once the patient was adequately anesthetized and neuromuscular blockade had been achieved, he was intubated without difficulty using the Dumon orange-striped rigid bronchoscope.
+
+Oropharyngeal landmarks were visualized, revealing extensive redundant soft tissue in the oropharynx. The vocal cords were visualized and appeared to move normally. Chronic inflammatory changes were noted in the tracheal mucosa, with evidence of dynamic airway collapse. The main carina was architecturally distorted, with a fibrotic stricture arising from the posterior wall of the right mainstem bronchus and tethering the anteromedial aspect of the main carina.
+
+The right and left lungs were explored segmentally and subsegmentally using the Q190 video bronchoscope introduced through the rigid bronchoscope. Examination of the left lung demonstrated chronic inflammatory changes of the bronchial mucosa with dynamic airway collapse resulting in less than 50% luminal obstruction during respiration. Examination of the right lung revealed a previously placed stent in situ with approximately 90% obstruction of the right middle lobe bronchus due to bronchial mucosal edema and granulation tissue. The stent was heavily coated with thick mucopurulent secretions. The right lower lobe bronchus appeared patent.
+
+Given these findings—particularly the severe obstruction of the right middle lobe bronchus and the exuberant granulation tissue—we elected to remove the stent. The stent was removed en bloc using forceps without difficulty. Following stent removal, the reconstructed right bronchus intermedius was carefully examined and demonstrated dynamic airway collapse, with an estimated luminal obstruction of less than 50%.
+
+The web-like fibrotic stricture arising from the posterior aspect of the right mainstem bronchus and tethering the anteromedial aspect of the main carina was divided using an electrocautery knife. This resulted in partial release of the stricture; however, dynamic airway collapse persisted, causing tissue apposition during respiration. A diode laser was then used to fulgurate the abutting tissue to discourage further stricture formation. Once an adequate airway lumen had been established, cryotherapy was applied to the edges of the treated area to further reduce the risk of restenosis.
+
+Given that the degree of luminal obstruction during respiration was less than 50% following intervention and in light of the observed granulation tissue formation, a decision was made not to place a stent at this time. The plan is to bring the patient back for repeat airway examination in two weeks to determine whether placement of a silicone stent would be appropriate.
+
+Complications: No immediate complications
+Estimated Blood Loss: <5 mL
+
+Findings:
+
+Chronic cough
+
+Fibrotic stricture of the right mainstem bronchus, excised
+
+Stent located in the bronchus intermedius, removed en bloc
+
+Chronic mucosal inflammation of the right mainstem bronchus
+
+Post–stent removal luminal obstruction of the right mainstem bronchus and right bronchus intermedius estimated at approximately 30%
+
+Post-Procedure Diagnosis:
+
+Chronic mucosal inflammation of the right mainstem bronchus
+
+Luminal obstruction of the right mainstem bronchus and right bronchus intermedius estimated at approximately 30% following stent removal
+
+Technically successful rigid bronchoscopy with stent removal and stricture resection
+
+The patient remained stable throughout the procedure and was transferred in good condition to the post-bronchoscopy recovery area, where he will be observed until discharge criteria are met. Preliminary findings were discussed with the patient, and follow-up in the pulmonary clinic in two weeks has been recommended.

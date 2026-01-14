@@ -1,0 +1,14 @@
+NOTE_ID:  note_161 SOURCE_FILE: note_161.txt Proceduralist(s): Russell Miller MD, Pulmonologist, Jeff Biberson (Fellow)Garrett Harp, MD (Fellow)
+Procedure Name: EBUS Staging Bronchoscopy. (CPT 31652 convex probe endobronchial ultrasound sampling 2 or fewer hilar or mediastinal stations or structures).
+Indications: Diagnosis and staging of presumed lung cancer
+Medications: General Anesthesia
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs 
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the ET tube into the tracheobronchial tree.   Tracheomalacia was noted in the trachea. The carina was sharp. The right-sided airway anatomy was normal. The left sided airway anatomy was normal. No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 11L  (5.4mm) and 4R (5.5mm) lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 11L Lymph node, followed by 4R lymph nodes using an Olympus Visioshot EBUSTBNA 22 gauge needle. ROSE showed non-diagnostic tissue in the low probability 11L lymph node and benign lymphocytes in the 4Rs. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.
+
+Complications: No immediate complications
+Estimated Blood Loss: 5 cc.
+
+Post Procedure Diagnosis:
+- Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsies.
+- The patient has remained stable and has been transferred in good condition to the post-surgical monitoring unit.
+- Will await final pathology results

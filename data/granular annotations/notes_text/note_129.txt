@@ -1,0 +1,46 @@
+NOTE_ID:  note_129 SOURCE_FILE: note_129.txt Procedure Performed:
+Right-sided medical thoracoscopy (pleuroscopy) with pleural biopsies, talc pleurodesis, and chest tube insertion
+
+Indication:
+Exudative pleural effusion
+
+Medications:
+Moderate sedation per anesthesia record
+
+Topical Anesthesia:
+Lidocaine 1%, 20 mL
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Pertinent laboratory studies and imaging were reviewed. A procedural time-out was performed.
+
+The patient was positioned in the left lateral decubitus position on the procedural bed, with pressure points appropriately padded. The right-sided pleural entry site was identified using ultrasound guidance. The patient was sterilely prepped with chlorhexidine gluconate (ChloraPrep) and draped in the usual fashion. The entry site was infiltrated with 20 mL of 1% lidocaine. A 1-cm skin incision was made, and blunt dissection was carried down to the pleural space. Finger sweep revealed pleural adhesions, which were lysed bluntly.
+
+An 8-mm disposable primary port was placed in the right fourth intercostal space at the mid-axillary line. After air entrainment and lung deflation, an Olympus semi-rigid pleuroscope was introduced through the trocar into the pleural cavity. Suction was applied, and approximately 1,600 mL of serosanguinous pleural fluid was removed.
+
+The pleura appeared abnormal, with areas of isolated nodularity and plaques most consistent with pachypleuritis. No significant adhesions were present. Multiple biopsies of abnormal posterior parietal pleura were obtained using forceps. Additionally, a large pleural specimen was obtained using an electrocautery knife. Approximately nine total biopsies were obtained and sent for histopathological examination. Minimal bleeding was observed.
+
+Following biopsies, talc pleurodesis was performed using a combination of talc poudrage and talc slurry, with a total of 5 grams of talc instilled. The primary port was then removed, and a 24-French chest tube was placed through the existing stoma, sutured in place, and connected to a pleuro-vac. The chest tube was dressed and covered with a transparent dressing.
+
+The patient tolerated the procedure well.
+
+A post-procedure chest radiograph demonstrated the chest tube in appropriate position, with the proximal side hole just at the pleural wall and a trace apical pneumothorax.
+
+Complications:
+None immediate
+
+Estimated Blood Loss:
+10 mL
+
+Post-Procedure Diagnosis:
+Pleural effusion
+
+Recommendations:
+
+Admit to inpatient service (planned)
+
+Chest tube to suction; plan for removal once output is <150 mL/day
+
+Pain management following talc pleurodesis, including narcotics as needed
+
+Await pathology results
+
+Inpatient Interventional Pulmonology consult team to follow

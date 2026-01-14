@@ -1,0 +1,20 @@
+NOTE_ID:  note_201 SOURCE_FILE: note_201.txt PREOPERATIVE DIAGNOSIS: 
+1.	Right lower lobe obstructive mass
+POSTOPERATIVE DIAGNOSIS: 
+1.	Right lower lobe obstructive mass
+PROCEDURE PERFORMED: 
+CPT 31641: Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with destruction of tumor or relief of stenosis by any method other than excision (eg, laser therapy, cryotherapy)
+CPT 31640 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with excision of tumor
+CPT 31645  bronchoscopy with therapeutic aspiration
+CPT 31625 Bronchoscopy with endobronchial biopsy(s)
+INDICATIONS:  Airway obstruction and need for tissue biopsy
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room.  Following intravenous medications as per the record a 12 mm ventilating rigid bronchoscope was inserted through the mouth into the distal trachea and advanced into the distal trachea before attaching the monsoon JET ventilator. 
+Using the flexible bronchoscope airway inspection was performed. The tracheal was normal. The tracheal carina was sharp. All left sided airways were normal. The right mainstem, right upper lobe, bronchus intermedius and right middle lobe were normal. In the proximal right lower lobe there was a completely obstructing endobronchial mass just distal to the uninvolved superior segment.
+We were unable to bypass the mass with the flexible bronchoscope and the mass was friable. We initially attempted to utilize electrocautery snare to remove the tumor but due to the broad base were unsuccessful. Bleeding which was controlled with topical epinephrine and iced saline. APC was used to then paint the lesion and then debulking was performed with a combination of cryoprobe, flexible and rigid forceps. The tumor persisted past the trifurcation of the basilar segments however we were able to bypass the tumor and visualize uninvolved distal airway to at least the first order sub-segments in the medial, anterior, lateral and posterior basal segments. Due to the extent of involvement we did not feel additional debulking was warranted at this time. The total endoluminal obstruction in the right lower lobe was approximately 60% at the end of the procedure. Once we were satisfied that there was no active bleeding the rigid bronchoscope was removed and the patient was turned over to anesthesia for continued care. 
+Complications: None
+Recommendations:
+- To PACU and return to ward once criteria met
+- Obtain CXR
+- Will await biopsy results. 

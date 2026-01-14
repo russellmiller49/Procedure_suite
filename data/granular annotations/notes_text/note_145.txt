@@ -1,0 +1,62 @@
+NOTE_ID:  note_145 SOURCE_FILE: note_145.txt Procedure Name: Pleuroscopy
+Indications: Pleural effusion
+Medications: Monitored anesthesia care
+
+Pre-Anesthesia Assessment
+
+ASA Physical Status: III – A patient with severe systemic disease
+
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered, and informed consent was documented per institutional protocol. A history and physical examination were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+
+The patient was sterilely prepped, and pleuroscopy was performed.
+
+Procedure Description
+Positioning and Preparation
+
+The patient was placed on the operating table in the lateral decubitus position, and all pressure points were adequately padded. The skin was prepped with chlorhexidine gluconate (Chloraprep) and draped in the usual sterile fashion.
+
+Local Anesthesia
+
+The pleural entry site was identified using ultrasound guidance. The entry site was infiltrated with 30 mL of 1% lidocaine.
+
+Incision and Port Placement
+
+A 10-mm reusable primary port was placed on the left side at the seventh intercostal space along the anterior axillary line using a Veress needle technique.
+
+Pleuroscopy
+
+A 0-degree 7.0-mm pleuroscopy telescope was introduced through the incision and advanced into the pleural space. A 0-degree 4.0-mm pleuroscopy telescope was subsequently introduced through the same incision for further inspection.
+
+The pleura was systematically inspected via the primary port.
+
+Findings
+
+There was extensive pleural studding throughout the pleural space. No purulent collections were identified. Thick pleural adhesions were present throughout.
+
+Biopsy and Interventions
+
+Biopsies of pleural adhesions were obtained from the upper pleura using forceps and sent for histopathologic examination. Five biopsy specimens were obtained. An additional five specimens were sent for microbiologic cultures.
+
+A 15.5-French PleurX catheter was placed in the pleural space over the diaphragm.
+
+Dressing
+
+Port sites were dressed with a transparent dressing.
+
+Complications
+
+No immediate complications.
+
+Estimated Blood Loss
+
+Minimal.
+
+Post-Procedure Diagnosis
+
+Pleural metastases
+
+Post-Procedure Care
+
+The patient will be observed post-procedure until all discharge criteria are met.
+
+Chest radiograph to be obtained post-procedure.

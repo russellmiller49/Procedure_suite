@@ -1,0 +1,17 @@
+NOTE_ID:  note_249 SOURCE_FILE: note_249.txt PREOPERATIVE DIAGNOSIS: Tracheal-esophageal fistula secondary to esophageal CA 
+POSTOPERATIVE DIAGNOSIS: Tracheal-esophageal fistula secondary to esophageal CA 
+PROCEDURE PERFORMED: Rigid bronchoscopy, Tracheal self-expandable airway stent removal
+INDICATIONS: Stent migration and presumed stent infection
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. After administration of sedatives an LMA was inserted and the flexible bronchoscope was passed through the vocal cords and into the trachea. Approximately 2 cm distal to the vocal cords the patients previous stent could be visualized. Throughout the stent were thick purulent material consistent with infection. The telescoped distal tracheal stent was noted to have migrated into the right mainstem causing complete occlusion of the left mainstem. The flexible bronchoscope and LMA were removed and a 12mm non-ventilating rigid tracheoscope was subsequently inserted into the mid trachea and connected to ventilator. The flexible bronchoscope was inserted through the rigid and into the stent. Bronchial lavage was performed with specimen obtained by trap and sent for culture. The proximal edge of the distal telescoped stent was visualized and using flexible forceps we secured the proximal knot and attempted to withdraw the stent. The stent moved only slightly but enough to visualize copious amounts of post-obstructive pus being expressed from the previously obstructed left mainstem. The material was collected in a trap for culture. We then removed the flexible bronchoscope and inserted the rigid optic alongside the non-optical rigid forceps. The proximal edge of the distal stent was secured and the stent retracted with the rigid bronchoscope which was removed while grasping tightly to the stent. Both stents were removed with this maneuver and the patient was re-intubated with the rigid bronchoscope. The airways which were previously covered by the stent were erythematous and friable, however there was no evidence of airway obstruction from external compression related to esophageal mass. The patient’s esophageal stent could be seen through the posterior trachea covering the TE fistula. The airways were irrigated and cleaned and once we were confident there was no evidence of active bleeding the rigid bronchoscope was removed and the procedure completed. 
+
+Post procedure diagnosis:
+-	Stent infection
+-	Stent migration resulting in post-obstructive pneumonia.
+-	Persistent TE fistula covered by esophageal stent 
+-	s/p airway stent removal
+Recommendations:
+- Transfer to PACU
+- Await cultures
+- consider gastrograffin swallow to ensure esophageal stent is adequately occluding TE fistula
+- Saline nebs 2-3 times per day for 3 days to thin residual blood and secretions allowing for expectoration.  

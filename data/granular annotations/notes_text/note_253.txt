@@ -1,0 +1,31 @@
+NOTE_ID:  note_253 SOURCE_FILE: note_253.txt Preoperative Diagnosis:
+•	Lung mass with complete left upper lobe and partial left lower lobe obstruction.
+Postoperative Diagnosis:
+•	Persistent tumor obstruction of the left mainstem, left upper, and left lower lobes.
+Procedure Performed: 
+•	Rigid bronchoscopy with tumor debulking
+Indications: 
+•	Airway obstruction and need for tissue biopsy
+Consent: 
+•	Obtained from the patient and their family after a detailed explanation of the procedure, potential risks, and alternatives.
+Sedation: 
+•	General Anesthesia
+
+Description of Procedure:
+The procedure was performed in the main operatingroom. Following anesthetic induction, a 12 mm ventilating rigid bronchoscope was inserted into the airway and advanced to the distal trachea, where it was attached to the jet ventilator. A flexible bronchoscope was then introduced through the rigid bronchoscope.
+Upon initial inspection, the trachea and right lung appeared normal, without evidence of endobronchial disease. The mid-left mainstem showed mucosal changes consistent with submucosal tumor involvement and lymphatic obstruction but was patent. At the LC2 carina, there was extensive tumor infiltration causing 100% obstruction of the left upper lobe and 95% obstruction of the left lower lobe. Purulent secretions were observed, and bronchial lavage with specimen collection for culture was performed.
+Forceps biopsy was carried out on the visible endobronchial tumor, and samples were placed in formalin. The tumor was friable and bled upon contact. APC was used to revascularize the tumor, and a combination of flexible and rigid forceps, as well as cryotherapy, was employed for debulking. Additional biopsy samples were also collected and preserved in formalin.
+During the procedure, a Fogarty balloon was passed into the lower lobe, inflated, and retracted in an attempt to open the airway. Copious purulent secretions were observed and suctioned following the maneuver. Despite this, due to the extent of the disease, adequate recanalization of the airway could not be achieved.
+The patient experienced two episodes of significant hypoxia, with saturations dropping into the 50s. This required clot extraction, repositioning, and direct oxygen insufflation via the flexible bronchoscope. Saturations later stabilized to >90%.
+Attempts to recanalize the airways were unsuccessful due to extensive disease. APC was again used for hemostasis. No further debulking was considered warranted at this time.
+Once we were satisfied that there was no active bleeding the rigid bronchoscope was removed and the patient was turned over to anesthesia for continued care.
+Complications:
+•	None
+Estimated Blood Loss: 
+•	100cc
+Recommendations:
+•	Admit to ICU for overnight observation with a bronchial blocker available in case of massive hemoptysis.
+•	Obtain a chest X-ray (CXR).
+•	Await biopsy results.
+•	Initiate palliative chemotherapy and radiation therapy (XRT) based on biopsy findings, as required.
+

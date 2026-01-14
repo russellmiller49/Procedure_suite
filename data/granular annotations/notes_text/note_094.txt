@@ -1,0 +1,53 @@
+NOTE_ID:  note_094 SOURCE_FILE: note_094.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with bilateral lung transplant and complication of anastomosis dehiscence, ischemic lung injury, and bronchial stenosis requiring endobronchial stents.
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure (50 MODIFIER):
+This patient required a bilateral procedure today when this procedure would typically be unilateral. Apply to: 
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Disposable Bronchoscope
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.  Mechanical ventilation initiated via patient's tracheostomy tube.
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the main carina, right carina 1, and left carina 2.
+Initial Airway Examination Findings:
+Trachea: Tracheostomy tube in good position.  Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: RMSB intact with visible sutures, greatly improved from prior.  No evidence of prior RMS dehiscence  There is moderate stenosis at RMSB anastomosis site due to circumferential fibrous tissue, but able to easily traverse with therapeutic bronchoscope without touching.  RUL bronchus in good repair - prior area of full thickness erosion completely resolved; small amount of fibrous scarring into RUL.  RB1-2 normal.  RB3 mildly stenotic but overall greatly improved.  Bronchus intermedius with tan exudative debris and granulation tissue along the medial aspect.  RML stent (AeroMini 8mm x 15mm) in good position and patent. Small amount of tan exudative debris overlying RC2 carina minimally overlying edge of stent; minimal granulation tissue.  Mild amount of non-obstructing mucous adhered to inside of stent.  Able to traverse stent with therapeutic bronchoscope.  RB4/5 patent and normal.  RLL, RB6-10 are widely patent and appear healthy.
+Left Lung Proximal Airways: LMS anastomosis intact with visible sutures.  There is mild stenosis at LMSB anastomosis site due to circumferential fibrous tissue, but able to easily traverse with therapeutic bronchoscope without touching.  LUL bronchus in good repair - prior area of full thickness erosion completely resolved.  Small amoutn of fibrous scarring in LUL.  LB1-3 patent and healthy.  Lingula stent (AeroMini 6mm x 10mm) in good position and patent.  Minimal non-obstructing mucus in stent.  Unable to traverse with therapeutic bronchoscope due to small size of stent but able to see fully patent LB4/LB5.  LLL, LB6-10 are patent and health.
+Mucosa: As described above.
+Secretions: Minimal, thin, and clear/white.  All secretions were suctioned to clear (therapeutic aspiration). 
+Successful therapeutic aspiration was performed to clean out the distal trachea, RMSB, RUL, BI, RML stent, RLL, LMSB, LUL, lingula stent, LLL from mucus.  
+Endobronchial lesion of exudative debris was noted at RC2 and excised with mechanical debridement using bland alligator forceps.  This improved patency of RML stent.
+Endobronchial lesion of exudative debris was noted in bronchus intermedius and excised with mechanical debridement using bland alligator forceps.
+Endobronchial lesion of exudative debris was noted at LC1 and excised with mechanical debridement using bland alligator forceps.  This improved patency of lingula stent.
+Endobronchial lesion of granulation tissue at bronchus intermedius, RMSB anastomosis stricture, and left carina 1 was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Cryoprobe	1.7mm cryoprobe	 	Numerous 30 seconds overlapping treatments	30 second overlapping treatments of granulation tissue at  bronchus intermedius, RMSB anastomosis stricture, LC1, and lingula takeoff.
+Prior to treatment, the RML bronchus/stent was note to be 90% patent.  After treatment, the airway/stent was 100% patent.
+Prior to treatment the bronchus intermedius was noted to be 90% patent.  After treatment, the airway was 90% patent.
+Prior to treatment, the lingula bronchus/stent was note to be 90% patent.  After treatment, the airway/stent was 100% patent.
+Therapeutic bronchoscope was removed.  Disposable bronchoscope with unused sterile channel was advanced.
+Bronchial alveolar lavage was performed at RML bronchus.  Instilled 60 cc of NS, suction returned with 25 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal). 
+Residual secretions and saline was suctioned to clear.  Disposable bronchoscope removed.  Procedure completed.
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient transported to the recovery room in stable condition.
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+SPECIMEN(S): 
+RML BAL:  cell count, cultures/micro
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for airway evaluation and stent check.
+-All airways continue to greatly improve.  Areas of mild-to-moderate stenosis as described above.
+-RML stent and lingula stent in good position and patent.  Some mild tan exudative debris at edges of proximal stent causing minimal obstruction.  This debris was excised and areas of granulation tissue causing any stenosis were treated with cryoprobe.
+-Repeat bronchoscopy in 3-4 weeks.  If stability in airways, then would pursue RML stent holiday (placed [REDACTED]) at that time.  Since lingula stent just placed [REDACTED], may need to remain in place longer to allow durable remodeling of airway.

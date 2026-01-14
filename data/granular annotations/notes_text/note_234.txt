@@ -1,0 +1,30 @@
+NOTE_ID:  note_234 SOURCE_FILE: note_234.txt PREOPERATIVE DIAGNOSIS:
+
+1.       Tracheal stenosis
+
+POSTOPERATIVE DIAGNOSIS:
+
+1.       Tracheal stenosis
+
+PROCEDURE PERFORMED:
+
+1.       Rigid and flexible bronchoscopy with Tracheal stent revision
+
+INDICATIONS:  Stent evaluation and pre-surgical stenosis measurements
+
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent.
+
+Sedation: General Anesthesia
+
+DESCRIPTION OF PROCEDURE: The procedure was performed in OR 23. Following intravenous medications as per the record the ventilator was attached to the patients t-tube and an laryngeal mask airway was inserted. Topical anesthesia was then applied to the upper airway and the T190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The supraglottic space was edematous. Granulation tissue was seen at the level of the vocal cords causing complete obstruction and inability to visualize the proximal aspect of the t-tube. The T190 bronchoscope was removed and the P190 ultrathin bronchoscope was inserted in a similar fashion. By applying gentle tressure we were able to advance the bronchoscope through the granulation tissue and into the t-tube. Thich dry secretions were visualized within the t-tube and were removed with a combination of suction, cryotherapy and flexible forceps. To improve patency. Once past the T-tube Moderate amount of secretions were seen in the trachea and proximal bronchi bilaterally and were suctioned clear. The distal tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The flexible bronchoscope was removed and inserted through the external limb of the t-tube and thick secretions were removed in a similar fashion using suction, cryotherapy and forceps. The bronchoscope was then reinserted through the LMA. The neck was cleaned with chlorhexidine and a guidewire was inserted into the t-tube. Using gentle tugging the t-tube was removed leaving the guidewire in-place. At this point a blue rhino dilator and guide sheath was inserted over the wire using a Seldinger technique to dilate the stoma. The dilator was removed and a 6.0 uncuffed Shiley tracheostomy was inserted with the blue rhino introducer into the airway. The guidewire, introducer sheath and introducer catheter were then removed leaving the tracheostomy tube in place. The bronchoscope was then inserted into the tracheostomy tube to confirm position. 
+At this point the therapeutic bronchoscope was introduced through the LMA and using APC we attempted to debulk the subglottic granulation tissue. We were not able to easy remove enough tissue to visualize the tracheostomy tube and the decision was made to not undergo further attempts at this time. The bronchoscope was removed, and the procedure competed. 
+
+. Approximately 4 cm below the vocal cords the previously placed silicone tube stent was visualized. There was mild granulation tissue at the proximal end which was non-obstructive. The stent was widely patent and clear of debris. . At this point the flexible bronchoscope and LMA were removed and a 14mm non-ventilating rigid tracheoscope was subsequently inserted into the upper trachea. Dual action rigid forceps were used to grasp the proximal end of the stent and were rotated repeatedly while withdrawing the stent into the rigid tracheoscope. The stent could not be easily withdrawn through the lumen of the scope and the rigid bronchoscope was removed en-bloc with the stent which was then removed from the lumen. An LMA was re-inserted and the flexible bronchoscope inserted into the subglottic space. The exposed mucosa in the area of the previous stent was evaluated. The mucosa was irritated and friable for the extent of the stent. The A-shaped stenosis was noted causing approximately 30% obstruction and was measured at 1.5cm in length, The distance from the vocal cords to the proximal edge of the stenosis was 4.5 cm and the distance from the cricoid cartilage to the proximal edge of the stenosis was 3 cm. At this point the flexible bronchoscope and LMA were removed and a 14mm non-ventilating rigid tracheoscope was subsequently re-inserted into the upper trachea.  The excised 15x50mm silicone stent was cleaned and loaded into the Efer-dumon stent loading system and deployed through the rigid bronchoscope into the previous location without difficulty. The stent was well seated with the proximal limb approximately XXX cm distal to the vocal cords and the airway was 100% patent. The bronchoscope was subsequently removed, and the procedure completed.
+
+Recommendations:
+
+- Transfer PACU
+
+- D/C home when criteria met
+
+- Will discuss surgical planning with otolaryngology.

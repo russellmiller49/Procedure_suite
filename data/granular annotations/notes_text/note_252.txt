@@ -1,0 +1,7 @@
+NOTE_ID:  note_252 SOURCE_FILE: note_252.txt Procedure Name: Bronchoscopy with endobronchial glue instillation 
+Indications: Post-pneumonectomy broncho-pleural fistula
+Medications: Per anesthesia
+Patient intubated by anesthesia with 8.5 ETT prior to case. The Q190 video bronchoscope was introduced through ETT and advanced to the tracheobronchial tree. ETT tip was approximately 4cm above carina. The distal trachea was of normal caliber. The carina was sharp. The right sided tracheobronchial tree was examined to at least the first subsegmental level and bronchial mucosa and anatomy were normal without endobronchial lesions or secretions. The left mainstem stump was then visualized with obvious pinpoint BP fistula, the remained of the stump appeared to be intact however we did not probe the stump due to concern for extending the fistula. At this point the Veno-seal sealant delivery system catheter was advanced through the working channel of the bronchoscope and glue was then carefully applied to seal the fistula which appeared to be successful. The bronchoscope was then removed and our portion of the procedure was completed. 
+Complications: none
+Estimated Blood Loss: None
+Post-procedure diagnosis: BF fistula with successful occlusion via sealant. 

@@ -1,0 +1,15 @@
+NOTE_ID:  note_217 SOURCE_FILE: note_217.txt REOPERATIVE DIAGNOSIS: 
+1.	Resolving Mediastinal Mass 
+POSTOPERATIVE DIAGNOSIS: 
+1.	Resolving Mediastinal Mass  status post tracheal Y-stent removal
+PROCEDURE PERFORMED: 
+1.	Rigid and flexible bronchoscopy with  Tracheal stent removal
+INDICATIONS: Resolved tracheal compression
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. Once the patient was sedated and paralyzed a 12 mm non-ventilating rigid tracheoscope was inserted through the mouth into the sub-glottic space. A flexible T190 Olympus bronchoscope was inserted through the tracheoscope into the trachea and thick mucus and bloody secretions were suctioned from the stent. The flexible bronchoscope was removed and the rigid non-optical forceps were inserted through the rigid scope along with the rigid optic. The forceps were used to grasp the proximal limb of the tracheal stent and were rotated repeatedly while withdrawing the stent into the rigid bronchoscope.  The stent was subsequently removed en-bloc with the rigid bronchoscope without difficulty.  Once his stent was removed a laryngeal mask airway was inserted and the flexible bronchoscope was then inserted through the LMA for re-inspection. The trachea mucosa was friable and inflamed but without residual obstruction. The right mainstem and distal airways were normal. The left mainstem was normal however a small fractures piece of the stent was found within the left mainstem which was removed with flexible forceps without difficulty. The left sided airways were re-inspected and normal without any other residual fractured stent pieces. Once we were satisfied that there was no active bleeding, the bronchoscope was subsequently removed and the procedure completed. Post-procedure, the patient developed laryngospasm requiring intubation by anesthesia. The flexible bronchoscope was then inserted into the posterior oropharynx and 6cc of topical 1% lidocaine was injected onto the vocal cords prior to extubation after which the patient was able to adequately ventilate prior to transfer to the PACU. 
+Complications: Post-procedure laryngospasm requiring re-intubation. 
+Recommendations:
+- Transfer PACU
+- Obtain post procedure CXR
+- Discharge to home once criteria met. 

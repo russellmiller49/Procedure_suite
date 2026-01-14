@@ -1,0 +1,13 @@
+NOTE_ID:  note_175 SOURCE_FILE: note_175.txt Procedure Name: 
+1.	radial EBUS guided bronchoscopy with TNBA and endobronchial biopsies
+2.	Bronchoscopic intubation 
+Indications: Lung cancer with suspicion for recurrence 
+Medications: Propofol infusion via anesthesia assistance  
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. 
+Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth. The vocal cords appeared normal. The subglottic space was normal. The trachea is of normal caliber. The carina was sharp. Somewhat thick secretions were seen throughout the airways. The left sided airway anatomy was normal without evidence of endobronchial disease. On the right the patient had an anatomic variant with an accessory airway just proximal to the superior segment of the right lower lobe. Within that segment fibrotic endoluminal obstruction was seen but all other airways did not have visual endobronchial disease to at least the first sub-segmental level. Due to difficulty with maintaining position of LMA (edentulous) the decision was made to convert to endotracheal intubation. This was performed over the bronchoscope without difficulty and the ETT was secured approximately 2 cm above the main carina. Once the ETT was connected to ventilator, The flexible bronchoscope was re-inserted through the tube and advanced to the orifice of the accessory left lower lobe bronchus and the radial ultrasound was advanced through the scope into the sub-segment and a concentric view of the lesion was visualized within the segment. Multiple forceps biopsies were then performed. The lesion was extremely firm and samples were relatively scant. We then utilized the super-dimension 21G peripheral needle and the 19G Olympus peripheral needle to obtain a total of 6 endobronchial needle biopsies of the lesion which were placed in formalin. After adequate samples were obtained repeat inspection was performed and no evidence of bleeding or other complications were seen. The bronchoscope was removed and the procedure completed.  
+Complications: No immediate complications
+Estimated Blood Loss: Less than 5 cc.
+Post Procedure Diagnosis:
+- Flexible bronchoscopy with successful biopsy of left lower lobe accessory segment fibrotic endobronchial lesion.
+- Await final pathology  
+

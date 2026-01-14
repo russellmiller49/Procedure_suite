@@ -1,0 +1,63 @@
+NOTE_ID:  note_143 SOURCE_FILE: note_143.txt Procedure Name: Pleuroscopy
+Indication: Pleural effusion
+Anesthesia: Monitored Anesthesia Care
+
+Pre-Anesthesia Assessment
+
+ASA Physical Status: III – Patient with severe systemic disease
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A focused history and physical examination were performed and updated in the pre-procedure assessment record. Relevant laboratory studies and imaging were reviewed. A procedural time-out was performed prior to initiation.
+
+Procedure Description
+
+The patient was placed on the operating table in the lateral decubitus position with appropriate padding of all pressure points. The procedural site was identified using ultrasound guidance and was sterilely prepped with chlorhexidine gluconate (Chloraprep) and draped in the usual fashion.
+
+A 10.0-mm integrated pleuroscope was introduced through the incision and advanced into the pleural space.
+
+Local Anesthesia
+
+The pleural entry site was infiltrated with 30 mL of 1% lidocaine.
+
+A 10-mm reusable primary port was placed on the right side at the 5th intercostal space along the mid-axillary line using a Veress needle technique.
+
+Pleuroscopy Findings
+
+Nodularity of the lung parenchyma, predominantly involving the lower lobe.
+
+The pleura appeared grossly normal but demonstrated excessive adipose tissue and diffuse white fibrinous strands enveloping the pleura and lung.
+
+Small areas of pleural studding were noted; differentiation between fat versus tumor studding was uncertain.
+
+A mass was visualized in the posterior pleural space near the spine; it appeared highly vascular and was not biopsied due to bleeding risk.
+
+Approximately 2,000 mL of milky-appearing pleural fluid was removed and sent for analysis.
+
+Biopsy
+
+Biopsies of a pleural mucosal abnormality over the diaphragm were obtained using forceps and sent for histopathologic evaluation.
+
+Eleven samples were obtained.
+
+A 15.5-Fr PleurX catheter was placed in the pleural space over the diaphragm.
+
+Dressing
+
+Port sites were dressed with a transparent dressing.
+
+Estimated Blood Loss
+
+Minimal
+
+Complications
+
+None immediate
+
+Post-Procedure Diagnosis
+
+Pleural adhesions
+
+Post-Procedure Plan
+
+The patient will be observed post-procedure until all discharge criteria are met.
+
+Chest X-ray to be obtained post-procedure.

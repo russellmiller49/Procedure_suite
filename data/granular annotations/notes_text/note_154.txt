@@ -1,0 +1,11 @@
+NOTE_ID:  note_154 SOURCE_FILE: note_154.txt Indications: right lower lobe nodule 
+Medications: Propofol infusion via anesthesia assistance  
+Medications: General Anesthesia,
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords were normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. We then removed the diagnostic Q190 bronchoscopy and the super-dimension navigational catheter was inserted through the T190 therapeutic bronchoscope and advanced into the airway. Using navigational map we attempted to advance the 90 degree edge catheter into the proximity of the lesion within the right lower lobe. Confirmation of placement once at the point of interest with radial ultrasound showed a concentric view within the lesion. Biopsies were then performed with a variety of instruments to include peripheral needle, triple needle brush and forceps, under fluoroscopic visualization.  After adequate samples were obtained the bronchoscope was removed and the procedure completed
+Complications: No immediate complications
+Estimated Blood Loss: Less than 5 cc.
+Post Procedure Diagnosis:
+- Flexible bronchoscopy with successful navigational biopsy of right lower lobe nodule.  
+Recommendations
+- Await final pathology

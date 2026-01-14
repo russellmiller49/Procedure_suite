@@ -1,0 +1,70 @@
+NOTE_ID:  note_109 SOURCE_FILE: note_109.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with Pleural Effusion.
+CONSENT : Obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to Chest Ultrasound and Chest tube placement were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate deci
+PREOPERATIVE DIAGNOSIS:  Pleural Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32557 Insert catheter pleura with imaging (chest tube)
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: Unusual Procedure:
+This patient required significant clinical expertise given the difficult location of the effusion, relatively small size, and severity of patient's condition. This resulted in >50% increased work due to Increased intensity, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 
+32557 Insert catheter pleura with imaging (chest tube)
+Local Anesthesia (Lidocaine)
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+99153 Moderate sedation: each additional 15 minutes 
+99153 Moderate sedation: each additional 15 minutes 
+Procedure performed under moderate sedation.  
+The following medications were provided:
+Versed             4m mg
+Fentanyl          200 mcg
+Physician/patient face-to-face anesthesia start time:   17:40
+Physician/patient face-to-face anesthesia stop time:   18:50
+Total moderate sedation time was 71 minutes.  
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by RN.  
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+PROCEDURE(S) IN DETAIL:
+A timeout was performed (confirming the patient's name, MRN, DOB, procedure type, and procedure location).
+Patient's ventilator mode was changed from PS to VC/AC in preparation for the procedure and moderate sedation.
+PATIENT POSITION:  Right lateral decubitus
+CHEST ULTRASOUND PROCEDURE:
+FINDINGS:
+Hemithorax:  Left
+Pleural Effusion: 
+Volume:  Moderate
+Echogenicity:  Hypoechoic
+Loculations:  Minimal and thin loculations.  However, lung tethered to pleura in multiple locations, likely related to recent lung transplant surgery.
+Diaphragmatic Motion:  Diminished
+Lung: 
+Lung sliding before procedure:  Absent
+Lung sliding post procedure:  
+Lung consolidation/atelectasis:  Present
+Pleura:  Normal
+Image(s) saved and uploaded:  yes
+PERCUTANEOUS CHEST TUBE INSERTION PROCEDURE:
+Anatomic landmarks and ultrasound-guidance were utilized to determine the appropriate insertion site.  Insertion site marked.  Insertion site prepped and draped in sterile fashion.
+ANESTHESIA:   Lidocaine 1%: 14 mL      Other:  See moderate sedation discussed above.
+Entry Site: Left 7th Intercostal Space in the Mid-scapular line
+Size:  14Fr
+Sutured:  Yes
+Procedure was performed using sterile technique throughout.  Insertion site prepped and draped in sterile fashion.  1% lidocaine was used to anesthesize the skin, subcutaneous tissue, superior aspect of the inferior rib periosteum, and parietal pleura.  A #10 scalpel blade was used to nick the skin at the insertion site.  A  pigtail catheter was inserted using the Seldinger technique. The introducer needle was introduced through the skin incision into the pleural space while applying negative aspiration pressure. Entry into the pleural space was confirmed with the easy aspiration of yellow fluid . A guidewire was inserted using the introducer needle pointed in the basilar direction. The introducer needle was then removed. A dilator was then inserted over the wire with a twisting motion through the thoracic wall tissue in order to form a tract for catheter insertion. The dilator was removed and the pigtail catheter (with trochar) was advanced over the guidewire in the basilar direction. The catheter was inserted into the chest until all catheter holes were well within the chest. The guidewire and trochar were then removed.  150 mL of pleural fluid was manually aspirated under sterile conditions and sent to the lab for analysis.  The tube was then attached to the collection drain apparatus and secured in place with suture and covered. 
+Fluid Volume Removed: 150 ml 
+Fluid Description:  Serous
+Pleural pressures:   Not measured.
+Drainage method:   Pleurovac
+Suction: No (to Water Seal)
+ULTRASOUND-GUIDANCE / RADIOLOGICAL GUIDANCE IMAGE:
+Confirming pleural fluid pocket at needle and catheter-over-needle insertion site.
+ 
+SPECIMEN(S): 
+0‌None
+1‌Analyses - pH, TProt, LDH, Glucose, and Cholesterol 
+1‌Cell Count
+1‌Cultures - Gram Stain/Culture, Blood culture bottle bedside innoculation, AFB, and Fungal
+1‌Cytology 
+0‌Other:
+CXR ordered: yes
+ESTIMATED BLOOD LOSS:  <5 mL
+COMPLICATIONS:  None.  There were no immediate complications.
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for Chest Ultrasound and Chest tube placement on the LEFT.  The patient tolerated the procedure well.  
+DISPOSITION: Remain ICU status

@@ -1,0 +1,15 @@
+NOTE_ID:  note_173 SOURCE_FILE: note_173.txt Procedure Name: Peripheral bronchoscopy with radial EBUS localization.
+Indications: Pulmonary nodule requiring diagnosis
+Medications: Propofol infusion via anesthesia assistance  
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. 
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level without endobronchial lesions visualized. Anatomy was normal with exception of what appears to be a fused anterior segment of left upper lobe with lingula. The video bronchoscope was then removed and the T190 Therapeutic video bronchoscope was inserted into the airway.  A sheath catheter was advanced through the working channel into the segment of suspicion. A radial US was advanced through the sheath and concentric view of lesion was seen. Using fluoroscopy, transbronchial needle biopsies were performed. ROSE was consistent with malignancy. We then performed 6 bronchoscopic lung biopsies in the same area under fluoroscopic visualization with forceps.   
+We then removed the therapeutic scope and re0inserted the Q190 videoscope. After cleaning of blood and debris no active bleeding and none was identified. Fluoroscopy was then used to scan for evidence of pneumothorax which was not seen. The bronchoscope was removed and the procedure completed. 
+
+Complications: 	
+-None 
+Estimated Blood Loss:  5 cc
+Recommendations:
+- post-procedure CXR
+- Await biopsy results 
+- Discharge home once criteria met.
+

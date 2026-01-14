@@ -1,0 +1,25 @@
+NOTE_ID:  note_218 SOURCE_FILE: note_218.txt PREOPERATIVE DIAGNOSIS:
+1. Small Cell Lung Cancer 
+
+POSTOPERATIVE DIAGNOSIS:
+1. Small Cell Lung Cancer 
+INDICATIONS:
+1. Stent eval and removal 
+
+PROCEDURE PERFORMED:
+Flexible and rigid bronchoscopy with therapeutic aspiration and Tracheal stent removal. 
+CPT CODES:
+CPT 31635: Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with removal of foreign body
+CPT 31641: Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with destruction of tumor or relief of stenosis by any method other than excision (e.g., laser therapy, cryotherapy)
+CPT 31645: Bronchoscopy with therapeutic aspiration
+Sedation: General Anesthesia
+
+Informed consent was obtained from the patient after explaining the procedure's indications, details, potential risks, and alternatives in lay terms. All questions were answered, and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedural assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed before the intervention.
+ 
+
+DESCRIPTION OF PROCEDURE: The procedure was carried out in the main operating room. Following intravenous medications as per the record, a laryngeal mask airway was inserted to ensure adequate ventilation. Topical anesthesia was applied to the upper airway, and the T190 therapeutic video bronchoscope was introduced through the mouth, via laryngeal mask airway, and advanced to the tracheobronchial tree. The laryngeal mask airway was in a good position. The vocal cords appeared normal. The subglottic space was normal. The proximal trachea was normal. The previously placed Y-stent was in appropriate position with thick mucus coating the inner aspect of the stent. The tracheal limb was about 40% obstructed with mucous, the right sided limb was about 60% obstructed and the left sided limb was completely obstructed. The flexible bronchoscope with suction was used to re-canulate the stent and saline instillation was used to thin the adherent mucous to allow for further removal via suction.  The flexible bronchoscope and LMA were then removed, and a 12 mm ventilating rigid bronchoscope was inserted through the mouth into the mid trachea. rigid non-optical forceps were inserted through the rigid scope along with the rigid optic. The forceps were used to grasp the proximal limb of the tracheal stent and were rotated repeatedly while withdrawing the stent into the rigid bronchoscope.  The stent was subsequently removed en-bloc with the rigid bronchoscope without difficulty.  Once his stent was removed a laryngeal mask airway was inserted and the flexible bronchoscope was then inserted through the LMA for re-inspection. Post stent removal the airways were widely patent. White plaques were seen in the posterior aspect of the right mainstem and left mainstem consistent with post-treatment effects from tumor. At the location of distal edge of the removed stent granulation tissue was seem both in the BI and the left mainstem. Cryotherapy was performed with three 30 second freeze thaw cycles in the areas of granulation. After this further suction was performed of residual mucous from the more distal airways. Once we were confident that the airways were patent and there was no active bleeding the flexible bronchoscope was removed, and the patient turned over to anesthesia who extubated the patient in the OR. 
+Complications: None 
+Recommendations:
+- Transfer to PACU
+- Obtain post procedure CXR
+- Discharge to home once criteria met. 

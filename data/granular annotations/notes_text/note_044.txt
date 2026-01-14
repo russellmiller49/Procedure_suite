@@ -1,0 +1,90 @@
+NOTE_ID:  note_044 SOURCE_FILE: note_044.txt INDICATION FOR OPERATION:  [REDACTED]is a 67 year old-year-old male who presents with Complicated Effusion.  
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Complicated Effusion
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32557 Insert catheter pleura with imaging (chest tube)
+32561 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); initial day
+ 
+Local ONLY
+ 
+PROCEDURE IN DETAIL:
+ 
+ 
+PATIENT POSITION: 
+0‌ Supine  1‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 0‌ Left 
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and uploaded to patient's medical record
+Hemithorax:   0‌ Right  1‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  0‌ Small  0‌ Moderate  1‌ Large 
+Echogenicity:   1‌ Anechoic  0‌ Hypoechoic  0‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  0‌ None  1‌Thin  1‌ Thick 
+Diaphragmatic Motion:  1‌ Normal  0‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   0‌ Present  1‌ Absent 
+Lung sliding post procedure:   0‌ Present  1‌ Absent 
+Lung consolidation/atelectasis: 1‌ Present  0‌  Absent 
+Pleura:  0‌ Normal  1‌ Thick  0‌ Nodular 
+ 
+ 
+ 
+  
+Insertion site prepped and draped in sterile fashion.
+ 
+ANESTHESIA:   Lidocaine 1%: 15 ml      Other: ______ 
+Entry Site: 
+0‌ Right ___ Intercostal Space   1‌ Left  7th Intercostal Space 
+0‌ Mid-clavicular   1‌ Post-axillary  0‌ Mid-scapular  0‌ Other: 
+ 
+Size:  0‌ 6Fr  0‌ 8Fr   0‌ 12FR   1‌ 14Fr  0‌ 16Fr   0‌ 18Fr  0‌ 24Fr   0‌ 32 Fr   0‌ Other: 
+Sutured: 1‌ Yes 0‌ No 
+ 
+PROCEDURE FINDINGS: 
+A  pigtail catheter was inserted using the Seldinger technique. Entry into the pleural space was confirmed with the easy removal of minimal serous appearing pleural fluid and air bubbles. A guidewire was inserted using the introducer needle pointed in the apical posterior direction. The introducer needle was then removed. A dilator was then inserted over the wire with a twisting motion in order to form a tract for catheter insertion. The dilator was removed and the pigtail catheter (with trochar) was advanced over the guidewire. The catheter was inserted into the chest until all catheter holes were well within the chest. The guidewire and trochar were then removed.  The tube was then attached to the collection drain apparatus and secured in place with suture and covered. 
+ 
+Fluid Removed: 150 ml 
+0‌ Serous  1‌ Serosanguinous 0‌ Bloody  0‌ Chylous 0‌ Other: 
+ 
+Pleural pressures:   If not measured, please check here 1‌
+
+Drainage device:   1‌ Pleurovac    0‌ Drainage Bag  0‌ Heimlich Valve  0‌ Pneumostat  0‌ Other: 
+Suction: 0‌ No 1‌Yes, -20cmH20 
+ 
+ 
+SPECIMEN(S): 
+0‌None           0‌PH               1‌ LDH                        1‌Glucose       1‌T. Protein    1‌Cholesterol
+1‌Cell Count   0‌ ADA             0‌Triglycerides            0‌Amylase 
+1‌Gram Stain/ Culture            1‌AFB                         1‌Fungal Culture 
+1‌Cytology      0‌Flow Cytometry                               0‌Other: 
+ 
+CXR ordered: 1‌ Yes 0‌ No 
+ 
+===============================================
+ 
+FIBRINOLYTIC THERAPY
+ 
+Date of chest tube insertion: [REDACTED]
+Side: left
+1‌  5 mg/5 mg tPA/Dnasedose #:1 
+            0‌  ___mg tPA                              dose #:____ 
+0‌  Other medication: 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 67 year old-year-old male who presents for Chest Ultrasound, Chest tube placement, and Instillation of agents for fibrinolysis (initial).  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+--Post-procedure CXR
+--Unclamp chest tube in 1 hour
+--Strict I/O
+--Daily CXR while chest tube in place
+--Nursing chest tube flushing protocol
+ 
+DISPOSITION: Nursing Unit
+ 

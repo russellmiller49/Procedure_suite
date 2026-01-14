@@ -1,0 +1,55 @@
+NOTE_ID:  note_144 SOURCE_FILE: note_144.txt Procedure Name: Bronchoscopy
+Indications: Metastatic lung cancer; hemoptysis
+
+Pre-Anesthesia Assessment:
+
+A history and physical examination were performed. Patient medications and allergies were reviewed. The risks and benefits of the procedure, as well as sedation options and associated risks, were discussed with the patient’s parent. All questions were answered, and informed consent was obtained. Patient identification and the proposed procedure were verified prior to the procedure by the physician, nurse, and technician in the procedure room.
+
+Mental status examination revealed the patient to be alert and oriented. Airway examination demonstrated a normal oropharyngeal airway. Respiratory examination was clear to auscultation. Cardiovascular examination revealed regular rate and rhythm without murmurs, S3, or S4. The ASA physical status classification was III (a patient with severe systemic disease). After reviewing risks and benefits, the patient was deemed an appropriate candidate to undergo the procedure under general anesthesia.
+
+Immediately prior to administration of medications, the patient was reassessed and found to be appropriate for sedation. Heart rate, respiratory rate, oxygen saturation, blood pressure, adequacy of ventilation, and response to care were continuously monitored throughout the procedure. The patient’s physical status was reassessed following completion of the procedure.
+
+Procedure, risks, benefits, and alternatives were again explained to the patient, and informed consent was documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+
+Following administration of intravenous medications per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree, the Q180 slim video bronchoscope was introduced through the rigid bronchoscope after removal of the telescope and advanced into the tracheobronchial tree bilaterally. The T180 therapeutic video bronchoscope was subsequently introduced and advanced into the airways. The procedure was accomplished without difficulty.
+
+Procedure Description:
+
+Left Lung Abnormalities:
+A partially obstructing airway abnormality (approximately 40% luminal obstruction) was identified at the entrance to the left lower lobe. Tumor debulking was performed using an electrocautery snare with successful coagulation. Upon completion, the left lower lobe entrance was fully patent.
+
+Findings:
+
+Right Lung Abnormalities:
+A nearly obstructing airway abnormality (>90% luminal obstruction) was identified at the entrance to the right lower lobe. Tumor destruction was performed using argon plasma coagulation at 25 watts and 0.3 L/min, in combination with an electrocautery probe and electrocautery snare. This resulted in successful recanalization.
+
+Upon completion of intervention, both the left lower lobe and right lower lobe entrances were 100% patent. Residual tumor remained within the anterior and lateral basal segments of the right lower lobe; this tissue appeared chronic and extended into the peripheral airways and was not amenable to further intervention. The right lower lobe superior segment, medial basal segment, and posterior segment were fully patent.
+
+Therapeutic aspiration was performed at the conclusion of the procedure to remove retained blood and secretions, with good hemostasis achieved.
+
+Complications: No immediate complications
+Estimated Blood Loss: Minimal
+
+Additional Findings:
+
+Metastatic renal cell carcinoma with endobronchial tumors involving the left lower lobe and right lower lobe entrances
+
+Hemoptysis
+
+Partially obstructing (approximately 40%) airway abnormality in the left lower lobe
+
+Nearly obstructing (>90%) airway abnormality in the right lower lobe
+
+No specimens collected
+
+Post-Procedure Diagnosis:
+
+Nearly obstructing airway abnormality of the right lower lobe, status post successful debulking
+
+No specimens collected
+
+Plan:
+
+Follow up with the bronchoscopist in one week
+
+Follow up with the referring physician as previously scheduled

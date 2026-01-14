@@ -1,0 +1,14 @@
+NOTE_ID:  note_180 SOURCE_FILE: note_180.txt Indications: Hilar adenopathy
+Procedure: EBUS bronchoscopy – single station
+Medications: General Anesthesia
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway initially was not well positioned but after replacement with larger LMA seated in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. There were thick greenish mucus plugs throughout the lungs which were easily suctioned. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The scope was advanced into the proximal left upper lobe and a 10mm hypoechoic structure was seen in the area of the 10L lymph node. Within the hypoechoic structure were hyperechoic bands similar to those seen in loculated pleural effusions. Sampling by transbronchial needle aspiration was performed with the Olympus 22G EBUS-TBNA needle and serous appearing liquid was noted within the suction line and attached syringe (approximately 2cc) consistent with cyst.  Subsequent pass with an Olympus 19G EBUS-TBNA needle yielded similar results with another 3cc fluid return. Ultrasound showed shrinkage of the cyst. Three additional needle passes were then performed. Rapid onsite pathological evaluation showed lymphocytes within the samples. Samples and fluid were sent for both flow and routine cytology. Following completion of EBUS bronchoscopy, the Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed. 
+
+Complications: No immediate complications
+Post-operative diagnosis: Hilar cyst (bronchogenic vs cardiac)
+Estimated Blood Loss: 5cc
+Recommendations:
+- Transferred patient to post-procedural monitoring unit and discharge when standard criteria are met.
+- 5 day course of Augmentin to reduce likelihood of infection of residual cystic space. 
+- Will await final pathology results
+- F/U with primary Pulmonologist Dr. Butlin once results are available. 

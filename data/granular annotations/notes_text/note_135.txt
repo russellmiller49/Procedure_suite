@@ -1,0 +1,49 @@
+NOTE_ID:  note_135 SOURCE_FILE: note_135.txt Procedure: Bronchoscopy (rigid + flexible)
+Indication: Collapsed left lung due to left mainstem airway stent occlusion (stent placed on [REDACTED]).
+Anesthesia/Ventilation: General anesthesia with jet ventilation. Topical 2% lidocaine to tracheobronchial tree (2 mL).
+Pre-procedure status: ASA III, ECOG 3. Standard consent/time-out performed. Labs/imaging reviewed.
+Protocol: Enrolled in protocol 2010-0990 (normal saline vs 4.2% bicarbonate solution for mucus obstruction clearance in airway stent lumen).
+
+Technique
+
+Q180 slim video bronchoscope introduced orally to trachea.
+
+T180 therapeutic video bronchoscope introduced through rigid bronchoscope and advanced through the tracheobronchial tree.
+
+Findings
+
+Larynx: Normal.
+
+Trachea/Carina: No significant pathology.
+
+Right lung: No significant pathology.
+
+Left lung:
+
+Left mainstem bronchus: 14 mm x 4 cm Microvasive stent present. Stent lumen completely obstructed by blood clot and clear retained secretions.
+
+After instillation of 10 cc of “agent A” (per study protocol), clot successfully removed with no significant bleeding and no residual stent lumen obstruction (stent lumen patent).
+
+Left lower lobe: Malignant airway disease with:
+
+>90% near-complete obstruction of segmental bronchi from malignant extrinsic compression and submucosal infiltration.
+
+An additional completely obstructing lesion in the LLL due to malignant disease.
+
+Stent position: Stent covers the left upper lobe takeoff.
+
+Impression
+
+Complete occlusion of left mainstem stent (blood clot + secretions) causing collapsed left lung → successfully cleared, stent patent post-intervention.
+
+Severe malignant obstruction of the left lower lobe (near-complete and complete obstructions), consistent with advanced malignant airway involvement.
+
+No right-sided, tracheal, or carinal pathology identified.
+
+No specimens obtained.
+
+Complications / Blood Loss
+
+No immediate complications.
+
+Estimated blood loss: None.

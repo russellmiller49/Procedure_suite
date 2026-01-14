@@ -1,0 +1,91 @@
+NOTE_ID:  note_037 SOURCE_FILE: note_037.txt INDICATION FOR OPERATION:  [REDACTED]is a 76 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required multiple modalities for debulking and to treat bronchial stenosis. This resulted in >100% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Moderate
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Normal.
+Vocal Cords: Tissue/web at anterior commissure 
+Trachea: Extrinsic compression from tumor at distal trachea, right side as well as some extruding tumor
+Main Carina: Sharp
+Right Lung Proximal Airways: Obstructed airways at RUL and beyond the proximal bronchus intermedius secondary to extrinsic compression and tumor in-growth 
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Erythematous and Friable.
+Secretions: Minimal, thin, and clear mucus. Blood at the bronchus intermedius and distal right-sided airways   
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+
+TISSUE AT VOCAL CORDS/ANTERIOR COMMISSURE 
+ 
+ 
+EXTRINSIC COMPRESSION / INGROWING TUMOR AT DISTAL TRACHEA 
+ 
+ 
+BRONCHUS INTERMEDIUS
+ 
+ 
+Endobronchial tumor was noted and excised with mechanical debridement using forceps.  
+ 
+Bleeding/oozing was noted from the airways so decision was made to intubate patient with endotracheal tube. Anesthesia placed 8.0mm ETT without issue.
+ 
+Endobronchial obstruction at Bronchus Intermedius  was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Mechanical	Forceps	N/A	N/A	Tissue/tumor debulking
+APC	2.3mm Straightfire probe	Forced, effect 3	 	Tissue/tumor debulking and hemostasis
+Cryoprobe	2.4mm Cryoprobe	 	3-10 second applications	Tissue/tumor debulking and hemostasis
+ 
+Prior to treatment, affected airway was note to be 5% patent.  After treatment, the airway was 15% patent. 
+ 
+Bleeding/oozing was treated with cold saline, TXA (total 1000mg), and epinephrine (total 1000mg).
+ 
+BRONCHUS INTERMEDIUS AT CONCLUSION
+ 
+ 
+DISTAL RIGHT-SIDED AIRWAYS (RIGHT LOWER LOBE) AT CONCLUSION
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--None
+ 
+IMPRESSION/PLAN: [REDACTED]is a 76 year old-year-old female who presents for bronchoscopy for evaluation of airway stenosis. Patient was noted to have extensive endobronchial tumor involvement at the right-sided airways. This was treated with multiple modalities including forceps, APC, and cryotherapy. At the conclusion of the case patent distal right-sided airways were identified.
+ 
+--Post procedure CXR
+--Continued care per primary team
+--If patient has scant hemoptysis, would treat with TXA 500mg NEB Q8h

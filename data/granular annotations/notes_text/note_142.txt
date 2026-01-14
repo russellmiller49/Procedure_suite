@@ -1,0 +1,54 @@
+NOTE_ID:  note_142 SOURCE_FILE: note_142.txt Procedure Name: Bronchoscopy
+
+Indications:
+
+Hilar mass
+
+Anesthesia:
+General anesthesia with topical anesthesia using 2% lidocaine to the tracheobronchial tree (8 mL). See anesthesia record for administered medications.
+
+Pre-Procedure Assessment
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Relevant laboratory studies and radiographic imaging were reviewed. A procedural time-out was performed prior to the intervention.
+
+Following administration of intravenous anesthetic medications and topical anesthesia to the upper airway and tracheobronchial tree, the Q180 slim video bronchoscope was introduced through the mouth via a laryngeal mask airway and advanced into the tracheobronchial tree. The UC180F convex probe EBUS bronchoscope was subsequently introduced through the mouth via the laryngeal mask airway and advanced into the tracheobronchial tree. The patient tolerated the procedure well.
+
+Procedure Description and Findings
+
+The laryngeal mask airway was in normal position. The vocal cords moved normally with respiration. The subglottic space was normal. The trachea was of normal caliber, and the carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal, with no endobronchial lesions identified, except for extrinsic compression of the left upper lobe posterior segment. No significant secretions were present.
+
+Endobronchial Ultrasound Findings
+
+The bronchoscope was withdrawn and replaced with the EBUS bronchoscope to perform ultrasound evaluation. A systematic hilar and mediastinal lymph node survey was conducted, revealing visible lymph nodes.
+
+Lymph node sizing and sampling were performed using endobronchial ultrasound with an Olympus EBUS-TBNA 22-gauge needle. Specimens were sent for routine cytopathologic evaluation.
+
+The left upper lobe mass measured 24.2 mm by EBUS and 24 mm by CT. PET imaging was not available. On ultrasound, the mass appeared hypoechoic, heterogeneous, irregularly shaped, with sharp margins. Multiple surrounding vessels were noted, limiting safe needle trajectory. A small window for safe needle access was identified, and the mass was biopsied with a single pass using a 22-gauge needle.
+
+ROSE preliminary analysis demonstrated atypical cells. However, brisk bleeding occurred following the first needle pass, and no additional ultrasound-guided passes were performed.
+
+An esophageal approach was attempted but did not allow adequate visualization of the mass.
+
+The EBUS bronchoscope was withdrawn, and a therapeutic bronchoscope was introduced. A conventional TBNA was attempted in the region of extrinsic compression in the left upper lobe posterior segment; however, the return was bloody, and no further passes were performed.
+
+All samples were sent to cytopathology for review.
+
+Complications
+
+No immediate complications.
+
+Estimated Blood Loss
+
+Less than 5 mL.
+
+Impression
+
+Normal bronchoscopic examination except for extrinsic compression of the left upper lobe posterior segment
+
+Lymph node sizing and limited sampling performed via EBUS-TBNA
+
+Post-Procedure Diagnosis
+
+Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsy
+
+The patient remained stable throughout the procedure and was transferred in good condition to the post-bronchoscopy recovery area for observation until discharge criteria were met. Preliminary findings were discussed with the patient. Follow-up with the requesting service for final cytology results was recommended.

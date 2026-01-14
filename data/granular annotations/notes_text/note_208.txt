@@ -1,0 +1,63 @@
+NOTE_ID:  note_208 SOURCE_FILE: note_208.txt ndications: Diagnosis and staging of presumed lung cancer
+Medications: General Anesthesia,
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications,
+details of procedure, and potential risks and alternatives. All questions were answered and informed
+consent was documented as per institutional protocol. A history and physical were performed and
+updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A
+time-out was performed prior to the intervention.
+Following intravenous medications as per the record and topical anesthesia to the upper airway and
+tracheobronchial tree, the T190 video bronchoscope was introduced through the mouth, via laryngeal
+mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good
+position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal
+caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental
+level. Left sided bronchial mucosa and anatomy were normal; without endobronchial lesions, or
+secretions. Within the right mainstem mucosal irregularities and mild compression of the right upper
+lobe segmental bronchi was seen. Gross submucosal infiltration of tumor was seen in the mid to distal
+bronchus intermedius extending into the right middle lobe and right lower lobe causing &gt; 80%
+obstruction of the right middle lobe orifice, and right lower lobe basilar segments and  complete
+obstruction of the superior segment of the right lower lobe. The video bronchoscope was then removed
+and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal
+mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node
+survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L, 7 and 4R
+lymph nodes. The N1 lymph nodes were not measured due to tumor invasion. The EBUS scope was
+inserted into the right lower lobe orifice and positioned laterally allowing visualization of the completely
+obstructed right intralobar pulmonary artery. Tumor infiltration could be seen within the vessel with
+progressive tapering of the patent artery. Surrounding tumor could also be seen with the linear EBUS
+outside of the vessel wall.  Sampling by transbronchial needle aspiration was performed with the
+Olympus EBUS Visioshot 2 19G and 25G needles beginning with the 4L Lymph node, followed by the 7
+and then 4R. A total of 5 biopsies was performed at each station. ROSE reported as benign lymphocytes
+in the 4L and 4R and non-diagnostic in the station 7. All samples were sent for routine cytology. The
+EBUS bronchoscope was then repositioned at the level of the right hilar lobe/PA mass. EBUS guided
+TBNA was performed in the mass distal to the cessation of blood flow from the PA. ROSE was reported
+as benign lymphocytes. A total of 5 biopsies of the mass was performed. Following completion of EBUS
+bronchoscopy, the T190 video bronchoscope was then re-inserted into the airway. A large clot
+completely obstructed the right sided airways. After suctioning the clot active bleeding was encountered
+originating from the superior segment of the right lower lobe. Blood was suctioned and we were able to
+perform two endobronchial forceps biopsies of the right middle lobe carina as well as one
+endobronchial brushing of the submucosal tumor within the BI. Bleeding however continued from the
+superior segment despite attempts to control the bleeding with wedging of the bronchoscope into the
+bleeding segment, endobronchial epinephrine (5cc 2% lidocaine with epi) and endobronchial TXA
+(100mg). The LMA was then removed, and the patient was intubated bronchoscopically with an 8.5 ETT.
+An Arndt endobronchial blocker was then inserted into the distal right mainstem and inflated to prevent
+blood soiling of the left sided airways. After clearing residual blood from the left sided airways the
+patient was transferred to the ICU with the endobronchial blocker in  place.
+
+ 
+Complications: Hemoptysis requiring endobronchial blocker and ICU admission.
+Estimated Blood Loss: 50cc
+ 
+Post Procedure Recommendations. :
+- Admit to ICU
+- CXR upon arrival in ICU and in AM
+- Keep endobronchial blocker inflated overnight
+- In issues with ventilation occur, confirm blocker has not migrated into the trachea (vis bronchoscopy
+with pediatric scope)
+- Technical aspects of repositioning were discussed with the ICU team.
+- In AM if no overnight issues would deflate the balloon and if bleeding has stopped remove blocker and
+extubate.
+- Await final path
+Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsies.
+- The patient has remained stable and has been transferred in good condition to the post-surgical
+monitoring unit.
+- Please call if any questions or concerns
+- Will await final pathology results

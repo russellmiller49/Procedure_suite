@@ -1,0 +1,68 @@
+NOTE_ID:  note_137 SOURCE_FILE: note_137.txt Proceduralist(s):
+Procedure Name: Pleuroscopy
+Indication: Pleural effusion
+Anesthesia: Monitored Anesthesia Care
+
+Pre-Anesthesia Assessment
+
+ASA Physical Status: III – Patient with severe systemic disease
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A focused history and physical examination were performed and updated in the pre-procedure assessment record. Relevant laboratory studies and imaging were reviewed. A procedural time-out was performed prior to initiation.
+
+Procedure Description
+
+The patient was placed on the operating table in the lateral decubitus position with appropriate padding of all pressure points. The procedural site was identified using ultrasound guidance and was sterilely prepped with chlorhexidine gluconate (Chloraprep) and draped in the usual fashion.
+
+Local Anesthesia
+
+The pleural entry site was infiltrated with 15 mL of 1% lidocaine.
+
+A 10-mm reusable primary port was placed on the left side at the 6th intercostal space along the anterior axillary line using a Veress needle technique. An LTF VP Endoeye thoracoscope was introduced through the incision and advanced into the pleural space, followed by a 0-degree 2.0-mm pleuroscopy telescope and then a 0-degree 7.0-mm pleuroscopy telescope.
+
+Pleuroscopy Findings
+
+Extensive adhesions were present throughout the left hemithorax.
+
+Adhesions in the upper hemithorax were soft and thin and were successfully lysed using the pleuroscope.
+
+Dense, thick adhesions were noted in the lower hemithorax and were not taken down due to concern for bleeding.
+
+The parietal pleura was carefully inspected and demonstrated multiple tumor masses involving the posterior mid and upper parietal pleura.
+
+These masses were exophytic, friable, and fungating.
+
+The visceral pleura overlying the upper lobe was thickened but without discrete tumor nodules.
+
+Biopsy
+
+Biopsies of the parietal pleural masses in the mid pleura were obtained using forceps and sent for histopathologic evaluation.
+
+Fourteen samples were obtained.
+
+Careful inspection of the pleural space following biopsy confirmed complete hemostasis at all biopsy sites.
+
+The previously placed 15.5-Fr PleurX catheter was left in place in the pleural space over the diaphragm.
+
+The port site was closed with three interrupted 3-0 silk sutures.
+
+Dressing
+
+Port sites were dressed with a transparent dressing.
+
+Estimated Blood Loss
+
+Minimal
+
+Complications
+
+None immediate
+
+Post-Procedure Diagnosis
+
+Suspected pleural metastasis
+
+Post-Procedure Plan
+
+The patient will be observed post-procedure until all discharge criteria are met.
+
+Chest X-ray to be obtained post-procedure.

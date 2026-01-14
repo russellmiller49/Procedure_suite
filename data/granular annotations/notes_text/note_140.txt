@@ -1,0 +1,60 @@
+NOTE_ID:  note_140 SOURCE_FILE: note_140.txt Procedure: Bronchoscopy with radial probe endobronchial ultrasound (RP-EBUS)
+Indication: Esophageal cancer with suspected malignant airway involvement
+Anesthesia/Ventilation: General anesthesia with controlled mechanical ventilation. Topical 2% lidocaine to tracheobronchial tree (6 mL).
+Pre-procedure status: ASA III. Standard consent and time-out performed. Labs and imaging reviewed.
+
+Technique
+
+Q180 slim video bronchoscope introduced via tracheostomy to the tracheobronchial tree.
+
+T180 therapeutic bronchoscope also introduced via tracheostomy.
+
+UM-BS20-26R 20 MHz radial probe ultrasound advanced through the working channel to assess airway wall and adjacent structures.
+
+Airway Examination
+
+Tracheostomy stoma: Normal.
+
+Trachea: Normal caliber.
+
+Carina: Sharp.
+
+Bronchial tree: Examined to at least the first subsegmental level.
+
+Mucosa/anatomy: Normal throughout; no endobronchial lesions and no secretions.
+
+Radial Probe Ultrasound Findings
+
+Radial EBUS performed at:
+
+Proximal left mainstem bronchus takeoff
+
+Mid and distal trachea
+
+Esophageal tumor visualized infiltrating the adventitia of the posterior wall of the left mainstem bronchus.
+
+Minimum distance from esophageal mass to left mainstem bronchial lumen: 3.2 mm.
+
+No intraluminal airway invasion identified on bronchoscopic inspection.
+
+Impression
+
+Malignant extrinsic airway involvement from esophageal cancer, affecting the adventitia of the posterior wall of the left mainstem bronchus.
+
+No endobronchial disease and no intrinsic airway obstruction at time of examination.
+
+Findings suggest high-risk proximity of tumor to airway, relevant for oncologic planning and future airway risk assessment.
+
+Complications / Blood Loss
+
+No immediate complications.
+
+Estimated blood loss: None.
+
+Specimens: None collected.
+
+Post-Procedure Plan
+
+Routine post-procedure observation until discharge criteria met.
+
+Follow-up with primary/oncology team as previously scheduled.

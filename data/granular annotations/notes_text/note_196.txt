@@ -1,0 +1,23 @@
+NOTE_ID:  note_196 SOURCE_FILE: note_196.txt Indications: Hodgkin’s Lymphoma with possible recurrence
+Medications: General Anesthesia,
+Procedure: EBUS guided bronchoscopy 
+CPT Codes: 31653 bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 3 or more structures.
+Procedural Details: 
+The patient provided informed consent for the procedure after receiving an explanation in lay terms about the indications, details of the procedure, potential risks, and alternatives. All questions were addressed, and informed consent was documented in accordance with institutional protocol. A history and physical examination were conducted, and the findings were updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed before the intervention.
+The patient received intravenous medications, as documented in the record, and topical anesthesia was applied to the upper airway and tracheobronchial tree. The Q190 video bronchoscope was introduced through the mouth via a laryngeal mask airway and advanced into the tracheobronchial tree. The laryngeal mask airway was properly positioned. The vocal cords appeared normal, and the subglottic space was unremarkable. The trachea had a normal caliber, and the carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. The bronchial mucosa and anatomy were normal, with no endobronchial lesions or secretions observed.
+The Q190 video bronchoscope was removed, and the UC180F convex probe endobronchial ultrasound (EBUS) bronchoscope was introduced through the mouth via the laryngeal mask airway and advanced into the tracheobronchial tree.
+A directed EBUS examination was performed to evaluate the abnormal lymph node that had been previously identified and biopsied as follows
+1.	After identification of the 11Rs lymph node transbronchial needle aspiration (TBNA) was performed using the 19-gauge and 21 gauge Olympus ViziShot 2 EBUS-TBNA needles . A total of eight biopsies were performed. Rapid on-site evaluation (ROSE) yielded lymphocytes.
+2.	After identification of the station 7 lymph node transbronchial needle aspiration (TBNA) was performed using the 19-gauge and 21 gauge Olympus ViziShot 2 EBUS-TBNA needles . A total of eight biopsies were performed. Rapid on-site evaluation (ROSE) yielded lymphocytes.
+3.	After identification of the station 4R lymph node transbronchial needle aspiration (TBNA) was performed using the 19-gauge Olympus ViziShot 2 EBUS-TBNA needle and ROSE yielded scant tissue from a single pass, and it was decided to return our focus to a more abnormal appearing node given known Hodgkin’s and higher yield with larger tissue samples. 
+4.	We then returned to the station 7 lymph node and created a tract with the 19-gauge Olympus ViziShot 2 EBUS-TBNA needle using the sheath to dilate the tract, the spybite mini-forceps were inserted through the tract and into the lymph node under EBUS guidance and tissue biopsies were obtained. A total of four tissue samples were obtained.  
+Following the completion of EBUS bronchoscopy, the Q190 video bronchoscope was re-inserted. After suctioning blood and secretions, no evidence of active bleeding was observed. The bronchoscope was subsequently removed.
+
+ All TBNA samples were sent for routine cytology and mini-forceps sample were sent for histology. 
+Complications: No immediate complications
+Estimated Blood Loss: 10 cc
+
+Post Procedure Diagnosis:
+- Technically successful flexible bronchoscopy with endobronchial ultrasound-guided needle and forceps biopsies.
+- The patient has remained stable and has been transferred in good condition to the post-surgical monitoring unit.
+- Will await final pathology results

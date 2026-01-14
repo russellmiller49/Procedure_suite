@@ -1,0 +1,34 @@
+NOTE_ID:  note_089 SOURCE_FILE: note_089.txt INDICATION FOR OPERATION:  [REDACTED]is a 57 year old-year-old male who presents with airway narrowing.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: 
+Initial Airway Inspection Findings:
+Right middle lobe orifice was significantly narrowed. 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem and Bronchus Intermedius  from mucus. 
+Endobronchial obstruction at RML orifice was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	knife	endoI 4, 4, 1	4 sec	Radial cuts
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	 	 	 	 
+Balloon dilation was performed at right middle lobe orifice.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the right middle lobe orifice.  Total 3 inflations with dilation time of 60 seconds each.
+Prior to treatment, affected airway was note to be 10% patent.  After treatment, the airway was 100% patent. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+none
+IMPRESSION/PLAN: [REDACTED]is a 57 year old-year-old male who presents for bronchoscopy for airway narrowing.
+- 2 weeks f/u bronch (order placed with level 2)
