@@ -65,5 +65,5 @@ class IPRegistryV3(BaseModel):
     note_id: str
     source_filename: str
     schema_version: Literal["v3"] = "v3"
+    established_tracheostomy_route: bool = False
     procedures: list[ProcedureEvent] = []
-

@@ -593,7 +593,7 @@ class RegistryService:
         # Legacy fallback: if no hybrid orchestrator is injected, run extractor only
         if self.hybrid_orchestrator is None:
             logger.info("No hybrid_orchestrator configured, running extractor-only mode")
-            record = self.registry_engine.run(note_text, context=None)
+            record = self.registry_engine.run(note_text, context={"schema_version": "v3"})
             if isinstance(record, tuple):
                 record = record[0]  # Unpack if evidence included
             return RegistryExtractionResult(
@@ -625,6 +625,7 @@ class RegistryService:
             "coder_difficulty": coder_result.difficulty.value,
             "hybrid_source": coder_result.source,
             "ml_metadata": coder_result.metadata.get("ml_result"),
+            "schema_version": "v3",
         }
 
         engine_warnings: list[str] = []
@@ -712,6 +713,13 @@ class RegistryService:
                 record, granular_warnings = _apply_granular_up_propagation(record)
                 warnings.extend(granular_warnings)
 
+                from modules.registry.evidence.verifier import verify_evidence_integrity
+                from modules.registry.postprocess import sanitize_ebus_events
+
+                record, verifier_warnings = verify_evidence_integrity(record, note_text)
+                warnings.extend(verifier_warnings)
+                warnings.extend(sanitize_ebus_events(record, note_text))
+
                 return record, warnings, meta
             except NotImplementedError as exc:
                 warnings.append(str(exc))
@@ -723,7 +731,9 @@ class RegistryService:
             warnings.append(f"Unknown REGISTRY_EXTRACTION_ENGINE='{extraction_engine}', using engine")
 
         meta["extraction_text"] = text_for_extraction
-        context = {"note_id": note_id} if note_id else None
+        context: dict[str, Any] = {"schema_version": "v3"}
+        if note_id:
+            context["note_id"] = note_id
         engine_warnings: list[str] = []
         run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
         if callable(run_with_warnings):
@@ -736,6 +746,13 @@ class RegistryService:
 
         record, granular_warnings = _apply_granular_up_propagation(record)
         warnings.extend(granular_warnings)
+
+        from modules.registry.evidence.verifier import verify_evidence_integrity
+        from modules.registry.postprocess import sanitize_ebus_events
+
+        record, verifier_warnings = verify_evidence_integrity(record, note_text)
+        warnings.extend(verifier_warnings)
+        warnings.extend(sanitize_ebus_events(record, note_text))
 
         return record, warnings, meta
 

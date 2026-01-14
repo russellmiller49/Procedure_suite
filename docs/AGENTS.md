@@ -37,10 +37,25 @@ These environment variables control whether/where agents are used:
 
 - **`PROCSUITE_PIPELINE_MODE`**: `current` (hybrid-first) or `extraction_first`
 - **`REGISTRY_EXTRACTION_ENGINE`** (only meaningful in extraction-first): `engine`, `agents_focus_then_engine`, or `agents_structurer`
+- **`REGISTRY_SCHEMA_VERSION`**: `v3` (default) or `v2` (legacy prompt). Extraction-first forces `schema_version="v3"` in the registry-engine context so the model uses the schema-driven prompt and the EBUS `node_events` structure.
 
 Notes:
 - `agents_structurer` is currently **not implemented** (it is expected to raise `NotImplementedError` and fall back to the deterministic engine).
 - CPT coding is handled by the coder module (`modules/coder/`) and is **not** produced by agents in the current architecture.
+
+## Registry V3 Guardrails (Post-Extraction)
+
+Even when agents are used for **focusing**, the extraction-first pipeline applies Python-side guardrails to the **full raw note text** before deterministic registry→CPT derivation:
+
+- **Evidence integrity**: `modules/registry/evidence/verifier.py:verify_evidence_integrity()` verifies that hallucination-prone `performed=True` fields are supported by verifiable quotes (with fuzzy fallback) and wipes unsupported details (e.g., therapeutic aspiration; hallucinated trach `device_name`).
+- **EBUS negation sanitizer**: `modules/registry/postprocess.py:sanitize_ebus_events()` forces `needle_aspiration` → `inspected_only` when the station context is explicitly negated (e.g., “not biopsied/not sampled”, “benign ultrasound characteristics”).
+- **Recall/omission detector**: `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` flags “silent misses” when keywords are present (brushings/rigid/thermal) but the corresponding registry fields are missing/false.
+
+Chokepoints:
+- `modules/registry/application/registry_service.py:RegistryService.extract_record()` (runs guardrails immediately after extraction)
+- `modules/registry/application/registry_service.py:RegistryService._extract_fields_extraction_first()` (runs omission scan before deterministic coding)
+
+Tests to run: `pytest -q` (see `tests/registry/test_registry_guardrails.py`, `tests/registry/test_keyword_guard_omissions.py`, `tests/registry/test_provider_name_sanitization.py`).
 
 ## Full pipeline (conceptual)
 

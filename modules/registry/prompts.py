@@ -1,4 +1,10 @@
-"""Prompts for LLM-based registry extraction, dynamically built from IP_Registry.json."""
+"""Prompts for LLM-based registry extraction.
+
+Two prompt modes are supported:
+- Legacy prompt (v2): field list derived from `data/knowledge/IP_Registry.json`.
+- Schema-driven prompt (v3): embeds the Pydantic JSON schema so the model sees
+  nested structures like EBUS `node_events` (avoids old flat-list outputs).
+"""
 
 from __future__ import annotations
 
@@ -8,6 +14,7 @@ from functools import lru_cache
 from pathlib import Path
 
 _SYSTEM_PROMPT_PATH = Path(__file__).parent / "registry_system_prompt.txt"
+_DEFAULT_SCHEMA_VERSION = "v3"
 
 
 @lru_cache(maxsize=1)
@@ -853,6 +860,69 @@ def _load_field_instructions() -> dict[str, str]:
 FIELD_INSTRUCTIONS: dict[str, str] = _load_field_instructions()
 
 
+def _resolve_schema_version(context: dict[str, object]) -> str:
+    raw = context.get("schema_version") or os.getenv("REGISTRY_SCHEMA_VERSION") or _DEFAULT_SCHEMA_VERSION
+    return str(raw).strip().lower() if raw is not None else _DEFAULT_SCHEMA_VERSION
+
+
+@lru_cache(maxsize=1)
+def _registry_record_model_json_schema() -> str:
+    # Import lazily to avoid heavy module import cost at startup.
+    from modules.registry.schema import RegistryRecord
+
+    return json.dumps(RegistryRecord.model_json_schema(), indent=2)
+
+
+def build_registry_extraction_prompt(note_text: str, context: dict | None = None) -> str:
+    """Schema-driven extraction prompt (v3).
+
+    Embeds the full Pydantic JSON schema so the model sees nested structures
+    like `procedures_performed.linear_ebus.node_events`.
+    """
+    context = context or {}
+    schema_json = _registry_record_model_json_schema()
+
+    # Optional CPT guidance (hybrid flow only). Extraction-first typically omits this.
+    verified_section = ""
+    verified_codes = context.get("verified_cpt_codes") or []
+    if verified_codes:
+        coder_difficulty = context.get("coder_difficulty") or "unknown"
+        hybrid_source = context.get("hybrid_source") or "unknown"
+        codes_str = ", ".join(sorted(set(str(c) for c in verified_codes)))
+        verified_section = (
+            "\n--- CPT CODE GUIDANCE ---\n"
+            f"Most likely CPT codes (difficulty={coder_difficulty}, source={hybrid_source}): {codes_str}.\n"
+            "Use as weak guidance only; do not contradict the note.\n"
+            "--- END CPT CODE GUIDANCE ---\n"
+        )
+
+    return f"""
+You are an expert Clinical Registry Abstractor.
+Your goal is to extract structured data from the procedure note below with 100% factual accuracy.
+
+### 🛑 CRITICAL SCHEMA RULES (DO NOT IGNORE)
+1. **NO OLD EBUS LIST-ONLY OUTPUTS:** Do not represent EBUS sampling only as a flat `stations_sampled` list. You MUST populate `procedures_performed.linear_ebus.node_events` with `action` and a verbatim `evidence_quote` per station.
+2. **EVIDENCE HARD-GATING:** Only set any `performed: true` when there is explicit verbatim text describing the action. If you cannot find it, set `performed: false` (or null).
+3. **DO NOT HALLUCINATE:** Do not infer diagnoses (e.g., \"Aspergilloma\") unless explicitly written in the note text. Do not copy details from schema descriptions or examples.
+4. **OUTPUT STRICTNESS:** Return ONLY a single valid JSON object that conforms to the schema. No markdown, no code fences, no commentary.
+
+### 🏥 SPECIFIC EXTRACTION RULES
+- **EBUS:** If a node is described as \"sized\", \"viewed\", or \"benign ultrasound/sonographic characteristics\" but NOT biopsied/sampled, set `action: \"inspected_only\"` for that station.
+- **Tracheostomy:** If the patient already has a trach and the scope goes through it, set `established_tracheostomy_route: true`. Only set `procedures_performed.percutaneous_tracheostomy.performed: true` if a NEW tracheostomy is created.
+- **Rigid/Thermal:** For rigid bronchoscopy, look for \"rigid scope/rigid bronchoscope/rigid barrel\". For thermal ablation, look for \"electrocautery\", \"laser\", \"APC/argon plasma\".
+{verified_section}
+
+### TARGET JSON SCHEMA:
+{schema_json}
+
+### PROCEDURE NOTE:
+{note_text}
+
+### OUTPUT:
+Return ONLY the valid JSON object.
+""".strip()
+
+
 def _load_registry_prompt() -> str:
     """Load schema from IP_Registry.json and build a concise field guide for the LLM."""
 
@@ -911,6 +981,10 @@ def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
         Complete prompt string for the LLM.
     """
     context = context or {}
+    schema_version = _resolve_schema_version(context)
+    if schema_version == "v3":
+        return build_registry_extraction_prompt(note_text, context=context)
+
     active_families = None
     if _env_flag("REGISTRY_PROMPT_FILTER_BY_FAMILY", False):
         active_families = _normalize_active_families(context.get("active_families"))
@@ -947,4 +1021,4 @@ def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
     return f"{prompt_text}{verified_section}\n\n### PROCEDURE NOTE:\n{note_text}\nJSON:"
 
 
-__all__ = ["build_registry_prompt", "FIELD_INSTRUCTIONS"]
+__all__ = ["build_registry_prompt", "build_registry_extraction_prompt", "FIELD_INSTRUCTIONS"]

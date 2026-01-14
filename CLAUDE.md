@@ -43,9 +43,19 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 **Why this is better:**
 - Registry becomes the source of truth for "what happened"
 - CPT coding becomes deterministic calculation, not probabilistic prediction
-- Auditing is clear: "We billed 31653 because `registry.ebus.stations_sampled.count >= 3`"
+- Auditing is clear: "We billed 31653 because `len(sampled_stations) >= 3` (derived from `procedures_performed.linear_ebus.node_events` sampling actions)"
 - Negation is explicit: `performed: false` in structured data
 - The existing ML becomes a "safety net" for double-checking
+
+### Registry V3 Guardrails (Prompting Is Not Enough)
+
+Extraction-first correctness relies on **Python-side enforcement** immediately after LLM extraction:
+
+- **Schema-driven prompting (v3)**: `modules/registry/prompts.py:build_registry_extraction_prompt()` embeds `RegistryRecord.model_json_schema()` and hard-bans old flat EBUS outputs; select via `context["schema_version"]="v3"` or `REGISTRY_SCHEMA_VERSION` (default `v3`).
+- **Evidence verifier**: `modules/registry/evidence/verifier.py:verify_evidence_integrity()` flips hallucination-prone `performed=True` fields to `False` when no supporting quote exists in the source text (exact / normalized / RapidFuzz `partial_ratio>=85`) and wipes dependent details (e.g., therapeutic aspiration details; trach `device_name`).
+- **EBUS negation sanitizer**: `modules/registry/postprocess.py:sanitize_ebus_events()` converts `needle_aspiration` → `inspected_only` when a station is described as “not biopsied/not sampled/benign ultrasound characteristics”, and keeps legacy aggregates (`stations_sampled`) consistent when present.
+- **Omission detection (recall guard)**: `modules/registry/self_correction/keyword_guard.py` flags when high-value keywords exist (brushings/rigid/thermal) but the corresponding registry fields are missing/false.
+- **Integration chokepoint**: guardrails run in `modules/registry/application/registry_service.py:RegistryService.extract_record()` so downstream derivation/reporting always benefits.
 
 ---
 
@@ -1155,8 +1165,10 @@ Pipeline behavior:
 ### EBUS Codes
 | Code | Description | Registry Condition |
 |------|-------------|-------------------|
-| 31652 | EBUS-TBNA, 1-2 stations | `ebus.performed AND len(ebus.stations) in [1,2]` |
-| 31653 | EBUS-TBNA, 3+ stations | `ebus.performed AND len(ebus.stations) >= 3` |
+| 31652 | EBUS-TBNA, 1-2 stations | `linear_ebus.performed AND sampled_station_count in [1,2]` |
+| 31653 | EBUS-TBNA, 3+ stations | `linear_ebus.performed AND sampled_station_count >= 3` |
+
+`sampled_station_count` is the number of unique stations in `procedures_performed.linear_ebus.node_events` where `action` is a sampling action (e.g., `needle_aspiration`).
 
 ### Bronchoscopy Codes
 | Code | Description | Registry Condition |
@@ -1166,6 +1178,17 @@ Pipeline behavior:
 | 31624 | Bronchoscopy with BAL | `bal.performed` |
 | 31625 | Bronchoscopy with biopsy | `transbronchial_biopsy.performed` |
 | 31627 | Navigation add-on | `navigation.performed` (add-on only) |
+
+### Tracheostomy / Tracheoscopy Codes
+| Code | Description | Registry Condition |
+|------|-------------|-------------------|
+| 31615 | Tracheoscopy through established tracheostomy route | `established_tracheostomy_route == true` |
+| 31600 | New percutaneous tracheostomy | `procedures_performed.percutaneous_tracheostomy.performed AND established_tracheostomy_route == false` |
+
+### Ultrasound Codes
+| Code | Description | Registry Condition |
+|------|-------------|-------------------|
+| 76536 | Neck ultrasound | `procedures_performed.neck_ultrasound.performed` |
 
 ### Bundling Rules
 - 31622 is bundled into any interventional procedure

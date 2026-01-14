@@ -437,7 +437,9 @@ def extract_providers(note_text: str) -> Dict[str, Any]:
 
     # Pattern for attending
     attending_patterns = [
-        r"(?:Attending|Attending Physician|Primary Operator)[\s:]+(?:\*{1,2}\s*)?(?:Dr\.?\s+)?([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)",
+        # Avoid false-positive capture of header words like "Participation"
+        r"(?:Attending\s+Participation|Attending\s+Physician\s+Participation)\s*:\s*(?:\*{1,2}\s*)?(?:Dr\.?\s+)?([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)",
+        r"(?:Attending\s+Physician|Attending|Primary\s+Operator)\s*:\s*(?:\*{1,2}\s*)?(?:Dr\.?\s+)?([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)",
         r"\*{2}\s*Dr\.?\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)",
     ]
 

@@ -62,6 +62,24 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
         (r"(?i)\bneck\s+ultrasound\b", "Text contains 'neck ultrasound'."),
         (r"(?i)\bultrasound\s+of\s+(?:the\s+)?neck\b", "Text contains 'ultrasound of the neck'."),
     ],
+    # Fix for missed brushings (Report #1 & #7)
+    "procedures_performed.brushings.performed": [
+        (r"(?i)\bbrush(?:ings?)?\b", "Text mentions 'brush' or 'brushings'."),
+        (r"(?i)triple\s+needle", "Text mentions 'triple needle' (implies brushing/sampling)."),
+    ],
+    # Fix for missed rigid bronchoscopy (Report #3)
+    "procedures_performed.rigid_bronchoscopy.performed": [
+        (r"(?i)rigid\s+bronchoscop", "Text mentions 'rigid bronchoscopy'."),
+        (r"(?i)rigid\s+optic", "Text mentions 'rigid optic'."),
+        (r"(?i)rigid\s+barrel", "Text mentions 'rigid barrel'."),
+    ],
+    # Fix for missed thermal/ablation keywords (Report #3)
+    "procedures_performed.thermal_ablation.performed": [
+        (r"(?i)electrocautery", "Text mentions 'electrocautery'."),
+        (r"(?i)\blaser\b", "Text mentions 'laser'."),
+        (r"(?i)\bapc\b", "Text mentions 'APC' (Argon Plasma Coagulation)."),
+        (r"(?i)argon\s+plasma", "Text mentions 'Argon Plasma'."),
+    ],
 }
 
 

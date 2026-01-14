@@ -1,0 +1,19 @@
+{
+  "total_files": 1,
+  "successful_files": 1,
+  "total_notes": 1,
+  "total_spans_raw": 57,
+  "total_spans_valid": 57,
+  "label_counts": {
+    "OBS_FINDING": 8,
+    "PROC_METHOD": 2,
+    "PROC_ACTION": 7,
+    "DEV_VALVE": 9,
+    "ANAT_LUNG_LOC": 14,
+    "MEAS_VOL": 5,
+    "DEV_INSTRUMENT": 2,
+    "MEAS_SIZE": 7,
+    "MEAS_PRESS": 1,
+    "SPECIMEN": 2
+  }
+}

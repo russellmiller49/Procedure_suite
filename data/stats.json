@@ -1,0 +1,33 @@
+{
+  "total_files": 21,
+  "successful_files": 13,
+  "total_notes": 21,
+  "total_spans_raw": 897,
+  "total_spans_valid": 897,
+  "label_counts": {
+    "LATERALITY": 10,
+    "PROC_METHOD": 72,
+    "PROC_ACTION": 49,
+    "MEDICATION": 17,
+    "DEV_CATHETER": 24,
+    "OBS_LESION": 145,
+    "MEAS_VOL": 34,
+    "MEAS_SIZE": 30,
+    "ANAT_PLEURA": 18,
+    "OBS_FINDING": 24,
+    "DEV_INSTRUMENT": 152,
+    "SPECIMEN": 12,
+    "MEAS_COUNT": 4,
+    "DEV_CATHETER_SIZE": 6,
+    "ANAT_LUNG_LOC": 35,
+    "ANAT_AIRWAY": 141,
+    "ANAT_LN_STATION": 7,
+    "DEV_NEEDLE": 14,
+    "OBS_ROSE": 7,
+    "OUTCOME_COMPLICATION": 24,
+    "DEV_STENT": 24,
+    "OUTCOME_AIRWAY_LUMEN_PRE": 8,
+    "DEV_STENT_SIZE": 16,
+    "OUTCOME_AIRWAY_LUMEN_POST": 24
+  }
+}

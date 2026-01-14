@@ -340,10 +340,26 @@ def derive_all_codes_with_meta(
             codes.append("31661")
             rationales["31661"] = f"bronchial_thermoplasty.areas_treated_count={len(areas)} (>=2)"
 
-    # Percutaneous tracheostomy (performed during/around bronchoscopy cases)
+    # Tracheostomy: distinguish established route vs new percutaneous trach.
+    established_trach_route = getattr(record, "established_tracheostomy_route", False) is True
+    if established_trach_route:
+        codes.append("31615")
+        rationales["31615"] = "established_tracheostomy_route=true"
+
+    # Percutaneous tracheostomy (new trach creation)
     if _performed(_proc(record, "percutaneous_tracheostomy")):
-        codes.append("31600")
-        rationales["31600"] = "percutaneous_tracheostomy.performed=true"
+        if established_trach_route:
+            warnings.append(
+                "percutaneous_tracheostomy.performed=true but established_tracheostomy_route=true; suppressing 31600"
+            )
+        else:
+            codes.append("31600")
+            rationales["31600"] = "percutaneous_tracheostomy.performed=true and established_tracheostomy_route=false"
+
+    # Neck ultrasound (often pre-tracheostomy vascular mapping)
+    if _performed(_proc(record, "neck_ultrasound")):
+        codes.append("76536")
+        rationales["76536"] = "neck_ultrasound.performed=true"
 
     # --- Pleural family ---
     if _performed(_pleural(record, "ipc")):

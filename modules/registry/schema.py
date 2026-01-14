@@ -180,6 +180,10 @@ def _build_registry_model() -> type[BaseModel]:
         evidence: dict[str, list[Span]] = Field(default_factory=dict)
         version: str | None = None
         procedure_families: list[str] = Field(default_factory=list)
+        established_tracheostomy_route: bool = Field(
+            default=False,
+            description="True when bronchoscopy/tracheoscopy is performed through an established tracheostomy route.",
+        )
         linear_ebus_stations: list[str] | None = Field(default=None)
         ebus_stations_sampled: list[str] | None = Field(default=None)
         ebus_stations_detail: list[dict[str, Any]] | None = Field(default=None)

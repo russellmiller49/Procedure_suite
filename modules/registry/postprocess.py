@@ -7,6 +7,8 @@ import re
 from datetime import datetime
 import logging
 
+from modules.registry.schema import RegistryRecord
+
 logger = logging.getLogger(__name__)
 
 
@@ -140,6 +142,8 @@ __all__ = [
     "POSTPROCESSORS",
     # Granular data processing
     "process_granular_data",
+    # Registry-record-level guardrails
+    "sanitize_ebus_events",
 ]
 
 
@@ -1838,6 +1842,12 @@ def normalize_attending_name(raw: Any) -> str | None:
     # Clean up any trailing commas or whitespace
     result = result.rstrip(",").strip()
 
+    # Guardrail: ignore common header words mistakenly captured as "names"
+    banned = {"PARTICIPATION", "ATTENDING", "PROCEDURE", "NOTE", "SIGNED"}
+    token = result.lstrip("*").strip().upper()
+    if token in banned:
+        return None
+
     return result if result else None
 
 
@@ -2554,3 +2564,140 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
     # Radial EBUS probe position
     "radial_ebus_probe_position": normalize_radial_ebus_probe_position,
 }
+
+
+_EBUS_SAMPLING_INDICATORS_RE = re.compile(
+    r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|ing)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+    re.IGNORECASE,
+)
+
+_EBUS_EXPLICIT_NEGATION_PHRASES_RE = re.compile(
+    r"\b(?:"
+    r"not\s+biops(?:y|ied)\b"
+    r"|not\s+sampled\b"
+    r"|no\s+biops(?:y|ies)\b"
+    r"|no\s+sampling\b"
+    r"|no\s+needle\b"
+    r"|deferred\b"
+    r"|inspected\s+only\b"
+    r"|sized\s+only\b"
+    r"|viewed\s+only\b"
+    r")",
+    re.IGNORECASE,
+)
+
+_EBUS_BENIGN_ONLY_PHRASES_RE = re.compile(
+    r"\b(?:"
+    r"benign\s+ultrasound\b"
+    r"|benign\s+characteristics\b"
+    r"|ultrasound\s+characteristics\b"
+    r"|sonographically\s+benign\b"
+    r")",
+    re.IGNORECASE,
+)
+
+
+def _ebus_station_pattern(station: str) -> re.Pattern[str] | None:
+    token = (station or "").strip().upper()
+    if not token:
+        return None
+    if token.isdigit():
+        # Station "7" is highly collision-prone; require "station 7" or a station-style line prefix.
+        return re.compile(rf"(?i)(?:\bstation\s*{re.escape(token)}\b|\b{re.escape(token)}\b\s*[:\-])")
+    return re.compile(rf"(?i)(?:\bstation\s*{re.escape(token)}\b|\b{re.escape(token)}\b)")
+
+
+def _station_has_sampling_negation(full_text: str, station: str) -> bool:
+    pattern = _ebus_station_pattern(station)
+    if pattern is None:
+        return False
+
+    text = full_text or ""
+
+    def _station_has_sampling_positive() -> bool:
+        for line in text.splitlines():
+            if pattern.search(line) and _EBUS_SAMPLING_INDICATORS_RE.search(line):
+                return True
+        for match in pattern.finditer(text):
+            end_of_line = text.find("\n", match.start())
+            if end_of_line == -1:
+                end_of_line = len(text)
+            snippet = text[match.start():end_of_line]
+            if _EBUS_SAMPLING_INDICATORS_RE.search(snippet):
+                return True
+        return False
+
+    station_has_sampling_positive = _station_has_sampling_positive()
+
+    # Prefer line-local evidence to avoid leaking negations from adjacent stations.
+    for line in text.splitlines():
+        if not pattern.search(line):
+            continue
+        if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(line):
+            return True
+        if _EBUS_BENIGN_ONLY_PHRASES_RE.search(line) and not station_has_sampling_positive:
+            return True
+
+    # Fallback: station mention context up to end-of-line.
+    for match in pattern.finditer(text):
+        end_of_line = text.find("\n", match.start())
+        if end_of_line == -1:
+            end_of_line = len(text)
+        snippet = text[match.start():end_of_line]
+        if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(snippet):
+            return True
+        if _EBUS_BENIGN_ONLY_PHRASES_RE.search(snippet) and not station_has_sampling_positive:
+            return True
+
+    return False
+
+
+def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
+    """Correct EBUS node events when the note explicitly negates sampling.
+
+    Guardrail: if node_events marks a station as needle_aspiration but the note
+    near that station says "not biopsied"/"not sampled"/"no needle", force
+    action="inspected_only".
+    """
+
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    node_events = getattr(linear, "node_events", None) if linear is not None else None
+    if not isinstance(node_events, list) or not node_events:
+        return warnings
+
+    sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+    for event in node_events:
+        if getattr(event, "action", None) != "needle_aspiration":
+            continue
+        station = getattr(event, "station", None)
+        if not isinstance(station, str) or not station.strip():
+            continue
+        station_token = station.strip().upper()
+        if not _station_has_sampling_negation(full_text, station_token):
+            continue
+
+        original_quote = getattr(event, "evidence_quote", None)
+        setattr(event, "action", "inspected_only")
+        marker = f"AUTO-CORRECTED: Found negation for {station_token}"
+        if isinstance(original_quote, str) and original_quote.strip():
+            setattr(event, "evidence_quote", f"{marker} | {original_quote}")
+        else:
+            setattr(event, "evidence_quote", marker)
+
+        warnings.append(f"AUTO_CORRECTED_EBUS_NEGATION: {station_token}")
+
+    # Keep legacy aggregate station lists consistent when present.
+    sampled: list[str] = []
+    for event in node_events:
+        action = getattr(event, "action", None)
+        if action not in sampling_actions:
+            continue
+        station = getattr(event, "station", None)
+        if isinstance(station, str) and station.strip():
+            sampled.append(station.strip().upper())
+    if hasattr(linear, "stations_sampled"):
+        setattr(linear, "stations_sampled", sorted(set(sampled)) if sampled else None)
+
+    return warnings

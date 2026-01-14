@@ -55,6 +55,8 @@ def make_record(**kwargs) -> MagicMock:
         "whole_lung_lavage",
         "rigid_bronchoscopy",
         "fiducial_placement",
+        "percutaneous_tracheostomy",
+        "neck_ultrasound",
     ]
 
     for name in procedure_names:
@@ -66,6 +68,7 @@ def make_record(**kwargs) -> MagicMock:
         setattr(procedures_performed, name, proc)
 
     record.procedures_performed = procedures_performed
+    record.established_tracheostomy_route = kwargs.get("established_tracheostomy_route", False)
 
     # Set up pleural_procedures
     pleural_procedures = MagicMock()
@@ -281,3 +284,29 @@ class TestEBUSStationCounts:
         assert "31652" not in codes
         assert "31653" not in codes
         assert any("stations_sampled missing" in w for w in warnings)
+
+
+class TestTracheostomyCPTLogic:
+    def test_established_tracheostomy_route_derives_31615(self):
+        record = make_record(established_tracheostomy_route=True)
+        codes, rationales, warnings = derive_all_codes_with_meta(record)
+        assert "31615" in codes
+
+    def test_percutaneous_tracheostomy_without_established_route_derives_31600(self):
+        record = make_record(percutaneous_tracheostomy=True, established_tracheostomy_route=False)
+        codes, rationales, warnings = derive_all_codes_with_meta(record)
+        assert "31600" in codes
+        assert "31615" not in codes
+
+    def test_established_route_suppresses_31600_even_if_percutaneous_tracheostomy_true(self):
+        record = make_record(percutaneous_tracheostomy=True, established_tracheostomy_route=True)
+        codes, rationales, warnings = derive_all_codes_with_meta(record)
+        assert "31615" in codes
+        assert "31600" not in codes
+
+
+class TestNeckUltrasoundCPTLogic:
+    def test_neck_ultrasound_derives_76536(self):
+        record = make_record(neck_ultrasound=True)
+        codes, rationales, warnings = derive_all_codes_with_meta(record)
+        assert "76536" in codes

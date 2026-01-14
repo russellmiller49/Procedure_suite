@@ -603,11 +603,13 @@ class RegistryEngine:
         *,
         explain: bool = False,
         include_evidence: bool = True,
+        schema_version: str | None = None,
         context: dict[str, Any] | None = None,
     ) -> RegistryRecord | tuple[RegistryRecord, dict[str, list[Span]]]:
         record, _warnings = self.run_with_warnings(
             note_text,
             include_evidence=include_evidence,
+            schema_version=schema_version,
             context=context,
         )
         if explain:
@@ -619,6 +621,7 @@ class RegistryEngine:
         note_text: str,
         *,
         include_evidence: bool = True,
+        schema_version: str | None = None,
         context: dict[str, Any] | None = None,
     ) -> tuple[RegistryRecord, list[str]]:
         sections = self.sectionizer.sectionize(note_text)
@@ -654,7 +657,10 @@ class RegistryEngine:
         llm_data: dict[str, Any] = {}
         raw_llm_evidence = None
         try:
-            llm_result = self.llm_extractor.extract(note_text, sections, context=context)
+            effective_context = dict(context) if context else {}
+            if schema_version:
+                effective_context.setdefault("schema_version", schema_version)
+            llm_result = self.llm_extractor.extract(note_text, sections, context=effective_context)
         except TimeoutError as exc:
             warnings.append("REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE")
             try:

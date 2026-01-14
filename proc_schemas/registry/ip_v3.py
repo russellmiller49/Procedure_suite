@@ -229,6 +229,11 @@ class IPRegistryV3(BaseModel):
     # Sedation
     sedation: Sedation = Field(default_factory=Sedation)
 
+    established_tracheostomy_route: bool = Field(
+        False,
+        description="True when bronchoscopy/tracheoscopy is performed through an established tracheostomy route.",
+    )
+
     # Event timeline
     events: List[ProcedureEvent] = Field(default_factory=list)
 
