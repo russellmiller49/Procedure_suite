@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Train a DistilBERT NER (token classification) model from pre-tokenized WordPiece tokens + BIO tags.
+Train a biomedical BERT NER (token classification) model from pre-tokenized WordPiece tokens + BIO tags.
 
 Expected JSONL schema per line:
 {
@@ -22,7 +22,7 @@ import json
 import os
 import random
 from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
 import torch
 import torch.nn as nn
@@ -36,6 +36,15 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
+
+ALLOWED_LABEL_TYPES: Set[str] = {
+    "ANAT_LN_STATION",
+    "PROC_ACTION",
+    "PROC_METHOD",
+    "DEV_STENT",
+    "DEV_VALVE",
+    "OBS_ROSE",
+}
 
 
 class WeightedLossTrainer(Trainer):
@@ -119,12 +128,18 @@ def read_jsonl(path: str, limit: int | None = None) -> List[Dict[str, Any]]:
     return rows
 
 
-def build_label_maps(rows: List[Dict[str, Any]]) -> Tuple[List[str], Dict[str, int], Dict[int, str]]:
-    label_set = set()
-    for r in rows:
-        for t in r.get("ner_tags", []):
-            if t and t != "O":
-                label_set.add(t.split("-", 1)[-1])
+def build_label_maps(
+    rows: List[Dict[str, Any]],
+    allowed_categories: Set[str] | None = None,
+) -> Tuple[List[str], Dict[str, int], Dict[int, str]]:
+    if allowed_categories:
+        label_set = set(allowed_categories)
+    else:
+        label_set = set()
+        for r in rows:
+            for t in r.get("ner_tags", []):
+                if t and t != "O":
+                    label_set.add(t.split("-", 1)[-1])
     # Always include "O" category for mapping convenience
     categories = ["O"] + sorted(label_set)
 
@@ -223,6 +238,36 @@ def normalize_tag(tag: str) -> str:
     if prefix not in ("B", "I"):
         return "O"
     return f"{prefix}-{cat}"
+
+
+def apply_label_allowlist(
+    rows: List[Dict[str, Any]],
+    allowed_categories: Set[str],
+) -> List[Dict[str, Any]]:
+    filtered_rows: List[Dict[str, Any]] = []
+    for row in rows:
+        tags = row.get("ner_tags") or []
+        if not tags:
+            filtered_rows.append(row)
+            continue
+        filtered_tags: List[str] = []
+        for tag in tags:
+            normalized = normalize_tag(tag)
+            if normalized == "O":
+                filtered_tags.append("O")
+                continue
+            _, category = normalized.split("-", 1)
+            if category in allowed_categories:
+                filtered_tags.append(normalized)
+            else:
+                filtered_tags.append("O")
+        if filtered_tags == tags:
+            filtered_rows.append(row)
+        else:
+            updated = dict(row)
+            updated["ner_tags"] = filtered_tags
+            filtered_rows.append(updated)
+    return filtered_rows
 
 
 def truncate_to_max(tokens: List[str], tags: List[str], max_wordpieces: int) -> Tuple[List[str], List[str]]:
@@ -331,13 +376,20 @@ def build_compute_metrics(id2label: Dict[int, str]):
             true_labels.append(lab_tags)
 
         results = seqeval.compute(predictions=true_predictions, references=true_labels)
-        
+
         # Print per-entity breakdown using seqeval's classification_report
         if classification_report is not None:
-            print("\n" + "=" * 80)
-            print("SEQEVAL PER-ENTITY REPORT (entity-level)")
-            print(classification_report(true_labels, true_predictions, digits=4))
-            print("=" * 80 + "\n")
+            has_entities = any(tag != "O" for seq in true_labels for tag in seq)
+            has_predictions = any(tag != "O" for seq in true_predictions for tag in seq)
+            if has_entities or has_predictions:
+                print("\n" + "=" * 80)
+                print("SEQEVAL PER-ENTITY REPORT (entity-level)")
+                print(classification_report(true_labels, true_predictions, digits=4))
+                print("=" * 80 + "\n")
+            else:
+                print("\n" + "=" * 80)
+                print("SEQEVAL PER-ENTITY REPORT skipped (no entity labels in eval set)")
+                print("=" * 80 + "\n")
         
         # Return the common aggregate numbers
         return {
@@ -356,7 +408,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     ap.add_argument("--train-data", default=None)
     ap.add_argument("--patched-data", default=None)
     ap.add_argument("--hard-negative-jsonl", default=None)
-    ap.add_argument("--model", default="distilbert-base-uncased")
+    ap.add_argument("--model", default="microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext")
     ap.add_argument("--resume-from", default=None)
     ap.add_argument("--output-dir", default="artifacts/phi_distilbert_ner")
     ap.add_argument("--model-dir", default=None)
@@ -478,6 +530,8 @@ def main():
     rows = read_jsonl(data_path, limit=args.limit)
     if not rows:
         raise RuntimeError(f"No rows loaded from {data_path}")
+    rows = apply_label_allowlist(rows, ALLOWED_LABEL_TYPES)
+    print(f"[data] Applied label allowlist: {', '.join(sorted(ALLOWED_LABEL_TYPES))}")
 
     # Determine device for model placement
     if args.cpu:
@@ -504,7 +558,7 @@ def main():
             model = model.to(device)  # Explicitly move to device
             label_list, label2id, id2label = resolve_label_maps(rows, model=model, model_dir=resume_dir)
         else:
-            label_list, label2id, id2label = build_label_maps(rows)
+            label_list, label2id, id2label = build_label_maps(rows, allowed_categories=ALLOWED_LABEL_TYPES)
             tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=True)
             model = AutoModelForTokenClassification.from_pretrained(
                 args.model,

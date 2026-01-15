@@ -59,6 +59,190 @@ Extraction-first correctness relies on **Python-side enforcement** immediately a
 
 ---
 
+## 🧠 Parallel NER Pathway (Experimental)
+
+The Parallel NER Pathway implements extraction-first architecture using a trained NER model for entity extraction, combined with an ML safety net for cross-validation.
+
+### Architecture
+
+```
+                    Procedure Note Text
+                           │
+          ┌────────────────┴────────────────┐
+          │                                 │
+          ▼                                 ▼
+    ┌─────────────┐                  ┌─────────────┐
+    │   PATH A    │                  │   PATH B    │
+    │ Deterministic│                  │Probabilistic│
+    │ (NER+Rules) │                  │    (ML)     │
+    └──────┬──────┘                  └──────┬──────┘
+           │                                │
+           ▼                                ▼
+    GranularNERPredictor             TorchRegistryPredictor
+    (DistilBERT NER)                 (BiomedBERT Classifier)
+           │                                │
+           │ Entities                       │ Probabilities
+           │ [4R, 7, 11L, ...]              │ {linear_ebus: 0.95}
+           ▼                                │
+    NERToRegistryMapper                     │
+           │                                │
+           │ RegistryRecord                 │
+           │ (node_events populated)        │
+           ▼                                │
+    derive_all_codes_with_meta()            │
+           │                                │
+           │ (codes, rationales)            │
+           └────────────┬───────────────────┘
+                        ▼
+               ConfidenceCombiner
+               (Reconciliation + Review Flagging)
+                        │
+                        ▼
+               ParallelPathwayResult
+               - final_codes + confidences
+               - per-code explanations
+               - needs_review flag
+```
+
+### Usage
+
+Enable via environment variable:
+
+```bash
+export REGISTRY_EXTRACTION_ENGINE=parallel_ner
+```
+
+Or programmatically:
+
+```python
+import os
+os.environ['REGISTRY_EXTRACTION_ENGINE'] = 'parallel_ner'
+
+from modules.registry.application.registry_service import RegistryService
+
+service = RegistryService()
+record, warnings, meta = service.extract_record(note_text)
+
+# meta['parallel_pathway'] contains:
+# - path_a: {codes, ner_entity_count, stations_sampled_count, ...}
+# - path_b: {codes, confidences, ...}
+# - final_codes, final_confidences
+# - needs_review, review_reasons
+```
+
+### Key Components
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| `GranularNERPredictor` | `modules/ner/inference.py` | DistilBERT NER model inference |
+| `NERToRegistryMapper` | `modules/registry/ner_mapping/entity_to_registry.py` | Map entities to RegistryRecord |
+| `EBUSStationExtractor` | `modules/registry/ner_mapping/station_extractor.py` | Extract EBUS station events |
+| `ProcedureExtractor` | `modules/registry/ner_mapping/procedure_extractor.py` | Extract procedure flags |
+| `ParallelPathwayOrchestrator` | `modules/coder/parallel_pathway/orchestrator.py` | Run both paths, combine results |
+| `ConfidenceCombiner` | `modules/coder/parallel_pathway/confidence_combiner.py` | Combine confidences, flag reviews |
+
+### Granular NER Model
+
+**Training data**: `data/ml_training/granular_ner/`
+- 263 annotated procedure notes
+- 10,046 entity spans across 40 entity types
+- BIO-formatted for token classification
+
+**Key entity types for CPT derivation**:
+| Entity | Count | CPT Relevance |
+|--------|-------|---------------|
+| `ANAT_LN_STATION` | 339 | EBUS station counting (31652 vs 31653) |
+| `PROC_METHOD` | 944 | Procedure type detection |
+| `PROC_ACTION` | 923 | Sampling vs inspection |
+| `OBS_ROSE` | 147 | ROSE outcomes |
+| `DEV_VALVE` | 14 | BLVR valve counts |
+
+**Model artifacts**: `artifacts/granular_ner_model/`
+- `model.safetensors` - DistilBERT weights (265MB)
+- `label_map.json` - 71 BIO labels
+- `config.json`, `tokenizer.json` - Model configuration
+
+**Training command**:
+```bash
+python scripts/train_distilbert_ner.py \
+  --data data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --output-dir artifacts/granular_ner_model \
+  --epochs 15 --train-batch 16 --eval-batch 16 --lr 2e-5
+```
+
+**Evaluation metrics** (document-level F1):
+| Entity Type | F1 | Support |
+|-------------|-----|---------|
+| ANAT_AIRWAY | 0.98 | 50 |
+| DEV_INSTRUMENT | 0.98 | 50 |
+| PROC_ACTION | 0.94 | 48 |
+| ANAT_LN_STATION | 0.93 | 8 |
+| DEV_STENT | 0.91 | 22 |
+| MEAS_SIZE | 0.90 | 41 |
+| **Micro F1** | **0.78** | 516 |
+
+### Confidence Combination
+
+When Path A (NER+Rules) and Path B (ML) produce results:
+
+```
+final_confidence = 0.6 * path_a_found + 0.3 * ml_probability + 0.1 * entity_conf
+                 + 0.10 (agreement bonus) OR - 0.15 (disagreement penalty)
+```
+
+**Review flagging triggers**:
+- Path A has code, Path B probability < 0.3 → Flag for review
+- Path B probability > 0.7, Path A missing code → Flag for review
+- Station count disagreement between paths → Flag for review
+
+### Limitations
+
+1. **NER model quality**: Trained on 263 records; rare entity types have low recall
+2. **ML safety net**: Requires TorchRegistryPredictor to be available
+3. **Experimental status**: Use `parallel_ner` mode for evaluation, not production
+
+---
+
+## 🔬 Granular NER Training Workflow
+
+### Data Preparation
+
+1. **Source annotations**: Character-span entity annotations in JSON format
+2. **Convert to BIO**: `scripts/convert_spans_to_bio.py` converts spans to token-level BIO tags
+
+```bash
+python scripts/convert_spans_to_bio.py \
+  --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
+  --output data/ml_training/granular_ner/ner_bio_format.jsonl
+```
+
+3. **Stats**: `data/ml_training/granular_ner/stats.json` tracks entity distribution
+
+### Training
+
+```bash
+python scripts/train_distilbert_ner.py \
+  --data data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --output-dir artifacts/granular_ner_model \
+  --epochs 15 \
+  --train-batch 16 \
+  --eval-batch 16 \
+  --lr 2e-5 \
+  --class-weights
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `scripts/train_distilbert_ner.py` | NER model training script |
+| `scripts/convert_spans_to_bio.py` | Span → BIO conversion |
+| `data/ml_training/granular_ner/stats.json` | Source annotation stats |
+| `data/ml_training/granular_ner/ner_bio_format.stats.json` | BIO training stats |
+| `artifacts/granular_ner_model/` | Trained model artifacts |
+
+---
+
 ## 🚀 ML Training Data Workflow
 
 ### The Complete Pipeline: JSON → Trained Model
@@ -1012,10 +1196,18 @@ procedure-suite/
 │   ├── common/
 │   │   ├── llm.py                     # Centralized LLM caching & retry
 │   │   └── openai_responses.py        # OpenAI Responses API wrapper
+│   ├── ner/                           # Granular NER module
+│   │   ├── __init__.py                # Package exports
+│   │   ├── inference.py               # GranularNERPredictor (DistilBERT)
+│   │   └── entity_types.py            # 40 entity type definitions
 │   ├── coder/
 │   │   ├── application/
 │   │   │   ├── coding_service.py      # CodingService - main entry point
 │   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator (with fallback)
+│   │   ├── parallel_pathway/          # Parallel NER+ML pathway
+│   │   │   ├── __init__.py            # Package exports
+│   │   │   ├── orchestrator.py        # ParallelPathwayOrchestrator
+│   │   │   └── confidence_combiner.py # Confidence combination + review flagging
 │   │   ├── adapters/
 │   │   │   ├── registry_coder.py      # Registry-based coder
 │   │   │   └── llm/
@@ -1025,6 +1217,11 @@ procedure-suite/
 │   ├── registry/
 │   │   ├── application/
 │   │   │   └── registry_service.py    # RegistryService - main entry point
+│   │   ├── ner_mapping/               # NER-to-Registry mapping
+│   │   │   ├── __init__.py            # Package exports
+│   │   │   ├── entity_to_registry.py  # NERToRegistryMapper orchestrator
+│   │   │   ├── station_extractor.py   # EBUSStationExtractor
+│   │   │   └── procedure_extractor.py # ProcedureExtractor
 │   │   ├── engine/
 │   │   │   └── registry_engine.py     # LLM extraction logic
 │   │   ├── inference_onnx.py          # ONNX inference service
@@ -1046,16 +1243,30 @@ procedure-suite/
 │   ├── warm_models.py                 # Pre-load NLP models (optional)
 │   ├── smoke_run.sh                   # Local smoke test (/health, /ready)
 │   ├── train_roberta.py               # RoBERTa training script
+│   ├── train_distilbert_ner.py        # Granular NER training script
+│   ├── convert_spans_to_bio.py        # Span → BIO conversion for NER
 │   └── quantize_to_onnx.py            # ONNX conversion & quantization
 ├── data/
 │   ├── knowledge/
 │   │   ├── ip_coding_billing_v2_9.json  # CPT codes, RVUs, bundling rules
 │   │   ├── IP_Registry.json             # Registry schema definition
 │   │   └── golden_extractions/          # Training data
+│   ├── ml_training/
+│   │   └── granular_ner/                # NER training data
+│   │       ├── ner_dataset_all.jsonl    # Source span annotations
+│   │       ├── ner_bio_format.jsonl     # BIO-converted for training
+│   │       ├── stats.json               # Source annotation stats
+│   │       └── ner_bio_format.stats.json # Training data stats
 │   └── rules/
 │       └── coding_rules.py            # Deterministic CPT derivation rules
 ├── docs/
 │   └── optimization_12_16_25.md       # 8-phase optimization roadmap
+├── artifacts/
+│   └── granular_ner_model/            # Trained DistilBERT NER model
+│       ├── model.safetensors          # Model weights (265MB)
+│       ├── label_map.json             # 71 BIO labels
+│       ├── config.json                # Model config
+│       └── tokenizer.json             # Tokenizer config
 ├── models/
 │   ├── registry_model.pt              # Trained PyTorch model
 │   └── registry_model_int8.onnx       # Quantized ONNX model
@@ -1135,6 +1346,17 @@ procedure-suite/
 | `MKL_NUM_THREADS` | Intel MKL threads | `1` |
 | `OPENBLAS_NUM_THREADS` | OpenBLAS threads | `1` |
 | `NUMEXPR_NUM_THREADS` | NumExpr threads | `1` |
+
+#### Registry Extraction Engine
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `REGISTRY_EXTRACTION_ENGINE` | Extraction mode (see below) | `engine` |
+
+**Available modes**:
+- `engine` - Default LLM-based extraction via RegistryEngine
+- `agents_focus_then_engine` - Focus/summarize note, then extract
+- `agents_structurer` - Use StructurerAgent for extraction
+- `parallel_ner` - **Experimental**: NER→Registry→Rules + ML safety net
 
 ### 4. Contract-First Development
 All agents use Pydantic contracts defined in `modules/agents/contracts.py`:

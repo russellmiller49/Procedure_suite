@@ -20,8 +20,11 @@ This document is the **Single Source of Truth** for developers and AI assistants
 |-----------|--------|---------|
 | `modules/api/` | **ACTIVE** | Main FastAPI app (`fastapi_app.py`) |
 | `modules/coder/` | **ACTIVE** | CPT Coding Engine with CodingService (8-step pipeline) |
+| `modules/coder/parallel_pathway/` | **EXPERIMENTAL** | Parallel NER+ML pathway for extraction-first coding |
+| `modules/ner/` | **EXPERIMENTAL** | Granular NER model (DistilBERT for entity extraction) |
 | `modules/ml_coder/` | **ACTIVE** | ML-based code prediction and training |
 | `modules/registry/` | **ACTIVE** | Registry extraction with RegistryService and RegistryEngine |
+| `modules/registry/ner_mapping/` | **EXPERIMENTAL** | NER-to-Registry entity mapping |
 | `modules/agents/` | **ACTIVE** | 3-agent pipeline (Parser, Summarizer, Structurer) |
 | `modules/reporter/` | **ACTIVE** | Report generation with Jinja templates |
 | `modules/common/` | **ACTIVE** | Shared utilities, logging, exceptions |
@@ -36,6 +39,9 @@ This document is the **Single Source of Truth** for developers and AI assistants
 | `RegistryService` | `modules/registry/application/registry_service.py` | Hybrid-first registry extraction |
 | `SmartHybridOrchestrator` | `modules/coder/application/smart_hybrid_policy.py` | ML-first hybrid coding |
 | `RegistryEngine` | `modules/registry/engine.py` | LLM-based field extraction |
+| `ParallelPathwayOrchestrator` | `modules/coder/parallel_pathway/orchestrator.py` | NER+ML parallel pathway (experimental) |
+| `GranularNERPredictor` | `modules/ner/inference.py` | DistilBERT NER inference |
+| `NERToRegistryMapper` | `modules/registry/ner_mapping/entity_to_registry.py` | Map NER entities to registry fields |
 
 ### Data Flow
 

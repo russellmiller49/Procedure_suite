@@ -149,6 +149,62 @@ UI Components to Display:
 - **CPT Codes**: Show identified codes with difficulty indicator
 - **Confidence Indicator**: Color-coded based on `coder_difficulty`
 
+## Extraction Engine Modes
+
+The registry extraction engine supports multiple modes via the `REGISTRY_EXTRACTION_ENGINE` environment variable:
+
+| Mode | Description |
+|------|-------------|
+| `engine` | Default LLM-based extraction via RegistryEngine |
+| `agents_focus_then_engine` | Focus/summarize note, then extract |
+| `agents_structurer` | Use StructurerAgent for extraction |
+| `parallel_ner` | **Experimental**: NER→Registry→Rules + ML safety net |
+
+### Parallel NER Mode
+
+The `parallel_ner` mode implements extraction-first architecture using a trained NER model:
+
+```
+Text → [Path A: NER → Registry → Rules → Codes]
+     → [Path B: ML Classification → Codes]
+            ↓
+     [Confidence Combiner + Review Flagger]
+```
+
+**Enable:**
+```bash
+export REGISTRY_EXTRACTION_ENGINE=parallel_ner
+```
+
+**Response includes additional metadata:**
+```json
+{
+  "record": {...},
+  "warnings": [...],
+  "meta": {
+    "extraction_engine": "parallel_ner",
+    "parallel_pathway": {
+      "path_a": {
+        "source": "ner_rules",
+        "codes": ["31653", "31624"],
+        "ner_entity_count": 25,
+        "stations_sampled_count": 3
+      },
+      "path_b": {
+        "source": "ml_classification",
+        "codes": ["31653"],
+        "confidences": {"31653": 0.95}
+      },
+      "final_codes": ["31653", "31624"],
+      "needs_review": false,
+      "review_reasons": []
+    }
+  }
+}
+```
+
+**Review flagging**: Cases are flagged for review when Path A (NER+Rules) and Path B (ML) disagree.
+
 ## Related Endpoints
 
 - `POST /v1/registry/run` - Legacy registry extraction (RegistryEngine only)

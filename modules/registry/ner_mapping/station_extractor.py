@@ -1,6 +1,7 @@
 """EBUS station extraction from NER entities.
 
-Maps ANAT_LN_STATION entities with nearby PROC_ACTION entities
+Maps ANAT_LN_STATION entities with PROC_ACTION entities in the same
+sentence or bullet scope
 to NodeInteraction records for CPT derivation (31652 vs 31653).
 """
 
@@ -8,15 +9,15 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import List, Optional, Tuple, Set
+from typing import List, Optional, Set
 
 from modules.ner.inference import NEREntity, NERExtractionResult
 from modules.ner.entity_types import (
     SAMPLING_ACTION_KEYWORDS,
     INSPECTION_ACTION_KEYWORDS,
-    VALID_LN_STATIONS,
     normalize_station,
 )
+from modules.infra.nlp_warmup import get_spacy_model
 from modules.registry.schema import NodeInteraction, NodeActionType, NodeOutcomeType
 
 
@@ -30,18 +31,29 @@ class StationExtractionResult:
     warnings: List[str]
 
 
+@dataclass(frozen=True)
+class TextScope:
+    start_char: int
+    end_char: int
+    text: str
+    is_bullet: bool = False
+
+    def contains(self, entity: NEREntity) -> bool:
+        return self.start_char <= entity.start_char and entity.end_char <= self.end_char
+
+
 class EBUSStationExtractor:
     """Extract EBUS station node_events from NER entities.
 
     Algorithm:
     1. Find all ANAT_LN_STATION entities
-    2. For each station, find nearest PROC_ACTION within window
+    2. For each station, find PROC_ACTION within the same sentence/bullet scope
     3. Classify action: aspiration → needle_aspiration, viewed → inspected_only
-    4. Find nearest OBS_ROSE for outcome
+    4. Find OBS_ROSE within the same sentence/bullet scope
     5. Build NodeInteraction with evidence quote
     """
 
-    # Maximum character distance to look for related entities
+    # Legacy window sizes (unused; retained for API compatibility)
     ACTION_WINDOW_CHARS = 200
     ROSE_WINDOW_CHARS = 300
 
@@ -51,6 +63,8 @@ class EBUSStationExtractor:
         re.IGNORECASE,
     )
 
+    BULLET_LINE_PATTERN = re.compile(r"^\s*(?:[-*]|\u2022|\d+[.)])\s+")
+
     def __init__(
         self,
         action_window: int = ACTION_WINDOW_CHARS,
@@ -58,6 +72,7 @@ class EBUSStationExtractor:
     ) -> None:
         self.action_window = action_window
         self.rose_window = rose_window
+        self._nlp = get_spacy_model()
 
     def extract(self, ner_result: NERExtractionResult) -> StationExtractionResult:
         """
@@ -79,6 +94,14 @@ class EBUSStationExtractor:
         warnings: List[str] = []
         seen_stations: Set[str] = set()
 
+        raw_text = ner_result.raw_text or ""
+        bullet_scopes, line_scopes = self._collect_line_scopes(raw_text)
+        sentence_scopes = self._collect_sentence_scopes(raw_text)
+        if not sentence_scopes:
+            sentence_scopes = line_scopes
+            if raw_text:
+                warnings.append("spaCy sentence boundaries unavailable; using line scopes.")
+
         for station_entity in stations:
             # Normalize station name
             station_name = self._normalize_station(station_entity.text)
@@ -93,20 +116,31 @@ class EBUSStationExtractor:
                 continue
             seen_stations.add(station_name)
 
-            # Find nearest action within window
-            nearby_action = self._find_nearest(
+            scope = self._find_scope_for_entity(
+                station_entity,
+                bullet_scopes,
+                sentence_scopes,
+                line_scopes,
+            )
+            if scope is None:
+                warnings.append(
+                    f"No scope found for station '{station_entity.text}'"
+                )
+
+            # Find action within the same scope
+            nearby_action = self._find_nearest_in_scope(
                 station_entity,
                 actions,
-                self.action_window,
+                scope,
             )
 
             action_type = self._classify_action(nearby_action)
 
-            # Find nearby ROSE outcome
-            nearby_rose = self._find_nearest(
+            # Find ROSE outcome within the same scope
+            nearby_rose = self._find_nearest_in_scope(
                 station_entity,
                 rose_entities,
-                self.rose_window,
+                scope,
             )
             outcome = self._classify_outcome(nearby_rose)
 
@@ -153,14 +187,83 @@ class EBUSStationExtractor:
 
         return None
 
-    def _find_nearest(
+    def _collect_line_scopes(self, text: str) -> tuple[List[TextScope], List[TextScope]]:
+        bullet_scopes: List[TextScope] = []
+        line_scopes: List[TextScope] = []
+        offset = 0
+        for line in text.splitlines(keepends=True):
+            line_start = offset
+            line_end = offset + len(line)
+            offset = line_end
+
+            line_text = line.rstrip("\r\n")
+            if not line_text.strip():
+                continue
+
+            is_bullet = bool(self.BULLET_LINE_PATTERN.match(line_text))
+            scope = TextScope(
+                start_char=line_start,
+                end_char=line_end,
+                text=line_text,
+                is_bullet=is_bullet,
+            )
+            if is_bullet:
+                bullet_scopes.append(scope)
+            else:
+                line_scopes.append(scope)
+
+        return bullet_scopes, line_scopes
+
+    def _collect_sentence_scopes(self, text: str) -> List[TextScope]:
+        if not text or self._nlp is None:
+            return []
+        try:
+            doc = self._nlp(text)
+        except Exception:
+            return []
+        if not doc.has_annotation("SENT_START"):
+            return []
+        scopes: List[TextScope] = []
+        for sent in doc.sents:
+            sent_text = sent.text.strip()
+            if not sent_text:
+                continue
+            scopes.append(
+                TextScope(
+                    start_char=sent.start_char,
+                    end_char=sent.end_char,
+                    text=sent.text,
+                    is_bullet=False,
+                )
+            )
+        return scopes
+
+    def _find_scope_for_entity(
+        self,
+        entity: NEREntity,
+        bullet_scopes: List[TextScope],
+        sentence_scopes: List[TextScope],
+        line_scopes: List[TextScope],
+    ) -> Optional[TextScope]:
+        for scope in bullet_scopes:
+            if scope.contains(entity):
+                return scope
+        for scope in sentence_scopes:
+            if scope.contains(entity):
+                return scope
+        for scope in line_scopes:
+            if scope.contains(entity):
+                return scope
+        return None
+
+    def _find_nearest_in_scope(
         self,
         anchor: NEREntity,
         candidates: List[NEREntity],
-        window_chars: int,
+        scope: Optional[TextScope],
     ) -> Optional[NEREntity]:
-        """Find the nearest candidate entity within window of anchor."""
-        if not candidates:
+        """Find the nearest candidate entity within the same scope."""
+        if not candidates or scope is None:
             return None
 
         best_candidate: Optional[NEREntity] = None
@@ -169,10 +272,12 @@ class EBUSStationExtractor:
         anchor_center = (anchor.start_char + anchor.end_char) / 2
 
         for candidate in candidates:
+            if not scope.contains(candidate):
+                continue
             candidate_center = (candidate.start_char + candidate.end_char) / 2
             distance = abs(anchor_center - candidate_center)
 
-            if distance <= window_chars and distance < best_distance:
+            if distance < best_distance:
                 best_distance = distance
                 best_candidate = candidate
 

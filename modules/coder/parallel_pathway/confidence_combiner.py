@@ -1,7 +1,7 @@
 """Confidence combination for parallel pathway results.
 
 Combines deterministic (NER+Rules) and probabilistic (ML Classification)
-signals into final confidence scores with agreement analysis.
+signals into final confidence scores with evidence-gated review logic.
 """
 
 from __future__ import annotations
@@ -42,23 +42,15 @@ class ConfidenceCombiner:
     """Combine deterministic and probabilistic confidence scores.
 
     Strategy:
-    - Agreement between paths: high confidence
-    - Path A found, Path B missed: medium confidence, flag if ML prob was low
-    - Path B found, Path A missed: flag for review (NER may have missed evidence)
+    - NER evidence auto-confirms unless ML strongly negates
+    - ML-only high probability triggers review (possible NER blind spot)
+    - Otherwise rely on ML probability without averaging
     """
 
-    # Weights for confidence combination
-    DETERMINISTIC_WEIGHT = 0.6
-    ML_WEIGHT = 0.3
-    ENTITY_WEIGHT = 0.1
-
-    # Bonuses/penalties
-    AGREEMENT_BONUS = 0.10
-    DISAGREEMENT_PENALTY = 0.15
-
-    # Thresholds for review flagging
-    ML_HIGH_CONF_THRESHOLD = 0.8
-    ML_LOW_CONF_THRESHOLD = 0.5
+    AUTO_CODE_CONFIDENCE = 0.95
+    REVIEW_CONFIDENCE_FLOOR = 0.5
+    ML_HIGH_CONF_THRESHOLD = 0.90
+    ML_LOW_CONF_THRESHOLD = 0.10
 
     def combine(
         self,
@@ -79,72 +71,40 @@ class ConfidenceCombiner:
         Returns:
             CodeConfidence with score, explanation, and review flags
         """
-        agreement = deterministic_found and ml_probability >= self.ML_LOW_CONF_THRESHOLD
-
-        if deterministic_found and agreement:
-            # Best case: both paths agree
-            base = (
-                self.DETERMINISTIC_WEIGHT * 1.0 +
-                self.ML_WEIGHT * ml_probability +
-                self.ENTITY_WEIGHT * entity_confidence
-            )
-            confidence = min(0.99, base + self.AGREEMENT_BONUS)
-            explanation = (
-                f"Both pathways agree (NER+Rules: found, ML: {ml_probability:.2f})"
-            )
-            needs_review = False
-            review_reason = None
-
-        elif deterministic_found and not agreement:
-            # Path A found, Path B missed or low confidence
-            base = (
-                self.DETERMINISTIC_WEIGHT * 1.0 +
-                self.ML_WEIGHT * ml_probability +
-                self.ENTITY_WEIGHT * entity_confidence
-            )
-            confidence = max(0.50, base - self.DISAGREEMENT_PENALTY)
-
-            if ml_probability < 0.3:
+        if deterministic_found:
+            if ml_probability < self.ML_LOW_CONF_THRESHOLD:
+                confidence = max(self.REVIEW_CONFIDENCE_FLOOR, entity_confidence)
                 explanation = (
-                    f"NER+Rules derived code but ML had low confidence "
-                    f"(ML prob: {ml_probability:.2f}) - verify NER entities"
+                    "FLAG_FOR_REVIEW: NER found keyword, but context suggests "
+                    f"negation/history (ML prob: {ml_probability:.2f})"
                 )
                 needs_review = True
-                review_reason = f"Path A/B disagreement: ML prob={ml_probability:.2f}"
+                review_reason = "NER found keyword, but context suggests negation/history."
             else:
+                confidence = min(0.99, max(self.AUTO_CODE_CONFIDENCE, entity_confidence))
                 explanation = (
-                    f"NER+Rules derived code, ML moderately confident "
-                    f"(ML prob: {ml_probability:.2f})"
+                    f"AUTO_CODE: NER evidence found (ML prob: {ml_probability:.2f})"
                 )
                 needs_review = False
                 review_reason = None
-
-        elif not deterministic_found and ml_probability >= self.ML_HIGH_CONF_THRESHOLD:
-            # Path B found with high confidence, Path A missed
-            confidence = ml_probability * 0.7  # Penalize for missing deterministic
+        elif ml_probability > self.ML_HIGH_CONF_THRESHOLD:
+            confidence = max(self.REVIEW_CONFIDENCE_FLOOR, ml_probability)
             explanation = (
-                f"ML predicted with high confidence ({ml_probability:.2f}) "
-                f"but NER+Rules did not derive - NER may have missed evidence"
+                "FLAG_FOR_REVIEW: ML detected procedure, but specific "
+                f"device/anatomy was not found in text (ML prob: {ml_probability:.2f})"
             )
             needs_review = True
-            review_reason = f"ML confident ({ml_probability:.2f}) but NER missed"
-
-        elif not deterministic_found and ml_probability >= self.ML_LOW_CONF_THRESHOLD:
-            # Path B found with moderate confidence, Path A missed
-            confidence = ml_probability * 0.5
-            explanation = (
-                f"ML predicted with moderate confidence ({ml_probability:.2f}) "
-                f"but NER+Rules did not derive"
+            review_reason = (
+                "ML detected procedure, but specific device/anatomy was not found in text."
             )
-            needs_review = True
-            review_reason = f"ML moderate ({ml_probability:.2f}), NER missed"
-
         else:
-            # Neither path confident
-            confidence = max(ml_probability * 0.3, 0.10)
-            explanation = "Low confidence from both pathways"
-            needs_review = ml_probability > 0.3
-            review_reason = "Low confidence overall" if needs_review else None
+            confidence = ml_probability
+            explanation = (
+                "No NER evidence and ML probability below review threshold "
+                f"(ML prob: {ml_probability:.2f})"
+            )
+            needs_review = False
+            review_reason = None
 
         return CodeConfidence(
             code=code,
