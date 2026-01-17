@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-16T14:45:58-08:00`
-Git: `v22` @ `a0f1a61`
+Generated: `2026-01-16T17:17:17-08:00`
+Git: `v22` @ `41be2c9`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -45,6 +45,7 @@ Git: `v22` @ `a0f1a61`
      4371  scripts/warm_models.py
      4406  scripts/build_phi_allowlist_trie.py
      4522  scripts/run_coder_hybrid.py
+     4649  scripts/refine_ner_labels.py
      5160  scripts/fix_registry_hallucinations.py
      5187  scripts/add_training_case.py
      5248  scripts/force_merge_human_labels.py
@@ -68,6 +69,7 @@ Git: `v22` @ `a0f1a61`
      8166  scripts/export_patient_note_texts.py
      8233  scripts/test_phi_redaction_sample.py
      8397  scripts/prodigy_prepare_registry_relabel_batch.py
+     9036  scripts/find_critical_failures.py
      9076  scripts/fit_thresholds_from_eval.py
      9265  scripts/clean_distilled_phi_labels.py
      9583  scripts/registry_label_overlap_report.py
@@ -76,8 +78,8 @@ Git: `v22` @ `a0f1a61`
     11238  scripts/evaluate_coder.py
     11262  scripts/scrub_golden_jsons.py
     11519  scripts/prodigy_export_corrections.py
-    12041  scripts/convert_spans_to_bio.py
     12126  scripts/export_phi_model_for_transformersjs.py
+    12153  scripts/convert_spans_to_bio.py
     13507  scripts/extract_ner_from_excel.py
     14532  scripts/review_llm_fallback_errors.py
     14742  scripts/quantize_to_onnx.py
@@ -443,8 +445,8 @@ Git: `v22` @ `a0f1a61`
     11670  tests/coder/test_coding_rules_phase7.py
     11691  modules/registry/legacy/adapters/pleural.py
     11916  modules/api/dependencies.py
-    12217  modules/ner/inference.py
     12339  modules/registry_cleaning/schema_utils.py
+    12425  modules/ner/inference.py
     12446  docs/phi_review_system/backend/dependencies.py
     12640  tests/ml_coder/test_data_prep.py
     12657  docs/phi_review_system/backend/schemas.py
@@ -669,7 +671,7 @@ Git: `v22` @ `a0f1a61`
      4544  docs/Production_Readiness_Review.md
      4745  docs/Multi_agent_collaboration/Architect Priming Script.md
      5429  docs/ml_first_hybrid_policy.md
-     5813  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
+     6097  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
      6232  docs/Registry_API.md
      6862  modules/reporting/templates/macros/04_blvr_cryo.j2
      7031  docs/Registry_ML_summary.md
@@ -699,7 +701,7 @@ Git: `v22` @ `a0f1a61`
     21781  modules/reporting/templates/macros/template_schema.json
     25929  modules/api/static/phi_redactor/app.js
     27821  modules/registry/ip_registry_improvements.md
-    28691  docs/USER_GUIDE.md
+    28862  docs/USER_GUIDE.md
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     53018  modules/api/static/phi_redactor/protectedVeto.js
     84457  modules/api/static/phi_redactor/redactor.worker.js
@@ -709,6 +711,8 @@ Git: `v22` @ `a0f1a61`
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  scripts/train_roberta_pm3.py
+ inline_cap_reached>75  scripts/fix_alignment.py
  inline_cap_reached>75  scripts/train_distilbert_ner.py
  inline_cap_reached>75  scripts/prodigy_prepare_registry.py
  inline_cap_reached>75  scripts/train_registry_ner.py
@@ -946,8 +950,8 @@ Git: `v22` @ `a0f1a61`
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  modules/api/dependencies.py
- inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
+ inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
  inline_cap_reached>75  modules/coder/rules.py
  inline_cap_reached>75  modules/ml_coder/registry_predictor.py
@@ -3460,6 +3464,143 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
+```
+
+---
+### `scripts/refine_ner_labels.py`
+- Size: `4649` bytes
+```
+import json
+import shutil
+from collections import Counter
+from pathlib import Path
+
+# --- CONFIGURATION ---
+
+# 1. MERGE MAP: { "OLD_LABEL": "NEW_TARGET_LABEL" }
+MERGE_MAP = {
+    # Fix Schema Inconsistencies (Rare -> Common)
+    "PROC_MEDICATION": "MEDICATION",        # 3 -> 954
+    "MEAS_VOLUME": "MEAS_VOL",              # 4 -> 1055
+    "DEV_DEVICE": "DEV_INSTRUMENT",         # 4 -> 6298
+    
+    # Semantic Merges (Specific -> General)
+    "PROC_NAME": "PROC_ACTION",             # 3 -> 7411
+    "LMB": "ANAT_AIRWAY",                   # 39 -> 6524
+    "ANAT_INTERCOSTAL_SPACE": "ANAT_PLEURA",# 4 -> 1429
+    "OBS_FLUID_COLOR": "OBS_FINDING",       # 4 -> 3045
+    "OBS_NO_COMPLICATION": "OBS_FINDING",   # 1 -> 3045
+    
+    # NEW SUGGESTION based on updated stats (Optional but recommended)
+    # "MEAS_AIRWAY_DIAM": "MEAS_SIZE",      # 36 -> 2364 (Borderline count)
+    # "MEAS_TEMP": "OBS_FINDING",           # 48 -> 3045 (Borderline count)
+}
+
+# 2. PRUNE LIST: [ "LABEL_TO_REMOVE" ]
+#    These labels will be converted to 'O' (Outside).
+PRUNE_LIST = [
+    "CTX_INDICATION",   # Count: 2 (Too low to learn)
+    "DISPOSITION",      # Count: 2 (Too low to learn)
+    
+    # Note: CTX_HISTORICAL (192) and CTX_TIME (165) are now robust enough 
+    # to keep! They are commented out below so they WON'T be pruned.
+    # "CTX_HISTORICAL", 
+    # "CTX_TIME",       
+]
+
+# --- SCRIPT LOGIC ---
+
+def process_label(bio_tag):
+    """Refines a single BIO tag (e.g., 'B-PROC_NAME') based on rules."""
+    if bio_tag == "O":
+        return "O"
+        
+    # Handle potentially malformed tags (just in case)
+    if "-" not in bio_tag:
+        return "O"
+
+    prefix, label = bio_tag.split("-", 1)
+    
+    # Check Prune List
+    if label in PRUNE_LIST:
+        return "O"
+        
+    # Check Merge Map
+    if label in MERGE_MAP:
+        new_label = MERGE_MAP[label]
+        return f"{prefix}-{new_label}"
+        
+    return bio_tag
+
+def refine_dataset(input_path, output_path):
+    print(f"Reading from: {input_path}")
+    print(f"Writing to:   {output_path}")
+    
+    input_path = Path(input_path)
+    output_path = Path(output_path)
+    
+    counts = Counter()
+    modified_counts = Counter()
+    
+    with open(input_path, "r", encoding="utf-8") as fin, \
+         open(output_path, "w", encoding="utf-8") as fout:
+        
+        for line_num, line in enumerate(fin):
+            try:
+                data = json.loads(line)
+                original_tags = data.get("ner_tags", [])
+                
+                new_tags = []
+                for tag in original_tags:
+                    new_tag = process_label(tag)
+                    new_tags.append(new_tag)
+                    
+                    # Track stats
+                    if tag != "O":
+                        # Handle cases where tag might be malformed
+                        parts = tag.split("-", 1)
+                        base_label = parts[1] if len(parts) > 1 else tag
+                        counts[base_label] += 1
+                        
+                        if new_tag != "O":
+                            new_parts = new_tag.split("-", 1)
+                            new_base_label = new_parts[1] if len(new_parts) > 1 else new_tag
+                            
+                            if base_label != new_base_label:
+                                modified_counts[f"Merged {base_label} -> {new_base_label}"] += 1
+                        else:
+                            modified_counts[f"Pruned {base_label}"] += 1
+
+                data["ner_tags"] = new_tags
+                fout.write(json.dumps(data) + "\n")
+                
+            except json.JSONDecodeError:
+                print(f"Skipping invalid JSON line {line_num}")
+
+    print("\n--- Modification Stats ---")
+    if not modified_counts:
+        print("No labels were modified.")
+    for action, count in modified_counts.most_common():
+        print(f"{action}: {count} occurrences")
+        
+    print(f"\nSuccess! New dataset saved to {output_path}")
+
+if __name__ == "__main__":
+    # Point this to your uploaded file
+    INPUT_FILE = "ner_bio_format.jsonl" 
+    OUTPUT_FILE = "ner_bio_format_refined.jsonl"
+    
+    if Path(INPUT_FILE).exists():
+        refine_dataset(INPUT_FILE, OUTPUT_FILE)
+    else:
+        # Fallback for folder structures
+        INPUT_FILE = "data/ml_training/granular_ner/ner_bio_format.jsonl"
+        OUTPUT_FILE = "data/ml_training/granular_ner/ner_bio_format_refined.jsonl"
+        
+        if Path(INPUT_FILE).exists():
+            refine_dataset(INPUT_FILE, OUTPUT_FILE)
+        else:
+            print(f"Error: Could not find input file at {INPUT_FILE}")
 ```
 
 ---
@@ -8211,6 +8352,250 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/find_critical_failures.py`
+- Size: `9036` bytes
+```
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import argparse
+import glob
+import json
+import os
+import re
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Iterable
+from typing import TextIO
+
+# --- CONFIGURATION: Define your keywords here ---
+# These are "critical" classes you want to increase coverage for by finding notes
+# that likely contain these concepts.
+CRITICAL_CLASSES: dict[str, str] = {
+    "PROC_MEDICATION": r"(?i)\b(lidocaine|fentanyl|midazolam|epinephrine|heparin|propofol|versed|saline|romazicon|narcan)\b",
+    "CTX_INDICATION": r"(?i)\b(indication|history of|reason for|suspicion of|evaluate|eval|suspected|diagnosis)\b",
+    "DISPOSITION": r"(?i)\b(discharged|admitted|transferred|follow-up|return to|released|stable condition)\b",
+    "ANAT_INTERCOSTAL_SPACE": r"(?i)\b(intercostal|rib space|ics)\b",
+    "OBS_FLUID_COLOR": r"(?i)\b(serous|sanguineous|purulent|straw|bloody|yellow|clear|cloudy|turbid|amber)\b",
+    "MEAS_VOLUME": r"(?i)\b(\d+(\.\d+)?\s*(ml|cc|liters?|l))\b",
+    "OBS_NO_COMPLICATION": r"(?i)\b(no complication|tolerated well|no adverse|uncomplicated|no immediate|no pneumothorax)\b",
+    "PROC_NAME": r"(?i)\b(bronchoscopy|thoracentesis|biopsy|ebus|lavage|aspiration|pleuroscopy)\b",
+}
+
+
+@dataclass(frozen=True)
+class NoteRecord:
+    source_file: str
+    note_id: str
+    note_text: str
+    record_index: int | None = None
+
+
+def find_context(text: str, match_obj: re.Match[str], window: int = 50) -> str:
+    start, end = match_obj.span()
+    ctx_start = max(0, start - window)
+    ctx_end = min(len(text), end + window)
+    snippet = text[ctx_start:start] + "[[ " + text[start:end] + " ]]" + text[end:ctx_end]
+    return snippet.replace("\n", " ")
+
+
+def _extract_text_from_record(record: dict[str, Any]) -> str | None:
+    for key in ("note_text", "text", "content", "evidence"):
+        value = record.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return None
+
+
+def _extract_id_from_record(record: dict[str, Any], *, fallback: str) -> str:
+    for key in ("id", "note_id", "noteId", "noteID"):
+        value = record.get(key)
+        if value is not None and str(value).strip():
+            return str(value)
+    return fallback
+
+
+def iter_note_records(filepath: str) -> Iterable[NoteRecord]:
+    """
+    Yield NoteRecord objects from common JSON/JSONL shapes.
+
+    Supported:
+    - JSON dict mapping note_id -> note_text (this is how data/knowledge/patient_note_texts/*.json is structured)
+    - JSON dict record: {"id": ..., "text"/"note_text": ...}
+    - JSON list of dict records
+    - JSONL of dict records
+    """
+    try:
+        if filepath.endswith(".jsonl"):
+            with open(filepath, "r", encoding="utf-8") as f:
+                for idx, line in enumerate(f, 1):
+                    line = line.strip()
+                    if not line:
+                        continue
+                    obj = json.loads(line)
+                    if not isinstance(obj, dict):
+                        continue
+                    text = _extract_text_from_record(obj)
+                    if not text:
+                        continue
+                    note_id = _extract_id_from_record(obj, fallback=f"{os.path.basename(filepath)}:line_{idx}")
+                    yield NoteRecord(source_file=filepath, note_id=note_id, note_text=text, record_index=idx)
+            return
+
+        if filepath.endswith(".json"):
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = json.load(f)
+
+            # patient_note_texts format: { "note_123": "...", "note_123_syn_1": "..." }
+            if isinstance(content, dict) and content and all(isinstance(v, str) for v in content.values()):
+                for note_id, note_text in content.items():
+                    if isinstance(note_text, str) and note_text.strip():
+                        yield NoteRecord(source_file=filepath, note_id=str(note_id), note_text=note_text)
+                return
+
+            # single dict record: {"id": ..., "text": ...}
+            if isinstance(content, dict):
+                text = _extract_text_from_record(content)
+                if text:
+                    note_id = _extract_id_from_record(content, fallback=os.path.basename(filepath))
+                    yield NoteRecord(source_file=filepath, note_id=note_id, note_text=text)
+                return
+
+            # list of dict records
+            if isinstance(content, list):
+                for idx, item in enumerate(content, 1):
+                    if not isinstance(item, dict):
+                        continue
+                    text = _extract_text_from_record(item)
+                    if not text:
+                        continue
+                    note_id = _extract_id_from_record(item, fallback=f"{os.path.basename(filepath)}:idx_{idx}")
+                    yield NoteRecord(source_file=filepath, note_id=note_id, note_text=text, record_index=idx)
+                return
+    except Exception as e:
+        print(f"Error reading {filepath}: {e}")
+
+
+def scan_files(
+    input_path: str,
+    *,
+    max_matches_per_label: int = 50,
+    show_context: bool = True,
+    output: TextIO | None = None,
+) -> int:
+    if os.path.isdir(input_path):
+        files = glob.glob(os.path.join(input_path, "*.json*"))
+    else:
+        files = glob.glob(input_path)
+
+    write_stdout = True
+
+    def emit(line: str = "") -> None:
+        nonlocal write_stdout
+        if output is not None:
+            output.write(line + "\n")
+            output.flush()
+        if write_stdout:
+            try:
+                print(line)
+            except BrokenPipeError:
+                # If stdout is piped (e.g., `| head`) and the reader closes early,
+                # stop writing to stdout but keep writing to the output file.
+                write_stdout = False
+
+    emit(f"Scanning {len(files)} files for critical failure classes...\n")
+
+    compiled = {label: re.compile(pattern) for label, pattern in CRITICAL_CLASSES.items()}
+    hits_found = 0
+    hits_by_label: dict[str, int] = {k: 0 for k in CRITICAL_CLASSES}
+    notes_by_label: dict[str, set[str]] = {k: set() for k in CRITICAL_CLASSES}
+
+    for file in files:
+        for rec in iter_note_records(file):
+            for label, rx in compiled.items():
+                if max_matches_per_label >= 0 and hits_by_label[label] >= max_matches_per_label:
+                    continue
+
+                match = rx.search(rec.note_text)
+                if not match:
+                    continue
+
+                hits_found += 1
+                hits_by_label[label] += 1
+                notes_by_label[label].add(rec.note_id)
+
+                emit(f"[{label}]  note_id={rec.note_id}  file={os.path.basename(rec.source_file)}")
+                if show_context:
+                    emit(f"  Match: \"...{find_context(rec.note_text, match)}...\"")
+                emit()
+
+    if hits_found == 0:
+        emit("No matches found. Check your keywords or input path.")
+        return 0
+
+    emit("Summary:")
+    for label in sorted(CRITICAL_CLASSES.keys()):
+        emit(f"- {label}: {hits_by_label[label]} matches across {len(notes_by_label[label])} notes")
+    emit(f"\nDone. Found {hits_found} potential candidates.")
+    return hits_found
+
+
+def main() -> int:
+    repo_root = Path(__file__).resolve().parents[1]
+    default_output = repo_root / "reports" / "critical_failures.txt"
+
+    parser = argparse.ArgumentParser(
+        description="Scan JSONL/JSON note-text files for keywords indicating under-covered NER classes."
+    )
+    parser.add_argument("input", help="Path to a .jsonl file, a .json file, or a directory of files")
+    parser.add_argument(
+        "--max-matches-per-label",
+        type=int,
+        default=50,
+        help="Limit printed matches per label (default: 50). Use -1 for unlimited.",
+    )
+    parser.add_argument(
+        "--no-context",
+        action="store_true",
+        help="Don't print match context (just note_id + file).",
+    )
+    parser.add_argument(
+        "--output",
+        default=str(default_output),
+        help=(
+            "Path to write the same output to a text file (overwrites). "
+            f"Default: {default_output}. Use '-' to disable file output."
+        ),
+    )
+    args = parser.parse_args()
+
+    out_f: TextIO | None = None
+    try:
+        if args.output and str(args.output).strip() != "-":
+            out_path = os.path.expanduser(str(args.output))
+            os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+            out_f = open(out_path, "w", encoding="utf-8")
+            print(f"[output] writing report to: {out_path}")
+
+        hits = scan_files(
+            args.input,
+            max_matches_per_label=int(args.max_matches_per_label),
+            show_context=not bool(args.no_context),
+            output=out_f,
+        )
+    finally:
+        if out_f is not None:
+            out_f.close()
+    return 0 if hits else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `scripts/fit_thresholds_from_eval.py`
 - Size: `9076` bytes
 ```
@@ -10644,407 +11029,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/convert_spans_to_bio.py`
-- Size: `12041` bytes
-```
-#!/usr/bin/env python3
-"""
-Convert character-span NER annotations to BIO-tagged format for training.
-
-Input format (ner_dataset_all.jsonl):
-{
-  "id": "note_001",
-  "text": "Full procedure note text...",
-  "entities": [
-    {"start": 100, "end": 102, "label": "ANAT_LN_STATION", "text": "4R"},
-    ...
-  ]
-}
-
-Output format (for train_distilbert_ner.py):
-{
-  "id": "note_001",
-  "tokens": ["station", "4", "##r", "was", "sampled", ...],
-  "ner_tags": ["O", "B-ANAT_LN_STATION", "I-ANAT_LN_STATION", "O", "O", ...]
-}
-
-Usage:
-    python scripts/convert_spans_to_bio.py \
-        --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
-        --output data/ml_training/granular_ner/ner_bio_format.jsonl \
-        --model distilbert-base-uncased
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import logging
-import sys
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
-
-from transformers import AutoTokenizer
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
-
-
-def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--input", "-i",
-        type=Path,
-        required=True,
-        help="Input JSONL file with character-span annotations"
-    )
-    parser.add_argument(
-        "--output", "-o",
-        type=Path,
-        required=True,
-        help="Output JSONL file with BIO-tagged tokens"
-    )
-    parser.add_argument(
-        "--model",
-        type=str,
-        default="distilbert-base-uncased",
-        help="Tokenizer model name (default: distilbert-base-uncased)"
-    )
-    parser.add_argument(
-        "--max-length",
-        type=int,
-        default=512,
-        help="Maximum sequence length (default: 512)"
-    )
-    parser.add_argument(
-        "--window-size",
-        type=int,
-        default=None,
-        help="If set, split long texts into overlapping windows of this many chars"
-    )
-    parser.add_argument(
-        "--window-overlap",
-        type=int,
-        default=200,
-        help="Overlap between windows in characters (default: 200)"
-    )
-    return parser.parse_args(argv)
-
-
-def normalize_entity(entity: Any) -> Dict[str, Any]:
-    """
-    Normalize entity to dict format.
-
-    Handles both formats:
-    - Dict: {"start": 100, "end": 102, "label": "ANAT_LN_STATION", "text": "4R"}
-    - List: [100, 102, "ANAT_LN_STATION"] or [100, 102, "ANAT_LN_STATION", "4R"]
-    """
-    if isinstance(entity, dict):
-        start = entity.get("start")
-        end = entity.get("end")
-        if start is None:
-            start = entity.get("start_char", entity.get("start_offset", 0))
-        if end is None:
-            end = entity.get("end_char", entity.get("end_offset", 0))
-        text = entity.get("text")
-        if text is None:
-            text = entity.get("span_text", "")
-        return {
-            "start": start,
-            "end": end,
-            "label": entity.get("label", "UNKNOWN"),
-            "text": text or "",
-        }
-    elif isinstance(entity, (list, tuple)):
-        if len(entity) >= 3:
-            return {
-                "start": entity[0],
-                "end": entity[1],
-                "label": entity[2],
-                "text": entity[3] if len(entity) > 3 else "",
-            }
-    return {"start": 0, "end": 0, "label": "UNKNOWN", "text": ""}
-
-
-def spans_to_bio(
-    text: str,
-    entities: List[Any],
-    tokenizer: Any,
-    max_length: int = 512,
-) -> Tuple[List[str], List[str]]:
-    """
-    Convert character spans to BIO tags aligned to tokenizer output.
-
-    Args:
-        text: The original text
-        entities: List of entities (dict or list format)
-        tokenizer: The tokenizer to use for alignment
-        max_length: Maximum sequence length
-
-    Returns:
-        (tokens, ner_tags) tuple with special tokens filtered out
-    """
-    # Normalize all entities to dict format
-    normalized_entities = [normalize_entity(e) for e in entities]
-
-    # Tokenize with offset mapping
-    encoding = tokenizer(
-        text,
-        truncation=True,
-        max_length=max_length,
-        return_offsets_mapping=True,
-        add_special_tokens=True,
-    )
-
-    offset_mapping = encoding.get("offset_mapping", [])
-    input_ids = encoding.get("input_ids", [])
-
-    # Convert input_ids back to tokens
-    tokens = tokenizer.convert_ids_to_tokens(input_ids)
-
-    # Initialize all tags as O
-    ner_tags = ["O"] * len(tokens)
-
-    # Find valid token indices (non-special tokens)
-    # Special tokens like [CLS], [SEP] have offset (0, 0)
-    valid_indices = []
-    for idx, offset in enumerate(offset_mapping):
-        if offset[0] != offset[1]:  # Has non-zero span
-            valid_indices.append(idx)
-
-    # Sort entities by start position
-    sorted_entities = sorted(normalized_entities, key=lambda e: e.get("start", 0))
-
-    # Assign BIO tags based on entity spans
-    for entity in sorted_entities:
-        span_start = entity.get("start", 0)
-        span_end = entity.get("end", 0)
-        label = entity.get("label", "UNKNOWN")
-
-        # Find tokens that overlap with this entity span
-        is_first = True
-        for idx in valid_indices:
-            tok_start, tok_end = offset_mapping[idx]
-
-            # Check if token overlaps with entity span
-            if tok_start < span_end and tok_end > span_start:
-                if is_first:
-                    ner_tags[idx] = f"B-{label}"
-                    is_first = False
-                else:
-                    ner_tags[idx] = f"I-{label}"
-
-    # Filter out special tokens for output
-    filtered_tokens = []
-    filtered_tags = []
-    for idx, (token, tag) in enumerate(zip(tokens, ner_tags)):
-        offset = offset_mapping[idx] if idx < len(offset_mapping) else (0, 0)
-        # Include tokens with actual character spans
-        if offset[0] != offset[1]:
-            filtered_tokens.append(token)
-            filtered_tags.append(tag)
-
-    return filtered_tokens, filtered_tags
-
-
-def split_into_windows(
-    text: str,
-    entities: List[Any],
-    window_size: int,
-    window_overlap: int,
-) -> List[Tuple[str, List[Dict[str, Any]], int]]:
-    """
-    Split long text into overlapping windows with adjusted entity spans.
-
-    Returns list of (window_text, adjusted_entities, window_start) tuples.
-    """
-    # Normalize all entities to dict format
-    normalized_entities = [normalize_entity(e) for e in entities]
-
-    windows = []
-    start = 0
-    text_len = len(text)
-
-    while start < text_len:
-        end = min(start + window_size, text_len)
-
-        # Try to break at a sentence boundary if possible
-        if end < text_len:
-            # Look for sentence end markers in last 100 chars
-            search_region = text[max(end - 100, start):end]
-            for marker in [". ", ".\n", "! ", "? "]:
-                last_marker = search_region.rfind(marker)
-                if last_marker != -1:
-                    end = max(end - 100, start) + last_marker + len(marker)
-                    break
-
-        window_text = text[start:end]
-
-        # Adjust entity spans to window coordinates
-        window_entities = []
-        for entity in normalized_entities:
-            ent_start = entity.get("start", 0)
-            ent_end = entity.get("end", 0)
-
-            # Check if entity overlaps with window
-            if ent_start < end and ent_end > start:
-                # Clip entity to window boundaries
-                adj_start = max(0, ent_start - start)
-                adj_end = min(end - start, ent_end - start)
-
-                # Only include if entity has meaningful overlap
-                if adj_end > adj_start:
-                    window_entities.append({
-                        "start": adj_start,
-                        "end": adj_end,
-                        "label": entity["label"],
-                        "text": window_text[adj_start:adj_end],
-                    })
-
-        windows.append((window_text, window_entities, start))
-
-        # Move to next window
-        if end >= text_len:
-            break
-        start = end - window_overlap
-
-    return windows
-
-
-def convert_record(
-    record: Dict[str, Any],
-    tokenizer: Any,
-    max_length: int,
-    window_size: int | None,
-    window_overlap: int,
-) -> List[Dict[str, Any]]:
-    """
-    Convert a single record from span format to BIO format.
-
-    May return multiple records if windowing is enabled.
-    """
-    record_id = record.get("id", "unknown")
-    text = record.get("text", "")
-    entities = record.get("entities", [])
-
-    if not text:
-        return []
-
-    results = []
-
-    if window_size and len(text) > window_size:
-        # Split into windows
-        windows = split_into_windows(text, entities, window_size, window_overlap)
-        for idx, (window_text, window_entities, window_start) in enumerate(windows):
-            tokens, ner_tags = spans_to_bio(
-                window_text, window_entities, tokenizer, max_length
-            )
-            if tokens:
-                results.append({
-                    "id": f"{record_id}:w{idx}",
-                    "id_base": record_id,
-                    "window_index": idx,
-                    "window_start": window_start,
-                    "window_end": window_start + len(window_text),
-                    "tokens": tokens,
-                    "ner_tags": ner_tags,
-                })
-    else:
-        # Process entire text
-        tokens, ner_tags = spans_to_bio(text, entities, tokenizer, max_length)
-        if tokens:
-            results.append({
-                "id": record_id,
-                "tokens": tokens,
-                "ner_tags": ner_tags,
-            })
-
-    return results
-
-
-def main(argv: List[str] | None = None) -> int:
-    args = parse_args(argv)
-
-    # Load tokenizer
-    logger.info(f"Loading tokenizer: {args.model}")
-    tokenizer = AutoTokenizer.from_pretrained(args.model)
-
-    # Read input
-    logger.info(f"Reading input: {args.input}")
-    records = []
-    with open(args.input, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                records.append(json.loads(line))
-
-    logger.info(f"Loaded {len(records)} records")
-
-    # Convert records
-    output_records = []
-    label_counts = {}
-    total_tokens = 0
-
-    for record in records:
-        converted = convert_record(
-            record,
-            tokenizer,
-            args.max_length,
-            args.window_size,
-            args.window_overlap,
-        )
-        for rec in converted:
-            output_records.append(rec)
-            total_tokens += len(rec["tokens"])
-
-            # Count labels
-            for tag in rec["ner_tags"]:
-                if tag != "O":
-                    # Extract base label (remove B-/I- prefix)
-                    base_label = tag.split("-", 1)[-1] if "-" in tag else tag
-                    label_counts[base_label] = label_counts.get(base_label, 0) + 1
-
-    logger.info(f"Generated {len(output_records)} output records")
-    logger.info(f"Total tokens: {total_tokens}")
-    logger.info(f"Label distribution: {json.dumps(label_counts, indent=2)}")
-
-    # Write output
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with open(args.output, "w") as f:
-        for rec in output_records:
-            f.write(json.dumps(rec) + "\n")
-
-    logger.info(f"Wrote output to: {args.output}")
-
-    # Write stats
-    stats_path = args.output.with_suffix(".stats.json")
-    stats = {
-        "input_records": len(records),
-        "output_records": len(output_records),
-        "total_tokens": total_tokens,
-        "label_counts": label_counts,
-        "model": args.model,
-        "max_length": args.max_length,
-        "window_size": args.window_size,
-        "window_overlap": args.window_overlap,
-    }
-    with open(stats_path, "w") as f:
-        json.dump(stats, f, indent=2)
-
-    logger.info(f"Wrote stats to: {stats_path}")
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
-
-```
-
----
 ### `scripts/export_phi_model_for_transformersjs.py`
 - Size: `12126` bytes
 ```
@@ -11407,6 +11391,407 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+```
+
+---
+### `scripts/convert_spans_to_bio.py`
+- Size: `12153` bytes
+```
+#!/usr/bin/env python3
+"""
+Convert character-span NER annotations to BIO-tagged format for training.
+
+Input format (ner_dataset_all.jsonl):
+{
+  "id": "note_001",
+  "text": "Full procedure note text...",
+  "entities": [
+    {"start": 100, "end": 102, "label": "ANAT_LN_STATION", "text": "4R"},
+    ...
+  ]
+}
+
+Output format (for train_registry_ner.py):
+{
+  "id": "note_001",
+  "tokens": ["station", "4", "##r", "was", "sampled", ...],
+  "ner_tags": ["O", "B-ANAT_LN_STATION", "I-ANAT_LN_STATION", "O", "O", ...]
+}
+
+Usage:
+    python scripts/convert_spans_to_bio.py \
+        --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
+        --output data/ml_training/granular_ner/ner_bio_format.jsonl \
+        --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+import sys
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+from transformers import AutoTokenizer
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
+
+def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--input", "-i",
+        type=Path,
+        required=True,
+        help="Input JSONL file with character-span annotations"
+    )
+    parser.add_argument(
+        "--output", "-o",
+        type=Path,
+        required=True,
+        help="Output JSONL file with BIO-tagged tokens"
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+        help="Tokenizer model name (default: microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext)"
+    )
+    parser.add_argument(
+        "--max-length",
+        type=int,
+        default=512,
+        help="Maximum sequence length (default: 512)"
+    )
+    parser.add_argument(
+        "--window-size",
+        type=int,
+        default=None,
+        help="If set, split long texts into overlapping windows of this many chars"
+    )
+    parser.add_argument(
+        "--window-overlap",
+        type=int,
+        default=200,
+        help="Overlap between windows in characters (default: 200)"
+    )
+    return parser.parse_args(argv)
+
+
+def normalize_entity(entity: Any) -> Dict[str, Any]:
+    """
+    Normalize entity to dict format.
+
+    Handles both formats:
+    - Dict: {"start": 100, "end": 102, "label": "ANAT_LN_STATION", "text": "4R"}
+    - List: [100, 102, "ANAT_LN_STATION"] or [100, 102, "ANAT_LN_STATION", "4R"]
+    """
+    if isinstance(entity, dict):
+        start = entity.get("start")
+        end = entity.get("end")
+        if start is None:
+            start = entity.get("start_char", entity.get("start_offset", 0))
+        if end is None:
+            end = entity.get("end_char", entity.get("end_offset", 0))
+        text = entity.get("text")
+        if text is None:
+            text = entity.get("span_text", "")
+        return {
+            "start": start,
+            "end": end,
+            "label": entity.get("label", "UNKNOWN"),
+            "text": text or "",
+        }
+    elif isinstance(entity, (list, tuple)):
+        if len(entity) >= 3:
+            return {
+                "start": entity[0],
+                "end": entity[1],
+                "label": entity[2],
+                "text": entity[3] if len(entity) > 3 else "",
+            }
+    return {"start": 0, "end": 0, "label": "UNKNOWN", "text": ""}
+
+
+def spans_to_bio(
+    text: str,
+    entities: List[Any],
+    tokenizer: Any,
+    max_length: int = 512,
+) -> Tuple[List[str], List[str]]:
+    """
+    Convert character spans to BIO tags aligned to tokenizer output.
+
+    Args:
+        text: The original text
+        entities: List of entities (dict or list format)
+        tokenizer: The tokenizer to use for alignment
+        max_length: Maximum sequence length
+
+    Returns:
+        (tokens, ner_tags) tuple with special tokens filtered out
+    """
+    # Normalize all entities to dict format
+    normalized_entities = [normalize_entity(e) for e in entities]
+
+    # Tokenize with offset mapping
+    encoding = tokenizer(
+        text,
+        truncation=True,
+        max_length=max_length,
+        return_offsets_mapping=True,
+        add_special_tokens=True,
+    )
+
+    offset_mapping = encoding.get("offset_mapping", [])
+    input_ids = encoding.get("input_ids", [])
+
+    # Convert input_ids back to tokens
+    tokens = tokenizer.convert_ids_to_tokens(input_ids)
+
+    # Initialize all tags as O
+    ner_tags = ["O"] * len(tokens)
+
+    # Find valid token indices (non-special tokens)
+    # Special tokens like [CLS], [SEP] have offset (0, 0)
+    valid_indices = []
+    for idx, offset in enumerate(offset_mapping):
+        if offset[0] != offset[1]:  # Has non-zero span
+            valid_indices.append(idx)
+
+    # Sort entities by start position
+    sorted_entities = sorted(normalized_entities, key=lambda e: e.get("start", 0))
+
+    # Assign BIO tags based on entity spans
+    for entity in sorted_entities:
+        span_start = entity.get("start", 0)
+        span_end = entity.get("end", 0)
+        label = entity.get("label", "UNKNOWN")
+
+        # Find tokens that overlap with this entity span
+        is_first = True
+        for idx in valid_indices:
+            tok_start, tok_end = offset_mapping[idx]
+
+            # Check if token overlaps with entity span
+            if tok_start < span_end and tok_end > span_start:
+                if is_first:
+                    ner_tags[idx] = f"B-{label}"
+                    is_first = False
+                else:
+                    ner_tags[idx] = f"I-{label}"
+
+    # Filter out special tokens for output
+    filtered_tokens = []
+    filtered_tags = []
+    for idx, (token, tag) in enumerate(zip(tokens, ner_tags)):
+        offset = offset_mapping[idx] if idx < len(offset_mapping) else (0, 0)
+        # Include tokens with actual character spans
+        if offset[0] != offset[1]:
+            filtered_tokens.append(token)
+            filtered_tags.append(tag)
+
+    return filtered_tokens, filtered_tags
+
+
+def split_into_windows(
+    text: str,
+    entities: List[Any],
+    window_size: int,
+    window_overlap: int,
+) -> List[Tuple[str, List[Dict[str, Any]], int]]:
+    """
+    Split long text into overlapping windows with adjusted entity spans.
+
+    Returns list of (window_text, adjusted_entities, window_start) tuples.
+    """
+    # Normalize all entities to dict format
+    normalized_entities = [normalize_entity(e) for e in entities]
+
+    windows = []
+    start = 0
+    text_len = len(text)
+
+    while start < text_len:
+        end = min(start + window_size, text_len)
+
+        # Try to break at a sentence boundary if possible
+        if end < text_len:
+            # Look for sentence end markers in last 100 chars
+            search_region = text[max(end - 100, start):end]
+            for marker in [". ", ".\n", "! ", "? "]:
+                last_marker = search_region.rfind(marker)
+                if last_marker != -1:
+                    end = max(end - 100, start) + last_marker + len(marker)
+                    break
+
+        window_text = text[start:end]
+
+        # Adjust entity spans to window coordinates
+        window_entities = []
+        for entity in normalized_entities:
+            ent_start = entity.get("start", 0)
+            ent_end = entity.get("end", 0)
+
+            # Check if entity overlaps with window
+            if ent_start < end and ent_end > start:
+                # Clip entity to window boundaries
+                adj_start = max(0, ent_start - start)
+                adj_end = min(end - start, ent_end - start)
+
+                # Only include if entity has meaningful overlap
+                if adj_end > adj_start:
+                    window_entities.append({
+                        "start": adj_start,
+                        "end": adj_end,
+                        "label": entity["label"],
+                        "text": window_text[adj_start:adj_end],
+                    })
+
+        windows.append((window_text, window_entities, start))
+
+        # Move to next window
+        if end >= text_len:
+            break
+        start = end - window_overlap
+
+    return windows
+
+
+def convert_record(
+    record: Dict[str, Any],
+    tokenizer: Any,
+    max_length: int,
+    window_size: int | None,
+    window_overlap: int,
+) -> List[Dict[str, Any]]:
+    """
+    Convert a single record from span format to BIO format.
+
+    May return multiple records if windowing is enabled.
+    """
+    record_id = record.get("id", "unknown")
+    text = record.get("text", "")
+    entities = record.get("entities", [])
+
+    if not text:
+        return []
+
+    results = []
+
+    if window_size and len(text) > window_size:
+        # Split into windows
+        windows = split_into_windows(text, entities, window_size, window_overlap)
+        for idx, (window_text, window_entities, window_start) in enumerate(windows):
+            tokens, ner_tags = spans_to_bio(
+                window_text, window_entities, tokenizer, max_length
+            )
+            if tokens:
+                results.append({
+                    "id": f"{record_id}:w{idx}",
+                    "id_base": record_id,
+                    "window_index": idx,
+                    "window_start": window_start,
+                    "window_end": window_start + len(window_text),
+                    "tokens": tokens,
+                    "ner_tags": ner_tags,
+                })
+    else:
+        # Process entire text
+        tokens, ner_tags = spans_to_bio(text, entities, tokenizer, max_length)
+        if tokens:
+            results.append({
+                "id": record_id,
+                "tokens": tokens,
+                "ner_tags": ner_tags,
+            })
+
+    return results
+
+
+def main(argv: List[str] | None = None) -> int:
+    args = parse_args(argv)
+
+    # Load tokenizer
+    logger.info(f"Loading tokenizer: {args.model}")
+    tokenizer = AutoTokenizer.from_pretrained(args.model)
+
+    # Read input
+    logger.info(f"Reading input: {args.input}")
+    records = []
+    with open(args.input, "r") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                records.append(json.loads(line))
+
+    logger.info(f"Loaded {len(records)} records")
+
+    # Convert records
+    output_records = []
+    label_counts = {}
+    total_tokens = 0
+
+    for record in records:
+        converted = convert_record(
+            record,
+            tokenizer,
+            args.max_length,
+            args.window_size,
+            args.window_overlap,
+        )
+        for rec in converted:
+            output_records.append(rec)
+            total_tokens += len(rec["tokens"])
+
+            # Count labels
+            for tag in rec["ner_tags"]:
+                if tag != "O":
+                    # Extract base label (remove B-/I- prefix)
+                    base_label = tag.split("-", 1)[-1] if "-" in tag else tag
+                    label_counts[base_label] = label_counts.get(base_label, 0) + 1
+
+    logger.info(f"Generated {len(output_records)} output records")
+    logger.info(f"Total tokens: {total_tokens}")
+    logger.info(f"Label distribution: {json.dumps(label_counts, indent=2)}")
+
+    # Write output
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with open(args.output, "w") as f:
+        for rec in output_records:
+            f.write(json.dumps(rec) + "\n")
+
+    logger.info(f"Wrote output to: {args.output}")
+
+    # Write stats
+    stats_path = args.output.with_suffix(".stats.json")
+    stats = {
+        "input_records": len(records),
+        "output_records": len(output_records),
+        "total_tokens": total_tokens,
+        "label_counts": label_counts,
+        "model": args.model,
+        "max_length": args.max_length,
+        "window_size": args.window_size,
+        "window_overlap": args.window_overlap,
+    }
+    with open(stats_path, "w") as f:
+        json.dump(stats, f, indent=2)
+
+    logger.info(f"Wrote stats to: {stats_path}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
 
 ```
 
@@ -17385,1185 +17770,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-```
-
----
-### `scripts/train_roberta_pm3.py`
-- Size: `20931` bytes
-```
-#!/usr/bin/env python3
-"""Train RoBERTa-PM-M3-Voc-distill for multi-label registry procedure classification.
-
-This script trains the local RoBERTa-PM-M3-Voc-distill model for predicting registry
-procedure flags from clinical procedure notes.
-
-Pipeline Context:
-    - Input: data/ml_training/registry_train.csv (Generated by data_prep.py)
-    - The input CSV is expected to contain pre-scrubbed text if PHI redaction was
-      performed during the data preparation phase.
-
-Key Features:
-    - Head + Tail truncation (First 382 + Last 128 tokens)
-    - pos_weight calculation for handling severe class imbalance
-    - Per-class threshold optimization on validation set
-    - Mixed precision training (fp16)
-
-Usage:
-    python scripts/train_roberta_pm3.py
-    python scripts/train_roberta_pm3.py --batch-size 16 --epochs 8
-    python scripts/train_roberta_pm3.py --evaluate-only --model-dir data/models/roberta_pm3_registry
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import shutil
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any
-
-import numpy as np
-import pandas as pd
-import torch
-import torch.nn as nn
-from sklearn.metrics import f1_score, precision_recall_fscore_support
-from sklearn.model_selection import train_test_split
-from torch.utils.data import DataLoader, Dataset
-from tqdm import tqdm
-from transformers import (
-    AutoConfig,
-    AutoModel,
-    AutoTokenizer,
-    get_linear_schedule_with_warmup,
-)
-
-from modules.ml_coder.distillation_io import load_label_fields_json
-from modules.ml_coder.registry_label_schema import DORMANT_LABELS, REGISTRY_LABELS
-
-# ============================================================================
-# Configuration
-# ============================================================================
-
-@dataclass
-class TrainingConfig:
-    """Configuration for RoBERTa-PM-M3-Voc-distill training."""
-
-    # Model
-    model_name: str = "data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf"
-
-    # Data paths (aligned with modules/ml_coder/data_prep.py)
-    train_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_train.csv"))
-    val_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_val.csv"))
-    test_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_test.csv"))
-    label_fields_json: Path = field(default_factory=lambda: Path("data/ml_training/registry_label_fields.json"))
-    output_dir: Path = field(default_factory=lambda: Path("data/models/roberta_pm3_registry"))
-
-    # Tokenization
-    max_length: int = 512
-    head_tokens: int = 382  # First N tokens to keep
-    tail_tokens: int = 128  # Last N tokens to keep
-
-    # Training hyperparameters
-    batch_size: int = 16
-    learning_rate: float = 2e-5
-    num_epochs: int = 5
-    warmup_ratio: float = 0.1
-    weight_decay: float = 0.01
-    gradient_accumulation_steps: int = 1
-    max_grad_norm: float = 1.0
-
-    # Hardware
-    fp16: bool = True
-    device: str = field(default_factory=lambda: "cuda" if torch.cuda.is_available() else "cpu")
-
-    # Class imbalance
-    pos_weight_cap: float = 100.0
-
-    # Validation
-    val_split: float = 0.1
-
-    # Dormant labels (exclude from ML head)
-    dormant_mode: str = "auto"  # "auto" | "schema" | "none"
-    dormant_min_positives: int = 20
-
-    # Logging
-    logging_steps: int = 50
-
-
-# ============================================================================
-# Data Loading
-# ============================================================================
-
-def load_label_fields(path: Path) -> list[str]:
-    """Load canonical label ordering from JSON."""
-    if not path.exists():
-        return []
-    with open(path, "r") as f:
-        return json.load(f)
-
-def load_registry_csv(path: Path, required_labels: list[str] = None) -> tuple[list[str], np.ndarray, list[str]]:
-    """Load registry training/test CSV file.
-
-    Args:
-        path: Path to CSV file
-        required_labels: List of label columns to enforce order.
-
-    Returns:
-        (texts, labels_matrix, label_names)
-    """
-    if not path.exists():
-        raise FileNotFoundError(f"CSV file not found: {path}")
-
-    df = pd.read_csv(path)
-    if "note_text" not in df.columns:
-        raise ValueError(f"File {path} missing 'note_text' column.")
-
-    texts = df["note_text"].fillna("").astype(str).tolist()
-
-    if required_labels:
-        # Enforce specific schema (crucial for inference consistency)
-        label_cols = required_labels
-        for col in label_cols:
-            if col not in df.columns:
-                # Add missing column as 0 (e.g. rare label present in train but not test)
-                df[col] = 0
-    else:
-        # Infer labels from binary columns
-        label_cols = []
-        for col in df.columns:
-            if col == "note_text":
-                continue
-            # Simple heuristic: if column is numeric, assume it's a label
-            if pd.api.types.is_numeric_dtype(df[col]):
-                label_cols.append(col)
-        label_cols.sort()
-
-    y = df[label_cols].fillna(0).astype(int).to_numpy()
-    
-    # Clip to [0, 1] just in case
-    y = np.clip(y, 0, 1)
-
-    print(f"Loaded {len(texts)} samples from {path}")
-    return texts, y, label_cols
-
-
-class HeadTailTokenizer:
-    """Tokenizer keeping the start (procedure) and end (complications/plan) of notes."""
-    def __init__(self, tokenizer, max_length=512, head_tokens=382, tail_tokens=128):
-        self.tokenizer = tokenizer
-        self.max_length = max_length
-        self.head_tokens = head_tokens
-        self.tail_tokens = tail_tokens
-
-    def __call__(self, text: str):
-        tokens = self.tokenizer(text, add_special_tokens=False, truncation=False, return_tensors="pt")
-        input_ids = tokens["input_ids"][0]
-
-        if len(input_ids) > (self.max_length - 2):
-            head = input_ids[:self.head_tokens]
-            tail = input_ids[-self.tail_tokens:]
-            input_ids = torch.cat([head, tail])
-
-        # Add [CLS] and [SEP]
-        input_ids = torch.cat([
-            torch.tensor([self.tokenizer.cls_token_id]),
-            input_ids,
-            torch.tensor([self.tokenizer.sep_token_id])
-        ])
-
-        # Pad
-        pad_len = self.max_length - len(input_ids)
-        if pad_len > 0:
-            input_ids = torch.cat([input_ids, torch.full((pad_len,), self.tokenizer.pad_token_id)])
-
-        mask = (input_ids != self.tokenizer.pad_token_id).long()
-        return {"input_ids": input_ids.long(), "attention_mask": mask}
-
-
-class RegistryDataset(Dataset):
-    def __init__(self, texts, labels, tokenizer):
-        self.texts = texts
-        self.labels = labels
-        self.tokenizer = tokenizer
-
-    def __len__(self):
-        return len(self.texts)
-
-    def __getitem__(self, idx):
-        data = self.tokenizer(self.texts[idx])
-        data["labels"] = torch.tensor(self.labels[idx], dtype=torch.float32)
-        return data
-
-
-# ============================================================================
-# Model & Training
-# ============================================================================
-
-class RoBERTaPM3MultiLabel(nn.Module):
-    def __init__(self, model_name, num_labels, pos_weight=None):
-        super().__init__()
-        self.bert = AutoModel.from_pretrained(model_name)
-        self.dropout = nn.Dropout(0.1)
-        self.classifier = nn.Linear(self.bert.config.hidden_size, num_labels)
-        self.register_buffer("pos_weight", pos_weight)
-
-    def forward(self, input_ids, attention_mask, labels=None):
-        outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
-        pooled = self.dropout(outputs.last_hidden_state[:, 0, :])
-        logits = self.classifier(pooled)
-        
-        loss = None
-        if labels is not None:
-            loss_fn = nn.BCEWithLogitsLoss(pos_weight=self.pos_weight)
-            loss = loss_fn(logits, labels)
-            
-        return {"logits": logits, "loss": loss}
-
-    def save_pretrained(self, path: Path):
-        path.mkdir(parents=True, exist_ok=True)
-        self.bert.save_pretrained(path)
-        torch.save(self.classifier.state_dict(), path / "classifier.pt")
-        if self.pos_weight is not None:
-            torch.save(self.pos_weight, path / "pos_weight.pt")
-
-    @classmethod
-    def from_pretrained(cls, path: Path, num_labels: int):
-        path = Path(path)
-        pos_weight_path = path / "pos_weight.pt"
-        pos_weight = torch.load(pos_weight_path, map_location="cpu") if pos_weight_path.exists() else None
-        model = cls(str(path), num_labels, pos_weight=pos_weight)
-        classifier_path = path / "classifier.pt"
-        if classifier_path.exists():
-            model.classifier.load_state_dict(torch.load(classifier_path, map_location="cpu"))
-        return model
-
-
-def _select_active_labels(schema_labels: list[str], train_y: np.ndarray, config: TrainingConfig) -> tuple[list[str], list[str]]:
-    dormant: set[str]
-    if config.dormant_mode == "schema":
-        dormant = set(DORMANT_LABELS)
-    elif config.dormant_mode == "auto":
-        dormant = set(DORMANT_LABELS)
-        min_pos = max(0, int(config.dormant_min_positives))
-        counts = train_y.sum(axis=0).astype(int)
-        for label, count in zip(schema_labels, counts.tolist()):
-            if count < min_pos:
-                dormant.add(label)
-    elif config.dormant_mode == "none":
-        dormant = set()
-    else:
-        raise ValueError(f"Unknown dormant_mode: {config.dormant_mode}")
-
-    active = [l for l in schema_labels if l not in dormant]
-    dormant_sorted = [l for l in schema_labels if l in dormant]
-    return active, dormant_sorted
-
-
-def _thresholds_05(labels: list[str]) -> dict[str, float]:
-    return {l: 0.5 for l in labels}
-
-
-def _metrics_at_thresholds(
-    y_true: np.ndarray,
-    probs: np.ndarray,
-    labels: list[str],
-    thresholds: dict[str, float],
-) -> dict[str, Any]:
-    preds = np.zeros_like(probs, dtype=int)
-    for i, label in enumerate(labels):
-        preds[:, i] = (probs[:, i] >= float(thresholds.get(label, 0.5))).astype(int)
-
-    precision, recall, f1, _ = precision_recall_fscore_support(y_true, preds, average=None, zero_division=0)
-    return {
-        "macro_f1": float(np.mean(f1)),
-        "micro_f1": float(f1_score(y_true.ravel(), preds.ravel(), zero_division=0)),
-        "per_label": {
-            label: {
-                "precision": float(precision[i]),
-                "recall": float(recall[i]),
-                "f1": float(f1[i]),
-                "support": int(y_true[:, i].sum()),
-                "threshold": float(thresholds.get(label, 0.5)),
-            }
-            for i, label in enumerate(labels)
-        },
-    }
-
-
-def train(config: TrainingConfig) -> dict[str, Any]:
-    print("--- Training RoBERTa-PM3 Registry Model ---")
-
-    schema_labels = list(REGISTRY_LABELS)
-    config.label_fields_json.parent.mkdir(parents=True, exist_ok=True)
-    config.label_fields_json.write_text(json.dumps(schema_labels, indent=2) + "\n", encoding="utf-8")
-
-    train_texts, train_y_full, _ = load_registry_csv(config.train_csv, required_labels=schema_labels)
-
-    if config.val_csv and config.val_csv.exists():
-        val_texts, val_y_full, _ = load_registry_csv(config.val_csv, required_labels=schema_labels)
-    else:
-        train_texts, val_texts, train_y_full, val_y_full = train_test_split(
-            train_texts, train_y_full, test_size=config.val_split, random_state=42
-        )
-
-    test_texts, test_y_full, _ = load_registry_csv(config.test_csv, required_labels=schema_labels)
-
-    active_labels, dormant_labels = _select_active_labels(schema_labels, train_y_full, config)
-    if not active_labels:
-        raise ValueError("No active labels selected; adjust dormant settings.")
-
-    active_idx = [schema_labels.index(l) for l in active_labels]
-    train_y = train_y_full[:, active_idx]
-    val_y = val_y_full[:, active_idx]
-    test_y = test_y_full[:, active_idx]
-
-    print(f"Active labels: {len(active_labels)} | Dormant: {len(dormant_labels)}")
-
-    # pos_weight
-    pos_counts = train_y.sum(axis=0)
-    neg_counts = len(train_y) - pos_counts
-    pos_counts = np.maximum(pos_counts, 1)
-    weights = neg_counts / pos_counts
-    weights = np.minimum(weights, config.pos_weight_cap)
-    pos_weight = torch.tensor(weights, dtype=torch.float32).to(config.device)
-
-    tokenizer = HeadTailTokenizer(
-        AutoTokenizer.from_pretrained(config.model_name),
-        max_length=config.max_length,
-        head_tokens=config.head_tokens,
-        tail_tokens=config.tail_tokens,
-    )
-
-    train_ds = RegistryDataset(train_texts, train_y, tokenizer)
-    val_ds = RegistryDataset(val_texts, val_y, tokenizer)
-    test_ds = RegistryDataset(test_texts, test_y, tokenizer)
-
-    train_loader = DataLoader(train_ds, batch_size=config.batch_size, shuffle=True)
-    val_loader = DataLoader(val_ds, batch_size=config.batch_size)
-    test_loader = DataLoader(test_ds, batch_size=config.batch_size)
-
-    model = RoBERTaPM3MultiLabel(config.model_name, len(active_labels), pos_weight=pos_weight)
-    model.to(config.device)
-
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
-    total_steps = max(1, len(train_loader) * config.num_epochs)
-    warmup_steps = int(total_steps * config.warmup_ratio)
-    scheduler = get_linear_schedule_with_warmup(
-        optimizer, num_warmup_steps=warmup_steps, num_training_steps=total_steps
-    )
-    scaler = torch.amp.GradScaler("cuda", enabled=config.fp16)
-
-    best_f1 = -1.0
-    thresholds = _thresholds_05(active_labels)
-
-    for epoch in range(config.num_epochs):
-        model.train()
-        for batch in tqdm(train_loader, desc=f"Epoch {epoch+1}"):
-            batch = {k: v.to(config.device) for k, v in batch.items()}
-            with torch.amp.autocast("cuda", enabled=config.fp16):
-                outputs = model(**batch)
-                loss = outputs["loss"]
-            scaler.scale(loss).backward()
-            scaler.step(optimizer)
-            scaler.update()
-            scheduler.step()
-            optimizer.zero_grad()
-
-        # Validation
-        model.eval()
-        val_probs = []
-        with torch.no_grad():
-            for batch in val_loader:
-                batch = {k: v.to(config.device) for k, v in batch.items()}
-                out = model(**batch)
-                val_probs.append(torch.sigmoid(out["logits"]).cpu().numpy())
-        val_probs = np.vstack(val_probs) if val_probs else np.zeros((0, len(active_labels)), dtype=float)
-
-        val_metrics = _metrics_at_thresholds(val_y, val_probs, active_labels, thresholds)
-        macro_f1 = float(val_metrics["macro_f1"])
-        print(f"Epoch {epoch+1} Val Macro F1: {macro_f1:.4f}")
-
-        if macro_f1 > best_f1:
-            best_f1 = macro_f1
-            print("Saving best model...")
-            model.save_pretrained(config.output_dir)
-            tokenizer.tokenizer.save_pretrained(config.output_dir / "tokenizer")
-
-            (config.output_dir / "label_fields.json").write_text(json.dumps(active_labels, indent=2) + "\n")
-            (config.output_dir / "dormant_labels.json").write_text(json.dumps(dormant_labels, indent=2) + "\n")
-            (config.output_dir / "thresholds.json").write_text(json.dumps(thresholds, indent=2) + "\n")
-
-            metrics = {
-                "best_val_macro_f1": best_f1,
-                "val_metrics": val_metrics,
-                "config": {
-                    "model_name": config.model_name,
-                    "batch_size": config.batch_size,
-                    "learning_rate": config.learning_rate,
-                    "num_epochs": config.num_epochs,
-                    "loss": "bce",
-                    "schema_labels": schema_labels,
-                    "active_labels": active_labels,
-                    "dormant_labels": dormant_labels,
-                    "dormant_mode": config.dormant_mode,
-                    "dormant_min_positives": int(config.dormant_min_positives),
-                },
-            }
-            (config.output_dir / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
-
-    # Test evaluation (on best checkpoint)
-    best_model = RoBERTaPM3MultiLabel.from_pretrained(config.output_dir, num_labels=len(active_labels))
-    best_model.to(config.device)
-    best_model.eval()
-    test_probs = []
-    with torch.no_grad():
-        for batch in tqdm(test_loader, desc="Testing"):
-            batch = {k: v.to(config.device) for k, v in batch.items()}
-            out = best_model(**batch)
-            test_probs.append(torch.sigmoid(out["logits"]).cpu().numpy())
-    test_probs = np.vstack(test_probs) if test_probs else np.zeros((0, len(active_labels)), dtype=float)
-    test_metrics = _metrics_at_thresholds(test_y, test_probs, active_labels, thresholds)
-
-    metrics_path = config.output_dir / "metrics.json"
-    metrics = json.loads(metrics_path.read_text()) if metrics_path.exists() else {}
-    metrics["test_metrics"] = test_metrics
-    metrics_path.write_text(json.dumps(metrics, indent=2) + "\n")
-
-    print(f"Training complete. Best Val Macro F1: {best_f1:.4f}")
-    return metrics
-
-
-def evaluate_only(model_dir: Path, config: TrainingConfig) -> dict[str, Any]:
-    label_fields_path = model_dir / "label_fields.json"
-    if not label_fields_path.exists():
-        raise SystemExit(f"Missing label_fields.json in model dir: {model_dir}")
-    label_fields = load_label_fields_json(label_fields_path)
-
-    thresholds_path = model_dir / "thresholds.json"
-    thresholds = _thresholds_05(label_fields)
-    if thresholds_path.exists():
-        data = json.loads(thresholds_path.read_text())
-        if isinstance(data, dict):
-            thresholds = {k: float(v["threshold"] if isinstance(v, dict) and "threshold" in v else v) for k, v in data.items()}
-
-    test_texts, test_y, _ = load_registry_csv(config.test_csv, required_labels=label_fields)
-
-    tokenizer_dir = model_dir / "tokenizer"
-    tokenizer = HeadTailTokenizer(
-        AutoTokenizer.from_pretrained(str(tokenizer_dir if tokenizer_dir.exists() else model_dir)),
-        max_length=config.max_length,
-        head_tokens=config.head_tokens,
-        tail_tokens=config.tail_tokens,
-    )
-    test_ds = RegistryDataset(test_texts, test_y, tokenizer)
-    test_loader = DataLoader(test_ds, batch_size=config.batch_size)
-
-    model = RoBERTaPM3MultiLabel.from_pretrained(model_dir, num_labels=len(label_fields))
-    model.to(config.device)
-    model.eval()
-
-    probs = []
-    with torch.no_grad():
-        for batch in tqdm(test_loader, desc="Evaluating"):
-            batch = {k: v.to(config.device) for k, v in batch.items()}
-            out = model(**batch)
-            probs.append(torch.sigmoid(out["logits"]).cpu().numpy())
-    probs = np.vstack(probs) if probs else np.zeros((0, len(label_fields)), dtype=float)
-
-    metrics = _metrics_at_thresholds(test_y, probs, label_fields, thresholds)
-    out = {"test_metrics": metrics, "model_dir": str(model_dir), "labels": label_fields}
-    print(json.dumps(out["test_metrics"], indent=2))
-    return out
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model-name", type=str, default=TrainingConfig.model_name)
-    parser.add_argument("--output-dir", type=Path, default=Path("data/models/roberta_pm3_registry"))
-    parser.add_argument("--train-csv", type=Path, default=Path("data/ml_training/registry_train.csv"))
-    parser.add_argument("--val-csv", type=Path, default=Path("data/ml_training/registry_val.csv"))
-    parser.add_argument("--test-csv", type=Path, default=Path("data/ml_training/registry_test.csv"))
-    parser.add_argument("--batch-size", type=int, default=16)
-    parser.add_argument("--epochs", type=int, default=5)
-    parser.add_argument("--lr", type=float, default=2e-5)
-    parser.add_argument("--no-fp16", action="store_true")
-    parser.add_argument("--dormant-mode", choices=["auto", "schema", "none"], default="auto")
-    parser.add_argument("--dormant-min-positives", type=int, default=20)
-    parser.add_argument("--evaluate-only", action="store_true")
-    parser.add_argument("--model-dir", type=Path, help="Model directory for --evaluate-only")
-    args = parser.parse_args()
-
-    config = TrainingConfig(
-        model_name=args.model_name,
-        train_csv=args.train_csv,
-        val_csv=args.val_csv,
-        test_csv=args.test_csv,
-        output_dir=args.output_dir,
-        batch_size=int(args.batch_size),
-        num_epochs=int(args.epochs),
-        learning_rate=float(args.lr),
-        fp16=not bool(args.no_fp16),
-        dormant_mode=str(args.dormant_mode),
-        dormant_min_positives=int(args.dormant_min_positives),
-    )
-
-    if args.evaluate_only:
-        if not args.model_dir:
-            raise SystemExit("--model-dir is required with --evaluate-only")
-        evaluate_only(Path(args.model_dir), config)
-    else:
-        train(config)
-
-```
-
----
-### `scripts/fix_alignment.py`
-- Size: `23467` bytes
-```
-from __future__ import annotations
-
-import argparse
-import ast
-import glob
-import json
-import os
-import re
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any
-
-# ================= CONFIGURATION =================
-# Update these if your folder names or keys are different
-REPO_ROOT = Path(__file__).resolve().parents[1]
-# Directory containing your .json files (defaults to your full note-text store)
-INPUT_DIR = REPO_ROOT / "data" / "knowledge" / "patient_note_texts_complete"
-# Directory to save fixed files (write to a sibling folder by default)
-OUTPUT_DIR = REPO_ROOT / "data" / "knowledge" / "patient_note_texts_complete_fixed"
-TEXT_KEY = "text"           # Key for the full note text
-LABELS_KEY = "labels"       # Key for the list of entities (e.g., "labels", "spans", "entities")
-# =================================================
-
-DEFAULT_UPDATE_SCRIPTS_DIR = REPO_ROOT / "data" / "granular annotations" / "Python_update_scripts"
-
-
-def _normalize_whitespace(text: str) -> str:
-    return " ".join(text.split())
-
-
-def _find_candidates(haystack: str, needle: str) -> list[tuple[int, int]]:
-    if not needle:
-        return []
-    pat = re.escape(needle)
-    cands = [(m.start(), m.end()) for m in re.finditer(pat, haystack)]
-    if cands:
-        return cands
-    return [(m.start(), m.end()) for m in re.finditer(pat, haystack, re.IGNORECASE)]
-
-
-def _entity_get_offsets(entity: Any) -> tuple[int | None, int | None]:
-    if isinstance(entity, dict):
-        s = entity.get("start_char", entity.get("start"))
-        e = entity.get("end_char", entity.get("end"))
-        if s is None:
-            s = entity.get("start_offset")
-        if e is None:
-            e = entity.get("end_offset")
-        return (s if isinstance(s, int) else None), (e if isinstance(e, int) else None)
-    if isinstance(entity, (list, tuple)) and len(entity) >= 2:
-        s, e = entity[0], entity[1]
-        return (s if isinstance(s, int) else None), (e if isinstance(e, int) else None)
-    return None, None
-
-
-def _entity_get_text(entity: Any) -> str | None:
-    if isinstance(entity, dict):
-        t = entity.get("text", entity.get("span_text"))
-        return t if isinstance(t, str) else None
-    if isinstance(entity, (list, tuple)) and len(entity) >= 4:
-        t = entity[3]
-        return t if isinstance(t, str) else None
-    return None
-
-
-def _entity_set(entity: Any, start: int, end: int, text: str | None) -> Any:
-    if isinstance(entity, dict):
-        entity["start"] = start
-        entity["end"] = end
-        if "start_char" in entity:
-            entity["start_char"] = start
-        if "end_char" in entity:
-            entity["end_char"] = end
-        if "start_offset" in entity:
-            entity["start_offset"] = start
-        if "end_offset" in entity:
-            entity["end_offset"] = end
-        if text is not None:
-            entity["text"] = text
-            if "span_text" in entity:
-                entity["span_text"] = text
-        return entity
-    if isinstance(entity, list):
-        if len(entity) >= 1:
-            entity[0] = start
-        if len(entity) >= 2:
-            entity[1] = end
-        if text is not None:
-            if len(entity) >= 4:
-                entity[3] = text
-            elif len(entity) == 3:
-                entity.append(text)
-        return entity
-    if isinstance(entity, tuple):
-        lst = list(entity)
-        if len(lst) >= 1:
-            lst[0] = start
-        if len(lst) >= 2:
-            lst[1] = end
-        if text is not None:
-            if len(lst) >= 4:
-                lst[3] = text
-            elif len(lst) == 3:
-                lst.append(text)
-        return lst
-    return entity
-
-
-@dataclass
-class FixCounts:
-    notes_processed: int = 0
-    notes_changed: int = 0
-    notes_text_overridden: int = 0
-    spans_checked: int = 0
-    fixed_offsets: int = 0
-    fixed_text: int = 0
-    dropped: int = 0
-    unchanged: int = 0
-    invalid_kept: int = 0
-    failures: list[dict[str, Any]] = field(default_factory=list)
-
-
-def _resolve_str(node: ast.AST, env: dict[str, str]) -> str | None:
-    """
-    Resolve a string value from an AST node using a simple constant-name environment.
-    Supports:
-      - Constant("...")
-      - Name("VAR") where env["VAR"] is a string constant
-    """
-    if isinstance(node, ast.Constant) and isinstance(node.value, str):
-        return node.value
-    if isinstance(node, ast.Name):
-        return env.get(node.id)
-    return None
-
-
-def load_note_texts_from_update_scripts(update_scripts_dir: Path) -> dict[str, str]:
-    """
-    Build a note_id -> note_text mapping by statically parsing update scripts.
-
-    Supported patterns in scripts:
-      - BATCH_DATA.append({"id": "...", "text": text_1, ...}) where text_1 is a string literal
-      - add_case(note_id="...", raw_text="...") or add_case(note_id=NOTE_ID, raw_text=RAW_TEXT)
-
-    We do NOT execute these scripts.
-    """
-    mapping: dict[str, str] = {}
-
-    py_files = sorted(update_scripts_dir.glob("*.py"))
-    for p in py_files:
-        try:
-            src = p.read_text(encoding="utf-8")
-        except Exception:
-            continue
-
-        try:
-            tree = ast.parse(src, filename=str(p))
-        except SyntaxError:
-            continue
-
-        # Collect simple constant string assignments.
-        env: dict[str, str] = {}
-        for node in tree.body:
-            if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
-                val = _resolve_str(node.value, env)
-                if val is not None:
-                    env[node.targets[0].id] = val
-            elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
-                if node.value is None:
-                    continue
-                val = _resolve_str(node.value, env)
-                if val is not None:
-                    env[node.target.id] = val
-
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Call):
-                continue
-
-            # Pattern 1: BATCH_DATA.append({...})
-            if isinstance(node.func, ast.Attribute) and node.func.attr == "append":
-                if isinstance(node.func.value, ast.Name) and node.func.value.id == "BATCH_DATA" and node.args:
-                    arg0 = node.args[0]
-                    if isinstance(arg0, ast.Dict):
-                        keys = arg0.keys
-                        vals = arg0.values
-                        d: dict[str, ast.AST] = {}
-                        for k, v in zip(keys, vals):
-                            if isinstance(k, ast.Constant) and isinstance(k.value, str):
-                                d[k.value] = v
-                        if "id" in d and "text" in d:
-                            note_id = _resolve_str(d["id"], env)
-                            note_text = _resolve_str(d["text"], env)
-                            if note_id and note_text:
-                                mapping[note_id] = note_text
-
-            # Pattern 2: add_case(note_id=..., raw_text=...)
-            func_name = None
-            if isinstance(node.func, ast.Name):
-                func_name = node.func.id
-            elif isinstance(node.func, ast.Attribute):
-                func_name = node.func.attr
-
-            if func_name == "add_case":
-                kw = {k.arg: k.value for k in node.keywords if k.arg}
-                if "note_id" in kw and "raw_text" in kw:
-                    note_id = _resolve_str(kw["note_id"], env)
-                    note_text = _resolve_str(kw["raw_text"], env)
-                    if note_id and note_text:
-                        mapping[note_id] = note_text
-
-    return mapping
-
-
-def _fix_entities_in_text(
-    note_text: str,
-    entities: list[Any],
-    *,
-    threshold: int,
-    fix_whitespace_mismatch: bool,
-    keep_text_on_mismatch: bool,
-    drop_unfixable: bool,
-    note_id: str | None,
-    counts: FixCounts,
-) -> list[Any]:
-    fixed: list[Any] = []
-
-    for idx, ent in enumerate(entities):
-        counts.spans_checked += 1
-
-        start, end = _entity_get_offsets(ent)
-        ent_text = _entity_get_text(ent)
-
-        # If offsets are valid, we can always make the record internally consistent.
-        # Strategy:
-        # - If text matches slice -> unchanged
-        # - Else: try relocating offsets using ent_text (if available)
-        # - Else: rewrite ent_text to match current offsets (unless opted out)
-        if start is not None and end is not None and 0 <= start <= end <= len(note_text):
-            extracted = note_text[start:end]
-
-            if ent_text is None:
-                fixed.append(_entity_set(ent, start, end, extracted))
-                counts.fixed_text += 1
-                continue
-
-            if extracted == ent_text:
-                fixed.append(ent)
-                counts.unchanged += 1
-                continue
-
-            if fix_whitespace_mismatch and _normalize_whitespace(extracted) == _normalize_whitespace(ent_text):
-                fixed.append(_entity_set(ent, start, end, extracted))
-                counts.fixed_text += 1
-                continue
-
-            # Try to fix offsets by locating the labeled text.
-            cands = _find_candidates(note_text, ent_text)
-            if cands:
-                new_start, new_end = min(cands, key=lambda x: abs(x[0] - start))
-                diff = abs(new_start - start)
-                if diff <= threshold:
-                    fixed.append(_entity_set(ent, new_start, new_end, note_text[new_start:new_end]))
-                    counts.fixed_offsets += 1
-                    continue
-
-            # Fall back: keep offsets, but rewrite the stored text to match them.
-            if not keep_text_on_mismatch:
-                fixed.append(_entity_set(ent, start, end, extracted))
-                counts.fixed_text += 1
-                continue
-
-        # Otherwise, relocate using the entity text (if any).
-        if not ent_text:
-            if drop_unfixable:
-                counts.dropped += 1
-            else:
-                fixed.append(ent)
-                counts.invalid_kept += 1
-                counts.failures.append(
-                    {
-                        "note_id": note_id,
-                        "entity_index": idx,
-                        "reason": "missing_text_and_invalid_offsets",
-                        "start": start,
-                        "end": end,
-                    }
-                )
-            continue
-
-        cands = _find_candidates(note_text, ent_text)
-        if not cands:
-            if drop_unfixable:
-                counts.dropped += 1
-            else:
-                fixed.append(ent)
-                counts.invalid_kept += 1
-                counts.failures.append(
-                    {
-                        "note_id": note_id,
-                        "entity_index": idx,
-                        "reason": "text_not_found",
-                        "start": start,
-                        "end": end,
-                        "text": ent_text[:200],
-                    }
-                )
-            continue
-
-        if start is None:
-            new_start, new_end = cands[0]
-            fixed.append(_entity_set(ent, new_start, new_end, note_text[new_start:new_end]))
-            counts.fixed_offsets += 1
-            continue
-
-        new_start, new_end = min(cands, key=lambda x: abs(x[0] - start))
-        diff = abs(new_start - start)
-        if diff <= threshold:
-            fixed.append(_entity_set(ent, new_start, new_end, note_text[new_start:new_end]))
-            counts.fixed_offsets += 1
-            continue
-
-        if drop_unfixable:
-            counts.dropped += 1
-        else:
-            fixed.append(ent)
-            counts.invalid_kept += 1
-            counts.failures.append(
-                {
-                    "note_id": note_id,
-                    "entity_index": idx,
-                    "reason": "candidate_too_far",
-                    "distance": diff,
-                    "start": start,
-                    "end": end,
-                    "best_start": new_start,
-                    "best_end": new_end,
-                    "text": ent_text[:200],
-                }
-            )
-
-    return fixed
-
-
-def fix_alignment_dir(
-    *,
-    input_dir: Path,
-    output_dir: Path,
-    text_key: str,
-    labels_key: str,
-    threshold: int,
-    fix_whitespace_mismatch: bool,
-    drop_unfixable: bool,
-) -> FixCounts:
-    counts = FixCounts()
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    files = glob.glob(os.path.join(str(input_dir), "*.json"))
-    print(f"Found {len(files)} files in {input_dir}. Starting alignment fix (dir mode)...")
-
-    for file_path in files:
-        filename = os.path.basename(file_path)
-        if filename in ["stats.json", "ner_bio_format.stats.json"]:
-            continue
-
-        try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        except Exception as e:
-            counts.failures.append({"file": filename, "reason": f"json_read_error: {e}"})
-            continue
-
-        if text_key not in data or labels_key not in data:
-            continue
-
-        note_text = data.get(text_key) or ""
-        if not isinstance(note_text, str):
-            note_text = str(note_text)
-
-        ents = data.get(labels_key) or []
-        if not isinstance(ents, list):
-            continue
-
-        counts.notes_processed += 1
-        fixed_ents = _fix_entities_in_text(
-            note_text=note_text,
-            entities=ents,
-            threshold=threshold,
-            fix_whitespace_mismatch=fix_whitespace_mismatch,
-            keep_text_on_mismatch=False,
-            drop_unfixable=drop_unfixable,
-            note_id=filename,
-            counts=counts,
-        )
-        if fixed_ents != ents:
-            counts.notes_changed += 1
-            data[labels_key] = fixed_ents
-
-        out_path = output_dir / filename
-        out_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-
-    return counts
-
-
-def fix_alignment_jsonl(
-    *,
-    input_jsonl: Path,
-    output_jsonl: Path,
-    entities_key: str,
-    threshold: int,
-    fix_whitespace_mismatch: bool,
-    keep_text_on_mismatch: bool,
-    drop_unfixable: bool,
-    limit_records: int | None,
-    report_path: Path | None,
-    note_text_map: dict[str, str] | None = None,
-    only_note_ids: set[str] | None = None,
-) -> FixCounts:
-    counts = FixCounts()
-    output_jsonl.parent.mkdir(parents=True, exist_ok=True)
-
-    with input_jsonl.open("r", encoding="utf-8") as f_in, output_jsonl.open("w", encoding="utf-8") as f_out:
-        for line_num, line in enumerate(f_in, 1):
-            raw = line.strip()
-            if not raw:
-                continue
-            rec = json.loads(raw)
-
-            note_id = str(rec.get("id") or rec.get("note_id") or f"line_{line_num}")
-            if only_note_ids is not None and note_id not in only_note_ids:
-                f_out.write(json.dumps(rec) + "\n")
-                continue
-
-            # Use update-script text as authoritative note text if available.
-            if note_text_map is not None and note_id in note_text_map:
-                note_text = note_text_map[note_id]
-                # Ensure the output record uses the authoritative text so offsets align.
-                if rec.get("text") != note_text:
-                    counts.notes_text_overridden += 1
-                rec["text"] = note_text
-            else:
-                note_text = rec.get("text") or ""
-                if not isinstance(note_text, str):
-                    note_text = str(note_text)
-
-            ents = rec.get(entities_key, [])
-            if not isinstance(ents, list):
-                counts.failures.append({"note_id": note_id, "line": line_num, "reason": f"{entities_key}_not_a_list"})
-                f_out.write(json.dumps(rec) + "\n")
-                continue
-
-            counts.notes_processed += 1
-            fixed_ents = _fix_entities_in_text(
-                note_text=note_text,
-                entities=ents,
-                threshold=threshold,
-                fix_whitespace_mismatch=fix_whitespace_mismatch,
-                keep_text_on_mismatch=keep_text_on_mismatch,
-                drop_unfixable=drop_unfixable,
-                note_id=note_id,
-                counts=counts,
-            )
-            if fixed_ents != ents:
-                counts.notes_changed += 1
-                rec[entities_key] = fixed_ents
-
-            f_out.write(json.dumps(rec) + "\n")
-
-            if limit_records is not None and counts.notes_processed >= limit_records:
-                break
-
-    if report_path is not None:
-        report_path.parent.mkdir(parents=True, exist_ok=True)
-        payload = {
-            "input_jsonl": str(input_jsonl),
-            "output_jsonl": str(output_jsonl),
-            "entities_key": entities_key,
-            "threshold": threshold,
-            "fix_whitespace_mismatch": fix_whitespace_mismatch,
-            "drop_unfixable": drop_unfixable,
-            "limit_records": limit_records,
-            "counts": {
-                "notes_processed": counts.notes_processed,
-                "notes_changed": counts.notes_changed,
-                "notes_text_overridden": counts.notes_text_overridden,
-                "spans_checked": counts.spans_checked,
-                "fixed_offsets": counts.fixed_offsets,
-                "fixed_text": counts.fixed_text,
-                "dropped": counts.dropped,
-                "unchanged": counts.unchanged,
-                "invalid_kept": counts.invalid_kept,
-            },
-            "failures_sample": counts.failures[:200],
-        }
-        report_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-
-    return counts
-
-
-def parse_args() -> argparse.Namespace:
-    ap = argparse.ArgumentParser(description="Fix misaligned start/end offsets in labeled note data (JSON dir or JSONL).")
-    mode = ap.add_mutually_exclusive_group(required=False)
-    mode.add_argument(
-        "--input-jsonl",
-        default=None,
-        help="JSONL file to fix (e.g. data/ml_training/granular_ner/ner_dataset_all.jsonl).",
-    )
-    mode.add_argument(
-        "--input-dir",
-        default=str(INPUT_DIR),
-        help="Directory containing note JSON files (default: data/knowledge/patient_note_texts_complete).",
-    )
-    ap.add_argument(
-        "--output-jsonl",
-        default=None,
-        help="Where to write fixed JSONL (default: <input>.fixed.jsonl).",
-    )
-    ap.add_argument(
-        "--entities-key",
-        default="entities",
-        help="JSONL key for entity list (default: entities).",
-    )
-    ap.add_argument(
-        "--threshold",
-        type=int,
-        default=100,
-        help="Max allowed shift (chars) when relocating entity text (default: 100).",
-    )
-    ap.add_argument(
-        "--fix-whitespace-mismatch",
-        action="store_true",
-        help="If offsets are valid but entity text differs only by whitespace, rewrite text to match slice.",
-    )
-    ap.add_argument(
-        "--keep-text-on-mismatch",
-        action="store_true",
-        help="If offsets are valid but entity text mismatches, do NOT rewrite text to match offsets (default: rewrite).",
-    )
-    ap.add_argument(
-        "--drop-unfixable",
-        action="store_true",
-        help="Drop spans that cannot be aligned (default: keep and report).",
-    )
-    ap.add_argument(
-        "--limit-records",
-        type=int,
-        default=None,
-        help="Only process first N JSONL records (debugging).",
-    )
-    ap.add_argument(
-        "--report",
-        default="reports/fix_alignment_report.json",
-        help="Where to write a JSON report for JSONL mode (default: reports/fix_alignment_report.json).",
-    )
-    ap.add_argument(
-        "--use-update-scripts-text",
-        action="store_true",
-        help="In JSONL mode, override record['text'] using note texts parsed from update scripts.",
-    )
-    ap.add_argument(
-        "--update-scripts-dir",
-        default=str(DEFAULT_UPDATE_SCRIPTS_DIR),
-        help="Directory containing update scripts (default: data/granular annotations/Python_update_scripts).",
-    )
-    ap.add_argument(
-        "--only-note-ids",
-        default=None,
-        help="Comma-separated list of note IDs to process (others are passed through unchanged).",
-    )
-    ap.add_argument(
-        "--output-dir",
-        default=str(OUTPUT_DIR),
-        help="Directory to write fixed note JSON files (default: data/knowledge/patient_note_texts_complete_fixed).",
-    )
-    ap.add_argument(
-        "--text-key",
-        default=TEXT_KEY,
-        help="JSON key for the note text (default: text).",
-    )
-    ap.add_argument(
-        "--labels-key",
-        default=LABELS_KEY,
-        help="JSON key for the list of spans/entities (default: labels).",
-    )
-    return ap.parse_args()
-
-if __name__ == "__main__":
-    args = parse_args()
-    if args.input_jsonl:
-        in_path = Path(args.input_jsonl)
-        out_path = Path(args.output_jsonl) if args.output_jsonl else in_path.with_suffix(".fixed.jsonl")
-
-        note_text_map = None
-        if args.use_update_scripts_text:
-            note_text_map = load_note_texts_from_update_scripts(Path(args.update_scripts_dir))
-
-        only_ids = None
-        if args.only_note_ids:
-            only_ids = {s.strip() for s in str(args.only_note_ids).split(",") if s.strip()}
-
-        counts = fix_alignment_jsonl(
-            input_jsonl=in_path,
-            output_jsonl=out_path,
-            entities_key=args.entities_key,
-            threshold=int(args.threshold),
-            fix_whitespace_mismatch=bool(args.fix_whitespace_mismatch),
-            keep_text_on_mismatch=bool(args.keep_text_on_mismatch),
-            drop_unfixable=bool(args.drop_unfixable),
-            limit_records=args.limit_records,
-            report_path=Path(args.report) if args.report else None,
-            note_text_map=note_text_map,
-            only_note_ids=only_ids,
-        )
-        print("-" * 30)
-        print("Done (JSONL mode).")
-        print(f"Notes processed:     {counts.notes_processed}")
-        print(f"Notes changed:       {counts.notes_changed}")
-        print(f"Total spans checked: {counts.spans_checked}")
-        print(f"Fixed offsets:       {counts.fixed_offsets}")
-        print(f"Fixed text:          {counts.fixed_text}")
-        print(f"Dropped:             {counts.dropped}")
-        print(f"Invalid/kept:        {counts.invalid_kept}")
-        print(f"Wrote: {out_path}")
-        if args.report:
-            print(f"Report: {args.report}")
-    else:
-        counts = fix_alignment_dir(
-            input_dir=Path(args.input_dir),
-            output_dir=Path(args.output_dir),
-            text_key=args.text_key,
-            labels_key=args.labels_key,
-            threshold=int(args.threshold),
-            fix_whitespace_mismatch=bool(args.fix_whitespace_mismatch),
-            drop_unfixable=bool(args.drop_unfixable),
-        )
-        print("-" * 30)
-        print("Done (dir mode).")
-        print(f"Notes processed:     {counts.notes_processed}")
-        print(f"Notes changed:       {counts.notes_changed}")
-        print(f"Total spans checked: {counts.spans_checked}")
-        print(f"Fixed offsets:       {counts.fixed_offsets}")
-        print(f"Fixed text:          {counts.fixed_text}")
-        print(f"Dropped:             {counts.dropped}")
-        print(f"Invalid/kept:        {counts.invalid_kept}")
 
 ```
