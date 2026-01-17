@@ -1,0 +1,11 @@
+{
+  "IP2026047_syn_1": "Procedure: Rigid Bronchoscopy.\n- Path: L Mainstem stenosis (GPA).\n- Action: Radial cuts, APC, Balloon dilation.\n- Complication: Airway injury -> L Chest Tube (32551).\n- Result: Improved patency.",
+  "IP2026047_syn_2": "Operative Report: The patient with granulomatosis with polyangiitis and severe left mainstem stenosis underwent rigid bronchoscopy. The stenosis was managed with radial knife incisions, argon plasma coagulation (APC), and balloon dilation. During the procedure, a transmural airway injury occurred. A left-sided tube thoracostomy was immediately performed to manage the resulting pneumothorax.",
+  "IP2026047_syn_3": "Codes:\n- 31641: Bronchoscopy with lysis of stenosis (Knife/APC/Balloon).\n- 32551: Tube thoracostomy (Chest tube) for complication management.\nNote: 31622 bundled. 31630 bundled into 31641? Or 31641 covers 'any method'.",
+  "IP2026047_syn_4": "Resident Note:\n- Rigid scope inserted.\n- Severe LMS stenosis found.\n- Tx: Cuts, APC, Balloon.\n- Complication: Tear in airway.\n- Action: Chest tube placed left side.\n- Pt stable.",
+  "IP2026047_syn_5": "tough case. rigid bronch for gpa stenosis in the left main. used the knife and apc and balloon. balloon caused a tear so we had to put in a chest tube on the left. airway is open now though.",
+  "IP2026047_syn_6": "Rigid bronchoscopy for severe left mainstem bronchial stenosis due to granulomatosis with polyangiitis. Radial knife incisions, APC, and balloon dilation were used. An airway injury occurred, requiring immediate placement of a left chest tube.",
+  "IP2026047_syn_7": "[Indication] LMS Stenosis (GPA).\n[Anesthesia] General/Rigid.\n[Description] Stenosis relieved via knife/APC/Balloon (31641). Airway injury noted. Tube thoracostomy performed (32551).\n[Plan] Monitor air leak.",
+  "IP2026047_syn_8": "We performed a rigid bronchoscopy to treat severe stenosis in the left mainstem bronchus caused by GPA. We used a radial knife, APC, and balloon dilation to open the airway. Unfortunately, the dilation resulted in an airway injury, so we placed a left chest tube to treat the complication.",
+  "IP2026047_syn_9": "Rigid bronchoscopy for severe left mainstem bronchial constriction using radial knife incisions, APC, and balloon expansion. The procedure was complicated by airway trauma necessitating left tube thoracostomy."
+}

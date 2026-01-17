@@ -1,0 +1,11 @@
+{
+  "IP2026048_syn_1": "Procedure: Medical Pleuroscopy (32650).\n- Indication: Recurrent exudative effusion, neg cytology.\n- Action: Inspection, Biopsies, Talc Pleurodesis.\n- Result: Fluid drained, talc insufflated.",
+  "IP2026048_syn_2": "Procedure Note: A semi-rigid pleuroscopy was performed for evaluation of a recurrent right exudative pleural effusion. The pleural space was inspected, revealing nodularities which were biopsied. Given the recurrent nature, a talc poudrage pleurodesis was performed to prevent reaccumulation.",
+  "IP2026048_syn_3": "Coding: 32650 (Thoracoscopy with pleurodesis). This code includes the diagnostic inspection (32601) and the administration of the pleurodesis agent. Biopsy is technically part of the diagnostic look if not separate code, but 32650 is the primary therapeutic code here.",
+  "IP2026048_syn_4": "Resident Note:\n- Trocar placed.\n- Pleuroscope inserted.\n- Drained fluid.\n- Saw nodules -> biopsied.\n- Sprayed talc for pleurodesis.\n- Chest tube placed.",
+  "IP2026048_syn_5": "did a pleuroscopy for the recurrent effusion. looked inside took some biopsies of the pleura. put in talc for pleurodesis so it doesnt come back. chest tube in place.",
+  "IP2026048_syn_6": "Planned pleuroscopy for recurrent right exudative pleural effusion with prior negative cytology. The pleural space was inspected, biopsies were taken, and talc pleurodesis was performed.",
+  "IP2026048_syn_7": "[Indication] Recurrent effusion.\n[Anesthesia] MAC/Local.\n[Description] Pleuroscopy performed. Fluid drained. Pleura biopsied. Talc pleurodesis (32650) completed.\n[Plan] Chest tube to suction.",
+  "IP2026048_syn_8": "We took the patient for a pleuroscopy to investigate their recurrent pleural effusion. We drained the fluid and inspected the pleural cavity, taking biopsies of abnormal areas. We then performed a pleurodesis with talc to seal the space.",
+  "IP2026048_syn_9": "Scheduled pleuroscopy for recurring right exudative pleural effusion with previous negative cytology, intended for pleural examination, sampling, and pleurodesis."
+}

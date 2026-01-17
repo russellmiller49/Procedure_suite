@@ -1,0 +1,732 @@
+{
+  "started_at": "2026-01-16T18:58:40.733608+00:00",
+  "elapsed_seconds": 3.127643,
+  "python": "/home/rjm/miniconda3/bin/python",
+  "scripts_dir": "data/granular annotations/Python_update_scripts",
+  "pattern": "*.py",
+  "total_scripts": 158,
+  "failed_scripts": 103,
+  "failures": [
+    {
+      "script": "data/granular annotations/Python_update_scripts/1005321.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021905,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1005321.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1007314.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019815,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1007314.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1028374.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020806,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1028374.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1029384.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020529,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1029384.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1034928.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.022017,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1034928.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1080868.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020024,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1080868.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1145427.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019182,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1145427.py\", line 11, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1211095.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016016,
+      "stdout": "Error: Could not import 'add_case' from 'scripts.add_training_case'.\nEnsure your project structure is correct and the script is running from the right location.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1225416.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019847,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1225416.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1232915.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020376,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1232915.py\", line 11, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/123789.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020307,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/123789.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1248551.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020149,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1248551.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1256170.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020701,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1256170.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1269056.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.022233,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1269056.py\", line 11, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1334901.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020513,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1334901.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1367281.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020208,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1367281.py\", line 15, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1375843.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021032,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1375843.py\", line 11, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1377952.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020033,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1377952.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1377952.py\", line 14, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1391425.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021248,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1391425.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1395844.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020097,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1395844.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1395844.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1432446.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016167,
+      "stdout": "Error: Could not import 'add_case' from 'scripts.add_training_case'.\nEnsure the repository structure is correct.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1464511.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020792,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1464511.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1478392.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020823,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1478392.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1490801.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019431,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1490801.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1494096.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021794,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1494096.py\", line 202, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"Brushings\", 3)}, # Specimens section\n                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1494096.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Brushings' (occurrence 3) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1541787.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020118,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1541787.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1553685.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019901,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1553685.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1587446.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020115,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1587446.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1589403.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021734,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1589403.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1595295.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.0156,
+      "stdout": "Error: Could not import 'add_case'. Ensure you are running from the correct repository structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1649097.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016108,
+      "stdout": "Error: Could not import 'add_case'. Ensure the script is running in the correct repo structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1690514.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.015632,
+      "stdout": "Error: Could not import 'add_case' from 'scripts.add_training_case'. Make sure the script is run from the correct directory.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1701625.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020697,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1701625.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1701625.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1763427.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019408,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1763427.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1773250.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020026,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1773250.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1800685.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.015103,
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts.add_training_case.py\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1818780.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.015249,
+      "stdout": "Error: Could not import 'add_case'. Ensure you are running from the correct repository context.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1904503.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.02225,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1904503.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1904503.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1904504.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021468,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1904504.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1904505.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019215,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1904505.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1904506.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019662,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1904506.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1917284.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020396,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1917284.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1923847.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020983,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1923847.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1923847.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1925965.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020875,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1925965.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1938435.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021186,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1938435.py\", line 14, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/1977516.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020641,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/1977516.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/2009693.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021535,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2009693.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/2031984.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019203,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2031984.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/2034958.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021256,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2034958.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/204263.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019395,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/204263.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/204940.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.017586,
+      "stdout": "Error: Could not import 'add_case'. Ensure the script is running from the correct repository structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/2066368.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021271,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2066368.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2066368.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/213199.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020558,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/213199.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/217055.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.02071,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/217055.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/217055.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/219775.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016728,
+      "stdout": "Error: Could not import 'add_case'. Ensure you are running this from the correct repository structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/231025.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021045,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/231025.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/231025.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/234890.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020739,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/234890.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/268045.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016199,
+      "stdout": "Error: Could not import 'add_case' from 'scripts.add_training_case'.\nEnsure the script is running from the correct directory structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/345012.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019918,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/345012.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/345012.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/345678.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020127,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/345678.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/374618.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020365,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/374618.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/424242.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020124,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/424242.py\", line 15, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/436795.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020363,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/436795.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/442918.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.02102,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/442918.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/445892.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016484,
+      "stdout": "Error: Could not import 'add_case'. Ensure the script is running from the correct directory structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/456123.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021256,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/456123.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/456789.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.0193,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/456789.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/456890.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.015792,
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/493827.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016969,
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/502118.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021212,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/502118.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/555123.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016562,
+      "stdout": "Error: Could not import 'add_case'. Ensure you are running from the correct repository context.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/567123.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020079,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/567123.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/567890.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016963,
+      "stdout": "Error: Could not import 'add_case' from 'scripts.add_training_case'.\nEnsure the script is running in the correct environment/directory structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/582736.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019901,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/582736.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/651294.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016222,
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/653325.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020341,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/653325.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/659521.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.015748,
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/678234.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020181,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/678234.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/678234.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/694697.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021524,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/694697.py\", line 11, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/700001.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020824,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/700001.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/700003.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020731,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/700003.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/700004.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021599,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/700004.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/700008.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020879,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/700008.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/700010.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019884,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/700010.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/736492.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020199,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/736492.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/739185.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020936,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/739185.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/748829C.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019893,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/748829C.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/772194.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.017679,
+      "stdout": "Error: Could not import 'add_case' from 'scripts.add_training_case'.\nEnsure you are running this script from the correct repository context.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/774930.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020169,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/774930.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/781244.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020803,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/781244.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/782341.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020437,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/782341.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/782341.py\", line 14, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/789456.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019379,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/789456.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/796499.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020558,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/796499.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/821540.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020678,
+      "stdout": "WARNING: Could not import add_case. Ensure script is run within repo structure.\nStarting batch processing of 10 notes...\n",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/821540.py\", line 298, in <module>\n    add_case(case[\"id\"], case[\"text\"], case[\"entities\"], REPO_ROOT)\n    ^^^^^^^^\nNameError: name 'add_case' is not defined\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/876543.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.016878,
+      "stdout": "Error: Could not import 'add_case'. Ensure the script is in the correct directory structure.\n",
+      "stderr": ""
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/881204.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.0204,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/881204.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/891234.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.022786,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/891234.py\", line 245, in <module>\n    {\"label\": \"OBS_LESION\",   **get_span(t10, \"organized hemothorax\", 2)},\n                                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/891234.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'organized hemothorax' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/901234.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019992,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/901234.py\", line 11, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/916783.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.022164,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/916783.py\", line 10, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/916783.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/927364.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021094,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/927364.py\", line 9, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/927364.py\", line 13, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/940211.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019797,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/940211.py\", line 12, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/991283.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020783,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/991283.py\", line 8, in <module>\n    from scripts.add_training_case import add_case\nModuleNotFoundError: No module named 'scripts'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/991823.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.015938,
+      "stdout": "Error: Could not import 'add_case'. Ensure the script is run from the correct directory context.\n",
+      "stderr": ""
+    }
+  ]
+}

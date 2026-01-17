@@ -23,7 +23,8 @@ def _truthy_env(name: str) -> bool:
 _env_path = Path(__file__).resolve().parents[4] / ".env"
 # Tests can opt out (and avoid accidental real network calls) by setting `PROCSUITE_SKIP_DOTENV=1`.
 if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(_env_path, override=True)
+    # Prefer explicitly-exported environment variables over values in `.env`.
+    load_dotenv(_env_path, override=False)
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Optional

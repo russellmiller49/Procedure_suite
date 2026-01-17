@@ -31,6 +31,22 @@ def _normalize_whitespace(text: str) -> str:
     return " ".join(text.split())
 
 
+def _get_offset(ent: dict, start_key: str, end_key: str) -> tuple[int | None, int | None]:
+    start = ent.get(start_key)
+    end = ent.get(end_key)
+    if start is None and start_key == "start":
+        start = ent.get("start_char", ent.get("start_offset"))
+    if end is None and end_key == "end":
+        end = ent.get("end_char", ent.get("end_offset"))
+
+    try:
+        start_i = int(start)
+        end_i = int(end)
+    except (TypeError, ValueError):
+        return None, None
+    return start_i, end_i
+
+
 @dataclass
 class Stats:
     total_files: int = 0
@@ -115,20 +131,19 @@ def regenerate(base_dir: Path) -> tuple[Stats, list[str]]:
 
             # Support both dict entities and list-style [start,end,label] / [start,end,label,text]
             if isinstance(ent, dict):
-                start = ent.get("start")
-                end = ent.get("end")
+                start_i, end_i = _get_offset(ent, "start", "end")
                 label = ent.get("label")
-                expected = ent.get("text")
+                expected = ent.get("text", ent.get("span_text"))
             elif isinstance(ent, (list, tuple)) and len(ent) >= 3:
-                start, end, label = ent[0], ent[1], ent[2]
+                start_i, end_i, label = ent[0], ent[1], ent[2]
                 expected = ent[3] if len(ent) >= 4 else None
             else:
                 stats.alignment_errors += 1
                 continue
 
             try:
-                start_i = int(start)
-                end_i = int(end)
+                start_i = int(start_i)
+                end_i = int(end_i)
             except (TypeError, ValueError):
                 stats.alignment_errors += 1
                 continue
@@ -209,4 +224,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

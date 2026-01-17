@@ -13,6 +13,7 @@ from modules.coder.parallel_pathway.confidence_combiner import (
     ConfidenceCombiner,
     ConfidenceFactors,
 )
+from modules.coder.parallel_pathway.reconciler import CodeReconciler, ReconciledCode
 
 __all__ = [
     "ParallelPathwayOrchestrator",
@@ -20,4 +21,6 @@ __all__ = [
     "PathwayResult",
     "ConfidenceCombiner",
     "ConfidenceFactors",
+    "CodeReconciler",
+    "ReconciledCode",
 ]

@@ -16,28 +16,96 @@
 2. Generate CPT billing codes with RVU calculations
 3. Produce standardized synoptic reports
 
-## ⚠️ ARCHITECTURAL PIVOT IN PROGRESS: Extraction-First
+## 🎯 Parallel Pathway Architecture (Target State)
 
-### The Problem with Current Architecture (Prediction-First)
+The system uses a **dual-pathway approach** to balance precision (evidence) with recall (safety net):
 
-The current system uses **prediction-first** architecture:
+```
+                         Procedure Note Text
+                                │
+               ┌────────────────┴────────────────┐
+               │                                 │
+               ▼                                 ▼
+        ┌─────────────┐                  ┌─────────────┐
+        │   PATH A    │                  │   PATH B    │
+        │ "Evidence"  │                  │"Safety Net" │
+        │(NER+Rules)  │                  │    (ML)     │
+        └──────┬──────┘                  └──────┬──────┘
+               │                                │
+               ▼                                ▼
+        GranularNERPredictor             TorchRegistryPredictor
+        (BiomedBERT NER)                 (BiomedBERT Classifier)
+               │                                │
+               │ Entities                       │ Probabilities
+               │ [4R, 7, 11L, ...]              │ {linear_ebus: 0.95}
+               ▼                                │
+        NERToRegistryMapper                     │
+               │                                │
+               │ RegistryRecord                 │
+               ▼                                │
+        derive_all_codes_with_meta()            │
+               │                                │
+               │ (codes, rationales)            │
+               └────────────┬───────────────────┘
+                            ▼
+                   ConfidenceCombiner
+                   ("Evidence > Probability" Veto Logic)
+                            │
+                            ▼
+                   ParallelPathwayResult
+                   - final_codes + confidences
+                   - per-code explanations
+                   - needs_review flag
+```
+
+### Path Descriptions
+
+1. **Path A (Deterministic / "The Evidence"):**
+   - **Input:** Note Text
+   - **Model:** Granular NER (BiomedBERT) → Extracts entities (e.g., "Station 4R", "Stent")
+   - **Logic:** Entity-to-Registry Mapping → Deterministic Rules
+   - **Output:** High-precision codes backed by specific text spans
+
+2. **Path B (Probabilistic / "The Safety Net"):**
+   - **Input:** Note Text
+   - **Model:** Multi-label Classifier (RoBERTa/BiomedBERT)
+   - **Output:** Probability scores for codes (e.g., "31653: 0.92")
+
+### Reconciliation Logic ("Evidence > Probability")
+
+| Scenario | Path A (NER) | Path B (ML) | Action |
+|----------|--------------|-------------|--------|
+| Agreement | Has code | > 70% | **ACCEPT** (high confidence) |
+| Evidence wins | Has code | < 10% | **FLAG FOR REVIEW** (potential hallucination/negation) |
+| Safety net | Missing code | > 90% | **FLAG FOR REVIEW** (potential false negative) |
+| Consensus reject | Missing code | < 30% | **REJECT** (neither path found evidence) |
+
+**Key Principle ("Evidence is King")**: If Path A finds a code, **ACCEPT** it. Path A (Evidence) always takes precedence, but strong disagreement from Path B must trigger a human review flag.
+
+---
+
+## ⚠️ ARCHITECTURAL CONTEXT: Extraction-First Foundation
+
+### The Problem with Prediction-First Architecture
+
+The legacy system used **prediction-first** architecture:
 
 ```
 Text → CPT Prediction (ML/Rules) → Registry Hints → Registry Extraction
 ```
 
-**Why this is backwards:**
-- CPT codes are "summaries" — we're using summaries to reconstruct the clinical "story"
-- If the CPT model misses a code (typo, unusual phrasing), the Registry misses entire data sections
-- Auditing is difficult: "Why did you bill 31623?" can only be answered with "ML was 92% confident"
-- Negation handling is poor: "We did NOT perform biopsy" is hard for text-based ML
+**Why this was backwards:**
+- CPT codes are "summaries" — we were using summaries to reconstruct the clinical "story"
+- If the CPT model missed a code (typo, unusual phrasing), the Registry missed entire data sections
+- Auditing was difficult: "Why did you bill 31623?" could only be answered with "ML was 92% confident"
+- Negation handling was poor: "We did NOT perform biopsy" is hard for text-based ML
 
-### The Target Architecture (Extraction-First)
+### The Extraction-First Foundation
 
-We are pivoting to **extraction-first** architecture:
+The Parallel Pathway builds on **extraction-first** architecture:
 
 ```
-Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
+Text → Registry Extraction (NER/LLM) → Deterministic Rules → CPT Codes
 ```
 
 **Why this is better:**
@@ -45,7 +113,7 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 - CPT coding becomes deterministic calculation, not probabilistic prediction
 - Auditing is clear: "We billed 31653 because `len(sampled_stations) >= 3` (derived from `procedures_performed.linear_ebus.node_events` sampling actions)"
 - Negation is explicit: `performed: false` in structured data
-- The existing ML becomes a "safety net" for double-checking
+- The ML classifier becomes a "safety net" for catching false negatives
 
 ### Registry V3 Guardrails (Prompting Is Not Enough)
 
@@ -59,9 +127,9 @@ Extraction-first correctness relies on **Python-side enforcement** immediately a
 
 ---
 
-## 🧠 Parallel NER Pathway (Experimental)
+## 🧠 Parallel NER Pathway (Implementation Details)
 
-The Parallel NER Pathway implements extraction-first architecture using a trained NER model for entity extraction, combined with an ML safety net for cross-validation.
+The Parallel NER Pathway implements the extraction-first architecture using a trained NER model for entity extraction, combined with an ML safety net for cross-validation. This is the **target production architecture**.
 
 ### Architecture
 
@@ -195,11 +263,15 @@ final_confidence = 0.6 * path_a_found + 0.3 * ml_probability + 0.1 * entity_conf
 - Path B probability > 0.7, Path A missing code → Flag for review
 - Station count disagreement between paths → Flag for review
 
-### Limitations
+### Current Limitations & Mitigations
 
 1. **NER model quality**: Trained on 263 records; rare entity types have low recall
-2. **ML safety net**: Requires TorchRegistryPredictor to be available
-3. **Experimental status**: Use `parallel_ner` mode for evaluation, not production
+   - *Mitigation*: ML safety net catches codes missed by NER
+   - *Mitigation*: Review flagging alerts when paths disagree
+2. **ML safety net dependency**: Requires TorchRegistryPredictor to be available
+   - *Fallback*: Path A (NER+Rules) operates independently if ML unavailable
+3. **Review volume**: High disagreement rates increase human review workload
+   - *Mitigation*: Threshold tuning to balance precision vs review volume
 
 ---
 
@@ -218,7 +290,7 @@ python scripts/convert_spans_to_bio.py \
 
 3. **Stats**: `data/ml_training/granular_ner/stats.json` tracks entity distribution
 
-### Training
+### Training (DistilBERT - Lightweight)
 
 ```bash
 python scripts/train_distilbert_ner.py \
@@ -231,15 +303,58 @@ python scripts/train_distilbert_ner.py \
   --class-weights
 ```
 
+### Training (BiomedBERT - Higher Accuracy)
+
+For production use, train with BiomedBERT for improved clinical entity recognition:
+
+```bash
+python scripts/train_registry_ner.py \
+  --data data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --output-dir artifacts/registry_biomedbert_ner \
+  --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
+  --epochs 20 \
+  --lr 2e-5 \
+  --train-batch 8 \
+  --eval-batch 8
+```
+
+**BiomedBERT Advantages:**
+- Pre-trained on PubMed abstracts + full-text articles
+- Better understanding of medical terminology
+- Higher F1 on clinical entity types (LN stations, procedures, devices)
+
+**Training Output:**
+- `artifacts/registry_biomedbert_ner/model.safetensors` - Model weights
+- `artifacts/registry_biomedbert_ner/label_map.json` - Entity label mapping
+- `artifacts/registry_biomedbert_ner/training_metrics.json` - Per-epoch metrics
+
+### Adding New Training Cases
+
+To add a new annotated case to the training dataset:
+
+```bash
+python scripts/add_training_case.py path/to/new_case.json
+```
+
+This script:
+1. Validates the annotation format
+2. Appends to `data/ml_training/granular_ner/ner_dataset_all.jsonl`
+3. Updates entity distribution statistics
+
+After adding new cases, re-run the BIO conversion and training steps above.
+
 ### Key Files
 
 | File | Purpose |
 |------|---------|
-| `scripts/train_distilbert_ner.py` | NER model training script |
+| `scripts/train_distilbert_ner.py` | DistilBERT NER training (lightweight) |
+| `scripts/train_registry_ner.py` | BiomedBERT NER training (production) |
 | `scripts/convert_spans_to_bio.py` | Span → BIO conversion |
+| `scripts/add_training_case.py` | Add new annotated cases to training data |
 | `data/ml_training/granular_ner/stats.json` | Source annotation stats |
 | `data/ml_training/granular_ner/ner_bio_format.stats.json` | BIO training stats |
-| `artifacts/granular_ner_model/` | Trained model artifacts |
+| `artifacts/granular_ner_model/` | DistilBERT model artifacts |
+| `artifacts/registry_biomedbert_ner/` | BiomedBERT model artifacts |
 
 ---
 
@@ -1196,15 +1311,15 @@ procedure-suite/
 │   ├── common/
 │   │   ├── llm.py                     # Centralized LLM caching & retry
 │   │   └── openai_responses.py        # OpenAI Responses API wrapper
-│   ├── ner/                           # Granular NER module
+│   ├── ner/                           # [NEW] Granular NER inference & entity types
 │   │   ├── __init__.py                # Package exports
-│   │   ├── inference.py               # GranularNERPredictor (DistilBERT)
+│   │   ├── inference.py               # GranularNERPredictor (BiomedBERT)
 │   │   └── entity_types.py            # 40 entity type definitions
 │   ├── coder/
 │   │   ├── application/
 │   │   │   ├── coding_service.py      # CodingService - main entry point
 │   │   │   └── smart_hybrid_policy.py # SmartHybridOrchestrator (with fallback)
-│   │   ├── parallel_pathway/          # Parallel NER+ML pathway
+│   │   ├── parallel_pathway/          # [NEW] Parallel NER+ML pathway (Orchestrator & Confidence Reconciler)
 │   │   │   ├── __init__.py            # Package exports
 │   │   │   ├── orchestrator.py        # ParallelPathwayOrchestrator
 │   │   │   └── confidence_combiner.py # Confidence combination + review flagging
@@ -1216,8 +1331,8 @@ procedure-suite/
 │   │   └── domain/
 │   ├── registry/
 │   │   ├── application/
-│   │   │   └── registry_service.py    # RegistryService - main entry point
-│   │   ├── ner_mapping/               # NER-to-Registry mapping
+│   │   │   └── registry_service.py    # RegistryService - orchestrates parallel_ner mode
+│   │   ├── ner_mapping/               # [NEW] Maps NER entities to Registry fields
 │   │   │   ├── __init__.py            # Package exports
 │   │   │   ├── entity_to_registry.py  # NERToRegistryMapper orchestrator
 │   │   │   ├── station_extractor.py   # EBUSStationExtractor
@@ -1242,9 +1357,11 @@ procedure-suite/
 │   ├── railway_start_gunicorn.sh      # Alternative: Gunicorn prefork+preload
 │   ├── warm_models.py                 # Pre-load NLP models (optional)
 │   ├── smoke_run.sh                   # Local smoke test (/health, /ready)
-│   ├── train_roberta.py               # RoBERTa training script
-│   ├── train_distilbert_ner.py        # Granular NER training script
+│   ├── train_roberta.py               # RoBERTa classifier training (Path B)
+│   ├── train_distilbert_ner.py        # DistilBERT NER training (lightweight)
+│   ├── train_registry_ner.py          # BiomedBERT NER training (Path A, production)
 │   ├── convert_spans_to_bio.py        # Span → BIO conversion for NER
+│   ├── add_training_case.py           # Add new annotated cases to training data
 │   └── quantize_to_onnx.py            # ONNX conversion & quantization
 ├── data/
 │   ├── knowledge/
@@ -1262,11 +1379,15 @@ procedure-suite/
 ├── docs/
 │   └── optimization_12_16_25.md       # 8-phase optimization roadmap
 ├── artifacts/
-│   └── granular_ner_model/            # Trained DistilBERT NER model
-│       ├── model.safetensors          # Model weights (265MB)
-│       ├── label_map.json             # 71 BIO labels
-│       ├── config.json                # Model config
-│       └── tokenizer.json             # Tokenizer config
+│   ├── granular_ner_model/            # DistilBERT NER (lightweight, client)
+│   │   ├── model.safetensors          # Model weights (265MB)
+│   │   ├── label_map.json             # 71 BIO labels
+│   │   ├── config.json                # Model config
+│   │   └── tokenizer.json             # Tokenizer config
+│   └── registry_biomedbert_ner/       # BiomedBERT NER (Path A, production)
+│       ├── model.safetensors          # Model weights
+│       ├── label_map.json             # Entity label mapping
+│       └── training_metrics.json      # Per-epoch training metrics
 ├── models/
 │   ├── registry_model.pt              # Trained PyTorch model
 │   └── registry_model_int8.onnx       # Quantized ONNX model
@@ -1356,7 +1477,7 @@ procedure-suite/
 - `engine` - Default LLM-based extraction via RegistryEngine
 - `agents_focus_then_engine` - Focus/summarize note, then extract
 - `agents_structurer` - Use StructurerAgent for extraction
-- `parallel_ner` - **Experimental**: NER→Registry→Rules + ML safety net
+- `parallel_ner` - **Target Production**: Dual-path NER+ML with "Evidence > Probability" reconciliation
 
 ### 4. Contract-First Development
 All agents use Pydantic contracts defined in `modules/agents/contracts.py`:
@@ -1379,6 +1500,29 @@ Pipeline behavior:
 - `ok` → Continue to next stage
 - `degraded` → Continue with warning
 - `failed` → Stop pipeline, return partial results
+
+### 6. Parallel Pathway Safety Invariant
+
+> **SAFETY INVARIANT**: Never average confidence scores from Path A and Path B.
+> Path A (Evidence) always takes precedence, but strong disagreement from Path B
+> must trigger a human review flag.
+
+**Why this matters:**
+- Averaging would dilute evidence-backed decisions with probabilistic noise
+- A code found by NER with supporting text spans is fundamentally different from a probability score
+- Disagreement between paths indicates ambiguity that requires human judgment
+
+**Correct pattern:**
+```python
+# CORRECT: Evidence takes precedence
+if path_a_has_code:
+    accept_code()
+    if path_b_probability < 0.3:
+        flag_for_review("Low ML confidence despite NER evidence")
+
+# WRONG: Never do this
+final_confidence = (path_a_found + path_b_probability) / 2  # NO!
+```
 
 ---
 
@@ -1715,7 +1859,9 @@ Solutions:
 ---
 
 *Last updated: January 2026*
-*Architecture: Extraction-First with RoBERTa ML + Deterministic Rules Engine*
+*Architecture: Parallel Pathway (NER + ML) with "Evidence > Probability" reconciliation*
+*Path A: BiomedBERT NER → Registry Mapping → Deterministic Rules (evidence-backed codes)*
+*Path B: BiomedBERT Classifier → Probability scores (safety net for false negatives)*
 *Runtime: Async FastAPI + ThreadPool CPU offload + LLM concurrency control*
 *Deployment Target: Railway (ONNX INT8, Uvicorn single-worker)*
 *PHI Redactor: Hybrid ML+Regex detection with veto layer + Prodigy iterative correction*

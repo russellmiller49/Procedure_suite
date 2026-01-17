@@ -1,0 +1,1422 @@
+{
+  "input_jsonl": "data/ml_training/granular_ner/ner_dataset_all.jsonl",
+  "output_jsonl": "data/ml_training/granular_ner/ner_dataset_all.fixed.jsonl",
+  "entities_key": "entities",
+  "threshold": 100,
+  "fix_whitespace_mismatch": false,
+  "drop_unfixable": false,
+  "limit_records": null,
+  "counts": {
+    "notes_processed": 1489,
+    "notes_changed": 0,
+    "notes_text_overridden": 0,
+    "spans_checked": 27489,
+    "fixed_offsets": 36,
+    "fixed_text": 3794,
+    "dropped": 0,
+    "unchanged": 22627,
+    "invalid_kept": 1032
+  },
+  "failures_sample": [
+    {
+      "note_id": "note_063",
+      "entity_index": 0,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 1,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 2,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 3,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 4,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 5,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 6,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 7,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 8,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 9,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 10,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 11,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 12,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 13,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 14,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 15,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 16,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 17,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 18,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 19,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 20,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 21,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 22,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 23,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 24,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 25,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 26,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 27,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 28,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 29,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 30,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 31,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 32,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 33,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 34,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 35,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 36,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 37,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 38,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 39,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 40,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 41,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 42,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 43,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 44,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 45,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 46,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 47,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 48,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 49,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 50,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 51,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 52,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 53,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 54,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 55,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 56,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 57,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 58,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 59,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 60,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 61,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 62,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 63,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 64,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 65,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 66,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 67,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 68,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 69,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 70,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 71,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 72,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 73,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 74,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 75,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 76,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 77,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 78,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 79,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 80,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 81,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 82,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 83,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 84,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 85,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 86,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 87,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 88,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 89,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 90,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 91,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 92,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 93,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 94,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 95,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 96,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 97,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 98,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 99,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 100,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 101,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 102,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 103,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 104,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 105,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 106,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 107,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 108,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 109,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 110,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 111,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 112,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 113,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 114,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 115,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 116,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 117,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 118,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 119,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 120,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 121,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 122,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 123,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 124,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 125,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 126,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 127,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 128,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 129,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 130,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 131,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 132,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 133,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 134,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 135,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 136,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 137,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 138,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 139,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 140,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 141,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 142,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 143,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 144,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 145,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 146,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 147,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 148,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 149,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 150,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 151,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 152,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 153,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 154,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 155,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 156,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 157,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 158,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 159,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 160,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 161,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 162,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 163,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 164,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 165,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 166,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 167,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 168,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_063",
+      "entity_index": 169,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 0,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 1,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 2,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 3,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 4,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 5,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 6,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 7,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 8,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 9,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 10,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 11,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 12,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 13,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 14,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 15,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 16,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 17,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 18,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 19,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 20,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 21,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 22,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 23,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 24,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 25,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 26,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 27,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 28,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    },
+    {
+      "note_id": "note_140",
+      "entity_index": 29,
+      "reason": "missing_text_and_invalid_offsets",
+      "start": null,
+      "end": null
+    }
+  ]
+}

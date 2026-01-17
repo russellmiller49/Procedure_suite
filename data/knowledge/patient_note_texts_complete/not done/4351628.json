@@ -1,0 +1,11 @@
+{
+  "4351628_syn_1": "Indication: LUL Emphysema.\nProcedure: Valve Placement (4 valves).\n- 31647: LB1+2 (Initial).\n- 31651: LB3 (Add'l).\n- 31651: LB4 (Add'l).\n- 31651: LB5 (Add'l).\nResult: Total occlusion LUL.",
+  "4351628_syn_2": "PROCEDURE: Bronchoscopic Lung Volume Reduction.\nTARGET: Left Upper Lobe.\nDETAILS: The airway was sized. The first valve (Zephyr 5.5) was deployed in the apicoposterior segment (Initial Lobe, 31647). Subsequently, valves were deployed in the Anterior, Superior Lingula, and Inferior Lingula segments (Each additional bronchus, 31651 x3). Complete lobar occlusion was verified visually.",
+  "4351628_syn_3": "Billing Codes:\n- 31647 (1 unit): Initial bronchus valve placement (LB1+2).\n- 31651 (3 units): Additional bronchus valve placements (LB3, LB4, LB5).\nNote: Procedure performed in LUL. Four distinct segmental bronchi treated.",
+  "4351628_syn_4": "Procedure: BLVR LUL\nSteps:\n1. Chartis negative.\n2. Placed valve in LB1+2 (First).\n3. Placed valve in LB3 (Add-on).\n4. Placed valve in LB4 (Add-on).\n5. Placed valve in LB5 (Add-on).\nAll valves look good.",
+  "4351628_syn_5": "harold johnson here for valve placement lul. chartis was good. put the first valve in the top segment. then put three more in the other segments to block the whole lobe. four valves total. patient woke up fine.",
+  "4351628_syn_6": "Bronchoscopic lung volume reduction performed on Left Upper Lobe. Initial valve placed in LB1+2. Additional valves placed in LB3, LB4, and LB5. Total of 4 Zephyr valves deployed. Complete occlusion achieved.",
+  "4351628_syn_7": "[Indication]\nSevere Emphysema, LUL target.\n[Anesthesia]\nGeneral.\n[Description]\nValves placed:\n1. LB1+2 (31647)\n2. LB3 (31651)\n3. LB4 (31651)\n4. LB5 (31651)\n[Plan]\nAdmit for obs.",
+  "4351628_syn_8": "We treated [REDACTED] blocking off the diseased upper left part of his lung. We placed a total of four one-way valves. The first one went into the top segment, and then we placed three more in the remaining segments of that lobe to make sure no air could get in. This should help the healthier parts of his lung work better.",
+  "4351628_syn_9": "Procedure: Deployment of bronchial flow-control devices.\nTarget: LUL.\nAction: Primary device anchored in LB1+2. Supplemental devices anchored in LB3, LB4, and LB5.\nOutcome: Lobar isolation."
+}

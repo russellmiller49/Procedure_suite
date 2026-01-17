@@ -1,0 +1,15 @@
+{
+    "total_notes": 10,
+    "total_spans_valid": 131,
+    "label_counts": {
+        "ANAT_AIRWAY": 15,
+        "OUTCOME_AIRWAY_LUMEN_PRE": 9,
+        "PROC_METHOD": 23,
+        "PROC_ACTION": 30,
+        "OBS_LESION": 23,
+        "OUTCOME_COMPLICATION": 9,
+        "DEV_INSTRUMENT": 13,
+        "OUTCOME_AIRWAY_LUMEN_POST": 8,
+        "DEV_STENT": 1
+    }
+}

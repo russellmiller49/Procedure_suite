@@ -1,0 +1,12 @@
+{
+  "HH-9482-L_syn_1": "Procedure: EBUS-TBNA.\nNodes:\n- 4R: 11mm (Malignant).\n- 7: 16mm (Malignant).\n- 10R: 7mm (Benign).\nAssessment: N2 positive.\nMolecular: Sent from 4R.",
+  "HH-9482-L_syn_2": "PROCEDURE NOTE: EBUS-TBNA.\nINDICATION: Lung cancer staging.\nRESULTS: Systematic evaluation performed. Stations 4R and 7 were enlarged, PET-positive, and confirmed malignant on ROSE. Station 10R was negative. \nCONCLUSION: Confirmed N2 mediastinal disease. Samples submitted for molecular profiling.",
+  "HH-9482-L_syn_3": "Code: 31653.\nStations: 4R, 7, 10R.\nAdequacy: Confirmed on all.\nSpecial Tests: Molecular ordered.",
+  "HH-9482-L_syn_4": "Procedure: EBUS\nPt: [REDACTED]\n1. Mod Sedation.\n2. EBUS of 4R, 7, 10R.\n3. ROSE: Pos for cancer at 4R/7.\n4. N2 disease.\n5. Molecular sent.\n6. Pt discharged.",
+  "HH-9482-L_syn_5": "[REDACTED] ebus. checked the nodes. 4r and 7 were cancer. 10r was fine. so she has n2 disease. sent the 4r sample for molecular testing. procedure went fast 32 mins. no issues.",
+  "HH-9482-L_syn_6": "EBUS-TBNA performed. Stations 4R, 7, and 10R sampled. ROSE confirmed malignancy in 4R and 7. Station 10R benign. Molecular testing requested. N2 disease confirmed.",
+  "HH-9482-L_syn_7": "[Indication]\nStaging.\n[Anesthesia]\nModerate.\n[Description]\nEBUS-TBNA 4R, 7, 10R. N2 positive (4R, 7).\n[Plan]\nOncology.",
+  "HH-9482-L_syn_8": "We performed an EBUS on [REDACTED]. We sampled three lymph node stations. The nodes at 4R and 7 were positive for cancer, confirming spread to the mediastinum. The hilar node at 10R was negative. We sent the tissue for molecular testing to help guide treatment.",
+  "HH-9482-L_syn_9": "Procedure: EBUS aspiration (31653).\nFindings: Metastatic disease at 4R/7.\nAssessment: N2 disease.\nAction: Molecular profiling initiated.",
+  "HH-9482-L": "Case#: 2024-0847 | Pt: Sarah Miller | ID: [REDACTED] | DOB: [REDACTED]\n\nEBUS Staging: Y | Systematic: Y | Photos: Y\n4R: 11mm, 4x, ROSE+, PET+\n7: 16mm, 4x, ROSE+, PET+\n10R: 7mm, 3x, ROSE+, PET-\nMolecular: Y (from 4R)\nAdequacy: Y (all nodes)\n\nSedation: Moderate | Ramsay: 3 | Monitoring: q5min\nCx: None\nDuration: 32min\n\nN2 disease ✓"
+}

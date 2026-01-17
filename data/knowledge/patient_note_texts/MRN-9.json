@@ -1,0 +1,11 @@
+{
+  "MRN-9_syn_1": "Indication: Pneumonia.\nProc: Flex Bronch, BAL LLL.\nFindings: Normal airway. No lesions.\nLab: Sent for culture/cyto.\nDisp: Floor.",
+  "MRN-9_syn_2": "PROCEDURE: Diagnostic Flexible Bronchoscopy with Bronchoalveolar Lavage.\nINDICATION: Evaluation of non-resolving pneumonia.\nNARRATIVE: The tracheobronchial tree was inspected and found to be patent with no endobronchial lesions. The bronchoscope was wedged in a segment of the left lower lobe. 100mL of saline was instilled and aspirated. The return was cloudy and sent for analysis.\nIMPRESSION: Presumed infectious pneumonia.",
+  "MRN-9_syn_3": "Code: 31624 (BAL).\nTarget: Left Lower Lobe.\nFindings: Negative for mass.\nSpecimen: Lavage fluid sent for microbiology.",
+  "MRN-9_syn_4": "Procedure: BAL\nPatient: [REDACTED]\nSteps:\n1. Scope down.\n2. Lungs look clear.\n3. Wedged LLL.\n4. Washed with saline.\n5. Sucked it back.\nPlan: Antibiotics pending cultures.",
+  "MRN-9_syn_5": "bronch for pneumonia. looked normal inside. went to the left lower lobe did a wash. fluid looked purulent. sent to lab. done.",
+  "MRN-9_syn_6": "Diagnostic bronchoscopy with bronchoalveolar lavage of the left lower lobe for pneumonia evaluation. No endobronchial lesions seen. Lavage obtained.",
+  "MRN-9_syn_7": "[Indication]\nPneumonia.\n[Anesthesia]\nLocal/Sedation.\n[Description]\nAirways patent. BAL LLL performed. No masses.\n[Plan]\nAwait cultures.",
+  "MRN-9_syn_8": "We performed a bronchoscopy to investigate the patient's pneumonia. The airways looked normal with no signs of tumors or blockage. We washed the left lower lobe with saline and collected the fluid to test for bacteria or other infections.",
+  "MRN-9_syn_9": "Procedure: Diagnostic alveolar lavage.\nIndication: Pulmonary infiltrate.\nAction: The bronchial tree was surveyed. A liquid biopsy (BAL) was performed in the LLL.\nResult: Specimen submitted for microbiologic analysis."
+}

@@ -1,0 +1,12 @@
+{
+  "23456789_syn_1": "Indication: RML Emphysema.\nProc: BLVR RML.\nAction:\n- Chartis: CV Negative.\n- Valves: 2 Zephyr (RB4, RB5).\nResult: RML occluded.",
+  "23456789_syn_2": "PROCEDURE NOTE: Elective bronchoscopy for RML lung volume reduction. The right middle lobe was isolated. Chartis assessment confirmed absence of collateral ventilation. Two Zephyr valves were deployed in the medial (RB5) and lateral (RB4) segments. Complete lobar isolation was confirmed.",
+  "23456789_syn_3": "CPT: 31647 (Valve placement initial lobe).\nTarget: Right Middle Lobe.\nValves: 2 (RB4, RB5).\nChartis: Negative for CV.\nOutcome: Procedure successful.",
+  "23456789_syn_4": "Resident Note\nPt: [REDACTED]\nProc: RML Valves\nSteps:\n1. Insp RML.\n2. Chartis negative.\n3. Placed 2 valves (RB4, RB5).\n4. No leaks.\nPlan: Discharge.",
+  "23456789_syn_5": "RML valve case. Chartis said no collateral ventilation so we proceeded. Put in two valves one for lateral one for medial. RML collapsed nicely. No pneumo on xray. Sending home.",
+  "23456789_syn_6": "Bronchoscopic Lung Volume Reduction, Right Middle Lobe. Chartis CV negative. Two Zephyr valves deployed (RB4, RB5). Complete occlusion. Discharged home.",
+  "23456789_syn_7": "[Indication]\nSevere emphysema RML.\n[Anesthesia]\nModerate.\n[Description]\nChartis negative. 2 valves placed RML. Good seal.\n[Plan]\nDischarge.",
+  "23456789_syn_8": "[REDACTED] valve placement. After confirming no collateral ventilation with Chartis, we placed valves in the medial and lateral segments. The lobe was fully occluded, and she was discharged the same day.",
+  "23456789_syn_9": "Procedure: BLVR with valve implantation.\nTarget: Right Middle Lobe.\nAction: Chartis confirmed eligibility. Two valves implanted.\nResult: Lobe occluded.",
+  "23456789": "BRONCHOSCOPY - EBV PLACEMENT RML\n[REDACTED]\n\nPatient: [REDACTED] | DOB: [REDACTED] | Age: 65 | MRN: [REDACTED]\nInstitution: [REDACTED]\nPhysician: Ahmed Hassan, MD | RN: Rebecca Chen, RN\n\nPt: 65F w/ heterogeneous emphysema\nTarget: RML (CT destruction 75%, fissure 90%)\n\nSedation: ✓ Moderate\nScope: Flexible video bronchoscope\n\nPath:\n• Oropharynx → larynx (nl)\n• Trachea → carina (nl) \n• RML inspected - severe emphysema\n\nChartis: Negative CV (RML)\n\nValves placed:\n• RB4 (lateral): 4.0mm EBV ✓\n• RB5 (medial): 4.0mm EBV ✓\n\nResult: Complete RML occlusion\nCXR: Valves in place, no PTX\nDispo: Home same day\n\nAhmed Hassan, MD\nJohns Hopkins Interventional Pulmonology"
+}

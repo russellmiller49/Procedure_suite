@@ -46,10 +46,10 @@ def _truthy_env(name: str) -> bool:
 
 
 # Load environment variables from a .env file if present so GEMINI_* keys are available locally.
-# Override=True ensures .env values take precedence over stale shell exports.
+# Important: do NOT override explicitly-exported environment variables.
 # Tests can opt out (and avoid accidental real API keys) by setting `PROCSUITE_SKIP_DOTENV=1`.
 if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=True)
+    load_dotenv(override=False)
 
 
 def _normalize_openai_base_url(base_url: str | None) -> str:

@@ -1,0 +1,11 @@
+{
+  "MRN-6_syn_1": "Indication: Malignant effusion.\nProc: Bedside Talc Pleurodesis.\nAccess: Existing chest tube.\nAction: 4g Talc slurry instilled. Tube clamped. Patient rotated.\nResult: Pleurodesis complete.",
+  "MRN-6_syn_2": "PROCEDURE: Chemical Pleurodesis via Thoracostomy Tube.\nINDICATION: Recurrent malignant pleural effusion.\nNARRATIVE: The existing right-sided chest tube was assessed and found to be functional. A slurry containing 4 grams of sterile talc was instilled through the tube. The tube was clamped, and the patient was repositioned to ensure adequate distribution. The tube was then returned to suction.\nIMPRESSION: Talc pleurodesis administered.",
+  "MRN-6_syn_3": "Code: 32560 (Pleurodesis via chest tube).\nAgent: Talc slurry.\nRoute: Existing tube (no new insertion code).\nSetting: Bedside.",
+  "MRN-6_syn_4": "Procedure: Talc Slurry\nPatient: [REDACTED]\nSteps:\n1. Mixed talc.\n2. Pushed into chest tube.\n3. Clamped tube.\n4. Rolled patient around.\n5. Unclamped.\nPlan: Remove tube when output drops.",
+  "MRN-6_syn_5": "bedside talc job. right chest tube. pushed the slurry in. clamped it for a while. moved the patient so it spreads. hooked back up to suction. hope it sticks.",
+  "MRN-6_syn_6": "Bedside talc slurry pleurodesis via existing large-bore chest tube for right malignant pleural effusion. Position changes performed for talc distribution. Tube returned to suction.",
+  "MRN-6_syn_7": "[Indication]\nMalignant effusion.\n[Anesthesia]\nLocal/None.\n[Description]\nTalc slurry instilled via existing chest tube. Dwell time and rotation completed. Suction resumed.\n[Plan]\nMonitor output.",
+  "MRN-6_syn_8": "We performed a pleurodesis procedure at the bedside to prevent fluid from returning. Using the patient's existing chest tube, we injected a mixture of talc. We clamped the tube and helped the patient change positions to coat the inside of the chest. The tube was then unclamped and put back on suction.",
+  "MRN-6_syn_9": "Procedure: Chemical sclerotherapy administration.\nRoute: Indwelling thoracostomy catheter.\nAction: Sclerosing agent (talc) was introduced. Patient repositioning facilitated distribution.\nResult: Pleural symphysis induction attempted."
+}

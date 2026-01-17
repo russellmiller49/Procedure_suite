@@ -1,0 +1,11 @@
+{
+  "MRN-3_syn_1": "Indication: Valve retrieval.\nProc: Bronchoscopy, removal of 3 Zephyr valves (RUL).\nFindings: Mucus plugging distal to valves.\nAction: Valves removed. Airway cleared.\nPlan: Assess for lung re-expansion.",
+  "MRN-3_syn_2": "PROCEDURE: Flexible Bronchoscopy with Removal of Endobronchial Valves.\nINDICATION: Valve retrieval/clearance.\nNARRATIVE: Under general anesthesia, the RUL was inspected. Three Zephyr valves were id[REDACTED] in situ. Each valve was grasped and removed without difficulty. Significant distal mucus plugging was noted and suctioned clear. The airway mucosa appeared healthy.\nIMPRESSION: Successful removal of bronchial valves.",
+  "MRN-3_syn_3": "Code: 31648 (Removal of bronchial valves).\nQuantity: 3 valves.\nLocation: Right Upper Lobe.\nNote: Clearance of secretions (31645) bundled into removal if related to the obstruction.",
+  "MRN-3_syn_4": "Procedure: Valve Removal\nPatient: [REDACTED]\nSteps:\n1. GA.\n2. Scope to RUL.\n3. Pulled 3 valves out.\n4. Sucked out a lot of mucus behind them.\n5. Airway open.\nPlan: Recovery.",
+  "MRN-3_syn_5": "taking out the valves today from the RUL. patient under GA. went in grabbed the three zephyr valves pulled them out. lots of junk behind them cleaned it up. all done.",
+  "MRN-3_syn_6": "Flexible bronchoscopy under GA with retrieval of three Zephyr endobronchial valves from the right upper lobe. Clearance of distal mucus plugging performed. Airway patent post-removal.",
+  "MRN-3_syn_7": "[Indication]\nValve removal (RUL).\n[Anesthesia]\nGeneral.\n[Description]\n3 Zephyr valves removed from RUL. Mucus plugging cleared. No complications.\n[Plan]\nDischarge.",
+  "MRN-3_syn_8": "We performed a bronchoscopy to remove the valves from the patient's right upper lobe. Under general anesthesia, we located the three valves and removed them one by one. There was a significant amount of mucus trapped behind the valves, which we suctioned out. The airways are now clear and open.",
+  "MRN-3_syn_9": "Procedure: Endoscopic prosthesis retrieval.\nAction: Three bronchial occluders were extracted from the RUL. Post-obstructive secretions were evacuated.\nResult: Restoration of bronchial patency."
+}

@@ -1,0 +1,21 @@
+{
+  "input_jsonl": "data/ml_training/granular_ner/ner_dataset_all.jsonl",
+  "output_jsonl": "reports/ner_dataset_subset.fixed.jsonl",
+  "entities_key": "entities",
+  "threshold": 100,
+  "fix_whitespace_mismatch": false,
+  "drop_unfixable": false,
+  "limit_records": null,
+  "counts": {
+    "notes_processed": 3,
+    "notes_changed": 0,
+    "notes_text_overridden": 0,
+    "spans_checked": 45,
+    "fixed_offsets": 0,
+    "fixed_text": 0,
+    "dropped": 0,
+    "unchanged": 45,
+    "invalid_kept": 0
+  },
+  "failures_sample": []
+}

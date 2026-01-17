@@ -187,6 +187,7 @@ class RegistryService:
         default_version: str = "v2",
         hybrid_orchestrator: SmartHybridOrchestrator | None = None,
         registry_engine: RegistryEngine | None = None,
+        parallel_orchestrator: ParallelPathwayOrchestrator | None = None,
     ):
         """Initialize RegistryService.
 
@@ -202,6 +203,7 @@ class RegistryService:
         self._registry_engine = registry_engine
         self._registry_ml_predictor: Any | None = None
         self._ml_predictor_init_attempted: bool = False
+        self.parallel_orchestrator = parallel_orchestrator or ParallelPathwayOrchestrator()
 
     @property
     def registry_engine(self) -> RegistryEngine:
@@ -253,17 +255,27 @@ class RegistryService:
                 from modules.registry.inference_onnx import ONNXRegistryPredictor
 
                 # Prefer runtime bundle paths if present; otherwise keep defaults.
-                model_path = (
-                    runtime_dir / "registry_model_int8.onnx"
-                    if (runtime_dir / "registry_model_int8.onnx").exists()
-                    else None
-                )
-                tokenizer_path = (
-                    runtime_dir / "tokenizer" if (runtime_dir / "tokenizer").exists() else None
-                )
-                thresholds_path = (
-                    runtime_dir / "thresholds.json" if (runtime_dir / "thresholds.json").exists() else None
-                )
+                model_path: Path | None = None
+                for candidate in ("registry_model_int8.onnx", "registry_model.onnx"):
+                    p = runtime_dir / candidate
+                    if p.exists():
+                        model_path = p
+                        break
+
+                tokenizer_path: Path | None = None
+                for candidate in ("tokenizer", "roberta_registry_tokenizer"):
+                    p = runtime_dir / candidate
+                    if p.exists():
+                        tokenizer_path = p
+                        break
+
+                thresholds_path: Path | None = None
+                for candidate in ("thresholds.json", "registry_thresholds.json", "roberta_registry_thresholds.json"):
+                    p = runtime_dir / candidate
+                    if p.exists():
+                        thresholds_path = p
+                        break
+
                 label_fields_path = (
                     runtime_dir / "registry_label_fields.json"
                     if (runtime_dir / "registry_label_fields.json").exists()
@@ -571,7 +583,7 @@ class RegistryService:
     # Hybrid-First Registry Extraction
     # -------------------------------------------------------------------------
 
-    def extract_fields(self, note_text: str) -> RegistryExtractionResult:
+    def extract_fields(self, note_text: str, mode: str = "default") -> RegistryExtractionResult:
         """Extract registry fields using hybrid-first flow.
 
         This method orchestrates:
@@ -583,10 +595,18 @@ class RegistryService:
 
         Args:
             note_text: The procedure note text.
+            mode: Optional override (e.g., "parallel_ner").
 
         Returns:
             RegistryExtractionResult with extracted record and metadata.
         """
+        if mode == "parallel_ner":
+            predictor = self._get_registry_ml_predictor()
+            return self.parallel_orchestrator.run_parallel_process(
+                note_text,
+                ml_predictor=predictor,
+            )
+
         pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
         if pipeline_mode == "extraction_first":
             return self._extract_fields_extraction_first(note_text)
@@ -731,8 +751,11 @@ class RegistryService:
         elif extraction_engine == "parallel_ner":
             # Parallel NER pathway: Run NER → Registry mapping → Rules + ML safety net
             try:
-                orchestrator = ParallelPathwayOrchestrator()
-                parallel_result = orchestrator.process(note_text)
+                predictor = self._get_registry_ml_predictor()
+                parallel_result = self.parallel_orchestrator.process(
+                    note_text,
+                    ml_predictor=predictor,
+                )
 
                 # Get record from Path A (NER → Registry → Rules)
                 path_a_details = parallel_result.path_a_result.details

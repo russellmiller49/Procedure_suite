@@ -1,0 +1,29 @@
+Scanning 1316 files for critical failure classes...
+
+[CTX_INDICATION]  note_id=89012356_syn_1  file=89012356.json
+
+[PROC_NAME]  note_id=89012356_syn_1  file=89012356.json
+
+[DISPOSITION]  note_id=89012356  file=89012356.json
+
+[OBS_FLUID_COLOR]  note_id=QQ8473R_syn_6  file=QQ8473R.json
+
+[PROC_MEDICATION]  note_id=QQ8473R  file=QQ8473R.json
+
+[MEAS_VOLUME]  note_id=MRN_SYN_7_style_3  file=MRN_SYN_7_style_3.json
+
+[OBS_NO_COMPLICATION]  note_id=3871230_syn_1  file=3871230.json
+
+[ANAT_INTERCOSTAL_SPACE]  note_id=6984578  file=6984578.json
+
+Summary:
+- ANAT_INTERCOSTAL_SPACE: 1 matches across 1 notes
+- CTX_INDICATION: 1 matches across 1 notes
+- DISPOSITION: 1 matches across 1 notes
+- MEAS_VOLUME: 1 matches across 1 notes
+- OBS_FLUID_COLOR: 1 matches across 1 notes
+- OBS_NO_COMPLICATION: 1 matches across 1 notes
+- PROC_MEDICATION: 1 matches across 1 notes
+- PROC_NAME: 1 matches across 1 notes
+
+Done. Found 8 potential candidates.

@@ -1,0 +1,12 @@
+{
+  "555123_syn_1": "EBUS-TBNA 7, 4R. Radial EBUS RUL nodule. TBBx x5. Brush x1.",
+  "555123_syn_2": "Mr. [REDACTED] underwent a combined EBUS-TBNA and navigational bronchoscopy. Mediastinal staging involved sampling stations 7 and 4R. The peripheral RUL nodule was localized via radial EBUS (eccentric view) and sampled with transbronchial biopsy and brushing.",
+  "555123_syn_3": "CPT 31652 (EBUS-TBNA 2 stations), 31654 (Radial EBUS peripheral), 31628 (TBBx), 31623 (Brush). RUL nodule and mediastinal nodes sampled.",
+  "555123_syn_4": "Procedure: EBUS and Nav Bronch. Steps: 1. EBUS stations 7, 4R. 2. Radial EBUS to RUL lesion. 3. Biopsy x5. 4. Brush x1.",
+  "555123_syn_5": "bronch for john doe did ebus first hit 7 and 4r then switched scopes for the nodule in the rul used the radar probe found it eccentric took 5 biopsies and a brush rose said inflammation.",
+  "555123_syn_6": "Bronchoscopy performed for mediastinal adenopathy and RUL nodule. EBUS-TBNA of stations 7 and 4R was completed. The RUL nodule was located with radial EBUS and sampled via biopsy and brush.",
+  "555123_syn_7": "[Indication] Adenopathy/Nodule. [Anesthesia] Moderate. [Description] EBUS 7/4R. Radial EBUS RUL. TBBx/Brush. [Plan] Path pending.",
+  "555123_syn_8": "We started with the EBUS scope to sample the lymph nodes at stations 7 and 4R. Then we switched to the thin scope and used the radial probe to find the nodule in the right upper lobe. We took biopsies and a brush sample.",
+  "555123_syn_9": "Endobronchial ultrasound-guided needle aspiration of mediastinal nodes. Peripheral lesion localization via radial probe. Transbronchial sampling and brushing performed.",
+  "555123": "Fellow Procedure Note\n\nPatient: [REDACTED] (MRN: [REDACTED])\nAttending: Dr. Z. Smith\nDate: [REDACTED]\n\nPerformed standard bronchoscopy via oral route (moderate sedation). Vocal cords normal. \n\n**EBUS-TBNA:**\nUsed linear scope. Sampled station 7 (subcarinal) and 4R (right paratracheal). Both small (<1cm) but PET avid. \n- 7: 3 passes, ROSE negative.\n- 4R: 3 passes, ROSE negative.\n\n**Peripheral Nodule Assessment:**\nExchanged for thin bronchoscope (P190). Advanced to RUL apical segment. Inserted **Radial EBUS** probe. Visualized lesion - eccentric view (not concentric). Adjusted scope, still eccentric but tool-in-lesion confirmed. \n\nPerformed **transbronchial biopsies** (fluoroscopy guidance) x 5. \nPerformed **brushing** x 1.\n\nROSE: Non-diagnostic / inflammation.\n\nPlan: Await final path. If negative, consider TTNA."
+}

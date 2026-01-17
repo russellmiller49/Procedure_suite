@@ -63,6 +63,8 @@ The easiest way to interact with the system is the development server, which pro
 - **Web UI**: [http://localhost:8000/ui/](http://localhost:8000/ui/)
 - **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
+to run with updated NER (if not set will use the default artifacts/granular_ner_model )
+GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2 ./scripts/devserver.sh
 ---
 
 ## 🛠 CLI Tools
@@ -102,6 +104,39 @@ python scripts/clean_ip_registry.py \
   --registry-data data/samples/my_registry_dump.jsonl \
   --output-json reports/cleaned_registry_data.json \
   --issues-log reports/issues_log.csv
+```
+
+### 5. Generate LLM “repo context” docs (gitingest)
+When you want to share repo context with an LLM, use the gitingest generator to produce:
+
+- `gitingest.md`: a **lightweight**, curated repo snapshot (structure + a few key files)
+- `gitingest_details.md`: an **optional** second document with more granular, **text-only** code/docs
+
+```bash
+# Base (light) doc only
+python scripts/generate_gitingest.py
+
+# Generate both base + details
+python scripts/generate_gitingest.py --details
+
+# Details only (no base)
+python scripts/generate_gitingest.py --no-base --details
+```
+
+#### Details document controls
+The details doc is designed to stay readable and safe for LLM ingestion:
+- Skips common large/binary/unreadable files (best-effort)
+- Enforces a per-file size cap
+- Can avoid minified JS/TS bundles
+
+```bash
+# Include only specific folders (repeatable), cap size and inline count
+python scripts/generate_gitingest.py --details \
+  --details-include scripts/ \
+  --details-include modules/registry/ \
+  --details-max-bytes 200000 \
+  --details-max-files 75 \
+  --details-inline curated
 ```
 
 ---
@@ -148,6 +183,14 @@ Input:
 }
 ```
 
+Optional mode override:
+```json
+{
+  "note": "Patient is a 65yo male...",
+  "mode": "parallel_ner"
+}
+```
+
 Output:
 ```json
 {
@@ -158,6 +201,26 @@ Output:
   }
 }
 ```
+
+---
+
+## Parallel Pathway Configuration
+
+Use the parallel NER+ML pathway globally by setting these environment flags:
+
+- `PROCSUITE_PIPELINE_MODE=extraction_first`
+- `REGISTRY_EXTRACTION_ENGINE=parallel_ner`
+- `MODEL_BACKEND=auto` (or `pytorch`)
+
+Example:
+```bash
+PROCSUITE_PIPELINE_MODE=extraction_first \
+REGISTRY_EXTRACTION_ENGINE=parallel_ner \
+MODEL_BACKEND=auto \
+./scripts/devserver.sh
+```
+
+Note: `MODEL_BACKEND=onnx` (the devserver default) may skip the registry ML classifier if ONNX artifacts are missing.
 
 ---
 
@@ -806,4 +869,36 @@ http://localhost:8000/ui/phi_redactor/
 
 ---
 
-*Last updated: December 2025*
+## 🏷️ Registry NER training (granular)
+
+Use this workflow to retrain the **granular registry NER** model with the **BiomedBERT** tokenizer/model.
+
+### Step 1) Regenerate BIO training data (crucial)
+This rebuilds `ner_bio_format.jsonl` using the target tokenizer. Do this any time you change the base model/tokenizer.
+
+```bash
+python scripts/convert_spans_to_bio.py \
+  --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
+  --output data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
+  --max-length 512
+```
+
+### Step 2) Train the model
+Note: the training script uses **hyphenated** flags like `--output-dir`, `--train-batch`, and the learning rate flag is `--lr`.
+
+```bash
+python scripts/train_registry_ner.py \
+  --data data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --output-dir artifacts/registry_biomedbert_ner \
+  --epochs 20 \
+  --lr 2e-5 \
+  --train-batch 16 \
+  --eval-batch 16
+```
+
+---
+
+*Last updated: January 2026*
+run all granular python updates:
+python scripts/run_python_update_scripts.py

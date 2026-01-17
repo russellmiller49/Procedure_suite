@@ -1,0 +1,11 @@
+{
+  "IP2026044_syn_1": "Procedure:\n- EBUS-TBNA: 4R, 10R.\n- Robotic Bronch (Ion): RUL nodule.\n- REBUS (+).\n- Tool: Cryoprobe.\n- Pt: Never-smoker.",
+  "IP2026044_syn_2": "Operative Note: In this never-smoker with an RUL nodule, we proceeded with EBUS-TBNA of stations 4R and 10R to rule out occult nodal disease. The Ion robotic system was then used to navigate to the right upper lobe nodule. Radial EBUS confirmed the target location. A cryobiopsy was performed to preserve tissue architecture for molecular testing.",
+  "IP2026044_syn_3": "Billing:\n- 31652: EBUS TBNA (4R, 10R).\n- 31627: Robotic Nav.\n- 31654: Radial EBUS.\n- 31628: Transbronchial biopsy (Cryo).\nJustification: Staging and diagnosis of peripheral RUL nodule.",
+  "IP2026044_syn_4": "Resident Note:\n- EBUS scope: Biopsied 4R and 10R.\n- Ion Robot: Drove to RUL.\n- Radial EBUS: Confirmed.\n- Cryo biopsy: 3 passes.\n- Frozen section: pending.",
+  "IP2026044_syn_5": "patient [REDACTED] has a rul nodule. did ebus first on 4r and 10r. then used the ion robot to get out to the nodule. used radial ebus to see it. used the cryo probe to get a biopsy. hopefully we get an answer.",
+  "IP2026044_syn_6": "EBUS-TBNA of 4R and 10R nodes plus Ion robotic bronchoscopy with radial EBUS and cryobiopsy of an RUL nodule. Staging was negative on ROSE. Robotic navigation allowed access to the RUL lesion. Cryobiopsy was utilized for high-quality tissue acquisition.",
+  "IP2026044_syn_7": "[Indication] RUL nodule, never-smoker.\n[Anesthesia] General.\n[Description] EBUS-TBNA 4R/10R (31652). Ion Nav (31627) to RUL. Radial EBUS (31654). Cryobiopsy (31628).\n[Plan] Molecular panel if positive.",
+  "IP2026044_syn_8": "For this patient, a never-smoker with a lung nodule, we performed EBUS staging followed by robotic biopsy. We sampled lymph nodes 4R and 10R. Then, using the Ion system, we reached the nodule in the right upper lobe. After confirming with radial EBUS, we used a cryoprobe to obtain the biopsy.",
+  "IP2026044_syn_9": "EBUS-TBNA of 4R and 10R nodes plus Ion robotic bronchoscopy with radial EBUS and cryosampling of an RUL nodule. We aspirated the indicated nodes. The robot navigated to the lesion, and we utilized cryotechnology to harvest the specimen."
+}

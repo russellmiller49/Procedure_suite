@@ -12,7 +12,7 @@ Input format (ner_dataset_all.jsonl):
   ]
 }
 
-Output format (for train_distilbert_ner.py):
+Output format (for train_registry_ner.py):
 {
   "id": "note_001",
   "tokens": ["station", "4", "##r", "was", "sampled", ...],
@@ -23,7 +23,7 @@ Usage:
     python scripts/convert_spans_to_bio.py \
         --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
         --output data/ml_training/granular_ner/ner_bio_format.jsonl \
-        --model distilbert-base-uncased
+        --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext
 """
 
 from __future__ import annotations
@@ -61,8 +61,8 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--model",
         type=str,
-        default="distilbert-base-uncased",
-        help="Tokenizer model name (default: distilbert-base-uncased)"
+        default="microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+        help="Tokenizer model name (default: microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext)"
     )
     parser.add_argument(
         "--max-length",
@@ -94,7 +94,21 @@ def normalize_entity(entity: Any) -> Dict[str, Any]:
     - List: [100, 102, "ANAT_LN_STATION"] or [100, 102, "ANAT_LN_STATION", "4R"]
     """
     if isinstance(entity, dict):
-        return entity
+        start = entity.get("start")
+        end = entity.get("end")
+        if start is None:
+            start = entity.get("start_char", entity.get("start_offset", 0))
+        if end is None:
+            end = entity.get("end_char", entity.get("end_offset", 0))
+        text = entity.get("text")
+        if text is None:
+            text = entity.get("span_text", "")
+        return {
+            "start": start,
+            "end": end,
+            "label": entity.get("label", "UNKNOWN"),
+            "text": text or "",
+        }
     elif isinstance(entity, (list, tuple)):
         if len(entity) >= 3:
             return {

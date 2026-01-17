@@ -1,0 +1,12 @@
+{
+  "IP2025023_syn_1": "Indication: Recurrent right effusion.\nProcedure: US-guided Thoracentesis.\nAction: 900mL clear fluid removed.\nComplication: None.\nPlan: Discharge.",
+  "IP2025023_syn_2": "PROCEDURE: Ultrasound-guided therapeutic thoracentesis.\nNARRATIVE: The right hemithorax was scanned, id[REDACTED] a locatable pocket of fluid in the 8th intercostal space. Under local anesthesia, a catheter was introduced and 900 mL of clear serous fluid was aspirated. The patient tolerated the procedure without complication.",
+  "IP2025023_syn_3": "CPT 32555: Thoracentesis, therapeutic, with imaging guidance.\nDetails: Ultrasound guidance utilized to id[REDACTED] pocket. 900 mL fluid removed via catheter. No pleural biopsy performed.",
+  "IP2025023_syn_4": "Procedure Note\nPatient: [REDACTED]\nProcedure: Thoracentesis\nSteps:\n1. Ultrasound check.\n2. Local numbing.\n3. Needle/catheter in.\n4. Drained 900cc.\n5. Pulled catheter, bandaged.\nPlan: Home.",
+  "IP2025023_syn_5": "Isabel Morales thoracentesis note. She has heart failure fluid on the right. We used the ultrasound to find a spot. Drained 900ml of clear fluid. She felt better. Sent her home.",
+  "IP2025023_syn_6": "Right posterior 8th intercostal space chosen under ultrasound guidance. 900 mL of clear serous fluid removed via catheter system. No complications occurred. Patient discharged home.",
+  "IP2025023_syn_7": "[Indication]\nRecurrent right pleural effusion (HF).\n[Anesthesia]\nLocal.\n[Description]\nUS-guided thoracentesis. 900mL serous fluid drained.\n[Plan]\nDischarge.",
+  "IP2025023_syn_8": "[REDACTED] drained from her right lung due to heart failure. We used ultrasound to guide a small tube into the fluid pocket and drained 900 mL. She tolerated it well and was breathing better afterwards. She was discharged home.",
+  "IP2025023_syn_9": "Procedure: Image-guided pleural drainage.\nAction: 900mL liquid aspirated via percutaneous catheter.\nOutcome: Symptom relief.",
+  "IP2025023": "Interventional Pulmonology Procedure Note\nProcedure: Ultrasound-guided therapeutic thoracentesis.\nPatient: [REDACTED], 73-year-old female with recurrent right pleural effusion due to heart failure.\nAnesthesia: Local anesthesia with lidocaine and mild anxiolysis.\nProcedure details: Right posterior 8th intercostal space chosen under ultrasound guidance. 900 mL of clear serous fluid removed via catheter system. Opening pressure not formally measured.\nComplications: None; no cough or chest pain.\nDisposition: Discharged home after brief observation."
+}

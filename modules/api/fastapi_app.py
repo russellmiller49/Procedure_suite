@@ -753,6 +753,7 @@ async def registry_run(
     req: RegistryRequest,
     request: Request,
     _ready: None = Depends(require_ready),
+    registry_service: RegistryService = Depends(get_registry_service),
     phi_scrubber=Depends(get_phi_scrubber),
 ) -> RegistryResponse:
     # Early PHI redaction - scrub once at entry
@@ -760,6 +761,16 @@ async def registry_run(
     note_text = redaction.text
 
     mode_value = (req.mode or "").strip().lower()
+    if mode_value == "parallel_ner":
+        result = await run_cpu(
+            request.app,
+            registry_service.extract_fields,
+            note_text,
+            req.mode,
+        )
+        payload = _shape_registry_payload(result.record, {})
+        return JSONResponse(content=payload)
+
     if mode_value in {"engine_only", "no_llm", "deterministic_only"}:
         from modules.registry.extractors.noop import NoOpLLMExtractor
 

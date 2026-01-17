@@ -1,0 +1,11 @@
+{
+  "IP2026045_syn_1": "- EBUS-TBNA: Stations 5, 7, 10L.\n- EMN Bronchoscopy: LLL mass.\n- REBUS (+).\n- TBBX, BAL, Brushings performed.",
+  "IP2026045_syn_2": "Procedure: A comprehensive staging EBUS-TBNA was performed, sampling stations 5 (subaortic), 7 (subcarinal), and 10L (hilar). Following this, electromagnetic navigation guided the bronchoscope to a left lower lobe mass. Radial EBUS confirmed the peripheral location. Diagnostic transbronchial biopsy, bronchoalveolar lavage (BAL), and cytologic brushings were obtained.",
+  "IP2026045_syn_3": "Coding:\n- 31653: EBUS TBNA 3+ stations (5, 7, 10L).\n- 31628: TBBX LLL.\n- 31624: BAL.\n- 31623: Brushings.\n- 31627: EMN Nav.\n- 31654: REBUS.\nNote: High complexity procedure involving staging and full diagnostic workup.",
+  "IP2026045_syn_4": "Steps:\n1. EBUS of 5, 7, 10L.\n2. EMN setup and reg.\n3. Nav to LLL mass.\n4. REBUS check.\n5. Biopsy x4.\n6. Brushings x1.\n7. BAL x1 aliquot.",
+  "IP2026045_syn_5": "big case today. did ebus on 5 7 and 10l. then switched to emn for the lll mass. found it with radial ebus. did the works biopsy bal and brushes. patient tolerated it well.",
+  "IP2026045_syn_6": "Comprehensive combined EBUS-TBNA of stations 5, 7, and 10L plus EMN-guided radial EBUS-confirmed transbronchial biopsy of an LLL mass with BAL and brushings. Triple station nodal sampling was completed. The peripheral mass was sampled via multiple modalities including lavage and brushing.",
+  "IP2026045_syn_7": "[Indication] LLL mass, staging.\n[Anesthesia] General.\n[Description] EBUS-TBNA stations 5, 7, 10L (31653). EMN Nav (31627) to LLL. REBUS (31654). TBBX (31628), BAL (31624), Brush (31623).\n[Plan] Review path.",
+  "IP2026045_syn_8": "We conducted a thorough evaluation including EBUS staging and peripheral biopsy. We sampled lymph nodes at stations 5, 7, and 10L. Then, using electromagnetic navigation, we targeted the mass in the left lower lobe. We confirmed the target with radial EBUS and performed biopsies, brushings, and a wash (BAL).",
+  "IP2026045_syn_9": "Extensive combined EBUS-TBNA of stations 5, 7, and 10L plus EMN-directed radial EBUS-verified transbronchial sampling of an LLL mass with BAL and brushings. We aspirated three nodal stations. We navigated to the LLL tumor and obtained tissue via biopsy, brush, and lavage."
+}

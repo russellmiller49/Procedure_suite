@@ -86,6 +86,10 @@ class RegistryExtractRequest(BaseModel):
         description="The raw procedure note text to extract registry fields from",
         min_length=10,
     )
+    mode: str | None = Field(
+        default=None,
+        description="Optional extraction mode override (e.g., parallel_ner)",
+    )
 
 
 class RegistryExtractResponse(BaseModel):
@@ -220,7 +224,12 @@ async def extract_registry_fields(
     note_text = redaction.text
 
     try:
-        result = await run_cpu(request.app, registry_service.extract_fields, note_text)
+        result = await run_cpu(
+            request.app,
+            registry_service.extract_fields,
+            note_text,
+            payload.mode,
+        )
         return RegistryExtractResponse.from_domain(result)
 
     except ValueError as e:

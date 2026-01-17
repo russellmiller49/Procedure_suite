@@ -1,0 +1,1516 @@
+{"span_id": "OBS_LESION_12", "note_id": "123789_syn_1", "label": "OBS_LESION", "text": "Thymoma", "start": 12, "end": 19}
+{"span_id": "PROC_METHOD_32", "note_id": "123789_syn_1", "label": "PROC_METHOD", "text": "VATS", "start": 32, "end": 36}
+{"span_id": "PROC_ACTION_37", "note_id": "123789_syn_1", "label": "PROC_ACTION", "text": "thymectomy", "start": 37, "end": 47}
+{"span_id": "OBS_LESION_48", "note_id": "123789_syn_1", "label": "OBS_LESION", "text": "mass", "start": 48, "end": 52}
+{"span_id": "PROC_ACTION_53", "note_id": "123789_syn_1", "label": "PROC_ACTION", "text": "excision", "start": 53, "end": 61}
+{"span_id": "MEAS_COUNT_65", "note_id": "123789_syn_1", "label": "MEAS_COUNT", "text": "3", "start": 65, "end": 66}
+{"span_id": "OBS_LESION_76", "note_id": "123789_syn_1", "label": "OBS_LESION", "text": "Mass", "start": 76, "end": 80}
+{"span_id": "DEV_INSTRUMENT_151", "note_id": "123789_syn_1", "label": "DEV_INSTRUMENT", "text": "endobag", "start": 151, "end": 158}
+{"span_id": "MEAS_PLEURAL_DRAIN_162", "note_id": "123789_syn_1", "label": "MEAS_PLEURAL_DRAIN", "text": "24Fr", "start": 162, "end": 166}
+{"span_id": "DEV_CATHETER_167", "note_id": "123789_syn_1", "label": "DEV_CATHETER", "text": "chest tube", "start": 167, "end": 177}
+{"span_id": "PROC_METHOD_19", "note_id": "123789_syn_2", "label": "PROC_METHOD", "text": "Video-assisted thoracoscopic", "start": 19, "end": 47}
+{"span_id": "PROC_ACTION_48", "note_id": "123789_syn_2", "label": "PROC_ACTION", "text": "excision", "start": 48, "end": 56}
+{"span_id": "OBS_LESION_81", "note_id": "123789_syn_2", "label": "OBS_LESION", "text": "mass", "start": 81, "end": 85}
+{"span_id": "MEAS_SIZE_99", "note_id": "123789_syn_2", "label": "MEAS_SIZE", "text": "4.5 cm", "start": 99, "end": 105}
+{"span_id": "OBS_LESION_132", "note_id": "123789_syn_2", "label": "OBS_LESION", "text": "mass", "start": 132, "end": 136}
+{"span_id": "MEAS_COUNT_275", "note_id": "123789_syn_2", "label": "MEAS_COUNT", "text": "three", "start": 275, "end": 280}
+{"span_id": "PROC_METHOD_286", "note_id": "123789_syn_2", "label": "PROC_METHOD", "text": "VATS", "start": 286, "end": 290}
+{"span_id": "ANAT_PLEURA_305", "note_id": "123789_syn_2", "label": "ANAT_PLEURA", "text": "mediastinal pleura", "start": 305, "end": 323}
+{"span_id": "OBS_LESION_341", "note_id": "123789_syn_2", "label": "OBS_LESION", "text": "mass", "start": 341, "end": 345}
+{"span_id": "PROC_ACTION_435", "note_id": "123789_syn_2", "label": "PROC_ACTION", "text": "resection", "start": 435, "end": 444}
+{"span_id": "DEV_INSTRUMENT_497", "note_id": "123789_syn_2", "label": "DEV_INSTRUMENT", "text": "endo-catch bag", "start": 497, "end": 511}
+{"span_id": "MEAS_COUNT_4", "note_id": "123789_syn_3", "label": "MEAS_COUNT", "text": "3", "start": 4, "end": 5}
+{"span_id": "PROC_METHOD_11", "note_id": "123789_syn_3", "label": "PROC_METHOD", "text": "VATS", "start": 11, "end": 15}
+{"span_id": "PROC_ACTION_16", "note_id": "123789_syn_3", "label": "PROC_ACTION", "text": "excision", "start": 16, "end": 24}
+{"span_id": "OBS_LESION_40", "note_id": "123789_syn_3", "label": "OBS_LESION", "text": "cyst", "start": 40, "end": 44}
+{"span_id": "OBS_LESION_46", "note_id": "123789_syn_3", "label": "OBS_LESION", "text": "tumor", "start": 46, "end": 51}
+{"span_id": "OBS_LESION_56", "note_id": "123789_syn_3", "label": "OBS_LESION", "text": "mass", "start": 56, "end": 60}
+{"span_id": "PROC_METHOD_79", "note_id": "123789_syn_3", "label": "PROC_METHOD", "text": "VATS", "start": 79, "end": 83}
+{"span_id": "OBS_LESION_96", "note_id": "123789_syn_3", "label": "OBS_LESION", "text": "Thymoma", "start": 96, "end": 103}
+{"span_id": "MEAS_SIZE_105", "note_id": "123789_syn_3", "label": "MEAS_SIZE", "text": "4.5cm", "start": 105, "end": 110}
+{"span_id": "DEV_INSTRUMENT_192", "note_id": "123789_syn_3", "label": "DEV_INSTRUMENT", "text": "bag", "start": 192, "end": 195}
+{"span_id": "DEV_CATHETER_197", "note_id": "123789_syn_3", "label": "DEV_CATHETER", "text": "chest tube", "start": 197, "end": 207}
+{"span_id": "PROC_METHOD_11", "note_id": "123789_syn_4", "label": "PROC_METHOD", "text": "VATS", "start": 11, "end": 15}
+{"span_id": "PROC_ACTION_16", "note_id": "123789_syn_4", "label": "PROC_ACTION", "text": "Resection", "start": 16, "end": 25}
+{"span_id": "OBS_LESION_38", "note_id": "123789_syn_4", "label": "OBS_LESION", "text": "Mass", "start": 38, "end": 42}
+{"span_id": "OBS_LESION_121", "note_id": "123789_syn_4", "label": "OBS_LESION", "text": "mass", "start": 121, "end": 125}
+{"span_id": "DEV_INSTRUMENT_166", "note_id": "123789_syn_4", "label": "DEV_INSTRUMENT", "text": "harmonic", "start": 166, "end": 174}
+{"span_id": "DEV_CATHETER_202", "note_id": "123789_syn_4", "label": "DEV_CATHETER", "text": "Chest tube", "start": 202, "end": 212}
+{"span_id": "PROC_METHOD_0", "note_id": "123789_syn_5", "label": "PROC_METHOD", "text": "Vats", "start": 0, "end": 4}
+{"span_id": "OBS_LESION_9", "note_id": "123789_syn_5", "label": "OBS_LESION", "text": "thymoma", "start": 9, "end": 16}
+{"span_id": "LATERALITY_17", "note_id": "123789_syn_5", "label": "LATERALITY", "text": "right", "start": 17, "end": 22}
+{"span_id": "LATERALITY_33", "note_id": "123789_syn_5", "label": "LATERALITY", "text": "left", "start": 33, "end": 37}
+{"span_id": "MEAS_COUNT_43", "note_id": "123789_syn_5", "label": "MEAS_COUNT", "text": "3", "start": 43, "end": 44}
+{"span_id": "OBS_LESION_51", "note_id": "123789_syn_5", "label": "OBS_LESION", "text": "mass", "start": 51, "end": 55}
+{"span_id": "DEV_INSTRUMENT_137", "note_id": "123789_syn_5", "label": "DEV_INSTRUMENT", "text": "bag", "start": 137, "end": 140}
+{"span_id": "DEV_CATHETER_159", "note_id": "123789_syn_5", "label": "DEV_CATHETER", "text": "chest tube", "start": 159, "end": 169}
+{"span_id": "PROC_METHOD_0", "note_id": "123789_syn_6", "label": "PROC_METHOD", "text": "Video-assisted thoracoscopic surgery", "start": 0, "end": 36}
+{"span_id": "PROC_METHOD_38", "note_id": "123789_syn_6", "label": "PROC_METHOD", "text": "VATS", "start": 38, "end": 42}
+{"span_id": "PROC_ACTION_49", "note_id": "123789_syn_6", "label": "PROC_ACTION", "text": "excision", "start": 49, "end": 57}
+{"span_id": "OBS_LESION_73", "note_id": "123789_syn_6", "label": "OBS_LESION", "text": "lesion", "start": 73, "end": 79}
+{"span_id": "MEAS_SIZE_103", "note_id": "123789_syn_6", "label": "MEAS_SIZE", "text": "4.2cm", "start": 103, "end": 108}
+{"span_id": "OBS_LESION_130", "note_id": "123789_syn_6", "label": "OBS_LESION", "text": "mass", "start": 130, "end": 134}
+{"span_id": "MEAS_COUNT_136", "note_id": "123789_syn_6", "label": "MEAS_COUNT", "text": "Three", "start": 136, "end": 141}
+{"span_id": "DEV_INSTRUMENT_159", "note_id": "123789_syn_6", "label": "DEV_INSTRUMENT", "text": "Thoracoscope", "start": 159, "end": 171}
+{"span_id": "OBS_LESION_239", "note_id": "123789_syn_6", "label": "OBS_LESION", "text": "mass", "start": 239, "end": 243}
+{"span_id": "DEV_INSTRUMENT_307", "note_id": "123789_syn_6", "label": "DEV_INSTRUMENT", "text": "harmonic scalpel", "start": 307, "end": 323}
+{"span_id": "OBS_LESION_335", "note_id": "123789_syn_6", "label": "OBS_LESION", "text": "mass", "start": 335, "end": 339}
+{"span_id": "DEV_INSTRUMENT_404", "note_id": "123789_syn_6", "label": "DEV_INSTRUMENT", "text": "endo-bag", "start": 404, "end": 412}
+{"span_id": "MEAS_PLEURAL_DRAIN_421", "note_id": "123789_syn_6", "label": "MEAS_PLEURAL_DRAIN", "text": "24Fr", "start": 421, "end": 425}
+{"span_id": "DEV_CATHETER_426", "note_id": "123789_syn_6", "label": "DEV_CATHETER", "text": "chest tube", "start": 426, "end": 436}
+{"span_id": "OBS_LESION_34", "note_id": "123789_syn_7", "label": "OBS_LESION", "text": "mass", "start": 34, "end": 38}
+{"span_id": "OBS_LESION_40", "note_id": "123789_syn_7", "label": "OBS_LESION", "text": "Thymoma", "start": 40, "end": 47}
+{"span_id": "MEAS_COUNT_91", "note_id": "123789_syn_7", "label": "MEAS_COUNT", "text": "3", "start": 91, "end": 92}
+{"span_id": "PROC_METHOD_98", "note_id": "123789_syn_7", "label": "PROC_METHOD", "text": "VATS", "start": 98, "end": 102}
+{"span_id": "MEAS_SIZE_104", "note_id": "123789_syn_7", "label": "MEAS_SIZE", "text": "4.5cm", "start": 104, "end": 109}
+{"span_id": "OBS_LESION_110", "note_id": "123789_syn_7", "label": "OBS_LESION", "text": "mass", "start": 110, "end": 114}
+{"span_id": "PROC_ACTION_161", "note_id": "123789_syn_7", "label": "PROC_ACTION", "text": "excision", "start": 161, "end": 169}
+{"span_id": "DEV_INSTRUMENT_171", "note_id": "123789_syn_7", "label": "DEV_INSTRUMENT", "text": "Endo-bag", "start": 171, "end": 179}
+{"span_id": "DEV_CATHETER_206", "note_id": "123789_syn_7", "label": "DEV_CATHETER", "text": "chest tube", "start": 206, "end": 216}
+{"span_id": "PROC_METHOD_13", "note_id": "123789_syn_8", "label": "PROC_METHOD", "text": "VATS", "start": 13, "end": 17}
+{"span_id": "OBS_LESION_51", "note_id": "123789_syn_8", "label": "OBS_LESION", "text": "mass", "start": 51, "end": 55}
+{"span_id": "MEAS_COUNT_78", "note_id": "123789_syn_8", "label": "MEAS_COUNT", "text": "three", "start": 78, "end": 83}
+{"span_id": "OBS_LESION_125", "note_id": "123789_syn_8", "label": "OBS_LESION", "text": "mass", "start": 125, "end": 129}
+{"span_id": "DEV_INSTRUMENT_266", "note_id": "123789_syn_8", "label": "DEV_INSTRUMENT", "text": "retrieval bag", "start": 266, "end": 279}
+{"span_id": "DEV_CATHETER_283", "note_id": "123789_syn_8", "label": "DEV_CATHETER", "text": "chest tube", "start": 283, "end": 293}
+{"span_id": "OBS_LESION_32", "note_id": "123789_syn_9", "label": "OBS_LESION", "text": "neoplasm", "start": 32, "end": 40}
+{"span_id": "PROC_METHOD_50", "note_id": "123789_syn_9", "label": "PROC_METHOD", "text": "Thoracoscopic", "start": 50, "end": 63}
+{"span_id": "PROC_ACTION_64", "note_id": "123789_syn_9", "label": "PROC_ACTION", "text": "resection", "start": 64, "end": 73}
+{"span_id": "OBS_LESION_89", "note_id": "123789_syn_9", "label": "OBS_LESION", "text": "tumor", "start": 89, "end": 94}
+{"span_id": "MEAS_COUNT_105", "note_id": "123789_syn_9", "label": "MEAS_COUNT", "text": "Three", "start": 105, "end": 110}
+{"span_id": "OBS_LESION_136", "note_id": "123789_syn_9", "label": "OBS_LESION", "text": "Tumor", "start": 136, "end": 141}
+{"span_id": "DEV_INSTRUMENT_211", "note_id": "123789_syn_9", "label": "DEV_INSTRUMENT", "text": "retrieval sac", "start": 211, "end": 224}
+{"span_id": "DEV_CATHETER_226", "note_id": "123789_syn_9", "label": "DEV_CATHETER", "text": "Drainage tube", "start": 226, "end": 239}
+{"span_id": "OBS_LESION_381", "note_id": "123789", "label": "OBS_LESION", "text": "mass", "start": 381, "end": 385}
+{"span_id": "OBS_LESION_397", "note_id": "123789", "label": "OBS_LESION", "text": "thymoma", "start": 397, "end": 404}
+{"span_id": "OBS_LESION_452", "note_id": "123789", "label": "OBS_LESION", "text": "mass", "start": 452, "end": 456}
+{"span_id": "OBS_LESION_459", "note_id": "123789", "label": "OBS_LESION", "text": "thymoma", "start": 459, "end": 466}
+{"span_id": "PROC_METHOD_489", "note_id": "123789", "label": "PROC_METHOD", "text": "Video-assisted thoracoscopic surgery", "start": 489, "end": 525}
+{"span_id": "PROC_METHOD_527", "note_id": "123789", "label": "PROC_METHOD", "text": "VATS", "start": 527, "end": 531}
+{"span_id": "PROC_ACTION_538", "note_id": "123789", "label": "PROC_ACTION", "text": "excision", "start": 538, "end": 546}
+{"span_id": "OBS_LESION_562", "note_id": "123789", "label": "OBS_LESION", "text": "lesion", "start": 562, "end": 568}
+{"span_id": "MEAS_SIZE_629", "note_id": "123789", "label": "MEAS_SIZE", "text": "4.2cm", "start": 629, "end": 634}
+{"span_id": "OBS_LESION_656", "note_id": "123789", "label": "OBS_LESION", "text": "mass", "start": 656, "end": 660}
+{"span_id": "OBS_LESION_766", "note_id": "123789", "label": "OBS_LESION", "text": "lesion", "start": 766, "end": 772}
+{"span_id": "PROC_ACTION_803", "note_id": "123789", "label": "PROC_ACTION", "text": "excision", "start": 803, "end": 811}
+{"span_id": "LATERALITY_873", "note_id": "123789", "label": "LATERALITY", "text": "left", "start": 873, "end": 877}
+{"span_id": "LATERALITY_957", "note_id": "123789", "label": "LATERALITY", "text": "Left", "start": 957, "end": 961}
+{"span_id": "MEAS_COUNT_1008", "note_id": "123789", "label": "MEAS_COUNT", "text": "Three", "start": 1008, "end": 1013}
+{"span_id": "MEAS_SIZE_1033", "note_id": "123789", "label": "MEAS_SIZE", "text": "10mm", "start": 1033, "end": 1037}
+{"span_id": "MEAS_SIZE_1099", "note_id": "123789", "label": "MEAS_SIZE", "text": "5mm", "start": 1099, "end": 1102}
+{"span_id": "MEAS_SIZE_1162", "note_id": "123789", "label": "MEAS_SIZE", "text": "5mm", "start": 1162, "end": 1165}
+{"span_id": "DEV_INSTRUMENT_1227", "note_id": "123789", "label": "DEV_INSTRUMENT", "text": "Thoracoscope", "start": 1227, "end": 1239}
+{"span_id": "ANAT_PLEURA_1252", "note_id": "123789", "label": "ANAT_PLEURA", "text": "Pleural space", "start": 1252, "end": 1265}
+{"span_id": "OBS_LESION_1360", "note_id": "123789", "label": "OBS_LESION", "text": "mass", "start": 1360, "end": 1364}
+{"span_id": "DEV_INSTRUMENT_1428", "note_id": "123789", "label": "DEV_INSTRUMENT", "text": "harmonic scalpel", "start": 1428, "end": 1444}
+{"span_id": "OBS_LESION_1457", "note_id": "123789", "label": "OBS_LESION", "text": "mass", "start": 1457, "end": 1461}
+{"span_id": "DEV_INSTRUMENT_1562", "note_id": "123789", "label": "DEV_INSTRUMENT", "text": "endo-bag", "start": 1562, "end": 1570}
+{"span_id": "MEAS_PLEURAL_DRAIN_1631", "note_id": "123789", "label": "MEAS_PLEURAL_DRAIN", "text": "24Fr", "start": 1631, "end": 1635}
+{"span_id": "DEV_CATHETER_1636", "note_id": "123789", "label": "DEV_CATHETER", "text": "chest tube", "start": 1636, "end": 1646}
+{"span_id": "MEAS_SIZE_1735", "note_id": "123789", "label": "MEAS_SIZE", "text": "4.5 x 3.8 x 3.2 cm", "start": 1735, "end": 1753}
+{"span_id": "OBS_LESION_1767", "note_id": "123789", "label": "OBS_LESION", "text": "mass", "start": 1767, "end": 1771}
+{"span_id": "MEAS_VOL_1809", "note_id": "123789", "label": "MEAS_VOL", "text": "75mL", "start": 1809, "end": 1813}
+{"span_id": "OUTCOME_COMPLICATION_1829", "note_id": "123789", "label": "OUTCOME_COMPLICATION", "text": "None", "start": 1829, "end": 1833}
+{"span_id": "ANAT_AIRWAY_4", "note_id": "436795_syn_1", "label": "ANAT_AIRWAY", "text": "Distal Trachea", "start": 4, "end": 18}
+{"span_id": "MEAS_SIZE_71", "note_id": "436795_syn_1", "label": "MEAS_SIZE", "text": "2.0cm", "start": 71, "end": 76}
+{"span_id": "OBS_LESION_77", "note_id": "436795_syn_1", "label": "OBS_LESION", "text": "tumor", "start": 77, "end": 82}
+{"span_id": "PROC_METHOD_84", "note_id": "436795_syn_1", "label": "PROC_METHOD", "text": "Fluoro", "start": 84, "end": 90}
+{"span_id": "ANAT_AIRWAY_85", "note_id": "436795_syn_2", "label": "ANAT_AIRWAY", "text": "distal trachea", "start": 85, "end": 99}
+{"span_id": "OBS_LESION_138", "note_id": "436795_syn_2", "label": "OBS_LESION", "text": "lesion", "start": 138, "end": 144}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_160", "note_id": "436795_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "55% obstruction", "start": 160, "end": 175}
+{"span_id": "OBS_LESION_263", "note_id": "436795_syn_2", "label": "OBS_LESION", "text": "tumor", "start": 263, "end": 268}
+{"span_id": "PROC_METHOD_270", "note_id": "436795_syn_2", "label": "PROC_METHOD", "text": "Fluoroscopic", "start": 270, "end": 282}
+{"span_id": "MEAS_SIZE_339", "note_id": "436795_syn_2", "label": "MEAS_SIZE", "text": "4.0 cm", "start": 339, "end": 345}
+{"span_id": "ANAT_AIRWAY_62", "note_id": "436795_syn_3", "label": "ANAT_AIRWAY", "text": "Distal Trachea", "start": 62, "end": 76}
+{"span_id": "PROC_METHOD_152", "note_id": "436795_syn_3", "label": "PROC_METHOD", "text": "Fluoroscopic", "start": 152, "end": 164}
+{"span_id": "MEAS_TIME_175", "note_id": "436795_syn_3", "label": "MEAS_TIME", "text": "5 min", "start": 175, "end": 180}
+{"span_id": "ANAT_AIRWAY_83", "note_id": "436795_syn_4", "label": "ANAT_AIRWAY", "text": "distal trachea", "start": 83, "end": 97}
+{"span_id": "OBS_LESION_102", "note_id": "436795_syn_4", "label": "OBS_LESION", "text": "Tumor", "start": 102, "end": 107}
+{"span_id": "PROC_METHOD_136", "note_id": "436795_syn_4", "label": "PROC_METHOD", "text": "Fluoro", "start": 136, "end": 142}
+{"span_id": "ANAT_AIRWAY_23", "note_id": "436795_syn_5", "label": "ANAT_AIRWAY", "text": "distal trachea", "start": 23, "end": 37}
+{"span_id": "OBS_LESION_38", "note_id": "436795_syn_5", "label": "OBS_LESION", "text": "tumor", "start": 38, "end": 43}
+{"span_id": "OBS_LESION_143", "note_id": "436795_syn_5", "label": "OBS_LESION", "text": "tumor", "start": 143, "end": 148}
+{"span_id": "PROC_METHOD_177", "note_id": "436795_syn_5", "label": "PROC_METHOD", "text": "fluoro", "start": 177, "end": 183}
+{"span_id": "ANAT_AIRWAY_77", "note_id": "436795_syn_6", "label": "ANAT_AIRWAY", "text": "distal tracheal", "start": 77, "end": 92}
+{"span_id": "MEAS_SIZE_126", "note_id": "436795_syn_6", "label": "MEAS_SIZE", "text": "2.0 cm", "start": 126, "end": 132}
+{"span_id": "OBS_LESION_133", "note_id": "436795_syn_6", "label": "OBS_LESION", "text": "tumor", "start": 133, "end": 138}
+{"span_id": "PROC_METHOD_224", "note_id": "436795_syn_6", "label": "PROC_METHOD", "text": "fluoroscopy", "start": 224, "end": 235}
+{"span_id": "ANAT_AIRWAY_13", "note_id": "436795_syn_7", "label": "ANAT_AIRWAY", "text": "Distal trachea", "start": 13, "end": 27}
+{"span_id": "ANAT_AIRWAY_88", "note_id": "436795_syn_7", "label": "ANAT_AIRWAY", "text": "Tracheal", "start": 88, "end": 96}
+{"span_id": "OBS_LESION_97", "note_id": "436795_syn_7", "label": "OBS_LESION", "text": "tumor", "start": 97, "end": 102}
+{"span_id": "MEAS_SIZE_136", "note_id": "436795_syn_7", "label": "MEAS_SIZE", "text": "2 cm", "start": 136, "end": 140}
+{"span_id": "OBS_LESION_151", "note_id": "436795_syn_7", "label": "OBS_LESION", "text": "lesion", "start": 151, "end": 157}
+{"span_id": "PROC_METHOD_159", "note_id": "436795_syn_7", "label": "PROC_METHOD", "text": "Fluoroscopy", "start": 159, "end": 170}
+{"span_id": "ANAT_AIRWAY_53", "note_id": "436795_syn_8", "label": "ANAT_AIRWAY", "text": "tracheal", "start": 53, "end": 61}
+{"span_id": "OBS_LESION_62", "note_id": "436795_syn_8", "label": "OBS_LESION", "text": "tumor", "start": 62, "end": 67}
+{"span_id": "OBS_LESION_138", "note_id": "436795_syn_8", "label": "OBS_LESION", "text": "tumor", "start": 138, "end": 143}
+{"span_id": "ANAT_AIRWAY_151", "note_id": "436795_syn_8", "label": "ANAT_AIRWAY", "text": "lower windpipe", "start": 151, "end": 165}
+{"span_id": "PROC_METHOD_225", "note_id": "436795_syn_8", "label": "PROC_METHOD", "text": "fluoroscope", "start": 225, "end": 236}
+{"span_id": "ANAT_AIRWAY_4", "note_id": "436795_syn_9", "label": "ANAT_AIRWAY", "text": "Tracheal", "start": 4, "end": 12}
+{"span_id": "MEAS_SIZE_112", "note_id": "436795_syn_9", "label": "MEAS_SIZE", "text": "2 cm", "start": 112, "end": 116}
+{"span_id": "OBS_LESION_117", "note_id": "436795_syn_9", "label": "OBS_LESION", "text": "mass", "start": 117, "end": 121}
+{"span_id": "PROC_METHOD_148", "note_id": "436795_syn_9", "label": "PROC_METHOD", "text": "fluoroscopy", "start": 148, "end": 159}
+{"span_id": "OBS_LESION_24", "note_id": "502118_syn_1", "label": "OBS_LESION", "text": "Peanut", "start": 24, "end": 30}
+{"span_id": "OBS_LESION_39", "note_id": "502118_syn_1", "label": "OBS_LESION", "text": "Foreign Body", "start": 39, "end": 51}
+{"span_id": "PROC_ACTION_52", "note_id": "502118_syn_1", "label": "PROC_ACTION", "text": "Removal", "start": 52, "end": 59}
+{"span_id": "ANAT_AIRWAY_71", "note_id": "502118_syn_1", "label": "ANAT_AIRWAY", "text": "R main", "start": 71, "end": 77}
+{"span_id": "ANAT_LUNG_LOC_78", "note_id": "502118_syn_1", "label": "ANAT_LUNG_LOC", "text": "RLL", "start": 78, "end": 81}
+{"span_id": "OBS_LESION_94", "note_id": "502118_syn_1", "label": "OBS_LESION", "text": "nuts", "start": 94, "end": 98}
+{"span_id": "DEV_INSTRUMENT_108", "note_id": "502118_syn_1", "label": "DEV_INSTRUMENT", "text": "Basket", "start": 108, "end": 114}
+{"span_id": "DEV_INSTRUMENT_115", "note_id": "502118_syn_1", "label": "DEV_INSTRUMENT", "text": "Forceps", "start": 115, "end": 122}
+{"span_id": "PROC_ACTION_123", "note_id": "502118_syn_1", "label": "PROC_ACTION", "text": "removal", "start": 123, "end": 130}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_150", "note_id": "502118_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Airways cleared", "start": 150, "end": 165}
+{"span_id": "PROC_ACTION_28", "note_id": "502118_syn_2", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 28, "end": 40}
+{"span_id": "OBS_LESION_108", "note_id": "502118_syn_2", "label": "OBS_LESION", "text": "foreign body", "start": 108, "end": 120}
+{"span_id": "OBS_LESION_122", "note_id": "502118_syn_2", "label": "OBS_LESION", "text": "peanut fragments", "start": 122, "end": 138}
+{"span_id": "ANAT_AIRWAY_154", "note_id": "502118_syn_2", "label": "ANAT_AIRWAY", "text": "right mainstem bronchus", "start": 154, "end": 177}
+{"span_id": "DEV_INSTRUMENT_187", "note_id": "502118_syn_2", "label": "DEV_INSTRUMENT", "text": "retrieval basket", "start": 187, "end": 203}
+{"span_id": "DEV_INSTRUMENT_208", "note_id": "502118_syn_2", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 208, "end": 215}
+{"span_id": "OBS_LESION_221", "note_id": "502118_syn_2", "label": "OBS_LESION", "text": "foreign material", "start": 221, "end": 237}
+{"span_id": "PROC_ACTION_242", "note_id": "502118_syn_2", "label": "PROC_ACTION", "text": "extracted", "start": 242, "end": 251}
+{"span_id": "PROC_ACTION_273", "note_id": "502118_syn_2", "label": "PROC_ACTION", "text": "removal", "start": 273, "end": 280}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_332", "note_id": "502118_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "patent", "start": 332, "end": 338}
+{"span_id": "PROC_ACTION_13", "note_id": "502118_syn_3", "label": "PROC_ACTION", "text": "Bronchoscopy", "start": 13, "end": 25}
+{"span_id": "PROC_ACTION_31", "note_id": "502118_syn_3", "label": "PROC_ACTION", "text": "removal", "start": 31, "end": 38}
+{"span_id": "OBS_LESION_42", "note_id": "502118_syn_3", "label": "OBS_LESION", "text": "foreign body", "start": 42, "end": 54}
+{"span_id": "PROC_ACTION_65", "note_id": "502118_syn_3", "label": "PROC_ACTION", "text": "Removal", "start": 65, "end": 72}
+{"span_id": "OBS_LESION_76", "note_id": "502118_syn_3", "label": "OBS_LESION", "text": "aspirated organic material", "start": 76, "end": 102}
+{"span_id": "ANAT_AIRWAY_108", "note_id": "502118_syn_3", "label": "ANAT_AIRWAY", "text": "Right Mainstem", "start": 108, "end": 122}
+{"span_id": "ANAT_LUNG_LOC_123", "note_id": "502118_syn_3", "label": "ANAT_LUNG_LOC", "text": "RLL", "start": 123, "end": 126}
+{"span_id": "DEV_INSTRUMENT_133", "note_id": "502118_syn_3", "label": "DEV_INSTRUMENT", "text": "basket", "start": 133, "end": 139}
+{"span_id": "DEV_INSTRUMENT_144", "note_id": "502118_syn_3", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 144, "end": 151}
+{"span_id": "PROC_ACTION_175", "note_id": "502118_syn_3", "label": "PROC_ACTION", "text": "removal", "start": 175, "end": 182}
+{"span_id": "PROC_ACTION_10", "note_id": "502118_syn_4", "label": "PROC_ACTION", "text": "Bronch", "start": 10, "end": 16}
+{"span_id": "DEV_INSTRUMENT_74", "note_id": "502118_syn_4", "label": "DEV_INSTRUMENT", "text": "Scope", "start": 74, "end": 79}
+{"span_id": "OBS_LESION_88", "note_id": "502118_syn_4", "label": "OBS_LESION", "text": "Peanut parts", "start": 88, "end": 100}
+{"span_id": "ANAT_LUNG_LOC_104", "note_id": "502118_syn_4", "label": "ANAT_LUNG_LOC", "text": "R lung", "start": 104, "end": 110}
+{"span_id": "DEV_INSTRUMENT_120", "note_id": "502118_syn_4", "label": "DEV_INSTRUMENT", "text": "basket", "start": 120, "end": 126}
+{"span_id": "DEV_INSTRUMENT_131", "note_id": "502118_syn_4", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 131, "end": 138}
+{"span_id": "PROC_ACTION_143", "note_id": "502118_syn_4", "label": "PROC_ACTION", "text": "Pulled out", "start": 143, "end": 153}
+{"span_id": "PROC_ACTION_174", "note_id": "502118_syn_4", "label": "PROC_ACTION", "text": "Suctioned", "start": 174, "end": 183}
+{"span_id": "OUTCOME_PLEURAL_194", "note_id": "502118_syn_4", "label": "OUTCOME_PLEURAL", "text": "R lung reinflated", "start": 194, "end": 211}
+{"span_id": "OBS_LESION_25", "note_id": "502118_syn_5", "label": "OBS_LESION", "text": "peanut", "start": 25, "end": 31}
+{"span_id": "ANAT_LUNG_LOC_51", "note_id": "502118_syn_5", "label": "ANAT_LUNG_LOC", "text": "right lung", "start": 51, "end": 61}
+{"span_id": "DEV_INSTRUMENT_85", "note_id": "502118_syn_5", "label": "DEV_INSTRUMENT", "text": "scope", "start": 85, "end": 90}
+{"span_id": "OBS_LESION_97", "note_id": "502118_syn_5", "label": "OBS_LESION", "text": "peanut mess", "start": 97, "end": 108}
+{"span_id": "ANAT_AIRWAY_116", "note_id": "502118_syn_5", "label": "ANAT_AIRWAY", "text": "right main", "start": 116, "end": 126}
+{"span_id": "DEV_INSTRUMENT_137", "note_id": "502118_syn_5", "label": "DEV_INSTRUMENT", "text": "basket", "start": 137, "end": 143}
+{"span_id": "DEV_INSTRUMENT_148", "note_id": "502118_syn_5", "label": "DEV_INSTRUMENT", "text": "grabbers", "start": 148, "end": 156}
+{"span_id": "OUTCOME_PLEURAL_220", "note_id": "502118_syn_5", "label": "OUTCOME_PLEURAL", "text": "lung is up", "start": 220, "end": 230}
+{"span_id": "PROC_ACTION_10", "note_id": "502118_syn_6", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 10, "end": 22}
+{"span_id": "OBS_LESION_27", "note_id": "502118_syn_6", "label": "OBS_LESION", "text": "foreign body", "start": 27, "end": 39}
+{"span_id": "OBS_FINDING_79", "note_id": "502118_syn_6", "label": "OBS_FINDING", "text": "right lung collapse", "start": 79, "end": 98}
+{"span_id": "PROC_ACTION_100", "note_id": "502118_syn_6", "label": "PROC_ACTION", "text": "Bronchoscopy", "start": 100, "end": 112}
+{"span_id": "OBS_LESION_122", "note_id": "502118_syn_6", "label": "OBS_LESION", "text": "peanut fragments", "start": 122, "end": 138}
+{"span_id": "ANAT_AIRWAY_155", "note_id": "502118_syn_6", "label": "ANAT_AIRWAY", "text": "right mainstem", "start": 155, "end": 169}
+{"span_id": "PROC_ACTION_182", "note_id": "502118_syn_6", "label": "PROC_ACTION", "text": "removed", "start": 182, "end": 189}
+{"span_id": "DEV_INSTRUMENT_213", "note_id": "502118_syn_6", "label": "DEV_INSTRUMENT", "text": "basket", "start": 213, "end": 219}
+{"span_id": "DEV_INSTRUMENT_224", "note_id": "502118_syn_6", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 224, "end": 231}
+{"span_id": "OBS_LESION_271", "note_id": "502118_syn_6", "label": "OBS_LESION", "text": "foreign material", "start": 271, "end": 287}
+{"span_id": "OBS_LESION_13", "note_id": "502118_syn_7", "label": "OBS_LESION", "text": "Foreign body", "start": 13, "end": 25}
+{"span_id": "MEDICATION_81", "note_id": "502118_syn_7", "label": "MEDICATION", "text": "Propofol", "start": 81, "end": 89}
+{"span_id": "MEDICATION_90", "note_id": "502118_syn_7", "label": "MEDICATION", "text": "Fentanyl", "start": 90, "end": 98}
+{"span_id": "OBS_LESION_115", "note_id": "502118_syn_7", "label": "OBS_LESION", "text": "FB", "start": 115, "end": 117}
+{"span_id": "OBS_LESION_132", "note_id": "502118_syn_7", "label": "OBS_LESION", "text": "Peanut", "start": 132, "end": 138}
+{"span_id": "ANAT_LUNG_LOC_140", "note_id": "502118_syn_7", "label": "ANAT_LUNG_LOC", "text": "R lung", "start": 140, "end": 146}
+{"span_id": "PROC_ACTION_148", "note_id": "502118_syn_7", "label": "PROC_ACTION", "text": "Removal", "start": 148, "end": 155}
+{"span_id": "DEV_INSTRUMENT_160", "note_id": "502118_syn_7", "label": "DEV_INSTRUMENT", "text": "basket", "start": 160, "end": 166}
+{"span_id": "DEV_INSTRUMENT_167", "note_id": "502118_syn_7", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 167, "end": 174}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_176", "note_id": "502118_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Airways patent", "start": 176, "end": 190}
+{"span_id": "OBS_LESION_52", "note_id": "502118_syn_8", "label": "OBS_LESION", "text": "peanut", "start": 52, "end": 58}
+{"span_id": "ANAT_LUNG_LOC_91", "note_id": "502118_syn_8", "label": "ANAT_LUNG_LOC", "text": "right lung", "start": 91, "end": 101}
+{"span_id": "DEV_INSTRUMENT_117", "note_id": "502118_syn_8", "label": "DEV_INSTRUMENT", "text": "basket", "start": 117, "end": 123}
+{"span_id": "DEV_INSTRUMENT_128", "note_id": "502118_syn_8", "label": "DEV_INSTRUMENT", "text": "grippers", "start": 128, "end": 136}
+{"span_id": "DEV_INSTRUMENT_149", "note_id": "502118_syn_8", "label": "DEV_INSTRUMENT", "text": "scope", "start": 149, "end": 154}
+{"span_id": "PROC_ACTION_159", "note_id": "502118_syn_8", "label": "PROC_ACTION", "text": "removed", "start": 159, "end": 166}
+{"span_id": "OBS_LESION_171", "note_id": "502118_syn_8", "label": "OBS_LESION", "text": "peanut", "start": 171, "end": 177}
+{"span_id": "PROC_ACTION_221", "note_id": "502118_syn_8", "label": "PROC_ACTION", "text": "suctioned", "start": 221, "end": 230}
+{"span_id": "OUTCOME_PLEURAL_257", "note_id": "502118_syn_8", "label": "OUTCOME_PLEURAL", "text": "lung re-expanded", "start": 257, "end": 273}
+{"span_id": "PROC_ACTION_11", "note_id": "502118_syn_9", "label": "PROC_ACTION", "text": "Retrieval", "start": 11, "end": 20}
+{"span_id": "OBS_LESION_24", "note_id": "502118_syn_9", "label": "OBS_LESION", "text": "aspirated foreign material", "start": 24, "end": 50}
+{"span_id": "ANAT_AIRWAY_60", "note_id": "502118_syn_9", "label": "ANAT_AIRWAY", "text": "Right bronchial tree", "start": 60, "end": 80}
+{"span_id": "PROC_ACTION_90", "note_id": "502118_syn_9", "label": "PROC_ACTION", "text": "Extraction", "start": 90, "end": 100}
+{"span_id": "DEV_INSTRUMENT_111", "note_id": "502118_syn_9", "label": "DEV_INSTRUMENT", "text": "wire basket", "start": 111, "end": 122}
+{"span_id": "DEV_INSTRUMENT_127", "note_id": "502118_syn_9", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 127, "end": 134}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_145", "note_id": "502118_syn_9", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Restoration of bronchial patency", "start": 145, "end": 177}
+{"span_id": "PROC_ACTION_10", "note_id": "502118", "label": "PROC_ACTION", "text": "BRONCHOSCOPY", "start": 10, "end": 22}
+{"span_id": "OBS_LESION_25", "note_id": "502118", "label": "OBS_LESION", "text": "FOREIGN BODY", "start": 25, "end": 37}
+{"span_id": "OBS_LESION_212", "note_id": "502118", "label": "OBS_LESION", "text": "peanut", "start": 212, "end": 218}
+{"span_id": "OBS_FINDING_326", "note_id": "502118", "label": "OBS_FINDING", "text": "right lung collapse", "start": 326, "end": 345}
+{"span_id": "MEDICATION_460", "note_id": "502118", "label": "MEDICATION", "text": "propofol", "start": 460, "end": 468}
+{"span_id": "MEDICATION_473", "note_id": "502118", "label": "MEDICATION", "text": "fentanyl", "start": 473, "end": 481}
+{"span_id": "DEV_INSTRUMENT_537", "note_id": "502118", "label": "DEV_INSTRUMENT", "text": "Flexible bronchoscope", "start": 537, "end": 558}
+{"span_id": "OBS_LESION_605", "note_id": "502118", "label": "OBS_LESION", "text": "particulate material", "start": 605, "end": 625}
+{"span_id": "ANAT_AIRWAY_648", "note_id": "502118", "label": "ANAT_AIRWAY", "text": "right mainstem bronchus", "start": 648, "end": 671}
+{"span_id": "ANAT_AIRWAY_724", "note_id": "502118", "label": "ANAT_AIRWAY", "text": "right lower lobe bronchus", "start": 724, "end": 749}
+{"span_id": "DEV_INSTRUMENT_760", "note_id": "502118", "label": "DEV_INSTRUMENT", "text": "4-wire retrieval basket", "start": 760, "end": 783}
+{"span_id": "DEV_INSTRUMENT_788", "note_id": "502118", "label": "DEV_INSTRUMENT", "text": "alligator forceps", "start": 788, "end": 805}
+{"span_id": "OBS_LESION_816", "note_id": "502118", "label": "OBS_LESION", "text": "peanut fragments", "start": 816, "end": 832}
+{"span_id": "PROC_ACTION_838", "note_id": "502118", "label": "PROC_ACTION", "text": "removed", "start": 838, "end": 845}
+{"span_id": "ANAT_AIRWAY_865", "note_id": "502118", "label": "ANAT_AIRWAY", "text": "right mainstem", "start": 865, "end": 879}
+{"span_id": "ANAT_AIRWAY_884", "note_id": "502118", "label": "ANAT_AIRWAY", "text": "right lower lobe bronchi", "start": 884, "end": 908}
+{"span_id": "PROC_ACTION_923", "note_id": "502118", "label": "PROC_ACTION", "text": "suctioned", "start": 923, "end": 932}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_950", "note_id": "502118", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "patent", "start": 950, "end": 956}
+{"span_id": "OUTCOME_COMPLICATION_1086", "note_id": "502118", "label": "OUTCOME_COMPLICATION", "text": "None", "start": 1086, "end": 1090}
+{"span_id": "PROC_METHOD_6", "note_id": "700001_syn_1", "label": "PROC_METHOD", "text": "EBUS", "start": 6, "end": 10}
+{"span_id": "PROC_ACTION_11", "note_id": "700001_syn_1", "label": "PROC_ACTION", "text": "TBNA", "start": 11, "end": 15}
+{"span_id": "ANAT_LN_STATION_16", "note_id": "700001_syn_1", "label": "ANAT_LN_STATION", "text": "mediastinal/hilar nodes", "start": 16, "end": 39}
+{"span_id": "MEAS_SIZE_57", "note_id": "700001_syn_1", "label": "MEAS_SIZE", "text": "8.5", "start": 57, "end": 60}
+{"span_id": "DEV_INSTRUMENT_61", "note_id": "700001_syn_1", "label": "DEV_INSTRUMENT", "text": "ETT", "start": 61, "end": 64}
+{"span_id": "ANAT_AIRWAY_77", "note_id": "700001_syn_1", "label": "ANAT_AIRWAY", "text": "Airway", "start": 77, "end": 83}
+{"span_id": "DEV_INSTRUMENT_102", "note_id": "700001_syn_1", "label": "DEV_INSTRUMENT", "text": "EBUS scope", "start": 102, "end": 112}
+{"span_id": "PROC_ACTION_127", "note_id": "700001_syn_1", "label": "PROC_ACTION", "text": "Sampled", "start": 127, "end": 134}
+{"span_id": "ANAT_LN_STATION_135", "note_id": "700001_syn_1", "label": "ANAT_LN_STATION", "text": "4R", "start": 135, "end": 137}
+{"span_id": "MEAS_COUNT_139", "note_id": "700001_syn_1", "label": "MEAS_COUNT", "text": "3 passes", "start": 139, "end": 147}
+{"span_id": "OBS_ROSE_154", "note_id": "700001_syn_1", "label": "OBS_ROSE", "text": "malig", "start": 154, "end": 159}
+{"span_id": "ANAT_LN_STATION_162", "note_id": "700001_syn_1", "label": "ANAT_LN_STATION", "text": "4L", "start": 162, "end": 164}
+{"span_id": "MEAS_COUNT_166", "note_id": "700001_syn_1", "label": "MEAS_COUNT", "text": "3 passes", "start": 166, "end": 174}
+{"span_id": "OBS_ROSE_176", "note_id": "700001_syn_1", "label": "OBS_ROSE", "text": "benign", "start": 176, "end": 182}
+{"span_id": "ANAT_LN_STATION_185", "note_id": "700001_syn_1", "label": "ANAT_LN_STATION", "text": "7", "start": 185, "end": 186}
+{"span_id": "MEAS_COUNT_188", "note_id": "700001_syn_1", "label": "MEAS_COUNT", "text": "4 passes", "start": 188, "end": 196}
+{"span_id": "OBS_ROSE_198", "note_id": "700001_syn_1", "label": "OBS_ROSE", "text": "susp", "start": 198, "end": 202}
+{"span_id": "ANAT_LN_STATION_205", "note_id": "700001_syn_1", "label": "ANAT_LN_STATION", "text": "10L", "start": 205, "end": 208}
+{"span_id": "MEAS_COUNT_210", "note_id": "700001_syn_1", "label": "MEAS_COUNT", "text": "2 passes", "start": 210, "end": 218}
+{"span_id": "OBS_ROSE_220", "note_id": "700001_syn_1", "label": "OBS_ROSE", "text": "benign", "start": 220, "end": 226}
+{"span_id": "MEAS_COUNT_237", "note_id": "700001_syn_1", "label": "MEAS_COUNT", "text": "12 passes", "start": 237, "end": 246}
+{"span_id": "OUTCOME_COMPLICATION_254", "note_id": "700001_syn_1", "label": "OUTCOME_COMPLICATION", "text": "None", "start": 254, "end": 258}
+{"span_id": "MEAS_VOL_260", "note_id": "700001_syn_1", "label": "MEAS_VOL", "text": "<5mL", "start": 260, "end": 264}
+{"span_id": "ANAT_LUNG_LOC_82", "note_id": "700001_syn_2", "label": "ANAT_LUNG_LOC", "text": "left upper lobe", "start": 82, "end": 97}
+{"span_id": "OBS_LESION_98", "note_id": "700001_syn_2", "label": "OBS_LESION", "text": "mass", "start": 98, "end": 102}
+{"span_id": "MEAS_SIZE_166", "note_id": "700001_syn_2", "label": "MEAS_SIZE", "text": "8.5 mm", "start": 166, "end": 172}
+{"span_id": "DEV_INSTRUMENT_173", "note_id": "700001_syn_2", "label": "DEV_INSTRUMENT", "text": "endotracheal tube", "start": 173, "end": 190}
+{"span_id": "PROC_METHOD_205", "note_id": "700001_syn_2", "label": "PROC_METHOD", "text": "endobronchial ultrasound", "start": 205, "end": 229}
+{"span_id": "PROC_ACTION_277", "note_id": "700001_syn_2", "label": "PROC_ACTION", "text": "sampled", "start": 277, "end": 284}
+{"span_id": "ANAT_LN_STATION_285", "note_id": "700001_syn_2", "label": "ANAT_LN_STATION", "text": "stations 4R, 4L, 7, and 10L", "start": 285, "end": 312}
+{"span_id": "OBS_ROSE_356", "note_id": "700001_syn_2", "label": "OBS_ROSE", "text": "malignancy", "start": 356, "end": 366}
+{"span_id": "ANAT_LN_STATION_379", "note_id": "700001_syn_2", "label": "ANAT_LN_STATION", "text": "4R", "start": 379, "end": 381}
+{"span_id": "ANAT_LN_STATION_386", "note_id": "700001_syn_2", "label": "ANAT_LN_STATION", "text": "7", "start": 386, "end": 387}
+{"span_id": "ANAT_LN_STATION_404", "note_id": "700001_syn_2", "label": "ANAT_LN_STATION", "text": "4L", "start": 404, "end": 406}
+{"span_id": "ANAT_LN_STATION_411", "note_id": "700001_syn_2", "label": "ANAT_LN_STATION", "text": "10L", "start": 411, "end": 414}
+{"span_id": "OBS_ROSE_432", "note_id": "700001_syn_2", "label": "OBS_ROSE", "text": "lymphocytes", "start": 432, "end": 443}
+{"span_id": "OBS_ROSE_463", "note_id": "700001_syn_2", "label": "OBS_ROSE", "text": "malignant cells", "start": 463, "end": 478}
+{"span_id": "OUTCOME_COMPLICATION_504", "note_id": "700001_syn_2", "label": "OUTCOME_COMPLICATION", "text": "without complication", "start": 504, "end": 524}
+{"span_id": "PROC_METHOD_23", "note_id": "700001_syn_3", "label": "PROC_METHOD", "text": "EBUS", "start": 23, "end": 27}
+{"span_id": "PROC_ACTION_28", "note_id": "700001_syn_3", "label": "PROC_ACTION", "text": "sampling", "start": 28, "end": 36}
+{"span_id": "PROC_METHOD_61", "note_id": "700001_syn_3", "label": "PROC_METHOD", "text": "Convex linear EBUS", "start": 61, "end": 79}
+{"span_id": "DEV_INSTRUMENT_81", "note_id": "700001_syn_3", "label": "DEV_INSTRUMENT", "text": "Olympus BF-UC180F", "start": 81, "end": 98}
+{"span_id": "ANAT_LN_STATION_119", "note_id": "700001_syn_3", "label": "ANAT_LN_STATION", "text": "Station 4R", "start": 119, "end": 129}
+{"span_id": "DEV_NEEDLE_141", "note_id": "700001_syn_3", "label": "DEV_NEEDLE", "text": "22G needle", "start": 141, "end": 151}
+{"span_id": "MEAS_COUNT_153", "note_id": "700001_syn_3", "label": "MEAS_COUNT", "text": "3 passes", "start": 153, "end": 161}
+{"span_id": "ANAT_LN_STATION_166", "note_id": "700001_syn_3", "label": "ANAT_LN_STATION", "text": "Station 4L", "start": 166, "end": 176}
+{"span_id": "DEV_NEEDLE_187", "note_id": "700001_syn_3", "label": "DEV_NEEDLE", "text": "22G needle", "start": 187, "end": 197}
+{"span_id": "MEAS_COUNT_199", "note_id": "700001_syn_3", "label": "MEAS_COUNT", "text": "3 passes", "start": 199, "end": 207}
+{"span_id": "ANAT_LN_STATION_212", "note_id": "700001_syn_3", "label": "ANAT_LN_STATION", "text": "Station 7", "start": 212, "end": 221}
+{"span_id": "DEV_NEEDLE_232", "note_id": "700001_syn_3", "label": "DEV_NEEDLE", "text": "22G needle", "start": 232, "end": 242}
+{"span_id": "MEAS_COUNT_244", "note_id": "700001_syn_3", "label": "MEAS_COUNT", "text": "4 passes", "start": 244, "end": 252}
+{"span_id": "ANAT_LN_STATION_257", "note_id": "700001_syn_3", "label": "ANAT_LN_STATION", "text": "Station 10L", "start": 257, "end": 268}
+{"span_id": "DEV_NEEDLE_279", "note_id": "700001_syn_3", "label": "DEV_NEEDLE", "text": "22G needle", "start": 279, "end": 289}
+{"span_id": "MEAS_COUNT_291", "note_id": "700001_syn_3", "label": "MEAS_COUNT", "text": "2 passes", "start": 291, "end": 299}
+{"span_id": "ANAT_LUNG_LOC_345", "note_id": "700001_syn_3", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 345, "end": 348}
+{"span_id": "OBS_LESION_349", "note_id": "700001_syn_3", "label": "OBS_LESION", "text": "mass", "start": 349, "end": 353}
+{"span_id": "SPECIMEN_385", "note_id": "700001_syn_3", "label": "SPECIMEN", "text": "Cytology", "start": 385, "end": 393}
+{"span_id": "PROC_METHOD_11", "note_id": "700001_syn_4", "label": "PROC_METHOD", "text": "EBUS", "start": 11, "end": 15}
+{"span_id": "PROC_ACTION_16", "note_id": "700001_syn_4", "label": "PROC_ACTION", "text": "TBNA", "start": 16, "end": 20}
+{"span_id": "DEV_INSTRUMENT_73", "note_id": "700001_syn_4", "label": "DEV_INSTRUMENT", "text": "ETT", "start": 73, "end": 76}
+{"span_id": "PROC_METHOD_102", "note_id": "700001_syn_4", "label": "PROC_METHOD", "text": "White light bronchoscopy", "start": 102, "end": 126}
+{"span_id": "PROC_METHOD_147", "note_id": "700001_syn_4", "label": "PROC_METHOD", "text": "EBUS", "start": 147, "end": 151}
+{"span_id": "PROC_ACTION_152", "note_id": "700001_syn_4", "label": "PROC_ACTION", "text": "TBNA", "start": 152, "end": 156}
+{"span_id": "ANAT_LN_STATION_179", "note_id": "700001_syn_4", "label": "ANAT_LN_STATION", "text": "4R", "start": 179, "end": 181}
+{"span_id": "ANAT_LN_STATION_183", "note_id": "700001_syn_4", "label": "ANAT_LN_STATION", "text": "4L", "start": 183, "end": 185}
+{"span_id": "ANAT_LN_STATION_187", "note_id": "700001_syn_4", "label": "ANAT_LN_STATION", "text": "7", "start": 187, "end": 188}
+{"span_id": "ANAT_LN_STATION_194", "note_id": "700001_syn_4", "label": "ANAT_LN_STATION", "text": "10L", "start": 194, "end": 197}
+{"span_id": "DEV_NEEDLE_204", "note_id": "700001_syn_4", "label": "DEV_NEEDLE", "text": "22G needle", "start": 204, "end": 214}
+{"span_id": "OBS_ROSE_243", "note_id": "700001_syn_4", "label": "OBS_ROSE", "text": "malignancy", "start": 243, "end": 253}
+{"span_id": "ANAT_LN_STATION_257", "note_id": "700001_syn_4", "label": "ANAT_LN_STATION", "text": "4R", "start": 257, "end": 259}
+{"span_id": "ANAT_LN_STATION_260", "note_id": "700001_syn_4", "label": "ANAT_LN_STATION", "text": "7", "start": 260, "end": 261}
+{"span_id": "OUTCOME_COMPLICATION_315", "note_id": "700001_syn_4", "label": "OUTCOME_COMPLICATION", "text": "None", "start": 315, "end": 319}
+{"span_id": "PROC_ACTION_11", "note_id": "700001_syn_5", "label": "PROC_ACTION", "text": "bronch", "start": 11, "end": 17}
+{"span_id": "OBS_LESION_49", "note_id": "700001_syn_5", "label": "OBS_LESION", "text": "lung mass", "start": 49, "end": 58}
+{"span_id": "DEV_INSTRUMENT_76", "note_id": "700001_syn_5", "label": "DEV_INSTRUMENT", "text": "ebus scope", "start": 76, "end": 86}
+{"span_id": "MEAS_SIZE_106", "note_id": "700001_syn_5", "label": "MEAS_SIZE", "text": "8.5", "start": 106, "end": 109}
+{"span_id": "PROC_ACTION_131", "note_id": "700001_syn_5", "label": "PROC_ACTION", "text": "sampled", "start": 131, "end": 138}
+{"span_id": "ANAT_LN_STATION_139", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "4R", "start": 139, "end": 141}
+{"span_id": "ANAT_LN_STATION_142", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "4L", "start": 142, "end": 144}
+{"span_id": "ANAT_LN_STATION_145", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "7", "start": 145, "end": 146}
+{"span_id": "ANAT_LN_STATION_151", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "10L", "start": 151, "end": 154}
+{"span_id": "OBS_ROSE_182", "note_id": "700001_syn_5", "label": "OBS_ROSE", "text": "cancer", "start": 182, "end": 188}
+{"span_id": "ANAT_LN_STATION_192", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "4R", "start": 192, "end": 194}
+{"span_id": "ANAT_LN_STATION_199", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "7", "start": 199, "end": 200}
+{"span_id": "ANAT_LN_STATION_226", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "4L", "start": 226, "end": 228}
+{"span_id": "ANAT_LN_STATION_233", "note_id": "700001_syn_5", "label": "ANAT_LN_STATION", "text": "10L", "start": 233, "end": 236}
+{"span_id": "OBS_ROSE_254", "note_id": "700001_syn_5", "label": "OBS_ROSE", "text": "lymphocytes", "start": 254, "end": 265}
+{"span_id": "OUTCOME_COMPLICATION_267", "note_id": "700001_syn_5", "label": "OUTCOME_COMPLICATION", "text": "No bleeding", "start": 267, "end": 278}
+{"span_id": "ANAT_LUNG_LOC_22", "note_id": "700001_syn_6", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 22, "end": 25}
+{"span_id": "OBS_LESION_26", "note_id": "700001_syn_6", "label": "OBS_LESION", "text": "mass", "start": 26, "end": 30}
+{"span_id": "PROC_METHOD_32", "note_id": "700001_syn_6", "label": "PROC_METHOD", "text": "Flexible bronchoscopy", "start": 32, "end": 53}
+{"span_id": "PROC_METHOD_59", "note_id": "700001_syn_6", "label": "PROC_METHOD", "text": "EBUS", "start": 59, "end": 63}
+{"span_id": "PROC_ACTION_64", "note_id": "700001_syn_6", "label": "PROC_ACTION", "text": "TBNA", "start": 64, "end": 68}
+{"span_id": "ANAT_AIRWAY_105", "note_id": "700001_syn_6", "label": "ANAT_AIRWAY", "text": "Airway", "start": 105, "end": 111}
+{"span_id": "OBS_LESION_140", "note_id": "700001_syn_6", "label": "OBS_LESION", "text": "lesions", "start": 140, "end": 147}
+{"span_id": "PROC_METHOD_149", "note_id": "700001_syn_6", "label": "PROC_METHOD", "text": "EBUS", "start": 149, "end": 153}
+{"span_id": "DEV_NEEDLE_181", "note_id": "700001_syn_6", "label": "DEV_NEEDLE", "text": "Needle", "start": 181, "end": 187}
+{"span_id": "PROC_ACTION_188", "note_id": "700001_syn_6", "label": "PROC_ACTION", "text": "aspiration", "start": 188, "end": 198}
+{"span_id": "ANAT_LN_STATION_221", "note_id": "700001_syn_6", "label": "ANAT_LN_STATION", "text": "4R", "start": 221, "end": 223}
+{"span_id": "ANAT_LN_STATION_225", "note_id": "700001_syn_6", "label": "ANAT_LN_STATION", "text": "4L", "start": 225, "end": 227}
+{"span_id": "ANAT_LN_STATION_229", "note_id": "700001_syn_6", "label": "ANAT_LN_STATION", "text": "7", "start": 229, "end": 230}
+{"span_id": "ANAT_LN_STATION_236", "note_id": "700001_syn_6", "label": "ANAT_LN_STATION", "text": "10L", "start": 236, "end": 239}
+{"span_id": "OBS_ROSE_259", "note_id": "700001_syn_6", "label": "OBS_ROSE", "text": "malignancy", "start": 259, "end": 269}
+{"span_id": "ANAT_LN_STATION_273", "note_id": "700001_syn_6", "label": "ANAT_LN_STATION", "text": "4R", "start": 273, "end": 275}
+{"span_id": "ANAT_LN_STATION_280", "note_id": "700001_syn_6", "label": "ANAT_LN_STATION", "text": "7", "start": 280, "end": 281}
+{"span_id": "OUTCOME_COMPLICATION_351", "note_id": "700001_syn_6", "label": "OUTCOME_COMPLICATION", "text": "no complications", "start": 351, "end": 367}
+{"span_id": "ANAT_LUNG_LOC_34", "note_id": "700001_syn_7", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 34, "end": 37}
+{"span_id": "OBS_LESION_38", "note_id": "700001_syn_7", "label": "OBS_LESION", "text": "mass", "start": 38, "end": 42}
+{"span_id": "OBS_LESION_57", "note_id": "700001_syn_7", "label": "OBS_LESION", "text": "adenopathy", "start": 57, "end": 67}
+{"span_id": "MEAS_SIZE_102", "note_id": "700001_syn_7", "label": "MEAS_SIZE", "text": "8.5 mm", "start": 102, "end": 108}
+{"span_id": "DEV_INSTRUMENT_109", "note_id": "700001_syn_7", "label": "DEV_INSTRUMENT", "text": "ETT", "start": 109, "end": 112}
+{"span_id": "PROC_METHOD_139", "note_id": "700001_syn_7", "label": "PROC_METHOD", "text": "EBUS", "start": 139, "end": 143}
+{"span_id": "PROC_ACTION_144", "note_id": "700001_syn_7", "label": "PROC_ACTION", "text": "TBNA", "start": 144, "end": 148}
+{"span_id": "ANAT_LN_STATION_160", "note_id": "700001_syn_7", "label": "ANAT_LN_STATION", "text": "Stations 4R, 4L, 7, and 10L", "start": 160, "end": 187}
+{"span_id": "PROC_ACTION_188", "note_id": "700001_syn_7", "label": "PROC_ACTION", "text": "sampled", "start": 188, "end": 195}
+{"span_id": "DEV_NEEDLE_201", "note_id": "700001_syn_7", "label": "DEV_NEEDLE", "text": "22G needle", "start": 201, "end": 211}
+{"span_id": "OBS_ROSE_228", "note_id": "700001_syn_7", "label": "OBS_ROSE", "text": "malignant cells", "start": 228, "end": 243}
+{"span_id": "ANAT_LN_STATION_247", "note_id": "700001_syn_7", "label": "ANAT_LN_STATION", "text": "4R", "start": 247, "end": 249}
+{"span_id": "ANAT_LN_STATION_254", "note_id": "700001_syn_7", "label": "ANAT_LN_STATION", "text": "7", "start": 254, "end": 255}
+{"span_id": "ANAT_LN_STATION_257", "note_id": "700001_syn_7", "label": "ANAT_LN_STATION", "text": "4L", "start": 257, "end": 259}
+{"span_id": "ANAT_LN_STATION_264", "note_id": "700001_syn_7", "label": "ANAT_LN_STATION", "text": "10L", "start": 264, "end": 267}
+{"span_id": "OBS_ROSE_268", "note_id": "700001_syn_7", "label": "OBS_ROSE", "text": "benign", "start": 268, "end": 274}
+{"span_id": "PROC_METHOD_54", "note_id": "700001_syn_8", "label": "PROC_METHOD", "text": "EBUS", "start": 54, "end": 58}
+{"span_id": "PROC_ACTION_59", "note_id": "700001_syn_8", "label": "PROC_ACTION", "text": "TBNA", "start": 59, "end": 63}
+{"span_id": "ANAT_LUNG_LOC_75", "note_id": "700001_syn_8", "label": "ANAT_LUNG_LOC", "text": "left upper lobe", "start": 75, "end": 90}
+{"span_id": "OBS_LESION_91", "note_id": "700001_syn_8", "label": "OBS_LESION", "text": "mass", "start": 91, "end": 95}
+{"span_id": "MEAS_SIZE_135", "note_id": "700001_syn_8", "label": "MEAS_SIZE", "text": "8.5 mm", "start": 135, "end": 141}
+{"span_id": "DEV_INSTRUMENT_142", "note_id": "700001_syn_8", "label": "DEV_INSTRUMENT", "text": "ETT", "start": 142, "end": 145}
+{"span_id": "ANAT_AIRWAY_167", "note_id": "700001_syn_8", "label": "ANAT_AIRWAY", "text": "airway", "start": 167, "end": 173}
+{"span_id": "DEV_INSTRUMENT_204", "note_id": "700001_syn_8", "label": "DEV_INSTRUMENT", "text": "EBUS scope", "start": 204, "end": 214}
+{"span_id": "PROC_ACTION_232", "note_id": "700001_syn_8", "label": "PROC_ACTION", "text": "sampled", "start": 232, "end": 239}
+{"span_id": "ANAT_LN_STATION_240", "note_id": "700001_syn_8", "label": "ANAT_LN_STATION", "text": "stations 4R, 4L, 7, and 10L", "start": 240, "end": 267}
+{"span_id": "OBS_ROSE_313", "note_id": "700001_syn_8", "label": "OBS_ROSE", "text": "malignancy", "start": 313, "end": 323}
+{"span_id": "ANAT_LN_STATION_331", "note_id": "700001_syn_8", "label": "ANAT_LN_STATION", "text": "4R", "start": 331, "end": 333}
+{"span_id": "ANAT_LN_STATION_338", "note_id": "700001_syn_8", "label": "ANAT_LN_STATION", "text": "subcarinal", "start": 338, "end": 348}
+{"span_id": "OBS_ROSE_412", "note_id": "700001_syn_8", "label": "OBS_ROSE", "text": "benign", "start": 412, "end": 418}
+{"span_id": "OUTCOME_COMPLICATION_431", "note_id": "700001_syn_8", "label": "OUTCOME_COMPLICATION", "text": "no complications", "start": 431, "end": 447}
+{"span_id": "PROC_METHOD_11", "note_id": "700001_syn_9", "label": "PROC_METHOD", "text": "Flexible bronchoscopy", "start": 11, "end": 32}
+{"span_id": "PROC_ACTION_56", "note_id": "700001_syn_9", "label": "PROC_ACTION", "text": "aspiration", "start": 56, "end": 66}
+{"span_id": "ANAT_LN_STATION_70", "note_id": "700001_syn_9", "label": "ANAT_LN_STATION", "text": "mediastinal nodes", "start": 70, "end": 87}
+{"span_id": "ANAT_AIRWAY_121", "note_id": "700001_syn_9", "label": "ANAT_AIRWAY", "text": "airway", "start": 121, "end": 127}
+{"span_id": "PROC_METHOD_183", "note_id": "700001_syn_9", "label": "PROC_METHOD", "text": "linear EBUS", "start": 183, "end": 194}
+{"span_id": "ANAT_LN_STATION_212", "note_id": "700001_syn_9", "label": "ANAT_LN_STATION", "text": "4R", "start": 212, "end": 214}
+{"span_id": "ANAT_LN_STATION_216", "note_id": "700001_syn_9", "label": "ANAT_LN_STATION", "text": "4L", "start": 216, "end": 218}
+{"span_id": "ANAT_LN_STATION_220", "note_id": "700001_syn_9", "label": "ANAT_LN_STATION", "text": "7", "start": 220, "end": 221}
+{"span_id": "ANAT_LN_STATION_227", "note_id": "700001_syn_9", "label": "ANAT_LN_STATION", "text": "10L", "start": 227, "end": 230}
+{"span_id": "PROC_ACTION_250", "note_id": "700001_syn_9", "label": "PROC_ACTION", "text": "aspirated", "start": 250, "end": 259}
+{"span_id": "OBS_ROSE_275", "note_id": "700001_syn_9", "label": "OBS_ROSE", "text": "malignant cells", "start": 275, "end": 290}
+{"span_id": "ANAT_LN_STATION_294", "note_id": "700001_syn_9", "label": "ANAT_LN_STATION", "text": "4R", "start": 294, "end": 296}
+{"span_id": "ANAT_LN_STATION_301", "note_id": "700001_syn_9", "label": "ANAT_LN_STATION", "text": "7", "start": 301, "end": 302}
+{"span_id": "SPECIMEN_304", "note_id": "700001_syn_9", "label": "SPECIMEN", "text": "Specimens", "start": 304, "end": 313}
+{"span_id": "PROC_METHOD_126", "note_id": "700001", "label": "PROC_METHOD", "text": "Flexible bronchoscopy", "start": 126, "end": 147}
+{"span_id": "PROC_METHOD_153", "note_id": "700001", "label": "PROC_METHOD", "text": "linear endobronchial ultrasound", "start": 153, "end": 184}
+{"span_id": "PROC_ACTION_192", "note_id": "700001", "label": "PROC_ACTION", "text": "transbronchial needle aspiration", "start": 192, "end": 224}
+{"span_id": "PROC_METHOD_226", "note_id": "700001", "label": "PROC_METHOD", "text": "EBUS", "start": 226, "end": 230}
+{"span_id": "PROC_ACTION_231", "note_id": "700001", "label": "PROC_ACTION", "text": "TBNA", "start": 231, "end": 235}
+{"span_id": "ANAT_LN_STATION_240", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "mediastinal and hilar lymph nodes", "start": 240, "end": 273}
+{"span_id": "MEAS_SIZE_515", "note_id": "700001", "label": "MEAS_SIZE", "text": "3.2 cm", "start": 515, "end": 521}
+{"span_id": "ANAT_LUNG_LOC_522", "note_id": "700001", "label": "ANAT_LUNG_LOC", "text": "left upper lobe", "start": 522, "end": 537}
+{"span_id": "OBS_LESION_538", "note_id": "700001", "label": "OBS_LESION", "text": "mass", "start": 538, "end": 542}
+{"span_id": "OBS_LESION_574", "note_id": "700001", "label": "OBS_LESION", "text": "adenopathy", "start": 574, "end": 584}
+{"span_id": "ANAT_LN_STATION_586", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "stations 4R, 4L, 7, 10L", "start": 586, "end": 609}
+{"span_id": "MEAS_SIZE_768", "note_id": "700001", "label": "MEAS_SIZE", "text": "8.5 mm", "start": 768, "end": 774}
+{"span_id": "DEV_INSTRUMENT_775", "note_id": "700001", "label": "DEV_INSTRUMENT", "text": "ETT", "start": 775, "end": 778}
+{"span_id": "DEV_INSTRUMENT_952", "note_id": "700001", "label": "DEV_INSTRUMENT", "text": "bronchoscope", "start": 952, "end": 964}
+{"span_id": "ANAT_AIRWAY_1022", "note_id": "700001", "label": "ANAT_AIRWAY", "text": "Trachea", "start": 1022, "end": 1029}
+{"span_id": "OBS_LESION_1114", "note_id": "700001", "label": "OBS_LESION", "text": "tumor", "start": 1114, "end": 1119}
+{"span_id": "OBS_FINDING_1121", "note_id": "700001", "label": "OBS_FINDING", "text": "secretions", "start": 1121, "end": 1131}
+{"span_id": "OBS_FINDING_1136", "note_id": "700001", "label": "OBS_FINDING", "text": "active bleeding", "start": 1136, "end": 1151}
+{"span_id": "DEV_INSTRUMENT_1220", "note_id": "700001", "label": "DEV_INSTRUMENT", "text": "convex linear EBUS bronchoscope", "start": 1220, "end": 1251}
+{"span_id": "PROC_METHOD_1234", "note_id": "700001", "label": "PROC_METHOD", "text": "EBUS", "start": 1234, "end": 1238}
+{"span_id": "DEV_INSTRUMENT_1253", "note_id": "700001", "label": "DEV_INSTRUMENT", "text": "Olympus BF-UC180F", "start": 1253, "end": 1270}
+{"span_id": "ANAT_LN_STATION_1404", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "Station 4R", "start": 1404, "end": 1414}
+{"span_id": "MEAS_SIZE_1416", "note_id": "700001", "label": "MEAS_SIZE", "text": "1.5 x 1.3 cm", "start": 1416, "end": 1428}
+{"span_id": "MEAS_COUNT_1477", "note_id": "700001", "label": "MEAS_COUNT", "text": "Three passes", "start": 1477, "end": 1489}
+{"span_id": "DEV_NEEDLE_1495", "note_id": "700001", "label": "DEV_NEEDLE", "text": "22G EBUS needle", "start": 1495, "end": 1510}
+{"span_id": "OBS_ROSE_1517", "note_id": "700001", "label": "OBS_ROSE", "text": "adequate with malignant cells", "start": 1517, "end": 1546}
+{"span_id": "ANAT_LN_STATION_1550", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "Station 4L", "start": 1550, "end": 1560}
+{"span_id": "MEAS_SIZE_1562", "note_id": "700001", "label": "MEAS_SIZE", "text": "1.2 x 1.0 cm", "start": 1562, "end": 1574}
+{"span_id": "MEAS_COUNT_1598", "note_id": "700001", "label": "MEAS_COUNT", "text": "Three passes", "start": 1598, "end": 1610}
+{"span_id": "DEV_NEEDLE_1616", "note_id": "700001", "label": "DEV_NEEDLE", "text": "22G needle", "start": 1616, "end": 1626}
+{"span_id": "OBS_ROSE_1633", "note_id": "700001", "label": "OBS_ROSE", "text": "adequate lymphocytes", "start": 1633, "end": 1653}
+{"span_id": "OBS_ROSE_1667", "note_id": "700001", "label": "OBS_ROSE", "text": "malignancy", "start": 1667, "end": 1677}
+{"span_id": "ANAT_LN_STATION_1681", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "Station 7", "start": 1681, "end": 1690}
+{"span_id": "ANAT_LN_STATION_1692", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "subcarinal", "start": 1692, "end": 1702}
+{"span_id": "MEAS_SIZE_1705", "note_id": "700001", "label": "MEAS_SIZE", "text": "2.0 x 1.6 cm", "start": 1705, "end": 1717}
+{"span_id": "MEAS_COUNT_1761", "note_id": "700001", "label": "MEAS_COUNT", "text": "Four passes", "start": 1761, "end": 1772}
+{"span_id": "OBS_ROSE_1779", "note_id": "700001", "label": "OBS_ROSE", "text": "suspicious for malignancy", "start": 1779, "end": 1804}
+{"span_id": "ANAT_LN_STATION_1808", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "Station 10L", "start": 1808, "end": 1819}
+{"span_id": "MEAS_SIZE_1821", "note_id": "700001", "label": "MEAS_SIZE", "text": "1.0 x 0.8 cm", "start": 1821, "end": 1833}
+{"span_id": "MEAS_COUNT_1840", "note_id": "700001", "label": "MEAS_COUNT", "text": "Two passes", "start": 1840, "end": 1850}
+{"span_id": "OBS_ROSE_1857", "note_id": "700001", "label": "OBS_ROSE", "text": "adequate lymphocytes", "start": 1857, "end": 1877}
+{"span_id": "MEAS_COUNT_1891", "note_id": "700001", "label": "MEAS_COUNT", "text": "12 needle passes", "start": 1891, "end": 1907}
+{"span_id": "SPECIMEN_1948", "note_id": "700001", "label": "SPECIMEN", "text": "cytology", "start": 1948, "end": 1956}
+{"span_id": "SPECIMEN_1958", "note_id": "700001", "label": "SPECIMEN", "text": "cell block", "start": 1958, "end": 1968}
+{"span_id": "OUTCOME_COMPLICATION_2064", "note_id": "700001", "label": "OUTCOME_COMPLICATION", "text": "No significant bleeding", "start": 2064, "end": 2087}
+{"span_id": "MEAS_VOL_2143", "note_id": "700001", "label": "MEAS_VOL", "text": "< 5 mL", "start": 2143, "end": 2149}
+{"span_id": "OUTCOME_COMPLICATION_2151", "note_id": "700001", "label": "OUTCOME_COMPLICATION", "text": "No immediate complications", "start": 2151, "end": 2177}
+{"span_id": "PROC_ACTION_2531", "note_id": "700001", "label": "PROC_ACTION", "text": "TBNA", "start": 2531, "end": 2535}
+{"span_id": "ANAT_LN_STATION_2539", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "mediastinal and hilar lymph nodes", "start": 2539, "end": 2572}
+{"span_id": "ANAT_LN_STATION_2574", "note_id": "700001", "label": "ANAT_LN_STATION", "text": "stations 4R, 4L, 7, 10L", "start": 2574, "end": 2597}
+{"span_id": "LATERALITY_18", "note_id": "901234_syn_1", "label": "LATERALITY", "text": "R", "start": 18, "end": 19}
+{"span_id": "OBS_LESION_20", "note_id": "901234_syn_1", "label": "OBS_LESION", "text": "effusion", "start": 20, "end": 28}
+{"span_id": "PROC_ACTION_36", "note_id": "901234_syn_1", "label": "PROC_ACTION", "text": "Thoracentesis", "start": 36, "end": 49}
+{"span_id": "DEV_CATHETER_53", "note_id": "901234_syn_1", "label": "DEV_CATHETER", "text": "catheter", "start": 53, "end": 61}
+{"span_id": "PROC_METHOD_65", "note_id": "901234_syn_1", "label": "PROC_METHOD", "text": "US", "start": 65, "end": 67}
+{"span_id": "MEAS_PLEURAL_DRAIN_78", "note_id": "901234_syn_1", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 78, "end": 82}
+{"span_id": "DEV_CATHETER_83", "note_id": "901234_syn_1", "label": "DEV_CATHETER", "text": "catheter", "start": 83, "end": 91}
+{"span_id": "MEAS_VOL_103", "note_id": "901234_syn_1", "label": "MEAS_VOL", "text": "1800mL", "start": 103, "end": 109}
+{"span_id": "OBS_FINDING_110", "note_id": "901234_syn_1", "label": "OBS_FINDING", "text": "serosanguinous", "start": 110, "end": 124}
+{"span_id": "DEV_CATHETER_128", "note_id": "901234_syn_1", "label": "DEV_CATHETER", "text": "Catheter", "start": 128, "end": 136}
+{"span_id": "PROC_ACTION_16", "note_id": "901234_syn_2", "label": "PROC_ACTION", "text": "Thoracentesis", "start": 16, "end": 29}
+{"span_id": "DEV_CATHETER_48", "note_id": "901234_syn_2", "label": "DEV_CATHETER", "text": "indwelling pleural drainage catheter", "start": 48, "end": 84}
+{"span_id": "OBS_LESION_110", "note_id": "901234_syn_2", "label": "OBS_LESION", "text": "pleural effusion", "start": 110, "end": 126}
+{"span_id": "PROC_METHOD_173", "note_id": "901234_syn_2", "label": "PROC_METHOD", "text": "ultrasound", "start": 173, "end": 183}
+{"span_id": "MEAS_PLEURAL_DRAIN_195", "note_id": "901234_syn_2", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 195, "end": 199}
+{"span_id": "DEV_CATHETER_200", "note_id": "901234_syn_2", "label": "DEV_CATHETER", "text": "pleural catheter", "start": 200, "end": 216}
+{"span_id": "MEAS_VOL_272", "note_id": "901234_syn_2", "label": "MEAS_VOL", "text": "1800 mL", "start": 272, "end": 279}
+{"span_id": "OBS_FINDING_283", "note_id": "901234_syn_2", "label": "OBS_FINDING", "text": "serosanguinous fluid", "start": 283, "end": 303}
+{"span_id": "OUTCOME_PLEURAL_337", "note_id": "901234_syn_2", "label": "OUTCOME_PLEURAL", "text": "symptomatic relief", "start": 337, "end": 355}
+{"span_id": "DEV_CATHETER_361", "note_id": "901234_syn_2", "label": "DEV_CATHETER", "text": "catheter", "start": 361, "end": 369}
+{"span_id": "PROC_ACTION_11", "note_id": "901234_syn_3", "label": "PROC_ACTION", "text": "Pleural drainage", "start": 11, "end": 27}
+{"span_id": "DEV_CATHETER_46", "note_id": "901234_syn_3", "label": "DEV_CATHETER", "text": "indwelling catheter", "start": 46, "end": 65}
+{"span_id": "PROC_METHOD_77", "note_id": "901234_syn_3", "label": "PROC_METHOD", "text": "Ultrasound", "start": 77, "end": 87}
+{"span_id": "MEAS_VOL_112", "note_id": "901234_syn_3", "label": "MEAS_VOL", "text": "1800mL", "start": 112, "end": 118}
+{"span_id": "MEAS_PLEURAL_DRAIN_130", "note_id": "901234_syn_3", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 130, "end": 134}
+{"span_id": "DEV_CATHETER_11", "note_id": "901234_syn_4", "label": "DEV_CATHETER", "text": "Catheter", "start": 11, "end": 19}
+{"span_id": "PROC_ACTION_20", "note_id": "901234_syn_4", "label": "PROC_ACTION", "text": "Drainage", "start": 20, "end": 28}
+{"span_id": "PROC_METHOD_32", "note_id": "901234_syn_4", "label": "PROC_METHOD", "text": "US", "start": 32, "end": 34}
+{"span_id": "MEAS_PLEURAL_DRAIN_54", "note_id": "901234_syn_4", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 54, "end": 58}
+{"span_id": "DEV_CATHETER_59", "note_id": "901234_syn_4", "label": "DEV_CATHETER", "text": "catheter", "start": 59, "end": 67}
+{"span_id": "MEAS_VOL_87", "note_id": "901234_syn_4", "label": "MEAS_VOL", "text": "1800mL", "start": 87, "end": 93}
+{"span_id": "LATERALITY_28", "note_id": "901234_syn_5", "label": "LATERALITY", "text": "right", "start": 28, "end": 33}
+{"span_id": "OBS_LESION_34", "note_id": "901234_syn_5", "label": "OBS_LESION", "text": "effusion", "start": 34, "end": 42}
+{"span_id": "PROC_METHOD_37", "note_id": "901234_syn_5", "label": "PROC_METHOD", "text": "us", "start": 37, "end": 39}
+{"span_id": "MEAS_PLEURAL_DRAIN_52", "note_id": "901234_syn_5", "label": "MEAS_PLEURAL_DRAIN", "text": "14fr", "start": 52, "end": 56}
+{"span_id": "DEV_CATHETER_57", "note_id": "901234_syn_5", "label": "DEV_CATHETER", "text": "catheter", "start": 57, "end": 65}
+{"span_id": "MEAS_VOL_95", "note_id": "901234_syn_5", "label": "MEAS_VOL", "text": "1.8 liters", "start": 95, "end": 105}
+{"span_id": "OBS_FINDING_118", "note_id": "901234_syn_5", "label": "OBS_FINDING", "text": "serosanguinous", "start": 118, "end": 132}
+{"span_id": "DEV_CATHETER_162", "note_id": "901234_syn_5", "label": "DEV_CATHETER", "text": "catheter", "start": 162, "end": 170}
+{"span_id": "PROC_ACTION_0", "note_id": "901234_syn_6", "label": "PROC_ACTION", "text": "Thoracentesis", "start": 0, "end": 13}
+{"span_id": "DEV_CATHETER_32", "note_id": "901234_syn_6", "label": "DEV_CATHETER", "text": "indwelling pleural drainage catheter", "start": 32, "end": 68}
+{"span_id": "LATERALITY_97", "note_id": "901234_syn_6", "label": "LATERALITY", "text": "right", "start": 97, "end": 102}
+{"span_id": "OBS_LESION_109", "note_id": "901234_syn_6", "label": "OBS_LESION", "text": "pleural effusion", "start": 109, "end": 125}
+{"span_id": "MEAS_PLEURAL_DRAIN_153", "note_id": "901234_syn_6", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 153, "end": 157}
+{"span_id": "DEV_CATHETER_158", "note_id": "901234_syn_6", "label": "DEV_CATHETER", "text": "pleural drainage catheter", "start": 158, "end": 183}
+{"span_id": "MEAS_VOL_209", "note_id": "901234_syn_6", "label": "MEAS_VOL", "text": "1800mL", "start": 209, "end": 215}
+{"span_id": "OBS_FINDING_216", "note_id": "901234_syn_6", "label": "OBS_FINDING", "text": "serosanguinous fluid", "start": 216, "end": 236}
+{"span_id": "MEAS_TIME_242", "note_id": "901234_syn_6", "label": "MEAS_TIME", "text": "30 minutes", "start": 242, "end": 252}
+{"span_id": "OUTCOME_SYMPTOMS_281", "note_id": "901234_syn_6", "label": "OUTCOME_SYMPTOMS", "text": "relief of dyspnea", "start": 281, "end": 298}
+{"span_id": "LATERALITY_25", "note_id": "901234_syn_7", "label": "LATERALITY", "text": "R", "start": 25, "end": 26}
+{"span_id": "OBS_LESION_27", "note_id": "901234_syn_7", "label": "OBS_LESION", "text": "pleural effusion", "start": 27, "end": 43}
+{"span_id": "MEAS_PLEURAL_DRAIN_79", "note_id": "901234_syn_7", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 79, "end": 83}
+{"span_id": "DEV_CATHETER_84", "note_id": "901234_syn_7", "label": "DEV_CATHETER", "text": "catheter", "start": 84, "end": 92}
+{"span_id": "PROC_METHOD_101", "note_id": "901234_syn_7", "label": "PROC_METHOD", "text": "US", "start": 101, "end": 103}
+{"span_id": "MEAS_VOL_121", "note_id": "901234_syn_7", "label": "MEAS_VOL", "text": "1800mL", "start": 121, "end": 127}
+{"span_id": "LATERALITY_46", "note_id": "901234_syn_8", "label": "LATERALITY", "text": "right", "start": 46, "end": 51}
+{"span_id": "PROC_METHOD_94", "note_id": "901234_syn_8", "label": "PROC_METHOD", "text": "ultrasound", "start": 94, "end": 104}
+{"span_id": "DEV_CATHETER_150", "note_id": "901234_syn_8", "label": "DEV_CATHETER", "text": "tube", "start": 150, "end": 154}
+{"span_id": "DEV_CATHETER_156", "note_id": "901234_syn_8", "label": "DEV_CATHETER", "text": "catheter", "start": 156, "end": 164}
+{"span_id": "MEAS_VOL_190", "note_id": "901234_syn_8", "label": "MEAS_VOL", "text": "1800mL", "start": 190, "end": 196}
+{"span_id": "DEV_CATHETER_258", "note_id": "901234_syn_8", "label": "DEV_CATHETER", "text": "tube", "start": 258, "end": 262}
+{"span_id": "OBS_LESION_11", "note_id": "901234_syn_9", "label": "OBS_LESION", "text": "Pleural effusion", "start": 11, "end": 27}
+{"span_id": "DEV_CATHETER_50", "note_id": "901234_syn_9", "label": "DEV_CATHETER", "text": "pleural drainage catheter", "start": 50, "end": 75}
+{"span_id": "MEAS_PLEURAL_DRAIN_86", "note_id": "901234_syn_9", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 86, "end": 90}
+{"span_id": "DEV_CATHETER_91", "note_id": "901234_syn_9", "label": "DEV_CATHETER", "text": "catheter", "start": 91, "end": 99}
+{"span_id": "MEAS_VOL_108", "note_id": "901234_syn_9", "label": "MEAS_VOL", "text": "1800mL", "start": 108, "end": 114}
+{"span_id": "DEV_CATHETER_124", "note_id": "901234_syn_9", "label": "DEV_CATHETER", "text": "Catheter", "start": 124, "end": 132}
+{"span_id": "LATERALITY_140", "note_id": "901234", "label": "LATERALITY", "text": "right", "start": 140, "end": 145}
+{"span_id": "OBS_LESION_146", "note_id": "901234", "label": "OBS_LESION", "text": "pleural effusion", "start": 146, "end": 162}
+{"span_id": "PROC_ACTION_196", "note_id": "901234", "label": "PROC_ACTION", "text": "Thoracentesis", "start": 196, "end": 209}
+{"span_id": "DEV_CATHETER_228", "note_id": "901234", "label": "DEV_CATHETER", "text": "indwelling pleural drainage catheter", "start": 228, "end": 264}
+{"span_id": "DEV_CATHETER_256", "note_id": "901234", "label": "DEV_CATHETER", "text": "catheter", "start": 256, "end": 264}
+{"span_id": "LATERALITY_297", "note_id": "901234", "label": "LATERALITY", "text": "right", "start": 297, "end": 302}
+{"span_id": "OBS_LESION_309", "note_id": "901234", "label": "OBS_LESION", "text": "pleural effusion", "start": 309, "end": 325}
+{"span_id": "OBS_LESION_342", "note_id": "901234", "label": "OBS_LESION", "text": "effusion", "start": 342, "end": 350}
+{"span_id": "OBS_LESION_356", "note_id": "901234", "label": "OBS_LESION", "text": "nodular", "start": 356, "end": 363}
+{"span_id": "OBS_FINDING_364", "note_id": "901234", "label": "OBS_FINDING", "text": "pleural thickening", "start": 364, "end": 382}
+{"span_id": "LATERALITY_509", "note_id": "901234", "label": "LATERALITY", "text": "Right", "start": 509, "end": 514}
+{"span_id": "ANAT_PLEURA_515", "note_id": "901234", "label": "ANAT_PLEURA", "text": "posterior chest", "start": 515, "end": 530}
+{"span_id": "MEDICATION_583", "note_id": "901234", "label": "MEDICATION", "text": "lidocaine", "start": 583, "end": 592}
+{"span_id": "PROC_METHOD_621", "note_id": "901234", "label": "PROC_METHOD", "text": "Ultrasound", "start": 621, "end": 631}
+{"span_id": "MEAS_PLEURAL_DRAIN_710", "note_id": "901234", "label": "MEAS_PLEURAL_DRAIN", "text": "14Fr", "start": 710, "end": 714}
+{"span_id": "DEV_CATHETER_715", "note_id": "901234", "label": "DEV_CATHETER", "text": "pleural drainage catheter", "start": 715, "end": 740}
+{"span_id": "MEAS_VOL_769", "note_id": "901234", "label": "MEAS_VOL", "text": "200mL", "start": 769, "end": 774}
+{"span_id": "OBS_FINDING_775", "note_id": "901234", "label": "OBS_FINDING", "text": "sanguineous fluid", "start": 775, "end": 792}
+{"span_id": "MEAS_VOL_846", "note_id": "901234", "label": "MEAS_VOL", "text": "1800mL", "start": 846, "end": 852}
+{"span_id": "OBS_FINDING_853", "note_id": "901234", "label": "OBS_FINDING", "text": "serosanguinous fluid", "start": 853, "end": 873}
+{"span_id": "MEAS_TIME_879", "note_id": "901234", "label": "MEAS_TIME", "text": "30 minutes", "start": 879, "end": 889}
+{"span_id": "SPECIMEN_892", "note_id": "901234", "label": "SPECIMEN", "text": "Fluid", "start": 892, "end": 897}
+{"span_id": "OUTCOME_SYMPTOMS_971", "note_id": "901234", "label": "OUTCOME_SYMPTOMS", "text": "relief of dyspnea", "start": 971, "end": 988}
+{"span_id": "OUTCOME_SYMPTOMS_990", "note_id": "901234", "label": "OUTCOME_SYMPTOMS", "text": "SpO2 improved", "start": 990, "end": 1003}
+{"span_id": "OUTCOME_COMPLICATION_1022", "note_id": "901234", "label": "OUTCOME_COMPLICATION", "text": "No pneumothorax", "start": 1022, "end": 1037}
+{"span_id": "DEV_CATHETER_1108", "note_id": "901234", "label": "DEV_CATHETER", "text": "PleurX", "start": 1108, "end": 1114}
+{"span_id": "OBS_LESION_22", "note_id": "940211_syn_1", "label": "OBS_LESION", "text": "effusion", "start": 22, "end": 30}
+{"span_id": "OBS_LESION_32", "note_id": "940211_syn_1", "label": "OBS_LESION", "text": "nodules", "start": 32, "end": 39}
+{"span_id": "PROC_METHOD_47", "note_id": "940211_syn_1", "label": "PROC_METHOD", "text": "Med Thoracoscopy", "start": 47, "end": 63}
+{"span_id": "PROC_ACTION_66", "note_id": "940211_syn_1", "label": "PROC_ACTION", "text": "Biopsy", "start": 66, "end": 72}
+{"span_id": "OBS_LESION_92", "note_id": "940211_syn_1", "label": "OBS_LESION", "text": "nodules", "start": 92, "end": 99}
+{"span_id": "ANAT_PLEURA_100", "note_id": "940211_syn_1", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 100, "end": 115}
+{"span_id": "MEAS_VOL_133", "note_id": "940211_syn_1", "label": "MEAS_VOL", "text": "900cc", "start": 133, "end": 138}
+{"span_id": "MEAS_COUNT_140", "note_id": "940211_syn_1", "label": "MEAS_COUNT", "text": "10", "start": 140, "end": 142}
+{"span_id": "PROC_ACTION_143", "note_id": "940211_syn_1", "label": "PROC_ACTION", "text": "biopsies", "start": 143, "end": 151}
+{"span_id": "OUTCOME_COMPLICATION_167", "note_id": "940211_syn_1", "label": "OUTCOME_COMPLICATION", "text": "No complications", "start": 167, "end": 183}
+{"span_id": "DEV_CATHETER_185", "note_id": "940211_syn_1", "label": "DEV_CATHETER", "text": "Pigtail", "start": 185, "end": 192}
+{"span_id": "PROC_METHOD_18", "note_id": "940211_syn_2", "label": "PROC_METHOD", "text": "Medical Thoracoscopy", "start": 18, "end": 38}
+{"span_id": "OBS_LESION_64", "note_id": "940211_syn_2", "label": "OBS_LESION", "text": "pleural effusion", "start": 64, "end": 80}
+{"span_id": "LATERALITY_117", "note_id": "940211_syn_2", "label": "LATERALITY", "text": "right", "start": 117, "end": 122}
+{"span_id": "ANAT_PLEURA_123", "note_id": "940211_syn_2", "label": "ANAT_PLEURA", "text": "pleural space", "start": 123, "end": 136}
+{"span_id": "OBS_LESION_154", "note_id": "940211_syn_2", "label": "OBS_LESION", "text": "nodularity", "start": 154, "end": 164}
+{"span_id": "ANAT_PLEURA_172", "note_id": "940211_syn_2", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 172, "end": 187}
+{"span_id": "MEAS_VOL_243", "note_id": "940211_syn_2", "label": "MEAS_VOL", "text": "900 mL", "start": 243, "end": 249}
+{"span_id": "DEV_INSTRUMENT_283", "note_id": "940211_syn_2", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 283, "end": 290}
+{"span_id": "PROC_ACTION_291", "note_id": "940211_syn_2", "label": "PROC_ACTION", "text": "biopsies", "start": 291, "end": 299}
+{"span_id": "ANAT_PLEURA_323", "note_id": "940211_syn_2", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 323, "end": 338}
+{"span_id": "DEV_CATHETER_399", "note_id": "940211_syn_2", "label": "DEV_CATHETER", "text": "catheter", "start": 399, "end": 407}
+{"span_id": "PROC_METHOD_13", "note_id": "940211_syn_3", "label": "PROC_METHOD", "text": "Thoracoscopy", "start": 13, "end": 25}
+{"span_id": "ANAT_PLEURA_31", "note_id": "940211_syn_3", "label": "ANAT_PLEURA", "text": "pleural", "start": 31, "end": 38}
+{"span_id": "PROC_ACTION_39", "note_id": "940211_syn_3", "label": "PROC_ACTION", "text": "biopsy", "start": 39, "end": 45}
+{"span_id": "PROC_ACTION_81", "note_id": "940211_syn_3", "label": "PROC_ACTION", "text": "Biopsy", "start": 81, "end": 87}
+{"span_id": "ANAT_PLEURA_91", "note_id": "940211_syn_3", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 91, "end": 106}
+{"span_id": "DEV_CATHETER_158", "note_id": "940211_syn_3", "label": "DEV_CATHETER", "text": "Catheter", "start": 158, "end": 166}
+{"span_id": "DEV_CATHETER_201", "note_id": "940211_syn_3", "label": "DEV_CATHETER", "text": "chest tube", "start": 201, "end": 211}
+{"span_id": "PROC_METHOD_11", "note_id": "940211_syn_4", "label": "PROC_METHOD", "text": "Pleuroscopy", "start": 11, "end": 22}
+{"span_id": "LATERALITY_33", "note_id": "940211_syn_4", "label": "LATERALITY", "text": "R", "start": 33, "end": 34}
+{"span_id": "ANAT_PLEURA_56", "note_id": "940211_syn_4", "label": "ANAT_PLEURA", "text": "6th ICS", "start": 56, "end": 63}
+{"span_id": "MEAS_VOL_76", "note_id": "940211_syn_4", "label": "MEAS_VOL", "text": "900cc", "start": 76, "end": 81}
+{"span_id": "OBS_LESION_96", "note_id": "940211_syn_4", "label": "OBS_LESION", "text": "nodules", "start": 96, "end": 103}
+{"span_id": "PROC_ACTION_119", "note_id": "940211_syn_4", "label": "PROC_ACTION", "text": "Biopsied", "start": 119, "end": 127}
+{"span_id": "MEAS_COUNT_129", "note_id": "940211_syn_4", "label": "MEAS_COUNT", "text": "10", "start": 129, "end": 131}
+{"span_id": "DEV_CATHETER_161", "note_id": "940211_syn_4", "label": "DEV_CATHETER", "text": "tube", "start": 161, "end": 165}
+{"span_id": "LATERALITY_28", "note_id": "940211_syn_5", "label": "LATERALITY", "text": "right", "start": 28, "end": 33}
+{"span_id": "PROC_METHOD_66", "note_id": "940211_syn_5", "label": "PROC_METHOD", "text": "thoracoscopy", "start": 66, "end": 78}
+{"span_id": "OBS_LESION_93", "note_id": "940211_syn_5", "label": "OBS_LESION", "text": "nodules", "start": 93, "end": 100}
+{"span_id": "ANAT_PLEURA_114", "note_id": "940211_syn_5", "label": "ANAT_PLEURA", "text": "wall", "start": 114, "end": 118}
+{"span_id": "PROC_ACTION_136", "note_id": "940211_syn_5", "label": "PROC_ACTION", "text": "biopsies", "start": 136, "end": 144}
+{"span_id": "MEAS_COUNT_150", "note_id": "940211_syn_5", "label": "MEAS_COUNT", "text": "10", "start": 150, "end": 152}
+{"span_id": "DEV_CATHETER_200", "note_id": "940211_syn_5", "label": "DEV_CATHETER", "text": "chest tube", "start": 200, "end": 210}
+{"span_id": "PROC_METHOD_0", "note_id": "940211_syn_6", "label": "PROC_METHOD", "text": "Medical thoracoscopy", "start": 0, "end": 20}
+{"span_id": "OBS_LESION_35", "note_id": "940211_syn_6", "label": "OBS_LESION", "text": "pleural effusion", "start": 35, "end": 51}
+{"span_id": "LATERALITY_53", "note_id": "940211_syn_6", "label": "LATERALITY", "text": "Right", "start": 53, "end": 58}
+{"span_id": "ANAT_PLEURA_59", "note_id": "940211_syn_6", "label": "ANAT_PLEURA", "text": "pleural space", "start": 59, "end": 72}
+{"span_id": "MEAS_VOL_83", "note_id": "940211_syn_6", "label": "MEAS_VOL", "text": "900cc", "start": 83, "end": 88}
+{"span_id": "ANAT_PLEURA_104", "note_id": "940211_syn_6", "label": "ANAT_PLEURA", "text": "Parietal pleura", "start": 104, "end": 119}
+{"span_id": "PROC_ACTION_154", "note_id": "940211_syn_6", "label": "PROC_ACTION", "text": "biopsies", "start": 154, "end": 162}
+{"span_id": "PROC_ACTION_173", "note_id": "940211_syn_6", "label": "PROC_ACTION", "text": "pleurodesis", "start": 173, "end": 184}
+{"span_id": "DEV_CATHETER_196", "note_id": "940211_syn_6", "label": "DEV_CATHETER", "text": "Catheter", "start": 196, "end": 204}
+{"span_id": "OBS_LESION_13", "note_id": "940211_syn_7", "label": "OBS_LESION", "text": "Pleural effusion", "start": 13, "end": 29}
+{"span_id": "PROC_METHOD_93", "note_id": "940211_syn_7", "label": "PROC_METHOD", "text": "Thoracoscopy", "start": 93, "end": 105}
+{"span_id": "LATERALITY_106", "note_id": "940211_syn_7", "label": "LATERALITY", "text": "R", "start": 106, "end": 107}
+{"span_id": "ANAT_PLEURA_115", "note_id": "940211_syn_7", "label": "ANAT_PLEURA", "text": "Parietal pleura", "start": 115, "end": 130}
+{"span_id": "PROC_ACTION_131", "note_id": "940211_syn_7", "label": "PROC_ACTION", "text": "biopsies", "start": 131, "end": 139}
+{"span_id": "MEAS_COUNT_141", "note_id": "940211_syn_7", "label": "MEAS_COUNT", "text": "10", "start": 141, "end": 143}
+{"span_id": "DEV_CATHETER_151", "note_id": "940211_syn_7", "label": "DEV_CATHETER", "text": "drain", "start": 151, "end": 156}
+{"span_id": "PROC_METHOD_23", "note_id": "940211_syn_8", "label": "PROC_METHOD", "text": "thoracoscopy", "start": 23, "end": 35}
+{"span_id": "OBS_LESION_163", "note_id": "940211_syn_8", "label": "OBS_LESION", "text": "lumps", "start": 163, "end": 168}
+{"span_id": "ANAT_PLEURA_190", "note_id": "940211_syn_8", "label": "ANAT_PLEURA", "text": "chest wall", "start": 190, "end": 200}
+{"span_id": "OBS_LESION_227", "note_id": "940211_syn_8", "label": "OBS_LESION", "text": "lumps", "start": 227, "end": 232}
+{"span_id": "DEV_CATHETER_279", "note_id": "940211_syn_8", "label": "DEV_CATHETER", "text": "tube", "start": 279, "end": 283}
+{"span_id": "PROC_METHOD_22", "note_id": "940211_syn_9", "label": "PROC_METHOD", "text": "pleuroscopy", "start": 22, "end": 33}
+{"span_id": "OBS_LESION_74", "note_id": "940211_syn_9", "label": "OBS_LESION", "text": "pleural nodularity", "start": 74, "end": 92}
+{"span_id": "OBS_LESION_116", "note_id": "940211_syn_9", "label": "OBS_LESION", "text": "effusion", "start": 116, "end": 124}
+{"span_id": "PROC_ACTION_129", "note_id": "940211_syn_9", "label": "PROC_ACTION", "text": "biopsy", "start": 129, "end": 135}
+{"span_id": "ANAT_PLEURA_139", "note_id": "940211_syn_9", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 139, "end": 154}
+{"span_id": "PROC_METHOD_0", "note_id": "940211", "label": "PROC_METHOD", "text": "MEDICAL THORACOSCOPY", "start": 0, "end": 20}
+{"span_id": "ANAT_PLEURA_26", "note_id": "940211", "label": "ANAT_PLEURA", "text": "PLEURAL", "start": 26, "end": 33}
+{"span_id": "PROC_ACTION_34", "note_id": "940211", "label": "PROC_ACTION", "text": "BIOPSY", "start": 34, "end": 40}
+{"span_id": "LATERALITY_196", "note_id": "940211", "label": "LATERALITY", "text": "right", "start": 196, "end": 201}
+{"span_id": "OBS_LESION_202", "note_id": "940211", "label": "OBS_LESION", "text": "pleural effusion", "start": 202, "end": 218}
+{"span_id": "OBS_LESION_224", "note_id": "940211", "label": "OBS_LESION", "text": "pleural nodularity", "start": 224, "end": 242}
+{"span_id": "PROC_METHOD_311", "note_id": "940211", "label": "PROC_METHOD", "text": "Medical thoracoscopy", "start": 311, "end": 331}
+{"span_id": "ANAT_PLEURA_337", "note_id": "940211", "label": "ANAT_PLEURA", "text": "pleural", "start": 337, "end": 344}
+{"span_id": "PROC_ACTION_345", "note_id": "940211", "label": "PROC_ACTION", "text": "biopsy", "start": 345, "end": 351}
+{"span_id": "ANAT_PLEURA_444", "note_id": "940211", "label": "ANAT_PLEURA", "text": "chest wall", "start": 444, "end": 454}
+{"span_id": "LATERALITY_586", "note_id": "940211", "label": "LATERALITY", "text": "right", "start": 586, "end": 591}
+{"span_id": "OBS_LESION_592", "note_id": "940211", "label": "OBS_LESION", "text": "pleural effusion", "start": 592, "end": 608}
+{"span_id": "LATERALITY_642", "note_id": "940211", "label": "LATERALITY", "text": "right", "start": 642, "end": 647}
+{"span_id": "ANAT_PLEURA_673", "note_id": "940211", "label": "ANAT_PLEURA", "text": "6th intercostal space", "start": 673, "end": 694}
+{"span_id": "DEV_INSTRUMENT_698", "note_id": "940211", "label": "DEV_INSTRUMENT", "text": "trocar", "start": 698, "end": 704}
+{"span_id": "DEV_INSTRUMENT_709", "note_id": "940211", "label": "DEV_INSTRUMENT", "text": "thoracoscope", "start": 709, "end": 721}
+{"span_id": "ANAT_PLEURA_747", "note_id": "940211", "label": "ANAT_PLEURA", "text": "pleural space", "start": 747, "end": 760}
+{"span_id": "MEAS_VOL_777", "note_id": "940211", "label": "MEAS_VOL", "text": "900 mL", "start": 777, "end": 783}
+{"span_id": "ANAT_PLEURA_826", "note_id": "940211", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 826, "end": 841}
+{"span_id": "OBS_LESION_883", "note_id": "940211", "label": "OBS_LESION", "text": "nodules", "start": 883, "end": 890}
+{"span_id": "ANAT_PLEURA_900", "note_id": "940211", "label": "ANAT_PLEURA", "text": "diaphragmatic", "start": 900, "end": 913}
+{"span_id": "ANAT_PLEURA_918", "note_id": "940211", "label": "ANAT_PLEURA", "text": "posterolateral pleura", "start": 918, "end": 939}
+{"span_id": "MEAS_COUNT_941", "note_id": "940211", "label": "MEAS_COUNT", "text": "Ten", "start": 941, "end": 944}
+{"span_id": "DEV_INSTRUMENT_951", "note_id": "940211", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 951, "end": 958}
+{"span_id": "PROC_ACTION_959", "note_id": "940211", "label": "PROC_ACTION", "text": "biopsies", "start": 959, "end": 967}
+{"span_id": "PROC_ACTION_1039", "note_id": "940211", "label": "PROC_ACTION", "text": "talc pleurodesis", "start": 1039, "end": 1055}
+{"span_id": "DEV_CATHETER_1077", "note_id": "940211", "label": "DEV_CATHETER", "text": "chest tube", "start": 1077, "end": 1087}
+{"span_id": "DEV_CATHETER_SIZE_1116", "note_id": "940211", "label": "DEV_CATHETER_SIZE", "text": "16 Fr pigtail catheter", "start": 1116, "end": 1138}
+{"span_id": "OUTCOME_COMPLICATION_1249", "note_id": "940211", "label": "OUTCOME_COMPLICATION", "text": "None", "start": 1249, "end": 1253}
+{"span_id": "ANAT_LUNG_LOC_20", "note_id": "1028374_syn_1", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 20, "end": 23}
+{"span_id": "OBS_LESION_24", "note_id": "1028374_syn_1", "label": "OBS_LESION", "text": "CA", "start": 24, "end": 26}
+{"span_id": "MEAS_COUNT_45", "note_id": "1028374_syn_1", "label": "MEAS_COUNT", "text": "3", "start": 45, "end": 46}
+{"span_id": "PROC_METHOD_48", "note_id": "1028374_syn_1", "label": "PROC_METHOD", "text": "EBUS", "start": 48, "end": 52}
+{"span_id": "ANAT_LN_STATION_65", "note_id": "1028374_syn_1", "label": "ANAT_LN_STATION", "text": "4R", "start": 65, "end": 67}
+{"span_id": "ANAT_LN_STATION_69", "note_id": "1028374_syn_1", "label": "ANAT_LN_STATION", "text": "7", "start": 69, "end": 70}
+{"span_id": "ANAT_LN_STATION_72", "note_id": "1028374_syn_1", "label": "ANAT_LN_STATION", "text": "4L", "start": 72, "end": 74}
+{"span_id": "PROC_ACTION_86", "note_id": "1028374_syn_1", "label": "PROC_ACTION", "text": "TBNA", "start": 86, "end": 90}
+{"span_id": "ANAT_LUNG_LOC_91", "note_id": "1028374_syn_1", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 91, "end": 94}
+{"span_id": "OBS_LESION_95", "note_id": "1028374_syn_1", "label": "OBS_LESION", "text": "mass", "start": 95, "end": 99}
+{"span_id": "PROC_ACTION_123", "note_id": "1028374_syn_1", "label": "PROC_ACTION", "text": "TBNA", "start": 123, "end": 127}
+{"span_id": "ANAT_LUNG_LOC_128", "note_id": "1028374_syn_1", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 128, "end": 131}
+{"span_id": "OBS_LESION_132", "note_id": "1028374_syn_1", "label": "OBS_LESION", "text": "nodule", "start": 132, "end": 138}
+{"span_id": "OBS_FINDING_162", "note_id": "1028374_syn_1", "label": "OBS_FINDING", "text": "N2 disease confirmed", "start": 162, "end": 182}
+{"span_id": "PROC_METHOD_18", "note_id": "1028374_syn_2", "label": "PROC_METHOD", "text": "EBUS", "start": 18, "end": 22}
+{"span_id": "PROC_ACTION_23", "note_id": "1028374_syn_2", "label": "PROC_ACTION", "text": "TBNA", "start": 23, "end": 27}
+{"span_id": "PROC_ACTION_45", "note_id": "1028374_syn_2", "label": "PROC_ACTION", "text": "TBNA", "start": 45, "end": 49}
+{"span_id": "ANAT_LN_STATION_55", "note_id": "1028374_syn_2", "label": "ANAT_LN_STATION", "text": "mediastinum", "start": 55, "end": 66}
+{"span_id": "PROC_METHOD_88", "note_id": "1028374_syn_2", "label": "PROC_METHOD", "text": "EBUS", "start": 88, "end": 92}
+{"span_id": "ANAT_LN_STATION_112", "note_id": "1028374_syn_2", "label": "ANAT_LN_STATION", "text": "4R", "start": 112, "end": 114}
+{"span_id": "ANAT_LN_STATION_116", "note_id": "1028374_syn_2", "label": "ANAT_LN_STATION", "text": "7", "start": 116, "end": 117}
+{"span_id": "ANAT_LN_STATION_123", "note_id": "1028374_syn_2", "label": "ANAT_LN_STATION", "text": "4L", "start": 123, "end": 125}
+{"span_id": "ANAT_LUNG_LOC_215", "note_id": "1028374_syn_2", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 215, "end": 218}
+{"span_id": "OBS_LESION_219", "note_id": "1028374_syn_2", "label": "OBS_LESION", "text": "mass", "start": 219, "end": 223}
+{"span_id": "PROC_ACTION_228", "note_id": "1028374_syn_2", "label": "PROC_ACTION", "text": "sampled", "start": 228, "end": 235}
+{"span_id": "ANAT_LUNG_LOC_286", "note_id": "1028374_syn_2", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 286, "end": 289}
+{"span_id": "OBS_LESION_290", "note_id": "1028374_syn_2", "label": "OBS_LESION", "text": "nodule", "start": 290, "end": 296}
+{"span_id": "PROC_ACTION_318", "note_id": "1028374_syn_2", "label": "PROC_ACTION", "text": "sampled", "start": 318, "end": 325}
+{"span_id": "OBS_ROSE_367", "note_id": "1028374_syn_2", "label": "OBS_ROSE", "text": "malignancy", "start": 367, "end": 377}
+{"span_id": "MEAS_COUNT_22", "note_id": "1028374_syn_3", "label": "MEAS_COUNT", "text": "3", "start": 22, "end": 23}
+{"span_id": "PROC_METHOD_25", "note_id": "1028374_syn_3", "label": "PROC_METHOD", "text": "EBUS", "start": 25, "end": 29}
+{"span_id": "PROC_ACTION_30", "note_id": "1028374_syn_3", "label": "PROC_ACTION", "text": "TBNA", "start": 30, "end": 34}
+{"span_id": "PROC_ACTION_58", "note_id": "1028374_syn_3", "label": "PROC_ACTION", "text": "Transtracheal/bronchial needle aspiration", "start": 58, "end": 99}
+{"span_id": "ANAT_LUNG_LOC_126", "note_id": "1028374_syn_3", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 126, "end": 129}
+{"span_id": "OBS_LESION_130", "note_id": "1028374_syn_3", "label": "OBS_LESION", "text": "Mass", "start": 130, "end": 134}
+{"span_id": "PROC_ACTION_146", "note_id": "1028374_syn_3", "label": "PROC_ACTION", "text": "TBNA", "start": 146, "end": 150}
+{"span_id": "ANAT_LUNG_LOC_175", "note_id": "1028374_syn_3", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 175, "end": 178}
+{"span_id": "OBS_LESION_179", "note_id": "1028374_syn_3", "label": "OBS_LESION", "text": "Nodule", "start": 179, "end": 185}
+{"span_id": "OBS_LESION_220", "note_id": "1028374_syn_3", "label": "OBS_LESION", "text": "lesions", "start": 220, "end": 227}
+{"span_id": "PROC_ACTION_258", "note_id": "1028374_syn_3", "label": "PROC_ACTION", "text": "needle aspiration", "start": 258, "end": 275}
+{"span_id": "PROC_METHOD_11", "note_id": "1028374_syn_4", "label": "PROC_METHOD", "text": "EBUS", "start": 11, "end": 15}
+{"span_id": "PROC_ACTION_18", "note_id": "1028374_syn_4", "label": "PROC_ACTION", "text": "TBNA", "start": 18, "end": 22}
+{"span_id": "PROC_METHOD_26", "note_id": "1028374_syn_4", "label": "PROC_METHOD", "text": "EBUS", "start": 26, "end": 30}
+{"span_id": "MEAS_COUNT_43", "note_id": "1028374_syn_4", "label": "MEAS_COUNT", "text": "3", "start": 43, "end": 44}
+{"span_id": "ANAT_LUNG_LOC_101", "note_id": "1028374_syn_4", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 101, "end": 104}
+{"span_id": "OBS_LESION_105", "note_id": "1028374_syn_4", "label": "OBS_LESION", "text": "mass", "start": 105, "end": 109}
+{"span_id": "ANAT_LUNG_LOC_133", "note_id": "1028374_syn_4", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 133, "end": 136}
+{"span_id": "OBS_LESION_137", "note_id": "1028374_syn_4", "label": "OBS_LESION", "text": "nodule", "start": 137, "end": 143}
+{"span_id": "OBS_FINDING_170", "note_id": "1028374_syn_4", "label": "OBS_FINDING", "text": "Adeno CA", "start": 170, "end": 178}
+{"span_id": "ANAT_LUNG_LOC_38", "note_id": "1028374_syn_5", "label": "ANAT_LUNG_LOC", "text": "rul", "start": 38, "end": 41}
+{"span_id": "OBS_LESION_42", "note_id": "1028374_syn_5", "label": "OBS_LESION", "text": "cancer", "start": 42, "end": 48}
+{"span_id": "ANAT_LUNG_LOC_60", "note_id": "1028374_syn_5", "label": "ANAT_LUNG_LOC", "text": "lul", "start": 60, "end": 63}
+{"span_id": "OBS_LESION_64", "note_id": "1028374_syn_5", "label": "OBS_LESION", "text": "nodule", "start": 64, "end": 70}
+{"span_id": "PROC_METHOD_80", "note_id": "1028374_syn_5", "label": "PROC_METHOD", "text": "ebus", "start": 80, "end": 84}
+{"span_id": "ANAT_LN_STATION_99", "note_id": "1028374_syn_5", "label": "ANAT_LN_STATION", "text": "lymph nodes", "start": 99, "end": 110}
+{"span_id": "ANAT_LUNG_LOC_140", "note_id": "1028374_syn_5", "label": "ANAT_LUNG_LOC", "text": "rul", "start": 140, "end": 143}
+{"span_id": "OBS_LESION_144", "note_id": "1028374_syn_5", "label": "OBS_LESION", "text": "mass", "start": 144, "end": 148}
+{"span_id": "LATERALITY_167", "note_id": "1028374_syn_5", "label": "LATERALITY", "text": "left", "start": 167, "end": 171}
+{"span_id": "ANAT_LUNG_LOC_193", "note_id": "1028374_syn_5", "label": "ANAT_LUNG_LOC", "text": "lul", "start": 193, "end": 196}
+{"span_id": "OBS_LESION_197", "note_id": "1028374_syn_5", "label": "OBS_LESION", "text": "nodule", "start": 197, "end": 203}
+{"span_id": "OBS_FINDING_209", "note_id": "1028374_syn_5", "label": "OBS_FINDING", "text": "positive for cancer", "start": 209, "end": 228}
+{"span_id": "PROC_ACTION_0", "note_id": "1028374_syn_6", "label": "PROC_ACTION", "text": "Bronchoscopy", "start": 0, "end": 12}
+{"span_id": "PROC_METHOD_18", "note_id": "1028374_syn_6", "label": "PROC_METHOD", "text": "EBUS", "start": 18, "end": 22}
+{"span_id": "PROC_ACTION_40", "note_id": "1028374_syn_6", "label": "PROC_ACTION", "text": "TBNA", "start": 40, "end": 44}
+{"span_id": "PROC_METHOD_56", "note_id": "1028374_syn_6", "label": "PROC_METHOD", "text": "EBUS", "start": 56, "end": 60}
+{"span_id": "ANAT_LN_STATION_82", "note_id": "1028374_syn_6", "label": "ANAT_LN_STATION", "text": "4R", "start": 82, "end": 84}
+{"span_id": "ANAT_LN_STATION_86", "note_id": "1028374_syn_6", "label": "ANAT_LN_STATION", "text": "7", "start": 86, "end": 87}
+{"span_id": "ANAT_LN_STATION_93", "note_id": "1028374_syn_6", "label": "ANAT_LN_STATION", "text": "4L", "start": 93, "end": 95}
+{"span_id": "PROC_ACTION_120", "note_id": "1028374_syn_6", "label": "PROC_ACTION", "text": "transbronchial needle aspiration", "start": 120, "end": 152}
+{"span_id": "ANAT_LUNG_LOC_166", "note_id": "1028374_syn_6", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 166, "end": 169}
+{"span_id": "OBS_LESION_170", "note_id": "1028374_syn_6", "label": "OBS_LESION", "text": "mass", "start": 170, "end": 174}
+{"span_id": "PROC_ACTION_204", "note_id": "1028374_syn_6", "label": "PROC_ACTION", "text": "TBNA", "start": 204, "end": 208}
+{"span_id": "ANAT_LUNG_LOC_227", "note_id": "1028374_syn_6", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 227, "end": 230}
+{"span_id": "OBS_LESION_231", "note_id": "1028374_syn_6", "label": "OBS_LESION", "text": "nodule", "start": 231, "end": 237}
+{"span_id": "ANAT_LUNG_LOC_13", "note_id": "1028374_syn_7", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 13, "end": 16}
+{"span_id": "OBS_LESION_17", "note_id": "1028374_syn_7", "label": "OBS_LESION", "text": "Adeno", "start": 17, "end": 22}
+{"span_id": "PROC_METHOD_69", "note_id": "1028374_syn_7", "label": "PROC_METHOD", "text": "EBUS", "start": 69, "end": 73}
+{"span_id": "ANAT_LN_STATION_75", "note_id": "1028374_syn_7", "label": "ANAT_LN_STATION", "text": "4R", "start": 75, "end": 77}
+{"span_id": "ANAT_LN_STATION_79", "note_id": "1028374_syn_7", "label": "ANAT_LN_STATION", "text": "7", "start": 79, "end": 80}
+{"span_id": "ANAT_LN_STATION_82", "note_id": "1028374_syn_7", "label": "ANAT_LN_STATION", "text": "4L", "start": 82, "end": 84}
+{"span_id": "PROC_ACTION_94", "note_id": "1028374_syn_7", "label": "PROC_ACTION", "text": "TBNA", "start": 94, "end": 98}
+{"span_id": "ANAT_LUNG_LOC_100", "note_id": "1028374_syn_7", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 100, "end": 103}
+{"span_id": "OBS_LESION_104", "note_id": "1028374_syn_7", "label": "OBS_LESION", "text": "mass", "start": 104, "end": 108}
+{"span_id": "PROC_ACTION_126", "note_id": "1028374_syn_7", "label": "PROC_ACTION", "text": "TBNA", "start": 126, "end": 130}
+{"span_id": "ANAT_LUNG_LOC_132", "note_id": "1028374_syn_7", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 132, "end": 135}
+{"span_id": "OBS_LESION_136", "note_id": "1028374_syn_7", "label": "OBS_LESION", "text": "nodule", "start": 136, "end": 142}
+{"span_id": "PROC_METHOD_64", "note_id": "1028374_syn_8", "label": "PROC_METHOD", "text": "ultrasound scope", "start": 64, "end": 80}
+{"span_id": "ANAT_LN_STATION_94", "note_id": "1028374_syn_8", "label": "ANAT_LN_STATION", "text": "lymph nodes", "start": 94, "end": 105}
+{"span_id": "OBS_LESION_196", "note_id": "1028374_syn_8", "label": "OBS_LESION", "text": "tumor", "start": 196, "end": 201}
+{"span_id": "ANAT_LUNG_LOC_209", "note_id": "1028374_syn_8", "label": "ANAT_LUNG_LOC", "text": "right lung", "start": 209, "end": 219}
+{"span_id": "OBS_LESION_235", "note_id": "1028374_syn_8", "label": "OBS_LESION", "text": "spot", "start": 235, "end": 239}
+{"span_id": "ANAT_LUNG_LOC_247", "note_id": "1028374_syn_8", "label": "ANAT_LUNG_LOC", "text": "left lung", "start": 247, "end": 256}
+{"span_id": "OBS_LESION_318", "note_id": "1028374_syn_8", "label": "OBS_LESION", "text": "cancer", "start": 318, "end": 324}
+{"span_id": "PROC_METHOD_11", "note_id": "1028374_syn_9", "label": "PROC_METHOD", "text": "Endobronchial ultrasound", "start": 11, "end": 35}
+{"span_id": "PROC_ACTION_52", "note_id": "1028374_syn_9", "label": "PROC_ACTION", "text": "needle aspiration", "start": 52, "end": 69}
+{"span_id": "ANAT_LN_STATION_79", "note_id": "1028374_syn_9", "label": "ANAT_LN_STATION", "text": "Lymph nodes", "start": 79, "end": 90}
+{"span_id": "PROC_METHOD_103", "note_id": "1028374_syn_9", "label": "PROC_METHOD", "text": "EBUS", "start": 103, "end": 107}
+{"span_id": "ANAT_LUNG_LOC_109", "note_id": "1028374_syn_9", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 109, "end": 112}
+{"span_id": "OBS_LESION_113", "note_id": "1028374_syn_9", "label": "OBS_LESION", "text": "mass", "start": 113, "end": 117}
+{"span_id": "PROC_ACTION_118", "note_id": "1028374_syn_9", "label": "PROC_ACTION", "text": "aspirated", "start": 118, "end": 127}
+{"span_id": "ANAT_LUNG_LOC_158", "note_id": "1028374_syn_9", "label": "ANAT_LUNG_LOC", "text": "LUL", "start": 158, "end": 161}
+{"span_id": "OBS_LESION_162", "note_id": "1028374_syn_9", "label": "OBS_LESION", "text": "nodule", "start": 162, "end": 168}
+{"span_id": "PROC_ACTION_169", "note_id": "1028374_syn_9", "label": "PROC_ACTION", "text": "aspirated", "start": 169, "end": 178}
+{"span_id": "ANAT_LUNG_LOC_12", "note_id": "1029384_syn_1", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 12, "end": 15}
+{"span_id": "OBS_LESION_16", "note_id": "1029384_syn_1", "label": "OBS_LESION", "text": "SCC", "start": 16, "end": 19}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_20", "note_id": "1029384_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "obstruction (80%)", "start": 20, "end": 37}
+{"span_id": "PROC_METHOD_67", "note_id": "1029384_syn_1", "label": "PROC_METHOD", "text": "Rigid", "start": 67, "end": 72}
+{"span_id": "PROC_ACTION_82", "note_id": "1029384_syn_1", "label": "PROC_ACTION", "text": "Cryotherapy", "start": 82, "end": 93}
+{"span_id": "DEV_INSTRUMENT_95", "note_id": "1029384_syn_1", "label": "DEV_INSTRUMENT", "text": "Erbe", "start": 95, "end": 99}
+{"span_id": "MEAS_COUNT_102", "note_id": "1029384_syn_1", "label": "MEAS_COUNT", "text": "7 cycles", "start": 102, "end": 110}
+{"span_id": "MEAS_TIME_112", "note_id": "1029384_syn_1", "label": "MEAS_TIME", "text": "30s", "start": 112, "end": 115}
+{"span_id": "ANAT_LUNG_LOC_125", "note_id": "1029384_syn_1", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 125, "end": 128}
+{"span_id": "ANAT_AIRWAY_129", "note_id": "1029384_syn_1", "label": "ANAT_AIRWAY", "text": "BI", "start": 129, "end": 131}
+{"span_id": "OBS_LESION_132", "note_id": "1029384_syn_1", "label": "OBS_LESION", "text": "tumor", "start": 132, "end": 137}
+{"span_id": "OBS_FINDING_147", "note_id": "1029384_syn_1", "label": "OBS_FINDING", "text": "Necrosis", "start": 147, "end": 155}
+{"span_id": "PROC_ACTION_156", "note_id": "1029384_syn_1", "label": "PROC_ACTION", "text": "Debridement", "start": 156, "end": 167}
+{"span_id": "ANAT_LUNG_LOC_169", "note_id": "1029384_syn_1", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 169, "end": 172}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_173", "note_id": "1029384_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "50% open", "start": 173, "end": 181}
+{"span_id": "ANAT_AIRWAY_183", "note_id": "1029384_syn_1", "label": "ANAT_AIRWAY", "text": "BI", "start": 183, "end": 185}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_186", "note_id": "1029384_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "80% open", "start": 186, "end": 194}
+{"span_id": "OUTCOME_COMPLICATION_215", "note_id": "1029384_syn_1", "label": "OUTCOME_COMPLICATION", "text": "bleeding (controlled)", "start": 215, "end": 236}
+{"span_id": "OBS_LESION_54", "note_id": "1029384_syn_2", "label": "OBS_LESION", "text": "squamous cell carcinoma", "start": 54, "end": 77}
+{"span_id": "ANAT_LUNG_LOC_95", "note_id": "1029384_syn_2", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 95, "end": 98}
+{"span_id": "OBS_LESION_99", "note_id": "1029384_syn_2", "label": "OBS_LESION", "text": "obstruction", "start": 99, "end": 110}
+{"span_id": "PROC_METHOD_141", "note_id": "1029384_syn_2", "label": "PROC_METHOD", "text": "rigid bronchoscopy", "start": 141, "end": 159}
+{"span_id": "OBS_LESION_169", "note_id": "1029384_syn_2", "label": "OBS_LESION", "text": "exophytic tumor", "start": 169, "end": 184}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_200", "note_id": "1029384_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "occluding 80%", "start": 200, "end": 213}
+{"span_id": "ANAT_LUNG_LOC_221", "note_id": "1029384_syn_2", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 221, "end": 224}
+{"span_id": "ANAT_AIRWAY_248", "note_id": "1029384_syn_2", "label": "ANAT_AIRWAY", "text": "bronchus intermedius", "start": 248, "end": 268}
+{"span_id": "PROC_ACTION_270", "note_id": "1029384_syn_2", "label": "PROC_ACTION", "text": "Cryotherapeutic ablation", "start": 270, "end": 294}
+{"span_id": "DEV_INSTRUMENT_317", "note_id": "1029384_syn_2", "label": "DEV_INSTRUMENT", "text": "Erbe flexible probe", "start": 317, "end": 336}
+{"span_id": "OBS_LESION_386", "note_id": "1029384_syn_2", "label": "OBS_LESION", "text": "tumor", "start": 386, "end": 391}
+{"span_id": "OBS_FINDING_401", "note_id": "1029384_syn_2", "label": "OBS_FINDING", "text": "Necrotic tissue", "start": 401, "end": 416}
+{"span_id": "PROC_ACTION_434", "note_id": "1029384_syn_2", "label": "PROC_ACTION", "text": "debrided", "start": 434, "end": 442}
+{"span_id": "OUTCOME_COMPLICATION_487", "note_id": "1029384_syn_2", "label": "OUTCOME_COMPLICATION", "text": "hemorrhage", "start": 487, "end": 497}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_499", "note_id": "1029384_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Luminal patency was significantly improved", "start": 499, "end": 541}
+{"span_id": "OBS_LESION_12", "note_id": "1029384_syn_3", "label": "OBS_LESION", "text": "Tumor", "start": 12, "end": 17}
+{"span_id": "PROC_ACTION_34", "note_id": "1029384_syn_3", "label": "PROC_ACTION", "text": "cryotherapy", "start": 34, "end": 45}
+{"span_id": "PROC_METHOD_56", "note_id": "1029384_syn_3", "label": "PROC_METHOD", "text": "Rigid bronchoscopy", "start": 56, "end": 74}
+{"span_id": "PROC_ACTION_80", "note_id": "1029384_syn_3", "label": "PROC_ACTION", "text": "cryo-ablation", "start": 80, "end": 93}
+{"span_id": "ANAT_LUNG_LOC_103", "note_id": "1029384_syn_3", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 103, "end": 106}
+{"span_id": "ANAT_AIRWAY_111", "note_id": "1029384_syn_3", "label": "ANAT_AIRWAY", "text": "Bronchus Intermedius", "start": 111, "end": 131}
+{"span_id": "OBS_LESION_144", "note_id": "1029384_syn_3", "label": "OBS_LESION", "text": "Tumor", "start": 144, "end": 149}
+{"span_id": "PROC_ACTION_150", "note_id": "1029384_syn_3", "label": "PROC_ACTION", "text": "debulking", "start": 150, "end": 159}
+{"span_id": "PROC_ACTION_206", "note_id": "1029384_syn_3", "label": "PROC_ACTION", "text": "Mechanical debridement", "start": 206, "end": 228}
+{"span_id": "OBS_FINDING_232", "note_id": "1029384_syn_3", "label": "OBS_FINDING", "text": "necrotic tissue", "start": 232, "end": 247}
+{"span_id": "OUTCOME_COMPLICATION_251", "note_id": "1029384_syn_3", "label": "OUTCOME_COMPLICATION", "text": "Hemostasis managed", "start": 251, "end": 269}
+{"span_id": "MEAS_COUNT_275", "note_id": "1029384_syn_3", "label": "MEAS_COUNT", "text": "7", "start": 275, "end": 276}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_291", "note_id": "1029384_syn_3", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Relief of obstruction", "start": 291, "end": 312}
+{"span_id": "ANAT_LUNG_LOC_314", "note_id": "1029384_syn_3", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 314, "end": 317}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_318", "note_id": "1029384_syn_3", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "80%", "start": 318, "end": 321}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_323", "note_id": "1029384_syn_3", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "50% block", "start": 323, "end": 332}
+{"span_id": "ANAT_LUNG_LOC_44", "note_id": "1029384_syn_4", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 44, "end": 47}
+{"span_id": "OBS_LESION_48", "note_id": "1029384_syn_4", "label": "OBS_LESION", "text": "SCC tumor", "start": 48, "end": 57}
+{"span_id": "PROC_ACTION_69", "note_id": "1029384_syn_4", "label": "PROC_ACTION", "text": "Cryo debulking", "start": 69, "end": 83}
+{"span_id": "DEV_INSTRUMENT_98", "note_id": "1029384_syn_4", "label": "DEV_INSTRUMENT", "text": "Rigid scope", "start": 98, "end": 109}
+{"span_id": "OBS_LESION_118", "note_id": "1029384_syn_4", "label": "OBS_LESION", "text": "tumor", "start": 118, "end": 123}
+{"span_id": "ANAT_LUNG_LOC_127", "note_id": "1029384_syn_4", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 127, "end": 130}
+{"span_id": "ANAT_AIRWAY_131", "note_id": "1029384_syn_4", "label": "ANAT_AIRWAY", "text": "BI", "start": 131, "end": 133}
+{"span_id": "DEV_INSTRUMENT_143", "note_id": "1029384_syn_4", "label": "DEV_INSTRUMENT", "text": "cryo probe", "start": 143, "end": 153}
+{"span_id": "MEAS_COUNT_168", "note_id": "1029384_syn_4", "label": "MEAS_COUNT", "text": "7 cycles", "start": 168, "end": 176}
+{"span_id": "OBS_FINDING_193", "note_id": "1029384_syn_4", "label": "OBS_FINDING", "text": "dead tissue", "start": 193, "end": 204}
+{"span_id": "OUTCOME_COMPLICATION_209", "note_id": "1029384_syn_4", "label": "OUTCOME_COMPLICATION", "text": "Bleeding controlled", "start": 209, "end": 228}
+{"span_id": "MEDICATION_234", "note_id": "1029384_syn_4", "label": "MEDICATION", "text": "cold saline", "start": 234, "end": 245}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_250", "note_id": "1029384_syn_4", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Airway looks better", "start": 250, "end": 269}
+{"span_id": "PROC_ACTION_43", "note_id": "1029384_syn_5", "label": "PROC_ACTION", "text": "debulking", "start": 43, "end": 52}
+{"span_id": "OBS_LESION_61", "note_id": "1029384_syn_5", "label": "OBS_LESION", "text": "cancer", "start": 61, "end": 67}
+{"span_id": "PROC_METHOD_69", "note_id": "1029384_syn_5", "label": "PROC_METHOD", "text": "Rigid bronchoscopy", "start": 69, "end": 87}
+{"span_id": "OBS_LESION_112", "note_id": "1029384_syn_5", "label": "OBS_LESION", "text": "tumor", "start": 112, "end": 117}
+{"span_id": "ANAT_LUNG_LOC_131", "note_id": "1029384_syn_5", "label": "ANAT_LUNG_LOC", "text": "right upper lobe", "start": 131, "end": 147}
+{"span_id": "DEV_INSTRUMENT_158", "note_id": "1029384_syn_5", "label": "DEV_INSTRUMENT", "text": "cryo probe", "start": 158, "end": 168}
+{"span_id": "MEAS_TIME_201", "note_id": "1029384_syn_5", "label": "MEAS_TIME", "text": "30 seconds", "start": 201, "end": 211}
+{"span_id": "OUTCOME_COMPLICATION_251", "note_id": "1029384_syn_5", "label": "OUTCOME_COMPLICATION", "text": "bleeding", "start": 251, "end": 259}
+{"span_id": "MEDICATION_291", "note_id": "1029384_syn_5", "label": "MEDICATION", "text": "epinephrine", "start": 291, "end": 302}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_312", "note_id": "1029384_syn_5", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "airway open a bit more", "start": 312, "end": 334}
+{"span_id": "PROC_METHOD_0", "note_id": "1029384_syn_6", "label": "PROC_METHOD", "text": "Rigid bronchoscopy", "start": 0, "end": 18}
+{"span_id": "PROC_ACTION_24", "note_id": "1029384_syn_6", "label": "PROC_ACTION", "text": "cryotherapy ablation", "start": 24, "end": 44}
+{"span_id": "OBS_LESION_72", "note_id": "1029384_syn_6", "label": "OBS_LESION", "text": "squamous cell lung cancer", "start": 72, "end": 97}
+{"span_id": "ANAT_LUNG_LOC_138", "note_id": "1029384_syn_6", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 138, "end": 141}
+{"span_id": "OBS_LESION_142", "note_id": "1029384_syn_6", "label": "OBS_LESION", "text": "obstruction", "start": 142, "end": 153}
+{"span_id": "OBS_LESION_161", "note_id": "1029384_syn_6", "label": "OBS_LESION", "text": "exophytic tumor", "start": 161, "end": 176}
+{"span_id": "ANAT_LUNG_LOC_180", "note_id": "1029384_syn_6", "label": "ANAT_LUNG_LOC", "text": "RUL orifice", "start": 180, "end": 191}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_200", "note_id": "1029384_syn_6", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "80% obstruction", "start": 200, "end": 215}
+{"span_id": "ANAT_AIRWAY_236", "note_id": "1029384_syn_6", "label": "ANAT_AIRWAY", "text": "bronchus intermedius", "start": 236, "end": 256}
+{"span_id": "PROC_ACTION_258", "note_id": "1029384_syn_6", "label": "PROC_ACTION", "text": "Cryotherapy", "start": 258, "end": 269}
+{"span_id": "DEV_INSTRUMENT_286", "note_id": "1029384_syn_6", "label": "DEV_INSTRUMENT", "text": "Erbe Erbokryo CA unit", "start": 286, "end": 307}
+{"span_id": "DEV_INSTRUMENT_313", "note_id": "1029384_syn_6", "label": "DEV_INSTRUMENT", "text": "flexible cryoprobe", "start": 313, "end": 331}
+{"span_id": "OBS_FINDING_399", "note_id": "1029384_syn_6", "label": "OBS_FINDING", "text": "tumor necrosis", "start": 399, "end": 413}
+{"span_id": "OBS_FINDING_424", "note_id": "1029384_syn_6", "label": "OBS_FINDING", "text": "Necrotic tissue", "start": 424, "end": 439}
+{"span_id": "PROC_ACTION_440", "note_id": "1029384_syn_6", "label": "PROC_ACTION", "text": "debrided", "start": 440, "end": 448}
+{"span_id": "DEV_INSTRUMENT_454", "note_id": "1029384_syn_6", "label": "DEV_INSTRUMENT", "text": "rigid suction", "start": 454, "end": 467}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_484", "note_id": "1029384_syn_6", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "patency improved to approximately 50%", "start": 484, "end": 521}
+{"span_id": "ANAT_LUNG_LOC_525", "note_id": "1029384_syn_6", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 525, "end": 528}
+{"span_id": "ANAT_AIRWAY_530", "note_id": "1029384_syn_6", "label": "ANAT_AIRWAY", "text": "BI", "start": 530, "end": 532}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_537", "note_id": "1029384_syn_6", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "80% patent", "start": 537, "end": 547}
+{"span_id": "OBS_LESION_13", "note_id": "1029384_syn_7", "label": "OBS_LESION", "text": "Malignant airway obstruction", "start": 13, "end": 41}
+{"span_id": "OBS_LESION_43", "note_id": "1029384_syn_7", "label": "OBS_LESION", "text": "SCC", "start": 43, "end": 46}
+{"span_id": "ANAT_LUNG_LOC_49", "note_id": "1029384_syn_7", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 49, "end": 52}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_54", "note_id": "1029384_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "80%", "start": 54, "end": 57}
+{"span_id": "PROC_METHOD_82", "note_id": "1029384_syn_7", "label": "PROC_METHOD", "text": "Rigid Bronchoscopy", "start": 82, "end": 100}
+{"span_id": "PROC_ACTION_116", "note_id": "1029384_syn_7", "label": "PROC_ACTION", "text": "Cryotherapy ablation", "start": 116, "end": 136}
+{"span_id": "MEAS_COUNT_148", "note_id": "1029384_syn_7", "label": "MEAS_COUNT", "text": "7 cycles", "start": 148, "end": 156}
+{"span_id": "MEAS_TIME_158", "note_id": "1029384_syn_7", "label": "MEAS_TIME", "text": "30s", "start": 158, "end": 161}
+{"span_id": "OBS_FINDING_164", "note_id": "1029384_syn_7", "label": "OBS_FINDING", "text": "Necrotic tissue", "start": 164, "end": 179}
+{"span_id": "PROC_ACTION_180", "note_id": "1029384_syn_7", "label": "PROC_ACTION", "text": "debrided", "start": 180, "end": 188}
+{"span_id": "ANAT_LUNG_LOC_190", "note_id": "1029384_syn_7", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 190, "end": 193}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_194", "note_id": "1029384_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "patency improved to 50%", "start": 194, "end": 217}
+{"span_id": "ANAT_AIRWAY_219", "note_id": "1029384_syn_7", "label": "ANAT_AIRWAY", "text": "BI", "start": 219, "end": 221}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_225", "note_id": "1029384_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "80%", "start": 225, "end": 228}
+{"span_id": "OUTCOME_COMPLICATION_239", "note_id": "1029384_syn_7", "label": "OUTCOME_COMPLICATION", "text": "bleeding controlled", "start": 239, "end": 258}
+{"span_id": "OBS_LESION_73", "note_id": "1029384_syn_8", "label": "OBS_LESION", "text": "tumor", "start": 73, "end": 78}
+{"span_id": "DEV_INSTRUMENT_112", "note_id": "1029384_syn_8", "label": "DEV_INSTRUMENT", "text": "rigid bronchoscope", "start": 112, "end": 130}
+{"span_id": "PROC_ACTION_143", "note_id": "1029384_syn_8", "label": "PROC_ACTION", "text": "freezing therapy", "start": 143, "end": 159}
+{"span_id": "PROC_ACTION_161", "note_id": "1029384_syn_8", "label": "PROC_ACTION", "text": "cryotherapy", "start": 161, "end": 172}
+{"span_id": "OBS_LESION_181", "note_id": "1029384_syn_8", "label": "OBS_LESION", "text": "tumor mass", "start": 181, "end": 191}
+{"span_id": "ANAT_LUNG_LOC_199", "note_id": "1029384_syn_8", "label": "ANAT_LUNG_LOC", "text": "right upper lobe", "start": 199, "end": 215}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_285", "note_id": "1029384_syn_8", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "open the airway significantly", "start": 285, "end": 314}
+{"span_id": "OUTCOME_COMPLICATION_361", "note_id": "1029384_syn_8", "label": "OUTCOME_COMPLICATION", "text": "bleeding", "start": 361, "end": 369}
+{"span_id": "OBS_LESION_11", "note_id": "1029384_syn_9", "label": "OBS_LESION", "text": "Endobronchial squamous cell carcinoma", "start": 11, "end": 48}
+{"span_id": "ANAT_LUNG_LOC_50", "note_id": "1029384_syn_9", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 50, "end": 53}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_59", "note_id": "1029384_syn_9", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "80% obstruction", "start": 59, "end": 74}
+{"span_id": "PROC_METHOD_86", "note_id": "1029384_syn_9", "label": "PROC_METHOD", "text": "Rigid bronchoscopy", "start": 86, "end": 104}
+{"span_id": "PROC_ACTION_110", "note_id": "1029384_syn_9", "label": "PROC_ACTION", "text": "cryotherapy destruction", "start": 110, "end": 133}
+{"span_id": "OBS_LESION_149", "note_id": "1029384_syn_9", "label": "OBS_LESION", "text": "exophytic tumor", "start": 149, "end": 164}
+{"span_id": "ANAT_LUNG_LOC_168", "note_id": "1029384_syn_9", "label": "ANAT_LUNG_LOC", "text": "RUL orifice", "start": 168, "end": 179}
+{"span_id": "PROC_ACTION_181", "note_id": "1029384_syn_9", "label": "PROC_ACTION", "text": "Cryotherapy", "start": 181, "end": 192}
+{"span_id": "DEV_INSTRUMENT_209", "note_id": "1029384_syn_9", "label": "DEV_INSTRUMENT", "text": "Erbe unit", "start": 209, "end": 218}
+{"span_id": "OBS_FINDING_269", "note_id": "1029384_syn_9", "label": "OBS_FINDING", "text": "tumor necrosis", "start": 269, "end": 283}
+{"span_id": "OBS_FINDING_294", "note_id": "1029384_syn_9", "label": "OBS_FINDING", "text": "Necrotic tissue", "start": 294, "end": 309}
+{"span_id": "DEV_INSTRUMENT_325", "note_id": "1029384_syn_9", "label": "DEV_INSTRUMENT", "text": "rigid suction", "start": 325, "end": 338}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_355", "note_id": "1029384_syn_9", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "patency improved", "start": 355, "end": 371}
+{"span_id": "OUTCOME_COMPLICATION_382", "note_id": "1029384_syn_9", "label": "OUTCOME_COMPLICATION", "text": "hemorrhage controlled", "start": 382, "end": 403}
+{"span_id": "PROC_METHOD_6", "note_id": "991283_syn_1", "label": "PROC_METHOD", "text": "EBUS-TBNA", "start": 6, "end": 15}
+{"span_id": "PROC_METHOD_28", "note_id": "991283_syn_1", "label": "PROC_METHOD", "text": "Nav Bronch", "start": 28, "end": 38}
+{"span_id": "PROC_ACTION_43", "note_id": "991283_syn_1", "label": "PROC_ACTION", "text": "Sampling", "start": 43, "end": 51}
+{"span_id": "ANAT_LN_STATION_55", "note_id": "991283_syn_1", "label": "ANAT_LN_STATION", "text": "Stn 7", "start": 55, "end": 60}
+{"span_id": "MEAS_SIZE_62", "note_id": "991283_syn_1", "label": "MEAS_SIZE", "text": "12mm", "start": 62, "end": 66}
+{"span_id": "MEAS_COUNT_69", "note_id": "991283_syn_1", "label": "MEAS_COUNT", "text": "3 passes", "start": 69, "end": 77}
+{"span_id": "OBS_ROSE_79", "note_id": "991283_syn_1", "label": "OBS_ROSE", "text": "benign", "start": 79, "end": 85}
+{"span_id": "ANAT_LN_STATION_89", "note_id": "991283_syn_1", "label": "ANAT_LN_STATION", "text": "Stn 4R", "start": 89, "end": 95}
+{"span_id": "MEAS_SIZE_97", "note_id": "991283_syn_1", "label": "MEAS_SIZE", "text": "10mm", "start": 97, "end": 101}
+{"span_id": "MEAS_COUNT_104", "note_id": "991283_syn_1", "label": "MEAS_COUNT", "text": "3 passes", "start": 104, "end": 112}
+{"span_id": "OBS_ROSE_114", "note_id": "991283_syn_1", "label": "OBS_ROSE", "text": "benign", "start": 114, "end": 120}
+{"span_id": "ANAT_LN_STATION_124", "note_id": "991283_syn_1", "label": "ANAT_LN_STATION", "text": "Stn 4L", "start": 124, "end": 130}
+{"span_id": "MEAS_SIZE_132", "note_id": "991283_syn_1", "label": "MEAS_SIZE", "text": "8mm", "start": 132, "end": 135}
+{"span_id": "MEAS_COUNT_138", "note_id": "991283_syn_1", "label": "MEAS_COUNT", "text": "2 passes", "start": 138, "end": 146}
+{"span_id": "OBS_ROSE_148", "note_id": "991283_syn_1", "label": "OBS_ROSE", "text": "benign", "start": 148, "end": 154}
+{"span_id": "PROC_METHOD_156", "note_id": "991283_syn_1", "label": "PROC_METHOD", "text": "Navigation", "start": 156, "end": 166}
+{"span_id": "PROC_METHOD_168", "note_id": "991283_syn_1", "label": "PROC_METHOD", "text": "Veran system", "start": 168, "end": 180}
+{"span_id": "ANAT_LUNG_LOC_182", "note_id": "991283_syn_1", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 182, "end": 185}
+{"span_id": "OBS_LESION_186", "note_id": "991283_syn_1", "label": "OBS_LESION", "text": "nodule", "start": 186, "end": 192}
+{"span_id": "MEAS_SIZE_211", "note_id": "991283_syn_1", "label": "MEAS_SIZE", "text": "5mm", "start": 211, "end": 214}
+{"span_id": "PROC_METHOD_273", "note_id": "991283_syn_1", "label": "PROC_METHOD", "text": "Radial EBUS", "start": 273, "end": 284}
+{"span_id": "ANAT_PLEURA_304", "note_id": "991283_syn_1", "label": "ANAT_PLEURA", "text": "Mediastinum", "start": 304, "end": 315}
+{"span_id": "PROC_ACTION_316", "note_id": "991283_syn_1", "label": "PROC_ACTION", "text": "staged", "start": 316, "end": 322}
+{"span_id": "PROC_ACTION_335", "note_id": "991283_syn_1", "label": "PROC_ACTION", "text": "biopsy", "start": 335, "end": 341}
+{"span_id": "PROC_METHOD_50", "note_id": "991283_syn_2", "label": "PROC_METHOD", "text": "EBUS-TBNA", "start": 50, "end": 59}
+{"span_id": "PROC_METHOD_74", "note_id": "991283_syn_2", "label": "PROC_METHOD", "text": "electromagnetic navigation bronchoscopy", "start": 74, "end": 113}
+{"span_id": "PROC_METHOD_90", "note_id": "991283_syn_2", "label": "PROC_METHOD", "text": "navigation", "start": 90, "end": 100}
+{"span_id": "ANAT_PLEURA_126", "note_id": "991283_syn_2", "label": "ANAT_PLEURA", "text": "mediastinal", "start": 126, "end": 137}
+{"span_id": "PROC_ACTION_138", "note_id": "991283_syn_2", "label": "PROC_ACTION", "text": "staging", "start": 138, "end": 145}
+{"span_id": "PROC_METHOD_167", "note_id": "991283_syn_2", "label": "PROC_METHOD", "text": "EBUS-guided", "start": 167, "end": 178}
+{"span_id": "PROC_ACTION_179", "note_id": "991283_syn_2", "label": "PROC_ACTION", "text": "transbronchial needle aspiration", "start": 179, "end": 211}
+{"span_id": "ANAT_LN_STATION_229", "note_id": "991283_syn_2", "label": "ANAT_LN_STATION", "text": "stations 7", "start": 229, "end": 239}
+{"span_id": "ANAT_LN_STATION_241", "note_id": "991283_syn_2", "label": "ANAT_LN_STATION", "text": "4R", "start": 241, "end": 243}
+{"span_id": "ANAT_LN_STATION_249", "note_id": "991283_syn_2", "label": "ANAT_LN_STATION", "text": "4L", "start": 249, "end": 251}
+{"span_id": "OBS_ROSE_288", "note_id": "991283_syn_2", "label": "OBS_ROSE", "text": "benign lymphocytes", "start": 288, "end": 306}
+{"span_id": "MEAS_SIZE_387", "note_id": "991283_syn_2", "label": "MEAS_SIZE", "text": "1.8cm", "start": 387, "end": 392}
+{"span_id": "ANAT_LUNG_LOC_393", "note_id": "991283_syn_2", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 393, "end": 396}
+{"span_id": "ANAT_LUNG_LOC_397", "note_id": "991283_syn_2", "label": "ANAT_LUNG_LOC", "text": "apical", "start": 397, "end": 403}
+{"span_id": "OBS_LESION_404", "note_id": "991283_syn_2", "label": "OBS_LESION", "text": "nodule", "start": 404, "end": 410}
+{"span_id": "MEAS_SIZE_453", "note_id": "991283_syn_2", "label": "MEAS_SIZE", "text": "5mm", "start": 453, "end": 456}
+{"span_id": "PROC_METHOD_471", "note_id": "991283_syn_2", "label": "PROC_METHOD", "text": "radial EBUS", "start": 471, "end": 482}
+{"span_id": "OBS_LESION_488", "note_id": "991283_syn_2", "label": "OBS_LESION", "text": "lesion", "start": 488, "end": 494}
+{"span_id": "PROC_ACTION_581", "note_id": "991283_syn_2", "label": "PROC_ACTION", "text": "biopsy", "start": 581, "end": 587}
+{"span_id": "PROC_ACTION_634", "note_id": "991283_syn_2", "label": "PROC_ACTION", "text": "sampling", "start": 634, "end": 642}
+{"span_id": "ANAT_LUNG_LOC_653", "note_id": "991283_syn_2", "label": "ANAT_LUNG_LOC", "text": "parenchyma", "start": 653, "end": 663}
+{"span_id": "PROC_METHOD_22", "note_id": "991283_syn_3", "label": "PROC_METHOD", "text": "EBUS-TBNA", "start": 22, "end": 31}
+{"span_id": "PROC_METHOD_53", "note_id": "991283_syn_3", "label": "PROC_METHOD", "text": "Navigational Bronchoscopy", "start": 53, "end": 78}
+{"span_id": "PROC_METHOD_53", "note_id": "991283_syn_3", "label": "PROC_METHOD", "text": "Navigation", "start": 53, "end": 63}
+{"span_id": "PROC_METHOD_83", "note_id": "991283_syn_3", "label": "PROC_METHOD", "text": "EBUS", "start": 83, "end": 87}
+{"span_id": "ANAT_LN_STATION_89", "note_id": "991283_syn_3", "label": "ANAT_LN_STATION", "text": "Stations 7", "start": 89, "end": 99}
+{"span_id": "ANAT_LN_STATION_101", "note_id": "991283_syn_3", "label": "ANAT_LN_STATION", "text": "4R", "start": 101, "end": 103}
+{"span_id": "ANAT_LN_STATION_105", "note_id": "991283_syn_3", "label": "ANAT_LN_STATION", "text": "4L", "start": 105, "end": 107}
+{"span_id": "PROC_ACTION_108", "note_id": "991283_syn_3", "label": "PROC_ACTION", "text": "sampled", "start": 108, "end": 115}
+{"span_id": "PROC_ACTION_121", "note_id": "991283_syn_3", "label": "PROC_ACTION", "text": "needle aspiration", "start": 121, "end": 138}
+{"span_id": "DEV_CATHETER_210", "note_id": "991283_syn_3", "label": "DEV_CATHETER", "text": "Catheter", "start": 210, "end": 218}
+{"span_id": "ANAT_LUNG_LOC_231", "note_id": "991283_syn_3", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 231, "end": 234}
+{"span_id": "OBS_LESION_248", "note_id": "991283_syn_3", "label": "OBS_LESION", "text": "Lesion", "start": 248, "end": 254}
+{"span_id": "PROC_METHOD_273", "note_id": "991283_syn_3", "label": "PROC_METHOD", "text": "Radial EBUS", "start": 273, "end": 284}
+{"span_id": "PROC_ACTION_343", "note_id": "991283_syn_3", "label": "PROC_ACTION", "text": "Biopsy", "start": 343, "end": 349}
+{"span_id": "PROC_METHOD_35", "note_id": "991283_syn_4", "label": "PROC_METHOD", "text": "EBUS", "start": 35, "end": 39}
+{"span_id": "PROC_METHOD_42", "note_id": "991283_syn_4", "label": "PROC_METHOD", "text": "ENB", "start": 42, "end": 45}
+{"span_id": "DEV_INSTRUMENT_49", "note_id": "991283_syn_4", "label": "DEV_INSTRUMENT", "text": "EBUS scope", "start": 49, "end": 59}
+{"span_id": "PROC_ACTION_64", "note_id": "991283_syn_4", "label": "PROC_ACTION", "text": "Sampled", "start": 64, "end": 71}
+{"span_id": "ANAT_LN_STATION_72", "note_id": "991283_syn_4", "label": "ANAT_LN_STATION", "text": "7", "start": 72, "end": 73}
+{"span_id": "ANAT_LN_STATION_75", "note_id": "991283_syn_4", "label": "ANAT_LN_STATION", "text": "4R", "start": 75, "end": 77}
+{"span_id": "ANAT_LN_STATION_79", "note_id": "991283_syn_4", "label": "ANAT_LN_STATION", "text": "4L", "start": 79, "end": 81}
+{"span_id": "OBS_ROSE_89", "note_id": "991283_syn_4", "label": "OBS_ROSE", "text": "Benign", "start": 89, "end": 95}
+{"span_id": "DEV_INSTRUMENT_112", "note_id": "991283_syn_4", "label": "DEV_INSTRUMENT", "text": "therapeutic scope", "start": 112, "end": 129}
+{"span_id": "PROC_METHOD_141", "note_id": "991283_syn_4", "label": "PROC_METHOD", "text": "Veran map", "start": 141, "end": 150}
+{"span_id": "ANAT_LUNG_LOC_165", "note_id": "991283_syn_4", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 165, "end": 168}
+{"span_id": "PROC_METHOD_203", "note_id": "991283_syn_4", "label": "PROC_METHOD", "text": "REBUS", "start": 203, "end": 208}
+{"span_id": "PROC_ACTION_239", "note_id": "991283_syn_4", "label": "PROC_ACTION", "text": "biopsy", "start": 239, "end": 245}
+{"span_id": "OBS_LESION_249", "note_id": "991283_syn_4", "label": "OBS_LESION", "text": "nodule", "start": 249, "end": 255}
+{"span_id": "PROC_ACTION_288", "note_id": "991283_syn_4", "label": "PROC_ACTION", "text": "biopsy", "start": 288, "end": 294}
+{"span_id": "PROC_METHOD_42", "note_id": "991283_syn_5", "label": "PROC_METHOD", "text": "ebus", "start": 42, "end": 46}
+{"span_id": "PROC_METHOD_51", "note_id": "991283_syn_5", "label": "PROC_METHOD", "text": "navigation", "start": 51, "end": 61}
+{"span_id": "PROC_METHOD_69", "note_id": "991283_syn_5", "label": "PROC_METHOD", "text": "Ebus", "start": 69, "end": 73}
+{"span_id": "ANAT_LN_STATION_91", "note_id": "991283_syn_5", "label": "ANAT_LN_STATION", "text": "station 7", "start": 91, "end": 100}
+{"span_id": "ANAT_LN_STATION_105", "note_id": "991283_syn_5", "label": "ANAT_LN_STATION", "text": "4r", "start": 105, "end": 107}
+{"span_id": "ANAT_LN_STATION_112", "note_id": "991283_syn_5", "label": "ANAT_LN_STATION", "text": "4l", "start": 112, "end": 114}
+{"span_id": "OBS_ROSE_126", "note_id": "991283_syn_5", "label": "OBS_ROSE", "text": "benign", "start": 126, "end": 132}
+{"span_id": "DEV_INSTRUMENT_164", "note_id": "991283_syn_5", "label": "DEV_INSTRUMENT", "text": "nav scope", "start": 164, "end": 173}
+{"span_id": "ANAT_LUNG_LOC_183", "note_id": "991283_syn_5", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 183, "end": 186}
+{"span_id": "OBS_LESION_187", "note_id": "991283_syn_5", "label": "OBS_LESION", "text": "nodule", "start": 187, "end": 193}
+{"span_id": "PROC_METHOD_223", "note_id": "991283_syn_5", "label": "PROC_METHOD", "text": "veran system", "start": 223, "end": 235}
+{"span_id": "DEV_INSTRUMENT_267", "note_id": "991283_syn_5", "label": "DEV_INSTRUMENT", "text": "radial probe", "start": 267, "end": 279}
+{"span_id": "DEV_NEEDLE_331", "note_id": "991283_syn_5", "label": "DEV_NEEDLE", "text": "needle", "start": 331, "end": 337}
+{"span_id": "PROC_ACTION_345", "note_id": "991283_syn_5", "label": "PROC_ACTION", "text": "biopsy", "start": 345, "end": 351}
+{"span_id": "ANAT_LN_STATION_369", "note_id": "991283_syn_5", "label": "ANAT_LN_STATION", "text": "lymph nodes", "start": 369, "end": 380}
+{"span_id": "PROC_METHOD_0", "note_id": "991283_syn_6", "label": "PROC_METHOD", "text": "Electromagnetic Navigation Bronchoscopy", "start": 0, "end": 39}
+{"span_id": "PROC_METHOD_44", "note_id": "991283_syn_6", "label": "PROC_METHOD", "text": "EBUS-TBNA", "start": 44, "end": 53}
+{"span_id": "DEV_INSTRUMENT_70", "note_id": "991283_syn_6", "label": "DEV_INSTRUMENT", "text": "Linear EBUS", "start": 70, "end": 81}
+{"span_id": "PROC_ACTION_94", "note_id": "991283_syn_6", "label": "PROC_ACTION", "text": "sample", "start": 94, "end": 100}
+{"span_id": "ANAT_LN_STATION_101", "note_id": "991283_syn_6", "label": "ANAT_LN_STATION", "text": "lymph node stations 7", "start": 101, "end": 122}
+{"span_id": "ANAT_LN_STATION_124", "note_id": "991283_syn_6", "label": "ANAT_LN_STATION", "text": "4R", "start": 124, "end": 126}
+{"span_id": "ANAT_LN_STATION_132", "note_id": "991283_syn_6", "label": "ANAT_LN_STATION", "text": "4L", "start": 132, "end": 134}
+{"span_id": "OBS_ROSE_145", "note_id": "991283_syn_6", "label": "OBS_ROSE", "text": "benign", "start": 145, "end": 151}
+{"span_id": "PROC_METHOD_161", "note_id": "991283_syn_6", "label": "PROC_METHOD", "text": "Electromagnetic navigation", "start": 161, "end": 187}
+{"span_id": "MEAS_SIZE_213", "note_id": "991283_syn_6", "label": "MEAS_SIZE", "text": "1.8cm", "start": 213, "end": 218}
+{"span_id": "ANAT_LUNG_LOC_219", "note_id": "991283_syn_6", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 219, "end": 222}
+{"span_id": "OBS_LESION_223", "note_id": "991283_syn_6", "label": "OBS_LESION", "text": "nodule", "start": 223, "end": 229}
+{"span_id": "PROC_METHOD_287", "note_id": "991283_syn_6", "label": "PROC_METHOD", "text": "radial EBUS", "start": 287, "end": 298}
+{"span_id": "PROC_ACTION_346", "note_id": "991283_syn_6", "label": "PROC_ACTION", "text": "biopsy", "start": 346, "end": 352}
+{"span_id": "OUTCOME_COMPLICATION_417", "note_id": "991283_syn_6", "label": "OUTCOME_COMPLICATION", "text": "without complications", "start": 417, "end": 438}
+{"span_id": "MEAS_SIZE_13", "note_id": "991283_syn_7", "label": "MEAS_SIZE", "text": "1.8cm", "start": 13, "end": 18}
+{"span_id": "ANAT_LUNG_LOC_19", "note_id": "991283_syn_7", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 19, "end": 22}
+{"span_id": "OBS_LESION_23", "note_id": "991283_syn_7", "label": "OBS_LESION", "text": "nodule", "start": 23, "end": 29}
+{"span_id": "ANAT_PLEURA_31", "note_id": "991283_syn_7", "label": "ANAT_PLEURA", "text": "mediastinal", "start": 31, "end": 42}
+{"span_id": "PROC_ACTION_43", "note_id": "991283_syn_7", "label": "PROC_ACTION", "text": "staging", "start": 43, "end": 50}
+{"span_id": "PROC_METHOD_98", "note_id": "991283_syn_7", "label": "PROC_METHOD", "text": "EBUS-TBNA", "start": 98, "end": 107}
+{"span_id": "ANAT_LN_STATION_121", "note_id": "991283_syn_7", "label": "ANAT_LN_STATION", "text": "stations 7", "start": 121, "end": 131}
+{"span_id": "ANAT_LN_STATION_133", "note_id": "991283_syn_7", "label": "ANAT_LN_STATION", "text": "4R", "start": 133, "end": 135}
+{"span_id": "ANAT_LN_STATION_137", "note_id": "991283_syn_7", "label": "ANAT_LN_STATION", "text": "4L", "start": 137, "end": 139}
+{"span_id": "OBS_ROSE_146", "note_id": "991283_syn_7", "label": "OBS_ROSE", "text": "negative for malignancy", "start": 146, "end": 169}
+{"span_id": "PROC_METHOD_171", "note_id": "991283_syn_7", "label": "PROC_METHOD", "text": "ENB", "start": 171, "end": 174}
+{"span_id": "ANAT_LUNG_LOC_188", "note_id": "991283_syn_7", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 188, "end": 191}
+{"span_id": "OBS_LESION_192", "note_id": "991283_syn_7", "label": "OBS_LESION", "text": "nodule", "start": 192, "end": 198}
+{"span_id": "OBS_LESION_200", "note_id": "991283_syn_7", "label": "OBS_LESION", "text": "Lesion", "start": 200, "end": 206}
+{"span_id": "PROC_METHOD_225", "note_id": "991283_syn_7", "label": "PROC_METHOD", "text": "Radial EBUS", "start": 225, "end": 236}
+{"span_id": "PROC_ACTION_238", "note_id": "991283_syn_7", "label": "PROC_ACTION", "text": "Biopsy", "start": 238, "end": 244}
+{"span_id": "ANAT_PLEURA_28", "note_id": "991283_syn_8", "label": "ANAT_PLEURA", "text": "mediastinal", "start": 28, "end": 39}
+{"span_id": "PROC_ACTION_40", "note_id": "991283_syn_8", "label": "PROC_ACTION", "text": "staging", "start": 40, "end": 47}
+{"span_id": "DEV_INSTRUMENT_58", "note_id": "991283_syn_8", "label": "DEV_INSTRUMENT", "text": "linear EBUS scope", "start": 58, "end": 75}
+{"span_id": "PROC_ACTION_93", "note_id": "991283_syn_8", "label": "PROC_ACTION", "text": "sampled", "start": 93, "end": 100}
+{"span_id": "ANAT_LN_STATION_101", "note_id": "991283_syn_8", "label": "ANAT_LN_STATION", "text": "lymph nodes", "start": 101, "end": 112}
+{"span_id": "ANAT_LN_STATION_116", "note_id": "991283_syn_8", "label": "ANAT_LN_STATION", "text": "stations 7", "start": 116, "end": 126}
+{"span_id": "ANAT_LN_STATION_128", "note_id": "991283_syn_8", "label": "ANAT_LN_STATION", "text": "4R", "start": 128, "end": 130}
+{"span_id": "ANAT_LN_STATION_136", "note_id": "991283_syn_8", "label": "ANAT_LN_STATION", "text": "4L", "start": 136, "end": 138}
+{"span_id": "OBS_ROSE_160", "note_id": "991283_syn_8", "label": "OBS_ROSE", "text": "benign lymphocytes", "start": 160, "end": 178}
+{"span_id": "PROC_METHOD_216", "note_id": "991283_syn_8", "label": "PROC_METHOD", "text": "electromagnetic navigation", "start": 216, "end": 242}
+{"span_id": "PROC_ACTION_252", "note_id": "991283_syn_8", "label": "PROC_ACTION", "text": "biopsy", "start": 252, "end": 258}
+{"span_id": "ANAT_LUNG_LOC_263", "note_id": "991283_syn_8", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 263, "end": 266}
+{"span_id": "OBS_LESION_267", "note_id": "991283_syn_8", "label": "OBS_LESION", "text": "nodule", "start": 267, "end": 273}
+{"span_id": "OBS_LESION_348", "note_id": "991283_syn_8", "label": "OBS_LESION", "text": "lesion", "start": 348, "end": 354}
+{"span_id": "PROC_METHOD_371", "note_id": "991283_syn_8", "label": "PROC_METHOD", "text": "radial EBUS", "start": 371, "end": 382}
+{"span_id": "PROC_ACTION_419", "note_id": "991283_syn_8", "label": "PROC_ACTION", "text": "biopsy", "start": 419, "end": 425}
+{"span_id": "ANAT_LUNG_LOC_433", "note_id": "991283_syn_8", "label": "ANAT_LUNG_LOC", "text": "lung", "start": 433, "end": 437}
+{"span_id": "OBS_LESION_438", "note_id": "991283_syn_8", "label": "OBS_LESION", "text": "nodule", "start": 438, "end": 444}
+{"span_id": "PROC_METHOD_11", "note_id": "991283_syn_9", "label": "PROC_METHOD", "text": "Endobronchial Ultrasound", "start": 11, "end": 35}
+{"span_id": "PROC_METHOD_40", "note_id": "991283_syn_9", "label": "PROC_METHOD", "text": "Guided Navigation", "start": 40, "end": 57}
+{"span_id": "ANAT_LN_STATION_68", "note_id": "991283_syn_9", "label": "ANAT_LN_STATION", "text": "Nodal stations 7", "start": 68, "end": 84}
+{"span_id": "ANAT_LN_STATION_86", "note_id": "991283_syn_9", "label": "ANAT_LN_STATION", "text": "4R", "start": 86, "end": 88}
+{"span_id": "ANAT_LN_STATION_94", "note_id": "991283_syn_9", "label": "ANAT_LN_STATION", "text": "4L", "start": 94, "end": 96}
+{"span_id": "PROC_ACTION_102", "note_id": "991283_syn_9", "label": "PROC_ACTION", "text": "aspirated", "start": 102, "end": 111}
+{"span_id": "OBS_ROSE_136", "note_id": "991283_syn_9", "label": "OBS_ROSE", "text": "benign cells", "start": 136, "end": 148}
+{"span_id": "PROC_METHOD_189", "note_id": "991283_syn_9", "label": "PROC_METHOD", "text": "electromagnetic guidance system", "start": 189, "end": 220}
+{"span_id": "ANAT_LUNG_LOC_242", "note_id": "991283_syn_9", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 242, "end": 245}
+{"span_id": "ANAT_LUNG_LOC_246", "note_id": "991283_syn_9", "label": "ANAT_LUNG_LOC", "text": "apex", "start": 246, "end": 250}
+{"span_id": "OBS_LESION_285", "note_id": "991283_syn_9", "label": "OBS_LESION", "text": "lesion", "start": 285, "end": 291}
+{"span_id": "PROC_METHOD_297", "note_id": "991283_syn_9", "label": "PROC_METHOD", "text": "ultrasound", "start": 297, "end": 307}
+{"span_id": "PROC_ACTION_313", "note_id": "991283_syn_9", "label": "PROC_ACTION", "text": "tissue sampling", "start": 313, "end": 328}
+{"span_id": "ANAT_LUNG_LOC_336", "note_id": "991283_syn_9", "label": "ANAT_LUNG_LOC", "text": "parenchymal", "start": 336, "end": 347}
+{"span_id": "OBS_LESION_348", "note_id": "991283_syn_9", "label": "OBS_LESION", "text": "nodule", "start": 348, "end": 354}
+{"span_id": "PROC_METHOD_11", "note_id": "991283", "label": "PROC_METHOD", "text": "Electromagnetic Navigation Bronchoscopy", "start": 11, "end": 50}
+{"span_id": "PROC_METHOD_53", "note_id": "991283", "label": "PROC_METHOD", "text": "EBUS", "start": 53, "end": 57}
+{"span_id": "PROC_ACTION_124", "note_id": "991283", "label": "PROC_ACTION", "text": "Biopsy", "start": 124, "end": 130}
+{"span_id": "MEAS_SIZE_134", "note_id": "991283", "label": "MEAS_SIZE", "text": "1.8cm", "start": 134, "end": 139}
+{"span_id": "ANAT_LUNG_LOC_140", "note_id": "991283", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 140, "end": 143}
+{"span_id": "OBS_LESION_144", "note_id": "991283", "label": "OBS_LESION", "text": "nodule", "start": 144, "end": 150}
+{"span_id": "ANAT_PLEURA_155", "note_id": "991283", "label": "ANAT_PLEURA", "text": "mediastinal", "start": 155, "end": 166}
+{"span_id": "PROC_ACTION_167", "note_id": "991283", "label": "PROC_ACTION", "text": "staging", "start": 167, "end": 174}
+{"span_id": "PROC_METHOD_179", "note_id": "991283", "label": "PROC_METHOD", "text": "EBUS-TBNA", "start": 179, "end": 188}
+{"span_id": "DEV_INSTRUMENT_192", "note_id": "991283", "label": "DEV_INSTRUMENT", "text": "Linear EBUS scope", "start": 192, "end": 209}
+{"span_id": "ANAT_LN_STATION_223", "note_id": "991283", "label": "ANAT_LN_STATION", "text": "Station 7", "start": 223, "end": 232}
+{"span_id": "ANAT_LN_STATION_234", "note_id": "991283", "label": "ANAT_LN_STATION", "text": "Subcarinal", "start": 234, "end": 244}
+{"span_id": "MEAS_SIZE_247", "note_id": "991283", "label": "MEAS_SIZE", "text": "12mm", "start": 247, "end": 251}
+{"span_id": "PROC_ACTION_258", "note_id": "991283", "label": "PROC_ACTION", "text": "Sampled", "start": 258, "end": 265}
+{"span_id": "MEAS_COUNT_268", "note_id": "991283", "label": "MEAS_COUNT", "text": "3 passes", "start": 268, "end": 276}
+{"span_id": "OBS_ROSE_284", "note_id": "991283", "label": "OBS_ROSE", "text": "Benign lymphocytes", "start": 284, "end": 302}
+{"span_id": "ANAT_LN_STATION_306", "note_id": "991283", "label": "ANAT_LN_STATION", "text": "Station 4R", "start": 306, "end": 316}
+{"span_id": "ANAT_LN_STATION_318", "note_id": "991283", "label": "ANAT_LN_STATION", "text": "Right Paratracheal", "start": 318, "end": 336}
+{"span_id": "MEAS_SIZE_339", "note_id": "991283", "label": "MEAS_SIZE", "text": "10mm", "start": 339, "end": 343}
+{"span_id": "PROC_ACTION_350", "note_id": "991283", "label": "PROC_ACTION", "text": "Sampled", "start": 350, "end": 357}
+{"span_id": "MEAS_COUNT_360", "note_id": "991283", "label": "MEAS_COUNT", "text": "3 passes", "start": 360, "end": 368}
+{"span_id": "OBS_ROSE_376", "note_id": "991283", "label": "OBS_ROSE", "text": "Benign lymphocytes", "start": 376, "end": 394}
+{"span_id": "ANAT_LN_STATION_398", "note_id": "991283", "label": "ANAT_LN_STATION", "text": "Station 4L", "start": 398, "end": 408}
+{"span_id": "MEAS_SIZE_410", "note_id": "991283", "label": "MEAS_SIZE", "text": "8mm", "start": 410, "end": 413}
+{"span_id": "PROC_ACTION_420", "note_id": "991283", "label": "PROC_ACTION", "text": "Sampled", "start": 420, "end": 427}
+{"span_id": "MEAS_COUNT_430", "note_id": "991283", "label": "MEAS_COUNT", "text": "2 passes", "start": 430, "end": 438}
+{"span_id": "OBS_ROSE_446", "note_id": "991283", "label": "OBS_ROSE", "text": "Benign lymphocytes", "start": 446, "end": 464}
+{"span_id": "DEV_INSTRUMENT_503", "note_id": "991283", "label": "DEV_INSTRUMENT", "text": "therapeutic bronchoscope", "start": 503, "end": 527}
+{"span_id": "PROC_METHOD_529", "note_id": "991283", "label": "PROC_METHOD", "text": "Electromagnetic navigation", "start": 529, "end": 555}
+{"span_id": "PROC_METHOD_557", "note_id": "991283", "label": "PROC_METHOD", "text": "Veran", "start": 557, "end": 562}
+{"span_id": "ANAT_LUNG_LOC_577", "note_id": "991283", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 577, "end": 580}
+{"span_id": "ANAT_LUNG_LOC_581", "note_id": "991283", "label": "ANAT_LUNG_LOC", "text": "apical segment", "start": 581, "end": 595}
+{"span_id": "OBS_LESION_596", "note_id": "991283", "label": "OBS_LESION", "text": "nodule", "start": 596, "end": 602}
+{"span_id": "MEAS_SIZE_623", "note_id": "991283", "label": "MEAS_SIZE", "text": "5mm", "start": 623, "end": 626}
+{"span_id": "DEV_CATHETER_659", "note_id": "991283", "label": "DEV_CATHETER", "text": "catheter", "start": 659, "end": 667}
+{"span_id": "DEV_INSTRUMENT_729", "note_id": "991283", "label": "DEV_INSTRUMENT", "text": "Radial EBUS probe", "start": 729, "end": 746}
+{"span_id": "OBS_LESION_770", "note_id": "991283", "label": "OBS_LESION", "text": "lesion", "start": 770, "end": 776}
+{"span_id": "ANAT_LUNG_LOC_801", "note_id": "991283", "label": "ANAT_LUNG_LOC", "text": "lung parenchyma", "start": 801, "end": 816}
+{"span_id": "PROC_ACTION_835", "note_id": "991283", "label": "PROC_ACTION", "text": "Biopsy", "start": 835, "end": 841}
+{"span_id": "OBS_LESION_860", "note_id": "991283", "label": "OBS_LESION", "text": "nodule", "start": 860, "end": 866}
+{"span_id": "ANAT_LUNG_LOC_930", "note_id": "991283", "label": "ANAT_LUNG_LOC", "text": "RUL", "start": 930, "end": 933}
+{"span_id": "OBS_LESION_22", "note_id": "940211_syn_1", "label": "OBS_LESION", "text": "effusion", "start": 22, "end": 30}
+{"span_id": "OBS_LESION_32", "note_id": "940211_syn_1", "label": "OBS_LESION", "text": "nodules", "start": 32, "end": 39}
+{"span_id": "PROC_METHOD_47", "note_id": "940211_syn_1", "label": "PROC_METHOD", "text": "Med Thoracoscopy", "start": 47, "end": 63}
+{"span_id": "PROC_ACTION_66", "note_id": "940211_syn_1", "label": "PROC_ACTION", "text": "Biopsy", "start": 66, "end": 72}
+{"span_id": "OBS_LESION_92", "note_id": "940211_syn_1", "label": "OBS_LESION", "text": "nodules", "start": 92, "end": 99}
+{"span_id": "ANAT_PLEURA_100", "note_id": "940211_syn_1", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 100, "end": 115}
+{"span_id": "MEAS_VOL_133", "note_id": "940211_syn_1", "label": "MEAS_VOL", "text": "900cc", "start": 133, "end": 138}
+{"span_id": "MEAS_COUNT_140", "note_id": "940211_syn_1", "label": "MEAS_COUNT", "text": "10", "start": 140, "end": 142}
+{"span_id": "PROC_ACTION_143", "note_id": "940211_syn_1", "label": "PROC_ACTION", "text": "biopsies", "start": 143, "end": 151}
+{"span_id": "OUTCOME_COMPLICATION_167", "note_id": "940211_syn_1", "label": "OUTCOME_COMPLICATION", "text": "No complications", "start": 167, "end": 183}
+{"span_id": "DEV_CATHETER_185", "note_id": "940211_syn_1", "label": "DEV_CATHETER", "text": "Pigtail", "start": 185, "end": 192}
+{"span_id": "PROC_METHOD_18", "note_id": "940211_syn_2", "label": "PROC_METHOD", "text": "Medical Thoracoscopy", "start": 18, "end": 38}
+{"span_id": "OBS_LESION_64", "note_id": "940211_syn_2", "label": "OBS_LESION", "text": "pleural effusion", "start": 64, "end": 80}
+{"span_id": "LATERALITY_117", "note_id": "940211_syn_2", "label": "LATERALITY", "text": "right", "start": 117, "end": 122}
+{"span_id": "ANAT_PLEURA_123", "note_id": "940211_syn_2", "label": "ANAT_PLEURA", "text": "pleural space", "start": 123, "end": 136}
+{"span_id": "OBS_LESION_154", "note_id": "940211_syn_2", "label": "OBS_LESION", "text": "nodularity", "start": 154, "end": 164}
+{"span_id": "ANAT_PLEURA_172", "note_id": "940211_syn_2", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 172, "end": 187}
+{"span_id": "MEAS_VOL_243", "note_id": "940211_syn_2", "label": "MEAS_VOL", "text": "900 mL", "start": 243, "end": 249}
+{"span_id": "DEV_INSTRUMENT_283", "note_id": "940211_syn_2", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 283, "end": 290}
+{"span_id": "PROC_ACTION_291", "note_id": "940211_syn_2", "label": "PROC_ACTION", "text": "biopsies", "start": 291, "end": 299}
+{"span_id": "ANAT_PLEURA_323", "note_id": "940211_syn_2", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 323, "end": 338}
+{"span_id": "DEV_CATHETER_399", "note_id": "940211_syn_2", "label": "DEV_CATHETER", "text": "catheter", "start": 399, "end": 407}
+{"span_id": "PROC_METHOD_13", "note_id": "940211_syn_3", "label": "PROC_METHOD", "text": "Thoracoscopy", "start": 13, "end": 25}
+{"span_id": "ANAT_PLEURA_31", "note_id": "940211_syn_3", "label": "ANAT_PLEURA", "text": "pleural", "start": 31, "end": 38}
+{"span_id": "PROC_ACTION_39", "note_id": "940211_syn_3", "label": "PROC_ACTION", "text": "biopsy", "start": 39, "end": 45}
+{"span_id": "PROC_ACTION_81", "note_id": "940211_syn_3", "label": "PROC_ACTION", "text": "Biopsy", "start": 81, "end": 87}
+{"span_id": "ANAT_PLEURA_91", "note_id": "940211_syn_3", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 91, "end": 106}
+{"span_id": "DEV_CATHETER_158", "note_id": "940211_syn_3", "label": "DEV_CATHETER", "text": "Catheter", "start": 158, "end": 166}
+{"span_id": "DEV_CATHETER_201", "note_id": "940211_syn_3", "label": "DEV_CATHETER", "text": "chest tube", "start": 201, "end": 211}
+{"span_id": "PROC_METHOD_11", "note_id": "940211_syn_4", "label": "PROC_METHOD", "text": "Pleuroscopy", "start": 11, "end": 22}
+{"span_id": "LATERALITY_33", "note_id": "940211_syn_4", "label": "LATERALITY", "text": "R", "start": 33, "end": 34}
+{"span_id": "ANAT_PLEURA_56", "note_id": "940211_syn_4", "label": "ANAT_PLEURA", "text": "6th ICS", "start": 56, "end": 63}
+{"span_id": "MEAS_VOL_76", "note_id": "940211_syn_4", "label": "MEAS_VOL", "text": "900cc", "start": 76, "end": 81}
+{"span_id": "OBS_LESION_96", "note_id": "940211_syn_4", "label": "OBS_LESION", "text": "nodules", "start": 96, "end": 103}
+{"span_id": "PROC_ACTION_119", "note_id": "940211_syn_4", "label": "PROC_ACTION", "text": "Biopsied", "start": 119, "end": 127}
+{"span_id": "MEAS_COUNT_129", "note_id": "940211_syn_4", "label": "MEAS_COUNT", "text": "10", "start": 129, "end": 131}
+{"span_id": "DEV_CATHETER_161", "note_id": "940211_syn_4", "label": "DEV_CATHETER", "text": "tube", "start": 161, "end": 165}
+{"span_id": "LATERALITY_28", "note_id": "940211_syn_5", "label": "LATERALITY", "text": "right", "start": 28, "end": 33}
+{"span_id": "PROC_METHOD_66", "note_id": "940211_syn_5", "label": "PROC_METHOD", "text": "thoracoscopy", "start": 66, "end": 78}
+{"span_id": "OBS_LESION_93", "note_id": "940211_syn_5", "label": "OBS_LESION", "text": "nodules", "start": 93, "end": 100}
+{"span_id": "ANAT_PLEURA_114", "note_id": "940211_syn_5", "label": "ANAT_PLEURA", "text": "wall", "start": 114, "end": 118}
+{"span_id": "PROC_ACTION_136", "note_id": "940211_syn_5", "label": "PROC_ACTION", "text": "biopsies", "start": 136, "end": 144}
+{"span_id": "MEAS_COUNT_150", "note_id": "940211_syn_5", "label": "MEAS_COUNT", "text": "10", "start": 150, "end": 152}
+{"span_id": "DEV_CATHETER_200", "note_id": "940211_syn_5", "label": "DEV_CATHETER", "text": "chest tube", "start": 200, "end": 210}
+{"span_id": "PROC_METHOD_0", "note_id": "940211_syn_6", "label": "PROC_METHOD", "text": "Medical thoracoscopy", "start": 0, "end": 20}
+{"span_id": "OBS_LESION_35", "note_id": "940211_syn_6", "label": "OBS_LESION", "text": "pleural effusion", "start": 35, "end": 51}
+{"span_id": "LATERALITY_53", "note_id": "940211_syn_6", "label": "LATERALITY", "text": "Right", "start": 53, "end": 58}
+{"span_id": "ANAT_PLEURA_59", "note_id": "940211_syn_6", "label": "ANAT_PLEURA", "text": "pleural space", "start": 59, "end": 72}
+{"span_id": "MEAS_VOL_83", "note_id": "940211_syn_6", "label": "MEAS_VOL", "text": "900cc", "start": 83, "end": 88}
+{"span_id": "ANAT_PLEURA_104", "note_id": "940211_syn_6", "label": "ANAT_PLEURA", "text": "Parietal pleura", "start": 104, "end": 119}
+{"span_id": "PROC_ACTION_154", "note_id": "940211_syn_6", "label": "PROC_ACTION", "text": "biopsies", "start": 154, "end": 162}
+{"span_id": "PROC_ACTION_173", "note_id": "940211_syn_6", "label": "PROC_ACTION", "text": "pleurodesis", "start": 173, "end": 184}
+{"span_id": "DEV_CATHETER_196", "note_id": "940211_syn_6", "label": "DEV_CATHETER", "text": "Catheter", "start": 196, "end": 204}
+{"span_id": "OBS_LESION_13", "note_id": "940211_syn_7", "label": "OBS_LESION", "text": "Pleural effusion", "start": 13, "end": 29}
+{"span_id": "PROC_METHOD_93", "note_id": "940211_syn_7", "label": "PROC_METHOD", "text": "Thoracoscopy", "start": 93, "end": 105}
+{"span_id": "LATERALITY_106", "note_id": "940211_syn_7", "label": "LATERALITY", "text": "R", "start": 106, "end": 107}
+{"span_id": "ANAT_PLEURA_115", "note_id": "940211_syn_7", "label": "ANAT_PLEURA", "text": "Parietal pleura", "start": 115, "end": 130}
+{"span_id": "PROC_ACTION_131", "note_id": "940211_syn_7", "label": "PROC_ACTION", "text": "biopsies", "start": 131, "end": 139}
+{"span_id": "MEAS_COUNT_141", "note_id": "940211_syn_7", "label": "MEAS_COUNT", "text": "10", "start": 141, "end": 143}
+{"span_id": "DEV_CATHETER_151", "note_id": "940211_syn_7", "label": "DEV_CATHETER", "text": "drain", "start": 151, "end": 156}
+{"span_id": "PROC_METHOD_23", "note_id": "940211_syn_8", "label": "PROC_METHOD", "text": "thoracoscopy", "start": 23, "end": 35}
+{"span_id": "OBS_LESION_163", "note_id": "940211_syn_8", "label": "OBS_LESION", "text": "lumps", "start": 163, "end": 168}
+{"span_id": "ANAT_PLEURA_190", "note_id": "940211_syn_8", "label": "ANAT_PLEURA", "text": "chest wall", "start": 190, "end": 200}
+{"span_id": "OBS_LESION_227", "note_id": "940211_syn_8", "label": "OBS_LESION", "text": "lumps", "start": 227, "end": 232}
+{"span_id": "DEV_CATHETER_279", "note_id": "940211_syn_8", "label": "DEV_CATHETER", "text": "tube", "start": 279, "end": 283}
+{"span_id": "PROC_METHOD_22", "note_id": "940211_syn_9", "label": "PROC_METHOD", "text": "pleuroscopy", "start": 22, "end": 33}
+{"span_id": "OBS_LESION_74", "note_id": "940211_syn_9", "label": "OBS_LESION", "text": "pleural nodularity", "start": 74, "end": 92}
+{"span_id": "OBS_LESION_116", "note_id": "940211_syn_9", "label": "OBS_LESION", "text": "effusion", "start": 116, "end": 124}
+{"span_id": "PROC_ACTION_129", "note_id": "940211_syn_9", "label": "PROC_ACTION", "text": "biopsy", "start": 129, "end": 135}
+{"span_id": "ANAT_PLEURA_139", "note_id": "940211_syn_9", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 139, "end": 154}
+{"span_id": "PROC_METHOD_0", "note_id": "940211", "label": "PROC_METHOD", "text": "MEDICAL THORACOSCOPY", "start": 0, "end": 20}
+{"span_id": "ANAT_PLEURA_26", "note_id": "940211", "label": "ANAT_PLEURA", "text": "PLEURAL", "start": 26, "end": 33}
+{"span_id": "PROC_ACTION_34", "note_id": "940211", "label": "PROC_ACTION", "text": "BIOPSY", "start": 34, "end": 40}
+{"span_id": "LATERALITY_196", "note_id": "940211", "label": "LATERALITY", "text": "right", "start": 196, "end": 201}
+{"span_id": "OBS_LESION_202", "note_id": "940211", "label": "OBS_LESION", "text": "pleural effusion", "start": 202, "end": 218}
+{"span_id": "OBS_LESION_224", "note_id": "940211", "label": "OBS_LESION", "text": "pleural nodularity", "start": 224, "end": 242}
+{"span_id": "PROC_METHOD_311", "note_id": "940211", "label": "PROC_METHOD", "text": "Medical thoracoscopy", "start": 311, "end": 331}
+{"span_id": "ANAT_PLEURA_337", "note_id": "940211", "label": "ANAT_PLEURA", "text": "pleural", "start": 337, "end": 344}
+{"span_id": "PROC_ACTION_345", "note_id": "940211", "label": "PROC_ACTION", "text": "biopsy", "start": 345, "end": 351}
+{"span_id": "ANAT_PLEURA_444", "note_id": "940211", "label": "ANAT_PLEURA", "text": "chest wall", "start": 444, "end": 454}
+{"span_id": "LATERALITY_586", "note_id": "940211", "label": "LATERALITY", "text": "right", "start": 586, "end": 591}
+{"span_id": "OBS_LESION_592", "note_id": "940211", "label": "OBS_LESION", "text": "pleural effusion", "start": 592, "end": 608}
+{"span_id": "LATERALITY_642", "note_id": "940211", "label": "LATERALITY", "text": "right", "start": 642, "end": 647}
+{"span_id": "ANAT_PLEURA_673", "note_id": "940211", "label": "ANAT_PLEURA", "text": "6th intercostal space", "start": 673, "end": 694}
+{"span_id": "DEV_INSTRUMENT_698", "note_id": "940211", "label": "DEV_INSTRUMENT", "text": "trocar", "start": 698, "end": 704}
+{"span_id": "DEV_INSTRUMENT_709", "note_id": "940211", "label": "DEV_INSTRUMENT", "text": "thoracoscope", "start": 709, "end": 721}
+{"span_id": "ANAT_PLEURA_747", "note_id": "940211", "label": "ANAT_PLEURA", "text": "pleural space", "start": 747, "end": 760}
+{"span_id": "MEAS_VOL_777", "note_id": "940211", "label": "MEAS_VOL", "text": "900 mL", "start": 777, "end": 783}
+{"span_id": "ANAT_PLEURA_826", "note_id": "940211", "label": "ANAT_PLEURA", "text": "parietal pleura", "start": 826, "end": 841}
+{"span_id": "OBS_LESION_883", "note_id": "940211", "label": "OBS_LESION", "text": "nodules", "start": 883, "end": 890}
+{"span_id": "ANAT_PLEURA_900", "note_id": "940211", "label": "ANAT_PLEURA", "text": "diaphragmatic", "start": 900, "end": 913}
+{"span_id": "ANAT_PLEURA_918", "note_id": "940211", "label": "ANAT_PLEURA", "text": "posterolateral pleura", "start": 918, "end": 939}
+{"span_id": "MEAS_COUNT_941", "note_id": "940211", "label": "MEAS_COUNT", "text": "Ten", "start": 941, "end": 944}
+{"span_id": "DEV_INSTRUMENT_951", "note_id": "940211", "label": "DEV_INSTRUMENT", "text": "forceps", "start": 951, "end": 958}
+{"span_id": "PROC_ACTION_959", "note_id": "940211", "label": "PROC_ACTION", "text": "biopsies", "start": 959, "end": 967}
+{"span_id": "PROC_ACTION_1039", "note_id": "940211", "label": "PROC_ACTION", "text": "talc pleurodesis", "start": 1039, "end": 1055}
+{"span_id": "DEV_CATHETER_1077", "note_id": "940211", "label": "DEV_CATHETER", "text": "chest tube", "start": 1077, "end": 1087}
+{"span_id": "DEV_CATHETER_SIZE_1116", "note_id": "940211", "label": "DEV_CATHETER_SIZE", "text": "16 Fr pigtail catheter", "start": 1116, "end": 1138}
+{"span_id": "OUTCOME_COMPLICATION_1249", "note_id": "940211", "label": "OUTCOME_COMPLICATION", "text": "None", "start": 1249, "end": 1253}
+{"span_id": "OBS_LESION_399", "note_id": "1541787", "label": "OBS_LESION", "text": "lung cancer", "start": 399, "end": 410}
+{"span_id": "OBS_LESION_442", "note_id": "1541787", "label": "OBS_LESION", "text": "mediastinal lymphadenopathy", "start": 442, "end": 469}
+{"span_id": "MEAS_SIZE_512", "note_id": "1541787", "label": "MEAS_SIZE", "text": "31.5 millimeter", "start": 512, "end": 527}
+{"span_id": "OBS_LESION_539", "note_id": "1541787", "label": "OBS_LESION", "text": "pulmonary nodule", "start": 539, "end": 555}
+{"span_id": "ANAT_LUNG_LOC_571", "note_id": "1541787", "label": "ANAT_LUNG_LOC", "text": "RML lobe", "start": 571, "end": 579}
+{"span_id": "ANAT_LUNG_LOC_605", "note_id": "1541787", "label": "ANAT_LUNG_LOC", "text": "medial (B5) segment", "start": 605, "end": 624}
+{"span_id": "OBS_FINDING_658", "note_id": "1541787", "label": "OBS_FINDING", "text": "bronchus sign", "start": 658, "end": 671}
+{"span_id": "CTX_HISTORICAL_1077", "note_id": "1541787", "label": "CTX_HISTORICAL", "text": "former smoker", "start": 1077, "end": 1090}
+{"span_id": "MEAS_SIZE_1285", "note_id": "1541787", "label": "MEAS_SIZE", "text": "8.0 millimeter", "start": 1285, "end": 1299}
+{"span_id": "DEV_INSTRUMENT_1300", "note_id": "1541787", "label": "DEV_INSTRUMENT", "text": "endotracheal tube", "start": 1300, "end": 1317}
+{"span_id": "PROC_METHOD_1451", "note_id": "1541787", "label": "PROC_METHOD", "text": "linear endobronchial ultrasound", "start": 1451, "end": 1482}
+{"span_id": "DEV_INSTRUMENT_1488", "note_id": "1541787", "label": "DEV_INSTRUMENT", "text": "Pentax EB-1990i bronchoscope", "start": 1488, "end": 1516}
+{"span_id": "ANAT_LN_STATION_1732", "note_id": "1541787", "label": "ANAT_LN_STATION", "text": "station 4R", "start": 1732, "end": 1742}
+{"span_id": "MEAS_SIZE_1796", "note_id": "1541787", "label": "MEAS_SIZE", "text": "23.5 millimeters", "start": 1796, "end": 1812}
+{"span_id": "MEAS_SIZE_1831", "note_id": "1541787", "label": "MEAS_SIZE", "text": "32.6 millimeters", "start": 1831, "end": 1847}
+{"span_id": "DEV_NEEDLE_1910", "note_id": "1541787", "label": "DEV_NEEDLE", "text": "22-gauge needle", "start": 1910, "end": 1925}
+{"span_id": "MEAS_COUNT_1910", "note_id": "1541787", "label": "MEAS_COUNT", "text": "2", "start": 1910, "end": 1911}
+{"span_id": "MEAS_COUNT_1911", "note_id": "1541787", "label": "MEAS_COUNT", "text": "2", "start": 1911, "end": 1912}
+{"span_id": "MEAS_COUNT_1927", "note_id": "1541787", "label": "MEAS_COUNT", "text": "2 aspiration passes", "start": 1927, "end": 1946}
+{"span_id": "PROC_ACTION_1929", "note_id": "1541787", "label": "PROC_ACTION", "text": "aspiration", "start": 1929, "end": 1939}
+{"span_id": "OBS_ROSE_2027", "note_id": "1541787", "label": "OBS_ROSE", "text": "malignant - squamous cell carcinoma", "start": 2027, "end": 2062}
+{"span_id": "ANAT_LN_STATION_2067", "note_id": "1541787", "label": "ANAT_LN_STATION", "text": "station 4L", "start": 2067, "end": 2077}
+{"span_id": "MEAS_COUNT_2075", "note_id": "1541787", "label": "MEAS_COUNT", "text": "4", "start": 2075, "end": 2076}
+{"span_id": "MEAS_SIZE_2131", "note_id": "1541787", "label": "MEAS_SIZE", "text": "14.3 millimeters", "start": 2131, "end": 2147}
+{"span_id": "MEAS_SIZE_2166", "note_id": "1541787", "label": "MEAS_SIZE", "text": "14.4 millimeters", "start": 2166, "end": 2182}
+{"span_id": "DEV_NEEDLE_2241", "note_id": "1541787", "label": "DEV_NEEDLE", "text": "22-gauge needle", "start": 2241, "end": 2256}
+{"span_id": "MEAS_COUNT_2258", "note_id": "1541787", "label": "MEAS_COUNT", "text": "4 aspiration passes", "start": 2258, "end": 2277}
+{"span_id": "PROC_ACTION_2260", "note_id": "1541787", "label": "PROC_ACTION", "text": "aspiration", "start": 2260, "end": 2270}
+{"span_id": "OBS_ROSE_2358", "note_id": "1541787", "label": "OBS_ROSE", "text": "suspicious for malignancy", "start": 2358, "end": 2383}
+{"span_id": "ANAT_LN_STATION_2388", "note_id": "1541787", "label": "ANAT_LN_STATION", "text": "station 10R", "start": 2388, "end": 2399}
+{"span_id": "MEAS_SIZE_2453", "note_id": "1541787", "label": "MEAS_SIZE", "text": "11.1 millimeters", "start": 2453, "end": 2469}
+{"span_id": "MEAS_SIZE_2488", "note_id": "1541787", "label": "MEAS_SIZE", "text": "12.3 millimeters", "start": 2488, "end": 2504}
+{"span_id": "DEV_NEEDLE_2562", "note_id": "1541787", "label": "DEV_NEEDLE", "text": "22-gauge needle", "start": 2562, "end": 2577}
+{"span_id": "MEAS_COUNT_2579", "note_id": "1541787", "label": "MEAS_COUNT", "text": "2 aspiration passes", "start": 2579, "end": 2598}
+{"span_id": "OBS_ROSE_2679", "note_id": "1541787", "label": "OBS_ROSE", "text": "suspicious for malignancy", "start": 2679, "end": 2704}
+{"span_id": "ANAT_LN_STATION_2709", "note_id": "1541787", "label": "ANAT_LN_STATION", "text": "station 2L", "start": 2709, "end": 2719}
+{"span_id": "MEAS_COUNT_2775", "note_id": "1541787", "label": "MEAS_COUNT", "text": "2", "start": 2775, "end": 2776}
+{"span_id": "MEAS_SIZE_2775", "note_id": "1541787", "label": "MEAS_SIZE", "text": "20.1 millimeters", "start": 2775, "end": 2791}
+{"span_id": "MEAS_SIZE_2810", "note_id": "1541787", "label": "MEAS_SIZE", "text": "33.5 millimeters", "start": 2810, "end": 2826}
+{"span_id": "DEV_NEEDLE_2884", "note_id": "1541787", "label": "DEV_NEEDLE", "text": "22-gauge needle", "start": 2884, "end": 2899}
+{"span_id": "MEAS_COUNT_2901", "note_id": "1541787", "label": "MEAS_COUNT", "text": "2 aspiration passes", "start": 2901, "end": 2920}
+{"span_id": "OBS_ROSE_3001", "note_id": "1541787", "label": "OBS_ROSE", "text": "malignant - adenocarcinoma", "start": 3001, "end": 3027}
+{"span_id": "PROC_METHOD_3119", "note_id": "1541787", "label": "PROC_METHOD", "text": "robotic bronchoscopy", "start": 3119, "end": 3139}
+{"span_id": "PROC_METHOD_3176", "note_id": "1541787", "label": "PROC_METHOD", "text": "Monarch robotic bronchoscopy system", "start": 3176, "end": 3211}
+{"span_id": "DEV_INSTRUMENT_3441", "note_id": "1541787", "label": "DEV_INSTRUMENT", "text": "robotic catheter", "start": 3441, "end": 3457}
+{"span_id": "ANAT_LUNG_LOC_3530", "note_id": "1541787", "label": "ANAT_LUNG_LOC", "text": "RML medial (B5)", "start": 3530, "end": 3545}
+{"span_id": "DEV_INSTRUMENT_3651", "note_id": "1541787", "label": "DEV_INSTRUMENT", "text": "radial endobronchial ultrasound probe", "start": 3651, "end": 3688}
+{"span_id": "PROC_METHOD_3918", "note_id": "1541787", "label": "PROC_METHOD", "text": "fluoroscopy", "start": 3918, "end": 3929}
+{"span_id": "PROC_ACTION_4023", "note_id": "1541787", "label": "PROC_ACTION", "text": "Transbronchial forceps biopsies", "start": 4023, "end": 4054}
+{"span_id": "MEAS_COUNT_4079", "note_id": "1541787", "label": "MEAS_COUNT", "text": "5 specimens", "start": 4079, "end": 4090}
+{"span_id": "PROC_ACTION_4092", "note_id": "1541787", "label": "PROC_ACTION", "text": "Transbronchial needle aspiration", "start": 4092, "end": 4124}
+{"span_id": "MEAS_COUNT_4144", "note_id": "1541787", "label": "MEAS_COUNT", "text": "4 passes", "start": 4144, "end": 4152}
+{"span_id": "PROC_ACTION_4177", "note_id": "1541787", "label": "PROC_ACTION", "text": "bronchial brushing", "start": 4177, "end": 4195}
+{"span_id": "OBS_ROSE_4303", "note_id": "1541787", "label": "OBS_ROSE", "text": "malignant - squamous cell carcinoma", "start": 4303, "end": 4338}
+{"span_id": "PROC_ACTION_4349", "note_id": "1541787", "label": "PROC_ACTION", "text": "bronchoalveolar lavage", "start": 4349, "end": 4371}
+{"span_id": "ANAT_LUNG_LOC_4395", "note_id": "1541787", "label": "ANAT_LUNG_LOC", "text": "RML lobe", "start": 4395, "end": 4403}
+{"span_id": "CTX_TIME_4572", "note_id": "1541787", "label": "CTX_TIME", "text": "105 minutes", "start": 4572, "end": 4583}
+{"span_id": "OUTCOME_COMPLICATION_4585", "note_id": "1541787", "label": "OUTCOME_COMPLICATION", "text": "No complications", "start": 4585, "end": 4601}
+{"span_id": "MEAS_VOL_4758", "note_id": "1541787", "label": "MEAS_VOL", "text": "ten milliliters", "start": 4758, "end": 4773}
+{"span_id": "CTX_HISTORICAL_12", "note_id": "1904504_syn_1", "label": "CTX_HISTORICAL", "text": "Breast ca hx", "start": 12, "end": 24}
+{"span_id": "ANAT_LN_STATION_26", "note_id": "1904504_syn_1", "label": "ANAT_LN_STATION", "text": "4L node", "start": 26, "end": 33}
+{"span_id": "MEAS_SIZE_51", "note_id": "1904504_syn_1", "label": "MEAS_SIZE", "text": "7.5", "start": 51, "end": 54}
+{"span_id": "PROC_ACTION_71", "note_id": "1904504_syn_1", "label": "PROC_ACTION", "text": "Bronch", "start": 71, "end": 77}
+{"span_id": "PROC_ACTION_81", "note_id": "1904504_syn_1", "label": "PROC_ACTION", "text": "TBNA", "start": 81, "end": 85}
+{"span_id": "DEV_INSTRUMENT_89", "note_id": "1904504_syn_1", "label": "DEV_INSTRUMENT", "text": "Scope", "start": 89, "end": 94}
+{"span_id": "ANAT_LN_STATION_106", "note_id": "1904504_syn_1", "label": "ANAT_LN_STATION", "text": "4L node", "start": 106, "end": 113}
+{"span_id": "DEV_NEEDLE_125", "note_id": "1904504_syn_1", "label": "DEV_NEEDLE", "text": "22G", "start": 125, "end": 128}
+{"span_id": "DEV_NEEDLE_129", "note_id": "1904504_syn_1", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 129, "end": 140}
+{"span_id": "MEAS_COUNT_144", "note_id": "1904504_syn_1", "label": "MEAS_COUNT", "text": "3 passes", "start": 144, "end": 152}
+{"span_id": "OBS_ROSE_162", "note_id": "1904504_syn_1", "label": "OBS_ROSE", "text": "Malignant", "start": 162, "end": 171}
+{"span_id": "OUTCOME_COMPLICATION_215", "note_id": "1904504_syn_1", "label": "OUTCOME_COMPLICATION", "text": "None", "start": 215, "end": 219}
+{"span_id": "CTX_HISTORICAL_36", "note_id": "1904504_syn_2", "label": "CTX_HISTORICAL", "text": "history of breast cancer", "start": 36, "end": 60}
+{"span_id": "ANAT_LN_STATION_81", "note_id": "1904504_syn_2", "label": "ANAT_LN_STATION", "text": "4L", "start": 81, "end": 83}
+{"span_id": "OBS_LESION_84", "note_id": "1904504_syn_2", "label": "OBS_LESION", "text": "lymphadenopathy", "start": 84, "end": 99}
+{"span_id": "DEV_INSTRUMENT_140", "note_id": "1904504_syn_2", "label": "DEV_INSTRUMENT", "text": "flexible bronchoscope", "start": 140, "end": 161}
+{"span_id": "ANAT_AIRWAY_204", "note_id": "1904504_syn_2", "label": "ANAT_AIRWAY", "text": "airway", "start": 204, "end": 210}
+{"span_id": "PROC_METHOD_226", "note_id": "1904504_syn_2", "label": "PROC_METHOD", "text": "Conventional", "start": 226, "end": 238}
+{"span_id": "PROC_ACTION_239", "note_id": "1904504_syn_2", "label": "PROC_ACTION", "text": "TBNA", "start": 239, "end": 243}
+{"span_id": "ANAT_LN_STATION_251", "note_id": "1904504_syn_2", "label": "ANAT_LN_STATION", "text": "left lower paratracheal (Station 4L) node", "start": 251, "end": 292}
+{"span_id": "ANAT_LN_STATION_276", "note_id": "1904504_syn_2", "label": "ANAT_LN_STATION", "text": "Station 4L", "start": 276, "end": 286}
+{"span_id": "DEV_NEEDLE_315", "note_id": "1904504_syn_2", "label": "DEV_NEEDLE", "text": "22-gauge", "start": 315, "end": 323}
+{"span_id": "DEV_NEEDLE_324", "note_id": "1904504_syn_2", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 324, "end": 335}
+{"span_id": "MEAS_COUNT_337", "note_id": "1904504_syn_2", "label": "MEAS_COUNT", "text": "Three passes", "start": 337, "end": 349}
+{"span_id": "OBS_ROSE_380", "note_id": "1904504_syn_2", "label": "OBS_ROSE", "text": "atypical cells suspicious for metastatic carcinoma", "start": 380, "end": 430}
+{"span_id": "PROC_ACTION_488", "note_id": "1904504_syn_2", "label": "PROC_ACTION", "text": "TBNA", "start": 488, "end": 492}
+{"span_id": "OBS_ROSE_517", "note_id": "1904504_syn_2", "label": "OBS_ROSE", "text": "malignancy", "start": 517, "end": 527}
+{"span_id": "PROC_ACTION_9", "note_id": "1904504_syn_3", "label": "PROC_ACTION", "text": "Bronchoscopy", "start": 9, "end": 21}
+{"span_id": "PROC_ACTION_27", "note_id": "1904504_syn_3", "label": "PROC_ACTION", "text": "TBNA", "start": 27, "end": 31}
+{"span_id": "ANAT_LN_STATION_49", "note_id": "1904504_syn_3", "label": "ANAT_LN_STATION", "text": "Station 4L (Left Lower Paratracheal)", "start": 49, "end": 85}
+{"span_id": "DEV_NEEDLE_95", "note_id": "1904504_syn_3", "label": "DEV_NEEDLE", "text": "22-gauge", "start": 95, "end": 103}
+{"span_id": "DEV_NEEDLE_104", "note_id": "1904504_syn_3", "label": "DEV_NEEDLE", "text": "Wang Needle", "start": 104, "end": 115}
+{"span_id": "PROC_METHOD_125", "note_id": "1904504_syn_3", "label": "PROC_METHOD", "text": "Conventional", "start": 125, "end": 137}
+{"span_id": "PROC_ACTION_138", "note_id": "1904504_syn_3", "label": "PROC_ACTION", "text": "aspiration", "start": 138, "end": 148}
+{"span_id": "PROC_METHOD_153", "note_id": "1904504_syn_3", "label": "PROC_METHOD", "text": "anatomic landmarks", "start": 153, "end": 171}
+{"span_id": "MEAS_COUNT_193", "note_id": "1904504_syn_3", "label": "MEAS_COUNT", "text": "3 passes", "start": 193, "end": 201}
+{"span_id": "OBS_ROSE_238", "note_id": "1904504_syn_3", "label": "OBS_ROSE", "text": "malignancy", "start": 238, "end": 248}
+{"span_id": "PROC_ACTION_45", "note_id": "1904504_syn_4", "label": "PROC_ACTION", "text": "TBNA", "start": 45, "end": 49}
+{"span_id": "ANAT_LN_STATION_50", "note_id": "1904504_syn_4", "label": "ANAT_LN_STATION", "text": "Station 4L", "start": 50, "end": 60}
+{"span_id": "DEV_INSTRUMENT_97", "note_id": "1904504_syn_4", "label": "DEV_INSTRUMENT", "text": "Scope", "start": 97, "end": 102}
+{"span_id": "ANAT_LN_STATION_114", "note_id": "1904504_syn_4", "label": "ANAT_LN_STATION", "text": "4L node", "start": 114, "end": 121}
+{"span_id": "PROC_METHOD_139", "note_id": "1904504_syn_4", "label": "PROC_METHOD", "text": "landmarks", "start": 139, "end": 148}
+{"span_id": "DEV_NEEDLE_153", "note_id": "1904504_syn_4", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 153, "end": 164}
+{"span_id": "MEAS_COUNT_174", "note_id": "1904504_syn_4", "label": "MEAS_COUNT", "text": "3 passes", "start": 174, "end": 182}
+{"span_id": "OBS_ROSE_193", "note_id": "1904504_syn_4", "label": "OBS_ROSE", "text": "Malignant cells", "start": 193, "end": 208}
+{"span_id": "DEV_INSTRUMENT_213", "note_id": "1904504_syn_4", "label": "DEV_INSTRUMENT", "text": "Scope", "start": 213, "end": 218}
+{"span_id": "CTX_HISTORICAL_32", "note_id": "1904504_syn_5", "label": "CTX_HISTORICAL", "text": "hx breast cancer", "start": 32, "end": 48}
+{"span_id": "ANAT_LN_STATION_57", "note_id": "1904504_syn_5", "label": "ANAT_LN_STATION", "text": "4l node", "start": 57, "end": 64}
+{"span_id": "DEV_INSTRUMENT_106", "note_id": "1904504_syn_5", "label": "DEV_INSTRUMENT", "text": "scope", "start": 106, "end": 111}
+{"span_id": "ANAT_AIRWAY_123", "note_id": "1904504_syn_5", "label": "ANAT_AIRWAY", "text": "airway", "start": 123, "end": 129}
+{"span_id": "DEV_NEEDLE_142", "note_id": "1904504_syn_5", "label": "DEV_NEEDLE", "text": "22g", "start": 142, "end": 145}
+{"span_id": "DEV_NEEDLE_146", "note_id": "1904504_syn_5", "label": "DEV_NEEDLE", "text": "wang needle", "start": 146, "end": 157}
+{"span_id": "ANAT_LN_STATION_161", "note_id": "1904504_syn_5", "label": "ANAT_LN_STATION", "text": "4l", "start": 161, "end": 163}
+{"span_id": "MEAS_COUNT_168", "note_id": "1904504_syn_5", "label": "MEAS_COUNT", "text": "3 passes", "start": 168, "end": 176}
+{"span_id": "OBS_ROSE_187", "note_id": "1904504_syn_5", "label": "OBS_ROSE", "text": "cancer cells", "start": 187, "end": 199}
+{"span_id": "OUTCOME_COMPLICATION_226", "note_id": "1904504_syn_5", "label": "OUTCOME_COMPLICATION", "text": "no bleeding", "start": 226, "end": 237}
+{"span_id": "PROC_ACTION_24", "note_id": "1904504_syn_6", "label": "PROC_ACTION", "text": "flexible bronchoscopy", "start": 24, "end": 45}
+{"span_id": "PROC_METHOD_51", "note_id": "1904504_syn_6", "label": "PROC_METHOD", "text": "conventional", "start": 51, "end": 63}
+{"span_id": "PROC_ACTION_64", "note_id": "1904504_syn_6", "label": "PROC_ACTION", "text": "TBNA", "start": 64, "end": 68}
+{"span_id": "ANAT_LN_STATION_92", "note_id": "1904504_syn_6", "label": "ANAT_LN_STATION", "text": "4L node", "start": 92, "end": 99}
+{"span_id": "DEV_INSTRUMENT_134", "note_id": "1904504_syn_6", "label": "DEV_INSTRUMENT", "text": "bronchoscope", "start": 134, "end": 146}
+{"span_id": "DEV_NEEDLE_181", "note_id": "1904504_syn_6", "label": "DEV_NEEDLE", "text": "22-gauge", "start": 181, "end": 189}
+{"span_id": "DEV_NEEDLE_190", "note_id": "1904504_syn_6", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 190, "end": 201}
+{"span_id": "ANAT_LN_STATION_225", "note_id": "1904504_syn_6", "label": "ANAT_LN_STATION", "text": "left lower paratracheal node (Station 4L)", "start": 225, "end": 266}
+{"span_id": "PROC_METHOD_273", "note_id": "1904504_syn_6", "label": "PROC_METHOD", "text": "anatomic landmarks", "start": 273, "end": 291}
+{"span_id": "MEAS_COUNT_293", "note_id": "1904504_syn_6", "label": "MEAS_COUNT", "text": "Three passes", "start": 293, "end": 305}
+{"span_id": "OBS_ROSE_346", "note_id": "1904504_syn_6", "label": "OBS_ROSE", "text": "malignant cells", "start": 346, "end": 361}
+{"span_id": "OUTCOME_COMPLICATION_363", "note_id": "1904504_syn_6", "label": "OUTCOME_COMPLICATION", "text": "No complications", "start": 363, "end": 379}
+{"span_id": "CTX_HISTORICAL_13", "note_id": "1904504_syn_7", "label": "CTX_HISTORICAL", "text": "Breast cancer hx", "start": 13, "end": 29}
+{"span_id": "ANAT_LN_STATION_40", "note_id": "1904504_syn_7", "label": "ANAT_LN_STATION", "text": "4L node", "start": 40, "end": 47}
+{"span_id": "PROC_ACTION_102", "note_id": "1904504_syn_7", "label": "PROC_ACTION", "text": "Flexible bronchoscopy", "start": 102, "end": 123}
+{"span_id": "PROC_METHOD_133", "note_id": "1904504_syn_7", "label": "PROC_METHOD", "text": "Conventional", "start": 133, "end": 145}
+{"span_id": "PROC_ACTION_146", "note_id": "1904504_syn_7", "label": "PROC_ACTION", "text": "TBNA", "start": 146, "end": 150}
+{"span_id": "ANAT_LN_STATION_154", "note_id": "1904504_syn_7", "label": "ANAT_LN_STATION", "text": "Station 4L", "start": 154, "end": 164}
+{"span_id": "DEV_NEEDLE_171", "note_id": "1904504_syn_7", "label": "DEV_NEEDLE", "text": "22G", "start": 171, "end": 174}
+{"span_id": "DEV_NEEDLE_175", "note_id": "1904504_syn_7", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 175, "end": 186}
+{"span_id": "MEAS_COUNT_188", "note_id": "1904504_syn_7", "label": "MEAS_COUNT", "text": "3 passes", "start": 188, "end": 196}
+{"span_id": "OBS_ROSE_214", "note_id": "1904504_syn_7", "label": "OBS_ROSE", "text": "malignancy", "start": 214, "end": 224}
+{"span_id": "DEV_INSTRUMENT_65", "note_id": "1904504_syn_8", "label": "DEV_INSTRUMENT", "text": "bronchoscope", "start": 65, "end": 77}
+{"span_id": "ANAT_AIRWAY_125", "note_id": "1904504_syn_8", "label": "ANAT_AIRWAY", "text": "airway", "start": 125, "end": 131}
+{"span_id": "PROC_METHOD_139", "note_id": "1904504_syn_8", "label": "PROC_METHOD", "text": "anatomic landmarks", "start": 139, "end": 157}
+{"span_id": "ANAT_LN_STATION_195", "note_id": "1904504_syn_8", "label": "ANAT_LN_STATION", "text": "left lower paratracheal node (Station 4L)", "start": 195, "end": 236}
+{"span_id": "PROC_METHOD_251", "note_id": "1904504_syn_8", "label": "PROC_METHOD", "text": "conventional", "start": 251, "end": 263}
+{"span_id": "PROC_ACTION_264", "note_id": "1904504_syn_8", "label": "PROC_ACTION", "text": "TBNA", "start": 264, "end": 268}
+{"span_id": "DEV_NEEDLE_277", "note_id": "1904504_syn_8", "label": "DEV_NEEDLE", "text": "22-gauge", "start": 277, "end": 285}
+{"span_id": "DEV_NEEDLE_286", "note_id": "1904504_syn_8", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 286, "end": 297}
+{"span_id": "MEAS_COUNT_309", "note_id": "1904504_syn_8", "label": "MEAS_COUNT", "text": "three passes", "start": 309, "end": 321}
+{"span_id": "OBS_ROSE_346", "note_id": "1904504_syn_8", "label": "OBS_ROSE", "text": "consistent with metastatic disease", "start": 346, "end": 380}
+{"span_id": "PROC_ACTION_11", "note_id": "1904504_syn_9", "label": "PROC_ACTION", "text": "Bronchoscopy", "start": 11, "end": 23}
+{"span_id": "PROC_METHOD_29", "note_id": "1904504_syn_9", "label": "PROC_METHOD", "text": "blind", "start": 29, "end": 34}
+{"span_id": "PROC_ACTION_35", "note_id": "1904504_syn_9", "label": "PROC_ACTION", "text": "needle biopsy", "start": 35, "end": 48}
+{"span_id": "ANAT_LN_STATION_52", "note_id": "1904504_syn_9", "label": "ANAT_LN_STATION", "text": "paratracheal node", "start": 52, "end": 69}
+{"span_id": "DEV_INSTRUMENT_155", "note_id": "1904504_syn_9", "label": "DEV_INSTRUMENT", "text": "scope", "start": 155, "end": 160}
+{"span_id": "ANAT_LN_STATION_179", "note_id": "1904504_syn_9", "label": "ANAT_LN_STATION", "text": "Station 4L node", "start": 179, "end": 194}
+{"span_id": "DEV_NEEDLE_214", "note_id": "1904504_syn_9", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 214, "end": 225}
+{"span_id": "MEAS_COUNT_227", "note_id": "1904504_syn_9", "label": "MEAS_COUNT", "text": "Three samples", "start": 227, "end": 240}
+{"span_id": "OBS_ROSE_278", "note_id": "1904504_syn_9", "label": "OBS_ROSE", "text": "malignancy", "start": 278, "end": 288}
+{"span_id": "PROC_ACTION_135", "note_id": "1904504", "label": "PROC_ACTION", "text": "Flexible bronchoscopy", "start": 135, "end": 156}
+{"span_id": "PROC_METHOD_162", "note_id": "1904504", "label": "PROC_METHOD", "text": "conventional", "start": 162, "end": 174}
+{"span_id": "PROC_ACTION_175", "note_id": "1904504", "label": "PROC_ACTION", "text": "transbronchial needle aspiration", "start": 175, "end": 207}
+{"span_id": "PROC_ACTION_209", "note_id": "1904504", "label": "PROC_ACTION", "text": "TBNA", "start": 209, "end": 213}
+{"span_id": "ANAT_LN_STATION_218", "note_id": "1904504", "label": "ANAT_LN_STATION", "text": "left lower paratracheal lymph node", "start": 218, "end": 252}
+{"span_id": "ANAT_AIRWAY_233", "note_id": "1904504", "label": "ANAT_AIRWAY", "text": "trachea", "start": 233, "end": 240}
+{"span_id": "ANAT_LN_STATION_254", "note_id": "1904504", "label": "ANAT_LN_STATION", "text": "station 4L", "start": 254, "end": 264}
+{"span_id": "ANAT_LN_STATION_262", "note_id": "1904504", "label": "ANAT_LN_STATION", "text": "4L", "start": 262, "end": 264}
+{"span_id": "DEV_NEEDLE_272", "note_id": "1904504", "label": "DEV_NEEDLE", "text": "Wang needle", "start": 272, "end": 283}
+{"span_id": "CTX_HISTORICAL_308", "note_id": "1904504", "label": "CTX_HISTORICAL", "text": "History of breast cancer", "start": 308, "end": 332}
+{"span_id": "OBS_LESION_354", "note_id": "1904504", "label": "OBS_LESION", "text": "mediastinal lymphadenopathy", "start": 354, "end": 381}
+{"span_id": "MEAS_SIZE_548", "note_id": "1904504", "label": "MEAS_SIZE", "text": "7.5", "start": 548, "end": 551}
+{"span_id": "DEV_INSTRUMENT_742", "note_id": "1904504", "label": "DEV_INSTRUMENT", "text": "flexible bronchoscope", "start": 742, "end": 763}
+{"span_id": "ANAT_AIRWAY_824", "note_id": "1904504", "label": "ANAT_AIRWAY", "text": "main carina", "start": 824, "end": 835}
+{"span_id": "ANAT_AIRWAY_853", "note_id": "1904504", "label": "ANAT_AIRWAY", "text": "right bronchial tree", "start": 853, "end": 873}
+{"span_id": "OBS_FINDING_916", "note_id": "1904504", "label": "OBS_FINDING", "text": "extrinsic narrowing", "start": 916, "end": 935}
+{"span_id": "ANAT_AIRWAY_943", "note_id": "1904504", "label": "ANAT_AIRWAY", "text": "distal trachea", "start": 943, "end": 957}
+{"span_id": "ANAT_AIRWAY_973", "note_id": "1904504", "label": "ANAT_AIRWAY", "text": "carina", "start": 973, "end": 979}
+{"span_id": "ANAT_AIRWAY_1007", "note_id": "1904504", "label": "ANAT_AIRWAY", "text": "proximal left mainstem bronchus", "start": 1007, "end": 1038}
+{"span_id": "PROC_METHOD_1060", "note_id": "1904504", "label": "PROC_METHOD", "text": "CONVENTIONAL", "start": 1060, "end": 1072}
+{"span_id": "PROC_ACTION_1073", "note_id": "1904504", "label": "PROC_ACTION", "text": "TBNA", "start": 1073, "end": 1077}
+{"span_id": "DEV_NEEDLE_1079", "note_id": "1904504", "label": "DEV_NEEDLE", "text": "WANG NEEDLE", "start": 1079, "end": 1090}
+{"span_id": "DEV_NEEDLE_1095", "note_id": "1904504", "label": "DEV_NEEDLE", "text": "22-gauge", "start": 1095, "end": 1103}
+{"span_id": "DEV_NEEDLE_1104", "note_id": "1904504", "label": "DEV_NEEDLE", "text": "Wang TBNA needle", "start": 1104, "end": 1120}
+{"span_id": "PROC_ACTION_1109", "note_id": "1904504", "label": "PROC_ACTION", "text": "TBNA", "start": 1109, "end": 1113}
+{"span_id": "DEV_INSTRUMENT_1144", "note_id": "1904504", "label": "DEV_INSTRUMENT", "text": "bronchoscope", "start": 1144, "end": 1156}
+{"span_id": "PROC_METHOD_1164", "note_id": "1904504", "label": "PROC_METHOD", "text": "anatomic landmarks", "start": 1164, "end": 1182}
+{"span_id": "ANAT_LN_STATION_1219", "note_id": "1904504", "label": "ANAT_LN_STATION", "text": "left lower paratracheal (4L) node", "start": 1219, "end": 1252}
+{"span_id": "ANAT_AIRWAY_1302", "note_id": "1904504", "label": "ANAT_AIRWAY", "text": "distal trachea", "start": 1302, "end": 1316}
+{"span_id": "MEAS_COUNT_1349", "note_id": "1904504", "label": "MEAS_COUNT", "text": "Three passes", "start": 1349, "end": 1361}
+{"span_id": "OBS_ROSE_1515", "note_id": "1904504", "label": "OBS_ROSE", "text": "lymphoid tissue", "start": 1515, "end": 1530}
+{"span_id": "OBS_ROSE_1536", "note_id": "1904504", "label": "OBS_ROSE", "text": "atypical epithelial cells", "start": 1536, "end": 1561}
+{"span_id": "OBS_ROSE_1577", "note_id": "1904504", "label": "OBS_ROSE", "text": "suspicious for metastatic carcinoma", "start": 1577, "end": 1612}
+{"span_id": "SPECIMEN_1686", "note_id": "1904504", "label": "SPECIMEN", "text": "cell block", "start": 1686, "end": 1696}
+{"span_id": "ANAT_LN_STATION_1735", "note_id": "1904504", "label": "ANAT_LN_STATION", "text": "Station 4L", "start": 1735, "end": 1745}
+{"span_id": "PROC_METHOD_1746", "note_id": "1904504", "label": "PROC_METHOD", "text": "conventional", "start": 1746, "end": 1758}
+{"span_id": "MEAS_COUNT_1764", "note_id": "1904504", "label": "MEAS_COUNT", "text": "x3 passes", "start": 1764, "end": 1773}
+{"span_id": "SPECIMEN_1788", "note_id": "1904504", "label": "SPECIMEN", "text": "cytology", "start": 1788, "end": 1796}
+{"span_id": "SPECIMEN_1798", "note_id": "1904504", "label": "SPECIMEN", "text": "cell block", "start": 1798, "end": 1808}
+{"span_id": "OUTCOME_COMPLICATION_1860", "note_id": "1904504", "label": "OUTCOME_COMPLICATION", "text": "No significant bleeding", "start": 1860, "end": 1883}
+{"span_id": "PROC_METHOD_2023", "note_id": "1904504", "label": "PROC_METHOD", "text": "blind", "start": 2023, "end": 2028}
+{"span_id": "OBS_LESION_12", "note_id": "1925965_syn_1", "label": "OBS_LESION", "text": "RCC met", "start": 12, "end": 19}
+{"span_id": "ANAT_AIRWAY_23", "note_id": "1925965_syn_1", "label": "ANAT_AIRWAY", "text": "RMS", "start": 23, "end": 26}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_28", "note_id": "1925965_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "89% block", "start": 28, "end": 37}
+{"span_id": "PROC_METHOD_51", "note_id": "1925965_syn_1", "label": "PROC_METHOD", "text": "Rigid", "start": 51, "end": 56}
+{"span_id": "PROC_ACTION_57", "note_id": "1925965_syn_1", "label": "PROC_ACTION", "text": "Bronchoscopy", "start": 57, "end": 69}
+{"span_id": "PROC_METHOD_71", "note_id": "1925965_syn_1", "label": "PROC_METHOD", "text": "Jet Vent", "start": 71, "end": 79}
+{"span_id": "DEV_INSTRUMENT_93", "note_id": "1925965_syn_1", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 93, "end": 100}
+{"span_id": "PROC_ACTION_101", "note_id": "1925965_syn_1", "label": "PROC_ACTION", "text": "dilation", "start": 101, "end": 109}
+{"span_id": "ANAT_AIRWAY_113", "note_id": "1925965_syn_1", "label": "ANAT_AIRWAY", "text": "RMS", "start": 113, "end": 116}
+{"span_id": "DEV_STENT_MATERIAL_120", "note_id": "1925965_syn_1", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 120, "end": 129}
+{"span_id": "DEV_STENT_MATERIAL_130", "note_id": "1925965_syn_1", "label": "DEV_STENT_MATERIAL", "text": "Covered", "start": 130, "end": 137}
+{"span_id": "DEV_STENT_138", "note_id": "1925965_syn_1", "label": "DEV_STENT", "text": "SEMS", "start": 138, "end": 142}
+{"span_id": "DEV_STENT_SIZE_144", "note_id": "1925965_syn_1", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 144, "end": 151}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_169", "note_id": "1925965_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "25% residual", "start": 169, "end": 181}
+{"span_id": "OBS_LESION_47", "note_id": "1925965_syn_2", "label": "OBS_LESION", "text": "renal cell carcinoma", "start": 47, "end": 67}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_87", "note_id": "1925965_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "89% metastatic obstruction", "start": 87, "end": 113}
+{"span_id": "ANAT_AIRWAY_121", "note_id": "1925965_syn_2", "label": "ANAT_AIRWAY", "text": "Right Main Stem", "start": 121, "end": 136}
+{"span_id": "ANAT_AIRWAY_138", "note_id": "1925965_syn_2", "label": "ANAT_AIRWAY", "text": "RMS", "start": 138, "end": 141}
+{"span_id": "ANAT_AIRWAY_143", "note_id": "1925965_syn_2", "label": "ANAT_AIRWAY", "text": "bronchus", "start": 143, "end": 151}
+{"span_id": "PROC_METHOD_188", "note_id": "1925965_syn_2", "label": "PROC_METHOD", "text": "jet ventilation", "start": 188, "end": 203}
+{"span_id": "PROC_METHOD_205", "note_id": "1925965_syn_2", "label": "PROC_METHOD", "text": "rigid", "start": 205, "end": 210}
+{"span_id": "PROC_ACTION_211", "note_id": "1925965_syn_2", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 211, "end": 223}
+{"span_id": "OBS_FINDING_243", "note_id": "1925965_syn_2", "label": "OBS_FINDING", "text": "stenotic segment", "start": 243, "end": 259}
+{"span_id": "DEV_INSTRUMENT_281", "note_id": "1925965_syn_2", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 281, "end": 288}
+{"span_id": "PROC_ACTION_289", "note_id": "1925965_syn_2", "label": "PROC_ACTION", "text": "dilation", "start": 289, "end": 297}
+{"span_id": "DEV_STENT_SIZE_316", "note_id": "1925965_syn_2", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 316, "end": 323}
+{"span_id": "DEV_STENT_MATERIAL_324", "note_id": "1925965_syn_2", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 324, "end": 333}
+{"span_id": "DEV_STENT_334", "note_id": "1925965_syn_2", "label": "DEV_STENT", "text": "Self-Expanding Metallic Stent", "start": 334, "end": 363}
+{"span_id": "DEV_STENT_365", "note_id": "1925965_syn_2", "label": "DEV_STENT", "text": "SEMS", "start": 365, "end": 369}
+{"span_id": "DEV_STENT_MATERIAL_371", "note_id": "1925965_syn_2", "label": "DEV_STENT_MATERIAL", "text": "covered", "start": 371, "end": 378}
+{"span_id": "OBS_LESION_404", "note_id": "1925965_syn_2", "label": "OBS_LESION", "text": "lesion", "start": 404, "end": 410}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_491", "note_id": "1925965_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "reducing the obstruction to approximately 25%", "start": 491, "end": 536}
+{"span_id": "DEV_STENT_33", "note_id": "1925965_syn_3", "label": "DEV_STENT", "text": "Stent", "start": 33, "end": 38}
+{"span_id": "DEV_STENT_82", "note_id": "1925965_syn_3", "label": "DEV_STENT", "text": "Bronchial Stent", "start": 82, "end": 97}
+{"span_id": "DEV_INSTRUMENT_108", "note_id": "1925965_syn_3", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 108, "end": 115}
+{"span_id": "PROC_ACTION_116", "note_id": "1925965_syn_3", "label": "PROC_ACTION", "text": "Dilation", "start": 116, "end": 124}
+{"span_id": "DEV_STENT_MATERIAL_135", "note_id": "1925965_syn_3", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 135, "end": 144}
+{"span_id": "DEV_STENT_145", "note_id": "1925965_syn_3", "label": "DEV_STENT", "text": "SEMS", "start": 145, "end": 149}
+{"span_id": "DEV_STENT_MATERIAL_150", "note_id": "1925965_syn_3", "label": "DEV_STENT_MATERIAL", "text": "Covered", "start": 150, "end": 157}
+{"span_id": "DEV_STENT_SIZE_159", "note_id": "1925965_syn_3", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 159, "end": 166}
+{"span_id": "ANAT_AIRWAY_179", "note_id": "1925965_syn_3", "label": "ANAT_AIRWAY", "text": "Right Main Stem", "start": 179, "end": 194}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_211", "note_id": "1925965_syn_3", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "89% critical obstruction", "start": 211, "end": 235}
+{"span_id": "OBS_LESION_38", "note_id": "1925965_syn_4", "label": "OBS_LESION", "text": "RCC met", "start": 38, "end": 45}
+{"span_id": "ANAT_AIRWAY_49", "note_id": "1925965_syn_4", "label": "ANAT_AIRWAY", "text": "RMS", "start": 49, "end": 52}
+{"span_id": "PROC_METHOD_64", "note_id": "1925965_syn_4", "label": "PROC_METHOD", "text": "Rigid", "start": 64, "end": 69}
+{"span_id": "PROC_ACTION_70", "note_id": "1925965_syn_4", "label": "PROC_ACTION", "text": "bronch", "start": 70, "end": 76}
+{"span_id": "PROC_METHOD_82", "note_id": "1925965_syn_4", "label": "PROC_METHOD", "text": "jet vent", "start": 82, "end": 90}
+{"span_id": "DEV_INSTRUMENT_95", "note_id": "1925965_syn_4", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 95, "end": 102}
+{"span_id": "PROC_ACTION_103", "note_id": "1925965_syn_4", "label": "PROC_ACTION", "text": "dilation", "start": 103, "end": 111}
+{"span_id": "ANAT_AIRWAY_115", "note_id": "1925965_syn_4", "label": "ANAT_AIRWAY", "text": "RMS", "start": 115, "end": 118}
+{"span_id": "DEV_STENT_MATERIAL_130", "note_id": "1925965_syn_4", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 130, "end": 139}
+{"span_id": "DEV_STENT_MATERIAL_140", "note_id": "1925965_syn_4", "label": "DEV_STENT_MATERIAL", "text": "Covered", "start": 140, "end": 147}
+{"span_id": "DEV_STENT_148", "note_id": "1925965_syn_4", "label": "DEV_STENT", "text": "SEMS", "start": 148, "end": 152}
+{"span_id": "DEV_STENT_SIZE_153", "note_id": "1925965_syn_4", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 153, "end": 160}
+{"span_id": "ANAT_AIRWAY_198", "note_id": "1925965_syn_4", "label": "ANAT_AIRWAY", "text": "RMS", "start": 198, "end": 201}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_222", "note_id": "1925965_syn_4", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "25% obs", "start": 222, "end": 229}
+{"span_id": "ANAT_AIRWAY_28", "note_id": "1925965_syn_5", "label": "ANAT_AIRWAY", "text": "RMS", "start": 28, "end": 31}
+{"span_id": "OBS_LESION_50", "note_id": "1925965_syn_5", "label": "OBS_LESION", "text": "met", "start": 50, "end": 53}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_71", "note_id": "1925965_syn_5", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "89 percent blocked", "start": 71, "end": 89}
+{"span_id": "PROC_METHOD_102", "note_id": "1925965_syn_5", "label": "PROC_METHOD", "text": "rigid", "start": 102, "end": 107}
+{"span_id": "PROC_ACTION_108", "note_id": "1925965_syn_5", "label": "PROC_ACTION", "text": "bronch", "start": 108, "end": 114}
+{"span_id": "PROC_METHOD_120", "note_id": "1925965_syn_5", "label": "PROC_METHOD", "text": "jet ventilation", "start": 120, "end": 135}
+{"span_id": "PROC_ACTION_137", "note_id": "1925965_syn_5", "label": "PROC_ACTION", "text": "Dilated", "start": 137, "end": 144}
+{"span_id": "DEV_INSTRUMENT_157", "note_id": "1925965_syn_5", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 157, "end": 164}
+{"span_id": "DEV_STENT_MATERIAL_188", "note_id": "1925965_syn_5", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 188, "end": 197}
+{"span_id": "DEV_STENT_MATERIAL_198", "note_id": "1925965_syn_5", "label": "DEV_STENT_MATERIAL", "text": "covered", "start": 198, "end": 205}
+{"span_id": "DEV_STENT_206", "note_id": "1925965_syn_5", "label": "DEV_STENT", "text": "stent", "start": 206, "end": 211}
+{"span_id": "DEV_STENT_SIZE_212", "note_id": "1925965_syn_5", "label": "DEV_STENT_SIZE", "text": "18 by 30", "start": 212, "end": 220}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_240", "note_id": "1925965_syn_5", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "residual is 25 percent", "start": 240, "end": 262}
+{"span_id": "OUTCOME_COMPLICATION_264", "note_id": "1925965_syn_5", "label": "OUTCOME_COMPLICATION", "text": "No complications", "start": 264, "end": 280}
+{"span_id": "PROC_METHOD_30", "note_id": "1925965_syn_6", "label": "PROC_METHOD", "text": "jet ventilation", "start": 30, "end": 45}
+{"span_id": "PROC_METHOD_47", "note_id": "1925965_syn_6", "label": "PROC_METHOD", "text": "rigid", "start": 47, "end": 52}
+{"span_id": "PROC_ACTION_53", "note_id": "1925965_syn_6", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 53, "end": 65}
+{"span_id": "DEV_INSTRUMENT_88", "note_id": "1925965_syn_6", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 88, "end": 95}
+{"span_id": "PROC_ACTION_96", "note_id": "1925965_syn_6", "label": "PROC_ACTION", "text": "dilation", "start": 96, "end": 104}
+{"span_id": "ANAT_AIRWAY_108", "note_id": "1925965_syn_6", "label": "ANAT_AIRWAY", "text": "RMS", "start": 108, "end": 111}
+{"span_id": "OBS_FINDING_112", "note_id": "1925965_syn_6", "label": "OBS_FINDING", "text": "stenosis", "start": 112, "end": 120}
+{"span_id": "DEV_STENT_MATERIAL_152", "note_id": "1925965_syn_6", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 152, "end": 161}
+{"span_id": "DEV_STENT_162", "note_id": "1925965_syn_6", "label": "DEV_STENT", "text": "SEMS", "start": 162, "end": 166}
+{"span_id": "DEV_STENT_MATERIAL_169", "note_id": "1925965_syn_6", "label": "DEV_STENT_MATERIAL", "text": "Covered", "start": 169, "end": 176}
+{"span_id": "DEV_STENT_177", "note_id": "1925965_syn_6", "label": "DEV_STENT", "text": "stent", "start": 177, "end": 182}
+{"span_id": "DEV_STENT_SIZE_184", "note_id": "1925965_syn_6", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 184, "end": 191}
+{"span_id": "ANAT_AIRWAY_205", "note_id": "1925965_syn_6", "label": "ANAT_AIRWAY", "text": "Right mainstem", "start": 205, "end": 219}
+{"span_id": "DEV_STENT_221", "note_id": "1925965_syn_6", "label": "DEV_STENT", "text": "Stent", "start": 221, "end": 226}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_279", "note_id": "1925965_syn_6", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Post-procedure obstruction: ~25%", "start": 279, "end": 311}
+{"span_id": "OUTCOME_COMPLICATION_312", "note_id": "1925965_syn_6", "label": "OUTCOME_COMPLICATION", "text": "No complications", "start": 312, "end": 328}
+{"span_id": "OBS_LESION_13", "note_id": "1925965_syn_7", "label": "OBS_LESION", "text": "Renal cell carcinoma met", "start": 13, "end": 37}
+{"span_id": "ANAT_AIRWAY_41", "note_id": "1925965_syn_7", "label": "ANAT_AIRWAY", "text": "RMS", "start": 41, "end": 44}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_46", "note_id": "1925965_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "89% obstruction", "start": 46, "end": 61}
+{"span_id": "PROC_METHOD_89", "note_id": "1925965_syn_7", "label": "PROC_METHOD", "text": "Jet Ventilation", "start": 89, "end": 104}
+{"span_id": "PROC_METHOD_120", "note_id": "1925965_syn_7", "label": "PROC_METHOD", "text": "Rigid", "start": 120, "end": 125}
+{"span_id": "PROC_ACTION_126", "note_id": "1925965_syn_7", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 126, "end": 138}
+{"span_id": "DEV_INSTRUMENT_140", "note_id": "1925965_syn_7", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 140, "end": 147}
+{"span_id": "PROC_ACTION_148", "note_id": "1925965_syn_7", "label": "PROC_ACTION", "text": "dilation", "start": 148, "end": 156}
+{"span_id": "ANAT_AIRWAY_160", "note_id": "1925965_syn_7", "label": "ANAT_AIRWAY", "text": "RMS", "start": 160, "end": 163}
+{"span_id": "DEV_STENT_MATERIAL_179", "note_id": "1925965_syn_7", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 179, "end": 188}
+{"span_id": "DEV_STENT_MATERIAL_189", "note_id": "1925965_syn_7", "label": "DEV_STENT_MATERIAL", "text": "Covered", "start": 189, "end": 196}
+{"span_id": "DEV_STENT_197", "note_id": "1925965_syn_7", "label": "DEV_STENT", "text": "SEMS", "start": 197, "end": 201}
+{"span_id": "DEV_STENT_SIZE_203", "note_id": "1925965_syn_7", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 203, "end": 210}
+{"span_id": "DEV_STENT_213", "note_id": "1925965_syn_7", "label": "DEV_STENT", "text": "Stent", "start": 213, "end": 218}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_234", "note_id": "1925965_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Residual obstruction 25%", "start": 234, "end": 258}
+{"span_id": "PROC_ACTION_291", "note_id": "1925965_syn_7", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 291, "end": 303}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_18", "note_id": "1925965_syn_8", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "89% blockage", "start": 18, "end": 30}
+{"span_id": "ANAT_AIRWAY_38", "note_id": "1925965_syn_8", "label": "ANAT_AIRWAY", "text": "right mainstem bronchus", "start": 38, "end": 61}
+{"span_id": "OBS_LESION_67", "note_id": "1925965_syn_8", "label": "OBS_LESION", "text": "metastatic cancer", "start": 67, "end": 84}
+{"span_id": "DEV_STENT_104", "note_id": "1925965_syn_8", "label": "DEV_STENT", "text": "stent", "start": 104, "end": 109}
+{"span_id": "PROC_ACTION_156", "note_id": "1925965_syn_8", "label": "PROC_ACTION", "text": "dilated", "start": 156, "end": 163}
+{"span_id": "DEV_INSTRUMENT_185", "note_id": "1925965_syn_8", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 185, "end": 192}
+{"span_id": "DEV_STENT_SIZE_214", "note_id": "1925965_syn_8", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 214, "end": 221}
+{"span_id": "DEV_STENT_MATERIAL_222", "note_id": "1925965_syn_8", "label": "DEV_STENT_MATERIAL", "text": "covered", "start": 222, "end": 229}
+{"span_id": "DEV_STENT_MATERIAL_230", "note_id": "1925965_syn_8", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 230, "end": 239}
+{"span_id": "DEV_STENT_240", "note_id": "1925965_syn_8", "label": "DEV_STENT", "text": "SEMS", "start": 240, "end": 244}
+{"span_id": "DEV_STENT_250", "note_id": "1925965_syn_8", "label": "DEV_STENT", "text": "stent", "start": 250, "end": 255}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_319", "note_id": "1925965_syn_8", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "residual obstruction of 25%", "start": 319, "end": 346}
+{"span_id": "PROC_METHOD_11", "note_id": "1925965_syn_9", "label": "PROC_METHOD", "text": "Rigid", "start": 11, "end": 16}
+{"span_id": "PROC_ACTION_17", "note_id": "1925965_syn_9", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 17, "end": 29}
+{"span_id": "DEV_STENT_51", "note_id": "1925965_syn_9", "label": "DEV_STENT", "text": "self-expanding metallic stent", "start": 51, "end": 80}
+{"span_id": "ANAT_AIRWAY_89", "note_id": "1925965_syn_9", "label": "ANAT_AIRWAY", "text": "Right Main Stem", "start": 89, "end": 104}
+{"span_id": "OBS_FINDING_118", "note_id": "1925965_syn_9", "label": "OBS_FINDING", "text": "stenosis", "start": 118, "end": 126}
+{"span_id": "PROC_ACTION_131", "note_id": "1925965_syn_9", "label": "PROC_ACTION", "text": "dilated", "start": 131, "end": 138}
+{"span_id": "DEV_INSTRUMENT_143", "note_id": "1925965_syn_9", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 143, "end": 150}
+{"span_id": "DEV_STENT_MATERIAL_155", "note_id": "1925965_syn_9", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 155, "end": 164}
+{"span_id": "DEV_STENT_MATERIAL_165", "note_id": "1925965_syn_9", "label": "DEV_STENT_MATERIAL", "text": "Covered", "start": 165, "end": 172}
+{"span_id": "DEV_STENT_173", "note_id": "1925965_syn_9", "label": "DEV_STENT", "text": "SEMS", "start": 173, "end": 177}
+{"span_id": "DEV_STENT_SIZE_179", "note_id": "1925965_syn_9", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 179, "end": 186}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_245", "note_id": "1925965_syn_9", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Occlusion reduced to 25%", "start": 245, "end": 269}
+{"span_id": "OBS_LESION_167", "note_id": "1925965", "label": "OBS_LESION", "text": "Renal cell carcinoma metastasis", "start": 167, "end": 198}
+{"span_id": "ANAT_AIRWAY_202", "note_id": "1925965", "label": "ANAT_AIRWAY", "text": "bronchus", "start": 202, "end": 210}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_225", "note_id": "1925965", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "obstruction: ~89%", "start": 225, "end": 242}
+{"span_id": "ANAT_AIRWAY_243", "note_id": "1925965", "label": "ANAT_AIRWAY", "text": "Right mainstem", "start": 243, "end": 257}
+{"span_id": "PROC_METHOD_300", "note_id": "1925965", "label": "PROC_METHOD", "text": "jet ventilation", "start": 300, "end": 315}
+{"span_id": "PROC_METHOD_317", "note_id": "1925965", "label": "PROC_METHOD", "text": "rigid", "start": 317, "end": 322}
+{"span_id": "PROC_ACTION_323", "note_id": "1925965", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 323, "end": 335}
+{"span_id": "DEV_INSTRUMENT_358", "note_id": "1925965", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 358, "end": 365}
+{"span_id": "PROC_ACTION_366", "note_id": "1925965", "label": "PROC_ACTION", "text": "dilation", "start": 366, "end": 374}
+{"span_id": "ANAT_AIRWAY_378", "note_id": "1925965", "label": "ANAT_AIRWAY", "text": "RMS", "start": 378, "end": 381}
+{"span_id": "OBS_FINDING_382", "note_id": "1925965", "label": "OBS_FINDING", "text": "stenosis", "start": 382, "end": 390}
+{"span_id": "DEV_STENT_MATERIAL_422", "note_id": "1925965", "label": "DEV_STENT_MATERIAL", "text": "Ultraflex", "start": 422, "end": 431}
+{"span_id": "DEV_STENT_432", "note_id": "1925965", "label": "DEV_STENT", "text": "SEMS", "start": 432, "end": 436}
+{"span_id": "DEV_STENT_MATERIAL_439", "note_id": "1925965", "label": "DEV_STENT_MATERIAL", "text": "Covered", "start": 439, "end": 446}
+{"span_id": "DEV_STENT_447", "note_id": "1925965", "label": "DEV_STENT", "text": "stent", "start": 447, "end": 452}
+{"span_id": "DEV_STENT_SIZE_454", "note_id": "1925965", "label": "DEV_STENT_SIZE", "text": "18x30mm", "start": 454, "end": 461}
+{"span_id": "ANAT_AIRWAY_475", "note_id": "1925965", "label": "ANAT_AIRWAY", "text": "Right mainstem", "start": 475, "end": 489}
+{"span_id": "DEV_STENT_491", "note_id": "1925965", "label": "DEV_STENT", "text": "Stent", "start": 491, "end": 496}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_549", "note_id": "1925965", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "Post-procedure obstruction: ~25%", "start": 549, "end": 581}
+{"span_id": "OUTCOME_COMPLICATION_582", "note_id": "1925965", "label": "OUTCOME_COMPLICATION", "text": "No complications", "start": 582, "end": 598}
+{"span_id": "PROC_ACTION_721", "note_id": "1925965", "label": "PROC_ACTION", "text": "bronchoscopy", "start": 721, "end": 733}

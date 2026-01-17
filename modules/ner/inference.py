@@ -6,6 +6,7 @@ converting BIO token tags back to character-span entities with confidence scores
 
 from __future__ import annotations
 
+import os
 import json
 import time
 from dataclasses import dataclass, field
@@ -94,6 +95,7 @@ class GranularNERPredictor:
     DEFAULT_MODEL_DIR = Path("artifacts/granular_ner_model")
     DEFAULT_CONFIDENCE_THRESHOLD = 0.5
     DEFAULT_CONTEXT_CHARS = 50
+    MODEL_DIR_ENV_VAR = "GRANULAR_NER_MODEL_DIR"
 
     def __init__(
         self,
@@ -111,7 +113,11 @@ class GranularNERPredictor:
             context_chars: Characters of context for evidence quotes
             device: Device to run on ('cpu', 'cuda', 'mps', or None for auto)
         """
-        self.model_dir = Path(model_dir) if model_dir else self.DEFAULT_MODEL_DIR
+        if model_dir:
+            self.model_dir = Path(model_dir)
+        else:
+            env_dir = os.getenv(self.MODEL_DIR_ENV_VAR, "").strip()
+            self.model_dir = Path(env_dir) if env_dir else self.DEFAULT_MODEL_DIR
         self.confidence_threshold = confidence_threshold
         self.context_chars = context_chars
         self.available = False

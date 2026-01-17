@@ -1,0 +1,11 @@
+{
+  "MRN-5_syn_1": "Indication: ILD workup.\nProc: REBUS-guided Cryobiopsy RLL.\nDetails: Arndt blocker placed. REBUS confirmed no vessels. 5 samples taken.\nComp: None.\nDisp: Home.",
+  "MRN-5_syn_2": "PROCEDURE: Transbronchial Cryobiopsy with Radial EBUS Guidance.\nINDICATION: Interstitial Lung Disease diagnosis.\nNARRATIVE: An Arndt bronchial blocker was positioned for prophylactic control. The RLL target area was screened with radial EBUS to ensure a vessel-free zone. Five cryobiopsies were obtained. The blocker was inflated after each pass to prevent bleeding. Hemostasis was excellent.\nIMPRESSION: Adequate tissue for ILD classification.",
+  "MRN-5_syn_3": "Codes: 31628 (Lung biopsy), 31654 (REBUS).\nNote: Cryobiopsy is coded as 31628. Blocker is incidental.\nSamples: 5 from RLL.\nGuidance: Radial EBUS used for safety.",
+  "MRN-5_syn_4": "Procedure: Cryobiopsy\nPatient: [REDACTED]\nSteps:\n1. GA/ETT.\n2. Blocker in RLL.\n3. REBUS checked area.\n4. Freeze biopsy x5.\n5. Inflated blocker each time.\n6. No bleeding.\nResult: ILD tissue.",
+  "MRN-5_syn_5": "doing a cryo for ild. put the blocker in first. used the radar probe to check for vessels. froze 5 pieces from the right lower lobe. no bleeding problems. hopefully pathology can figure it out.",
+  "MRN-5_syn_6": "Bronchoscopy with REBUS-guided transbronchial cryobiopsy of the right lower lobe (5 samples) for ILD workup using an Arndt blocker for bleeding control. Procedure uneventful.",
+  "MRN-5_syn_7": "[Indication]\nILD diagnosis.\n[Anesthesia]\nGeneral.\n[Description]\nREBUS guidance used. Arndt blocker placed. 5 cryobiopsies taken from RLL. Hemostasis secured.\n[Plan]\nFollow up ILD clinic.",
+  "MRN-5_syn_8": "We performed a cryobiopsy to help diagnose the patient's interstitial lung disease. We placed a balloon blocker in the airway first for safety. Using radial ultrasound, we found a safe spot in the right lower lobe and took five large tissue samples using the freezing probe. There was no significant bleeding, and the patient recovered well.",
+  "MRN-5_syn_9": "Procedure: Cryo-adhesive parenchymal sampling.\nGuidance: Radial ultrasonography.\nAction: An endobronchial blocker was deployed. Five biopsy specimens were harvested from the RLL via cryoprobe.\nResult: Diagnostic tissue acquisition."
+}

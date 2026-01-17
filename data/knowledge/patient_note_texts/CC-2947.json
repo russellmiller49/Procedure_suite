@@ -1,0 +1,12 @@
+{
+  "CC-2947_syn_1": "Indication: Dx bronch + EBUS.\nProcedure: EBUS (4R, 7) + RUL Biopsy.\nEBUS: 4R/7 positive.\nRUL: Biopsy x4, Brush x2.\nCodes: 31652, 31625.\nPlan: Path pending.",
+  "CC-2947_syn_2": "PROCEDURE NOTE: Combined EBUS-TBNA and Endobronchial Biopsy.\nINDICATION: Lung mass with adenopathy.\nEBUS: Stations 4R and 7 were sampled and ROSE confirmed malignancy.\nBRONCHOSCOPY: The RUL lesion was visualized endobronchially. Forceps biopsy and brushing were performed. \nSUMMARY: N2 disease with RUL primary.",
+  "CC-2947_syn_3": "Codes:\n- 31652: EBUS (2 stations: 4R, 7).\n- 31625: Endobronchial biopsy (RUL lesion).\nJustification: Staging via EBUS and separate diagnostic biopsy of visible airway lesion.",
+  "CC-2947_syn_4": "Procedure: EBUS + RUL Bx\nPatient: [REDACTED]\nSteps:\n1. EBUS 4R (Pos).\n2. EBUS 7 (Pos).\n3. Standard bronch RUL.\n4. Biopsied mass x 4.\n5. Brush x 2.\nPlan: Discharge.",
+  "CC-2947_syn_5": "bronch for Frank Costanza. did ebus first. 4R and 7 both cancer. then went to the RUL saw the tumor there took bites and a brush. systematic check done. no bleeding.",
+  "CC-2947_syn_6": "Diagnostic bronchoscopy with EBUS. Stations 4R and 7 sampled; both positive. Systematic evaluation completed. Right upper lobe endobronchial lesion biopsied and brushed. No complications.",
+  "CC-2947_syn_7": "[Indication]\nLung mass, adenopathy.\n[Anesthesia]\nModerate Sedation.\n[Description]\nEBUS 4R/7 (Positive). RUL Biopsy/Brush performed.\n[Plan]\nWait for final path.",
+  "CC-2947_syn_8": "Mr. [REDACTED] underwent a bronchoscopy today. We used the ultrasound scope to check his lymph nodes first; stations 4R and 7 both showed cancer cells. We then looked at the main tumor in the right upper lobe and took direct biopsies and brushings. This confirms the diagnosis and stage.",
+  "CC-2947_syn_9": "Procedure: Staging EBUS and airway biopsy.\nAction: Nodal stations 4R and 7 were aspirated. The RUL endobronchial mass was biopsied and brushed. \nResult: Tissue obtained from primary and nodes.",
+  "CC-2947": "Pt: [REDACTED] / ID: [REDACTED] / Birth: [REDACTED]\nDx bronch + EBUS\nMod sed, Ramsay 3, stable\nEBUS: 4R (9mm) x3, 7 (12mm) x4, both ROSE+, PET+ both\nN3-N2-N1 systematic ✓, photos ✓\nRUL lesion bx x4, brush x2\nNo cx\nPath pending"
+}

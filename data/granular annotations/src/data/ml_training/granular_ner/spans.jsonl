@@ -1,0 +1,131 @@
+{"span_id": "ANAT_AIRWAY_26", "note_id": "1587446_syn_1", "label": "ANAT_AIRWAY", "text": "RMS", "start": 26, "end": 29}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_41", "note_id": "1587446_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "66% obstruction", "start": 41, "end": 56}
+{"span_id": "PROC_METHOD_71", "note_id": "1587446_syn_1", "label": "PROC_METHOD", "text": "Rigid bronch", "start": 71, "end": 83}
+{"span_id": "PROC_ACTION_87", "note_id": "1587446_syn_1", "label": "PROC_ACTION", "text": "Cryoextraction", "start": 87, "end": 101}
+{"span_id": "OBS_LESION_105", "note_id": "1587446_syn_1", "label": "OBS_LESION", "text": "tumor", "start": 105, "end": 110}
+{"span_id": "PROC_METHOD_114", "note_id": "1587446_syn_1", "label": "PROC_METHOD", "text": "APC", "start": 114, "end": 117}
+{"span_id": "OUTCOME_COMPLICATION_122", "note_id": "1587446_syn_1", "label": "OUTCOME_COMPLICATION", "text": "hemostasis", "start": 122, "end": 132}
+{"span_id": "DEV_INSTRUMENT_141", "note_id": "1587446_syn_1", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 141, "end": 148}
+{"span_id": "PROC_ACTION_149", "note_id": "1587446_syn_1", "label": "PROC_ACTION", "text": "dilation", "start": 149, "end": 157}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_167", "note_id": "1587446_syn_1", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "17% residual", "start": 167, "end": 179}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_29", "note_id": "1587446_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "66% malignant obstruction", "start": 29, "end": 54}
+{"span_id": "ANAT_AIRWAY_62", "note_id": "1587446_syn_2", "label": "ANAT_AIRWAY", "text": "right mainstem", "start": 62, "end": 76}
+{"span_id": "ANAT_AIRWAY_78", "note_id": "1587446_syn_2", "label": "ANAT_AIRWAY", "text": "RMS", "start": 78, "end": 81}
+{"span_id": "PROC_METHOD_84", "note_id": "1587446_syn_2", "label": "PROC_METHOD", "text": "Rigid bronchoscopy", "start": 84, "end": 102}
+{"span_id": "OBS_LESION_121", "note_id": "1587446_syn_2", "label": "OBS_LESION", "text": "tumor", "start": 121, "end": 126}
+{"span_id": "PROC_ACTION_145", "note_id": "1587446_syn_2", "label": "PROC_ACTION", "text": "cryoextraction", "start": 145, "end": 159}
+{"span_id": "PROC_ACTION_230", "note_id": "1587446_syn_2", "label": "PROC_ACTION", "text": "cryodebulking", "start": 230, "end": 243}
+{"span_id": "OBS_LESION_249", "note_id": "1587446_syn_2", "label": "OBS_LESION", "text": "tumor", "start": 249, "end": 254}
+{"span_id": "PROC_METHOD_277", "note_id": "1587446_syn_2", "label": "PROC_METHOD", "text": "APC", "start": 277, "end": 280}
+{"span_id": "OUTCOME_COMPLICATION_285", "note_id": "1587446_syn_2", "label": "OUTCOME_COMPLICATION", "text": "hemostasis", "start": 285, "end": 295}
+{"span_id": "PROC_ACTION_300", "note_id": "1587446_syn_2", "label": "PROC_ACTION", "text": "ablation", "start": 300, "end": 308}
+{"span_id": "DEV_INSTRUMENT_345", "note_id": "1587446_syn_2", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 345, "end": 352}
+{"span_id": "PROC_ACTION_353", "note_id": "1587446_syn_2", "label": "PROC_ACTION", "text": "dilation", "start": 353, "end": 361}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_387", "note_id": "1587446_syn_2", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "17% residual obstruction", "start": 387, "end": 411}
+{"span_id": "PROC_METHOD_17", "note_id": "1587446_syn_3", "label": "PROC_METHOD", "text": "Bronchoscopy", "start": 17, "end": 29}
+{"span_id": "PROC_ACTION_35", "note_id": "1587446_syn_3", "label": "PROC_ACTION", "text": "destruction", "start": 35, "end": 46}
+{"span_id": "OBS_LESION_50", "note_id": "1587446_syn_3", "label": "OBS_LESION", "text": "tumor", "start": 50, "end": 55}
+{"span_id": "PROC_ACTION_69", "note_id": "1587446_syn_3", "label": "PROC_ACTION", "text": "Cryoextraction", "start": 69, "end": 83}
+{"span_id": "PROC_METHOD_88", "note_id": "1587446_syn_3", "label": "PROC_METHOD", "text": "APC", "start": 88, "end": 91}
+{"span_id": "ANAT_AIRWAY_103", "note_id": "1587446_syn_3", "label": "ANAT_AIRWAY", "text": "Right Mainstem Bronchus", "start": 103, "end": 126}
+{"span_id": "DEV_INSTRUMENT_138", "note_id": "1587446_syn_3", "label": "DEV_INSTRUMENT", "text": "Cryoprobe", "start": 138, "end": 147}
+{"span_id": "OBS_LESION_175", "note_id": "1587446_syn_3", "label": "OBS_LESION", "text": "tumor", "start": 175, "end": 180}
+{"span_id": "PROC_METHOD_191", "note_id": "1587446_syn_3", "label": "PROC_METHOD", "text": "APC", "start": 191, "end": 194}
+{"span_id": "PROC_ACTION_209", "note_id": "1587446_syn_3", "label": "PROC_ACTION", "text": "destruction", "start": 209, "end": 220}
+{"span_id": "DEV_INSTRUMENT_224", "note_id": "1587446_syn_3", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 224, "end": 231}
+{"span_id": "PROC_ACTION_232", "note_id": "1587446_syn_3", "label": "PROC_ACTION", "text": "dilation", "start": 232, "end": 240}
+{"span_id": "OBS_LESION_11", "note_id": "1587446_syn_4", "label": "OBS_LESION", "text": "Tumor", "start": 11, "end": 16}
+{"span_id": "PROC_ACTION_17", "note_id": "1587446_syn_4", "label": "PROC_ACTION", "text": "Debulking", "start": 17, "end": 26}
+{"span_id": "PROC_METHOD_28", "note_id": "1587446_syn_4", "label": "PROC_METHOD", "text": "Cryo", "start": 28, "end": 32}
+{"span_id": "DEV_INSTRUMENT_62", "note_id": "1587446_syn_4", "label": "DEV_INSTRUMENT", "text": "Rigid scope", "start": 62, "end": 73}
+{"span_id": "ANAT_AIRWAY_77", "note_id": "1587446_syn_4", "label": "ANAT_AIRWAY", "text": "RMS", "start": 77, "end": 80}
+{"span_id": "OBS_LESION_85", "note_id": "1587446_syn_4", "label": "OBS_LESION", "text": "Tumor", "start": 85, "end": 90}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_105", "note_id": "1587446_syn_4", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "66%", "start": 105, "end": 108}
+{"span_id": "DEV_INSTRUMENT_114", "note_id": "1587446_syn_4", "label": "DEV_INSTRUMENT", "text": "Cryoprobe", "start": 114, "end": 123}
+{"span_id": "OBS_LESION_140", "note_id": "1587446_syn_4", "label": "OBS_LESION", "text": "tumor", "start": 140, "end": 145}
+{"span_id": "PROC_METHOD_150", "note_id": "1587446_syn_4", "label": "PROC_METHOD", "text": "APC", "start": 150, "end": 153}
+{"span_id": "DEV_INSTRUMENT_189", "note_id": "1587446_syn_4", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 189, "end": 196}
+{"span_id": "PROC_ACTION_197", "note_id": "1587446_syn_4", "label": "PROC_ACTION", "text": "dilation", "start": 197, "end": 205}
+{"span_id": "OUTCOME_COMPLICATION_234", "note_id": "1587446_syn_4", "label": "OUTCOME_COMPLICATION", "text": "Hemostasis confirmed", "start": 234, "end": 254}
+{"span_id": "OBS_LESION_18", "note_id": "1587446_syn_5", "label": "OBS_LESION", "text": "tumor", "start": 18, "end": 23}
+{"span_id": "PROC_ACTION_24", "note_id": "1587446_syn_5", "label": "PROC_ACTION", "text": "debulking", "start": 24, "end": 33}
+{"span_id": "ANAT_AIRWAY_41", "note_id": "1587446_syn_5", "label": "ANAT_AIRWAY", "text": "RMS", "start": 41, "end": 44}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_54", "note_id": "1587446_syn_5", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "66 percent", "start": 54, "end": 64}
+{"span_id": "DEV_INSTRUMENT_78", "note_id": "1587446_syn_5", "label": "DEV_INSTRUMENT", "text": "cryo probe", "start": 78, "end": 88}
+{"span_id": "OBS_LESION_103", "note_id": "1587446_syn_5", "label": "OBS_LESION", "text": "tumor", "start": 103, "end": 108}
+{"span_id": "PROC_METHOD_154", "note_id": "1587446_syn_5", "label": "PROC_METHOD", "text": "APC", "start": 154, "end": 157}
+{"span_id": "PROC_ACTION_203", "note_id": "1587446_syn_5", "label": "PROC_ACTION", "text": "dilated", "start": 203, "end": 210}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_236", "note_id": "1587446_syn_5", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "17 percent", "start": 236, "end": 246}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_50", "note_id": "1587446_syn_6", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "~66% obstruction", "start": 50, "end": 66}
+{"span_id": "ANAT_AIRWAY_70", "note_id": "1587446_syn_6", "label": "ANAT_AIRWAY", "text": "RMS", "start": 70, "end": 73}
+{"span_id": "PROC_METHOD_101", "note_id": "1587446_syn_6", "label": "PROC_METHOD", "text": "rigid bronchoscopy", "start": 101, "end": 119}
+{"span_id": "OBS_LESION_149", "note_id": "1587446_syn_6", "label": "OBS_LESION", "text": "tumor", "start": 149, "end": 154}
+{"span_id": "ANAT_AIRWAY_171", "note_id": "1587446_syn_6", "label": "ANAT_AIRWAY", "text": "RMS", "start": 171, "end": 174}
+{"span_id": "PROC_ACTION_176", "note_id": "1587446_syn_6", "label": "PROC_ACTION", "text": "Cryoextraction", "start": 176, "end": 190}
+{"span_id": "OBS_LESION_217", "note_id": "1587446_syn_6", "label": "OBS_LESION", "text": "tumor", "start": 217, "end": 222}
+{"span_id": "PROC_ACTION_277", "note_id": "1587446_syn_6", "label": "PROC_ACTION", "text": "debulking", "start": 277, "end": 286}
+{"span_id": "PROC_METHOD_299", "note_id": "1587446_syn_6", "label": "PROC_METHOD", "text": "APC", "start": 299, "end": 302}
+{"span_id": "PROC_METHOD_303", "note_id": "1587446_syn_6", "label": "PROC_METHOD", "text": "laser", "start": 303, "end": 308}
+{"span_id": "OUTCOME_COMPLICATION_318", "note_id": "1587446_syn_6", "label": "OUTCOME_COMPLICATION", "text": "hemostasis", "start": 318, "end": 328}
+{"span_id": "OBS_LESION_333", "note_id": "1587446_syn_6", "label": "OBS_LESION", "text": "tumor", "start": 333, "end": 338}
+{"span_id": "PROC_ACTION_344", "note_id": "1587446_syn_6", "label": "PROC_ACTION", "text": "ablation", "start": 344, "end": 352}
+{"span_id": "DEV_INSTRUMENT_354", "note_id": "1587446_syn_6", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 354, "end": 361}
+{"span_id": "PROC_ACTION_362", "note_id": "1587446_syn_6", "label": "PROC_ACTION", "text": "dilation", "start": 362, "end": 370}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_435", "note_id": "1587446_syn_6", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "~17% residual obstruction", "start": 435, "end": 460}
+{"span_id": "ANAT_AIRWAY_28", "note_id": "1587446_syn_7", "label": "ANAT_AIRWAY", "text": "RMS", "start": 28, "end": 31}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_33", "note_id": "1587446_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "66%", "start": 33, "end": 36}
+{"span_id": "PROC_METHOD_61", "note_id": "1587446_syn_7", "label": "PROC_METHOD", "text": "Rigid Bronch", "start": 61, "end": 73}
+{"span_id": "PROC_ACTION_89", "note_id": "1587446_syn_7", "label": "PROC_ACTION", "text": "Cryoextraction", "start": 89, "end": 103}
+{"span_id": "OBS_LESION_107", "note_id": "1587446_syn_7", "label": "OBS_LESION", "text": "tumor", "start": 107, "end": 112}
+{"span_id": "PROC_METHOD_124", "note_id": "1587446_syn_7", "label": "PROC_METHOD", "text": "APC", "start": 124, "end": 127}
+{"span_id": "OUTCOME_COMPLICATION_132", "note_id": "1587446_syn_7", "label": "OUTCOME_COMPLICATION", "text": "hemostasis", "start": 132, "end": 142}
+{"span_id": "DEV_INSTRUMENT_144", "note_id": "1587446_syn_7", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 144, "end": 151}
+{"span_id": "PROC_ACTION_152", "note_id": "1587446_syn_7", "label": "PROC_ACTION", "text": "dilation", "start": 152, "end": 160}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_183", "note_id": "1587446_syn_7", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "17%", "start": 183, "end": 186}
+{"span_id": "PROC_METHOD_11", "note_id": "1587446_syn_8", "label": "PROC_METHOD", "text": "bronchoscopy", "start": 11, "end": 23}
+{"span_id": "OBS_LESION_30", "note_id": "1587446_syn_8", "label": "OBS_LESION", "text": "tumor", "start": 30, "end": 35}
+{"span_id": "ANAT_AIRWAY_43", "note_id": "1587446_syn_8", "label": "ANAT_AIRWAY", "text": "right mainstem bronchus", "start": 43, "end": 66}
+{"span_id": "PROC_ACTION_76", "note_id": "1587446_syn_8", "label": "PROC_ACTION", "text": "cryoextraction", "start": 76, "end": 90}
+{"span_id": "OBS_LESION_105", "note_id": "1587446_syn_8", "label": "OBS_LESION", "text": "tumor", "start": 105, "end": 110}
+{"span_id": "OBS_LESION_153", "note_id": "1587446_syn_8", "label": "OBS_LESION", "text": "tumor", "start": 153, "end": 158}
+{"span_id": "PROC_METHOD_180", "note_id": "1587446_syn_8", "label": "PROC_METHOD", "text": "APC", "start": 180, "end": 183}
+{"span_id": "PROC_ACTION_232", "note_id": "1587446_syn_8", "label": "PROC_ACTION", "text": "dilated", "start": 232, "end": 239}
+{"span_id": "ANAT_AIRWAY_244", "note_id": "1587446_syn_8", "label": "ANAT_AIRWAY", "text": "airway", "start": 244, "end": 250}
+{"span_id": "DEV_INSTRUMENT_258", "note_id": "1587446_syn_8", "label": "DEV_INSTRUMENT", "text": "balloon", "start": 258, "end": 265}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_320", "note_id": "1587446_syn_8", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "66%", "start": 320, "end": 323}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_327", "note_id": "1587446_syn_8", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "17%", "start": 327, "end": 330}
+{"span_id": "OUTCOME_COMPLICATION_366", "note_id": "1587446_syn_8", "label": "OUTCOME_COMPLICATION", "text": "hemostasis was achieved", "start": 366, "end": 389}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_62", "note_id": "1587446_syn_9", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "~66% occlusion", "start": 62, "end": 76}
+{"span_id": "ANAT_AIRWAY_80", "note_id": "1587446_syn_9", "label": "ANAT_AIRWAY", "text": "RMS", "start": 80, "end": 83}
+{"span_id": "PROC_METHOD_122", "note_id": "1587446_syn_9", "label": "PROC_METHOD", "text": "rigid bronchoscopy", "start": 122, "end": 140}
+{"span_id": "OBS_LESION_169", "note_id": "1587446_syn_9", "label": "OBS_LESION", "text": "neoplasm", "start": 169, "end": 177}
+{"span_id": "ANAT_AIRWAY_194", "note_id": "1587446_syn_9", "label": "ANAT_AIRWAY", "text": "RMS", "start": 194, "end": 197}
+{"span_id": "PROC_ACTION_199", "note_id": "1587446_syn_9", "label": "PROC_ACTION", "text": "Cryoextraction", "start": 199, "end": 213}
+{"span_id": "OBS_LESION_240", "note_id": "1587446_syn_9", "label": "OBS_LESION", "text": "tumor", "start": 240, "end": 245}
+{"span_id": "PROC_ACTION_302", "note_id": "1587446_syn_9", "label": "PROC_ACTION", "text": "debulking", "start": 302, "end": 311}
+{"span_id": "PROC_METHOD_324", "note_id": "1587446_syn_9", "label": "PROC_METHOD", "text": "APC", "start": 324, "end": 327}
+{"span_id": "PROC_METHOD_328", "note_id": "1587446_syn_9", "label": "PROC_METHOD", "text": "laser", "start": 328, "end": 333}
+{"span_id": "OUTCOME_COMPLICATION_347", "note_id": "1587446_syn_9", "label": "OUTCOME_COMPLICATION", "text": "hemostasis", "start": 347, "end": 357}
+{"span_id": "OBS_LESION_362", "note_id": "1587446_syn_9", "label": "OBS_LESION", "text": "tumor", "start": 362, "end": 367}
+{"span_id": "PROC_ACTION_373", "note_id": "1587446_syn_9", "label": "PROC_ACTION", "text": "cauterization", "start": 373, "end": 386}
+{"span_id": "DEV_INSTRUMENT_388", "note_id": "1587446_syn_9", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 388, "end": 395}
+{"span_id": "PROC_ACTION_396", "note_id": "1587446_syn_9", "label": "PROC_ACTION", "text": "dilation", "start": 396, "end": 404}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_453", "note_id": "1587446_syn_9", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "~17% residual occlusion", "start": 453, "end": 476}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_PRE_222", "note_id": "1587446", "label": "OUTCOME_AIRWAY_LUMEN_PRE", "text": "~66% obstruction", "start": 222, "end": 238}
+{"span_id": "ANAT_AIRWAY_242", "note_id": "1587446", "label": "ANAT_AIRWAY", "text": "RMS", "start": 242, "end": 245}
+{"span_id": "PROC_METHOD_284", "note_id": "1587446", "label": "PROC_METHOD", "text": "rigid bronchoscopy", "start": 284, "end": 302}
+{"span_id": "OBS_LESION_328", "note_id": "1587446", "label": "OBS_LESION", "text": "tumor", "start": 328, "end": 333}
+{"span_id": "ANAT_AIRWAY_350", "note_id": "1587446", "label": "ANAT_AIRWAY", "text": "RMS", "start": 350, "end": 353}
+{"span_id": "PROC_ACTION_355", "note_id": "1587446", "label": "PROC_ACTION", "text": "Cryoextraction", "start": 355, "end": 369}
+{"span_id": "OBS_LESION_396", "note_id": "1587446", "label": "OBS_LESION", "text": "tumor", "start": 396, "end": 401}
+{"span_id": "PROC_ACTION_456", "note_id": "1587446", "label": "PROC_ACTION", "text": "debulking", "start": 456, "end": 465}
+{"span_id": "PROC_METHOD_478", "note_id": "1587446", "label": "PROC_METHOD", "text": "APC", "start": 478, "end": 481}
+{"span_id": "PROC_METHOD_482", "note_id": "1587446", "label": "PROC_METHOD", "text": "laser", "start": 482, "end": 487}
+{"span_id": "OUTCOME_COMPLICATION_497", "note_id": "1587446", "label": "OUTCOME_COMPLICATION", "text": "hemostasis", "start": 497, "end": 507}
+{"span_id": "OBS_LESION_512", "note_id": "1587446", "label": "OBS_LESION", "text": "tumor", "start": 512, "end": 517}
+{"span_id": "PROC_ACTION_523", "note_id": "1587446", "label": "PROC_ACTION", "text": "ablation", "start": 523, "end": 531}
+{"span_id": "DEV_INSTRUMENT_533", "note_id": "1587446", "label": "DEV_INSTRUMENT", "text": "Balloon", "start": 533, "end": 540}
+{"span_id": "PROC_ACTION_541", "note_id": "1587446", "label": "PROC_ACTION", "text": "dilation", "start": 541, "end": 549}
+{"span_id": "OUTCOME_AIRWAY_LUMEN_POST_599", "note_id": "1587446", "label": "OUTCOME_AIRWAY_LUMEN_POST", "text": "~17% residual obstruction", "start": 599, "end": 624}
+{"span_id": "OUTCOME_COMPLICATION_639", "note_id": "1587446", "label": "OUTCOME_COMPLICATION", "text": "Hemostasis achieved", "start": 639, "end": 658}
+{"span_id": "DEV_STENT_760", "note_id": "1587446", "label": "DEV_STENT", "text": "stent", "start": 760, "end": 765}

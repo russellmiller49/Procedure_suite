@@ -1,0 +1,12 @@
+{
+  "9388499_syn_1": "Indication: Undiagnosed effusion.\nProc: Dx Thoracoscopy.\nFindings: Normal pleura.\nAction: Fluid drained. Tube placed. No bx.\nPlan: Water seal.",
+  "9388499_syn_2": "PROCEDURE: Diagnostic Medical Thoracoscopy.\nFINDINGS: Detailed inspection of the right hemithorax revealed normal-appearing parietal and visceral pleura. No biopsies were indicated or performed. The effusion was fully evacuated.\nOUTCOME: Diagnostic inspection complete.",
+  "9388499_syn_3": "Code: 32601 (Diagnostic Thoracoscopy).\nNote: No biopsy (32609) or talc (32650) performed as pleura appeared normal. Purely diagnostic inspection and drainage.",
+  "9388499_syn_4": "Resident Note: [REDACTED]\nRight side.\n- Scope in.\n- Everything looks normal.\n- Drained fluid.\n- Chest tube placed.\n- No biopsy.",
+  "9388499_syn_5": "Kathleen Carter note. Undiagnosed fluid right side. Went in with the scope. Everything looked totally normal inside. Just drained the fluid and put a tube in. No biopsy needed.",
+  "9388499_syn_6": "Medical Thoracoscopy (Pleuroscopy) - Diagnostic. Indication undiagnosed exudative pleural effusion. Right side. Findings: Normal-appearing pleura. All remaining fluid evacuated. Chest tube placed. No air leak.",
+  "9388499_syn_7": "[Indication]\nUndiagnosed effusion.\n[Anesthesia]\nModerate.\n[Description]\nNormal pleura. Fluid drained. Tube placed.\n[Plan]\nAdmit. Water seal.",
+  "9388499_syn_8": "We took a look inside [REDACTED] see why she had fluid. Surprisingly, the lining looked completely healthy. We drained the fluid and put in a temporary tube, but we didn't see anything suspicious enough to biopsy.",
+  "9388499_syn_9": "Procedure: Pleuroscopy - Diagnostic.\nFindings: Normal anatomy.\nAction: Fluid extracted. Drain inserted.\nResult: Lung expanded.",
+  "9388499": "Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttending: Dr. Rachel Kim\n\nIndication: Undiagnosed exudative pleural effusion\nSide: Right\n\nPROCEDURE: Medical Thoracoscopy (Pleuroscopy) - Diagnostic\nUnder moderate sedation with local anesthesia.\nSingle-port entry at 6th intercostal space, mid-axillary line.\nSemi-rigid pleuroscope inserted.\n\nFINDINGS: Normal-appearing pleura\nParietal, visceral, and diaphragmatic pleura visualized.\nAll remaining fluid evacuated under direct visualization.\nChest tube placed. No air leak. Lung expanded.\n\nDISPOSITION: Floor admission, chest tube to water seal.\nF/U: Path results in 3-5 days. Tube removal when output <150mL/day.\n\nKim, MD"
+}

@@ -1,0 +1,11 @@
+{
+  "MRN-1_syn_1": "Indication: Tracheal stenosis.\nProc: Flex bronch, Balloon dilation.\nDetails: Stenosis 40% patency -> dilated to 75%.\nTool: CRE Balloon.\nComp: None.\nPlan: Monitor stridor.",
+  "MRN-1_syn_2": "PROCEDURE: Flexible Bronchoscopy with Tracheal Dilation.\nINDICATION: Post-intubation tracheal stenosis.\nNARRATIVE: The airway was inspected, revealing a concentric stenotic segment in the mid-trachea reducing the lumen to approximately 40%. Serial balloon dilations were performed using a CRE balloon, achieving a final patency of 75%. No significant mucosal trauma was noted.\nIMPRESSION: Improved tracheal caliber.",
+  "MRN-1_syn_3": "Code: 31630 (Bronchoscopy with dilation).\nTarget: Trachea.\nMethod: Balloon dilation (serial inflations).\nResult: Improvement from 40% to 75% luminal diameter.\nNote: Diagnostic component bundled.",
+  "MRN-1_syn_4": "Procedure: Bronch Dilation\nPatient: [REDACTED]\nSteps:\n1. Scope in.\n2. Found stenosis in trachea.\n3. Balloon up to 3ATM then 5ATM.\n4. Opened up good.\n5. No bleeding.\nPlan: Decadron, observe.",
+  "MRN-1_syn_5": "flex bronch for stenosis patient had a tube before. trachea was tight like 40 percent. used the balloon to stretch it out. got it to 75 percent. no bleeding really. patient breathing better.",
+  "MRN-1_syn_6": "Flexible bronchoscopy with serial balloon dilation of post-intubation tracheal stenosis. Stenosis improved from ~40% to ~75% patency. No complications. Post-procedure airway patent.",
+  "MRN-1_syn_7": "[Indication]\nTracheal stenosis (post-intubation).\n[Anesthesia]\nModerate sedation.\n[Description]\nFlexible bronchoscopy. Stenosis id[REDACTED]. Serial balloon dilation performed. Patency improved to 75%.\n[Plan]\nDischarge home if stable.",
+  "MRN-1_syn_8": "We performed a flexible bronchoscopy to treat the patient's tracheal narrowing. The stenosis was significant, blocking about 60% of the airway. We used a balloon catheter to gently stretch the scar tissue in multiple steps. By the end of the procedure, the airway was much more open, with about 75% patency. The patient tolerated the dilation well.",
+  "MRN-1_syn_9": "Procedure: Endoscopic tracheal expansion.\nIssue: Cicatricial airway stenosis.\nAction: The stricture was radially expanded using a pneumatic dilator. Serial inflations were executed.\nResult: Augmented tracheal cross-section."
+}
