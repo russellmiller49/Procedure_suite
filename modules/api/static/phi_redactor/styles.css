@@ -137,13 +137,22 @@ button.secondary {
 }
 
 .editor {
-  flex: 1;
-  min-height: 0;
+  flex: 0 0 auto;
+  height: 300px;
+  min-height: 150px;
+  max-height: 70vh;
+  resize: vertical;
+  overflow: hidden;
 }
 
 .result {
+  flex: 1;
+  min-height: 200px;
   border-top: 1px solid var(--border);
   background: rgba(15, 23, 48, 0.55);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .resultHeader {
@@ -308,7 +317,7 @@ button.secondary {
 /* Results container */
 .resultsContainer {
   padding: 12px;
-  max-height: 300px;
+  flex: 1;
   overflow: auto;
 }
 

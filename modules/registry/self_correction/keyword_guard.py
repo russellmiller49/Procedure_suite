@@ -306,6 +306,26 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
     ],
 }
 
+_NEGATION_CUES = r"(?:no|not|without|declined|deferred|aborted)"
+
+
+def _match_is_negated(note_text: str, match: re.Match[str]) -> bool:
+    """Return True when a keyword match is negated in local context."""
+    if not note_text:
+        return False
+
+    start, end = match.start(), match.end()
+    before = note_text[max(0, start - 120) : start]
+    after = note_text[end : end + 120]
+
+    if re.search(rf"(?i)\b{_NEGATION_CUES}\b[^.\n]{{0,60}}$", before):
+        return True
+
+    if re.search(rf"(?i)^[^.\n]{{0,60}}\b{_NEGATION_CUES}\b", after):
+        return True
+
+    return False
+
 
 def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
     """Scan raw text for required patterns missing from the extracted record.
@@ -320,7 +340,8 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
             continue
 
         for pattern, msg in rules:
-            if re.search(pattern, note_text or ""):
+            match = re.search(pattern, note_text or "")
+            if match and not _match_is_negated(note_text or "", match):
                 warning = f"SILENT_FAILURE: {msg} (Pattern: '{pattern}')"
                 warnings.append(warning)
                 logger.warning(warning, extra={"field": field_path, "pattern": pattern})
@@ -348,6 +369,8 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
         for pattern, msg in rules:
             match = re.search(pattern, note_text or "")
             if not match:
+                continue
+            if _match_is_negated(note_text or "", match):
                 continue
 
             if field_path.startswith("granular_data.navigation_targets"):

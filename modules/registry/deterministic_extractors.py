@@ -537,7 +537,8 @@ CRYOBIOPSY_PATTERN = r"\bcryo\s*biops(?:y|ies)\b|\bcryobiops(?:y|ies)\b"
 
 # Rigid bronchoscopy patterns (31640/31641 family)
 RIGID_BRONCHOSCOPY_PATTERNS = [
-    r"\brigid\s+bronchoscop(?:y|ies)\b",
+    r"\brigid\s+bronchoscop",  # bronchoscopy/bronchoscope/bronchoscopic
+    r"\brigid\s+optic\b",
     r"\brigid\s+scope\b",
 ]
 

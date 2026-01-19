@@ -239,6 +239,45 @@ function renderCPTTable(data) {
 }
 
 /**
+ * Format a value for display in the registry table.
+ * Handles primitives, arrays, and objects.
+ */
+function formatValueForDisplay(value) {
+  if (value === null || value === undefined) return "—";
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "number") return String(value);
+  if (typeof value === "string") return value;
+
+  if (Array.isArray(value)) {
+    if (value.length === 0) return "—";
+    // Check if array contains objects
+    if (typeof value[0] === "object" && value[0] !== null) {
+      // For arrays of objects, extract meaningful info
+      return value.map(item => {
+        if (item.code) return item.code; // CPT code object
+        if (item.text) return `"${item.text.slice(0, 50)}${item.text.length > 50 ? '...' : ''}"`; // Evidence span
+        if (item.name) return item.name;
+        // Fallback: show first few properties
+        const keys = Object.keys(item).slice(0, 2);
+        return keys.map(k => `${k}: ${item[k]}`).join(", ");
+      }).join("; ");
+    }
+    return value.join(", ");
+  }
+
+  if (typeof value === "object") {
+    // For single objects, extract meaningful info
+    if (value.code) return value.code;
+    if (value.text) return `"${value.text.slice(0, 50)}${value.text.length > 50 ? '...' : ''}"`;
+    // Fallback: JSON but truncated
+    const json = JSON.stringify(value);
+    return json.length > 100 ? json.slice(0, 97) + "..." : json;
+  }
+
+  return String(value);
+}
+
+/**
  * Recursively render all non-null registry fields.
  * Flattens nested objects with arrow notation paths.
  */
@@ -246,30 +285,31 @@ function renderRegistrySummary(registry) {
   const tbody = document.getElementById("registryTableBody");
   const rows = [];
 
+  // Keys to skip (complex nested structures shown separately or not useful)
+  const skipKeys = new Set(["evidence", "billing", "ner_spans"]);
+
   // Recursively extract non-null fields
   function extractFields(obj, prefix = "") {
     if (obj === null || obj === undefined) return;
 
     for (const [key, value] of Object.entries(obj)) {
       const path = prefix ? `${prefix}.${key}` : key;
+      const lowKey = key.toLowerCase();
 
       if (value === null || value === undefined) continue;
       if (value === false) continue; // Skip false booleans (procedures not performed)
       if (Array.isArray(value) && value.length === 0) continue; // Skip empty arrays
+
+      // Skip complex evidence/billing structures at top level
+      if (!prefix && skipKeys.has(lowKey)) continue;
 
       if (typeof value === "object" && !Array.isArray(value)) {
         // Recurse into nested objects
         extractFields(value, path);
       } else {
         // Format the value for display
-        let displayValue;
-        if (Array.isArray(value)) {
-          displayValue = value.join(", ");
-        } else if (typeof value === "boolean") {
-          displayValue = value ? "Yes" : "No";
-        } else {
-          displayValue = String(value);
-        }
+        const displayValue = formatValueForDisplay(value);
+        if (displayValue === "—") continue; // Skip empty values
 
         // Format the key for display (snake_case → Title Case with arrow separators)
         const displayKey = path
@@ -290,7 +330,9 @@ function renderRegistrySummary(registry) {
     html += '<tr><td colspan="2" class="subtle" style="text-align: center;">No registry data extracted</td></tr>';
   } else {
     rows.forEach(([label, value]) => {
-      html += `<tr><td><strong>${label}</strong></td><td>${value}</td></tr>`;
+      // Escape HTML in values to prevent XSS
+      const safeValue = value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      html += `<tr><td><strong>${label}</strong></td><td>${safeValue}</td></tr>`;
     });
   }
   html += "</tbody>";

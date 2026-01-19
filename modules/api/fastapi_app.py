@@ -341,7 +341,8 @@ async def _phi_redactor_headers(request: Request, call_next):
     """
     resp = await call_next(request)
     path = request.url.path
-    if path.startswith("/ui/phi_redactor"):
+    # Apply COEP headers to all /ui/ paths (PHI Redactor is now the main UI)
+    if path.startswith("/ui"):
         # Required for SharedArrayBuffer in modern browsers (cross-origin isolation).
         resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
         resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
@@ -460,8 +461,13 @@ def phi_redactor_sw() -> FileResponse:
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
     # Use absolute path to static directory relative to this file
-    static_dir = Path(__file__).parent / "static"
-    app.mount("/ui", StaticFiles(directory=str(static_dir), html=True), name="ui")
+    # Mount PHI Redactor as the main UI (client-side PHI detection)
+    phi_redactor_dir = Path(__file__).parent / "static" / "phi_redactor"
+    app.mount("/ui", StaticFiles(directory=str(phi_redactor_dir), html=True), name="ui")
+    # Also mount vendor directory for ONNX model files
+    vendor_dir = phi_redactor_dir / "vendor"
+    if vendor_dir.exists():
+        app.mount("/ui/vendor", StaticFiles(directory=str(vendor_dir)), name="ui_vendor")
 
 # Configure logging
 _logger = logging.getLogger(__name__)
