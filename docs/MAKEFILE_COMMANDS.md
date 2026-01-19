@@ -77,6 +77,10 @@ make test
 make test 2>&1 | tee test_output_$(date +%Y%m%d_%H%M%S).txt
 
 ---
+#mac make test
+set -a; source .env; set +a; make test
+set -a; source .env; set +a; make test 2>&1 | tee test_output_$(date +%Y%m%d_%H%M%S).txt
+
 
 ## Validation
 

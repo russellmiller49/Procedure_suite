@@ -85,6 +85,49 @@ def test_verify_evidence_integrity_does_not_flip_when_quote_present() -> None:
     assert warnings == []
 
 
+def test_verify_evidence_integrity_keeps_therapeutic_aspiration_with_contextual_suction() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "therapeutic_aspiration": {
+                    "performed": True,
+                }
+            }
+        }
+    )
+    record.evidence = {}
+
+    note_text = "Routine suctioning performed. Copious secretions were suctioned from the airway."
+    record, warnings = verify_evidence_integrity(record, note_text)
+
+    assert record.procedures_performed is not None
+    assert record.procedures_performed.therapeutic_aspiration is not None
+    assert record.procedures_performed.therapeutic_aspiration.performed is True
+    assert warnings == []
+    assert "procedures_performed.therapeutic_aspiration.performed" in (record.evidence or {})
+
+
+def test_verify_evidence_integrity_keeps_therapeutic_aspiration_across_newlines() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "therapeutic_aspiration": {
+                    "performed": True,
+                }
+            }
+        }
+    )
+    record.evidence = {}
+
+    note_text = "Routine suctioning performed.\nCopious secretions\nwere suctioned from the airway."
+    record, warnings = verify_evidence_integrity(record, note_text)
+
+    assert record.procedures_performed is not None
+    assert record.procedures_performed.therapeutic_aspiration is not None
+    assert record.procedures_performed.therapeutic_aspiration.performed is True
+    assert warnings == []
+
+
 def test_sanitize_ebus_events_flips_needle_aspiration_when_not_biopsied() -> None:
     record = RegistryRecord.model_validate(
         {

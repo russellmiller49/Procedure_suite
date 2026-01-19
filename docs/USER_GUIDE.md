@@ -96,6 +96,8 @@ Notes:
 - The devserver sources `.env`. If you change `.env`, restart the devserver.
 - Keep secrets (e.g., `OPENAI_API_KEY`) out of version control; prefer shell env vars or an untracked local `.env`.
 - To use the current granular NER model, set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2` (in `.env` or your shell).
+  Example (shell): `export GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2`
+  Example (`.env`): `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2`
 - For faster responses (disable self-correction LLM calls), run with `PROCSUITE_FAST_MODE=1`.
 ---
 
@@ -143,6 +145,9 @@ python scripts/registry_pipeline_smoke.py --note <note.txt>
 # With self-correction enabled
 python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct
 
+# With real LLM calls enabled (OpenAI)
+python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct --real-llm
+
 # With inline text (no file needed)
 python scripts/registry_pipeline_smoke.py --text "Procedure: EBUS bronchoscopy..."
 ```
@@ -176,6 +181,9 @@ python scripts/registry_pipeline_smoke_batch.py --self-correct
 
 # Custom notes directory (default: data/knowledge/patient_note_texts)
 python scripts/registry_pipeline_smoke_batch.py --notes-dir path/to/notes
+
+python scripts/registry_pipeline_smoke_batch.py --output my_results.txt --self-correct --real-llm
+python scripts/registry_pipeline_smoke_batch.py --output my_results_V2.txt --self-correct --real-llm
 ```
 
 **Output file format:**
@@ -195,6 +203,7 @@ python scripts/registry_pipeline_smoke_batch.py --notes-dir path/to/notes
 - Keyword gating is configured in `modules/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
 
 **Note:** The batch script automatically sets `REGISTRY_USE_STUB_LLM=1` and `GEMINI_OFFLINE=1` for offline testing. To test with real LLM/self-correction, ensure `REGISTRY_SELF_CORRECT_ENABLED=1` is set in your environment and pass the `--self-correct` flag.
+The single-note smoke test supports `--real-llm`, which disables stub/offline defaults for that run.
 
 ### 3c. Unified Pipeline Batch Test
 
@@ -218,6 +227,15 @@ python scripts/unified_pipeline_batch.py --no-financials --no-explain
 
 # Custom notes directory (default: data/granular annotations/notes_text)
 python scripts/unified_pipeline_batch.py --notes-dir path/to/notes
+
+# With real LLM calls enabled
+python scripts/unified_pipeline_batch.py --output my_results.txt --real-llm
+
+# Check which provider is configured
+python -c "import os; print('LLM_PROVIDER:', os.getenv('LLM_PROVIDER', 'gemini (default)'))"
+
+# Check if API keys are set (without showing values)
+python -c "import os; print('GEMINI_API_KEY:', 'SET' if os.getenv('GEMINI_API_KEY') else 'NOT SET'); print('OPENAI_API_KEY:', 'SET' if os.getenv('OPENAI_API_KEY') else 'NOT SET')"
 ```
 
 **Output file format:**

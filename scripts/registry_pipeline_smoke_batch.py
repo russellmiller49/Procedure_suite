@@ -218,7 +218,13 @@ def _run_smoke_test(note_text: str, note_id: str, self_correct: bool = False) ->
                 if result.self_correction:
                     output_lines.append("Self-correction applied:\n")
                     for item in result.self_correction:
-                        output_lines.append(f"  - {item.trigger.target_cpt}: {item.outcome}\n")
+                        applied_paths = getattr(item, "applied_paths", None)
+                        if isinstance(applied_paths, list) and applied_paths:
+                            output_lines.append(
+                                f"  - {item.trigger.target_cpt}: applied {', '.join(applied_paths)}\n"
+                            )
+                        else:
+                            output_lines.append(f"  - {item.trigger.target_cpt}: applied (no paths recorded)\n")
                 else:
                     output_lines.append("Self-correction applied: (none)\n")
 
@@ -296,13 +302,22 @@ def main() -> int:
         action="store_true",
         help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
     )
+    parser.add_argument(
+        "--real-llm",
+        action="store_true",
+        help="Allow real LLM calls (disables stub/offline defaults).",
+    )
     args = parser.parse_args()
 
     # Set up environment
-    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-    if os.getenv("GEMINI_OFFLINE") is None:
-        os.environ["GEMINI_OFFLINE"] = "1"
+    if args.real_llm:
+        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
+        os.environ.setdefault("GEMINI_OFFLINE", "0")
+    else:
+        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+        if os.getenv("GEMINI_OFFLINE") is None:
+            os.environ["GEMINI_OFFLINE"] = "1"
 
     # Load notes
     if not args.notes_dir.exists():
@@ -350,6 +365,7 @@ def main() -> int:
         if args.seed is not None:
             f.write(f"Random seed: {args.seed}\n")
         f.write(f"Self-correction: {args.self_correct}\n")
+        f.write(f"Real LLM enabled: {args.real_llm}\n")
         f.write("=" * 80 + "\n")
         f.write("\n")
 

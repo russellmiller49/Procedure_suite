@@ -143,6 +143,7 @@ __all__ = [
     # Granular data processing
     "process_granular_data",
     # Registry-record-level guardrails
+    "populate_ebus_node_events_fallback",
     "sanitize_ebus_events",
 ]
 
@@ -2596,6 +2597,11 @@ _EBUS_BENIGN_ONLY_PHRASES_RE = re.compile(
     re.IGNORECASE,
 )
 
+_EBUS_MEASURE_ONLY_RE = re.compile(
+    r"\bmeasur(?:e|ed|ement|ing)\b",
+    re.IGNORECASE,
+)
+
 
 def _ebus_station_pattern(station: str) -> re.Pattern[str] | None:
     token = (station or "").strip().upper()
@@ -2635,6 +2641,8 @@ def _station_has_sampling_negation(full_text: str, station: str) -> bool:
             continue
         if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(line):
             return True
+        if _EBUS_MEASURE_ONLY_RE.search(line) and not _EBUS_SAMPLING_INDICATORS_RE.search(line):
+            return True
         if _EBUS_BENIGN_ONLY_PHRASES_RE.search(line) and not station_has_sampling_positive:
             return True
 
@@ -2645,6 +2653,8 @@ def _station_has_sampling_negation(full_text: str, station: str) -> bool:
             end_of_line = len(text)
         snippet = text[match.start():end_of_line]
         if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(snippet):
+            return True
+        if _EBUS_MEASURE_ONLY_RE.search(snippet) and not _EBUS_SAMPLING_INDICATORS_RE.search(snippet):
             return True
         if _EBUS_BENIGN_ONLY_PHRASES_RE.search(snippet) and not station_has_sampling_positive:
             return True
@@ -2700,4 +2710,104 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
     if hasattr(linear, "stations_sampled"):
         setattr(linear, "stations_sampled", sorted(set(sampled)) if sampled else None)
 
+    return warnings
+
+
+_EBUS_FALLBACK_STATION_RE = re.compile(
+    r"\b(?:station|site)\s*(\d{1,2}[RL]?(?:s|i)?)\b",
+    re.IGNORECASE,
+)
+_EBUS_STATION_TOKEN_RE = re.compile(
+    r"\b(2R|2L|4R|4L|7|10R|10L|11R(?:S|I)?|11L(?:S|I)?)\b",
+    re.IGNORECASE,
+)
+_EBUS_INSPECTION_HINTS_RE = re.compile(
+    r"\b(?:inspect|inspection|visualiz|view|survey|assess|measure|measurement)\b",
+    re.IGNORECASE,
+)
+_EBUS_SAMPLED_SECTION_RE = re.compile(
+    r"\b(?:EBUS\s+)?Lymph\s+Nodes\s+Sampled\b",
+    re.IGNORECASE,
+)
+
+
+def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -> list[str]:
+    """Populate basic EBUS node_events from station lines when missing."""
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    if linear is None or getattr(linear, "performed", False) is not True:
+        return warnings
+
+    existing = getattr(linear, "node_events", None)
+    if isinstance(existing, list) and existing:
+        return warnings
+
+    if not full_text:
+        return warnings
+
+    from modules.ner.entity_types import normalize_station
+    from modules.registry.schema import NodeInteraction
+
+    station_events: dict[str, NodeInteraction] = {}
+    stations_sampled: list[str] = []
+    in_sampled_section = False
+
+    for line in full_text.splitlines():
+        if _EBUS_SAMPLED_SECTION_RE.search(line):
+            in_sampled_section = True
+            continue
+        if not line.strip():
+            in_sampled_section = False
+
+        if not _EBUS_FALLBACK_STATION_RE.search(line):
+            if not (in_sampled_section or "lymph node" in line.lower()):
+                continue
+
+        sampling = bool(_EBUS_SAMPLING_INDICATORS_RE.search(line)) or in_sampled_section
+        negated = bool(_EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(line))
+        inspection = bool(_EBUS_INSPECTION_HINTS_RE.search(line))
+        if _EBUS_MEASURE_ONLY_RE.search(line) and not sampling:
+            inspection = True
+
+        if not sampling and not inspection:
+            continue
+
+        action = "needle_aspiration" if sampling and not negated else "inspected_only"
+
+        station_tokens: list[str] = []
+        for match in _EBUS_FALLBACK_STATION_RE.finditer(line):
+            station_tokens.append(match.group(1) or "")
+        if in_sampled_section or "lymph node" in line.lower():
+            for match in _EBUS_STATION_TOKEN_RE.finditer(line):
+                station_tokens.append(match.group(1) or "")
+
+        for token in station_tokens:
+            station = normalize_station(token)
+            if not station:
+                continue
+            existing = station_events.get(station)
+            if existing:
+                if existing.action == "inspected_only" and action != "inspected_only":
+                    existing.action = action
+                    existing.evidence_quote = line.strip()
+                    stations_sampled.append(station)
+                continue
+            station_events[station] = NodeInteraction(
+                station=station,
+                action=action,
+                outcome=None,
+                evidence_quote=line.strip(),
+            )
+            if action != "inspected_only":
+                stations_sampled.append(station)
+
+    if not station_events:
+        return warnings
+
+    setattr(linear, "node_events", list(station_events.values()))
+    if hasattr(linear, "stations_sampled"):
+        setattr(linear, "stations_sampled", sorted(set(stations_sampled)) if stations_sampled else None)
+
+    warnings.append("EBUS_REGEX_FALLBACK: populated node_events from station lines.")
     return warnings

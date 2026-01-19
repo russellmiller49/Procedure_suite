@@ -1,3809 +1,2362 @@
-NOTE_ID:  note_239 SOURCE_FILE: note_239.txt PREOPERATIVE DIAGNOSIS: Tracheobronchomalacia
+================================================================================
+UNIFIED PIPELINE BATCH TEST RESULTS
+================================================================================
+Date: 2026-01-18T21:39:26.229966
+Notes tested: 10
+Notes directory: /Users/russellmiller/Projects/Procedure_suite/data/granular annotations/notes_text
+Include financials: True
+Include explain: True
+================================================================================
 
-POSTOPERATIVE DIAGNOSIS: Tracheobronchomalacia
+================================================================================
+NOTE: note_062
+================================================================================
 
-PROCEDURE PERFORMED: Rigid bronchoscopy, Silicone Y-stent removal
-
-INDICATIONS: Completed stent trial
-
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_062 SOURCE_FILE: note_062.txt INDICATION FOR OPERATION:  [REDACTED]is a 68 year old-year-old male who presents with lung transplant and airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
  
-
-Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives.
-
-Sedation: General Anesthesia
-
-DESCRIPTION OF PROCEDURE: The procedure was performed in the bronchoscopy suite. Once the patient was sedated and relaxed a 12 mm non-ventilating rigid tracheoscope was inserted through the mouth into the sublottic glottic space. A flexible Q190 Olympus bronchoscope was inserted through the tracheoscope into the trachea and airway inspection was performed. The patient’s Y stent was well placed without mucosal debris or obstruction. At the distal tip of the right limb was mild granulation tissue causing about 10% obstruction and at the distal tip of the left mild was moderate granulation tissue causing about 40% obstruction. The distal airways were widely patent.  The flexible bronchoscope was removed and the rigid optic was reinserted alongside rigid alligator forceps. The forceps were used to grasp the proximal limb of the tracheal stent and were rotated repeatedly while withdrawing the stent into the rigid bronchoscope.  The stent was subsequently removed en-bloc with the rigid bronchoscope without difficulty.  Once his stent was removed an I-gel LMA was then placed and the flexible bronchoscope was reinserted.  There was some mild erythema in the areas of the struts from the move stent however the previously covered airways appeared to be relatively normal.  At this point  the cryotherapy probe was used to perform multiple 30 second freeze thaw cycles at the areas of residual granulation tissue within the left and right mainstems. There was some mild bleeding associated with the treatment on the left requiring cold saline and 2cc of topical epinephrine. Once we were confident that the bleeding had resolved the flexible bronchoscope was removed and the procedure was completed.
-
  
-
-Complications: None
-
-EBL: 5
-
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
  
-
-Recommendations:
-
-- Transfer to PACU 
-
-- Discharge patient once criteria is met
-
-- Due to lack of symptomatic response to stenting would not recommend consideration of tracheoplasty at this time. 
-
-- Recommend continuing of non-invasive ventilation for now.
-
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
  
-
-Results
-
-Formatted
-
-Raw JSON
-
-Unified Results Extraction-First
-
-Pipeline: extraction_first
-
-Confidence: gray_zone
-
-Manual Review Needed
-
-CPT Codes
-
-31641
-
-Code Details
-
-CodeDescriptionConfidenceReview31641Bronchoscopy; with destruction of tumor or relief of stenosis by any method80%recommendedcryotherapy.performed=true
-
-RVU & Payment
-
-Total Work RVU: 5.25
-
-Estimated Payment: $271.79
-
-Per-Code Breakdown
-
-CPTWork RVUPayment316415.25$N/A
-
-Registry Extraction
-
-FieldValueCryotherapy PerformedYesRigid Bronchoscopy PerformedYesCpt Code 1 Code31641Established Tracheostomy RouteNo
-
-Evidence
-
-{
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "Rigid bronchoscopy",
-
-"span": [
-
-159,
-
-177
-
-],
-
-"confidence": 0.6223974525928497
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Y-stent",
-
-"span": [
-
-188,
-
-195
-
-],
-
-"confidence": 0.9657225807507833
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "removal",
-
-"span": [
-
-196,
-
-203
-
-],
-
-"confidence": 0.9042719602584839
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "airway inspection",
-
-"span": [
-
-761,
-
-778
-
-],
-
-"confidence": 0.8114435374736786
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Y stent",
-
-"span": [
-
-808,
-
-815
-
-],
-
-"confidence": 0.9747903347015381
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "tracheal",
-
-"span": [
-
-1271,
-
-1279
-
-],
-
-"confidence": 0.5591835975646973
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1280,
-
-1285
-
-],
-
-"confidence": 0.7928583025932312
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1336,
-
-1341
-
-],
-
-"confidence": 0.8499670028686523
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1376,
-
-1381
-
-],
-
-"confidence": 0.9560505151748657
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1473,
-
-1478
-
-],
-
-"confidence": 0.9556964039802551
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1637,
-
-1642
-
-],
-
-"confidence": 0.9396381378173828
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "freeze thaw cycles",
-
-"span": [
-
-1793,
-
-1811
-
-],
-
-"confidence": 0.9931309620539347
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "cryotherapy",
-
-"span": [
-
-1736,
-
-1747
-
-],
-
-"confidence": 1
-
-}
-
-]
-
-}
-
-Audit Warnings:
-
-DETERMINISTIC_UPLIFT: added performed=true for cryotherapy
-
-31635: ML detected procedure, but specific device/anatomy was not found in text.
-
-31636: ML detected procedure, but specific device/anatomy was not found in text.
-
-31637: ML detected procedure, but specific device/anatomy was not found in text.
-
-31638: ML detected procedure, but specific device/anatomy was not found in text.
-
-31641: ML detected procedure, but specific device/anatomy was not found in text.
-
-RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31636 (prob=0.46), but deterministic derivation missed it
-
-KB: 2.9 · Policy: extraction_first_v1 · Time: 1180ms
-
-
-
-Raw JSON
-
-{
-
-"registry": {
-
-"procedures_performed": {
-
-"cryotherapy": {
-
-"performed": true
-
-},
-
-"rigid_bronchoscopy": {
-
-"performed": true
-
-}
-
-},
-
-"billing": {
-
-"cpt_codes": [
-
-{
-
-"code": "31641"
-
-}
-
-]
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"text": "Rigid bronchoscopy",
-
-"start": 159,
-
-"end": 177,
-
-"confidence": 0.6223974525928497
-
-},
-
-{
-
-"text": "Y-stent",
-
-"start": 188,
-
-"end": 195,
-
-"confidence": 0.9657225807507833
-
-},
-
-{
-
-"text": "removal",
-
-"start": 196,
-
-"end": 203,
-
-"confidence": 0.9042719602584839
-
-},
-
-{
-
-"text": "airway inspection",
-
-"start": 761,
-
-"end": 778,
-
-"confidence": 0.8114435374736786
-
-},
-
-{
-
-"text": "Y stent",
-
-"start": 808,
-
-"end": 815,
-
-"confidence": 0.9747903347015381
-
-},
-
-{
-
-"text": "tracheal",
-
-"start": 1271,
-
-"end": 1279,
-
-"confidence": 0.5591835975646973
-
-},
-
-{
-
-"text": "stent",
-
-"start": 1280,
-
-"end": 1285,
-
-"confidence": 0.7928583025932312
-
-},
-
-{
-
-"text": "stent",
-
-"start": 1336,
-
-"end": 1341,
-
-"confidence": 0.8499670028686523
-
-},
-
-{
-
-"text": "stent",
-
-"start": 1376,
-
-"end": 1381,
-
-"confidence": 0.9560505151748657
-
-},
-
-{
-
-"text": "stent",
-
-"start": 1473,
-
-"end": 1478,
-
-"confidence": 0.9556964039802551
-
-},
-
-{
-
-"text": "stent",
-
-"start": 1637,
-
-"end": 1642,
-
-"confidence": 0.9396381378173828
-
-},
-
-{
-
-"text": "freeze thaw cycles",
-
-"start": 1793,
-
-"end": 1811,
-
-"confidence": 0.9931309620539347
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"text": "cryotherapy",
-
-"start": 1736,
-
-"end": 1747
-
-}
-
-]
-
-},
-
-"procedure_families": [],
-
-"established_tracheostomy_route": false,
-
-"granular_validation_warnings": []
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "Rigid bronchoscopy",
-
-"span": [
-
-159,
-
-177
-
-],
-
-"confidence": 0.6223974525928497
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Y-stent",
-
-"span": [
-
-188,
-
-195
-
-],
-
-"confidence": 0.9657225807507833
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "removal",
-
-"span": [
-
-196,
-
-203
-
-],
-
-"confidence": 0.9042719602584839
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "airway inspection",
-
-"span": [
-
-761,
-
-778
-
-],
-
-"confidence": 0.8114435374736786
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Y stent",
-
-"span": [
-
-808,
-
-815
-
-],
-
-"confidence": 0.9747903347015381
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "tracheal",
-
-"span": [
-
-1271,
-
-1279
-
-],
-
-"confidence": 0.5591835975646973
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1280,
-
-1285
-
-],
-
-"confidence": 0.7928583025932312
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1336,
-
-1341
-
-],
-
-"confidence": 0.8499670028686523
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1376,
-
-1381
-
-],
-
-"confidence": 0.9560505151748657
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1473,
-
-1478
-
-],
-
-"confidence": 0.9556964039802551
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-1637,
-
-1642
-
-],
-
-"confidence": 0.9396381378173828
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "freeze thaw cycles",
-
-"span": [
-
-1793,
-
-1811
-
-],
-
-"confidence": 0.9931309620539347
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "cryotherapy",
-
-"span": [
-
-1736,
-
-1747
-
-],
-
-"confidence": 1
-
-}
-
-]
-
-},
-
-"cpt_codes": [
-
-"31641"
-
-],
-
-"suggestions": [
-
-{
-
-"code": "31641",
-
-"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
-
-"confidence": 0.8,
-
-"rationale": "cryotherapy.performed=true",
-
-"review_flag": "recommended"
-
-}
-
-],
-
-"total_work_rvu": 5.25,
-
-"estimated_payment": 271.79,
-
-"per_code_billing": [
-
-{
-
-"cpt_code": "31641",
-
-"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
-
-"work_rvu": 5.25,
-
-"total_facility_rvu": 8.4,
-
-"facility_payment": 271.79
-
-}
-
-],
-
-"pipeline_mode": "extraction_first",
-
-"coder_difficulty": "gray_zone",
-
-"needs_manual_review": true,
-
-"audit_warnings": [
-
-"DETERMINISTIC_UPLIFT: added performed=true for cryotherapy",
-
-"31635: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31636: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31637: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31638: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31641: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31636 (prob=0.46), but deterministic derivation missed it"
-
-],
-
-"validation_errors": [],
-
-"review_status": "pending_phi_review",
-
-"kb_version": "2.9",
-
-"policy_version": "extraction_first_v1",
-
-"processing_time_ms": 1180.1
-
-}
-
-Extraction evaluator
-Custom Gem
-This is for informational purposes only. For medical advice or diagnosis, consult a professional.
-🩺 Extraction Quality Report
-Score: 60 / 100 Status: ⚠️ WARNING (Significant Omission)
-
-1. Accuracy (Precision)
-Hallucinations: None. The extraction of Cryotherapy (31641) and Rigid Bronchoscopy is fully supported by the text.
-
-Evidence Support: The evidence for cryotherapy ("cryotherapy probe was used...") is precise and correct.
-
-2. Completeness (Recall)
-Missed Major Procedure: CRITICAL FAILURE. The pipeline completely missed the Stent Removal.
-
-Text Evidence: "PROCEDURE PERFORMED: ... Silicone Y-stent removal", "The forceps were used to grasp the proximal limb... stent was subsequently removed en-bloc".
-
-Missing Code: 31638 (Bronchoscopy; with revision of tracheal or bronchial stent). Removal of an existing stent is typically coded as a revision (31638) or occasionally as foreign body removal (31635), but the pipeline output contains neither.
-
-Missing Registry Event: procedures_performed lacks any entry for stent_removal, stent_revision, or foreign_body_removal.
-
-Missed Granularity:
-
-Stent Details: The note specifies a "Silicone Y-stent". This detail is absent from the structured output.
-
-Airway Findings: The note specifies "10% obstruction" (Right) and "40% obstruction" (Left) due to granulation tissue. These quantitative findings were not extracted into the registry.
-
-3. Logic & Coding
-Audit Warning Failure: The pipeline actually detected the missing code but failed to validate it. The audit_warnings list contains: "31638: ML detected procedure, but specific device/anatomy was not found in text."
-
-Root Cause: The NER model identified "Y-stent" (confidence 0.96) and "removal" (confidence 0.90) in the evidence block, but the deterministic post-processor likely failed to link "Y-stent" to the allowable anchor terms for CPT 31638, causing it to be dropped.
-
-CPT Consistency: 31641 is correct for the cryotherapy destruction of granulation tissue. However, listing only 31641 for a Rigid Bronchoscopy with Stent Removal is a significant under-coding error.
-
-4. Corrected JSON Snippet
-The following fields should be added to the output to reflect the stent removal:
-
-JSON
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31635 Foreign body removal
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required conversion to rigid bronchoscopy and stent removal and re-placement . This resulted in >50% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31636 Dilate and bronchial stent initial bronchus
+31635 Foreign body removal. 
+ 
+31630 - completed in the right mainstem bronchus
+31636 performed in the left main stem bronchus 
+This increase the time and complexity of the procedure
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Normal.
+Vocal Cords: Normal without mass/lesions
+Trachea: Normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Slight stenosis as anastamosis site without evidence of dehiscence. Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Stent in place at LMSB. Thick mucus throughout. Granulation at distal stent and evidence of distal stent migration and occlusion of LUL. Otherwise, normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Granulation tissue at distal LMSB stent. Slightly friable.
+Secretions: Copious thick and thin secretions throughout with left greater than right.
+ 
+MUCUS WITHIN TRACHEA AT OUTSET OF PROCEDURE
+ 
+ 
+DISTAL LMSB STENT WITH GRANULATION TISSUE AND DISTAL MIGRATION
+ 
+ 
+RMSB STENOSIS AT ANASTOMOSIS SITE
+ 
+  
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8).  Instilled 80 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+Given evidence of distal migration of the stent and occlusion of the left upper lobe, decision was made to remove the patient's stent and place a larger stent.
+ 
+After induction of muscle relaxants, tooth or gum protector was placed. The black rigid barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid bronchoscope was advanced carefully while minimizing contact with them. Once the rigid bronchoscope was positioned at the mid-trachea, jet ventilation was initiated and chest wall movement was confirmed. 
+ 
+The rigid bronchoscope was placed in the left mainstem bronchus and the patient's stent was grasped with the single-action rigid forceps. The stent was removed from the patient's airway through the rigid bronchoscope (foreign body removal).
+ 
+The following stent (Bonastent, 12 x 50mm, covered) was placed in the Left Mainstem. 
+ 
+Balloon dilation was performed at Left Mainstem through the stent to fully expand seat the stent.  10/11/12 Elation balloon was used to perform dilation to 12 mm at the Left Mainstem.  Total 3 inflations with dilation time of 10 seconds each.
+ 
+VIEW OF NEW LMSB STENT
+ 
+ 
+Balloon dilation was performed at Right Mainstem (at stenotic anastamosis site).  10/11/12 Elation balloon was used to perform dilation to 12 mm at the Right Mainstem.  Total 1 inflations with dilation time of 60 seconds each.
+ 
+VIEW OF RMSB STENOSIS AT ANASTOMOSIS (AFTER BALLOON DILATION) 
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--LLL BAL (cell count, micro, cyto)
+--LMSB stent (path)
+ 
+IMPRESSION/PLAN: [REDACTED]is a 68 year old-year-old male who presents for bronchoscopy for evaluation of airway stenosis and stent evaluation. Patient underwent stent removal and re-placement without immediate complication.
+ 
+--Continue stent hydration regimen TID in the following order: 
+1) Albuterol nebs
+2) Hypertonic saline (3%) nebs
+3) Flutter valve
+--Guaifenesin 1200mg PO BID
+--Follow up BAL results
+--Repeat bronchoscopy in 2-4 weeks for re-evaluation
+--Follow-up in outpatient Interventional Pulmonology clinic as scheduled on [REDACTED] 
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
 {
   "registry": {
     "procedures_performed": {
-      "cryotherapy": {
+      "bal": {
         "performed": true
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug"
+      },
+      "foreign_body_removal": {
+        "performed": true,
+        "retrieval_tool": "Forceps"
+      },
+      "airway_dilation": {
+        "performed": true,
+        "method": "Balloon"
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action": "Placement"
       },
       "rigid_bronchoscopy": {
         "performed": true
-      },
-      "stent_removal": {
-        "performed": true,
-        "device": "rigid alligator forceps",
-        "target": "Silicone Y-stent",
-        "location": "trachea"
       }
     },
     "billing": {
       "cpt_codes": [
         {
+          "code": "31624"
+        },
+        {
+          "code": "31630"
+        },
+        {
+          "code": "31635"
+        },
+        {
+          "code": "31636"
+        },
+        {
+          "code": "31645"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 3304,
+          "end": 3329
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "Balloon dilat",
+          "start": 4524,
+          "end": 4537
+        }
+      ],
+      "procedures_performed.airway_stent.performed": [
+        {
+          "text": "stent",
+          "start": 1029,
+          "end": 1034
+        }
+      ],
+      "procedures_performed.foreign_body_removal.performed": [
+        {
+          "text": "foreign body",
+          "start": 4411,
+          "end": 4423
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 3067,
+          "end": 3089
+        }
+      ],
+      "procedures_performed.rigid_bronchoscopy.performed": [
+        {
+          "text": "rigid bronchoscop",
+          "start": 1006,
+          "end": 1023
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          3304,
+          3329
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "Balloon dilat",
+        "span": [
+          4524,
+          4537
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_stent.performed": [
+      {
+        "source": "registry_span",
+        "text": "stent",
+        "span": [
+          1029,
+          1034
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.foreign_body_removal.performed": [
+      {
+        "source": "registry_span",
+        "text": "foreign body",
+        "span": [
+          4411,
+          4423
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          3067,
+          3089
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.rigid_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "rigid bronchoscop",
+        "span": [
+          1006,
+          1023
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31624",
+    "31630",
+    "31635",
+    "31636",
+    "31645"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31630",
+      "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+      "confidence": 0.8,
+      "rationale": "airway_dilation.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31635",
+      "description": "Bronchoscopy; with removal of foreign body",
+      "confidence": 0.8,
+      "rationale": "foreign_body_removal.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31636",
+      "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+      "confidence": 0.8,
+      "rationale": "airway_stent.performed=true and no removal flag",
+      "review_flag": "required"
+    },
+    {
+      "code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 16.94,
+  "estimated_payment": 885.59,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.63,
+      "total_facility_rvu": 4.24,
+      "facility_payment": 137.19
+    },
+    {
+      "cpt_code": "31630",
+      "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+      "work_rvu": 3.81,
+      "total_facility_rvu": 6.27,
+      "facility_payment": 202.87
+    },
+    {
+      "cpt_code": "31635",
+      "description": "Bronchoscopy; with removal of foreign body",
+      "work_rvu": 3.42,
+      "total_facility_rvu": 5.54,
+      "facility_payment": 179.25
+    },
+    {
+      "cpt_code": "31636",
+      "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+      "work_rvu": 4.3,
+      "total_facility_rvu": 6.85,
+      "facility_payment": 221.64
+    },
+    {
+      "cpt_code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "work_rvu": 2.78,
+      "total_facility_rvu": 4.47,
+      "facility_payment": 144.63
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, airway_stent, bal, foreign_body_removal, therapeutic_aspiration",
+    "31630: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31631: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31638: ML detected procedure, but specific device/anatomy was not found in text.",
+    "SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\\s+bronchoscop')",
+    "HARD_OVERRIDE: Text mentions 'rigid bronchoscopy'. -> procedures_performed.rigid_bronchoscopy.performed=true",
+    "SELF_CORRECT_SKIPPED: 31646: judge returned null",
+    "HEADER_EXPLICIT: header lists ['31646'] but deterministic derivation missed them"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 1106.1
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_260
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_260 SOURCE_FILE: note_260.txt PREOPERATIVE DIAGNOSIS: Malignant lung mass with left lower lobe and partial left main-stem obstruction
+POSTOPERATIVE DIAGNOSIS: Malignant airway obstruction 
+PROCEDURE PERFORMED: Rigid bronchoscopy with airway debulking
+INDICATIONS: left mainstem obstruction 
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T180 therapeutic video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Right sided bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions.  The proximal and mid left mainstem were normal. In the distal left mainstem a white fungating tumor was seen causing complete obstruction of the left lower lobe and extending from the left lower lobe bronchus to causing complete obstruction of the lingula and 80% obstruction of the left mainstem.  The LMA was then removed and a 12 mm ventilating rigid bronchoscope was subsequently inserted into the mid trachea and attached to the jet ventilator. The rigid optic was then removed and the flexible bronchoscope was inserted through the rigid bronchoscope. We then utilized cryoextraction to remove large pieces of tumor piece meal. Most of the superficial tumor was avascular and did not bleed but as we continued debulking into less necrotic tumor mild bleeding occurred and was treated with cold saline flushes. After extensive debulking we were able to advance the bronchoscope into the lingula were some purulent secretions were seen and performed mini BAL. The tumor however extended into the subsegments of the lingula and deemed likely not salvageable with endobronchial treatment alone.  APC was then used to coagulate the residual superficial layer of oozing tumor. At the end of the procedure distal left mainstem was only 15% obstructed. The left upper lobe proper (anterior and apical posterior segments) were completely patent. The lingula was 80% obstructed and the left lower lobe remained completely obstructed with distal tumor. Once we were satisfied that there was no active bleeding the rigid bronchoscope was removed and the procedure was completed. 
+Recommendations:
+Transfer to PACU and then home once discharge criteria met. 
+Will discuss with oncology if biopsy samples obtained during procedure need any specific mutational analysis. 
+Defer to oncology regarding medical and radiation treatment. 
+Will monitor for symptoms or radiographic signs of tumor regrowth and possible need for repeat debulking to salvage left upper lobe.
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "bal": {
+        "performed": true
+      },
+      "thermal_ablation": {
+        "performed": true,
+        "modality": "APC"
+      },
+      "rigid_bronchoscopy": {
+        "performed": true
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624"
+        },
+        {
+          "code": "31641"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "BAL",
+          "start": 2189,
+          "end": 2192
+        }
+      ],
+      "procedures_performed.thermal_ablation.performed": [
+        {
+          "text": "APC",
+          "start": 2328,
+          "end": 2331
+        }
+      ],
+      "procedures_performed.rigid_bronchoscopy.performed": [
+        {
+          "text": "Rigid bronchoscop",
+          "start": 225,
+          "end": 242
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "BAL",
+        "span": [
+          2189,
+          2192
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.thermal_ablation.performed": [
+      {
+        "source": "registry_span",
+        "text": "APC",
+        "span": [
+          2328,
+          2331
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.rigid_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Rigid bronchoscop",
+        "span": [
+          225,
+          242
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31624",
+    "31641"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "confidence": 0.8,
+      "rationale": "thermal_ablation.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 7.88,
+  "estimated_payment": 408.98,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.63,
+      "total_facility_rvu": 4.24,
+      "facility_payment": 137.19
+    },
+    {
+      "cpt_code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "work_rvu": 5.25,
+      "total_facility_rvu": 8.4,
+      "facility_payment": 271.79
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for bal, thermal_ablation",
+    "31603: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31645: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31646: ML detected procedure, but specific device/anatomy was not found in text.",
+    "SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\\s+bronchoscop')",
+    "HARD_OVERRIDE: Text mentions 'rigid bronchoscopy'. -> procedures_performed.rigid_bronchoscopy.performed=true"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 739.93
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_053
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_053 SOURCE_FILE: note_053.txt Pre-Op Diagnosis: Respiratory failure, on VV ECMO, CTEPH, acute PE, RV failure, reintubation
+ 
+Post-Op Diagnosis: Same
+ 
+Procedure: Tracheostomy, modified open/percutaneous
+
+Brief Clinical Note: 
+49F w/polycythemia vera with JAK2 mutation and prior thrombogenic events p/w SOB/CP found to have group 4 CTEPH w/ massive PEs w/RV strain/thrombus 12/1 (Loma Linda) s/p failed/incomplete IR thrombectomy c/b Lt CVA s/p neuroIR thrombectomy 12/3 further c/b CV decompensation s/p Lt fem VA ECMO w/DPC 12/4, failed wean 12/10 so converted to VV ECMO. Extubated 12/11. S/p oxygenator exchange 12/12. Re-intubated 12/14 2/2 secretions. 12/15 bronch, AF RVR. New LLE DVT on bival 12/16 though was ECMO cannula there.  From her Lt MCA CVA has Rt hemiplegia 
+ 
+In need of tracheostomy to assist with ventilator weaning, secretion management, and ongoing potential rehabilitation. Primary team, ICU team, and family in agreement. Ventilator settings, labs, and body habitus adequate for bedside procedure. Has slightly high riding innominate artery (though not classic) as well as a large bridging neck vein. VV ECMO/DVT/PE anticoagulation held and will restart shortly thereafter. Consent signed.
+ 
+Details of Procedure Performed:  
+ 
+The patient remained in the ICU with a previously placed single-lumen endotracheal tube. The patient was positioned supine with a padded shoulder roll in place, the head of bed elevated, and the neck moderately extended. A surgical brief was performed and the level of inspired fraction of oxygen was reduced to 40%. Patient remained on VV ECMO support. After adequate anesthesia, landmarks were palpated including the thyroid notch, cricoid, and suprasternal notch. Neck ultrasound was performed to confirm vascular anatomy. Exposure was excellent. The anterior neck was prepped and draped in the standard fashion. 
+ 
+A surgical time out was performed. 5mL of 1% lidocaine was injected 2-3 cm above the sternal notch. It was made higher due to the known partially high-riding innominate. A 3cm horizontal skin incision was made with a #15 blade knife in a natural, relaxed skin tension line midway between the cricoid cartilage and the sternal notch. Bovie cautery was used to dissect through the platysma and down to the strap muscles, with effort made to avoid the anterior jugular veins. There were two vertical engorged veins along the midline raphe with a bridging vein between then. The bridging vein was dissected, suture ligated, and divided. This allowed visualization of the midline raphe. The strap muscles were separated vertically at the midline with Bovie cautery. The strap muscles are retracted laterally. Using a combination of blunt and careful cautery midline dissection, the anterior tracheal wall was freed of soft tissue. The innominate artery was identified and protected. There was good soft tissue between the innominate and the trachea which was not disturbed.  The trachea was palpated to find the 2nd and 3rd tracheal rings. There was adequate distance between the innominate artery and the planned insertion site. 
+ 
+Under bronchoscopic guidance, the endotracheal tube cuff was deflated and was pulled back below the level of the vocal cords. A finder needle was placed through the anterior trachea between the 2nd and 3rd cartilaginous rings.  Once confirmed by bronchoscopy, a seldinger technique was used to serially dilate the tracheotomy over a wire and to place a # 7 cuffed shiley tracheostomy. The tracheostomy cuff was inflated. Cross table ventilation was performed and the tracheostomy placement was confirmed by bronchoscopy through the tracheostomy as well as CO2 return on the anesthesia monitor. The tracheostomy inner cannula was then placed. Surgicel was placed in the wound bed though hemostasis was great but plan to resume anticoagulation very shortly. The tracheostomy was secured with loose 2-0 prolene sutures to the skin and tracheostomy straps to maintain airway but prevent skin pressure injuries. The endotracheal tube was then withdrawn completely. The tracheostomy obturator was provided to the bedside care team. The patient remained in the ICU in critical condition. There were no complications.
+ 
+At the end of the procedure, I contacted her husband Carl Pinell at 626-991-6311 
+ 
+EBL: 1ml
+ 
+Fluids: per anesthesia record
+ 
+Specimens: none
+ 
+Implants: none
+ 
+Drains: none
+ 
+Complications: none immediately apparent
+ 
+Disposition: stable, ventilated, remained in ICU, on VV ECMO
+ 
+Plan: 
+Okay to resume bival in 1 hour
+Trach ties to stay for 7-10 days
+No need for routine trach exchange within first 14 day if not having issues
+Do not over inflate the cuff 
+ 
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "percutaneous_tracheostomy": {
+        "performed": true,
+        "device_name": "Shiley"
+      },
+      "neck_ultrasound": {
+        "performed": true
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31600"
+        },
+        {
+          "code": "76536"
+        }
+      ]
+    },
+    "evidence": {},
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "code_evidence": [
+      {
+        "source": "derived_code",
+        "text": "31600",
+        "span": [
+          0,
+          0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "source": "derived_code",
+        "text": "76536",
+        "span": [
+          0,
+          0
+        ],
+        "confidence": 0.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31600",
+    "76536"
+  ],
+  "suggestions": [
+    {
+      "code": "31600",
+      "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
+      "confidence": 0.8,
+      "rationale": "percutaneous_tracheostomy.performed=true and established_tracheostomy_route=false",
+      "review_flag": "optional"
+    },
+    {
+      "code": "76536",
+      "description": "",
+      "confidence": 0.8,
+      "rationale": "neck_ultrasound.performed=true",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 5.56,
+  "estimated_payment": 290.24,
+  "per_code_billing": [
+    {
+      "cpt_code": "31600",
+      "description": "Planned tracheostomy, stand-alone open airway creation (age ≥ 2 years)",
+      "work_rvu": 5.56,
+      "total_facility_rvu": 8.97,
+      "facility_payment": 290.24
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for neck_ultrasound, percutaneous_tracheostomy",
+    "32551: ML detected procedure, but specific device/anatomy was not found in text."
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 791.85
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_087
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_087 SOURCE_FILE: note_087.txt INDICATION FOR OPERATION:  [REDACTED]is a 57 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a Pt with transplant stenosis that required 4 balloon dilations and 6 applications of cryo . This resulted in >50% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: supine
+Initial Airway Inspection Findings:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: . 
+Initial Airway Inspection Findings:
+The laryngeal mask airway is in good position. The vocal cords appear normal. The subglottic space is normal. The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Airway exam notable for stenosis of the RML (75% patent). Diameter was 5-6 mm
+Moderate clear secretions bilaterally, white thicker mucus eminating from RML. 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, and RML Carina (RC2) from mucus and mucus plug. 
+Endobronchial obstruction at RML was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	1.7mm probe	 	30sec freeze-thaw cycles; total 6 applications	Ablation
+ 
+Balloon dilation was performed at RML.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the RML.  Total 2 inflations with dilation time of 60 seconds each.
+Prior to treatment, affected airway was note to be 75% patent.  After treatment, the airway was 100% patent. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was successfully extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+BAL - RML
+IMPRESSION/PLAN: [REDACTED]is a 57 year old-year-old male who presents for bronchoscopy for bronchial stenosis.
+[ ] f/u results
+[ ] f/u CXR
+[ ] repeat bronchoscopy on [REDACTED] 
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "bal": {
+        "performed": true
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug"
+      },
+      "airway_dilation": {
+        "performed": true,
+        "method": "Balloon"
+      },
+      "thermal_ablation": {
+        "performed": true
+      },
+      "cryotherapy": {
+        "performed": true
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624"
+        },
+        {
           "code": "31641"
         },
         {
-          "code": "31638"
+          "code": "31645"
         }
       ]
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "BAL",
+          "start": 3426,
+          "end": 3429
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "balloon dilat",
+          "start": 1024,
+          "end": 1037
+        }
+      ],
+      "procedures_performed.cryotherapy.performed": [
+        {
+          "text": "cryotherapy",
+          "start": 1310,
+          "end": 1321
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 2478,
+          "end": 2500
+        }
+      ],
+      "procedures_performed.thermal_ablation.performed": [
+        {
+          "text": "laser",
+          "start": 1295,
+          "end": 1300
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "BAL",
+        "span": [
+          3426,
+          3429
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "balloon dilat",
+        "span": [
+          1024,
+          1037
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.cryotherapy.performed": [
+      {
+        "source": "registry_span",
+        "text": "cryotherapy",
+        "span": [
+          1310,
+          1321
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          2478,
+          2500
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.thermal_ablation.performed": [
+      {
+        "source": "registry_span",
+        "text": "laser",
+        "span": [
+          1295,
+          1300
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31624",
+    "31641",
+    "31645"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "confidence": 0.8,
+      "rationale": "thermal_ablation.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true",
+      "review_flag": "required"
     }
-  }
+  ],
+  "total_work_rvu": 10.66,
+  "estimated_payment": 553.61,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.63,
+      "total_facility_rvu": 4.24,
+      "facility_payment": 137.19
+    },
+    {
+      "cpt_code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "work_rvu": 5.25,
+      "total_facility_rvu": 8.4,
+      "facility_payment": 271.79
+    },
+    {
+      "cpt_code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "work_rvu": 2.78,
+      "total_facility_rvu": 4.47,
+      "facility_payment": 144.63
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, bal, cryotherapy, therapeutic_aspiration",
+    "31630: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31631: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31641: ML detected procedure, but specific device/anatomy was not found in text.",
+    "SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')",
+    "HARD_OVERRIDE: Text mentions 'laser'. -> procedures_performed.thermal_ablation.performed=true",
+    "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location",
+    "SELF_CORRECT_SKIPPED: 31622: judge returned null",
+    "SELF_CORRECT_SKIPPED: 31630: judge returned null",
+    "HEADER_EXPLICIT: header lists ['31622', '31630'] but deterministic derivation missed them"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 738.48
 }
+--------------------------------------------------------------------------------
 
+STATUS: SUCCESS
 
-NOTE_ID:  note_242 SOURCE_FILE: note_242.txt ANESTHESIA:  General
+================================================================================
+NOTE: note_020
+================================================================================
 
-INDICATIONS FOR PROCEDURE: Right lower lobe mass
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_020 SOURCE_FILE: note_020.txt INDICATION FOR OPERATION:  [REDACTED]is a 59 year old-year-old male who presents with lung transplant and airway narrowing.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+Endobronchial biopsy was performed at Right Mainstem.  Lesion was successfully removed.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+BAL, EBBX
+ 
+IMPRESSION/PLAN: [REDACTED]is a 59 year old-year-old male who presents for bronchoscopy for airway stenosis.
+- f/u BAL
+- airway in good condition, need repeat bronch in 4-6 weeks. 
+ 
+--------------------------------------------------------------------------------
 
-DESCRIPTION OF PROCEDURE: Explanation of the procedure and all risks, benefits, and options were discussed. The risks include but were not limited to bleeding, infection, and pneumothorax. All questions were answered. 
-
-The patient was anesthetized with topical anesthesia and the bronchoscope was introduced through the mouth where topical lidocaine was instilled on the vocal cords and into the trachea. When adequate anesthesia was achieved, the bronchoscope was passed through the vocal cords and topical lidocaine administered on a local-regional fashion. The endobronchial tree was inspected and patient was found to have endobronchial lesion noted in the right lower lobe superior segment.  Multiple forceps biopsies were obtained at this time.  Lidocaine with epinephrine was instilled in addition to cold saline to achieve adequate hemostasis. ROSE at bedside confirmed adequate sample and possible evidence of malignancy.  The bronchoscope was then slowly withdrawn and removed.
-
-The endobronchial ultrasound bronchoscope was inserted through the vocal cords.  Staging ultrasound performed.  Measured on ultrasound the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri.  Station 7 was greater than 5 mm and therefore was sampled by needle aspiration ×4.  ROSE at bedside confirmed adequate sample.  Bronchoscope was slowly withdrawn and removed.
-
-Diagnostic bronchoscope passed through the vocal cords.  Tracheobronchial tree was examined adequate hemostasis was achieved.  Right lower lobe superior segment endobronchial lesion no longer bleeding.  Bronchoscope was slowly withdrawn and removed.
-
-Complication: None
-
-Impression:
-
-1.  Right lower lobe superior segment endobronchial lesion
-
-2.  Biopsies of 7 lymph node station
-
-Recommendations: 
-
-1.  Follow up final pathology of endobronchial lesion
-
-2.  Will notify patient in regards to follow-up with primary pulmonologist
-
-
-
-Results
-
-Formatted
-
-Raw JSON
-
-Unified Results Extraction-First
-
-Pipeline: extraction_first
-
-Confidence: low_confidence
-
-Manual Review Needed
-
-CPT Codes
-
-No CPT codes derived.
-
-RVU & Payment
-
-Total Work RVU: N/A
-
-Estimated Payment: $N/A
-
-Registry Extraction
-
-FieldValueLinear EBUS PerformedYesLinear EBUS Node Event 1 Station7Linear EBUS Node Event 1 Actioninspected_onlyLinear EBUS Node Event 1 Evidence QuoteMeasured on ultrasound the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greaterLinear EBUS Node Event 2 Station4RLinear EBUS Node Event 2 Actioninspected_onlyLinear EBUS Node Event 2 Evidence Quoteeasured on ultrasound the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greater thanLinear EBUS Node Event 3 Station11RsLinear EBUS Node Event 3 Actioninspected_onlyLinear EBUS Node Event 3 Evidence Quoteultrasound the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greater than 5 mm and thLinear EBUS Node Event 4 Station11RiLinear EBUS Node Event 4 Actioninspected_onlyLinear EBUS Node Event 4 Evidence Quotend the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greater than 5 mm and therefore wRadial EBUS PerformedNoTherapeutic Aspiration PerformedNoEstablished Tracheostomy RouteNo
-
-Evidence
-
+RESULTS (JSON):
+--------------------------------------------------------------------------------
 {
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "biopsies",
-
-"span": [
-
-825,
-
-833
-
-],
-
-"confidence": 0.9954668283462524
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "malignancy",
-
-"span": [
-
-1030,
-
-1040
-
-],
-
-"confidence": 0.988860547542572
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "endobronchial ultrasound",
-
-"span": [
-
-1103,
-
-1127
-
-],
-
-"confidence": 0.9922162493069967
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "11 L",
-
-"span": [
-
-1238,
-
-1242
-
-],
-
-"confidence": 0.9881703555583954
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "10 L",
-
-"span": [
-
-1244,
-
-1248
-
-],
-
-"confidence": 0.9869250655174255
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "7",
-
-"span": [
-
-1259,
-
-1260
-
-],
-
-"confidence": 0.9884318709373474
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "4R",
-
-"span": [
-
-1262,
-
-1264
-
-],
-
-"confidence": 0.9913255572319031
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "10 R",
-
-"span": [
-
-1266,
-
-1270
-
-],
-
-"confidence": 0.9912819862365723
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "11RS",
-
-"span": [
-
-1272,
-
-1276
-
-],
-
-"confidence": 0.9911926686763763
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "11Ri",
-
-"span": [
-
-1281,
-
-1285
-
-],
-
-"confidence": 0.9908568263053894
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Station",
-
-"span": [
-
-1288,
-
-1295
-
-],
-
-"confidence": 0.9528900980949402
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "7",
-
-"span": [
-
-1296,
-
-1297
-
-],
-
-"confidence": 0.5750337243080139
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "needle aspiration",
-
-"span": [
-
-1349,
-
-1366
-
-],
-
-"confidence": 0.9943834543228149
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Biopsies",
-
-"span": [
-
-1807,
-
-1815
-
-],
-
-"confidence": 0.9957045912742615
-
-}
-
-]
-
-}
-
-Audit Warnings:
-
-WIPED_VERIFICATION_FAILED: procedures_performed.therapeutic_aspiration
-
-31622: ML detected procedure, but specific device/anatomy was not found in text.
-
-31625: ML detected procedure, but specific device/anatomy was not found in text.
-
-31645: NER found keyword, but context suggests negation/history.
-
-31652: ML detected procedure, but specific device/anatomy was not found in text.
-
-31653: ML detected procedure, but specific device/anatomy was not found in text.
-
-Linear EBUS inferred from convex/mediastinal/station sampling.
-
-linear_ebus.performed=true but node_events contains no qualifying sampling actions; cannot derive 31652/31653
-
-KB: 2.9 · Policy: extraction_first_v1 · Time: 1317ms
-
-
-
-Raw JSON
-
-{
-
-"registry": {
-
-"procedures_performed": {
-
-"linear_ebus": {
-
-"performed": true,
-
-"node_events": [
-
-{
-
-"station": "7",
-
-"action": "inspected_only",
-
-"evidence_quote": " Measured on ultrasound the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greater "
-
-},
-
-{
-
-"station": "4R",
-
-"action": "inspected_only",
-
-"evidence_quote": "easured on ultrasound the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greater than"
-
-},
-
-{
-
-"station": "11Rs",
-
-"action": "inspected_only",
-
-"evidence_quote": " ultrasound the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greater than 5 mm and th"
-
-},
-
-{
-
-"station": "11Ri",
-
-"action": "inspected_only",
-
-"evidence_quote": "nd the 11 L, 10 L, for now, 7, 4R, 10 R, 11RS and 11Ri. Station 7 was greater than 5 mm and therefore w"
-
-}
-
-]
-
-},
-
-"radial_ebus": {
-
-"performed": false
-
-},
-
-"therapeutic_aspiration": {
-
-"performed": false
-
-}
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"text": "biopsies",
-
-"start": 825,
-
-"end": 833,
-
-"confidence": 0.9954668283462524
-
-},
-
-{
-
-"text": "malignancy",
-
-"start": 1030,
-
-"end": 1040,
-
-"confidence": 0.988860547542572
-
-},
-
-{
-
-"text": "endobronchial ultrasound",
-
-"start": 1103,
-
-"end": 1127,
-
-"confidence": 0.9922162493069967
-
-},
-
-{
-
-"text": "11 L",
-
-"start": 1238,
-
-"end": 1242,
-
-"confidence": 0.9881703555583954
-
-},
-
-{
-
-"text": "10 L",
-
-"start": 1244,
-
-"end": 1248,
-
-"confidence": 0.9869250655174255
-
-},
-
-{
-
-"text": "7",
-
-"start": 1259,
-
-"end": 1260,
-
-"confidence": 0.9884318709373474
-
-},
-
-{
-
-"text": "4R",
-
-"start": 1262,
-
-"end": 1264,
-
-"confidence": 0.9913255572319031
-
-},
-
-{
-
-"text": "10 R",
-
-"start": 1266,
-
-"end": 1270,
-
-"confidence": 0.9912819862365723
-
-},
-
-{
-
-"text": "11RS",
-
-"start": 1272,
-
-"end": 1276,
-
-"confidence": 0.9911926686763763
-
-},
-
-{
-
-"text": "11Ri",
-
-"start": 1281,
-
-"end": 1285,
-
-"confidence": 0.9908568263053894
-
-},
-
-{
-
-"text": "Station",
-
-"start": 1288,
-
-"end": 1295,
-
-"confidence": 0.9528900980949402
-
-},
-
-{
-
-"text": "7",
-
-"start": 1296,
-
-"end": 1297,
-
-"confidence": 0.5750337243080139
-
-},
-
-{
-
-"text": "needle aspiration",
-
-"start": 1349,
-
-"end": 1366,
-
-"confidence": 0.9943834543228149
-
-},
-
-{
-
-"text": "Biopsies",
-
-"start": 1807,
-
-"end": 1815,
-
-"confidence": 0.9957045912742615
-
-}
-
-]
-
-},
-
-"procedure_families": [],
-
-"established_tracheostomy_route": false,
-
-"granular_validation_warnings": []
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "biopsies",
-
-"span": [
-
-825,
-
-833
-
-],
-
-"confidence": 0.9954668283462524
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "malignancy",
-
-"span": [
-
-1030,
-
-1040
-
-],
-
-"confidence": 0.988860547542572
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "endobronchial ultrasound",
-
-"span": [
-
-1103,
-
-1127
-
-],
-
-"confidence": 0.9922162493069967
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "11 L",
-
-"span": [
-
-1238,
-
-1242
-
-],
-
-"confidence": 0.9881703555583954
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "10 L",
-
-"span": [
-
-1244,
-
-1248
-
-],
-
-"confidence": 0.9869250655174255
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "7",
-
-"span": [
-
-1259,
-
-1260
-
-],
-
-"confidence": 0.9884318709373474
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "4R",
-
-"span": [
-
-1262,
-
-1264
-
-],
-
-"confidence": 0.9913255572319031
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "10 R",
-
-"span": [
-
-1266,
-
-1270
-
-],
-
-"confidence": 0.9912819862365723
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "11RS",
-
-"span": [
-
-1272,
-
-1276
-
-],
-
-"confidence": 0.9911926686763763
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "11Ri",
-
-"span": [
-
-1281,
-
-1285
-
-],
-
-"confidence": 0.9908568263053894
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Station",
-
-"span": [
-
-1288,
-
-1295
-
-],
-
-"confidence": 0.9528900980949402
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "7",
-
-"span": [
-
-1296,
-
-1297
-
-],
-
-"confidence": 0.5750337243080139
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "needle aspiration",
-
-"span": [
-
-1349,
-
-1366
-
-],
-
-"confidence": 0.9943834543228149
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Biopsies",
-
-"span": [
-
-1807,
-
-1815
-
-],
-
-"confidence": 0.9957045912742615
-
-}
-
-]
-
-},
-
-"cpt_codes": [],
-
-"suggestions": [],
-
-"per_code_billing": [],
-
-"pipeline_mode": "extraction_first",
-
-"coder_difficulty": "low_confidence",
-
-"needs_manual_review": true,
-
-"audit_warnings": [
-
-"WIPED_VERIFICATION_FAILED: procedures_performed.therapeutic_aspiration",
-
-"31622: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31625: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31645: NER found keyword, but context suggests negation/history.",
-
-"31652: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31653: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"Linear EBUS inferred from convex/mediastinal/station sampling.",
-
-"linear_ebus.performed=true but node_events contains no qualifying sampling actions; cannot derive 31652/31653"
-
-],
-
-"validation_errors": [],
-
-"review_status": "pending_phi_review",
-
-"kb_version": "2.9",
-
-"policy_version": "extraction_first_v1",
-
-"processing_time_ms": 1316.6
-
-}
-
-Extraction evaluator
-Custom Gem
-This is for informational purposes only. For medical advice or diagnosis, consult a professional.
-🩺 Extraction Quality Report
-Score: 40 / 100 Status: ❌ FAIL
-
-1. Accuracy (Precision)
-Action Classification Error (EBUS): The JSON classifies Station 7 as inspected_only in the node events list.
-
-Evidence: The note explicitly states: "Station 7 was greater than 5 mm and therefore was sampled by needle aspiration x4."
-
-Impact: This misclassification prevents the generation of CPT 31652 (EBUS-TBNA), as inspection alone is not billable.
-
-Logic Failure: The pipeline acknowledges "Linear EBUS Performed: Yes" but fails to derive the necessary sampling event to support a billing code.
-
-2. Completeness (Recall)
-CRITICAL: Missed Endobronchial Biopsy (31625):
-
-Text: "Multiple forceps biopsies were obtained at this time... right lower lobe superior segment."
-
-Pipeline: The audit warnings show 31625: ML detected procedure, but specific device/anatomy was not found in text.
-
-Result: The event was wiped, resulting in a missed billable procedure.
-
-Missed Stations (Inspection): The note mentions measuring stations 11L, 10L, and 10R. These are absent from the Linear EBUS Node Event list (only 7, 4R, 11Rs, 11Ri are listed). While inspection isn't separately billable, it is part of the clinical record.
-
-3. Logic & Coding
-CPT Derivations: TOTAL FAILURE. The system generated No CPT codes.
-
-Should be:
-
-31625 (Bronchoscopy with endobronchial biopsy).
-
-31652 (EBUS-TBNA, 1-2 stations).
-
-Audit Warnings: The warning linear_ebus.performed=true but node_events contains no qualifying sampling actions correctly identifies the internal logic break, but the root cause is the extraction failure of the "sampling" action.
-
-4. Corrected JSON Snippet
-The procedures_performed section should look like this to drive accurate CPT coding:
-
-JSON
-"procedures_performed": {
-  "endobronchial_biopsy": {
-    "performed": true,
-    "events": [
-      {
-        "location": "RLL superior segment",
-        "method": "forceps",
-        "evidence_quote": "endobronchial lesion noted in the right lower lobe superior segment. Multiple forceps biopsies were obtained"
-      }
-    ]
-  },
-  "linear_ebus": {
-    "performed": true,
-    "node_events": [
-      {
-        "station": "7",
-        "action": "sampled",
-        "passes": 4,
-        "evidence_quote": "Station 7 was greater than 5 mm and therefore was sampled by needle aspiration x4"
+  "registry": {
+    "procedures_performed": {
+      "bal": {
+        "performed": true
       },
-      {
-        "station": "4R",
-        "action": "inspected_only",
-        "evidence_quote": "Measured on ultrasound... 4R"
+      "endobronchial_biopsy": {
+        "performed": true
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug"
       }
-      // ... include other inspected stations
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624"
+        },
+        {
+          "code": "31625"
+        },
+        {
+          "code": "31645"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 1644,
+          "end": 1669
+        }
+      ],
+      "procedures_performed.endobronchial_biopsy.performed": [
+        {
+          "text": "Endobronchial biops",
+          "start": 1892,
+          "end": 1911
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 1518,
+          "end": 1540
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          1644,
+          1669
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.endobronchial_biopsy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Endobronchial biops",
+        "span": [
+          1892,
+          1911
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          1518,
+          1540
+        ],
+        "confidence": 1.0
+      }
     ]
-  }
+  },
+  "cpt_codes": [
+    "31624",
+    "31625",
+    "31645"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "endobronchial_biopsy.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 8.52,
+  "estimated_payment": 441.34,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.63,
+      "total_facility_rvu": 4.24,
+      "facility_payment": 137.19
+    },
+    {
+      "cpt_code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "work_rvu": 3.11,
+      "total_facility_rvu": 4.93,
+      "facility_payment": 159.52
+    },
+    {
+      "cpt_code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "work_rvu": 2.78,
+      "total_facility_rvu": 4.47,
+      "facility_payment": 144.63
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for bal, endobronchial_biopsy, therapeutic_aspiration",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31624: ML detected procedure, but specific device/anatomy was not found in text."
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 698.44
 }
-Summary
-The pipeline successfully "focused" on the text but failed the strict verification step for the Biopsy (likely due to strict anatomy matching) and misclassified the EBUS action (missing the "needle aspiration" keyword connection to Station 7). This resulted in a $0.00 bill for a complex procedure.
+--------------------------------------------------------------------------------
 
+STATUS: SUCCESS
 
+================================================================================
+NOTE: note_204
+================================================================================
 
-NOTE_ID:  note_246 SOURCE_FILE: note_246.txt PREOPERATIVE DIAGNOSIS: left upper and lower lobe obstruction 
-
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_204 SOURCE_FILE: note_204.txt PREOPERATIVE DIAGNOSIS: 
+1.	Left mainstem obstruction
 POSTOPERATIVE DIAGNOSIS: 
-
-Presumed malignant obstruction of left upper and lower lobe
-
-PROCEDURE PERFORMED: flexible bronchoscopy with cryodebulking, electrocautery snare and APC..
-
-INDICATIONS: bilobar collapse  
-
-Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. 
-
+1.	Left mainstem obstruction secondary to stricture and granulation tissue
+PROCEDURE PERFORMED: 
+CPT 31641: Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with destruction of tumor or relief of stenosis by any method other than excision (eg, laser therapy, cryotherapy)
+Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with tracheal/bronchial dilation or closed reduction of fracture
+CPT 31645 bronchoscopy with therapeutic aspiration
+CPT 31502 Tracheotomy tube change
+INDICATIONS:  Left mainstem obstruction
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
 Sedation: General Anesthesia
-
-DESCRIPTION OF PROCEDURE: Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the T190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The trachea was normal. On the right there was a small focus of tumor just prximal to the right upper lobe at the anterior wall which was non-obstructive. The right sided airways were otherwise normal. The left mainstem was normal.  At the takeoff of the left lower lobe there was a vascular appearing endobronchial mass causing complete airway obstruction. At the takeoff of the left upper lobe there was a similar appearing vascular endobronchial lesion causing complete airway obstruction. With gentile manipulation of the tumor it was noted to bleed easily. APC was used to devascularize the superficial layer of the left upper and lower lobe tumors.  The electrocautery snare was then used to remove the prximal portion of the left upper lobe tumor after which we cold visualize distal airways. The tumor extended to just proximal to the lingual take-off and distally there did not appear to be evidence of active tumor.  Using APC we used the burn and shave method to slowly debulk the tumor as well as flexible forceps debulking of charred tumor after APC cauterization. Bleeding was moderate and resolved with topical instillation of 1:1000 TXA through the bronchoscope. After debulking in the left upper lobe we had complete opening of the lobar and segmental bronchi. We then brought our attention to the left lower lobe lesion. Using the electrocautery snare in a similar fashion we were able to debulk the proximal tumor. There was much more extensive distal tumor in the lower lobe with tumor involving multiple segmental bronchi. Using the 1.9 mm cryoprobe we are able to extract some of the tissue after which we utilized APC and flexible forceps in a similar fashion as performed in the left upper lobe to slowly debulk the tumor. We were able to open the left lower lobe orifice to approximately 70% of normal but despite our best efforts we could not completely remove the tumor due to the extent of disease and distal tumor infiltration. APC was used at the end of the procedure to paint cauterize any active oozing and once we were satisfied that no further intervention was required and that there was no evidence of active bleeding the flexible bronchoscope was removed and the case was turned over to anesthesia to recover the patient. 
-
+DESCRIPTION OF PROCEDURE: DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. Following intravenous medications as per the record a laryngeal mask airway was inserted and the tracheoscomy tube removed and the stoma covered.  Topical anesthesia was then applied to the upper airway and the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The tracheostomy stoma was mature without granulation tissue. There was no evidence of TE fistula. The tracheal carina was sharp. All right sided airways were inspected to at least the first subsegmental bronchi with findings notable for purulent secretions in the superior segment and basilar segments of the right lower lobe with mild extrinsic compression of the superior segment.  The left-sided airways were than inspected. The proximal and mid left mainstem was normal. In the distal aspect of the left mainstem there was an asymmetrical complex-appearing stricture with area of attached granulation tissue, on a stalk, moving in a ball valve motion with breathing resulting in approximately 90% obstruction.  At this point the only was removed and a 12 mm ventilating rigid bronchoscope was inserted through the mouth into the distal trachea and advanced into the distal trachea before attaching the monsoon JET ventilator.  There is difficulty ventilating the patient with jet ventilation and oxygen saturation dropped requiring rigid bronchoscope to be removed and LMA replaced until saturation increase.  We then reinserted the rigid bronchoscope and had similar problems causing us to convert to closed ventilation with packing of the mouth and nose.  Once we are able to ensure adequate oxygenation and ventilation the FiO2 was decreased until exhaled FiO2 is less than 40% at which time the T190 therapeutic bronchoscope was inserted through the rigid bronchoscope and an electrocautery snare was used to remove the area of granulation tissue without difficulty and there is only minimal bleeding.  Subsequently the electrocautery knife was used to make 2 incisions (2 and 6 o’clock) in the complex-appearing stricture (which is felt to likely be from unrecognized airway trauma at time of injury) after which a phase 8/9/10 Merritt dilatation balloon was used to gently dilate the airway to a maximum diameter of 10 mm.  At this point, the rigid bronchoscope was advanced to the distal left mainstem and inserted through the area of the stricture for further mechanical dilatation.  The rigid bronchoscope was then pulled back to the trachea and on repeat inspection with the flexible bronchoscope the post dilatational orifice was approximately 8 mm with orifice compromised by associated malacia.  There remains significant stricturing of the medial wall however decision was made not to further dilate or inserts sent at this time given plan for him to transfer to long-term neuro rehabilitation facility in Northern California in the next few days.  The rigid bronchoscope was then removed after which a fresh 6.0 cuffed fenestrated Shiley tracheostomy tube was reinserted through his stoma and attached to the ventilator.
+Complications: None
 Recommendations:
-
-- Transfer patient PACU
-
-- Follow-up PRN if return of symptoms
-
-- Treatment of metastatic foci per oncology
-
-
-
-Results
-
-Formatted
-
-Raw JSON
-
-Unified Results Extraction-First
-
-Pipeline: extraction_first
-
-Confidence: gray_zone
-
-Manual Review Needed
-
-CPT Codes
-
-31641
-
-Code Details
-
-CodeDescriptionConfidenceReview31641Bronchoscopy; with destruction of tumor or relief of stenosis by any method80%optionalthermal_ablation.performed=true
-
-RVU & Payment
-
-Total Work RVU: 5.25
-
-Estimated Payment: $271.79
-
-Per-Code Breakdown
-
-CPTWork RVUPayment316415.25$N/A
-
-Registry Extraction
-
-FieldValueThermal Ablation PerformedYesThermal Ablation ModalityAPCCryotherapy PerformedYesCpt Code 1 Code31641Established Tracheostomy RouteNo
-
-Evidence
-
-{
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "flexible bronchoscopy",
-
-"span": [
-
-215,
-
-236
-
-],
-
-"confidence": 0.6218134164810181
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "cryodebulking",
-
-"span": [
-
-242,
-
-255
-
-],
-
-"confidence": 0.996329951286316
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "APC",
-
-"span": [
-
-282,
-
-285
-
-],
-
-"confidence": 0.5636472105979919
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulk",
-
-"span": [
-
-1765,
-
-1771
-
-],
-
-"confidence": 0.9932560125986735
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulking",
-
-"span": [
-
-1969,
-
-1978
-
-],
-
-"confidence": 0.9672376910845438
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulk",
-
-"span": [
-
-2191,
-
-2197
-
-],
-
-"confidence": 0.9852023720741272
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulk",
-
-"span": [
-
-2513,
-
-2519
-
-],
-
-"confidence": 0.9824595053990682
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "cryodebulking",
-
-"span": [
-
-242,
-
-255
-
-],
-
-"confidence": 1
-
-}
-
-]
-
-}
-
-Audit Warnings:
-
-DETERMINISTIC_UPLIFT: added performed=true for cryotherapy
-
-31603: ML detected procedure, but specific device/anatomy was not found in text.
-
-KB: 2.9 · Policy: extraction_first_v1 · Time: 1507ms
-
-
-
-Raw JSON
-
-{
-
-"registry": {
-
-"procedures_performed": {
-
-"thermal_ablation": {
-
-"performed": true,
-
-"modality": "APC"
-
-},
-
-"cryotherapy": {
-
-"performed": true
-
-}
-
-},
-
-"billing": {
-
-"cpt_codes": [
-
-{
-
-"code": "31641"
-
-}
-
-]
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"text": "flexible bronchoscopy",
-
-"start": 215,
-
-"end": 236,
-
-"confidence": 0.6218134164810181
-
-},
-
-{
-
-"text": "cryodebulking",
-
-"start": 242,
-
-"end": 255,
-
-"confidence": 0.996329951286316
-
-},
-
-{
-
-"text": "APC",
-
-"start": 282,
-
-"end": 285,
-
-"confidence": 0.5636472105979919
-
-},
-
-{
-
-"text": "debulk",
-
-"start": 1765,
-
-"end": 1771,
-
-"confidence": 0.9932560125986735
-
-},
-
-{
-
-"text": "debulking",
-
-"start": 1969,
-
-"end": 1978,
-
-"confidence": 0.9672376910845438
-
-},
-
-{
-
-"text": "debulk",
-
-"start": 2191,
-
-"end": 2197,
-
-"confidence": 0.9852023720741272
-
-},
-
-{
-
-"text": "debulk",
-
-"start": 2513,
-
-"end": 2519,
-
-"confidence": 0.9824595053990682
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"text": "cryodebulking",
-
-"start": 242,
-
-"end": 255
-
-}
-
-]
-
-},
-
-"procedure_families": [],
-
-"established_tracheostomy_route": false,
-
-"granular_validation_warnings": []
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "flexible bronchoscopy",
-
-"span": [
-
-215,
-
-236
-
-],
-
-"confidence": 0.6218134164810181
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "cryodebulking",
-
-"span": [
-
-242,
-
-255
-
-],
-
-"confidence": 0.996329951286316
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "APC",
-
-"span": [
-
-282,
-
-285
-
-],
-
-"confidence": 0.5636472105979919
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulk",
-
-"span": [
-
-1765,
-
-1771
-
-],
-
-"confidence": 0.9932560125986735
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulking",
-
-"span": [
-
-1969,
-
-1978
-
-],
-
-"confidence": 0.9672376910845438
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulk",
-
-"span": [
-
-2191,
-
-2197
-
-],
-
-"confidence": 0.9852023720741272
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "debulk",
-
-"span": [
-
-2513,
-
-2519
-
-],
-
-"confidence": 0.9824595053990682
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "cryodebulking",
-
-"span": [
-
-242,
-
-255
-
-],
-
-"confidence": 1
-
-}
-
-]
-
-},
-
-"cpt_codes": [
-
-"31641"
-
-],
-
-"suggestions": [
-
-{
-
-"code": "31641",
-
-"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
-
-"confidence": 0.8,
-
-"rationale": "thermal_ablation.performed=true",
-
-"review_flag": "optional"
-
-}
-
-],
-
-"total_work_rvu": 5.25,
-
-"estimated_payment": 271.79,
-
-"per_code_billing": [
-
-{
-
-"cpt_code": "31641",
-
-"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
-
-"work_rvu": 5.25,
-
-"total_facility_rvu": 8.4,
-
-"facility_payment": 271.79
-
-}
-
-],
-
-"pipeline_mode": "extraction_first",
-
-"coder_difficulty": "gray_zone",
-
-"needs_manual_review": true,
-
-"audit_warnings": [
-
-"DETERMINISTIC_UPLIFT: added performed=true for cryotherapy",
-
-"31603: ML detected procedure, but specific device/anatomy was not found in text."
-
-],
-
-"validation_errors": [],
-
-"review_status": "pending_phi_review",
-
-"kb_version": "2.9",
-
-"policy_version": "extraction_first_v1",
-
-"processing_time_ms": 1506.92
-
-}
-
-Extraction evaluator
-Custom Gem
-This is for informational purposes only. For medical advice or diagnosis, consult a professional.
-🩺 Extraction Quality Report
-Score: 90 / 100 Status: ✅ PASS (with warnings)
-
-1. Accuracy (Precision)
-Hallucinations: None in the final CPT list or Registry flags.
-
-Note: The Audit Warning 31603: ML detected procedure... indicates an internal False Positive trigger for Emergency Tracheostomy (likely triggered by "trachea was normal" or "tracheobronchial tree"), but the system correctly excluded this from the final output.
-
-Mismatch: None. The extracted thermal_ablation (APC) and cryotherapy are fully supported by the text.
-
-2. Completeness (Recall)
-Missed Registry Detail: Tumor Debulking (Non-Thermal/Mechanical).
-
-The note explicitly describes using an "electrocautery snare" and "flexible forceps" to debulk the tumor ("flexible forceps debulking of charred tumor").
-
-The JSON procedures_performed list contains thermal_ablation (APC) and cryotherapy, but misses a flag for the snare/forceps work. While 31641 covers the billing, the registry data is slightly incomplete regarding the distinct mechanical modalities used.
-
-Missed Granularity: The JSON does not specify the anatomy treated (LUL and LLL) or the specific devices (Snare, Forceps) in a structured format, though this is a known limitation of the V2/Extraction-First schema compared to the target V3.
-
-3. Logic & Coding
-CPT Consistency: Excellent.
-
-The system selected 31641 (Destruction/Relief of Stenosis).
-
-Clinical Logic: The physician performed APC (Destruction - 31641), Cryodebulking (Excision - 31640), and Snare (Excision - 31640).
-
-Bundling Rule: According to ip_coding_billing_v2_9.json, when 31640 (Excision) and 31641 (Destruction) are performed on the same site, only the higher-valued code (31641) is reported. The pipeline correctly applied this rule.
-
-Schema Compliance: Valid.
-
-4. Corrected JSON Snippet (Registry Data Enhancement)
-To fully capture the clinical reality in the registry data (beyond just billing), the tumor_debulking_non_thermal flag should ideally be triggered by "snare" or "forceps debulking".
-
-JSON
-"procedures_performed": {
-  "thermal_ablation": {
-    "performed": true,
-    "modality": "APC"
-  },
-  "cryotherapy": {
-    "performed": true
-  },
-  "tumor_debulking_non_thermal": { 
-    "performed": true,
-    "evidence": "electrocautery snare... flexible forceps debulking"
-  }
-}
-
-NOTE_ID:  note_219 SOURCE_FILE: note_219.txt PREOPERATIVE DIAGNOSIS:
-
-
-
-Small Cell Lung Cancer with Central Airway Obstruction
-
-Retained/Embedded Metallic Airway Stent
-
-POSTOPERATIVE DIAGNOSIS:
-
-
-
-Small Cell Lung Cancer with Central Airway Obstruction s/p Airway Stent Removal and Y-Stent Insertion
-
-PROCEDURE PERFORMED:
-
-
-
-INDICATIONS:
-
-Malignant Central Airway Obstruction
-
-Retained/Embedded Metallic Airway Stent
-
-Informed consent was obtained from the patient after explaining the procedure's indications, details, potential risks, and alternatives in lay terms. All questions were answered, and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedural assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed before the intervention.
-
-
-
-Sedation: General Anesthesia
-
-
-
-DESCRIPTION OF PROCEDURE: The procedure was carried out in the main operating room. Following intravenous medications as per the record, a laryngeal mask airway was inserted to ensure adequate ventilation. Topical anesthesia was applied to the upper airway, and the Boston Scientific Model B diagnostic disposable video bronchoscope was introduced through the mouth, via laryngeal mask airway, and advanced to the tracheobronchial tree. The laryngeal mask airway was in a good position. The vocal cords appeared normal. The subglottic space was normal. The proximal trachea was normal. The mid-trachea was free of tumor, but moderate to severe dynamic collapse was visualized (TBM). The right mainstem was extrinsically compressed from the posterior aspect, with additional tumor studding and submucosal disease seen throughout the airway, causing approximately 70% obstruction. A few small tumor nodules were present in the distal trachea, mostly on the posterior membrane. The proximal left mainstem was mildly compressed externally, with submucosal tumor within the airway wall. In the mid left mainstem, there was extensive granulation tissue causing about 75% airway obstruction just proximal to the proximal end of the known airway stent. After gently passing the bronchoscope through the area of granulation tissue, the stent was visualized with thick purulent mucus throughout. 10cc of bicarbonate solution was instilled to thin secretions, and then the secretions were suctioned and cleared. Significant post-obstructive pus was noted distal to the stent, primarily originating from the lower lobe bronchus, and a mini lavage was performed for culture. After suctioning clear, tumor infiltration could be seen extending into the proximal aspect of the lower lobe and growing through the stent wall. The left upper lobe, however, appeared free of disease.
-
-
-
-At this point, the flexible bronchoscope and LMA were removed, and a 12mm ventilating rigid bronchoscope was subsequently inserted into the trachea and advanced into the left mainstem bronchus, then connected to the JET ventilator. The rigid optic was removed, and the Olympus T190 Therapeutic bronchoscope was inserted through the rigid lumen and advanced to the proximal edge of the stent. APC was used, followed by gentle shaving of coagulated tissue with the tip of the bronchoscope to remove granulation tissue. We then utilized APC to burn the inner silicone coating from the stent and gently placed flexible forceps through the wall of the stent to peel it from the mucosa. After this, a size 4-5-6 Merit dilatational balloon was guided similarly outside of the stent and used to further break adhesions with the underlying airway wall. We repeated this multiple times, attempting to slowly recannulate the airway. We then removed the flexible bronchoscope and utilized rigid forceps to grasp and remove the stent. APC was then used to cauterize the underlying inflamed mucosa, and a 2.1 mm cryotherapy probe was used to remove debris. Significant obstruction, both from endobronchial disease and extrinsic compression, was still present. At this point, we focused on the right-sided airway and utilized APC with the burn and shave technique, attempting to recannulate the airway with partial success; however, obstruction remained > 50% in the right mainstem, with tumor extending through the bronchus intermedius.
-
-
-
-Measurements of the airway were then taken in anticipation of airway stent placement. We customized a 14x10x10 silicone Y-stent to a length of 30mm in the tracheal limb, 35mm in the right limb, and 35mm in the left mainstem limb. We also created a 10mm hole in the right-sided limb to allow for the right upper lobe to remain ventilated while maintaining patency of the bronchus intermedius. The rigid bronchoscope was then advanced into the right mainstem, and the stent was deployed. After deployment, the rigid forceps were used to manipulate the stent to adequately position the limbs within the proper airways, resulting in successful stabilization of the airway. Persistent tumor beyond the stent remained bilaterally, with small isolates of tumor in the distal bronchus intermedius and significant residual tumor in the left lower lobe bronchus. The rigid bronchoscope was removed, and an LMA was inserted, and the procedure was turned over to anesthesia for post-procedural care.
-
-
-
-Recommendations:
-
-
-
-• Transfer to PACU
-
-• Obtain post-procedure chest x-ray.
-
-• Patient to be admitted to inpatient service for expedited radiation oncology consultation, given residual disease.
-
-• Patient will need TID hypertonic nebulization (4cc 3% saline) to avoid mucus impaction and obstruction of stent.
-
-• Management of stent-related complications was discussed with the in-patient team, and a notice for airway management precautions was placed above the patient's bed.
-
-• Plan to schedule the procedure in approximately 2 weeks (after the effects of radiation should be seen).
-
-
-
-Results
-
-Formatted
-
-Raw JSON
-
-Unified Results Extraction-First
-
-Pipeline: extraction_first
-
-Confidence: high_confidence
-
-Manual Review Needed
-
-CPT Codes
-
-31624
-
-31641
-
-Code Details
-
-CodeDescriptionConfidenceReview31624Bronchoscopy; with bronchoalveolar lavage80%requiredbal.performed=true31641Bronchoscopy; with destruction of tumor or relief of stenosis by any method80%requiredthermal_ablation.performed=true
-
-RVU & Payment
-
-Total Work RVU: 7.88
-
-Estimated Payment: $408.98
-
-Per-Code Breakdown
-
-CPTWork RVUPayment316242.63$N/A316415.25$N/A
-
-Registry Extraction
-
-FieldValueBal PerformedYesTherapeutic Aspiration PerformedNoThermal Ablation PerformedYesThermal Ablation ModalityAPCCryotherapy PerformedYesCpt Code 1 Code31624Cpt Code 2 Code31641Established Tracheostomy RouteNo
-
-Evidence
-
-{
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "Airway Stent",
-
-"span": [
-
-152,
-
-164
-
-],
-
-"confidence": 0.8816852569580078
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Airway Stent",
-
-"span": [
-
-250,
-
-262
-
-],
-
-"confidence": 0.9565528929233551
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Removal",
-
-"span": [
-
-263,
-
-270
-
-],
-
-"confidence": 0.973399817943573
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Y-Stent",
-
-"span": [
-
-275,
-
-282
-
-],
-
-"confidence": 0.9725358883539835
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Insertion",
-
-"span": [
-
-283,
-
-292
-
-],
-
-"confidence": 0.9409266114234924
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Airway Stent",
-
-"span": [
-
-392,
-
-404
-
-],
-
-"confidence": 0.8862966001033783
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "General Anesthesia",
-
-"span": [
-
-840,
-
-858
-
-],
-
-"confidence": 0.5599491894245148
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "airway stent",
-
-"span": [
-
-2091,
-
-2103
-
-],
-
-"confidence": 0.7050609886646271
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-2187,
-
-2192
-
-],
-
-"confidence": 0.919175386428833
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "suctioned",
-
-"span": [
-
-2338,
-
-2347
-
-],
-
-"confidence": 0.9637217223644257
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-2418,
-
-2423
-
-],
-
-"confidence": 0.9358530640602112
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "mini lavage",
-
-"span": [
-
-2483,
-
-2494
-
-],
-
-"confidence": 0.8256942331790924
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "suctioning",
-
-"span": [
-
-2528,
-
-2538
-
-],
-
-"confidence": 0.9339577555656433
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-2656,
-
-2661
-
-],
-
-"confidence": 0.9197975397109985
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "removed",
-
-"span": [
-
-2779,
-
-2786
-
-],
-
-"confidence": 0.9569275975227356
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "cryotherapy",
-
-"span": [
-
-3823,
-
-3834
-
-],
-
-"confidence": 1
-
-}
-
-],
-
-"procedures_performed.thermal_ablation.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "APC",
-
-"span": [
-
-3117,
-
-3120
-
-],
-
-"confidence": 1
-
-}
-
-]
-
-}
-
-Audit Warnings:
-
-DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, thermal_ablation
-
-WIPED_VERIFICATION_FAILED: procedures_performed.therapeutic_aspiration
-
-31630: ML detected procedure, but specific device/anatomy was not found in text.
-
-31631: ML detected procedure, but specific device/anatomy was not found in text.
-
-31641: ML detected procedure, but specific device/anatomy was not found in text.
-
-31646: ML detected procedure, but specific device/anatomy was not found in text.
-
-SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\s+bronchoscop')
-
-SELF_CORRECT_SKIPPED: 31636: keyword guard failed (no keywords configured)
-
-RAW_ML_AUDIT[HIGH_CONF]: model suggests 31636 (prob=0.81), but deterministic derivation missed it
-
-KB: 2.9 · Policy: extraction_first_v1 · Time: 1881ms
-
-
-
-{
-
-"registry": {
-
-"procedures_performed": {
-
-"bal": {
-
-"performed": true
-
-},
-
-"therapeutic_aspiration": {
-
-"performed": false
-
-},
-
-"thermal_ablation": {
-
-"performed": true,
-
-"modality": "APC"
-
-},
-
-"cryotherapy": {
-
-"performed": true
-
-}
-
-},
-
-"billing": {
-
-"cpt_codes": [
-
-{
-
-"code": "31624"
-
-},
-
-{
-
-"code": "31641"
-
-}
-
-]
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"text": "Airway Stent",
-
-"start": 152,
-
-"end": 164,
-
-"confidence": 0.8816852569580078
-
-},
-
-{
-
-"text": "Airway Stent",
-
-"start": 250,
-
-"end": 262,
-
-"confidence": 0.9565528929233551
-
-},
-
-{
-
-"text": "Removal",
-
-"start": 263,
-
-"end": 270,
-
-"confidence": 0.973399817943573
-
-},
-
-{
-
-"text": "Y-Stent",
-
-"start": 275,
-
-"end": 282,
-
-"confidence": 0.9725358883539835
-
-},
-
-{
-
-"text": "Insertion",
-
-"start": 283,
-
-"end": 292,
-
-"confidence": 0.9409266114234924
-
-},
-
-{
-
-"text": "Airway Stent",
-
-"start": 392,
-
-"end": 404,
-
-"confidence": 0.8862966001033783
-
-},
-
-{
-
-"text": "General Anesthesia",
-
-"start": 840,
-
-"end": 858,
-
-"confidence": 0.5599491894245148
-
-},
-
-{
-
-"text": "airway stent",
-
-"start": 2091,
-
-"end": 2103,
-
-"confidence": 0.7050609886646271
-
-},
-
-{
-
-"text": "stent",
-
-"start": 2187,
-
-"end": 2192,
-
-"confidence": 0.919175386428833
-
-},
-
-{
-
-"text": "suctioned",
-
-"start": 2338,
-
-"end": 2347,
-
-"confidence": 0.9637217223644257
-
-},
-
-{
-
-"text": "stent",
-
-"start": 2418,
-
-"end": 2423,
-
-"confidence": 0.9358530640602112
-
-},
-
-{
-
-"text": "mini lavage",
-
-"start": 2483,
-
-"end": 2494,
-
-"confidence": 0.8256942331790924
-
-},
-
-{
-
-"text": "suctioning",
-
-"start": 2528,
-
-"end": 2538,
-
-"confidence": 0.9339577555656433
-
-},
-
-{
-
-"text": "stent",
-
-"start": 2656,
-
-"end": 2661,
-
-"confidence": 0.9197975397109985
-
-},
-
-{
-
-"text": "removed",
-
-"start": 2779,
-
-"end": 2786,
-
-"confidence": 0.9569275975227356
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"text": "cryotherapy",
-
-"start": 3823,
-
-"end": 3834
-
-}
-
-],
-
-"procedures_performed.thermal_ablation.performed": [
-
-{
-
-"text": "APC",
-
-"start": 3117,
-
-"end": 3120
-
-}
-
-]
-
-},
-
-"procedure_families": [],
-
-"established_tracheostomy_route": false,
-
-"granular_validation_warnings": []
-
-},
-
-"evidence": {
-
-"ner_spans": [
-
-{
-
-"source": "ner_span",
-
-"text": "Airway Stent",
-
-"span": [
-
-152,
-
-164
-
-],
-
-"confidence": 0.8816852569580078
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Airway Stent",
-
-"span": [
-
-250,
-
-262
-
-],
-
-"confidence": 0.9565528929233551
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Removal",
-
-"span": [
-
-263,
-
-270
-
-],
-
-"confidence": 0.973399817943573
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Y-Stent",
-
-"span": [
-
-275,
-
-282
-
-],
-
-"confidence": 0.9725358883539835
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Insertion",
-
-"span": [
-
-283,
-
-292
-
-],
-
-"confidence": 0.9409266114234924
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "Airway Stent",
-
-"span": [
-
-392,
-
-404
-
-],
-
-"confidence": 0.8862966001033783
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "General Anesthesia",
-
-"span": [
-
-840,
-
-858
-
-],
-
-"confidence": 0.5599491894245148
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "airway stent",
-
-"span": [
-
-2091,
-
-2103
-
-],
-
-"confidence": 0.7050609886646271
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-2187,
-
-2192
-
-],
-
-"confidence": 0.919175386428833
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "suctioned",
-
-"span": [
-
-2338,
-
-2347
-
-],
-
-"confidence": 0.9637217223644257
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-2418,
-
-2423
-
-],
-
-"confidence": 0.9358530640602112
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "mini lavage",
-
-"span": [
-
-2483,
-
-2494
-
-],
-
-"confidence": 0.8256942331790924
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "suctioning",
-
-"span": [
-
-2528,
-
-2538
-
-],
-
-"confidence": 0.9339577555656433
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "stent",
-
-"span": [
-
-2656,
-
-2661
-
-],
-
-"confidence": 0.9197975397109985
-
-},
-
-{
-
-"source": "ner_span",
-
-"text": "removed",
-
-"span": [
-
-2779,
-
-2786
-
-],
-
-"confidence": 0.9569275975227356
-
-}
-
-],
-
-"procedures_performed.cryotherapy.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "cryotherapy",
-
-"span": [
-
-3823,
-
-3834
-
-],
-
-"confidence": 1
-
-}
-
-],
-
-"procedures_performed.thermal_ablation.performed": [
-
-{
-
-"source": "registry_span",
-
-"text": "APC",
-
-"span": [
-
-3117,
-
-3120
-
-],
-
-"confidence": 1
-
-}
-
-]
-
-},
-
-"cpt_codes": [
-
-"31624",
-
-"31641"
-
-],
-
-"suggestions": [
-
-{
-
-"code": "31624",
-
-"description": "Bronchoscopy; with bronchoalveolar lavage",
-
-"confidence": 0.8,
-
-"rationale": "bal.performed=true",
-
-"review_flag": "required"
-
-},
-
-{
-
-"code": "31641",
-
-"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
-
-"confidence": 0.8,
-
-"rationale": "thermal_ablation.performed=true",
-
-"review_flag": "required"
-
-}
-
-],
-
-"total_work_rvu": 7.88,
-
-"estimated_payment": 408.98,
-
-"per_code_billing": [
-
-{
-
-"cpt_code": "31624",
-
-"description": "Bronchoscopy; with bronchoalveolar lavage",
-
-"work_rvu": 2.63,
-
-"total_facility_rvu": 4.24,
-
-"facility_payment": 137.19
-
-},
-
-{
-
-"cpt_code": "31641",
-
-"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
-
-"work_rvu": 5.25,
-
-"total_facility_rvu": 8.4,
-
-"facility_payment": 271.79
-
-}
-
-],
-
-"pipeline_mode": "extraction_first",
-
-"coder_difficulty": "high_confidence",
-
-"needs_manual_review": true,
-
-"audit_warnings": [
-
-"DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, thermal_ablation",
-
-"WIPED_VERIFICATION_FAILED: procedures_performed.therapeutic_aspiration",
-
-"31630: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31631: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31641: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"31646: ML detected procedure, but specific device/anatomy was not found in text.",
-
-"SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\\s+bronchoscop')",
-
-"SELF_CORRECT_SKIPPED: 31636: keyword guard failed (no keywords configured)",
-
-"RAW_ML_AUDIT[HIGH_CONF]: model suggests 31636 (prob=0.81), but deterministic derivation missed it"
-
-],
-
-"validation_errors": [],
-
-"review_status": "pending_phi_review",
-
-"kb_version": "2.9",
-
-"policy_version": "extraction_first_v1",
-
-"processing_time_ms": 1880.97
-
-}
-
-This is for informational purposes only. For medical advice or diagnosis, consult a professional.
-🩺 Extraction Quality Report
-Score: 45 / 100 Status: ❌ FAIL
-
-1. Accuracy (Precision)
-Hallucinations: None. The captured events (BAL, APC, Cryotherapy) did occur.
-
-Context Failure: The extraction captures the "cleanup" steps but misses the primary surgical events. It treats a complex rigid airway reconstruction as a simple therapeutic bronchoscopy.
-
-2. Completeness (Recall)
-Missed Critical Procedures:
-
-Rigid Bronchoscopy: Explicitly stated ("12mm ventilating rigid bronchoscope was subsequently inserted"). The audit log flags this as a SILENT_FAILURE.
-
-Stent Removal: The note describes removing a retained/embedded metallic stent ("utilized rigid forceps to grasp and remove the stent"). This is a high-value procedure (CPT 31638 or 31635) completely missing from the output.
-
-Stent Placement: The note describes placing a "customized 14x10x10 silicone Y-stent". This is CPT 31636, which the ML model suspected (probability 0.81) but the deterministic layer rejected.
-
-Balloon Dilation: "size 4-5-6 Merit dilatational balloon... repeated this multiple times" is missed.
-
-Missed Details:
-
-Anatomy: No distinction between the Left Mainstem work (removal) and Right Mainstem work (Y-stent limb).
-
-Devices: Missed the specific stent type (Y-stent) and balloon details.
-
-3. Logic & Coding
-CPT Consistency: Critical Failure.
-
-Current Output: 31624 (BAL) + 31641 (Destruction).
-
-Required Output: 31638 (Stent Revision/Removal) OR 31635 (Foreign Body Removal - metallic stent) + 31636 (Stent Placement) + 31641 (Destruction) + 31624 (BAL).
-
-Note: The system missed the most complex and high-RVU components of the case (Rigid Bronch + Stent Exchange).
-
-4. Corrected JSON Snippet
-JSON
-{
-  "procedures_performed": {
-    "bal": { "performed": true },
-    "rigid_bronchoscopy": { "performed": true },
-    "airway_stent": {
-      "performed": true,
-      "action": "placement",
-      "device_type": "Silicone Y-stent",
-      "location": "Trachea/RMB/LMB"
+- Return to ICU for recovery 
+- Will discuss case with interventional pulmonology at Stamford prior to the patient’s transfer to Palo Alto neuro rehabilitation facility, as repeat dilatation and possibly temporary stent placement will likely be required.
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "airway_dilation": {
+        "performed": true,
+        "method": "Balloon"
+      },
+      "thermal_ablation": {
+        "performed": true,
+        "modality": "Electrocautery"
+      },
+      "rigid_bronchoscopy": {
+        "performed": true
+      },
+      "percutaneous_tracheostomy": {
+        "performed": true
+      }
     },
-    "stent_removal": {
-      "performed": true,
-      "device_type": "Metallic stent",
-      "location": "Left Mainstem"
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31615"
+        },
+        {
+          "code": "31641"
+        }
+      ]
     },
-    "airway_dilation": {
-      "performed": true,
-      "method": "Balloon",
-      "device": "Merit 4-5-6mm"
+    "evidence": {
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "dilatation balloon",
+          "start": 3283,
+          "end": 3301
+        }
+      ],
+      "procedures_performed.thermal_ablation.performed": [
+        {
+          "text": "electrocautery",
+          "start": 2917,
+          "end": 2931
+        }
+      ],
+      "procedures_performed.percutaneous_tracheostomy.performed": [
+        {
+          "text": "tracheostomy",
+          "start": 1448,
+          "end": 1460
+        }
+      ],
+      "procedures_performed.rigid_bronchoscopy.performed": [
+        {
+          "text": "rigid bronchoscop",
+          "start": 2219,
+          "end": 2236
+        }
+      ]
     },
-    "thermal_ablation": { "performed": true, "modality": "APC" },
-    "cryotherapy": { "performed": true }
+    "procedure_families": [],
+    "established_tracheostomy_route": true,
+    "granular_validation_warnings": []
   },
-  "cpt_codes": ["31638", "31636", "31641", "31624"] 
-  // Note: Coding logic for stent removal (31638) vs replacement needs careful NCCI checks, 
-  // but missing both is a failure.
+  "evidence": {
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "dilatation balloon",
+        "span": [
+          3283,
+          3301
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.thermal_ablation.performed": [
+      {
+        "source": "registry_span",
+        "text": "electrocautery",
+        "span": [
+          2917,
+          2931
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.percutaneous_tracheostomy.performed": [
+      {
+        "source": "registry_span",
+        "text": "tracheostomy",
+        "span": [
+          1448,
+          1460
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.rigid_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "rigid bronchoscop",
+        "span": [
+          2219,
+          2236
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31615",
+    "31641"
+  ],
+  "suggestions": [
+    {
+      "code": "31615",
+      "description": "Tracheobronchoscopy performed through an established tracheostomy",
+      "confidence": 0.8,
+      "rationale": "established_tracheostomy_route=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "confidence": 0.8,
+      "rationale": "thermal_ablation.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 7.09,
+  "estimated_payment": 377.92,
+  "per_code_billing": [
+    {
+      "cpt_code": "31615",
+      "description": "Tracheobronchoscopy performed through an established tracheostomy",
+      "work_rvu": 1.84,
+      "total_facility_rvu": 3.28,
+      "facility_payment": 106.13
+    },
+    {
+      "cpt_code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "work_rvu": 5.25,
+      "total_facility_rvu": 8.4,
+      "facility_payment": 271.79
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, thermal_ablation",
+    "SILENT_FAILURE: Text contains 'tracheostomy' but extraction missed it. (Pattern: '(?i)\\btracheostomy\\b')",
+    "SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\\s+bronchoscop')",
+    "HARD_OVERRIDE: Text contains 'tracheostomy' but extraction missed it. -> procedures_performed.percutaneous_tracheostomy.performed=true",
+    "HARD_OVERRIDE: Text mentions 'rigid bronchoscopy'. -> procedures_performed.rigid_bronchoscopy.performed=true",
+    "percutaneous_tracheostomy.performed=true but established_tracheostomy_route=true; suppressing 31600",
+    "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location",
+    "SELF_CORRECT_SKIPPED: 31502: judge returned null",
+    "SELF_CORRECT_SKIPPED: 31645: judge returned null",
+    "HEADER_EXPLICIT: header lists ['31502', '31645'] but deterministic derivation missed them"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 758.93
 }
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_159
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_159 SOURCE_FILE: note_159.txt Indications: Left upper lobe mass 
+Medications: Propofol infusion via anesthesia assistance  
+Medications: General Anesthesia,
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions. We then removed the diagnostic Q190 bronchoscopy and the super-dimension navigational catheter was inserted through the T190 therapeutic bronchoscope and advanced into the airway. Using navigational map we attempted to advance the 90 degree edge catheter into the proximity of the lesion within the left upper lobe. Confirmation of placement once at the point of interest with radial ultrasound showed a concentric view within the lesion. Biopsies were then performed with a variety of instruments to include peripheral needle, brush, triple needle brush and forceps, under fluoroscopic visualization.  After adequate samples were obtained the bronchoscope was removed and the procedure completed
+Complications: No immediate complications
+Estimated Blood Loss: Less than 5 cc.
+Post Procedure Diagnosis:
+- Flexible bronchoscopy with successful navigational biopsy of left upper lobe nodule.  
+- Await final pathology    
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "brushings": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": false,
+        "node_events": []
+      },
+      "radial_ebus": {
+        "performed": true
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31623"
+        },
+        {
+          "code": "31654"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.brushings.performed": [
+        {
+          "text": "brush",
+          "start": 1646,
+          "end": 1651
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.brushings.performed": [
+      {
+        "source": "registry_span",
+        "text": "brush",
+        "span": [
+          1646,
+          1651
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31623",
+    "31654"
+  ],
+  "suggestions": [
+    {
+      "code": "31623",
+      "description": "Bronchoscopy; with brushing or protected brushings",
+      "confidence": 0.8,
+      "rationale": "brushings.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31654",
+      "description": "",
+      "confidence": 0.8,
+      "rationale": "radial_ebus.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 2.63,
+  "estimated_payment": 135.25,
+  "per_code_billing": [
+    {
+      "cpt_code": "31623",
+      "description": "Bronchoscopy; with brushing or protected brushings",
+      "work_rvu": 2.63,
+      "total_facility_rvu": 4.18,
+      "facility_payment": 135.25
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31623: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31625: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31627: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31628: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31629: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31632: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31633: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31654: ML detected procedure, but specific device/anatomy was not found in text.",
+    "SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\\bbrush(?:ings?)?\\b')",
+    "HARD_OVERRIDE: Text mentions 'brush' or 'brushings'. -> procedures_performed.brushings.performed=true",
+    "Radial EBUS inferred from concentric/eccentric view.",
+    "SELF_CORRECT_SKIPPED: 31629: keyword guard failed (no keyword hit)",
+    "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31629 (prob=0.45), but deterministic derivation missed it",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31627 (prob=0.49), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 698.08
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_175
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_175 SOURCE_FILE: note_175.txt Procedure Name: 
+1.	radial EBUS guided bronchoscopy with TNBA and endobronchial biopsies
+2.	Bronchoscopic intubation 
+Indications: Lung cancer with suspicion for recurrence 
+Medications: Propofol infusion via anesthesia assistance  
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention. 
+Following intravenous medications as per the anesthesia record and topical anesthesia to the upper airway and tracheobronchial tree the Q190 video bronchoscope was introduced through the mouth. The vocal cords appeared normal. The subglottic space was normal. The trachea is of normal caliber. The carina was sharp. Somewhat thick secretions were seen throughout the airways. The left sided airway anatomy was normal without evidence of endobronchial disease. On the right the patient had an anatomic variant with an accessory airway just proximal to the superior segment of the right lower lobe. Within that segment fibrotic endoluminal obstruction was seen but all other airways did not have visual endobronchial disease to at least the first sub-segmental level. Due to difficulty with maintaining position of LMA (edentulous) the decision was made to convert to endotracheal intubation. This was performed over the bronchoscope without difficulty and the ETT was secured approximately 2 cm above the main carina. Once the ETT was connected to ventilator, The flexible bronchoscope was re-inserted through the tube and advanced to the orifice of the accessory left lower lobe bronchus and the radial ultrasound was advanced through the scope into the sub-segment and a concentric view of the lesion was visualized within the segment. Multiple forceps biopsies were then performed. The lesion was extremely firm and samples were relatively scant. We then utilized the super-dimension 21G peripheral needle and the 19G Olympus peripheral needle to obtain a total of 6 endobronchial needle biopsies of the lesion which were placed in formalin. After adequate samples were obtained repeat inspection was performed and no evidence of bleeding or other complications were seen. The bronchoscope was removed and the procedure completed.  
+Complications: No immediate complications
+Estimated Blood Loss: Less than 5 cc.
+Post Procedure Diagnosis:
+- Flexible bronchoscopy with successful biopsy of left lower lobe accessory segment fibrotic endobronchial lesion.
+- Await final pathology  
+
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "endobronchial_biopsy": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": false,
+        "node_events": []
+      },
+      "radial_ebus": {
+        "performed": true
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31625"
+        },
+        {
+          "code": "31654"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.endobronchial_biopsy.performed": [
+        {
+          "text": "endobronchial biops",
+          "start": 111,
+          "end": 130
+        }
+      ],
+      "procedures_performed.radial_ebus.performed": [
+        {
+          "text": "radial EBUS",
+          "start": 65,
+          "end": 76
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS",
+          "start": 72,
+          "end": 76
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.endobronchial_biopsy.performed": [
+      {
+        "source": "registry_span",
+        "text": "endobronchial biops",
+        "span": [
+          111,
+          130
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.radial_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "radial EBUS",
+        "span": [
+          65,
+          76
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS",
+        "span": [
+          72,
+          76
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31625",
+    "31654"
+  ],
+  "suggestions": [
+    {
+      "code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "endobronchial_biopsy.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31654",
+      "description": "",
+      "confidence": 0.8,
+      "rationale": "radial_ebus.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 3.11,
+  "estimated_payment": 159.52,
+  "per_code_billing": [
+    {
+      "cpt_code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "work_rvu": 3.11,
+      "total_facility_rvu": 4.93,
+      "facility_payment": 159.52
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for endobronchial_biopsy, radial_ebus",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31629: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31633: ML detected procedure, but specific device/anatomy was not found in text.",
+    "SILENT_FAILURE: Text contains 'EBUS' but extraction missed linear EBUS. (Pattern: '(?i)\\bebus\\b')",
+    "HARD_OVERRIDE: Text contains 'EBUS' but extraction missed linear EBUS. -> procedures_performed.linear_ebus.performed=true",
+    "Radial EBUS inferred from concentric/eccentric view.",
+    "SELF_CORRECT_SKIPPED: 31624: keyword guard failed (no keyword hit)",
+    "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31624 (prob=0.43), but deterministic derivation missed it",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31627 (prob=0.53), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 711.27
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_093
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_093 SOURCE_FILE: note_093.txt INDICATION FOR OPERATION:  [REDACTED]is a 57 year old-year-old male who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31629 TBNA single lobe   
+31652 EBUS sampling 1 or 2 nodes
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required multiple modalities and increased effort to access and open the RML. This resulted in >100% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31629 TBNA single lobe   
+31652 EBUS sampling 1 or 2 nodes
+31630 Balloon dilation
+31640 Bronchoscopy with excision . 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+Linear EBUS 
+ESTIMATED BLOOD LOSS:   Moderate
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Initial Airway Inspection Findings:
+  
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Not fully assessed due to bronchoscopy introduction through LMA.
+Vocal Cords: Normal without mass/lesions
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: RML orifice unable to be identified on initial inspection since the airway had swallowed up the prior RML stent and this was now fused shut. No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+VIEW OF OBLITERATED RML AND PATENT RLL FROM BRONCHUS INTERMEDIUS
+ 
+PRIOR VIEW OF RML AND RLL FROM PRIOR BRONCHOSCOPY [REDACTED]
+ 
+PRIOR VIEW OF RML AND RLL FROM PRIOR BRONCHOSCOPY [REDACTED] 
+The RML was unable to be identified and there was suspicion that the RML stent migrated distally with overgrowth of tissue, effectively closing off the RML. The EBUS scope was utilized to identify the RML orifice and distal stent. Transbronchial needle aspiration was utilized to re-create/re-open the RML orifice. During this maneuver, frank pus was aspirated from the RML.
+RML stent with needle within the airway:
+ 
+Once an pinhole opening was made with above TBNA, pulmonary forceps were used to probe the RML and blunt dissect to widen the opening.
+Endobronchial biopsy was performed at RML.  Lesion was successfully removed.  Samples sent for Pathology.
+A 4Fr Fogarty balloon was inserted to further open the RML.  
+Purulent secretions distal to the obstruction were aspirated. 
+The hybrid scope was used to explore the distal RML and the medial and lateral subsegments were successfully identified.
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Instilled 40 cc of NS, suction returned with 25 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+Balloon dilation was performed at RML Carina (RC2).  6/7/8 Elation balloon was used to perform dilation to 8 mm at the RML Carina (RC2).  Total 3 inflations with dilation time of 60 seconds each.
+After above excision and dilation, the RML was finally patent and the stent could be visualized. 
+VIEW OF RML AFTER RECANNALIZATION
+ 
+VIEW OF DISTAL RML AFTER RECANNALIZATION
+ 
+The foreign body/old stent (iCAST 7mm x 16mm) was identified and grasped with the pulmonary rat tooth forceps. This was removed en bloc with the bronchoscope.
+Bleeding/oozing was noted from the RML and this was treated with multiple modalities including cold saline, TXA, epinephrine, and electrocautery/coagulation.
+Endobronchial debris and hemorrhage at RML was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	Probe 	Forced coag	2-5sec	Ablation/Coagulation
+ 
+In effort to prevent stent from getting swallowed up again, a longer stent was selected. Next, an iCAST 7mm x 22mm stent was deployed into the RML however this blocked off the RLL and was subsequently removed en bloc with the bronchoscope using the rat tooth forceps.
+An iCAST 7mm x 16mm stent was placed in the RML but was noted to be too proximal and was subsequently removed en bloc with the bronchoscope using the rat tooth forceps.
+Another iCAST 7mm x 16mm stent was placed in the RML and seated appropriately. 
+Balloon dilation was performed at RML Carina (RC2) through the stent to seat the stent.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the RML Carina (RC2).  Total 1 inflations with dilation time of 30 seconds.
+RML stent at end of case:
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+--iCAST 7mm x 16mm stent (path)
+--RML BAL (cell count, micro, cyto)
+IMPRESSION/PLAN: [REDACTED]is a 57 year old-year-old male who presents for bronchoscopy for evaluation of airway stenosis. The patient's RML was closed off around his iCAST stent. The RML was reopened and the stent was removed. A new iCAST stent (7mm x 16mm) was placed. Patient tolerated the procedure and there were no immediate complications.
+--Follow-up path and BAL results
+--Repeat bronchoscopy in 2 weeks for re-evaluation
+--Augmentin (875mg-125mg) 1 tab by mouth twice daily for 7 days
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "bal": {
+        "performed": true
+      },
+      "endobronchial_biopsy": {
+        "performed": true
+      },
+      "tbna_conventional": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": true,
+        "node_events": []
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug"
+      },
+      "foreign_body_removal": {
+        "performed": true,
+        "retrieval_tool": "Forceps"
+      },
+      "airway_dilation": {
+        "performed": true,
+        "method": "Balloon"
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action": "Placement"
+      },
+      "thermal_ablation": {
+        "performed": true,
+        "modality": "Electrocautery"
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624"
+        },
+        {
+          "code": "31625"
+        },
+        {
+          "code": "31629"
+        },
+        {
+          "code": "31635"
+        },
+        {
+          "code": "31636"
+        },
+        {
+          "code": "31641"
+        },
+        {
+          "code": "31645"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 4067,
+          "end": 4092
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "Balloon dilat",
+          "start": 4313,
+          "end": 4326
+        }
+      ],
+      "procedures_performed.airway_stent.performed": [
+        {
+          "text": "stent",
+          "start": 2430,
+          "end": 2435
+        }
+      ],
+      "procedures_performed.foreign_body_removal.performed": [
+        {
+          "text": "foreign body",
+          "start": 4690,
+          "end": 4702
+        }
+      ],
+      "procedures_performed.endobronchial_biopsy.performed": [
+        {
+          "text": "Endobronchial biops",
+          "start": 3715,
+          "end": 3734
+        }
+      ],
+      "procedures_performed.tbna_conventional.performed": [
+        {
+          "text": "TBNA",
+          "start": 1343,
+          "end": 1347
+        }
+      ],
+      "procedures_performed.thermal_ablation.performed": [
+        {
+          "text": "electrocautery",
+          "start": 4975,
+          "end": 4989
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 2753,
+          "end": 2775
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS",
+          "start": 1754,
+          "end": 1758
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          4067,
+          4092
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "Balloon dilat",
+        "span": [
+          4313,
+          4326
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_stent.performed": [
+      {
+        "source": "registry_span",
+        "text": "stent",
+        "span": [
+          2430,
+          2435
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.foreign_body_removal.performed": [
+      {
+        "source": "registry_span",
+        "text": "foreign body",
+        "span": [
+          4690,
+          4702
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.endobronchial_biopsy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Endobronchial biops",
+        "span": [
+          3715,
+          3734
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.tbna_conventional.performed": [
+      {
+        "source": "registry_span",
+        "text": "TBNA",
+        "span": [
+          1343,
+          1347
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.thermal_ablation.performed": [
+      {
+        "source": "registry_span",
+        "text": "electrocautery",
+        "span": [
+          4975,
+          4989
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          2753,
+          2775
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS",
+        "span": [
+          1754,
+          1758
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31624",
+    "31625",
+    "31629",
+    "31635",
+    "31636",
+    "31641",
+    "31645"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "endobronchial_biopsy.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "tbna_conventional.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31635",
+      "description": "Bronchoscopy; with removal of foreign body",
+      "confidence": 0.8,
+      "rationale": "foreign_body_removal.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31636",
+      "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+      "confidence": 0.8,
+      "rationale": "airway_stent.performed=true and no removal flag",
+      "review_flag": "required"
+    },
+    {
+      "code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "confidence": 0.8,
+      "rationale": "thermal_ablation.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 25.24,
+  "estimated_payment": 1304.6,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.63,
+      "total_facility_rvu": 4.24,
+      "facility_payment": 137.19
+    },
+    {
+      "cpt_code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "work_rvu": 3.11,
+      "total_facility_rvu": 4.93,
+      "facility_payment": 159.52
+    },
+    {
+      "cpt_code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "work_rvu": 3.75,
+      "total_facility_rvu": 5.89,
+      "facility_payment": 190.58
+    },
+    {
+      "cpt_code": "31635",
+      "description": "Bronchoscopy; with removal of foreign body",
+      "work_rvu": 3.42,
+      "total_facility_rvu": 5.54,
+      "facility_payment": 179.25
+    },
+    {
+      "cpt_code": "31636",
+      "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+      "work_rvu": 4.3,
+      "total_facility_rvu": 6.85,
+      "facility_payment": 221.64
+    },
+    {
+      "cpt_code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "work_rvu": 5.25,
+      "total_facility_rvu": 8.4,
+      "facility_payment": 271.79
+    },
+    {
+      "cpt_code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "work_rvu": 2.78,
+      "total_facility_rvu": 4.47,
+      "facility_payment": 144.63
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, airway_stent, bal, endobronchial_biopsy, foreign_body_removal, tbna_conventional, therapeutic_aspiration, thermal_ablation",
+    "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31638: ML detected procedure, but specific device/anatomy was not found in text.",
+    "SILENT_FAILURE: Text contains 'EBUS' but extraction missed linear EBUS. (Pattern: '(?i)\\bebus\\b')",
+    "HARD_OVERRIDE: Text contains 'EBUS' but extraction missed linear EBUS. -> procedures_performed.linear_ebus.performed=true",
+    "linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653",
+    "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location",
+    "SELF_CORRECT_SKIPPED: 31630: judge returned null",
+    "SELF_CORRECT_SKIPPED: 31640: judge returned null",
+    "SELF_CORRECT_SKIPPED: 31652: judge returned null",
+    "HEADER_EXPLICIT: header lists ['31630', '31640', '31652'] but deterministic derivation missed them",
+    "STRUCTURAL_FAILURE: linear_ebus performed but stations_sampled is empty (station extraction likely failed)"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 841.47
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_127
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_127 SOURCE_FILE: note_127.txt Patient name: [REDACTED]
+
+Preoperative diagnosis: 1:DLBCL - diffuse large B cell lymphoma
+Postoperative diagnosis: same as above
+
+Procedures performed:
+31622 – Bronchoscopy, flexible, with or without fluoroscopic guidance, diagnostic
+CPT 31652 bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 2 or fewer structures.
+
+Indications for the procedure: peripheral nodule
+
+Anesthesia: General anesthesia using a #8.5 endotracheal tube.
+
+Procedure: After obtaining informed consent from the patient,_was brought to the procedure room. A proper timeout was performed to identify the correct patient and procedure to be performed. General anesthesia was administered to the patient and_was orally intubated with a 8.5 ETT by the anesthesia team. the H190 video bronchoscope was introduced through the endotracheal tube and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords were normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions.
+
+The UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 7 lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus Vizishot 2 EBUS TBNA 21 gauge needle beginning with the 7 Lymph node, 5 biopsies were performed in each station. ROSE evaluation yielded mostly nondiagnostic neutrophil/blood. Following sample from the 7 station, transvascular needle aspiration was performed of station 5 using a 21-gauge and 25-gauge needle for total of 3 passes through the pulmonary artery. Samples from station 5 appeared bloody under microscopic evaluation. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the H1 90 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.
+
+Lymph nodes
+
+7: >15mm; 6of passes
+5: 4.7 mm; 6 passes
+
+Following confirmation of hemostasis and therapeutic aspiration of all endobronchial secretions, the bronchoscope was removed. Patient tolerated the procedure well with no immediate complications. Patient was extubated and returned to recovery in good condition.
+
+Specimens:
+Cytology
+Cell count
+Bacterial culture
+Fungal culture
+Acid Fast culture
+flow cytometry
+
+EBL: minimal
+
+Bronchoscopes: Olympus H190, UC180F EBUS
+
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "tbna_conventional": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "5",
+          "7"
+        ],
+        "node_events": [
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "evidence_quote": "The UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 7 lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus Vizishot 2 EBUS TBNA 21 gauge needle beginning with the 7 Lymph node, 5 biopsies were performed in each station. ROSE evaluation yielded mostly nondiagnostic neutrophil/blood. Following sample from the 7 station, transvascular needle aspiration was performed of station 5 using a 21-gauge and 25-gauge needle for total of 3 passes through the pulmonary artery. Samples from station 5 appeared bloody under microscopic evaluation. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the H1 90 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed."
+          },
+          {
+            "station": "5",
+            "action": "needle_aspiration",
+            "evidence_quote": "The UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 7 lymph nodes. Sampling by transbronchial needle aspiration was performed with the Olympus Vizishot 2 EBUS TBNA 21 gauge needle beginning with the 7 Lymph node, 5 biopsies were performed in each station. ROSE evaluation yielded mostly nondiagnostic neutrophil/blood. Following sample from the 7 station, transvascular needle aspiration was performed of station 5 using a 21-gauge and 25-gauge needle for total of 3 passes through the pulmonary artery. Samples from station 5 appeared bloody under microscopic evaluation. All samples were sent for routine cytology. Following completion of EBUS bronchoscopy, the H1 90 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed."
+          }
+        ]
+      },
+      "radial_ebus": {
+        "performed": false
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31629"
+        },
+        {
+          "code": "31652"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS",
+          "start": 1362,
+          "end": 1366
+        }
+      ],
+      "procedures_performed.tbna_conventional.performed": [
+        {
+          "text": "TBNA",
+          "start": 1724,
+          "end": 1728
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS",
+        "span": [
+          1362,
+          1366
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.tbna_conventional.performed": [
+      {
+        "source": "registry_span",
+        "text": "TBNA",
+        "span": [
+          1724,
+          1728
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "cpt_codes": [
+    "31629",
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "tbna_conventional.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 8.21,
+  "estimated_payment": 415.78,
+  "per_code_billing": [
+    {
+      "cpt_code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "work_rvu": 3.75,
+      "total_facility_rvu": 5.89,
+      "facility_payment": 190.58
+    },
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.46,
+      "total_facility_rvu": 6.96,
+      "facility_payment": 225.2
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for tbna_conventional, therapeutic_aspiration",
+    "Deterministic uplift failed (1 validation error for RegistryRecord\nprocedures_performed.therapeutic_aspiration.material\n  Input should be 'Mucus plug', 'Blood/clot', 'Purulent secretions' or 'Other' [type=literal_error, input_value='Blood clot', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/literal_error)",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31652: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+    "SILENT_FAILURE: Text contains 'EBUS' but extraction missed linear EBUS. (Pattern: '(?i)\\bebus\\b')",
+    "SILENT_FAILURE: Text contains 'TBNA' but extraction missed it. (Pattern: '(?i)\\btbna\\b')",
+    "HARD_OVERRIDE: Text contains 'EBUS' but extraction missed linear EBUS. -> procedures_performed.linear_ebus.performed=true",
+    "HARD_OVERRIDE: Text contains 'TBNA' but extraction missed it. -> procedures_performed.tbna_conventional.performed=true",
+    "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "SELF_CORRECT_SKIPPED: 31622: judge returned null",
+    "HEADER_EXPLICIT: header lists ['31622'] but deterministic derivation missed them",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31627 (prob=0.43), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 719.45
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+SUMMARY
+================================================================================
+Total notes tested: 10
+Successful: 10
+Failed: 0
+Success rate: 100.0%
+================================================================================

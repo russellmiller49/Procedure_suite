@@ -1,0 +1,86 @@
+source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311 && pytest
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+........................................................................ [ 19%]
+........................................................................ [ 24%]
+................sssssssss.................sssssssssssss................. [ 29%]
+........................................................................ [ 34%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+........................................................................ [ 59%]
+........................................................................ [ 64%]
+.....................................................F.................. [ 69%]
+........................................................................ [ 74%]
+........................................................................ [ 79%]
+........................................................................ [ 84%]
+........................................................................ [ 89%]
+........................................................................ [ 94%]
+........................................................................ [ 99%]
+...........                                                              [100%]
+=================================== FAILURES ===================================
+__________________________ test_ebus_scope_and_needle __________________________
+
+registry_engine = <modules.registry.engine.RegistryEngine object at 0x1d3cac510>
+
+    @pytest.mark.ebus
+    def test_ebus_scope_and_needle(registry_engine):
+        """Test extraction of scope brand and needle info."""
+        cases = filter_cases(ALL_CASES, required_fields=["ebus_scope_brand", "ebus_needle_gauge", "ebus_needle_type"])
+    
+        assert len(cases) > 0
+    
+        for case in cases:
+            note_text = case["note_text"]
+            exp_brand = case["registry_entry"].get("ebus_scope_brand")
+            exp_gauge = case["registry_entry"].get("ebus_needle_gauge")
+            exp_type = case["registry_entry"].get("ebus_needle_type")
+    
+            result = registry_engine.run(note_text, include_evidence=False)
+    
+            if exp_brand:
+                # ebus_scope_brand is not in compat layer - it's a top-level field if it exists
+                actual_brand = getattr(result, "ebus_scope_brand", None)
+                assert actual_brand == exp_brand, f"Brand mismatch MRN {case['registry_entry'].get('patient_mrn')}"
+            if exp_gauge:
+                # Use nested path: procedures_performed.linear_ebus.needle_gauge
+                actual_gauge = _get_linear_ebus_field(result, "needle_gauge")
+>               assert actual_gauge == exp_gauge, f"Gauge mismatch MRN {case['registry_entry'].get('patient_mrn')}"
+E               AssertionError: Gauge mismatch MRN SYNTH001
+E               assert '22-gauge' == '22G'
+E                 
+E                 - 22G
+E                 + 22-gauge
+
+tests/registry/test_registry_extraction_ebus.py:130: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"timestamp": "2026-01-19T19:18:28.192432", "level": "INFO", "logger": "httpx", "message": "HTTP Request: POST https://api.openai.com/v1/responses \"HTTP/1.1 200 OK\""}
+------------------------------ Captured log call -------------------------------
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+=============================== warnings summary ===============================
+tests/api/test_fastapi.py::test_coder_run_fixture_response
+tests/phi/test_presidio_nlp_backend_smoke.py::test_presidio_scrubber_initializes_with_backend[scispacy-model_candidates1]
+  /Users/russellmiller/miniconda3/envs/medparse-py311/lib/python3.11/site-packages/spacy/language.py:2195: FutureWarning: Possible set union at position 6328
+    deserializers["tokenizer"] = lambda p: self.tokenizer.from_disk(  # type: ignore[union-attr]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [9] tests/integration/api/test_startup_warmup.py: _do_heavy_warmup was removed; warmup tests need to be updated
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:99: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:107: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:111: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:127: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:162: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:185: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:216: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:244: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:258: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:298: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:335: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:363: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:390: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+FAILED tests/registry/test_registry_extraction_ebus.py::test_ebus_scope_and_needle
+1 failed, 1428 passed, 22 skipped, 2 warnings in 219.99s (0:03:39)
+make: *** [test] Error 1

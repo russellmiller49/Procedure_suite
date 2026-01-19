@@ -393,6 +393,11 @@ def derive_all_codes_with_meta(
         codes.append("76604")
         rationales["76604"] = "chest_ultrasound.performed=true"
 
+    # EUS-B (endoscopic ultrasound via bronchoscope)
+    if _performed(_proc(record, "eus_b")):
+        codes.append("43238")
+        rationales["43238"] = "eus_b.performed=true"
+
     # --- Pleural family ---
     if _performed(_pleural(record, "ipc")):
         codes.append("32550")

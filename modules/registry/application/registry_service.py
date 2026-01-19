@@ -9,9 +9,13 @@ This application-layer service orchestrates:
 
 from __future__ import annotations
 
+import hashlib
+import json
+import re
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, date
+from datetime import datetime, date, timezone
+from pathlib import Path
 from typing import Any, Literal, TYPE_CHECKING
 
 import os
@@ -35,8 +39,8 @@ from modules.registry.application.registry_builder import (
 from modules.registry.engine import RegistryEngine
 from modules.registry.schema import RegistryRecord
 from modules.registry.schema_granular import derive_procedures_from_granular
-from modules.registry.processing.masking import mask_offset_preserving
-from modules.registry.audit.audit_types import AuditCompareReport
+from modules.registry.processing.masking import mask_extraction_noise
+from modules.registry.audit.audit_types import AuditCompareReport, AuditPrediction
 
 logger = get_logger("registry_service")
 from proc_schemas.coding import FinalCode, CodingResult
@@ -73,6 +77,61 @@ def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
     from modules.registry.extraction.focus import focus_note_for_extraction as _focus
 
     return _focus(note_text)
+
+
+_HEADER_START_RE = re.compile(
+    r"(?:\bPROCEDURE\b|\bPROCEDURES\b|\bOPERATION\b|\bOPERATIONS\b)\s*:?",
+    re.IGNORECASE,
+)
+_HEADER_END_RE = re.compile(
+    r"(?:\bANESTHESIA\b|\bINDICATION\b|\bDESCRIPTION\b|\bFINDINGS\b)",
+    re.IGNORECASE,
+)
+_CPT_RE = re.compile(r"\b([37]\d{4})\b")
+
+
+def _extract_procedure_header_block(text: str) -> str | None:
+    """Return the block immediately following the procedure header (signals only)."""
+    if not text:
+        return None
+
+    start = _HEADER_START_RE.search(text)
+    if not start:
+        return None
+
+    after = text[start.end() :]
+    end = _HEADER_END_RE.search(after)
+    header_body = after[: end.start()] if end else after[:1500]
+    header_body = header_body.strip()
+    return header_body or None
+
+
+def _scan_header_for_codes(text: str) -> set[str]:
+    """Scan the procedure header block for explicit CPT codes (e.g., 31653)."""
+    header = _extract_procedure_header_block(text)
+    if not header:
+        return set()
+    return set(_CPT_RE.findall(header))
+
+
+def _hash_note_text(text: str) -> str:
+    normalized = (text or "").strip()
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def _append_self_correction_log(path: str, payload: dict[str, Any]) -> None:
+    if not path:
+        return
+    try:
+        log_path = Path(path)
+        if log_path.exists() and log_path.is_dir():
+            logger.warning("Self-correction log path is a directory: %s", log_path)
+            return
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        with log_path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(payload, ensure_ascii=True) + "\n")
+    except Exception as exc:
+        logger.warning("Failed to write self-correction log: %s", exc)
 
 
 def _apply_granular_up_propagation(record: RegistryRecord) -> tuple[RegistryRecord, list[str]]:
@@ -603,7 +662,7 @@ class RegistryService:
         Returns:
             RegistryExtractionResult with extracted record and metadata.
         """
-        masked_note_text = mask_offset_preserving(note_text)
+        masked_note_text, _mask_meta = mask_extraction_noise(note_text)
 
         if mode == "parallel_ner":
             predictor = self._get_registry_ml_predictor()
@@ -730,8 +789,9 @@ class RegistryService:
         meta["extraction_engine"] = extraction_engine
 
         raw_note_text = note_text
-        masked_note_text = mask_offset_preserving(raw_note_text)
+        masked_note_text, mask_meta = mask_extraction_noise(raw_note_text)
         meta["masked_note_text"] = masked_note_text
+        meta["masking_meta"] = mask_meta
 
         text_for_extraction = masked_note_text
         if extraction_engine == "engine":
@@ -762,11 +822,15 @@ class RegistryService:
                 warnings.extend(granular_warnings)
 
                 from modules.registry.evidence.verifier import verify_evidence_integrity
-                from modules.registry.postprocess import sanitize_ebus_events
+                from modules.registry.postprocess import (
+                    populate_ebus_node_events_fallback,
+                    sanitize_ebus_events,
+                )
 
                 record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
                 warnings.extend(verifier_warnings)
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
+                warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
 
                 return record, warnings, meta
             except NotImplementedError as exc:
@@ -811,6 +875,8 @@ class RegistryService:
 
                     from modules.common.spans import Span
                     from modules.registry.deterministic_extractors import (
+                        AIRWAY_DILATION_PATTERNS,
+                        AIRWAY_STENT_DEVICE_PATTERNS,
                         BAL_PATTERNS,
                         BRUSHINGS_PATTERNS,
                         CHEST_TUBE_PATTERNS,
@@ -821,6 +887,7 @@ class RegistryService:
                         IPC_PATTERNS,
                         NAVIGATIONAL_BRONCHOSCOPY_PATTERNS,
                         PERIPHERAL_ABLATION_PATTERNS,
+                        RIGID_BRONCHOSCOPY_PATTERNS,
                         ENDOBRONCHIAL_BIOPSY_PATTERNS,
                         RADIAL_EBUS_PATTERNS,
                         TBNA_CONVENTIONAL_PATTERNS,
@@ -874,6 +941,27 @@ class RegistryService:
                                     )
                                     return
 
+                        def _add_first_span_skip_cpt_headers(field: str, patterns: list[str]) -> None:
+                            cpt_line = re.compile(r"^\s*\d{5}\b")
+                            offset = 0
+                            for raw_line in (masked_note_text or "").splitlines(keepends=True):
+                                line = raw_line.rstrip("\r\n")
+                                if cpt_line.match(line):
+                                    offset += len(raw_line)
+                                    continue
+                                for pat in patterns:
+                                    match = re.search(pat, line, re.IGNORECASE)
+                                    if match:
+                                        evidence.setdefault(field, []).append(
+                                            Span(
+                                                text=match.group(0).strip(),
+                                                start=offset + match.start(),
+                                                end=offset + match.end(),
+                                            )
+                                        )
+                                        return
+                                offset += len(raw_line)
+
                         if isinstance(seed_procs, dict):
                             for proc_name, proc_data in seed_procs.items():
                                 if not isinstance(proc_data, dict):
@@ -926,10 +1014,28 @@ class RegistryService:
                                         )
                                     elif proc_name == "brushings":
                                         _add_first_span(field_key, list(BRUSHINGS_PATTERNS))
+                                    elif proc_name == "rigid_bronchoscopy":
+                                        _add_first_span(
+                                            field_key,
+                                            list(RIGID_BRONCHOSCOPY_PATTERNS),
+                                        )
                                     elif proc_name == "transbronchial_cryobiopsy":
                                         _add_first_span(
                                             field_key,
                                             list(TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS),
+                                        )
+                                    elif proc_name == "airway_dilation":
+                                        _add_first_span(field_key, list(AIRWAY_DILATION_PATTERNS))
+                                    elif proc_name == "airway_stent":
+                                        _add_first_span(field_key, list(AIRWAY_STENT_DEVICE_PATTERNS))
+                                    elif proc_name == "foreign_body_removal":
+                                        _add_first_span(
+                                            field_key,
+                                            [
+                                                r"\bforeign\s+body\b",
+                                                r"\bstent\b[^.\n]{0,80}\b(?:remov|retriev|extract|explant|pull|grasp)\w*",
+                                                r"\b(?:remov|retriev|extract|explant|pull|grasp)\w*\b[^.\n]{0,80}\bstent\b",
+                                            ],
                                         )
                                     elif proc_name == "peripheral_ablation":
                                         _add_first_span(
@@ -937,7 +1043,7 @@ class RegistryService:
                                             list(PERIPHERAL_ABLATION_PATTERNS),
                                         )
                                     elif proc_name == "thermal_ablation":
-                                        _add_first_span(
+                                        _add_first_span_skip_cpt_headers(
                                             field_key,
                                             list(THERMAL_ABLATION_PATTERNS),
                                         )
@@ -949,7 +1055,7 @@ class RegistryService:
                                             re.IGNORECASE,
                                         ):
                                             cryo_patterns.append(CRYOPROBE_PATTERN)
-                                        _add_first_span(field_key, cryo_patterns)
+                                        _add_first_span_skip_cpt_headers(field_key, cryo_patterns)
                                     elif proc_name == "chest_ultrasound":
                                         _add_first_span(
                                             field_key,
@@ -1050,11 +1156,15 @@ class RegistryService:
                 warnings.extend(granular_warnings)
 
                 from modules.registry.evidence.verifier import verify_evidence_integrity
-                from modules.registry.postprocess import sanitize_ebus_events
+                from modules.registry.postprocess import (
+                    populate_ebus_node_events_fallback,
+                    sanitize_ebus_events,
+                )
 
                 record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
                 warnings.extend(verifier_warnings)
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
+                warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
 
                 # Add review warnings if parallel pathway flagged discrepancies
                 if parallel_result.needs_review:
@@ -1085,11 +1195,15 @@ class RegistryService:
         warnings.extend(granular_warnings)
 
         from modules.registry.evidence.verifier import verify_evidence_integrity
-        from modules.registry.postprocess import sanitize_ebus_events
+        from modules.registry.postprocess import (
+            populate_ebus_node_events_fallback,
+            sanitize_ebus_events,
+        )
 
         record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
         warnings.extend(verifier_warnings)
         warnings.extend(sanitize_ebus_events(record, masked_note_text))
+        warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
 
         return record, warnings, meta
 
@@ -1107,6 +1221,7 @@ class RegistryService:
         from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
         from modules.registry.self_correction.judge import RegistryCorrectionJudge
         from modules.registry.self_correction.keyword_guard import (
+            apply_required_overrides,
             keyword_guard_check,
             keyword_guard_passes,
             scan_for_omissions,
@@ -1122,7 +1237,156 @@ class RegistryService:
         # overwrite this variable with focused/summarized text.
         raw_text_for_audit = raw_note_text
 
-        masked_note_text = mask_offset_preserving(raw_note_text)
+        masked_note_text, _mask_meta = mask_extraction_noise(raw_note_text)
+
+        def _env_flag(name: str, default: str = "0") -> bool:
+            return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
+
+        def _env_int(name: str, default: int) -> int:
+            raw = os.getenv(name)
+            if raw is None:
+                return default
+            raw = raw.strip()
+            if not raw:
+                return default
+            try:
+                return int(raw)
+            except ValueError:
+                return default
+
+        def _apply_navigation_target_heuristics(
+            note_text: str, record_in: RegistryRecord
+        ) -> tuple[RegistryRecord, list[str]]:
+            if record_in is None:
+                return RegistryRecord(), []
+
+            text = note_text or ""
+            nav_hint = re.search(
+                r"(?i)\b(navigational bronchoscopy|robotic bronchoscopy|electromagnetic navigation|\benb\b|\bion\b|monarch|galaxy|planning station)\b",
+                text,
+            )
+            if not nav_hint:
+                return record_in, []
+
+            target_lines = [line for line in text.splitlines() if re.search(r"(?i)target lesion", line)]
+            if not target_lines:
+                return record_in, []
+
+            record_data = record_in.model_dump()
+            granular = record_data.get("granular_data")
+            if granular is None or not isinstance(granular, dict):
+                granular = {}
+
+            targets_raw = granular.get("navigation_targets")
+            if isinstance(targets_raw, list):
+                targets = [dict(t) for t in targets_raw if isinstance(t, dict)]
+            else:
+                targets = []
+
+            existing_count = len(targets)
+            needed_count = len(target_lines)
+            if existing_count >= needed_count:
+                return record_in, []
+
+            for idx in range(existing_count, needed_count):
+                line = target_lines[idx].strip()
+                targets.append(
+                    {
+                        "target_number": idx + 1,
+                        "target_location_text": line or f"Target lesion {idx + 1}",
+                    }
+                )
+
+            granular["navigation_targets"] = targets
+            record_data["granular_data"] = granular
+            record_out = RegistryRecord(**record_data)
+
+            added = needed_count - existing_count
+            return record_out, [f"NAV_TARGET_HEURISTIC: added {added} navigation target(s) from text"]
+
+        def _coverage_failures(note_text: str, record_in: RegistryRecord) -> list[str]:
+            failures: list[str] = []
+            text = note_text or ""
+
+            ebus_hit = re.search(r"(?i)EBUS[- ]Findings|EBUS Lymph Nodes Sampled|\blinear\s+ebus\b", text)
+            ebus_performed = False
+            try:
+                ebus_obj = (
+                    record_in.procedures_performed.linear_ebus
+                    if record_in.procedures_performed
+                    else None
+                )
+                ebus_performed = bool(getattr(ebus_obj, "performed", False))
+            except Exception:
+                ebus_performed = False
+            if ebus_hit and not ebus_performed:
+                failures.append("linear_ebus missing")
+
+            eus_hit = re.search(
+                r"(?i)\bEUS-?B\b|\bleft adrenal\b|\btransgastric\b|\btransesophageal\b",
+                text,
+            )
+            procedures = record_in.procedures_performed if record_in.procedures_performed else None
+            if eus_hit and procedures is not None and hasattr(procedures, "eus_b"):
+                eus_b_performed = False
+                try:
+                    eus_b_obj = getattr(procedures, "eus_b", None)
+                    eus_b_performed = bool(getattr(eus_b_obj, "performed", False)) if eus_b_obj else False
+                except Exception:
+                    eus_b_performed = False
+                if not eus_b_performed:
+                    failures.append("eus_b missing")
+
+            nav_hit = re.search(
+                r"(?i)\b(navigational bronchoscopy|robotic bronchoscopy|electromagnetic navigation|\benb\b|\bion\b|monarch|galaxy)\b",
+                text,
+            )
+            if nav_hit:
+                target_mentions = len(re.findall(r"(?i)target lesion", text))
+                try:
+                    nav_targets = (
+                        record_in.granular_data.navigation_targets
+                        if record_in.granular_data is not None
+                        else None
+                    )
+                    nav_count = len(nav_targets or [])
+                except Exception:
+                    nav_count = 0
+                if target_mentions and nav_count < target_mentions:
+                    failures.append(f"navigation_targets {nav_count} < {target_mentions}")
+
+            return failures
+
+        def _run_structurer_fallback(note_text: str) -> tuple[RegistryRecord | None, list[str]]:
+            warnings: list[str] = []
+            context: dict[str, Any] = {"schema_version": "v3"}
+            try:
+                run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
+                if callable(run_with_warnings):
+                    record_out, engine_warnings = run_with_warnings(note_text, context=context)
+                    warnings.extend(engine_warnings or [])
+                else:
+                    record_out = self.registry_engine.run(note_text, context=context)
+                    if isinstance(record_out, tuple):
+                        record_out = record_out[0]
+
+                record_out, granular_warnings = _apply_granular_up_propagation(record_out)
+                warnings.extend(granular_warnings)
+
+                from modules.registry.evidence.verifier import verify_evidence_integrity
+                from modules.registry.postprocess import (
+                    populate_ebus_node_events_fallback,
+                    sanitize_ebus_events,
+                )
+
+                record_out, verifier_warnings = verify_evidence_integrity(record_out, note_text)
+                warnings.extend(verifier_warnings)
+                warnings.extend(sanitize_ebus_events(record_out, note_text))
+                warnings.extend(populate_ebus_node_events_fallback(record_out, note_text))
+                return record_out, warnings
+            except Exception as exc:
+                warnings.append(f"STRUCTURER_FALLBACK_FAILED: {exc}")
+                return None, warnings
 
         record, extraction_warnings, meta = self.extract_record(raw_note_text)
         extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
@@ -1135,6 +1399,26 @@ class RegistryService:
         if omission_warnings:
             extraction_warnings.extend(omission_warnings)
 
+        record, override_warnings = apply_required_overrides(masked_note_text, record)
+        if override_warnings:
+            extraction_warnings.extend(override_warnings)
+
+        record, nav_target_warnings = _apply_navigation_target_heuristics(masked_note_text, record)
+        if nav_target_warnings:
+            extraction_warnings.extend(nav_target_warnings)
+
+        from modules.registry.postprocess import (
+            populate_ebus_node_events_fallback,
+            sanitize_ebus_events,
+        )
+
+        ebus_fallback_warnings = populate_ebus_node_events_fallback(record, masked_note_text)
+        if ebus_fallback_warnings:
+            extraction_warnings.extend(ebus_fallback_warnings)
+        ebus_sanitize_warnings = sanitize_ebus_events(record, masked_note_text)
+        if ebus_sanitize_warnings:
+            extraction_warnings.extend(ebus_sanitize_warnings)
+
         guardrail_outcome = self.clinical_guardrails.apply_record_guardrails(
             masked_note_text, record
         )
@@ -1146,6 +1430,7 @@ class RegistryService:
         derived_codes = [c.code for c in derivation.codes]
         base_warnings = list(extraction_warnings)
         self_correct_warnings: list[str] = []
+        coverage_warnings: list[str] = []
         self_correction_meta: list[SelfCorrectionMetadata] = []
 
         auditor_source = os.getenv("REGISTRY_AUDITOR_SOURCE", "raw_ml").strip().lower()
@@ -1181,38 +1466,91 @@ class RegistryService:
                 audit_preds=audit_preds,
             )
 
+            header_codes = _scan_header_for_codes(raw_note_text)
+
+            def _apply_balanced_triggers(
+                report: AuditCompareReport, current_codes: list[str]
+            ) -> None:
+                nonlocal needs_manual_review
+
+                derived_code_set = {str(c) for c in (current_codes or [])}
+                missing_header_codes = sorted(header_codes - derived_code_set)
+                if missing_header_codes:
+                    warning = (
+                        "HEADER_EXPLICIT: header lists "
+                        f"{missing_header_codes} but deterministic derivation missed them"
+                    )
+                    if warning not in audit_warnings:
+                        logger.info(
+                            "HEADER_EXPLICIT mismatch: header has %s but derivation missed them.",
+                            missing_header_codes,
+                        )
+                        audit_warnings.append(warning)
+
+                    existing = {p.cpt for p in (report.high_conf_omissions or [])}
+                    for missing in missing_header_codes:
+                        if missing in existing:
+                            continue
+                        report.high_conf_omissions.append(
+                            AuditPrediction(cpt=missing, prob=1.0, bucket="HEADER_EXPLICIT")
+                        )
+                        existing.add(missing)
+
+                try:
+                    ebus_obj = (
+                        record.procedures_performed.linear_ebus
+                        if record.procedures_performed
+                        else None
+                    )
+                    ebus_performed = bool(getattr(ebus_obj, "performed", False))
+                    stations = getattr(ebus_obj, "stations_sampled", None)
+                    stations_empty = not stations
+                except Exception:
+                    ebus_performed = False
+                    stations_empty = False
+
+                if ebus_performed and stations_empty:
+                    warning = (
+                        "STRUCTURAL_FAILURE: linear_ebus performed but stations_sampled is empty "
+                        "(station extraction likely failed)"
+                    )
+                    if warning not in audit_warnings:
+                        audit_warnings.append(warning)
+                    needs_manual_review = True
+
+                    if "31653" in header_codes and "31653" not in derived_code_set:
+                        existing = {p.cpt for p in (report.high_conf_omissions or [])}
+                        if "31653" not in existing:
+                            report.high_conf_omissions.append(
+                                AuditPrediction(cpt="31653", prob=1.0, bucket="STRUCTURAL_FAILURE")
+                            )
+
             def _audit_requires_review(report: AuditCompareReport, evidence: str) -> bool:
                 if not report.high_conf_omissions:
                     return False
                 for pred in report.high_conf_omissions:
+                    if pred.bucket in {"HEADER_EXPLICIT", "STRUCTURAL_FAILURE"}:
+                        return True
                     passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=evidence)
                     if passes or reason == "no keywords configured":
                         return True
                 return False
 
-            needs_manual_review = baseline_needs_manual_review or _audit_requires_review(
+            needs_manual_review = baseline_needs_manual_review
+            _apply_balanced_triggers(audit_report, derived_codes)
+            needs_manual_review = needs_manual_review or _audit_requires_review(
                 audit_report, masked_note_text
             )
-
-            def _env_flag(name: str, default: str = "0") -> bool:
-                return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
-
-            def _env_int(name: str, default: int) -> int:
-                raw = os.getenv(name)
-                if raw is None:
-                    return default
-                raw = raw.strip()
-                if not raw:
-                    return default
-                try:
-                    return int(raw)
-                except ValueError:
-                    return default
 
             self_correct_enabled = _env_flag("REGISTRY_SELF_CORRECT_ENABLED", "0")
             if self_correct_enabled and audit_report.high_conf_omissions:
                 max_attempts = max(0, _env_int("REGISTRY_SELF_CORRECT_MAX_ATTEMPTS", 1))
-                bucket_by_cpt = {p.cpt: p.bucket for p in audit_report.ml_audit_codes}
+                bucket_by_cpt: dict[str, str | None] = {}
+                for pred in (audit_report.ml_audit_codes or []):
+                    bucket_by_cpt[pred.cpt] = pred.bucket
+                for pred in (audit_report.high_conf_omissions or []):
+                    if pred.bucket and pred.cpt not in bucket_by_cpt:
+                        bucket_by_cpt[pred.cpt] = pred.bucket
                 trigger_preds = sorted(
                     audit_report.high_conf_omissions,
                     key=lambda p: float(p.prob),
@@ -1239,24 +1577,51 @@ class RegistryService:
                     if corrections_applied >= max_attempts:
                         break
 
-                    passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=evidence_text)
+                    bucket = bucket_by_cpt.get(pred.cpt) or getattr(pred, "bucket", None) or "UNKNOWN"
+                    bypass_guard = bucket in {"HEADER_EXPLICIT", "STRUCTURAL_FAILURE"}
+                    guard_evidence = evidence_text
+                    if bypass_guard:
+                        header_block = _extract_procedure_header_block(masked_note_text)
+                        if not header_block:
+                            header_block = _extract_procedure_header_block(raw_note_text)
+                        if header_block and header_block.strip():
+                            guard_evidence = header_block
+
+                    if bypass_guard:
+                        passes, reason = True, "bucket bypass"
+                    else:
+                        passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=guard_evidence)
                     if not passes:
                         self_correct_warnings.append(
                             f"SELF_CORRECT_SKIPPED: {pred.cpt}: keyword guard failed ({reason})"
                         )
                         continue
 
+                    derived_codes_before = list(derived_codes)
                     trigger = SelfCorrectionTrigger(
                         target_cpt=pred.cpt,
                         ml_prob=float(pred.prob),
-                        ml_bucket=bucket_by_cpt.get(pred.cpt),
-                        reason="RAW_ML_HIGH_CONF_OMISSION",
+                        ml_bucket=bucket,
+                        reason=bucket if bucket != "UNKNOWN" else "RAW_ML_HIGH_CONF_OMISSION",
                     )
 
-                    discrepancy = (
-                        f"RAW-ML suggests missing CPT {pred.cpt} "
-                        f"(prob={float(pred.prob):.2f}, bucket={bucket_by_cpt.get(pred.cpt) or 'UNKNOWN'})."
-                    )
+                    if bucket == "HEADER_EXPLICIT":
+                        discrepancy = (
+                            f"Procedure header explicitly lists CPT {pred.cpt}, but deterministic "
+                            "derivation missed it. Patch the registry fields (not billing codes) "
+                            "so deterministic derivation includes this CPT if supported by the note."
+                        )
+                    elif bucket == "STRUCTURAL_FAILURE":
+                        discrepancy = (
+                            f"Registry shows a structural extraction failure related to CPT {pred.cpt}. "
+                            "Patch the registry fields (not billing codes) so deterministic derivation "
+                            "includes this CPT if supported by the note."
+                        )
+                    else:
+                        discrepancy = (
+                            f"RAW-ML suggests missing CPT {pred.cpt} "
+                            f"(prob={float(pred.prob):.2f}, bucket={bucket})."
+                        )
                     proposal = judge.propose_correction(
                         note_text=raw_note_text,
                         record=record,
@@ -1307,23 +1672,50 @@ class RegistryService:
                     self_correct_warnings.extend(candidate_granular_warnings)
 
                     self_correct_warnings.append(f"AUTO_CORRECTED: {pred.cpt}")
+                    applied_paths = [
+                        str(op.get("path"))
+                        for op in proposal.json_patch
+                        if isinstance(op, dict) and op.get("path") is not None
+                    ]
+                    allowlist_snapshot = _allowlist_snapshot()
+                    config_snapshot = {
+                        "max_attempts": max_attempts,
+                        "allowlist": allowlist_snapshot,
+                        "audit_config": audit_report.config.to_dict(),
+                        "judge_rationale": proposal.rationale,
+                    }
                     self_correction_meta.append(
                         SelfCorrectionMetadata(
                             trigger=trigger,
-                            applied_paths=[
-                                str(op.get("path"))
-                                for op in proposal.json_patch
-                                if isinstance(op, dict) and op.get("path") is not None
-                            ],
+                            applied_paths=applied_paths,
                             evidence_quotes=[proposal.evidence_quote],
-                            config_snapshot={
-                                "max_attempts": max_attempts,
-                                "allowlist": _allowlist_snapshot(),
-                                "audit_config": audit_report.config.to_dict(),
-                                "judge_rationale": proposal.rationale,
-                            },
+                            config_snapshot=config_snapshot,
                         )
                     )
+                    log_path = os.getenv("REGISTRY_SELF_CORRECT_LOG_PATH", "").strip()
+                    if log_path:
+                        _append_self_correction_log(
+                            log_path,
+                            {
+                                "event": "AUTO_CORRECTED",
+                                "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+                                "note_sha256": _hash_note_text(raw_note_text),
+                                "note_length": len((raw_note_text or "").strip()),
+                                "trigger": {
+                                    "target_cpt": pred.cpt,
+                                    "ml_prob": float(pred.prob),
+                                    "bucket": bucket,
+                                    "reason": trigger.reason,
+                                },
+                                "derived_codes_before": derived_codes_before,
+                                "derived_codes_after": list(candidate_codes),
+                                "json_patch": proposal.json_patch,
+                                "evidence_quote": proposal.evidence_quote,
+                                "judge_rationale": proposal.rationale,
+                                "applied_paths": applied_paths,
+                                "config_snapshot": config_snapshot,
+                            },
+                        )
 
                     audit_report = build_audit_compare_report(
                         derived_codes=derived_codes,
@@ -1331,9 +1723,46 @@ class RegistryService:
                         ml_case=ml_case,
                         audit_preds=audit_preds,
                     )
-                    needs_manual_review = baseline_needs_manual_review or _audit_requires_review(
+                    needs_manual_review = baseline_needs_manual_review
+                    _apply_balanced_triggers(audit_report, derived_codes)
+                    needs_manual_review = needs_manual_review or _audit_requires_review(
                         audit_report, masked_note_text
                     )
+
+            if _env_flag("REGISTRY_LLM_FALLBACK_ON_COVERAGE_FAIL", "0"):
+                coverage_failures = _coverage_failures(masked_note_text, record)
+                if coverage_failures:
+                    coverage_warnings.append(
+                        "COVERAGE_FAIL: " + "; ".join(coverage_failures)
+                    )
+                    needs_manual_review = True
+
+                    fallback_record, fallback_warns = _run_structurer_fallback(masked_note_text)
+                    if fallback_warns:
+                        coverage_warnings.extend(fallback_warns)
+
+                    if fallback_record is not None:
+                        record = fallback_record
+                        derivation = derive_registry_to_cpt(record)
+                        derived_codes = [c.code for c in derivation.codes]
+
+                        audit_report = build_audit_compare_report(
+                            derived_codes=derived_codes,
+                            cfg=cfg,
+                            ml_case=ml_case,
+                            audit_preds=audit_preds,
+                        )
+                        needs_manual_review = baseline_needs_manual_review
+                        _apply_balanced_triggers(audit_report, derived_codes)
+                        needs_manual_review = needs_manual_review or _audit_requires_review(
+                            audit_report, masked_note_text
+                        )
+
+                        remaining = _coverage_failures(masked_note_text, record)
+                        if remaining:
+                            coverage_warnings.append(
+                                "COVERAGE_FAIL_REMAINS: " + "; ".join(remaining)
+                            )
         elif auditor_source == "disabled":
             from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
 
@@ -1368,7 +1797,7 @@ class RegistryService:
             record = RegistryRecord(**record_data)
 
         derivation_warnings = list(derivation.warnings)
-        warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings)
+        warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings) + list(coverage_warnings)
         code_rationales = {c.code: c.rationale for c in derivation.codes}
         mapped_fields = (
             aggregate_registry_fields(derived_codes, version="v3") if derived_codes else {}

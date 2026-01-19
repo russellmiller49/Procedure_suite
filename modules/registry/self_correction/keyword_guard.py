@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 
 from modules.common.logger import get_logger
+from modules.common.spans import Span
 from modules.registry.schema import RegistryRecord
 
 logger = get_logger("keyword_guard")
@@ -64,6 +65,21 @@ CPT_KEYWORDS: dict[str, list[str]] = {
         "tbna",
         "transbronchial needle aspiration",
         "transbronchial needle",
+        "ebus lymph nodes sampled",
+        "lymph nodes sampled",
+        "lymph node stations",
+        "site 1",
+        "site 2",
+        "site 3",
+        "site 4",
+        "subcarinal",
+        "11l",
+        "11rs",
+        "11ri",
+        "4r",
+        "4l",
+        "10r",
+        "10l",
     ],
     # Tumor debulking / destruction
     "31640": [
@@ -87,7 +103,70 @@ CPT_KEYWORDS: dict[str, list[str]] = {
         "cryotherapy",
     ],
     "31654": ["radial ebus", "radial ultrasound", "rp-ebus", "r-ebus", "rebus", "miniprobe"],
-    "31627": ["navigational bronchoscopy", "navigation", "electromagnetic navigation", "enb"],
+    "31627": [
+        "navigational bronchoscopy",
+        "navigation",
+        "electromagnetic navigation",
+        "enb",
+        "ion",
+        "intuitive ion",
+        "robotic bronchoscopy",
+        "monarch",
+        "galaxy",
+        "planning station",
+    ],
+    "43238": [
+        "eus-b",
+        "eus b",
+        "endoscopic ultrasound",
+        "transesophageal",
+        "transgastric",
+        "left adrenal",
+        "adrenal mass",
+        "eusb",
+    ],
+    "76982": [
+        "elastography",
+        "elastrography",
+        "type 1 elastographic",
+        "type 2 elastographic",
+        "stiff",
+        "soft (green",
+        "blue)",
+    ],
+    "76983": [
+        "elastography",
+        "elastrography",
+        "additional target",
+        "additional targets",
+        "type 1 elastographic",
+        "type 2 elastographic",
+    ],
+    "77012": [
+        "cone beam ct",
+        "cone-beam ct",
+        "cios",
+        "spin system",
+        "ct guidance",
+        "ct guided",
+        "3d reconstruction",
+    ],
+    "76377": [
+        "3d rendering",
+        "3-d reconstruction",
+        "3d reconstruction",
+        "planning station",
+        "ion planning station",
+    ],
+    # Therapeutics: dilation
+    "31630": ["balloon", "dilation", "dilate", "dilated"],
+    "31631": ["balloon", "dilation", "dilate", "dilated"],
+    # Therapeutics: airway stent
+    "31636": ["stent", "silicone", "metal", "metallic", "hybrid", "y-stent", "dumon", "ultraflex", "aero"],
+    "31637": ["stent", "silicone", "metal", "metallic", "hybrid", "y-stent", "dumon", "ultraflex", "aero"],
+    "31638": ["stent", "removal", "removed", "retrieved", "extracted", "forceps", "silicone", "metal", "metallic"],
+    # Therapeutics: foreign body removal
+    "31635": ["foreign body", "removed", "remove", "extracted", "retrieved", "forceps"],
 }
 
 # -----------------------------------------------------------------------------
@@ -124,6 +203,27 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
         (r"(?i)\br-?ebus\b", "Text contains 'rEBUS' but extraction missed it."),
         (r"(?i)\brp-?ebus\b", "Text contains 'rp-EBUS' but extraction missed it."),
         (r"(?i)\bminiprobe\b", "Text contains 'miniprobe' (radial EBUS) but extraction missed it."),
+    ],
+    # Fix for missed linear EBUS
+    "procedures_performed.linear_ebus.performed": [
+        (r"(?i)\b(?:linear|convex)\s+ebus\b", "Text contains 'linear/convex EBUS' but extraction missed it."),
+        (r"(?i)\bebus[- ]?tbna\b", "Text contains 'EBUS-TBNA' but extraction missed linear EBUS."),
+        (r"(?i)EBUS[- ]Findings", "Text contains 'EBUS Findings' but extraction missed linear EBUS."),
+        (r"(?i)EBUS Lymph Nodes Sampled", "Text contains 'EBUS Lymph Nodes Sampled' but extraction missed linear EBUS."),
+        (
+            r"(?is)\b(?:ebus|endobronchial\s+ultrasound)\b.{0,200}\b(?:lymph\s+node(?:s)?|lymph\s+nodes\s+sampled|lymph\s+node\s+stations?)\b",
+            "Text mentions EBUS lymph node sampling but extraction missed linear EBUS.",
+        ),
+        (
+            r"(?is)\b(?:ebus|endobronchial\s+ultrasound)\b.{0,200}\b(?:station|level)\s*\d+[RL]?\b",
+            "Text mentions EBUS station/level numbers but extraction missed linear EBUS.",
+        ),
+    ],
+    # Fix for missed EUS-B
+    "procedures_performed.eus_b.performed": [
+        (r"(?i)\bEUS-?B\b", "Text contains 'EUS-B' but extraction missed EUS-B."),
+        (r"(?i)\bleft adrenal\b", "Text contains left adrenal mass evaluation but extraction missed EUS-B."),
+        (r"(?i)\btransgastric\b|\btransesophageal\b", "Text contains transgastric/transesophageal sampling but extraction missed EUS-B."),
     ],
     # Fix for missed cryotherapy / tumor destruction
     "procedures_performed.cryotherapy.performed": [
@@ -229,6 +329,84 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
     return warnings
 
 
+def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[RegistryRecord, list[str]]:
+    """Force required procedure flags when high-signal patterns appear."""
+    if record is None:
+        return RegistryRecord(), []
+
+    warnings: list[str] = []
+    record_data = record.model_dump()
+    evidence = record_data.get("evidence") or {}
+    if not isinstance(evidence, dict):
+        evidence = {}
+
+    updated = False
+    for field_path, rules in REQUIRED_PATTERNS.items():
+        if _is_field_populated(record, field_path):
+            continue
+
+        for pattern, msg in rules:
+            match = re.search(pattern, note_text or "")
+            if not match:
+                continue
+
+            if field_path.startswith("granular_data.navigation_targets"):
+                granular = record_data.get("granular_data")
+                if granular is None or not isinstance(granular, dict):
+                    granular = {}
+
+                targets_raw = granular.get("navigation_targets")
+                if isinstance(targets_raw, list):
+                    targets = [t for t in targets_raw if isinstance(t, dict)]
+                else:
+                    targets = []
+
+                if not targets:
+                    targets = [
+                        {
+                            "target_number": 1,
+                            "target_location_text": "Unknown target",
+                            "fiducial_marker_placed": True,
+                        }
+                    ]
+                else:
+                    latest = dict(targets[-1])
+                    if latest.get("fiducial_marker_placed") is not True:
+                        latest["fiducial_marker_placed"] = True
+                    targets[-1] = latest
+
+                granular["navigation_targets"] = targets
+                record_data["granular_data"] = granular
+                evidence.setdefault(field_path, []).append(
+                    Span(
+                        text=match.group(0).strip(),
+                        start=match.start(),
+                        end=match.end(),
+                    )
+                )
+                warnings.append(f"HARD_OVERRIDE: {msg} -> {field_path}=true")
+                updated = True
+                break
+
+            _set_nested_field(record_data, field_path, True)
+            evidence.setdefault(field_path, []).append(
+                Span(
+                    text=match.group(0).strip(),
+                    start=match.start(),
+                    end=match.end(),
+                )
+            )
+            warnings.append(f"HARD_OVERRIDE: {msg} -> {field_path}=true")
+            updated = True
+            break
+
+    if updated:
+        record_data["evidence"] = evidence
+        record = RegistryRecord(**record_data)
+
+    return record, warnings
+
+
 def _is_field_populated(record: RegistryRecord, path: str) -> bool:
     """Safely navigate the RegistryRecord using dot-notation and check truthiness."""
     try:
@@ -256,6 +434,16 @@ def _is_field_populated(record: RegistryRecord, path: str) -> bool:
     except Exception as exc:  # pragma: no cover
         logger.error("Error checking field population for %s: %s", path, exc)
         return False
+
+
+def _set_nested_field(data: dict, path: str, value: object) -> None:
+    parts = path.split(".")
+    current = data
+    for part in parts[:-1]:
+        if part not in current or not isinstance(current.get(part), dict):
+            current[part] = {}
+        current = current[part]
+    current[parts[-1]] = value
 
 
 def keyword_guard_passes(*, cpt: str, evidence_text: str) -> bool:
@@ -293,6 +481,7 @@ def _keyword_hit(text_lower: str, needle_lower: str) -> bool:
 __all__ = [
     "CPT_KEYWORDS",
     "REQUIRED_PATTERNS",
+    "apply_required_overrides",
     "keyword_guard_check",
     "keyword_guard_passes",
     "scan_for_omissions",

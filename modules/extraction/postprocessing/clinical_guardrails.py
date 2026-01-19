@@ -22,6 +22,40 @@ _DILATION_CONTEXT_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+_STENT_NEGATION_PATTERNS = [
+    re.compile(
+        r"\bdecision\b[^.\n]{0,80}\bnot\b[^.\n]{0,40}\b(?:place|insert|perform|deploy)\w*\b"
+        r"[^.\n]{0,80}\bstent\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bno\s+additional\s+stents?\b[^.\n]{0,40}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,40}\bstent(?:s)?\b"
+        r"[^.\n]{0,40}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
+        re.IGNORECASE,
+    ),
+]
+
+_STENT_PLACEMENT_CONTEXT_RE = re.compile(
+    r"\bstent\b[^.\n]{0,60}\b(place|placed|deploy|deployed|insert|inserted|position|positioned|advance|advanced|seat|seated)\b",
+    re.IGNORECASE,
+)
+_STENT_STRONG_PLACEMENT_RE = re.compile(
+    r"\bstent\b[^.\n]{0,60}\b(deploy|deployed|insert|inserted|advance|advanced|position|positioned|seat|seated)\b",
+    re.IGNORECASE,
+)
+_STENT_REMOVAL_CONTEXT_RE = re.compile(
+    r"\bstent\b[^.\n]{0,60}\b(remov|retriev|extract|explant|grasp|pull|peel)\w*\b",
+    re.IGNORECASE,
+)
+_STENT_INSPECTION_RE = re.compile(
+    r"\bstent\b[^.\n]{0,60}\b(evaluat|inspect|inspection|patent|in\s+good\s+position|position\s+confirmed)\b",
+    re.IGNORECASE,
+)
+
 _IPC_TERMS = ("pleurx", "aspira", "tunneled", "tunnelled", "indwelling pleural catheter", "ipc")
 _CHEST_TUBE_TERMS = ("pigtail", "wayne", "pleur-evac", "pleur evac", "tube thoracostomy", "chest tube")
 _INSERT_TERMS = ("insert", "inserted", "placed", "place", "deploy", "deployed", "introduced", "positioned")
@@ -82,6 +116,30 @@ class ClinicalGuardrails:
         if radial_marker and linear_marker:
             needs_review = True
             warnings.append("Radial vs linear EBUS markers both present; review required.")
+
+        # Stent negation and inspection-only guardrails.
+        procedures = record_data.get("procedures_performed")
+        stent = procedures.get("airway_stent") if isinstance(procedures, dict) else None
+        if isinstance(stent, dict) and stent.get("performed") is True:
+            negated = any(p.search(text_lower) for p in _STENT_NEGATION_PATTERNS)
+            removal_present = bool(_STENT_REMOVAL_CONTEXT_RE.search(text_lower)) or stent.get("airway_stent_removal") is True
+            placement_present = bool(_STENT_PLACEMENT_CONTEXT_RE.search(text_lower))
+            strong_placement = bool(_STENT_STRONG_PLACEMENT_RE.search(text_lower))
+            inspection_only = bool(_STENT_INSPECTION_RE.search(text_lower))
+
+            if negated and not strong_placement:
+                if removal_present:
+                    if self._set_stent_action(record_data, "Removal"):
+                        warnings.append("Stent placement negated; treating as stent removal.")
+                        changed = True
+                else:
+                    if self._clear_stent(record_data):
+                        warnings.append("Stent placement negated; treating as not performed.")
+                        changed = True
+            elif inspection_only and not placement_present and not removal_present:
+                if self._clear_stent(record_data):
+                    warnings.append("Stent inspection-only language; treating as not performed.")
+                    changed = True
 
         # IPC vs chest tube disambiguation.
         ipc_present = self._contains_any(text_lower, _IPC_TERMS)
@@ -193,6 +251,34 @@ class ClinicalGuardrails:
         procedures[proc_name] = proc
         record_data["procedures_performed"] = procedures
         return current != value
+
+    def _set_stent_action(self, record_data: dict[str, Any], action: str) -> bool:
+        procedures = record_data.get("procedures_performed")
+        if not isinstance(procedures, dict):
+            procedures = {}
+        stent = procedures.get("airway_stent")
+        if not isinstance(stent, dict):
+            stent = {}
+        current = stent.get("action")
+        stent["performed"] = True
+        stent["action"] = action
+        if action.lower().startswith("remov"):
+            stent["airway_stent_removal"] = True
+        procedures["airway_stent"] = stent
+        record_data["procedures_performed"] = procedures
+        return current != action
+
+    def _clear_stent(self, record_data: dict[str, Any]) -> bool:
+        procedures = record_data.get("procedures_performed")
+        if not isinstance(procedures, dict):
+            procedures = {}
+        stent = procedures.get("airway_stent")
+        if not isinstance(stent, dict):
+            stent = {}
+        current = stent.get("performed")
+        procedures["airway_stent"] = {"performed": False}
+        record_data["procedures_performed"] = procedures
+        return current is not False or len(stent) > 1
 
     def _set_pleural_performed(self, record_data: dict[str, Any], proc_name: str, value: bool) -> bool:
         pleural = record_data.get("pleural_procedures")

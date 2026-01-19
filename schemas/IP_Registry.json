@@ -105,6 +105,14 @@
       "type": ["array", "string", "null"],
       "description": "Linear EBUS stations"
     },
+    "eus_b_performed": {
+      "type": ["boolean", "null"],
+      "description": "EUS-B performed"
+    },
+    "eus_b_sites_sampled": {
+      "type": ["array", "string", "null"],
+      "description": "EUS-B sites sampled"
+    },
     "nav_platform": {
       "type": ["string", "null"],
       "description": "Navigation platform used"

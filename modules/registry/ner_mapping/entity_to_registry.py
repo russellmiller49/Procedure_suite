@@ -114,11 +114,11 @@ class NERToRegistryMapper:
         warnings.extend(proc_result.warnings)
 
         for proc_name, performed in proc_result.procedure_flags.items():
-            self._set_nested_field(
-                record_dict,
-                f"procedures_performed.{proc_name}.performed",
-                performed,
-            )
+            field_path = self.procedure_extractor.field_path_for(proc_name)
+            if not field_path:
+                field_path = f"procedures_performed.{proc_name}.performed"
+
+            self._set_nested_field(record_dict, field_path, performed)
 
             # Track evidence
             if proc_name in proc_result.evidence:

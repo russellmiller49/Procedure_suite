@@ -355,7 +355,7 @@ class LLMDetailedExtractor:
     def _filter_relevant_text(self, text: str, sections: list[Section]) -> str:
         """Filter text to relevant sections."""
         relevant_text = ""
-        target_headers = ["DESCRIPTION", "PROCEDURE", "FINDINGS", "IMPRESSION", "PLAN", "RECOMMENDATIONS"]
+        target_headers = ["DESCRIPTION", "PROCEDURE", "TECHNIQUE", "FINDINGS", "IMPRESSION"]
 
         for section in sections:
             if any(h in section.title.upper() for h in target_headers):

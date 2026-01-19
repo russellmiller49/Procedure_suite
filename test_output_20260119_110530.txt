@@ -1,28 +1,29 @@
 source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311 && pytest
-........................................................................ [  5%]
-........................................................................ [ 10%]
-........................................................................ [ 15%]
-........................................................................ [ 20%]
-........................................................................ [ 25%]
-...............sssssssss.................sssssssssssss..........EEEEEEEE [ 30%]
-FFFFFFFEEEE............................................................. [ 35%]
-........................................................................ [ 40%]
-........................................................................ [ 45%]
-........................................................................ [ 50%]
-........................................................................ [ 55%]
-........................................................................ [ 60%]
-........................................................................ [ 65%]
-........................................................................ [ 70%]
-........................................................................ [ 75%]
-........................................................................ [ 80%]
-........................................................................ [ 85%]
-........................................................................ [ 90%]
-........................................................................ [ 95%]
-......................................................................   [100%]
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+........................................................................ [ 19%]
+........................................................................ [ 24%]
+................sssssssss.................sssssssssssss..........EEEEEEE [ 29%]
+EFFFFFFFEEEE............................................................ [ 34%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+........................................................................ [ 59%]
+........................................................................ [ 64%]
+........................................................................ [ 69%]
+........................................................................ [ 74%]
+........................................................................ [ 79%]
+........................................................................ [ 84%]
+........................................................................ [ 89%]
+........................................................................ [ 94%]
+........................................................................ [ 99%]
+...........                                                              [100%]
 ==================================== ERRORS ====================================
 ___________ ERROR at setup of TestHealthEndpoints.test_health_check ____________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -87,7 +88,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -340,7 +341,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -409,14 +410,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:03.888470", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:49.650883", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 __________ ERROR at setup of TestHealthEndpoints.test_advisor_status ___________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -481,7 +482,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -734,7 +735,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -803,14 +804,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:04.370701", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:49.888982", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ________ ERROR at setup of TestCodeEndpoints.test_code_procedure_basic _________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -875,7 +876,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -1128,7 +1129,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -1197,14 +1198,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:04.627463", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:50.299670", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 _____ ERROR at setup of TestCodeEndpoints.test_code_procedure_bronchoscopy _____
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -1269,7 +1270,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -1522,7 +1523,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -1591,14 +1592,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:05.047460", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:50.536817", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ____ ERROR at setup of TestCodeEndpoints.test_code_procedure_thoracentesis _____
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -1663,7 +1664,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -1916,7 +1917,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -1985,14 +1986,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:05.307286", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:50.771566", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 __________ ERROR at setup of TestCodeEndpoints.test_code_with_advisor __________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -2057,7 +2058,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -2310,7 +2311,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -2379,14 +2380,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:05.566233", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:51.158134", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 _____ ERROR at setup of TestCodeEndpoints.test_code_with_advisor_disabled ______
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -2451,7 +2452,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -2704,7 +2705,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -2773,14 +2774,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:05.975554", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:51.403080", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 _ ERROR at setup of TestAdvisorSuggestEndpoint.test_suggest_requires_enabled_advisor _
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -2845,7 +2846,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -3098,7 +3099,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -3167,14 +3168,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:06.236231", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:51.792624", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ________ ERROR at setup of TestErrorHandling.test_invalid_request_body _________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -3239,7 +3240,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -3492,7 +3493,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -3561,14 +3562,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:08.801002", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:54.074536", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 _____ ERROR at setup of TestErrorHandling.test_invalid_procedure_category ______
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -3633,7 +3634,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -3886,7 +3887,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -3955,14 +3956,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:09.198439", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:54.311638", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ________ ERROR at setup of TestTraceLogging.test_trace_created_on_code _________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -4027,7 +4028,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -4280,7 +4281,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -4349,14 +4350,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:09.451766", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:54.547174", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ____________ ERROR at setup of TestTraceLogging.test_trace_disabled ____________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -4421,7 +4422,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -4674,7 +4675,7 @@ tests/ml_advisor/conftest.py:509: in test_client
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -4743,15 +4744,15 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ---------------------------- Captured stderr setup -----------------------------
-{"timestamp": "2026-01-19T00:16:09.868795", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:54.936441", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log setup ------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 =================================== FAILURES ===================================
 _________ TestAdvisorSuggestEndpoint.test_suggest_with_enabled_advisor _________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -4816,7 +4817,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -4965,7 +4966,7 @@ modules/registry/model_runtime.py:209: RuntimeError
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.ml_advisor.test_router.TestAdvisorSuggestEndpoint object at 0x17663da10>
+self = <tests.ml_advisor.test_router.TestAdvisorSuggestEndpoint object at 0x1749d7d50>
 
     def test_suggest_with_enabled_advisor(self):
         """Suggest endpoint should work when advisor is enabled."""
@@ -5069,7 +5070,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -5138,14 +5139,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ----------------------------- Captured stderr call -----------------------------
-{"timestamp": "2026-01-19T00:16:06.683407", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:52.028499", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log call -------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 __________________ TestTraceEndpoints.test_list_traces_empty ___________________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -5210,7 +5211,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -5359,8 +5360,8 @@ modules/registry/model_runtime.py:209: RuntimeError
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x17663e390>
-tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-15/test_list_traces_empty0')
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x1749dc6d0>
+tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-17/test_list_traces_empty0')
 
     def test_list_traces_empty(self, tmp_path):
         """Should return empty list when no traces exist."""
@@ -5465,7 +5466,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -5534,14 +5535,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ----------------------------- Captured stderr call -----------------------------
-{"timestamp": "2026-01-19T00:16:06.937692", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:52.259429", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log call -------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ________________ TestTraceEndpoints.test_list_traces_with_data _________________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -5606,7 +5607,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -5755,8 +5756,8 @@ modules/registry/model_runtime.py:209: RuntimeError
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x17663ea90>
-populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-15/test_list_traces_with_data0/test_traces.jsonl')
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x1749dcdd0>
+populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-17/test_list_traces_with_data0/test_traces.jsonl')
 
     def test_list_traces_with_data(self, populated_trace_file):
         """Should return traces when file has data."""
@@ -5859,7 +5860,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -5928,14 +5929,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ----------------------------- Captured stderr call -----------------------------
-{"timestamp": "2026-01-19T00:16:07.191839", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:52.636396", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log call -------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ________________ TestTraceEndpoints.test_list_traces_pagination ________________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -6000,7 +6001,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -6149,8 +6150,8 @@ modules/registry/model_runtime.py:209: RuntimeError
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x17663f1d0>
-populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-15/test_list_traces_pagination0/test_traces.jsonl')
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x1749dd510>
+populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-17/test_list_traces_pagination0/test_traces.jsonl')
 
     def test_list_traces_pagination(self, populated_trace_file):
         """Should support pagination."""
@@ -6253,7 +6254,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -6322,14 +6323,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ----------------------------- Captured stderr call -----------------------------
-{"timestamp": "2026-01-19T00:16:07.640553", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:52.863171", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log call -------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 _________________ TestTraceEndpoints.test_get_trace_not_found __________________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -6394,7 +6395,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -6543,8 +6544,8 @@ modules/registry/model_runtime.py:209: RuntimeError
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x17663f990>
-tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-15/test_get_trace_not_found0')
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x1749ddcd0>
+tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-17/test_get_trace_not_found0')
 
     def test_get_trace_not_found(self, tmp_path):
         """Should return 404 for non-existent trace."""
@@ -6650,7 +6651,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -6719,14 +6720,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ----------------------------- Captured stderr call -----------------------------
-{"timestamp": "2026-01-19T00:16:07.877870", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:53.244802", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log call -------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 ____________________ TestMetricsEndpoint.test_metrics_empty ____________________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -6791,7 +6792,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -6940,8 +6941,8 @@ modules/registry/model_runtime.py:209: RuntimeError
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.ml_advisor.test_router.TestMetricsEndpoint object at 0x176650210>
-tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-15/test_metrics_empty0')
+self = <tests.ml_advisor.test_router.TestMetricsEndpoint object at 0x1749d4dd0>
+tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-17/test_metrics_empty0')
 
     def test_metrics_empty(self, tmp_path):
         """Should return empty metrics when no traces exist."""
@@ -7046,7 +7047,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -7115,14 +7116,14 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ----------------------------- Captured stderr call -----------------------------
-{"timestamp": "2026-01-19T00:16:08.299558", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:53.470692", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log call -------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 __________________ TestMetricsEndpoint.test_metrics_with_data __________________
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -7187,7 +7188,7 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           runtime_warnings = verify_registry_runtime_bundle()
                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-modules/api/fastapi_app.py:236: 
+modules/api/fastapi_app.py:251: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
     def verify_registry_runtime_bundle(
@@ -7336,8 +7337,8 @@ modules/registry/model_runtime.py:209: RuntimeError
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.ml_advisor.test_router.TestMetricsEndpoint object at 0x176650910>
-populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-15/test_metrics_with_data0/test_traces.jsonl')
+self = <tests.ml_advisor.test_router.TestMetricsEndpoint object at 0x1749de0d0>
+populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-17/test_metrics_with_data0/test_traces.jsonl')
 
     def test_metrics_with_data(self, populated_trace_file):
         """Should calculate metrics from traces."""
@@ -7440,7 +7441,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
            ^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-app = <fastapi.applications.FastAPI object at 0x110e56f50>
+app = <fastapi.applications.FastAPI object at 0x10f191c10>
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -7509,11 +7510,11 @@ app = <fastapi.applications.FastAPI object at 0x110e56f50>
 >           raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 E           RuntimeError: Registry runtime bundle validation failed: Missing config.json at data/models/registry_runtime/config.json; Missing classifier.pt at data/models/registry_runtime/classifier.pt; Missing model weights (model.safetensors or pytorch_model.bin) in runtime bundle
 
-modules/api/fastapi_app.py:240: RuntimeError
+modules/api/fastapi_app.py:255: RuntimeError
 ----------------------------- Captured stderr call -----------------------------
-{"timestamp": "2026-01-19T00:16:08.549381", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-19T19:05:53.696227", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
 ------------------------------ Captured log call -------------------------------
-INFO     modules.api.fastapi_app:fastapi_app.py:231 PHI database tables verified/created
+INFO     modules.api.fastapi_app:fastapi_app.py:246 PHI database tables verified/created
 =============================== warnings summary ===============================
 tests/api/test_fastapi.py::test_coder_run_fixture_response
 tests/phi/test_presidio_nlp_backend_smoke.py::test_presidio_scrubber_initializes_with_backend[scispacy-model_candidates1]
@@ -7555,5 +7556,5 @@ FAILED tests/ml_advisor/test_router.py::TestTraceEndpoints::test_list_traces_pag
 FAILED tests/ml_advisor/test_router.py::TestTraceEndpoints::test_get_trace_not_found
 FAILED tests/ml_advisor/test_router.py::TestMetricsEndpoint::test_metrics_empty
 FAILED tests/ml_advisor/test_router.py::TestMetricsEndpoint::test_metrics_with_data
-7 failed, 1397 passed, 22 skipped, 2 warnings, 12 errors in 32.07s
+7 failed, 1410 passed, 22 skipped, 2 warnings, 12 errors in 44.99s
 make: *** [test] Error 1

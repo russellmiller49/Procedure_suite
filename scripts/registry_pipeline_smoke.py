@@ -183,6 +183,11 @@ def main() -> int:
         action="store_true",
         help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
     )
+    parser.add_argument(
+        "--real-llm",
+        action="store_true",
+        help="Allow real LLM calls (disables stub/offline defaults).",
+    )
     args = parser.parse_args()
 
     try:
@@ -191,10 +196,15 @@ def main() -> int:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
-    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-    if os.getenv("GEMINI_OFFLINE") is None:
-        os.environ["GEMINI_OFFLINE"] = "1"
+    if args.real_llm:
+        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
+        os.environ.setdefault("GEMINI_OFFLINE", "0")
+        os.environ.setdefault("OPENAI_OFFLINE", "0")
+    else:
+        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+        if os.getenv("GEMINI_OFFLINE") is None:
+            os.environ["GEMINI_OFFLINE"] = "1"
 
     masked = mask_offset_preserving(note_text)
 

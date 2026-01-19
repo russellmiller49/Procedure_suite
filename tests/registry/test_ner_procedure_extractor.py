@@ -73,3 +73,13 @@ def test_procedure_extractor_matches_brushings() -> None:
     extracted = extractor.extract(result)
 
     assert extracted.procedure_flags.get("brushings") is True
+
+
+def test_procedure_extractor_does_not_mark_linear_ebus_from_radial_ebus() -> None:
+    extractor = ProcedureExtractor()
+    result = _result_with_proc_method("Radial EBUS performed to confirm lesion location")
+
+    extracted = extractor.extract(result)
+
+    assert extracted.procedure_flags.get("radial_ebus") is True
+    assert "linear_ebus" not in extracted.procedure_flags

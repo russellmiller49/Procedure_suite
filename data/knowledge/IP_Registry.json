@@ -992,6 +992,60 @@
             }
           }
         },
+        "eus_b": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "EUS-B (endoscopic ultrasound via EBUS bronchoscope)",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "sites_sampled": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "Targets sampled (e.g., left adrenal, paraesophageal mass)"
+            },
+            "needle_gauge": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "19G",
+                "21G",
+                "22G",
+                "25G",
+                null
+              ]
+            },
+            "passes": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "rose_result": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "complications": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
         "radial_ebus": {
           "type": [
             "object",

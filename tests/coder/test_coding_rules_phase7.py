@@ -20,9 +20,11 @@ from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
 from modules.registry.deterministic_extractors import (
     extract_bal,
     extract_cryotherapy,
+    extract_linear_ebus,
     extract_navigational_bronchoscopy,
     extract_tbna_conventional,
     extract_brushings,
+    extract_rigid_bronchoscopy,
     extract_transbronchial_cryobiopsy,
     extract_peripheral_ablation,
     extract_thermal_ablation,
@@ -302,6 +304,30 @@ class TestCryotherapyExtractor:
         result = extract_cryotherapy(text)
         assert result == {"cryotherapy": {"performed": True}}
 
+    def test_extract_cryotherapy_cryo_probe(self):
+        text = "Cryo probe was used for tumor debulking."
+        result = extract_cryotherapy(text)
+        assert result == {"cryotherapy": {"performed": True}}
+
+
+class TestRigidBronchoscopyExtractor:
+    def test_extract_rigid_bronchoscopy_phrase(self):
+        text = "Rigid bronchoscopy was performed for central airway obstruction."
+        result = extract_rigid_bronchoscopy(text)
+        assert result == {"rigid_bronchoscopy": {"performed": True}}
+
+
+class TestLinearEBUSExtractor:
+    def test_extract_linear_ebus_with_stations(self):
+        text = "Stations sampled: 4R, 7, 11L. Linear EBUS bronchoscopy performed."
+        result = extract_linear_ebus(text)
+        assert result.get("linear_ebus", {}).get("performed") is True
+        assert set(result.get("linear_ebus", {}).get("stations_sampled") or []) == {"4R", "7", "11L"}
+
+    def test_extract_linear_ebus_not_from_radial_ebus(self):
+        text = "Radial EBUS performed to confirm lesion location. rEBUS view: Concentric."
+        result = extract_linear_ebus(text)
+        assert result == {}
 
 class TestNavigationExtractor:
     def test_extract_navigation_platform(self):
@@ -322,6 +348,12 @@ class TestBrushingsExtractor:
         text = "Brushings x2 were obtained for cytology."
         result = extract_brushings(text)
         assert result == {"brushings": {"performed": True}}
+
+    def test_extract_brushings_with_location(self):
+        text = "Endobronchial brushing was performed at the takeoff of the right upper lobe."
+        result = extract_brushings(text)
+        assert result.get("brushings", {}).get("performed") is True
+        assert result.get("brushings", {}).get("locations") == ["RUL"]
 
 
 class TestCryobiopsyExtractor:

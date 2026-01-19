@@ -41,3 +41,24 @@ def test_validate_proposal_allows_mechanical_debulking_prefix_path() -> None:
     )
     is_valid, reason = validate_proposal(proposal, "mechanical debulking")
     assert is_valid, reason
+
+
+def test_validate_proposal_allows_granular_data_prefix_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[{"op": "add", "path": "/granular_data/cryobiopsy_sites/0/lobe", "value": "RUL"}],
+        evidence_quote="cryobiopsy performed",
+    )
+    is_valid, reason = validate_proposal(proposal, "cryobiopsy performed")
+    assert is_valid, reason
+
+
+def test_validate_proposal_normalizes_whitespace_in_quote_matching() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[{"op": "add", "path": "/procedures_performed/brushings/performed", "value": True}],
+        evidence_quote="Brushings performed",
+    )
+    note_text = "Brushings\nperformed"
+    is_valid, reason = validate_proposal(proposal, note_text)
+    assert is_valid, reason

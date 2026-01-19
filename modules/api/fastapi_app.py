@@ -60,8 +60,17 @@ def _validate_startup_env() -> None:
         return
 
     extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
-    if extraction_engine != "parallel_ner":
-        raise RuntimeError("REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' in production.")
+    allow_registry_engine_override = _truthy_env("PROCSUITE_ALLOW_REGISTRY_ENGINE_OVERRIDE")
+    if extraction_engine != "parallel_ner" and not allow_registry_engine_override:
+        raise RuntimeError(
+            "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' in production "
+            "(or set PROCSUITE_ALLOW_REGISTRY_ENGINE_OVERRIDE=true for an explicit override)."
+        )
+    if extraction_engine != "parallel_ner" and allow_registry_engine_override:
+        logging.getLogger(__name__).warning(
+            "Production override enabled: REGISTRY_EXTRACTION_ENGINE=%s (expected parallel_ner).",
+            extraction_engine,
+        )
 
     schema_version = _env_value("REGISTRY_SCHEMA_VERSION")
     if schema_version != "v3":

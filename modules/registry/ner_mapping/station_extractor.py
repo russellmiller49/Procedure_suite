@@ -96,6 +96,7 @@ class EBUSStationExtractor:
 
         raw_text = ner_result.raw_text or ""
         bullet_scopes, line_scopes = self._collect_line_scopes(raw_text)
+        paragraph_scopes = self._collect_paragraph_scopes(raw_text)
         sentence_scopes = self._collect_sentence_scopes(raw_text)
         if not sentence_scopes:
             sentence_scopes = line_scopes
@@ -127,14 +128,38 @@ class EBUSStationExtractor:
                     f"No scope found for station '{station_entity.text}'"
                 )
 
-            # Find action within the same scope
+            # Find action within the same scope; if missing, broaden to paragraph/window.
             nearby_action = self._find_nearest_in_scope(
                 station_entity,
                 actions,
                 scope,
             )
 
-            action_type = self._classify_action(nearby_action)
+            if nearby_action is None and paragraph_scopes:
+                paragraph_scope = self._find_scope_for_entity(
+                    station_entity,
+                    paragraph_scopes,
+                    [],
+                    [],
+                )
+                nearby_action = self._find_nearest_in_scope(
+                    station_entity,
+                    actions,
+                    paragraph_scope,
+                )
+
+            # Use a local context window as an additional backstop when the action
+            # entity is missing or the note spans multiple lines.
+            context_window = ""
+            if raw_text:
+                start = max(0, int(station_entity.start_char) - self.action_window)
+                end = min(len(raw_text), int(station_entity.end_char) + self.action_window)
+                context_window = raw_text[start:end]
+
+            action_type = self._classify_action(
+                nearby_action,
+                context_text=context_window,
+            )
 
             # Find ROSE outcome within the same scope
             nearby_rose = self._find_nearest_in_scope(
@@ -238,6 +263,56 @@ class EBUSStationExtractor:
             )
         return scopes
 
+    def _collect_paragraph_scopes(self, text: str) -> List[TextScope]:
+        """Collect paragraph scopes separated by blank lines.
+
+        This is a deterministic fallback when spaCy is unavailable and when
+        station + action phrases are split across adjacent lines.
+        """
+        if not text:
+            return []
+
+        scopes: List[TextScope] = []
+        offset = 0
+        paragraph_start: int | None = None
+        paragraph_chunks: list[str] = []
+
+        for raw_line in text.splitlines(keepends=True):
+            is_blank = not raw_line.strip()
+            if is_blank:
+                if paragraph_start is not None and paragraph_chunks:
+                    paragraph_text = "".join(paragraph_chunks).rstrip("\r\n")
+                    scopes.append(
+                        TextScope(
+                            start_char=paragraph_start,
+                            end_char=offset,
+                            text=paragraph_text,
+                            is_bullet=False,
+                        )
+                    )
+                paragraph_start = None
+                paragraph_chunks = []
+                offset += len(raw_line)
+                continue
+
+            if paragraph_start is None:
+                paragraph_start = offset
+            paragraph_chunks.append(raw_line)
+            offset += len(raw_line)
+
+        if paragraph_start is not None and paragraph_chunks:
+            paragraph_text = "".join(paragraph_chunks).rstrip("\r\n")
+            scopes.append(
+                TextScope(
+                    start_char=paragraph_start,
+                    end_char=offset,
+                    text=paragraph_text,
+                    is_bullet=False,
+                )
+            )
+
+        return scopes
+
     def _find_scope_for_entity(
         self,
         entity: NEREntity,
@@ -286,12 +361,19 @@ class EBUSStationExtractor:
     def _classify_action(
         self,
         action_entity: Optional[NEREntity],
+        *,
+        context_text: str | None = None,
     ) -> NodeActionType:
         """Classify PROC_ACTION entity into NodeActionType."""
-        if action_entity is None:
+        candidate_texts: list[str] = []
+        if action_entity is not None and isinstance(action_entity.text, str):
+            candidate_texts.append(action_entity.text)
+        if context_text:
+            candidate_texts.append(context_text)
+        if not candidate_texts:
             return "inspected_only"
 
-        text_lower = action_entity.text.lower()
+        text_lower = " ".join(candidate_texts).lower()
 
         # Check for sampling keywords
         if any(kw in text_lower for kw in SAMPLING_ACTION_KEYWORDS):

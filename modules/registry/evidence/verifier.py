@@ -114,15 +114,37 @@ def _find_therapeutic_aspiration_anchor(full_text: str) -> tuple[str, int, int] 
     if not text_lower:
         return None
 
-    for pattern in ROUTINE_SUCTION_PATTERNS:
-        if re.search(pattern, text_lower):
-            return None
-
     for pattern in THERAPEUTIC_ASPIRATION_PATTERNS:
         match = re.search(pattern, full_text, re.IGNORECASE)
         if not match:
             continue
-        negation_check = r"\b(?:no|not|without)\b[^.\n]{0,40}" + pattern
+        negation_check = r"\b(?:no|not|without)\b[^.]{0,80}" + pattern
+        if re.search(negation_check, text_lower, re.IGNORECASE):
+            continue
+        return (match.group(0).strip(), match.start(), match.end())
+
+    routine_suction_present = any(re.search(pattern, text_lower) for pattern in ROUTINE_SUCTION_PATTERNS)
+    contextual_patterns = [
+        r"\b(?:copious|large\s+amount\s+of|thick|tenacious|purulent|bloody|blood-tinged)\s+secretions?\b[^.]{0,80}\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared|remov(?:ed|al))\b",
+        r"\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared|remov(?:ed|al))\b[^.]{0,80}\b(?:copious|large\s+amount\s+of|thick|tenacious|purulent|bloody|blood-tinged)\s+secretions?\b",
+        r"\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared|remov(?:ed|al))\b[^.]{0,80}\b(?:mucus\s+plug|clot|blood)\b",
+    ]
+    if not routine_suction_present:
+        contextual_patterns.append(
+            r"\b(?:airway|tracheobronchial\s+tree)\b[^.]{0,80}\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared)\b"
+        )
+        contextual_patterns.extend(
+            [
+                r"\bsecretions?\b[^.]{0,80}\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b",
+                r"\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b[^.]{0,80}\bsecretions?\b",
+            ]
+        )
+
+    for pattern in contextual_patterns:
+        match = re.search(pattern, full_text, re.IGNORECASE)
+        if not match:
+            continue
+        negation_check = r"\b(?:no|not|without)\b[^.]{0,80}" + pattern
         if re.search(negation_check, text_lower, re.IGNORECASE):
             continue
         return (match.group(0).strip(), match.start(), match.end())

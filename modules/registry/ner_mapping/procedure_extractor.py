@@ -1,6 +1,10 @@
 """Procedure extraction from NER entities.
 
-Maps PROC_METHOD entities to procedure boolean flags in RegistryRecord.
+Maps NER entities to procedure boolean flags in RegistryRecord.
+
+The granular NER model may emit procedure *devices* (e.g., `DEV_STENT`) instead
+of `PROC_METHOD`/`PROC_ACTION` spans; those device entities must still drive the
+corresponding clinical performed flags to avoid falling back to regex uplift.
 """
 
 from __future__ import annotations
@@ -33,7 +37,7 @@ PROCEDURE_MAPPINGS: Dict[str, Tuple[Set[str], str]] = {
         "procedures_performed.linear_ebus.performed",
     ),
     "radial_ebus": (
-        {"radial ebus", "rebus", "miniprobe", "radial probe"},
+        {"radial ebus", "radial endobronchial ultrasound", "rebus", "miniprobe", "radial probe"},
         "procedures_performed.radial_ebus.performed",
     ),
 
@@ -83,7 +87,7 @@ PROCEDURE_MAPPINGS: Dict[str, Tuple[Set[str], str]] = {
 
     # Therapeutic procedures
     "therapeutic_aspiration": (
-        {"therapeutic aspiration", "aspiration", "suctioning", "mucus plug"},
+        {"therapeutic aspiration", "suctioning", "mucus plug"},
         "procedures_performed.therapeutic_aspiration.performed",
     ),
     "airway_dilation": (
@@ -162,6 +166,13 @@ class ProcedureExtractor:
         # Pre-compile patterns
         self._patterns = self._compile_patterns()
 
+    def field_path_for(self, proc_name: str) -> str | None:
+        """Return the RegistryRecord field path for a procedure key."""
+        pattern = self._patterns.get(proc_name)
+        if not pattern:
+            return None
+        return pattern[1]
+
     def _keyword_hit(self, text_lower: str, needle: str) -> bool:
         """Return True if needle matches text.
 
@@ -194,9 +205,13 @@ class ProcedureExtractor:
         """
         proc_methods = ner_result.entities_by_type.get("PROC_METHOD", [])
         proc_actions = ner_result.entities_by_type.get("PROC_ACTION", [])
+        device_hints = (
+            ner_result.entities_by_type.get("DEV_STENT", [])
+            + ner_result.entities_by_type.get("DEV_DEVICE", [])
+        )
 
         # Combine method and action entities for procedure detection
-        all_proc_entities = proc_methods + proc_actions
+        all_proc_entities = proc_methods + proc_actions + device_hints
 
         procedure_flags: Dict[str, bool] = {}
         evidence: Dict[str, List[str]] = {}
@@ -204,8 +219,12 @@ class ProcedureExtractor:
 
         for entity in all_proc_entities:
             text_lower = entity.text.lower()
+            radial_keywords = self._patterns.get("radial_ebus", ([], ""))[0]
+            radial_hit = any(self._keyword_hit(text_lower, kw) for kw in radial_keywords)
 
             for proc_name, (keywords, field_path) in self._patterns.items():
+                if proc_name == "linear_ebus" and radial_hit:
+                    continue
                 for keyword in keywords:
                     if self._keyword_hit(text_lower, keyword):
                         # Found a match

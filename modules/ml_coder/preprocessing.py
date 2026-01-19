@@ -5,6 +5,7 @@ from typing import Iterable, List
 
 from sklearn.base import BaseEstimator, TransformerMixin
 
+from modules.common.text_cleaning import strip_empty_table_rows
 # Common boilerplate patterns to remove from clinical notes
 BOILERPLATE_PATTERNS = [
     r"electronically signed by.*$",
@@ -45,6 +46,7 @@ class NoteTextCleaner(BaseEstimator, TransformerMixin):
         cleaned = []
         for text in X:
             t = str(text) if text is not None else ""
+            t, _removed = strip_empty_table_rows(t)
             for rx in _bp_regexes:
                 t = rx.sub("", t)
             # Normalize whitespace

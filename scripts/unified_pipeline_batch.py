@@ -274,13 +274,23 @@ def main() -> int:
         action="store_false",
         help="Exclude evidence/explanation data",
     )
+    parser.add_argument(
+        "--real-llm",
+        action="store_true",
+        help="Allow real LLM calls (disables stub/offline defaults).",
+    )
     args = parser.parse_args()
     
-    # Set up environment (use stub LLM for offline testing)
-    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-    if os.getenv("GEMINI_OFFLINE") is None:
-        os.environ["GEMINI_OFFLINE"] = "1"
+    # Set up environment
+    if args.real_llm:
+        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
+        os.environ.setdefault("GEMINI_OFFLINE", "0")
+    else:
+        # Use stub LLM for offline testing
+        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+        if os.getenv("GEMINI_OFFLINE") is None:
+            os.environ["GEMINI_OFFLINE"] = "1"
     
     # Load notes
     if not args.notes_dir.exists():
@@ -353,6 +363,7 @@ def main() -> int:
             f.write(f"Random seed: {args.seed}\n")
         f.write(f"Include financials: {args.include_financials}\n")
         f.write(f"Include explain: {args.explain}\n")
+        f.write(f"Real LLM enabled: {args.real_llm}\n")
         f.write("=" * 80 + "\n")
         f.write("\n")
         

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 from typing import Any
 
 ALLOWED_PATHS: set[str] = {
@@ -16,6 +17,10 @@ ALLOWED_PATHS: set[str] = {
     "/procedures_performed/linear_ebus/performed",
     "/procedures_performed/radial_ebus/performed",
     "/procedures_performed/navigational_bronchoscopy/performed",
+    "/procedures_performed/airway_dilation/performed",
+    "/procedures_performed/airway_stent/performed",
+    "/procedures_performed/foreign_body_removal/performed",
+    "/procedures_performed/eus_b/performed",
     "/pleural_procedures/ipc/performed",
     "/pleural_procedures/thoracentesis/performed",
     "/pleural_procedures/chest_tube/performed",
@@ -30,10 +35,23 @@ ALLOWED_PATH_PREFIXES: set[str] = {
     "/procedures_performed/transbronchial_cryobiopsy",
     "/procedures_performed/thermal_ablation",
     "/procedures_performed/peripheral_ablation",
+    "/procedures_performed/airway_dilation",
+    "/procedures_performed/airway_stent",
+    "/procedures_performed/foreign_body_removal",
+    "/procedures_performed/eus_b",
     "/pleural_procedures/ipc",
     "/pleural_procedures/thoracentesis",
     "/pleural_procedures/chest_tube",
+    "/granular_data",
 }
+
+_WS_RE = re.compile(r"\s+")
+
+
+def _normalize_whitespace(text: str) -> str:
+    if not text:
+        return ""
+    return _WS_RE.sub(" ", text).strip()
 
 
 def validate_proposal(
@@ -57,7 +75,10 @@ def validate_proposal(
         text = raw_note_text or ""
         text_label = "raw note text"
     if quote not in text:
-        return False, f"Quote not found verbatim in {text_label}: '{quote[:50]}...'"
+        normalized_quote = _normalize_whitespace(quote)
+        normalized_text = _normalize_whitespace(text)
+        if not normalized_quote or normalized_quote not in normalized_text:
+            return False, f"Quote not found verbatim in {text_label}: '{quote[:50]}...'"
 
     patches = getattr(proposal, "json_patch", [])
     if not isinstance(patches, list) or not patches:

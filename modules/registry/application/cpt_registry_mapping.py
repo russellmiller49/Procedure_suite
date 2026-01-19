@@ -168,6 +168,12 @@ CPT_TO_REGISTRY_MAPPING: dict[str, RegistryFieldMapping] = {
         fields={"radial_ebus_performed": True},
         hints={"procedure_type": "radial_ebus"},
     ),
+
+    # EUS-B (endoscopic ultrasound via bronchoscope)
+    "43238": RegistryFieldMapping(
+        fields={"eus_b_performed": True},
+        hints={"procedure_type": "eus_b"},
+    ),
 }
 
 
@@ -330,6 +336,10 @@ def aggregate_registry_fields(
     # Percutaneous tracheal puncture (often part of percutaneous trach kits): 31612
     if code_set & {"31600", "31601", "31612"}:
         procedures["percutaneous_tracheostomy"] = {"performed": True}
+
+    # EUS-B (endoscopic ultrasound via bronchoscope)
+    if "43238" in code_set:
+        procedures["eus_b"] = {"performed": True}
 
     # PEG insertion: 43246 (endoscopic PEG), 49440 (percutaneous gastrostomy)
     if code_set & {"43246", "49440"}:

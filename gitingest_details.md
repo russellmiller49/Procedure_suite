@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-18T16:50:27-08:00`
-Git: `v22` @ `8bd11f5`
+Generated: `2026-01-19T12:32:21-08:00`
+Git: `v23` @ `b9b50da`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -72,8 +72,8 @@ Git: `v22` @ `8bd11f5`
      8397  scripts/prodigy_prepare_registry_relabel_batch.py
      9036  scripts/find_critical_failures.py
      9076  scripts/fit_thresholds_from_eval.py
-     9082  scripts/registry_pipeline_smoke.py
      9265  scripts/clean_distilled_phi_labels.py
+     9449  scripts/registry_pipeline_smoke.py
      9583  scripts/registry_label_overlap_report.py
      9603  scripts/align_synthetic_names.py
     10358  scripts/diamond_loop_cloud_sync.py
@@ -83,10 +83,10 @@ Git: `v22` @ `8bd11f5`
     12126  scripts/export_phi_model_for_transformersjs.py
     12153  scripts/convert_spans_to_bio.py
     13507  scripts/extract_ner_from_excel.py
-    14382  scripts/unified_pipeline_batch.py
-    14424  scripts/registry_pipeline_smoke_batch.py
     14532  scripts/review_llm_fallback_errors.py
     14742  scripts/quantize_to_onnx.py
+    14760  scripts/unified_pipeline_batch.py
+    15178  scripts/registry_pipeline_smoke_batch.py
     15511  scripts/verify_registry_human_data.py
     15806  scripts/sanitize_dataset.py
     16359  scripts/apply_platinum_redactions.py
@@ -136,7 +136,6 @@ Git: `v22` @ `8bd11f5`
        75  modules/coder/domain_rules/registry_to_cpt/__init__.py
        90  modules/registry/extraction/__init__.py
        94  modules/__init__.py
-      105  modules/api/__init__.py
       113  modules/domain/text/__init__.py
       116  modules/coder/adapters/persistence/__init__.py
       123  modules/domain/reasoning/__init__.py
@@ -180,6 +179,7 @@ Git: `v22` @ `8bd11f5`
       545  modules/registry_cleaning/__init__.py
       565  modules/coder/code_families.py
       573  modules/phi/adapters/__init__.py
+      576  modules/api/__init__.py
       579  tests/scripts/test_audit_model_fp_logic.py
       602  modules/infra/executors.py
       610  modules/infra/safe_logging.py
@@ -204,7 +204,6 @@ Git: `v22` @ `8bd11f5`
       831  modules/registry/slots/imaging.py
       839  modules/agents/summarizer/summarizer_agent.py
       840  modules/common/logger.py
-      841  modules/registry/processing/masking.py
       843  tests/registry/test_navigation_fiducials.py
       852  tests/ml_coder/test_registry_label_constraints.py
       863  modules/reporting/coder_view.py
@@ -258,6 +257,7 @@ Git: `v22` @ `8bd11f5`
      1442  modules/domain/reasoning/models.py
      1451  tests/coding/test_ebus_rules.py
      1461  modules/phi/db.py
+     1477  tests/registry/test_ner_to_registry_mapper.py
      1493  tests/coding/test_hierarchy_normalization.py
      1542  modules/domain/knowledge_base/repository.py
      1547  modules/registry/slots/complications.py
@@ -266,8 +266,6 @@ Git: `v22` @ `8bd11f5`
      1561  tests/test_openai_responses_parse.py
      1568  modules/coder/reconciliation/__init__.py
      1582  modules/registry/ml/__init__.py
-     1645  modules/ml_coder/preprocessing.py
-     1648  tests/registry/test_self_correction_validation.py
      1665  modules/coder/ncci.py
      1675  modules/infra/llm_control.py
      1676  tests/scripts/test_prodigy_export_registry.py
@@ -276,6 +274,7 @@ Git: `v22` @ `8bd11f5`
      1708  proc_schemas/reasoning.py
      1717  tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
      1731  modules/domain/text/negation.py
+     1761  modules/ml_coder/preprocessing.py
      1763  tests/registry/test_kitchen_sink_extraction_first.py
      1767  tests/utils/case_filter.py
      1779  tests/registry/test_masking.py
@@ -295,6 +294,7 @@ Git: `v22` @ `8bd11f5`
      2003  modules/registry/legacy/supabase_sink.py
      2027  modules/registry/audit/audit_types.py
      2032  modules/agents/parser/parser_agent.py
+     2046  tests/registry/test_note_002_regression.py
      2093  modules/registry/slots/dilation.py
      2107  modules/ml_coder/training_losses.py
      2136  modules/coder/peripheral_rules.py
@@ -302,19 +302,20 @@ Git: `v22` @ `8bd11f5`
      2143  modules/reporting/metadata.py
      2167  modules/registry/legacy/adapters/base.py
      2196  modules/registry/self_correction/__init__.py
+     2207  tests/registry/test_header_scan.py
      2225  tests/registry/test_sedation_blvr.py
      2250  modules/ml_coder/self_correction.py
      2253  tests/unit/test_phi_distillation.py
      2320  modules/registry/slots/sedation.py
      2346  tests/conftest.py
      2372  tests/scripts/test_prodigy_export_registry_file_mode.py
-     2443  tests/registry/test_ner_procedure_extractor.py
+     2416  modules/common/text_cleaning.py
      2448  modules/common/rules_engine/mer.py
+     2456  tests/registry/test_self_correction_validation.py
      2472  modules/reporter/prompts.py
      2487  modules/proc_ml_advisor/__init__.py
      2488  modules/llm/client.py
      2582  modules/reporting/inference.py
-     2591  modules/registry/self_correction/judge.py
      2607  tests/registry/test_extraction_first_flow.py
      2612  modules/phi/safety/protected_terms.py
      2647  tests/registry/test_ebus_deterministic.py
@@ -324,6 +325,7 @@ Git: `v22` @ `8bd11f5`
      2788  modules/domain/coding_rules/ncci.py
      2808  modules/domain/rvu/calculator.py
      2819  tests/test_clean_ip_registry.py
+     2821  tests/registry/test_ner_procedure_extractor.py
      2825  tests/coding/test_phi_gating.py
      2835  modules/ml_coder/thresholds.py
      2853  modules/api/routes/phi_demo_cases.py
@@ -350,6 +352,7 @@ Git: `v22` @ `8bd11f5`
      3399  modules/infra/settings.py
      3513  tests/unit/test_sanitize_dataset.py
      3532  proc_schemas/coding.py
+     3549  modules/registry/processing/masking.py
      3622  modules/coder/posthoc.py
      3627  tests/scripts/test_prodigy_prepare_registry.py
      3656  proc_schemas/registry/ip_v2.py
@@ -362,6 +365,7 @@ Git: `v22` @ `8bd11f5`
      3831  modules/api/phi_dependencies.py
      3862  tests/integration/test_pipeline_integrity.py
      3899  modules/registry/extraction/focus.py
+     3901  modules/registry/self_correction/judge.py
      3944  modules/ml_coder/registry_label_constraints.py
      3958  modules/coder/schema.py
      3962  modules/registry/processing/focus.py
@@ -379,7 +383,6 @@ Git: `v22` @ `8bd11f5`
      4461  proc_schemas/clinical/common.py
      4494  modules/registry/ebus_config.py
      4509  tests/phi/test_manual_scrub.py
-     4510  modules/registry/self_correction/validation.py
      4522  tests/registry/test_registry_engine_sanitization.py
      4539  tests/registry/test_derive_procedures_from_granular_consistency.py
      4598  tests/api/test_coding_phi_gating.py
@@ -392,13 +395,13 @@ Git: `v22` @ `8bd11f5`
      5166  modules/api/schemas/qa.py
      5176  tests/unit/test_openai_payload_compat.py
      5186  tests/coding/test_rules_engine_phase1.py
+     5268  modules/registry/self_correction/validation.py
      5334  modules/api/phi_demo_store.py
      5394  modules/api/gemini_client.py
      5424  modules/coder/parallel_pathway/confidence_combiner.py
      5641  modules/coder/ebus_rules.py
      5653  modules/phi/models.py
      5773  modules/api/schemas/base.py
-     5778  tests/registry/test_registry_guardrails.py
      5870  modules/infra/nlp_warmup.py
      5968  modules/registry/processing/navigation_fiducials.py
      6019  modules/ner/entity_types.py
@@ -417,12 +420,12 @@ Git: `v22` @ `8bd11f5`
      6646  tests/unit/test_protected_veto.py
      6904  modules/reporting/ip_addons.py
      6955  tests/integration/api/test_startup_warmup.py
-     7041  modules/registry/evidence/verifier.py
      7110  modules/coder/application/candidate_expansion.py
      7176  modules/agents/run_pipeline.py
      7307  tests/integration/coder/test_coding_service.py
+     7364  tests/registry/test_registry_guardrails.py
      7383  tests/api/test_phi_endpoints.py
-     7420  modules/registry/ner_mapping/entity_to_registry.py
+     7505  modules/registry/ner_mapping/entity_to_registry.py
      7526  modules/domain/coding_rules/evidence_context.py
      7599  modules/registry/model_runtime.py
      7652  tests/registry/test_registry_extraction_ebus.py
@@ -433,6 +436,7 @@ Git: `v22` @ `8bd11f5`
      8182  tests/ml_coder/test_registry_predictor.py
      8227  tests/coder/test_rules_engine.py
      8415  modules/registry/inference_pytorch.py
+     8418  modules/registry/evidence/verifier.py
      8427  modules/registry_cleaning/clinical_qc.py
      8556  modules/registry/ml/evaluate.py
      8618  tests/coder/test_hierarchy_bundling_fixes.py
@@ -443,20 +447,18 @@ Git: `v22` @ `8bd11f5`
      8873  modules/common/knowledge.py
      9005  modules/api/routes/metrics.py
      9261  proc_schemas/registry/ip_v3.py
-     9299  modules/registry/ner_mapping/procedure_extractor.py
      9466  tests/ml_coder/test_training_pipeline.py
      9471  tests/ml_coder/test_case_difficulty.py
      9490  modules/ml_coder/training.py
      9505  modules/coder/adapters/persistence/csv_kb_adapter.py
      9738  modules/phi/service.py
-     9846  modules/extraction/postprocessing/clinical_guardrails.py
      9850  tests/unit/test_extraction_adapters.py
      9870  modules/reporting/validation.py
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
+    10240  modules/registry/ner_mapping/procedure_extractor.py
     10466  modules/api/routes_registry.py
     10791  tests/unit/test_inmemory_procedure_store.py
-    10825  modules/registry/ner_mapping/station_extractor.py
     10938  tests/registry/test_ebus_config_station_count.py
     11181  tests/test_phi_redaction_contract.py
     11253  modules/registry/application/registry_builder.py
@@ -476,18 +478,18 @@ Git: `v22` @ `8bd11f5`
     13253  tests/ml_advisor/test_router.py
     13453  modules/coder/application/coding_service.py
     13483  modules/coder/domain_rules/__init__.py
-    13550  modules/registry/self_correction/keyword_guard.py
     13696  modules/coder/rules.py
+    13791  modules/extraction/postprocessing/clinical_guardrails.py
+    13964  modules/registry/ner_mapping/station_extractor.py
     14135  tests/integration/persistence/test_supabase_procedure_store.py
     14250  modules/ml_coder/registry_predictor.py
     14397  modules/registry/ml/models.py
     14466  tests/integration/coder/test_hybrid_policy.py
-    14522  modules/registry/application/cpt_registry_mapping.py
     14585  docs/phi_review_system/backend/models.py
     14603  modules/registry/audit/raw_ml_auditor.py
+    14835  modules/registry/application/cpt_registry_mapping.py
     15142  modules/registry/v2_booleans.py
     15243  tests/unit/test_dsl.py
-    15260  tests/coder/test_coding_rules_phase7.py
     15267  modules/domain/coding_rules/json_rules_evaluator.py
     15328  modules/registry/inference_onnx.py
     15346  tests/registry/test_action_predictor.py
@@ -501,6 +503,7 @@ Git: `v22` @ `8bd11f5`
     16032  modules/coder/rules_engine.py
     16366  modules/phi/safety/veto.py
     16608  tests/integration/api/test_metrics_endpoint.py
+    16762  tests/coder/test_coding_rules_phase7.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
     17161  proc_schemas/clinical/airway.py
     17268  modules/common/openai_responses.py
@@ -512,14 +515,15 @@ Git: `v22` @ `8bd11f5`
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
     19326  modules/registry/schema.py
+    19632  modules/registry/self_correction/keyword_guard.py
     19783  tests/integration/api/test_registry_endpoints.py
-    20025  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
+    20205  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     20223  modules/domain/coding_rules/rule_engine.py
     20317  modules/coder/parallel_pathway/orchestrator.py
     20430  modules/registry/model_bootstrap.py
-    20553  modules/registry/extractors/llm_detailed.py
+    20539  modules/registry/extractors/llm_detailed.py
     21220  modules/coder/adapters/llm/openai_compat_advisor.py
     21460  modules/coder/adapters/persistence/supabase_procedure_store.py
     21479  tests/coder/test_reconciliation.py
@@ -550,17 +554,17 @@ Git: `v22` @ `8bd11f5`
     36538  modules/coder/dictionary.py
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
-    40777  modules/api/fastapi_app.py
+    41290  modules/api/fastapi_app.py
     41901  modules/proc_ml_advisor/schemas.py
     42913  modules/api/routes/procedure_codes.py
     43756  tests/registry/test_granular_registry_models.py
-    44259  modules/registry/deterministic_extractors.py
     54786  modules/autocode/ip_kb/ip_kb.py
     56478  modules/registry/schema_granular.py
     61733  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    81991  modules/registry/application/registry_service.py
-    91646  modules/registry/postprocess.py
+    65465  modules/registry/deterministic_extractors.py
+    95729  modules/registry/postprocess.py
+   102556  modules/registry/application/registry_service.py
    110004  modules/registry/engine.py
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  modules/reporting/templates/addons/eus_b.jinja
@@ -717,12 +721,12 @@ Git: `v22` @ `8bd11f5`
     17732  docs/phi_review_system/README.md
     17850  modules/api/static/phi_demo.js
     17982  modules/phi/adapters/redaction-service.js
-    18781  docs/MAKEFILE_COMMANDS.md
+    18925  docs/MAKEFILE_COMMANDS.md
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
     25929  modules/api/static/phi_redactor/app.js
     27821  modules/registry/ip_registry_improvements.md
-    33220  docs/USER_GUIDE.md
+    37723  docs/USER_GUIDE.md
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     54018  modules/api/static/phi_redactor/protectedVeto.js
     84457  modules/api/static/phi_redactor/redactor.worker.js
@@ -763,7 +767,6 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/__init__.py
  inline_cap_reached>75  modules/registry/extraction/__init__.py
  inline_cap_reached>75  modules/__init__.py
- inline_cap_reached>75  modules/api/__init__.py
  inline_cap_reached>75  modules/domain/text/__init__.py
  inline_cap_reached>75  modules/coder/adapters/persistence/__init__.py
  inline_cap_reached>75  modules/domain/reasoning/__init__.py
@@ -800,6 +803,7 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/registry_cleaning/__init__.py
  inline_cap_reached>75  modules/coder/code_families.py
  inline_cap_reached>75  modules/phi/adapters/__init__.py
+ inline_cap_reached>75  modules/api/__init__.py
  inline_cap_reached>75  modules/infra/executors.py
  inline_cap_reached>75  modules/infra/safe_logging.py
  inline_cap_reached>75  modules/reporting/second_pass/counts_backfill.py
@@ -818,7 +822,6 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/registry/slots/imaging.py
  inline_cap_reached>75  modules/agents/summarizer/summarizer_agent.py
  inline_cap_reached>75  modules/common/logger.py
- inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/reporting/coder_view.py
  inline_cap_reached>75  modules/domain/knowledge_base/models.py
  inline_cap_reached>75  modules/registry/application/__init__.py
@@ -852,12 +855,12 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  proc_schemas/procedure_report.py
  inline_cap_reached>75  modules/coder/reconciliation/__init__.py
  inline_cap_reached>75  modules/registry/ml/__init__.py
- inline_cap_reached>75  modules/ml_coder/preprocessing.py
  inline_cap_reached>75  modules/coder/ncci.py
  inline_cap_reached>75  modules/infra/llm_control.py
  inline_cap_reached>75  modules/registry/schema/ip_v3.py
  inline_cap_reached>75  proc_schemas/reasoning.py
  inline_cap_reached>75  modules/domain/text/negation.py
+ inline_cap_reached>75  modules/ml_coder/preprocessing.py
  inline_cap_reached>75  modules/registry/slots/tblb.py
  inline_cap_reached>75  modules/coder/parallel_pathway/reconciler.py
  inline_cap_reached>75  modules/reporting/__init__.py
@@ -876,12 +879,12 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/registry/self_correction/__init__.py
  inline_cap_reached>75  modules/ml_coder/self_correction.py
  inline_cap_reached>75  modules/registry/slots/sedation.py
+ inline_cap_reached>75  modules/common/text_cleaning.py
  inline_cap_reached>75  modules/common/rules_engine/mer.py
  inline_cap_reached>75  modules/reporter/prompts.py
  inline_cap_reached>75  modules/proc_ml_advisor/__init__.py
  inline_cap_reached>75  modules/llm/client.py
  inline_cap_reached>75  modules/reporting/inference.py
- inline_cap_reached>75  modules/registry/self_correction/judge.py
  inline_cap_reached>75  modules/phi/safety/protected_terms.py
  inline_cap_reached>75  modules/registry/slots/ebus.py
  inline_cap_reached>75  modules/common/text_io.py
@@ -906,6 +909,7 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/coder/peripheral_extractor.py
  inline_cap_reached>75  modules/infra/settings.py
  inline_cap_reached>75  proc_schemas/coding.py
+ inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/coder/posthoc.py
  inline_cap_reached>75  proc_schemas/registry/ip_v2.py
  inline_cap_reached>75  modules/coder/sectionizer.py
@@ -916,6 +920,7 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/common/model_capabilities.py
  inline_cap_reached>75  modules/api/phi_dependencies.py
  inline_cap_reached>75  modules/registry/extraction/focus.py
+ inline_cap_reached>75  modules/registry/self_correction/judge.py
  inline_cap_reached>75  modules/ml_coder/registry_label_constraints.py
  inline_cap_reached>75  modules/coder/schema.py
  inline_cap_reached>75  modules/registry/processing/focus.py
@@ -928,11 +933,11 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/registry/audit/compare.py
  inline_cap_reached>75  proc_schemas/clinical/common.py
  inline_cap_reached>75  modules/registry/ebus_config.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/common/sectionizer.py
  inline_cap_reached>75  modules/coder/adapters/nlp/simple_negation_detector.py
  inline_cap_reached>75  modules/registry/cli.py
  inline_cap_reached>75  modules/api/schemas/qa.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/api/phi_demo_store.py
  inline_cap_reached>75  modules/api/gemini_client.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
@@ -948,7 +953,6 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
  inline_cap_reached>75  modules/coder/cli.py
  inline_cap_reached>75  modules/reporting/ip_addons.py
- inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
  inline_cap_reached>75  modules/agents/run_pipeline.py
  inline_cap_reached>75  modules/registry/ner_mapping/entity_to_registry.py
@@ -958,6 +962,7 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/coder/adapters/persistence/inmemory_procedure_store.py
  inline_cap_reached>75  modules/registry/inference_pytorch.py
+ inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/registry_cleaning/clinical_qc.py
  inline_cap_reached>75  modules/registry/ml/evaluate.py
  inline_cap_reached>75  modules/coder/application/procedure_type_detector.py
@@ -966,15 +971,13 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/common/knowledge.py
  inline_cap_reached>75  modules/api/routes/metrics.py
  inline_cap_reached>75  proc_schemas/registry/ip_v3.py
- inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/ml_coder/training.py
  inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  modules/phi/service.py
- inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
+ inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/api/routes_registry.py
- inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
@@ -985,12 +988,13 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
- inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/rules.py
+ inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
+ inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/ml_coder/registry_predictor.py
  inline_cap_reached>75  modules/registry/ml/models.py
- inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  modules/registry/audit/raw_ml_auditor.py
+ inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  modules/registry/v2_booleans.py
  inline_cap_reached>75  modules/domain/coding_rules/json_rules_evaluator.py
  inline_cap_reached>75  modules/registry/inference_onnx.py
@@ -1006,8 +1010,9 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
  inline_cap_reached>75  modules/registry/schema.py
- inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+ inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
+ inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  modules/registry/model_bootstrap.py
@@ -1033,13 +1038,13 @@ Git: `v22` @ `8bd11f5`
  inline_cap_reached>75  modules/api/fastapi_app.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
- inline_cap_reached>75  modules/registry/deterministic_extractors.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  modules/registry/schema_granular.py
  inline_cap_reached>75  modules/registry/prompts.py
  inline_cap_reached>75  modules/reporting/engine.py
- inline_cap_reached>75  modules/registry/application/registry_service.py
+ inline_cap_reached>75  modules/registry/deterministic_extractors.py
  inline_cap_reached>75  modules/registry/postprocess.py
+ inline_cap_reached>75  modules/registry/application/registry_service.py
  inline_cap_reached>75  modules/registry/engine.py
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
@@ -8995,253 +9000,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/registry_pipeline_smoke.py`
-- Size: `9082` bytes
-```
-#!/usr/bin/env python3
-from __future__ import annotations
-
-import argparse
-import os
-import sys
-from pathlib import Path
-from typing import Any
-
-from dotenv import load_dotenv
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-
-def _truthy_env(name: str) -> bool:
-    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
-
-
-if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
-
-from modules.registry.application.registry_service import RegistryService  # noqa: E402
-from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
-from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
-from modules.registry.processing.navigation_fiducials import (  # noqa: E402
-    apply_navigation_fiducials,
-)
-from modules.registry.schema import RegistryRecord  # noqa: E402
-from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
-
-
-def _read_note_text(path: str | None, inline_text: str | None) -> str:
-    if inline_text:
-        return inline_text
-    if not path:
-        raise ValueError("Provide --note or --text.")
-    note_path = Path(path)
-    return note_path.read_text(encoding="utf-8")
-
-
-def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
-    flags: set[str] = set()
-    procs = record_data.get("procedures_performed")
-    if isinstance(procs, dict):
-        for name, payload in procs.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"procedures_performed.{name}.performed")
-
-    pleural = record_data.get("pleural_procedures")
-    if isinstance(pleural, dict):
-        for name, payload in pleural.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"pleural_procedures.{name}.performed")
-
-    if record_data.get("established_tracheostomy_route") is True:
-        flags.add("established_tracheostomy_route")
-
-    granular = record_data.get("granular_data")
-    if isinstance(granular, dict):
-        targets = granular.get("navigation_targets")
-        if isinstance(targets, list):
-            for target in targets:
-                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
-                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
-                    break
-
-    return flags
-
-
-def _apply_seed_uplift(
-    record_data: dict[str, Any],
-    seed: dict[str, Any],
-    masked_note_text: str,
-) -> tuple[dict[str, Any], list[str]]:
-    uplifted: list[str] = []
-
-    seed_procs = seed.get("procedures_performed")
-    if isinstance(seed_procs, dict):
-        record_procs = record_data.get("procedures_performed") or {}
-        if not isinstance(record_procs, dict):
-            record_procs = {}
-        for name, payload in seed_procs.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_procs.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"procedures_performed.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_procs[name] = existing
-        if record_procs:
-            record_data["procedures_performed"] = record_procs
-
-    seed_pleural = seed.get("pleural_procedures")
-    if isinstance(seed_pleural, dict):
-        record_pleural = record_data.get("pleural_procedures") or {}
-        if not isinstance(record_pleural, dict):
-            record_pleural = {}
-        for name, payload in seed_pleural.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_pleural.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"pleural_procedures.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_pleural[name] = existing
-        if record_pleural:
-            record_data["pleural_procedures"] = record_pleural
-
-    if seed.get("established_tracheostomy_route") is True:
-        if record_data.get("established_tracheostomy_route") is not True:
-            record_data["established_tracheostomy_route"] = True
-            uplifted.append("established_tracheostomy_route")
-
-    if apply_navigation_fiducials(record_data, masked_note_text):
-        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
-
-    return record_data, uplifted
-
-
-def _print_list(label: str, items: list[str] | set[str]) -> None:
-    if not items:
-        print(f"{label}: (none)")
-        return
-    if isinstance(items, set):
-        items = sorted(items)
-    print(f"{label}:")
-    for item in items:
-        print(f"  - {item}")
-
-
-def _print_self_correction_diagnostics(result) -> None:
-    audit_report = getattr(result, "audit_report", None)
-    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
-    if not high_conf:
-        print("Audit high-conf omissions: (none)")
-    else:
-        print("Audit high-conf omissions:")
-        for pred in high_conf:
-            cpt = getattr(pred, "cpt", None)
-            prob = getattr(pred, "prob", None)
-            bucket = getattr(pred, "bucket", None)
-            try:
-                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
-            except Exception:
-                prob_str = "?"
-            print(f"  - {cpt} (prob={prob_str}, bucket={bucket})")
-
-    warnings = getattr(result, "warnings", None)
-    if isinstance(warnings, list):
-        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
-        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
-        diag = self_correct_warnings + auto_corrected
-        if diag:
-            print("Self-correction diagnostics:")
-            for w in diag:
-                print(f"  - {w}")
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Smoke test the registry extraction pipeline on a note."
-    )
-    parser.add_argument("--note", help="Path to a note text file.")
-    parser.add_argument("--text", help="Inline note text.")
-    parser.add_argument(
-        "--self-correct",
-        action="store_true",
-        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
-    )
-    args = parser.parse_args()
-
-    try:
-        note_text = _read_note_text(args.note, args.text)
-    except Exception as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 1
-
-    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-    if os.getenv("GEMINI_OFFLINE") is None:
-        os.environ["GEMINI_OFFLINE"] = "1"
-
-    masked = mask_offset_preserving(note_text)
-
-    service = RegistryService()
-    record, warnings, meta = service.extract_record(note_text)
-
-    before_flags = _collect_performed_flags(record.model_dump())
-
-    seed = run_deterministic_extractors(masked)
-    record_data = record.model_dump()
-    record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
-    uplifted_flags = set(uplifted)
-    after_flags = _collect_performed_flags(record_data)
-
-    record_after = RegistryRecord(**record_data)
-    omission_warnings = scan_for_omissions(masked, record_after)
-
-    _print_list("Performed flags (extract_record)", before_flags)
-    _print_list("Performed flags added by deterministic uplift", uplifted_flags)
-    _print_list("Performed flags (after uplift)", after_flags)
-    _print_list("Extract warnings", warnings)
-    _print_list("Omission warnings", omission_warnings)
-
-    if args.self_correct:
-        os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
-        try:
-            result = service.extract_fields(note_text)
-        except Exception as exc:
-            print(f"SELF_CORRECT_ERROR: {exc}")
-        else:
-            _print_self_correction_diagnostics(result)
-            if result.self_correction:
-                print("Self-correction applied:")
-                for item in result.self_correction:
-                    print(f"  - {item.trigger.target_cpt}: {item.outcome}")
-            else:
-                print("Self-correction applied: (none)")
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
 ### `scripts/clean_distilled_phi_labels.py`
 - Size: `9265` bytes
 ```
@@ -9507,6 +9265,263 @@ def main() -> int:
     logger.info("Label schema: %s", args.label_schema)
     if args.label_schema == "standard":
         logger.info("Standard label mapping keys: %s", sorted(LABEL_MAPPING_STANDARD))
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `scripts/registry_pipeline_smoke.py`
+- Size: `9449` bytes
+```
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+from modules.registry.application.registry_service import RegistryService  # noqa: E402
+from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
+from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
+from modules.registry.processing.navigation_fiducials import (  # noqa: E402
+    apply_navigation_fiducials,
+)
+from modules.registry.schema import RegistryRecord  # noqa: E402
+from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
+
+
+def _read_note_text(path: str | None, inline_text: str | None) -> str:
+    if inline_text:
+        return inline_text
+    if not path:
+        raise ValueError("Provide --note or --text.")
+    note_path = Path(path)
+    return note_path.read_text(encoding="utf-8")
+
+
+def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
+    flags: set[str] = set()
+    procs = record_data.get("procedures_performed")
+    if isinstance(procs, dict):
+        for name, payload in procs.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"procedures_performed.{name}.performed")
+
+    pleural = record_data.get("pleural_procedures")
+    if isinstance(pleural, dict):
+        for name, payload in pleural.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"pleural_procedures.{name}.performed")
+
+    if record_data.get("established_tracheostomy_route") is True:
+        flags.add("established_tracheostomy_route")
+
+    granular = record_data.get("granular_data")
+    if isinstance(granular, dict):
+        targets = granular.get("navigation_targets")
+        if isinstance(targets, list):
+            for target in targets:
+                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
+                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
+                    break
+
+    return flags
+
+
+def _apply_seed_uplift(
+    record_data: dict[str, Any],
+    seed: dict[str, Any],
+    masked_note_text: str,
+) -> tuple[dict[str, Any], list[str]]:
+    uplifted: list[str] = []
+
+    seed_procs = seed.get("procedures_performed")
+    if isinstance(seed_procs, dict):
+        record_procs = record_data.get("procedures_performed") or {}
+        if not isinstance(record_procs, dict):
+            record_procs = {}
+        for name, payload in seed_procs.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_procs.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"procedures_performed.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_procs[name] = existing
+        if record_procs:
+            record_data["procedures_performed"] = record_procs
+
+    seed_pleural = seed.get("pleural_procedures")
+    if isinstance(seed_pleural, dict):
+        record_pleural = record_data.get("pleural_procedures") or {}
+        if not isinstance(record_pleural, dict):
+            record_pleural = {}
+        for name, payload in seed_pleural.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_pleural.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"pleural_procedures.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_pleural[name] = existing
+        if record_pleural:
+            record_data["pleural_procedures"] = record_pleural
+
+    if seed.get("established_tracheostomy_route") is True:
+        if record_data.get("established_tracheostomy_route") is not True:
+            record_data["established_tracheostomy_route"] = True
+            uplifted.append("established_tracheostomy_route")
+
+    if apply_navigation_fiducials(record_data, masked_note_text):
+        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
+
+    return record_data, uplifted
+
+
+def _print_list(label: str, items: list[str] | set[str]) -> None:
+    if not items:
+        print(f"{label}: (none)")
+        return
+    if isinstance(items, set):
+        items = sorted(items)
+    print(f"{label}:")
+    for item in items:
+        print(f"  - {item}")
+
+
+def _print_self_correction_diagnostics(result) -> None:
+    audit_report = getattr(result, "audit_report", None)
+    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
+    if not high_conf:
+        print("Audit high-conf omissions: (none)")
+    else:
+        print("Audit high-conf omissions:")
+        for pred in high_conf:
+            cpt = getattr(pred, "cpt", None)
+            prob = getattr(pred, "prob", None)
+            bucket = getattr(pred, "bucket", None)
+            try:
+                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
+            except Exception:
+                prob_str = "?"
+            print(f"  - {cpt} (prob={prob_str}, bucket={bucket})")
+
+    warnings = getattr(result, "warnings", None)
+    if isinstance(warnings, list):
+        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
+        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
+        diag = self_correct_warnings + auto_corrected
+        if diag:
+            print("Self-correction diagnostics:")
+            for w in diag:
+                print(f"  - {w}")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Smoke test the registry extraction pipeline on a note."
+    )
+    parser.add_argument("--note", help="Path to a note text file.")
+    parser.add_argument("--text", help="Inline note text.")
+    parser.add_argument(
+        "--self-correct",
+        action="store_true",
+        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
+    )
+    parser.add_argument(
+        "--real-llm",
+        action="store_true",
+        help="Allow real LLM calls (disables stub/offline defaults).",
+    )
+    args = parser.parse_args()
+
+    try:
+        note_text = _read_note_text(args.note, args.text)
+    except Exception as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+    if args.real_llm:
+        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
+        os.environ.setdefault("GEMINI_OFFLINE", "0")
+        os.environ.setdefault("OPENAI_OFFLINE", "0")
+    else:
+        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+        if os.getenv("GEMINI_OFFLINE") is None:
+            os.environ["GEMINI_OFFLINE"] = "1"
+
+    masked = mask_offset_preserving(note_text)
+
+    service = RegistryService()
+    record, warnings, meta = service.extract_record(note_text)
+
+    before_flags = _collect_performed_flags(record.model_dump())
+
+    seed = run_deterministic_extractors(masked)
+    record_data = record.model_dump()
+    record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
+    uplifted_flags = set(uplifted)
+    after_flags = _collect_performed_flags(record_data)
+
+    record_after = RegistryRecord(**record_data)
+    omission_warnings = scan_for_omissions(masked, record_after)
+
+    _print_list("Performed flags (extract_record)", before_flags)
+    _print_list("Performed flags added by deterministic uplift", uplifted_flags)
+    _print_list("Performed flags (after uplift)", after_flags)
+    _print_list("Extract warnings", warnings)
+    _print_list("Omission warnings", omission_warnings)
+
+    if args.self_correct:
+        os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
+        try:
+            result = service.extract_fields(note_text)
+        except Exception as exc:
+            print(f"SELF_CORRECT_ERROR: {exc}")
+        else:
+            _print_self_correction_diagnostics(result)
+            if result.self_correction:
+                print("Self-correction applied:")
+                for item in result.self_correction:
+                    print(f"  - {item.trigger.target_cpt}: {item.outcome}")
+            else:
+                print("Self-correction applied: (none)")
 
     return 0
 
@@ -12550,824 +12565,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/unified_pipeline_batch.py`
-- Size: `14382` bytes
-```
-#!/usr/bin/env python3
-"""Batch unified pipeline test on random notes.
-
-This script randomly selects N notes from data/granular annotations/notes_text,
-runs the full unified pipeline (same as UI at /ui/), and saves results to a text file.
-"""
-from __future__ import annotations
-
-import argparse
-import json
-import os
-import random
-import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Any
-
-from dotenv import load_dotenv
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-
-def _truthy_env(name: str) -> bool:
-    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
-
-
-if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
-
-# Import after environment setup
-from modules.api.adapters.response_adapter import build_v3_evidence_payload  # noqa: E402
-from modules.api.dependencies import get_coding_service, get_registry_service  # noqa: E402
-from modules.api.phi_dependencies import get_phi_scrubber  # noqa: E402
-from modules.api.phi_redaction import apply_phi_redaction  # noqa: E402
-from modules.api.schemas import (  # noqa: E402
-    CodeSuggestionSummary,
-    UnifiedProcessRequest,
-    UnifiedProcessResponse,
-)
-from modules.coder.application.coding_service import CodingService  # noqa: E402
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta  # noqa: E402
-from modules.coder.phi_gating import is_phi_review_required  # noqa: E402
-from modules.common.exceptions import LLMError  # noqa: E402
-from modules.registry.application.registry_service import (  # noqa: E402
-    RegistryExtractionResult,
-    RegistryService,
-)
-from config.settings import CoderSettings  # noqa: E402
-
-
-def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
-    """Load all notes from .txt files in the directory.
-    
-    Returns a dict mapping note_id (filename without .txt) to note_text.
-    """
-    notes = {}
-    
-    for txt_file in sorted(notes_dir.glob("*.txt")):
-        try:
-            note_text = txt_file.read_text(encoding="utf-8")
-            note_id = txt_file.stem  # filename without .txt extension
-            notes[note_id] = note_text
-        except Exception as exc:
-            print(f"Warning: Failed to load {txt_file}: {exc}", file=sys.stderr)
-    
-    return notes
-
-
-def _run_unified_pipeline(
-    note_text: str,
-    registry_service: RegistryService,
-    coding_service: CodingService,
-    phi_scrubber,
-    *,
-    include_financials: bool = True,
-    explain: bool = True,
-) -> UnifiedProcessResponse:
-    """Run the unified pipeline (same as /api/v1/process endpoint).
-    
-    This replicates the exact logic from modules/api/routes/unified_process.py
-    """
-    import time
-    
-    start_time = time.time()
-    
-    # PHI redaction (if not already scrubbed)
-    # For batch testing, we'll treat notes as already scrubbed to match UI behavior
-    # when user submits via PHI redactor
-    redaction = apply_phi_redaction(note_text, phi_scrubber)
-    scrubbed_text = redaction.text
-    
-    # Step 1: Registry extraction (synchronous call)
-    try:
-        extraction_result = registry_service.extract_fields(scrubbed_text)
-    except Exception as exc:
-        if isinstance(exc, LLMError) and "429" in str(exc):
-            raise Exception("Upstream LLM rate limited") from exc
-        raise
-    
-    # Step 2: Derive CPT codes from registry
-    record = extraction_result.record
-    if record is None:
-        from modules.registry.schema import RegistryRecord
-        record = RegistryRecord.model_validate(extraction_result.mapped_fields)
-    
-    codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
-    
-    # Build suggestions with confidence and rationale
-    suggestions = []
-    base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
-    
-    for code in codes:
-        proc_info = coding_service.kb_repo.get_procedure_info(code)
-        description = proc_info.description if proc_info else ""
-        rationale = rationales.get(code, "")
-        
-        # Determine review flag
-        if extraction_result.needs_manual_review:
-            review_flag = "required"
-        elif extraction_result.audit_warnings:
-            review_flag = "recommended"
-        else:
-            review_flag = "optional"
-        
-        suggestions.append(
-            CodeSuggestionSummary(
-                code=code,
-                description=description,
-                confidence=base_confidence,
-                rationale=rationale,
-                review_flag=review_flag,
-            )
-        )
-    
-    # Step 3: Calculate financials if requested
-    total_work_rvu = None
-    estimated_payment = None
-    per_code_billing = []
-    
-    if include_financials and codes:
-        settings = CoderSettings()
-        conversion_factor = settings.cms_conversion_factor
-        total_work = 0.0
-        total_payment = 0.0
-        
-        for code in codes:
-            proc_info = coding_service.kb_repo.get_procedure_info(code)
-            if proc_info:
-                work_rvu = proc_info.work_rvu
-                total_rvu = proc_info.total_facility_rvu
-                payment = total_rvu * conversion_factor
-                
-                total_work += work_rvu
-                total_payment += payment
-                
-                per_code_billing.append({
-                    "cpt_code": code,
-                    "description": proc_info.description,
-                    "work_rvu": work_rvu,
-                    "total_facility_rvu": total_rvu,
-                    "facility_payment": round(payment, 2),
-                })
-        
-        total_work_rvu = round(total_work, 2)
-        estimated_payment = round(total_payment, 2)
-    
-    # Combine audit warnings
-    all_warnings: list[str] = []
-    all_warnings.extend(extraction_result.warnings or [])
-    all_warnings.extend(extraction_result.audit_warnings or [])
-    all_warnings.extend(derivation_warnings)
-    
-    # Deduplicate warnings
-    deduped_warnings: list[str] = []
-    seen_warnings: set[str] = set()
-    for warning in all_warnings:
-        if warning in seen_warnings:
-            continue
-        seen_warnings.add(warning)
-        deduped_warnings.append(warning)
-    all_warnings = deduped_warnings
-    
-    # Build evidence payload
-    evidence_payload = build_v3_evidence_payload(record=record, codes=codes)
-    if not explain and not evidence_payload:
-        evidence_payload = {}
-    
-    # Determine review status
-    needs_manual_review = extraction_result.needs_manual_review
-    if is_phi_review_required():
-        review_status = "pending_phi_review"
-        needs_manual_review = True
-    elif needs_manual_review:
-        review_status = "unverified"
-    else:
-        review_status = "finalized"
-    
-    processing_time_ms = (time.time() - start_time) * 1000
-    
-    # Build response
-    registry_payload = record.model_dump(exclude_none=True)
-    
-    return UnifiedProcessResponse(
-        registry=registry_payload,
-        evidence=evidence_payload,
-        cpt_codes=codes,
-        suggestions=suggestions,
-        total_work_rvu=total_work_rvu,
-        estimated_payment=estimated_payment,
-        per_code_billing=per_code_billing,
-        pipeline_mode="extraction_first",
-        coder_difficulty=extraction_result.coder_difficulty or "",
-        needs_manual_review=needs_manual_review,
-        audit_warnings=all_warnings,
-        validation_errors=extraction_result.validation_errors or [],
-        kb_version=coding_service.kb_repo.version,
-        policy_version="extraction_first_v1",
-        processing_time_ms=round(processing_time_ms, 2),
-        review_status=review_status,
-    )
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Batch unified pipeline test on random notes from notes_text directory."
-    )
-    parser.add_argument(
-        "--count",
-        type=int,
-        default=10,
-        help="Number of random notes to test (default: 10)",
-    )
-    parser.add_argument(
-        "--notes-dir",
-        type=Path,
-        default=ROOT / "data" / "granular annotations" / "notes_text",
-        help="Directory containing note .txt files (default: data/granular annotations/notes_text)",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=None,
-        help="Output file path (default: unified_pipeline_batch_<timestamp>.txt)",
-    )
-    parser.add_argument(
-        "--seed",
-        type=int,
-        default=None,
-        help="Random seed for reproducibility",
-    )
-    parser.add_argument(
-        "--include-financials",
-        action="store_true",
-        default=True,
-        help="Include RVU and payment information (default: True)",
-    )
-    parser.add_argument(
-        "--no-financials",
-        dest="include_financials",
-        action="store_false",
-        help="Exclude RVU and payment information",
-    )
-    parser.add_argument(
-        "--explain",
-        action="store_true",
-        default=True,
-        help="Include evidence/explanation data (default: True)",
-    )
-    parser.add_argument(
-        "--no-explain",
-        dest="explain",
-        action="store_false",
-        help="Exclude evidence/explanation data",
-    )
-    args = parser.parse_args()
-    
-    # Set up environment (use stub LLM for offline testing)
-    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-    if os.getenv("GEMINI_OFFLINE") is None:
-        os.environ["GEMINI_OFFLINE"] = "1"
-    
-    # Load notes
-    if not args.notes_dir.exists():
-        print(f"ERROR: Notes directory not found: {args.notes_dir}", file=sys.stderr)
-        return 1
-    
-    print(f"Loading notes from {args.notes_dir}...", file=sys.stderr)
-    all_notes = _load_notes_from_directory(args.notes_dir)
-    
-    if not all_notes:
-        print(f"ERROR: No notes found in {args.notes_dir}", file=sys.stderr)
-        return 1
-    
-    print(f"Loaded {len(all_notes)} notes", file=sys.stderr)
-    
-    # Select random notes
-    if args.seed is not None:
-        random.seed(args.seed)
-        print(f"Using random seed: {args.seed}", file=sys.stderr)
-    
-    count = min(args.count, len(all_notes))
-    selected_notes = random.sample(list(all_notes.items()), count)
-    
-    print(f"Selected {count} random notes for testing", file=sys.stderr)
-    
-    # Determine output file
-    if args.output:
-        output_path = args.output
-    else:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_path = ROOT / f"unified_pipeline_batch_{timestamp}.txt"
-    
-    # Initialize services
-    print("Initializing services...", file=sys.stderr)
-    registry_service = get_registry_service()
-    coding_service = get_coding_service()
-    phi_scrubber = get_phi_scrubber()
-    
-    # Run unified pipeline on each note
-    print(f"Running unified pipeline on {count} notes...", file=sys.stderr)
-    print(f"Output will be saved to: {output_path}", file=sys.stderr)
-    
-    all_results = []
-    for i, (note_id, note_text) in enumerate(selected_notes, 1):
-        print(f"[{i}/{count}] Processing {note_id}...", file=sys.stderr)
-        try:
-            result = _run_unified_pipeline(
-                note_text,
-                registry_service,
-                coding_service,
-                phi_scrubber,
-                include_financials=args.include_financials,
-                explain=args.explain,
-            )
-            all_results.append((note_id, note_text, result, None))
-        except Exception as exc:
-            print(f"  ERROR: {exc}", file=sys.stderr)
-            all_results.append((note_id, note_text, None, str(exc)))
-    
-    # Write output file
-    with open(output_path, "w", encoding="utf-8") as f:
-        # Write header
-        f.write("=" * 80 + "\n")
-        f.write("UNIFIED PIPELINE BATCH TEST RESULTS\n")
-        f.write("=" * 80 + "\n")
-        f.write(f"Date: {datetime.now().isoformat()}\n")
-        f.write(f"Notes tested: {count}\n")
-        f.write(f"Notes directory: {args.notes_dir}\n")
-        if args.seed is not None:
-            f.write(f"Random seed: {args.seed}\n")
-        f.write(f"Include financials: {args.include_financials}\n")
-        f.write(f"Include explain: {args.explain}\n")
-        f.write("=" * 80 + "\n")
-        f.write("\n")
-        
-        # Write results for each note
-        success_count = 0
-        failed_count = 0
-        
-        for note_id, note_text, result, error in all_results:
-            f.write("=" * 80 + "\n")
-            f.write(f"NOTE: {note_id}\n")
-            f.write("=" * 80 + "\n")
-            f.write("\n")
-            
-            # Write note text
-            f.write("NOTE TEXT:\n")
-            f.write("-" * 80 + "\n")
-            f.write(note_text)
-            f.write("\n")
-            f.write("-" * 80 + "\n")
-            f.write("\n")
-            
-            # Write results
-            if error:
-                f.write("ERROR:\n")
-                f.write(f"{error}\n")
-                f.write("\n")
-                f.write("STATUS: FAILED\n")
-                failed_count += 1
-            else:
-                f.write("RESULTS (JSON):\n")
-                f.write("-" * 80 + "\n")
-                # Convert Pydantic model to dict and serialize
-                result_dict = result.model_dump(exclude_none=True)
-                f.write(json.dumps(result_dict, indent=2, ensure_ascii=False))
-                f.write("\n")
-                f.write("-" * 80 + "\n")
-                f.write("\n")
-                f.write("STATUS: SUCCESS\n")
-                success_count += 1
-            
-            f.write("\n")
-        
-        # Write summary
-        f.write("=" * 80 + "\n")
-        f.write("SUMMARY\n")
-        f.write("=" * 80 + "\n")
-        f.write(f"Total notes tested: {count}\n")
-        f.write(f"Successful: {success_count}\n")
-        f.write(f"Failed: {failed_count}\n")
-        if count > 0:
-            f.write(f"Success rate: {success_count/count*100:.1f}%\n")
-        f.write("=" * 80 + "\n")
-    
-    print(f"\nCompleted! Results saved to: {output_path}", file=sys.stderr)
-    print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
-    
-    return 0 if failed_count == 0 else 1
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
-### `scripts/registry_pipeline_smoke_batch.py`
-- Size: `14424` bytes
-```
-#!/usr/bin/env python3
-"""Batch smoke test for registry pipeline on random notes.
-
-This script randomly selects N notes from data/knowledge/patient_note_texts,
-runs the registry pipeline smoke test on each, and saves all output to a text file.
-"""
-from __future__ import annotations
-
-import argparse
-import json
-import os
-import random
-import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Any
-
-from dotenv import load_dotenv
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-
-def _truthy_env(name: str) -> bool:
-    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
-
-
-if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
-
-from modules.registry.application.registry_service import RegistryService  # noqa: E402
-from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
-from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
-from modules.registry.processing.navigation_fiducials import (  # noqa: E402
-    apply_navigation_fiducials,
-)
-from modules.registry.schema import RegistryRecord  # noqa: E402
-from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
-
-
-def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
-    flags: set[str] = set()
-    procs = record_data.get("procedures_performed")
-    if isinstance(procs, dict):
-        for name, payload in procs.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"procedures_performed.{name}.performed")
-
-    pleural = record_data.get("pleural_procedures")
-    if isinstance(pleural, dict):
-        for name, payload in pleural.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"pleural_procedures.{name}.performed")
-
-    if record_data.get("established_tracheostomy_route") is True:
-        flags.add("established_tracheostomy_route")
-
-    granular = record_data.get("granular_data")
-    if isinstance(granular, dict):
-        targets = granular.get("navigation_targets")
-        if isinstance(targets, list):
-            for target in targets:
-                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
-                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
-                    break
-
-    return flags
-
-
-def _apply_seed_uplift(
-    record_data: dict[str, Any],
-    seed: dict[str, Any],
-    masked_note_text: str,
-) -> tuple[dict[str, Any], list[str]]:
-    uplifted: list[str] = []
-
-    seed_procs = seed.get("procedures_performed")
-    if isinstance(seed_procs, dict):
-        record_procs = record_data.get("procedures_performed") or {}
-        if not isinstance(record_procs, dict):
-            record_procs = {}
-        for name, payload in seed_procs.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_procs.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"procedures_performed.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_procs[name] = existing
-        if record_procs:
-            record_data["procedures_performed"] = record_procs
-
-    seed_pleural = seed.get("pleural_procedures")
-    if isinstance(seed_pleural, dict):
-        record_pleural = record_data.get("pleural_procedures") or {}
-        if not isinstance(record_pleural, dict):
-            record_pleural = {}
-        for name, payload in seed_pleural.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_pleural.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"pleural_procedures.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_pleural[name] = existing
-        if record_pleural:
-            record_data["pleural_procedures"] = record_pleural
-
-    if seed.get("established_tracheostomy_route") is True:
-        if record_data.get("established_tracheostomy_route") is not True:
-            record_data["established_tracheostomy_route"] = True
-            uplifted.append("established_tracheostomy_route")
-
-    if apply_navigation_fiducials(record_data, masked_note_text):
-        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
-
-    return record_data, uplifted
-
-
-def _format_list(label: str, items: list[str] | set[str]) -> str:
-    """Format a list of items for output."""
-    if not items:
-        return f"{label}: (none)\n"
-    if isinstance(items, set):
-        items = sorted(items)
-    lines = [f"{label}:"]
-    for item in items:
-        lines.append(f"  - {item}")
-    return "\n".join(lines) + "\n"
-
-
-def _format_self_correction_diagnostics(result) -> str:
-    lines: list[str] = []
-
-    audit_report = getattr(result, "audit_report", None)
-    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
-    if not high_conf:
-        lines.append("Audit high-conf omissions: (none)\n")
-    else:
-        lines.append("Audit high-conf omissions:\n")
-        for pred in high_conf:
-            cpt = getattr(pred, "cpt", None)
-            prob = getattr(pred, "prob", None)
-            bucket = getattr(pred, "bucket", None)
-            try:
-                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
-            except Exception:
-                prob_str = "?"
-            lines.append(f"  - {cpt} (prob={prob_str}, bucket={bucket})\n")
-
-    warnings = getattr(result, "warnings", None)
-    if isinstance(warnings, list):
-        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
-        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
-        diag = self_correct_warnings + auto_corrected
-        if diag:
-            lines.append("Self-correction diagnostics:\n")
-            for w in diag:
-                lines.append(f"  - {w}\n")
-
-    return "".join(lines)
-
-
-def _run_smoke_test(note_text: str, note_id: str, self_correct: bool = False) -> str:
-    """Run smoke test on a single note and return formatted output."""
-    output_lines = []
-    output_lines.append("=" * 80)
-    output_lines.append(f"NOTE: {note_id}")
-    output_lines.append("=" * 80)
-    output_lines.append("")
-
-    try:
-        masked = mask_offset_preserving(note_text)
-
-        service = RegistryService()
-        record, warnings, meta = service.extract_record(note_text)
-
-        before_flags = _collect_performed_flags(record.model_dump())
-
-        seed = run_deterministic_extractors(masked)
-        record_data = record.model_dump()
-        record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
-        uplifted_flags = set(uplifted)
-        after_flags = _collect_performed_flags(record_data)
-
-        record_after = RegistryRecord(**record_data)
-        omission_warnings = scan_for_omissions(masked, record_after)
-
-        output_lines.append(_format_list("Performed flags (extract_record)", before_flags))
-        output_lines.append(_format_list("Performed flags added by deterministic uplift", uplifted_flags))
-        output_lines.append(_format_list("Performed flags (after uplift)", after_flags))
-        output_lines.append(_format_list("Extract warnings", warnings))
-        output_lines.append(_format_list("Omission warnings", omission_warnings))
-
-        if self_correct:
-            os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
-            try:
-                result = service.extract_fields(note_text)
-            except Exception as exc:
-                output_lines.append(f"SELF_CORRECT_ERROR: {exc}\n")
-            else:
-                output_lines.append(_format_self_correction_diagnostics(result))
-                if result.self_correction:
-                    output_lines.append("Self-correction applied:\n")
-                    for item in result.self_correction:
-                        output_lines.append(f"  - {item.trigger.target_cpt}: {item.outcome}\n")
-                else:
-                    output_lines.append("Self-correction applied: (none)\n")
-
-        output_lines.append("")
-        output_lines.append("STATUS: SUCCESS")
-        output_lines.append("")
-
-    except Exception as exc:
-        output_lines.append(f"ERROR: {exc}\n")
-        output_lines.append("STATUS: FAILED")
-        output_lines.append("")
-
-    return "".join(output_lines)
-
-
-def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
-    """Load all notes from JSON files in the directory.
-    
-    Returns a dict mapping note_id to note_text.
-    Only includes the main note (key without '_syn_' suffix) from each file.
-    """
-    notes = {}
-    
-    for json_file in sorted(notes_dir.glob("*.json")):
-        try:
-            with open(json_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            
-            # Find the main note (key without '_syn_' suffix)
-            main_key = None
-            for key in data.keys():
-                if "_syn_" not in key:
-                    main_key = key
-                    break
-            
-            if main_key and isinstance(data[main_key], str):
-                note_id = json_file.stem
-                notes[note_id] = data[main_key]
-        except Exception as exc:
-            print(f"Warning: Failed to load {json_file}: {exc}", file=sys.stderr)
-    
-    return notes
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Batch smoke test the registry extraction pipeline on random notes."
-    )
-    parser.add_argument(
-        "--count",
-        type=int,
-        default=30,
-        help="Number of random notes to test (default: 30)",
-    )
-    parser.add_argument(
-        "--notes-dir",
-        type=Path,
-        default=ROOT / "data" / "knowledge" / "patient_note_texts",
-        help="Directory containing note JSON files (default: data/knowledge/patient_note_texts)",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=None,
-        help="Output file path (default: registry_smoke_batch_<timestamp>.txt)",
-    )
-    parser.add_argument(
-        "--seed",
-        type=int,
-        default=None,
-        help="Random seed for reproducibility",
-    )
-    parser.add_argument(
-        "--self-correct",
-        action="store_true",
-        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
-    )
-    args = parser.parse_args()
-
-    # Set up environment
-    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-    if os.getenv("GEMINI_OFFLINE") is None:
-        os.environ["GEMINI_OFFLINE"] = "1"
-
-    # Load notes
-    if not args.notes_dir.exists():
-        print(f"ERROR: Notes directory not found: {args.notes_dir}", file=sys.stderr)
-        return 1
-
-    print(f"Loading notes from {args.notes_dir}...", file=sys.stderr)
-    all_notes = _load_notes_from_directory(args.notes_dir)
-    
-    if not all_notes:
-        print(f"ERROR: No notes found in {args.notes_dir}", file=sys.stderr)
-        return 1
-
-    print(f"Loaded {len(all_notes)} notes", file=sys.stderr)
-
-    # Select random notes
-    if args.seed is not None:
-        random.seed(args.seed)
-        print(f"Using random seed: {args.seed}", file=sys.stderr)
-
-    count = min(args.count, len(all_notes))
-    selected_notes = random.sample(list(all_notes.items()), count)
-    
-    print(f"Selected {count} random notes for testing", file=sys.stderr)
-
-    # Determine output file
-    if args.output:
-        output_path = args.output
-    else:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_path = ROOT / f"registry_smoke_batch_{timestamp}.txt"
-
-    # Run smoke tests
-    print(f"Running smoke tests...", file=sys.stderr)
-    print(f"Output will be saved to: {output_path}", file=sys.stderr)
-
-    with open(output_path, "w", encoding="utf-8") as f:
-        # Write header
-        f.write("=" * 80 + "\n")
-        f.write("REGISTRY PIPELINE BATCH SMOKE TEST\n")
-        f.write("=" * 80 + "\n")
-        f.write(f"Date: {datetime.now().isoformat()}\n")
-        f.write(f"Notes tested: {count}\n")
-        f.write(f"Notes directory: {args.notes_dir}\n")
-        if args.seed is not None:
-            f.write(f"Random seed: {args.seed}\n")
-        f.write(f"Self-correction: {args.self_correct}\n")
-        f.write("=" * 80 + "\n")
-        f.write("\n")
-
-        # Run tests
-        success_count = 0
-        failed_count = 0
-
-        for i, (note_id, note_text) in enumerate(selected_notes, 1):
-            print(f"[{i}/{count}] Testing {note_id}...", file=sys.stderr)
-            result = _run_smoke_test(note_text, note_id, args.self_correct)
-            f.write(result)
-            f.flush()
-
-            if "STATUS: SUCCESS" in result:
-                success_count += 1
-            else:
-                failed_count += 1
-
-        # Write summary
-        f.write("=" * 80 + "\n")
-        f.write("SUMMARY\n")
-        f.write("=" * 80 + "\n")
-        f.write(f"Total notes tested: {count}\n")
-        f.write(f"Successful: {success_count}\n")
-        f.write(f"Failed: {failed_count}\n")
-        f.write(f"Success rate: {success_count/count*100:.1f}%\n")
-        f.write("=" * 80 + "\n")
-
-    print(f"\nCompleted! Results saved to: {output_path}", file=sys.stderr)
-    print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
-
-    return 0 if failed_count == 0 else 1
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
 ### `scripts/review_llm_fallback_errors.py`
 - Size: `14532` bytes
 ```
@@ -14249,6 +13446,851 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+```
+
+---
+### `scripts/unified_pipeline_batch.py`
+- Size: `14760` bytes
+```
+#!/usr/bin/env python3
+"""Batch unified pipeline test on random notes.
+
+This script randomly selects N notes from data/granular annotations/notes_text,
+runs the full unified pipeline (same as UI at /ui/), and saves results to a text file.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import random
+import sys
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+# Import after environment setup
+from modules.api.adapters.response_adapter import build_v3_evidence_payload  # noqa: E402
+from modules.api.dependencies import get_coding_service, get_registry_service  # noqa: E402
+from modules.api.phi_dependencies import get_phi_scrubber  # noqa: E402
+from modules.api.phi_redaction import apply_phi_redaction  # noqa: E402
+from modules.api.schemas import (  # noqa: E402
+    CodeSuggestionSummary,
+    UnifiedProcessRequest,
+    UnifiedProcessResponse,
+)
+from modules.coder.application.coding_service import CodingService  # noqa: E402
+from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta  # noqa: E402
+from modules.coder.phi_gating import is_phi_review_required  # noqa: E402
+from modules.common.exceptions import LLMError  # noqa: E402
+from modules.registry.application.registry_service import (  # noqa: E402
+    RegistryExtractionResult,
+    RegistryService,
+)
+from config.settings import CoderSettings  # noqa: E402
+
+
+def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
+    """Load all notes from .txt files in the directory.
+    
+    Returns a dict mapping note_id (filename without .txt) to note_text.
+    """
+    notes = {}
+    
+    for txt_file in sorted(notes_dir.glob("*.txt")):
+        try:
+            note_text = txt_file.read_text(encoding="utf-8")
+            note_id = txt_file.stem  # filename without .txt extension
+            notes[note_id] = note_text
+        except Exception as exc:
+            print(f"Warning: Failed to load {txt_file}: {exc}", file=sys.stderr)
+    
+    return notes
+
+
+def _run_unified_pipeline(
+    note_text: str,
+    registry_service: RegistryService,
+    coding_service: CodingService,
+    phi_scrubber,
+    *,
+    include_financials: bool = True,
+    explain: bool = True,
+) -> UnifiedProcessResponse:
+    """Run the unified pipeline (same as /api/v1/process endpoint).
+    
+    This replicates the exact logic from modules/api/routes/unified_process.py
+    """
+    import time
+    
+    start_time = time.time()
+    
+    # PHI redaction (if not already scrubbed)
+    # For batch testing, we'll treat notes as already scrubbed to match UI behavior
+    # when user submits via PHI redactor
+    redaction = apply_phi_redaction(note_text, phi_scrubber)
+    scrubbed_text = redaction.text
+    
+    # Step 1: Registry extraction (synchronous call)
+    try:
+        extraction_result = registry_service.extract_fields(scrubbed_text)
+    except Exception as exc:
+        if isinstance(exc, LLMError) and "429" in str(exc):
+            raise Exception("Upstream LLM rate limited") from exc
+        raise
+    
+    # Step 2: Derive CPT codes from registry
+    record = extraction_result.record
+    if record is None:
+        from modules.registry.schema import RegistryRecord
+        record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+    
+    codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
+    
+    # Build suggestions with confidence and rationale
+    suggestions = []
+    base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
+    
+    for code in codes:
+        proc_info = coding_service.kb_repo.get_procedure_info(code)
+        description = proc_info.description if proc_info else ""
+        rationale = rationales.get(code, "")
+        
+        # Determine review flag
+        if extraction_result.needs_manual_review:
+            review_flag = "required"
+        elif extraction_result.audit_warnings:
+            review_flag = "recommended"
+        else:
+            review_flag = "optional"
+        
+        suggestions.append(
+            CodeSuggestionSummary(
+                code=code,
+                description=description,
+                confidence=base_confidence,
+                rationale=rationale,
+                review_flag=review_flag,
+            )
+        )
+    
+    # Step 3: Calculate financials if requested
+    total_work_rvu = None
+    estimated_payment = None
+    per_code_billing = []
+    
+    if include_financials and codes:
+        settings = CoderSettings()
+        conversion_factor = settings.cms_conversion_factor
+        total_work = 0.0
+        total_payment = 0.0
+        
+        for code in codes:
+            proc_info = coding_service.kb_repo.get_procedure_info(code)
+            if proc_info:
+                work_rvu = proc_info.work_rvu
+                total_rvu = proc_info.total_facility_rvu
+                payment = total_rvu * conversion_factor
+                
+                total_work += work_rvu
+                total_payment += payment
+                
+                per_code_billing.append({
+                    "cpt_code": code,
+                    "description": proc_info.description,
+                    "work_rvu": work_rvu,
+                    "total_facility_rvu": total_rvu,
+                    "facility_payment": round(payment, 2),
+                })
+        
+        total_work_rvu = round(total_work, 2)
+        estimated_payment = round(total_payment, 2)
+    
+    # Combine audit warnings
+    all_warnings: list[str] = []
+    all_warnings.extend(extraction_result.warnings or [])
+    all_warnings.extend(extraction_result.audit_warnings or [])
+    all_warnings.extend(derivation_warnings)
+    
+    # Deduplicate warnings
+    deduped_warnings: list[str] = []
+    seen_warnings: set[str] = set()
+    for warning in all_warnings:
+        if warning in seen_warnings:
+            continue
+        seen_warnings.add(warning)
+        deduped_warnings.append(warning)
+    all_warnings = deduped_warnings
+    
+    # Build evidence payload
+    evidence_payload = build_v3_evidence_payload(record=record, codes=codes)
+    if not explain and not evidence_payload:
+        evidence_payload = {}
+    
+    # Determine review status
+    needs_manual_review = extraction_result.needs_manual_review
+    if is_phi_review_required():
+        review_status = "pending_phi_review"
+        needs_manual_review = True
+    elif needs_manual_review:
+        review_status = "unverified"
+    else:
+        review_status = "finalized"
+    
+    processing_time_ms = (time.time() - start_time) * 1000
+    
+    # Build response
+    registry_payload = record.model_dump(exclude_none=True)
+    
+    return UnifiedProcessResponse(
+        registry=registry_payload,
+        evidence=evidence_payload,
+        cpt_codes=codes,
+        suggestions=suggestions,
+        total_work_rvu=total_work_rvu,
+        estimated_payment=estimated_payment,
+        per_code_billing=per_code_billing,
+        pipeline_mode="extraction_first",
+        coder_difficulty=extraction_result.coder_difficulty or "",
+        needs_manual_review=needs_manual_review,
+        audit_warnings=all_warnings,
+        validation_errors=extraction_result.validation_errors or [],
+        kb_version=coding_service.kb_repo.version,
+        policy_version="extraction_first_v1",
+        processing_time_ms=round(processing_time_ms, 2),
+        review_status=review_status,
+    )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Batch unified pipeline test on random notes from notes_text directory."
+    )
+    parser.add_argument(
+        "--count",
+        type=int,
+        default=10,
+        help="Number of random notes to test (default: 10)",
+    )
+    parser.add_argument(
+        "--notes-dir",
+        type=Path,
+        default=ROOT / "data" / "granular annotations" / "notes_text",
+        help="Directory containing note .txt files (default: data/granular annotations/notes_text)",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Output file path (default: unified_pipeline_batch_<timestamp>.txt)",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducibility",
+    )
+    parser.add_argument(
+        "--include-financials",
+        action="store_true",
+        default=True,
+        help="Include RVU and payment information (default: True)",
+    )
+    parser.add_argument(
+        "--no-financials",
+        dest="include_financials",
+        action="store_false",
+        help="Exclude RVU and payment information",
+    )
+    parser.add_argument(
+        "--explain",
+        action="store_true",
+        default=True,
+        help="Include evidence/explanation data (default: True)",
+    )
+    parser.add_argument(
+        "--no-explain",
+        dest="explain",
+        action="store_false",
+        help="Exclude evidence/explanation data",
+    )
+    parser.add_argument(
+        "--real-llm",
+        action="store_true",
+        help="Allow real LLM calls (disables stub/offline defaults).",
+    )
+    args = parser.parse_args()
+    
+    # Set up environment
+    if args.real_llm:
+        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
+        os.environ.setdefault("GEMINI_OFFLINE", "0")
+    else:
+        # Use stub LLM for offline testing
+        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+        if os.getenv("GEMINI_OFFLINE") is None:
+            os.environ["GEMINI_OFFLINE"] = "1"
+    
+    # Load notes
+    if not args.notes_dir.exists():
+        print(f"ERROR: Notes directory not found: {args.notes_dir}", file=sys.stderr)
+        return 1
+    
+    print(f"Loading notes from {args.notes_dir}...", file=sys.stderr)
+    all_notes = _load_notes_from_directory(args.notes_dir)
+    
+    if not all_notes:
+        print(f"ERROR: No notes found in {args.notes_dir}", file=sys.stderr)
+        return 1
+    
+    print(f"Loaded {len(all_notes)} notes", file=sys.stderr)
+    
+    # Select random notes
+    if args.seed is not None:
+        random.seed(args.seed)
+        print(f"Using random seed: {args.seed}", file=sys.stderr)
+    
+    count = min(args.count, len(all_notes))
+    selected_notes = random.sample(list(all_notes.items()), count)
+    
+    print(f"Selected {count} random notes for testing", file=sys.stderr)
+    
+    # Determine output file
+    if args.output:
+        output_path = args.output
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_path = ROOT / f"unified_pipeline_batch_{timestamp}.txt"
+    
+    # Initialize services
+    print("Initializing services...", file=sys.stderr)
+    registry_service = get_registry_service()
+    coding_service = get_coding_service()
+    phi_scrubber = get_phi_scrubber()
+    
+    # Run unified pipeline on each note
+    print(f"Running unified pipeline on {count} notes...", file=sys.stderr)
+    print(f"Output will be saved to: {output_path}", file=sys.stderr)
+    
+    all_results = []
+    for i, (note_id, note_text) in enumerate(selected_notes, 1):
+        print(f"[{i}/{count}] Processing {note_id}...", file=sys.stderr)
+        try:
+            result = _run_unified_pipeline(
+                note_text,
+                registry_service,
+                coding_service,
+                phi_scrubber,
+                include_financials=args.include_financials,
+                explain=args.explain,
+            )
+            all_results.append((note_id, note_text, result, None))
+        except Exception as exc:
+            print(f"  ERROR: {exc}", file=sys.stderr)
+            all_results.append((note_id, note_text, None, str(exc)))
+    
+    # Write output file
+    with open(output_path, "w", encoding="utf-8") as f:
+        # Write header
+        f.write("=" * 80 + "\n")
+        f.write("UNIFIED PIPELINE BATCH TEST RESULTS\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Date: {datetime.now().isoformat()}\n")
+        f.write(f"Notes tested: {count}\n")
+        f.write(f"Notes directory: {args.notes_dir}\n")
+        if args.seed is not None:
+            f.write(f"Random seed: {args.seed}\n")
+        f.write(f"Include financials: {args.include_financials}\n")
+        f.write(f"Include explain: {args.explain}\n")
+        f.write(f"Real LLM enabled: {args.real_llm}\n")
+        f.write("=" * 80 + "\n")
+        f.write("\n")
+        
+        # Write results for each note
+        success_count = 0
+        failed_count = 0
+        
+        for note_id, note_text, result, error in all_results:
+            f.write("=" * 80 + "\n")
+            f.write(f"NOTE: {note_id}\n")
+            f.write("=" * 80 + "\n")
+            f.write("\n")
+            
+            # Write note text
+            f.write("NOTE TEXT:\n")
+            f.write("-" * 80 + "\n")
+            f.write(note_text)
+            f.write("\n")
+            f.write("-" * 80 + "\n")
+            f.write("\n")
+            
+            # Write results
+            if error:
+                f.write("ERROR:\n")
+                f.write(f"{error}\n")
+                f.write("\n")
+                f.write("STATUS: FAILED\n")
+                failed_count += 1
+            else:
+                f.write("RESULTS (JSON):\n")
+                f.write("-" * 80 + "\n")
+                # Convert Pydantic model to dict and serialize
+                result_dict = result.model_dump(exclude_none=True)
+                f.write(json.dumps(result_dict, indent=2, ensure_ascii=False))
+                f.write("\n")
+                f.write("-" * 80 + "\n")
+                f.write("\n")
+                f.write("STATUS: SUCCESS\n")
+                success_count += 1
+            
+            f.write("\n")
+        
+        # Write summary
+        f.write("=" * 80 + "\n")
+        f.write("SUMMARY\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Total notes tested: {count}\n")
+        f.write(f"Successful: {success_count}\n")
+        f.write(f"Failed: {failed_count}\n")
+        if count > 0:
+            f.write(f"Success rate: {success_count/count*100:.1f}%\n")
+        f.write("=" * 80 + "\n")
+    
+    print(f"\nCompleted! Results saved to: {output_path}", file=sys.stderr)
+    print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
+    
+    return 0 if failed_count == 0 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `scripts/registry_pipeline_smoke_batch.py`
+- Size: `15178` bytes
+```
+#!/usr/bin/env python3
+"""Batch smoke test for registry pipeline on random notes.
+
+This script randomly selects N notes from data/knowledge/patient_note_texts,
+runs the registry pipeline smoke test on each, and saves all output to a text file.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import random
+import sys
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+from modules.registry.application.registry_service import RegistryService  # noqa: E402
+from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
+from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
+from modules.registry.processing.navigation_fiducials import (  # noqa: E402
+    apply_navigation_fiducials,
+)
+from modules.registry.schema import RegistryRecord  # noqa: E402
+from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
+
+
+def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
+    flags: set[str] = set()
+    procs = record_data.get("procedures_performed")
+    if isinstance(procs, dict):
+        for name, payload in procs.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"procedures_performed.{name}.performed")
+
+    pleural = record_data.get("pleural_procedures")
+    if isinstance(pleural, dict):
+        for name, payload in pleural.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"pleural_procedures.{name}.performed")
+
+    if record_data.get("established_tracheostomy_route") is True:
+        flags.add("established_tracheostomy_route")
+
+    granular = record_data.get("granular_data")
+    if isinstance(granular, dict):
+        targets = granular.get("navigation_targets")
+        if isinstance(targets, list):
+            for target in targets:
+                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
+                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
+                    break
+
+    return flags
+
+
+def _apply_seed_uplift(
+    record_data: dict[str, Any],
+    seed: dict[str, Any],
+    masked_note_text: str,
+) -> tuple[dict[str, Any], list[str]]:
+    uplifted: list[str] = []
+
+    seed_procs = seed.get("procedures_performed")
+    if isinstance(seed_procs, dict):
+        record_procs = record_data.get("procedures_performed") or {}
+        if not isinstance(record_procs, dict):
+            record_procs = {}
+        for name, payload in seed_procs.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_procs.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"procedures_performed.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_procs[name] = existing
+        if record_procs:
+            record_data["procedures_performed"] = record_procs
+
+    seed_pleural = seed.get("pleural_procedures")
+    if isinstance(seed_pleural, dict):
+        record_pleural = record_data.get("pleural_procedures") or {}
+        if not isinstance(record_pleural, dict):
+            record_pleural = {}
+        for name, payload in seed_pleural.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_pleural.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"pleural_procedures.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_pleural[name] = existing
+        if record_pleural:
+            record_data["pleural_procedures"] = record_pleural
+
+    if seed.get("established_tracheostomy_route") is True:
+        if record_data.get("established_tracheostomy_route") is not True:
+            record_data["established_tracheostomy_route"] = True
+            uplifted.append("established_tracheostomy_route")
+
+    if apply_navigation_fiducials(record_data, masked_note_text):
+        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
+
+    return record_data, uplifted
+
+
+def _format_list(label: str, items: list[str] | set[str]) -> str:
+    """Format a list of items for output."""
+    if not items:
+        return f"{label}: (none)\n"
+    if isinstance(items, set):
+        items = sorted(items)
+    lines = [f"{label}:"]
+    for item in items:
+        lines.append(f"  - {item}")
+    return "\n".join(lines) + "\n"
+
+
+def _format_self_correction_diagnostics(result) -> str:
+    lines: list[str] = []
+
+    audit_report = getattr(result, "audit_report", None)
+    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
+    if not high_conf:
+        lines.append("Audit high-conf omissions: (none)\n")
+    else:
+        lines.append("Audit high-conf omissions:\n")
+        for pred in high_conf:
+            cpt = getattr(pred, "cpt", None)
+            prob = getattr(pred, "prob", None)
+            bucket = getattr(pred, "bucket", None)
+            try:
+                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
+            except Exception:
+                prob_str = "?"
+            lines.append(f"  - {cpt} (prob={prob_str}, bucket={bucket})\n")
+
+    warnings = getattr(result, "warnings", None)
+    if isinstance(warnings, list):
+        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
+        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
+        diag = self_correct_warnings + auto_corrected
+        if diag:
+            lines.append("Self-correction diagnostics:\n")
+            for w in diag:
+                lines.append(f"  - {w}\n")
+
+    return "".join(lines)
+
+
+def _run_smoke_test(note_text: str, note_id: str, self_correct: bool = False) -> str:
+    """Run smoke test on a single note and return formatted output."""
+    output_lines = []
+    output_lines.append("=" * 80)
+    output_lines.append(f"NOTE: {note_id}")
+    output_lines.append("=" * 80)
+    output_lines.append("")
+
+    try:
+        masked = mask_offset_preserving(note_text)
+
+        service = RegistryService()
+        record, warnings, meta = service.extract_record(note_text)
+
+        before_flags = _collect_performed_flags(record.model_dump())
+
+        seed = run_deterministic_extractors(masked)
+        record_data = record.model_dump()
+        record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
+        uplifted_flags = set(uplifted)
+        after_flags = _collect_performed_flags(record_data)
+
+        record_after = RegistryRecord(**record_data)
+        omission_warnings = scan_for_omissions(masked, record_after)
+
+        output_lines.append(_format_list("Performed flags (extract_record)", before_flags))
+        output_lines.append(_format_list("Performed flags added by deterministic uplift", uplifted_flags))
+        output_lines.append(_format_list("Performed flags (after uplift)", after_flags))
+        output_lines.append(_format_list("Extract warnings", warnings))
+        output_lines.append(_format_list("Omission warnings", omission_warnings))
+
+        if self_correct:
+            os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
+            try:
+                result = service.extract_fields(note_text)
+            except Exception as exc:
+                output_lines.append(f"SELF_CORRECT_ERROR: {exc}\n")
+            else:
+                output_lines.append(_format_self_correction_diagnostics(result))
+                if result.self_correction:
+                    output_lines.append("Self-correction applied:\n")
+                    for item in result.self_correction:
+                        applied_paths = getattr(item, "applied_paths", None)
+                        if isinstance(applied_paths, list) and applied_paths:
+                            output_lines.append(
+                                f"  - {item.trigger.target_cpt}: applied {', '.join(applied_paths)}\n"
+                            )
+                        else:
+                            output_lines.append(f"  - {item.trigger.target_cpt}: applied (no paths recorded)\n")
+                else:
+                    output_lines.append("Self-correction applied: (none)\n")
+
+        output_lines.append("")
+        output_lines.append("STATUS: SUCCESS")
+        output_lines.append("")
+
+    except Exception as exc:
+        output_lines.append(f"ERROR: {exc}\n")
+        output_lines.append("STATUS: FAILED")
+        output_lines.append("")
+
+    return "".join(output_lines)
+
+
+def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
+    """Load all notes from JSON files in the directory.
+    
+    Returns a dict mapping note_id to note_text.
+    Only includes the main note (key without '_syn_' suffix) from each file.
+    """
+    notes = {}
+    
+    for json_file in sorted(notes_dir.glob("*.json")):
+        try:
+            with open(json_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            
+            # Find the main note (key without '_syn_' suffix)
+            main_key = None
+            for key in data.keys():
+                if "_syn_" not in key:
+                    main_key = key
+                    break
+            
+            if main_key and isinstance(data[main_key], str):
+                note_id = json_file.stem
+                notes[note_id] = data[main_key]
+        except Exception as exc:
+            print(f"Warning: Failed to load {json_file}: {exc}", file=sys.stderr)
+    
+    return notes
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Batch smoke test the registry extraction pipeline on random notes."
+    )
+    parser.add_argument(
+        "--count",
+        type=int,
+        default=30,
+        help="Number of random notes to test (default: 30)",
+    )
+    parser.add_argument(
+        "--notes-dir",
+        type=Path,
+        default=ROOT / "data" / "knowledge" / "patient_note_texts",
+        help="Directory containing note JSON files (default: data/knowledge/patient_note_texts)",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Output file path (default: registry_smoke_batch_<timestamp>.txt)",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducibility",
+    )
+    parser.add_argument(
+        "--self-correct",
+        action="store_true",
+        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
+    )
+    parser.add_argument(
+        "--real-llm",
+        action="store_true",
+        help="Allow real LLM calls (disables stub/offline defaults).",
+    )
+    args = parser.parse_args()
+
+    # Set up environment
+    if args.real_llm:
+        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
+        os.environ.setdefault("GEMINI_OFFLINE", "0")
+    else:
+        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+        if os.getenv("GEMINI_OFFLINE") is None:
+            os.environ["GEMINI_OFFLINE"] = "1"
+
+    # Load notes
+    if not args.notes_dir.exists():
+        print(f"ERROR: Notes directory not found: {args.notes_dir}", file=sys.stderr)
+        return 1
+
+    print(f"Loading notes from {args.notes_dir}...", file=sys.stderr)
+    all_notes = _load_notes_from_directory(args.notes_dir)
+    
+    if not all_notes:
+        print(f"ERROR: No notes found in {args.notes_dir}", file=sys.stderr)
+        return 1
+
+    print(f"Loaded {len(all_notes)} notes", file=sys.stderr)
+
+    # Select random notes
+    if args.seed is not None:
+        random.seed(args.seed)
+        print(f"Using random seed: {args.seed}", file=sys.stderr)
+
+    count = min(args.count, len(all_notes))
+    selected_notes = random.sample(list(all_notes.items()), count)
+    
+    print(f"Selected {count} random notes for testing", file=sys.stderr)
+
+    # Determine output file
+    if args.output:
+        output_path = args.output
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_path = ROOT / f"registry_smoke_batch_{timestamp}.txt"
+
+    # Run smoke tests
+    print(f"Running smoke tests...", file=sys.stderr)
+    print(f"Output will be saved to: {output_path}", file=sys.stderr)
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        # Write header
+        f.write("=" * 80 + "\n")
+        f.write("REGISTRY PIPELINE BATCH SMOKE TEST\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Date: {datetime.now().isoformat()}\n")
+        f.write(f"Notes tested: {count}\n")
+        f.write(f"Notes directory: {args.notes_dir}\n")
+        if args.seed is not None:
+            f.write(f"Random seed: {args.seed}\n")
+        f.write(f"Self-correction: {args.self_correct}\n")
+        f.write(f"Real LLM enabled: {args.real_llm}\n")
+        f.write("=" * 80 + "\n")
+        f.write("\n")
+
+        # Run tests
+        success_count = 0
+        failed_count = 0
+
+        for i, (note_id, note_text) in enumerate(selected_notes, 1):
+            print(f"[{i}/{count}] Testing {note_id}...", file=sys.stderr)
+            result = _run_smoke_test(note_text, note_id, args.self_correct)
+            f.write(result)
+            f.flush()
+
+            if "STATUS: SUCCESS" in result:
+                success_count += 1
+            else:
+                failed_count += 1
+
+        # Write summary
+        f.write("=" * 80 + "\n")
+        f.write("SUMMARY\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Total notes tested: {count}\n")
+        f.write(f"Successful: {success_count}\n")
+        f.write(f"Failed: {failed_count}\n")
+        f.write(f"Success rate: {success_count/count*100:.1f}%\n")
+        f.write("=" * 80 + "\n")
+
+    print(f"\nCompleted! Results saved to: {output_path}", file=sys.stderr)
+    print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
+
+    return 0 if failed_count == 0 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 ```
 
