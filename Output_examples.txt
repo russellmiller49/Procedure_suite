@@ -1,0 +1,16 @@
+Example A: Navigation failure (Modifier -53)
+Header: Robotic navigation bronchoscopy
+Body: Navigation attempted, but mis-registration occurred and conversion to standard bronchoscopy was required. Unable to navigate to target.
+
+Example B: Radial vs linear EBUS
+Radial EBUS was used with concentric view of the lesion. No mediastinal stations were sampled.
+
+Example C: Airway dilation false positive
+The subcutaneous tissues were dilated to place the chest tube.
+
+Example D: IPC vs chest tube
+A 14Fr Wayne pigtail chest drain was placed for pneumothorax. No tunneled catheter was inserted.
+
+Example E: Rigid bronchoscopy header/body conflict
+Header: Rigid bronchoscopy with tumor debulking
+Body: The flexible bronchoscope was advanced to the segmental bronchi and inspection was completed.

@@ -314,8 +314,9 @@ New:
 - `REGISTRY_V3_SELF_CORRECT=0/1` (default 0)
 
 Existing:
-- `PROCSUITE_PIPELINE_MODE=current|extraction_first`
-- `REGISTRY_EXTRACTION_ENGINE=engine|agents_focus_then_engine|agents_structurer`
+- `PROCSUITE_PIPELINE_MODE=extraction_first` (startup-enforced; legacy pipeline modes are disabled by default)
+- `REGISTRY_EXTRACTION_ENGINE=parallel_ner|engine|agents_focus_then_engine|agents_structurer`
+- `REGISTRY_SCHEMA_VERSION=v3|v2` (production requires `v3`)
 - `REGISTRY_SELF_CORRECT_ENABLED=0/1`
 
 ---

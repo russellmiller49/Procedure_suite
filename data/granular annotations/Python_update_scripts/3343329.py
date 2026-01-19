@@ -2,43 +2,37 @@ import sys
 from pathlib import Path
 
 # ==========================================
-# Setup: Path Configuration
+# 1. Setup Environment
 # ==========================================
-# Dynamically determine the repository root (assumed to be 2 levels up)
-try:
-    REPO_ROOT = Path(__file__).resolve().parents[1]
-except NameError:
-    REPO_ROOT = Path('.').resolve()
-
-# Add the repository to sys.path to access utility scripts
+# Adjust parents based on where this script is saved.
+# If saved in: data/granular_annotations/Python_update_scripts/
+# Then parents[3] is the Repo Root.
+REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.append(str(REPO_ROOT))
 
-# Import the utility function
-from scripts.add_training_case import add_case
+try:
+    from scripts.add_training_case import add_case
+except ImportError:
+    print("CRITICAL ERROR: Could not import 'add_case'. Check REPO_ROOT path.")
+    sys.exit(1)
 
 # ==========================================
-# Helper: Span Extraction
+# 2. Helper Function
 # ==========================================
 def get_span(text, term, occurrence=1):
-    """
-    Finds the start and end indices of the nth occurrence of a term in the text.
-    Case-sensitive.
-    """
     start = -1
-    for _ in range(occurrence):
+    for i in range(occurrence):
         start = text.find(term, start + 1)
         if start == -1:
-            raise ValueError(f"Term '{term}' not found {occurrence} times in text.")
-    return {"start": start, "end": start + len(term)}
+             raise ValueError(f"Term '{term}' (occurrence {occurrence}) not found.")
+    return {"text": term, "start": start, "end": start + len(term)}
 
 # ==========================================
-# Data Payload
+# 3. Batch Data Definitions
 # ==========================================
 BATCH_DATA = []
 
-# ------------------------------------------
-# Case 1: 3343329
-# ------------------------------------------
+# --- Note 1: 3343329 ---
 id_1 = "3343329"
 text_1 = """Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]
 Date: [REDACTED] || Location: [REDACTED]
@@ -64,39 +58,44 @@ Plan: Daily CXR, assess for tube removal criteria.
 Davis, MD"""
 
 entities_1 = [
-    # Indication: "Complicated parapneumonic effusion" -> OBS_LESION maps to indication
-    {"label": "OBS_LESION", **get_span(text_1, "parapneumonic effusion", 1)},
-    # Side: "Left" -> LATERALITY
+    # Indication/Findings
+    {"label": "OBS_FINDING", **get_span(text_1, "Complicated parapneumonic effusion", 1)},
     {"label": "LATERALITY", **get_span(text_1, "Left", 1)},
-    # Procedure: "Tube Thoracostomy" -> PROC_ACTION
-    {"label": "PROC_ACTION", **get_span(text_1, "Tube Thoracostomy", 1)},
-    # Method: "Bedside ultrasound" -> PROC_METHOD
-    {"label": "PROC_METHOD", **get_span(text_1, "ultrasound", 1)},
-    # Finding/Target: "effusion" -> OBS_LESION
-    {"label": "OBS_LESION", **get_span(text_1, "effusion", 2)},
-    # Anatomy: "6th intercostal space" -> ANAT_PLEURA (chest wall boundary)
+
+    # Procedure Info
+    {"label": "PROC_METHOD", **get_span(text_1, "Tube Thoracostomy", 1)},
+    
+    # Ultrasound
+    {"label": "PROC_METHOD", **get_span(text_1, "Bedside ultrasound", 1)},
+    {"label": "OBS_FINDING", **get_span(text_1, "effusion", 2)}, # 2nd occurrence in 'confirmed effusion'
+    {"label": "OBS_FINDING", **get_span(text_1, "septations", 1)},
+
+    # Site & Prep
     {"label": "ANAT_PLEURA", **get_span(text_1, "6th intercostal space", 1)},
-    # Anatomy: "mid-axillary line" -> ANAT_PLEURA (boundary)
     {"label": "ANAT_PLEURA", **get_span(text_1, "mid-axillary line", 1)},
-    # Medication: "lidocaine" -> MEDICATION
     {"label": "MEDICATION", **get_span(text_1, "lidocaine", 1)},
-    # Drain Size: "28Fr" -> MEAS_PLEURAL_DRAIN (explicit size meas)
+    
+    # Action & Device
+    {"label": "PROC_ACTION", **get_span(text_1, "Blunt dissection", 1)},
     {"label": "MEAS_PLEURAL_DRAIN", **get_span(text_1, "28Fr", 1)},
-    # Device: "chest tube" -> DEV_CATHETER
+    {"label": "DEV_CATHETER_SIZE", **get_span(text_1, "28Fr chest tube", 1)},
     {"label": "DEV_CATHETER", **get_span(text_1, "chest tube", 1)},
-    # Volume: "670mL" -> MEAS_VOL
+    
+    # Drainage & Measurements
     {"label": "MEAS_VOL", **get_span(text_1, "670mL", 1)},
-    # Finding: "serosanguinous fluid" -> OBS_FINDING
     {"label": "OBS_FINDING", **get_span(text_1, "serosanguinous fluid", 1)},
-    # Pressure: "-20cmH2O" -> MEAS_PRESS
-    {"label": "MEAS_PRESS", **get_span(text_1, "-20cmH2O", 1)}
+    {"label": "MEAS_PRESS", **get_span(text_1, "-20cmH2O", 1)},
+    
+    # Outcomes/Imaging
+    {"label": "PROC_METHOD", **get_span(text_1, "CXR", 1)},
+    {"label": "PROC_METHOD", **get_span(text_1, "CXR", 2)}, # Daily CXR
 ]
 
 BATCH_DATA.append({"id": id_1, "text": text_1, "entities": entities_1})
 
 
 # ==========================================
-# Execution Loop
+# 4. Execution Loop
 # ==========================================
 if __name__ == "__main__":
     print(f"Starting batch processing of {len(BATCH_DATA)} notes...")

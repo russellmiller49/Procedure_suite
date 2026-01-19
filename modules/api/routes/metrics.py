@@ -23,8 +23,8 @@ from typing import Any
 from fastapi import APIRouter, Response
 from fastapi.responses import PlainTextResponse
 
-from observability.metrics import get_metrics_client, RegistryMetricsClient
 from observability.logging_config import get_logger
+from observability.metrics import RegistryMetricsClient, get_metrics_client
 
 router = APIRouter()
 logger = get_logger("metrics_api")
@@ -196,12 +196,9 @@ def get_llm_drift_metrics() -> dict[str, Any]:
     # Extract LLM acceptance metrics from the registry
     json_data = client.export_json()
     counters = json_data.get("counters", {})
-    gauges = json_data.get("gauges", {})
-
     # Get the acceptance counters
     reviewed_data = counters.get(CodingMetrics.LLM_SUGGESTIONS_REVIEWED, {})
     accepted_data = counters.get(CodingMetrics.LLM_SUGGESTIONS_ACCEPTED, {})
-    acceptance_rate_data = gauges.get(CodingMetrics.ACCEPTANCE_RATE, {})
 
     # Parse and aggregate by procedure_type
     by_procedure_type: dict[str, dict[str, Any]] = {}
@@ -238,7 +235,7 @@ def get_llm_drift_metrics() -> dict[str, Any]:
         by_procedure_type[key]["accepted"] += accepted_count
 
     # Calculate acceptance rates
-    for key, data in by_procedure_type.items():
+    for _key, data in by_procedure_type.items():
         if data["reviewed"] > 0:
             data["acceptance_rate"] = round(data["accepted"] / data["reviewed"], 4)
 

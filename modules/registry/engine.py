@@ -13,6 +13,7 @@ from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
 from modules.registry.postprocess import POSTPROCESSORS, apply_cross_field_consistency, derive_global_ebus_rose_result
 from modules.registry.transform import build_nested_registry_payload
 from modules.registry.deterministic_extractors import run_deterministic_extractors
+from modules.registry.processing.masking import mask_offset_preserving
 from modules.registry.normalization import normalize_registry_enums
 from modules.registry.tags import FIELD_APPLICABLE_TAGS, PROCEDURE_FAMILIES
 
@@ -624,6 +625,7 @@ class RegistryEngine:
         schema_version: str | None = None,
         context: dict[str, Any] | None = None,
     ) -> tuple[RegistryRecord, list[str]]:
+        note_text = mask_offset_preserving(note_text)
         sections = self.sectionizer.sectionize(note_text)
         evidence: Dict[str, list[Span]] = {}
         seed_data: Dict[str, Any] = {}
@@ -1105,7 +1107,9 @@ class RegistryEngine:
         lowered = text.lower()
         station_passes: dict[str, int] = {}
         station_pattern = r"(?<!\d)(2r|2l|4r|4l|7|10r|10l|11r|11l)\b"
+        alphanumeric_station_pattern = r"(?<![a-z0-9])(2r|2l|4r|4l|10r|10l|11r|11l)\b"
         word_to_int = {
+            "zero": 0,
             "one": 1,
             "two": 2,
             "three": 3,
@@ -1118,23 +1122,51 @@ class RegistryEngine:
             "ten": 10,
         }
 
-        # Look for "station X ... 3 passes" patterns
-        for match in re.finditer(rf"station\s*{station_pattern}", lowered, re.IGNORECASE):
-            station = match.group(1).upper()
-            window = lowered[match.start(): match.end() + 80]
-            pass_match = re.search(r"(\d{1,2})\s+(?:needle\s+)?passes?", window)
-            if pass_match:
-                station_passes.setdefault(station, int(pass_match.group(1)))
-                continue
-            word_match = re.search(r"(one|two|three|four|five|six|seven|eight|nine|ten)\s+(?:needle\s+)?passes?", window)
-            if word_match:
-                word_val = word_to_int.get(word_match.group(1))
-                if word_val:
-                    station_passes.setdefault(station, word_val)
+        pass_count_pattern = r"\d{1,2}|zero|one|two|three|four|five|six|seven|eight|nine|ten"
+        pass_phrase_pattern = rf"\b(?P<count>{pass_count_pattern})\b\s+(?:needle\s+)?passes?\b"
 
-        # Look for "3 passes at station X" phrasing
-        for match in re.finditer(rf"(\d{{1,2}})\s+(?:passes|needle passes?).{{0,30}}station\s*{station_pattern}", lowered, re.IGNORECASE):
-            station_passes.setdefault(match.group(2).upper(), int(match.group(1)))
+        def _parse_count(raw: str) -> int | None:
+            if not raw:
+                return None
+            raw = raw.strip().lower()
+            if raw.isdigit():
+                return int(raw)
+            return word_to_int.get(raw)
+
+        def _set_passes(station_raw: str, count_raw: str) -> None:
+            station = station_raw.strip().upper()
+            count = _parse_count(count_raw)
+            if count is None:
+                return
+            station_passes.setdefault(station, count)
+
+        # Station-first patterns ("station 11L ... five passes", "11L: five passes")
+        station_first_patterns: list[re.Pattern[str]] = [
+            re.compile(rf"\bstation\s*(?P<station>{station_pattern})", re.IGNORECASE),
+            re.compile(rf"(?P<station>{alphanumeric_station_pattern})", re.IGNORECASE),
+            # Station 7 is ambiguous; only accept label-ish forms (e.g., "7: ...", "7 (subcarinal) ...")
+            re.compile(r"(?<![a-z0-9])(?P<station>7)\b(?=\s*(?:[:\-]|\())", re.IGNORECASE),
+        ]
+
+        for pat in station_first_patterns:
+            for match in pat.finditer(lowered):
+                station = match.group("station")
+                window = lowered[match.end() : match.end() + 160]
+                pass_match = re.search(pass_phrase_pattern, window, re.IGNORECASE)
+                if pass_match:
+                    _set_passes(station, pass_match.group("count"))
+
+        # Passes-first patterns ("five needle passes at station 11L", "5 passes ... 11L")
+        for match in re.finditer(pass_phrase_pattern, lowered, re.IGNORECASE):
+            count = match.group("count")
+            window = lowered[match.end() : match.end() + 160]
+            station_match = re.search(rf"\bstation\s*(?P<station>{station_pattern})", window, re.IGNORECASE)
+            if station_match:
+                _set_passes(station_match.group("station"), count)
+                continue
+            alpha_station_match = re.search(rf"(?P<station>{alphanumeric_station_pattern})", window, re.IGNORECASE)
+            if alpha_station_match:
+                _set_passes(alpha_station_match.group("station"), count)
 
         return station_passes
 
@@ -1654,137 +1686,9 @@ class RegistryEngine:
 
     def _apply_navigation_fiducial_heuristics(self, data: dict[str, Any], text: str) -> None:
         """Deterministically extract fiducial marker placement into granular navigation targets."""
-        families = {str(x) for x in (data.get("procedure_families") or []) if x}
-        if "NAVIGATION" not in families:
-            return
+        from modules.registry.processing.navigation_fiducials import apply_navigation_fiducials
 
-        lowered = text.lower()
-        if "fiducial" not in lowered:
-            return
-
-        fiducial_sentence: str | None = None
-        for line in text.splitlines():
-            if re.search(r"\bfiducial\s+marker\b", line, re.IGNORECASE):
-                fiducial_sentence = line.strip()
-                break
-        if fiducial_sentence is None:
-            match = re.search(r"\bfiducial\s+marker\b", text, re.IGNORECASE)
-            if match:
-                window = text[match.start() : match.start() + 300]
-                fiducial_sentence = window.splitlines()[0].strip() if window else None
-        if fiducial_sentence is None:
-            return
-
-        fiducial_lower = fiducial_sentence.lower()
-        if not re.search(r"\b(?:placed|deploy\w*|position\w*|insert\w*)\b", fiducial_lower):
-            return
-        if re.search(r"\b(?:no|not|without)\b", fiducial_lower):
-            return
-
-        def _extract_target_location() -> str:
-            for pattern in (
-                r"\bengage(?:d)?\s+the\s+([^\n.]{3,200})",
-                r"\bnavigate(?:d|ion)?\s+to\s+([^\n.]{3,200})",
-                r"\btarget(?:ed)?\s+lesion\s+(?:is\s+)?(?:in|at)\s+([^\n.]{3,200})",
-            ):
-                match = re.search(pattern, text, re.IGNORECASE)
-                if match:
-                    loc = match.group(1).strip()
-                    if loc:
-                        return loc
-            return "Unknown target"
-
-        def _extract_target_lobe(location_text: str) -> str | None:
-            upper = location_text.upper()
-            for token in ("RUL", "RML", "RLL", "LUL", "LLL"):
-                if re.search(rf"\b{token}\b", upper):
-                    return token
-            if "LINGULA" in upper:
-                return "Lingula"
-            if "LEFT UPPER" in upper:
-                return "LUL"
-            if "LEFT LOWER" in upper:
-                return "LLL"
-            if "RIGHT UPPER" in upper:
-                return "RUL"
-            if "RIGHT MIDDLE" in upper:
-                return "RML"
-            if "RIGHT LOWER" in upper:
-                return "RLL"
-            return None
-
-        def _extract_lesion_size_mm() -> float | None:
-            cm_match = re.search(r"\blesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*cm\b", lowered)
-            if cm_match:
-                try:
-                    return float(cm_match.group(1)) * 10.0
-                except ValueError:
-                    return None
-            mm_match = re.search(r"\blesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*mm\b", lowered)
-            if mm_match:
-                try:
-                    return float(mm_match.group(1))
-                except ValueError:
-                    return None
-            return None
-
-        def _extract_segment(location_text: str) -> str | None:
-            match = re.search(r"\((LB[^)]+)\)", location_text, re.IGNORECASE)
-            if match:
-                seg = match.group(1).strip()
-                return seg or None
-            return None
-
-        granular_raw = data.get("granular_data")
-        granular: dict[str, Any]
-        if granular_raw is None:
-            granular = {}
-        elif isinstance(granular_raw, dict):
-            granular = dict(granular_raw)
-        else:
-            return
-
-        targets_raw = granular.get("navigation_targets")
-        targets: list[dict[str, Any]]
-        if isinstance(targets_raw, list):
-            targets = [t for t in targets_raw if isinstance(t, dict)]
-        else:
-            targets = []
-
-        details = fiducial_sentence
-        location = _extract_target_location()
-        lesion_size_mm = _extract_lesion_size_mm()
-
-        if targets:
-            target0 = dict(targets[0])
-            target0.setdefault("target_number", 1)
-            target0.setdefault("target_location_text", location)
-            target0.setdefault("target_lobe", _extract_target_lobe(location))
-            target0.setdefault("target_segment", _extract_segment(location))
-            if lesion_size_mm is not None:
-                target0.setdefault("lesion_size_mm", lesion_size_mm)
-            target0["fiducial_marker_placed"] = True
-            target0.setdefault("fiducial_marker_details", details)
-            targets[0] = target0
-        else:
-            target_payload: dict[str, Any] = {
-                "target_number": 1,
-                "target_location_text": location,
-                "fiducial_marker_placed": True,
-                "fiducial_marker_details": details,
-            }
-            lobe = _extract_target_lobe(location)
-            if lobe is not None:
-                target_payload["target_lobe"] = lobe
-            segment = _extract_segment(location)
-            if segment is not None:
-                target_payload["target_segment"] = segment
-            if lesion_size_mm is not None:
-                target_payload["lesion_size_mm"] = lesion_size_mm
-            targets = [target_payload]
-
-        granular["navigation_targets"] = targets
-        data["granular_data"] = granular
+        apply_navigation_fiducials(data, text)
 
     def _apply_ebus_only_bronch_cleanup(
         self, data: dict[str, Any], text: str, procedure_families: Set[str]

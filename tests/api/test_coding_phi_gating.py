@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-import uuid
 
 import pytest
 from fastapi.testclient import TestClient
@@ -13,9 +12,9 @@ os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 os.environ.setdefault("PHI_DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("PHI_ENCRYPTION_MODE", "demo")
 
-from modules.api.fastapi_app import app  # noqa: E402
-from modules.api.phi_dependencies import SessionLocal, engine  # noqa: E402
 from modules.api.dependencies import get_coding_service  # noqa: E402
+from modules.api.fastapi_app import app  # noqa: E402
+from modules.api.phi_dependencies import engine  # noqa: E402
 from modules.phi import models  # noqa: E402
 from modules.phi.db import Base  # noqa: E402
 from proc_schemas.coding import CodingResult  # noqa: E402
@@ -32,7 +31,13 @@ class FakeCodingService:
                 return []
         self.kb_repo = _KB()
 
-    def generate_result(self, procedure_id: str, report_text: str, use_llm: bool = True, procedure_type: str | None = None):
+    def generate_result(
+        self,
+        procedure_id: str,
+        report_text: str,
+        use_llm: bool = True,
+        procedure_type: str | None = None,
+    ):
         self.last_report_text = report_text
         return CodingResult(
             procedure_id=procedure_id,
@@ -92,7 +97,12 @@ def test_coding_allowed_after_review_uses_scrubbed_text(client, override_coding_
         json={
             "scrubbed_text": scrubbed_text,
             "entities": [
-                {"placeholder": "[[REDACTED]]", "entity_type": "PERSON", "original_start": 0, "original_end": 7}
+                {
+                    "placeholder": "[[REDACTED]]",
+                    "entity_type": "PERSON",
+                    "original_start": 0,
+                    "original_end": 7,
+                }
             ],
             "reviewer_id": "reviewer_demo",
         },

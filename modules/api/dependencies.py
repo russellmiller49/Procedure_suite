@@ -7,28 +7,10 @@ from __future__ import annotations
 
 import os
 from functools import lru_cache
-from typing import Optional
 
 from fastapi import Depends
 
 from config.settings import CoderSettings
-from modules.coder.application.coding_service import CodingService
-from modules.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
-from modules.coder.adapters.nlp.keyword_mapping_loader import YamlKeywordMappingRepository
-from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
-from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter, LLMAdvisorPort, MockLLMAdvisor
-from modules.domain.coding_rules.rule_engine import RuleEngine
-from modules.domain.procedure_store.repository import ProcedureStore
-from modules.coder.adapters.persistence.inmemory_procedure_store import (
-    InMemoryProcedureStore,
-)
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.adapters.schema_registry import get_schema_registry
-from modules.coder.application.smart_hybrid_policy import (
-    SmartHybridOrchestrator,
-    build_hybrid_orchestrator,
-)
-from observability.logging_config import get_logger
 
 # QA Pipeline imports
 from modules.api.services.qa_pipeline import (
@@ -36,6 +18,24 @@ from modules.api.services.qa_pipeline import (
     ReportingStrategy,
     SimpleReporterStrategy,
 )
+from modules.coder.adapters.llm.gemini_advisor import (
+    GeminiAdvisorAdapter,
+    LLMAdvisorPort,
+)
+from modules.coder.adapters.nlp.keyword_mapping_loader import YamlKeywordMappingRepository
+from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
+from modules.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
+from modules.coder.adapters.persistence.inmemory_procedure_store import (
+    InMemoryProcedureStore,
+)
+from modules.coder.application.coding_service import CodingService
+from modules.coder.application.smart_hybrid_policy import (
+    build_hybrid_orchestrator,
+)
+from modules.domain.coding_rules.rule_engine import RuleEngine
+from modules.domain.procedure_store.repository import ProcedureStore
+from modules.registry.adapters.schema_registry import get_schema_registry
+from modules.registry.application.registry_service import RegistryService
 from modules.registry.engine import RegistryEngine
 from modules.reporting.engine import (
     ReporterEngine,
@@ -45,6 +45,7 @@ from modules.reporting.engine import (
 )
 from modules.reporting.inference import InferenceEngine
 from modules.reporting.validation import ValidationEngine
+from observability.logging_config import get_logger
 
 logger = get_logger("api_dependencies")
 
@@ -104,7 +105,7 @@ def get_coding_service() -> CodingService:
     )
 
     # 5. LLM advisor (conditionally enabled)
-    llm_advisor: Optional[LLMAdvisorPort] = None
+    llm_advisor: LLMAdvisorPort | None = None
     use_llm = os.getenv("CODER_USE_LLM_ADVISOR", "").lower() in ("true", "1", "yes")
 
     if use_llm:
@@ -116,7 +117,9 @@ def get_coding_service() -> CodingService:
             if not offline and api_key and not model_name:
                 logger.warning("OPENAI_MODEL not set, LLM advisor disabled")
             else:
-                from modules.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
+                from modules.coder.adapters.llm.openai_compat_advisor import (
+                    OpenAICompatAdvisorAdapter,
+                )
 
                 llm_advisor = OpenAICompatAdvisorAdapter(
                     model_name=model_name,
@@ -179,7 +182,15 @@ def get_registry_service() -> RegistryService:
     """
     import os
 
-    default_version = os.getenv("REGISTRY_DEFAULT_VERSION", "v2")
+    default_version = (
+        os.getenv("REGISTRY_DEFAULT_VERSION")
+        or os.getenv("REGISTRY_SCHEMA_VERSION")
+        or "v3"
+    ).strip()
+    if default_version not in {"v2", "v3"}:
+        raise ValueError(
+            f"Invalid REGISTRY_DEFAULT_VERSION={default_version!r}. Expected 'v2' or 'v3'."
+        )
     schema_registry = get_schema_registry()
 
     # Build hybrid orchestrator for ML-first coding
@@ -214,7 +225,8 @@ def get_procedure_store() -> ProcedureStore:
     This factory:
     - Reads PROCEDURE_STORE_BACKEND environment variable (default: "memory")
     - If "memory" → returns InMemoryProcedureStore singleton
-    - If "supabase" → returns SupabaseProcedureStore singleton (requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY)
+    - If "supabase" → returns SupabaseProcedureStore singleton (requires SUPABASE_URL and
+      SUPABASE_SERVICE_ROLE_KEY)
 
     The instance is cached as a singleton for reuse across requests.
 
@@ -231,8 +243,8 @@ def get_procedure_store() -> ProcedureStore:
     if backend == "supabase":
         # Try to use Supabase backend
         from modules.coder.adapters.persistence.supabase_procedure_store import (
-            is_supabase_available,
             SupabaseProcedureStore,
+            is_supabase_available,
         )
 
         if is_supabase_available():
@@ -271,8 +283,11 @@ def reset_procedure_store() -> None:
         logger.debug("ProcedureStore reset")
 
 
+_coding_service_dep = Depends(get_coding_service)
+
+
 def get_qa_pipeline_service(
-    coding_service: CodingService = Depends(get_coding_service),
+    coding_service: CodingService = _coding_service_dep,
 ) -> QAPipelineService:
     """Create a fully wired QAPipelineService instance.
 

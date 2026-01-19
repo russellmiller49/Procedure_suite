@@ -28,7 +28,7 @@ async def require_ready(request: Request) -> None:
     if wait_s > 0:
         try:
             await asyncio.wait_for(request.app.state.ready_event.wait(), timeout=wait_s)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             pass
 
         if bool(getattr(request.app.state, "model_ready", False)):

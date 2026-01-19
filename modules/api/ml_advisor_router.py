@@ -33,9 +33,9 @@ import logging
 import os
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Annotated, Any, Optional
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import StreamingResponse
@@ -45,20 +45,18 @@ from pydantic import BaseModel, Field
 from modules.proc_ml_advisor.schemas import (
     # Enums
     AdvisorBackend,
-    CodingPolicy,
-    ProcedureCategory,
-    # Models
-    CodeWithConfidence,
     CodeModifier,
-    NCCIWarning,
-    StructuredProcedureReport,
-    MLAdvisorInput,
-    MLAdvisorSuggestion,
-    HybridCodingResult,
-    CodingTrace,
     CodeRequest,
     CodeResponse,
+    # Models
+    CodeWithConfidence,
+    CodingTrace,
     EvaluationMetrics,
+    MLAdvisorInput,
+    MLAdvisorSuggestion,
+    NCCIWarning,
+    ProcedureCategory,
+    StructuredProcedureReport,
 )
 
 logger = logging.getLogger(__name__)
@@ -86,6 +84,10 @@ router = APIRouter(
     responses={
         500: {"description": "Internal server error"},
     },
+)
+_rule_codes_query = Query(
+    default=[],
+    description="Pre-existing rule codes to provide context",
 )
 
 
@@ -175,7 +177,9 @@ def mock_rule_engine(
 
     if "thoracentesis" in text_lower or procedure_category == ProcedureCategory.PLEURAL:
         # Check for imaging guidance
-        if "ultrasound" in text_lower or (report and report.pleural and report.pleural.imaging_guidance):
+        if "ultrasound" in text_lower or (
+            report and report.pleural and report.pleural.imaging_guidance
+        ):
             codes.append(CodeWithConfidence(
                 code="32555",
                 confidence=0.95,
@@ -205,7 +209,9 @@ def mock_rule_engine(
         ))
 
     # Add NCCI warning if relevant
-    if any(c.code == "31622" for c in codes) and any(c.code in ["31652", "31653"] for c in codes):
+    if any(c.code == "31622" for c in codes) and any(
+        c.code in ["31652", "31653"] for c in codes
+    ):
         warnings.append(NCCIWarning(
             warning_id="ncci_31622_ebus",
             codes_involved=["31622", "31652/31653"],
@@ -301,7 +307,7 @@ class HealthResponse(BaseModel):
     advisor_backend: str
     trace_enabled: bool
     pipeline_version: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class AdvisorStatusResponse(BaseModel):
@@ -412,10 +418,16 @@ async def code_procedure(
         if config["trace_enabled"]:
             trace = CodingTrace(
                 trace_id=trace_id,
-                report_id=request.structured_report.report_id if request.structured_report else None,
+                report_id=(
+                    request.structured_report.report_id if request.structured_report else None
+                ),
                 report_text=request.report_text or "",
-                structured_report=request.structured_report.model_dump() if request.structured_report else {},
-                procedure_category=request.procedure_category.value if request.procedure_category else None,
+                structured_report=(
+                    request.structured_report.model_dump() if request.structured_report else {}
+                ),
+                procedure_category=(
+                    request.procedure_category.value if request.procedure_category else None
+                ),
                 autocode_codes=[c.code for c in codes],
                 autocode_confidence={c.code: c.confidence for c in codes},
                 ncci_warnings=[w.message for w in warnings],
@@ -432,7 +444,7 @@ async def code_procedure(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Coding failed: {str(e)}",
-        )
+        ) from e
 
 
 @router.post(
@@ -476,11 +488,15 @@ async def code_with_advisor(
             # Prepare advisor input
             advisor_input = MLAdvisorInput(
                 trace_id=trace_id,
-                report_id=request.structured_report.report_id if request.structured_report else None,
+                report_id=(
+                    request.structured_report.report_id if request.structured_report else None
+                ),
                 report_text=request.report_text or (
                     request.structured_report.raw_text if request.structured_report else ""
                 ),
-                structured_report=request.structured_report.model_dump() if request.structured_report else {},
+                structured_report=(
+                    request.structured_report.model_dump() if request.structured_report else {}
+                ),
                 autocode_codes=rule_code_list,
                 procedure_category=request.procedure_category,
             )
@@ -511,20 +527,36 @@ async def code_with_advisor(
         if config["trace_enabled"]:
             trace = CodingTrace(
                 trace_id=trace_id,
-                report_id=request.structured_report.report_id if request.structured_report else None,
+                report_id=(
+                    request.structured_report.report_id if request.structured_report else None
+                ),
                 report_text=request.report_text or "",
-                structured_report=request.structured_report.model_dump() if request.structured_report else {},
-                procedure_category=request.procedure_category.value if request.procedure_category else None,
+                structured_report=(
+                    request.structured_report.model_dump() if request.structured_report else {}
+                ),
+                procedure_category=(
+                    request.procedure_category.value if request.procedure_category else None
+                ),
                 autocode_codes=rule_code_list,
                 autocode_confidence={c.code: c.confidence for c in codes},
                 ncci_warnings=[w.message for w in warnings],
                 mer_applied=mer_applied,
-                advisor_candidate_codes=advisor_suggestion.candidate_codes if advisor_suggestion else [],
-                advisor_code_confidence=advisor_suggestion.code_confidence if advisor_suggestion else {},
-                advisor_explanation=advisor_suggestion.explanation if advisor_suggestion else None,
-                advisor_disagreements=advisor_suggestion.disagreements if advisor_suggestion else [],
+                advisor_candidate_codes=(
+                    advisor_suggestion.candidate_codes if advisor_suggestion else []
+                ),
+                advisor_code_confidence=(
+                    advisor_suggestion.code_confidence if advisor_suggestion else {}
+                ),
+                advisor_explanation=(
+                    advisor_suggestion.explanation if advisor_suggestion else None
+                ),
+                advisor_disagreements=(
+                    advisor_suggestion.disagreements if advisor_suggestion else []
+                ),
                 advisor_model=advisor_suggestion.model_name if advisor_suggestion else None,
-                advisor_latency_ms=advisor_suggestion.latency_ms if advisor_suggestion else None,
+                advisor_latency_ms=(
+                    advisor_suggestion.latency_ms if advisor_suggestion else None
+                ),
                 source="api.code_with_advisor",
                 pipeline_version=config["pipeline_version"],
             )
@@ -537,7 +569,7 @@ async def code_with_advisor(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Coding failed: {str(e)}",
-        )
+        ) from e
 
 
 @router.post(
@@ -549,10 +581,7 @@ async def code_with_advisor(
 async def advisor_suggest(
     request: CodeRequest,
     config: AdvisorConfig,
-    rule_codes: list[str] = Query(
-        default=[],
-        description="Pre-existing rule codes to provide context",
-    ),
+    rule_codes: list[str] = _rule_codes_query,
 ) -> MLAdvisorSuggestion:
     """
     Advisor-only endpoint.
@@ -572,11 +601,15 @@ async def advisor_suggest(
         # Prepare advisor input
         advisor_input = MLAdvisorInput(
             trace_id=trace_id,
-            report_id=request.structured_report.report_id if request.structured_report else None,
+            report_id=(
+                request.structured_report.report_id if request.structured_report else None
+            ),
             report_text=request.report_text or (
                 request.structured_report.raw_text if request.structured_report else ""
             ),
-            structured_report=request.structured_report.model_dump() if request.structured_report else {},
+            structured_report=(
+                request.structured_report.model_dump() if request.structured_report else {}
+            ),
             autocode_codes=rule_codes,
             procedure_category=request.procedure_category,
         )
@@ -594,7 +627,7 @@ async def advisor_suggest(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Advisor failed: {str(e)}",
-        )
+        ) from e
 
 
 @router.get(
@@ -605,10 +638,25 @@ async def advisor_suggest(
 )
 async def list_traces(
     config: AdvisorConfig,
-    limit: int = Query(default=100, ge=1, le=1000, description="Maximum traces to return"),
-    offset: int = Query(default=0, ge=0, description="Number of traces to skip"),
-    source: Optional[str] = Query(default=None, description="Filter by source"),
-    has_disagreements: Optional[bool] = Query(default=None, description="Filter by disagreement presence"),
+    limit: int = Query(
+        default=100,
+        ge=1,
+        le=1000,
+        description="Maximum traces to return",
+    ),
+    offset: int = Query(
+        default=0,
+        ge=0,
+        description="Number of traces to skip",
+    ),
+    source: str | None = Query(
+        default=None,
+        description="Filter by source",
+    ),
+    has_disagreements: bool | None = Query(
+        default=None,
+        description="Filter by disagreement presence",
+    ),
 ) -> TraceListResponse:
     """
     List coding traces for analysis.
@@ -622,7 +670,7 @@ async def list_traces(
 
     try:
         all_traces = []
-        with open(trace_path, "r", encoding="utf-8") as f:
+        with open(trace_path, encoding="utf-8") as f:
             for line in f:
                 try:
                     data = json.loads(line.strip())
@@ -659,7 +707,7 @@ async def list_traces(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to read traces: {str(e)}",
-        )
+        ) from e
 
 
 @router.get(
@@ -684,7 +732,7 @@ async def get_trace(
         )
 
     try:
-        with open(trace_path, "r", encoding="utf-8") as f:
+        with open(trace_path, encoding="utf-8") as f:
             for line in f:
                 try:
                     data = json.loads(line.strip())
@@ -705,7 +753,7 @@ async def get_trace(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to read trace: {str(e)}",
-        )
+        ) from e
 
 
 @router.get(
@@ -715,7 +763,7 @@ async def get_trace(
 )
 async def export_traces(
     config: AdvisorConfig,
-    source: Optional[str] = Query(default=None, description="Filter by source"),
+    source: str | None = Query(default=None, description="Filter by source"),
 ) -> StreamingResponse:
     """
     Export traces as JSONL for offline analysis.
@@ -729,7 +777,7 @@ async def export_traces(
         )
 
     def generate():
-        with open(trace_path, "r", encoding="utf-8") as f:
+        with open(trace_path, encoding="utf-8") as f:
             for line in f:
                 if source:
                     try:
@@ -785,7 +833,7 @@ async def get_metrics(
         rule_tp, rule_fp, rule_fn = 0, 0, 0
         advisor_tp, advisor_fp, advisor_fn = 0, 0, 0
 
-        with open(trace_path, "r", encoding="utf-8") as f:
+        with open(trace_path, encoding="utf-8") as f:
             for line in f:
                 try:
                     data = json.loads(line.strip())
@@ -862,4 +910,4 @@ async def get_metrics(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to calculate metrics: {str(e)}",
-        )
+        ) from e

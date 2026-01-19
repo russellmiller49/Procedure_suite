@@ -143,10 +143,6 @@ class ReportingStrategy:
             Dict with report data (markdown, bundle/issues/warnings or
             procedure_core/indication/postop for fallback)
         """
-        from modules.reporting.engine import (
-            apply_patch_result,
-            build_procedure_bundle_from_extraction,
-        )
 
         # Case 1: We have registry data with a record
         if registry_data and registry_data.get("record"):
@@ -410,7 +406,8 @@ class QAPipelineService:
                     "source": s.source,
                     "hybrid_decision": s.hybrid_decision,
                     # QA schema expects a boolean; treat required/recommended as needing review.
-                    "review_flag": str(getattr(s, "review_flag", "")).lower() in ("required", "recommended"),
+                    "review_flag": str(getattr(s, "review_flag", "")).lower()
+                    in ("required", "recommended"),
                 }
                 for s in result.suggestions
             ]
@@ -425,7 +422,11 @@ class QAPipelineService:
                     "kb_version": result.kb_version,
                     "policy_version": result.policy_version,
                     "model_version": result.model_version,
-                    "processing_time_ms": int(result.processing_time_ms) if result.processing_time_ms is not None else None,
+                    "processing_time_ms": (
+                        int(result.processing_time_ms)
+                        if result.processing_time_ms is not None
+                        else None
+                    ),
                 },
             )
         except Exception as e:

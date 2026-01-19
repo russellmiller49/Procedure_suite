@@ -11,22 +11,20 @@ os.environ.setdefault("GEMINI_OFFLINE", "1")
 os.environ.setdefault("DISABLE_STATIC_FILES", "1")
 os.environ.setdefault("PHI_SCRUBBER_MODE", "stub")
 
+from typing import Any
+from unittest.mock import MagicMock
+
+import httpx
 import pytest
 import pytest_asyncio
-import httpx
-from unittest.mock import MagicMock
-from typing import Any
 
-from modules.api.fastapi_app import app
 from modules.api.dependencies import get_registry_service
+from modules.api.fastapi_app import app
 from modules.registry.application.registry_service import (
-    RegistryService,
     RegistryExtractionResult,
+    RegistryService,
 )
 from modules.registry.schema import RegistryRecord
-from modules.coder.application.smart_hybrid_policy import HybridCoderResult
-from modules.ml_coder.thresholds import CaseDifficulty
-
 
 # ============================================================================
 # Fixtures
@@ -39,7 +37,10 @@ from modules.ml_coder.thresholds import CaseDifficulty
 async def api_client():
     """Async HTTP client for testing FastAPI endpoints."""
     transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-    async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+    async with httpx.AsyncClient(
+        transport=transport,
+        base_url="http://testserver",
+    ) as client:
         yield client
 
 
@@ -76,12 +77,18 @@ class TestRegistryExtractEndpoint:
     """Tests for POST /api/registry/extract endpoint."""
 
     @pytest.mark.asyncio
-    async def test_endpoint_returns_200_with_valid_input(self, api_client: httpx.AsyncClient) -> None:
+    async def test_endpoint_returns_200_with_valid_input(
+        self, api_client: httpx.AsyncClient
+    ) -> None:
         """Valid note text should return 200 with expected response structure."""
         response = await api_client.post(
             "/api/registry/extract",
             json={
-                "note_text": "PROCEDURE: Diagnostic bronchoscopy\n\nThe patient underwent diagnostic bronchoscopy. Airways were inspected. No abnormalities noted."
+                "note_text": (
+                    "PROCEDURE: Diagnostic bronchoscopy\n\n"
+                    "The patient underwent diagnostic bronchoscopy. Airways were inspected. "
+                    "No abnormalities noted."
+                )
             },
         )
 
@@ -159,11 +166,18 @@ class TestRegistryExtractWithMockedService:
 
         try:
             transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="http://testserver",
+            ) as client:
                 response = await client.post(
                     "/api/registry/extract",
                     json={
-                        "note_text": "PROCEDURE: EBUS-TBNA with Navigation\n\nThe patient underwent EBUS-TBNA of stations 4R, 7, and 11L. Navigation bronchoscopy was used."
+                        "note_text": (
+                            "PROCEDURE: EBUS-TBNA with Navigation\n\n"
+                            "The patient underwent EBUS-TBNA of stations 4R, 7, and 11L. "
+                            "Navigation bronchoscopy was used."
+                        )
                     },
                 )
 
@@ -177,7 +191,8 @@ class TestRegistryExtractWithMockedService:
 
                 # Verify mapped fields
                 assert "procedures_performed" in data["mapped_fields"]
-                assert data["mapped_fields"]["procedures_performed"]["linear_ebus"]["performed"] is True
+                procedures = data["mapped_fields"]["procedures_performed"]
+                assert procedures["linear_ebus"]["performed"] is True
 
                 # Verify no manual review needed for high confidence
                 assert data["needs_manual_review"] is False
@@ -194,7 +209,9 @@ class TestRegistryExtractWithMockedService:
             coder_source="hybrid_llm_fallback",
             mapped_fields={},
             needs_manual_review=True,
-            validation_errors=["Hybrid coder marked this case as LOW_CONF; manual review required."],
+            validation_errors=[
+                "Hybrid coder marked this case as LOW_CONF; manual review required."
+            ],
         )
 
         mock_service = MagicMock(spec=RegistryService)
@@ -204,7 +221,10 @@ class TestRegistryExtractWithMockedService:
 
         try:
             transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="http://testserver",
+            ) as client:
                 response = await client.post(
                     "/api/registry/extract",
                     json={"note_text": "Some ambiguous procedure note that is hard to code."},
@@ -247,10 +267,15 @@ class TestRegistryExtractWithMockedService:
 
         try:
             transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="http://testserver",
+            ) as client:
                 response = await client.post(
                     "/api/registry/extract",
-                    json={"note_text": "PROCEDURE: EBUS-TBNA performed at station 4R and 7."},
+                    json={
+                        "note_text": "PROCEDURE: EBUS-TBNA performed at station 4R and 7."
+                    },
                 )
 
                 assert response.status_code == 200
@@ -280,7 +305,8 @@ class TestRegistryExtractWithMockedService:
             warnings=["Some warning"],
             needs_manual_review=True,
             validation_errors=[
-                "CPT 31652 present but procedures_performed.linear_ebus is not marked."
+                "CPT 31652 present but procedures_performed.linear_ebus "
+                "is not marked."
             ],
         )
 
@@ -291,7 +317,10 @@ class TestRegistryExtractWithMockedService:
 
         try:
             transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="http://testserver",
+            ) as client:
                 response = await client.post(
                     "/api/registry/extract",
                     json={"note_text": "EBUS procedure but extractor missed the field."},
@@ -328,10 +357,18 @@ class TestRegistryExtractWithMockedService:
 
         try:
             transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="http://testserver",
+            ) as client:
                 response = await client.post(
                     "/api/registry/extract",
-                    json={"note_text": "Thoracentesis performed under ultrasound guidance. 1200mL removed."},
+                    json={
+                        "note_text": (
+                            "Thoracentesis performed under ultrasound guidance. "
+                            "1200mL removed."
+                        )
+                    },
                 )
 
                 assert response.status_code == 200
@@ -339,7 +376,8 @@ class TestRegistryExtractWithMockedService:
 
                 # Verify pleural procedures mapping
                 assert "pleural_procedures" in data["mapped_fields"]
-                assert data["mapped_fields"]["pleural_procedures"]["thoracentesis"]["performed"] is True
+                pleural = data["mapped_fields"]["pleural_procedures"]
+                assert pleural["thoracentesis"]["performed"] is True
         finally:
             app.dependency_overrides.pop(get_registry_service, None)
 
@@ -362,7 +400,10 @@ class TestRegistryExtractErrorHandling:
 
         try:
             transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="http://testserver",
+            ) as client:
                 response = await client.post(
                     "/api/registry/extract",
                     json={"note_text": "Some procedure note that causes an error."},
@@ -410,7 +451,10 @@ class TestResponseSchemaValidation:
 
         try:
             transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="http://testserver",
+            ) as client:
                 response = await client.post(
                     "/api/registry/extract",
                     json={"note_text": "Diagnostic bronchoscopy performed."},

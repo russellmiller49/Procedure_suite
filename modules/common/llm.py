@@ -6,6 +6,7 @@ import json
 import os
 import random
 import time
+from pathlib import Path
 from typing import Any, Protocol, TypeVar
 
 import httpx
@@ -49,7 +50,13 @@ def _truthy_env(name: str) -> bool:
 # Important: do NOT override explicitly-exported environment variables.
 # Tests can opt out (and avoid accidental real API keys) by setting `PROCSUITE_SKIP_DOTENV=1`.
 if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
+    try:
+        load_dotenv(dotenv_path=Path(__file__).resolve().parents[2] / ".env", override=False)
+    except Exception as e:
+        logger.warning(
+            "Failed to load .env via python-dotenv (%s); proceeding with OS env only",
+            type(e).__name__,
+        )
 
 
 def _normalize_openai_base_url(base_url: str | None) -> str:
@@ -731,7 +738,7 @@ class GeminiLLM:
 class DeterministicStubLLM:
     """Simple deterministic LLM stub used for tests and local runs."""
 
-    def __init__(self, payload: dict | None = None) -> None:
+    def __init__(self, payload: dict | None = None, *, reason: str | None = None) -> None:
         self.payload = payload or {
             "indication": "Peripheral nodule",
             "anesthesia": "Moderate Sedation",
@@ -742,9 +749,16 @@ class DeterministicStubLLM:
             "complications": [],
             "disposition": "Home",
         }
+        self.reason = reason
+        self._warned = False
 
     def generate(self, prompt: str, **_kwargs: Any) -> str:
-        logger.warning("Using DeterministicStubLLM. Set GEMINI_API_KEY for real inference.")
+        if not self._warned:
+            if self.reason:
+                logger.warning("Using DeterministicStubLLM (%s)", self.reason)
+            else:
+                logger.warning("Using DeterministicStubLLM")
+            self._warned = True
         return json.dumps(self.payload)
 
 TModel = TypeVar("TModel", bound=BaseModel)
@@ -764,24 +778,29 @@ class LLMService:
             self._llm = llm
             return
 
+        stub_reason: str | None = None
         use_stub = os.getenv("REGISTRY_USE_STUB_LLM", "").lower() in ("1", "true", "yes")
         use_stub = use_stub or os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
 
         if use_stub:
-            self._llm = DeterministicStubLLM()
+            if os.getenv("REGISTRY_USE_STUB_LLM", "").lower() in ("1", "true", "yes"):
+                stub_reason = "REGISTRY_USE_STUB_LLM enabled"
+            elif os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes"):
+                stub_reason = "GEMINI_OFFLINE enabled"
+            self._llm = DeterministicStubLLM(reason=stub_reason)
             return
 
         provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower()
         if provider == "openai_compat":
             openai_offline = _truthy_env("OPENAI_OFFLINE") or not bool(os.getenv("OPENAI_API_KEY"))
             if openai_offline:
-                self._llm = DeterministicStubLLM()
+                reason = "OPENAI_OFFLINE enabled" if _truthy_env("OPENAI_OFFLINE") else "OPENAI_API_KEY not set"
+                self._llm = DeterministicStubLLM(reason=reason)
                 return
 
             model = _resolve_openai_model(task)
             if not model:
-                logger.warning("OPENAI_MODEL not set; falling back to DeterministicStubLLM")
-                self._llm = DeterministicStubLLM()
+                self._llm = DeterministicStubLLM(reason="OPENAI_MODEL not set")
                 return
 
             self._llm = OpenAILLM(
@@ -795,7 +814,7 @@ class LLMService:
             logger.warning("Unknown LLM_PROVIDER='%s'; defaulting to gemini", provider)
 
         if not os.getenv("GEMINI_API_KEY"):
-            self._llm = DeterministicStubLLM()
+            self._llm = DeterministicStubLLM(reason="GEMINI_API_KEY not set (LLM_PROVIDER=gemini)")
             return
 
         self._llm = GeminiLLM()

@@ -1,0 +1,1845 @@
+Terminal:
+(medparse-py311) russellmiller@Russells-MacBook-Pro Procedure_suite % ./scripts/devserver.sh
+[devserver] ==============================================
+[devserver] Starting Procedure Suite API (dev mode)
+[devserver] ==============================================
+[devserver] PORT=8000
+[devserver] MODEL_BACKEND=pytorch
+[devserver] PSUITE_KNOWLEDGE_FILE=data/knowledge/ip_coding_billing_v2_9.json
+[devserver] ENABLE_UMLS_LINKER=false
+[devserver] OMP_NUM_THREADS=1
+[devserver] ==============================================
+INFO:     Will watch for changes in these directories: ['/Users/russellmiller/Projects/Procedure_suite']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [64185] using StatReload
+INFO:     Started server process [64187]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-01-18T03:22:36.538403", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-18T03:22:36.538512", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "Starting background warmup"}
+{"timestamp": "2026-01-18T03:22:36.538780", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Warming up heavy NLP resources..."}
+INFO:     Application startup complete.
+{"timestamp": "2026-01-18T03:22:37.289992", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Loading spaCy model: en_core_sci_sm"}
+/Users/russellmiller/miniconda3/envs/medparse-py311/lib/python3.11/site-packages/spacy/language.py:2195: FutureWarning: Possible set union at position 6328
+  deserializers["tokenizer"] = lambda p: self.tokenizer.from_disk(  # type: ignore[union-attr]
+{"timestamp": "2026-01-18T03:22:37.705081", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "spaCy model en_core_sci_sm loaded successfully"}
+{"timestamp": "2026-01-18T03:22:37.712541", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Initializing SectionizerService"}
+{"timestamp": "2026-01-18T03:22:37.915455", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "SectionizerService initialized successfully"}
+{"timestamp": "2026-01-18T03:22:37.915522", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "UMLS linker warmup skipped (ENABLE_UMLS_LINKER=false)"}
+{"timestamp": "2026-01-18T03:22:37.915542", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Heavy NLP resources warmed up successfully"}
+INFO:     127.0.0.1:50623 - "GET / HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:50623 - "GET /ui/ HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50623 - "GET /ui/app.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50623 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50623 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+{"timestamp": "2026-01-18T03:23:44.163590", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:50653 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:23:49.185161", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:50655 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:23:49.199432", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:50655 - "POST /v1/phi/procedure/5aaf42e3-ea31-46bf-b07e-43ab366d7784/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:23:49.203835", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T03:23:49.233707", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+{"timestamp": "2026-01-18T03:23:49.237347", "level": "INFO", "logger": "api_dependencies", "message": "SmartHybridOrchestrator built for RegistryService"}
+{"timestamp": "2026-01-18T03:23:51.096684", "level": "INFO", "logger": "ner.inference", "message": "GranularNERPredictor loaded: 13 labels, device=mps"}
+{"timestamp": "2026-01-18T03:23:51.096978", "level": "INFO", "logger": "coder.parallel_pathway", "message": "ParallelPathwayOrchestrator initialized: NER=available, ML=unavailable"}
+{"timestamp": "2026-01-18T03:23:51.097104", "level": "INFO", "logger": "api_dependencies", "message": "RegistryService initialized", "default_version": "v3"}
+{"timestamp": "2026-01-18T03:23:51.099381", "level": "INFO", "logger": "api_dependencies", "message": "Initializing CodingService", "kb_path": "data/knowledge/ip_coding_billing_v2_9.json", "kb_version": "v2_9", "keyword_mapping_dir": "data/keyword_mappings"}
+{"timestamp": "2026-01-18T03:23:51.101125", "level": "INFO", "logger": "api_dependencies", "message": "Loaded KB version: 2.9"}
+{"timestamp": "2026-01-18T03:23:51.105543", "level": "INFO", "logger": "api_dependencies", "message": "Loaded keyword mappings version: 68546a5f3c55051b"}
+{"timestamp": "2026-01-18T03:23:51.105589", "level": "INFO", "logger": "api_dependencies", "message": "Negation detector version: simple_v1"}
+{"timestamp": "2026-01-18T03:23:51.113686", "level": "INFO", "logger": "rule_engine", "message": "IP Knowledge Base initialized", "kb_version": "unknown"}
+{"timestamp": "2026-01-18T03:23:51.113752", "level": "INFO", "logger": "coding_rules_engine", "message": "CodingRulesEngine initialized", "mode": "python", "version": "coding_rules_engine_v1"}
+{"timestamp": "2026-01-18T03:23:51.113802", "level": "INFO", "logger": "rule_engine", "message": "CodingRulesEngine initialized", "mode": "python"}
+{"timestamp": "2026-01-18T03:23:51.113846", "level": "INFO", "logger": "api_dependencies", "message": "Rule engine version: rule_engine_v2", "rules_mode": "python"}
+{"timestamp": "2026-01-18T03:23:51.113943", "level": "INFO", "logger": "api_dependencies", "message": "LLM advisor enabled: openai_compat"}
+{"timestamp": "2026-01-18T03:23:51.113974", "level": "INFO", "logger": "api_dependencies", "message": "CodingService initialized successfully"}
+{"timestamp": "2026-01-18T03:23:51.222224", "level": "WARNING", "logger": "registry.inference_pytorch", "message": "TorchRegistryPredictor unavailable: Unrecognized model in data/models/registry_runtime. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, arcee, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, bitnet, blenderbot, blenderbot-small, blip, blip-2, blip_2_qformer, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, colqwen2, conditional_detr, convbert, convnext, convnextv2, cpmant, csm, ctrl, cvt, d_fine, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deepseek_v3, deformable_detr, deit, depth_anything, depth_pro, deta, detr, dia, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dots1, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_h1, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, gemma3n, gemma3n_audio, gemma3n_text, gemma3n_vision, git, glm, glm4, glm4v, glm4v_text, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granite_speech, granitemoe, granitemoehybrid, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hgnet_v2, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, internvl, internvl_vision, jamba, janus, jetmoe, jukebox, kosmos-2, kyutai_speech_to_text, layoutlm, layoutlmv2, layoutlmv3, led, levit, lightglue, lilt, llama, llama4, llama4_text, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, minimax, mistral, mistral3, mixtral, mlcd, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phi4_multimodal, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_omni, qwen2_5_vl, qwen2_5_vl_text, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, qwen2_vl_text, qwen3, qwen3_moe, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, sam_hq, sam_hq_vision_model, sam_vision_model, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smollm3, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, t5gemma, table-transformer, tapas, textnet, time_series_transformer, timesfm, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, vjepa2, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth"}
+{"timestamp": "2026-01-18T03:23:51.226706", "level": "INFO", "logger": "ml_coder.registry_predictor", "message": "Loading registry model from data/models/registry_classifier.pkl"}
+{"timestamp": "2026-01-18T03:23:51.262653", "level": "INFO", "logger": "ml_coder.registry_predictor", "message": "Loaded 21 labels from MLB"}
+{"timestamp": "2026-01-18T03:23:51.262873", "level": "INFO", "logger": "ml_coder.registry_predictor", "message": "RegistryMLPredictor initialized with 21 labels"}
+{"timestamp": "2026-01-18T03:23:51.262954", "level": "INFO", "logger": "registry_service", "message": "Using RegistryMLPredictor (TF-IDF) with 21 labels"}
+{"timestamp": "2026-01-18T03:23:51.835005", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')"}
+{"timestamp": "2026-01-18T03:23:51.835687", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T03:23:51.865235", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+INFO:     127.0.0.1:50655 - "POST /api/v1/process HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:37:40.385700", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:51019 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:37:45.365524", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:51020 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:37:45.388461", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:51020 - "POST /v1/phi/procedure/82cc5ded-4e27-43bb-b863-27176362c25f/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:37:46.031502", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\\bbrush(?:ings?)?\\b')"}
+{"timestamp": "2026-01-18T03:37:46.033219", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T03:37:46.068985", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+INFO:     127.0.0.1:51020 - "POST /api/v1/process HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:40:40.839434", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:51131 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:41:04.762676", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:51147 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:41:04.770267", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:51147 - "POST /v1/phi/procedure/b54ed432-b0bc-4e09-a8fd-fdabcc8a7762/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:41:05.268439", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text contains 'tracheostomy' but extraction missed it. (Pattern: '(?i)\\btracheostomy\\b')"}
+{"timestamp": "2026-01-18T03:41:05.269818", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')"}
+{"timestamp": "2026-01-18T03:41:05.270790", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T03:41:05.303674", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+INFO:     127.0.0.1:51147 - "POST /api/v1/process HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:43:15.037691", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:51222 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:43:20.439974", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:51224 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:43:20.447494", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:51224 - "POST /v1/phi/procedure/d02e9cf6-535a-4cd7-a377-8226944eddb4/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T03:43:20.910592", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T03:43:20.998225", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+INFO:     127.0.0.1:51224 - "POST /api/v1/process HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52603 - "GET /ui/phi_redactor/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52603 - "GET /ui/phi_redactor/styles.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52605 - "GET /ui/phi_redactor/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52605 - "GET /ui/phi_redactor/redactor.worker.js?v=1768709379499 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52603 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52605 - "GET /ui/phi_redactor/protectedVeto.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52605 - "GET /ui/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52603 - "GET /ui/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52605 - "GET /ui/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52612 - "GET /ui/phi_redactor/vendor/phi_distilbert_ner/config.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52603 - "GET /ui/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T04:09:54.557458", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')"}
+{"timestamp": "2026-01-18T04:09:54.558357", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T04:09:54.605872", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+INFO:     127.0.0.1:52621 - "POST /api/v1/process HTTP/1.1" 200 OK
+^CINFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [64187]
+INFO:     Stopping reloader process [64185]
+(medparse-py311) russellmiller@Russells-MacBook-Pro Procedure_suite % ./scripts/devserver.sh
+[devserver] ==============================================
+[devserver] Starting Procedure Suite API (dev mode)
+[devserver] ==============================================
+[devserver] PORT=8000
+[devserver] MODEL_BACKEND=pytorch
+[devserver] PSUITE_KNOWLEDGE_FILE=data/knowledge/ip_coding_billing_v2_9.json
+[devserver] ENABLE_UMLS_LINKER=false
+[devserver] OMP_NUM_THREADS=1
+[devserver] ==============================================
+INFO:     Will watch for changes in these directories: ['/Users/russellmiller/Projects/Procedure_suite']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [27165] using StatReload
+INFO:     Started server process [27167]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-01-18T18:52:24.469091", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "PHI database tables verified/created"}
+{"timestamp": "2026-01-18T18:52:24.469190", "level": "INFO", "logger": "modules.api.fastapi_app", "message": "Starting background warmup"}
+{"timestamp": "2026-01-18T18:52:24.469403", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Warming up heavy NLP resources..."}
+INFO:     Application startup complete.
+INFO:     127.0.0.1:50775 - "GET / HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:50775 - "GET /ui/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50775 - "GET /ui/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50775 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50775 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+{"timestamp": "2026-01-18T18:52:25.529217", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Loading spaCy model: en_core_sci_sm"}
+/Users/russellmiller/miniconda3/envs/medparse-py311/lib/python3.11/site-packages/spacy/language.py:2195: FutureWarning: Possible set union at position 6328
+  deserializers["tokenizer"] = lambda p: self.tokenizer.from_disk(  # type: ignore[union-attr]
+{"timestamp": "2026-01-18T18:52:25.981592", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "spaCy model en_core_sci_sm loaded successfully"}
+{"timestamp": "2026-01-18T18:52:25.998081", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Initializing SectionizerService"}
+{"timestamp": "2026-01-18T18:52:26.243393", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "SectionizerService initialized successfully"}
+{"timestamp": "2026-01-18T18:52:26.243467", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "UMLS linker warmup skipped (ENABLE_UMLS_LINKER=false)"}
+{"timestamp": "2026-01-18T18:52:26.243487", "level": "INFO", "logger": "modules.infra.nlp_warmup", "message": "Heavy NLP resources warmed up successfully"}
+{"timestamp": "2026-01-18T18:53:22.398186", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:50772 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:53:28.704495", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:50807 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:53:28.715954", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:50807 - "POST /v1/phi/procedure/747abc5f-f194-4521-ae63-d88baa480ca0/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:53:28.719465", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T18:53:28.751305", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+{"timestamp": "2026-01-18T18:53:28.754724", "level": "INFO", "logger": "api_dependencies", "message": "SmartHybridOrchestrator built for RegistryService"}
+{"timestamp": "2026-01-18T18:53:30.654447", "level": "INFO", "logger": "ner.inference", "message": "GranularNERPredictor loaded: 13 labels, device=mps"}
+{"timestamp": "2026-01-18T18:53:30.654606", "level": "INFO", "logger": "coder.parallel_pathway", "message": "ParallelPathwayOrchestrator initialized: NER=available, ML=unavailable"}
+{"timestamp": "2026-01-18T18:53:30.654656", "level": "INFO", "logger": "api_dependencies", "message": "RegistryService initialized", "default_version": "v3"}
+{"timestamp": "2026-01-18T18:53:30.656320", "level": "INFO", "logger": "api_dependencies", "message": "Initializing CodingService", "kb_path": "data/knowledge/ip_coding_billing_v2_9.json", "kb_version": "v2_9", "keyword_mapping_dir": "data/keyword_mappings"}
+{"timestamp": "2026-01-18T18:53:30.657942", "level": "INFO", "logger": "api_dependencies", "message": "Loaded KB version: 2.9"}
+{"timestamp": "2026-01-18T18:53:30.661979", "level": "INFO", "logger": "api_dependencies", "message": "Loaded keyword mappings version: 68546a5f3c55051b"}
+{"timestamp": "2026-01-18T18:53:30.662015", "level": "INFO", "logger": "api_dependencies", "message": "Negation detector version: simple_v1"}
+{"timestamp": "2026-01-18T18:53:30.666499", "level": "INFO", "logger": "rule_engine", "message": "IP Knowledge Base initialized", "kb_version": "unknown"}
+{"timestamp": "2026-01-18T18:53:30.666546", "level": "INFO", "logger": "coding_rules_engine", "message": "CodingRulesEngine initialized", "mode": "python", "version": "coding_rules_engine_v1"}
+{"timestamp": "2026-01-18T18:53:30.666569", "level": "INFO", "logger": "rule_engine", "message": "CodingRulesEngine initialized", "mode": "python"}
+{"timestamp": "2026-01-18T18:53:30.666589", "level": "INFO", "logger": "api_dependencies", "message": "Rule engine version: rule_engine_v2", "rules_mode": "python"}
+{"timestamp": "2026-01-18T18:53:30.666635", "level": "INFO", "logger": "api_dependencies", "message": "LLM advisor enabled: openai_compat"}
+{"timestamp": "2026-01-18T18:53:30.666657", "level": "INFO", "logger": "api_dependencies", "message": "CodingService initialized successfully"}
+{"timestamp": "2026-01-18T18:53:30.704589", "level": "WARNING", "logger": "registry.inference_pytorch", "message": "TorchRegistryPredictor unavailable: Unrecognized model in data/models/registry_runtime. Should have a `model_type` key in its config.json, or contain one of the following strings in its name: albert, align, altclip, arcee, aria, aria_text, audio-spectrogram-transformer, autoformer, aya_vision, bamba, bark, bart, beit, bert, bert-generation, big_bird, bigbird_pegasus, biogpt, bit, bitnet, blenderbot, blenderbot-small, blip, blip-2, blip_2_qformer, bloom, bridgetower, bros, camembert, canine, chameleon, chinese_clip, chinese_clip_vision_model, clap, clip, clip_text_model, clip_vision_model, clipseg, clvp, code_llama, codegen, cohere, cohere2, colpali, colqwen2, conditional_detr, convbert, convnext, convnextv2, cpmant, csm, ctrl, cvt, d_fine, dab-detr, dac, data2vec-audio, data2vec-text, data2vec-vision, dbrx, deberta, deberta-v2, decision_transformer, deepseek_v3, deformable_detr, deit, depth_anything, depth_pro, deta, detr, dia, diffllama, dinat, dinov2, dinov2_with_registers, distilbert, donut-swin, dots1, dpr, dpt, efficientformer, efficientnet, electra, emu3, encodec, encoder-decoder, ernie, ernie_m, esm, falcon, falcon_h1, falcon_mamba, fastspeech2_conformer, flaubert, flava, fnet, focalnet, fsmt, funnel, fuyu, gemma, gemma2, gemma3, gemma3_text, gemma3n, gemma3n_audio, gemma3n_text, gemma3n_vision, git, glm, glm4, glm4v, glm4v_text, glpn, got_ocr2, gpt-sw3, gpt2, gpt_bigcode, gpt_neo, gpt_neox, gpt_neox_japanese, gptj, gptsan-japanese, granite, granite_speech, granitemoe, granitemoehybrid, granitemoeshared, granitevision, graphormer, grounding-dino, groupvit, helium, hgnet_v2, hiera, hubert, ibert, idefics, idefics2, idefics3, idefics3_vision, ijepa, imagegpt, informer, instructblip, instructblipvideo, internvl, internvl_vision, jamba, janus, jetmoe, jukebox, kosmos-2, kyutai_speech_to_text, layoutlm, layoutlmv2, layoutlmv3, led, levit, lightglue, lilt, llama, llama4, llama4_text, llava, llava_next, llava_next_video, llava_onevision, longformer, longt5, luke, lxmert, m2m_100, mamba, mamba2, marian, markuplm, mask2former, maskformer, maskformer-swin, mbart, mctct, mega, megatron-bert, mgp-str, mimi, minimax, mistral, mistral3, mixtral, mlcd, mllama, mobilebert, mobilenet_v1, mobilenet_v2, mobilevit, mobilevitv2, modernbert, moonshine, moshi, mpnet, mpt, mra, mt5, musicgen, musicgen_melody, mvp, nat, nemotron, nezha, nllb-moe, nougat, nystromformer, olmo, olmo2, olmoe, omdet-turbo, oneformer, open-llama, openai-gpt, opt, owlv2, owlvit, paligemma, patchtsmixer, patchtst, pegasus, pegasus_x, perceiver, persimmon, phi, phi3, phi4_multimodal, phimoe, pix2struct, pixtral, plbart, poolformer, pop2piano, prompt_depth_anything, prophetnet, pvt, pvt_v2, qdqbert, qwen2, qwen2_5_omni, qwen2_5_vl, qwen2_5_vl_text, qwen2_audio, qwen2_audio_encoder, qwen2_moe, qwen2_vl, qwen2_vl_text, qwen3, qwen3_moe, rag, realm, recurrent_gemma, reformer, regnet, rembert, resnet, retribert, roberta, roberta-prelayernorm, roc_bert, roformer, rt_detr, rt_detr_resnet, rt_detr_v2, rwkv, sam, sam_hq, sam_hq_vision_model, sam_vision_model, seamless_m4t, seamless_m4t_v2, segformer, seggpt, sew, sew-d, shieldgemma2, siglip, siglip2, siglip_vision_model, smollm3, smolvlm, smolvlm_vision, speech-encoder-decoder, speech_to_text, speech_to_text_2, speecht5, splinter, squeezebert, stablelm, starcoder2, superglue, superpoint, swiftformer, swin, swin2sr, swinv2, switch_transformers, t5, t5gemma, table-transformer, tapas, textnet, time_series_transformer, timesfm, timesformer, timm_backbone, timm_wrapper, trajectory_transformer, transfo-xl, trocr, tvlt, tvp, udop, umt5, unispeech, unispeech-sat, univnet, upernet, van, video_llava, videomae, vilt, vipllava, vision-encoder-decoder, vision-text-dual-encoder, visual_bert, vit, vit_hybrid, vit_mae, vit_msn, vitdet, vitmatte, vitpose, vitpose_backbone, vits, vivit, vjepa2, wav2vec2, wav2vec2-bert, wav2vec2-conformer, wavlm, whisper, xclip, xglm, xlm, xlm-prophetnet, xlm-roberta, xlm-roberta-xl, xlnet, xmod, yolos, yoso, zamba, zamba2, zoedepth"}
+{"timestamp": "2026-01-18T18:53:30.707981", "level": "INFO", "logger": "ml_coder.registry_predictor", "message": "Loading registry model from data/models/registry_classifier.pkl"}
+{"timestamp": "2026-01-18T18:53:30.743553", "level": "INFO", "logger": "ml_coder.registry_predictor", "message": "Loaded 21 labels from MLB"}
+{"timestamp": "2026-01-18T18:53:30.743804", "level": "INFO", "logger": "ml_coder.registry_predictor", "message": "RegistryMLPredictor initialized with 21 labels"}
+{"timestamp": "2026-01-18T18:53:30.743851", "level": "INFO", "logger": "registry_service", "message": "Using RegistryMLPredictor (TF-IDF) with 21 labels"}
+{"timestamp": "2026-01-18T18:53:31.630236", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\\bbrush(?:ings?)?\\b')"}
+{"timestamp": "2026-01-18T18:53:31.632838", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T18:53:31.660990", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+{"timestamp": "2026-01-18T18:53:49.489429", "level": "INFO", "logger": "httpx", "message": "HTTP Request: POST https://api.openai.com/v1/responses \"HTTP/1.1 200 OK\""}
+INFO:     127.0.0.1:50807 - "POST /api/v1/process HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:57:07.799589", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:50887 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:57:25.214765", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:50892 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:57:25.225766", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:50892 - "POST /v1/phi/procedure/3074b1e6-e648-46e7-a472-20cf12c0f411/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:57:25.688181", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')"}
+{"timestamp": "2026-01-18T18:57:25.689466", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T18:57:25.719502", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+{"timestamp": "2026-01-18T18:57:37.058752", "level": "INFO", "logger": "httpx", "message": "HTTP Request: POST https://api.openai.com/v1/responses \"HTTP/1.1 200 OK\""}
+INFO:     127.0.0.1:50892 - "POST /api/v1/process HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:59:41.273979", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:50939 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:59:44.543288", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:50939 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:59:44.548996", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:50939 - "POST /v1/phi/procedure/e89a7be2-31a7-4c33-93f2-465e4863552d/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T18:59:44.923535", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text contains 'tracheostomy' but extraction missed it. (Pattern: '(?i)\\btracheostomy\\b')"}
+{"timestamp": "2026-01-18T18:59:44.924762", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')"}
+{"timestamp": "2026-01-18T18:59:44.925896", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T18:59:44.954872", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+INFO:     127.0.0.1:50939 - "POST /api/v1/process HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T19:02:33.374782", "level": "INFO", "logger": "phi_api", "message": "phi_preview"}
+INFO:     127.0.0.1:50994 - "POST /v1/phi/scrub/preview HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T19:02:36.125670", "level": "INFO", "logger": "phi_api", "message": "phi_submit"}
+INFO:     127.0.0.1:50994 - "POST /v1/phi/submit HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T19:02:36.131786", "level": "INFO", "logger": "phi_api", "message": "phi_feedback"}
+INFO:     127.0.0.1:50994 - "POST /v1/phi/procedure/797f4994-334d-4e3c-a277-c610a42c9ac8/feedback HTTP/1.1" 200 OK
+{"timestamp": "2026-01-18T19:02:36.525030", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\\s+bronchoscop')"}
+{"timestamp": "2026-01-18T19:02:36.526704", "level": "INFO", "logger": "ml_coder.predictor", "message": "Loading model from data/models/cpt_classifier.pkl"}
+{"timestamp": "2026-01-18T19:02:36.556628", "level": "INFO", "logger": "ml_coder.predictor", "message": "Predictor initialized with 35 labels, upper=0.70, lower=0.40"}
+INFO:     127.0.0.1:50994 - "POST /api/v1/process HTTP/1.1" 200 OK
+
+#examples:
+note:INDICATION FOR OPERATION:  [REDACTED]is a 32 year old-year-old female who presents with lung nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule
+POSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31623 Dx bronchoscope/brushing    
+31624 Dx bronchoscope/lavage (BAL)    
+31628 TBBX single lobe     
+31632 TBBX additional lobes  
+31626 Fiducial marker placements, single or multiple     
+31627 Navigational Bronchoscopy (computer assisted)
+77012 Radiology / radiologic guidance for CT guided needle placement (CIOS)
+76377 3D rendering with interpretation and reporting of CT, US, Tomo modality (ION Planning Station)
+31899NFN BRONCHOSCOPY WITH ENDOBRONCHIAL ULTRASOUND (EBUS) OF MEDIASTINAL AND/OR HILAR LYMPH NODES WITHOUT BIOPSY
+31654 Radial EBUS for peripheral lesion
+76981 Ultrasound Elastography, Parenchyma of Organ
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP [REDACTED] CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a Transbronchial Cryo biopsies. This resulted in >40% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31628 TBBX single lobe     . 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Linear EBUS 
+Radial EBUS
+Ion Robotic Bronchoscope
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+PATIENT POSITION: . 
+Initial Airway Inspection Findings:
+Normal appearing airway anatomy and mucosa bilaterally to the segmental level.
+CT Chest scan was placed on separate planning station to generate 3D rendering of the pathway to target.   The navigational plan was reviewed and verified.  This was then loaded into robotic bronchoscopy platform. 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+Ventilation Parameters:
+Mode RR TV PEEP FiO2 Flow Rate Pmean
+VCV 16 100 20
+Robotic navigation bronchoscopy was performed with Ion platform.  Partial registration was used.    Ion robotic catheter was used to engage the Anteromedial Segment of LLL (Lb7/8).  Target lesion is about 2.5 cm in diameter.   Under navigational guidance the ion robotic catheter was advanced to 1.0 cm away from the planned target. 
+Radial EBUS was performed to confirm that the location of the nodule is Eccentric.  The following features were noted: Continuous margin  and Absence of linear-discrete air bronchogram.
+Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation.  Cios Spin system was used for evaluation of nodule location.  Low dose spin was performed to acquire CT imaging.  This was passed on to Ion platform system for reconstruction and nodule location.  The 3D images was interpreted on an independent workstation (Ion).   Using the newly acquired nodule location, the Ion robotic system was adjusted to the new targeted location.   I personally interpreted the cone beam CT and 3-D reconstruction. 
+ 
+Transbronchial needle aspiration was performed with 21G Needle through the extended working channel catheter.  Total 4 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Cytology.
+Transbronchial cryobiopsy was performed with 1.1mm cryoprobe via the extended working channel catheter.  Freeze time of 6 seconds were used.  Total 8 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.
+Fiducial marker was loaded with bone wax and placed under fluoroscopy guidance. Prior to withdraw of the bronchoscope. 
+Transbronchial brushing was performed with Protected cytology brush the extended working channel catheter.  Total 1 samples were collected.  Samples sent for Cytology.
+Bronchial alveolar lavage was performed the extended working channel catheter.  Instilled 20 cc of NS, suction returned with 5 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ROSE from ION procedure was noted to be:
+Fungus
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and blood. 
+Bronchial alveolar lavage was performed at Superior Segment of LLL (LB6), Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+EBUS-Findings
+Indications: Diagnostic
+Technique:
+All lymph node stations were assessed. Only those 5 mm or greater in short axis were sampled.
+Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node
+4L (lower paratracheal) node
+7 (subcarinal) node
+11Rs lymph node
+11Ri lymph node
+11L lymph node
+No immediate complications
+No biopsies taken based upon ultrasound appearance
+Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. Elastography provided a semi-quantitative classification (Type 1–3), which was used to guide biopsy site selection and sampling strategy. 
+Lymph Nodes Evaluated:
+Site 1: The 11L lymph node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given the size and ultrasound appearance, biopsies were not taken
+Site 2: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given the size and ultrasound appearance, biopsies were not taken
+Site 3: The 7 (subcarinal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given the size and ultrasound appearance, biopsies were not taken
+Site 4: The 4R (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given the size and ultrasound appearance, biopsies were not taken
+Site 5: The 11Ri lymph node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given the size and ultrasound appearance, biopsies were not taken
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+Left lower lobe transbronchial needle aspiration, transbronchial cryobiopsies, transbronchial brush, subsegmental bronchoalveolar lavage, lobar bronchoalveolar lavage
+IMPRESSION/PLAN: [REDACTED]is a 32 year old-year-old female who presents for bronchoscopy for lung nodule.
+-Follow up bronchoscopic lab work
+-Follow up CXR
+
+Format:
+Unified Results Extraction-First
+Pipeline: extraction_first
+Confidence: high_confidence
+Manual Review Needed
+CPT Codes
+31624
+31645
+31654
+Code Details
+CodeDescriptionConfidenceReview31624Bronchoscopy; with bronchoalveolar lavage80%requiredbal.performed=true31645Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial80%requiredtherapeutic_aspiration.performed=true3165480%requiredradial_ebus.performed=true
+RVU & Payment
+Total Work RVU: 5.41
+Estimated Payment: $281.82
+Per-Code Breakdown
+CPTWork RVUPayment316242.63$N/A316452.78$N/A
+Registry Extraction
+FieldValueBal PerformedYesLinear EBUS PerformedYesRadial EBUS PerformedYesTherapeutic Aspiration PerformedYesTherapeutic Aspiration MaterialMucus plugCpt Code 1 Code31624Cpt Code 2 Code31645Cpt Code 3 Code31654Established Tracheostomy RouteNo
+Evidence
+{
+"ner_spans": [
+{
+"source": "ner_span",
+"text": "Fiducial marker placements",
+"span": [
+564,
+590
+],
+"confidence": 0.8152843614419302
+},
+{
+"source": "ner_span",
+"text": "Linear EB",
+"span": [
+1746,
+1755
+],
+"confidence": 0.5784636735916138
+},
+{
+"source": "ner_span",
+"text": "Radial",
+"span": [
+1759,
+1765
+],
+"confidence": 0.5774801969528198
+},
+{
+"source": "ner_span",
+"text": "Successful therapeutic aspiration",
+"span": [
+2393,
+2426
+],
+"confidence": 0.6761535406112671
+},
+{
+"source": "ner_span",
+"text": "clean out the",
+"span": [
+2444,
+2457
+],
+"confidence": 0.6800264914830526
+}
+],
+"procedures_performed.bal.performed": [
+{
+"source": "registry_span",
+"text": "bronchoalveolar lavage",
+"span": [
+8939,
+8961
+],
+"confidence": 1
+}
+],
+"procedures_performed.radial_ebus.performed": [
+{
+"source": "registry_span",
+"text": "Radial EBUS",
+"span": [
+965,
+976
+],
+"confidence": 1
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"source": "registry_span",
+"text": "Therapeutic aspiration",
+"span": [
+342,
+364
+],
+"confidence": 1
+}
+]
+}
+Audit Warnings:
+DETERMINISTIC_UPLIFT: added performed=true for bal, radial_ebus
+31622: ML detected procedure, but specific device/anatomy was not found in text.
+31645: NER found keyword, but context suggests negation/history.
+SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+Radial EBUS inferred from concentric/eccentric view.
+Linear EBUS inferred from convex/mediastinal/station sampling.
+Radial vs linear EBUS markers both present; review required.
+linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653
+SELF_CORRECT_SKIPPED: 31629: judge returned null
+RAW_ML_AUDIT[HIGH_CONF]: model suggests 31629 (prob=0.44), but deterministic derivation missed it
+RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31627 (prob=0.83), but deterministic derivation missed it
+RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31628 (prob=0.63), but deterministic derivation missed it
+KB: 2.9 · Policy: extraction_first_v1 · Time: 18825ms
+
+raw json:
+{
+"registry": {
+"procedures_performed": {
+"bal": {
+"performed": true
+},
+"linear_ebus": {
+"performed": true,
+"node_events": []
+},
+"radial_ebus": {
+"performed": true
+},
+"therapeutic_aspiration": {
+"performed": true,
+"material": "Mucus plug"
+}
+},
+"billing": {
+"cpt_codes": [
+{
+"code": "31624"
+},
+{
+"code": "31645"
+},
+{
+"code": "31654"
+}
+]
+},
+"evidence": {
+"ner_spans": [
+{
+"text": "Fiducial marker placements",
+"start": 564,
+"end": 590,
+"confidence": 0.8152843614419302
+},
+{
+"text": "Linear EB",
+"start": 1746,
+"end": 1755,
+"confidence": 0.5784636735916138
+},
+{
+"text": "Radial",
+"start": 1759,
+"end": 1765,
+"confidence": 0.5774801969528198
+},
+{
+"text": "Successful therapeutic aspiration",
+"start": 2393,
+"end": 2426,
+"confidence": 0.6761535406112671
+},
+{
+"text": "clean out the",
+"start": 2444,
+"end": 2457,
+"confidence": 0.6800264914830526
+}
+],
+"procedures_performed.bal.performed": [
+{
+"text": "bronchoalveolar lavage",
+"start": 8939,
+"end": 8961
+}
+],
+"procedures_performed.radial_ebus.performed": [
+{
+"text": "Radial EBUS",
+"start": 965,
+"end": 976
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"text": "Therapeutic aspiration",
+"start": 342,
+"end": 364
+}
+]
+},
+"procedure_families": [],
+"established_tracheostomy_route": false,
+"granular_validation_warnings": []
+},
+"evidence": {
+"ner_spans": [
+{
+"source": "ner_span",
+"text": "Fiducial marker placements",
+"span": [
+564,
+590
+],
+"confidence": 0.8152843614419302
+},
+{
+"source": "ner_span",
+"text": "Linear EB",
+"span": [
+1746,
+1755
+],
+"confidence": 0.5784636735916138
+},
+{
+"source": "ner_span",
+"text": "Radial",
+"span": [
+1759,
+1765
+],
+"confidence": 0.5774801969528198
+},
+{
+"source": "ner_span",
+"text": "Successful therapeutic aspiration",
+"span": [
+2393,
+2426
+],
+"confidence": 0.6761535406112671
+},
+{
+"source": "ner_span",
+"text": "clean out the",
+"span": [
+2444,
+2457
+],
+"confidence": 0.6800264914830526
+}
+],
+"procedures_performed.bal.performed": [
+{
+"source": "registry_span",
+"text": "bronchoalveolar lavage",
+"span": [
+8939,
+8961
+],
+"confidence": 1
+}
+],
+"procedures_performed.radial_ebus.performed": [
+{
+"source": "registry_span",
+"text": "Radial EBUS",
+"span": [
+965,
+976
+],
+"confidence": 1
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"source": "registry_span",
+"text": "Therapeutic aspiration",
+"span": [
+342,
+364
+],
+"confidence": 1
+}
+]
+},
+"cpt_codes": [
+"31624",
+"31645",
+"31654"
+],
+"suggestions": [
+{
+"code": "31624",
+"description": "Bronchoscopy; with bronchoalveolar lavage",
+"confidence": 0.8,
+"rationale": "bal.performed=true",
+"review_flag": "required"
+},
+{
+"code": "31645",
+"description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+"confidence": 0.8,
+"rationale": "therapeutic_aspiration.performed=true",
+"review_flag": "required"
+},
+{
+"code": "31654",
+"description": "",
+"confidence": 0.8,
+"rationale": "radial_ebus.performed=true",
+"review_flag": "required"
+}
+],
+"total_work_rvu": 5.41,
+"estimated_payment": 281.82,
+"per_code_billing": [
+{
+"cpt_code": "31624",
+"description": "Bronchoscopy; with bronchoalveolar lavage",
+"work_rvu": 2.63,
+"total_facility_rvu": 4.24,
+"facility_payment": 137.19
+},
+{
+"cpt_code": "31645",
+"description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+"work_rvu": 2.78,
+"total_facility_rvu": 4.47,
+"facility_payment": 144.63
+}
+],
+"pipeline_mode": "extraction_first",
+"coder_difficulty": "high_confidence",
+"needs_manual_review": true,
+"audit_warnings": [
+"DETERMINISTIC_UPLIFT: added performed=true for bal, radial_ebus",
+"31622: ML detected procedure, but specific device/anatomy was not found in text.",
+"31645: NER found keyword, but context suggests negation/history.",
+"SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\\bbrush(?:ings?)?\\b')",
+"Radial EBUS inferred from concentric/eccentric view.",
+"Linear EBUS inferred from convex/mediastinal/station sampling.",
+"Radial vs linear EBUS markers both present; review required.",
+"linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653",
+"SELF_CORRECT_SKIPPED: 31629: judge returned null",
+"RAW_ML_AUDIT[HIGH_CONF]: model suggests 31629 (prob=0.44), but deterministic derivation missed it",
+"RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31627 (prob=0.83), but deterministic derivation missed it",
+"RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31628 (prob=0.63), but deterministic derivation missed it"
+],
+"validation_errors": [],
+"review_status": "pending_phi_review",
+"kb_version": "2.9",
+"policy_version": "extraction_first_v1",
+"processing_time_ms": 18825.38
+}
+Extraction evaluator
+Custom Gem
+This is for informational purposes only. For medical advice or diagnosis, consult a professional.
+🩺 Extraction Quality Report
+Score: 40 / 100 Status: ❌ FAIL
+1. Accuracy (Precision)
+•	Hallucinations: None. The items extracted (bal, therapeutic_aspiration, radial_ebus, linear_ebus) were indeed performed.
+•	Mismatch: None. The data present is accurate to the text, but the record is severely incomplete.
+2. Completeness (Recall) - CRITICAL FAILURES
+The pipeline completely missed the primary purpose of the procedure (Diagnostic bronchoscopy for lung nodule).
+•	Missed Procedure (Navigation): The text explicitly states "Robotic navigation bronchoscopy was performed with Ion platform" and "Ion robotic catheter was used". The pipeline missed navigational_bronchoscopy / 31627.
+•	Missed Procedure (Lung Biopsy - Cryo): Text states "Transbronchial cryobiopsy was performed with 1.1mm cryoprobe... Total 8 samples". The pipeline missed transbronchial_cryobiopsy / 31628.
+•	Missed Procedure (Lung Biopsy - TBNA): Text states "Transbronchial needle aspiration was performed with 21G Needle... 4 samples". The pipeline missed transbronchial_biopsy (or tbna_parenchymal).
+•	Missed Procedure (Brushing): Text states "Transbronchial brushing was performed". Audit warning explicitly flagged this (SILENT_FAILURE: Text mentions 'brush'), yet it was not extracted.
+•	Missed Procedure (Fiducials): Text states "Fiducial marker was loaded... and placed". NER detected the span, but it did not propagate to procedures_performed or cpt_codes (Missed 31626).
+3. Logic & Coding
+•	CPT Consistency: The CPTs generated (31624, 31645, 31654) are valid for the extracted data, but because the extraction is missing ~70% of the case, the billing is significantly under-coded.
+•	Missing CPTs: 31627 (Nav), 31626 (Fiducials), 31628 (Biopsy), 31623 (Brush).
+•	Linear EBUS: The pipeline correctly identified linear_ebus.performed = true but correctly did not bill 31652/31653 because the text explicitly states "No biopsies taken" (inspection only). This part of the logic worked correctly.
+4. Corrected JSON Snippet
+The procedures_performed section should have looked like this:
+JSON
+"procedures_performed": {
+  "bal": { "performed": true },
+  "therapeutic_aspiration": { "performed": true },
+  "linear_ebus": { "performed": true, "node_events": [] },
+  "radial_ebus": { "performed": true },
+  "navigational_bronchoscopy": {
+      "performed": true,
+      "platform": "Ion",
+      "evidence": "Robotic navigation bronchoscopy was performed with Ion platform"
+  },
+  "transbronchial_cryobiopsy": {
+      "performed": true,
+      "target": "LLL",
+      "samples": 8,
+      "evidence": "Transbronchial cryobiopsy was performed with 1.1mm cryoprobe... Total 8 samples"
+  },
+  "transbronchial_biopsy": {
+      "performed": true,
+      "type": "Needle / TBNA",
+      "target": "LLL",
+      "evidence": "Transbronchial needle aspiration was performed with 21G Needle"
+  },
+  "brushings": {
+      "performed": true,
+      "evidence": "Transbronchial brushing was performed"
+  },
+  "fiducial_placement": {
+      "performed": true,
+      "evidence": "Fiducial marker was loaded... and placed"
+  }
+}
+
+
+note;
+NOTE_ID:  note_067 SOURCE_FILE: note_067.txt INDICATION FOR OPERATION:  [REDACTED] is a 63 year old-year-old female who presents with pulmonary nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+ 
+PREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31629 TBNA single lobe   
+31627 Navigational Bronchoscopy (computer assisted)
+77012 Radiology / radiologic guidance for CT guided needle placement (CIOS)
+76377 3D rendering with interpretation and reporting of CT, US, Tomo modality (ION Planning Station)
+31654 Radial EBUS for peripheral lesion
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+Radial EBUS
+Ion Robotic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, and Bronchus Intermedius  from mucus. 
+ 
+ 
+CT Chest scan was placed on separate planning station to generate 3D rendering of the pathway to target.   The navigational plan was reviewed and verified.  This was then loaded into robotic bronchoscopy platform. 
+ 
+Ventilation Parameters:
+Mode RR TV PEEP FiO2 Flow Rate Pmean
+VCV 12 300 12 100 10 15
+ 
+RUL Mass: 
+ 
+Robotic navigation bronchoscopy was performed with Ion platform.  Partial registration was used.    Ion robotic catheter was used to engage the Anterior Segment of RUL (RB3).  Target lesion is about 4.0 cm in diameter.   Under navigational guidance the ion robotic catheter was advanced to 1.0 cm away from the planned target. 
+ 
+Needle was advanced into the lesion. Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation.  Cios Spin system was used for evaluation of nodule location.  Low dose spin was performed to acquire CT imaging.  This was passed on to Ion platform system for reconstruction and nodule location.  The 3D images was interpreted on an independent workstation (Ion).   Using the newly acquired nodule location, the Ion robotic system was adjusted to the new targeted location. I personally interpreted the cone beam CT and 3-D reconstruction. 
+ 
+Transbronchial needle aspiration was performed with 19G Needle through the extended working channel catheter.  Total 1 samples were collected.  Samples sent for Cytology.
+ 
+Radial EBUS was performed to confirm that the location of the nodule is Concentric after initial needle puncture into the lesion.  The following features were noted: continuous margin, heterogenous echotexture.
+ 
+Once a tunnel had been created into the lesion with TBNA as above, transbronchial microwave ablation was performed of the nodule as below. 
+ 
+Modality Tools Setting/Mode Duration Results
+Microwave Medium Antenna 90*C 20:00 min Transbronchial Ablation of Nodule
+ 
+ 
+Subsequently, RB2 was engaged.  And microwave catheter was placed in the lateral superior aspect of the lung mass. CBCT was done to confirm the location. 
+ 
+Modality Tools Setting/Mode Duration Results
+Microwave Medium Antenna 90*C 10:00 min Transbronchial Ablation of Nodule
+ 
+Subsequently, RB1 was engaged.  And microwave catheter was placed in the superior medial aspect of the lung mass. CBCT was done to confirm the location. 
+ 
+Modality Tools Setting/Mode Duration Results
+Microwave Medium Antenna 90*C 10:00 min Transbronchial Ablation of Nodule
+ 
+Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation.  Cios Spin system was used for evaluation of nodule location.  Low dose spin was performed to acquire CT imaging.  This was passed on to Ion platform system for reconstruction and nodule location.  The 3D images was interpreted on an independent workstation (Ion).   Using the newly acquired nodule location, the Ion robotic system was adjusted to the new targeted location. I personally interpreted the cone beam CT and 3-D reconstruction. The images confirmed tool-in-lesion. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+- RUL mass TBNA (cyto)
+ 
+ 
+IMPRESSION/PLAN: [REDACTED] is a 63 year old-year-old female who presents for bronchoscopy for lung nodules.
+RLL nodule and RUL mass underwent TBNA and MWA. 
+ 
+- f/u CXR
+- admit to medicine for observation
+- monitor for post-ablation pain 
+- start empiric abx (IV unasyn as inpatient, po moxifloxacin as an outpatient) 
+ 
+ formatted:
+Unified Results Extraction-First
+Pipeline: extraction_first
+Confidence: high_confidence
+Manual Review Needed
+CPT Codes
+31641
+31645
+31654
+Code Details
+CodeDescriptionConfidenceReview31641Bronchoscopy; with destruction of tumor or relief of stenosis by any method80%requiredcryotherapy.performed=true31645Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial80%requiredtherapeutic_aspiration.performed=true3165480%requiredradial_ebus.performed=true
+RVU & Payment
+Total Work RVU: 8.03
+Estimated Payment: $416.42
+Per-Code Breakdown
+CPTWork RVUPayment316415.25$N/A316452.78$N/A
+Registry Extraction
+FieldValueLinear EBUS PerformedNoRadial EBUS PerformedYesTherapeutic Aspiration PerformedYesTherapeutic Aspiration MaterialMucus plugCryotherapy PerformedYesCpt Code 1 Code31641Cpt Code 2 Code31645Cpt Code 3 Code31654Established Tracheostomy RouteNo
+Evidence
+{
+"ner_spans": [
+{
+"source": "ner_span",
+"text": "Therapeutic",
+"span": [
+397,
+408
+],
+"confidence": 0.4978310167789459
+}
+],
+"procedures_performed.radial_ebus.performed": [
+{
+"source": "registry_span",
+"text": "Radial EBUS",
+"span": [
+697,
+708
+],
+"confidence": 1
+}
+],
+"procedures_performed.cryotherapy.performed": [
+{
+"source": "registry_span",
+"text": "cryotherapy",
+"span": [
+834,
+845
+],
+"confidence": 1
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"source": "registry_span",
+"text": "Therapeutic aspiration",
+"span": [
+397,
+419
+],
+"confidence": 1
+}
+]
+}
+Audit Warnings:
+DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, radial_ebus, therapeutic_aspiration
+SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\blaser\b')
+Radial EBUS inferred from concentric/eccentric view.
+SELF_CORRECT_SKIPPED: 31627: Path not allowed: /procedures_performed/navigational_bronchoscopy
+SELF_CORRECT_SKIPPED: 31629: keyword guard failed
+SELF_CORRECT_SKIPPED: 31623: keyword guard failed
+RAW_ML_AUDIT[HIGH_CONF]: model suggests 31627 (prob=0.99), but deterministic derivation missed it
+RAW_ML_AUDIT[HIGH_CONF]: model suggests 31629 (prob=0.90), but deterministic derivation missed it
+RAW_ML_AUDIT[HIGH_CONF]: model suggests 31623 (prob=0.55), but deterministic derivation missed it
+RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31628 (prob=0.68), but deterministic derivation missed it
+KB: 2.9 · Policy: extraction_first_v1 · Time: 11832ms
+
+Raw json:
+{
+"registry": {
+"procedures_performed": {
+"linear_ebus": {
+"performed": false,
+"node_events": []
+},
+"radial_ebus": {
+"performed": true
+},
+"therapeutic_aspiration": {
+"performed": true,
+"material": "Mucus plug"
+},
+"cryotherapy": {
+"performed": true
+}
+},
+"billing": {
+"cpt_codes": [
+{
+"code": "31641"
+},
+{
+"code": "31645"
+},
+{
+"code": "31654"
+}
+]
+},
+"evidence": {
+"ner_spans": [
+{
+"text": "Therapeutic",
+"start": 397,
+"end": 408,
+"confidence": 0.4978310167789459
+}
+],
+"procedures_performed.radial_ebus.performed": [
+{
+"text": "Radial EBUS",
+"start": 697,
+"end": 708
+}
+],
+"procedures_performed.cryotherapy.performed": [
+{
+"text": "cryotherapy",
+"start": 834,
+"end": 845
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"text": "Therapeutic aspiration",
+"start": 397,
+"end": 419
+}
+]
+},
+"procedure_families": [],
+"established_tracheostomy_route": false,
+"granular_validation_warnings": []
+},
+"evidence": {
+"ner_spans": [
+{
+"source": "ner_span",
+"text": "Therapeutic",
+"span": [
+397,
+408
+],
+"confidence": 0.4978310167789459
+}
+],
+"procedures_performed.radial_ebus.performed": [
+{
+"source": "registry_span",
+"text": "Radial EBUS",
+"span": [
+697,
+708
+],
+"confidence": 1
+}
+],
+"procedures_performed.cryotherapy.performed": [
+{
+"source": "registry_span",
+"text": "cryotherapy",
+"span": [
+834,
+845
+],
+"confidence": 1
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"source": "registry_span",
+"text": "Therapeutic aspiration",
+"span": [
+397,
+419
+],
+"confidence": 1
+}
+]
+},
+"cpt_codes": [
+"31641",
+"31645",
+"31654"
+],
+"suggestions": [
+{
+"code": "31641",
+"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+"confidence": 0.8,
+"rationale": "cryotherapy.performed=true",
+"review_flag": "required"
+},
+{
+"code": "31645",
+"description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+"confidence": 0.8,
+"rationale": "therapeutic_aspiration.performed=true",
+"review_flag": "required"
+},
+{
+"code": "31654",
+"description": "",
+"confidence": 0.8,
+"rationale": "radial_ebus.performed=true",
+"review_flag": "required"
+}
+],
+"total_work_rvu": 8.03,
+"estimated_payment": 416.42,
+"per_code_billing": [
+{
+"cpt_code": "31641",
+"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+"work_rvu": 5.25,
+"total_facility_rvu": 8.4,
+"facility_payment": 271.79
+},
+{
+"cpt_code": "31645",
+"description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+"work_rvu": 2.78,
+"total_facility_rvu": 4.47,
+"facility_payment": 144.63
+}
+],
+"pipeline_mode": "extraction_first",
+"coder_difficulty": "high_confidence",
+"needs_manual_review": true,
+"audit_warnings": [
+"DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, radial_ebus, therapeutic_aspiration",
+"SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')",
+"Radial EBUS inferred from concentric/eccentric view.",
+"SELF_CORRECT_SKIPPED: 31627: Path not allowed: /procedures_performed/navigational_bronchoscopy",
+"SELF_CORRECT_SKIPPED: 31629: keyword guard failed",
+"SELF_CORRECT_SKIPPED: 31623: keyword guard failed",
+"RAW_ML_AUDIT[HIGH_CONF]: model suggests 31627 (prob=0.99), but deterministic derivation missed it",
+"RAW_ML_AUDIT[HIGH_CONF]: model suggests 31629 (prob=0.90), but deterministic derivation missed it",
+"RAW_ML_AUDIT[HIGH_CONF]: model suggests 31623 (prob=0.55), but deterministic derivation missed it",
+"RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31628 (prob=0.68), but deterministic derivation missed it"
+],
+"validation_errors": [],
+"review_status": "pending_phi_review",
+"kb_version": "2.9",
+"policy_version": "extraction_first_v1",
+"processing_time_ms": 11831.58
+}
+Extraction evaluator
+Custom Gem
+This is for informational purposes only. For medical advice or diagnosis, consult a professional.
+🩺 Extraction Quality Report
+Score: 50 / 100 Status: ❌ FAIL
+1. Accuracy (Precision)
+•	Hallucination (Wrong Modality): The JSON claims cryotherapy.performed=true. The text explicitly states "Transbronchial microwave ablation was performed". The term "cryotherapy" likely appears only in the CPT description header ("Destruction... eg. laser therapy, cryotherapy") which the extractor mistakenly grabbed as the performed procedure.
+•	Evidence Misattribution: The "evidence" span for cryotherapy likely points to that generic header description, violating the requirement for evidence to reflect performed actions.
+2. Completeness (Recall)
+•	Missed Procedures (Critical):
+•	Navigational Bronchoscopy (31627): Text is explicit: "Robotic navigation bronchoscopy was performed with Ion platform." The RAW_ML_AUDIT correctly saw this (prob=0.99), but the deterministic layer failed to finalize it (SELF_CORRECT_SKIPPED).
+•	TBNA (31629): Text is explicit: "Transbronchial needle aspiration was performed with 19G Needle." This is completely missing from the final JSON and CPT list despite high ML confidence (0.90).
+•	Missed Details:
+•	Targeting: The note details targets in "Anterior Segment of RUL (RB3)", "RB2", and "RB1". The JSON captures none of this granularity.
+•	Devices: 19G Needle, Microwave Antenna.
+•	Imaging: Cone Beam CT (Cios Spin) usage is prominent in the text but absent in extraction.
+3. Logic & Coding
+•	CPT Consistency: Major under-coding. The extraction missed 31627 (Navigation) and 31629 (TBNA), which are core value drivers for this procedure.
+•	System Logic Failure: The audit logs (SELF_CORRECT_SKIPPED: Path not allowed) indicate that the pipeline correctly detected the missing codes via ML but a logic guardrail prevented them from being added to the final record.
+4. Corrected JSON Snippet (Relevant Section)
+JSON
+{
+  "procedures_performed": {
+    "navigational_bronchoscopy": {
+      "performed": true,
+      "platform": "Ion Robotic Bronchoscope",
+      "evidence": { "quote": "Robotic navigation bronchoscopy was performed with Ion platform" }
+    },
+    "tbna_conventional": {
+      "performed": true,
+      "needle_gauge": "19G",
+      "evidence": { "quote": "Transbronchial needle aspiration was performed with 19G Needle" }
+    },
+    "thermal_ablation": {
+      "performed": true,
+      "modality": "Microwave",
+      "evidence": { "quote": "transbronchial microwave ablation was performed" }
+    },
+    "cryotherapy": {
+      "performed": false
+    },
+    "radial_ebus": {
+      "performed": true,
+      "evidence": { "quote": "Radial EBUS was performed" }
+    }
+  },
+  "cpt_codes": ["31645", "31629", "31627", "31654", "31641"]
+}
+
+Gemini can make mistakes, so double-check it
+note:
+NOTE_ID:  note_010 SOURCE_FILE: note_010.txt INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with hemoptysis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             8 mg
+Fentanyl          100 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   1450
+ 
+Physician/patient face-to-face anesthesia stop time:   1510
+ 
+Total moderate sedation time was 20 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by RN. 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Hybrid (Pedatric) Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+The tracheostomy tube is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Larynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Vocal Cords: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  Thin rusty secretions, therapeutic aspiration was done.  Cavity noted in the RB2 subsegment. Cavity was entered. 
+Left Lung Proximal Airways: Endobronchial balloon at ligula, LUL with organized clot obscuring evaluation of distal airways. Otherwise, normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology. 7Fr Ardnt blocker was noted in middle of LMS. Balloon deflated. 
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus, blood, and blood clots. 
+ 
+Uniblocker (5Fr) balloon occlusion was performed at the Left Carina (LC2) with 5 Fr Uniblocker and secured in place with the Uniblocker ventilator adaptor.
+            -Placed at the tape level at dark blue securement device
+            -Confirmed that 3cc of air was required to inflate the balloon to fully occlude the 
+LUL
+The endobronchial blocker balloon was intermittently inflated in the LUL to assist with clot removal.
+ 
+Endobronchial clot at LUL Lingula Carina (Lc1) and Left Carina (LC2) was treated with the following modalities:
+ 
+Modality Tools Setting/Mode Duration Results
+Cryoprobe 1.1mm Cryoprobe N/A 5-10 second freezes Excellent clot removal
+ 
+After organized clot was removed from the LUL orifice.  
+ 
+When block balloon was deflated, no blood was noted coming from LB1/2 or LB3.  The blocker was left deflated. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications. 
+ 
+SPECIMEN(S): 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy for evaluation of hemoptysis, cryotherapy (cryoprobe) were used to evacuate the LUL airways of organized clot.  5 Fr Uniblocker was placed and left deflated at the LUL. The patient tolerated the procedure well and there were no immediate complications.
+ 
+- prn bronchoscopy as needed
+- decannulation as appropriate.
+ 
+Formatted:
+Unified Results Extraction-First
+Pipeline: extraction_first
+Confidence: low_confidence
+Manual Review Needed
+CPT Codes
+31641
+31645
+Code Details
+CodeDescriptionConfidenceReview31641Bronchoscopy; with destruction of tumor or relief of stenosis by any method80%requiredcryotherapy.performed=true31645Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial80%requiredtherapeutic_aspiration.performed=true
+RVU & Payment
+Total Work RVU: 8.03
+Estimated Payment: $416.42
+Per-Code Breakdown
+CPTWork RVUPayment316415.25$N/A316452.78$N/A
+Registry Extraction
+FieldValueTherapeutic Aspiration PerformedYesTherapeutic Aspiration MaterialMucus plugCryotherapy PerformedYesCpt Code 1 Code31641Cpt Code 2 Code31645Established Tracheostomy RouteNo
+Evidence
+{
+"ner_spans": [
+{
+"source": "ner_span",
+"text": "therapeutic aspiration was done",
+"span": [
+2580,
+2611
+],
+"confidence": 0.9420065581798553
+}
+],
+"procedures_performed.cryotherapy.performed": [
+{
+"source": "registry_span",
+"text": "cryotherapy",
+"span": [
+997,
+1008
+],
+"confidence": 1
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"source": "registry_span",
+"text": "Therapeutic aspiration",
+"span": [
+851,
+873
+],
+"confidence": 1
+}
+]
+}
+Audit Warnings:
+DETERMINISTIC_UPLIFT: added performed=true for cryotherapy
+31645: NER found keyword, but context suggests negation/history.
+SILENT_FAILURE: Text contains 'tracheostomy' but extraction missed it. (Pattern: '(?i)\btracheostomy\b')
+SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\blaser\b')
+KB: 2.9 · Policy: extraction_first_v1 · Time: 422ms
+
+Raw json:
+{
+"registry": {
+"procedures_performed": {
+"therapeutic_aspiration": {
+"performed": true,
+"material": "Mucus plug"
+},
+"cryotherapy": {
+"performed": true
+}
+},
+"billing": {
+"cpt_codes": [
+{
+"code": "31641"
+},
+{
+"code": "31645"
+}
+]
+},
+"evidence": {
+"ner_spans": [
+{
+"text": "therapeutic aspiration was done",
+"start": 2580,
+"end": 2611,
+"confidence": 0.9420065581798553
+}
+],
+"procedures_performed.cryotherapy.performed": [
+{
+"text": "cryotherapy",
+"start": 997,
+"end": 1008
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"text": "Therapeutic aspiration",
+"start": 851,
+"end": 873
+}
+]
+},
+"procedure_families": [],
+"established_tracheostomy_route": false,
+"granular_validation_warnings": []
+},
+"evidence": {
+"ner_spans": [
+{
+"source": "ner_span",
+"text": "therapeutic aspiration was done",
+"span": [
+2580,
+2611
+],
+"confidence": 0.9420065581798553
+}
+],
+"procedures_performed.cryotherapy.performed": [
+{
+"source": "registry_span",
+"text": "cryotherapy",
+"span": [
+997,
+1008
+],
+"confidence": 1
+}
+],
+"procedures_performed.therapeutic_aspiration.performed": [
+{
+"source": "registry_span",
+"text": "Therapeutic aspiration",
+"span": [
+851,
+873
+],
+"confidence": 1
+}
+]
+},
+"cpt_codes": [
+"31641",
+"31645"
+],
+"suggestions": [
+{
+"code": "31641",
+"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+"confidence": 0.8,
+"rationale": "cryotherapy.performed=true",
+"review_flag": "required"
+},
+{
+"code": "31645",
+"description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+"confidence": 0.8,
+"rationale": "therapeutic_aspiration.performed=true",
+"review_flag": "required"
+}
+],
+"total_work_rvu": 8.03,
+"estimated_payment": 416.42,
+"per_code_billing": [
+{
+"cpt_code": "31641",
+"description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+"work_rvu": 5.25,
+"total_facility_rvu": 8.4,
+"facility_payment": 271.79
+},
+{
+"cpt_code": "31645",
+"description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+"work_rvu": 2.78,
+"total_facility_rvu": 4.47,
+"facility_payment": 144.63
+}
+],
+"pipeline_mode": "extraction_first",
+"coder_difficulty": "low_confidence",
+"needs_manual_review": true,
+"audit_warnings": [
+"DETERMINISTIC_UPLIFT: added performed=true for cryotherapy",
+"31645: NER found keyword, but context suggests negation/history.",
+"SILENT_FAILURE: Text contains 'tracheostomy' but extraction missed it. (Pattern: '(?i)\\btracheostomy\\b')",
+"SILENT_FAILURE: Text mentions 'laser'. (Pattern: '(?i)\\blaser\\b')"
+],
+"validation_errors": [],
+"review_status": "pending_phi_review",
+"kb_version": "2.9",
+"policy_version": "extraction_first_v1",
+"processing_time_ms": 421.91
+}
+Extraction evaluator
+Custom Gem
+This is for informational purposes only. For medical advice or diagnosis, consult a professional.
+🩺 Extraction Quality Report
+Score: 70 / 100 Status: ⚠️ WARNING
+1. Accuracy (Precision)
+•	Hallucinations: None. The extracted procedures (therapeutic_aspiration, cryotherapy) are present in the text.
+•	Mismatch:
+•	Tracheostomy Route: JSON established_tracheostomy_route: false vs Note "bronchoscopy introduction through tracheostomy tube". This is a direct factual contradiction. The Audit Warning correctly flagged this ("SILENT_FAILURE: Text contains 'tracheostomy'..."), but the final JSON value remained incorrect.
+2. Completeness (Recall)
+•	Missed Procedures:
+•	Balloon Occlusion: The note describes "Uniblocker (5Fr) balloon occlusion was performed at the Left Carina". This event is completely missing from procedures_performed.
+•	Moderate Sedation: While 31645/31641 are the focus, the note clearly documents "99152 Moderate sedation: initial 15 minutes" and "Total moderate sedation time was 20 minutes". The JSON billing section misses 99152.
+•	Missed Details:
+•	Cryotherapy Indication: The JSON maps Cryotherapy -> CPT 31641 (Tumor Destruction). However, the text explicitly states cryo was used for "Excellent clot removal". Cryotherapy for clot extraction is often coded as Foreign Body Removal (31635) or bundled into Therapeutic Aspiration (31645), rather than Tumor Destruction (31641). The engine blindly mapped "Cryo" -> 31641 without context (Indication: Clot vs Tumor).
+3. Logic & Coding
+•	CPT Consistency:
+•	31641 is questionable for clot removal. The note explicitly lists 31641 in the header, which justifies the engine picking it up, but the body describes clot removal. The extractor followed the header (Provider's code) rather than the clinical truth (Procedure performed).
+•	31645 is correct.
+4. Corrected JSON Snippet
+JSON
+{
+  "registry": {
+    "procedures_performed": {
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus, blood, and blood clots"
+      },
+      "cryotherapy": {
+        "performed": true,
+        "indication": "Clot removal" 
+      },
+      "balloon_occlusion": {
+        "performed": true,
+        "device": "5Fr Uniblocker",
+        "location": "Left Carina (LC2) / LUL"
+      }
+    },
+    "established_tracheostomy_route": true, 
+    "billing": {
+      "cpt_codes": [
+        { "code": "31641" }, 
+        { "code": "31645" },
+        { "code": "99152" }
+      ]
+    }
+  }
+}
+
+Gemini can make mistakes, so double-che
+note:
+NOTE_ID:  note_130 SOURCE_FILE: note_130.txt Procedure Name: Bronchoscopy
+
+Indications:
+
+Known lung cancer of the right lower lobe
+
+Malignant airway disease
+
+Evaluation for mediastinal staging
+
+Anesthesia:
+General anesthesia with controlled mechanical ventilation. Topical anesthesia with 2% lidocaine to the tracheobronchial tree (9 mL). See the anesthesia record for full documentation of administered medications.
+
+Pre-Anesthesia Assessment:
+
+ASA Physical Status Classification: III (patient with severe systemic disease)
+
+The procedure, including risks, benefits, and alternatives, was explained to the patient. All questions were answered, and informed consent was obtained and documented per institutional protocol. A history and physical examination were performed and updated in the pre-procedure assessment record. Relevant laboratory studies and radiographic imaging were reviewed. A procedural time-out was performed prior to the intervention.
+
+Following administration of intravenous anesthetic medications and topical anesthesia to the upper airway and tracheobronchial tree, the Q180 slim video bronchoscope was introduced through the mouth via a laryngeal mask airway and advanced into the tracheobronchial tree. The UC180F convex probe EBUS bronchoscope was subsequently introduced through the mouth via the laryngeal mask airway and advanced into the tracheobronchial tree.
+
+A black rigid bronchial tube (12.0–11.0 mm) was introduced through the mouth and advanced into the tracheobronchial tree. A 0-degree, 4.0-mm rigid telescope was introduced through the rigid bronchoscope and advanced into the airway. The T180 therapeutic video bronchoscope was then introduced through the rigid bronchoscope following removal of the telescope and advanced into the tracheobronchial tree.
+
+Procedure Description and Findings
+
+Larynx:
+Normal appearance.
+
+Trachea and Carina:
+No evidence of significant pathology.
+
+Left Lung:
+No evidence of significant pathology.
+
+Right Lung:
+A nearly obstructing (>90% obstruction) endobronchial mass was identified proximally in the apical segment of the right upper lobe (B1). The lesion was not traversed.
+
+A second nearly obstructing (>90% obstruction) large endobronchial mass was identified proximally within the bronchus intermedius. This lesion was successfully traversed, allowing visualization of the distal airway.
+
+The bronchoscope was withdrawn and replaced with the EBUS bronchoscope to perform endobronchial ultrasound examination.
+
+Lymph Node Assessment
+
+Lymph node sizing and sampling were performed using endobronchial ultrasound for staging of non-small cell lung cancer. Transbronchial needle aspiration was performed using an Olympus EBUS-TBNA needle at the following stations, with specimens sent for histopathologic examination:
+
+Station 11L (interlobar): ROSE demonstrated adequate tissue. Five needle passes obtained.
+
+Station 4L (lower paratracheal): Not sampled.
+
+Station 2L (upper paratracheal): ROSE demonstrated non-diagnostic tissue. Five needle passes obtained.
+
+Station 2R (upper paratracheal): Not sampled.
+
+Station 4R (lower paratracheal): ROSE demonstrated adequate tissue. Five needle passes obtained.
+
+Station 7 (subcarinal): ROSE demonstrated adequate tissue. Five needle passes obtained.
+
+Stations 11Rs and 11Ri were not sampled due to direct invasion by the primary tumor.
+
+Therapeutic Intervention
+
+The endobronchial tumor within the right bronchus intermedius was mechanically excised using rigid bronchoscopy and rigid suction. Following tumor debulking, the right middle lobe bronchus was patent. The right lower lobe bronchi were noted to be occluded at the subsegmental level due to malignant disease.
+
+A portion of the endobronchial tumor arising from the apical segment of the right upper lobe and occluding the right upper lobe bronchus was also removed using biopsy forceps. The anterior and posterior segmental bronchi of the right upper lobe were patent; however, the apical segmental bronchus remained completely occluded.
+
+Complications
+
+No immediate complications.
+
+Estimated Blood Loss
+
+Less than 5 mL.
+
+Impression
+
+Known lung cancer of the right lower lobe
+
+Malignant endobronchial mass in the apical segment of the right upper lobe (B1)
+
+Malignant endobronchial mass in the bronchus intermedius
+
+Successful lymph node sizing and sampling via EBUS-TBNA
+
+Mechanical excision of endobronchial lesions in the bronchus intermedius and right upper lobe
+
+Post-Procedure Diagnosis
+
+Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsies
+
+The patient remained stable throughout the procedure and was transferred in good condition to the post-bronchoscopy recovery area for observation until discharge criteria were met. Preliminary findings were discussed with the patient, and follow-up with the requesting service for final pathology results was recommended.
+
+Results
+Formatted
+Raw JSON
+Unified Results Extraction-First
+Pipeline: extraction_first
+Confidence: low_confidence
+Manual Review Needed
+CPT Codes
+No CPT codes derived.
+RVU & Payment
+Total Work RVU: N/A
+Estimated Payment: $N/A
+Registry Extraction
+FieldValueLinear EBUS PerformedYesRadial EBUS PerformedNoTherapeutic Aspiration PerformedNoEstablished Tracheostomy RouteNo
+Evidence
+{
+  "ner_spans": [
+    {
+      "source": "ner_span",
+      "text": "Bronchoscopy",
+      "span": [
+        61,
+        73
+      ],
+      "confidence": 0.5048133134841919
+    },
+    {
+      "source": "ner_span",
+      "text": "US",
+      "span": [
+        1254,
+        1256
+      ],
+      "confidence": 0.5379695892333984
+    },
+    {
+      "source": "ner_span",
+      "text": "EBUS",
+      "span": [
+        2420,
+        2424
+      ],
+      "confidence": 0.7623721659183502
+    },
+    {
+      "source": "ner_span",
+      "text": "endobronchial ultrasound",
+      "span": [
+        2449,
+        2473
+      ],
+      "confidence": 0.9936341842015585
+    },
+    {
+      "source": "ner_span",
+      "text": "Lymph node sizing and sampling",
+      "span": [
+        2511,
+        2541
+      ],
+      "confidence": 0.9867066740989685
+    },
+    {
+      "source": "ner_span",
+      "text": "endobronchial ultrasound",
+      "span": [
+        2563,
+        2587
+      ],
+      "confidence": 0.991489032904307
+    },
+    {
+      "source": "ner_span",
+      "text": "Transbronchial needle aspiration",
+      "span": [
+        2631,
+        2663
+      ],
+      "confidence": 0.9956105351448059
+    },
+    {
+      "source": "ner_span",
+      "text": "EBUS-TBNA",
+      "span": [
+        2695,
+        2704
+      ],
+      "confidence": 0.8307964920997619
+    }
+  ]
+}
+Audit Warnings:
+WIPED_VERIFICATION_FAILED: procedures_performed.therapeutic_aspiration
+31645: NER found keyword, but context suggests negation/history.
+SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\s+bronchoscop')
+Linear EBUS inferred from convex/mediastinal/station sampling.
+linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653
+KB: 2.9 · Policy: extraction_first_v1 · Time: 441ms
+
+Raw json:
+{
+  "registry": {
+    "procedures_performed": {
+      "linear_ebus": {
+        "performed": true,
+        "node_events": []
+      },
+      "radial_ebus": {
+        "performed": false
+      },
+      "therapeutic_aspiration": {
+        "performed": false
+      }
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Bronchoscopy",
+          "start": 61,
+          "end": 73,
+          "confidence": 0.5048133134841919
+        },
+        {
+          "text": "US",
+          "start": 1254,
+          "end": 1256,
+          "confidence": 0.5379695892333984
+        },
+        {
+          "text": "EBUS",
+          "start": 2420,
+          "end": 2424,
+          "confidence": 0.7623721659183502
+        },
+        {
+          "text": "endobronchial ultrasound",
+          "start": 2449,
+          "end": 2473,
+          "confidence": 0.9936341842015585
+        },
+        {
+          "text": "Lymph node sizing and sampling",
+          "start": 2511,
+          "end": 2541,
+          "confidence": 0.9867066740989685
+        },
+        {
+          "text": "endobronchial ultrasound",
+          "start": 2563,
+          "end": 2587,
+          "confidence": 0.991489032904307
+        },
+        {
+          "text": "Transbronchial needle aspiration",
+          "start": 2631,
+          "end": 2663,
+          "confidence": 0.9956105351448059
+        },
+        {
+          "text": "EBUS-TBNA",
+          "start": 2695,
+          "end": 2704,
+          "confidence": 0.8307964920997619
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Bronchoscopy",
+        "span": [
+          61,
+          73
+        ],
+        "confidence": 0.5048133134841919
+      },
+      {
+        "source": "ner_span",
+        "text": "US",
+        "span": [
+          1254,
+          1256
+        ],
+        "confidence": 0.5379695892333984
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          2420,
+          2424
+        ],
+        "confidence": 0.7623721659183502
+      },
+      {
+        "source": "ner_span",
+        "text": "endobronchial ultrasound",
+        "span": [
+          2449,
+          2473
+        ],
+        "confidence": 0.9936341842015585
+      },
+      {
+        "source": "ner_span",
+        "text": "Lymph node sizing and sampling",
+        "span": [
+          2511,
+          2541
+        ],
+        "confidence": 0.9867066740989685
+      },
+      {
+        "source": "ner_span",
+        "text": "endobronchial ultrasound",
+        "span": [
+          2563,
+          2587
+        ],
+        "confidence": 0.991489032904307
+      },
+      {
+        "source": "ner_span",
+        "text": "Transbronchial needle aspiration",
+        "span": [
+          2631,
+          2663
+        ],
+        "confidence": 0.9956105351448059
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          2695,
+          2704
+        ],
+        "confidence": 0.8307964920997619
+      }
+    ]
+  },
+  "cpt_codes": [],
+  "suggestions": [],
+  "per_code_billing": [],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "WIPED_VERIFICATION_FAILED: procedures_performed.therapeutic_aspiration",
+    "31645: NER found keyword, but context suggests negation/history.",
+    "SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\\s+bronchoscop')",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "2.9",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 441.06
+}
+Extraction evaluator
+Custom Gem
+This is for informational purposes only. For medical advice or diagnosis, consult a professional.
+🩺 Extraction Quality Report
+Score: 10 / 100 Status: ❌ FAIL
+1. Accuracy (Precision)
+•	Hallucinations: None. (The pipeline produced almost no data, so it did not hallucinate).
+•	Mismatch: N/A (Data is missing, not mismatched).
+2. Completeness (Recall)
+CRITICAL FAILURE: The extraction engine failed to capture 90% of the procedure described in the note.
+•	Missed Procedures:
+•	Rigid Bronchoscopy: Clearly documented ("black rigid bronchial tube... introduced"), flagged in audit warnings as a SILENT_FAILURE, but missing from extracted structured data.
+•	Tumor Excision/Debulking: Documented as "Mechanical excision... using rigid bronchoscopy and rigid suction" and "removed using biopsy forceps". Missing from output.
+•	Endobronchial Biopsy: Forceps biopsy of the RUL mass. Missing.
+•	Missed Details:
+•	EBUS Stations: The note details sampling of stations 11L, 2L, 4R, and 7 (5 passes each). The JSON linear_ebus object has performed: true but node_events: []. This is a complete data loss for the primary diagnostic component.
+•	Tumor Locations: RUL Apical (B1) and Bronchus Intermedius masses were not extracted.
+3. Logic & Coding
+•	CPT Consistency: FAILED. The pipeline generated [] (No CPTs). Based on the text, it should have generated at least:
+•	31653 (EBUS-TBNA, 3+ stations).
+•	31640 (Excision of tumor, rigid or flexible).
+•	Schema Compliance: The linear_ebus object is technically schema-valid but semantically empty. The pipeline logic correctly identified the presence of EBUS but failed the granular extraction step.
+4. Corrected JSON Snippet (Reconstruction)
+Here is how the missing sections should have appeared in a valid V3 extraction:
+JSON
+{
+  "procedures_performed": {
+    "rigid_bronchoscopy": {
+      "performed": true,
+      "evidence": { "quote": "A black rigid bronchial tube (12.0–11.0 mm) was introduced" }
+    },
+    "linear_ebus": {
+      "performed": true,
+      "node_events": [
+        { "station": "11L", "passes": 5, "needle_gauge": "22G", "evidence": { "quote": "Station 11L (interlobar)... Five needle passes obtained" } },
+        { "station": "2L", "passes": 5, "needle_gauge": "22G", "evidence": { "quote": "Station 2L (upper paratracheal)... Five needle passes obtained" } },
+        { "station": "4R", "passes": 5, "needle_gauge": "22G", "evidence": { "quote": "Station 4R (lower paratracheal)... Five needle passes obtained" } },
+        { "station": "7", "passes": 5, "needle_gauge": "22G", "evidence": { "quote": "Station 7 (subcarinal)... Five needle passes obtained" } }
+      ]
+    },
+    "tumor_debulking_non_thermal": {
+      "performed": true,
+      "method": "rigid suction and biopsy forceps",
+      "sites": [
+        { "location": "Right Bronchus Intermedius", "evidence": { "quote": "endobronchial tumor within the right bronchus intermedius was mechanically excised" } },
+        { "location": "RUL Apical Segment", "evidence": { "quote": "tumor arising from the apical segment of the right upper lobe... removed using biopsy forceps" } }
+      ]
+    }
+  }
+}
+
+Gemini can make mistakes, so double-check it
+

@@ -1,11 +1,13 @@
+from unittest.mock import MagicMock, patch
+
 import pytest
 from fastapi.testclient import TestClient
+
+from modules.api.dependencies import get_registry_service
 from modules.api.fastapi_app import app
-from unittest.mock import patch, MagicMock
+from modules.api.phi_dependencies import get_phi_scrubber
 from modules.registry.application.registry_service import RegistryExtractionResult, RegistryRecord
 from proc_schemas.registry.ip_v2 import IPRegistryV2
-from modules.api.dependencies import get_registry_service
-from modules.api.phi_dependencies import get_phi_scrubber
 
 client = TestClient(app)
 
@@ -99,3 +101,41 @@ def test_unified_process_needs_scrubbing(mock_registry_service):
         mock_redact.assert_called_once()
         # Verify call to service passes scrubbed text
         mock_registry_service.extract_fields.assert_called_once_with("Scrubbed text")
+
+
+def test_unified_process_surfaces_registry_warnings(mock_registry_service, mock_phi_scrubber):
+    mock_record = IPRegistryV2(
+        patient={"patient_id": "123"},
+        procedure={"procedure_date": "2023-01-01", "indication": "Test"},
+    )
+    full_record = RegistryRecord(
+        patient=mock_record.patient,
+        procedure=mock_record.procedure,
+    )
+
+    extraction_result = RegistryExtractionResult(
+        record=full_record,
+        cpt_codes=["31622"],
+        coder_difficulty="HIGH_CONF",
+        coder_source="extraction_first",
+        mapped_fields={},
+        warnings=["SILENT_FAILURE: Text mentions 'laser'."],
+        audit_warnings=[
+            "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31641 (prob=0.99), "
+            "but deterministic derivation missed it"
+        ],
+        needs_manual_review=True,
+    )
+
+    mock_registry_service.extract_fields.return_value = extraction_result
+
+    payload = {
+        "note": "Already scrubbed text",
+        "already_scrubbed": True,
+    }
+    response = client.post("/api/v1/process", json=payload)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert any("SILENT_FAILURE" in w for w in data["audit_warnings"])
+    assert any("RAW_ML_AUDIT" in w for w in data["audit_warnings"])

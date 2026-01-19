@@ -169,6 +169,7 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   // meds/abbr
   "lidocaine", "fentanyl", "midazolam", "versed", "propofol", "epinephrine",
   "ga", "ett", "asa", "npo", "nkda", "ebl", "ptx", "cxr", "cbct", "pacu", "icu",
+  "saline", "normal saline", "ns",
 
   // IP-specific abbreviations (commonly mis-tagged)
   "ip", "interventional pulmonology", "pulmonology",
@@ -330,6 +331,7 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   // Pathology/lab terms
   "histopathological", "histopathology", "cytopathology", "cytopathological",
   "histologic", "histological", "cytologic", "cytological",
+  "microbiology", "cytology", "culture", "cultures",
   "examination", "examinations", "documentation", "documentation",
 
   // Facility/location terms (prevent "Center, Main" truncation)
@@ -403,6 +405,7 @@ const CLINICAL_ALLOW_PARTIAL = makeNormalizedSet([
   "immunohistochemical", "immunohistochemistry",
   "bronchoscopic", "bronchoscopically", "thoracoscopic", "thoracoscopically",
   "endobronchial", "transbronchial", "mediastinoscopy", "mediastinoscopic",
+  "carina", "mainstem", "saline", "microbiology",
   // Medical adjectives that should veto entire span if present
   "diffuse", "parenchymal", "interstitial", "infiltrative", "fibrotic",
   "pulmonary", "respiratory", "bronchial", "alveolar", "pleural",
@@ -907,6 +910,22 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     // -------------------------------------------------------------------------
     if (!veto && activeIndex.anatomySet.has(norm)) {
       veto = true; reason = "anatomy_list";
+    }
+
+    // -------------------------------------------------------------------------
+    // 1b) Multi-token anatomy phrases (e.g., "Left Mainstem, Carina", "Carina (LC1)")
+    // These are often tagged as PATIENT due to capitalization/punctuation.
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const tokens = norm.split(/\s+/).filter(Boolean);
+      if (tokens.length >= 2) {
+        const dir = new Set(["left", "right", "bilateral"]);
+        const isLcToken = (t) => /^[a-z]{1,3}\d{1,2}$/i.test(t); // e.g., lc1, lc2
+        const tokenOk = (t) => dir.has(t) || activeIndex.anatomySet.has(t) || isLcToken(t);
+        if (tokens.some((t) => activeIndex.anatomySet.has(t)) && tokens.every(tokenOk)) {
+          veto = true; reason = "anatomy_phrase";
+        }
+      }
     }
 
     // -------------------------------------------------------------------------

@@ -52,11 +52,16 @@ const api = {
             body: JSON.stringify(payload),
         });
     },
-    async extract(procedure_id, include_financials = true) {
-        return fetchJson(`${API_BASE}/api/v1/procedures/${procedure_id}/extract`, {
+    async extract(scrubbed_text, include_financials = true) {
+        return fetchJson(`${API_BASE}/api/v1/process`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ include_financials, explain: true }),
+            body: JSON.stringify({
+                note: scrubbed_text,
+                already_scrubbed: true,
+                include_financials,
+                explain: true,
+            }),
         });
     },
     async reidentify(procedure_id) {
@@ -427,7 +432,7 @@ async function handleReview() {
 
         // Step 2: Run extraction
         try {
-            const extraction = await api.extract(state.procedureId, true);
+            const extraction = await api.extract(state.scrubbedText, true);
             renderExtractionResults(extraction);
             setStatus("Extraction Complete", "bg-success");
         } catch (extractErr) {

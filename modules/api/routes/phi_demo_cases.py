@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, HTTPException
@@ -77,7 +76,7 @@ def attach_procedure(case_id: str, payload: AttachProcedureRequest) -> PhiDemoCa
 
     try:
         case = store.attach_procedure(case_uuid, proc_uuid)
-    except KeyError:
-        raise HTTPException(status_code=404, detail="Case not found")
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="Case not found") from exc
 
     return _serialize_case(case)

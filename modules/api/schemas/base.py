@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from enum import Enum
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -111,7 +112,10 @@ class UnifiedProcessRequest(BaseModel):
     note: str = Field(..., description="The procedure note text to process")
     already_scrubbed: bool = Field(
         False,
-        description="If true, the server will skip PHI scrubbing and treat the note as already de-identified/scrubbed.",
+        description=(
+            "If true, the server will skip PHI scrubbing and treat the note as already "
+            "de-identified/scrubbed."
+        ),
     )
     locality: str = Field("00", description="Geographic locality for RVU calculations")
     include_financials: bool = Field(True, description="Whether to include RVU/payment info")
@@ -126,6 +130,12 @@ class CodeSuggestionSummary(BaseModel):
     confidence: float
     rationale: str = ""
     review_flag: str = "optional"
+
+
+class ReviewStatus(str, Enum):
+    UNVERIFIED = "unverified"
+    PENDING_PHI_REVIEW = "pending_phi_review"
+    FINALIZED = "finalized"
 
 
 class UnifiedProcessResponse(BaseModel):
@@ -152,6 +162,10 @@ class UnifiedProcessResponse(BaseModel):
     needs_manual_review: bool = False
     audit_warnings: list[str] = Field(default_factory=list)
     validation_errors: list[str] = Field(default_factory=list)
+    review_status: ReviewStatus = Field(
+        default=ReviewStatus.UNVERIFIED,
+        description="Review status: unverified, pending_phi_review, or finalized",
+    )
 
     # Versions
     kb_version: str = ""
@@ -172,6 +186,7 @@ __all__ = [
     "RenderResponse",
     "UnifiedProcessRequest",
     "UnifiedProcessResponse",
+    "ReviewStatus",
     "VerifyRequest",
     "VerifyResponse",
 ]

@@ -1,0 +1,2774 @@
+source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311 && pytest
+...............................F........................................ [  5%]
+........................................................................ [ 10%]
+........................................................................ [ 15%]
+........................................................................ [ 20%]
+........................................................................ [ 25%]
+sssssssss.................sssssssssssss..........EEEEEEEEFFFFFFFEEEE.... [ 31%]
+........................................................................ [ 36%]
+........................................................................ [ 41%]
+........................................................................ [ 46%]
+........................................................................ [ 51%]
+........................................................................ [ 57%]
+........................................................................ [ 62%]
+.......F................................................................ [ 67%]
+........................................................................ [ 72%]
+........................................................................ [ 77%]
+........................................................................ [ 83%]
+........................................................................ [ 88%]
+........................................................................ [ 93%]
+........................................................................ [ 98%]
+...................                                                      [100%]
+==================================== ERRORS ====================================
+___________ ERROR at setup of TestHealthEndpoints.test_health_check ____________
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_health_check>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+__________ ERROR at setup of TestHealthEndpoints.test_advisor_status ___________
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_advisor_status>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+________ ERROR at setup of TestCodeEndpoints.test_code_procedure_basic _________
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_code_procedure_basic>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+_____ ERROR at setup of TestCodeEndpoints.test_code_procedure_bronchoscopy _____
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_code_procedure_bronchoscopy>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+____ ERROR at setup of TestCodeEndpoints.test_code_procedure_thoracentesis _____
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_code_procedure_thoracentesis>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+__________ ERROR at setup of TestCodeEndpoints.test_code_with_advisor __________
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_code_with_advisor>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+_____ ERROR at setup of TestCodeEndpoints.test_code_with_advisor_disabled ______
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_code_with_advisor_disabled>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+_ ERROR at setup of TestAdvisorSuggestEndpoint.test_suggest_requires_enabled_advisor _
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_suggest_requires_enabled_advisor>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+________ ERROR at setup of TestErrorHandling.test_invalid_request_body _________
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_invalid_request_body>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+_____ ERROR at setup of TestErrorHandling.test_invalid_procedure_category ______
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_invalid_procedure_category>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+________ ERROR at setup of TestTraceLogging.test_trace_created_on_code _________
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_trace_created_on_code>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+____________ ERROR at setup of TestTraceLogging.test_trace_disabled ____________
+
+fixturedef = <FixtureDef argname='test_client' scope='function' baseid='tests/ml_advisor'>
+request = <SubRequest 'test_client' for <Function test_trace_disabled>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/ml_advisor/conftest.py:509: in test_client
+    with TestClient(app) as client:
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+=================================== FAILURES ===================================
+________ test_unified_process_already_scrubbed_bypasses_server_scrubber ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1d0bc1850>
+client = <starlette.testclient.TestClient object at 0x1d0bc00d0>
+
+    def test_unified_process_already_scrubbed_bypasses_server_scrubber(
+        monkeypatch, client: TestClient
+    ) -> None:
+        class StubRegistryService:
+            def __init__(self) -> None:
+                self.seen_note: str | None = None
+    
+            def extract_fields(self, note_text: str):
+                self.seen_note = note_text
+                record = SimpleNamespace(model_dump=lambda **_: {})
+                return SimpleNamespace(
+                    record=record,
+                    cpt_codes=[],
+                    coder_difficulty="HIGH_CONF",
+                    coder_source="stub",
+                    mapped_fields={},
+                    derivation_warnings=[],
+                    warnings=[],
+                    needs_manual_review=False,
+                    validation_errors=[],
+                    audit_warnings=[],
+                )
+    
+        class StubKBRepo:
+            version = "test_kb"
+    
+            def get_procedure_info(self, _code: str):
+                return None
+    
+        class StubCodingService:
+            kb_repo = StubKBRepo()
+    
+        stub_registry = StubRegistryService()
+    
+        # Hard-fail if the server-side scrubbing helper is invoked.
+        from modules.api import fastapi_app as fastapi_app_module
+    
+        def _fail_apply(*_args, **_kwargs):
+            raise AssertionError("apply_phi_redaction should not be called when already_scrubbed=true")
+    
+        monkeypatch.setattr(fastapi_app_module, "apply_phi_redaction", _fail_apply)
+    
+        async def _run_cpu_direct(_app, fn, *args):  # noqa: ANN001
+            return fn(*args)
+    
+        monkeypatch.setattr(fastapi_app_module, "run_cpu", _run_cpu_direct)
+    
+        # Avoid unrelated readiness dependencies
+        app.dependency_overrides[require_ready] = lambda: None
+        app.dependency_overrides[get_registry_service] = lambda: stub_registry
+        app.dependency_overrides[get_coding_service] = lambda: StubCodingService()
+        app.dependency_overrides[get_phi_scrubber] = lambda: (lambda text: text)
+    
+        try:
+            note = "RAW_TEXT_SHOULD_PASS_THROUGH_UNCHANGED"
+>           resp = client.post(
+                "/api/v1/process",
+                json={"note": note, "already_scrubbed": True, "include_financials": False},
+            )
+
+tests/api/test_phi_redactor_ui.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:546: in post
+    return super().post(
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:445: in request
+    return super().request(
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:348: in handle_request
+    raise exc
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:345: in handle_request
+    portal.call(self.app, scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:191: in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/_utils.py:85: in collapse_excgroups
+    raise exc
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:193: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:326: in _phi_redactor_headers
+    resp = await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:168: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:144: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:125: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:111: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:391: in app
+    raw_response = await run_endpoint_function(
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:290: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+payload = UnifiedProcessRequest(note='RAW_TEXT_SHOULD_PASS_THROUGH_UNCHANGED', already_scrubbed=True, locality='00', include_financials=False, explain=False)
+request = <starlette.requests.Request object at 0x1d0bf1750>
+response = <starlette.responses.Response object at 0x1d0bf1c90>, _ready = None
+registry_service = <test_phi_redactor_ui.test_unified_process_already_scrubbed_bypasses_server_scrubber.<locals>.StubRegistryService object at 0x1d0bbbbd0>
+coding_service = <test_phi_redactor_ui.test_unified_process_already_scrubbed_bypasses_server_scrubber.<locals>.StubCodingService object at 0x1d0bf2810>
+phi_scrubber = <function test_unified_process_already_scrubbed_bypasses_server_scrubber.<locals>.<lambda>.<locals>.<lambda> at 0x1d0b67ce0>
+
+    @router.post(
+        "/v1/process",
+        response_model=UnifiedProcessResponse,
+        response_model_exclude_none=True,
+        summary="Unified PHI-safe extraction and coding pipeline",
+    )
+    async def unified_process(
+        payload: UnifiedProcessRequest,
+        request: Request,
+        response: Response,
+        _ready: None = _ready_dep,
+        registry_service: RegistryService = _registry_service_dep,
+        coding_service: CodingService = _coding_service_dep,
+        phi_scrubber=_phi_scrubber_dep,
+    ) -> UnifiedProcessResponse:
+        """Run the unified extraction pipeline."""
+        response.headers["X-Process-Route"] = "router"
+        start_time = time.time()
+    
+        # 1. PHI Redaction (if not already scrubbed)
+        if payload.already_scrubbed:
+            note_text = payload.note
+        else:
+            redaction = apply_phi_redaction(payload.note, phi_scrubber)
+            note_text = redaction.text
+    
+        # 2. Run Registry Extraction (includes CPT Coding via Hybrid Orchestrator)
+        try:
+            result: RegistryExtractionResult = await run_cpu(
+                request.app, registry_service.extract_fields, note_text
+            )
+        except httpx.HTTPStatusError as exc:
+            if exc.response is not None and exc.response.status_code == 429:
+                retry_after = exc.response.headers.get("Retry-After") or "10"
+                raise HTTPException(
+                    status_code=503,
+                    detail="Upstream LLM rate limited",
+                    headers={"Retry-After": str(retry_after)},
+                ) from exc
+            raise
+        except LLMError as exc:
+            if "429" in str(exc):
+                raise HTTPException(
+                    status_code=503,
+                    detail="Upstream LLM rate limited",
+                    headers={"Retry-After": "10"},
+                ) from exc
+            raise
+        except ValueError as exc:
+            logger.error("Unified process configuration error: %s", exc)
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        except Exception as exc:
+            logger.error("Unified process failed: %s", exc, exc_info=True)
+            raise HTTPException(status_code=500, detail="Internal processing error") from exc
+    
+        from config.settings import CoderSettings
+        from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+    
+        record = result.record
+        if record is None:
+            from modules.registry.schema import RegistryRecord
+    
+            record = RegistryRecord.model_validate(result.mapped_fields)
+    
+        derived_codes, derived_rationales, derivation_warnings = derive_all_codes_with_meta(record)
+        codes = list(result.cpt_codes or derived_codes)
+>       code_rationales = result.code_rationales or derived_rationales
+                          ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'code_rationales'
+
+modules/api/routes/unified_process.py:113: AttributeError
+_________ TestAdvisorSuggestEndpoint.test_suggest_with_enabled_advisor _________
+
+self = <tests.ml_advisor.test_router.TestAdvisorSuggestEndpoint object at 0x176165090>
+
+    def test_suggest_with_enabled_advisor(self):
+        """Suggest endpoint should work when advisor is enabled."""
+        from modules.api.fastapi_app import app
+    
+        # Override the dependency to enable advisor
+        def override_config():
+            return make_override_config(enabled=True, backend="stub")
+    
+        app.dependency_overrides[get_advisor_config] = override_config
+    
+        try:
+>           with TestClient(app) as client:
+
+tests/ml_advisor/test_router.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+__________________ TestTraceEndpoints.test_list_traces_empty ___________________
+
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x176166590>
+tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-2/test_list_traces_empty0')
+
+    def test_list_traces_empty(self, tmp_path):
+        """Should return empty list when no traces exist."""
+        from modules.api.fastapi_app import app
+    
+        trace_file = tmp_path / "empty_traces.jsonl"
+    
+        def override_config():
+            return make_override_config(trace_path=trace_file)
+    
+        app.dependency_overrides[get_advisor_config] = override_config
+    
+        try:
+>           with TestClient(app) as client:
+
+tests/ml_advisor/test_router.py:198: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+________________ TestTraceEndpoints.test_list_traces_with_data _________________
+
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x17615af50>
+populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-2/test_list_traces_with_data0/test_traces.jsonl')
+
+    def test_list_traces_with_data(self, populated_trace_file):
+        """Should return traces when file has data."""
+        from modules.api.fastapi_app import app
+    
+        def override_config():
+            return make_override_config(trace_path=populated_trace_file)
+    
+        app.dependency_overrides[get_advisor_config] = override_config
+    
+        try:
+>           with TestClient(app) as client:
+
+tests/ml_advisor/test_router.py:217: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+________________ TestTraceEndpoints.test_list_traces_pagination ________________
+
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x176166290>
+populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-2/test_list_traces_pagination0/test_traces.jsonl')
+
+    def test_list_traces_pagination(self, populated_trace_file):
+        """Should support pagination."""
+        from modules.api.fastapi_app import app
+    
+        def override_config():
+            return make_override_config(trace_path=populated_trace_file)
+    
+        app.dependency_overrides[get_advisor_config] = override_config
+    
+        try:
+>           with TestClient(app) as client:
+
+tests/ml_advisor/test_router.py:236: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+_________________ TestTraceEndpoints.test_get_trace_not_found __________________
+
+self = <tests.ml_advisor.test_router.TestTraceEndpoints object at 0x176166690>
+tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-2/test_get_trace_not_found0')
+
+    def test_get_trace_not_found(self, tmp_path):
+        """Should return 404 for non-existent trace."""
+        from modules.api.fastapi_app import app
+    
+        trace_file = tmp_path / "traces.jsonl"
+        trace_file.touch()
+    
+        def override_config():
+            return make_override_config(trace_path=trace_file)
+    
+        app.dependency_overrides[get_advisor_config] = override_config
+    
+        try:
+>           with TestClient(app) as client:
+
+tests/ml_advisor/test_router.py:259: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+____________________ TestMetricsEndpoint.test_metrics_empty ____________________
+
+self = <tests.ml_advisor.test_router.TestMetricsEndpoint object at 0x176165fd0>
+tmp_path = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-2/test_metrics_empty0')
+
+    def test_metrics_empty(self, tmp_path):
+        """Should return empty metrics when no traces exist."""
+        from modules.api.fastapi_app import app
+    
+        trace_file = tmp_path / "empty_traces.jsonl"
+    
+        def override_config():
+            return make_override_config(trace_path=trace_file)
+    
+        app.dependency_overrides[get_advisor_config] = override_config
+    
+        try:
+>           with TestClient(app) as client:
+
+tests/ml_advisor/test_router.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+__________________ TestMetricsEndpoint.test_metrics_with_data __________________
+
+self = <tests.ml_advisor.test_router.TestMetricsEndpoint object at 0x1761671d0>
+populated_trace_file = PosixPath('/private/var/folders/kf/nr505v1d6sj_5f64rv_831zc0000gn/T/pytest-of-russellmiller/pytest-2/test_metrics_with_data0/test_traces.jsonl')
+
+    def test_metrics_with_data(self, populated_trace_file):
+        """Should calculate metrics from traces."""
+        from modules.api.fastapi_app import app
+    
+        def override_config():
+            return make_override_config(trace_path=populated_trace_file)
+    
+        app.dependency_overrides[get_advisor_config] = override_config
+    
+        try:
+>           with TestClient(app) as client:
+
+tests/ml_advisor/test_router.py:299: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:688: in __enter__
+    portal.call(self.wait_startup)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:321: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:723: in wait_startup
+    await receive()
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:714: in receive
+    self.task.result()
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/anyio/from_thread.py:252: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/testclient.py:704: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/applications.py:1134: in __call__
+    await super().__call__(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/cors.py:77: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:725: in app
+    await self.lifespan(scope, receive, send)
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/starlette/routing.py:694: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../miniconda3/envs/medparse-py311/lib/python3.11/site-packages/fastapi/routing.py:211: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+../../miniconda3/envs/medparse-py311/lib/python3.11/contextlib.py:210: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+modules/api/fastapi_app.py:197: in lifespan
+    _validate_startup_env()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _validate_startup_env() -> None:
+        pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+        if pipeline_mode != "extraction_first":
+            if pipeline_mode == "parallel_ner":
+                raise RuntimeError(
+                    "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+                )
+            raise RuntimeError(
+                f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+            )
+    
+        extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+        if extraction_engine != "parallel_ner":
+>           raise RuntimeError(
+                "REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production."
+            )
+E           RuntimeError: REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' for production.
+
+modules/api/fastapi_app.py:56: RuntimeError
+___________________ test_kitchen_sink_extraction_first_flags ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1d1823610>
+
+    def test_kitchen_sink_extraction_first_flags(monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+        monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "engine")
+        monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+        monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
+    
+        note_text = Path(
+            "tests/fixtures/notes/kitchen_sink_ion_nav_ebus_fiducial_dilation.txt"
+        ).read_text()
+    
+        result = RegistryService().extract_fields(note_text)
+        record = result.record
+    
+        assert "NAVIGATION" in (record.procedure_families or [])
+    
+        assert record.procedures_performed is not None
+    
+        assert record.procedures_performed.navigational_bronchoscopy is not None
+        assert record.procedures_performed.navigational_bronchoscopy.performed is True
+    
+        assert record.procedures_performed.airway_dilation is not None
+        assert record.procedures_performed.airway_dilation.performed is True
+    
+        assert record.procedures_performed.therapeutic_aspiration is not None
+        assert record.procedures_performed.therapeutic_aspiration.performed is True
+    
+        assert record.procedures_performed.radial_ebus is not None
+        assert record.procedures_performed.radial_ebus.performed is True
+    
+        assert record.procedures_performed.linear_ebus is not None
+>       assert record.procedures_performed.linear_ebus.performed is True
+E       AssertionError: assert False is True
+E        +  where False = LinearEBUSProcedure(performed=False, stations_sampled=['11R'], stations_planned=['11R'], stations_detail=[{'station': ...hotodocumentation_complete=None, elastography_used=True, elastography_pattern='qua', doppler_used=None, node_events=[]).performed
+E        +    where LinearEBUSProcedure(performed=False, stations_sampled=['11R'], stations_planned=['11R'], stations_detail=[{'station': ...hotodocumentation_complete=None, elastography_used=True, elastography_pattern='qua', doppler_used=None, node_events=[]) = RegistryrecordProceduresPerformed(diagnostic_bronchoscopy=None, bal=None, bronchial_wash=None, brushings=None, endobro...ermoplasty=None, whole_lung_lavage=None, rigid_bronchoscopy=None, percutaneous_tracheostomy=None, neck_ultrasound=None).linear_ebus
+E        +      where RegistryrecordProceduresPerformed(diagnostic_bronchoscopy=None, bal=None, bronchial_wash=None, brushings=None, endobro...ermoplasty=None, whole_lung_lavage=None, rigid_bronchoscopy=None, percutaneous_tracheostomy=None, neck_ultrasound=None) = RegistryRecord(patient_mrn=None, procedure_date=None, procedure_start_time=None, procedure_end_time=None, procedure_du...pled is empty/missing', 'procedures_performed.tbna_conventional.performed=true but stations_sampled is empty/missing']).procedures_performed
+
+tests/registry/test_kitchen_sink_extraction_first.py:40: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"timestamp": "2026-01-18T01:19:49.436250", "level": "WARNING", "logger": "ner.inference", "message": "GranularNERPredictor unavailable: Model directory not found: artifacts/granular_ner_model"}
+{"timestamp": "2026-01-18T01:19:49.436319", "level": "INFO", "logger": "coder.parallel_pathway", "message": "ParallelPathwayOrchestrator initialized: NER=unavailable, ML=unavailable"}
+{"timestamp": "2026-01-18T01:19:49.439547", "level": "WARNING", "logger": "common.llm", "message": "Using DeterministicStubLLM. Set GEMINI_API_KEY for real inference."}
+{"timestamp": "2026-01-18T01:19:49.446193", "level": "WARNING", "logger": "keyword_guard", "message": "SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\\bbrush(?:ings?)?\\b')"}
+------------------------------ Captured log call -------------------------------
+WARNING  ner.inference:inference.py:150 GranularNERPredictor unavailable: Model directory not found: artifacts/granular_ner_model
+INFO     coder.parallel_pathway:orchestrator.py:157 ParallelPathwayOrchestrator initialized: NER=unavailable, ML=unavailable
+WARNING  common.llm:llm.py:747 Using DeterministicStubLLM. Set GEMINI_API_KEY for real inference.
+WARNING  keyword_guard:keyword_guard.py:102 SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+=============================== warnings summary ===============================
+tests/api/test_fastapi.py::test_coder_run_fixture_response
+tests/phi/test_presidio_nlp_backend_smoke.py::test_presidio_scrubber_initializes_with_backend[scispacy-model_candidates1]
+  /Users/russellmiller/miniconda3/envs/medparse-py311/lib/python3.11/site-packages/spacy/language.py:2195: FutureWarning: Possible set union at position 6328
+    deserializers["tokenizer"] = lambda p: self.tokenizer.from_disk(  # type: ignore[union-attr]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [9] tests/integration/api/test_startup_warmup.py: _do_heavy_warmup was removed; warmup tests need to be updated
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:99: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:107: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:111: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:127: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:162: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:185: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:216: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:244: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:258: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:298: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:335: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:363: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:390: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+ERROR tests/ml_advisor/test_router.py::TestHealthEndpoints::test_health_check
+ERROR tests/ml_advisor/test_router.py::TestHealthEndpoints::test_advisor_status
+ERROR tests/ml_advisor/test_router.py::TestCodeEndpoints::test_code_procedure_basic
+ERROR tests/ml_advisor/test_router.py::TestCodeEndpoints::test_code_procedure_bronchoscopy
+ERROR tests/ml_advisor/test_router.py::TestCodeEndpoints::test_code_procedure_thoracentesis
+ERROR tests/ml_advisor/test_router.py::TestCodeEndpoints::test_code_with_advisor
+ERROR tests/ml_advisor/test_router.py::TestCodeEndpoints::test_code_with_advisor_disabled
+ERROR tests/ml_advisor/test_router.py::TestAdvisorSuggestEndpoint::test_suggest_requires_enabled_advisor
+ERROR tests/ml_advisor/test_router.py::TestErrorHandling::test_invalid_request_body
+ERROR tests/ml_advisor/test_router.py::TestErrorHandling::test_invalid_procedure_category
+ERROR tests/ml_advisor/test_router.py::TestTraceLogging::test_trace_created_on_code
+ERROR tests/ml_advisor/test_router.py::TestTraceLogging::test_trace_disabled
+FAILED tests/api/test_phi_redactor_ui.py::test_unified_process_already_scrubbed_bypasses_server_scrubber
+FAILED tests/ml_advisor/test_router.py::TestAdvisorSuggestEndpoint::test_suggest_with_enabled_advisor
+FAILED tests/ml_advisor/test_router.py::TestTraceEndpoints::test_list_traces_empty
+FAILED tests/ml_advisor/test_router.py::TestTraceEndpoints::test_list_traces_with_data
+FAILED tests/ml_advisor/test_router.py::TestTraceEndpoints::test_list_traces_pagination
+FAILED tests/ml_advisor/test_router.py::TestTraceEndpoints::test_get_trace_not_found
+FAILED tests/ml_advisor/test_router.py::TestMetricsEndpoint::test_metrics_empty
+FAILED tests/ml_advisor/test_router.py::TestMetricsEndpoint::test_metrics_with_data
+FAILED tests/registry/test_kitchen_sink_extraction_first.py::test_kitchen_sink_extraction_first_flags
+9 failed, 1344 passed, 22 skipped, 2 warnings, 12 errors in 22.86s
+make: *** [test] Error 1

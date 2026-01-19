@@ -13,7 +13,6 @@ os.environ.setdefault("PHI_DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("PHI_ENCRYPTION_MODE", "demo")
 
 from modules.api.fastapi_app import app  # noqa: E402
-from modules.api.phi_demo_store import get_phi_demo_store  # noqa: E402
 
 
 @pytest.fixture(autouse=True)

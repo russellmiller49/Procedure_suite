@@ -10,13 +10,13 @@ import os
 import uuid
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 
 
 @dataclass
 class PhiDemoCase:
     id: uuid.UUID
-    procedure_id: Optional[uuid.UUID] = None
+    procedure_id: uuid.UUID | None = None
     synthetic_patient_label: str | None = None
     procedure_date: str | None = None
     operator_name: str | None = None
@@ -91,12 +91,16 @@ def _build_supabase_store():
                 cases.append(
                     PhiDemoCase(
                         id=uuid.UUID(row["id"]),
-                        procedure_id=uuid.UUID(row["procedure_id"]) if row.get("procedure_id") else None,
+                        procedure_id=(
+                            uuid.UUID(row["procedure_id"]) if row.get("procedure_id") else None
+                        ),
                         synthetic_patient_label=row.get("synthetic_patient_label"),
                         procedure_date=row.get("procedure_date"),
                         operator_name=row.get("operator_name"),
                         scenario_label=row.get("scenario_label"),
-                        created_at=datetime.fromisoformat(row.get("created_at") or datetime.utcnow().isoformat()),
+                        created_at=datetime.fromisoformat(
+                            row.get("created_at") or datetime.utcnow().isoformat()
+                        ),
                     )
                 )
             return cases
@@ -132,7 +136,12 @@ def _build_supabase_store():
 
         def attach_procedure(self, case_id: uuid.UUID, procedure_id: uuid.UUID) -> PhiDemoCase:
             case = super().attach_procedure(case_id, procedure_id)
-            client.table(table).update({"procedure_id": str(procedure_id)}).eq("id", str(case_id)).execute()
+            (
+                client.table(table)
+                .update({"procedure_id": str(procedure_id)})
+                .eq("id", str(case_id))
+                .execute()
+            )
             return case
 
     return SupabasePhiDemoStore()

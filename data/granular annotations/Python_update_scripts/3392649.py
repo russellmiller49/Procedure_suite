@@ -17,8 +17,11 @@ except ImportError:
     sys.exit(1)
 
 # ==========================================
-# 2. Helper Functions
+# 2. Data Definition
 # ==========================================
+
+BATCH_DATA = []
+
 def get_span(text, term, occurrence=1):
     start = -1
     for i in range(occurrence):
@@ -27,13 +30,11 @@ def get_span(text, term, occurrence=1):
              raise ValueError(f"Term '{term}' (occurrence {occurrence}) not found.")
     return {"text": term, "start": start, "end": start + len(term)}
 
-BATCH_DATA = []
-
 # ==========================================
 # Note 1: 3392649
 # ==========================================
-id_1 = "3392649"
-text_1 = """Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]
+id_3392649 = "3392649"
+text_3392649 = """Pt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]
 Date: [REDACTED] || Location: [REDACTED]
 MD: Dr. Michael Chen
 
@@ -56,30 +57,58 @@ Plan: Daily output monitoring, reassess in 48-72h.
 
 Chen, MD"""
 
-entities_1 = [
-    {"label": "OBS_LESION", **get_span(text_1, "Hepatic hydrothorax", 1)},
-    {"label": "LATERALITY", **get_span(text_1, "Right", 1)},
-    {"label": "PROC_METHOD", **get_span(text_1, "Ultrasound-guided", 1)},
-    {"label": "ANAT_PLEURA", **get_span(text_1, "Pleural", 1)},
-    {"label": "DEV_CATHETER", **get_span(text_1, "Drainage Catheter", 1)},
-    {"label": "PROC_METHOD", **get_span(text_1, "Real-time ultrasound", 1)},
-    {"label": "MEDICATION", **get_span(text_1, "lidocaine", 1)},
-    {"label": "DEV_CATHETER_SIZE", **get_span(text_1, "14Fr", 1)},
-    {"label": "DEV_CATHETER", **get_span(text_1, "pigtail catheter", 1)},
-    {"label": "MEAS_VOL", **get_span(text_1, "1011mL", 1)},
-    {"label": "OBS_FINDING", **get_span(text_1, "turbid fluid", 1)},
-    # Occurrence 2 of "Catheter" (Capitalized) matches "Catheter secured"
-    {"label": "DEV_CATHETER", **get_span(text_1, "Catheter", 2)},
-    # Occurrence 2 of "catheter" (lowercase) matches "catheter in appropriate"
-    {"label": "DEV_CATHETER", **get_span(text_1, "catheter", 2)},
-    {"label": "OUTCOME_COMPLICATION", **get_span(text_1, "no PTX", 1)},
+entities_3392649 = [
+    # Indication: Hepatic hydrothorax -> OBS_LESION (maps to indication)
+    {"label": "OBS_LESION", **get_span(text_3392649, "Hepatic hydrothorax", 1)},
+    
+    # Side: Right -> LATERALITY
+    {"label": "LATERALITY", **get_span(text_3392649, "Right", 1)},
+    
+    # PROCEDURE: Ultrasound-guided -> PROC_METHOD
+    {"label": "PROC_METHOD", **get_span(text_3392649, "Ultrasound-guided", 1)},
+    
+    # Pleural (in Pleural Drainage) -> ANAT_PLEURA
+    {"label": "ANAT_PLEURA", **get_span(text_3392649, "Pleural", 1)},
+    
+    # Catheter (in Catheter Placement) -> DEV_CATHETER
+    {"label": "DEV_CATHETER", **get_span(text_3392649, "Catheter", 1)},
+    
+    # Real-time ultrasound -> PROC_METHOD
+    {"label": "PROC_METHOD", **get_span(text_3392649, "Real-time ultrasound", 1)},
+    
+    # lidocaine -> MEDICATION
+    {"label": "MEDICATION", **get_span(text_3392649, "lidocaine", 1)},
+    
+    # Seldinger technique -> PROC_METHOD
+    {"label": "PROC_METHOD", **get_span(text_3392649, "Seldinger technique", 1)},
+    
+    # 14Fr pigtail catheter -> DEV_CATHETER_SIZE (matches "14 Fr pigtail" pattern)
+    {"label": "DEV_CATHETER_SIZE", **get_span(text_3392649, "14Fr pigtail catheter", 1)},
+    
+    # 1011mL -> MEAS_VOL
+    {"label": "MEAS_VOL", **get_span(text_3392649, "1011mL", 1)},
+    
+    # turbid fluid -> SPECIMEN (fluid matches SPECIMEN, turbid matches findings, keeping specific specimen phrase)
+    {"label": "SPECIMEN", **get_span(text_3392649, "turbid fluid", 1)},
+    
+    # Catheter (in Catheter secured) -> DEV_CATHETER
+    {"label": "DEV_CATHETER", **get_span(text_3392649, "Catheter", 2)},
+    
+    # catheter (in catheter in appropriate position) -> DEV_CATHETER
+    # Note: 1st lowercase "catheter" is inside "14Fr pigtail catheter". 2nd is standalone.
+    {"label": "DEV_CATHETER", **get_span(text_3392649, "catheter", 2)},
+    
+    # no PTX -> OUTCOME_COMPLICATION
+    {"label": "OUTCOME_COMPLICATION", **get_span(text_3392649, "no PTX", 1)},
 ]
 
-BATCH_DATA.append({"id": id_1, "text": text_1, "entities": entities_1})
+BATCH_DATA.append({"id": id_3392649, "text": text_3392649, "entities": entities_3392649})
+
 
 # ==========================================
-# 3. Execution
+# 3. Execution Loop
 # ==========================================
+
 if __name__ == "__main__":
     print(f"Starting batch processing of {len(BATCH_DATA)} notes...")
     for case in BATCH_DATA:

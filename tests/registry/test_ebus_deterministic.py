@@ -46,3 +46,33 @@ def test_ebus_pass_counts_and_elastography(engine):
     detail_by_station = {d["station"]: d for d in stations_detail if d.get("station")}
     assert detail_by_station.get("4R", {}).get("passes") == 3
     assert detail_by_station.get("7", {}).get("passes") == 2
+
+
+def test_parse_ebus_station_passes_without_station_keyword(engine):
+    note = """
+    EBUS-Findings:
+    11L... tissue. Five needle passes.
+    """
+    passes = engine._parse_ebus_station_passes(note)
+    assert passes.get("11L") == 5
+
+
+def test_parse_ebus_station_passes_passes_before_station(engine):
+    note = "Five needle passes at station 11L were obtained."
+    passes = engine._parse_ebus_station_passes(note)
+    assert passes.get("11L") == 5
+
+
+def test_parse_ebus_station_passes_station7_label_style(engine):
+    note = """
+    EBUS-Findings:
+    7 (subcarinal) sampled with two passes.
+    """
+    passes = engine._parse_ebus_station_passes(note)
+    assert passes.get("7") == 2
+
+
+def test_parse_ebus_station_passes_does_not_false_positive_age(engine):
+    note = "Age 7 years. Five needle passes were performed."
+    passes = engine._parse_ebus_station_passes(note)
+    assert passes == {}

@@ -197,6 +197,81 @@ class CodingService:
         rationales = dict(extraction_result.code_rationales or {})
         derivation_warnings = list(extraction_result.derivation_warnings or [])
 
+        if not codes:
+            rule_result = self.rule_engine.generate_candidates(report_text)
+            suggestions: list[CodeSuggestion] = []
+            candidates = getattr(rule_result, "candidates", None)
+            if candidates is None:
+                legacy_codes = list(getattr(rule_result, "codes", []) or [])
+                legacy_conf = dict(getattr(rule_result, "confidence", {}) or {})
+                candidates = [
+                    {
+                        "code": code,
+                        "confidence": legacy_conf.get(code, 0.9),
+                        "rule_path": "RULE_ENGINE_FALLBACK",
+                        "rationale": "rule_engine.fallback",
+                    }
+                    for code in legacy_codes
+                ]
+
+            for candidate in candidates:
+                if isinstance(candidate, dict):
+                    code = str(candidate.get("code", "")).strip()
+                    confidence = float(candidate.get("confidence", 0.9))
+                    rule_path = str(candidate.get("rule_path", "RULE_ENGINE"))
+                    rationale = str(candidate.get("rationale", "derived"))
+                else:
+                    code = str(getattr(candidate, "code", "")).strip()
+                    confidence = float(getattr(candidate, "confidence", 0.9))
+                    rule_path = str(getattr(candidate, "rule_path", "RULE_ENGINE"))
+                    rationale = str(getattr(candidate, "rationale", "derived"))
+
+                if not code:
+                    continue
+
+                proc_info = self.kb_repo.get_procedure_info(code)
+                description = proc_info.description if proc_info else ""
+
+                reasoning = ReasoningFields(
+                    trigger_phrases=[],
+                    evidence_spans=[],
+                    rule_paths=[rule_path, rationale],
+                    ncci_notes="",
+                    mer_notes="",
+                    confidence=confidence,
+                    kb_version=self.kb_repo.version,
+                    policy_version=self.POLICY_VERSION,
+                )
+
+                suggestions.append(
+                    CodeSuggestion(
+                        code=code,
+                        description=description,
+                        source="rules",
+                        hybrid_decision="kept_rule_priority",
+                        rule_confidence=confidence,
+                        llm_confidence=None,
+                        final_confidence=confidence,
+                        reasoning=reasoning,
+                        review_flag="optional",
+                        trigger_phrases=[],
+                        evidence_verified=True,
+                        suggestion_id=str(uuid.uuid4()),
+                        procedure_id=procedure_id,
+                    )
+                )
+
+            latency_ms = (time.time() - start_time) * 1000
+            logger.info(
+                "Extraction-first derivation produced no CPT codes; using rules fallback",
+                extra={
+                    "procedure_id": procedure_id,
+                    "fallback_code_count": len(suggestions),
+                    "processing_time_ms": int(latency_ms),
+                },
+            )
+            return suggestions, 0.0
+
         # Step 2: Build audit warnings
         audit_warnings: list[str] = list(extraction_result.audit_warnings or [])
         audit_warnings.extend(derivation_warnings)

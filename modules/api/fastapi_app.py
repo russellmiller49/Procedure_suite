@@ -8,80 +8,133 @@
 See AI_ASSISTANT_GUIDE.md for details.
 """
 
+# ruff: noqa: E402
+
 from __future__ import annotations
 
 import asyncio
 import logging
 import os
+import subprocess
+import uuid
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
+from functools import lru_cache
+from pathlib import Path
+from typing import Any, AsyncIterator, List
 
-# Load .env file early so API keys are available
-from dotenv import load_dotenv
 import httpx
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 
 def _truthy_env(name: str) -> bool:
     return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
 
 
+def _env_value(name: str) -> str:
+    return os.getenv(name, "").strip().lower()
+
+
+def _validate_startup_env() -> None:
+    pipeline_mode = _env_value("PROCSUITE_PIPELINE_MODE")
+    if pipeline_mode != "extraction_first":
+        if pipeline_mode == "parallel_ner":
+            raise RuntimeError(
+                "PROCSUITE_PIPELINE_MODE=parallel_ner is invalid; use extraction_first."
+            )
+        raise RuntimeError(
+            f"PROCSUITE_PIPELINE_MODE must be 'extraction_first', got '{pipeline_mode or 'unset'}'."
+        )
+
+    # In production we enforce a single, deterministic configuration to prevent drift.
+    # In dev/tests we allow experimentation (e.g., engine-based extraction).
+    is_production = _truthy_env("CODER_REQUIRE_PHI_REVIEW") or (
+        _env_value("PROCSUITE_ENV") == "production"
+    )
+    if not is_production:
+        return
+
+    extraction_engine = _env_value("REGISTRY_EXTRACTION_ENGINE")
+    if extraction_engine != "parallel_ner":
+        raise RuntimeError("REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' in production.")
+
+    schema_version = _env_value("REGISTRY_SCHEMA_VERSION")
+    if schema_version != "v3":
+        raise RuntimeError("REGISTRY_SCHEMA_VERSION must be 'v3' in production.")
+
+    auditor_source = _env_value("REGISTRY_AUDITOR_SOURCE")
+    if auditor_source != "raw_ml":
+        raise RuntimeError("REGISTRY_AUDITOR_SOURCE must be 'raw_ml' in production.")
+
+
 # Prefer explicitly-exported environment variables over values in `.env`.
 # Tests can opt out (and avoid accidental real network calls) by setting `PROCSUITE_SKIP_DOTENV=1`.
 if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
-import subprocess
-import uuid
-from dataclasses import asdict
-from functools import lru_cache
-from pathlib import Path
-from typing import Any, AsyncIterator, List
+    try:
+        load_dotenv(dotenv_path=Path(__file__).resolve().parents[2] / ".env", override=False)
+    except Exception as e:
+        logging.getLogger(__name__).warning(
+            "Failed to load .env via python-dotenv (%s); proceeding with OS env only",
+            type(e).__name__,
+        )
 
-from fastapi import FastAPI, Request, Depends, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from config.settings import CoderSettings
+from modules.api.adapters.response_adapter import build_v3_evidence_payload
+from modules.api.coder_adapter import convert_coding_result_to_coder_output
+from modules.api.dependencies import (
+    get_coding_service,
+    get_qa_pipeline_service,
+    get_registry_service,
+)
+from modules.api.guards import (
+    enforce_legacy_endpoints_allowed,
+    enforce_request_mode_override_allowed,
+)
 
 # Coding entry points:
 # - Primary: /api/v1/procedures/{id}/codes/suggest (CodingService, PHI-gated)
 # - Legacy shim: /v1/coder/run (non-PHI/synthetic only; blocked when CODER_REQUIRE_PHI_REVIEW=true)
-
 # Import ML Advisor router
 from modules.api.ml_advisor_router import router as ml_advisor_router
-from modules.api.routes.phi import router as phi_router
-from modules.api.routes.procedure_codes import router as procedure_codes_router
-from modules.api.routes.metrics import router as metrics_router
-from modules.api.routes.phi_demo_cases import router as phi_demo_router
-from modules.api.routes_registry import router as registry_extract_router
+from modules.api.normalization import simplify_billing_cpt_codes
+from modules.api.phi_dependencies import get_phi_scrubber
+from modules.api.phi_redaction import apply_phi_redaction
 from modules.api.readiness import require_ready
-from modules.infra.executors import run_cpu
+from modules.api.routes.metrics import router as metrics_router
+from modules.api.routes.phi import router as phi_router
+from modules.api.routes.phi_demo_cases import router as phi_demo_router
+from modules.api.routes.procedure_codes import router as procedure_codes_router
 from modules.api.routes.unified_process import router as unified_process_router
+from modules.api.routes_registry import _prune_none
+from modules.api.routes_registry import router as registry_extract_router
 
 # All API schemas (base + QA pipeline)
 from modules.api.schemas import (
+    # QA pipeline schemas
+    CodeEntry,
+    CoderData,
     # Base schemas
     CoderRequest,
     CoderResponse,
-    CodeSuggestionSummary,
     HybridPipelineMetadata,
     KnowledgeMeta,
+    ModuleResult,
+    ModuleStatus,
     QARunRequest,
+    QARunResponse,
+    RegistryData,
     RegistryRequest,
     RegistryResponse,
     RenderRequest,
     RenderResponse,
-    UnifiedProcessRequest,
-    UnifiedProcessResponse,
+    ReporterData,
     VerifyRequest,
     VerifyResponse,
-    # QA pipeline schemas
-    CodeEntry,
-    CoderData,
-    ModuleResult,
-    ModuleStatus,
-    QARunResponse,
-    RegistryData,
-    ReporterData,
 )
 
 # QA Pipeline service
@@ -90,31 +143,18 @@ from modules.api.services.qa_pipeline import (
     QAPipelineResult,
     QAPipelineService,
 )
-from modules.api.dependencies import (
-    get_coding_service,
-    get_qa_pipeline_service,
-    get_registry_service,
-)
-from modules.api.phi_dependencies import get_phi_scrubber
-from modules.api.phi_redaction import apply_phi_redaction
-
-from config.settings import CoderSettings
-from modules.coder.schema import CodeDecision, CoderOutput
-from modules.common.knowledge import knowledge_hash, knowledge_version
-from modules.common.exceptions import LLMError
-from modules.common.spans import Span
-from modules.registry.engine import RegistryEngine
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
-from modules.api.normalization import simplify_billing_cpt_codes
-from modules.api.routes_registry import _prune_none
-from modules.registry.summarize import add_procedure_summaries
 
 # New architecture imports
 from modules.coder.application.coding_service import CodingService
-from modules.api.coder_adapter import convert_coding_result_to_coder_output
 from modules.coder.phi_gating import is_phi_review_required
-
+from modules.coder.schema import CodeDecision, CoderOutput
+from modules.common.knowledge import knowledge_hash, knowledge_version
+from modules.common.spans import Span
+from modules.infra.executors import run_cpu
+from modules.registry.application.registry_service import RegistryService
+from modules.registry.engine import RegistryEngine
+from modules.registry.schema import RegistryRecord
+from modules.registry.summarize import add_procedure_summaries
 from modules.reporting import MissingFieldIssue, ProcedureBundle
 from modules.reporting.engine import (
     ReporterEngine,
@@ -127,6 +167,13 @@ from modules.reporting.engine import (
 )
 from modules.reporting.inference import InferenceEngine
 from modules.reporting.validation import ValidationEngine
+
+# Dependency singletons for FastAPI signatures (avoid B008 warnings)
+_coding_service_dep = Depends(get_coding_service)
+_registry_service_dep = Depends(get_registry_service)
+_phi_scrubber_dep = Depends(get_phi_scrubber)
+_ready_dep = Depends(require_ready)
+_qa_service_dep = Depends(get_qa_pipeline_service)
 
 
 # ============================================================================
@@ -153,23 +200,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Import here to avoid circular import at module load time
     from modules.infra.nlp_warmup import (
         should_skip_warmup as _should_skip_warmup,
+    )
+    from modules.infra.nlp_warmup import (
         warm_heavy_resources_sync as _warm_heavy_resources_sync,
     )
     from modules.infra.settings import get_infra_settings
 
+    _validate_startup_env()
+
     settings = get_infra_settings()
     logger = logging.getLogger(__name__)
-    from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
-
-    def _verify_registry_onnx_bundle() -> None:
-        if resolve_model_backend() != "onnx":
-            return
-        runtime_dir = get_registry_runtime_dir()
-        model_path = runtime_dir / "registry_model_int8.onnx"
-        if not model_path.exists():
-            raise RuntimeError(
-                f"MODEL_BACKEND=onnx but missing registry model at {model_path}."
-            )
+    from modules.registry.model_runtime import verify_registry_runtime_bundle
 
     # Readiness state (liveness vs readiness)
     app.state.model_ready = False
@@ -188,16 +229,21 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
     # Ensure PHI database tables exist (auto-create on startup)
     try:
-        from modules.phi.db import Base as PHIBase
         from modules.api.phi_dependencies import engine as phi_engine
         from modules.phi import models as _phi_models  # noqa: F401 - register models
+        from modules.phi.db import Base as PHIBase
 
         PHIBase.metadata.create_all(bind=phi_engine)
         logger.info("PHI database tables verified/created")
     except Exception as e:
         logger.warning(f"Could not initialize PHI tables: {e}")
 
-    _verify_registry_onnx_bundle()
+    try:
+        runtime_warnings = verify_registry_runtime_bundle()
+        for warning in runtime_warnings:
+            logger.warning("Registry runtime bundle warning: %s", warning)
+    except RuntimeError as exc:
+        raise RuntimeError(f"Registry runtime bundle validation failed: {exc}") from exc
 
     loop = asyncio.get_running_loop()
 
@@ -416,13 +462,8 @@ _logger = logging.getLogger(__name__)
 # Heavy NLP model preloading (delegated to modules.infra.nlp_warmup)
 # ============================================================================
 from modules.infra.nlp_warmup import (
-    should_skip_warmup,
-    warm_heavy_resources as _warm_heavy_resources,
     is_nlp_warmed,
-    get_spacy_model,
-    get_sectionizer,
 )
-
 
 # NOTE: The lifespan context manager is defined above app creation.
 # See lifespan() function for startup/shutdown logic.
@@ -472,7 +513,7 @@ async def root(request: Request) -> Any:
     accept = request.headers.get("accept", "")
     if "text/html" in accept:
         return RedirectResponse(url="/ui/")
-        
+
     return {
         "name": "Procedure Suite API",
         "version": "0.3.0",
@@ -501,7 +542,10 @@ async def root(request: Request) -> Any:
             },
             "registry_extract": "/api/registry/extract",
         },
-        "note": "Use /api/v1/process for extraction-first pipeline (registry → CPT codes in one call). Legacy endpoints /v1/coder/run and /v1/registry/run still available.",
+        "note": (
+            "Use /api/v1/process for extraction-first pipeline (registry → CPT codes in one call). "
+            "Legacy endpoints /v1/coder/run and /v1/registry/run still available."
+        ),
     }
 
 
@@ -571,9 +615,13 @@ async def coder_run(
     req: CoderRequest,
     request: Request,
     mode: str | None = None,
-    coding_service: CodingService = Depends(get_coding_service),
+    coding_service: CodingService = _coding_service_dep,
 ) -> CoderResponse:
-    """Legacy raw-text coder shim (non-PHI). Use PHI workflow + /api/v1/procedures/{id}/codes/suggest."""
+    """Legacy raw-text coder shim (non-PHI).
+
+    Use PHI workflow + /api/v1/procedures/{id}/codes/suggest.
+    """
+    enforce_legacy_endpoints_allowed()
     require_review = is_phi_review_required()
     procedure_id = str(uuid.uuid4())
     report_text = req.note
@@ -582,7 +630,10 @@ async def coder_run(
     if require_review:
         raise HTTPException(
             status_code=400,
-            detail="Direct coding on raw text is disabled; submit via /v1/phi and review before coding.",
+            detail=(
+                "Direct coding on raw text is disabled; submit via /v1/phi and review "
+                "before coding."
+            ),
         )
 
     mode_value = (mode or req.mode or "").strip().lower()
@@ -666,7 +717,6 @@ async def _run_ml_first_pipeline(
     result = await run_cpu(request.app, _run_hybrid)
 
     # Build code decisions from orchestrator result
-    from modules.coder.schema import CodeDecision
 
     code_decisions = []
     for cpt in result.codes:
@@ -734,7 +784,6 @@ async def _run_ml_first_pipeline(
     )
 
     # Build response
-    from modules.coder.schema import CoderOutput
     return CoderOutput(
         codes=code_decisions,
         financials=financials,
@@ -752,15 +801,18 @@ async def _run_ml_first_pipeline(
 async def registry_run(
     req: RegistryRequest,
     request: Request,
-    _ready: None = Depends(require_ready),
-    registry_service: RegistryService = Depends(get_registry_service),
-    phi_scrubber=Depends(get_phi_scrubber),
+    _ready: None = _ready_dep,
+    registry_service: RegistryService = _registry_service_dep,
+    phi_scrubber=_phi_scrubber_dep,
 ) -> RegistryResponse:
+    enforce_legacy_endpoints_allowed()
+
     # Early PHI redaction - scrub once at entry
     redaction = apply_phi_redaction(req.note, phi_scrubber)
     note_text = redaction.text
 
     mode_value = (req.mode or "").strip().lower()
+    enforce_request_mode_override_allowed(mode_value)
     if mode_value == "parallel_ner":
         result = await run_cpu(
             request.app,
@@ -768,15 +820,20 @@ async def registry_run(
             note_text,
             req.mode,
         )
-        payload = _shape_registry_payload(result.record, {})
+        payload = _shape_registry_payload(result.record, {}, codes=result.cpt_codes)
         return JSONResponse(content=payload)
 
     if mode_value in {"engine_only", "no_llm", "deterministic_only"}:
-        from modules.registry.extractors.noop import NoOpLLMExtractor
+        result = await run_cpu(
+            request.app,
+            registry_service.extract_fields,
+            note_text,
+            "parallel_ner",
+        )
+        payload = _shape_registry_payload(result.record, {}, codes=result.cpt_codes)
+        return JSONResponse(content=payload)
 
-        eng = RegistryEngine(llm_extractor=NoOpLLMExtractor())
-    else:
-        eng = RegistryEngine()
+    eng = RegistryEngine()
     result = await run_cpu(request.app, eng.run, note_text, explain=req.explain)
     if isinstance(result, tuple):
         record, evidence = result
@@ -787,7 +844,15 @@ async def registry_run(
     return JSONResponse(content=payload)
 
 
-def _verify_bundle(bundle) -> tuple[ProcedureBundle, list[MissingFieldIssue], list[str], list[str], list[str]]:
+def _verify_bundle(
+    bundle,
+) -> tuple[
+    ProcedureBundle,
+    list[MissingFieldIssue],
+    list[str],
+    list[str],
+    list[str],
+]:
     templates = default_template_registry()
     schemas = default_schema_registry()
     inference = InferenceEngine()
@@ -804,7 +869,13 @@ def _verify_bundle(bundle) -> tuple[ProcedureBundle, list[MissingFieldIssue], li
 async def report_verify(req: VerifyRequest) -> VerifyResponse:
     bundle = build_procedure_bundle_from_extraction(req.extraction)
     bundle, issues, warnings, suggestions, notes = _verify_bundle(bundle)
-    return VerifyResponse(bundle=bundle, issues=issues, warnings=warnings, suggestions=suggestions, inference_notes=notes)
+    return VerifyResponse(
+        bundle=bundle,
+        issues=issues,
+        warnings=warnings,
+        suggestions=suggestions,
+        inference_notes=notes,
+    )
 
 
 @app.post("/report/render", response_model=RenderResponse)
@@ -845,25 +916,12 @@ async def report_render(req: RenderRequest) -> RenderResponse:
     )
 
 
-def _serialize_evidence(evidence: dict[str, list[Span]] | None) -> dict[str, list[dict[str, Any]]]:
-    serialized: dict[str, list[dict[str, Any]]] = {}
-    for field, spans in (evidence or {}).items():
-        cleaned: list[dict[str, Any]] = []
-        for span in spans or []:
-            if span is None:
-                continue
-            cleaned.append(_prune_none(_span_to_dict(span)))
-        if cleaned:
-            serialized[field] = cleaned
-    return serialized
-
-
-def _span_to_dict(span: Span) -> dict[str, Any]:
-    data = asdict(span)
-    return data
-
-
-def _shape_registry_payload(record: RegistryRecord, evidence: dict[str, list[Span]] | None) -> dict[str, Any]:
+def _shape_registry_payload(
+    record: RegistryRecord,
+    evidence: dict[str, list[Span]] | None,
+    *,
+    codes: list[str] | None = None,
+) -> dict[str, Any]:
     """Convert a registry record + evidence into a JSON-safe, null-pruned payload."""
     payload = _prune_none(record.model_dump(exclude_none=True))
 
@@ -871,161 +929,12 @@ def _shape_registry_payload(record: RegistryRecord, evidence: dict[str, list[Spa
     simplify_billing_cpt_codes(payload)
     add_procedure_summaries(payload)
 
-    payload["evidence"] = _serialize_evidence(evidence)
-    return payload
-
-
-# --- Unified Process Endpoint (Extraction-First) ---
-
-@app.post("/api/v1/process", response_model=UnifiedProcessResponse)
-async def unified_process(
-    req: UnifiedProcessRequest,
-    request: Request,
-    _ready: None = Depends(require_ready),
-    registry_service: RegistryService = Depends(get_registry_service),
-    coding_service: CodingService = Depends(get_coding_service),
-    phi_scrubber=Depends(get_phi_scrubber),
-) -> UnifiedProcessResponse:
-    """Unified endpoint combining registry extraction and CPT code derivation.
-
-    This endpoint implements the extraction-first pipeline:
-    1. Extracts structured registry fields from the procedure note
-    2. Derives CPT codes deterministically from the registry fields
-    3. Optionally calculates RVU/payment information
-
-    Returns both registry data and derived CPT codes in a single response,
-    making it ideal for production use where both outputs are needed.
-
-    This replaces the need to call /v1/registry/run and /v1/coder/run separately.
-    """
-    import time
-    from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-    from config.settings import CoderSettings
-
-    start_time = time.time()
-
-    if req.already_scrubbed:
-        note_text = req.note
-    else:
-        # Early PHI redaction - scrub once at entry, use scrubbed text downstream
-        redaction = apply_phi_redaction(req.note, phi_scrubber)
-        note_text = redaction.text
-
-    # Step 1: Registry extraction
-    try:
-        extraction_result = await run_cpu(request.app, registry_service.extract_fields, note_text)
-    except httpx.HTTPStatusError as exc:
-        if exc.response is not None and exc.response.status_code == 429:
-            retry_after = exc.response.headers.get("Retry-After") or "10"
-            raise HTTPException(
-                status_code=503,
-                detail="Upstream LLM rate limited",
-                headers={"Retry-After": str(retry_after)},
-            ) from exc
-        raise
-    except LLMError as exc:
-        if "429" in str(exc):
-            raise HTTPException(
-                status_code=503,
-                detail="Upstream LLM rate limited",
-                headers={"Retry-After": "10"},
-            ) from exc
-        raise
-
-    # Step 2: Derive CPT codes from registry
-    record = extraction_result.record
-    if record is None:
-        from modules.registry.schema import RegistryRecord
-        record = RegistryRecord.model_validate(extraction_result.mapped_fields)
-
-    codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
-
-    # Build suggestions with confidence and rationale
-    suggestions = []
-    base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
-
-    for code in codes:
-        proc_info = coding_service.kb_repo.get_procedure_info(code)
-        description = proc_info.description if proc_info else ""
-        rationale = rationales.get(code, "")
-
-        # Determine review flag
-        if extraction_result.needs_manual_review:
-            review_flag = "required"
-        elif extraction_result.audit_warnings:
-            review_flag = "recommended"
-        else:
-            review_flag = "optional"
-
-        suggestions.append(CodeSuggestionSummary(
-            code=code,
-            description=description,
-            confidence=base_confidence,
-            rationale=rationale,
-            review_flag=review_flag,
-        ))
-
-    # Step 3: Calculate financials if requested
-    total_work_rvu = None
-    estimated_payment = None
-    per_code_billing = []
-
-    if req.include_financials and codes:
-        settings = CoderSettings()
-        conversion_factor = settings.cms_conversion_factor
-        total_work = 0.0
-        total_payment = 0.0
-
-        for code in codes:
-            proc_info = coding_service.kb_repo.get_procedure_info(code)
-            if proc_info:
-                work_rvu = proc_info.work_rvu
-                total_rvu = proc_info.total_facility_rvu
-                payment = total_rvu * conversion_factor
-
-                total_work += work_rvu
-                total_payment += payment
-
-                per_code_billing.append({
-                    "cpt_code": code,
-                    "description": proc_info.description,
-                    "work_rvu": work_rvu,
-                    "total_facility_rvu": total_rvu,
-                    "facility_payment": round(payment, 2),
-                })
-
-        total_work_rvu = round(total_work, 2)
-        estimated_payment = round(total_payment, 2)
-
-    # Combine audit warnings
-    all_warnings = list(extraction_result.audit_warnings or [])
-    all_warnings.extend(derivation_warnings)
-
-    processing_time_ms = (time.time() - start_time) * 1000
-
-    # Build response
-    registry_payload = _prune_none(record.model_dump(exclude_none=True))
-    evidence_payload = {}
-    if req.explain and hasattr(extraction_result, 'evidence'):
-        evidence_payload = _serialize_evidence(getattr(extraction_result, 'evidence', {}))
-
-    return UnifiedProcessResponse(
-        registry=registry_payload,
-        evidence=evidence_payload,
-        cpt_codes=codes,
-        suggestions=suggestions,
-        total_work_rvu=total_work_rvu,
-        estimated_payment=estimated_payment,
-        per_code_billing=per_code_billing,
-        pipeline_mode="extraction_first",
-        coder_difficulty=extraction_result.coder_difficulty or "",
-        needs_manual_review=extraction_result.needs_manual_review,
-        audit_warnings=all_warnings,
-        validation_errors=extraction_result.validation_errors or [],
-        kb_version=coding_service.kb_repo.version,
-        policy_version="extraction_first_v1",
-        processing_time_ms=round(processing_time_ms, 2),
+    payload["evidence"] = build_v3_evidence_payload(
+        record=record,
+        evidence=evidence,
+        codes=codes,
     )
+    return payload
 
 
 # --- QA Sandbox Endpoint ---
@@ -1192,7 +1101,7 @@ def _qapipeline_result_to_response(
 async def qa_run(
     payload: QARunRequest,
     request: Request,
-    qa_service: QAPipelineService = Depends(get_qa_pipeline_service),
+    qa_service: QAPipelineService = _qa_service_dep,
 ) -> QARunResponse:
     """
     QA sandbox endpoint: runs reporter, coder, and/or registry on input text.

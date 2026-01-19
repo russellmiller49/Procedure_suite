@@ -20,6 +20,7 @@ from modules.coder.parallel_pathway.confidence_combiner import (
     CodeConfidence,
 )
 from modules.coder.parallel_pathway.reconciler import CodeReconciler, ReconciledCode
+from modules.common.spans import Span
 
 logger = get_logger("coder.parallel_pathway")
 
@@ -224,7 +225,8 @@ class ParallelPathwayOrchestrator:
         ml_predictor: Optional[Any] = None,
     ):
         """Run parallel NER + ML reconciliation and return a RegistryExtractionResult."""
-        path_a_result = self._run_path_a(note_text)
+        parallel_result = self.process(note_text, ml_predictor=ml_predictor)
+        path_a_result = parallel_result.path_a_result
         record = path_a_result.details.get("record")
 
         if record is None:
@@ -232,38 +234,21 @@ class ParallelPathwayOrchestrator:
 
             record = RegistryRecord()
 
-        ml_probabilities = self._predict_ml_probabilities(note_text, ml_predictor=ml_predictor)
-        ml_candidates = {code for code, prob in ml_probabilities.items() if prob > 0.5}
-        all_codes = sorted(set(path_a_result.codes) | ml_candidates)
-
-        audit_warnings: list[str] = []
-        finalized_codes: list[str] = []
-        needs_manual_review = False
-
-        for code in all_codes:
-            ner_code = code if code in path_a_result.codes else None
-            reconciled = self.reconciler.reconcile(ner_code, ml_probabilities.get(code, 0.0))
-            if not reconciled.code:
-                reconciled = ReconciledCode(
-                    code=code,
-                    status=reconciled.status,
-                    review_required=reconciled.review_required,
-                    message=reconciled.message,
-                )
-
-            if reconciled.status == "FINALIZED":
-                finalized_codes.append(reconciled.code)
-            if reconciled.review_required:
-                needs_manual_review = True
-                if reconciled.message:
-                    audit_warnings.append(f"{reconciled.code}: {reconciled.message}")
+        ner_evidence = self._build_ner_evidence(path_a_result.details.get("ner_entities"))
+        if ner_evidence:
+            record_evidence = getattr(record, "evidence", None)
+            if not isinstance(record_evidence, dict):
+                record_evidence = {}
+            for key, spans in ner_evidence.items():
+                record_evidence.setdefault(key, []).extend(spans)
+            record.evidence = record_evidence
 
         from modules.registry.application.cpt_registry_mapping import aggregate_registry_fields
         from modules.registry.application.registry_service import RegistryExtractionResult
 
         mapped_fields = (
-            aggregate_registry_fields(finalized_codes, version="v3")
-            if finalized_codes
+            aggregate_registry_fields(parallel_result.final_codes, version="v3")
+            if parallel_result.final_codes
             else {}
         )
 
@@ -272,15 +257,15 @@ class ParallelPathwayOrchestrator:
 
         return RegistryExtractionResult(
             record=record,
-            cpt_codes=sorted(finalized_codes),
+            cpt_codes=sorted(parallel_result.final_codes),
             coder_difficulty="unknown",
             coder_source="parallel_ner",
             mapped_fields=mapped_fields,
             code_rationales=path_a_result.rationales,
             derivation_warnings=derivation_warnings,
             warnings=warnings,
-            needs_manual_review=needs_manual_review,
-            audit_warnings=audit_warnings,
+            needs_manual_review=parallel_result.needs_review,
+            audit_warnings=list(parallel_result.review_reasons or []),
         )
 
     def _ensure_ml_predictor(self) -> Any | None:
@@ -296,6 +281,27 @@ class ParallelPathwayOrchestrator:
         except Exception as exc:
             logger.debug("RegistryMLPredictor unavailable: %s", exc)
         return None
+
+    def _build_ner_evidence(self, entities: list[Any] | None) -> dict[str, list[Span]]:
+        spans: list[Span] = []
+        for ent in entities or []:
+            start = getattr(ent, "start_char", None)
+            end = getattr(ent, "end_char", None)
+            text = getattr(ent, "text", None)
+            confidence = getattr(ent, "confidence", None)
+            if start is None or end is None or text is None:
+                continue
+            spans.append(
+                Span(
+                    text=str(text),
+                    start=int(start),
+                    end=int(end),
+                    confidence=float(confidence) if confidence is not None else None,
+                )
+            )
+        if not spans:
+            return {}
+        return {"ner_spans": spans}
 
     def _predict_ml_probabilities(
         self,
@@ -347,6 +353,7 @@ class ParallelPathwayOrchestrator:
             ner_result = self.ner_predictor.predict(note_text)
             details["ner_entity_count"] = len(ner_result.entities)
             details["ner_time_ms"] = ner_result.inference_time_ms
+            details["ner_entities"] = ner_result.entities
 
             # 2. Map to Registry
             mapping_result = self.ner_mapper.map_entities(ner_result)
@@ -398,24 +405,74 @@ class ParallelPathwayOrchestrator:
 
         predictor = ml_predictor or self.ml_predictor
         try:
-            if predictor and predictor.available:
-                # Run ML prediction
-                result = predictor.predict(note_text)
+            if predictor and getattr(predictor, "available", False):
+                classify_case = getattr(predictor, "classify_case", None)
+                predict_proba = getattr(predictor, "predict_proba", None)
+
+                if callable(classify_case):
+                    result = classify_case(note_text)
+                elif callable(predict_proba):
+                    preds = predict_proba(note_text)
+                    positive_fields = [p.field for p in preds if getattr(p, "is_positive", False)]
+                    difficulty = "HIGH_CONF" if positive_fields else "LOW_CONF"
+                    result = {
+                        "predictions": preds,
+                        "positive_fields": positive_fields,
+                        "difficulty": difficulty,
+                    }
+                else:
+                    predicted_fields = list(getattr(predictor, "predict", lambda _: [])(note_text) or [])
+                    result = {
+                        "predictions": [
+                            {"field": field, "probability": 0.5, "threshold": 0.0, "is_positive": True}
+                            for field in predicted_fields
+                        ],
+                        "positive_fields": predicted_fields,
+                        "difficulty": "HIGH_CONF" if predicted_fields else "LOW_CONF",
+                    }
 
                 # Convert predictions to codes using FLAG_TO_CPT_MAP
                 from modules.registry.audit.raw_ml_auditor import FLAG_TO_CPT_MAP
 
-                for pred in result.predictions:
-                    if pred.is_positive:
-                        field_name = pred.field
-                        if field_name in FLAG_TO_CPT_MAP:
-                            for cpt_code in FLAG_TO_CPT_MAP[field_name]:
-                                codes.append(cpt_code)
-                                confidences[cpt_code] = pred.probability
-                                rationales[cpt_code] = f"ML predicted {field_name}={pred.probability:.2f}"
+                predictions = getattr(result, "predictions", None)
+                if predictions is None and isinstance(result, dict):
+                    predictions = result.get("predictions")
 
-                details["ml_positive_fields"] = result.positive_fields
-                details["ml_difficulty"] = result.difficulty
+                for pred in predictions or []:
+                    is_positive = getattr(pred, "is_positive", None)
+                    if is_positive is None and isinstance(pred, dict):
+                        is_positive = pred.get("is_positive")
+                    if not is_positive:
+                        continue
+
+                    field_name = getattr(pred, "field", None)
+                    if field_name is None and isinstance(pred, dict):
+                        field_name = pred.get("field")
+                    if not field_name:
+                        continue
+
+                    probability = getattr(pred, "probability", None)
+                    if probability is None and isinstance(pred, dict):
+                        probability = pred.get("probability")
+                    try:
+                        prob_val = float(probability) if probability is not None else 0.5
+                    except (TypeError, ValueError):
+                        prob_val = 0.5
+
+                    if field_name in FLAG_TO_CPT_MAP:
+                        for cpt_code in FLAG_TO_CPT_MAP[field_name]:
+                            codes.append(cpt_code)
+                            confidences[cpt_code] = prob_val
+                            rationales[cpt_code] = f"ML predicted {field_name}={prob_val:.2f}"
+
+                positive_fields = getattr(result, "positive_fields", None)
+                difficulty = getattr(result, "difficulty", None)
+                if isinstance(result, dict):
+                    positive_fields = result.get("positive_fields", positive_fields)
+                    difficulty = result.get("difficulty", difficulty)
+
+                details["ml_positive_fields"] = list(positive_fields or [])
+                details["ml_difficulty"] = str(difficulty or "")
             else:
                 details["ml_available"] = False
 

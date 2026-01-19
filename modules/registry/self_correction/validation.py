@@ -9,6 +9,7 @@ ALLOWED_PATHS: set[str] = {
     # Performed flags
     "/procedures_performed/bal/performed",
     "/procedures_performed/brushings/performed",
+    "/procedures_performed/mechanical_debulking/performed",
     "/procedures_performed/transbronchial_biopsy/performed",
     "/procedures_performed/transbronchial_cryobiopsy/performed",
     "/procedures_performed/tbna_conventional/performed",
@@ -19,6 +20,19 @@ ALLOWED_PATHS: set[str] = {
     "/pleural_procedures/thoracentesis/performed",
     "/pleural_procedures/chest_tube/performed",
     # Add other safe fields as needed
+}
+
+ALLOWED_PATH_PREFIXES: set[str] = {
+    "/procedures_performed/navigational_bronchoscopy",
+    "/procedures_performed/tbna_conventional",
+    "/procedures_performed/brushings",
+    "/procedures_performed/mechanical_debulking",
+    "/procedures_performed/transbronchial_cryobiopsy",
+    "/procedures_performed/thermal_ablation",
+    "/procedures_performed/peripheral_ablation",
+    "/pleural_procedures/ipc",
+    "/pleural_procedures/thoracentesis",
+    "/pleural_procedures/chest_tube",
 }
 
 
@@ -55,14 +69,17 @@ def validate_proposal(
     if len(patches) > max_patch_ops:
         return False, f"Patch too large: {len(patches)} ops (max {max_patch_ops})"
 
-    allowed_paths = _allowed_paths_from_env(default=ALLOWED_PATHS)
+    allowed_paths, allowed_prefixes = _allowed_paths_from_env(
+        default_paths=ALLOWED_PATHS,
+        default_prefixes=ALLOWED_PATH_PREFIXES,
+    )
 
     for op in patches:
         if not isinstance(op, dict):
             return False, "Patch operation must be an object"
 
         path = op.get("path")
-        if path not in allowed_paths:
+        if not _path_allowed(path, allowed_paths, allowed_prefixes):
             return False, f"Path not allowed: {path}"
 
         verb = op.get("op")
@@ -72,12 +89,42 @@ def validate_proposal(
     return True, "Valid"
 
 
-def _allowed_paths_from_env(*, default: set[str]) -> set[str]:
+def _allowed_paths_from_env(
+    *,
+    default_paths: set[str],
+    default_prefixes: set[str],
+) -> tuple[set[str], set[str]]:
     raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "")
     if not raw.strip():
-        return set(default)
-    parsed = {p.strip() for p in raw.split(",") if p.strip()}
-    return parsed or set(default)
+        return set(default_paths), set(default_prefixes)
+
+    parsed_paths: set[str] = set()
+    parsed_prefixes: set[str] = set()
+    for entry in raw.split(","):
+        cleaned = entry.strip()
+        if not cleaned:
+            continue
+        if cleaned.endswith("/*"):
+            prefix = cleaned[:-2].rstrip("/")
+            if prefix:
+                parsed_prefixes.add(prefix)
+            continue
+        parsed_paths.add(cleaned)
+
+    if not parsed_paths and not parsed_prefixes:
+        return set(default_paths), set(default_prefixes)
+    return parsed_paths, parsed_prefixes
+
+
+def _path_allowed(path: object, allowed_paths: set[str], allowed_prefixes: set[str]) -> bool:
+    if not isinstance(path, str):
+        return False
+    if path in allowed_paths:
+        return True
+    for prefix in allowed_prefixes:
+        if path == prefix or path.startswith(f"{prefix}/"):
+            return True
+    return False
 
 
 def _env_int(name: str, default: int) -> int:
@@ -93,4 +140,4 @@ def _env_int(name: str, default: int) -> int:
         return default
 
 
-__all__ = ["ALLOWED_PATHS", "validate_proposal"]
+__all__ = ["ALLOWED_PATHS", "ALLOWED_PATH_PREFIXES", "validate_proposal"]

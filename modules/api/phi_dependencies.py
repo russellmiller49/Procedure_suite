@@ -24,13 +24,14 @@ from modules.phi.adapters import (
     StubScrubber,
 )
 from modules.phi.adapters.fernet_encryption import FernetEncryptionAdapter
-from modules.phi.db import Base
 
 logger = logging.getLogger(__name__)
 
 
 def _default_db_url() -> str:
-    return os.getenv("PHI_DATABASE_URL") or os.getenv("DATABASE_URL", "sqlite:///./phi_demo.db")
+    return os.getenv("PHI_DATABASE_URL") or os.getenv(
+        "DATABASE_URL", "sqlite:///./phi_demo.db"
+    )
 
 
 DATABASE_URL = _default_db_url()
@@ -69,18 +70,23 @@ def _get_encryption_adapter():
     return FernetEncryptionAdapter()
 
 
-@lru_cache()
+@lru_cache
 def _get_scrubber():
     mode = os.getenv("PHI_SCRUBBER_MODE", "presidio").lower()
     if mode == "stub":
         return StubScrubber()
-    strict = os.getenv("PHI_SCRUBBER_STRICT", "").strip().lower() in {"1", "true", "yes"}
+    strict = os.getenv("PHI_SCRUBBER_STRICT", "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+    }
     try:
         return PresidioScrubber()
     except Exception as exc:  # noqa: BLE001
         logger.warning(
-            "PresidioScrubber unavailable; falling back to StubScrubber (set PHI_SCRUBBER_MODE=stub to silence, "
-            "or install the configured spaCy model and presidio-analyzer to enable real scrubbing).",
+            "PresidioScrubber unavailable; falling back to StubScrubber "
+            "(set PHI_SCRUBBER_MODE=stub to silence, or install the configured "
+            "spaCy model and presidio-analyzer to enable real scrubbing).",
             extra={"error_type": type(exc).__name__},
         )
         if strict:
@@ -89,13 +95,21 @@ def _get_scrubber():
         return StubScrubber()
 
 
-def get_phi_service(db: Session = Depends(get_phi_session)) -> PHIService:
+_phi_session_dep = Depends(get_phi_session)
+
+
+def get_phi_service(db: Session = _phi_session_dep) -> PHIService:
     """Construct a PHIService with configured adapters (no raw PHI logging)."""
 
     encryption = _get_encryption_adapter()
     scrubber = _get_scrubber()
     audit_logger = DatabaseAuditLogger(db)
-    return PHIService(session=db, encryption=encryption, scrubber=scrubber, audit_logger=audit_logger)
+    return PHIService(
+        session=db,
+        encryption=encryption,
+        scrubber=scrubber,
+        audit_logger=audit_logger,
+    )
 
 
 def get_phi_scrubber():

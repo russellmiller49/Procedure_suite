@@ -8,20 +8,18 @@ to the legacy CoderOutput/CodeDecision format expected by existing clients.
 from __future__ import annotations
 
 import re
-from typing import Optional
 
 from config.settings import CoderSettings
-from proc_schemas.coding import CodingResult, CodeSuggestion
 from modules.coder.schema import (
+    BundleDecision,
     CodeDecision,
     CoderOutput,
-    BundleDecision,
     FinancialSummary,
-    PerCodeBilling,
     LLMCodeSuggestion,
+    PerCodeBilling,
 )
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
-
+from proc_schemas.coding import CodeSuggestion, CodingResult
 
 _BILLABLE_HYBRID_DECISIONS = {
     "accepted_agreement",
@@ -41,7 +39,7 @@ def _is_billable_suggestion(suggestion: CodeSuggestion) -> bool:
 
 def convert_suggestion_to_code_decision(
     suggestion: CodeSuggestion,
-    kb_repo: Optional[KnowledgeBaseRepository] = None,
+    kb_repo: KnowledgeBaseRepository | None = None,
 ) -> CodeDecision:
     """Convert a CodeSuggestion to the legacy CodeDecision format.
 
@@ -79,7 +77,11 @@ def convert_suggestion_to_code_decision(
     display_code = base_code
 
     # Add '+' prefix for add-on codes in legacy output (guard for stub KBs)
-    if kb_repo and callable(getattr(kb_repo, "is_addon_code", None)) and kb_repo.is_addon_code(base_code):
+    if (
+        kb_repo
+        and callable(getattr(kb_repo, "is_addon_code", None))
+        and kb_repo.is_addon_code(base_code)
+    ):
         display_code = f"+{base_code}"
 
     # Add RVU data if KB available
@@ -108,7 +110,7 @@ def convert_suggestion_to_code_decision(
 
 def convert_coding_result_to_coder_output(
     result: CodingResult,
-    kb_repo: Optional[KnowledgeBaseRepository] = None,
+    kb_repo: KnowledgeBaseRepository | None = None,
     locality: str = "00",
     conversion_factor: float | None = None,
 ) -> CoderOutput:
@@ -168,7 +170,7 @@ def convert_coding_result_to_coder_output(
         )
 
     # Build financial summary if KB available
-    financials: Optional[FinancialSummary] = None
+    financials: FinancialSummary | None = None
     if kb_repo and billable_codes:
         per_code_billing: list[PerCodeBilling] = []
         total_work_rvu = 0.0

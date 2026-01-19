@@ -13,7 +13,11 @@ from modules.registry.self_correction.types import (
     SelfCorrectionMetadata,
     SelfCorrectionTrigger,
 )
-from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
+from modules.registry.self_correction.validation import (
+    ALLOWED_PATHS,
+    ALLOWED_PATH_PREFIXES,
+    validate_proposal,
+)
 
 
 def get_allowed_values(field_name: str) -> list[str]:
@@ -55,6 +59,7 @@ __all__ = [
     "PatchProposal",
     "RegistryCorrectionJudge",
     "ALLOWED_PATHS",
+    "ALLOWED_PATH_PREFIXES",
     "validate_proposal",
     "apply_patch_to_record",
     "SelfCorrectionApplyError",

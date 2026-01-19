@@ -20,22 +20,29 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
 
 from modules.api.dependencies import get_registry_service
+from modules.api.guards import (
+    enforce_legacy_endpoints_allowed,
+    enforce_request_mode_override_allowed,
+)
+from modules.api.normalization import simplify_billing_cpt_codes
 from modules.api.phi_dependencies import get_phi_scrubber
 from modules.api.phi_redaction import apply_phi_redaction
 from modules.api.readiness import require_ready
 from modules.api.schemas import RegistryRequest, RegistryResponse
-from modules.infra.executors import run_cpu
 from modules.common.exceptions import LLMError
-from modules.api.normalization import simplify_billing_cpt_codes
-from modules.registry.application.registry_service import (
-    RegistryService,
-    RegistryExtractionResult,
-)
+from modules.infra.executors import run_cpu
 from modules.registry.adapters.v3_to_v2 import project_v3_to_v2
+from modules.registry.application.registry_service import (
+    RegistryExtractionResult,
+    RegistryService,
+)
 from modules.registry.pipelines.v3_pipeline import run_v3_extraction
 from modules.registry.summarize import add_procedure_summaries
 
 logger = logging.getLogger(__name__)
+_ready_dep = Depends(require_ready)
+_registry_service_dep = Depends(get_registry_service)
+_phi_scrubber_dep = Depends(get_phi_scrubber)
 
 
 def _prune_none(obj: Any) -> Any:
@@ -144,7 +151,7 @@ class RegistryExtractResponse(BaseModel):
     )
 
     @classmethod
-    def from_domain(cls, result: RegistryExtractionResult) -> "RegistryExtractResponse":
+    def from_domain(cls, result: RegistryExtractionResult) -> RegistryExtractResponse:
         """Convert domain result to API response.
 
         Args:
@@ -198,9 +205,9 @@ class RegistryExtractResponse(BaseModel):
 async def extract_registry_fields(
     payload: RegistryExtractRequest,
     request: Request,
-    _ready: None = Depends(require_ready),
-    registry_service: RegistryService = Depends(get_registry_service),
-    phi_scrubber=Depends(get_phi_scrubber),
+    _ready: None = _ready_dep,
+    registry_service: RegistryService = _registry_service_dep,
+    phi_scrubber=_phi_scrubber_dep,
 ) -> RegistryExtractResponse:
     """
     Extract registry fields from a procedure note using hybrid-first pipeline.
@@ -219,6 +226,9 @@ async def extract_registry_fields(
     Raises:
         HTTPException: If extraction fails due to missing orchestrator or errors.
     """
+    enforce_legacy_endpoints_allowed()
+    enforce_request_mode_override_allowed(payload.mode)
+
     # Early PHI redaction - scrub once at entry, use scrubbed text downstream
     redaction = apply_phi_redaction(payload.note_text, phi_scrubber)
     note_text = redaction.text
@@ -238,27 +248,31 @@ async def extract_registry_fields(
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail=str(e),
-        )
+        ) from e
 
     except Exception as e:
-        if isinstance(e, httpx.HTTPStatusError) and e.response is not None and e.response.status_code == 429:
+        if (
+            isinstance(e, httpx.HTTPStatusError)
+            and e.response is not None
+            and e.response.status_code == 429
+        ):
             retry_after = e.response.headers.get("Retry-After") or "10"
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Upstream LLM rate limited",
                 headers={"Retry-After": str(retry_after)},
-            )
+            ) from e
         if isinstance(e, LLMError) and "429" in str(e):
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Upstream LLM rate limited",
                 headers={"Retry-After": "10"},
-            )
+            ) from e
         logger.error(f"Registry extraction failed: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Registry extraction failed: {str(e)}",
-        )
+        ) from e
 
 
 @v1_router.post(
@@ -269,9 +283,11 @@ async def extract_registry_fields(
 async def registry_run_v3(
     req: RegistryRequest,
     request: Request,
-    _ready: None = Depends(require_ready),
-    phi_scrubber=Depends(get_phi_scrubber),
+    _ready: None = _ready_dep,
+    phi_scrubber=_phi_scrubber_dep,
 ) -> RegistryResponse:
+    enforce_legacy_endpoints_allowed()
+
     redaction = apply_phi_redaction(req.note, phi_scrubber)
     note_text = redaction.text
 

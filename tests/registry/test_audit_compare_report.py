@@ -127,3 +127,38 @@ def test_audit_compare_report_created_when_auditor_disabled(
     assert result.audit_warnings == []
     assert result.needs_manual_review is False
 
+
+def test_audit_compare_report_treats_equivalent_codes_as_not_missing() -> None:
+    from modules.ml_coder.predictor import CaseClassification, CodePrediction
+    from modules.ml_coder.thresholds import CaseDifficulty
+    from modules.registry.audit.compare import build_audit_compare_report
+    from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
+
+    cfg = RawMLAuditConfig(
+        use_buckets=True,
+        top_k=25,
+        min_prob=0.50,
+        self_correct_min_prob=0.95,
+    )
+
+    preds = [
+        CodePrediction(cpt="31652", prob=0.99),  # linear EBUS (1-2) vs 31653
+        CodePrediction(cpt="32554", prob=0.99),  # thoracentesis no imaging vs 32555
+        CodePrediction(cpt="31640", prob=0.99),  # excision vs 31641
+    ]
+    ml_case = CaseClassification(
+        predictions=preds,
+        high_conf=preds,
+        gray_zone=[],
+        difficulty=CaseDifficulty.HIGH_CONF,
+    )
+
+    report = build_audit_compare_report(
+        derived_codes=["31653", "32555", "31641"],
+        cfg=cfg,
+        ml_case=ml_case,
+        audit_preds=preds,
+    )
+
+    assert [p.cpt for p in report.missing_in_derived] == []
+    assert report.high_conf_omissions == []

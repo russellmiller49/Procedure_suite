@@ -70,7 +70,11 @@ def simplify_billing_cpt_codes(payload: dict[str, Any]) -> None:
         return
 
     code_dicts: list[dict[str, Any]] = [
-        c for c in cpt_data if isinstance(c, dict) and isinstance(c.get("code"), str) and c.get("code").strip()
+        c
+        for c in cpt_data
+        if isinstance(c, dict)
+        and isinstance(c.get("code"), str)
+        and c.get("code").strip()
     ]
     if not code_dicts:
         return
@@ -520,7 +524,9 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
                 if isinstance(specimen, dict):
                     source_loc = specimen.get("source_location")
                     # source_location is required - provide default if null
-                    if source_loc is None or (isinstance(source_loc, str) and not source_loc.strip()):
+                    if source_loc is None or (
+                        isinstance(source_loc, str) and not source_loc.strip()
+                    ):
                         # Try to derive from source_procedure if available
                         source_proc = specimen.get("source_procedure", "")
                         specimen["source_location"] = source_proc if source_proc else "Unknown"

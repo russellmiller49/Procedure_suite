@@ -1,0 +1,44 @@
+source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311 && pytest
+........................................................................ [  5%]
+........................................................................ [ 10%]
+........................................................................ [ 15%]
+........................................................................ [ 20%]
+........................................................................ [ 25%]
+.........sssssssss.................sssssssssssss........................ [ 30%]
+........................................................................ [ 36%]
+........................................................................ [ 41%]
+........................................................................ [ 46%]
+........................................................................ [ 51%]
+........................................................................ [ 56%]
+........................................................................ [ 61%]
+........................................................................ [ 66%]
+........................................................................ [ 72%]
+........................................................................ [ 77%]
+........................................................................ [ 82%]
+........................................................................ [ 87%]
+........................................................................ [ 92%]
+........................................................................ [ 97%]
+...............................                                          [100%]
+=============================== warnings summary ===============================
+tests/api/test_fastapi.py::test_coder_run_fixture_response
+tests/phi/test_presidio_nlp_backend_smoke.py::test_presidio_scrubber_initializes_with_backend[scispacy-model_candidates1]
+  /Users/russellmiller/miniconda3/envs/medparse-py311/lib/python3.11/site-packages/spacy/language.py:2195: FutureWarning: Possible set union at position 6328
+    deserializers["tokenizer"] = lambda p: self.tokenizer.from_disk(  # type: ignore[union-attr]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [9] tests/integration/api/test_startup_warmup.py: _do_heavy_warmup was removed; warmup tests need to be updated
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:99: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:107: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:111: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:127: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:162: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:185: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:216: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:244: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:258: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:298: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:335: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:363: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+SKIPPED [1] tests/integration/persistence/test_supabase_procedure_store.py:390: Supabase tests disabled (set RUN_SUPABASE_TESTS=1 to enable)
+1377 passed, 22 skipped, 2 warnings in 19.12s

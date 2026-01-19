@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-16T17:17:17-08:00`
-Git: `v22` @ `41be2c9`
+Generated: `2026-01-18T16:50:27-08:00`
+Git: `v22` @ `8bd11f5`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -26,6 +26,7 @@ Git: `v22` @ `41be2c9`
      1357  scripts/check_pydantic_models.py
      1430  scripts/cpt_check.py
      1609  scripts/preflight.py
+     1728  scripts/verify_registry_runtime_bundle.py
      1833  scripts/check_onnx_inputs.py
      1918  scripts/patch.py
      2032  scripts/evaluate_cpt.py
@@ -71,6 +72,7 @@ Git: `v22` @ `41be2c9`
      8397  scripts/prodigy_prepare_registry_relabel_batch.py
      9036  scripts/find_critical_failures.py
      9076  scripts/fit_thresholds_from_eval.py
+     9082  scripts/registry_pipeline_smoke.py
      9265  scripts/clean_distilled_phi_labels.py
      9583  scripts/registry_label_overlap_report.py
      9603  scripts/align_synthetic_names.py
@@ -81,6 +83,8 @@ Git: `v22` @ `41be2c9`
     12126  scripts/export_phi_model_for_transformersjs.py
     12153  scripts/convert_spans_to_bio.py
     13507  scripts/extract_ner_from_excel.py
+    14382  scripts/unified_pipeline_batch.py
+    14424  scripts/registry_pipeline_smoke_batch.py
     14532  scripts/review_llm_fallback_errors.py
     14742  scripts/quantize_to_onnx.py
     15511  scripts/verify_registry_human_data.py
@@ -123,9 +127,11 @@ Git: `v22` @ `41be2c9`
        50  modules/registry/audit/__init__.py
        51  modules/api/routes/__init__.py
        56  modules/registry/evidence/__init__.py
+       57  modules/extraction/postprocessing/__init__.py
        58  modules/registry/pipelines/__init__.py
        58  modules/registry/slots/__init__.py
        61  modules/agents/__init__.py
+       71  modules/extraction/__init__.py
        72  modules/domain/procedure_store/__init__.py
        75  modules/coder/domain_rules/registry_to_cpt/__init__.py
        90  modules/registry/extraction/__init__.py
@@ -140,6 +146,7 @@ Git: `v22` @ `41be2c9`
       135  proc_schemas/registry/__init__.py
       147  modules/registry/legacy/adapters/__init__.py
       166  tests/__init__.py
+      169  modules/api/adapters/__init__.py
       169  modules/registry/adapters/__init__.py
       182  modules/common/__init__.py
       191  modules/domain/knowledge_base/__init__.py
@@ -178,6 +185,7 @@ Git: `v22` @ `41be2c9`
       610  modules/infra/safe_logging.py
       615  modules/reporting/second_pass/counts_backfill.py
       630  proc_schemas/billing.py
+      632  tests/registry/test_tracheostomy_route.py
       639  proc_schemas/clinical/__init__.py
       651  tests/unit/test_schemas.py
       666  proc_schemas/__init__.py
@@ -196,6 +204,8 @@ Git: `v22` @ `41be2c9`
       831  modules/registry/slots/imaging.py
       839  modules/agents/summarizer/summarizer_agent.py
       840  modules/common/logger.py
+      841  modules/registry/processing/masking.py
+      843  tests/registry/test_navigation_fiducials.py
       852  tests/ml_coder/test_registry_label_constraints.py
       863  modules/reporting/coder_view.py
       874  modules/domain/knowledge_base/models.py
@@ -207,10 +217,11 @@ Git: `v22` @ `41be2c9`
       907  modules/registry/__init__.py
       926  modules/ml_coder/utils.py
       944  tests/scripts/test_audit_model_fp_cli.py
-      964  tests/conftest.py
       968  modules/reporter/schema.py
       972  modules/registry/self_correction/types.py
       975  modules/coder/domain_rules/registry_to_cpt/engine.py
+      989  tests/registry/test_registry_to_cpt_mechanical_debulking.py
+      996  modules/api/guards.py
       999  tests/phi/test_fernet_encryption_adapter.py
      1072  modules/coder/__init__.py
      1123  modules/coder/types.py
@@ -220,6 +231,7 @@ Git: `v22` @ `41be2c9`
      1143  tests/registry/test_slots_ebus_tblb.py
      1163  modules/registry/slots/disposition.py
      1184  tests/registry/test_schema_filter.py
+     1185  tests/registry/test_keyword_guard_keywords.py
      1200  tests/registry/test_structurer_fallback.py
      1201  tests/unit/test_knowledge.py
      1212  modules/common/exceptions.py
@@ -235,13 +247,14 @@ Git: `v22` @ `41be2c9`
      1320  tests/unit/test_template_cache.py
      1335  modules/common/spans.py
      1335  tests/coder/test_llm_provider_openai_compat.py
-     1337  tests/api/conftest.py
      1339  modules/common/knowledge_cli.py
      1355  modules/phi/adapters/fernet_encryption.py
-     1363  tests/registry/test_llm_timeout_fallback.py
+     1376  tests/api/conftest.py
+     1380  modules/api/readiness.py
      1382  tests/phi/test_presidio_nlp_backend_smoke.py
-     1388  modules/api/readiness.py
+     1412  tests/registry/test_registry_engine_merge_llm_and_seed.py
      1426  tests/registry/test_keyword_guard_omissions.py
+     1426  tests/registry/test_llm_timeout_fallback.py
      1442  modules/domain/reasoning/models.py
      1451  tests/coding/test_ebus_rules.py
      1461  modules/phi/db.py
@@ -254,6 +267,7 @@ Git: `v22` @ `41be2c9`
      1568  modules/coder/reconciliation/__init__.py
      1582  modules/registry/ml/__init__.py
      1645  modules/ml_coder/preprocessing.py
+     1648  tests/registry/test_self_correction_validation.py
      1665  modules/coder/ncci.py
      1675  modules/infra/llm_control.py
      1676  tests/scripts/test_prodigy_export_registry.py
@@ -262,36 +276,39 @@ Git: `v22` @ `41be2c9`
      1708  proc_schemas/reasoning.py
      1717  tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
      1731  modules/domain/text/negation.py
-     1742  tests/registry/test_ebus_deterministic.py
      1763  tests/registry/test_kitchen_sink_extraction_first.py
      1767  tests/utils/case_filter.py
+     1779  tests/registry/test_masking.py
+     1802  tests/registry/test_deterministic_extractors_phase6.py
      1823  config/settings.py
      1835  modules/registry/slots/tblb.py
      1842  tests/registry/test_pleural_extraction.py
      1847  modules/coder/parallel_pathway/reconciler.py
+     1875  tests/coder/test_parallel_pathway_orchestrator_path_b.py
      1876  modules/reporting/__init__.py
      1877  tests/integration/api/test_health_endpoint.py
      1880  tests/registry/test_new_extractors.py
      1929  modules/coder/constants.py
+     1961  tests/api/test_phi_demo_cases.py
      1985  modules/coder/phi_gating.py
      1999  modules/phi/ports.py
      2003  modules/registry/legacy/supabase_sink.py
      2027  modules/registry/audit/audit_types.py
-     2030  modules/registry/model_runtime.py
      2032  modules/agents/parser/parser_agent.py
-     2033  tests/api/test_phi_demo_cases.py
      2093  modules/registry/slots/dilation.py
      2107  modules/ml_coder/training_losses.py
-     2127  modules/registry/self_correction/__init__.py
      2136  modules/coder/peripheral_rules.py
      2140  modules/registry/label_fields.py
      2143  modules/reporting/metadata.py
      2167  modules/registry/legacy/adapters/base.py
+     2196  modules/registry/self_correction/__init__.py
      2225  tests/registry/test_sedation_blvr.py
      2250  modules/ml_coder/self_correction.py
      2253  tests/unit/test_phi_distillation.py
      2320  modules/registry/slots/sedation.py
+     2346  tests/conftest.py
      2372  tests/scripts/test_prodigy_export_registry_file_mode.py
+     2443  tests/registry/test_ner_procedure_extractor.py
      2448  modules/common/rules_engine/mer.py
      2472  modules/reporter/prompts.py
      2487  modules/proc_ml_advisor/__init__.py
@@ -300,6 +317,7 @@ Git: `v22` @ `41be2c9`
      2591  modules/registry/self_correction/judge.py
      2607  tests/registry/test_extraction_first_flow.py
      2612  modules/phi/safety/protected_terms.py
+     2647  tests/registry/test_ebus_deterministic.py
      2664  modules/registry/slots/ebus.py
      2713  modules/common/text_io.py
      2768  modules/domain/coding_rules/mer.py
@@ -308,17 +326,18 @@ Git: `v22` @ `41be2c9`
      2819  tests/test_clean_ip_registry.py
      2825  tests/coding/test_phi_gating.py
      2835  modules/ml_coder/thresholds.py
-     2867  modules/api/routes/phi_demo_cases.py
+     2853  modules/api/routes/phi_demo_cases.py
      2914  modules/reporter/cli.py
      2927  modules/common/rvu_calc.py
-     2945  modules/registry/self_correction/validation.py
      2990  tests/coding/test_sectionizer_integration.py
      2993  tests/unit/test_openai_timeouts.py
      3060  modules/common/umls_linking.py
+     3076  modules/api/adapters/response_adapter.py
      3104  modules/coder/ebus_extractor.py
      3131  modules/registry/adapters/schema_registry.py
      3141  tests/unit/test_validation_engine.py
      3163  modules/ml_coder/distillation_io.py
+     3166  tests/registry/test_phase5_regression_harness.py
      3169  proc_nlp/umls_linker.py
      3186  modules/registry/summarize.py
      3188  modules/common/rules_engine/dsl.py
@@ -331,19 +350,17 @@ Git: `v22` @ `41be2c9`
      3399  modules/infra/settings.py
      3513  tests/unit/test_sanitize_dataset.py
      3532  proc_schemas/coding.py
-     3562  tests/api/test_unified_process.py
      3622  modules/coder/posthoc.py
      3627  tests/scripts/test_prodigy_prepare_registry.py
      3656  proc_schemas/registry/ip_v2.py
      3682  modules/coder/sectionizer.py
      3694  modules/ml_coder/registry_label_schema.py
-     3697  modules/registry/audit/compare.py
      3704  modules/registry/slots/blvr.py
      3706  modules/api/phi_redaction.py
-     3728  modules/api/phi_dependencies.py
      3774  modules/common/knowledge_schema.py
      3795  modules/common/model_capabilities.py
-     3862  modules/api/routes/unified_process.py
+     3831  modules/api/phi_dependencies.py
+     3862  tests/integration/test_pipeline_integrity.py
      3899  modules/registry/extraction/focus.py
      3944  modules/ml_coder/registry_label_constraints.py
      3958  modules/coder/schema.py
@@ -352,41 +369,45 @@ Git: `v22` @ `41be2c9`
      3996  modules/registry/tags.py
      4071  modules/registry/self_correction/prompt_improvement.py
      4202  tests/unit/test_phi_platinum_filters.py
-     4249  tests/api/test_phi_redactor_ui.py
      4251  modules/registry/slots/stent.py
+     4302  tests/api/test_phi_redactor_ui.py
      4339  tests/phi/test_models.py
      4343  modules/registry/self_correction/apply.py
      4390  modules/registry_cleaning/logging_utils.py
      4403  tests/phi/test_presidio_scrubber_adapter.py
+     4404  modules/registry/audit/compare.py
      4461  proc_schemas/clinical/common.py
-     4478  tests/api/test_coding_phi_gating.py
      4494  modules/registry/ebus_config.py
      4509  tests/phi/test_manual_scrub.py
+     4510  modules/registry/self_correction/validation.py
      4522  tests/registry/test_registry_engine_sanitization.py
      4539  tests/registry/test_derive_procedures_from_granular_consistency.py
+     4598  tests/api/test_coding_phi_gating.py
      4782  modules/common/sectionizer.py
+     4845  tests/api/test_unified_process.py
      4978  tests/registry/test_auditor_raw_ml_only.py
      5045  modules/coder/adapters/nlp/simple_negation_detector.py
      5048  docs/phi_review_system/backend/main.py
      5103  modules/registry/cli.py
-     5147  tests/registry/test_audit_compare_report.py
-     5154  modules/api/phi_demo_store.py
      5166  modules/api/schemas/qa.py
      5176  tests/unit/test_openai_payload_compat.py
      5186  tests/coding/test_rules_engine_phase1.py
-     5384  modules/api/schemas/base.py
+     5334  modules/api/phi_demo_store.py
      5394  modules/api/gemini_client.py
      5424  modules/coder/parallel_pathway/confidence_combiner.py
      5641  modules/coder/ebus_rules.py
      5653  modules/phi/models.py
+     5773  modules/api/schemas/base.py
      5778  tests/registry/test_registry_guardrails.py
      5870  modules/infra/nlp_warmup.py
+     5968  modules/registry/processing/navigation_fiducials.py
      6019  modules/ner/entity_types.py
-     6038  tests/api/test_fastapi.py
-     6156  tests/api/test_phi_redaction.py
+     6042  tests/api/test_fastapi.py
+     6131  tests/api/test_phi_redaction.py
      6184  tests/integration/test_phi_workflow_end_to_end.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
+     6333  tests/registry/test_audit_compare_report.py
      6351  modules/registry/slots/therapeutics.py
      6438  modules/domain/procedure_store/repository.py
      6451  tests/phi/test_service.py
@@ -396,55 +417,55 @@ Git: `v22` @ `41be2c9`
      6646  tests/unit/test_protected_veto.py
      6904  modules/reporting/ip_addons.py
      6955  tests/integration/api/test_startup_warmup.py
-     7010  modules/registry/self_correction/keyword_guard.py
      7041  modules/registry/evidence/verifier.py
      7110  modules/coder/application/candidate_expansion.py
-     7122  tests/api/test_phi_endpoints.py
      7176  modules/agents/run_pipeline.py
      7307  tests/integration/coder/test_coding_service.py
+     7383  tests/api/test_phi_endpoints.py
      7420  modules/registry/ner_mapping/entity_to_registry.py
      7526  modules/domain/coding_rules/evidence_context.py
+     7599  modules/registry/model_runtime.py
      7652  tests/registry/test_registry_extraction_ebus.py
      7672  modules/coder/adapters/ml_ranker.py
      7837  tests/unit/test_no_legacy_imports.py
+     7863  modules/api/routes/unified_process.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
      8227  tests/coder/test_rules_engine.py
-     8323  modules/registry/ner_mapping/procedure_extractor.py
      8415  modules/registry/inference_pytorch.py
      8427  modules/registry_cleaning/clinical_qc.py
      8556  modules/registry/ml/evaluate.py
      8618  tests/coder/test_hierarchy_bundling_fixes.py
      8652  modules/coder/application/procedure_type_detector.py
      8695  tests/coding/test_json_rules_parity.py
-     8708  modules/api/coder_adapter.py
+     8702  modules/api/coder_adapter.py
      8836  modules/registry/adapters/v3_to_v2.py
      8873  modules/common/knowledge.py
-     9119  modules/api/routes/metrics.py
+     9005  modules/api/routes/metrics.py
      9261  proc_schemas/registry/ip_v3.py
+     9299  modules/registry/ner_mapping/procedure_extractor.py
      9466  tests/ml_coder/test_training_pipeline.py
      9471  tests/ml_coder/test_case_difficulty.py
      9490  modules/ml_coder/training.py
      9505  modules/coder/adapters/persistence/csv_kb_adapter.py
      9738  modules/phi/service.py
+     9846  modules/extraction/postprocessing/clinical_guardrails.py
      9850  tests/unit/test_extraction_adapters.py
      9870  modules/reporting/validation.py
-    10052  modules/api/routes_registry.py
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
-    10163  modules/coder/application/coding_service.py
-    10498  tests/registry/test_self_correction_loop.py
+    10466  modules/api/routes_registry.py
     10791  tests/unit/test_inmemory_procedure_store.py
     10825  modules/registry/ner_mapping/station_extractor.py
     10938  tests/registry/test_ebus_config_station_count.py
-    11016  modules/api/routes/phi.py
     11181  tests/test_phi_redaction_contract.py
     11253  modules/registry/application/registry_builder.py
     11289  modules/coder/adapters/nlp/keyword_mapping_loader.py
     11419  modules/registry/extractors/v3_extractor.py
-    11670  tests/coder/test_coding_rules_phase7.py
+    11467  modules/api/routes/phi.py
     11691  modules/registry/legacy/adapters/pleural.py
-    11916  modules/api/dependencies.py
+    12196  tests/registry/test_self_correction_loop.py
+    12198  modules/api/dependencies.py
     12339  modules/registry_cleaning/schema_utils.py
     12425  modules/ner/inference.py
     12446  docs/phi_review_system/backend/dependencies.py
@@ -453,7 +474,9 @@ Git: `v22` @ `41be2c9`
     12997  tests/coder/test_smart_hybrid_policy.py
     13192  tests/unit/test_openai_responses_primary.py
     13253  tests/ml_advisor/test_router.py
+    13453  modules/coder/application/coding_service.py
     13483  modules/coder/domain_rules/__init__.py
+    13550  modules/registry/self_correction/keyword_guard.py
     13696  modules/coder/rules.py
     14135  tests/integration/persistence/test_supabase_procedure_store.py
     14250  modules/ml_coder/registry_predictor.py
@@ -464,10 +487,12 @@ Git: `v22` @ `41be2c9`
     14603  modules/registry/audit/raw_ml_auditor.py
     15142  modules/registry/v2_booleans.py
     15243  tests/unit/test_dsl.py
+    15260  tests/coder/test_coding_rules_phase7.py
     15267  modules/domain/coding_rules/json_rules_evaluator.py
     15328  modules/registry/inference_onnx.py
     15346  tests/registry/test_action_predictor.py
-    15492  modules/api/services/qa_pipeline.py
+    15436  modules/autocode/ip_kb/canonical_rules.py
+    15467  modules/api/services/qa_pipeline.py
     15495  modules/ml_coder/registry_training.py
     15601  tests/reporter/test_ip_addons.py
     15653  tests/registry/test_extraction_quality.py
@@ -480,19 +505,19 @@ Git: `v22` @ `41be2c9`
     17161  proc_schemas/clinical/airway.py
     17268  modules/common/openai_responses.py
     17313  modules/coder/reconciliation/reconciler.py
-    17414  modules/coder/parallel_pathway/orchestrator.py
-    17428  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     17806  tests/ml_coder/test_label_hydrator.py
     17854  modules/coder/adapters/llm/gemini_advisor.py
     17939  tests/unit/test_template_coverage.py
     17947  modules/registry/normalization.py
-    18196  tests/api/test_registry_extract_endpoint.py
+    18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
     19326  modules/registry/schema.py
     19783  tests/integration/api/test_registry_endpoints.py
+    20025  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
     20223  modules/domain/coding_rules/rule_engine.py
+    20317  modules/coder/parallel_pathway/orchestrator.py
     20430  modules/registry/model_bootstrap.py
     20553  modules/registry/extractors/llm_detailed.py
     21220  modules/coder/adapters/llm/openai_compat_advisor.py
@@ -507,35 +532,36 @@ Git: `v22` @ `41be2c9`
     23485  docs/phi_review_system/backend/endpoints.py
     24069  tests/ml_advisor/conftest.py
     24922  tests/integration/api/test_coder_run_endpoint.py
-    25313  modules/registry/deterministic_extractors.py
     25665  modules/coder/application/smart_hybrid_policy.py
     25902  modules/reporting/macro_engine.py
-    27496  modules/api/normalization.py
     27507  modules/ml_coder/label_hydrator.py
+    27574  modules/api/normalization.py
     27607  modules/registry/transform.py
     27702  modules/coder/adapters/registry_coder.py
     28626  modules/ml_coder/registry_data_prep.py
-    29354  modules/api/ml_advisor_router.py
     29893  modules/domain/coding_rules/coding_rules_engine.py
+    30063  modules/api/ml_advisor_router.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
-    32441  modules/common/llm.py
-    32956  tests/registry/test_registry_service_hybrid_flow.py
+    33189  tests/registry/test_registry_service_hybrid_flow.py
+    33415  modules/common/llm.py
     35268  tests/coding/test_rules_validation.py
     35981  modules/registry/ml/action_predictor.py
     35997  modules/phi/adapters/phi_redactor_hybrid.py
     36538  modules/coder/dictionary.py
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
+    40777  modules/api/fastapi_app.py
     41901  modules/proc_ml_advisor/schemas.py
-    42228  modules/api/routes/procedure_codes.py
+    42913  modules/api/routes/procedure_codes.py
     43756  tests/registry/test_granular_registry_models.py
-    44823  modules/api/fastapi_app.py
+    44259  modules/registry/deterministic_extractors.py
+    54786  modules/autocode/ip_kb/ip_kb.py
     56478  modules/registry/schema_granular.py
     61733  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    64939  modules/registry/application/registry_service.py
+    81991  modules/registry/application/registry_service.py
     91646  modules/registry/postprocess.py
-   113497  modules/registry/engine.py
+   110004  modules/registry/engine.py
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  modules/reporting/templates/addons/eus_b.jinja
       247  modules/reporting/templates/addons/peg_removal_exchange.jinja
@@ -546,7 +572,6 @@ Git: `v22` @ `41be2c9`
       290  modules/reporting/templates/addons/intrapleural_fibrinolysis.jinja
       293  modules/reporting/templates/addons/tunneled_pleural_catheter_removal.jinja
       300  modules/reporting/templates/addons/whole_lung_lavage.jinja
-      310  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/quantize_config.json
       331  modules/reporting/templates/addons/indwelling_tunneled_pleural_catheter_placement.jinja
       338  modules/reporting/templates/addons/chest_tube_pleurx_catheter_discharge.jinja
       346  modules/reporting/templates/addons/therapeutic_aspiration.jinja
@@ -576,6 +601,7 @@ Git: `v22` @ `41be2c9`
       512  modules/reporting/templates/addons/transbronchial_cryobiopsy.jinja
       543  modules/reporting/templates/addons/chest_tube_removal.jinja
       565  modules/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
+      580  modules/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
       582  modules/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
       584  modules/reporting/templates/addons/ion_registration_complete.jinja
       586  modules/reporting/templates/addons/tool_in_lesion_confirmation.jinja
@@ -597,7 +623,6 @@ Git: `v22` @ `41be2c9`
       689  modules/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
       690  modules/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
       695  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
-      695  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
       707  modules/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
       708  modules/reporting/templates/addons/tracheostomy_downsizing_fenestrated_tube_placement.jinja
       714  modules/reporting/templates/addons/endobronchial_sealant_application_for_bronchopleural_fistula_bpf.jinja
@@ -612,7 +637,6 @@ Git: `v22` @ `41be2c9`
       746  modules/reporting/templates/addons/thoracentesis_with_pleural_manometry.jinja
       750  modules/reporting/templates/addons/endobronchial_valve_placement_for_persistent_air_leak_bpf.jinja
       762  tests/fixtures/thora_bilateral.txt
-      764  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/ort_config.json
       765  modules/reporting/templates/addons/electromagnetic_navigation_bronchoscopy.jinja
       768  modules/reporting/templates/addons/intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d.jinja
       778  modules/reporting/templates/addons/ion_registration_registration_drift_mismatch.jinja
@@ -628,21 +652,17 @@ Git: `v22` @ `41be2c9`
       910  modules/reporting/templates/addons/tracheostomy_planned_percutaneous_bronchoscopic_assistance.jinja
       920  modules/reporting/templates/addons/radial_ebus_guided_sampling_with_guide_sheath.jinja
       942  tests/fixtures/stent_rmb_and_dilation_lul.txt
-      951  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/config.json
-      951  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
-      970  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/special_tokens_map.json
+      957  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/config.json
       982  modules/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
      1095  modules/reporting/templates/addons/percutaneous_tracheostomy_revision.jinja
      1193  tests/fixtures/ppl_nav_radial_tblb.txt
      1227  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
-     1227  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
      1232  docs/REPORTER_STYLE_GUIDE.md
      1359  modules/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1432  modules/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
      1473  docs/DEPLOY_RAILWAY.md
      1797  modules/api/static/phi_redactor/allowlist_trie.json
      1817  modules/reporting/templates/addons/post_blvr_management_protocol.jinja
-     1822  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/config.json
      1925  modules/reporting/templates/addons/general_bronchoscopy_note.jinja
      1961  modules/phi/README.md
      1992  tests/fixtures/complex_tracheal_stenosis.txt
@@ -669,6 +689,7 @@ Git: `v22` @ `41be2c9`
      4198  docs/REGISTRY_PRODIGY_WORKFLOW.md
      4233  tests/fixtures/notes/kitchen_sink_ion_nav_ebus_fiducial_dilation.txt
      4544  docs/Production_Readiness_Review.md
+     4606  docs/CODEX_PRODUCTION_PLAN.md
      4745  docs/Multi_agent_collaboration/Architect Priming Script.md
      5429  docs/ml_first_hybrid_policy.md
      6097  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
@@ -678,6 +699,7 @@ Git: `v22` @ `41be2c9`
      7368  docs/Multi_agent_collaboration/Multi‑Agent Architecture.md
      7469  modules/reporting/templates/macros/06_other_interventions.j2
      8655  modules/reporting/EXTRACTION_RULES.md
+     9413  docs/"Diamond" Improvement Plan 1_18_26.txt
      9688  modules/reporting/templates/macros/01_minor_trach_laryngoscopy.j2
      9941  docs/optimization_12_16_25.md
     10242  docs/DEPLOYMENT.md
@@ -688,29 +710,32 @@ Git: `v22` @ `41be2c9`
     14072  docs/Multi_agent_collaboration/External_Review_Action_Plan.md
     14126  modules/reporting/templates/macros/02_core_bronchoscopy.j2
     15081  docs/GRAFANA_DASHBOARDS.md
-    15095  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
-    15255  docs/AGENTS.md
+    15227  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
     16028  modules/reporting/templates/macros/05_pleural.j2
+    16113  docs/AGENTS.md
     16515  docs/ARCHITECTURE.md
     17732  docs/phi_review_system/README.md
-    17753  modules/api/static/phi_demo.js
+    17850  modules/api/static/phi_demo.js
     17982  modules/phi/adapters/redaction-service.js
-    18663  docs/MAKEFILE_COMMANDS.md
-    19704  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer_config.json
+    18781  docs/MAKEFILE_COMMANDS.md
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
     25929  modules/api/static/phi_redactor/app.js
     27821  modules/registry/ip_registry_improvements.md
-    28862  docs/USER_GUIDE.md
+    33220  docs/USER_GUIDE.md
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
-    53018  modules/api/static/phi_redactor/protectedVeto.js
+    54018  modules/api/static/phi_redactor/protectedVeto.js
     84457  modules/api/static/phi_redactor/redactor.worker.js
-    86646  modules/api/static/app.js
+    86668  modules/api/static/app.js
 ```
 
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  scripts/prodigy_prepare_phi_batch.py
+ inline_cap_reached>75  scripts/generate_synthetic_phi_data.py
+ inline_cap_reached>75  scripts/build_model_agnostic_phi_spans.py
+ inline_cap_reached>75  scripts/audit_model_fp.py
  inline_cap_reached>75  scripts/train_roberta_pm3.py
  inline_cap_reached>75  scripts/fix_alignment.py
  inline_cap_reached>75  scripts/train_distilbert_ner.py
@@ -729,9 +754,11 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/registry/audit/__init__.py
  inline_cap_reached>75  modules/api/routes/__init__.py
  inline_cap_reached>75  modules/registry/evidence/__init__.py
+ inline_cap_reached>75  modules/extraction/postprocessing/__init__.py
  inline_cap_reached>75  modules/registry/pipelines/__init__.py
  inline_cap_reached>75  modules/registry/slots/__init__.py
  inline_cap_reached>75  modules/agents/__init__.py
+ inline_cap_reached>75  modules/extraction/__init__.py
  inline_cap_reached>75  modules/domain/procedure_store/__init__.py
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/__init__.py
  inline_cap_reached>75  modules/registry/extraction/__init__.py
@@ -745,6 +772,7 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/common/rules_engine/__init__.py
  inline_cap_reached>75  proc_schemas/registry/__init__.py
  inline_cap_reached>75  modules/registry/legacy/adapters/__init__.py
+ inline_cap_reached>75  modules/api/adapters/__init__.py
  inline_cap_reached>75  modules/registry/adapters/__init__.py
  inline_cap_reached>75  modules/common/__init__.py
  inline_cap_reached>75  modules/domain/knowledge_base/__init__.py
@@ -790,6 +818,7 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/registry/slots/imaging.py
  inline_cap_reached>75  modules/agents/summarizer/summarizer_agent.py
  inline_cap_reached>75  modules/common/logger.py
+ inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/reporting/coder_view.py
  inline_cap_reached>75  modules/domain/knowledge_base/models.py
  inline_cap_reached>75  modules/registry/application/__init__.py
@@ -799,6 +828,7 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/reporter/schema.py
  inline_cap_reached>75  modules/registry/self_correction/types.py
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/engine.py
+ inline_cap_reached>75  modules/api/guards.py
  inline_cap_reached>75  modules/coder/__init__.py
  inline_cap_reached>75  modules/coder/types.py
  inline_cap_reached>75  modules/ml_coder/valid_ip_codes.py
@@ -836,15 +866,14 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/phi/ports.py
  inline_cap_reached>75  modules/registry/legacy/supabase_sink.py
  inline_cap_reached>75  modules/registry/audit/audit_types.py
- inline_cap_reached>75  modules/registry/model_runtime.py
  inline_cap_reached>75  modules/agents/parser/parser_agent.py
  inline_cap_reached>75  modules/registry/slots/dilation.py
  inline_cap_reached>75  modules/ml_coder/training_losses.py
- inline_cap_reached>75  modules/registry/self_correction/__init__.py
  inline_cap_reached>75  modules/coder/peripheral_rules.py
  inline_cap_reached>75  modules/registry/label_fields.py
  inline_cap_reached>75  modules/reporting/metadata.py
  inline_cap_reached>75  modules/registry/legacy/adapters/base.py
+ inline_cap_reached>75  modules/registry/self_correction/__init__.py
  inline_cap_reached>75  modules/ml_coder/self_correction.py
  inline_cap_reached>75  modules/registry/slots/sedation.py
  inline_cap_reached>75  modules/common/rules_engine/mer.py
@@ -863,8 +892,8 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/api/routes/phi_demo_cases.py
  inline_cap_reached>75  modules/reporter/cli.py
  inline_cap_reached>75  modules/common/rvu_calc.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/common/umls_linking.py
+ inline_cap_reached>75  modules/api/adapters/response_adapter.py
  inline_cap_reached>75  modules/coder/ebus_extractor.py
  inline_cap_reached>75  modules/registry/adapters/schema_registry.py
  inline_cap_reached>75  modules/ml_coder/distillation_io.py
@@ -881,13 +910,11 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  proc_schemas/registry/ip_v2.py
  inline_cap_reached>75  modules/coder/sectionizer.py
  inline_cap_reached>75  modules/ml_coder/registry_label_schema.py
- inline_cap_reached>75  modules/registry/audit/compare.py
  inline_cap_reached>75  modules/registry/slots/blvr.py
  inline_cap_reached>75  modules/api/phi_redaction.py
- inline_cap_reached>75  modules/api/phi_dependencies.py
  inline_cap_reached>75  modules/common/knowledge_schema.py
  inline_cap_reached>75  modules/common/model_capabilities.py
- inline_cap_reached>75  modules/api/routes/unified_process.py
+ inline_cap_reached>75  modules/api/phi_dependencies.py
  inline_cap_reached>75  modules/registry/extraction/focus.py
  inline_cap_reached>75  modules/ml_coder/registry_label_constraints.py
  inline_cap_reached>75  modules/coder/schema.py
@@ -898,19 +925,22 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/registry/slots/stent.py
  inline_cap_reached>75  modules/registry/self_correction/apply.py
  inline_cap_reached>75  modules/registry_cleaning/logging_utils.py
+ inline_cap_reached>75  modules/registry/audit/compare.py
  inline_cap_reached>75  proc_schemas/clinical/common.py
  inline_cap_reached>75  modules/registry/ebus_config.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/common/sectionizer.py
  inline_cap_reached>75  modules/coder/adapters/nlp/simple_negation_detector.py
  inline_cap_reached>75  modules/registry/cli.py
- inline_cap_reached>75  modules/api/phi_demo_store.py
  inline_cap_reached>75  modules/api/schemas/qa.py
- inline_cap_reached>75  modules/api/schemas/base.py
+ inline_cap_reached>75  modules/api/phi_demo_store.py
  inline_cap_reached>75  modules/api/gemini_client.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/coder/ebus_rules.py
  inline_cap_reached>75  modules/phi/models.py
+ inline_cap_reached>75  modules/api/schemas/base.py
  inline_cap_reached>75  modules/infra/nlp_warmup.py
+ inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
  inline_cap_reached>75  modules/ner/entity_types.py
  inline_cap_reached>75  modules/registry_cleaning/consistency_utils.py
  inline_cap_reached>75  modules/registry/slots/therapeutics.py
@@ -918,15 +948,15 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
  inline_cap_reached>75  modules/coder/cli.py
  inline_cap_reached>75  modules/reporting/ip_addons.py
- inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
  inline_cap_reached>75  modules/agents/run_pipeline.py
  inline_cap_reached>75  modules/registry/ner_mapping/entity_to_registry.py
  inline_cap_reached>75  modules/domain/coding_rules/evidence_context.py
+ inline_cap_reached>75  modules/registry/model_runtime.py
  inline_cap_reached>75  modules/coder/adapters/ml_ranker.py
+ inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/coder/adapters/persistence/inmemory_procedure_store.py
- inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/registry/inference_pytorch.py
  inline_cap_reached>75  modules/registry_cleaning/clinical_qc.py
  inline_cap_reached>75  modules/registry/ml/evaluate.py
@@ -936,23 +966,26 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/common/knowledge.py
  inline_cap_reached>75  modules/api/routes/metrics.py
  inline_cap_reached>75  proc_schemas/registry/ip_v3.py
+ inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/ml_coder/training.py
  inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  modules/phi/service.py
+ inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/reporting/validation.py
- inline_cap_reached>75  modules/api/routes_registry.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
- inline_cap_reached>75  modules/coder/application/coding_service.py
+ inline_cap_reached>75  modules/api/routes_registry.py
  inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
- inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
+ inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
  inline_cap_reached>75  modules/ner/inference.py
+ inline_cap_reached>75  modules/coder/application/coding_service.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
+ inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/rules.py
  inline_cap_reached>75  modules/ml_coder/registry_predictor.py
  inline_cap_reached>75  modules/registry/ml/models.py
@@ -961,6 +994,7 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/registry/v2_booleans.py
  inline_cap_reached>75  modules/domain/coding_rules/json_rules_evaluator.py
  inline_cap_reached>75  modules/registry/inference_onnx.py
+ inline_cap_reached>75  modules/autocode/ip_kb/canonical_rules.py
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
@@ -969,13 +1003,13 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  modules/common/openai_responses.py
  inline_cap_reached>75  modules/coder/reconciliation/reconciler.py
- inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
- inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
  inline_cap_reached>75  modules/registry/schema.py
+ inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
  inline_cap_reached>75  modules/domain/coding_rules/rule_engine.py
+ inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  modules/registry/model_bootstrap.py
  inline_cap_reached>75  modules/registry/extractors/llm_detailed.py
  inline_cap_reached>75  modules/coder/adapters/llm/openai_compat_advisor.py
@@ -983,23 +1017,24 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/registry/legacy/adapters/airway.py
  inline_cap_reached>75  modules/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  modules/ml_coder/data_prep.py
- inline_cap_reached>75  modules/registry/deterministic_extractors.py
  inline_cap_reached>75  modules/coder/application/smart_hybrid_policy.py
  inline_cap_reached>75  modules/reporting/macro_engine.py
- inline_cap_reached>75  modules/api/normalization.py
  inline_cap_reached>75  modules/ml_coder/label_hydrator.py
+ inline_cap_reached>75  modules/api/normalization.py
  inline_cap_reached>75  modules/registry/transform.py
  inline_cap_reached>75  modules/coder/adapters/registry_coder.py
  inline_cap_reached>75  modules/ml_coder/registry_data_prep.py
- inline_cap_reached>75  modules/api/ml_advisor_router.py
  inline_cap_reached>75  modules/domain/coding_rules/coding_rules_engine.py
+ inline_cap_reached>75  modules/api/ml_advisor_router.py
  inline_cap_reached>75  modules/common/llm.py
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/coder/dictionary.py
+ inline_cap_reached>75  modules/api/fastapi_app.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
- inline_cap_reached>75  modules/api/fastapi_app.py
+ inline_cap_reached>75  modules/registry/deterministic_extractors.py
+ inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  modules/registry/schema_granular.py
  inline_cap_reached>75  modules/registry/prompts.py
  inline_cap_reached>75  modules/reporting/engine.py
@@ -1007,10 +1042,7 @@ Git: `v22` @ `41be2c9`
  inline_cap_reached>75  modules/registry/postprocess.py
  inline_cap_reached>75  modules/registry/engine.py
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
-     too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
-     too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
-     too_large>200000B  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer.json
 ```
 
 ## Inlined file contents
@@ -1419,6 +1451,79 @@ if __name__ == "__main__":
     except Exception as exc:  # pragma: no cover
         print(f"Preflight failed: {exc}", file=sys.stderr)
         raise
+
+```
+
+---
+### `scripts/verify_registry_runtime_bundle.py`
+- Size: `1728` bytes
+```
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+from modules.registry.model_runtime import (  # noqa: E402
+    get_registry_runtime_dir,
+    resolve_model_backend,
+    verify_registry_runtime_bundle,
+)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Verify registry runtime model bundle artifacts."
+    )
+    parser.add_argument(
+        "--backend",
+        choices=["pytorch", "onnx", "auto"],
+        default=None,
+        help="Backend to validate (defaults to MODEL_BACKEND resolution).",
+    )
+    parser.add_argument(
+        "--runtime-dir",
+        default=None,
+        help="Override registry runtime directory.",
+    )
+    args = parser.parse_args()
+
+    runtime_dir = Path(args.runtime_dir) if args.runtime_dir else get_registry_runtime_dir()
+    backend = args.backend or resolve_model_backend()
+
+    try:
+        warnings = verify_registry_runtime_bundle(
+            backend=backend,
+            runtime_dir=runtime_dir,
+        )
+    except RuntimeError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"OK: registry runtime bundle valid (backend={backend}, runtime_dir={runtime_dir})")
+    for warning in warnings:
+        print(f"WARNING: {warning}", file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 ```
 
@@ -8890,6 +8995,253 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/registry_pipeline_smoke.py`
+- Size: `9082` bytes
+```
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+from modules.registry.application.registry_service import RegistryService  # noqa: E402
+from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
+from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
+from modules.registry.processing.navigation_fiducials import (  # noqa: E402
+    apply_navigation_fiducials,
+)
+from modules.registry.schema import RegistryRecord  # noqa: E402
+from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
+
+
+def _read_note_text(path: str | None, inline_text: str | None) -> str:
+    if inline_text:
+        return inline_text
+    if not path:
+        raise ValueError("Provide --note or --text.")
+    note_path = Path(path)
+    return note_path.read_text(encoding="utf-8")
+
+
+def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
+    flags: set[str] = set()
+    procs = record_data.get("procedures_performed")
+    if isinstance(procs, dict):
+        for name, payload in procs.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"procedures_performed.{name}.performed")
+
+    pleural = record_data.get("pleural_procedures")
+    if isinstance(pleural, dict):
+        for name, payload in pleural.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"pleural_procedures.{name}.performed")
+
+    if record_data.get("established_tracheostomy_route") is True:
+        flags.add("established_tracheostomy_route")
+
+    granular = record_data.get("granular_data")
+    if isinstance(granular, dict):
+        targets = granular.get("navigation_targets")
+        if isinstance(targets, list):
+            for target in targets:
+                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
+                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
+                    break
+
+    return flags
+
+
+def _apply_seed_uplift(
+    record_data: dict[str, Any],
+    seed: dict[str, Any],
+    masked_note_text: str,
+) -> tuple[dict[str, Any], list[str]]:
+    uplifted: list[str] = []
+
+    seed_procs = seed.get("procedures_performed")
+    if isinstance(seed_procs, dict):
+        record_procs = record_data.get("procedures_performed") or {}
+        if not isinstance(record_procs, dict):
+            record_procs = {}
+        for name, payload in seed_procs.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_procs.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"procedures_performed.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_procs[name] = existing
+        if record_procs:
+            record_data["procedures_performed"] = record_procs
+
+    seed_pleural = seed.get("pleural_procedures")
+    if isinstance(seed_pleural, dict):
+        record_pleural = record_data.get("pleural_procedures") or {}
+        if not isinstance(record_pleural, dict):
+            record_pleural = {}
+        for name, payload in seed_pleural.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_pleural.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"pleural_procedures.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_pleural[name] = existing
+        if record_pleural:
+            record_data["pleural_procedures"] = record_pleural
+
+    if seed.get("established_tracheostomy_route") is True:
+        if record_data.get("established_tracheostomy_route") is not True:
+            record_data["established_tracheostomy_route"] = True
+            uplifted.append("established_tracheostomy_route")
+
+    if apply_navigation_fiducials(record_data, masked_note_text):
+        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
+
+    return record_data, uplifted
+
+
+def _print_list(label: str, items: list[str] | set[str]) -> None:
+    if not items:
+        print(f"{label}: (none)")
+        return
+    if isinstance(items, set):
+        items = sorted(items)
+    print(f"{label}:")
+    for item in items:
+        print(f"  - {item}")
+
+
+def _print_self_correction_diagnostics(result) -> None:
+    audit_report = getattr(result, "audit_report", None)
+    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
+    if not high_conf:
+        print("Audit high-conf omissions: (none)")
+    else:
+        print("Audit high-conf omissions:")
+        for pred in high_conf:
+            cpt = getattr(pred, "cpt", None)
+            prob = getattr(pred, "prob", None)
+            bucket = getattr(pred, "bucket", None)
+            try:
+                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
+            except Exception:
+                prob_str = "?"
+            print(f"  - {cpt} (prob={prob_str}, bucket={bucket})")
+
+    warnings = getattr(result, "warnings", None)
+    if isinstance(warnings, list):
+        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
+        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
+        diag = self_correct_warnings + auto_corrected
+        if diag:
+            print("Self-correction diagnostics:")
+            for w in diag:
+                print(f"  - {w}")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Smoke test the registry extraction pipeline on a note."
+    )
+    parser.add_argument("--note", help="Path to a note text file.")
+    parser.add_argument("--text", help="Inline note text.")
+    parser.add_argument(
+        "--self-correct",
+        action="store_true",
+        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
+    )
+    args = parser.parse_args()
+
+    try:
+        note_text = _read_note_text(args.note, args.text)
+    except Exception as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+    if os.getenv("GEMINI_OFFLINE") is None:
+        os.environ["GEMINI_OFFLINE"] = "1"
+
+    masked = mask_offset_preserving(note_text)
+
+    service = RegistryService()
+    record, warnings, meta = service.extract_record(note_text)
+
+    before_flags = _collect_performed_flags(record.model_dump())
+
+    seed = run_deterministic_extractors(masked)
+    record_data = record.model_dump()
+    record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
+    uplifted_flags = set(uplifted)
+    after_flags = _collect_performed_flags(record_data)
+
+    record_after = RegistryRecord(**record_data)
+    omission_warnings = scan_for_omissions(masked, record_after)
+
+    _print_list("Performed flags (extract_record)", before_flags)
+    _print_list("Performed flags added by deterministic uplift", uplifted_flags)
+    _print_list("Performed flags (after uplift)", after_flags)
+    _print_list("Extract warnings", warnings)
+    _print_list("Omission warnings", omission_warnings)
+
+    if args.self_correct:
+        os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
+        try:
+            result = service.extract_fields(note_text)
+        except Exception as exc:
+            print(f"SELF_CORRECT_ERROR: {exc}")
+        else:
+            _print_self_correction_diagnostics(result)
+            if result.self_correction:
+                print("Self-correction applied:")
+                for item in result.self_correction:
+                    print(f"  - {item.trigger.target_cpt}: {item.outcome}")
+            else:
+                print("Self-correction applied: (none)")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `scripts/clean_distilled_phi_labels.py`
 - Size: `9265` bytes
 ```
@@ -12194,6 +12546,824 @@ def main():
 
 if __name__ == "__main__":
     exit(main())
+
+```
+
+---
+### `scripts/unified_pipeline_batch.py`
+- Size: `14382` bytes
+```
+#!/usr/bin/env python3
+"""Batch unified pipeline test on random notes.
+
+This script randomly selects N notes from data/granular annotations/notes_text,
+runs the full unified pipeline (same as UI at /ui/), and saves results to a text file.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import random
+import sys
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+# Import after environment setup
+from modules.api.adapters.response_adapter import build_v3_evidence_payload  # noqa: E402
+from modules.api.dependencies import get_coding_service, get_registry_service  # noqa: E402
+from modules.api.phi_dependencies import get_phi_scrubber  # noqa: E402
+from modules.api.phi_redaction import apply_phi_redaction  # noqa: E402
+from modules.api.schemas import (  # noqa: E402
+    CodeSuggestionSummary,
+    UnifiedProcessRequest,
+    UnifiedProcessResponse,
+)
+from modules.coder.application.coding_service import CodingService  # noqa: E402
+from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta  # noqa: E402
+from modules.coder.phi_gating import is_phi_review_required  # noqa: E402
+from modules.common.exceptions import LLMError  # noqa: E402
+from modules.registry.application.registry_service import (  # noqa: E402
+    RegistryExtractionResult,
+    RegistryService,
+)
+from config.settings import CoderSettings  # noqa: E402
+
+
+def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
+    """Load all notes from .txt files in the directory.
+    
+    Returns a dict mapping note_id (filename without .txt) to note_text.
+    """
+    notes = {}
+    
+    for txt_file in sorted(notes_dir.glob("*.txt")):
+        try:
+            note_text = txt_file.read_text(encoding="utf-8")
+            note_id = txt_file.stem  # filename without .txt extension
+            notes[note_id] = note_text
+        except Exception as exc:
+            print(f"Warning: Failed to load {txt_file}: {exc}", file=sys.stderr)
+    
+    return notes
+
+
+def _run_unified_pipeline(
+    note_text: str,
+    registry_service: RegistryService,
+    coding_service: CodingService,
+    phi_scrubber,
+    *,
+    include_financials: bool = True,
+    explain: bool = True,
+) -> UnifiedProcessResponse:
+    """Run the unified pipeline (same as /api/v1/process endpoint).
+    
+    This replicates the exact logic from modules/api/routes/unified_process.py
+    """
+    import time
+    
+    start_time = time.time()
+    
+    # PHI redaction (if not already scrubbed)
+    # For batch testing, we'll treat notes as already scrubbed to match UI behavior
+    # when user submits via PHI redactor
+    redaction = apply_phi_redaction(note_text, phi_scrubber)
+    scrubbed_text = redaction.text
+    
+    # Step 1: Registry extraction (synchronous call)
+    try:
+        extraction_result = registry_service.extract_fields(scrubbed_text)
+    except Exception as exc:
+        if isinstance(exc, LLMError) and "429" in str(exc):
+            raise Exception("Upstream LLM rate limited") from exc
+        raise
+    
+    # Step 2: Derive CPT codes from registry
+    record = extraction_result.record
+    if record is None:
+        from modules.registry.schema import RegistryRecord
+        record = RegistryRecord.model_validate(extraction_result.mapped_fields)
+    
+    codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
+    
+    # Build suggestions with confidence and rationale
+    suggestions = []
+    base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
+    
+    for code in codes:
+        proc_info = coding_service.kb_repo.get_procedure_info(code)
+        description = proc_info.description if proc_info else ""
+        rationale = rationales.get(code, "")
+        
+        # Determine review flag
+        if extraction_result.needs_manual_review:
+            review_flag = "required"
+        elif extraction_result.audit_warnings:
+            review_flag = "recommended"
+        else:
+            review_flag = "optional"
+        
+        suggestions.append(
+            CodeSuggestionSummary(
+                code=code,
+                description=description,
+                confidence=base_confidence,
+                rationale=rationale,
+                review_flag=review_flag,
+            )
+        )
+    
+    # Step 3: Calculate financials if requested
+    total_work_rvu = None
+    estimated_payment = None
+    per_code_billing = []
+    
+    if include_financials and codes:
+        settings = CoderSettings()
+        conversion_factor = settings.cms_conversion_factor
+        total_work = 0.0
+        total_payment = 0.0
+        
+        for code in codes:
+            proc_info = coding_service.kb_repo.get_procedure_info(code)
+            if proc_info:
+                work_rvu = proc_info.work_rvu
+                total_rvu = proc_info.total_facility_rvu
+                payment = total_rvu * conversion_factor
+                
+                total_work += work_rvu
+                total_payment += payment
+                
+                per_code_billing.append({
+                    "cpt_code": code,
+                    "description": proc_info.description,
+                    "work_rvu": work_rvu,
+                    "total_facility_rvu": total_rvu,
+                    "facility_payment": round(payment, 2),
+                })
+        
+        total_work_rvu = round(total_work, 2)
+        estimated_payment = round(total_payment, 2)
+    
+    # Combine audit warnings
+    all_warnings: list[str] = []
+    all_warnings.extend(extraction_result.warnings or [])
+    all_warnings.extend(extraction_result.audit_warnings or [])
+    all_warnings.extend(derivation_warnings)
+    
+    # Deduplicate warnings
+    deduped_warnings: list[str] = []
+    seen_warnings: set[str] = set()
+    for warning in all_warnings:
+        if warning in seen_warnings:
+            continue
+        seen_warnings.add(warning)
+        deduped_warnings.append(warning)
+    all_warnings = deduped_warnings
+    
+    # Build evidence payload
+    evidence_payload = build_v3_evidence_payload(record=record, codes=codes)
+    if not explain and not evidence_payload:
+        evidence_payload = {}
+    
+    # Determine review status
+    needs_manual_review = extraction_result.needs_manual_review
+    if is_phi_review_required():
+        review_status = "pending_phi_review"
+        needs_manual_review = True
+    elif needs_manual_review:
+        review_status = "unverified"
+    else:
+        review_status = "finalized"
+    
+    processing_time_ms = (time.time() - start_time) * 1000
+    
+    # Build response
+    registry_payload = record.model_dump(exclude_none=True)
+    
+    return UnifiedProcessResponse(
+        registry=registry_payload,
+        evidence=evidence_payload,
+        cpt_codes=codes,
+        suggestions=suggestions,
+        total_work_rvu=total_work_rvu,
+        estimated_payment=estimated_payment,
+        per_code_billing=per_code_billing,
+        pipeline_mode="extraction_first",
+        coder_difficulty=extraction_result.coder_difficulty or "",
+        needs_manual_review=needs_manual_review,
+        audit_warnings=all_warnings,
+        validation_errors=extraction_result.validation_errors or [],
+        kb_version=coding_service.kb_repo.version,
+        policy_version="extraction_first_v1",
+        processing_time_ms=round(processing_time_ms, 2),
+        review_status=review_status,
+    )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Batch unified pipeline test on random notes from notes_text directory."
+    )
+    parser.add_argument(
+        "--count",
+        type=int,
+        default=10,
+        help="Number of random notes to test (default: 10)",
+    )
+    parser.add_argument(
+        "--notes-dir",
+        type=Path,
+        default=ROOT / "data" / "granular annotations" / "notes_text",
+        help="Directory containing note .txt files (default: data/granular annotations/notes_text)",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Output file path (default: unified_pipeline_batch_<timestamp>.txt)",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducibility",
+    )
+    parser.add_argument(
+        "--include-financials",
+        action="store_true",
+        default=True,
+        help="Include RVU and payment information (default: True)",
+    )
+    parser.add_argument(
+        "--no-financials",
+        dest="include_financials",
+        action="store_false",
+        help="Exclude RVU and payment information",
+    )
+    parser.add_argument(
+        "--explain",
+        action="store_true",
+        default=True,
+        help="Include evidence/explanation data (default: True)",
+    )
+    parser.add_argument(
+        "--no-explain",
+        dest="explain",
+        action="store_false",
+        help="Exclude evidence/explanation data",
+    )
+    args = parser.parse_args()
+    
+    # Set up environment (use stub LLM for offline testing)
+    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+    if os.getenv("GEMINI_OFFLINE") is None:
+        os.environ["GEMINI_OFFLINE"] = "1"
+    
+    # Load notes
+    if not args.notes_dir.exists():
+        print(f"ERROR: Notes directory not found: {args.notes_dir}", file=sys.stderr)
+        return 1
+    
+    print(f"Loading notes from {args.notes_dir}...", file=sys.stderr)
+    all_notes = _load_notes_from_directory(args.notes_dir)
+    
+    if not all_notes:
+        print(f"ERROR: No notes found in {args.notes_dir}", file=sys.stderr)
+        return 1
+    
+    print(f"Loaded {len(all_notes)} notes", file=sys.stderr)
+    
+    # Select random notes
+    if args.seed is not None:
+        random.seed(args.seed)
+        print(f"Using random seed: {args.seed}", file=sys.stderr)
+    
+    count = min(args.count, len(all_notes))
+    selected_notes = random.sample(list(all_notes.items()), count)
+    
+    print(f"Selected {count} random notes for testing", file=sys.stderr)
+    
+    # Determine output file
+    if args.output:
+        output_path = args.output
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_path = ROOT / f"unified_pipeline_batch_{timestamp}.txt"
+    
+    # Initialize services
+    print("Initializing services...", file=sys.stderr)
+    registry_service = get_registry_service()
+    coding_service = get_coding_service()
+    phi_scrubber = get_phi_scrubber()
+    
+    # Run unified pipeline on each note
+    print(f"Running unified pipeline on {count} notes...", file=sys.stderr)
+    print(f"Output will be saved to: {output_path}", file=sys.stderr)
+    
+    all_results = []
+    for i, (note_id, note_text) in enumerate(selected_notes, 1):
+        print(f"[{i}/{count}] Processing {note_id}...", file=sys.stderr)
+        try:
+            result = _run_unified_pipeline(
+                note_text,
+                registry_service,
+                coding_service,
+                phi_scrubber,
+                include_financials=args.include_financials,
+                explain=args.explain,
+            )
+            all_results.append((note_id, note_text, result, None))
+        except Exception as exc:
+            print(f"  ERROR: {exc}", file=sys.stderr)
+            all_results.append((note_id, note_text, None, str(exc)))
+    
+    # Write output file
+    with open(output_path, "w", encoding="utf-8") as f:
+        # Write header
+        f.write("=" * 80 + "\n")
+        f.write("UNIFIED PIPELINE BATCH TEST RESULTS\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Date: {datetime.now().isoformat()}\n")
+        f.write(f"Notes tested: {count}\n")
+        f.write(f"Notes directory: {args.notes_dir}\n")
+        if args.seed is not None:
+            f.write(f"Random seed: {args.seed}\n")
+        f.write(f"Include financials: {args.include_financials}\n")
+        f.write(f"Include explain: {args.explain}\n")
+        f.write("=" * 80 + "\n")
+        f.write("\n")
+        
+        # Write results for each note
+        success_count = 0
+        failed_count = 0
+        
+        for note_id, note_text, result, error in all_results:
+            f.write("=" * 80 + "\n")
+            f.write(f"NOTE: {note_id}\n")
+            f.write("=" * 80 + "\n")
+            f.write("\n")
+            
+            # Write note text
+            f.write("NOTE TEXT:\n")
+            f.write("-" * 80 + "\n")
+            f.write(note_text)
+            f.write("\n")
+            f.write("-" * 80 + "\n")
+            f.write("\n")
+            
+            # Write results
+            if error:
+                f.write("ERROR:\n")
+                f.write(f"{error}\n")
+                f.write("\n")
+                f.write("STATUS: FAILED\n")
+                failed_count += 1
+            else:
+                f.write("RESULTS (JSON):\n")
+                f.write("-" * 80 + "\n")
+                # Convert Pydantic model to dict and serialize
+                result_dict = result.model_dump(exclude_none=True)
+                f.write(json.dumps(result_dict, indent=2, ensure_ascii=False))
+                f.write("\n")
+                f.write("-" * 80 + "\n")
+                f.write("\n")
+                f.write("STATUS: SUCCESS\n")
+                success_count += 1
+            
+            f.write("\n")
+        
+        # Write summary
+        f.write("=" * 80 + "\n")
+        f.write("SUMMARY\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Total notes tested: {count}\n")
+        f.write(f"Successful: {success_count}\n")
+        f.write(f"Failed: {failed_count}\n")
+        if count > 0:
+            f.write(f"Success rate: {success_count/count*100:.1f}%\n")
+        f.write("=" * 80 + "\n")
+    
+    print(f"\nCompleted! Results saved to: {output_path}", file=sys.stderr)
+    print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
+    
+    return 0 if failed_count == 0 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `scripts/registry_pipeline_smoke_batch.py`
+- Size: `14424` bytes
+```
+#!/usr/bin/env python3
+"""Batch smoke test for registry pipeline on random notes.
+
+This script randomly selects N notes from data/knowledge/patient_note_texts,
+runs the registry pipeline smoke test on each, and saves all output to a text file.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import random
+import sys
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+from modules.registry.application.registry_service import RegistryService  # noqa: E402
+from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
+from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
+from modules.registry.processing.navigation_fiducials import (  # noqa: E402
+    apply_navigation_fiducials,
+)
+from modules.registry.schema import RegistryRecord  # noqa: E402
+from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
+
+
+def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
+    flags: set[str] = set()
+    procs = record_data.get("procedures_performed")
+    if isinstance(procs, dict):
+        for name, payload in procs.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"procedures_performed.{name}.performed")
+
+    pleural = record_data.get("pleural_procedures")
+    if isinstance(pleural, dict):
+        for name, payload in pleural.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"pleural_procedures.{name}.performed")
+
+    if record_data.get("established_tracheostomy_route") is True:
+        flags.add("established_tracheostomy_route")
+
+    granular = record_data.get("granular_data")
+    if isinstance(granular, dict):
+        targets = granular.get("navigation_targets")
+        if isinstance(targets, list):
+            for target in targets:
+                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
+                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
+                    break
+
+    return flags
+
+
+def _apply_seed_uplift(
+    record_data: dict[str, Any],
+    seed: dict[str, Any],
+    masked_note_text: str,
+) -> tuple[dict[str, Any], list[str]]:
+    uplifted: list[str] = []
+
+    seed_procs = seed.get("procedures_performed")
+    if isinstance(seed_procs, dict):
+        record_procs = record_data.get("procedures_performed") or {}
+        if not isinstance(record_procs, dict):
+            record_procs = {}
+        for name, payload in seed_procs.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_procs.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"procedures_performed.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_procs[name] = existing
+        if record_procs:
+            record_data["procedures_performed"] = record_procs
+
+    seed_pleural = seed.get("pleural_procedures")
+    if isinstance(seed_pleural, dict):
+        record_pleural = record_data.get("pleural_procedures") or {}
+        if not isinstance(record_pleural, dict):
+            record_pleural = {}
+        for name, payload in seed_pleural.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_pleural.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"pleural_procedures.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_pleural[name] = existing
+        if record_pleural:
+            record_data["pleural_procedures"] = record_pleural
+
+    if seed.get("established_tracheostomy_route") is True:
+        if record_data.get("established_tracheostomy_route") is not True:
+            record_data["established_tracheostomy_route"] = True
+            uplifted.append("established_tracheostomy_route")
+
+    if apply_navigation_fiducials(record_data, masked_note_text):
+        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
+
+    return record_data, uplifted
+
+
+def _format_list(label: str, items: list[str] | set[str]) -> str:
+    """Format a list of items for output."""
+    if not items:
+        return f"{label}: (none)\n"
+    if isinstance(items, set):
+        items = sorted(items)
+    lines = [f"{label}:"]
+    for item in items:
+        lines.append(f"  - {item}")
+    return "\n".join(lines) + "\n"
+
+
+def _format_self_correction_diagnostics(result) -> str:
+    lines: list[str] = []
+
+    audit_report = getattr(result, "audit_report", None)
+    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
+    if not high_conf:
+        lines.append("Audit high-conf omissions: (none)\n")
+    else:
+        lines.append("Audit high-conf omissions:\n")
+        for pred in high_conf:
+            cpt = getattr(pred, "cpt", None)
+            prob = getattr(pred, "prob", None)
+            bucket = getattr(pred, "bucket", None)
+            try:
+                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
+            except Exception:
+                prob_str = "?"
+            lines.append(f"  - {cpt} (prob={prob_str}, bucket={bucket})\n")
+
+    warnings = getattr(result, "warnings", None)
+    if isinstance(warnings, list):
+        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
+        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
+        diag = self_correct_warnings + auto_corrected
+        if diag:
+            lines.append("Self-correction diagnostics:\n")
+            for w in diag:
+                lines.append(f"  - {w}\n")
+
+    return "".join(lines)
+
+
+def _run_smoke_test(note_text: str, note_id: str, self_correct: bool = False) -> str:
+    """Run smoke test on a single note and return formatted output."""
+    output_lines = []
+    output_lines.append("=" * 80)
+    output_lines.append(f"NOTE: {note_id}")
+    output_lines.append("=" * 80)
+    output_lines.append("")
+
+    try:
+        masked = mask_offset_preserving(note_text)
+
+        service = RegistryService()
+        record, warnings, meta = service.extract_record(note_text)
+
+        before_flags = _collect_performed_flags(record.model_dump())
+
+        seed = run_deterministic_extractors(masked)
+        record_data = record.model_dump()
+        record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
+        uplifted_flags = set(uplifted)
+        after_flags = _collect_performed_flags(record_data)
+
+        record_after = RegistryRecord(**record_data)
+        omission_warnings = scan_for_omissions(masked, record_after)
+
+        output_lines.append(_format_list("Performed flags (extract_record)", before_flags))
+        output_lines.append(_format_list("Performed flags added by deterministic uplift", uplifted_flags))
+        output_lines.append(_format_list("Performed flags (after uplift)", after_flags))
+        output_lines.append(_format_list("Extract warnings", warnings))
+        output_lines.append(_format_list("Omission warnings", omission_warnings))
+
+        if self_correct:
+            os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
+            try:
+                result = service.extract_fields(note_text)
+            except Exception as exc:
+                output_lines.append(f"SELF_CORRECT_ERROR: {exc}\n")
+            else:
+                output_lines.append(_format_self_correction_diagnostics(result))
+                if result.self_correction:
+                    output_lines.append("Self-correction applied:\n")
+                    for item in result.self_correction:
+                        output_lines.append(f"  - {item.trigger.target_cpt}: {item.outcome}\n")
+                else:
+                    output_lines.append("Self-correction applied: (none)\n")
+
+        output_lines.append("")
+        output_lines.append("STATUS: SUCCESS")
+        output_lines.append("")
+
+    except Exception as exc:
+        output_lines.append(f"ERROR: {exc}\n")
+        output_lines.append("STATUS: FAILED")
+        output_lines.append("")
+
+    return "".join(output_lines)
+
+
+def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
+    """Load all notes from JSON files in the directory.
+    
+    Returns a dict mapping note_id to note_text.
+    Only includes the main note (key without '_syn_' suffix) from each file.
+    """
+    notes = {}
+    
+    for json_file in sorted(notes_dir.glob("*.json")):
+        try:
+            with open(json_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            
+            # Find the main note (key without '_syn_' suffix)
+            main_key = None
+            for key in data.keys():
+                if "_syn_" not in key:
+                    main_key = key
+                    break
+            
+            if main_key and isinstance(data[main_key], str):
+                note_id = json_file.stem
+                notes[note_id] = data[main_key]
+        except Exception as exc:
+            print(f"Warning: Failed to load {json_file}: {exc}", file=sys.stderr)
+    
+    return notes
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Batch smoke test the registry extraction pipeline on random notes."
+    )
+    parser.add_argument(
+        "--count",
+        type=int,
+        default=30,
+        help="Number of random notes to test (default: 30)",
+    )
+    parser.add_argument(
+        "--notes-dir",
+        type=Path,
+        default=ROOT / "data" / "knowledge" / "patient_note_texts",
+        help="Directory containing note JSON files (default: data/knowledge/patient_note_texts)",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Output file path (default: registry_smoke_batch_<timestamp>.txt)",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducibility",
+    )
+    parser.add_argument(
+        "--self-correct",
+        action="store_true",
+        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
+    )
+    args = parser.parse_args()
+
+    # Set up environment
+    if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+        os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+    if os.getenv("GEMINI_OFFLINE") is None:
+        os.environ["GEMINI_OFFLINE"] = "1"
+
+    # Load notes
+    if not args.notes_dir.exists():
+        print(f"ERROR: Notes directory not found: {args.notes_dir}", file=sys.stderr)
+        return 1
+
+    print(f"Loading notes from {args.notes_dir}...", file=sys.stderr)
+    all_notes = _load_notes_from_directory(args.notes_dir)
+    
+    if not all_notes:
+        print(f"ERROR: No notes found in {args.notes_dir}", file=sys.stderr)
+        return 1
+
+    print(f"Loaded {len(all_notes)} notes", file=sys.stderr)
+
+    # Select random notes
+    if args.seed is not None:
+        random.seed(args.seed)
+        print(f"Using random seed: {args.seed}", file=sys.stderr)
+
+    count = min(args.count, len(all_notes))
+    selected_notes = random.sample(list(all_notes.items()), count)
+    
+    print(f"Selected {count} random notes for testing", file=sys.stderr)
+
+    # Determine output file
+    if args.output:
+        output_path = args.output
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_path = ROOT / f"registry_smoke_batch_{timestamp}.txt"
+
+    # Run smoke tests
+    print(f"Running smoke tests...", file=sys.stderr)
+    print(f"Output will be saved to: {output_path}", file=sys.stderr)
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        # Write header
+        f.write("=" * 80 + "\n")
+        f.write("REGISTRY PIPELINE BATCH SMOKE TEST\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Date: {datetime.now().isoformat()}\n")
+        f.write(f"Notes tested: {count}\n")
+        f.write(f"Notes directory: {args.notes_dir}\n")
+        if args.seed is not None:
+            f.write(f"Random seed: {args.seed}\n")
+        f.write(f"Self-correction: {args.self_correct}\n")
+        f.write("=" * 80 + "\n")
+        f.write("\n")
+
+        # Run tests
+        success_count = 0
+        failed_count = 0
+
+        for i, (note_id, note_text) in enumerate(selected_notes, 1):
+            print(f"[{i}/{count}] Testing {note_id}...", file=sys.stderr)
+            result = _run_smoke_test(note_text, note_id, args.self_correct)
+            f.write(result)
+            f.flush()
+
+            if "STATUS: SUCCESS" in result:
+                success_count += 1
+            else:
+                failed_count += 1
+
+        # Write summary
+        f.write("=" * 80 + "\n")
+        f.write("SUMMARY\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Total notes tested: {count}\n")
+        f.write(f"Successful: {success_count}\n")
+        f.write(f"Failed: {failed_count}\n")
+        f.write(f"Success rate: {success_count/count*100:.1f}%\n")
+        f.write("=" * 80 + "\n")
+
+    print(f"\nCompleted! Results saved to: {output_path}", file=sys.stderr)
+    print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
+
+    return 0 if failed_count == 0 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 ```
 
@@ -15570,2202 +16740,6 @@ def main():
 
     if any(r.errors for r in results):
         print(f"Error log saved to: {errors_file}")
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-### `scripts/prodigy_prepare_phi_batch.py`
-- Size: `17034` bytes
-```
-#!/usr/bin/env python3
-"""
-Prepare a batch of golden notes for Prodigy annotation.
-
-Samples golden notes, runs DistilBERT inference to pre-annotate PHI spans,
-and outputs Prodigy-compatible JSONL format.
-
-Usage:
-    python scripts/prodigy_prepare_phi_batch.py --count 100 --output data/ml_training/prodigy_batch.jsonl
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import logging
-import random
-import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
-
-import torch
-from transformers import AutoModelForTokenClassification, AutoTokenizer
-
-# Add repo root to path
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-logger = logging.getLogger(__name__)
-
-# Default paths
-DEFAULT_GOLDEN_DIR = Path("data/knowledge/golden_extractions")
-DEFAULT_MODEL_DIR = Path("artifacts/phi_distilbert_ner")
-DEFAULT_OUTPUT = Path("data/ml_training/prodigy_batch.jsonl")
-DEFAULT_MANIFEST = Path("data/ml_training/prodigy_manifest.json")
-
-# Windowing config
-WINDOW_CHARS = 2000
-OVERLAP_CHARS = 200
-
-
-def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--count", type=int, default=100, help="Number of notes to sample")
-    parser.add_argument("--golden-dir", type=Path, default=DEFAULT_GOLDEN_DIR, help="Golden notes directory")
-    parser.add_argument("--input-file", type=Path, default=None, help="Single JSONL file to use instead of golden-dir")
-    parser.add_argument("--model-dir", type=Path, default=DEFAULT_MODEL_DIR, help="Trained model directory")
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Output JSONL file")
-    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST, help="Manifest file for tracking")
-    parser.add_argument("--seed", type=int, default=None, help="Random seed for reproducibility")
-    parser.add_argument("--window-chars", type=int, default=WINDOW_CHARS, help="Window size in characters")
-    parser.add_argument("--overlap-chars", type=int, default=OVERLAP_CHARS, help="Overlap between windows")
-    parser.add_argument("--device", type=str, default=None, help="Device (cuda/mps/cpu)")
-    return parser.parse_args(argv)
-
-
-def iter_golden_files(golden_dir: Path) -> List[Path]:
-    """Iterate over golden extraction JSON files."""
-    patterns = [
-        "golden_*.json",
-        "consolidated_verified_notes_v2_8_part_*.json",
-        "synthetic_*.json",
-    ]
-    files: List[Path] = []
-    for pattern in patterns:
-        files.extend(golden_dir.glob(pattern))
-    # Also include JSONL files
-    files.extend(golden_dir.glob("*.jsonl"))
-
-    # Dedupe
-    seen: set[Path] = set()
-    unique: List[Path] = []
-    for p in sorted(files):
-        if p in seen:
-            continue
-        seen.add(p)
-        unique.append(p)
-    return unique
-
-
-def flatten_entries(data: Any) -> List[Dict[str, Any]]:
-    """Flatten entries from various JSON structures."""
-    if isinstance(data, list):
-        return [e for e in data if isinstance(e, dict)]
-    elif isinstance(data, dict):
-        entries = []
-        for key, value in data.items():
-            if key == "metadata":
-                continue
-            if isinstance(value, list):
-                entries.extend([e for e in value if isinstance(e, dict)])
-        return entries
-    return []
-
-
-def get_note_text(entry: Dict[str, Any]) -> str | None:
-    """Get note text from entry, checking both 'note_text' and 'text' fields."""
-    return entry.get("note_text") or entry.get("text")
-
-
-def load_golden_notes(golden_dir: Path) -> List[Dict[str, Any]]:
-    """Load all golden notes with their source file info."""
-    notes = []
-    for file_path in iter_golden_files(golden_dir):
-        try:
-            if file_path.suffix == ".jsonl":
-                with open(file_path, "r") as f:
-                    for line_num, line in enumerate(f):
-                        line = line.strip()
-                        if not line:
-                            continue
-                        entry = json.loads(line)
-                        if isinstance(entry, dict) and get_note_text(entry):
-                            entry["_source_file"] = file_path.name
-                            entry["_record_index"] = line_num
-                            notes.append(entry)
-            else:
-                with open(file_path, "r") as f:
-                    data = json.load(f)
-                entries = flatten_entries(data)
-                for idx, entry in enumerate(entries):
-                    if get_note_text(entry):
-                        entry["_source_file"] = file_path.name
-                        entry["_record_index"] = idx
-                        notes.append(entry)
-        except Exception as e:
-            logger.warning(f"Failed to load {file_path}: {e}")
-    return notes
-
-
-def load_notes_from_file(file_path: Path) -> List[Dict[str, Any]]:
-    """Load notes from a single JSONL file."""
-    notes = []
-    try:
-        with open(file_path, "r") as f:
-            for line_num, line in enumerate(f):
-                line = line.strip()
-                if not line:
-                    continue
-                entry = json.loads(line)
-                if isinstance(entry, dict) and get_note_text(entry):
-                    entry["_source_file"] = file_path.name
-                    entry["_record_index"] = line_num
-                    notes.append(entry)
-    except Exception as e:
-        logger.warning(f"Failed to load {file_path}: {e}")
-    return notes
-
-
-def load_manifest(manifest_path: Path) -> Dict[str, Any]:
-    """Load the annotation manifest to track already-annotated notes."""
-    if not manifest_path.exists():
-        return {"batches": [], "annotated_windows": []}
-    try:
-        with open(manifest_path, "r") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.warning(f"Failed to load manifest: {e}")
-        return {"batches": [], "annotated_windows": []}
-
-
-def save_manifest(manifest_path: Path, manifest: Dict[str, Any]) -> None:
-    """Save the annotation manifest."""
-    manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(manifest_path, "w") as f:
-        json.dump(manifest, f, indent=2)
-
-
-def window_text(text: str, window_chars: int, overlap_chars: int) -> List[Tuple[int, int, str]]:
-    """Split text into overlapping windows."""
-    if not text or window_chars <= 0:
-        return []
-    overlap_chars = max(0, overlap_chars)
-    step = max(window_chars - overlap_chars, 1)
-    windows: List[Tuple[int, int, str]] = []
-    start = 0
-    text_len = len(text)
-    while start < text_len:
-        end = min(start + window_chars, text_len)
-        windows.append((start, end, text[start:end]))
-        if end >= text_len:
-            break
-        start += step
-    return windows
-
-
-def load_model(model_dir: Path, device: torch.device) -> Tuple[Any, Any, Dict[int, str]]:
-    """Load the trained DistilBERT model and tokenizer."""
-    logger.info(f"Loading model from {model_dir}")
-
-    model = AutoModelForTokenClassification.from_pretrained(str(model_dir))
-    tokenizer = AutoTokenizer.from_pretrained(str(model_dir))
-    model.to(device)
-    model.eval()
-
-    # Load label mapping
-    label_map_path = model_dir / "label_map.json"
-    if label_map_path.exists():
-        with open(label_map_path, "r") as f:
-            label_data = json.load(f)
-        id2label = {int(k): v for k, v in label_data.get("id2label", {}).items()}
-    else:
-        # Fallback to model config
-        id2label = {int(k): v for k, v in model.config.id2label.items()}
-
-    return model, tokenizer, id2label
-
-
-def run_inference(
-    text: str,
-    tokenizer: Any,
-    model: Any,
-    id2label: Dict[int, str],
-    device: torch.device,
-) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """
-    Run inference on text and return both tokens and predicted spans.
-
-    Returns:
-        (tokens, spans) where:
-        - tokens: List of {"text": str, "start": int, "end": int, "id": int}
-        - spans: List of {"start": int, "end": int, "label": str, "token_start": int, "token_end": int}
-    """
-    # Tokenize with offset mapping
-    encoding = tokenizer(
-        text,
-        return_tensors="pt",
-        truncation=True,
-        max_length=512,
-        return_offsets_mapping=True,
-        return_attention_mask=True,
-    )
-
-    offset_mapping = encoding.pop("offset_mapping")[0].tolist()  # List of (start, end) tuples
-
-    # Move to device
-    input_ids = encoding["input_ids"].to(device)
-    attention_mask = encoding["attention_mask"].to(device)
-
-    # Run inference
-    with torch.no_grad():
-        outputs = model(input_ids=input_ids, attention_mask=attention_mask)
-
-    logits = outputs.logits
-    pred_ids = logits.argmax(-1).squeeze(0).tolist()
-
-    # Skip CLS and SEP tokens
-    # offset_mapping[0] is CLS, offset_mapping[-1] is SEP
-    tokens_list = []
-    pred_labels = []
-
-    for idx, (offset, pred_id) in enumerate(zip(offset_mapping, pred_ids)):
-        start, end = offset
-        if start == 0 and end == 0:
-            # Special token (CLS or SEP) - skip
-            continue
-
-        token_text = text[start:end]
-        tokens_list.append({
-            "text": token_text,
-            "start": start,
-            "end": end,
-            "id": len(tokens_list),
-        })
-        pred_labels.append(id2label.get(pred_id, "O"))
-
-    # Convert BIO labels to spans
-    spans = bio_to_spans(tokens_list, pred_labels)
-
-    return tokens_list, spans
-
-
-def bio_to_spans(
-    tokens: List[Dict[str, Any]],
-    labels: List[str],
-) -> List[Dict[str, Any]]:
-    """Convert BIO labels to character spans."""
-    spans = []
-    current_span = None
-
-    for idx, (token, label) in enumerate(zip(tokens, labels)):
-        if label.startswith("B-"):
-            # Start new span
-            if current_span is not None:
-                spans.append(current_span)
-            entity_type = label[2:]
-            current_span = {
-                "start": token["start"],
-                "end": token["end"],
-                "label": entity_type,
-                "token_start": idx,
-                "token_end": idx,
-            }
-        elif label.startswith("I-") and current_span is not None:
-            # Continue current span if same type
-            entity_type = label[2:]
-            if entity_type == current_span["label"]:
-                current_span["end"] = token["end"]
-                current_span["token_end"] = idx
-            else:
-                # Type mismatch - end current span, start new
-                spans.append(current_span)
-                current_span = {
-                    "start": token["start"],
-                    "end": token["end"],
-                    "label": entity_type,
-                    "token_start": idx,
-                    "token_end": idx,
-                }
-        elif label == "O":
-            # End current span if any
-            if current_span is not None:
-                spans.append(current_span)
-                current_span = None
-        else:
-            # I- tag without B- - treat as B-
-            if current_span is not None:
-                spans.append(current_span)
-            if label.startswith("I-"):
-                entity_type = label[2:]
-                current_span = {
-                    "start": token["start"],
-                    "end": token["end"],
-                    "label": entity_type,
-                    "token_start": idx,
-                    "token_end": idx,
-                }
-            else:
-                current_span = None
-
-    # Don't forget the last span
-    if current_span is not None:
-        spans.append(current_span)
-
-    return spans
-
-
-def process_note(
-    note: Dict[str, Any],
-    tokenizer: Any,
-    model: Any,
-    id2label: Dict[int, str],
-    device: torch.device,
-    window_chars: int,
-    overlap_chars: int,
-    batch_id: str,
-) -> List[Dict[str, Any]]:
-    """Process a single note into Prodigy examples."""
-    text = get_note_text(note)
-    if not text:
-        return []
-
-    source_file = note.get("_source_file", "unknown")
-    record_index = note.get("_record_index", 0)
-
-    examples = []
-    windows = window_text(text, window_chars, overlap_chars)
-
-    for window_idx, (start, end, window_text_content) in enumerate(windows):
-        # Run inference on window
-        tokens, spans = run_inference(window_text_content, tokenizer, model, id2label, device)
-
-        # Create Prodigy example
-        example = {
-            "text": window_text_content,
-            "spans": spans,
-            "tokens": tokens,
-            "meta": {
-                "source": source_file,
-                "record_index": record_index,
-                "window_index": window_idx,
-                "window_start": start,
-                "window_end": end,
-                "batch_id": batch_id,
-            },
-        }
-        examples.append(example)
-
-    return examples
-
-
-def main(argv: List[str] | None = None) -> int:
-    args = parse_args(argv)
-
-    # Set random seed
-    if args.seed is not None:
-        random.seed(args.seed)
-
-    # Determine device
-    if args.device:
-        device = torch.device(args.device)
-    elif torch.cuda.is_available():
-        device = torch.device("cuda")
-    elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-        device = torch.device("mps")
-    else:
-        device = torch.device("cpu")
-    logger.info(f"Using device: {device}")
-
-    # Load model
-    if not args.model_dir.exists():
-        logger.error(f"Model directory not found: {args.model_dir}")
-        return 1
-    model, tokenizer, id2label = load_model(args.model_dir, device)
-    logger.info(f"Loaded model with labels: {list(id2label.values())}")
-
-    # Load notes from input file or golden directory
-    if args.input_file:
-        if not args.input_file.exists():
-            logger.error(f"Input file not found: {args.input_file}")
-            return 1
-        logger.info(f"Loading notes from {args.input_file}")
-        all_notes = load_notes_from_file(args.input_file)
-    else:
-        logger.info(f"Loading golden notes from {args.golden_dir}")
-        all_notes = load_golden_notes(args.golden_dir)
-    logger.info(f"Found {len(all_notes)} total notes")
-
-    # Load manifest to get already-annotated notes
-    manifest = load_manifest(args.manifest)
-    annotated_ids = set(manifest.get("annotated_windows", []))
-
-    # Filter out already-annotated notes
-    def note_id(note: Dict[str, Any]) -> str:
-        return f"{note.get('_source_file', 'unknown')}:{note.get('_record_index', 0)}"
-
-    available_notes = [n for n in all_notes if not any(
-        wid.startswith(note_id(n)) for wid in annotated_ids
-    )]
-    logger.info(f"Available notes after filtering: {len(available_notes)}")
-
-    if len(available_notes) == 0:
-        logger.warning("No available notes to sample. All notes may have been annotated.")
-        return 0
-
-    # Sample notes
-    sample_count = min(args.count, len(available_notes))
-    sampled_notes = random.sample(available_notes, sample_count)
-    logger.info(f"Sampled {sample_count} notes")
-
-    # Generate batch ID
-    batch_id = datetime.now().strftime("%Y-%m-%d_batch_%H%M%S")
-
-    # Process notes and generate examples
-    all_examples = []
-    new_window_ids = []
-
-    for note in sampled_notes:
-        examples = process_note(
-            note, tokenizer, model, id2label, device,
-            args.window_chars, args.overlap_chars, batch_id
-        )
-        for ex in examples:
-            window_id = f"{ex['meta']['source']}:{ex['meta']['record_index']}:{ex['meta']['window_index']}"
-            new_window_ids.append(window_id)
-        all_examples.extend(examples)
-
-    logger.info(f"Generated {len(all_examples)} examples from {sample_count} notes")
-
-    # Count spans by label
-    span_counts: Dict[str, int] = {}
-    for ex in all_examples:
-        for span in ex.get("spans", []):
-            label = span.get("label", "UNKNOWN")
-            span_counts[label] = span_counts.get(label, 0) + 1
-    logger.info(f"Span counts by label: {span_counts}")
-
-    # Write output
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with open(args.output, "w") as f:
-        for ex in all_examples:
-            f.write(json.dumps(ex) + "\n")
-    logger.info(f"Wrote {len(all_examples)} examples to {args.output}")
-
-    # Update manifest
-    manifest["batches"].append({
-        "batch_id": batch_id,
-        "created_at": datetime.now().isoformat(),
-        "notes_count": sample_count,
-        "windows_count": len(all_examples),
-        "source_file": str(args.output),
-        "status": "pending",
-    })
-    manifest["annotated_windows"].extend(new_window_ids)
-    save_manifest(args.manifest, manifest)
-    logger.info(f"Updated manifest at {args.manifest}")
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
-
-```
-
----
-### `scripts/generate_synthetic_phi_data.py`
-- Size: `18203` bytes
-```
-#!/usr/bin/env python3
-"""
-Generate synthetic PHI training data for the DistilBERT NER model.
-
-This script creates balanced training examples with:
-- Patient names (various formats)
-- Phone numbers (various formats)
-- Dates (various formats)
-- Emails, SSNs, MRNs, addresses
-
-Output: JSONL file with WordPiece tokens and BIO tags aligned for training.
-"""
-
-import argparse
-import json
-import random
-from pathlib import Path
-from typing import Any
-
-from transformers import AutoTokenizer
-
-# Sample data pools
-FIRST_NAMES = [
-    "John", "Jane", "Michael", "Sarah", "David", "Emily", "Robert", "Lisa",
-    "William", "Jennifer", "James", "Maria", "Thomas", "Susan", "Charles",
-    "Margaret", "Joseph", "Elizabeth", "Daniel", "Patricia", "Richard", "Linda",
-    "Mark", "Barbara", "Steven", "Nancy", "Paul", "Karen", "Andrew", "Betty",
-    "Kevin", "Dorothy", "Brian", "Sandra", "George", "Ashley", "Edward", "Kimberly",
-    "Ronald", "Donna", "Timothy", "Carol", "Jason", "Michelle", "Jeffrey", "Amanda",
-]
-
-LAST_NAMES = [
-    "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis",
-    "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson",
-    "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson",
-    "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker",
-    "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores",
-    "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell",
-]
-
-STREET_NAMES = [
-    "Main", "Oak", "Maple", "Cedar", "Pine", "Elm", "Park", "Lake", "Hill", "River",
-    "Washington", "Lincoln", "Jefferson", "Madison", "Jackson", "Franklin", "Adams",
-]
-
-STREET_TYPES = ["St", "Ave", "Blvd", "Dr", "Ln", "Rd", "Way", "Ct", "Pl"]
-
-CITIES = [
-    "New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia",
-    "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Jacksonville",
-    "Fort Worth", "Columbus", "Charlotte", "San Francisco", "Indianapolis", "Seattle",
-    "Denver", "Boston", "Nashville", "Baltimore", "Oklahoma City", "Portland",
-]
-
-STATES = ["NY", "CA", "TX", "FL", "IL", "PA", "OH", "GA", "NC", "MI", "NJ", "VA", "WA", "AZ", "MA", "TN", "IN", "MO", "MD", "WI"]
-
-STATE_NAMES = [
-    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
-    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
-    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
-    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
-    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
-    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
-    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
-    "Wisconsin", "Wyoming",
-]
-
-FACILITY_BASES = [
-    "Naval Medical Center", "Medical Center", "University Medical Center",
-    "General Hospital", "Regional Hospital", "Memorial Hospital", "Community Hospital",
-    "Children's Hospital", "University Hospital", "County Medical Center",
-    "VA Medical Center", "Health Center", "Health System", "Cancer Center",
-    "Pulmonary Institute", "Medical Clinic", "Specialty Clinic",
-    "University of",
-]
-
-# Medical procedure context templates
-PROCEDURE_TEMPLATES = [
-    "Patient: {patient}. DOB: {date}. Phone: {phone}.",
-    "PATIENT: {patient}\nDOB: {date}\nCONTACT: {phone}",
-    "Name: {patient}, Date of Birth: {date}, Telephone: {phone}",
-    "Pt {patient} (DOB {date}) contacted at {phone}.",
-    "OPERATIVE REPORT\nPatient Name: {patient}\nDate of Procedure: {date}\nContact Number: {phone}",
-    "Pre-procedure checklist completed for {patient}, DOB {date}. Callback: {phone}.",
-    "Consent obtained from {patient} on {date}. Emergency contact: {phone}.",
-    "Patient {patient} scheduled for bronchoscopy on {date}. Phone: {phone}.",
-    "PROCEDURE NOTE\nPatient: {patient}\nProcedure Date: {date}\nPhone: {phone}\nIndication: Lung nodule evaluation",
-    "{patient} presented on {date} for diagnostic bronchoscopy. Contact: {phone}.",
-    "Follow-up call to {patient} at {phone} scheduled for {date}.",
-    "Medical Record for {patient}\nBirth Date: {date}\nPhone Number: {phone}",
-    "Admission date: {date}\nPatient: {patient}\nContact phone: {phone}",
-    "Email confirmation sent to {email} for {patient}, appointment {date}.",
-    "SSN ending in {ssn_last4} verified for {patient}. DOB: {date}.",
-    "MRN: {mrn} - {patient}, DOB {date}, Phone {phone}",
-    "Address: {address}\nPatient: {patient}\nDOB: {date}",
-    "Facility: {facility}\nPatient: {patient}\nDOB: {date}",
-    "Procedure performed at {facility} on {date}. Patient: {patient}.",
-    "Transferred to {facility}. Patient {patient} scheduled for bronchoscopy on {date}.",
-    "Operative location: {facility}\nMRN: {mrn}\nPatient: {patient}",
-]
-
-# Templates with just names
-NAME_TEMPLATES = [
-    "Attending physician: Dr. {patient}",
-    "Resident: {patient}",
-    "Procedure performed by {patient}",
-    "Nurse: {patient}",
-    "Patient {patient} arrived for procedure.",
-    "Consent signed by {patient}.",
-    "Family member {patient} was notified.",
-    "Emergency contact: {patient}",
-]
-
-# Templates with just dates
-DATE_TEMPLATES = [
-    "Procedure scheduled for {date}.",
-    "Follow-up appointment: {date}",
-    "Last seen on {date}.",
-    "Results received {date}.",
-    "Biopsy performed {date}.",
-    "CT scan dated {date}.",
-    "Lab work from {date}.",
-    "Discharge date: {date}",
-]
-
-# Templates with just phones
-PHONE_TEMPLATES = [
-    "Call back at {phone}.",
-    "Contact number: {phone}",
-    "Phone: {phone}",
-    "Telephone: {phone}",
-    "Fax: {phone}",
-    "Callback requested: {phone}",
-]
-
-
-def generate_name(format_type: str = "full") -> str:
-    """Generate a random name in various formats."""
-    first = random.choice(FIRST_NAMES)
-    last = random.choice(LAST_NAMES)
-
-    formats = {
-        "full": f"{first} {last}",
-        "last_first": f"{last}, {first}",
-        "initial": f"{first[0]}. {last}",
-        "last_initial": f"{last}, {first[0]}.",
-        "first_only": first,
-        "last_only": last,
-    }
-    return formats.get(format_type, formats["full"])
-
-
-def generate_date(format_type: str = "slash") -> str:
-    """Generate a random date in various formats."""
-    month = random.randint(1, 12)
-    day = random.randint(1, 28)
-    year = random.randint(1940, 2024)
-
-    formats = {
-        "slash": f"{month:02d}/{day:02d}/{year}",
-        "slash_short": f"{month}/{day}/{year % 100:02d}",
-        "dash": f"{year}-{month:02d}-{day:02d}",
-        "long": f"{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][month-1]} {day}, {year}",
-        "short_month": f"{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month-1]} {day}, {year}",
-        "dot": f"{month:02d}.{day:02d}.{year}",
-    }
-    return formats.get(format_type, formats["slash"])
-
-
-def generate_phone(format_type: str = "dash") -> str:
-    """Generate a random phone number in various formats."""
-    area = random.randint(200, 999)
-    prefix = random.randint(200, 999)
-    line = random.randint(1000, 9999)
-
-    formats = {
-        "dash": f"{area}-{prefix}-{line}",
-        "dot": f"{area}.{prefix}.{line}",
-        "paren": f"({area}) {prefix}-{line}",
-        "plain": f"{area}{prefix}{line}",
-        "space": f"{area} {prefix} {line}",
-    }
-    return formats.get(format_type, formats["dash"])
-
-
-def generate_email() -> str:
-    """Generate a random email address."""
-    first = random.choice(FIRST_NAMES).lower()
-    last = random.choice(LAST_NAMES).lower()
-    domain = random.choice(["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "email.com"])
-    formats = [
-        f"{first}.{last}@{domain}",
-        f"{first}{last}@{domain}",
-        f"{first[0]}{last}@{domain}",
-        f"{last}.{first}@{domain}",
-    ]
-    return random.choice(formats)
-
-
-def generate_ssn_last4() -> str:
-    """Generate last 4 digits of SSN."""
-    return f"{random.randint(1000, 9999)}"
-
-
-def generate_mrn() -> str:
-    """Generate a medical record number."""
-    formats = [
-        f"{random.randint(100000, 999999)}",
-        f"MRN{random.randint(10000, 99999)}",
-        f"{random.choice(['A', 'B', 'C', 'M', 'P'])}{random.randint(100000, 999999)}",
-    ]
-    return random.choice(formats)
-
-
-def generate_address() -> str:
-    """Generate a random address."""
-    number = random.randint(100, 9999)
-    street = random.choice(STREET_NAMES)
-    street_type = random.choice(STREET_TYPES)
-    city = random.choice(CITIES)
-    state = random.choice(STATES)
-    zip_code = random.randint(10000, 99999)
-
-    formats = [
-        f"{number} {street} {street_type}",
-        f"{number} {street} {street_type}, {city}, {state}",
-        f"{number} {street} {street_type}, {city}, {state} {zip_code}",
-    ]
-    return random.choice(formats)
-
-
-def generate_facility_name() -> str:
-    """Generate a facility name with city/state suffix at the end."""
-    base = random.choice(FACILITY_BASES)
-    city = random.choice(CITIES)
-    state = random.choice(STATE_NAMES)
-    suffix_style = random.choice(["city", "city_state", "state"])
-
-    if base.lower().endswith("of"):
-        return f"{base} {state}"
-
-    if suffix_style == "city":
-        return f"{base} {city}"
-    if suffix_style == "city_state":
-        return f"{base} {city} {state}"
-    return f"{base} {state}"
-
-
-def tokenize_and_tag(
-    text: str,
-    tokenizer: Any,
-    entities: list[dict],
-) -> tuple[list[str], list[str]]:
-    """
-    Tokenize text and align BIO tags to tokens.
-
-    Args:
-        text: The raw text
-        tokenizer: HuggingFace tokenizer
-        entities: List of dicts with 'start', 'end', 'label' keys
-
-    Returns:
-        Tuple of (tokens, ner_tags)
-    """
-    # Tokenize with offset mapping
-    encoding = tokenizer(
-        text,
-        return_offsets_mapping=True,
-        add_special_tokens=False,
-    )
-
-    tokens = tokenizer.convert_ids_to_tokens(encoding["input_ids"])
-    offsets = encoding["offset_mapping"]
-
-    # Initialize all tags as O
-    ner_tags = ["O"] * len(tokens)
-
-    # Sort entities by start position
-    sorted_entities = sorted(entities, key=lambda e: e["start"])
-
-    # Assign BIO tags based on character offsets
-    for entity in sorted_entities:
-        ent_start = entity["start"]
-        ent_end = entity["end"]
-        label = entity["label"]
-        is_first = True
-
-        for i, (tok_start, tok_end) in enumerate(offsets):
-            # Skip special tokens (offset 0,0)
-            if tok_start == tok_end:
-                continue
-
-            # Check if token overlaps with entity
-            if tok_start >= ent_start and tok_end <= ent_end:
-                if is_first:
-                    ner_tags[i] = f"B-{label}"
-                    is_first = False
-                else:
-                    ner_tags[i] = f"I-{label}"
-            elif tok_start < ent_end and tok_end > ent_start:
-                # Partial overlap
-                if is_first:
-                    ner_tags[i] = f"B-{label}"
-                    is_first = False
-                else:
-                    ner_tags[i] = f"I-{label}"
-
-    return tokens, ner_tags
-
-
-def generate_example(
-    tokenizer: Any,
-    template_type: str = "mixed",
-) -> dict:
-    """Generate a single training example."""
-
-    entities = []
-
-    if template_type == "mixed":
-        template = random.choice(PROCEDURE_TEMPLATES)
-
-        # Generate all PHI values
-        name_format = random.choice(["full", "last_first", "initial"])
-        date_format = random.choice(["slash", "slash_short", "dash", "long", "short_month"])
-        phone_format = random.choice(["dash", "dot", "paren"])
-
-        patient = generate_name(name_format)
-        date = generate_date(date_format)
-        phone = generate_phone(phone_format)
-        email = generate_email()
-        ssn_last4 = generate_ssn_last4()
-        mrn = generate_mrn()
-        address = generate_address()
-        facility = generate_facility_name()
-
-        # Build text with placeholders
-        text = template.format(
-            patient=patient,
-            date=date,
-            phone=phone,
-            email=email,
-            ssn_last4=ssn_last4,
-            mrn=mrn,
-            address=address,
-            facility=facility,
-        )
-
-        # Find entity positions
-        if "{patient}" in template:
-            start = text.find(patient)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(patient), "label": "PATIENT"})
-
-        if "{date}" in template:
-            start = text.find(date)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(date), "label": "DATE"})
-
-        if "{phone}" in template:
-            start = text.find(phone)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(phone), "label": "CONTACT"})
-
-        if "{email}" in template:
-            start = text.find(email)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(email), "label": "CONTACT"})
-
-        if "{ssn_last4}" in template:
-            start = text.find(ssn_last4)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(ssn_last4), "label": "ID"})
-
-        if "{mrn}" in template:
-            start = text.find(mrn)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(mrn), "label": "ID"})
-
-        if "{address}" in template:
-            start = text.find(address)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(address), "label": "GEO"})
-
-        if "{facility}" in template:
-            start = text.find(facility)
-            if start >= 0:
-                entities.append({"start": start, "end": start + len(facility), "label": "GEO"})
-
-    elif template_type == "name":
-        template = random.choice(NAME_TEMPLATES)
-        name_format = random.choice(["full", "last_first", "initial", "first_only", "last_only"])
-        patient = generate_name(name_format)
-        text = template.format(patient=patient)
-        start = text.find(patient)
-        if start >= 0:
-            entities.append({"start": start, "end": start + len(patient), "label": "PATIENT"})
-
-    elif template_type == "date":
-        template = random.choice(DATE_TEMPLATES)
-        date_format = random.choice(["slash", "slash_short", "dash", "long", "short_month", "dot"])
-        date = generate_date(date_format)
-        text = template.format(date=date)
-        start = text.find(date)
-        if start >= 0:
-            entities.append({"start": start, "end": start + len(date), "label": "DATE"})
-
-    elif template_type == "phone":
-        template = random.choice(PHONE_TEMPLATES)
-        phone_format = random.choice(["dash", "dot", "paren", "plain", "space"])
-        phone = generate_phone(phone_format)
-        text = template.format(phone=phone)
-        start = text.find(phone)
-        if start >= 0:
-            entities.append({"start": start, "end": start + len(phone), "label": "CONTACT"})
-
-    else:
-        raise ValueError(f"Unknown template type: {template_type}")
-
-    # Tokenize and tag
-    tokens, ner_tags = tokenize_and_tag(text, tokenizer, entities)
-
-    return {
-        "text": text,
-        "tokens": tokens,
-        "ner_tags": ner_tags,
-        "entities": entities,
-        "origin": "synthetic-phi",
-    }
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Generate synthetic PHI training data")
-    parser.add_argument("--output", "-o", default="data/ml_training/synthetic_phi_data.jsonl",
-                        help="Output JSONL file path")
-    parser.add_argument("--count", "-n", type=int, default=2000,
-                        help="Number of examples to generate")
-    parser.add_argument("--tokenizer", default="distilbert-base-uncased",
-                        help="Tokenizer to use for WordPiece tokenization")
-    parser.add_argument("--seed", type=int, default=42,
-                        help="Random seed for reproducibility")
-    args = parser.parse_args()
-
-    random.seed(args.seed)
-
-    print(f"Loading tokenizer: {args.tokenizer}")
-    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer, use_fast=True)
-
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    # Generate balanced examples
-    # 40% mixed (all PHI types), 20% names, 20% dates, 20% phones
-    type_distribution = {
-        "mixed": int(args.count * 0.4),
-        "name": int(args.count * 0.2),
-        "date": int(args.count * 0.2),
-        "phone": int(args.count * 0.2),
-    }
-
-    examples = []
-
-    for template_type, count in type_distribution.items():
-        print(f"Generating {count} {template_type} examples...")
-        for i in range(count):
-            try:
-                example = generate_example(tokenizer, template_type)
-                example["id"] = f"synthetic_{template_type}_{i}"
-                examples.append(example)
-            except Exception as e:
-                print(f"Error generating example: {e}")
-                continue
-
-    # Shuffle examples
-    random.shuffle(examples)
-
-    # Write to JSONL
-    print(f"Writing {len(examples)} examples to {output_path}")
-    with open(output_path, "w") as f:
-        for ex in examples:
-            f.write(json.dumps(ex) + "\n")
-
-    # Print statistics
-    entity_counts = {"PATIENT": 0, "DATE": 0, "CONTACT": 0, "ID": 0, "GEO": 0}
-    for ex in examples:
-        for tag in ex["ner_tags"]:
-            if tag.startswith("B-"):
-                label = tag[2:]
-                if label in entity_counts:
-                    entity_counts[label] += 1
-
-    print("\nEntity counts:")
-    for label, count in sorted(entity_counts.items()):
-        print(f"  {label}: {count}")
-
-    print(f"\nDone! Generated {len(examples)} examples.")
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-### `scripts/build_model_agnostic_phi_spans.py`
-- Size: `18208` bytes
-```
-#!/usr/bin/env python3
-"""Build model-agnostic PHI character spans using the hybrid redactor."""
-
-from __future__ import annotations
-
-import argparse
-import json
-import logging
-import re
-import sys
-from pathlib import Path
-from typing import Any
-
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
-
-try:
-    from modules.phi.adapters.phi_redactor_hybrid import (
-        ANATOMICAL_TERMS,
-        CLINICAL_ALLOW_LIST,
-        DEVICE_MANUFACTURERS,
-        PROTECTED_DEVICE_NAMES,
-        PHIRedactor,
-        RedactionConfig,
-    )
-except Exception:  # pragma: no cover - fallback for isolated execution
-    ANATOMICAL_TERMS = set()
-    CLINICAL_ALLOW_LIST = set()
-    DEVICE_MANUFACTURERS = set()
-    PROTECTED_DEVICE_NAMES = set()
-    PHIRedactor = None  # type: ignore[assignment]
-    RedactionConfig = None  # type: ignore[assignment]
-from scripts.distill_phi_labels import (
-    derive_id_base,
-    extract_note_text,
-    line_bounds,
-    load_records_from_json,
-)
-
-DEFAULT_IN_DIR = Path("data/knowledge/golden_extractions")
-DEFAULT_OUT_PATH = Path("data/ml_training/phi_platinum_spans.jsonl")
-
-PROVIDER_PREFIXES = (
-    "SURGEON:",
-    "ATTENDING:",
-    "PROCEDURALIST:",
-    "REFERRING",
-    "PHYSICIAN:",
-    "PROVIDER:",
-)
-PROVIDER_CREDENTIALS = ("MD", "DO", "PHD", "FCCP", "FACP")
-NAME_LABEL_HINTS = (
-    "GIVENNAME",
-    "SURNAME",
-    "USERNAME",
-    "FIRSTNAME",
-    "LASTNAME",
-    "PERSON",
-    "NAME",
-    "PATIENT",
-)
-DEGREE_SYMBOL = "\u00b0"
-
-STREET_SUFFIXES = {
-    "st",
-    "street",
-    "rd",
-    "road",
-    "ave",
-    "avenue",
-    "blvd",
-    "boulevard",
-    "dr",
-    "drive",
-    "ln",
-    "lane",
-    "ct",
-    "court",
-    "pl",
-    "place",
-    "pkwy",
-    "parkway",
-    "cir",
-    "circle",
-    "trl",
-    "trail",
-    "way",
-    "hwy",
-    "highway",
-    "ste",
-    "suite",
-    "unit",
-    "#",
-    "apt",
-    "apartment",
-}
-US_STATE_CODES = {
-    "AL",
-    "AK",
-    "AZ",
-    "AR",
-    "CA",
-    "CO",
-    "CT",
-    "DE",
-    "FL",
-    "GA",
-    "HI",
-    "ID",
-    "IL",
-    "IN",
-    "IA",
-    "KS",
-    "KY",
-    "LA",
-    "ME",
-    "MD",
-    "MA",
-    "MI",
-    "MN",
-    "MS",
-    "MO",
-    "MT",
-    "NE",
-    "NV",
-    "NH",
-    "NJ",
-    "NM",
-    "NY",
-    "NC",
-    "ND",
-    "OH",
-    "OK",
-    "OR",
-    "PA",
-    "RI",
-    "SC",
-    "SD",
-    "TN",
-    "TX",
-    "UT",
-    "VT",
-    "VA",
-    "WA",
-    "WV",
-    "WI",
-    "WY",
-    "DC",
-}
-
-LABEL_MAP_STANDARD = {
-    "PATIENT_NAME": "PATIENT",
-    "PATIENT_NAME_MENTION": "PATIENT",
-    "PATIENT_IDENTIFIER": "ID",
-    "MEDICAL_RECORD_NUMBER": "ID",
-    "MRN": "ID",
-    "SSN": "ID",
-    "SOCIAL_SECURITY_NUMBER": "ID",
-    "DOB": "DATE",
-    "DATE_OF_BIRTH": "DATE",
-    "DATE": "DATE",
-    "AGE_OVER_89": "AGE",
-    "AGE": "AGE",
-    "FACILITY": "HOSPITAL",
-    "FACILITY_NAME": "HOSPITAL",
-    "HOSPITAL_NAME": "HOSPITAL",
-    "LOCATION": "GEO",
-    "ADDRESS": "GEO",
-    "ZIPCODE": "GEO",
-    "CITY": "GEO",
-    "PHONE": "PHONE",
-    "PHONE_NUMBER": "PHONE",
-    "EMAIL": "CONTACT",
-    "EMAIL_ADDRESS": "CONTACT",
-    "PHYSICIAN_NAME": "PROVIDER",
-    "DOCTOR_NAME": "PROVIDER",
-}
-
-logger = logging.getLogger("phi_platinum")
-
-PROTECTED_WORDS = {
-    term.strip().lower()
-    for term in (
-        list(ANATOMICAL_TERMS)
-        + list(DEVICE_MANUFACTURERS)
-        + list(PROTECTED_DEVICE_NAMES)
-        + list(CLINICAL_ALLOW_LIST)
-    )
-    if isinstance(term, str) and term.strip()
-}
-PROTECTED_PERSON_VETO_TERMS = {
-    term.strip().lower()
-    for term in (list(ANATOMICAL_TERMS) + list(DEVICE_MANUFACTURERS) + list(PROTECTED_DEVICE_NAMES))
-    if isinstance(term, str) and term.strip()
-}
-
-DEVICE_KEYWORDS = ("stent", "valve")
-
-STATION_RE = re.compile(r"^\d{1,2}[LR](?:[is])?$", re.IGNORECASE)
-SEGMENT_RE = re.compile(r"^[LR][Bb]\d{1,2}$", re.IGNORECASE)
-
-
-def _map_label(entity_type: str, schema: str) -> str:
-    if schema != "standard":
-        return entity_type
-    mapped = LABEL_MAP_STANDARD.get(entity_type)
-    if mapped is not None:
-        return mapped
-    mapped = LABEL_MAP_STANDARD.get(entity_type.upper())
-    if mapped is not None:
-        return mapped
-    return entity_type
-
-
-def _line_text(text: str, idx: int) -> str:
-    start, end = line_bounds(text, idx)
-    return text[start:end]
-
-
-def _is_station_adjacent_digits(text: str, start: int, end: int) -> bool:
-    span = text[start:end].strip()
-    if not span.isdigit():
-        return False
-    next_idx = end
-    if next_idx >= len(text):
-        return False
-    return text[next_idx].upper() in {"R", "L"}
-
-
-def _normalize_span_text(span_text: str) -> str:
-    return span_text.lower().strip().strip(".,;:()[]{}")
-
-
-def _contains_device_keyword(span_text: str) -> bool:
-    normalized = _normalize_span_text(span_text)
-    if not normalized:
-        return False
-    return any(keyword in normalized for keyword in DEVICE_KEYWORDS)
-
-
-def _has_station_hint(line_text: str) -> bool:
-    if not line_text:
-        return False
-    return bool(
-        re.search(r"\bstation(s)?\b", line_text, re.IGNORECASE)
-        or re.search(r"\bstn\b", line_text, re.IGNORECASE)
-        or re.search(r"\bnodes?\b", line_text, re.IGNORECASE)
-        or re.search(r"\bln\b", line_text, re.IGNORECASE)
-        or re.search(r"\blymph\b", line_text, re.IGNORECASE)
-        or re.search(r"\bsampled\b", line_text, re.IGNORECASE)
-        or re.search(r"\btbna\b", line_text, re.IGNORECASE)
-        or re.search(r"\bebus\b", line_text, re.IGNORECASE)
-    )
-
-
-def _is_ln_station(span_text: str, line_text: str) -> bool:
-    stripped = span_text.strip()
-    if not stripped:
-        return False
-    if STATION_RE.fullmatch(stripped):
-        return True
-    if stripped == "7" and _has_station_hint(line_text):
-        return True
-    return False
-
-
-def _is_segment(span_text: str) -> bool:
-    return bool(SEGMENT_RE.fullmatch(span_text.strip()))
-
-
-def _looks_like_lobe_phrase(span_text: str) -> bool:
-    lowered = span_text.lower()
-    return " lobe" in lowered or lowered.endswith(" lobe")
-
-
-def is_protected_for_geo(span_text: str, line_text: str) -> bool:
-    normalized = _normalize_span_text(span_text)
-    if not normalized:
-        return False
-    if normalized in PROTECTED_WORDS:
-        return True
-    if _looks_like_lobe_phrase(normalized):
-        return True
-    if _is_ln_station(span_text, line_text):
-        return True
-    if _is_segment(span_text):
-        return True
-    return False
-
-
-def is_protected_for_person(span_text: str, line_text: str) -> bool:
-    normalized = _normalize_span_text(span_text)
-    if not normalized:
-        return False
-    if normalized in PROTECTED_PERSON_VETO_TERMS:
-        return True
-    if _looks_like_lobe_phrase(normalized):
-        return True
-    if _is_ln_station(span_text, line_text):
-        return True
-    if _is_segment(span_text):
-        return True
-    return False
-
-
-def looks_like_real_address(span_text: str, line_text: str) -> bool:
-    if not span_text:
-        return False
-    line = (line_text or "").strip()
-    low_line = line.lower()
-    if any(f" {suffix}" in low_line for suffix in STREET_SUFFIXES):
-        return True
-    state_pattern = "|".join(US_STATE_CODES)
-    if re.search(rf"\b[A-Za-z .'-]+,\s*(?:{state_pattern})\b", line):
-        return True
-    if re.search(r"\b\d{5}(?:-\d{4})?\b", line) and re.search(rf"\b(?:{state_pattern})\b", line):
-        return True
-    if any(header in low_line for header in ("address:", "addr:", "street:", "city:", "zip:", "zipcode:", "state:")):
-        return True
-    return False
-
-
-def _line_has_cpt_keyword(line_text: str) -> bool:
-    if re.search(r"\bCPT\b", line_text, re.IGNORECASE):
-        return True
-    if re.search(r"\bCODE\b", line_text, re.IGNORECASE) and not re.search(
-        r"\bZIP\s+CODE\b", line_text, re.IGNORECASE
-    ):
-        return True
-    cues = ("codes submitted", "billing", "code justification", "coding", "rvu")
-    low = line_text.lower()
-    return any(cue in low for cue in cues)
-
-
-def looks_like_cpt(span_text: str, line_text: str) -> bool:
-    if not span_text or not re.fullmatch(r"\d{5}", span_text.strip()):
-        return False
-    if re.search(r"\bzip(?:\s+code)?\b", line_text, re.IGNORECASE):
-        return False
-    return _line_has_cpt_keyword(line_text)
-
-
-def looks_like_temperature(span_text: str, text: str, start: int, end: int, line_text: str) -> bool:
-    if not span_text:
-        return False
-    stripped = span_text.strip()
-    temp_pattern = r"\d{2,3}(?:\.\d+)?\s*(?:[cCfF]|" + re.escape(DEGREE_SYMBOL) + r"[cCfF])"
-    if re.fullmatch(temp_pattern, stripped):
-        return True
-    if re.fullmatch(r"\d+(?:\.\d+)?", stripped):
-        tail = text[end : min(len(text), end + 4)]
-        if re.match(rf"\s*(?:{DEGREE_SYMBOL}\s*)?[cCfF](?![a-zA-Z])", tail):
-            return True
-        low_line = line_text.lower()
-        if any(token in low_line for token in ("temp", "temperature", "degrees")):
-            return True
-        if DEGREE_SYMBOL in line_text:
-            return True
-    return False
-
-
-def _is_name_like_label(label: str) -> bool:
-    upper = label.upper()
-    if upper in NAME_LABEL_HINTS:
-        return True
-    return "NAME" in upper or "PERSON" in upper
-
-
-def _is_provider_context(text: str, start: int, end: int) -> bool:
-    line_start = text.rfind("\n", 0, start)
-    if line_start == -1:
-        line_start = 0
-    prefix = text[line_start:start]
-    prefix_upper = prefix.upper()
-    if any(token in prefix_upper for token in PROVIDER_PREFIXES):
-        return True
-    if re.search(r"\bDR\.?\s*$", prefix.strip(), re.IGNORECASE):
-        return True
-    tail = text[end : min(len(text), end + 40)]
-    if re.search(r"\b(" + "|".join(PROVIDER_CREDENTIALS) + r")\b", tail, re.IGNORECASE):
-        return True
-    return False
-
-
-def filter_detections(
-    note_text: str,
-    detections: list[dict[str, Any]],
-    *,
-    label_schema: str,
-    provider_policy: str,
-    provider_label: str,
-    counters: dict[str, int],
-) -> list[dict[str, Any]]:
-    spans: list[dict[str, Any]] = []
-    for det in detections:
-        if not isinstance(det, dict):
-            continue
-        start = int(det.get("start", 0))
-        end = int(det.get("end", 0))
-        if start >= end:
-            continue
-        raw_label = str(det.get("type", ""))
-        label = _map_label(raw_label, label_schema)
-        span_text = det.get("text") or note_text[start:end]
-        line_text = _line_text(note_text, start)
-
-        if provider_policy == "drop" and (
-            label == provider_label
-            or (_is_name_like_label(raw_label) and _is_provider_context(note_text, start, end))
-        ):
-            counters["spans_dropped_provider"] += 1
-            continue
-        if provider_policy == "label" and _is_name_like_label(raw_label) and _is_provider_context(note_text, start, end):
-            label = provider_label
-
-        is_geo = label == "GEO"
-        is_person = label in {"PATIENT", provider_label}
-
-        if is_geo and looks_like_cpt(span_text, line_text):
-            counters["spans_dropped_cpt"] += 1
-            continue
-        if is_geo and looks_like_temperature(span_text, note_text, start, end, line_text):
-            counters["spans_dropped_temperature"] += 1
-            continue
-
-        if is_geo:
-            if _is_station_adjacent_digits(note_text, start, end):
-                counters["spans_dropped_station_adjacent_digits"] += 1
-                continue
-            if _is_ln_station(span_text, line_text):
-                counters["spans_dropped_ln_station"] += 1
-                continue
-            if _contains_device_keyword(span_text):
-                counters["spans_dropped_device_keyword"] += 1
-                continue
-            if is_protected_for_geo(span_text, line_text):
-                counters["spans_dropped_protected_geo"] += 1
-                continue
-            if not looks_like_real_address(span_text, line_text):
-                counters["spans_dropped_unplausible_address"] += 1
-                continue
-
-        if is_person:
-            if _is_station_adjacent_digits(note_text, start, end):
-                counters["spans_dropped_station_adjacent_digits"] += 1
-                continue
-            if is_protected_for_person(span_text, line_text):
-                counters["spans_dropped_protected_person"] += 1
-                continue
-
-        spans.append({"start": start, "end": end, "label": label, "text": span_text})
-    return spans
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Build model-agnostic PHI spans from hybrid redactor")
-    parser.add_argument("--in-dir", type=Path, default=DEFAULT_IN_DIR)
-    parser.add_argument("--glob", type=str, default="*.json")
-    parser.add_argument("--out", type=Path, default=DEFAULT_OUT_PATH)
-    parser.add_argument("--limit-notes", type=int, default=None)
-    parser.add_argument(
-        "--use-piiranha",
-        action=argparse.BooleanOptionalAction,
-        default=True,
-    )
-    parser.add_argument("--piiranha-threshold", type=float, default=0.5)
-    parser.add_argument("--label-schema", choices=["standard"], default="standard")
-    parser.add_argument("--provider-policy", choices=["keep", "drop", "label"], default="drop")
-    parser.add_argument("--provider-label", type=str, default="PROVIDER")
-
-    args = parser.parse_args()
-
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-
-    in_dir = args.in_dir
-    if not in_dir.exists():
-        logger.error("Input directory does not exist: %s", in_dir)
-        return 1
-
-    files = sorted(in_dir.glob(args.glob))
-    if not files:
-        logger.warning("No files matched %s in %s", args.glob, in_dir)
-        return 0
-
-    if PHIRedactor is None or RedactionConfig is None:
-        logger.error("PHI redactor dependencies are unavailable.")
-        return 1
-
-    config = RedactionConfig(
-        piiranha_threshold=args.piiranha_threshold,
-        protect_physician_names=True,
-    )
-    redactor = PHIRedactor(config=config, use_piiranha=args.use_piiranha)
-
-    counters = {
-        "files_scanned": 0,
-        "records_seen": 0,
-        "records_processed": 0,
-        "detections_total": 0,
-        "spans_emitted": 0,
-        "spans_dropped_provider": 0,
-        "spans_dropped_cpt": 0,
-        "spans_dropped_temperature": 0,
-        "spans_dropped_protected_geo": 0,
-        "spans_dropped_protected_person": 0,
-        "spans_dropped_ln_station": 0,
-        "spans_dropped_device_keyword": 0,
-        "spans_dropped_station_adjacent_digits": 0,
-        "spans_dropped_unplausible_address": 0,
-    }
-
-    from tqdm import tqdm
-
-    progress = tqdm(desc="records")
-
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    with args.out.open("w", encoding="utf-8") as out_f:
-        stop = False
-        for path in files:
-            counters["files_scanned"] += 1
-            records = load_records_from_json(path)
-            for record_index, record in enumerate(records):
-                counters["records_seen"] += 1
-                progress.update(1)
-                if args.limit_notes is not None and counters["records_processed"] >= args.limit_notes:
-                    stop = True
-                    break
-                if not isinstance(record, dict):
-                    continue
-                try:
-                    note_text = extract_note_text(record)
-                    if not note_text:
-                        continue
-                    counters["records_processed"] += 1
-                    id_base = derive_id_base(record, path, record_index)
-
-                    _, audit = redactor.scrub(note_text)
-                    detections = audit.get("detections", []) if isinstance(audit, dict) else []
-                    counters["detections_total"] += len(detections)
-
-                    spans = filter_detections(
-                        note_text,
-                        detections,
-                        label_schema=args.label_schema,
-                        provider_policy=args.provider_policy,
-                        provider_label=args.provider_label,
-                        counters=counters,
-                    )
-                    counters["spans_emitted"] += len(spans)
-
-                    output = {
-                        "id_base": id_base,
-                        "source_path": str(path),
-                        "record_index": record_index,
-                        "text": note_text,
-                        "spans": spans,
-                        "label_schema": args.label_schema,
-                        "origin": "hybrid_redactor_platinum",
-                    }
-                    out_f.write(json.dumps(output, ensure_ascii=False) + "\n")
-                except Exception as exc:
-                    logger.warning("Skipping record %s:%s: %s", path, record_index, exc)
-                    continue
-            if stop:
-                break
-
-    progress.close()
-
-    logger.info("Files scanned: %s", counters["files_scanned"])
-    logger.info("Records seen: %s", counters["records_seen"])
-    logger.info("Records processed: %s", counters["records_processed"])
-    logger.info("Detections total: %s", counters["detections_total"])
-    logger.info("Spans emitted: %s", counters["spans_emitted"])
-    logger.info("Spans dropped (provider): %s", counters["spans_dropped_provider"])
-    logger.info("Spans dropped (CPT): %s", counters["spans_dropped_cpt"])
-    logger.info("Spans dropped (temperature): %s", counters["spans_dropped_temperature"])
-    logger.info("Spans dropped (protected geo): %s", counters["spans_dropped_protected_geo"])
-    logger.info("Spans dropped (protected person): %s", counters["spans_dropped_protected_person"])
-    logger.info("Spans dropped (LN station): %s", counters["spans_dropped_ln_station"])
-    logger.info("Spans dropped (device keyword): %s", counters["spans_dropped_device_keyword"])
-    logger.info(
-        "Spans dropped (station adjacent digits): %s",
-        counters["spans_dropped_station_adjacent_digits"],
-    )
-    logger.info("Spans dropped (unplausible address): %s", counters["spans_dropped_unplausible_address"])
-    logger.info("Output: %s", args.out)
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
-### `scripts/audit_model_fp.py`
-- Size: `20528` bytes
-```
-#!/usr/bin/env python3
-"""
-Safety regression audit for PHI NER false positives (must-not-redact terms).
-
-Checks CPT splits, LN station patterns, device terms, "Left Upper Lobe",
-and new (Dec 2025) audit checks:
-- dangling_entity: stopwords, very short spans, purely punctuation
-- leading_punct_entity: entity spans starting with punctuation
-- numeric_code_fp: 4-6 digit codes in CPT/CBCT context tagged as PHI
-
-Reports raw vs vetoed violations. Post-veto violations should ALWAYS be 0.
-"""
-
-import argparse
-import json
-import os
-import re
-from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple
-
-import torch
-from transformers import AutoModelForTokenClassification, AutoTokenizer
-
-from modules.phi.adapters.phi_redactor_hybrid import DEVICE_MANUFACTURERS, PROTECTED_DEVICE_NAMES
-from modules.phi.safety.protected_terms import LN_CONTEXT_WORDS, normalize, reconstruct_wordpiece
-from modules.phi.safety.veto import apply_protected_veto
-
-CPT_CONTEXT_WORDS = {
-    "cpt",
-    "code",
-    "codes",
-    "billing",
-    "submitted",
-    "justification",
-    "rvu",
-    "coding",
-    "radiology",
-    "guidance",
-    "ct",
-    "cbct",
-    "fluoro",
-    "fluoroscopy",
-    "localization",
-    "rationale",
-}
-CPT_PUNCT_TOKENS = {",", ";", ":", "/", "(", ")", "[", "]"}
-LN_STATION_RE = re.compile(r"^\d{1,2}[lr](?:[is])?$")
-UNIT_TOKENS = {"l", "liter", "liters", "ml", "cc"}
-VOLUME_VERBS = {"drained", "output", "removed"}
-EXTRA_DEVICE_TERMS = {"chartis"}
-DEVICE_TERM_SET = (
-    {normalize(term) for term in DEVICE_MANUFACTURERS}
-    | {normalize(term) for term in PROTECTED_DEVICE_NAMES}
-    | {normalize(term) for term in EXTRA_DEVICE_TERMS}
-)
-
-# Stopwords for dangling entity detection
-STOPWORDS = {
-    "a", "an", "the", "of", "in", "and", "with", "to", "for", "or", "by", "at",
-    "is", "was", "are", "were", "be", "been", "being", "has", "had", "have",
-    "did", "does", "do", "will", "would", "could", "should", "may", "might",
-    "on", "as", "from", "but", "not", "no", "yes", "so", "if", "then",
-}
-
-PUNCTUATION_CHARS = set("()[]{},.;:!?/\\-_\"'")
-
-
-@dataclass
-class Violation:
-    kind: str
-    indices: List[int]
-    phrase: str
-
-
-def build_arg_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--model-dir", default="artifacts/phi_distilbert_ner")
-    ap.add_argument("--data", default="data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl")
-    ap.add_argument("--limit", type=int, default=2000)
-    ap.add_argument("--max-bad", type=int, default=20)
-    ap.add_argument("--report-out", default="artifacts/phi_distilbert_ner/audit_report.json")
-    return ap
-
-
-def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
-    return build_arg_parser().parse_args(argv)
-
-
-def validate_paths(args: argparse.Namespace) -> None:
-    if not os.path.isfile(args.data):
-        raise FileNotFoundError(f"Data file not found: {args.data}")
-    if not os.path.isdir(args.model_dir):
-        raise FileNotFoundError(f"Model directory not found: {args.model_dir}")
-
-
-def read_jsonl(path: str, limit: int | None = None) -> List[Dict[str, Any]]:
-    rows: List[Dict[str, Any]] = []
-    with open(path, "r") as f:
-        for i, line in enumerate(f):
-            if limit is not None and i >= limit:
-                break
-            line = line.strip()
-            if not line:
-                continue
-            rows.append(json.loads(line))
-    return rows
-
-
-def normalize_token(token: str) -> str:
-    if token.startswith("##"):
-        token = token[2:]
-    return normalize(token)
-
-
-def build_word_index(tokens: List[str]) -> Tuple[List[str], List[List[int]]]:
-    words: List[str] = []
-    word_to_pieces: List[List[int]] = []
-    idx = 0
-    while idx < len(tokens):
-        word, end_idx = reconstruct_wordpiece(tokens, idx)
-        words.append(normalize(word))
-        word_to_pieces.append(list(range(idx, end_idx + 1)))
-        idx = end_idx + 1
-    return words, word_to_pieces
-
-
-def resolve_id2label(model: Any, model_dir: str) -> Dict[int, str]:
-    id2label_raw = getattr(model.config, "id2label", {}) or {}
-    id2label: Dict[int, str] = {}
-    for key, value in id2label_raw.items():
-        try:
-            idx = int(key)
-        except (TypeError, ValueError):
-            continue
-        id2label[idx] = str(value)
-    if id2label:
-        return id2label
-
-    label_map_path = os.path.join(model_dir, "label_map.json")
-    if os.path.exists(label_map_path):
-        with open(label_map_path, "r") as f:
-            data = json.load(f)
-        raw = data.get("id2label", {})
-        for key, value in raw.items():
-            try:
-                idx = int(key)
-            except (TypeError, ValueError):
-                continue
-            id2label[idx] = str(value)
-    if id2label:
-        return id2label
-    raise RuntimeError("No id2label mapping found in model config or label_map.json.")
-
-
-def prepare_inputs(tokens: List[str], tokenizer: Any, max_length: int = 512) -> Tuple[List[str], List[int], List[int]]:
-    max_wordpieces = max_length - 2
-    tokens = tokens[:max_wordpieces]
-    if tokenizer.unk_token_id is None:
-        raise RuntimeError("Tokenizer must have an UNK token id.")
-    ids = tokenizer.convert_tokens_to_ids(tokens)
-    input_ids: List[int] = []
-    for x in ids:
-        if x is None or x == -1:
-            input_ids.append(int(tokenizer.unk_token_id))
-        else:
-            input_ids.append(int(x))
-    if tokenizer.cls_token_id is None or tokenizer.sep_token_id is None:
-        raise RuntimeError("Tokenizer must have CLS/SEP token ids.")
-    input_ids = [tokenizer.cls_token_id] + input_ids + [tokenizer.sep_token_id]
-    attention_mask = [1] * len(input_ids)
-    return tokens, input_ids, attention_mask
-
-
-def predict_labels(
-    tokens: List[str],
-    tokenizer: Any,
-    model: Any,
-    id2label: Dict[int, str],
-    device: torch.device,
-) -> Tuple[List[str], List[str]]:
-    tokens, input_ids, attention_mask = prepare_inputs(tokens, tokenizer)
-    if not tokens:
-        return [], []
-    input_ids_tensor = torch.tensor([input_ids], device=device)
-    attention_tensor = torch.tensor([attention_mask], device=device)
-    with torch.no_grad():
-        outputs = model(input_ids=input_ids_tensor, attention_mask=attention_tensor)
-    logits = outputs.logits
-    pred_ids = logits.argmax(-1).squeeze(0).tolist()
-    pred_ids = pred_ids[1 : 1 + len(tokens)]
-    labels = [id2label.get(int(pid), "O") for pid in pred_ids]
-    return tokens, labels
-
-
-def is_non_o(label: str) -> bool:
-    return label != "O"
-
-
-def is_stable_cpt_split(tokens: List[str], i: int) -> str | None:
-    if i + 1 >= len(tokens):
-        return None
-    if tokens[i].isdigit() and len(tokens[i]) == 3 and tokens[i + 1].startswith("##"):
-        suffix = tokens[i + 1][2:]
-        if suffix.isdigit() and len(suffix) == 2:
-            return tokens[i] + suffix
-    return None
-
-
-def has_cpt_context(tokens: List[str], i: int, j: int, text: str | None) -> bool:
-    start = max(0, i - 10)
-    end = min(len(tokens), j + 11)
-    context_tokens = tokens[start:end]
-    norm_context = {normalize_token(tok) for tok in context_tokens}
-    if any(word in norm_context for word in CPT_CONTEXT_WORDS):
-        return True
-    # Slash-separated in parentheses pattern
-    has_parens = "(" in context_tokens or ")" in context_tokens
-    has_slash = "/" in context_tokens
-    if has_parens and has_slash:
-        return True
-    if text:
-        text_norm = normalize(text)
-        return any(word in text_norm.split() for word in CPT_CONTEXT_WORDS)
-    return False
-
-
-def is_volume_context(tokens: List[str], idx: int) -> bool:
-    unit_window = tokens[max(0, idx - 3) : min(len(tokens), idx + 4)]
-    verb_window = tokens[max(0, idx - 6) : min(len(tokens), idx + 7)]
-    if not any(normalize_token(tok) in UNIT_TOKENS for tok in unit_window):
-        return False
-    return any(normalize_token(tok) in VOLUME_VERBS for tok in verb_window)
-
-
-def is_ln_station_split(tokens: List[str], i: int) -> Tuple[str, List[int]] | None:
-    if i + 1 >= len(tokens):
-        return None
-    if not tokens[i].isdigit() or len(tokens[i]) not in (1, 2):
-        return None
-    if not tokens[i + 1].startswith("##"):
-        return None
-    side = tokens[i + 1][2:].lower()
-    if side not in ("r", "l"):
-        return None
-    station = tokens[i] + side
-    indices = [i, i + 1]
-    if i + 2 < len(tokens) and tokens[i + 2].startswith("##"):
-        suffix = tokens[i + 2][2:].lower()
-        if suffix in ("i", "s"):
-            station += suffix
-            indices.append(i + 2)
-    if not LN_STATION_RE.match(station):
-        return None
-    return station, indices
-
-
-def is_station7_context(tokens: List[str], i: int) -> bool:
-    if tokens[i] != "7":
-        return False
-    start = max(0, i - 6)
-    end = min(len(tokens), i + 7)
-    context = {normalize_token(tok) for tok in tokens[start:end]}
-    return any(word in context for word in LN_CONTEXT_WORDS)
-
-
-def find_left_upper_lobe(words: List[str], word_to_pieces: List[List[int]]) -> List[Violation]:
-    violations: List[Violation] = []
-    for i in range(len(words) - 2):
-        if words[i] == "left" and words[i + 1] == "upper" and words[i + 2] == "lobe":
-            indices = word_to_pieces[i] + word_to_pieces[i + 1] + word_to_pieces[i + 2]
-            violations.append(Violation(kind="left_upper_lobe", indices=indices, phrase="left upper lobe"))
-    return violations
-
-
-def find_device_terms(words: List[str], word_to_pieces: List[List[int]]) -> List[Violation]:
-    violations: List[Violation] = []
-    for word, indices in zip(words, word_to_pieces):
-        if word in DEVICE_TERM_SET:
-            violations.append(Violation(kind="device_term", indices=indices, phrase=word))
-    return violations
-
-
-# =============================================================================
-# NEW AUDIT CHECKS (Dec 2025)
-# =============================================================================
-
-
-def extract_entity_spans(labels: List[str]) -> List[Tuple[int, int, str]]:
-    """Extract entity spans from BIO labels.
-
-    Returns list of (start_idx, end_idx_inclusive, entity_type).
-    """
-    spans: List[Tuple[int, int, str]] = []
-    i = 0
-    while i < len(labels):
-        label = labels[i]
-        if not label or label == "O" or "-" not in label:
-            i += 1
-            continue
-        prefix, entity_type = label.split("-", 1)
-        start = i
-        end = i
-        # Extend to include I- continuations
-        while end + 1 < len(labels):
-            next_label = labels[end + 1]
-            if next_label == f"I-{entity_type}":
-                end += 1
-            else:
-                break
-        spans.append((start, end, entity_type))
-        i = end + 1
-    return spans
-
-
-def reconstruct_span_text(tokens: List[str], start: int, end: int) -> str:
-    """Reconstruct surface text from a token span, handling wordpieces."""
-    result = []
-    for i in range(start, end + 1):
-        tok = tokens[i]
-        if tok.startswith("##"):
-            if result:
-                result[-1] += tok[2:]
-            else:
-                result.append(tok[2:])
-        else:
-            result.append(tok)
-    return " ".join(result)
-
-
-def is_punctuation_token(token: str) -> bool:
-    """Check if token is purely punctuation."""
-    return all(c in PUNCTUATION_CHARS for c in token)
-
-
-def is_numeric_code(text: str) -> bool:
-    """Check if text is a 4-6 digit numeric code."""
-    clean = text.replace(" ", "")
-    return clean.isdigit() and 4 <= len(clean) <= 6
-
-
-def find_dangling_entities(tokens: List[str], labels: List[str]) -> List[Violation]:
-    """Find dangling entity violations.
-
-    Dangling entity = entity span that is:
-    - A stopword/article (a, an, the, of, for, etc.)
-    - Length < 3 chars after stripping punctuation
-    - Purely punctuation
-    """
-    violations: List[Violation] = []
-    spans = extract_entity_spans(labels)
-
-    for start, end, entity_type in spans:
-        text = reconstruct_span_text(tokens, start, end)
-        norm = normalize(text)
-
-        # Check if it's a stopword
-        if norm in STOPWORDS:
-            violations.append(Violation(
-                kind="dangling_entity",
-                indices=list(range(start, end + 1)),
-                phrase=f"{text} (stopword)"
-            ))
-            continue
-
-        # Check if very short (< 2 chars after normalization)
-        if len(norm) < 2:
-            violations.append(Violation(
-                kind="dangling_entity",
-                indices=list(range(start, end + 1)),
-                phrase=f"{text} (too_short)"
-            ))
-            continue
-
-        # Check if all words are stopwords
-        words = norm.split()
-        if all(w in STOPWORDS for w in words):
-            violations.append(Violation(
-                kind="dangling_entity",
-                indices=list(range(start, end + 1)),
-                phrase=f"{text} (all_stopwords)"
-            ))
-            continue
-
-        # Check if purely punctuation
-        if all(is_punctuation_token(tokens[i]) for i in range(start, end + 1)):
-            violations.append(Violation(
-                kind="dangling_entity",
-                indices=list(range(start, end + 1)),
-                phrase=f"{text} (punctuation_only)"
-            ))
-
-    return violations
-
-
-def find_leading_punct_entities(tokens: List[str], labels: List[str]) -> List[Violation]:
-    """Find entities that start with punctuation token."""
-    violations: List[Violation] = []
-    spans = extract_entity_spans(labels)
-
-    for start, end, entity_type in spans:
-        if start < len(tokens) and is_punctuation_token(tokens[start]):
-            text = reconstruct_span_text(tokens, start, end)
-            violations.append(Violation(
-                kind="leading_punct_entity",
-                indices=list(range(start, end + 1)),
-                phrase=text
-            ))
-
-    return violations
-
-
-def find_numeric_code_fps(tokens: List[str], labels: List[str], text: str | None) -> List[Violation]:
-    """Find numeric codes in CPT/CBCT context tagged as PHI (false positives)."""
-    violations: List[Violation] = []
-    spans = extract_entity_spans(labels)
-
-    for start, end, entity_type in spans:
-        span_text = reconstruct_span_text(tokens, start, end)
-        # Check if it's a numeric code in CPT context
-        if is_numeric_code(span_text) and has_cpt_context(tokens, start, end, text):
-            violations.append(Violation(
-                kind="numeric_code_fp",
-                indices=list(range(start, end + 1)),
-                phrase=span_text
-            ))
-
-    return violations
-
-
-def find_violations(tokens: List[str], labels: List[str], text: str | None) -> List[Violation]:
-    violations: List[Violation] = []
-
-    for i in range(len(tokens) - 1):
-        cpt = is_stable_cpt_split(tokens, i)
-        if not cpt:
-            continue
-        if not has_cpt_context(tokens, i, i + 1, text):
-            continue
-        if is_non_o(labels[i]) or is_non_o(labels[i + 1]):
-            violations.append(Violation(kind="cpt_split", indices=[i, i + 1], phrase=cpt))
-
-    for i in range(len(tokens) - 1):
-        ln_match = is_ln_station_split(tokens, i)
-        if not ln_match:
-            continue
-        station, indices = ln_match
-        if is_volume_context(tokens, i):
-            continue
-        if any(is_non_o(labels[idx]) for idx in indices):
-            violations.append(Violation(kind="ln_station", indices=indices, phrase=station))
-
-    for i in range(len(tokens)):
-        if tokens[i] == "7" and is_station7_context(tokens, i) and not is_volume_context(tokens, i):
-            if is_non_o(labels[i]):
-                violations.append(Violation(kind="ln_station7", indices=[i], phrase="7"))
-
-    words, word_to_pieces = build_word_index(tokens)
-    for violation in find_left_upper_lobe(words, word_to_pieces):
-        if any(is_non_o(labels[idx]) for idx in violation.indices):
-            violations.append(violation)
-
-    for violation in find_device_terms(words, word_to_pieces):
-        if any(is_non_o(labels[idx]) for idx in violation.indices):
-            violations.append(violation)
-
-    # NEW: Add dangling entity, leading punct, and numeric code FP checks
-    violations.extend(find_dangling_entities(tokens, labels))
-    violations.extend(find_leading_punct_entities(tokens, labels))
-    violations.extend(find_numeric_code_fps(tokens, labels, text))
-
-    return violations
-
-
-def format_slice(
-    tokens: List[str],
-    labels: List[str],
-    indices: List[int],
-    window: int = 8,
-) -> Tuple[List[str], List[str]]:
-    if not indices:
-        return [], []
-    start = max(0, min(indices) - window)
-    end = min(len(tokens), max(indices) + window + 1)
-    return tokens[start:end], labels[start:end]
-
-
-def resolve_record_id(row: Dict[str, Any], fallback: int) -> str:
-    record_id = row.get("id") or row.get("id_base") or row.get("record_index") or fallback
-    return str(record_id)
-
-
-def main() -> None:
-    args = parse_args()
-    validate_paths(args)
-
-    rows = read_jsonl(args.data, limit=args.limit)
-    if not rows:
-        raise RuntimeError(f"No rows loaded from {args.data}")
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    tokenizer = AutoTokenizer.from_pretrained(args.model_dir, use_fast=True)
-    model = AutoModelForTokenClassification.from_pretrained(args.model_dir)
-    model.to(device)
-    model.eval()
-
-    id2label = resolve_id2label(model, args.model_dir)
-
-    violation_counts_raw: Dict[str, int] = {}
-    violation_counts_veto: Dict[str, int] = {}
-    examples: List[Dict[str, Any]] = []
-    checked = 0
-
-    for idx, row in enumerate(rows):
-        tokens = row.get("tokens") or []
-        if not isinstance(tokens, list) or not tokens:
-            continue
-        record_id = resolve_record_id(row, idx)
-        text = row.get("text")
-        tokens, labels = predict_labels(tokens, tokenizer, model, id2label, device)
-        if not tokens or not labels:
-            continue
-        checked += 1
-
-        vetoed_labels = apply_protected_veto(tokens, labels, text=text)
-
-        raw_violations = find_violations(tokens, labels, text)
-        veto_violations = find_violations(tokens, vetoed_labels, text)
-
-        for violation in raw_violations:
-            violation_counts_raw[violation.kind] = violation_counts_raw.get(violation.kind, 0) + 1
-            if len(examples) < args.max_bad:
-                tok_slice, pred_slice = format_slice(tokens, labels, violation.indices)
-                _, veto_slice = format_slice(tokens, vetoed_labels, violation.indices)
-                excerpt = text[:240] if isinstance(text, str) else None
-                examples.append(
-                    {
-                        "type": violation.kind,
-                        "id": record_id,
-                        "token_index": min(violation.indices),
-                        "span_len": len(violation.indices),
-                        "phrase": violation.phrase,
-                        "tokens": tok_slice,
-                        "pred": pred_slice,
-                        "post_veto": veto_slice,
-                        "text_excerpt": excerpt,
-                    }
-                )
-
-        for violation in veto_violations:
-            violation_counts_veto[violation.kind] = violation_counts_veto.get(violation.kind, 0) + 1
-
-    total_raw = sum(violation_counts_raw.values())
-    total_veto = sum(violation_counts_veto.values())
-
-    print(f"Checked records: {checked}")
-    print(f"Raw violations: total={total_raw} detail={violation_counts_raw}")
-    print(f"After veto: total={total_veto} detail={violation_counts_veto}")
-
-    if examples:
-        print(f"First {min(len(examples), args.max_bad)} raw violations:")
-        for ex in examples:
-            print(
-                f"[{ex['type']}] id={ex['id']} phrase={ex['phrase']} "
-                f"tokens={ex['tokens']} pred={ex['pred']} post_veto={ex['post_veto']}"
-            )
-            if ex.get("text_excerpt"):
-                print(f"  text={ex['text_excerpt']}")
-
-    report = {
-        "checked_records": checked,
-        "violations_raw": violation_counts_raw,
-        "violations_after_veto": violation_counts_veto,
-        "examples": examples,
-    }
-    report_dir = os.path.dirname(args.report_out)
-    if report_dir:
-        os.makedirs(report_dir, exist_ok=True)
-    with open(args.report_out, "w") as f:
-        json.dump(report, f, indent=2)
 
 
 if __name__ == "__main__":

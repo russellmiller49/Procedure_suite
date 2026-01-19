@@ -139,8 +139,18 @@ def test_feedback_endpoint_updates_procedure_status_and_logs(client):
         json={
             "scrubbed_text": "[[REDACTED]] synthetic note on <DATE_0>",
             "entities": [
-                {"placeholder": "[[REDACTED]]", "entity_type": "PERSON", "original_start": 0, "original_end": 7},
-                {"placeholder": "<DATE_0>", "entity_type": "DATE", "original_start": 22, "original_end": 30},
+                {
+                    "placeholder": "[[REDACTED]]",
+                    "entity_type": "PERSON",
+                    "original_start": 0,
+                    "original_end": 7,
+                },
+                {
+                    "placeholder": "<DATE_0>",
+                    "entity_type": "DATE",
+                    "original_start": 22,
+                    "original_end": 30,
+                },
             ],
             "reviewer_id": "reviewer_demo",
             "reviewer_email": "reviewer@example.com",
@@ -163,7 +173,12 @@ def test_feedback_endpoint_updates_procedure_status_and_logs(client):
         assert feedback.reviewer_id == "reviewer_demo"
         assert feedback.updated_entity_map[1]["entity_type"] == "DATE"
 
-        audit = db.query(models.AuditLog).filter_by(procedure_data_id=proc.id).order_by(models.AuditLog.timestamp).all()
+        audit = (
+            db.query(models.AuditLog)
+            .filter_by(procedure_data_id=proc.id)
+            .order_by(models.AuditLog.timestamp)
+            .all()
+        )
         assert any(a.action == models.AuditAction.SCRUBBING_FEEDBACK_APPLIED for a in audit)
         assert "Patient" not in str(audit[-1].metadata_json)
     finally:

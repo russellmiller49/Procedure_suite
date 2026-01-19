@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Blank patient update script (auto-generated).
 
-Source JSON: data/knowledge/patient_note_texts/NUMBER.json
+Source JSON: data/knowledge/patient_note_texts/Number.json
 """
 
 

@@ -5,6 +5,7 @@ Maps PROC_METHOD entities to procedure boolean flags in RegistryRecord.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Dict, List, Set, Tuple
 
@@ -38,7 +39,17 @@ PROCEDURE_MAPPINGS: Dict[str, Tuple[Set[str], str]] = {
 
     # Navigation
     "navigational_bronchoscopy": (
-        {"navigation", "enb", "superdimension", "ion", "electromagnetic navigation"},
+        {
+            "navigation",
+            "enb",
+            "superdimension",
+            "ion",
+            "monarch",
+            "electromagnetic navigation",
+            "robotic bronchoscopy",
+            "robotic-assisted bronchoscopy",
+            "robotic assisted bronchoscopy",
+        },
         "procedures_performed.navigational_bronchoscopy.performed",
     ),
 
@@ -62,8 +73,12 @@ PROCEDURE_MAPPINGS: Dict[str, Tuple[Set[str], str]] = {
         "procedures_performed.bal.performed",
     ),
     "brushings": (
-        {"brushing", "brush", "cytology brush"},
+        {"brushing", "brushings", "brush", "cytology brush", "bronchial brushing", "bronchial brush"},
         "procedures_performed.brushings.performed",
+    ),
+    "tbna_conventional": (
+        {"tbna", "transbronchial needle aspiration", "transbronchial needle"},
+        "procedures_performed.tbna_conventional.performed",
     ),
 
     # Therapeutic procedures
@@ -147,6 +162,17 @@ class ProcedureExtractor:
         # Pre-compile patterns
         self._patterns = self._compile_patterns()
 
+    def _keyword_hit(self, text_lower: str, needle: str) -> bool:
+        """Return True if needle matches text.
+
+        Short tokens (e.g., "ion", "enb", "bal") require word boundaries to
+        avoid false positives from substrings like "aspiratION".
+        """
+        needle_lower = (needle or "").lower()
+        if " " in needle_lower or len(needle_lower) >= 5:
+            return needle_lower in text_lower
+        return re.search(rf"\b{re.escape(needle_lower)}\b", text_lower) is not None
+
     def _compile_patterns(self) -> Dict[str, Tuple[List[str], str]]:
         """Convert keyword sets to sorted lists for consistent matching."""
         patterns = {}
@@ -181,7 +207,7 @@ class ProcedureExtractor:
 
             for proc_name, (keywords, field_path) in self._patterns.items():
                 for keyword in keywords:
-                    if keyword in text_lower:
+                    if self._keyword_hit(text_lower, keyword):
                         # Found a match
                         procedure_flags[proc_name] = True
 

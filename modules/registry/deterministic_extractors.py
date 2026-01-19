@@ -498,7 +498,130 @@ def extract_providers(note_text: str) -> Dict[str, Any]:
 # BAL detection patterns
 BAL_PATTERNS = [
     r"\bbroncho[-\s]?alveolar\s+lavage\b",
+    r"\bbronchial\s+alveolar\s+lavage\b",
     r"\bBAL\b(?!\s*score)",  # BAL but not "BAL score"
+]
+
+# Endobronchial biopsy detection patterns
+ENDOBRONCHIAL_BIOPSY_PATTERNS = [
+    r"\bendobronchial\s+biops",
+    r"\bbiops(?:y|ied|ies)\b[^.\n]{0,60}\bendobronchial\b",
+    r"\blesions?\s+were\s+biopsied\b",
+    r"\bebbx\b",
+]
+
+# Radial EBUS detection patterns (rEBUS for peripheral lesion localization)
+RADIAL_EBUS_PATTERNS = [
+    r"\bradial\s+ebus\b",
+    r"\bradial\s+endobronchial\s+ultrasound\b",
+    r"\br-?ebus\b",
+    r"\brp-?ebus\b",
+    r"\bminiprobe\b",
+    r"\bradial\s+probe\b",
+]
+
+# Cryotherapy / tumor destruction patterns (31641 family)
+CRYOTHERAPY_PATTERNS = [
+    r"\bcryotherap(?:y|ies)\b",
+    r"\bcryo(?:therapy|debulk(?:ing)?)\b",
+]
+CRYOPROBE_PATTERN = r"\bcryoprobe\b"
+CRYOBIOPSY_PATTERN = r"\bcryo\s*biops(?:y|ies)\b|\bcryobiops(?:y|ies)\b"
+
+# Navigation / robotic bronchoscopy patterns
+NAVIGATIONAL_BRONCHOSCOPY_PATTERNS = [
+    r"\bnavigational\s+bronchoscopy\b",
+    r"\bnavigation\s+bronchoscopy\b",
+    r"\belectromagnetic\s+navigation\b",
+    r"\bEMN\b",
+    r"\bENB\b",
+    r"\bion\b[^.\n]{0,40}\bbronchoscop",
+    r"\bmonarch\b[^.\n]{0,40}\bbronchoscop",
+    r"\brobotic\b[^.\n]{0,40}\bbronchoscop",
+    r"\brobotic\b[^.\n]{0,40}\bbronch",
+    r"\bgalaxy\b[^.\n]{0,40}\bbronch",
+    r"\bnoah\b[^.\n]{0,40}\bbronch",
+    r"\bsuperdimension\b",
+    r"\billumisite\b",
+    r"\bveran\b",
+    r"\bspin(?:drive)?\b",
+]
+
+# TBNA (conventional) patterns
+TBNA_CONVENTIONAL_PATTERNS = [
+    r"\btbna\b",
+    r"\btransbronchial\s+needle\s+aspiration\b",
+    r"\btransbronchial\s+needle\b",
+]
+
+# Brushings patterns
+BRUSHINGS_PATTERNS = [
+    r"\bbrushings?\b",
+    r"\bcytology\s+brush(?:ings?)?\b",
+    r"\bbronchial\s+brushing(?:s)?\b",
+    r"\bbronchoscopic\s+brush(?:ings?)?\b",
+]
+
+# Transbronchial cryobiopsy patterns
+TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS = [
+    r"\btransbronchial\s+cryo\b",
+    r"\bcryo\s*biops(?:y|ies)\b",
+    r"\bcryobiops(?:y|ies)\b",
+    r"\bTBLC\b",
+]
+
+# Peripheral ablation patterns (MWA/RFA/cryoablation)
+PERIPHERAL_ABLATION_PATTERNS = [
+    r"\bmicrowave\s+ablation\b",
+    r"\bmwa\b",
+    r"\bradiofrequency\s+ablation\b",
+    r"\brf\s+ablation\b",
+    r"\brfa\b",
+    r"\bcryoablation\b",
+    r"\bcryo\s*ablation\b",
+]
+
+# Thermal ablation patterns (APC/laser/electrocautery)
+THERMAL_ABLATION_PATTERNS = [
+    r"\bapc\b",
+    r"\bargon\s+plasma\b",
+    r"\belectrocautery\b",
+    r"\bcauteriz(?:e|ed|ation)\b",
+    r"\blaser\b",
+    r"\bthermal\s+ablation\b",
+]
+
+# Chest ultrasound patterns (76604 family)
+CHEST_ULTRASOUND_PATTERNS = [
+    r"\bchest\s+ultrasound\s+findings\b",
+    r"\bultrasound,\s*chest\b",
+    r"\bchest\s+ultrasound\b",
+    r"\b76604\b",
+]
+
+CHEST_ULTRASOUND_IMAGE_DOC_PATTERNS = [
+    r"\bimage\s+saved\s+and\s+printed\b",
+    r"\bimage\s+saved\b",
+    r"\bwith\s+image\s+documentation\b",
+]
+
+# Chest tube / pleural drainage catheter patterns
+CHEST_TUBE_PATTERNS = [
+    r"\bpigtail\s+catheter\b",
+    r"\bchest\s+tube\b",
+    r"\btube\s+thoracostomy\b",
+    r"\bpleurovac\b",
+    r"\bpleur-?evac\b",
+]
+
+# Indwelling pleural catheter (IPC / tunneled) patterns
+IPC_PATTERNS = [
+    r"\bpleurx\b",
+    r"\baspira\b",
+    r"\btunne(?:l|ll)ed\s+pleural\s+catheter\b",
+    r"\bindwelling\s+pleural\s+catheter\b",
+    r"\bipc\b[^.\n]{0,30}\b(?:catheter|drain)\b",
+    r"\brocket\b[^.\n]{0,40}\b(?:ipc|catheter|pleur)\b",
 ]
 
 # Therapeutic aspiration patterns (exclude routine suction)
@@ -576,19 +699,154 @@ def extract_endobronchial_biopsy(note_text: str) -> Dict[str, Any]:
     """
     text_lower = (note_text or "").lower()
 
-    patterns = [
-        r"\bendobronchial\s+biops",
-        r"\bbiops(?:y|ied|ies)\b[^.\n]{0,60}\bendobronchial\b",
-        r"\blesions?\s+were\s+biopsied\b",
-    ]
-
-    for pattern in patterns:
+    for pattern in ENDOBRONCHIAL_BIOPSY_PATTERNS:
         if re.search(pattern, text_lower, re.IGNORECASE):
             negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
             if re.search(negation_check, text_lower, re.IGNORECASE):
                 continue
             return {"endobronchial_biopsy": {"performed": True}}
 
+    return {}
+
+
+def extract_radial_ebus(note_text: str) -> Dict[str, Any]:
+    """Extract radial EBUS indicator (peripheral lesion localization)."""
+    text_lower = (note_text or "").lower()
+    for pattern in RADIAL_EBUS_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"radial_ebus": {"performed": True}}
+    return {}
+
+
+def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
+    """Extract cryotherapy (tumor destruction/stenosis relief) indicator."""
+    text_lower = (note_text or "").lower()
+    for pattern in CRYOTHERAPY_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"cryotherapy": {"performed": True}}
+
+    if re.search(CRYOPROBE_PATTERN, text_lower, re.IGNORECASE) and not re.search(
+        CRYOBIOPSY_PATTERN, text_lower, re.IGNORECASE
+    ):
+        return {"cryotherapy": {"performed": True}}
+
+    return {}
+
+
+def extract_navigational_bronchoscopy(note_text: str) -> Dict[str, Any]:
+    """Extract navigational/robotic bronchoscopy indicator."""
+    text_lower = (note_text or "").lower()
+    for pattern in NAVIGATIONAL_BRONCHOSCOPY_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"navigational_bronchoscopy": {"performed": True}}
+    return {}
+
+
+def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
+    """Extract conventional TBNA indicator."""
+    text_lower = (note_text or "").lower()
+    for pattern in TBNA_CONVENTIONAL_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"tbna_conventional": {"performed": True}}
+    return {}
+
+
+def extract_brushings(note_text: str) -> Dict[str, Any]:
+    """Extract bronchial brushings indicator."""
+    text_lower = (note_text or "").lower()
+    for pattern in BRUSHINGS_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"brushings": {"performed": True}}
+    return {}
+
+
+def extract_transbronchial_cryobiopsy(note_text: str) -> Dict[str, Any]:
+    """Extract transbronchial cryobiopsy indicator."""
+    text_lower = (note_text or "").lower()
+    for pattern in TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            return {"transbronchial_cryobiopsy": {"performed": True}}
+    return {}
+
+
+def extract_peripheral_ablation(note_text: str) -> Dict[str, Any]:
+    """Extract peripheral ablation indicator with modality when possible."""
+    text_lower = (note_text or "").lower()
+    negation = re.search(
+        r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}\b"
+        r"(?:ablation|mwa|rfa|cryoablation)\b",
+        text_lower,
+        re.IGNORECASE,
+    )
+    if negation:
+        return {}
+
+    has_mwa = bool(
+        re.search(r"\bmicrowave\s+ablation\b", text_lower, re.IGNORECASE)
+        or re.search(r"\bmwa\b", text_lower, re.IGNORECASE)
+    )
+    has_rfa = bool(
+        re.search(r"\bradiofrequency\s+ablation\b", text_lower, re.IGNORECASE)
+        or re.search(r"\brf\s+ablation\b", text_lower, re.IGNORECASE)
+        or re.search(r"\brfa\b", text_lower, re.IGNORECASE)
+    )
+    has_cryo = bool(
+        re.search(r"\bcryoablation\b", text_lower, re.IGNORECASE)
+        or re.search(r"\bcryo\s*ablation\b", text_lower, re.IGNORECASE)
+    )
+
+    if not (has_mwa or has_rfa or has_cryo):
+        return {}
+
+    proc: dict[str, Any] = {"performed": True}
+    if has_mwa:
+        proc["modality"] = "Microwave"
+    elif has_rfa:
+        proc["modality"] = "Radiofrequency"
+    elif has_cryo:
+        proc["modality"] = "Cryoablation"
+
+    return {"peripheral_ablation": proc}
+
+
+def extract_thermal_ablation(note_text: str) -> Dict[str, Any]:
+    """Extract thermal ablation indicator (APC/laser/electrocautery)."""
+    text_lower = (note_text or "").lower()
+    for pattern in THERMAL_ABLATION_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            proc: dict[str, Any] = {"performed": True}
+            if re.search(r"\bapc\b|\bargon\s+plasma\b", text_lower, re.IGNORECASE):
+                proc["modality"] = "APC"
+            elif re.search(r"\belectrocautery\b|\bcauteriz", text_lower, re.IGNORECASE):
+                proc["modality"] = "Electrocautery"
+            elif re.search(r"\bnd:?yag\b", text_lower, re.IGNORECASE):
+                proc["modality"] = "Laser (Nd:YAG)"
+            elif re.search(r"\bco2\b", text_lower, re.IGNORECASE):
+                proc["modality"] = "Laser (CO2)"
+            elif re.search(r"\bdiode\b", text_lower, re.IGNORECASE):
+                proc["modality"] = "Laser (Diode)"
+            return {"thermal_ablation": proc}
     return {}
 
 
@@ -630,6 +888,45 @@ def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
     return {}
 
 
+ESTABLISHED_TRACH_ROUTE_PATTERNS = [
+    r"\bvia\s+(?:an?\s+)?(?:existing\s+)?trach(?:eostomy)?\b",
+    r"\bthrough\s+(?:an?\s+)?(?:existing\s+)?trach(?:eostomy)?\b",
+    r"\btrach(?:eostomy)?\s+(?:stoma|tube)\b[^.\n]{0,40}\b(?:used|accessed|entered|through)\b",
+    r"\bbronchoscope\b[^.\n]{0,60}\btrach(?:eostomy)?\b",
+    r"\bestablished\s+trach(?:eostomy)?\b",
+]
+
+ESTABLISHED_TRACH_NEW_PATTERNS = [
+    r"\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b",
+    r"\bopen\s+tracheostomy\b",
+    r"\btracheostomy\b[^.\n]{0,60}\b(?:performed|placed|inserted|created)\b",
+    r"\bnew\s+trach(?:eostomy)?\b",
+    r"\btrach(?:eostomy)?\s+(?:created|placed|inserted)\b",
+    r"\btracheostomy\s+creation\b",
+]
+
+
+def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
+    """Detect bronchoscopy via an established tracheostomy route."""
+    text = note_text or ""
+    text_lower = text.lower()
+    if not text_lower.strip():
+        return {}
+
+    for pattern in ESTABLISHED_TRACH_NEW_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            return {}
+
+    if re.search(r"\b(?:no|not|without)\b[^.\n]{0,60}\btrach(?:eostomy)?\b", text_lower):
+        return {}
+
+    for pattern in ESTABLISHED_TRACH_ROUTE_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            return {"established_tracheostomy_route": True}
+
+    return {}
+
+
 def extract_neck_ultrasound(note_text: str) -> Dict[str, Any]:
     """Extract neck ultrasound indicator (often pre-tracheostomy vascular mapping)."""
     text_lower = (note_text or "").lower()
@@ -646,6 +943,159 @@ def extract_neck_ultrasound(note_text: str) -> Dict[str, Any]:
             return {"neck_ultrasound": {"performed": True}}
 
     return {}
+
+
+def _extract_checked_side(note_text: str, header: str) -> str | None:
+    """Extract Right/Left/Bilateral side from checkbox-style lines."""
+    if not note_text:
+        return None
+
+    header_lower = header.lower()
+    for line in note_text.splitlines():
+        if header_lower not in line.lower():
+            continue
+        if re.search(r"(?i)\b1\D{0,6}bilateral\b", line):
+            return "Bilateral"
+        if re.search(r"(?i)\b1\D{0,6}left\b", line):
+            return "Left"
+        if re.search(r"(?i)\b1\D{0,6}right\b", line):
+            return "Right"
+    return None
+
+
+def extract_chest_ultrasound(note_text: str) -> Dict[str, Any]:
+    """Extract chest ultrasound indicator (76604 family).
+
+    Conservative: requires explicit "CHEST ULTRASOUND FINDINGS" or CPT 76604 context.
+    """
+    text = note_text or ""
+    if not re.search(r"(?i)\bchest\s+ultrasound\s+findings\b|\b76604\b", text):
+        return {}
+
+    proc: dict[str, Any] = {"performed": True}
+
+    if re.search("|".join(CHEST_ULTRASOUND_IMAGE_DOC_PATTERNS), text, re.IGNORECASE):
+        proc["image_documentation"] = True
+
+    hemithorax = _extract_checked_side(note_text, "Hemithorax")
+    if hemithorax is not None:
+        proc["hemithorax"] = hemithorax
+
+    return {"chest_ultrasound": proc}
+
+
+def extract_chest_tube(note_text: str) -> Dict[str, Any]:
+    """Extract chest tube / pleural drainage catheter insertion (32556/32557/32551 family)."""
+    text = note_text or ""
+    text_lower = text.lower()
+
+    has_pigtail = re.search(r"(?i)\bpigtail\s+catheter\b", text) is not None
+    has_chest_tube = re.search(r"(?i)\bchest\s+tube\b", text) is not None
+    has_insertion = re.search(r"(?i)\b(insert(?:ed)?|place(?:d)?|advanced)\b", text) is not None
+
+    if not ((has_pigtail and has_insertion) or (has_chest_tube and has_insertion)):
+        return {}
+
+    proc: dict[str, Any] = {"performed": True, "action": "Insertion"}
+
+    side = _extract_checked_side(note_text, "Entry Site") or _extract_checked_side(
+        note_text, "Hemithorax"
+    )
+    if side in {"Left", "Right"}:
+        proc["side"] = side
+
+    if "pleural effusion" in text_lower or re.search(r"(?i)\beffusion\b", text):
+        proc["indication"] = "Effusion drainage"
+
+    if has_pigtail:
+        proc["tube_type"] = "Pigtail"
+    elif re.search(r"(?i)\blarge\s+bore\b|\bsurgical\b", text):
+        proc["tube_type"] = "Surgical/Large bore"
+    elif re.search(r"(?i)\bstraight\b", text):
+        proc["tube_type"] = "Straight"
+
+    size_match = None
+    for line in text.splitlines():
+        if not re.search(r"(?i)\bsize\s*:", line):
+            continue
+        # Prefer checkbox-style selection like "1 14Fr" (avoid matching "12FR").
+        size_match = re.search(r"(?i)\b1\D{1,6}(\d{1,2})\s*fr\b", line)
+        if size_match:
+            break
+    if not size_match:
+        size_match = re.search(r"(?i)\b1\D{1,6}(\d{1,2})\s*fr\b", text)
+    if not size_match:
+        size_match = re.search(r"(?i)\b(\d{1,2})\s*fr\b", text)
+    if size_match:
+        try:
+            proc["tube_size_fr"] = int(size_match.group(1))
+        except ValueError:
+            pass
+
+    if re.search(r"(?i)\bultrasound\b", text):
+        proc["guidance"] = "Ultrasound"
+    elif re.search(r"(?i)\bct\b|\bcomputed tomography\b", text):
+        proc["guidance"] = "CT"
+    elif re.search(r"(?i)\bfluoro(?:scopy)?\b", text):
+        proc["guidance"] = "Fluoroscopy"
+
+    return {"chest_tube": proc}
+
+
+def extract_ipc(note_text: str) -> Dict[str, Any]:
+    """Extract indwelling pleural catheter (IPC / tunneled pleural catheter)."""
+    text = note_text or ""
+    text_lower = text.lower()
+
+    matched_pattern: str | None = None
+    for pattern in IPC_PATTERNS:
+        if re.search(pattern, text_lower, re.IGNORECASE):
+            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
+            if re.search(negation_check, text_lower, re.IGNORECASE):
+                continue
+            matched_pattern = pattern
+            break
+
+    if matched_pattern is None:
+        return {}
+
+    if matched_pattern.startswith(r"\bipc\b") and not re.search(r"(?i)\b(?:pleur|effusion)\b", text):
+        return {}
+
+    proc: dict[str, Any] = {"performed": True}
+
+    # Action: prioritize explicit removal language.
+    if re.search(r"(?i)\b(removal|removed|pull(?:ed)?)\b", text):
+        proc["action"] = "Removal"
+    elif re.search(r"(?i)\b(placement|place(?:d)?|insert(?:ed)?|insertion|tunnel(?:ed)?|seldinger)\b", text):
+        proc["action"] = "Insertion"
+
+    right = re.search(r"(?i)\b(rt|right)\b", text) is not None
+    left = re.search(r"(?i)\b(lt|left)\b", text) is not None
+    if right and not left:
+        proc["side"] = "Right"
+    elif left and not right:
+        proc["side"] = "Left"
+
+    if re.search(r"(?i)\bpleurx\b", text):
+        proc["catheter_brand"] = "PleurX"
+        proc["tunneled"] = True
+    elif re.search(r"(?i)\baspira\b", text):
+        proc["catheter_brand"] = "Aspira"
+        proc["tunneled"] = True
+    elif re.search(r"(?i)\brocket\b", text):
+        proc["catheter_brand"] = "Rocket"
+        proc["tunneled"] = True
+    else:
+        proc["catheter_brand"] = "Other"
+
+    if re.search(r"(?i)\btunne(?:l|ll)ed\b", text) or re.search(r"(?i)\bindwelling\b", text):
+        proc["tunneled"] = True
+
+    if re.search(r"(?i)\bmalignant\b", text) and re.search(r"(?i)\beffusion\b", text):
+        proc["indication"] = "Malignant effusion"
+
+    return {"ipc": proc}
 
 
 def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
@@ -722,15 +1172,66 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if ebx_data:
         seed_data.setdefault("procedures_performed", {}).update(ebx_data)
 
+    radial_ebus_data = extract_radial_ebus(note_text)
+    if radial_ebus_data:
+        seed_data.setdefault("procedures_performed", {}).update(radial_ebus_data)
+
+    cryotherapy_data = extract_cryotherapy(note_text)
+    if cryotherapy_data:
+        seed_data.setdefault("procedures_performed", {}).update(cryotherapy_data)
+
+    nav_data = extract_navigational_bronchoscopy(note_text)
+    if nav_data:
+        seed_data.setdefault("procedures_performed", {}).update(nav_data)
+
+    tbna_data = extract_tbna_conventional(note_text)
+    if tbna_data:
+        seed_data.setdefault("procedures_performed", {}).update(tbna_data)
+
+    brushings_data = extract_brushings(note_text)
+    if brushings_data:
+        seed_data.setdefault("procedures_performed", {}).update(brushings_data)
+
+    cryobiopsy_data = extract_transbronchial_cryobiopsy(note_text)
+    if cryobiopsy_data:
+        seed_data.setdefault("procedures_performed", {}).update(cryobiopsy_data)
+
+    peripheral_ablation_data = extract_peripheral_ablation(note_text)
+    if peripheral_ablation_data:
+        seed_data.setdefault("procedures_performed", {}).update(peripheral_ablation_data)
+
+    thermal_ablation_data = extract_thermal_ablation(note_text)
+    if thermal_ablation_data:
+        seed_data.setdefault("procedures_performed", {}).update(thermal_ablation_data)
+
     # Percutaneous tracheostomy
     trach_data = extract_percutaneous_tracheostomy(note_text)
     if trach_data:
         seed_data.setdefault("procedures_performed", {}).update(trach_data)
 
+    established_trach = extract_established_tracheostomy_route(note_text)
+    if established_trach:
+        seed_data.update(established_trach)
+
     # Neck ultrasound
     neck_us_data = extract_neck_ultrasound(note_text)
     if neck_us_data:
         seed_data.setdefault("procedures_performed", {}).update(neck_us_data)
+
+    # Chest ultrasound
+    chest_us_data = extract_chest_ultrasound(note_text)
+    if chest_us_data:
+        seed_data.setdefault("procedures_performed", {}).update(chest_us_data)
+
+    # Pleural: chest tube / pleural drainage catheter
+    chest_tube_data = extract_chest_tube(note_text)
+    if chest_tube_data:
+        seed_data.setdefault("pleural_procedures", {}).update(chest_tube_data)
+
+    # Pleural: indwelling pleural catheter (IPC / tunneled pleural catheter)
+    ipc_data = extract_ipc(note_text)
+    if ipc_data:
+        seed_data.setdefault("pleural_procedures", {}).update(ipc_data)
 
     return seed_data
 
@@ -749,6 +1250,33 @@ __all__ = [
     "extract_bal",
     "extract_therapeutic_aspiration",
     "extract_endobronchial_biopsy",
+    "extract_radial_ebus",
+    "extract_cryotherapy",
+    "extract_navigational_bronchoscopy",
+    "extract_tbna_conventional",
+    "extract_brushings",
+    "extract_transbronchial_cryobiopsy",
+    "extract_peripheral_ablation",
+    "extract_thermal_ablation",
     "extract_percutaneous_tracheostomy",
+    "extract_established_tracheostomy_route",
     "extract_neck_ultrasound",
+    "extract_chest_ultrasound",
+    "extract_chest_tube",
+    "extract_ipc",
+    "BAL_PATTERNS",
+    "ENDOBRONCHIAL_BIOPSY_PATTERNS",
+    "RADIAL_EBUS_PATTERNS",
+    "CRYOTHERAPY_PATTERNS",
+    "NAVIGATIONAL_BRONCHOSCOPY_PATTERNS",
+    "TBNA_CONVENTIONAL_PATTERNS",
+    "BRUSHINGS_PATTERNS",
+    "TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS",
+    "PERIPHERAL_ABLATION_PATTERNS",
+    "THERMAL_ABLATION_PATTERNS",
+    "ESTABLISHED_TRACH_ROUTE_PATTERNS",
+    "ESTABLISHED_TRACH_NEW_PATTERNS",
+    "CHEST_ULTRASOUND_PATTERNS",
+    "CHEST_TUBE_PATTERNS",
+    "IPC_PATTERNS",
 ]

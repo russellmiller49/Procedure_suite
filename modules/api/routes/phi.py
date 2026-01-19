@@ -22,6 +22,8 @@ from modules.phi.service import PHIService
 
 router = APIRouter(prefix="/v1/phi", tags=["phi"])
 logger = logging.getLogger("phi_api")
+_phi_service_dep = Depends(get_phi_service)
+_phi_session_dep = Depends(get_phi_session)
 
 
 class ScrubbedEntityModel(BaseModel):
@@ -110,10 +112,14 @@ def _from_entity_map(entity_map) -> list[ScrubbedEntityModel]:
     return [ScrubbedEntityModel(**entity) for entity in entity_map]
 
 
-@router.post("/scrub/preview", response_model=ScrubPreviewResponse, summary="Preview PHI scrubbing (no persistence)")
+@router.post(
+    "/scrub/preview",
+    response_model=ScrubPreviewResponse,
+    summary="Preview PHI scrubbing (no persistence)",
+)
 def preview_scrub(
     payload: ScrubPreviewRequest,
-    phi_service: PHIService = Depends(get_phi_service),
+    phi_service: PHIService = _phi_service_dep,
 ) -> ScrubPreviewResponse:
     start = time.perf_counter()
     scrub_result = phi_service.preview(
@@ -131,13 +137,20 @@ def preview_scrub(
             "specialty": payload.specialty,
         },
     )
-    return ScrubPreviewResponse(scrubbed_text=scrub_result.scrubbed_text, entities=_to_entities(scrub_result))
+    return ScrubPreviewResponse(
+        scrubbed_text=scrub_result.scrubbed_text,
+        entities=_to_entities(scrub_result),
+    )
 
 
-@router.post("/submit", response_model=SubmitResponse, summary="Submit and vault PHI with scrubbing")
+@router.post(
+    "/submit",
+    response_model=SubmitResponse,
+    summary="Submit and vault PHI with scrubbing",
+)
 def submit_phi(
     payload: SubmitRequest,
-    phi_service: PHIService = Depends(get_phi_service),
+    phi_service: PHIService = _phi_service_dep,
 ) -> SubmitResponse:
     start = time.perf_counter()
     if payload.confirmed_entities is not None:
@@ -184,19 +197,29 @@ def submit_phi(
     )
 
 
-@router.get("/status/{procedure_id}", response_model=StatusResponse, summary="Check PHI record status")
+@router.get(
+    "/status/{procedure_id}",
+    response_model=StatusResponse,
+    summary="Check PHI record status",
+)
 def get_status(
     procedure_id: str,
-    db: Session = Depends(get_phi_session),
+    db: Session = _phi_session_dep,
 ) -> StatusResponse:
     try:
         proc_uuid = uuid.UUID(procedure_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid procedure_id") from exc
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid procedure_id",
+        ) from exc
 
     proc = db.get(models.ProcedureData, proc_uuid)
     if proc is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Procedure not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Procedure not found",
+        )
 
     return StatusResponse(
         procedure_id=str(proc.id),
@@ -215,17 +238,23 @@ def get_status(
 )
 def get_procedure_for_review(
     procedure_id: str,
-    phi_service: PHIService = Depends(get_phi_service),
+    phi_service: PHIService = _phi_service_dep,
 ) -> ProcedureReviewResponse:
     try:
         proc_uuid = uuid.UUID(procedure_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid procedure_id") from exc
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid procedure_id",
+        ) from exc
 
     try:
         proc = phi_service.get_procedure_for_review(procedure_data_id=proc_uuid)
-    except ValueError:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Procedure not found")
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Procedure not found",
+        ) from exc
 
     return ProcedureReviewResponse(
         procedure_id=str(proc.id),
@@ -247,12 +276,15 @@ def get_procedure_for_review(
 def submit_scrubbing_feedback(
     procedure_id: str,
     payload: ScrubbingFeedbackRequest,
-    phi_service: PHIService = Depends(get_phi_service),
+    phi_service: PHIService = _phi_service_dep,
 ) -> ProcedureReviewResponse:
     try:
         proc_uuid = uuid.UUID(procedure_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid procedure_id") from exc
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid procedure_id",
+        ) from exc
 
     start = time.perf_counter()
     try:
@@ -265,8 +297,11 @@ def submit_scrubbing_feedback(
             reviewer_role=payload.reviewer_role,
             comment=payload.comment,
         )
-    except ValueError:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Procedure not found or missing PHI vault")
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Procedure not found or missing PHI vault",
+        ) from exc
     duration_ms = (time.perf_counter() - start) * 1000
     logger.info(
         "phi_feedback",
@@ -290,15 +325,22 @@ def submit_scrubbing_feedback(
     )
 
 
-@router.post("/reidentify", response_model=ReidentifyResponse, summary="Reidentify raw PHI text (PHI-safe UI only)")
+@router.post(
+    "/reidentify",
+    response_model=ReidentifyResponse,
+    summary="Reidentify raw PHI text (PHI-safe UI only)",
+)
 def reidentify_phi(
     payload: ReidentifyRequest,
-    phi_service: PHIService = Depends(get_phi_service),
+    phi_service: PHIService = _phi_service_dep,
 ) -> ReidentifyResponse:
     try:
         proc_uuid = uuid.UUID(payload.procedure_id)
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid procedure_id") from exc
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid procedure_id",
+        ) from exc
 
     start = time.perf_counter()
     try:
@@ -311,8 +353,11 @@ def reidentify_phi(
             user_agent=payload.user_agent,
             request_id=payload.request_id,
         )
-    except ValueError:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Procedure not found or missing PHI vault")
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Procedure not found or missing PHI vault",
+        ) from exc
     duration_ms = (time.perf_counter() - start) * 1000
     logger.info(
         "phi_reidentify",

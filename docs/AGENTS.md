@@ -2,11 +2,14 @@
 
 This document describes the 3-agent pipeline used for structured note processing in the Procedure Suite.
 
+Note (2026-01): Production is moving to a **stateless extraction-first** architecture (Text In → Codes Out)
+driven by `POST /api/v1/process`. Hybrid-first/ID-based workflows are legacy and gated.
+
 ## Overview
 
 The agents module (`modules/agents/`) provides **deterministic, structured note processing** that can be used in two ways:
 
-- **Focused extraction helper (used today)**: `ParserAgent` is used to segment notes and optionally “focus” extraction onto high-yield sections for deterministic registry extraction (see `modules/registry/extraction/focus.py`).
+- **Focused extraction helper (optional)**: `ParserAgent` is used to segment notes and optionally “focus” extraction onto high-yield sections for deterministic registry extraction (see `modules/registry/extraction/focus.py`).
 - **Full 3-agent pipeline (available, experimental)**: `Parser → Summarizer → Structurer` via `modules/agents/run_pipeline.py`. Today, `StructurerAgent` is a placeholder and the “agents structurer” extraction mode is intentionally guarded/fallbacks to the engine.
 
 The goal is to make downstream extraction more reliable and auditable without seeding registry extraction with CPT hints when running in extraction-first mode.
@@ -22,22 +25,24 @@ Registry V3 introduces a stricter, section-aware focusing helper used to limit w
 
 ## Where this fits in the system
 
-The system has two major registry flows (feature-flagged):
+The system has two major registry flows:
 
-- **Hybrid-first (default)**: CPT coder → CPT→registry mapping → registry engine extraction → merge/validate.
-- **Extraction-first (feature flag)**: extract registry from raw note text (no CPT hints) → deterministic registry→CPT derivation → optional auditing/self-correction.
+- **Extraction-first (production direction)**: extract registry from (scrubbed) note text (no CPT hints) → deterministic registry→CPT derivation → optional auditing/self-correction.
+- **Hybrid-first (legacy)**: CPT coder → CPT→registry mapping → registry engine extraction → merge/validate.
 
 Agents are relevant primarily to **extraction-first**:
 
-- When `PROCSUITE_PIPELINE_MODE=extraction_first` and `REGISTRY_EXTRACTION_ENGINE=agents_focus_then_engine`, the system will use `ParserAgent` to focus the note text for the deterministic engine extraction. Guardrail: auditing always uses the full raw note text.
+- `PROCSUITE_PIPELINE_MODE=extraction_first` is enforced at startup (`modules/api/fastapi_app.py:_validate_startup_env()`).
+- When `REGISTRY_EXTRACTION_ENGINE=agents_focus_then_engine`, the system will use `ParserAgent` to focus the note text for the deterministic engine extraction. Guardrail: auditing always uses the full raw note text.
 
 ### Configuration
 
 These environment variables control whether/where agents are used:
 
-- **`PROCSUITE_PIPELINE_MODE`**: `current` (hybrid-first) or `extraction_first`
-- **`REGISTRY_EXTRACTION_ENGINE`** (only meaningful in extraction-first): `engine`, `agents_focus_then_engine`, or `agents_structurer`
-- **`REGISTRY_SCHEMA_VERSION`**: `v3` (default) or `v2` (legacy prompt). Extraction-first forces `schema_version="v3"` in the registry-engine context so the model uses the schema-driven prompt and the EBUS `node_events` structure.
+- **`PROCSUITE_PIPELINE_MODE`**: must be `extraction_first` (startup-enforced).
+- **`REGISTRY_EXTRACTION_ENGINE`** (extraction-first): `parallel_ner` (recommended; required in production), `engine`, `agents_focus_then_engine`, or `agents_structurer`.
+- **`REGISTRY_SCHEMA_VERSION`**: `v3` is recommended (and required in production); `v2` is legacy.
+- **`REGISTRY_AUDITOR_SOURCE`**: `raw_ml` enables the RAW-ML audit safety net (required in production).
 
 Notes:
 - `agents_structurer` is currently **not implemented** (it is expected to raise `NotImplementedError` and fall back to the deterministic engine).
@@ -49,7 +54,10 @@ Even when agents are used for **focusing**, the extraction-first pipeline applie
 
 - **Evidence integrity**: `modules/registry/evidence/verifier.py:verify_evidence_integrity()` verifies that hallucination-prone `performed=True` fields are supported by verifiable quotes (with fuzzy fallback) and wipes unsupported details (e.g., therapeutic aspiration; hallucinated trach `device_name`).
 - **EBUS negation sanitizer**: `modules/registry/postprocess.py:sanitize_ebus_events()` forces `needle_aspiration` → `inspected_only` when the station context is explicitly negated (e.g., “not biopsied/not sampled”, “benign ultrasound characteristics”).
-- **Recall/omission detector**: `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` flags “silent misses” when keywords are present (brushings/rigid/thermal) but the corresponding registry fields are missing/false.
+- **Clinical guardrails**: `modules/extraction/postprocessing/clinical_guardrails.py` prevents known failure modes (failed navigation, airway dilation false positives, rigid bronch header/body conflict, etc).
+- **Recall/omission detector**: `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` flags “silent misses” for high-value procedures (BAL/EBBx/radial EBUS/cryotherapy/laser/rigid/etc) and emits `SILENT_FAILURE:` warnings.
+- **Short-token keyword safety**: `modules/registry/self_correction/keyword_guard.py:_keyword_hit()` requires word boundaries for short tokens (e.g., `bal`, `ipc`) to reduce false positives.
+- **Evidence schema**: the UI/API expects V3 evidence items shaped like `{"source","text","span":[start,end],"confidence"}` (see `modules/api/adapters/response_adapter.py`).
 
 Chokepoints:
 - `modules/registry/application/registry_service.py:RegistryService.extract_record()` (runs guardrails immediately after extraction)

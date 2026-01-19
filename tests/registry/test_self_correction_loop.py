@@ -96,6 +96,45 @@ def test_self_correction_successful_patch(monkeypatch: pytest.MonkeyPatch) -> No
     assert result.self_correction[0].trigger.target_cpt == "32550"
 
 
+def test_self_correction_successful_patch_mechanical_debulking_31640(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
+
+    _stub_raw_ml_high_conf(monkeypatch, cpt="31640", prob=0.99)
+
+    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
+
+    mocked = MagicMock(
+        return_value=PatchProposal(
+            rationale="Procedure explicitly documented",
+            json_patch=[
+                {"op": "add", "path": "/procedures_performed/mechanical_debulking/performed", "value": True}
+            ],
+            evidence_quote="mechanical debulking",
+        )
+    )
+    monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", mocked)
+
+    orchestrator = MagicMock()
+    orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
+
+    service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=_StubRegistryEngine())
+    note_text = (
+        "PROCEDURE:\n"
+        "Rigid bronchoscopy with mechanical debulking of left mainstem tumor.\n"
+        "No thermal ablation was used.\n"
+    )
+    result = service.extract_fields(note_text)
+
+    assert "31640" in result.cpt_codes
+    assert any(w.startswith("AUTO_CORRECTED: 31640") for w in result.warnings)
+    mocked.assert_called()
+    assert result.record.procedures_performed is not None
+    assert result.record.procedures_performed.mechanical_debulking is not None
+    assert result.record.procedures_performed.mechanical_debulking.performed is True
+
+
 def test_self_correction_rejects_hallucinated_quote(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
     monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")

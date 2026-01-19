@@ -30,6 +30,13 @@ from modules.registry.engine import RegistryEngine
 from modules.registry.schema import RegistryRecord
 
 
+@pytest.fixture(autouse=True)
+def legacy_pipeline_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "current")
+    monkeypatch.setenv("PROCSUITE_ALLOW_LEGACY_PIPELINES", "1")
+    yield
+
+
 # ============================================================================
 # Test Helpers
 # ============================================================================

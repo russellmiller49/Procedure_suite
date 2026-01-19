@@ -9,7 +9,8 @@ import pytest_asyncio
 # Avoid network-bound LLM calls during tests.
 os.environ.setdefault("REGISTRY_USE_STUB_LLM", "1")
 os.environ.setdefault("GEMINI_OFFLINE", "1")
-os.environ.setdefault("DISABLE_STATIC_FILES", "1")
+# UI tests assert `/ui/` is available.
+os.environ.setdefault("DISABLE_STATIC_FILES", "0")
 os.environ.setdefault("PHI_SCRUBBER_MODE", "stub")
 
 from modules.api.fastapi_app import app

@@ -4,24 +4,53 @@ This guide explains how to use the Procedure Suite tools for generating reports,
 
 ---
 
+## Important: Current Production Mode (2026-01)
+
+- The server is a **stateless logic engine**: **(scrubbed) note text in → registry + CPT codes out**.
+- **Primary endpoint:** `POST /api/v1/process`
+- Startup enforces `PROCSUITE_PIPELINE_MODE=extraction_first` (service will not start otherwise).
+- In production (`CODER_REQUIRE_PHI_REVIEW=true`), `/api/v1/process` stays enabled and returns:
+  - `review_status="pending_phi_review"`
+  - `needs_manual_review=true`
+- Optional: `REGISTRY_SELF_CORRECT_ENABLED=1` allows an external LLM to act as a **judge** on **scrubbed text** to patch missing fields
+  when high-confidence omissions are detected (slower but higher quality).
+  - Self-correction is gated by a CPT keyword guard; skips will include `SELF_CORRECT_SKIPPED:` warnings when enabled.
+
 ## How the System Works (Plain Language)
 
 The Procedure Suite is an intelligent medical coding assistant that reads procedure notes and suggests appropriate CPT billing codes. Here's how it works in simple terms:
 
 ### The Three Brains
 
-1. **Machine Learning (ML) Model**: A trained neural network that has learned from thousands of procedure notes. It quickly predicts which CPT codes are likely correct and assigns a confidence score to each prediction.
+1. **Granular NER**: A trained model that finds procedure actions/devices (e.g., BAL, EBUS stations, cryotherapy) as text spans to drive structured extraction.
 
 2. **Rules Engine**: A set of explicit business rules that encode medical billing knowledge, such as:
    - "You can't bill these two codes together" (bundling rules)
    - "This code requires specific documentation" (validation rules)
    - "If procedure X was done, code Y is required" (inference rules)
 
-3. **LLM Advisor**: A large language model (like GPT/Gemini) that can read and understand procedure notes in natural language. It acts as a "second opinion" when the ML model is uncertain.
+3. **ML Auditor + Guardrails**: A safety net that flags likely omissions/mismatches and forces review when extraction degrades. Optional LLM components are used for advisor/self-correction when enabled.
 
-### The ML-First Hybrid Pipeline (NEW)
+### Extraction-First Pipeline (Current)
 
-The system uses a smart decision-making process called the **SmartHybridOrchestrator**:
+Recommended runtime configuration uses the `parallel_ner` extraction engine:
+
+```
+(Scrubbed) Note Text
+  → [Path A] Granular NER → Registry mapping → Deterministic Registry→CPT rules
+  → [Path B] Optional ML classifier/auditor (may be unavailable)
+  → Guardrails + omission scan (surface warnings, require review when needed)
+```
+
+Key behaviors:
+- **Deterministic uplift** prevents “silent revenue loss” when NER misses common procedures (BAL/EBBx/radial EBUS/cryotherapy, plus backstops like navigational bronchoscopy and pleural IPC/tunneled catheter).
+- `audit_warnings` surfaces `SILENT_FAILURE:` and other degraded-mode warnings to the UI.
+- **Self-correction (LLM judge)**: when `REGISTRY_SELF_CORRECT_ENABLED=1`, RAW-ML high-confidence omissions can trigger a small number of
+  evidence-gated patches (verbatim quote required). This is designed to fix “empty/under-coded” cases without making the LLM the primary extractor.
+
+### Legacy: ML-First Hybrid Pipeline
+
+Older “hybrid-first” workflows may still exist behind feature flags, but production is moving to extraction-first stateless processing via `/api/v1/process`.
 
 ```
 Note Text → ML Predicts → Classify Difficulty → Decision Gate → Final Codes
@@ -63,8 +92,11 @@ The easiest way to interact with the system is the development server, which pro
 - **Web UI**: [http://localhost:8000/ui/](http://localhost:8000/ui/)
 - **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-to run with updated NER (if not set will use the default artifacts/granular_ner_model )
-GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2 ./scripts/devserver.sh
+Notes:
+- The devserver sources `.env`. If you change `.env`, restart the devserver.
+- Keep secrets (e.g., `OPENAI_API_KEY`) out of version control; prefer shell env vars or an untracked local `.env`.
+- To use the current granular NER model, set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2` (in `.env` or your shell).
+- For faster responses (disable self-correction LLM calls), run with `PROCSUITE_FAST_MODE=1`.
 ---
 
 ## 🛠 CLI Tools
@@ -95,6 +127,129 @@ Ask the LLM to analyze specific registry fields or errors and suggest improvemen
 make self-correct-registry FIELD=sedation_type
 ```
 *Output*: `reports/registry_self_correction_sedation_type.md`
+
+### 3b. Smoke Test (Registry Extraction + Self-Correction Diagnostics)
+
+Use these scripts to quickly sanity-check extraction behavior and see why self-correction did or did not apply.
+
+#### Single Note Smoke Test
+
+Test a single note file:
+
+```bash
+# Basic usage
+python scripts/registry_pipeline_smoke.py --note <note.txt>
+
+# With self-correction enabled
+python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct
+
+# With inline text (no file needed)
+python scripts/registry_pipeline_smoke.py --text "Procedure: EBUS bronchoscopy..."
+```
+
+**Output shows:**
+- Performed flags from `extract_record()`
+- Flags added by deterministic uplift
+- Extract warnings
+- Omission warnings
+- Self-correction diagnostics (if `--self-correct` flag is used)
+
+#### Batch Smoke Test
+
+Test multiple random notes from a directory:
+
+```bash
+# Basic usage (30 random notes, default output file)
+python scripts/registry_pipeline_smoke_batch.py
+
+# Custom number of notes
+python scripts/registry_pipeline_smoke_batch.py --count 50
+
+# Specify output file
+python scripts/registry_pipeline_smoke_batch.py --output my_results.txt
+
+# Use a random seed for reproducibility
+python scripts/registry_pipeline_smoke_batch.py --seed 42
+
+# Enable self-correction testing
+python scripts/registry_pipeline_smoke_batch.py --self-correct
+
+# Custom notes directory (default: data/knowledge/patient_note_texts)
+python scripts/registry_pipeline_smoke_batch.py --notes-dir path/to/notes
+```
+
+**Output file format:**
+- Header with test metadata
+- For each note:
+  - Note ID
+  - Performed flags (before/after uplift)
+  - Extract warnings
+  - Omission warnings
+  - Self-correction diagnostics (if enabled)
+- Summary with success/failure counts
+
+**What to look for in the output:**
+- `Audit high-conf omissions:` indicates RAW-ML thinks something high-value was missed (self-correct triggers are sourced from this list).
+- `SELF_CORRECT_SKIPPED:` indicates self-correction was eligible but blocked (commonly keyword guard failures).
+- `AUTO_CORRECTED:` indicates self-correction successfully applied a fix.
+- Keyword gating is configured in `modules/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
+
+**Note:** The batch script automatically sets `REGISTRY_USE_STUB_LLM=1` and `GEMINI_OFFLINE=1` for offline testing. To test with real LLM/self-correction, ensure `REGISTRY_SELF_CORRECT_ENABLED=1` is set in your environment and pass the `--self-correct` flag.
+
+### 3c. Unified Pipeline Batch Test
+
+Test the full unified pipeline (same as the UI at `/ui/`) on multiple random notes:
+
+```bash
+# Basic usage (10 random notes from notes_text directory, default output file)
+python scripts/unified_pipeline_batch.py
+
+# Custom number of notes
+python scripts/unified_pipeline_batch.py --count 20
+
+# Specify output file
+python scripts/unified_pipeline_batch.py --output my_results.txt
+
+# Use a random seed for reproducibility
+python scripts/unified_pipeline_batch.py --seed 42
+
+# Exclude financials or evidence
+python scripts/unified_pipeline_batch.py --no-financials --no-explain
+
+# Custom notes directory (default: data/granular annotations/notes_text)
+python scripts/unified_pipeline_batch.py --notes-dir path/to/notes
+```
+
+**Output file format:**
+- Header with test metadata
+- For each note:
+  - Note ID
+  - Full note text
+  - Complete JSON results (same format as `/api/v1/process` endpoint):
+    - `registry`: Extracted registry fields
+    - `evidence`: Evidence spans with confidence scores
+    - `cpt_codes`: Derived CPT codes
+    - `suggestions`: Code suggestions with confidence and rationale
+    - `total_work_rvu`: Total work RVU
+    - `estimated_payment`: Estimated payment
+    - `per_code_billing`: Per-code RVU and payment breakdown
+    - `audit_warnings`: Warnings and self-correction messages
+    - `review_status`: Review status
+    - `processing_time_ms`: Processing time
+- Summary with success/failure counts
+
+**This script:**
+- Uses the same pipeline as the UI (`/api/v1/process` endpoint)
+- Includes PHI redaction (same as UI)
+- Processes notes from `.txt` files in the notes directory
+- Automatically sets `REGISTRY_USE_STUB_LLM=1` and `GEMINI_OFFLINE=1` for offline testing
+- Returns the complete unified response with registry, CPT codes, financials, and evidence
+
+**Use cases:**
+- Testing extraction quality on a random sample of notes
+- Generating example outputs for documentation
+- Validating pipeline behavior after code changes
+- Comparing results across different configurations
 
 ### 4. Clean & Normalize Registry
 Run the full cleaning pipeline (Schema Norm -> CPT Logic -> Consistency -> Clinical QC) on a raw dataset.
@@ -145,8 +300,43 @@ python scripts/generate_gitingest.py --details \
 
 You can interact with the system programmatically via the REST API.
 
+### Machine Extraction Endpoint (Stateless)
+**POST** `/api/v1/process`
+
+This is the production extraction engine. It expects **already scrubbed** text and
+returns structured registry data plus derived CPT codes. When
+`CODER_REQUIRE_PHI_REVIEW=true`, the response includes
+`review_status="pending_phi_review"` and `needs_manual_review=true`.
+
+If `REGISTRY_SELF_CORRECT_ENABLED=1`, the server may call an external LLM on **scrubbed text**
+as a judge to propose and apply small JSON patches when high-confidence omissions are detected.
+
+Evidence is returned in a UI-friendly V3 shape:
+`{"source": "...", "text": "...", "span": [start, end], "confidence": 0.0-1.0}`.
+
+Input:
+```json
+{
+  "note": "Scrubbed procedure note text...",
+  "already_scrubbed": true,
+  "include_financials": true,
+  "explain": true
+}
+```
+
+Output (excerpt):
+```json
+{
+  "registry": { "...": "..." },
+  "cpt_codes": ["31654"],
+  "audit_warnings": ["SILENT_FAILURE: ..."],
+  "review_status": "pending_phi_review",
+  "needs_manual_review": true
+}
+```
+
 ### CPT Coding Endpoint
-**POST** `/v1/coder/run`
+**POST** `/v1/coder/run` (legacy; returns 410 unless `PROCSUITE_ALLOW_LEGACY_ENDPOINTS=1`)
 
 Input:
 ```json
@@ -174,7 +364,7 @@ Output:
 ```
 
 ### Registry Extraction Endpoint
-**POST** `/v1/registry/run`
+**POST** `/v1/registry/run` (legacy; returns 410 unless `PROCSUITE_ALLOW_LEGACY_ENDPOINTS=1`)
 
 Input:
 ```json
@@ -210,12 +400,14 @@ Use the parallel NER+ML pathway globally by setting these environment flags:
 
 - `PROCSUITE_PIPELINE_MODE=extraction_first`
 - `REGISTRY_EXTRACTION_ENGINE=parallel_ner`
+- `REGISTRY_SCHEMA_VERSION=v3` (recommended; required in production)
 - `MODEL_BACKEND=auto` (or `pytorch`)
 
 Example:
 ```bash
 PROCSUITE_PIPELINE_MODE=extraction_first \
 REGISTRY_EXTRACTION_ENGINE=parallel_ner \
+REGISTRY_SCHEMA_VERSION=v3 \
 MODEL_BACKEND=auto \
 ./scripts/devserver.sh
 ```
@@ -240,22 +432,21 @@ The Web UI provides a simple interface for coding procedure notes.
 
 1. **Start the server**: `./scripts/devserver.sh`
 2. **Open the UI**: Navigate to [http://localhost:8000/ui/](http://localhost:8000/ui/)
-3. **Select "Coder" tab** (default)
+3. **Select "Unified" tab** (recommended; production-style flow)
 4. **Paste your procedure note** into the text area
 5. **Configure options**:
-   - **Use ML-First Pipeline** (recommended): Enables the smart hybrid pipeline
-   - **Locality**: Geographic code for RVU calculations (default: 00 = National)
-   - **Setting**: Facility or Non-Facility pricing
+   - **Include financials**: Adds RVU/payment estimates
+   - **Explain**: Returns evidence spans for UI display/debugging
 6. **Click "Run Processing"**
 
 ### Understanding the Results
 
-When using the ML-First Pipeline, you'll see:
+In **Unified** mode, the UI runs the PHI workflow and then calls `POST /api/v1/process` with `already_scrubbed=true`.
+You’ll see:
 
-- **Pipeline Metadata** (colored badges):
-  - **Difficulty**: green (high_confidence), yellow (gray_zone), red (low_confidence)
-  - **Source**: green (ml_rules_fastpath) means no LLM was used, blue (hybrid_llm_fallback) means LLM was consulted
-  - **LLM Used**: green (No) or yellow (Yes)
+- **Pipeline metadata**: `pipeline_mode`, `review_status`, `needs_manual_review`
+- **Audit warnings**: includes degraded-mode warnings like `SILENT_FAILURE:` and `DETERMINISTIC_UPLIFT:`
+- **Evidence**: V3 evidence objects with `source/text/span/confidence`
 
 - **Billing Codes**: The final CPT codes with descriptions
 

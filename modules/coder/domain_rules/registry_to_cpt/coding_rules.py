@@ -14,25 +14,35 @@ from typing import Any
 from modules.registry.schema import RegistryRecord
 
 
-def _performed(obj: Any) -> bool:
+def _get(obj: Any, name: str) -> Any:
     if obj is None:
-        return False
-    performed = getattr(obj, "performed", None)
+        return None
+    if isinstance(obj, dict):
+        return obj.get(name)
+    return getattr(obj, name, None)
+
+
+def _performed(obj: Any) -> bool:
+    performed = _get(obj, "performed")
     return performed is True
 
 
 def _proc(record: RegistryRecord, name: str) -> Any:
-    procedures = getattr(record, "procedures_performed", None)
+    procedures = _get(record, "procedures_performed")
     if procedures is None:
         return None
-    return getattr(procedures, name, None)
+    if isinstance(procedures, dict):
+        return procedures.get(name)
+    return _get(procedures, name)
 
 
 def _pleural(record: RegistryRecord, name: str) -> Any:
-    pleural = getattr(record, "pleural_procedures", None)
+    pleural = _get(record, "pleural_procedures")
     if pleural is None:
         return None
-    return getattr(pleural, name, None)
+    if isinstance(pleural, dict):
+        return pleural.get(name)
+    return _get(pleural, name)
 
 
 def _stations_sampled(record: RegistryRecord) -> tuple[list[str], str]:
@@ -41,14 +51,14 @@ def _stations_sampled(record: RegistryRecord) -> tuple[list[str], str]:
         return ([], "none")
 
     qualifying_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
-    node_events = getattr(linear, "node_events", None)
+    node_events = _get(linear, "node_events")
     if isinstance(node_events, (list, tuple)) and node_events:
         sampled: list[str] = []
         for event in node_events:
-            action = getattr(event, "action", None)
+            action = _get(event, "action")
             if action not in qualifying_actions:
                 continue
-            station = getattr(event, "station", None)
+            station = _get(event, "station")
             if station is None:
                 continue
             station_clean = str(station).upper().strip()
@@ -56,7 +66,7 @@ def _stations_sampled(record: RegistryRecord) -> tuple[list[str], str]:
                 sampled.append(station_clean)
         return (sampled, "node_events")
 
-    stations = getattr(linear, "stations_sampled", None)
+    stations = _get(linear, "stations_sampled")
     if not stations:
         return ([], "none")
 
@@ -64,8 +74,8 @@ def _stations_sampled(record: RegistryRecord) -> tuple[list[str], str]:
 
 
 def _navigation_targets(record: RegistryRecord) -> list[Any]:
-    granular = getattr(record, "granular_data", None)
-    targets = getattr(granular, "navigation_targets", None) if granular is not None else None
+    granular = _get(record, "granular_data")
+    targets = _get(granular, "navigation_targets") if granular is not None else None
     if not targets:
         return []
     return list(targets)
@@ -79,8 +89,8 @@ def _fiducial_marker_placed(record: RegistryRecord) -> bool:
 
     # Check granular navigation targets (fallback)
     for target in _navigation_targets(record):
-        placed = getattr(target, "fiducial_marker_placed", None)
-        details = getattr(target, "fiducial_marker_details", None)
+        placed = _get(target, "fiducial_marker_placed")
+        details = _get(target, "fiducial_marker_details")
         if placed is True:
             return True
         if details is not None and str(details).strip():
@@ -118,23 +128,23 @@ def _dilation_in_distinct_lobe_from_destruction(record: RegistryRecord) -> bool:
     Returns True only if granular data proves distinct anatomic locations.
     If granular data is missing, returns False (assume bundled).
     """
-    granular = getattr(record, "granular_data", None)
+    granular = _get(record, "granular_data")
     if not granular:
         return False
 
     # Get lobes for dilation
     dilation_lobes: set[str] = set()
-    dilation_targets = getattr(granular, "dilation_targets", None) or []
+    dilation_targets = _get(granular, "dilation_targets") or []
     for target in dilation_targets:
-        lobe = getattr(target, "lobe", None)
+        lobe = _get(target, "lobe")
         if lobe:
             dilation_lobes.add(str(lobe).upper())
 
     # Get lobes for destruction/ablation
     destruction_lobes: set[str] = set()
-    ablation_targets = getattr(granular, "ablation_targets", None) or []
+    ablation_targets = _get(granular, "ablation_targets") or []
     for target in ablation_targets:
-        lobe = getattr(target, "lobe", None)
+        lobe = _get(target, "lobe")
         if lobe:
             destruction_lobes.add(str(lobe).upper())
 
@@ -171,6 +181,7 @@ def derive_all_codes_with_meta(
             "foreign_body_removal",
             "airway_dilation",
             "airway_stent",
+            "mechanical_debulking",
             "thermal_ablation",
             "cryotherapy",
             "blvr",
@@ -192,6 +203,10 @@ def derive_all_codes_with_meta(
         codes.append("31624")
         rationales["31624"] = "bal.performed=true"
 
+    if _performed(_proc(record, "endobronchial_biopsy")):
+        codes.append("31625")
+        rationales["31625"] = "endobronchial_biopsy.performed=true"
+
     # Transbronchial lung biopsy (31628) and cryobiopsy are billed under 31628,
     # with add-on 31632 for additional lobes when documented.
     tbbx = _proc(record, "transbronchial_biopsy")
@@ -208,7 +223,7 @@ def derive_all_codes_with_meta(
         for proc in (tbbx, cryo_tbbx):
             if proc is None:
                 continue
-            locations = getattr(proc, "locations", None) or getattr(proc, "sites", None)
+            locations = _get(proc, "locations") or _get(proc, "sites")
             if locations:
                 break
         if locations:
@@ -223,7 +238,7 @@ def derive_all_codes_with_meta(
         codes.append("31629")
         rationales["31629"] = "tbna_conventional.performed=true"
 
-        locations = getattr(tbna, "locations", None) or getattr(tbna, "sites", None)
+        locations = _get(tbna, "locations") or _get(tbna, "sites")
         if locations:
             lobes = _lobe_tokens([str(x) for x in locations if x])
             if len(lobes) >= 2:
@@ -290,8 +305,8 @@ def derive_all_codes_with_meta(
     # Airway stent
     stent = _proc(record, "airway_stent")
     if stent is not None:
-        action = getattr(stent, "action", None)
-        removal_flag = getattr(stent, "airway_stent_removal", None)
+        action = _get(stent, "action")
+        removal_flag = _get(stent, "airway_stent_removal")
         is_removal = removal_flag is True or _stent_action_is_removal(action)
         is_placement = _performed(stent) and not is_removal
         if not is_placement and _stent_action_is_placement(action):
@@ -303,6 +318,18 @@ def derive_all_codes_with_meta(
         elif is_placement:
             codes.append("31636")
             rationales["31636"] = "airway_stent.performed=true and no removal flag"
+
+    # Mechanical debulking (tumor excision) → 31640
+    # Note: If both excision (31640) and destruction (31641) modalities are recorded,
+    # default to 31641 to avoid double-coding without anatomic granularity.
+    if _performed(_proc(record, "mechanical_debulking")):
+        if _performed(_proc(record, "thermal_ablation")) or _performed(_proc(record, "cryotherapy")):
+            warnings.append(
+                "mechanical_debulking.performed=true but destruction modality also present; defaulting to 31641"
+            )
+        else:
+            codes.append("31640")
+            rationales["31640"] = "mechanical_debulking.performed=true"
 
     # Thermal ablation (tumor destruction) → 31641
     if _performed(_proc(record, "thermal_ablation")):
@@ -318,8 +345,8 @@ def derive_all_codes_with_meta(
     # BLVR valve family
     blvr = _proc(record, "blvr")
     if _performed(blvr):
-        procedure_type = getattr(blvr, "procedure_type", None)
-        num_valves = getattr(blvr, "number_of_valves", None)
+        procedure_type = _get(blvr, "procedure_type")
+        num_valves = _get(blvr, "number_of_valves")
         if procedure_type == "Valve removal":
             codes.append("31649")
             rationales["31649"] = "blvr.procedure_type='Valve removal'"
@@ -335,13 +362,13 @@ def derive_all_codes_with_meta(
     if _performed(bt):
         codes.append("31660")
         rationales["31660"] = "bronchial_thermoplasty.performed=true"
-        areas = getattr(bt, "areas_treated", None)
+        areas = _get(bt, "areas_treated")
         if areas and len(areas) >= 2:
             codes.append("31661")
             rationales["31661"] = f"bronchial_thermoplasty.areas_treated_count={len(areas)} (>=2)"
 
     # Tracheostomy: distinguish established route vs new percutaneous trach.
-    established_trach_route = getattr(record, "established_tracheostomy_route", False) is True
+    established_trach_route = _get(record, "established_tracheostomy_route") is True
     if established_trach_route:
         codes.append("31615")
         rationales["31615"] = "established_tracheostomy_route=true"
@@ -361,6 +388,11 @@ def derive_all_codes_with_meta(
         codes.append("76536")
         rationales["76536"] = "neck_ultrasound.performed=true"
 
+    # Chest ultrasound (diagnostic, real-time with documentation)
+    if _performed(_proc(record, "chest_ultrasound")):
+        codes.append("76604")
+        rationales["76604"] = "chest_ultrasound.performed=true"
+
     # --- Pleural family ---
     if _performed(_pleural(record, "ipc")):
         codes.append("32550")
@@ -368,7 +400,7 @@ def derive_all_codes_with_meta(
 
     thora = _pleural(record, "thoracentesis")
     if _performed(thora):
-        guidance = getattr(thora, "guidance", None)
+        guidance = _get(thora, "guidance")
         if guidance == "Ultrasound":
             codes.append("32555")
             rationales["32555"] = "thoracentesis.performed=true and guidance='Ultrasound'"
@@ -376,9 +408,37 @@ def derive_all_codes_with_meta(
             codes.append("32554")
             rationales["32554"] = "thoracentesis.performed=true and guidance!='Ultrasound'"
 
-    if _performed(_pleural(record, "chest_tube")):
-        codes.append("32551")
-        rationales["32551"] = "pleural_procedures.chest_tube.performed=true"
+    chest_tube = _pleural(record, "chest_tube")
+    if _performed(chest_tube):
+        action = _get(chest_tube, "action")
+        tube_type = _get(chest_tube, "tube_type")
+        tube_size_fr = _get(chest_tube, "tube_size_fr")
+        guidance = _get(chest_tube, "guidance")
+
+        if action == "Removal":
+            warnings.append("pleural_procedures.chest_tube.action='Removal'; skipping insertion codes")
+        else:
+            imaging = guidance in {"Ultrasound", "CT", "Fluoroscopy"}
+            is_small_bore = False
+            if tube_type == "Pigtail":
+                is_small_bore = True
+            elif isinstance(tube_size_fr, int) and tube_size_fr <= 16:
+                is_small_bore = True
+
+            if is_small_bore:
+                if imaging:
+                    codes.append("32557")
+                    rationales["32557"] = (
+                        "pleural_procedures.chest_tube.performed=true and small-bore drain with imaging guidance"
+                    )
+                else:
+                    codes.append("32556")
+                    rationales["32556"] = (
+                        "pleural_procedures.chest_tube.performed=true and small-bore drain without imaging guidance"
+                    )
+            else:
+                codes.append("32551")
+                rationales["32551"] = "pleural_procedures.chest_tube.performed=true (tube thoracostomy)"
 
     if _performed(_pleural(record, "medical_thoracoscopy")):
         codes.append("32601")
@@ -407,6 +467,11 @@ def derive_all_codes_with_meta(
         derived = [c for c in derived if c != "32554"]
         rationales.pop("32554", None)
 
+    # Mutually exclusive: 32556 vs 32557 (prefer imaging-guided)
+    if "32556" in derived and "32557" in derived:
+        derived = [c for c in derived if c != "32556"]
+        rationales.pop("32556", None)
+
     # Bundling: Dilation (31630) vs Destruction (31641) / Excision (31640)
     # If destruction/excision is present, bundle dilation unless in distinct lobe
     destruction_codes = {"31641", "31640"}
@@ -426,9 +491,13 @@ def derive_all_codes_with_meta(
         "31622",
         "31623",
         "31624",
+        "31625",
         "31628",
         "31629",
+        "31635",
+        "31640",
         "31641",
+        "31645",
         "31647",
         "31652",
         "31653",

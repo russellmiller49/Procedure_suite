@@ -35,6 +35,7 @@ from modules.registry.application.registry_builder import (
 from modules.registry.engine import RegistryEngine
 from modules.registry.schema import RegistryRecord
 from modules.registry.schema_granular import derive_procedures_from_granular
+from modules.registry.processing.masking import mask_offset_preserving
 from modules.registry.audit.audit_types import AuditCompareReport
 
 logger = get_logger("registry_service")
@@ -56,6 +57,7 @@ from modules.coder.application.smart_hybrid_policy import (
 from modules.ml_coder.registry_predictor import RegistryMLPredictor
 from modules.registry.model_runtime import get_registry_runtime_dir, resolve_model_backend
 from modules.coder.parallel_pathway import ParallelPathwayOrchestrator
+from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
 
 
 if TYPE_CHECKING:
@@ -204,6 +206,7 @@ class RegistryService:
         self._registry_ml_predictor: Any | None = None
         self._ml_predictor_init_attempted: bool = False
         self.parallel_orchestrator = parallel_orchestrator or ParallelPathwayOrchestrator()
+        self.clinical_guardrails = ClinicalGuardrails()
 
     @property
     def registry_engine(self) -> RegistryEngine:
@@ -600,21 +603,35 @@ class RegistryService:
         Returns:
             RegistryExtractionResult with extracted record and metadata.
         """
+        masked_note_text = mask_offset_preserving(note_text)
+
         if mode == "parallel_ner":
             predictor = self._get_registry_ml_predictor()
-            return self.parallel_orchestrator.run_parallel_process(
-                note_text,
+            result = self.parallel_orchestrator.run_parallel_process(
+                masked_note_text,
                 ml_predictor=predictor,
             )
+            return self._apply_guardrails_to_result(masked_note_text, result)
 
         pipeline_mode = os.getenv("PROCSUITE_PIPELINE_MODE", "current").strip().lower()
+        if pipeline_mode != "extraction_first":
+            allow_legacy = os.getenv("PROCSUITE_ALLOW_LEGACY_PIPELINES", "0").strip().lower() in {
+                "1",
+                "true",
+                "yes",
+                "y",
+            }
+            if not allow_legacy:
+                raise ValueError(
+                    "Legacy pipelines are disabled. Set PROCSUITE_ALLOW_LEGACY_PIPELINES=1 to enable."
+                )
         if pipeline_mode == "extraction_first":
             return self._extract_fields_extraction_first(note_text)
 
         # Legacy fallback: if no hybrid orchestrator is injected, run extractor only
         if self.hybrid_orchestrator is None:
             logger.info("No hybrid_orchestrator configured, running extractor-only mode")
-            record = self.registry_engine.run(note_text, context={"schema_version": "v3"})
+            record = self.registry_engine.run(masked_note_text, context={"schema_version": "v3"})
             if isinstance(record, tuple):
                 record = record[0]  # Unpack if evidence included
             return RegistryExtractionResult(
@@ -628,7 +645,7 @@ class RegistryService:
 
         # 1. Run Hybrid Coder
         logger.debug("Running hybrid coder for registry extraction")
-        coder_result: HybridCoderResult = self.hybrid_orchestrator.get_codes(note_text)
+        coder_result: HybridCoderResult = self.hybrid_orchestrator.get_codes(masked_note_text)
 
         # 2. Map Codes to Registry Fields
         mapped_fields = aggregate_registry_fields(
@@ -652,9 +669,12 @@ class RegistryService:
         engine_warnings: list[str] = []
         run_with_warnings = getattr(self.registry_engine, "run_with_warnings", None)
         if callable(run_with_warnings):
-            record, engine_warnings = run_with_warnings(note_text, context=extraction_context)
+            record, engine_warnings = run_with_warnings(
+                masked_note_text,
+                context=extraction_context,
+            )
         else:
-            record = self.registry_engine.run(note_text, context=extraction_context)
+            record = self.registry_engine.run(masked_note_text, context=extraction_context)
             if isinstance(record, tuple):
                 record = record[0]  # Unpack if evidence included
 
@@ -672,7 +692,7 @@ class RegistryService:
                 warnings=list(engine_warnings),
             ),
             coder_result=coder_result,
-            note_text=note_text,
+            note_text=masked_note_text,
         )
 
         return final_result
@@ -709,27 +729,34 @@ class RegistryService:
         extraction_engine = os.getenv("REGISTRY_EXTRACTION_ENGINE", "engine").strip().lower()
         meta["extraction_engine"] = extraction_engine
 
-        text_for_extraction = note_text
+        raw_note_text = note_text
+        masked_note_text = mask_offset_preserving(raw_note_text)
+        meta["masked_note_text"] = masked_note_text
+
+        text_for_extraction = masked_note_text
         if extraction_engine == "engine":
             pass
         elif extraction_engine == "agents_focus_then_engine":
             # Phase 2: focusing helper is optional; guardrail is that RAW-ML always
             # runs on the raw note text.
             try:
-                focused_text, focus_meta = focus_note_for_extraction(note_text)
+                focused_text, focus_meta = focus_note_for_extraction(masked_note_text)
                 meta["focus_meta"] = focus_meta
-                text_for_extraction = focused_text or note_text
+                text_for_extraction = focused_text or masked_note_text
             except Exception as exc:
-                warnings.append(f"focus_note_for_extraction failed ({exc}); using raw note")
+                warnings.append(f"focus_note_for_extraction failed ({exc}); using masked note")
                 meta["focus_meta"] = {"status": "failed", "error": str(exc)}
-                text_for_extraction = note_text
+                text_for_extraction = masked_note_text
         elif extraction_engine == "agents_structurer":
             try:
                 from modules.registry.extraction.structurer import structure_note_to_registry_record
 
-                record, struct_meta = structure_note_to_registry_record(note_text, note_id=note_id)
+                record, struct_meta = structure_note_to_registry_record(
+                    masked_note_text,
+                    note_id=note_id,
+                )
                 meta["structurer_meta"] = struct_meta
-                meta["extraction_text"] = note_text
+                meta["extraction_text"] = masked_note_text
 
                 record, granular_warnings = _apply_granular_up_propagation(record)
                 warnings.extend(granular_warnings)
@@ -737,9 +764,9 @@ class RegistryService:
                 from modules.registry.evidence.verifier import verify_evidence_integrity
                 from modules.registry.postprocess import sanitize_ebus_events
 
-                record, verifier_warnings = verify_evidence_integrity(record, note_text)
+                record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
                 warnings.extend(verifier_warnings)
-                warnings.extend(sanitize_ebus_events(record, note_text))
+                warnings.extend(sanitize_ebus_events(record, masked_note_text))
 
                 return record, warnings, meta
             except NotImplementedError as exc:
@@ -753,7 +780,7 @@ class RegistryService:
             try:
                 predictor = self._get_registry_ml_predictor()
                 parallel_result = self.parallel_orchestrator.process(
-                    note_text,
+                    masked_note_text,
                     ml_predictor=predictor,
                 )
 
@@ -763,9 +790,237 @@ class RegistryService:
 
                 if record is None:
                     # Fallback: create empty record if NER pathway failed
-                    from modules.registry.schema import RegistryRecord
                     record = RegistryRecord()
                     warnings.append("Parallel NER path_a produced no record; using empty record")
+
+                ner_evidence = self.parallel_orchestrator._build_ner_evidence(
+                    path_a_details.get("ner_entities")
+                )
+                if ner_evidence:
+                    record_evidence = getattr(record, "evidence", None)
+                    if not isinstance(record_evidence, dict):
+                        record_evidence = {}
+                    for key, spans in ner_evidence.items():
+                        record_evidence.setdefault(key, []).extend(spans)
+                    record.evidence = record_evidence
+
+                # Deterministic fallback: fill common missed procedure flags so
+                # extraction-first does not silently drop revenue when NER misses.
+                try:
+                    import re
+
+                    from modules.common.spans import Span
+                    from modules.registry.deterministic_extractors import (
+                        BAL_PATTERNS,
+                        BRUSHINGS_PATTERNS,
+                        CHEST_TUBE_PATTERNS,
+                        CHEST_ULTRASOUND_PATTERNS,
+                        CRYOPROBE_PATTERN,
+                        CRYOTHERAPY_PATTERNS,
+                        CRYOBIOPSY_PATTERN,
+                        IPC_PATTERNS,
+                        NAVIGATIONAL_BRONCHOSCOPY_PATTERNS,
+                        PERIPHERAL_ABLATION_PATTERNS,
+                        ENDOBRONCHIAL_BIOPSY_PATTERNS,
+                        RADIAL_EBUS_PATTERNS,
+                        TBNA_CONVENTIONAL_PATTERNS,
+                        THERMAL_ABLATION_PATTERNS,
+                        TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS,
+                        run_deterministic_extractors,
+                    )
+
+                    seed = run_deterministic_extractors(masked_note_text)
+                    seed_procs = seed.get("procedures_performed") if isinstance(seed, dict) else None
+                    seed_pleural = seed.get("pleural_procedures") if isinstance(seed, dict) else None
+                    seed_established_trach = (
+                        seed.get("established_tracheostomy_route") is True if isinstance(seed, dict) else False
+                    )
+                    fiducial_candidate = "fiducial" in (masked_note_text or "").lower()
+
+                    if (
+                        (isinstance(seed_procs, dict) and seed_procs)
+                        or (isinstance(seed_pleural, dict) and seed_pleural)
+                        or seed_established_trach
+                        or fiducial_candidate
+                    ):
+                        record_data = record.model_dump()
+                        record_procs = record_data.get("procedures_performed") or {}
+                        if not isinstance(record_procs, dict):
+                            record_procs = {}
+
+                        record_pleural = record_data.get("pleural_procedures") or {}
+                        if not isinstance(record_pleural, dict):
+                            record_pleural = {}
+
+                        evidence = record_data.get("evidence") or {}
+                        if not isinstance(evidence, dict):
+                            evidence = {}
+
+                        uplifted: list[str] = []
+                        proc_modified = False
+                        pleural_modified = False
+                        other_modified = False
+
+                        def _add_first_span(field: str, patterns: list[str]) -> None:
+                            for pat in patterns:
+                                match = re.search(pat, masked_note_text or "", re.IGNORECASE)
+                                if match:
+                                    evidence.setdefault(field, []).append(
+                                        Span(
+                                            text=match.group(0).strip(),
+                                            start=match.start(),
+                                            end=match.end(),
+                                        )
+                                    )
+                                    return
+
+                        if isinstance(seed_procs, dict):
+                            for proc_name, proc_data in seed_procs.items():
+                                if not isinstance(proc_data, dict):
+                                    continue
+                                if proc_data.get("performed") is not True:
+                                    continue
+
+                                existing = record_procs.get(proc_name) or {}
+                                if not isinstance(existing, dict):
+                                    existing = {}
+                                already_performed = existing.get("performed") is True
+                                proc_changed = False
+
+                                if not already_performed:
+                                    existing["performed"] = True
+                                    uplifted.append(proc_name)
+                                    proc_changed = True
+
+                                for key, value in proc_data.items():
+                                    if key == "performed":
+                                        continue
+                                    if existing.get(key) in (None, "", [], {}):
+                                        existing[key] = value
+                                        proc_changed = True
+
+                                if proc_changed:
+                                    record_procs[proc_name] = existing
+                                    proc_modified = True
+
+                                if not already_performed:
+                                    field_key = f"procedures_performed.{proc_name}.performed"
+                                    if proc_name == "bal":
+                                        _add_first_span(field_key, list(BAL_PATTERNS))
+                                    elif proc_name == "endobronchial_biopsy":
+                                        _add_first_span(
+                                            field_key,
+                                            list(ENDOBRONCHIAL_BIOPSY_PATTERNS),
+                                        )
+                                    elif proc_name == "radial_ebus":
+                                        _add_first_span(field_key, list(RADIAL_EBUS_PATTERNS))
+                                    elif proc_name == "navigational_bronchoscopy":
+                                        _add_first_span(
+                                            field_key,
+                                            list(NAVIGATIONAL_BRONCHOSCOPY_PATTERNS),
+                                        )
+                                    elif proc_name == "tbna_conventional":
+                                        _add_first_span(
+                                            field_key,
+                                            list(TBNA_CONVENTIONAL_PATTERNS),
+                                        )
+                                    elif proc_name == "brushings":
+                                        _add_first_span(field_key, list(BRUSHINGS_PATTERNS))
+                                    elif proc_name == "transbronchial_cryobiopsy":
+                                        _add_first_span(
+                                            field_key,
+                                            list(TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS),
+                                        )
+                                    elif proc_name == "peripheral_ablation":
+                                        _add_first_span(
+                                            field_key,
+                                            list(PERIPHERAL_ABLATION_PATTERNS),
+                                        )
+                                    elif proc_name == "thermal_ablation":
+                                        _add_first_span(
+                                            field_key,
+                                            list(THERMAL_ABLATION_PATTERNS),
+                                        )
+                                    elif proc_name == "cryotherapy":
+                                        cryo_patterns = list(CRYOTHERAPY_PATTERNS)
+                                        if not re.search(
+                                            CRYOBIOPSY_PATTERN,
+                                            masked_note_text or "",
+                                            re.IGNORECASE,
+                                        ):
+                                            cryo_patterns.append(CRYOPROBE_PATTERN)
+                                        _add_first_span(field_key, cryo_patterns)
+                                    elif proc_name == "chest_ultrasound":
+                                        _add_first_span(
+                                            field_key,
+                                            list(CHEST_ULTRASOUND_PATTERNS),
+                                        )
+
+                        if isinstance(seed_pleural, dict):
+                            for proc_name, proc_data in seed_pleural.items():
+                                if not isinstance(proc_data, dict):
+                                    continue
+                                if proc_data.get("performed") is not True:
+                                    continue
+
+                                existing = record_pleural.get(proc_name) or {}
+                                if not isinstance(existing, dict):
+                                    existing = {}
+                                already_performed = existing.get("performed") is True
+                                proc_changed = False
+
+                                if not already_performed:
+                                    existing["performed"] = True
+                                    uplifted.append(f"pleural_procedures.{proc_name}")
+                                    proc_changed = True
+
+                                for key, value in proc_data.items():
+                                    if key == "performed":
+                                        continue
+                                    if existing.get(key) in (None, "", [], {}):
+                                        existing[key] = value
+                                        proc_changed = True
+
+                                if proc_changed:
+                                    record_pleural[proc_name] = existing
+                                    pleural_modified = True
+
+                                if not already_performed:
+                                    field_key = f"pleural_procedures.{proc_name}.performed"
+                                    if proc_name == "chest_tube":
+                                        _add_first_span(field_key, list(CHEST_TUBE_PATTERNS))
+                                    elif proc_name == "ipc":
+                                        _add_first_span(field_key, list(IPC_PATTERNS))
+
+                        if seed_established_trach and not record_data.get("established_tracheostomy_route"):
+                            record_data["established_tracheostomy_route"] = True
+                            other_modified = True
+
+                        if fiducial_candidate:
+                            from modules.registry.processing.navigation_fiducials import (
+                                apply_navigation_fiducials,
+                            )
+
+                            if apply_navigation_fiducials(record_data, masked_note_text):
+                                other_modified = True
+
+                        if uplifted:
+                            warnings.append(
+                                "DETERMINISTIC_UPLIFT: added performed=true for "
+                                + ", ".join(sorted(set(uplifted)))
+                            )
+
+                        if proc_modified:
+                            record_data["procedures_performed"] = record_procs
+                        if pleural_modified:
+                            record_data["pleural_procedures"] = record_pleural
+                        if proc_modified or pleural_modified:
+                            record_data["evidence"] = evidence
+
+                        if proc_modified or pleural_modified or other_modified:
+                            record = RegistryRecord(**record_data)
+                except Exception as exc:
+                    warnings.append(f"Deterministic uplift failed ({exc})")
 
                 # Store parallel pathway metadata
                 meta["parallel_pathway"] = {
@@ -788,7 +1043,7 @@ class RegistryService:
                     "review_reasons": parallel_result.review_reasons,
                     "total_time_ms": parallel_result.total_time_ms,
                 }
-                meta["extraction_text"] = note_text
+                meta["extraction_text"] = masked_note_text
 
                 # Apply standard postprocessing
                 record, granular_warnings = _apply_granular_up_propagation(record)
@@ -797,9 +1052,9 @@ class RegistryService:
                 from modules.registry.evidence.verifier import verify_evidence_integrity
                 from modules.registry.postprocess import sanitize_ebus_events
 
-                record, verifier_warnings = verify_evidence_integrity(record, note_text)
+                record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
                 warnings.extend(verifier_warnings)
-                warnings.extend(sanitize_ebus_events(record, note_text))
+                warnings.extend(sanitize_ebus_events(record, masked_note_text))
 
                 # Add review warnings if parallel pathway flagged discrepancies
                 if parallel_result.needs_review:
@@ -832,9 +1087,9 @@ class RegistryService:
         from modules.registry.evidence.verifier import verify_evidence_integrity
         from modules.registry.postprocess import sanitize_ebus_events
 
-        record, verifier_warnings = verify_evidence_integrity(record, note_text)
+        record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
         warnings.extend(verifier_warnings)
-        warnings.extend(sanitize_ebus_events(record, note_text))
+        warnings.extend(sanitize_ebus_events(record, masked_note_text))
 
         return record, warnings, meta
 
@@ -851,22 +1106,41 @@ class RegistryService:
         from modules.registry.audit.compare import build_audit_compare_report
         from modules.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
         from modules.registry.self_correction.judge import RegistryCorrectionJudge
-        from modules.registry.self_correction.keyword_guard import keyword_guard_passes, scan_for_omissions
+        from modules.registry.self_correction.keyword_guard import (
+            keyword_guard_check,
+            keyword_guard_passes,
+            scan_for_omissions,
+        )
         from modules.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
-        from modules.registry.self_correction.validation import ALLOWED_PATHS, validate_proposal
+        from modules.registry.self_correction.validation import (
+            ALLOWED_PATHS,
+            ALLOWED_PATH_PREFIXES,
+            validate_proposal,
+        )
 
         # Guardrail: auditing must always use the original raw note text. Do not
         # overwrite this variable with focused/summarized text.
         raw_text_for_audit = raw_note_text
 
+        masked_note_text = mask_offset_preserving(raw_note_text)
+
         record, extraction_warnings, meta = self.extract_record(raw_note_text)
         extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
+        if isinstance(meta.get("masked_note_text"), str):
+            masked_note_text = meta["masked_note_text"]
 
         # Omission detection: flag "silent failures" where high-value terms are present
         # in the raw text but the corresponding registry fields are missing/false.
-        omission_warnings = scan_for_omissions(raw_note_text, record)
+        omission_warnings = scan_for_omissions(masked_note_text, record)
         if omission_warnings:
             extraction_warnings.extend(omission_warnings)
+
+        guardrail_outcome = self.clinical_guardrails.apply_record_guardrails(
+            masked_note_text, record
+        )
+        record = guardrail_outcome.record or record
+        if guardrail_outcome.warnings:
+            extraction_warnings.extend(guardrail_outcome.warnings)
 
         derivation = derive_registry_to_cpt(record)
         derived_codes = [c.code for c in derivation.codes]
@@ -878,7 +1152,17 @@ class RegistryService:
         audit_warnings: list[str] = []
         audit_report: AuditCompareReport | None = None
         coder_difficulty = "unknown"
-        needs_manual_review = bool(omission_warnings)
+        needs_manual_review = bool(omission_warnings) or guardrail_outcome.needs_review
+
+        code_guardrail = self.clinical_guardrails.apply_code_guardrails(
+            masked_note_text, derived_codes
+        )
+        if code_guardrail.warnings:
+            base_warnings.extend(code_guardrail.warnings)
+        if code_guardrail.needs_review:
+            needs_manual_review = True
+
+        baseline_needs_manual_review = needs_manual_review
 
         if auditor_source == "raw_ml":
             from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
@@ -896,7 +1180,19 @@ class RegistryService:
                 ml_case=ml_case,
                 audit_preds=audit_preds,
             )
-            needs_manual_review = needs_manual_review or bool(audit_report.high_conf_omissions)
+
+            def _audit_requires_review(report: AuditCompareReport, evidence: str) -> bool:
+                if not report.high_conf_omissions:
+                    return False
+                for pred in report.high_conf_omissions:
+                    passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=evidence)
+                    if passes or reason == "no keywords configured":
+                        return True
+                return False
+
+            needs_manual_review = baseline_needs_manual_review or _audit_requires_review(
+                audit_report, masked_note_text
+            )
 
             def _env_flag(name: str, default: str = "0") -> bool:
                 return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
@@ -916,12 +1212,12 @@ class RegistryService:
             self_correct_enabled = _env_flag("REGISTRY_SELF_CORRECT_ENABLED", "0")
             if self_correct_enabled and audit_report.high_conf_omissions:
                 max_attempts = max(0, _env_int("REGISTRY_SELF_CORRECT_MAX_ATTEMPTS", 1))
-                omission_set = {p.cpt for p in audit_report.high_conf_omissions}
-
                 bucket_by_cpt = {p.cpt: p.bucket for p in audit_report.ml_audit_codes}
-                trigger_preds = [
-                    p for p in auditor.self_correct_triggers(ml_case, cfg) if p.cpt in omission_set
-                ]
+                trigger_preds = sorted(
+                    audit_report.high_conf_omissions,
+                    key=lambda p: float(p.prob),
+                    reverse=True,
+                )
 
                 judge = RegistryCorrectionJudge()
 
@@ -929,21 +1225,24 @@ class RegistryService:
                     raw = os.getenv("REGISTRY_SELF_CORRECT_ALLOWLIST", "").strip()
                     if raw:
                         return sorted({p.strip() for p in raw.split(",") if p.strip()})
-                    return sorted(ALLOWED_PATHS)
+                    defaults = set(ALLOWED_PATHS)
+                    defaults.update(f"{prefix}/*" for prefix in ALLOWED_PATH_PREFIXES)
+                    return sorted(defaults)
 
                 corrections_applied = 0
                 evidence_text = (
                     extraction_text
                     if extraction_text is not None and extraction_text.strip()
-                    else raw_note_text
+                    else masked_note_text
                 )
                 for pred in trigger_preds:
                     if corrections_applied >= max_attempts:
                         break
 
-                    if not keyword_guard_passes(cpt=pred.cpt, evidence_text=evidence_text):
+                    passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=evidence_text)
+                    if not passes:
                         self_correct_warnings.append(
-                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: keyword guard failed"
+                            f"SELF_CORRECT_SKIPPED: {pred.cpt}: keyword guard failed ({reason})"
                         )
                         continue
 
@@ -970,7 +1269,7 @@ class RegistryService:
 
                     is_valid, reason = validate_proposal(
                         proposal,
-                        raw_note_text,
+                        masked_note_text,
                         extraction_text=extraction_text,
                     )
                     if not is_valid:
@@ -1032,7 +1331,9 @@ class RegistryService:
                         ml_case=ml_case,
                         audit_preds=audit_preds,
                     )
-                    needs_manual_review = bool(audit_report.high_conf_omissions)
+                    needs_manual_review = baseline_needs_manual_review or _audit_requires_review(
+                        audit_report, masked_note_text
+                    )
         elif auditor_source == "disabled":
             from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
 
@@ -1069,12 +1370,15 @@ class RegistryService:
         derivation_warnings = list(derivation.warnings)
         warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings)
         code_rationales = {c.code: c.rationale for c in derivation.codes}
+        mapped_fields = (
+            aggregate_registry_fields(derived_codes, version="v3") if derived_codes else {}
+        )
         return RegistryExtractionResult(
             record=record,
             cpt_codes=derived_codes,
             coder_difficulty=coder_difficulty,
             coder_source="extraction_first",
-            mapped_fields={},
+            mapped_fields=mapped_fields,
             code_rationales=code_rationales,
             derivation_warnings=derivation_warnings,
             warnings=warnings,
@@ -1084,6 +1388,43 @@ class RegistryService:
             audit_report=audit_report,
             self_correction=self_correction_meta,
         )
+
+    def _apply_guardrails_to_result(
+        self,
+        note_text: str,
+        result: RegistryExtractionResult,
+    ) -> RegistryExtractionResult:
+        record_outcome = self.clinical_guardrails.apply_record_guardrails(
+            note_text, result.record
+        )
+        record = record_outcome.record or result.record
+        warnings = list(result.warnings) + list(record_outcome.warnings)
+        needs_manual_review = result.needs_manual_review or record_outcome.needs_review
+
+        if record_outcome.changed:
+            from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
+
+            derivation = derive_registry_to_cpt(record)
+            result.cpt_codes = [c.code for c in derivation.codes]
+            result.derivation_warnings = list(derivation.warnings)
+            result.code_rationales = {c.code: c.rationale for c in derivation.codes}
+            result.mapped_fields = (
+                aggregate_registry_fields(result.cpt_codes, version="v3")
+                if result.cpt_codes
+                else {}
+            )
+
+        result.record = record
+        result.warnings = warnings
+        result.needs_manual_review = needs_manual_review
+
+        code_outcome = self.clinical_guardrails.apply_code_guardrails(note_text, result.cpt_codes)
+        if code_outcome.warnings:
+            result.warnings.extend(code_outcome.warnings)
+        if code_outcome.needs_review:
+            result.needs_manual_review = True
+
+        return result
 
     def _merge_cpt_fields_into_record(
         self,

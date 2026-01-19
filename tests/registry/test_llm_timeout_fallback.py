@@ -13,6 +13,7 @@ from modules.registry.engine import RegistryEngine
 
 def test_registry_llm_timeout_falls_back_to_engine(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "current")
+    monkeypatch.setenv("PROCSUITE_ALLOW_LEGACY_PIPELINES", "1")
 
     note_text = Path(
         "tests/fixtures/notes/kitchen_sink_ion_nav_ebus_fiducial_dilation.txt"
@@ -38,4 +39,3 @@ def test_registry_llm_timeout_falls_back_to_engine(monkeypatch: pytest.MonkeyPat
 
     assert "REGISTRY_LLM_TIMEOUT_FALLBACK_TO_ENGINE" in result.warnings
     assert "NAVIGATION" in (result.record.procedure_families or [])
-

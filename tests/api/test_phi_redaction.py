@@ -4,12 +4,11 @@ Tests the apply_phi_redaction function which provides unified PHI
 redaction at the API route handler level.
 """
 
-import pytest
 from dataclasses import dataclass
 from typing import List
-from unittest.mock import Mock, MagicMock
+from unittest.mock import Mock
 
-from modules.api.phi_redaction import apply_phi_redaction, RedactionResult
+from modules.api.phi_redaction import RedactionResult, apply_phi_redaction
 
 
 @dataclass

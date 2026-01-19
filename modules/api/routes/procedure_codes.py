@@ -17,28 +17,41 @@ and persists reasoning for audit.
 
 from __future__ import annotations
 
-from datetime import datetime
 import uuid
+from datetime import datetime
 from typing import Any, Literal
 
-from fastapi import APIRouter, HTTPException, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
+from modules.api.dependencies import get_coding_service, get_procedure_store, get_registry_service
+from modules.api.guards import (
+    enforce_legacy_endpoints_allowed,
+    enforce_request_mode_override_allowed,
+)
+from modules.api.phi_dependencies import get_phi_session
+from modules.coder.application.coding_service import CodingService
+from modules.coder.phi_gating import is_phi_review_required, load_procedure_for_coding
+from modules.common.exceptions import (
+    CodingError,
+    KnowledgeBaseError,
+    PersistenceError,
+    RegistryError,
+)
+from modules.domain.procedure_store.repository import ProcedureStore
+from modules.registry.application.registry_service import RegistryService
+from observability.coding_metrics import CodingMetrics
 from observability.logging_config import get_logger
 from observability.timing import timed
-from proc_schemas.coding import CodeSuggestion, FinalCode, ReviewAction, CodingResult
+from proc_schemas.coding import CodeSuggestion, FinalCode, ReviewAction
 from proc_schemas.reasoning import ReasoningFields
-from modules.coder.application.coding_service import CodingService
-from modules.api.dependencies import get_coding_service, get_registry_service, get_procedure_store
-from modules.api.phi_dependencies import get_phi_session
-from modules.coder.phi_gating import load_procedure_for_coding, is_phi_review_required
-from modules.common.exceptions import CodingError, KnowledgeBaseError, RegistryError, PersistenceError
-from modules.registry.application.registry_service import RegistryService
-from modules.domain.procedure_store.repository import ProcedureStore
-from observability.coding_metrics import CodingMetrics
 
 router = APIRouter()
 logger = get_logger("procedure_codes_api")
+_coding_service_dep = Depends(get_coding_service)
+_registry_service_dep = Depends(get_registry_service)
+_procedure_store_dep = Depends(get_procedure_store)
+_phi_session_dep = Depends(get_phi_session)
 
 
 # ============================================================================
@@ -50,10 +63,16 @@ class SuggestCodesRequest(BaseModel):
     """Request body for triggering code suggestions."""
 
     report_text: str = Field(..., description="The procedure note text to analyze")
-    use_llm: bool = Field(True, description="Whether to use LLM advisor in addition to rules")
+    use_llm: bool = Field(
+        True,
+        description="Whether to use LLM advisor in addition to rules",
+    )
     procedure_type: str = Field(
         "unknown",
-        description="Procedure type classification (e.g., bronch_diagnostic, bronch_ebus, pleural, blvr)",
+        description=(
+            "Procedure type classification (e.g., bronch_diagnostic, bronch_ebus, "
+            "pleural, blvr)"
+        ),
     )
 
 
@@ -166,9 +185,9 @@ class RegistryPreviewResponse(BaseModel):
 def suggest_codes(
     proc_id: str,
     request: SuggestCodesRequest,
-    coding_service: CodingService = Depends(get_coding_service),
-    store: ProcedureStore = Depends(get_procedure_store),
-    phi_db=Depends(get_phi_session),
+    coding_service: CodingService = _coding_service_dep,
+    store: ProcedureStore = _procedure_store_dep,
+    phi_db=_phi_session_dep,
 ) -> SuggestCodesResponse:
     """Trigger rule+LLM pipeline, persist CodeSuggestion[].
 
@@ -194,23 +213,33 @@ def suggest_codes(
     proc = None
     if proc_uuid is not None:
         try:
-            proc = load_procedure_for_coding(phi_db, proc_uuid, require_review=require_review)
+            proc = load_procedure_for_coding(
+                phi_db,
+                proc_uuid,
+                require_review=require_review,
+            )
         except PermissionError as exc:
             logger.info(
                 "coding_phi_gated",
-                extra={"procedure_id": proc_id, "require_review": require_review, "reason": "not_reviewed"},
+                extra={
+                    "procedure_id": proc_id,
+                    "require_review": require_review,
+                    "reason": "not_reviewed",
+                },
             )
-            raise HTTPException(status_code=403, detail=str(exc))
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
         except ValueError as exc:
             logger.info(
                 "coding_phi_missing",
                 extra={"procedure_id": proc_id, "require_review": require_review},
             )
-            raise HTTPException(status_code=404, detail=str(exc))
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
     elif require_review:
         raise HTTPException(
             status_code=400,
-            detail="Invalid procedure_id format (PHI review requires UUID procedure IDs).",
+            detail=(
+                "Invalid procedure_id format (PHI review requires UUID procedure IDs)."
+            ),
         )
 
     if proc is not None:
@@ -289,25 +318,28 @@ def suggest_codes(
         raise HTTPException(
             status_code=500,
             detail=f"Knowledge base error: {str(e)}",
-        )
+        ) from e
     except CodingError as e:
         logger.error(f"Coding error: {e}", extra={"procedure_id": proc_id})
         raise HTTPException(
             status_code=500,
             detail=f"Coding pipeline error: {str(e)}",
-        )
+        ) from e
     except PersistenceError as e:
         logger.error(f"Persistence error: {e}", extra={"procedure_id": proc_id})
         raise HTTPException(
             status_code=500,
             detail=f"Storage error: {str(e)}",
-        )
+        ) from e
     except Exception as e:
-        logger.exception(f"Unexpected error in suggest_codes: {e}", extra={"procedure_id": proc_id})
+        logger.exception(
+            f"Unexpected error in suggest_codes: {e}",
+            extra={"procedure_id": proc_id},
+        )
         raise HTTPException(
             status_code=500,
             detail=f"Unexpected error: {str(e)}",
-        )
+        ) from e
 
 
 @router.get(
@@ -318,7 +350,7 @@ def suggest_codes(
 )
 def get_suggestions(
     proc_id: str,
-    store: ProcedureStore = Depends(get_procedure_store),
+    store: ProcedureStore = _procedure_store_dep,
 ) -> list[CodeSuggestion]:
     """Retrieve pending suggestions with reasoning/evidence.
 
@@ -332,7 +364,10 @@ def get_suggestions(
         if not store.exists(proc_id):
             raise HTTPException(
                 status_code=404,
-                detail=f"No suggestions found for procedure '{proc_id}'. Run POST /codes/suggest first.",
+                detail=(
+                    f"No suggestions found for procedure '{proc_id}'. "
+                    "Run POST /codes/suggest first."
+                ),
             )
 
     # Filter out suggestions that have already been reviewed
@@ -351,7 +386,7 @@ def get_suggestions(
 def review_suggestion(
     proc_id: str,
     request: ReviewActionRequest,
-    store: ProcedureStore = Depends(get_procedure_store),
+    store: ProcedureStore = _procedure_store_dep,
 ) -> ReviewActionResponse:
     """Submit ReviewAction for a suggestion.
 
@@ -376,7 +411,10 @@ def review_suggestion(
     if request.action not in ("accept", "reject", "modify"):
         raise HTTPException(
             status_code=400,
-            detail=f"Invalid action '{request.action}'. Must be 'accept', 'reject', or 'modify'.",
+            detail=(
+                f"Invalid action '{request.action}'. Must be 'accept', 'reject', or "
+                "'modify'."
+            ),
         )
 
     # Find the suggestion
@@ -389,7 +427,9 @@ def review_suggestion(
     if not suggestion:
         raise HTTPException(
             status_code=404,
-            detail=f"Suggestion '{request.suggestion_id}' not found for procedure '{proc_id}'.",
+            detail=(
+                f"Suggestion '{request.suggestion_id}' not found for procedure '{proc_id}'."
+            ),
         )
 
     # Create the review action
@@ -497,7 +537,7 @@ def review_suggestion(
 def add_manual_code(
     proc_id: str,
     request: ManualCodeRequest,
-    store: ProcedureStore = Depends(get_procedure_store),
+    store: ProcedureStore = _procedure_store_dep,
 ) -> ManualCodeResponse:
     """Add a manual code (bypasses AI).
 
@@ -571,7 +611,7 @@ def add_manual_code(
 )
 def get_final_codes(
     proc_id: str,
-    store: ProcedureStore = Depends(get_procedure_store),
+    store: ProcedureStore = _procedure_store_dep,
 ) -> list[FinalCode]:
     """Retrieve approved FinalCode[] for billing/registry.
 
@@ -594,7 +634,7 @@ def get_final_codes(
 )
 def get_review_history(
     proc_id: str,
-    store: ProcedureStore = Depends(get_procedure_store),
+    store: ProcedureStore = _procedure_store_dep,
 ) -> list[ReviewAction]:
     """Retrieve all review actions for audit trail.
 
@@ -613,7 +653,7 @@ def get_review_history(
 )
 def get_coding_metrics(
     proc_id: str,
-    store: ProcedureStore = Depends(get_procedure_store),
+    store: ProcedureStore = _procedure_store_dep,
 ) -> dict[str, Any]:
     """Get metrics for the coding workflow.
 
@@ -676,8 +716,8 @@ def get_coding_metrics(
 def export_to_registry(
     proc_id: str,
     request: RegistryExportRequest,
-    registry_service: RegistryService = Depends(get_registry_service),
-    store: ProcedureStore = Depends(get_procedure_store),
+    registry_service: RegistryService = _registry_service_dep,
+    store: ProcedureStore = _procedure_store_dep,
 ) -> RegistryExportResponse:
     """Export procedure data to IP Registry.
 
@@ -772,19 +812,22 @@ def export_to_registry(
         raise HTTPException(
             status_code=500,
             detail=f"Registry export error: {str(e)}",
-        )
+        ) from e
     except PersistenceError as e:
         logger.error(f"Persistence error: {e}", extra={"procedure_id": proc_id})
         raise HTTPException(
             status_code=500,
             detail=f"Storage error: {str(e)}",
-        )
+        ) from e
     except Exception as e:
-        logger.exception(f"Unexpected error in registry export: {e}", extra={"procedure_id": proc_id})
+        logger.exception(
+            f"Unexpected error in registry export: {e}",
+            extra={"procedure_id": proc_id},
+        )
         raise HTTPException(
             status_code=500,
             detail=f"Unexpected error: {str(e)}",
-        )
+        ) from e
 
 
 @router.get(
@@ -796,8 +839,8 @@ def export_to_registry(
 def preview_registry_entry(
     proc_id: str,
     registry_version: str = Query("v2", description="Schema version (v2 or v3)"),
-    registry_service: RegistryService = Depends(get_registry_service),
-    store: ProcedureStore = Depends(get_procedure_store),
+    registry_service: RegistryService = _registry_service_dep,
+    store: ProcedureStore = _procedure_store_dep,
 ) -> RegistryPreviewResponse:
     """Preview registry entry before export.
 
@@ -870,13 +913,16 @@ def preview_registry_entry(
         raise HTTPException(
             status_code=500,
             detail=f"Registry preview error: {str(e)}",
-        )
+        ) from e
     except Exception as e:
-        logger.exception(f"Unexpected error in registry preview: {e}", extra={"procedure_id": proc_id})
+        logger.exception(
+            f"Unexpected error in registry preview: {e}",
+            extra={"procedure_id": proc_id},
+        )
         raise HTTPException(
             status_code=500,
             detail=f"Unexpected error: {str(e)}",
-        )
+        ) from e
 
 
 @router.get(
@@ -887,7 +933,7 @@ def preview_registry_entry(
 )
 def get_registry_export(
     proc_id: str,
-    store: ProcedureStore = Depends(get_procedure_store),
+    store: ProcedureStore = _procedure_store_dep,
 ) -> RegistryExportResponse:
     """Retrieve a previously exported registry entry.
 
@@ -937,7 +983,10 @@ class UnifiedExtractRequest(BaseModel):
     )
     mode: str | None = Field(
         default=None,
-        description="Optional execution mode. Use 'engine_only' to disable LLM registry extraction.",
+        description=(
+            "Optional execution mode. Use 'engine_only' to disable LLM registry "
+            "extraction."
+        ),
     )
 
 
@@ -979,10 +1028,10 @@ class UnifiedExtractResponse(BaseModel):
 def run_unified_extraction(
     proc_id: str,
     request: UnifiedExtractRequest,
-    registry_service: RegistryService = Depends(get_registry_service),
-    coding_service: CodingService = Depends(get_coding_service),
-    store: ProcedureStore = Depends(get_procedure_store),
-    phi_db=Depends(get_phi_session),
+    registry_service: RegistryService = _registry_service_dep,
+    coding_service: CodingService = _coding_service_dep,
+    store: ProcedureStore = _procedure_store_dep,
+    phi_db=_phi_session_dep,
 ) -> UnifiedExtractResponse:
     """Run unified extraction-first pipeline on a PHI-reviewed procedure.
 
@@ -1009,16 +1058,22 @@ def run_unified_extraction(
         HTTPException 403: If procedure has not been PHI-reviewed
         HTTPException 404: If procedure not found
     """
-    from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+    enforce_legacy_endpoints_allowed()
+    enforce_request_mode_override_allowed((request.mode or "").strip().lower())
+
     from config.settings import CoderSettings
+    from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
 
     # Always require PHI review for this endpoint
     require_review = True
 
     try:
         proc_uuid = uuid.UUID(proc_id)
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid procedure_id format")
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid procedure_id format",
+        ) from exc
 
     # Load the PHI-reviewed procedure
     try:
@@ -1028,13 +1083,13 @@ def run_unified_extraction(
             "extraction_phi_gated",
             extra={"procedure_id": proc_id, "reason": "not_reviewed"},
         )
-        raise HTTPException(status_code=403, detail=str(exc))
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
     except ValueError as exc:
         logger.info(
             "extraction_phi_missing",
             extra={"procedure_id": proc_id},
         )
-        raise HTTPException(status_code=404, detail=str(exc))
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     if proc is None:
         raise HTTPException(status_code=404, detail="Procedure not found or missing scrubbed text")
@@ -1056,17 +1111,12 @@ def run_unified_extraction(
             # Step 1: Registry extraction
             mode_value = (request.mode or "").strip().lower()
             if mode_value in {"engine_only", "no_llm", "deterministic_only"}:
-                from modules.registry.engine import RegistryEngine
-                from modules.registry.extractors.noop import NoOpLLMExtractor
+                mode_value = "parallel_ner"
 
-                registry_service = RegistryService(
-                    schema_registry=registry_service.schema_registry,
-                    default_version=registry_service.default_version,
-                    hybrid_orchestrator=registry_service.hybrid_orchestrator,
-                    registry_engine=RegistryEngine(llm_extractor=NoOpLLMExtractor()),
-                )
-
-            extraction_result = registry_service.extract_fields(scrubbed_text)
+            if mode_value:
+                extraction_result = registry_service.extract_fields(scrubbed_text, mode_value)
+            else:
+                extraction_result = registry_service.extract_fields(scrubbed_text)
 
             # Step 2: Derive CPT codes from registry
             record = extraction_result.record
@@ -1165,11 +1215,14 @@ def run_unified_extraction(
         )
 
     except Exception as e:
-        logger.exception(f"Unified extraction error: {e}", extra={"procedure_id": proc_id})
+        logger.exception(
+            f"Unified extraction error: {e}",
+            extra={"procedure_id": proc_id},
+        )
         raise HTTPException(
             status_code=500,
             detail=f"Extraction error: {str(e)}",
-        )
+        ) from e
 
 
 # ============================================================================

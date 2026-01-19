@@ -2052,6 +2052,36 @@
               ]
             }
           }
+        },
+        "chest_ultrasound": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Chest ultrasound (includes mediastinum), real time with image documentation",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "image_documentation": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "hemithorax": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Right",
+                "Left",
+                "Bilateral",
+                null
+              ]
+            }
+          }
         }
       }
     },

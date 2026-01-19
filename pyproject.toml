@@ -100,8 +100,12 @@ extend-ignore = ["UP006", "UP035"]
 strict = true
 plugins = []
 exclude = [
+    "archive/",
     "docs/",
     "_archive/",
+    "data/",
+    "scripts/",
+    "tests/",
     "procedure_suite_ml_implimentation/",
 ]
 explicit_package_bases = true

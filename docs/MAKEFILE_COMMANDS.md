@@ -72,6 +72,9 @@ make typecheck
 ```bash
 make test
 ```
+- To create a text file with make test output run
+```bash
+make test 2>&1 | tee test_output_$(date +%Y%m%d_%H%M%S).txt
 
 ---
 

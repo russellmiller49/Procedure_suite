@@ -1718,16 +1718,17 @@ async function runUnifiedViaPHI(text, options) {
     }
 
     // Fallback to original single-step behavior (auto-scrub + auto-approve)
-    const { procedureId } = await submitAndApprovePHI(text);
+    const { scrubbedText } = await submitAndApprovePHI(text);
 
-    // Run PHI-gated extraction
-    const extractResp = await fetch(`/api/v1/procedures/${procedureId}/extract`, {
+    // Run unified extraction on scrubbed text
+    const extractResp = await fetch(`/api/v1/process`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+            note: scrubbedText,
+            already_scrubbed: true,
             include_financials: options.include_financials,
             explain: options.explain,
-            mode: options.mode || null
         })
     });
     if (!extractResp.ok) {
@@ -1783,13 +1784,14 @@ async function runUnifiedWithConfirmedEntities(options) {
     }
 
     // Step 3: Run extraction (no Presidio at this point - text already scrubbed)
-    const extractResp = await fetch(`/api/v1/procedures/${procedure_id}/extract`, {
+    const extractResp = await fetch(`/api/v1/process`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+            note: scrubbed_text,
+            already_scrubbed: true,
             include_financials: options.include_financials,
             explain: options.explain,
-            mode: options.mode || null
         })
     });
     if (!extractResp.ok) {

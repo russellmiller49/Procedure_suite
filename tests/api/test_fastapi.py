@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from httpx import AsyncClient
 import pytest
+from httpx import AsyncClient
 
 from modules.api.fastapi_app import _shape_registry_payload
 from modules.common.spans import Span
@@ -44,12 +44,15 @@ async def test_coder_run_fixture_response(api_client: AsyncClient) -> None:
     codes = {entry["cpt"]: entry for entry in payload["codes"]}
     # EnhancedCPTCoder uses IP knowledge base which has navigation as +31627 (add-on)
     # and radial EBUS as +31654 (add-on). Accept either format for compatibility.
-    expected_codes = {"31627", "+31627", "+31654", "31629", "31628", "31624"}
     found_codes = set(codes.keys())
     # Check that we have navigation (either 31627 or +31627)
-    assert "31627" in found_codes or "+31627" in found_codes, f"Expected navigation code (31627 or +31627), got {found_codes}"
+    assert "31627" in found_codes or "+31627" in found_codes, (
+        f"Expected navigation code (31627 or +31627), got {found_codes}"
+    )
     # Check that we have radial EBUS (+31654)
-    assert "+31654" in found_codes, f"Expected radial EBUS code (+31654), got {found_codes}"
+    assert "+31654" in found_codes, (
+        f"Expected radial EBUS code (+31654), got {found_codes}"
+    )
     # Check other required codes
     assert "31629" in found_codes, "Expected TBNA code (31629)"
     assert "31628" in found_codes, "Expected TBLB code (31628)"
@@ -66,7 +69,10 @@ async def test_coder_run_fixture_response(api_client: AsyncClient) -> None:
 
 async def test_registry_run_normalizes_stations(api_client: AsyncClient) -> None:
     note = _read_fixture("ebus_staging_4R_7_11R.txt")
-    response = await api_client.post("/v1/registry/run", json={"note": note, "explain": True})
+    response = await api_client.post(
+        "/v1/registry/run",
+        json={"note": note, "explain": True},
+    )
     assert response.status_code == 200
     payload = response.json()
     assert payload["linear_ebus_stations"] == ["4R", "7", "11R"]
@@ -126,7 +132,10 @@ async def test_shape_registry_payload_prunes_none_and_enriches():
         billing={"cpt_codes": [{"code": "31645", "description": None}]},
     )
 
-    payload = _shape_registry_payload(record, {"clinical_context": [Span(text="ASA 3", start=0, end=5)]})
+    payload = _shape_registry_payload(
+        record,
+        {"clinical_context": [Span(text="ASA 3", start=0, end=5)]},
+    )
 
     def _contains_none(obj):
         if obj is None:
@@ -141,4 +150,4 @@ async def test_shape_registry_payload_prunes_none_and_enriches():
     assert payload["billing"]["cpt_codes_simple"] == ["31645"]
     tbna = payload["procedures_performed"]["tbna_conventional"]
     assert tbna["summary"].startswith("Performed")
-    assert payload["evidence"]["clinical_context"][0]["start"] == 0
+    assert payload["evidence"]["clinical_context"][0]["span"] == [0, 5]

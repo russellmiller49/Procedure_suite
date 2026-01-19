@@ -19,6 +19,14 @@ from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
 )
 from modules.registry.deterministic_extractors import (
     extract_bal,
+    extract_cryotherapy,
+    extract_navigational_bronchoscopy,
+    extract_tbna_conventional,
+    extract_brushings,
+    extract_transbronchial_cryobiopsy,
+    extract_peripheral_ablation,
+    extract_thermal_ablation,
+    extract_radial_ebus,
     extract_therapeutic_aspiration,
 )
 
@@ -108,6 +116,12 @@ class TestRadialEBUS:
         # 31654 should be excluded because no primary bronchoscopy
         assert "31654" not in codes, f"31654 requires primary bronchoscopy"
 
+    def test_radial_ebus_with_therapeutic_aspiration_keeps_addon(self):
+        record = make_record(radial_ebus=True, therapeutic_aspiration=True)
+        codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+        assert "31645" in codes
+        assert "31654" in codes
+
 
 class TestNavigation:
     """Tests for Navigation → 31627."""
@@ -127,6 +141,19 @@ class TestNavigation:
 
         # 31627 is an add-on, requires primary
         assert "31627" not in codes
+
+    def test_navigation_with_therapeutic_aspiration_keeps_addon(self):
+        record = make_record(navigational_bronchoscopy=True, therapeutic_aspiration=True)
+        codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+        assert "31645" in codes
+        assert "31627" in codes
+
+
+class TestEndobronchialBiopsy:
+    def test_endobronchial_biopsy_derives_31625(self):
+        record = make_record(endobronchial_biopsy=True)
+        codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+        assert "31625" in codes
 
 
 class TestFiducialPlacement:
@@ -201,6 +228,11 @@ class TestBALExtractor:
 
         assert result == {"bal": {"performed": True}}
 
+    def test_extract_bal_bronchial_alveolar_variant(self):
+        text = "Bronchial alveolar lavage was performed at the lingula."
+        result = extract_bal(text)
+        assert result == {"bal": {"performed": True}}
+
     def test_extract_bal_abbreviation(self):
         """Should detect BAL abbreviation."""
         text = "BAL was obtained from the RML."
@@ -255,6 +287,64 @@ class TestTherapeuticAspirationExtractor:
         result = extract_therapeutic_aspiration(text)
 
         assert result == {}
+
+
+class TestRadialEBUSExtractor:
+    def test_extract_radial_ebus_phrase(self):
+        text = "Radial EBUS was utilized to identify vasculature and airways."
+        result = extract_radial_ebus(text)
+        assert result == {"radial_ebus": {"performed": True}}
+
+
+class TestCryotherapyExtractor:
+    def test_extract_cryotherapy_phrase(self):
+        text = "Cryotherapy was applied for further debulking."
+        result = extract_cryotherapy(text)
+        assert result == {"cryotherapy": {"performed": True}}
+
+
+class TestNavigationExtractor:
+    def test_extract_navigation_platform(self):
+        text = "Ion robotic bronchoscopy was performed for a peripheral lesion."
+        result = extract_navigational_bronchoscopy(text)
+        assert result == {"navigational_bronchoscopy": {"performed": True}}
+
+
+class TestTBNAExtractor:
+    def test_extract_tbna(self):
+        text = "TBNA was performed with 22G needle."
+        result = extract_tbna_conventional(text)
+        assert result == {"tbna_conventional": {"performed": True}}
+
+
+class TestBrushingsExtractor:
+    def test_extract_brushings(self):
+        text = "Brushings x2 were obtained for cytology."
+        result = extract_brushings(text)
+        assert result == {"brushings": {"performed": True}}
+
+
+class TestCryobiopsyExtractor:
+    def test_extract_transbronchial_cryobiopsy(self):
+        text = "Transbronchial cryobiopsy performed using a 1.9mm probe."
+        result = extract_transbronchial_cryobiopsy(text)
+        assert result == {"transbronchial_cryobiopsy": {"performed": True}}
+
+
+class TestPeripheralAblationExtractor:
+    def test_extract_peripheral_ablation_mwa(self):
+        text = "Microwave ablation performed for a peripheral lung nodule."
+        result = extract_peripheral_ablation(text)
+        assert result.get("peripheral_ablation", {}).get("performed") is True
+        assert result.get("peripheral_ablation", {}).get("modality") == "Microwave"
+
+
+class TestThermalAblationExtractor:
+    def test_extract_thermal_ablation_apc(self):
+        text = "APC was applied to control bleeding."
+        result = extract_thermal_ablation(text)
+        assert result.get("thermal_ablation", {}).get("performed") is True
+        assert result.get("thermal_ablation", {}).get("modality") == "APC"
 
 
 class TestEBUSStationCounts:

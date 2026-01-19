@@ -6,11 +6,10 @@ from types import SimpleNamespace
 import pytest
 from fastapi.testclient import TestClient
 
-from modules.api.fastapi_app import app
 from modules.api.dependencies import get_coding_service, get_registry_service
+from modules.api.fastapi_app import app
 from modules.api.phi_dependencies import get_phi_scrubber
 from modules.api.readiness import require_ready
-
 
 os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 
@@ -47,11 +46,17 @@ def test_phi_redactor_assets_have_coop_coep_headers(client: TestClient) -> None:
     ):
         resp = client.get(path)
         assert resp.status_code == 200, path
-        assert resp.headers.get("Cross-Origin-Opener-Policy") == "same-origin", f"Missing COOP header for {path}"
-        assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp", f"Missing COEP header for {path}"
+        assert resp.headers.get("Cross-Origin-Opener-Policy") == "same-origin", (
+            f"Missing COOP header for {path}"
+        )
+        assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp", (
+            f"Missing COEP header for {path}"
+        )
 
 
-def test_unified_process_already_scrubbed_bypasses_server_scrubber(monkeypatch, client: TestClient) -> None:
+def test_unified_process_already_scrubbed_bypasses_server_scrubber(
+    monkeypatch, client: TestClient
+) -> None:
     class StubRegistryService:
         def __init__(self) -> None:
             self.seen_note: str | None = None

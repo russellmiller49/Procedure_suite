@@ -1,0 +1,257 @@
+Repo review notes (as of 2026-01-18)
+
+- data/models/registry_runtime has ONNX artifacts but no config.json or PyTorch weights; TorchRegistryPredictor will be unavailable unless the bundle is fixed or MODEL_BACKEND=onnx.
+- RegistryEngine already runs run_deterministic_extractors and several heuristics; parallel_ner deterministic uplift includes common misses (BAL/EBBx/radial EBUS/cryotherapy/chest ultrasound/chest tube, plus navigation backstops and IPC/tunneled pleural catheter) and attaches evidence spans.
+- scan_for_omissions and keyword guard operate on masked note text (offset-preserving) to avoid CPT/billing header false positives.
+- self-correction is allowlist-based and keyword-gated; skipped attempts surface as `SELF_CORRECT_SKIPPED: ...` warnings with reasons.
+- Masking module exists: modules/registry/processing/masking.py
+
+Guiding rules (non-negotiable)
+
+Always preserve raw note text for UI display and span highlighting.
+
+Create an offset-preserving masked note (same length and newlines). Use it for all substring/regex/NER/LLM extraction and guardrails.
+
+Keep raw note text only for RAW-ML audit and user-visible outputs.
+
+Deterministic extractors must return seed data in the current merge format:
+top-level fields + nested procedures_performed / pleural_procedures.
+
+Self-correction may only patch allowlisted paths, but allow nested procedure objects for specific procedures.
+
+Phase 0 - Model bundle reliability (BLOCKER)
+0.1 Fix runtime bundle to match backend
+
+File: data/models/registry_runtime/
+Action: if backend is pytorch, add config.json and weights (model.safetensors or pytorch_model.bin + classifier.pt)
+and ensure tokenizer/, thresholds.json, registry_label_fields.json exist.
+If only ONNX artifacts are available, set MODEL_BACKEND=onnx and ensure registry_model_int8.onnx (.data if present)
+exists in the runtime dir (or set REGISTRY_ONNX_MODEL_PATH).
+Acceptance: RegistryService logs "ML=available" for the chosen backend; no silent fallback.
+
+0.2 Add a fail-fast preflight
+
+Create: scripts/verify_registry_runtime_bundle.py
+Checks per backend:
+- pytorch: config.json, tokenizer/, thresholds.json, label_order.json or registry_label_fields.json,
+  model.safetensors or pytorch_model.bin, classifier.pt
+- onnx: registry_model_int8.onnx (+ .data if present), tokenizer/, thresholds.json, label files
+Wire into startup (modules/api/fastapi_app.py or modules/registry/model_bootstrap.py).
+Acceptance: service exits with a clear error if any required artifact is missing.
+
+Phase 1 - Offset-safe masking (signal hygiene)
+Goal
+
+Eliminate CPT/billing header false positives without breaking offsets.
+
+1.1 Add a masking module (single source of truth)
+
+Create: modules/registry/processing/masking.py
+Implement mask_offset_preserving(text, patterns=PATTERNS) to replace matched regions with spaces.
+Start with patterns similar to CPT/billing headers plus standalone CPT lines.
+
+1.2 Add masking unit tests
+
+Create: tests/registry/test_masking.py
+Assert:
+
+len(masked) == len(raw)
+
+newline positions identical
+
+random spans still map cleanly onto raw text
+
+1.3 Wire masking into extraction entrypoints
+
+Files:
+- modules/registry/application/registry_service.py
+- modules/registry/engine.py
+- modules/coder/parallel_pathway/orchestrator.py (via caller)
+
+Actions:
+- In extract_record(), compute raw_note_text and masked_note_text once.
+- Use masked_note_text for:
+  - RegistryEngine.run_with_warnings()
+  - focus_note_for_extraction() input
+  - parallel_orchestrator.process() + deterministic uplift regex
+  - _add_first_span(), _extract_linear_station_spans(), keyword guard, omission scan,
+    clinical guardrails, evidence verification
+- Keep raw_note_text for RAW-ML audit and for UI output.
+- Set meta["extraction_text"] to the masked (or focused masked) text.
+
+Acceptance:
+
+CPT header keywords no longer trigger procedures
+
+Evidence spans still align to UI
+
+Phase 2 - Deterministic coverage + parallel_ner uplift
+Goal
+
+If NER/LLM misses, core procedures still land in the registry.
+
+2.1 Confirm seed shape (already correct)
+
+Verify run_deterministic_extractors() returns top-level fields and nested
+procedures_performed/pleural_procedures dicts.
+
+2.2 Expand deterministic extractors
+
+Update: modules/registry/deterministic_extractors.py
+Add extractors + patterns for:
+
+Navigational bronchoscopy: Ion/Monarch/ENB/robotic/navigation
+
+TBNA conventional: TBNA, transbronchial needle aspiration, needle passes
+
+Brushings: brushings, cytology brush, bronchial brushing
+
+Transbronchial cryobiopsy: cryobiopsy, cryo biopsy, TBLC
+
+Peripheral ablation: MWA/RFA/cryoablation (set modality if possible)
+
+Thermal ablation: APC/laser/electrocautery (do not infer from peripheral ablation terms)
+
+All regex runs on masked text and includes negation checks.
+
+2.3 Expand deterministic uplift in parallel_ner path
+
+Update: modules/registry/application/registry_service.py
+When run_deterministic_extractors returns new procedures, set performed flags
+and attach evidence spans (extend _add_first_span mapping for new procedures).
+
+2.4 Guard against cryotherapy false positives
+
+Make sure cryobiopsy or peripheral ablation terms do not set cryotherapy.
+
+Acceptance:
+
+Notes with nav/TBNA/brushings/cryobiopsy/peripheral ablation show performed=True
+
+No cryotherapy from CPT header or cryobiopsy-only notes
+
+Phase 3 - Self-correction (nested adds + masked gating)
+3.1 Allow nested procedure objects
+
+Update: modules/registry/self_correction/validation.py
+Support allowlisted prefixes, not just exact paths.
+Allow add/replace on nested paths under procedures_performed/* and pleural_procedures/*
+for selected procedures.
+
+3.2 Update allowlist and keyword guard
+
+Add allowlist prefixes for:
+
+/procedures_performed/navigational_bronchoscopy
+
+/procedures_performed/tbna_conventional
+
+/procedures_performed/brushings
+
+/procedures_performed/transbronchial_cryobiopsy
+
+/procedures_performed/thermal_ablation
+
+/procedures_performed/peripheral_ablation
+
+(plus any high-value pleural procedures)
+
+Update CPT_KEYWORDS in modules/registry/self_correction/keyword_guard.py to include 31626 (fiducial markers)
+and add missing TBNA terms where needed.
+
+3.3 Use masked text for gating + evidence checks
+
+keyword_guard_passes() and scan_for_omissions() should use masked text.
+
+validate_proposal() should check evidence quotes against masked extraction_text.
+
+Acceptance:
+
+Self-correction can add missing nested procedure objects
+
+Fewer "path not allowed" and fewer keyword guard failures on obvious cases
+
+Phase 4 - NER mapping + backstops
+4.1 Fill NER mapping gaps
+
+Update: modules/registry/ner_mapping/procedure_extractor.py
+
+Add tbna_conventional and brushings keywords.
+
+Include Ion/Monarch/robotic terms for navigational_bronchoscopy if not present.
+
+4.2 Fiducial placement mapping (granular data)
+
+Action: add a helper (new module) to populate granular_data.navigation_targets
+with required fields (target_number, target_location_text) and set
+fiducial_marker_placed/details when fiducial markers are mentioned.
+Call this helper from RegistryEngine (existing) and from parallel_ner deterministic uplift.
+
+4.3 Established tracheostomy route
+
+Add deterministic detection for established_tracheostomy_route
+(eg "via trach", "through existing tracheostomy") with negations for new trach creation.
+
+4.4 Expand omission scan patterns
+
+Update REQUIRED_PATTERNS to include navigation, TBNA, cryobiopsy, fiducials, peripheral ablation.
+
+Acceptance:
+
+Fiducial mentions set granular navigation target flags
+
+Established trach route flips to true when appropriate
+
+SILENT_FAILURE warnings include nav/TBNA/cryobiopsy/fiducials when missed
+
+Phase 5 - Regression harness
+5.1 Masking tests
+
+Add tests for mask invariants and CPT header suppression.
+
+5.2 Golden fixtures
+
+Use a few scrubbed notes from data/knowledge/patient_note_texts or synthetic snippets.
+Assert:
+
+navigation performed detected
+
+TBNA, brushings, cryobiopsy captured
+
+fiducial markers populate granular_data.navigation_targets
+
+peripheral ablation modality set for MWA/RFA
+
+no false positives from CPT headers
+
+5.3 CLI smoke test
+
+Add a script (eg scripts/registry_pipeline_smoke.py) that runs:
+raw -> masked -> extract_record -> deterministic uplift -> omission scan -> optional self-correct
+and prints a compact diff of performed flags, warnings, and self-correction diagnostics (audit high-conf omissions + skip reasons).
+
+Phase 6 - Targeted gap closure (2026-01-18)
+
+- Navigation regex strictness: support "Robotic Bronch" shorthand and add platform keywords (Galaxy/Noah).
+- Pleural IPC deterministic extractor: detect PleurX/Aspira/Rocket/tunneled pleural catheter and distinguish from temporary pigtails.
+- Registry uplift wiring: map deterministic IPC into `pleural_procedures.ipc.performed` and attach evidence spans.
+
+Implementation order (do in sequence)
+
+Phase 0 -> Phase 1 -> Phase 2 -> Phase 3 -> Phase 4 -> Phase 5
+
+Definition of Done (checklist)
+
+Torch or ONNX predictor loads with clear startup validation
+
+Masking applied across extraction, guardrails, and omission scan; offsets intact
+
+Deterministic coverage includes nav/TBNA/brushings/cryobiopsy/peripheral ablation
+
+Parallel_ner uplift covers the same procedures with evidence spans
+
+Self-correction can add nested procedure objects; keyword guard uses masked text
+
+Fiducial placement and established trach route are detected deterministically
+
+Tests and smoke script cover the above

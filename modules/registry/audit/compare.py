@@ -17,11 +17,29 @@ def _index_preds(preds: Iterable[CodePrediction]) -> dict[str, CodePrediction]:
     return {p.cpt: p for p in preds}
 
 
-def _derived_registry_flags(derived_codes: set[str]) -> set[str]:
-    flags: set[str] = set()
-    if derived_codes & {"31652", "31653"}:
-        flags.add("linear_ebus")
-    return flags
+_CPT_EQUIVALENCE_GROUPS: tuple[set[str], ...] = (
+    # Mutually exclusive alternatives or "more specific" variants that should not trigger audit omissions.
+    {"31652", "31653"},  # linear EBUS station bucket
+    {"32554", "32555"},  # thoracentesis (no imaging vs ultrasound guidance)
+    {"32556", "32557"},  # pleural drain (no imaging vs imaging guidance)
+    {"31640", "31641"},  # tumor excision vs destruction (choose one per site)
+)
+
+
+def _equivalent_cpt_map() -> dict[str, set[str]]:
+    mapping: dict[str, set[str]] = {}
+    for group in _CPT_EQUIVALENCE_GROUPS:
+        for code in group:
+            mapping[code] = set(group) - {code}
+    return mapping
+
+
+_CPT_EQUIVALENTS = _equivalent_cpt_map()
+
+
+def _covered_by_equivalent(*, predicted_cpt: str, derived_set: set[str]) -> bool:
+    equivalents = _CPT_EQUIVALENTS.get(predicted_cpt)
+    return bool(equivalents and (derived_set & equivalents))
 
 
 def build_audit_compare_report(
@@ -40,7 +58,6 @@ def build_audit_compare_report(
     """
     derived_list = list(derived_codes)
     derived_set = set(derived_list)
-    derived_flag_set = _derived_registry_flags(derived_set)
 
     snapshot = AuditConfigSnapshot(
         use_buckets=cfg.use_buckets,
@@ -84,7 +101,7 @@ def build_audit_compare_report(
     missing_in_derived = [
         p
         for p in ml_audit_codes
-        if p.cpt not in derived_set and p.cpt not in derived_flag_set
+        if p.cpt not in derived_set and not _covered_by_equivalent(predicted_cpt=p.cpt, derived_set=derived_set)
     ]
 
     high_conf_omissions = [
