@@ -92,7 +92,7 @@ class EBUSStationExtractor:
         stations_sampled: Set[str] = set()
         stations_inspected_only: Set[str] = set()
         warnings: List[str] = []
-        seen_stations: Set[str] = set()
+        best_by_station: dict[str, tuple[NodeInteraction, int]] = {}
 
         raw_text = ner_result.raw_text or ""
         bullet_scopes, line_scopes = self._collect_line_scopes(raw_text)
@@ -111,11 +111,6 @@ class EBUSStationExtractor:
                     f"Invalid station format: '{station_entity.text}'"
                 )
                 continue
-
-            # Skip if we've already processed this station
-            if station_name in seen_stations:
-                continue
-            seen_stations.add(station_name)
 
             scope = self._find_scope_for_entity(
                 station_entity,
@@ -156,10 +151,12 @@ class EBUSStationExtractor:
                 end = min(len(raw_text), int(station_entity.end_char) + self.action_window)
                 context_window = raw_text[start:end]
 
-            action_type = self._classify_action(
-                nearby_action,
-                context_text=context_window,
-            )
+            context_parts: list[str] = []
+            if scope is not None and scope.text:
+                context_parts.append(scope.text)
+            if context_window:
+                context_parts.append(context_window)
+            action_type = self._classify_action(nearby_action, context_text=" ".join(context_parts) or None)
 
             # Find ROSE outcome within the same scope
             nearby_rose = self._find_nearest_in_scope(
@@ -172,20 +169,49 @@ class EBUSStationExtractor:
             # Build evidence quote
             evidence = station_entity.evidence_quote or ""
 
-            node_events.append(
-                NodeInteraction(
-                    station=station_name,
-                    action=action_type,
-                    outcome=outcome,
-                    evidence_quote=evidence,
-                )
+            candidate = NodeInteraction(
+                station=station_name,
+                action=action_type,
+                outcome=outcome,
+                evidence_quote=evidence,
             )
+            candidate_pos = int(getattr(station_entity, "start_char", 0) or 0)
 
-            # Track sampled vs inspected
-            if action_type != "inspected_only":
-                stations_sampled.add(station_name)
+            existing = best_by_station.get(station_name)
+            if existing is None:
+                best_by_station[station_name] = (candidate, candidate_pos)
             else:
-                stations_inspected_only.add(station_name)
+                existing_event, existing_pos = existing
+                action_priority = {
+                    "inspected_only": 0,
+                    "needle_aspiration": 1,
+                    "core_biopsy": 1,
+                    "forceps_biopsy": 1,
+                }
+                existing_score = action_priority.get(existing_event.action, 0)
+                candidate_score = action_priority.get(candidate.action, 0)
+
+                replace = False
+                if candidate_score > existing_score:
+                    replace = True
+                elif candidate_score == existing_score:
+                    if existing_event.outcome is None and candidate.outcome is not None:
+                        replace = True
+                    elif len((candidate.evidence_quote or "").strip()) > len((existing_event.evidence_quote or "").strip()):
+                        replace = True
+                    elif candidate_pos > existing_pos:
+                        # Stable tie-breaker: prefer later mention (often the sampled section).
+                        replace = True
+
+                if replace:
+                    best_by_station[station_name] = (candidate, candidate_pos)
+
+        node_events = [event for event, _pos in sorted(best_by_station.values(), key=lambda pair: pair[1])]
+        for event in node_events:
+            if event.action != "inspected_only":
+                stations_sampled.add(event.station)
+            else:
+                stations_inspected_only.add(event.station)
 
         return StationExtractionResult(
             node_events=node_events,

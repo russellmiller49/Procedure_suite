@@ -315,6 +315,9 @@ def derive_all_codes_with_meta(
         if is_removal:
             codes.append("31638")
             rationales["31638"] = "airway_stent.airway_stent_removal=true or action indicates removal"
+            if is_placement and "31636" not in codes:
+                codes.append("31636")
+                rationales["31636"] = "airway_stent indicates revision/placement with removal"
         elif is_placement:
             codes.append("31636")
             rationales["31636"] = "airway_stent.performed=true and no removal flag"

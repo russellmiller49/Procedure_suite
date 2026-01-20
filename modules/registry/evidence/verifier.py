@@ -6,8 +6,8 @@ from rapidfuzz.fuzz import partial_ratio
 
 from modules.common.spans import Span
 from modules.registry.deterministic_extractors import (
-    ROUTINE_SUCTION_PATTERNS,
     THERAPEUTIC_ASPIRATION_PATTERNS,
+    extract_airway_stent,
 )
 from modules.registry.schema import RegistryRecord
 from modules.registry.schema.ip_v3 import IPRegistryV3, ProcedureEvent
@@ -15,6 +15,22 @@ from modules.registry.schema.ip_v3 import IPRegistryV3, ProcedureEvent
 
 _NON_ALNUM_RE = re.compile(r"[^a-z0-9]+")
 _WS_RE = re.compile(r"\s+")
+_STENT_TOKEN_RE = re.compile(r"\bstent(?:ing|s)?\b", re.IGNORECASE)
+_STENT_NEGATION_WINDOW_RE = re.compile(
+    r"\b(?:"
+    r"no\s+(?:appropriate|suitable)\s+landing\s+point"
+    r"|no\s+landing\s+point"
+    r"|no\s+appropriate\s+place\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r"|not\s+(?:safe|possible|feasible)\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r"|unable\s+to\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r"|could\s+not\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r"|decid(?:ed|ing)\b[^.\n]{0,80}\b(?:against|to\s+not)\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r"|decision\b[^.\n]{0,80}\bto\s+not\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r"|abandon(?:ed|ing)?\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r"|abort(?:ed|ing)?\b[^.\n]{0,80}\bstent(?:ing|s)?\b"
+    r")\b",
+    re.IGNORECASE,
+)
 
 
 def normalize_text(text: str) -> str:
@@ -114,42 +130,71 @@ def _find_therapeutic_aspiration_anchor(full_text: str) -> tuple[str, int, int] 
     if not text_lower:
         return None
 
+    def _match_negated(match: re.Match[str]) -> bool:
+        start, end = match.start(), match.end()
+        before = full_text[max(0, start - 30) : start]
+        after = full_text[end : min(len(full_text), end + 80)]
+
+        if re.search(r"(?i)\b(?:no|without)\b[^.\n]{0,20}$", before):
+            return True
+
+        if re.search(
+            r"(?i)\b(?:not\s+(?:performed|done|attempted)|was\s+not\s+performed|declined|deferred|aborted)\b",
+            after,
+        ):
+            return True
+
+        return False
+
     for pattern in THERAPEUTIC_ASPIRATION_PATTERNS:
         match = re.search(pattern, full_text, re.IGNORECASE)
         if not match:
             continue
-        negation_check = r"\b(?:no|not|without)\b[^.]{0,80}" + pattern
-        if re.search(negation_check, text_lower, re.IGNORECASE):
+        if _match_negated(match):
             continue
         return (match.group(0).strip(), match.start(), match.end())
 
-    routine_suction_present = any(re.search(pattern, text_lower) for pattern in ROUTINE_SUCTION_PATTERNS)
     contextual_patterns = [
         r"\b(?:copious|large\s+amount\s+of|thick|tenacious|purulent|bloody|blood-tinged)\s+secretions?\b[^.]{0,80}\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared|remov(?:ed|al))\b",
         r"\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared|remov(?:ed|al))\b[^.]{0,80}\b(?:copious|large\s+amount\s+of|thick|tenacious|purulent|bloody|blood-tinged)\s+secretions?\b",
         r"\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared|remov(?:ed|al))\b[^.]{0,80}\b(?:mucus\s+plug|clot|blood)\b",
+        r"\b(?:mucus|mucous|secretions?|blood|clot(?:s)?|debris|fluid|plug(?:s)?)\b[^.]{0,80}\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b",
+        r"\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b[^.]{0,80}\b(?:mucus|mucous|secretions?|blood|clot(?:s)?|debris|fluid|plug(?:s)?)\b",
+        r"\b(?:airway|airways|trachea|bronch(?:us|i)?|tracheobronchial\s+tree)\b[^.]{0,120}\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b",
+        r"\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b[^.]{0,120}\b(?:airway|airways|trachea|bronch(?:us|i)?|tracheobronchial\s+tree)\b",
     ]
-    if not routine_suction_present:
-        contextual_patterns.append(
-            r"\b(?:airway|tracheobronchial\s+tree)\b[^.]{0,80}\b(?:suction(?:ed|ing)|aspirat(?:ed|ion)|cleared)\b"
-        )
-        contextual_patterns.extend(
-            [
-                r"\bsecretions?\b[^.]{0,80}\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b",
-                r"\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b[^.]{0,80}\bsecretions?\b",
-            ]
-        )
+    contextual_patterns.extend(
+        [
+            r"\bsecretions?\b[^.]{0,120}\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b",
+            r"\b(?:suction(?:ed|ing)?|aspirat(?:ed|ion|ing)?|clear(?:ed|ing)?)\b[^.]{0,120}\bsecretions?\b",
+        ]
+    )
 
     for pattern in contextual_patterns:
         match = re.search(pattern, full_text, re.IGNORECASE)
         if not match:
             continue
-        negation_check = r"\b(?:no|not|without)\b[^.]{0,80}" + pattern
-        if re.search(negation_check, text_lower, re.IGNORECASE):
+        if _match_negated(match):
             continue
         return (match.group(0).strip(), match.start(), match.end())
 
     return None
+
+
+def _stent_is_negated(full_text: str) -> bool:
+    """Return True when stent mentions are explicitly negated (not performed)."""
+    text = full_text or ""
+    if not text:
+        return False
+
+    for match in _STENT_TOKEN_RE.finditer(text):
+        start = max(0, match.start() - 220)
+        end = min(len(text), match.end() + 220)
+        window = text[start:end]
+        if _STENT_NEGATION_WINDOW_RE.search(window):
+            return True
+
+    return False
 
 
 def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tuple[RegistryRecord, list[str]]:
@@ -208,6 +253,37 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
         if not _normalized_contains(full_text, device_name):
             setattr(trach, "device_name", None)
             warnings.append("WIPED_DEVICE_NAME_NOT_IN_TEXT: procedures_performed.percutaneous_tracheostomy.device_name")
+
+    # ------------------------------------------------------------------
+    # High-risk: airway stent false positives (keyword present but explicitly not performed)
+    # ------------------------------------------------------------------
+    stent = getattr(procedures, "airway_stent", None)
+    if getattr(stent, "performed", None) is True:
+        seed = extract_airway_stent(full_text) if full_text.strip() else {}
+        action_supported = bool(seed.get("airway_stent", {}).get("performed") is True)
+        if not action_supported and _stent_is_negated(full_text):
+            setattr(stent, "performed", False)
+            wipe_fields = {
+                "action": None,
+                "stent_type": None,
+                "stent_brand": None,
+                "diameter_mm": None,
+                "length_mm": None,
+                "location": None,
+                "indication": None,
+                "deployment_successful": None,
+                "airway_stent_removal": False,
+            }
+            for field_name, value in wipe_fields.items():
+                if hasattr(stent, field_name):
+                    setattr(stent, field_name, value)
+            prefixes = [
+                "procedures_performed.airway_stent",
+                "airway_stent",
+            ]
+            for prefix in prefixes:
+                _drop_evidence_prefix(record, prefix)
+            warnings.append("NEGATION_GUARD: procedures_performed.airway_stent")
 
     return record, warnings
 

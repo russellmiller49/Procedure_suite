@@ -25,10 +25,10 @@ CPT_KEYWORDS: dict[str, list[str]] = {
     "32554": ["thoracentesis", "pleural fluid removed", "tap"],
     "32555": ["thoracentesis", "pleural fluid removed", "tap"],
     # Pleural: chest tube / thoracostomy
-    "32551": ["chest tube", "tube thoracostomy", "thoracostomy", "pleur-evac", "pleurovac"],
+    "32551": ["chest tube", "tube thoracostomy", "thoracostomy"],
     # Pleural: percutaneous pleural drainage catheter (pigtail) without/with imaging
-    "32556": ["pigtail catheter", "pleural drainage", "seldinger", "pleurovac"],
-    "32557": ["pigtail catheter", "pleural drainage", "ultrasound", "imaging guidance", "seldinger", "pleurovac"],
+    "32556": ["pigtail catheter", "pleural drainage", "seldinger"],
+    "32557": ["pigtail catheter", "pleural drainage", "ultrasound", "imaging guidance", "seldinger"],
     # Diagnostic chest ultrasound
     "76604": ["chest ultrasound", "ultrasound findings", "with image documentation", "image saved"],
     # Bronchoscopy add-ons / performed flags
@@ -295,7 +295,6 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
     "pleural_procedures.chest_tube.performed": [
         (r"(?i)\bpigtail\s+catheter\b", "Text mentions 'pigtail catheter' (pleural drain)."),
         (r"(?i)\bchest\s+tube\b", "Text mentions 'chest tube' but extraction missed it."),
-        (r"(?i)\bpleurovac\b", "Text mentions 'Pleurovac' (drainage device)."),
         (r"(?i)\btube\s+thoracostomy\b", "Text mentions 'tube thoracostomy'."),
     ],
     # Diagnostic chest ultrasound (76604)

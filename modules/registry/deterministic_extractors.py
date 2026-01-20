@@ -632,8 +632,6 @@ CHEST_TUBE_PATTERNS = [
     r"\bpigtail\s+catheter\b",
     r"\bchest\s+tube\b",
     r"\btube\s+thoracostomy\b",
-    r"\bpleurovac\b",
-    r"\bpleur-?evac\b",
 ]
 
 # Indwelling pleural catheter (IPC / tunneled) patterns
@@ -931,7 +929,9 @@ def _select_stent_brand(text_lower: str, action: str | None) -> tuple[str | None
 
 def extract_airway_dilation(note_text: str) -> Dict[str, Any]:
     """Extract airway dilation indicator (balloon dilation)."""
-    text_lower = (note_text or "").lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
     if not text_lower.strip():
         return {}
 
@@ -957,13 +957,14 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
     """Extract airway stent indicator with a conservative action guess.
 
     Notes:
-    - If placement and removal are both present, default action to Placement to
-      preserve 31636 derivation, and allow removal to be represented via
-      foreign_body_removal when needed.
-    - If removal is present without placement, mark airway_stent_removal so
+    - If both placement and removal are present, mark the event as a revision
+      and set airway_stent_removal=True so 31638 can be derived alongside 31636.
+    - If removal is present without placement, set airway_stent_removal=True so
       31638 can be derived.
     """
-    text_lower = (note_text or "").lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
     if not text_lower.strip():
         return {}
 
@@ -1008,14 +1009,14 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
 
     proc: dict[str, Any] = {"performed": True}
 
-    if has_removal and (not has_placement or not placement_window_hit):
+    if has_removal and has_placement:
+        proc["action"] = "Revision/Repositioning"
+        proc["airway_stent_removal"] = True
+    elif has_removal:
         proc["action"] = "Removal"
         proc["airway_stent_removal"] = True
     elif has_placement:
         proc["action"] = "Placement"
-    elif has_removal:
-        proc["action"] = "Removal"
-        proc["airway_stent_removal"] = True
 
     # Best-effort stent type/brand
     if re.search(r"\by-?\s*stent\b", text_lower):
@@ -1032,29 +1033,13 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
 
 def extract_foreign_body_removal(note_text: str) -> Dict[str, Any]:
     """Extract foreign body removal indicator.
-
-    Also used as a safe fallback to represent stent removal when a case includes
-    both stent removal and placement (so placement can remain encoded on
-    airway_stent for 31636).
     """
     text_lower = (note_text or "").lower()
     if not text_lower.strip():
         return {}
 
     explicit_fb = any(re.search(pat, text_lower, re.IGNORECASE) for pat in FOREIGN_BODY_REMOVAL_PATTERNS)
-
-    # Stent removal + placement case: represent the removal here (31635) so the
-    # airway_stent object can represent the new placement (31636).
-    has_stent_placement = _stent_action_window_hit(
-        text_lower,
-        verbs=["place", "deploy", "insert", "position", "deliver", "implant"],
-    )
-    has_stent_removal = _stent_action_window_hit(
-        text_lower,
-        verbs=["remov", "retriev", "extract", "explant", "pull", "peel", "grasp"],
-    )
-
-    if not explicit_fb and not (has_stent_placement and has_stent_removal):
+    if not explicit_fb:
         return {}
 
     proc: dict[str, Any] = {"performed": True}

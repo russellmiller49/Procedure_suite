@@ -239,7 +239,11 @@ def main() -> int:
             if result.self_correction:
                 print("Self-correction applied:")
                 for item in result.self_correction:
-                    print(f"  - {item.trigger.target_cpt}: {item.outcome}")
+                    applied_paths = getattr(item, "applied_paths", None)
+                    if isinstance(applied_paths, list) and applied_paths:
+                        print(f"  - {item.trigger.target_cpt}: applied {', '.join(applied_paths)}")
+                    else:
+                        print(f"  - {item.trigger.target_cpt}: applied (no paths recorded)")
             else:
                 print("Self-correction applied: (none)")
 

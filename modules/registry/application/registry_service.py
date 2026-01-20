@@ -983,6 +983,18 @@ class RegistryService:
                                 for key, value in proc_data.items():
                                     if key == "performed":
                                         continue
+                                    if proc_name == "airway_stent":
+                                        if key == "airway_stent_removal" and value is True and existing.get(key) is not True:
+                                            existing[key] = True
+                                            proc_changed = True
+                                            continue
+                                        if key == "action" and isinstance(value, str) and value.strip():
+                                            existing_action = existing.get("action")
+                                            if existing_action in (None, "", "Placement") and existing_action != value:
+                                                existing[key] = value
+                                                proc_changed = True
+                                                continue
+
                                     if existing.get(key) in (None, "", [], {}):
                                         existing[key] = value
                                         proc_changed = True
