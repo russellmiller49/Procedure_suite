@@ -13,6 +13,8 @@ MERGE_MAP = {
     "LMB": "ANAT_AIRWAY",
     "MEAS_VOLUME": "MEAS_VOL",
     "DEV_DEVICE": "DEV_INSTRUMENT",
+    # Treat method/action as one label for training stability
+    "PROC_METHOD": "PROC_ACTION",
 }
 
 # 2. Define Labels to Drop completely

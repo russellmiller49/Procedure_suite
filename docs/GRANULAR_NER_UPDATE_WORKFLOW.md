@@ -80,6 +80,11 @@ Notes:
 - `NEG_STENT` is reserved for explicit absence (e.g., “no stent placed/needed/indicated”).
 - “Stent in place / good position” mentions may be relabeled to `CTX_STENT_PRESENT` (disable with `--no-label-present`).
 - Stent removal/exchange/migration is intentionally kept as `DEV_STENT`.
+- `scripts/label_neg_stent.py` is **dry-run by default**; add `--write` to write `--output`.
+
+⚠️ Important: update scripts must call `add_case(note_id, raw_text, entities, repo_root)` (in that order).
+If a script swaps `note_id` and `raw_text`, it can corrupt the dataset (e.g., `"text": "<script>.py"` with zero-length spans).
+`scripts/add_training_case.py` now raises a `ValueError` when it detects this common swap.
 
 Optional: validate alignment on the new file:
 
@@ -96,12 +101,13 @@ After you generate `ner_dataset_all.neg_stent.jsonl`, run the cleaner to:
 ```bash
 python data/ml_training/clean_data.py \
   --input data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl \
-  --output data/ml_training/granular_ner/ner_dataset_all.neg_stent.cleaned.jsonl
+  --output data/ml_training/granular_ner/ner_dataset_all.cleaned.jsonl
 ```
 
 Notes:
 - The merge/drop rules live in `data/ml_training/clean_data.py` (`MERGE_MAP`, `DROP_LABELS`).
 - The cleaner supports both `entities` (current) and legacy `spans` keys.
+- `PROC_METHOD` is merged into `PROC_ACTION` for training (so the model learns a single “procedure” action label).
 
 ### 5) Rebuild BIO format
 
@@ -117,7 +123,7 @@ If you ran the `NEG_STENT` + clean steps above, use the cleaned file as input in
 
 ```bash
 python scripts/convert_spans_to_bio.py \
-  --input data/ml_training/granular_ner/ner_dataset_all.neg_stent.cleaned.jsonl \
+  --input data/ml_training/granular_ner/ner_dataset_all.cleaned.jsonl \
   --output data/ml_training/granular_ner/ner_bio_format.jsonl \
   --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
   --max-length 512

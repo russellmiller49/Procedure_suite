@@ -57,24 +57,6 @@
     "OBS_NO_COMPLICATION": 1,
     "DISPOSITION": 1
   },
-  "hydration_status_counts": {
-    "hydrated_unique": 2189,
-    "hydrated_match_index": 175,
-    "hydrated_prefix_window": 676,
-    "hydrated_prefix": 23,
-    "hydrated_fallback_first": 15,
-    "hydrated_index": 32,
-    "hydrated_context": 154,
-    "hydrated_prefix_ambiguous": 2,
-    "hydrated_first_of_2": 9,
-    "hydrated_match_index_0": 1,
-    "hydrated_first_occurrence_ambiguous": 1,
-    "hydrated_prefix_window_multi": 1,
-    "hydrated_match_index_0_of_2": 4,
-    "hydrated_first_fallback": 3,
-    "hydrated_first_default": 2,
-    "hydrated_match_index_context": 1,
-    "hydrated_prefix_short": 1
-  },
+  "hydration_status_counts": {},
   "duplicate_note_ids": 0
 }
