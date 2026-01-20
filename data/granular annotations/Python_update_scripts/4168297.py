@@ -169,7 +169,7 @@ entities_6 = [
     {"label": "LATERALITY",         **get_span(text_6, "right", 1)},
     {"label": "DEV_CATHETER",       **get_span(text_6, "indwelling pleural catheter", 1)},
     {"label": "DEV_CATHETER",       **get_span(text_6, "PleurX", 1)},
-    {"label": "OBS_LESION",         **get_span(text_6, "Malignant effusion", 1)},
+    {"label": "OBS_LESION",         **get_span(text_6, "malignant effusion", 1)},
     {"label": "DEV_CATHETER_SIZE",  **get_span(text_6, "15.5 Fr", 1)},
     {"label": "DEV_CATHETER",       **get_span(text_6, "catheter", 1)},
     {"label": "PROC_ACTION",        **get_span(text_6, "tunneled", 1)},

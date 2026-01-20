@@ -124,7 +124,7 @@ entities_4 = [
     {"label": "LATERALITY", **get_span(text_4, "Right", 1)},
     {"label": "PROC_METHOD", **get_span(text_4, "Medical Thoracoscopy", 1)},
     {"label": "DEV_INSTRUMENT", **get_span(text_4, "Trocar", 1)},
-    {"label": "LATERALITY", **get_span(text_4, "right", 2)},
+    {"label": "LATERALITY", **get_span(text_4, "right", 1)},
     {"label": "ANAT_PLEURA", **get_span(text_4, "chest", 1)},
     {"label": "OBS_FINDING", **get_span(text_4, "Inflammatory changes", 1)},
     {"label": "OBS_LESION", **get_span(text_4, "masses", 1)},

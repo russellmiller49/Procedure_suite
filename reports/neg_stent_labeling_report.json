@@ -1,0 +1,185 @@
+{
+  "input": "data/ml_training/granular_ner/ner_dataset_all.jsonl",
+  "output": "data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl",
+  "present_label": "CTX_STENT_PRESENT",
+  "total_records": 2479,
+  "total_dev_stent_spans_seen": 614,
+  "dev_stent_relabelled_total": 12,
+  "dev_stent_relabelled_to_neg_stent": 3,
+  "dev_stent_relabelled_to_present_label": 9,
+  "neg_stent_added": 5,
+  "changes": [
+    {
+      "record_id": "note_068",
+      "start": 1143,
+      "end": 1148,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "Stent",
+      "context": "ormed (confirming the patient's name, procedure type, and procedure location). PATIENT POSITION: .    Initial Airway Inspection Findings:   Stent in RML orifice in good position. Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , an"
+    },
+    {
+      "record_id": "note_071",
+      "start": 1427,
+      "end": 1433,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "Stents",
+      "context": "t Bronchus Intermedius .  Two areas were biopsied with NBI guidance. Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.   Stents are in good position. The (iCAST 7x16) was noted in the right lower airway.  (iCAST 5x16) was noted in the right middle lobe airway. Bronch"
+    },
+    {
+      "record_id": "note_071",
+      "start": 1461,
+      "end": 1471,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "iCAST 7x16",
+      "context": "s were biopsied with NBI guidance. Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.   Stents are in good position. The (iCAST 7x16) was noted in the right lower airway.  (iCAST 5x16) was noted in the right middle lobe airway. Bronchial alveolar lavage was performed at R"
+    },
+    {
+      "record_id": "note_071",
+      "start": 1512,
+      "end": 1522,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "iCAST 5x16",
+      "context": " Microbiology (Cultures/Viral/Fungal) and Pathology.   Stents are in good position. The (iCAST 7x16) was noted in the right lower airway.  (iCAST 5x16) was noted in the right middle lobe airway. Bronchial alveolar lavage was performed at RLL.  Instilled 40 cc of NS, suction returned with 1"
+    },
+    {
+      "record_id": "note_073",
+      "start": 1428,
+      "end": 1442,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "Tracheal stent",
+      "context": "ion through LMA. Larynx: Not fully assessed due to bronchoscopy introduction through LMA. Vocal Cords: Normal without mass/lesions Trachea: Tracheal stent in place with slight granulation tissue and the anterior and posterior aspect of the proximal stent. Mild thick yellow mucus within the ste"
+    },
+    {
+      "record_id": "note_097",
+      "start": 1666,
+      "end": 1671,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "stent",
+      "context": "tissue.  RB1-2 normal. RB3 mildly stenotic with swirling granulation tissue/scar forming around the segmental airway take-off. The RML with stent (Aero 8x15mm covered metallic stent) in good position and fully patent. Able to traverse scope in the RML stent, but not into the segmental"
+    },
+    {
+      "record_id": "note_104",
+      "start": 1578,
+      "end": 1595,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "right sided stent",
+      "context": "ition and the balloon was inflated. Secretions were suctioned and lidocaine was applied. The airway was inspected via the tracheostomy. The right sided stent was in good position. There was significant necrosis/granulation tissue around the suture site and medially along the transplanted lung. Th"
+    },
+    {
+      "record_id": "1690514_syn_1",
+      "start": 55,
+      "end": 60,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "stent",
+      "context": "Procedure: Bronchoscopy (Stent Check). - Findings: LMS stent in good position. Mucus plugging. - Action: Toilet/suction. Mild granulation (no tx needed). - Plan: Antibiotics, f/u 4 weeks."
+    },
+    {
+      "record_id": "1690514_syn_4",
+      "start": 49,
+      "end": 54,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "stent",
+      "context": "Stent Check Note 1. Flex scope via trach. 2. LMS stent looks good, not moving. 3. Suctioned thick secretions. 4. Mild granulation, left alone. 5. Airway patent. Plan: Azithromycin."
+    },
+    {
+      "record_id": "4592817_syn_1",
+      "start": 260,
+      "end": 265,
+      "old_label": "DEV_STENT",
+      "new_label": "NEG_STENT",
+      "reason": "explicit_absence",
+      "span_text": "stent",
+      "context": "ottic. Action: Rigid scope. Snare resection of polypoid lesions. APC for base/hemostasis. Result: 90% patent airway. Plan: Oncology f/u. No stent placed (patient refusal)."
+    },
+    {
+      "record_id": "4592817_syn_6",
+      "start": 262,
+      "end": 267,
+      "old_label": "DEV_STENT",
+      "new_label": "NEG_STENT",
+      "reason": "explicit_absence",
+      "span_text": "stent",
+      "context": "anical debulking performed via snare cautery followed by APC for residual tissue and hemostasis. Airway patency restored to near normal. No stent placed per patient preference. Complications: None."
+    },
+    {
+      "record_id": "4592817_syn_8",
+      "start": 333,
+      "end": 338,
+      "old_label": "DEV_STENT",
+      "new_label": "NEG_STENT",
+      "reason": "explicit_absence",
+      "span_text": "stent",
+      "context": "he large tumors. We cleaned up the base of the tumors with argon plasma coagulation. By the end, his airway was wide open. He had refused a stent, so we rely on his chemotherapy to prevent regrowth."
+    }
+  ],
+  "additions": [
+    {
+      "record_id": "note_069",
+      "start": 582,
+      "end": 587,
+      "label": "NEG_STENT",
+      "span_text": "stent",
+      "context": "shing           31624 Dx bronchoscope/lavage (BAL)     31625 Endobronchial Biopsy(s) 31630 Balloon dilation - right lower lobe bronchus (no stent placed) 31636 Dilate and bronchial stent initial bronchus - right middle lobe bronchus (dilation and stent placement) 31640 Bronchoscopy wi",
+      "pattern": "\\bno\\s+(?:airway\\s+)?(?P<stent>stents?)\\b"
+    },
+    {
+      "record_id": "SYNIP0012_syn_1",
+      "start": 234,
+      "end": 239,
+      "label": "NEG_STENT",
+      "span_text": "stent",
+      "context": "ngs: Exophytic tumor BI, 75% occlusion. Action: Cored with rigid barrel. Microdebrider used for cleanup. Result: 30% residual narrowing. No stent. Complications: Mild bleeding. Disp: Floor.",
+      "pattern": "\\bno\\s+(?:airway\\s+)?(?P<stent>stents?)\\b"
+    },
+    {
+      "record_id": "SYNIP0012_syn_5",
+      "start": 314,
+      "end": 319,
+      "label": "NEG_STENT",
+      "span_text": "stent",
+      "context": "d the rigid tube to core it out and suctioned the pieces microdebrider used too final result looked good maybe 30 percent narrowing left no stent needed mild bleeding only stopped with saline admitted to floor.",
+      "pattern": "\\bno\\s+(?:airway\\s+)?(?P<stent>stents?)\\b"
+    },
+    {
+      "record_id": "SYNIP0012_syn_6",
+      "start": 631,
+      "end": 636,
+      "label": "NEG_STENT",
+      "span_text": "stent",
+      "context": "ents. A microdebrider was then used to excise residual tumor and smooth the airway wall. Final airway lumen had ~30% residual narrowing; no stent was placed. Mild bleeding controlled with cold saline and dilute epinephrine. Extubated in OR and admitted to medical floor for pneumonia m",
+      "pattern": "\\bno\\s+(?:airway\\s+)?(?P<stent>stents?)\\b"
+    },
+    {
+      "record_id": "SYNIP0012",
+      "start": 803,
+      "end": 808,
+      "label": "NEG_STENT",
+      "span_text": "stent",
+      "context": "ents. A microdebrider was then used to excise residual tumor and smooth the airway wall. Final airway lumen had ~30% residual narrowing; no stent was placed. Complications: Mild bleeding controlled with cold saline and dilute epinephrine. Disposition: Extubated in OR and admitted to m",
+      "pattern": "\\bno\\s+(?:airway\\s+)?(?P<stent>stents?)\\b"
+    }
+  ],
+  "notes": [
+    "This script is heuristic; review the report JSON before regenerating BIO.",
+    "NEG_STENT is intended for explicit stent absence (no stent placed/needed/indicated).",
+    "Stent removal/exchange/migration is intentionally NOT labeled as NEG_STENT."
+  ]
+}

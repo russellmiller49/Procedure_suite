@@ -191,7 +191,7 @@ entities_6 = [
     {"label": "MEAS_COUNT", **get_span(text_6, "6", 1)},
     {"label": "ANAT_PLEURA", **get_span(text_6, "diaphragmatic pleura", 1)},
     {"label": "MEDICATION", **get_span(text_6, "Talc", 2)},
-    {"label": "PROC_ACTION", **get_span(text_6, "poudrage", 2)},
+    {"label": "PROC_ACTION", **get_span(text_6, "poudrage", 1)},
     {"label": "PROC_ACTION", **get_span(text_6, "pleurodesis", 1)},
     {"label": "DEV_CATHETER", **get_span(text_6, "chest tube", 1)},
 ]

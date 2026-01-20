@@ -40,8 +40,9 @@ from transformers import (
 ALLOWED_LABEL_TYPES: Set[str] = {
     "ANAT_LN_STATION",
     "PROC_ACTION",
-    "PROC_METHOD",
     "DEV_STENT",
+    "NEG_STENT",
+    "CTX_STENT_PRESENT",
     "DEV_VALVE",
     "OBS_ROSE",
 }

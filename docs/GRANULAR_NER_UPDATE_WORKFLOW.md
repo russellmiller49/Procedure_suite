@@ -62,11 +62,46 @@ python scripts/regenerate_granular_ner_stats.py --base-dir data/ml_training/gran
 
 This recomputes alignment counts + label counts from `ner_dataset_all.jsonl` (the real training file).
 
+### 4.5) Add `NEG_STENT` labels (optional; recommended for stent label quality)
+
+If you want `DEV_STENT` to mean “stent deployed/placed” (and avoid training false positives from
+phrases like “stent in place”, “stent removed”, or “no stent placed”), generate `NEG_STENT` labels
+as a post-processing step:
+
+```bash
+python scripts/label_neg_stent.py --write
+```
+
+This writes:
+- `data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl` (updated training spans)
+- `reports/neg_stent_labeling_report.json` (what changed/was added; review this)
+
+Notes:
+- `NEG_STENT` is reserved for explicit absence (e.g., “no stent placed/needed/indicated”).
+- “Stent in place / good position” mentions may be relabeled to `CTX_STENT_PRESENT` (disable with `--no-label-present`).
+- Stent removal/exchange/migration is intentionally kept as `DEV_STENT`.
+
+Optional: validate alignment on the new file:
+
+```bash
+python scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl
+```
+
 ### 5) Rebuild BIO format
 
 ```bash
 python scripts/convert_spans_to_bio.py \
   --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
+  --output data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
+  --max-length 512
+```
+
+If you ran the `NEG_STENT` step above, use the `*.neg_stent.jsonl` file as input instead:
+
+```bash
+python scripts/convert_spans_to_bio.py \
+  --input data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl \
   --output data/ml_training/granular_ner/ner_bio_format.jsonl \
   --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
   --max-length 512

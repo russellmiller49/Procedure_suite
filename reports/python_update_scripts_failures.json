@@ -1,95 +1,550 @@
 {
-  "started_at": "2026-01-16T22:18:12.123162+00:00",
-  "elapsed_seconds": 1.005414,
-  "python": "/home/rjm/miniconda3/bin/python",
+  "started_at": "2026-01-20T17:21:03.149988+00:00",
+  "elapsed_seconds": 4.034042,
+  "python": "/home/rjm/miniconda3/envs/medparse-py311/bin/python",
   "scripts_dir": "data/granular annotations/Python_update_scripts",
   "pattern": "*.py",
-  "total_scripts": 53,
-  "failed_scripts": 12,
+  "total_scripts": 206,
+  "failed_scripts": 77,
   "failures": [
     {
-      "script": "data/granular annotations/Python_update_scripts/12245954.py",
+      "script": "data/granular annotations/Python_update_scripts/2138828.py",
       "returncode": 1,
-      "elapsed_seconds": 0.025002,
+      "elapsed_seconds": 0.019465,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/12245954.py\", line 50, in <module>\n    {\"label\": \"DEV_STENT\", **get_span(t1, \"esophageal stent\", 2)},\n                             ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/12245954.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'esophageal stent' (occurrence 2) not found in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2138828.py\", line 266, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_10, \"Ablation\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2138828.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Ablation' not found 2 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/20578149.py",
+      "script": "data/granular annotations/Python_update_scripts/2165517.py",
       "returncode": 1,
-      "elapsed_seconds": 0.023307,
+      "elapsed_seconds": 0.019127,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/20578149.py\", line 103, in <module>\n    {\"label\": \"PROC_ACTION\",               **get_span(t3, \"stent placement\", 2)},\n                                             ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/20578149.py\", line 25, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found.\")\nValueError: Term 'stent placement' (occurrence 2) not found.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2165517.py\", line 215, in <module>\n    {\"label\": \"ANAT_AIRWAY\", **get_span(text_2165517, \"Airways\", 2)}, # \"Airways inspected\"\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2165517.py\", line 30, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Airways' not found 2 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/2145069.py",
+      "script": "data/granular annotations/Python_update_scripts/2245091.py",
       "returncode": 1,
-      "elapsed_seconds": 0.023374,
+      "elapsed_seconds": 0.018945,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2145069.py\", line 484, in <module>\n    {\"label\": \"DEV_INSTRUMENT\", **get_span(text_10, \"flexible bronchoscope\", 1)},\n                                  ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2145069.py\", line 24, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found.\")\nValueError: Term 'flexible bronchoscope' (occurrence 1) not found.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2245091.py\", line 94, in <module>\n    {\"label\": \"OUTCOME_COMPLICATION\", **get_span(text_1, \"no complications\", 1)},\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2245091.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'no complications' not found 1 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/2297743.py",
+      "script": "data/granular annotations/Python_update_scripts/2245501.py",
       "returncode": 1,
-      "elapsed_seconds": 0.02246,
+      "elapsed_seconds": 0.018808,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2297743.py\", line 95, in <module>\n    {\"label\": \"ANAT_AIRWAY\", **get_span(text_3, \"tracheal\", 2)},\n                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2297743.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'tracheal' not found 2 times in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2245501.py\", line 126, in <module>\n    {\"label\": \"DEV_INSTRUMENT\", **get_span(text_4, \"fiducial\", 2)},\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2245501.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'fiducial' not found 2 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/2323422.py",
+      "script": "data/granular annotations/Python_update_scripts/2453744.py",
       "returncode": 1,
-      "elapsed_seconds": 0.021629,
+      "elapsed_seconds": 0.018224,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2323422.py\", line 271, in <module>\n    {\"label\": \"OBS_LESION\", **get_span(t10, \"effusion\", 3)},\n                              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2323422.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'effusion' not found 3 times in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2453744.py\", line 71, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_1, \"endobronchial ultrasound-guided\", 1)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'tuple' object is not a mapping\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/2498770.py",
+      "script": "data/granular annotations/Python_update_scripts/2497584.py",
       "returncode": 1,
-      "elapsed_seconds": 0.021173,
+      "elapsed_seconds": 0.017825,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2498770.py\", line 258, in <module>\n    {\"label\": \"DEV_INSTRUMENT\", **get_span(t10, \"semi-rigid pleuroscope\", 1)},\n                                  ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2498770.py\", line 31, in get_span\n    raise ValueError(f\"Term '{term}' not found (occurrence {occurrence}) in text:\\n{text[:100]}...\")\nValueError: Term 'semi-rigid pleuroscope' not found (occurrence 1) in text:\nPt: [REDACTED] || MRN: [REDACTED] || DOB: [REDACTED]\nDate: [REDACTED] || Location: [REDACTED]\nAttend...\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2497584.py\", line 242, in <module>\n    {\"label\": \"OUTCOME_COMPLICATION\", **get_span(text_1, \"no pneumothorax\", 2)},\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2497584.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'no pneumothorax' not found 2 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/2912934.py",
+      "script": "data/granular annotations/Python_update_scripts/2572017.py",
       "returncode": 1,
-      "elapsed_seconds": 0.021755,
+      "elapsed_seconds": 0.016566,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2912934.py\", line 181, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_6, \"Ablation\", 2)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not a mapping\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2572017.py\", line 11, in <module>\n    from add_training_case import add_case\nModuleNotFoundError: No module named 'add_training_case'\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/3060386.py",
+      "script": "data/granular annotations/Python_update_scripts/2590875.py",
       "returncode": 1,
-      "elapsed_seconds": 0.022694,
+      "elapsed_seconds": 0.018157,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3060386.py\", line 90, in <module>\n    {\"label\": \"PROC_METHOD\",         **get_span(text_1, \"rigid bronchoscopy\", 2)},\n                                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3060386.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'rigid bronchoscopy' (occurrence 2) not found in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2590875.py\", line 142, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"EBUS-TBNA\", 2)}, # In Specimen section\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2590875.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'EBUS-TBNA' not found 2 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/308212892.py",
+      "script": "data/granular annotations/Python_update_scripts/2777264.py",
       "returncode": 1,
-      "elapsed_seconds": 0.022252,
+      "elapsed_seconds": 0.018912,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/308212892.py\", line 56, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"dilated\", 2)},\n                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/308212892.py\", line 28, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'dilated' (occurrence 2) not found in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2777264.py\", line 154, in <module>\n    {\"label\": \"DEV_NEEDLE\", **get_span(text_1, \"Aspiration needle\", 2)},\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2777264.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Aspiration needle' not found 2 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/3591187.py",
+      "script": "data/granular annotations/Python_update_scripts/2844661.py",
       "returncode": 1,
-      "elapsed_seconds": 0.021941,
+      "elapsed_seconds": 0.017289,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3591187.py\", line 267, in <module>\n    {\"label\": \"DEV_CATHETER\", **get_span(t10, \"chest tube\", 2)},\n                                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3591187.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'chest tube' not found 2 times in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2844661.py\", line 124, in <module>\n    {\"label\": \"ANAT_AIRWAY\", **get_span(text_1, \"Trachea\", 1)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not a mapping\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/44521901.py",
+      "script": "data/granular annotations/Python_update_scripts/2847593.py",
       "returncode": 1,
-      "elapsed_seconds": 0.02093,
+      "elapsed_seconds": 0.019628,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/44521901.py\", line 81, in <module>\n    {\"label\": \"OBS_FINDING\", **get_span(text_1, \"Effusion\", 4)}, # 1: Indication, 2: Preop, 3: Proc desc (effusion), 4: Findings\n                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/44521901.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Effusion' not found 4 times in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2847593.py\", line 446, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_10, \"Radial EBUS\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2847593.py\", line 25, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Radial EBUS' not found 2 times in text.\n"
     },
     {
-      "script": "data/granular annotations/Python_update_scripts/4738291.py",
+      "script": "data/granular annotations/Python_update_scripts/2880089.py",
       "returncode": 1,
-      "elapsed_seconds": 0.023997,
+      "elapsed_seconds": 0.019846,
       "stdout": "",
-      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4738291.py\", line 376, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_10, \"Mechanical Debridement\", 2)},\n                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4738291.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Mechanical Debridement' (occurrence 2) not found in text.\n"
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2880089.py\", line 299, in <module>\n    {\"label\": \"ANAT_AIRWAY\", **get_span(t10, \"Trachea\", 2)}, # \"Trachea\" in \"visualized portion of the trachea\" and \"clean out the Trachea\"\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2880089.py\", line 23, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Trachea' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/2914130.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018397,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2914130.py\", line 233, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(t1, \"robotic bronchoscopy\", 3)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2914130.py\", line 14, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'robotic bronchoscopy' (occurrence 3) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/2947385.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018543,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2947385.py\", line 159, in <module>\n    {\"label\": \"ANAT_LN_STATION\", **get_span(t6, \"stations 7\", 2)},\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/2947385.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'stations 7' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3071562.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019396,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3071562.py\", line 106, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_3071562_syn_3, \"pleurodesis\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3071562.py\", line 30, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'pleurodesis' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3184705.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019679,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3184705.py\", line 138, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_4, \"dilation\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3184705.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'dilation' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3217688.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018934,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3217688.py\", line 127, in <module>\n    {\"label\": \"LATERALITY\", **get_span(text_4, \"right\", 2)},\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3217688.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'right' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3225609.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018839,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3225609.py\", line 111, in <module>\n    {\"label\": \"OBS_LESION\", **get_span(t3, \"stricture\", 2)},\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3225609.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'stricture' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3240651.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019147,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3240651.py\", line 151, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(t6, \"Ablation\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3240651.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Ablation' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3286551.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018784,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3286551.py\", line 257, in <module>\n    {\"label\": \"OUTCOME_COMPLICATION\", **get_span(text_1, \"no pneumothorax\", 2)},\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3286551.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'no pneumothorax' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3311679.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.022489,
+      "stdout": "",
+      "stderr": "  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3311679.py\", line 57\n    [cite_start]{\"label\": \"OBS_LESION\", **get_span(t1, \"Lung Cancer\", 1)},         # [cite: 12]\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3320855.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.021275,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3320855.py\", line 53, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(t_3320855, \"bronch\", 1)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'tuple' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3351868.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.0193,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3351868.py\", line 106, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_3, \"debridement\", 3)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3401530.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019402,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3401530.py\", line 250, in <module>\n    {\"label\": \"OUTCOME_COMPLICATION\", **get_span(text_1, \"no pneumothorax\", 2)},\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3401530.py\", line 28, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'no pneumothorax' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3410491.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019895,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3410491.py\", line 103, in <module>\n    {\"label\": \"DEV_INSTRUMENT\", **get_span(text_3, \"brush\", 2)},\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3410491.py\", line 29, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found.\")\nValueError: Term 'brush' (occurrence 2) not found.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3427249.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019058,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3427249.py\", line 189, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(t6, \"Ablation\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3427249.py\", line 34, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Ablation' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3429488.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019231,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3429488.py\", line 194, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_6, \"poudrage\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3429488.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'poudrage' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3459527.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.017913,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3459527.py\", line 149, in <module>\n    {\"label\": \"DEV_NEEDLE\",         **get_span(text_1, \"Aspiration needle\", 2)},\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3459527.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Aspiration needle' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3492872.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019603,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3492872.py\", line 308, in <module>\n    {\"label\": \"PROC_ACTION\",      **get_span(t10, \"Ablation\", 2)},\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3492872.py\", line 36, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Ablation' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3606919.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018015,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3606919.py\", line 204, in <module>\n    {\"label\": \"OBS_LESION\", **get_span(text_1, \"pulmonary lesion\", 2)}, # \"LUL pulmonary lesion\", pulmonary lesion occurs earlier in \"solid pulmonary...\"\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3606919.py\", line 43, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found.\")\nValueError: Term 'pulmonary lesion' (occurrence 2) not found.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3691751.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018974,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3691751.py\", line 132, in <module>\n    {\"label\": \"ANAT_LN_STATION\", **get_span(text_1, \"4R\", 2)}, # 1st is in '10R', 2nd is standalone '4R' -- Note: Python find finds substrings. '4R' might be inside '10R' (No, 0R != 4R). \n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3691751.py\", line 31, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term '4R' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3692014.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019805,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3692014.py\", line 369, in <module>\n    {\"label\": \"ANAT_LUNG_LOC\", **get_span(text_10, \"right lower lobe\", 3)},\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3692014.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'right lower lobe' not found 3 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3755795.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.017298,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3755795.py\", line 127, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_3755795, \"Robotic-assisted\", 1)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3755795.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Robotic-assisted' (occurrence 1) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3842227.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019684,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3842227.py\", line 184, in <module>\n    {\"label\": \"MEAS_COUNT\", **get_span(text_1, \"5\", 10)}, # Context \"Forceps biopsies: 5\"\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3842227.py\", line 30, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term '5' (occurrence 10) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3847291.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018523,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3847291.py\", line 138, in <module>\n    {\"label\": \"ANAT_AIRWAY\", **get_span(text_4, \"subglottic\", 2)}, # lower case usage\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3847291.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'subglottic' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3847592.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018534,
+      "stdout": "Warning: Term 'Cryobiopsy' (occurrence 2) not found.\n",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3847592.py\", line 506, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_1, \"Cryobiopsy\", 2)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3849571.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.0199,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3849571.py\", line 347, in <module>\n    {\"label\": \"ANAT_AIRWAY\", **get_span(text_10, \"Trachea\", 1)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3849571.py\", line 23, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Trachea' not found 1 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3900786.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018592,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3900786.py\", line 143, in <module>\n    {\"label\": \"DEV_INSTRUMENT\", **get_span(text_1, \"Aspiration needle\", 2)}, # Using '2' because it appears earlier in '22-gauge aspiration needle'\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3900786.py\", line 28, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Aspiration needle' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3916235.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019244,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3916235.py\", line 140, in <module>\n    {\"label\": \"DEV_NEEDLE\", **get_span(text_3916235, \"Aspiration needle\", 2)},\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3916235.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Aspiration needle' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/3983760.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018484,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/3983760.py\", line 235, in <module>\n    {\"label\": \"OBS_ROSE\", **get_span(text_1, \"No malignant cells\", 3)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4025945.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018391,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4025945.py\", line 165, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_1, \"endobronchial ultrasound-guided\", 2)}, # Lowercase\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4025945.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'endobronchial ultrasound-guided' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4075770.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018862,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4075770.py\", line 119, in <module>\n    {\"label\": \"OBS_ROSE\", **get_span(text_4075770, \"Malignant\", 1)},\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4075770.py\", line 25, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Malignant' not found 1 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4112765.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020311,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4112765.py\", line 224, in <module>\n    {\"label\": \"PROC_METHOD\", **dict(zip([\"start\", \"end\"], get_span(t9, \"robotic\", 2)))},\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4112765.py\", line 24, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'robotic' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4160565.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019258,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4160565.py\", line 359, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_10, \"Fluoroscopy\", 1)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4160565.py\", line 29, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Fluoroscopy' (occurrence 1) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4168297.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.01988,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4168297.py\", line 172, in <module>\n    {\"label\": \"OBS_LESION\",         **get_span(text_6, \"Malignant effusion\", 1)},\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4168297.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Malignant effusion' (occurrence 1) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4229850.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020129,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4229850.py\", line 140, in <module>\n    {\"label\": \"OBS_LESION\", \"text\": \"tumor\", **get_span(text_4, \"tumor\", 2)},\n                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4229850.py\", line 36, in get_span\n    raise ValueError(f\"Term '{term}' not found (occurrence {occurrence}) in text.\")\nValueError: Term 'tumor' not found (occurrence 2) in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4236971.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018317,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4236971.py\", line 131, in <module>\n    {\"label\": \"PROC_ACTION\",    **get_span(text_1, \"Bronchoscopy\", 2)}, # In header \"Procedure 2: Robotic Bronchoscopy\"\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4236971.py\", line 29, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Bronchoscopy' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4266178.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.0182,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4266178.py\", line 155, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"transbronchial needle aspiration\", 6)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4266178.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'transbronchial needle aspiration' (occurrence 6) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4286546.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.017756,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4286546.py\", line 130, in <module>\n    {\"label\": \"OBS_LESION\", **get_span(text_1, \"nodule\", 1)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'tuple' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4351438.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018763,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4351438.py\", line 193, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"biopsies\", 2)}, # \"biopsy\" in \"biopsy-proven\" is 1\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4351438.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found.\")\nValueError: Term 'biopsies' (occurrence 2) not found.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4366016.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019969,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4366016.py\", line 188, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_1, \"general anesthesia\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4366016.py\", line 29, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'general anesthesia' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4376848.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018941,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4376848.py\", line 120, in <module>\n    {\"label\": \"OBS_FINDING\", **get_span(text_3, \"stenosis\", 2)}\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4376848.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'stenosis' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4390529.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018486,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4390529.py\", line 163, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_4, \"debulking\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4390529.py\", line 33, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'debulking' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4392820.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.017727,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4392820.py\", line 146, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"transbronchial needle aspiration\", 4)}, # 4th occ overall, 1st in this section\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4392820.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'transbronchial needle aspiration' not found 4 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4458466.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018656,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4458466.py\", line 88, in <module>\n    {\"label\": \"ANAT_LN_STATION\", **get_span(text_1, \"Station 4L\", 1)},\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4458466.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Station 4L' not found 1 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4534382.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019869,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4534382.py\", line 206, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"Brushings\", 3)}, # Equipment -> Part B -> Specimens\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4534382.py\", line 12, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times.\")\nValueError: Term 'Brushings' not found 3 times.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4577270.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018014,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4577270.py\", line 253, in <module>\n    {\"label\": \"DEV_CATHETER\", **get_span(text_10, \"chest tube\", 2)},\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4577270.py\", line 28, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'chest tube' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4591666.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.015601,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4591666.py\", line 11, in <module>\n    from add_training_case import add_case\nModuleNotFoundError: No module named 'add_training_case'\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4597999.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019744,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4597999.py\", line 273, in <module>\n    {\"label\": \"OUTCOME_COMPLICATION\", **get_span(text_4597999, \"no pneumothorax\", 2)},\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4597999.py\", line 27, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'no pneumothorax' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4642724.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018912,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4642724.py\", line 173, in <module>\n    {\"label\": \"DEV_STENT\", **get_span(t6, \"Stent\", 2)},\n                             ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4642724.py\", line 24, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Stent' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4691776.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.01827,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4691776.py\", line 80, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(t1, \"endobronchial ultrasound-guided\", 1)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'tuple' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4726193.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019651,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4726193.py\", line 280, in <module>\n    {\"label\": \"OUTCOME_AIRWAY_LUMEN_PRE\", **get_span(text_10, \"90% obstruction\", 1)},\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4726193.py\", line 32, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in the provided text.\")\nValueError: Term '90% obstruction' not found 1 times in the provided text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4729381.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019178,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4729381.py\", line 144, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_1, \"Radial EBUS\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4729381.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Radial EBUS' (occurrence 2) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4735191.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018852,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4735191.py\", line 264, in <module>\n    {\"label\": \"OBS_LESION\", **get_span(text_1, \"peripheral nodule\", 2)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4744854.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019155,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4744854.py\", line 257, in <module>\n    {\"label\": \"DEV_INSTRUMENT\", **get_span(text_9, \"Laser\", 2)},\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4744854.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Laser' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4821956.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.020426,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4821956.py\", line 451, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_10, \"robotic bronchoscopy\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4821956.py\", line 24, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found.\")\nValueError: Term 'robotic bronchoscopy' (occurrence 2) not found.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4829301.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.01936,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4829301.py\", line 71, in <module>\n    {\"label\": \"OBS_ROSE\", **get_span(text_syn_2, \"Malignant\", 1)}, # \"malignant cells\"\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4829301.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'Malignant' (occurrence 1) not found in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4830228.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018609,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4830228.py\", line 53, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_1, \"endobronchial ultrasound\", 1)},\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'list' object is not a mapping\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4896975.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018907,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4896975.py\", line 160, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(t6, \"Ablation\", 2)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4896975.py\", line 22, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'Ablation' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4977152.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018391,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4977152.py\", line 130, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_1, \"Radial EBUS\", 3)}, # Tool-in-lesion confirmed via\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4977152.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} time(s) in text.\")\nValueError: Term 'Radial EBUS' not found 3 time(s) in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/4978533.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.02009,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4978533.py\", line 110, in <module>\n    {\"label\": \"PROC_METHOD\", **get_span(text_3, \"microwave\", 2)}, # \"microwave energy\" is 2nd mention of microwave\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/4978533.py\", line 39, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'microwave' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/5022444.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018638,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5022444.py\", line 242, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_5022444, \"biopsy\", 2)}, # \"Biopsy forceps\" was 1. \"peripheral lung biopsy\" is 2.\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5022444.py\", line 26, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'biopsy' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/5113901.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019181,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5113901.py\", line 285, in <module>\n    {\"label\": \"OUTCOME_COMPLICATION\", **get_span(t1, \"no pneumothorax\", 2)}\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5113901.py\", line 21, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'no pneumothorax' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/5214250.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018332,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5214250.py\", line 125, in <module>\n    {\"label\": \"MEAS_COUNT\", **get_span(t1, \"x2\", 2)},\n                              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5214250.py\", line 34, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'x2' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/5225684.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.019609,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5225684.py\", line 165, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"transbronchial needle aspiration\", 4)},\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5225684.py\", line 28, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'transbronchial needle aspiration' not found 4 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/5230703.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.017814,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5230703.py\", line 248, in <module>\n    {\"label\": \"OUTCOME_COMPLICATION\", **get_span(text_1, \"no pneumothorax\", 2)},\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5230703.py\", line 20, in get_span\n    raise ValueError(f\"Term '{term}' not found {occurrence} times in text.\")\nValueError: Term 'no pneumothorax' not found 2 times in text.\n"
+    },
+    {
+      "script": "data/granular annotations/Python_update_scripts/5246824.py",
+      "returncode": 1,
+      "elapsed_seconds": 0.018937,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5246824.py\", line 150, in <module>\n    {\"label\": \"PROC_ACTION\", **get_span(text_1, \"transbronchial needle aspiration\", 5)}, # 5th occurrence total\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/rjm/projects/proc_suite/data/granular annotations/Python_update_scripts/5246824.py\", line 26, in get_span\n    raise ValueError(f\"Term '{term}' (occurrence {occurrence}) not found in text.\")\nValueError: Term 'transbronchial needle aspiration' (occurrence 5) not found in text.\n"
     }
   ]
 }

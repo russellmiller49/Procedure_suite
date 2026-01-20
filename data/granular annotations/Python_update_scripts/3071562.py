@@ -103,7 +103,7 @@ entities_3071562_syn_3 = [
     {"label": "PROC_ACTION", **get_span(text_3071562_syn_3, "obtained", 2)},
     {"label": "MEDICATION", **get_span(text_3071562_syn_3, "Talc", 2)},
     {"label": "PROC_ACTION", **get_span(text_3071562_syn_3, "insufflated", 1)},
-    {"label": "PROC_ACTION", **get_span(text_3071562_syn_3, "pleurodesis", 2)},
+    {"label": "PROC_ACTION", **get_span(text_3071562_syn_3, "pleurodesis", 1)}, # Corrected from 2 to 1 (case sensitive: 'Pleurodesis' vs 'pleurodesis')
     {"label": "OBS_ROSE", **get_span(text_3071562_syn_3, "malignant", 1)},
     {"label": "DEV_CATHETER", **get_span(text_3071562_syn_3, "Chest tube", 1)},
     {"label": "PROC_ACTION", **get_span(text_3071562_syn_3, "placed", 1)},
@@ -126,7 +126,7 @@ entities_3071562_syn_4 = [
     {"label": "PROC_ACTION", **get_span(text_3071562_syn_4, "Biopsy", 1)},
     {"label": "MEDICATION", **get_span(text_3071562_syn_4, "Talc", 1)},
     {"label": "MEDICATION", **get_span(text_3071562_syn_4, "Sedation", 1)},
-    {"label": "ANAT_PLEURA", **get_span(text_3071562_syn_4, "6th ICS", 1)}, # Mapped via custom rules if needed, strictly strictly ICS is chest wall boundary
+    {"label": "ANAT_PLEURA", **get_span(text_3071562_syn_4, "6th ICS", 1)}, 
     {"label": "OBS_LESION", **get_span(text_3071562_syn_4, "mass", 1)},
     {"label": "PROC_ACTION", **get_span(text_3071562_syn_4, "Biopsies", 1)},
     {"label": "MEAS_COUNT", **get_span(text_3071562_syn_4, "12", 1)},
@@ -185,7 +185,7 @@ entities_3071562_syn_6 = [
     {"label": "ANAT_PLEURA", **get_span(text_3071562_syn_6, "parietal pleura", 1)},
     {"label": "MEAS_COUNT", **get_span(text_3071562_syn_6, "12", 1)},
     {"label": "PROC_ACTION", **get_span(text_3071562_syn_6, "staging", 1)},
-    {"label": "MEDICATION", **get_span(text_3071562_syn_6, "Talc", 2)},
+    {"label": "MEDICATION", **get_span(text_3071562_syn_6, "Talc", 1)}, 
     {"label": "DEV_CATHETER", **get_span(text_3071562_syn_6, "chest drain", 1)},
 ]
 BATCH_DATA.append({"id": "3071562_syn_6", "text": text_3071562_syn_6, "entities": entities_3071562_syn_6})
