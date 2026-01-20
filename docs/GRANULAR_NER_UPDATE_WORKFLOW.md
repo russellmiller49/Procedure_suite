@@ -87,6 +87,22 @@ Optional: validate alignment on the new file:
 python scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl
 ```
 
+### 4.6) Clean the dataset labels (recommended after `label_neg_stent.py --write`)
+
+After you generate `ner_dataset_all.neg_stent.jsonl`, run the cleaner to:
+- merge known “alias” labels (e.g., `MEAS_VOLUME` → `MEAS_VOL`)
+- drop labels you don’t want the NER model to learn
+
+```bash
+python data/ml_training/clean_data.py \
+  --input data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl \
+  --output data/ml_training/granular_ner/ner_dataset_all.neg_stent.cleaned.jsonl
+```
+
+Notes:
+- The merge/drop rules live in `data/ml_training/clean_data.py` (`MERGE_MAP`, `DROP_LABELS`).
+- The cleaner supports both `entities` (current) and legacy `spans` keys.
+
 ### 5) Rebuild BIO format
 
 ```bash
@@ -97,16 +113,22 @@ python scripts/convert_spans_to_bio.py \
   --max-length 512
 ```
 
-If you ran the `NEG_STENT` step above, use the `*.neg_stent.jsonl` file as input instead:
+If you ran the `NEG_STENT` + clean steps above, use the cleaned file as input instead:
 
 ```bash
 python scripts/convert_spans_to_bio.py \
-  --input data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl \
+  --input data/ml_training/granular_ner/ner_dataset_all.neg_stent.cleaned.jsonl \
   --output data/ml_training/granular_ner/ner_bio_format.jsonl \
   --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
   --max-length 512
 ```
-###6) Retrain:
+
+If you ran `NEG_STENT` but skipped cleaning, use:
+- `--input data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl`
+
+### 6) Retrain
+
+```bash
 python scripts/train_registry_ner.py \
   --data data/ml_training/granular_ner/ner_bio_format_refined.jsonl \
   --output-dir artifacts/registry_biomedbert_ner_v2 \
@@ -114,6 +136,7 @@ python scripts/train_registry_ner.py \
   --lr 2e-5 \
   --train-batch 16 \
   --eval-batch 16
+```
 
 ## “Clean rebuild” workflow (you want to regenerate from scratch)
 

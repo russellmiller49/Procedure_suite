@@ -385,10 +385,9 @@ BATCH_DATA.append((t30, e30))
 # ==============================================================================
 
 if __name__ == "__main__":
-    for text, entities in BATCH_DATA:
-        # The TypeError "missing 2 required positional arguments: 'entities' and 'repo_root'" 
-        # when calling add_case(text, entities) implies the function signature is likely:
-        # def add_case(text, dataset_name, entities, repo_root):
-        # We pass "neg_stent" as the dataset identifier and REPO_ROOT as the path.
-        add_case(text, "neg_stent", entities, REPO_ROOT)
+    # Signature: add_case(note_id, raw_text, entities, repo_root)
+    source_id = Path(__file__).name
+    for idx, (text, entities) in enumerate(BATCH_DATA, start=1):
+        note_id = f"{source_id}#{idx:03d}"
+        add_case(note_id, text, entities, REPO_ROOT)
     print(f"Successfully added {len(BATCH_DATA)} training cases with NEG_STENT labels.")

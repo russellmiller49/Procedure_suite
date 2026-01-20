@@ -1,5 +1,6 @@
 import json
 import datetime
+import re
 from pathlib import Path
 
 def _is_within(path: Path, root: Path) -> bool:
@@ -50,6 +51,23 @@ def add_case(note_id, raw_text, entities, repo_root):
     """
     
     repo_root = _resolve_repo_root(repo_root)
+
+    # --- Guard against the most common generated-script bug ---
+    # Some generated scripts accidentally swap (note_id, raw_text) and call:
+    #   add_case(<full note text>, <script_name_or_dataset_tag>, entities, repo_root)
+    # That corrupts the dataset (entities get clamped to the short "raw_text").
+    if isinstance(note_id, str) and isinstance(raw_text, str):
+        note_id_looks_like_text = (len(note_id) > 200) and (("\n" in note_id) or (" " in note_id))
+        raw_text_looks_like_id = (len(raw_text) <= 80) and ("\n" not in raw_text) and (
+            raw_text.endswith(".py") or re.fullmatch(r"[A-Za-z0-9_.-]+", raw_text) is not None
+        )
+        if note_id_looks_like_text and raw_text_looks_like_id:
+            raise ValueError(
+                "add_case() expects (note_id, raw_text, entities, repo_root), but it looks like "
+                "the first two arguments were swapped. Got a note_id that looks like note text "
+                f"(len={len(note_id)}), and a raw_text that looks like an identifier ({raw_text!r}). "
+                "Fix the caller to pass a short unique note_id and the full note text as raw_text."
+            )
 
     # Define Output Directory Structure
     output_dir = repo_root / "data" / "ml_training" / "granular_ner"
@@ -109,6 +127,9 @@ def add_case(note_id, raw_text, entities, repo_root):
             text = raw_text[start:end]
         elif raw_text:
             text = raw_text[start:end]
+
+        if end <= start:
+            continue
 
         normalized_entities.append(
             {"label": label, "start": start, "end": end, "text": text}
