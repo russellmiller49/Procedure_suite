@@ -248,8 +248,9 @@ BATCH_DATA.append((t20, e20))
 # ==============================================================================
 
 if __name__ == "__main__":
-    for i, (text, entities) in enumerate(BATCH_DATA, 1):
-        # Inferring signature: add_case(text, source_id, entities, repo_root)
-        # Passing a unique string identifier as the 2nd argument
-        add_case(text, f"CTX_STENT_PRESENT_{i}", entities, REPO_ROOT)
+    # Signature: add_case(note_id, raw_text, entities, repo_root)
+    source_id = Path(__file__).name
+    for idx, (text, entities) in enumerate(BATCH_DATA, start=1):
+        note_id = f"{source_id}#{idx:03d}"
+        add_case(note_id, text, entities, REPO_ROOT)
     print(f"Successfully added {len(BATCH_DATA)} training cases with CTX_STENT_PRESENT labels.")

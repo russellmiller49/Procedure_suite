@@ -2,11 +2,11 @@
   "input": "data/ml_training/granular_ner/ner_dataset_all.jsonl",
   "output": "data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl",
   "present_label": "CTX_STENT_PRESENT",
-  "total_records": 2479,
-  "total_dev_stent_spans_seen": 614,
-  "dev_stent_relabelled_total": 12,
+  "total_records": 2509,
+  "total_dev_stent_spans_seen": 619,
+  "dev_stent_relabelled_total": 13,
   "dev_stent_relabelled_to_neg_stent": 3,
-  "dev_stent_relabelled_to_present_label": 9,
+  "dev_stent_relabelled_to_present_label": 10,
   "neg_stent_added": 5,
   "changes": [
     {
@@ -128,6 +128,16 @@
       "reason": "explicit_absence",
       "span_text": "stent",
       "context": "he large tumors. We cleaned up the base of the tumors with argon plasma coagulation. By the end, his airway was wide open. He had refused a stent, so we rely on his chemotherapy to prevent regrowth."
+    },
+    {
+      "record_id": "CTX_STENT_PRESENT_1.py#008",
+      "start": 60,
+      "end": 73,
+      "old_label": "DEV_STENT",
+      "new_label": "CTX_STENT_PRESENT",
+      "reason": "present_no_intervention",
+      "span_text": "covered stent",
+      "context": "Recurrent tumor ingrowth was seen through the mesh of the uncovered stent.  We decided to place a new covered stent inside the existing stent to seal the tumor."
     }
   ],
   "additions": [

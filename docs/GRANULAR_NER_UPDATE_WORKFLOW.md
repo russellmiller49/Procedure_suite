@@ -136,8 +136,8 @@ If you ran `NEG_STENT` but skipped cleaning, use:
 
 ```bash
 python scripts/train_registry_ner.py \
-  --data data/ml_training/granular_ner/ner_bio_format_refined.jsonl \
-  --output-dir artifacts/registry_biomedbert_ner_v2 \
+  --data data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --output-dir artifacts/registry_biomedbert_ner \
   --epochs 20 \
   --lr 2e-5 \
   --train-batch 16 \

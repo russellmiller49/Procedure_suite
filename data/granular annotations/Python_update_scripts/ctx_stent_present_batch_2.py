@@ -379,8 +379,9 @@ BATCH_DATA.append((t50, e50))
 # ==============================================================================
 
 if __name__ == "__main__":
-    # The signature requires: (source_identifier, text, entities, repo_root)
+    # Signature: add_case(note_id, raw_text, entities, repo_root)
     source_id = Path(__file__).name
-    for text, entities in BATCH_DATA:
-        add_case(source_id, text, entities, REPO_ROOT)
+    for idx, (text, entities) in enumerate(BATCH_DATA, start=1):
+        note_id = f"{source_id}#{idx:03d}"
+        add_case(note_id, text, entities, REPO_ROOT)
     print(f"Successfully added {len(BATCH_DATA)} training cases with CTX_STENT_PRESENT labels.")
