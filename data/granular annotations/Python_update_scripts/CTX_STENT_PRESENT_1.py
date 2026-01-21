@@ -249,7 +249,7 @@ BATCH_DATA.append((t20, e20))
 
 if __name__ == "__main__":
     for i, (text, entities) in enumerate(BATCH_DATA, 1):
-        # Inferring signature: add_case(text, source_id, entities, repo_root)
-        # Passing a unique string identifier as the 2nd argument
-        add_case(text, f"CTX_STENT_PRESENT_{i}", entities, REPO_ROOT)
+        # Inferring signature: add_case(source_id, text, entities, repo_root)
+        # Passing a unique string identifier as the 1st argument and text as 2nd
+        add_case(f"CTX_STENT_PRESENT_{i}", text, entities, REPO_ROOT)
     print(f"Successfully added {len(BATCH_DATA)} training cases with CTX_STENT_PRESENT labels.")

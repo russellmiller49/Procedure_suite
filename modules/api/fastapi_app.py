@@ -397,6 +397,73 @@ def _static_files_enabled() -> bool:
     return os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes")
 
 
+@app.get("/ui")
+def ui_base() -> FileResponse:
+    """Serve Clinical Dashboard directly at /ui."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    index_path = _phi_redactor_static_dir() / "index.html"
+    return _phi_redactor_response(index_path)
+
+
+@app.get("/ui/")
+def ui_index() -> FileResponse:
+    """Serve Clinical Dashboard directly at /ui/."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    index_path = _phi_redactor_static_dir() / "index.html"
+    return _phi_redactor_response(index_path)
+
+
+@app.get("/ui/index.html")
+def ui_index_html() -> FileResponse:
+    """Serve Clinical Dashboard index.html at /ui/index.html."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    index_path = _phi_redactor_static_dir() / "index.html"
+    return _phi_redactor_response(index_path)
+
+
+@app.get("/ui/app.js")
+def ui_app_js() -> FileResponse:
+    """Serve Clinical Dashboard app.js at /ui/app.js."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "app.js")
+
+
+@app.get("/ui/styles.css")
+def ui_styles_css() -> FileResponse:
+    """Serve Clinical Dashboard styles.css at /ui/styles.css."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "styles.css")
+
+
+@app.get("/ui/redactor.worker.js")
+def ui_worker_js() -> FileResponse:
+    """Serve redactor.worker.js at /ui/redactor.worker.js."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "redactor.worker.js")
+
+
+@app.get("/ui/allowlist_trie.json")
+def ui_allowlist() -> FileResponse:
+    """Serve allowlist_trie.json at /ui/allowlist_trie.json."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "allowlist_trie.json")
+
+
+@app.get("/ui/protectedVeto.js")
+def ui_protected_veto() -> FileResponse:
+    """Serve protectedVeto.js at /ui/protectedVeto.js."""
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "protectedVeto.js")
+
+
 @app.get("/ui/phi_redactor")
 def phi_redactor_redirect() -> RedirectResponse:
     # Avoid "/ui/phi_redactor" being treated as a file path in the browser (breaks relative URLs).
@@ -461,13 +528,19 @@ def phi_redactor_sw() -> FileResponse:
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
     # Use absolute path to static directory relative to this file
-    # Mount PHI Redactor as the main UI (client-side PHI detection)
-    phi_redactor_dir = Path(__file__).parent / "static" / "phi_redactor"
-    app.mount("/ui", StaticFiles(directory=str(phi_redactor_dir), html=True), name="ui")
-    # Also mount vendor directory for ONNX model files
+    static_dir = Path(__file__).parent / "static"
+    phi_redactor_dir = static_dir / "phi_redactor"
     vendor_dir = phi_redactor_dir / "vendor"
+
+    # Mount vendor directory for ONNX model files at /ui/vendor/
     if vendor_dir.exists():
         app.mount("/ui/vendor", StaticFiles(directory=str(vendor_dir)), name="ui_vendor")
+
+    # Mount phi_redactor for backward compatibility at /ui/phi_redactor/
+    app.mount("/ui/phi_redactor", StaticFiles(directory=str(phi_redactor_dir), html=True), name="phi_redactor")
+
+    # Mount old workbench at /ui/workbench/ (legacy)
+    app.mount("/ui/workbench", StaticFiles(directory=str(static_dir), html=True), name="workbench")
 
 # Configure logging
 _logger = logging.getLogger(__name__)

@@ -11,8 +11,12 @@ const cancelBtn = document.getElementById("cancelBtn");
 const applyBtn = document.getElementById("applyBtn");
 const revertBtn = document.getElementById("revertBtn");
 const submitBtn = document.getElementById("submitBtn");
+const exportBtn = document.getElementById("exportBtn");
 const addRedactionBtn = document.getElementById("addRedactionBtn");
 const entityTypeSelect = document.getElementById("entityTypeSelect");
+
+// State management for diff tracking
+let lastServerResponse = null;
 
 /**
  * Get merge mode from query param or localStorage.
@@ -121,8 +125,8 @@ function safeSnippet(text, start, end) {
  */
 function renderResults(data) {
   const statusBanner = document.getElementById("statusBanner");
-  const cptTable = document.getElementById("cptTable");
-  const registrySummary = document.getElementById("registrySummary");
+  const cptSection = document.getElementById("cptSection");
+  const registrySection = document.getElementById("registrySection");
   const serverResponse = document.getElementById("serverResponse");
 
   // Show raw JSON in collapsible section
@@ -145,17 +149,17 @@ function renderResults(data) {
   // Render CPT table
   if (data.suggestions?.length > 0 || data.cpt_codes?.length > 0) {
     renderCPTTable(data);
-    cptTable.classList.remove("hidden");
+    cptSection.classList.remove("hidden");
   } else {
-    cptTable.classList.add("hidden");
+    cptSection.classList.add("hidden");
   }
 
-  // Render registry summary
+  // Render registry form
   if (data.registry) {
-    renderRegistrySummary(data.registry);
-    registrySummary.classList.remove("hidden");
+    renderRegistryForm(data.registry);
+    registrySection.classList.remove("hidden");
   } else {
-    registrySummary.classList.add("hidden");
+    registrySection.classList.add("hidden");
   }
 }
 
@@ -278,11 +282,11 @@ function formatValueForDisplay(value) {
 }
 
 /**
- * Recursively render all non-null registry fields.
+ * Recursively render all non-null registry fields as a form.
  * Flattens nested objects with arrow notation paths.
  */
-function renderRegistrySummary(registry) {
-  const tbody = document.getElementById("registryTableBody");
+function renderRegistryForm(registry) {
+  const container = document.getElementById("registryForm");
   const rows = [];
 
   // Keys to skip (complex nested structures shown separately or not useful)
@@ -315,28 +319,52 @@ function renderRegistrySummary(registry) {
         const displayKey = path
           .split(".")
           .map(part => part.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()))
-          .join(" → ");
+          .join(" > ");
 
-        rows.push([displayKey, displayValue]);
+        rows.push({ path, label: displayKey, value: displayValue, rawValue: value });
       }
     }
   }
 
   extractFields(registry);
 
-  // Build table HTML
-  let html = "<tbody>";
+  // Build form HTML
+  let html = "";
   if (rows.length === 0) {
-    html += '<tr><td colspan="2" class="subtle" style="text-align: center;">No registry data extracted</td></tr>';
+    html = '<div class="subtle" style="text-align: center; padding: 20px;">No registry data extracted</div>';
   } else {
-    rows.forEach(([label, value]) => {
-      // Escape HTML in values to prevent XSS
-      const safeValue = value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      html += `<tr><td><strong>${label}</strong></td><td>${safeValue}</td></tr>`;
+    // Group by top-level category
+    const groups = {};
+    rows.forEach(row => {
+      const category = row.path.split(".")[0].replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      if (!groups[category]) groups[category] = [];
+      groups[category].push(row);
     });
+
+    for (const [category, items] of Object.entries(groups)) {
+      html += `<div class="collapsible-section open">`;
+      html += `<button type="button" class="collapsible-header" onclick="this.parentElement.classList.toggle('open')">`;
+      html += `<span>${category}</span>`;
+      html += `<span class="collapsible-icon">▼</span>`;
+      html += `</button>`;
+      html += `<div class="collapsible-content">`;
+
+      items.forEach(({ path, label, value }) => {
+        // Escape HTML in values to prevent XSS
+        const safeValue = String(value).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const shortLabel = label.includes(" > ") ? label.split(" > ").slice(1).join(" > ") : label;
+
+        html += `<div class="form-group" data-path="${path}">`;
+        html += `<label class="form-label">${shortLabel}</label>`;
+        html += `<input type="text" class="form-control" value="${safeValue}" readonly>`;
+        html += `</div>`;
+      });
+
+      html += `</div></div>`;
+    }
   }
-  html += "</tbody>";
-  tbody.innerHTML = html;
+
+  container.innerHTML = html;
 }
 
 async function main() {
@@ -360,7 +388,7 @@ async function main() {
   const editor = monaco.editor.create(document.getElementById("editor"), {
     value: "",
     language: "plaintext",
-    theme: "vs-dark",
+    theme: "vs",
     minimap: { enabled: false },
     wordWrap: "on",
     fontSize: 13,
@@ -531,7 +559,7 @@ async function main() {
     revertBtn.disabled = running || originalText === model.getValue();
   });
 
-  const worker = new Worker(`/ui/phi_redactor/redactor.worker.js?v=${Date.now()}`, {
+  const worker = new Worker(`./redactor.worker.js?v=${Date.now()}`, {
     type: "module",
   });
   let workerReady = false;
@@ -832,7 +860,9 @@ async function main() {
       }
       
       console.log("Success:", data);
+      lastServerResponse = data;
       renderResults(data);
+      if (exportBtn) exportBtn.disabled = false;
       setStatus("Submitted (scrubbed text only)");
     } catch (err) {
       console.error("Submit error:", err);
@@ -846,6 +876,31 @@ async function main() {
       submitBtn.disabled = false;
     }
   });
+
+  // Export button: download JSON with response data
+  if (exportBtn) {
+    exportBtn.addEventListener("click", () => {
+      if (!lastServerResponse) {
+        setStatus("No data to export");
+        return;
+      }
+
+      const exportData = {
+        timestamp: new Date().toISOString(),
+        response: lastServerResponse,
+      };
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `clinical-export-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      setStatus("Exported to JSON file");
+    });
+  }
 
   // Optional: service worker (local assets only)
   if ("serviceWorker" in navigator && new URL(location.href).searchParams.get("sw") === "1") {

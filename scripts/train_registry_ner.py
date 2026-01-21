@@ -548,14 +548,20 @@ def main():
 
     if args.eval_only:
         tokenizer = AutoTokenizer.from_pretrained(model_dir, use_fast=True)
-        model = AutoModelForTokenClassification.from_pretrained(model_dir)
+        model = AutoModelForTokenClassification.from_pretrained(
+            model_dir,
+            use_safetensors=True,
+        )
         model = model.to(device)  # Explicitly move to device
         label_list, label2id, id2label = resolve_label_maps(rows, model=model, model_dir=model_dir)
     else:
         resume_dir = resolve_resume_dir(args)
         if resume_dir:
             tokenizer = AutoTokenizer.from_pretrained(resume_dir, use_fast=True)
-            model = AutoModelForTokenClassification.from_pretrained(resume_dir)
+            model = AutoModelForTokenClassification.from_pretrained(
+                resume_dir,
+                use_safetensors=True,
+            )
             model = model.to(device)  # Explicitly move to device
             label_list, label2id, id2label = resolve_label_maps(rows, model=model, model_dir=resume_dir)
         else:
@@ -566,6 +572,7 @@ def main():
                 num_labels=len(label_list),
                 id2label=id2label,
                 label2id=label2id,
+                use_safetensors=True,
             )
             # Enable gradient checkpointing if requested (before moving to device)
             if args.gradient_checkpointing:
