@@ -117,7 +117,7 @@ Post Procedure Diagnosis:
     
     # CHECK BOTH COMMON LOCATIONS
     biomed_path = "artifacts/registry_biomedbert_ner"
-    distil_path = "artifacts/granular_ner_model"
+    distil_path = "artifacts/registry_biomedbert_ner"
     
     # Prefer the one that exists
     target_model = biomed_path if Path(biomed_path).exists() else distil_path

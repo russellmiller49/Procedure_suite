@@ -445,11 +445,29 @@ def phi_redactor_styles_css() -> FileResponse:
     return _phi_redactor_response(_phi_redactor_static_dir() / "styles.css")
 
 
+@app.get("/ui/phi_redactor/protectedVeto.js")
+def phi_redactor_protected_veto_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "protectedVeto.js")
+
+
 @app.get("/ui/phi_redactor/allowlist_trie.json")
 def phi_redactor_allowlist() -> FileResponse:
     if not _static_files_enabled():
         raise HTTPException(status_code=404, detail="Static files disabled")
     return _phi_redactor_response(_phi_redactor_static_dir() / "allowlist_trie.json")
+
+
+@app.get("/ui/phi_redactor/vendor/{asset_path:path}")
+def phi_redactor_vendor_asset(asset_path: str) -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    vendor_dir = _phi_redactor_static_dir() / "vendor"
+    asset = (vendor_dir / asset_path).resolve()
+    if vendor_dir not in asset.parents or not asset.exists() or not asset.is_file():
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return _phi_redactor_response(asset)
 
 
 @app.get("/ui/phi_redactor/sw.js")
@@ -468,6 +486,11 @@ if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
     vendor_dir = phi_redactor_dir / "vendor"
     if vendor_dir.exists():
         app.mount("/ui/vendor", StaticFiles(directory=str(vendor_dir)), name="ui_vendor")
+        app.mount(
+            "/ui/phi_redactor/vendor",
+            StaticFiles(directory=str(vendor_dir)),
+            name="ui_phi_redactor_vendor",
+        )
 
 # Configure logging
 _logger = logging.getLogger(__name__)

@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import numpy as np
 import torch
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 
@@ -92,7 +93,7 @@ class NERExtractionResult:
 class GranularNERPredictor:
     """Runs granular NER inference using trained DistilBERT model."""
 
-    DEFAULT_MODEL_DIR = Path("artifacts/granular_ner_model")
+    DEFAULT_MODEL_DIR = Path("artifacts/registry_biomedbert_ner")
     DEFAULT_CONFIDENCE_THRESHOLD = 0.5
     DEFAULT_CONTEXT_CHARS = 50
     MODEL_DIR_ENV_VAR = "GRANULAR_NER_MODEL_DIR"
@@ -127,6 +128,9 @@ class GranularNERPredictor:
         self._label2id: Dict[str, int] = {}
         self._id2label: Dict[int, str] = {}
         self._device = None
+        self._use_onnx = False
+        self._onnx_session = None
+        self._onnx_input_names: List[str] = []
 
         # Determine device
         if device:
@@ -141,34 +145,85 @@ class GranularNERPredictor:
         try:
             self._load_model()
             self.available = True
+            backend = "onnx" if self._use_onnx else "pytorch"
             logger.info(
-                "GranularNERPredictor loaded: %d labels, device=%s",
+                "GranularNERPredictor loaded (%s): %d labels, device=%s",
+                backend,
                 len(self._label2id),
                 self._device,
             )
         except Exception as exc:
             logger.warning("GranularNERPredictor unavailable: %s", exc)
 
+    def _resolve_onnx_model_path(self) -> Path | None:
+        if self.model_dir.suffix == ".onnx" and self.model_dir.exists():
+            return self.model_dir
+        if self.model_dir.is_dir():
+            for candidate in ("model_quantized.onnx", "model.onnx"):
+                path = self.model_dir / candidate
+                if path.exists():
+                    return path
+        return None
+
+    def _load_label_map(self, model_root: Path) -> None:
+        label_map_path = model_root / "label_map.json"
+        if label_map_path.exists():
+            with open(label_map_path) as f:
+                label_data = json.load(f)
+            self._label2id = label_data.get("label2id", {})
+            self._id2label = {int(k): v for k, v in label_data.get("id2label", {}).items()}
+            return
+
+        config_path = model_root / "config.json"
+        if not config_path.exists():
+            raise FileNotFoundError(f"Label map not found: {label_map_path}")
+
+        config = json.loads(config_path.read_text())
+        label2id = config.get("label2id") or {}
+        id2label = config.get("id2label") or {}
+        if not id2label and label2id:
+            id2label = {str(v): k for k, v in label2id.items()}
+        if not id2label:
+            raise FileNotFoundError(f"Label map not found: {label_map_path}")
+
+        self._label2id = {str(k): int(v) for k, v in label2id.items()} if label2id else {}
+        self._id2label = {int(k): v for k, v in id2label.items()}
+
     def _load_model(self) -> None:
         """Load model, tokenizer, and label mappings."""
         if not self.model_dir.exists():
             raise FileNotFoundError(f"Model directory not found: {self.model_dir}")
 
+        model_root = self.model_dir if self.model_dir.is_dir() else self.model_dir.parent
+
+        onnx_path = self._resolve_onnx_model_path()
+        if onnx_path is not None:
+            self._load_label_map(model_root)
+            tokenizer_dir = model_root / "tokenizer" if (model_root / "tokenizer").exists() else model_root
+            self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_dir))
+
+            import onnxruntime as ort
+
+            sess_options = ort.SessionOptions()
+            sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+            sess_options.intra_op_num_threads = 4
+            self._onnx_session = ort.InferenceSession(
+                str(onnx_path),
+                sess_options=sess_options,
+                providers=["CPUExecutionProvider"],
+            )
+            self._onnx_input_names = [i.name for i in self._onnx_session.get_inputs()]
+            self._use_onnx = True
+            return
+
         # Load label map
-        label_map_path = self.model_dir / "label_map.json"
-        if label_map_path.exists():
-            with open(label_map_path) as f:
-                label_data = json.load(f)
-                self._label2id = label_data.get("label2id", {})
-                self._id2label = {int(k): v for k, v in label_data.get("id2label", {}).items()}
-        else:
-            raise FileNotFoundError(f"Label map not found: {label_map_path}")
+        self._load_label_map(model_root)
 
         # Load tokenizer
-        self._tokenizer = AutoTokenizer.from_pretrained(str(self.model_dir))
+        self._tokenizer = AutoTokenizer.from_pretrained(str(model_root))
 
         # Load model
-        self._model = AutoModelForTokenClassification.from_pretrained(str(self.model_dir))
+        self._model = AutoModelForTokenClassification.from_pretrained(str(model_root))
         self._model.to(self._device)
         self._model.eval()
 
@@ -202,12 +257,13 @@ class GranularNERPredictor:
         start_time = time.time()
 
         # Tokenize with offset mapping
+        return_tensors = "np" if self._use_onnx else "pt"
         encoding = self._tokenizer(
             note_text,
             truncation=True,
             max_length=max_length,
             return_offsets_mapping=True,
-            return_tensors="pt",
+            return_tensors=return_tensors,
         )
 
         truncated = len(note_text) > max_length * 4  # Rough estimate
@@ -215,19 +271,41 @@ class GranularNERPredictor:
         # Get offset mapping before moving tensors
         offset_mapping = encoding.pop("offset_mapping")[0].tolist()
 
-        # Move to device
-        input_ids = encoding["input_ids"].to(self._device)
-        attention_mask = encoding["attention_mask"].to(self._device)
+        if self._use_onnx:
+            inputs = {}
+            for name in self._onnx_input_names:
+                if name in encoding:
+                    inputs[name] = encoding[name].astype(np.int64)
+                elif name == "token_type_ids":
+                    inputs[name] = np.zeros_like(encoding["input_ids"], dtype=np.int64)
+                elif name == "position_ids":
+                    seq_len = encoding["input_ids"].shape[1]
+                    inputs[name] = np.arange(seq_len, dtype=np.int64)[None, :]
 
-        # Run inference
-        with torch.no_grad():
-            outputs = self._model(input_ids=input_ids, attention_mask=attention_mask)
-            logits = outputs.logits[0]  # Shape: (seq_len, num_labels)
+            outputs = self._onnx_session.run(None, inputs)
+            logits = outputs[0][0]
+            logits = logits.astype(np.float32)
 
-            # Get probabilities and predictions
-            probs = torch.softmax(logits, dim=-1)
-            predictions = torch.argmax(logits, dim=-1).cpu().tolist()
-            confidence_scores = probs.max(dim=-1).values.cpu().tolist()
+            maxes = np.max(logits, axis=-1, keepdims=True)
+            exp = np.exp(logits - maxes)
+            probs = exp / np.sum(exp, axis=-1, keepdims=True)
+
+            predictions = np.argmax(probs, axis=-1).tolist()
+            confidence_scores = np.max(probs, axis=-1).tolist()
+        else:
+            # Move to device
+            input_ids = encoding["input_ids"].to(self._device)
+            attention_mask = encoding["attention_mask"].to(self._device)
+
+            # Run inference
+            with torch.no_grad():
+                outputs = self._model(input_ids=input_ids, attention_mask=attention_mask)
+                logits = outputs.logits[0]  # Shape: (seq_len, num_labels)
+
+                # Get probabilities and predictions
+                probs = torch.softmax(logits, dim=-1)
+                predictions = torch.argmax(logits, dim=-1).cpu().tolist()
+                confidence_scores = probs.max(dim=-1).values.cpu().tolist()
 
         # Convert predictions to entities
         entities = self._decode_predictions(

@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import atexit
 import json
 import os
 import random
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol, TypeVar
 
@@ -44,6 +46,147 @@ logger = get_logger("common.llm")
 
 def _truthy_env(name: str) -> bool:
     return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+@dataclass
+class _UsageTotals:
+    calls: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+    total_tokens: int = 0
+    cost_usd: float = 0.0
+
+
+_USAGE_TOTALS_BY_MODEL: dict[str, _UsageTotals] = {}
+_USAGE_TOTALS_ALL = _UsageTotals()
+_PRICING_CACHE: dict[str, dict[str, float]] | None = None
+_USAGE_ATEXIT_REGISTERED = False
+
+
+def _load_pricing() -> dict[str, dict[str, float]]:
+    """
+    Optional pricing config for cost estimation.
+
+    Supported env vars:
+      - OPENAI_PRICING_JSON: JSON like {"gpt-4o-mini":{"input_per_1k":0.00015,"output_per_1k":0.0006}, ...}
+      - OPENAI_COST_INPUT_PER_1K, OPENAI_COST_OUTPUT_PER_1K: global fallback floats
+    """
+    global _PRICING_CACHE
+    if _PRICING_CACHE is not None:
+        return _PRICING_CACHE
+
+    pricing: dict[str, dict[str, float]] = {}
+
+    raw = os.getenv("OPENAI_PRICING_JSON", "").strip()
+    if raw:
+        try:
+            parsed = json.loads(raw)
+            if isinstance(parsed, dict):
+                for model, entry in parsed.items():
+                    if not isinstance(model, str) or not isinstance(entry, dict):
+                        continue
+                    inp = entry.get("input_per_1k")
+                    out = entry.get("output_per_1k")
+                    if isinstance(inp, (int, float)) and isinstance(out, (int, float)):
+                        pricing[model] = {"input_per_1k": float(inp), "output_per_1k": float(out)}
+        except Exception:
+            # Ignore malformed JSON; cost estimation will be disabled.
+            pricing = {}
+
+    inp = os.getenv("OPENAI_COST_INPUT_PER_1K", "").strip()
+    out = os.getenv("OPENAI_COST_OUTPUT_PER_1K", "").strip()
+    if inp and out:
+        try:
+            pricing["*"] = {"input_per_1k": float(inp), "output_per_1k": float(out)}
+        except Exception:
+            pass
+
+    _PRICING_CACHE = pricing
+    return pricing
+
+
+def _estimate_cost_usd(model: str, input_tokens: int, output_tokens: int) -> float | None:
+    pricing = _load_pricing()
+    entry = pricing.get(model) or pricing.get("*")
+    if not entry:
+        return None
+    in_per_1k = entry.get("input_per_1k")
+    out_per_1k = entry.get("output_per_1k")
+    if not isinstance(in_per_1k, float) or not isinstance(out_per_1k, float):
+        return None
+    return (input_tokens / 1000.0) * in_per_1k + (output_tokens / 1000.0) * out_per_1k
+
+
+def _record_usage(
+    *,
+    model: str,
+    api_style: str,
+    input_tokens: int,
+    output_tokens: int,
+    total_tokens: int,
+    latency_s: float,
+) -> None:
+    totals = _USAGE_TOTALS_BY_MODEL.setdefault(model, _UsageTotals())
+    totals.calls += 1
+    totals.input_tokens += int(input_tokens)
+    totals.output_tokens += int(output_tokens)
+    totals.total_tokens += int(total_tokens)
+
+    _USAGE_TOTALS_ALL.calls += 1
+    _USAGE_TOTALS_ALL.input_tokens += int(input_tokens)
+    _USAGE_TOTALS_ALL.output_tokens += int(output_tokens)
+    _USAGE_TOTALS_ALL.total_tokens += int(total_tokens)
+
+    cost = _estimate_cost_usd(model, int(input_tokens), int(output_tokens))
+    if cost is not None:
+        totals.cost_usd += float(cost)
+        _USAGE_TOTALS_ALL.cost_usd += float(cost)
+
+    if _truthy_env("OPENAI_LOG_USAGE_PER_CALL"):
+        cost_str = f"${cost:.6f}" if cost is not None else "(pricing not configured)"
+        msg = (
+            f"[llm_usage] api={api_style} model={model} "
+            f"in={input_tokens} out={output_tokens} total={total_tokens} "
+            f"latency_s={latency_s:.2f} cost={cost_str}"
+        )
+        # Ensure visibility even when logs aren't shown.
+        try:
+            print(msg, file=os.sys.stderr)
+        except Exception:
+            pass
+        logger.info(msg)
+
+
+def _print_usage_summary() -> None:
+    if not _truthy_env("OPENAI_LOG_USAGE_SUMMARY"):
+        return
+    if _USAGE_TOTALS_ALL.calls <= 0:
+        return
+
+    header = (
+        f"[llm_usage_summary] calls={_USAGE_TOTALS_ALL.calls} "
+        f"in={_USAGE_TOTALS_ALL.input_tokens} out={_USAGE_TOTALS_ALL.output_tokens} total={_USAGE_TOTALS_ALL.total_tokens} "
+        + (
+            f"cost=${_USAGE_TOTALS_ALL.cost_usd:.6f}"
+            if _USAGE_TOTALS_ALL.cost_usd > 0
+            else "cost=(pricing not configured)"
+        )
+    )
+    lines: list[str] = [header]
+
+    top = sorted(_USAGE_TOTALS_BY_MODEL.items(), key=lambda kv: kv[1].total_tokens, reverse=True)[:10]
+    for model, t in top:
+        lines.append(
+            f"  - {model}: calls={t.calls} in={t.input_tokens} out={t.output_tokens} total={t.total_tokens} "
+            + (f"cost=${t.cost_usd:.6f}" if t.cost_usd > 0 else "cost=(pricing not configured)")
+        )
+
+    msg = "\n".join(lines)
+    try:
+        print(msg, file=os.sys.stderr)
+    except Exception:
+        pass
+    logger.info(msg)
 
 
 # Load environment variables from a .env file if present so GEMINI_* keys are available locally.
@@ -348,27 +491,51 @@ class OpenAILLM:
 
         task_key = task if task is not None else self.task
         primary_api = get_primary_api()
+        started = time.monotonic()
+        usage: dict[str, Any] | None = None
 
         # Use Responses API for first-party OpenAI when configured
         if primary_api == "responses" and self._is_openai_endpoint():
             try:
-                response_text = self._generate_via_responses(prompt, task=task_key, **kwargs)
+                response_text, usage = self._generate_via_responses(prompt, task=task_key, **kwargs)
             except ResponsesEndpointNotFound:
                 if is_fallback_enabled():
                     logger.info(
                         "Responses API not available; falling back to Chat Completions model=%s",
                         self.model,
                     )
-                    response_text = self._generate_via_chat(prompt, task=task_key, **kwargs)
+                    response_text, usage = self._generate_via_chat(prompt, task=task_key, **kwargs)
                 else:
                     raise
 
         else:
             # Use Chat Completions for compat endpoints or when configured
-            response_text = self._generate_via_chat(prompt, task=task_key, **kwargs)
+            response_text, usage = self._generate_via_chat(prompt, task=task_key, **kwargs)
 
         if cache_key is not None and response_text:
             get_llm_memory_cache().set(cache_key, response_text, ttl_s=3600)
+
+        # Best-effort usage reporting (tokens are present only when upstream includes them)
+        if isinstance(usage, dict):
+            try:
+                input_tokens = int(usage.get("input_tokens") or 0)
+                output_tokens = int(usage.get("output_tokens") or 0)
+                total_tokens = int(usage.get("total_tokens") or (input_tokens + output_tokens))
+                if input_tokens or output_tokens or total_tokens:
+                    global _USAGE_ATEXIT_REGISTERED
+                    if not _USAGE_ATEXIT_REGISTERED:
+                        atexit.register(_print_usage_summary)
+                        _USAGE_ATEXIT_REGISTERED = True
+                    _record_usage(
+                        model=self.model,
+                        api_style=str(usage.get("api") or "unknown"),
+                        input_tokens=input_tokens,
+                        output_tokens=output_tokens,
+                        total_tokens=total_tokens,
+                        latency_s=max(0.0, time.monotonic() - started),
+                    )
+            except Exception:
+                pass
 
         return response_text
 
@@ -378,7 +545,7 @@ class OpenAILLM:
         *,
         task: str | None = None,
         **kwargs,
-    ) -> str:
+    ) -> tuple[str, dict[str, Any]]:
         """Generate using Responses API (POST /v1/responses)."""
         url = f"{self.base_url}/v1/responses"
         headers = self._get_headers()
@@ -412,7 +579,16 @@ class OpenAILLM:
                 timeout=timeout,
                 model=self.model,
             )
-            return parse_responses_text(resp_json)
+            text = parse_responses_text(resp_json)
+            usage: dict[str, Any] = {"api": "responses"}
+            usage_raw = resp_json.get("usage") if isinstance(resp_json, dict) else None
+            if isinstance(usage_raw, dict):
+                usage["input_tokens"] = int(usage_raw.get("input_tokens") or 0)
+                usage["output_tokens"] = int(usage_raw.get("output_tokens") or 0)
+                usage["total_tokens"] = int(
+                    usage_raw.get("total_tokens") or (usage["input_tokens"] + usage["output_tokens"])
+                )
+            return text, usage
         except ResponsesEndpointNotFound:
             raise
         except LLMError:
@@ -426,7 +602,7 @@ class OpenAILLM:
         *,
         task: str | None = None,
         **kwargs,
-    ) -> str:
+    ) -> tuple[str, dict[str, Any]]:
         """Generate using Chat Completions API (POST /v1/chat/completions)."""
         url = f"{self.base_url}/v1/chat/completions"
         headers = self._get_headers()
@@ -492,7 +668,16 @@ class OpenAILLM:
                         choices = data.get("choices", [])
                         if not choices:
                             raise LLMError("No choices returned from Chat Completions API")
-                        return choices[0].get("message", {}).get("content", "")
+                        content = choices[0].get("message", {}).get("content", "")
+                        usage: dict[str, Any] = {"api": "chat"}
+                        usage_raw = data.get("usage") if isinstance(data, dict) else None
+                        if isinstance(usage_raw, dict):
+                            usage["input_tokens"] = int(usage_raw.get("prompt_tokens") or 0)
+                            usage["output_tokens"] = int(usage_raw.get("completion_tokens") or 0)
+                            usage["total_tokens"] = int(
+                                usage_raw.get("total_tokens") or (usage["input_tokens"] + usage["output_tokens"])
+                            )
+                        return content, usage
 
                     message, error_type, error_param = _openai_error_details(response)
                     request_id = _openai_request_id(response)

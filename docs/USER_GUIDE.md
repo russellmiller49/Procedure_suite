@@ -45,6 +45,12 @@ Recommended runtime configuration uses the `parallel_ner` extraction engine:
 Key behaviors:
 - **Deterministic uplift** prevents “silent revenue loss” when NER misses common procedures (BAL/EBBx/radial EBUS/cryotherapy, plus backstops like navigational bronchoscopy and pleural IPC/tunneled catheter).
 - `audit_warnings` surfaces `SILENT_FAILURE:` and other degraded-mode warnings to the UI.
+- **Context guardrails (anti-hallucination)** reduce over-coding from “keyword only” matches:
+  - **Stents**: inspection-only phrases like “stent … in good position” clear `airway_stent.performed` (prevents CPT `31636`).
+  - **Chest tubes**: discontinue/removal phrases like “D/c chest tube” do not set `pleural_procedures.chest_tube.performed` (prevents CPT `32551`).
+  - **TBNA**: EBUS-TBNA does not set `tbna_conventional` (prevents double-coding `31629` alongside `31652/31653`).
+  - **Radial EBUS**: explicit “radial probe” language sets `radial_ebus.performed` even without “concentric/eccentric” markers.
+- **Noise masking** strips CPT menu blocks (e.g., `IP ... CODE MOD DETAILS`) before extraction to prevent “menu reading” hallucinations (laser/APC/etc).
 - **Self-correction (LLM judge)**: when `REGISTRY_SELF_CORRECT_ENABLED=1`, RAW-ML high-confidence omissions can trigger a small number of
   evidence-gated patches (verbatim quote required). This is designed to fix “empty/under-coded” cases without making the LLM the primary extractor.
 
@@ -95,9 +101,9 @@ The easiest way to interact with the system is the development server, which pro
 Notes:
 - The devserver sources `.env`. If you change `.env`, restart the devserver.
 - Keep secrets (e.g., `OPENAI_API_KEY`) out of version control; prefer shell env vars or an untracked local `.env`.
-- To use the current granular NER model, set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2` (in `.env` or your shell).
-  Example (shell): `export GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2`
-  Example (`.env`): `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2`
+- To use the current granular NER model, set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner` (in `.env` or your shell).
+  Example (shell): `export GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner`
+  Example (`.env`): `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner`
 - For faster responses (disable self-correction LLM calls), run with `PROCSUITE_FAST_MODE=1`.
 ---
 

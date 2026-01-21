@@ -40,11 +40,11 @@ _STENT_NEGATION_PATTERNS = [
 ]
 
 _STENT_PLACEMENT_CONTEXT_RE = re.compile(
-    r"\bstent\b[^.\n]{0,60}\b(place|placed|deploy|deployed|insert|inserted|position|positioned|advance|advanced|seat|seated)\b",
+    r"\bstent\b[^.\n]{0,60}\b(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|seat|seated)\b",
     re.IGNORECASE,
 )
 _STENT_STRONG_PLACEMENT_RE = re.compile(
-    r"\bstent\b[^.\n]{0,60}\b(deploy|deployed|insert|inserted|advance|advanced|position|positioned|seat|seated)\b",
+    r"\bstent\b[^.\n]{0,60}\b(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated)\b",
     re.IGNORECASE,
 )
 _STENT_REMOVAL_CONTEXT_RE = re.compile(
@@ -59,7 +59,20 @@ _STENT_INSPECTION_RE = re.compile(
 _IPC_TERMS = ("pleurx", "aspira", "tunneled", "tunnelled", "indwelling pleural catheter", "ipc")
 _CHEST_TUBE_TERMS = ("pigtail", "wayne", "pleur-evac", "pleur evac", "tube thoracostomy", "chest tube")
 _INSERT_TERMS = ("insert", "inserted", "placed", "place", "deploy", "deployed", "introduced", "positioned")
-_REMOVE_TERMS = ("remove", "removed", "removal", "exchanged", "exchange", "explant", "withdrawn")
+_REMOVE_TERMS = (
+    "remove",
+    "removed",
+    "removal",
+    "exchanged",
+    "exchange",
+    "explant",
+    "withdrawn",
+    "discontinue",
+    "discontinued",
+    "discontinuation",
+    "d/c",
+    "dc",
+)
 
 
 @dataclass
@@ -95,25 +108,36 @@ class ClinicalGuardrails:
 
         # Radial vs linear EBUS disambiguation.
         radial_marker = bool(_RADIAL_MARKER_PATTERN.search(text_lower))
+        explicit_radial = bool(
+            re.search(
+                r"\b(?:radial\s+ebus|radial\s+probe|r-?ebus|rp-?ebus|miniprobe)\b",
+                text_lower,
+                re.IGNORECASE,
+            )
+        )
+        radial_present = radial_marker or explicit_radial
         linear_marker = bool(_LINEAR_MARKER_PATTERN.search(text_lower))
-        if radial_marker:
+        station_data_present = self._linear_station_data_present(record_data)
+
+        if radial_present:
             changed |= self._set_procedure_performed(record_data, "radial_ebus", True)
-            warnings.append("Radial EBUS inferred from concentric/eccentric view.")
+            if radial_marker:
+                warnings.append("Radial EBUS inferred from concentric/eccentric view.")
+            else:
+                warnings.append("Radial EBUS inferred from radial probe keywords.")
 
         if linear_marker:
             changed |= self._set_procedure_performed(record_data, "linear_ebus", True)
-            if not radial_marker:
-                changed |= self._set_procedure_performed(record_data, "radial_ebus", False)
             warnings.append("Linear EBUS inferred from convex/mediastinal/station sampling.")
 
-        if self._linear_station_data_present(record_data):
+        if station_data_present:
             if self._set_procedure_performed(record_data, "linear_ebus", True):
                 warnings.append("Linear EBUS inferred from sampled station data.")
 
-        if radial_marker and not linear_marker and not self._linear_station_data_present(record_data):
+        if radial_present and not linear_marker and not station_data_present:
             changed |= self._set_procedure_performed(record_data, "linear_ebus", False)
 
-        if radial_marker and linear_marker:
+        if radial_present and (linear_marker or station_data_present):
             needs_review = True
             warnings.append("Radial vs linear EBUS markers both present; review required.")
 
@@ -146,18 +170,35 @@ class ClinicalGuardrails:
         tube_present = self._contains_any(text_lower, _CHEST_TUBE_TERMS)
         pleural_flagged = self._pleural_procedure_flagged(record_data)
         if pleural_flagged and (ipc_present or tube_present):
-            preferred = self._resolve_pleural_device(text_lower, ipc_present, tube_present)
-            if preferred == "ipc":
-                changed |= self._set_pleural_performed(record_data, "ipc", True)
+            ipc_insert = any(self._has_action_near(text_lower, term, _INSERT_TERMS) for term in _IPC_TERMS)
+            tube_insert = any(self._has_action_near(text_lower, term, _INSERT_TERMS) for term in _CHEST_TUBE_TERMS)
+            ipc_remove = any(self._has_action_near(text_lower, term, _REMOVE_TERMS) for term in _IPC_TERMS)
+            tube_remove = any(self._has_action_near(text_lower, term, _REMOVE_TERMS) for term in _CHEST_TUBE_TERMS)
+
+            removal_only = False
+            if tube_present and tube_remove and not tube_insert and not ipc_insert:
                 changed |= self._set_pleural_performed(record_data, "chest_tube", False)
-                warnings.append("IPC inferred from tunneled/IPC device language.")
-            elif preferred == "chest_tube":
-                changed |= self._set_pleural_performed(record_data, "chest_tube", True)
+                warnings.append("Chest tube discontinue/removal language; treating as not performed.")
+                removal_only = True
+            if ipc_present and ipc_remove and not ipc_insert and not tube_insert:
                 changed |= self._set_pleural_performed(record_data, "ipc", False)
-                warnings.append("Chest tube inferred from pigtail/Wayne/tube thoracostomy language.")
-            elif ipc_present and tube_present:
-                needs_review = True
-                warnings.append("IPC vs chest tube conflict; review required.")
+                warnings.append("IPC discontinue/removal language; treating as not performed.")
+                removal_only = True
+            if removal_only:
+                pass
+            else:
+                preferred = self._resolve_pleural_device(text_lower, ipc_present, tube_present)
+                if preferred == "ipc":
+                    changed |= self._set_pleural_performed(record_data, "ipc", True)
+                    changed |= self._set_pleural_performed(record_data, "chest_tube", False)
+                    warnings.append("IPC inferred from tunneled/IPC device language.")
+                elif preferred == "chest_tube":
+                    changed |= self._set_pleural_performed(record_data, "chest_tube", True)
+                    changed |= self._set_pleural_performed(record_data, "ipc", False)
+                    warnings.append("Chest tube inferred from pigtail/Wayne/tube thoracostomy language.")
+                elif ipc_present and tube_present:
+                    needs_review = True
+                    warnings.append("IPC vs chest tube conflict; review required.")
 
         updated = RegistryRecord(**record_data) if changed else record
         return GuardrailOutcome(

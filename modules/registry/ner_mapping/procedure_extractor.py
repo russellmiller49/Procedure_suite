@@ -207,6 +207,7 @@ class ProcedureExtractor:
         proc_actions = ner_result.entities_by_type.get("PROC_ACTION", [])
         device_hints = (
             ner_result.entities_by_type.get("DEV_STENT", [])
+            + ner_result.entities_by_type.get("DEV_INSTRUMENT", [])
             + ner_result.entities_by_type.get("DEV_DEVICE", [])
         )
 
@@ -217,8 +218,21 @@ class ProcedureExtractor:
         evidence: Dict[str, List[str]] = {}
         warnings: List[str] = []
 
+        raw_text = ner_result.raw_text or ""
+        raw_lower = raw_text.lower()
+        ebus_context_re = re.compile(
+            r"\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b",
+            re.IGNORECASE,
+        )
+
         for entity in all_proc_entities:
             text_lower = entity.text.lower()
+            if raw_lower and entity.start_char is not None and entity.end_char is not None:
+                window_start = max(0, entity.start_char - 100)
+                window_end = min(len(raw_lower), entity.end_char + 100)
+                entity_context = raw_lower[window_start:window_end]
+            else:
+                entity_context = ""
             radial_keywords = self._patterns.get("radial_ebus", ([], ""))[0]
             radial_hit = any(self._keyword_hit(text_lower, kw) for kw in radial_keywords)
 
@@ -227,6 +241,8 @@ class ProcedureExtractor:
                     continue
                 for keyword in keywords:
                     if self._keyword_hit(text_lower, keyword):
+                        if proc_name == "tbna_conventional" and entity_context and ebus_context_re.search(entity_context):
+                            continue
                         # Found a match
                         procedure_flags[proc_name] = True
 

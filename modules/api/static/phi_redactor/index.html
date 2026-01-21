@@ -3,11 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PHI Redactor (Client-Side)</title>
+    <title>Procedure Suite - Clinical Dashboard</title>
     <link rel="stylesheet" href="./styles.css" />
 
     <!-- Monaco Editor (AMD loader) -->
-    <!-- COEP=require-corp requires CORS-enabled cross-origin scripts -->
     <script
       src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"
       crossorigin="anonymous"
@@ -20,7 +19,6 @@
               vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs",
             },
             onNodeCreated: function (node) {
-              // Ensure scripts injected by the AMD loader are fetched with CORS under COEP.
               node.crossOrigin = "anonymous";
             },
           });
@@ -39,26 +37,34 @@
   <body>
     <header class="topbar">
       <div class="title">
-        <div class="h1">Procedure Suite — PHI Redactor</div>
+        <div class="h1">Procedure Suite - Clinical Dashboard</div>
         <div class="subtle">
-          Client-side detection and redaction. Never submits raw notes.
+          Client-side PHI detection. Scrub notes before submission.
         </div>
       </div>
       <div class="status">
-        <span id="statusText">Loading…</span>
+        <span id="statusText">Loading...</span>
         <span id="progressText" class="progress"></span>
       </div>
     </header>
 
     <main class="layout">
       <section class="editorPane">
+        <!-- Section 1: De-identify Note -->
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-number">1</span>
+            De-identify Note
+          </div>
+        </div>
+
         <div class="controls">
-          <button id="runBtn">Run detection</button>
+          <button id="runBtn">Run Detection</button>
           <button id="cancelBtn" class="secondary" disabled>Cancel</button>
           <div class="spacer"></div>
-          <button id="applyBtn" class="primary" disabled>Apply redactions</button>
-          <button id="revertBtn" class="secondary" disabled>Revert all</button>
-          <button id="submitBtn" class="success" disabled>Submit scrubbed note</button>
+          <button id="applyBtn" class="primary" disabled>Apply Redactions</button>
+          <button id="revertBtn" class="secondary" disabled>Revert</button>
+          <button id="submitBtn" class="success" disabled>Submit Scrubbed Note</button>
 
           <!-- Manual Redaction Controls -->
           <div class="manual-redaction-group">
@@ -76,34 +82,52 @@
         </div>
 
         <div class="warning">
-          <strong>No PHI policy:</strong> This page runs detection locally in your browser.
-          You must apply redactions before submitting. The server receives only scrubbed text.
+          <strong>PHI Policy:</strong> This page runs detection locally in your browser.
+          Apply redactions before submitting. The server receives only scrubbed text.
         </div>
 
         <div id="editor" class="editor"></div>
 
+        <!-- Section 2: Clinical Review -->
         <div class="result">
-          <div class="resultHeader">Results</div>
+          <div class="resultHeader">
+            <div class="section-title">
+              <span class="section-number">2</span>
+              Clinical Review
+            </div>
+            <button id="exportBtn" class="secondary" disabled>Export Changes</button>
+          </div>
           <div id="resultsContainer" class="resultsContainer">
             <!-- Status banner -->
             <div id="statusBanner" class="status-banner hidden"></div>
 
             <!-- CPT Codes Table -->
-            <div id="cptTable" class="result-section hidden">
+            <div id="cptSection" class="result-section hidden">
               <h3>CPT Codes</h3>
-              <table class="result-table" id="cptTableBody"></table>
+              <table class="result-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Confidence</th>
+                    <th>RVU</th>
+                    <th>Payment</th>
+                  </tr>
+                </thead>
+                <tbody id="cptTableBody"></tbody>
+              </table>
             </div>
 
-            <!-- Registry Summary -->
-            <div id="registrySummary" class="result-section hidden">
+            <!-- Registry Data (Editable) -->
+            <div id="registrySection" class="result-section hidden">
               <h3>Registry Data</h3>
-              <table class="result-table" id="registryTableBody"></table>
+              <div id="registryForm"></div>
             </div>
 
             <!-- Raw JSON toggle -->
             <details class="raw-json-toggle">
               <summary>View Raw JSON</summary>
-              <pre id="serverResponse" class="resultBody">(none)</pre>
+              <pre id="serverResponse">(none)</pre>
             </details>
           </div>
         </div>
@@ -118,7 +142,7 @@
           </div>
         </div>
         <div id="detectionsList" class="detectionsList"></div>
-        <div class="sideFooter subtle">
+        <div class="sideFooter">
           Uncheck items to exclude from redaction.
         </div>
       </aside>

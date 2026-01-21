@@ -677,7 +677,7 @@ AIRWAY_STENT_DEVICE_PATTERNS = [
 ]
 
 AIRWAY_STENT_PLACEMENT_PATTERNS = [
-    r"\b(?:place(?:d)?|deploy(?:ed)?|insert(?:ed)?|position(?:ed)?|deliver(?:ed)?|deploy(?:ment)?)\b",
+    r"\b(?:place(?:d)?|deploy(?:ed)?|insert(?:ed)?|positioned|deliver(?:ed)?|deploy(?:ment)?)\b",
     r"\b(?:placement|insertion)\b",
 ]
 
@@ -751,40 +751,59 @@ def _extract_ln_stations_from_text(note_text: str) -> list[str]:
     except Exception:
         normalize_station = None  # type: ignore[assignment]
 
-    stations: list[str] = []
-    patterns = [
-        r"\b(?:station(?:s)?|stn|level|ln|node(?:s)?)\s*[:#-]?\s*(2[RL]|3p|4[RL]|5|7|8|9|10[RL]|11[RL](?:s|i)?|12[RL])\b",
-        r"\b(2[RL]|3p|4[RL]|5|7|8|9|10[RL]|11[RL](?:s|i)?|12[RL])\b\s*(?:lymph\s*node|node|ln)\b",
-        r"\bsubcarinal\b",
-    ]
-
-    for pattern in patterns:
-        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
-            candidate = match.group(1) if match.groups() else "7"
-            if normalize_station is not None:
-                normalized = normalize_station(candidate)
-            else:
-                normalized = candidate.strip().upper()
-            if normalized and normalized not in stations:
-                stations.append(normalized)
-
+    sampling_hint_re = re.compile(
+        r"\b(?:tbna|fna|aspirat|biops|sampled|sampling|needle|passes?|core|forceps)\b",
+        re.IGNORECASE,
+    )
+    sampling_negation_re = re.compile(
+        r"\b(?:not\s+(?:sampled|biopsied|aspirated)|site\s+was\s+not\s+sampled|without\s+biops|no\s+biops(?:y|ies)"
+        r"|biops(?:y|ies)\s+were\s+not\s+taken)\b",
+        re.IGNORECASE,
+    )
+    station_context_re = re.compile(r"\b(?:station(?:s)?|stn|level|site|ln|node(?:s)?|lymph)\b", re.IGNORECASE)
     station_token_re = re.compile(
         r"(?<![0-9A-Z])(2R|2L|3p|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)(?![0-9A-Z])",
         re.IGNORECASE,
     )
-    for line in (note_text or "").splitlines():
-        if not line.strip():
+
+    stations: list[str] = []
+
+    for raw_line in (note_text or "").splitlines():
+        line = raw_line.strip()
+        if not line:
             continue
-        if not re.search(r"\b(?:station(?:s)?|stn|node(?:s)?|lymph)\b", line, re.IGNORECASE):
+
+        if not sampling_hint_re.search(line):
             continue
+        if sampling_negation_re.search(line):
+            continue
+
+        tokens = [m.group(1) for m in station_token_re.finditer(line)]
+        has_subcarinal = bool(re.search(r"\bsubcarinal\b", line, re.IGNORECASE))
+        if not tokens and not has_subcarinal:
+            continue
+
+        alpha_station_present = any(any(ch.isalpha() for ch in tok) for tok in tokens)
+
         for match in station_token_re.finditer(line):
             candidate = match.group(1)
-            if normalize_station is not None:
-                normalized = normalize_station(candidate)
-            else:
-                normalized = candidate.strip().upper()
-            if normalized and normalized not in stations:
-                stations.append(normalized)
+            if not candidate:
+                continue
+            candidate_norm = normalize_station(candidate) if normalize_station is not None else candidate.strip().upper()
+            if not candidate_norm:
+                continue
+
+            # Avoid interpreting bare digits (e.g., "7") as stations when they look like counts ("7 passes").
+            if candidate_norm.isdigit() and not alpha_station_present:
+                prefix = line[max(0, match.start() - 20) : match.start()]
+                if not station_context_re.search(prefix):
+                    continue
+
+            if candidate_norm not in stations:
+                stations.append(candidate_norm)
+
+        if has_subcarinal and "7" not in stations:
+            stations.append("7")
 
     return stations
 
@@ -872,7 +891,7 @@ _STENT_PLACEMENT_NEGATION_PATTERNS = [
 ]
 
 _STENT_PLACEMENT_VERBS_RE = re.compile(
-    r"\b(place|placed|placement|deploy|deployed|insert|inserted|advance|advanced|seat|seated|position|positioned)\b",
+    r"\b(place|placed|placement|deploy|deployed|insert|inserted|advance|advanced|seat|seated|positioned)\b",
     re.IGNORECASE,
 )
 _STENT_REMOVAL_VERBS_RE = re.compile(
@@ -971,7 +990,7 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
     # Prefer proximity-based evidence of actual action (avoids history-only mentions).
     placement_window_hit = _stent_action_window_hit(
         text_lower,
-        verbs=["place", "deploy", "insert", "position", "deliver", "implant"],
+        verbs=["place", "deploy", "insert", "positioned", "deliver", "implant"],
     )
     placement_pattern_hit = _has_airway_stent_action(
         text_lower, action_patterns=AIRWAY_STENT_PLACEMENT_PATTERNS
@@ -1151,17 +1170,31 @@ def extract_navigational_bronchoscopy(note_text: str) -> Dict[str, Any]:
 
 def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
     """Extract conventional TBNA indicator."""
-    text_lower = (note_text or "").lower()
+    raw_text = note_text or ""
+    if not raw_text.strip():
+        return {}
+
+    ebus_context_re = re.compile(
+        r"\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b",
+        re.IGNORECASE,
+    )
+
     for pattern in TBNA_CONVENTIONAL_PATTERNS:
-        if re.search(pattern, text_lower, re.IGNORECASE):
-            negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
-            if re.search(negation_check, text_lower, re.IGNORECASE):
+        for match in re.finditer(pattern, raw_text, re.IGNORECASE):
+            window = raw_text[max(0, match.start() - 80) : min(len(raw_text), match.end() + 80)]
+            if ebus_context_re.search(window):
                 continue
+
+            before = raw_text[max(0, match.start() - 120) : match.start()]
+            if re.search(r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}$", before, re.IGNORECASE):
+                continue
+
             tbna: dict[str, Any] = {"performed": True}
             stations = _extract_ln_stations_from_text(note_text)
             if stations:
                 tbna["stations_sampled"] = stations
             return {"tbna_conventional": tbna}
+
     return {}
 
 

@@ -200,6 +200,8 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
     # Fix for missed radial EBUS
     "procedures_performed.radial_ebus.performed": [
         (r"(?i)\bradial\s+ebus\b", "Text contains 'radial EBUS' but extraction missed it."),
+        (r"(?i)\bradial\s+probe\s+ebus\b", "Text contains 'radial probe EBUS' but extraction missed it."),
+        (r"(?i)\bradial\s+probe\b", "Text contains 'radial probe' (radial EBUS) but extraction missed it."),
         (r"(?i)\br-?ebus\b", "Text contains 'rEBUS' but extraction missed it."),
         (r"(?i)\brp-?ebus\b", "Text contains 'rp-EBUS' but extraction missed it."),
         (r"(?i)\bminiprobe\b", "Text contains 'miniprobe' (radial EBUS) but extraction missed it."),
@@ -307,8 +309,21 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
 
 _NEGATION_CUES = r"(?:no|not|without|declined|deferred|aborted)"
 
+# Field-specific "do not treat as performed" cues.
+#
+# Example: "D/c chest tube" should not trigger a chest tube placement override.
+_CHEST_TUBE_REMOVAL_CUES_RE = re.compile(
+    r"(?i)(?:\bd/c\b|\bdc\b|\bdiscontinu(?:e|ed|ation)\b|\bremove(?:d|al)?\b|\bpull(?:ed)?\b|\bwithdrawn\b)"
+)
+_CHEST_TUBE_INSERTION_CUES_RE = re.compile(
+    r"(?i)\b(?:place(?:d|ment)?|insert(?:ed|ion)?|tube\s+thoracostomy|thoracostomy|pigtail|seldinger)\b"
+)
+_TBNA_EBUS_CONTEXT_RE = re.compile(
+    r"(?i)\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b"
+)
 
-def _match_is_negated(note_text: str, match: re.Match[str]) -> bool:
+
+def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str | None = None) -> bool:
     """Return True when a keyword match is negated in local context."""
     if not note_text:
         return False
@@ -322,6 +337,16 @@ def _match_is_negated(note_text: str, match: re.Match[str]) -> bool:
 
     if re.search(rf"(?i)^[^.\n]{{0,60}}\b{_NEGATION_CUES}\b", after):
         return True
+
+    if field_path == "pleural_procedures.chest_tube.performed":
+        window = note_text[max(0, start - 30) : min(len(note_text), end + 30)]
+        if _CHEST_TUBE_REMOVAL_CUES_RE.search(window) and not _CHEST_TUBE_INSERTION_CUES_RE.search(window):
+            return True
+
+    if field_path == "procedures_performed.tbna_conventional.performed":
+        window = note_text[max(0, start - 60) : min(len(note_text), end + 60)]
+        if _TBNA_EBUS_CONTEXT_RE.search(window):
+            return True
 
     return False
 
@@ -340,7 +365,7 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
 
         for pattern, msg in rules:
             match = re.search(pattern, note_text or "")
-            if match and not _match_is_negated(note_text or "", match):
+            if match and not _match_is_negated(note_text or "", match, field_path=field_path):
                 warning = f"SILENT_FAILURE: {msg} (Pattern: '{pattern}')"
                 warnings.append(warning)
                 logger.warning(warning, extra={"field": field_path, "pattern": pattern})
@@ -369,7 +394,7 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
             match = re.search(pattern, note_text or "")
             if not match:
                 continue
-            if _match_is_negated(note_text or "", match):
+            if _match_is_negated(note_text or "", match, field_path=field_path):
                 continue
 
             if field_path.startswith("granular_data.navigation_targets"):

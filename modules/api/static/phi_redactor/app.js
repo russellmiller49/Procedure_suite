@@ -11,8 +11,11 @@ const cancelBtn = document.getElementById("cancelBtn");
 const applyBtn = document.getElementById("applyBtn");
 const revertBtn = document.getElementById("revertBtn");
 const submitBtn = document.getElementById("submitBtn");
+const exportBtn = document.getElementById("exportBtn");
 const addRedactionBtn = document.getElementById("addRedactionBtn");
 const entityTypeSelect = document.getElementById("entityTypeSelect");
+
+let lastServerResponse = null;
 
 /**
  * Get merge mode from query param or localStorage.
@@ -46,6 +49,7 @@ cancelBtn.disabled = true;
 applyBtn.disabled = true;
 revertBtn.disabled = true;
 submitBtn.disabled = true;
+if (exportBtn) exportBtn.disabled = true;
 
 function setStatus(text) {
   statusTextEl.textContent = text;
@@ -117,13 +121,16 @@ function safeSnippet(text, start, end) {
 
 /**
  * Render the formatted results from the server response.
- * Shows status banner, CPT codes table, and registry summary.
+ * Shows status banner, CPT codes table, and registry form.
  */
 function renderResults(data) {
   const statusBanner = document.getElementById("statusBanner");
-  const cptTable = document.getElementById("cptTable");
-  const registrySummary = document.getElementById("registrySummary");
+  const cptSection = document.getElementById("cptSection");
+  const registrySection = document.getElementById("registrySection");
   const serverResponse = document.getElementById("serverResponse");
+
+  lastServerResponse = data;
+  if (exportBtn) exportBtn.disabled = !data;
 
   // Show raw JSON in collapsible section
   serverResponse.textContent = JSON.stringify(data, null, 2);
@@ -145,17 +152,17 @@ function renderResults(data) {
   // Render CPT table
   if (data.suggestions?.length > 0 || data.cpt_codes?.length > 0) {
     renderCPTTable(data);
-    cptTable.classList.remove("hidden");
+    cptSection.classList.remove("hidden");
   } else {
-    cptTable.classList.add("hidden");
+    cptSection.classList.add("hidden");
   }
 
-  // Render registry summary
+  // Render registry form
   if (data.registry) {
-    renderRegistrySummary(data.registry);
-    registrySummary.classList.remove("hidden");
+    renderRegistryForm(data.registry);
+    registrySection.classList.remove("hidden");
   } else {
-    registrySummary.classList.add("hidden");
+    registrySection.classList.add("hidden");
   }
 }
 
@@ -171,28 +178,17 @@ function renderCPTTable(data) {
   const billingMap = {};
   billing.forEach(b => billingMap[b.cpt_code] = b);
 
-  let html = `
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Description</th>
-        <th>Confidence</th>
-        <th>RVU</th>
-        <th>Payment</th>
-      </tr>
-    </thead>
-    <tbody>
-  `;
+  let rows = "";
 
   // If we have suggestions, use those (more detailed)
   if (suggestions.length > 0) {
-    suggestions.forEach(s => {
+    suggestions.forEach((s) => {
       const b = billingMap[s.code] || {};
       const confidence = s.confidence ? `${(s.confidence * 100).toFixed(0)}%` : "—";
       const rvu = b.work_rvu?.toFixed(2) || "—";
       const payment = b.facility_payment ? `$${b.facility_payment.toFixed(2)}` : "—";
 
-      html += `
+      rows += `
         <tr>
           <td><code>${s.code}</code></td>
           <td>${s.description || "—"}</td>
@@ -204,12 +200,12 @@ function renderCPTTable(data) {
     });
   } else if (data.cpt_codes?.length > 0) {
     // Fallback to simple cpt_codes list
-    data.cpt_codes.forEach(code => {
+    data.cpt_codes.forEach((code) => {
       const b = billingMap[code] || {};
       const rvu = b.work_rvu?.toFixed(2) || "—";
       const payment = b.facility_payment ? `$${b.facility_payment.toFixed(2)}` : "—";
 
-      html += `
+      rows += `
         <tr>
           <td><code>${code}</code></td>
           <td>${b.description || "—"}</td>
@@ -219,13 +215,15 @@ function renderCPTTable(data) {
         </tr>
       `;
     });
+  } else {
+    rows = '<tr><td colspan="5" class="subtle" style="text-align: center;">No CPT codes returned</td></tr>';
   }
 
   // Totals row
   if (data.total_work_rvu || data.estimated_payment) {
     const totalRvu = data.total_work_rvu?.toFixed(2) || "—";
     const totalPayment = data.estimated_payment ? `$${data.estimated_payment.toFixed(2)}` : "—";
-    html += `
+    rows += `
       <tr class="totals-row">
         <td colspan="3"><strong>TOTALS</strong></td>
         <td><strong>${totalRvu}</strong></td>
@@ -234,8 +232,7 @@ function renderCPTTable(data) {
     `;
   }
 
-  html += "</tbody>";
-  tbody.innerHTML = html;
+  tbody.innerHTML = rows;
 }
 
 /**
@@ -278,11 +275,11 @@ function formatValueForDisplay(value) {
 }
 
 /**
- * Recursively render all non-null registry fields.
+ * Recursively render all non-null registry fields as a form.
  * Flattens nested objects with arrow notation paths.
  */
-function renderRegistrySummary(registry) {
-  const tbody = document.getElementById("registryTableBody");
+function renderRegistryForm(registry) {
+  const container = document.getElementById("registryForm");
   const rows = [];
 
   // Keys to skip (complex nested structures shown separately or not useful)
@@ -314,29 +311,57 @@ function renderRegistrySummary(registry) {
         // Format the key for display (snake_case → Title Case with arrow separators)
         const displayKey = path
           .split(".")
-          .map(part => part.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()))
-          .join(" → ");
+          .map((part) => part.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()))
+          .join(" > ");
 
-        rows.push([displayKey, displayValue]);
+        rows.push({ path, label: displayKey, value: displayValue, rawValue: value });
       }
     }
   }
 
   extractFields(registry);
 
-  // Build table HTML
-  let html = "<tbody>";
+  // Build form HTML
+  let html = "";
   if (rows.length === 0) {
-    html += '<tr><td colspan="2" class="subtle" style="text-align: center;">No registry data extracted</td></tr>';
+    html =
+      '<div class="subtle" style="text-align: center; padding: 20px;">No registry data extracted</div>';
   } else {
-    rows.forEach(([label, value]) => {
-      // Escape HTML in values to prevent XSS
-      const safeValue = value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      html += `<tr><td><strong>${label}</strong></td><td>${safeValue}</td></tr>`;
+    // Group by top-level category
+    const groups = {};
+    rows.forEach((row) => {
+      const category = row.path
+        .split(".")[0]
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+      if (!groups[category]) groups[category] = [];
+      groups[category].push(row);
     });
+
+    for (const [category, items] of Object.entries(groups)) {
+      html += `<div class="collapsible-section open">`;
+      html += `<button type="button" class="collapsible-header" onclick="this.parentElement.classList.toggle('open')">`;
+      html += `<span>${category}</span>`;
+      html += `<span class="collapsible-icon">▼</span>`;
+      html += `</button>`;
+      html += `<div class="collapsible-content">`;
+
+      items.forEach(({ path, label, value }) => {
+        // Escape HTML in values to prevent XSS
+        const safeValue = String(value).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const shortLabel = label.includes(" > ") ? label.split(" > ").slice(1).join(" > ") : label;
+
+        html += `<div class="form-group" data-path="${path}">`;
+        html += `<label class="form-label">${shortLabel}</label>`;
+        html += `<input type="text" class="form-control" value="${safeValue}" readonly>`;
+        html += `</div>`;
+      });
+
+      html += `</div></div>`;
+    }
   }
-  html += "</tbody>";
-  tbody.innerHTML = html;
+
+  container.innerHTML = html;
 }
 
 async function main() {
@@ -348,7 +373,7 @@ async function main() {
 
   if (!globalThis.crossOriginIsolated) {
     setStatus(
-      "Cross-origin isolation is OFF (SharedArrayBuffer unavailable). Open /ui/phi_redactor/ and verify COOP/COEP headers."
+      "Cross-origin isolation is OFF (SharedArrayBuffer unavailable). Open /ui/ and verify COOP/COEP headers."
     );
     runBtn.disabled = true;
     cancelBtn.disabled = true;
@@ -418,6 +443,8 @@ async function main() {
     detectionsCountEl.textContent = "0";
     applyBtn.disabled = true;
     revertBtn.disabled = true;
+    lastServerResponse = null;
+    if (exportBtn) exportBtn.disabled = true;
   }
 
   function updateDecorations() {
@@ -531,7 +558,7 @@ async function main() {
     revertBtn.disabled = running || originalText === model.getValue();
   });
 
-  const worker = new Worker(`/ui/phi_redactor/redactor.worker.js?v=${Date.now()}`, {
+  const worker = new Worker(`/ui/redactor.worker.js?v=${Date.now()}`, {
     type: "module",
   });
   let workerReady = false;
@@ -846,6 +873,27 @@ async function main() {
       submitBtn.disabled = false;
     }
   });
+
+  if (exportBtn) {
+    exportBtn.addEventListener("click", () => {
+      if (!lastServerResponse) {
+        setStatus("No results to export yet");
+        return;
+      }
+
+      const payload = JSON.stringify(lastServerResponse, null, 2);
+      const blob = new Blob([payload], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `procedure_suite_response_${Date.now()}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      setStatus("Exported results");
+    });
+  }
 
   // Optional: service worker (local assets only)
   if ("serviceWorker" in navigator && new URL(location.href).searchParams.get("sw") === "1") {

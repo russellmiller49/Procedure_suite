@@ -2,12 +2,12 @@
   "input": "data/ml_training/granular_ner/ner_dataset_all.jsonl",
   "output": "data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl",
   "present_label": "CTX_STENT_PRESENT",
-  "total_records": 2509,
-  "total_dev_stent_spans_seen": 619,
+  "total_records": 2569,
+  "total_dev_stent_spans_seen": 625,
   "dev_stent_relabelled_total": 13,
   "dev_stent_relabelled_to_neg_stent": 3,
   "dev_stent_relabelled_to_present_label": 10,
-  "neg_stent_added": 5,
+  "neg_stent_added": 6,
   "changes": [
     {
       "record_id": "note_068",
@@ -184,6 +184,15 @@
       "label": "NEG_STENT",
       "span_text": "stent",
       "context": "ents. A microdebrider was then used to excise residual tumor and smooth the airway wall. Final airway lumen had ~30% residual narrowing; no stent was placed. Complications: Mild bleeding controlled with cold saline and dilute epinephrine. Disposition: Extubated in OR and admitted to m",
+      "pattern": "\\bno\\s+(?:airway\\s+)?(?P<stent>stents?)\\b"
+    },
+    {
+      "record_id": "neg_stent_batch_3.py#020",
+      "start": 93,
+      "end": 98,
+      "label": "NEG_STENT",
+      "span_text": "stent",
+      "context": "Surveillance of previously placed Aero stent. Stent patent without migration or fracture. No stent-related complications identified. Continue annual surveillance protocol.",
       "pattern": "\\bno\\s+(?:airway\\s+)?(?P<stent>stents?)\\b"
     }
   ],

@@ -32,8 +32,11 @@ export PSUITE_KNOWLEDGE_FILE="${PSUITE_KNOWLEDGE_FILE:-data/knowledge/ip_coding_
 # Enable LLM Advisor for dev server to verify reliability fixes
 export CODER_USE_LLM_ADVISOR="${CODER_USE_LLM_ADVISOR:-true}"
 
-# Model backend (onnx for production parity, or pytorch for debugging)
-export MODEL_BACKEND="${MODEL_BACKEND:-onnx}"
+# Model backend:
+# - Prefer explicit shell env MODEL_BACKEND if set
+# - Else prefer .env MODEL_BACKEND (sourced above)
+# - Else default to pytorch for local dev (avoids requiring an ONNX runtime bundle)
+export MODEL_BACKEND="${MODEL_BACKEND:-pytorch}"
 
 # Limit BLAS/OpenMP thread oversubscription (matches Railway settings)
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"

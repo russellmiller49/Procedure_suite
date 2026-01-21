@@ -10,7 +10,7 @@ from modules.common.text_cleaning import (
 
 
 PATTERNS: list[str] = [
-    r"(?ims)^IP CODE MOD DETAILS.*?(?=\n\n|\Z)",
+    r"(?ims)^IP\b[^\n]{0,60}CODE\s+MOD\s+DETAILS.*?(?=^\\s*(?:ANESTHESIA|MONITORING|INSTRUMENT|ESTIMATED\\s+BLOOD\\s+LOSS|COMPLICATIONS|PROCEDURE\\s+IN\\s+DETAIL|DESCRIPTION\\s+OF\\s+PROCEDURE)\\b|\\Z)",
     r"(?ims)^CPT\s+CODES?:.*?(?=\n\n|\Z)",
     r"(?ims)^BILLING:.*?(?=\n\n|\Z)",
     r"(?ims)^CODING\s+SUMMARY.*?(?=\n\n|\Z)",

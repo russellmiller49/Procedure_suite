@@ -235,15 +235,34 @@ def derive_all_codes_with_meta(
     # Conventional (non-EBUS) TBNA (31629) with add-on 31633 for additional lobes.
     tbna = _proc(record, "tbna_conventional")
     if _performed(tbna):
-        codes.append("31629")
-        rationales["31629"] = "tbna_conventional.performed=true"
+        added_31629 = False
+        # Guardrail: avoid double-dipping when the same station list is already attributed
+        # to linear EBUS sampling (31652/31653). Conventional TBNA is bundled into EBUS-TBNA.
+        tbna_stations = _get(tbna, "stations_sampled") or []
+        if _performed(_proc(record, "linear_ebus")) and tbna_stations:
+            ebus_stations, _station_source = _stations_sampled(record)
+            if set(str(s).strip().upper() for s in tbna_stations if s) <= set(
+                str(s).strip().upper() for s in ebus_stations if s
+            ):
+                warnings.append(
+                    "Suppressed 31629: tbna_conventional stations overlap with EBUS sampling (bundled into 31652/31653)"
+                )
+            else:
+                codes.append("31629")
+                rationales["31629"] = "tbna_conventional.performed=true"
+                added_31629 = True
+        else:
+            codes.append("31629")
+            rationales["31629"] = "tbna_conventional.performed=true"
+            added_31629 = True
 
-        locations = _get(tbna, "locations") or _get(tbna, "sites")
-        if locations:
-            lobes = _lobe_tokens([str(x) for x in locations if x])
-            if len(lobes) >= 2:
-                codes.append("31633")
-                rationales["31633"] = f"tbna_conventional.locations spans lobes={sorted(lobes)}"
+        if added_31629:
+            locations = _get(tbna, "locations") or _get(tbna, "sites")
+            if locations:
+                lobes = _lobe_tokens([str(x) for x in locations if x])
+                if len(lobes) >= 2:
+                    codes.append("31633")
+                    rationales["31633"] = f"tbna_conventional.locations spans lobes={sorted(lobes)}"
 
     # Linear EBUS TBNA (31652/31653) based on station count.
     if _performed(_proc(record, "linear_ebus")):

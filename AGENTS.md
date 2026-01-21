@@ -63,7 +63,7 @@ See `modules/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
 - Typical command:
   - `python scripts/train_registry_ner.py --data data/ml_training/granular_ner/ner_bio_format_refined.jsonl --output-dir artifacts/registry_biomedbert_ner_v2 ...`
 - Run server with the model:
-  - set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner_v2` (in `.env` or shell)
+  - set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner` (in `.env` or shell)
 
 ## Common Pitfalls
 

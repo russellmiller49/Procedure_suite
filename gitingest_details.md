@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-19T12:32:21-08:00`
-Git: `v23` @ `b9b50da`
+Generated: `2026-01-21T13:23:53-08:00`
+Git: `v24` @ `d11a4a4`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -48,7 +48,6 @@ Git: `v23` @ `b9b50da`
      4522  scripts/run_coder_hybrid.py
      4649  scripts/refine_ner_labels.py
      5160  scripts/fix_registry_hallucinations.py
-     5187  scripts/add_training_case.py
      5248  scripts/force_merge_human_labels.py
      5264  scripts/split_phi_gold.py
      5339  scripts/validate_ner_alignment.py
@@ -56,6 +55,7 @@ Git: `v23` @ `b9b50da`
      5540  scripts/build_registry_bundle.py
      5917  scripts/ingest_phase0_data.py
      5946  scripts/normalize_phi_labels.py
+     6413  scripts/add_training_case.py
      6433  scripts/eval_registry_granular.py
      6757  scripts/merge_registry_prodigy.py
      6875  scripts/prodigy_export_registry.py
@@ -73,9 +73,9 @@ Git: `v23` @ `b9b50da`
      9036  scripts/find_critical_failures.py
      9076  scripts/fit_thresholds_from_eval.py
      9265  scripts/clean_distilled_phi_labels.py
-     9449  scripts/registry_pipeline_smoke.py
      9583  scripts/registry_label_overlap_report.py
      9603  scripts/align_synthetic_names.py
+     9739  scripts/registry_pipeline_smoke.py
     10358  scripts/diamond_loop_cloud_sync.py
     11238  scripts/evaluate_coder.py
     11262  scripts/scrub_golden_jsons.py
@@ -92,6 +92,7 @@ Git: `v23` @ `b9b50da`
     16359  scripts/apply_platinum_redactions.py
     16431  scripts/generate_gitingest.py
     16578  scripts/eval_hybrid_pipeline.py
+    16862  scripts/label_neg_stent.py
     17034  scripts/prodigy_prepare_phi_batch.py
     18203  scripts/generate_synthetic_phi_data.py
     18208  scripts/build_model_agnostic_phi_spans.py
@@ -100,7 +101,7 @@ Git: `v23` @ `b9b50da`
     23467  scripts/fix_alignment.py
     24804  scripts/train_distilbert_ner.py
     25261  scripts/prodigy_prepare_registry.py
-    26338  scripts/train_registry_ner.py
+    26361  scripts/train_registry_ner.py
     27149  scripts/golden_to_csv.py
     34569  scripts/validate_golden_extractions.py
     37469  scripts/distill_phi_labels.py
@@ -395,8 +396,8 @@ Git: `v23` @ `b9b50da`
      5166  modules/api/schemas/qa.py
      5176  tests/unit/test_openai_payload_compat.py
      5186  tests/coding/test_rules_engine_phase1.py
-     5268  modules/registry/self_correction/validation.py
      5334  modules/api/phi_demo_store.py
+     5382  modules/registry/self_correction/validation.py
      5394  modules/api/gemini_client.py
      5424  modules/coder/parallel_pathway/confidence_combiner.py
      5641  modules/coder/ebus_rules.py
@@ -436,7 +437,6 @@ Git: `v23` @ `b9b50da`
      8182  tests/ml_coder/test_registry_predictor.py
      8227  tests/coder/test_rules_engine.py
      8415  modules/registry/inference_pytorch.py
-     8418  modules/registry/evidence/verifier.py
      8427  modules/registry_cleaning/clinical_qc.py
      8556  modules/registry/ml/evaluate.py
      8618  tests/coder/test_hierarchy_bundling_fixes.py
@@ -466,10 +466,10 @@ Git: `v23` @ `b9b50da`
     11419  modules/registry/extractors/v3_extractor.py
     11467  modules/api/routes/phi.py
     11691  modules/registry/legacy/adapters/pleural.py
+    11747  modules/registry/evidence/verifier.py
     12196  tests/registry/test_self_correction_loop.py
     12198  modules/api/dependencies.py
     12339  modules/registry_cleaning/schema_utils.py
-    12425  modules/ner/inference.py
     12446  docs/phi_review_system/backend/dependencies.py
     12640  tests/ml_coder/test_data_prep.py
     12657  docs/phi_review_system/backend/schemas.py
@@ -480,7 +480,6 @@ Git: `v23` @ `b9b50da`
     13483  modules/coder/domain_rules/__init__.py
     13696  modules/coder/rules.py
     13791  modules/extraction/postprocessing/clinical_guardrails.py
-    13964  modules/registry/ner_mapping/station_extractor.py
     14135  tests/integration/persistence/test_supabase_procedure_store.py
     14250  modules/ml_coder/registry_predictor.py
     14397  modules/registry/ml/models.py
@@ -496,9 +495,11 @@ Git: `v23` @ `b9b50da`
     15436  modules/autocode/ip_kb/canonical_rules.py
     15467  modules/api/services/qa_pipeline.py
     15495  modules/ml_coder/registry_training.py
+    15516  modules/registry/ner_mapping/station_extractor.py
     15601  tests/reporter/test_ip_addons.py
     15653  tests/registry/test_extraction_quality.py
     15655  modules/coder/reconciliation/pipeline.py
+    15800  modules/ner/inference.py
     15857  tests/registry/test_normalization.py
     16032  modules/coder/rules_engine.py
     16366  modules/phi/safety/veto.py
@@ -515,15 +516,15 @@ Git: `v23` @ `b9b50da`
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
     19326  modules/registry/schema.py
-    19632  modules/registry/self_correction/keyword_guard.py
     19783  tests/integration/api/test_registry_endpoints.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
-    20205  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     20223  modules/domain/coding_rules/rule_engine.py
     20317  modules/coder/parallel_pathway/orchestrator.py
+    20392  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     20430  modules/registry/model_bootstrap.py
     20539  modules/registry/extractors/llm_detailed.py
+    20839  modules/registry/self_correction/keyword_guard.py
     21220  modules/coder/adapters/llm/openai_compat_advisor.py
     21460  modules/coder/adapters/persistence/supabase_procedure_store.py
     21479  tests/coder/test_reconciliation.py
@@ -554,17 +555,17 @@ Git: `v23` @ `b9b50da`
     36538  modules/coder/dictionary.py
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
-    41290  modules/api/fastapi_app.py
     41901  modules/proc_ml_advisor/schemas.py
+    42663  modules/api/fastapi_app.py
     42913  modules/api/routes/procedure_codes.py
     43756  tests/registry/test_granular_registry_models.py
     54786  modules/autocode/ip_kb/ip_kb.py
     56478  modules/registry/schema_granular.py
     61733  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    65465  modules/registry/deterministic_extractors.py
-    95729  modules/registry/postprocess.py
-   102556  modules/registry/application/registry_service.py
+    65025  modules/registry/deterministic_extractors.py
+    95831  modules/registry/postprocess.py
+   103438  modules/registry/application/registry_service.py
    110004  modules/registry/engine.py
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  modules/reporting/templates/addons/eus_b.jinja
@@ -576,6 +577,7 @@ Git: `v23` @ `b9b50da`
       290  modules/reporting/templates/addons/intrapleural_fibrinolysis.jinja
       293  modules/reporting/templates/addons/tunneled_pleural_catheter_removal.jinja
       300  modules/reporting/templates/addons/whole_lung_lavage.jinja
+      310  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/quantize_config.json
       331  modules/reporting/templates/addons/indwelling_tunneled_pleural_catheter_placement.jinja
       338  modules/reporting/templates/addons/chest_tube_pleurx_catheter_discharge.jinja
       346  modules/reporting/templates/addons/therapeutic_aspiration.jinja
@@ -605,7 +607,6 @@ Git: `v23` @ `b9b50da`
       512  modules/reporting/templates/addons/transbronchial_cryobiopsy.jinja
       543  modules/reporting/templates/addons/chest_tube_removal.jinja
       565  modules/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
-      580  modules/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
       582  modules/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
       584  modules/reporting/templates/addons/ion_registration_complete.jinja
       586  modules/reporting/templates/addons/tool_in_lesion_confirmation.jinja
@@ -627,6 +628,7 @@ Git: `v23` @ `b9b50da`
       689  modules/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
       690  modules/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
       695  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
+      695  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
       707  modules/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
       708  modules/reporting/templates/addons/tracheostomy_downsizing_fenestrated_tube_placement.jinja
       714  modules/reporting/templates/addons/endobronchial_sealant_application_for_bronchopleural_fistula_bpf.jinja
@@ -641,6 +643,7 @@ Git: `v23` @ `b9b50da`
       746  modules/reporting/templates/addons/thoracentesis_with_pleural_manometry.jinja
       750  modules/reporting/templates/addons/endobronchial_valve_placement_for_persistent_air_leak_bpf.jinja
       762  tests/fixtures/thora_bilateral.txt
+      764  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/ort_config.json
       765  modules/reporting/templates/addons/electromagnetic_navigation_bronchoscopy.jinja
       768  modules/reporting/templates/addons/intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d.jinja
       778  modules/reporting/templates/addons/ion_registration_registration_drift_mismatch.jinja
@@ -656,17 +659,21 @@ Git: `v23` @ `b9b50da`
       910  modules/reporting/templates/addons/tracheostomy_planned_percutaneous_bronchoscopic_assistance.jinja
       920  modules/reporting/templates/addons/radial_ebus_guided_sampling_with_guide_sheath.jinja
       942  tests/fixtures/stent_rmb_and_dilation_lul.txt
-      957  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/config.json
+      951  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/config.json
+      951  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
+      970  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/special_tokens_map.json
       982  modules/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
      1095  modules/reporting/templates/addons/percutaneous_tracheostomy_revision.jinja
      1193  tests/fixtures/ppl_nav_radial_tblb.txt
      1227  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
+     1227  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
      1232  docs/REPORTER_STYLE_GUIDE.md
      1359  modules/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1432  modules/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
      1473  docs/DEPLOY_RAILWAY.md
      1797  modules/api/static/phi_redactor/allowlist_trie.json
      1817  modules/reporting/templates/addons/post_blvr_management_protocol.jinja
+     1822  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/config.json
      1925  modules/reporting/templates/addons/general_bronchoscopy_note.jinja
      1961  modules/phi/README.md
      1992  tests/fixtures/complex_tracheal_stenosis.txt
@@ -696,13 +703,13 @@ Git: `v23` @ `b9b50da`
      4606  docs/CODEX_PRODUCTION_PLAN.md
      4745  docs/Multi_agent_collaboration/Architect Priming Script.md
      5429  docs/ml_first_hybrid_policy.md
-     6097  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
      6232  docs/Registry_API.md
      6862  modules/reporting/templates/macros/04_blvr_cryo.j2
      7031  docs/Registry_ML_summary.md
      7368  docs/Multi_agent_collaboration/Multi‑Agent Architecture.md
      7469  modules/reporting/templates/macros/06_other_interventions.j2
      8655  modules/reporting/EXTRACTION_RULES.md
+     8821  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
      9413  docs/"Diamond" Improvement Plan 1_18_26.txt
      9688  modules/reporting/templates/macros/01_minor_trach_laryngoscopy.j2
      9941  docs/optimization_12_16_25.md
@@ -722,11 +729,12 @@ Git: `v23` @ `b9b50da`
     17850  modules/api/static/phi_demo.js
     17982  modules/phi/adapters/redaction-service.js
     18925  docs/MAKEFILE_COMMANDS.md
+    19704  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer_config.json
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
-    25929  modules/api/static/phi_redactor/app.js
     27821  modules/registry/ip_registry_improvements.md
-    37723  docs/USER_GUIDE.md
+    29598  modules/api/static/phi_redactor/app.js
+    37714  docs/USER_GUIDE.md
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     54018  modules/api/static/phi_redactor/protectedVeto.js
     84457  modules/api/static/phi_redactor/redactor.worker.js
@@ -736,6 +744,7 @@ Git: `v23` @ `b9b50da`
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  scripts/label_neg_stent.py
  inline_cap_reached>75  scripts/prodigy_prepare_phi_batch.py
  inline_cap_reached>75  scripts/generate_synthetic_phi_data.py
  inline_cap_reached>75  scripts/build_model_agnostic_phi_spans.py
@@ -937,8 +946,8 @@ Git: `v23` @ `b9b50da`
  inline_cap_reached>75  modules/coder/adapters/nlp/simple_negation_detector.py
  inline_cap_reached>75  modules/registry/cli.py
  inline_cap_reached>75  modules/api/schemas/qa.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/api/phi_demo_store.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/api/gemini_client.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/coder/ebus_rules.py
@@ -962,7 +971,6 @@ Git: `v23` @ `b9b50da`
  inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/coder/adapters/persistence/inmemory_procedure_store.py
  inline_cap_reached>75  modules/registry/inference_pytorch.py
- inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/registry_cleaning/clinical_qc.py
  inline_cap_reached>75  modules/registry/ml/evaluate.py
  inline_cap_reached>75  modules/coder/application/procedure_type_detector.py
@@ -983,14 +991,13 @@ Git: `v23` @ `b9b50da`
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
  inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
+ inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
- inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
  inline_cap_reached>75  modules/coder/rules.py
  inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
- inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/ml_coder/registry_predictor.py
  inline_cap_reached>75  modules/registry/ml/models.py
  inline_cap_reached>75  modules/registry/audit/raw_ml_auditor.py
@@ -1001,7 +1008,9 @@ Git: `v23` @ `b9b50da`
  inline_cap_reached>75  modules/autocode/ip_kb/canonical_rules.py
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
+ inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
+ inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/coder/rules_engine.py
  inline_cap_reached>75  modules/phi/safety/veto.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
@@ -1010,13 +1019,13 @@ Git: `v23` @ `b9b50da`
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
  inline_cap_reached>75  modules/registry/schema.py
- inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
- inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
+ inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/registry/model_bootstrap.py
  inline_cap_reached>75  modules/registry/extractors/llm_detailed.py
+ inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/adapters/llm/openai_compat_advisor.py
  inline_cap_reached>75  modules/coder/adapters/persistence/supabase_procedure_store.py
  inline_cap_reached>75  modules/registry/legacy/adapters/airway.py
@@ -1035,8 +1044,8 @@ Git: `v23` @ `b9b50da`
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/coder/dictionary.py
- inline_cap_reached>75  modules/api/fastapi_app.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
+ inline_cap_reached>75  modules/api/fastapi_app.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  modules/registry/schema_granular.py
@@ -1047,7 +1056,10 @@ Git: `v23` @ `b9b50da`
  inline_cap_reached>75  modules/registry/application/registry_service.py
  inline_cap_reached>75  modules/registry/engine.py
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
+     too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
+     too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
+     too_large>200000B  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer.json
 ```
 
 ## Inlined file contents
@@ -3882,178 +3894,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/add_training_case.py`
-- Size: `5187` bytes
-```
-import json
-import datetime
-from pathlib import Path
-
-def _is_within(path: Path, root: Path) -> bool:
-    try:
-        path.relative_to(root)
-        return True
-    except ValueError:
-        return False
-
-
-def _resolve_repo_root(repo_root: Path | str | None) -> Path:
-    """
-    Resolve the actual repository root for this checkout.
-
-    Many generated scripts pass an incorrect "repo_root" (often a subdirectory
-    under ``data/``). When that subdirectory is still within this checkout, we
-    can reliably correct it to the real repo root based on this module's path.
-    """
-
-    module_repo_root = Path(__file__).resolve().parents[1]
-    if repo_root is None:
-        return module_repo_root
-
-    candidate = Path(repo_root).expanduser()
-    try:
-        candidate = candidate.resolve()
-    except FileNotFoundError:
-        candidate = candidate.absolute()
-
-    if candidate.is_file():
-        candidate = candidate.parent
-
-    if _is_within(candidate, module_repo_root):
-        return module_repo_root
-
-    return candidate
-
-
-def add_case(note_id, raw_text, entities, repo_root):
-    """
-    Central logic to update ML training files.
-    
-    Args:
-        note_id (str): Unique identifier for the note.
-        raw_text (str): The clinical text.
-        entities (list): List of dicts [{'label': '...', 'start': 0, 'end': 5, 'text': '...'}, ...]
-        repo_root (Path): Path object pointing to the repository root.
-    """
-    
-    repo_root = _resolve_repo_root(repo_root)
-
-    # Define Output Directory Structure
-    output_dir = repo_root / "data" / "ml_training" / "granular_ner"
-    output_dir.mkdir(parents=True, exist_ok=True)
-    
-    files = {
-        "ner": output_dir / "ner_dataset_all.jsonl",
-        "notes": output_dir / "notes.jsonl",
-        "spans": output_dir / "spans.jsonl",
-        "stats": output_dir / "stats.json",
-        "log": output_dir / "alignment_warnings.log"
-    }
-
-    if entities is None:
-        entities = []
-
-    # 1. Normalize + sort entities
-    normalized_entities = []
-    for ent in entities:
-        if not isinstance(ent, dict):
-            continue
-
-        label = ent.get("label")
-        start = ent.get("start")
-        end = ent.get("end")
-        text = ent.get("text", ent.get("token"))
-
-        try:
-            start = int(start)
-            end = int(end)
-        except (TypeError, ValueError):
-            if isinstance(text, str) and raw_text:
-                idx = raw_text.find(text)
-                if idx != -1:
-                    start = idx
-                    end = idx + len(text)
-                else:
-                    continue
-            else:
-                continue
-
-        if not isinstance(label, str) or not label:
-            continue
-
-        if start < 0:
-            start = 0
-        if end < start:
-            end = start
-        if raw_text:
-            max_len = len(raw_text)
-            if start > max_len:
-                start = max_len
-            if end > max_len:
-                end = max_len
-
-        if text is None:
-            text = raw_text[start:end]
-        elif raw_text:
-            text = raw_text[start:end]
-
-        normalized_entities.append(
-            {"label": label, "start": start, "end": end, "text": text}
-        )
-
-    entities = sorted(normalized_entities, key=lambda x: x["start"])
-
-    # 2. Append to ner_dataset_all.jsonl
-    with open(files["ner"], 'a', encoding='utf-8') as f:
-        record = {"id": note_id, "text": raw_text, "entities": entities}
-        f.write(json.dumps(record) + "\n")
-
-    # 3. Append to notes.jsonl
-    with open(files["notes"], 'a', encoding='utf-8') as f:
-        record = {"id": note_id, "text": raw_text}
-        f.write(json.dumps(record) + "\n")
-
-    # 4. Append to spans.jsonl
-    with open(files["spans"], 'a', encoding='utf-8') as f:
-        for ent in entities:
-            span_record = {
-                "span_id": f"{ent['label']}_{ent['start']}",
-                "note_id": note_id,
-                "label": ent['label'],
-                "text": ent["text"],
-                "start": ent['start'],
-                "end": ent['end']
-            }
-            f.write(json.dumps(span_record) + "\n")
-
-    # 5. Update stats.json
-    if files["stats"].exists():
-        with open(files["stats"], 'r', encoding='utf-8') as f:
-            stats = json.load(f)
-    else:
-        stats = {"total_notes": 0, "total_spans_valid": 0, "label_counts": {}}
-
-    stats["total_notes"] += 1
-    stats["total_spans_valid"] += len(entities)
-    for ent in entities:
-        lbl = ent['label']
-        stats["label_counts"][lbl] = stats["label_counts"].get(lbl, 0) + 1
-    
-    with open(files["stats"], 'w', encoding='utf-8') as f:
-        json.dump(stats, f, indent=4)
-
-    # 6. Validation & Logging
-    with open(files["log"], 'a', encoding='utf-8') as log:
-        for ent in entities:
-            extracted = raw_text[ent['start']:ent['end']]
-            if extracted != ent['text']:
-                log.write(f"[{datetime.datetime.now()}] MISMATCH: {note_id} | Label {ent['label']} expected '{ent['text']}' but got '{extracted}'\n")
-
-    print(f"✅ Success: {note_id} added to pipeline. ({len(entities)} entities)")
-
-```
-
----
 ### `scripts/force_merge_human_labels.py`
 - Size: `5248` bytes
 ```
@@ -5218,6 +5058,199 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
+
+```
+
+---
+### `scripts/add_training_case.py`
+- Size: `6413` bytes
+```
+import json
+import datetime
+import re
+from pathlib import Path
+
+def _is_within(path: Path, root: Path) -> bool:
+    try:
+        path.relative_to(root)
+        return True
+    except ValueError:
+        return False
+
+
+def _resolve_repo_root(repo_root: Path | str | None) -> Path:
+    """
+    Resolve the actual repository root for this checkout.
+
+    Many generated scripts pass an incorrect "repo_root" (often a subdirectory
+    under ``data/``). When that subdirectory is still within this checkout, we
+    can reliably correct it to the real repo root based on this module's path.
+    """
+
+    module_repo_root = Path(__file__).resolve().parents[1]
+    if repo_root is None:
+        return module_repo_root
+
+    candidate = Path(repo_root).expanduser()
+    try:
+        candidate = candidate.resolve()
+    except FileNotFoundError:
+        candidate = candidate.absolute()
+
+    if candidate.is_file():
+        candidate = candidate.parent
+
+    if _is_within(candidate, module_repo_root):
+        return module_repo_root
+
+    return candidate
+
+
+def add_case(note_id, raw_text, entities, repo_root):
+    """
+    Central logic to update ML training files.
+    
+    Args:
+        note_id (str): Unique identifier for the note.
+        raw_text (str): The clinical text.
+        entities (list): List of dicts [{'label': '...', 'start': 0, 'end': 5, 'text': '...'}, ...]
+        repo_root (Path): Path object pointing to the repository root.
+    """
+    
+    repo_root = _resolve_repo_root(repo_root)
+
+    # --- Guard against the most common generated-script bug ---
+    # Some generated scripts accidentally swap (note_id, raw_text) and call:
+    #   add_case(<full note text>, <script_name_or_dataset_tag>, entities, repo_root)
+    # That corrupts the dataset (entities get clamped to the short "raw_text").
+    if isinstance(note_id, str) and isinstance(raw_text, str):
+        note_id_looks_like_text = (len(note_id) > 200) and (("\n" in note_id) or (" " in note_id))
+        raw_text_looks_like_id = (len(raw_text) <= 80) and ("\n" not in raw_text) and (
+            raw_text.endswith(".py") or re.fullmatch(r"[A-Za-z0-9_.-]+", raw_text) is not None
+        )
+        if note_id_looks_like_text and raw_text_looks_like_id:
+            raise ValueError(
+                "add_case() expects (note_id, raw_text, entities, repo_root), but it looks like "
+                "the first two arguments were swapped. Got a note_id that looks like note text "
+                f"(len={len(note_id)}), and a raw_text that looks like an identifier ({raw_text!r}). "
+                "Fix the caller to pass a short unique note_id and the full note text as raw_text."
+            )
+
+    # Define Output Directory Structure
+    output_dir = repo_root / "data" / "ml_training" / "granular_ner"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    files = {
+        "ner": output_dir / "ner_dataset_all.jsonl",
+        "notes": output_dir / "notes.jsonl",
+        "spans": output_dir / "spans.jsonl",
+        "stats": output_dir / "stats.json",
+        "log": output_dir / "alignment_warnings.log"
+    }
+
+    if entities is None:
+        entities = []
+
+    # 1. Normalize + sort entities
+    normalized_entities = []
+    for ent in entities:
+        if not isinstance(ent, dict):
+            continue
+
+        label = ent.get("label")
+        start = ent.get("start")
+        end = ent.get("end")
+        text = ent.get("text", ent.get("token"))
+
+        try:
+            start = int(start)
+            end = int(end)
+        except (TypeError, ValueError):
+            if isinstance(text, str) and raw_text:
+                idx = raw_text.find(text)
+                if idx != -1:
+                    start = idx
+                    end = idx + len(text)
+                else:
+                    continue
+            else:
+                continue
+
+        if not isinstance(label, str) or not label:
+            continue
+
+        if start < 0:
+            start = 0
+        if end < start:
+            end = start
+        if raw_text:
+            max_len = len(raw_text)
+            if start > max_len:
+                start = max_len
+            if end > max_len:
+                end = max_len
+
+        if text is None:
+            text = raw_text[start:end]
+        elif raw_text:
+            text = raw_text[start:end]
+
+        if end <= start:
+            continue
+
+        normalized_entities.append(
+            {"label": label, "start": start, "end": end, "text": text}
+        )
+
+    entities = sorted(normalized_entities, key=lambda x: x["start"])
+
+    # 2. Append to ner_dataset_all.jsonl
+    with open(files["ner"], 'a', encoding='utf-8') as f:
+        record = {"id": note_id, "text": raw_text, "entities": entities}
+        f.write(json.dumps(record) + "\n")
+
+    # 3. Append to notes.jsonl
+    with open(files["notes"], 'a', encoding='utf-8') as f:
+        record = {"id": note_id, "text": raw_text}
+        f.write(json.dumps(record) + "\n")
+
+    # 4. Append to spans.jsonl
+    with open(files["spans"], 'a', encoding='utf-8') as f:
+        for ent in entities:
+            span_record = {
+                "span_id": f"{ent['label']}_{ent['start']}",
+                "note_id": note_id,
+                "label": ent['label'],
+                "text": ent["text"],
+                "start": ent['start'],
+                "end": ent['end']
+            }
+            f.write(json.dumps(span_record) + "\n")
+
+    # 5. Update stats.json
+    if files["stats"].exists():
+        with open(files["stats"], 'r', encoding='utf-8') as f:
+            stats = json.load(f)
+    else:
+        stats = {"total_notes": 0, "total_spans_valid": 0, "label_counts": {}}
+
+    stats["total_notes"] += 1
+    stats["total_spans_valid"] += len(entities)
+    for ent in entities:
+        lbl = ent['label']
+        stats["label_counts"][lbl] = stats["label_counts"].get(lbl, 0) + 1
+    
+    with open(files["stats"], 'w', encoding='utf-8') as f:
+        json.dump(stats, f, indent=4)
+
+    # 6. Validation & Logging
+    with open(files["log"], 'a', encoding='utf-8') as log:
+        for ent in entities:
+            extracted = raw_text[ent['start']:ent['end']]
+            if extracted != ent['text']:
+                log.write(f"[{datetime.datetime.now()}] MISMATCH: {note_id} | Label {ent['label']} expected '{ent['text']}' but got '{extracted}'\n")
+
+    print(f"✅ Success: {note_id} added to pipeline. ({len(entities)} entities)")
 
 ```
 
@@ -9275,263 +9308,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/registry_pipeline_smoke.py`
-- Size: `9449` bytes
-```
-#!/usr/bin/env python3
-from __future__ import annotations
-
-import argparse
-import os
-import sys
-from pathlib import Path
-from typing import Any
-
-from dotenv import load_dotenv
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-
-def _truthy_env(name: str) -> bool:
-    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
-
-
-if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
-
-from modules.registry.application.registry_service import RegistryService  # noqa: E402
-from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
-from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
-from modules.registry.processing.navigation_fiducials import (  # noqa: E402
-    apply_navigation_fiducials,
-)
-from modules.registry.schema import RegistryRecord  # noqa: E402
-from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
-
-
-def _read_note_text(path: str | None, inline_text: str | None) -> str:
-    if inline_text:
-        return inline_text
-    if not path:
-        raise ValueError("Provide --note or --text.")
-    note_path = Path(path)
-    return note_path.read_text(encoding="utf-8")
-
-
-def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
-    flags: set[str] = set()
-    procs = record_data.get("procedures_performed")
-    if isinstance(procs, dict):
-        for name, payload in procs.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"procedures_performed.{name}.performed")
-
-    pleural = record_data.get("pleural_procedures")
-    if isinstance(pleural, dict):
-        for name, payload in pleural.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"pleural_procedures.{name}.performed")
-
-    if record_data.get("established_tracheostomy_route") is True:
-        flags.add("established_tracheostomy_route")
-
-    granular = record_data.get("granular_data")
-    if isinstance(granular, dict):
-        targets = granular.get("navigation_targets")
-        if isinstance(targets, list):
-            for target in targets:
-                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
-                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
-                    break
-
-    return flags
-
-
-def _apply_seed_uplift(
-    record_data: dict[str, Any],
-    seed: dict[str, Any],
-    masked_note_text: str,
-) -> tuple[dict[str, Any], list[str]]:
-    uplifted: list[str] = []
-
-    seed_procs = seed.get("procedures_performed")
-    if isinstance(seed_procs, dict):
-        record_procs = record_data.get("procedures_performed") or {}
-        if not isinstance(record_procs, dict):
-            record_procs = {}
-        for name, payload in seed_procs.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_procs.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"procedures_performed.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_procs[name] = existing
-        if record_procs:
-            record_data["procedures_performed"] = record_procs
-
-    seed_pleural = seed.get("pleural_procedures")
-    if isinstance(seed_pleural, dict):
-        record_pleural = record_data.get("pleural_procedures") or {}
-        if not isinstance(record_pleural, dict):
-            record_pleural = {}
-        for name, payload in seed_pleural.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_pleural.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"pleural_procedures.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_pleural[name] = existing
-        if record_pleural:
-            record_data["pleural_procedures"] = record_pleural
-
-    if seed.get("established_tracheostomy_route") is True:
-        if record_data.get("established_tracheostomy_route") is not True:
-            record_data["established_tracheostomy_route"] = True
-            uplifted.append("established_tracheostomy_route")
-
-    if apply_navigation_fiducials(record_data, masked_note_text):
-        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
-
-    return record_data, uplifted
-
-
-def _print_list(label: str, items: list[str] | set[str]) -> None:
-    if not items:
-        print(f"{label}: (none)")
-        return
-    if isinstance(items, set):
-        items = sorted(items)
-    print(f"{label}:")
-    for item in items:
-        print(f"  - {item}")
-
-
-def _print_self_correction_diagnostics(result) -> None:
-    audit_report = getattr(result, "audit_report", None)
-    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
-    if not high_conf:
-        print("Audit high-conf omissions: (none)")
-    else:
-        print("Audit high-conf omissions:")
-        for pred in high_conf:
-            cpt = getattr(pred, "cpt", None)
-            prob = getattr(pred, "prob", None)
-            bucket = getattr(pred, "bucket", None)
-            try:
-                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
-            except Exception:
-                prob_str = "?"
-            print(f"  - {cpt} (prob={prob_str}, bucket={bucket})")
-
-    warnings = getattr(result, "warnings", None)
-    if isinstance(warnings, list):
-        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
-        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
-        diag = self_correct_warnings + auto_corrected
-        if diag:
-            print("Self-correction diagnostics:")
-            for w in diag:
-                print(f"  - {w}")
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Smoke test the registry extraction pipeline on a note."
-    )
-    parser.add_argument("--note", help="Path to a note text file.")
-    parser.add_argument("--text", help="Inline note text.")
-    parser.add_argument(
-        "--self-correct",
-        action="store_true",
-        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
-    )
-    parser.add_argument(
-        "--real-llm",
-        action="store_true",
-        help="Allow real LLM calls (disables stub/offline defaults).",
-    )
-    args = parser.parse_args()
-
-    try:
-        note_text = _read_note_text(args.note, args.text)
-    except Exception as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 1
-
-    if args.real_llm:
-        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
-        os.environ.setdefault("GEMINI_OFFLINE", "0")
-        os.environ.setdefault("OPENAI_OFFLINE", "0")
-    else:
-        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-        if os.getenv("GEMINI_OFFLINE") is None:
-            os.environ["GEMINI_OFFLINE"] = "1"
-
-    masked = mask_offset_preserving(note_text)
-
-    service = RegistryService()
-    record, warnings, meta = service.extract_record(note_text)
-
-    before_flags = _collect_performed_flags(record.model_dump())
-
-    seed = run_deterministic_extractors(masked)
-    record_data = record.model_dump()
-    record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
-    uplifted_flags = set(uplifted)
-    after_flags = _collect_performed_flags(record_data)
-
-    record_after = RegistryRecord(**record_data)
-    omission_warnings = scan_for_omissions(masked, record_after)
-
-    _print_list("Performed flags (extract_record)", before_flags)
-    _print_list("Performed flags added by deterministic uplift", uplifted_flags)
-    _print_list("Performed flags (after uplift)", after_flags)
-    _print_list("Extract warnings", warnings)
-    _print_list("Omission warnings", omission_warnings)
-
-    if args.self_correct:
-        os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
-        try:
-            result = service.extract_fields(note_text)
-        except Exception as exc:
-            print(f"SELF_CORRECT_ERROR: {exc}")
-        else:
-            _print_self_correction_diagnostics(result)
-            if result.self_correction:
-                print("Self-correction applied:")
-                for item in result.self_correction:
-                    print(f"  - {item.trigger.target_cpt}: {item.outcome}")
-            else:
-                print("Self-correction applied: (none)")
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
 ### `scripts/registry_label_overlap_report.py`
 - Size: `9583` bytes
 ```
@@ -10075,6 +9851,267 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
+
+```
+
+---
+### `scripts/registry_pipeline_smoke.py`
+- Size: `9739` bytes
+```
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
+    load_dotenv(override=False)
+
+from modules.registry.application.registry_service import RegistryService  # noqa: E402
+from modules.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
+from modules.registry.processing.masking import mask_offset_preserving  # noqa: E402
+from modules.registry.processing.navigation_fiducials import (  # noqa: E402
+    apply_navigation_fiducials,
+)
+from modules.registry.schema import RegistryRecord  # noqa: E402
+from modules.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
+
+
+def _read_note_text(path: str | None, inline_text: str | None) -> str:
+    if inline_text:
+        return inline_text
+    if not path:
+        raise ValueError("Provide --note or --text.")
+    note_path = Path(path)
+    return note_path.read_text(encoding="utf-8")
+
+
+def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
+    flags: set[str] = set()
+    procs = record_data.get("procedures_performed")
+    if isinstance(procs, dict):
+        for name, payload in procs.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"procedures_performed.{name}.performed")
+
+    pleural = record_data.get("pleural_procedures")
+    if isinstance(pleural, dict):
+        for name, payload in pleural.items():
+            if isinstance(payload, dict) and payload.get("performed") is True:
+                flags.add(f"pleural_procedures.{name}.performed")
+
+    if record_data.get("established_tracheostomy_route") is True:
+        flags.add("established_tracheostomy_route")
+
+    granular = record_data.get("granular_data")
+    if isinstance(granular, dict):
+        targets = granular.get("navigation_targets")
+        if isinstance(targets, list):
+            for target in targets:
+                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
+                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
+                    break
+
+    return flags
+
+
+def _apply_seed_uplift(
+    record_data: dict[str, Any],
+    seed: dict[str, Any],
+    masked_note_text: str,
+) -> tuple[dict[str, Any], list[str]]:
+    uplifted: list[str] = []
+
+    seed_procs = seed.get("procedures_performed")
+    if isinstance(seed_procs, dict):
+        record_procs = record_data.get("procedures_performed") or {}
+        if not isinstance(record_procs, dict):
+            record_procs = {}
+        for name, payload in seed_procs.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_procs.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"procedures_performed.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_procs[name] = existing
+        if record_procs:
+            record_data["procedures_performed"] = record_procs
+
+    seed_pleural = seed.get("pleural_procedures")
+    if isinstance(seed_pleural, dict):
+        record_pleural = record_data.get("pleural_procedures") or {}
+        if not isinstance(record_pleural, dict):
+            record_pleural = {}
+        for name, payload in seed_pleural.items():
+            if not isinstance(payload, dict) or payload.get("performed") is not True:
+                continue
+            existing = record_pleural.get(name) or {}
+            if not isinstance(existing, dict):
+                existing = {}
+            if existing.get("performed") is not True:
+                existing["performed"] = True
+                uplifted.append(f"pleural_procedures.{name}.performed")
+            for key, value in payload.items():
+                if key == "performed":
+                    continue
+                if existing.get(key) in (None, "", [], {}):
+                    existing[key] = value
+            record_pleural[name] = existing
+        if record_pleural:
+            record_data["pleural_procedures"] = record_pleural
+
+    if seed.get("established_tracheostomy_route") is True:
+        if record_data.get("established_tracheostomy_route") is not True:
+            record_data["established_tracheostomy_route"] = True
+            uplifted.append("established_tracheostomy_route")
+
+    if apply_navigation_fiducials(record_data, masked_note_text):
+        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
+
+    return record_data, uplifted
+
+
+def _print_list(label: str, items: list[str] | set[str]) -> None:
+    if not items:
+        print(f"{label}: (none)")
+        return
+    if isinstance(items, set):
+        items = sorted(items)
+    print(f"{label}:")
+    for item in items:
+        print(f"  - {item}")
+
+
+def _print_self_correction_diagnostics(result) -> None:
+    audit_report = getattr(result, "audit_report", None)
+    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
+    if not high_conf:
+        print("Audit high-conf omissions: (none)")
+    else:
+        print("Audit high-conf omissions:")
+        for pred in high_conf:
+            cpt = getattr(pred, "cpt", None)
+            prob = getattr(pred, "prob", None)
+            bucket = getattr(pred, "bucket", None)
+            try:
+                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
+            except Exception:
+                prob_str = "?"
+            print(f"  - {cpt} (prob={prob_str}, bucket={bucket})")
+
+    warnings = getattr(result, "warnings", None)
+    if isinstance(warnings, list):
+        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
+        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
+        diag = self_correct_warnings + auto_corrected
+        if diag:
+            print("Self-correction diagnostics:")
+            for w in diag:
+                print(f"  - {w}")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Smoke test the registry extraction pipeline on a note."
+    )
+    parser.add_argument("--note", help="Path to a note text file.")
+    parser.add_argument("--text", help="Inline note text.")
+    parser.add_argument(
+        "--self-correct",
+        action="store_true",
+        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
+    )
+    parser.add_argument(
+        "--real-llm",
+        action="store_true",
+        help="Allow real LLM calls (disables stub/offline defaults).",
+    )
+    args = parser.parse_args()
+
+    try:
+        note_text = _read_note_text(args.note, args.text)
+    except Exception as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+    if args.real_llm:
+        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
+        os.environ.setdefault("GEMINI_OFFLINE", "0")
+        os.environ.setdefault("OPENAI_OFFLINE", "0")
+    else:
+        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
+            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
+        if os.getenv("GEMINI_OFFLINE") is None:
+            os.environ["GEMINI_OFFLINE"] = "1"
+
+    masked = mask_offset_preserving(note_text)
+
+    service = RegistryService()
+    record, warnings, meta = service.extract_record(note_text)
+
+    before_flags = _collect_performed_flags(record.model_dump())
+
+    seed = run_deterministic_extractors(masked)
+    record_data = record.model_dump()
+    record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
+    uplifted_flags = set(uplifted)
+    after_flags = _collect_performed_flags(record_data)
+
+    record_after = RegistryRecord(**record_data)
+    omission_warnings = scan_for_omissions(masked, record_after)
+
+    _print_list("Performed flags (extract_record)", before_flags)
+    _print_list("Performed flags added by deterministic uplift", uplifted_flags)
+    _print_list("Performed flags (after uplift)", after_flags)
+    _print_list("Extract warnings", warnings)
+    _print_list("Omission warnings", omission_warnings)
+
+    if args.self_correct:
+        os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
+        try:
+            result = service.extract_fields(note_text)
+        except Exception as exc:
+            print(f"SELF_CORRECT_ERROR: {exc}")
+        else:
+            _print_self_correction_diagnostics(result)
+            if result.self_correction:
+                print("Self-correction applied:")
+                for item in result.self_correction:
+                    applied_paths = getattr(item, "applied_paths", None)
+                    if isinstance(applied_paths, list) and applied_paths:
+                        print(f"  - {item.trigger.target_cpt}: applied {', '.join(applied_paths)}")
+                    else:
+                        print(f"  - {item.trigger.target_cpt}: applied (no paths recorded)")
+            else:
+                print("Self-correction applied: (none)")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 ```
 
