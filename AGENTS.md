@@ -46,7 +46,7 @@ Key path: `modules/registry/application/registry_service.py:_extract_fields_extr
 - **Context/negation guardrails (extraction quality):**
   - **Stents**: inspection-only phrases (e.g., “stent … in good position”) should *not* trigger stent placement (`31636`).
   - **Chest tubes**: discontinue/removal phrases (e.g., “D/c chest tube”) should *not* trigger insertion (`32551`).
-  - **TBNA**: EBUS-TBNA should *not* populate `tbna_conventional` (prevents double-coding `31629` alongside `31652/31653`).
+  - **TBNA**: EBUS-TBNA should *not* populate `tbna_conventional`. Use `peripheral_tbna` for lung/lesion TBNA; when peripheral TBNA co-occurs with EBUS (`31652/31653`), keep `31629` with Modifier `59` (distinct site).
   - **Radial EBUS**: explicit “radial probe …” language should set `radial_ebus.performed` even without concentric/eccentric markers.
   - **Menu masking**: `mask_extraction_noise()` strips CPT/menu blocks (e.g., `IP ... CODE MOD DETAILS`) before extraction to prevent “menu reading” hallucinations.
 - **Omission scan:** `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` emits

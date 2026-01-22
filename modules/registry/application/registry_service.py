@@ -1807,7 +1807,29 @@ class RegistryService:
             billing = record_data.get("billing")
             if not isinstance(billing, dict):
                 billing = {}
-            billing["cpt_codes"] = [{"code": str(code)} for code in derived_codes if str(code).strip()]
+            has_ebus_sampling_code = any(str(code) in {"31652", "31653"} for code in derived_codes)
+            peripheral_tbna = (
+                (record_data.get("procedures_performed") or {}).get("peripheral_tbna") or {}
+            )
+            peripheral_tbna_performed = (
+                isinstance(peripheral_tbna, dict) and peripheral_tbna.get("performed") is True
+            )
+
+            cpt_payload: list[dict[str, Any]] = []
+            for code in derived_codes:
+                code_str = str(code).strip()
+                if not code_str:
+                    continue
+                item: dict[str, Any] = {"code": code_str}
+                if (
+                    code_str == "31629"
+                    and has_ebus_sampling_code
+                    and peripheral_tbna_performed
+                ):
+                    item["modifiers"] = ["59"]
+                cpt_payload.append(item)
+
+            billing["cpt_codes"] = cpt_payload
             record_data["billing"] = billing
             record = RegistryRecord(**record_data)
 
@@ -2092,11 +2114,18 @@ class RegistryService:
                     "CPT 31624/31625 present but procedures_performed.bal is not marked."
                 )
 
-        # Transbronchial biopsy: 31628, 31629
-        if "31628" in codes or "31629" in codes:
+        # Transbronchial biopsy: 31628, 31632
+        if "31628" in codes or "31632" in codes:
             if not _proc_is_set(procedures, "transbronchial_biopsy"):
                 validation_errors.append(
-                    "CPT 31628/31629 present but procedures_performed.transbronchial_biopsy is not marked."
+                    "CPT 31628/31632 present but procedures_performed.transbronchial_biopsy is not marked."
+                )
+
+        # Peripheral/lung TBNA: 31629, 31633
+        if "31629" in codes or "31633" in codes:
+            if not _proc_is_set(procedures, "peripheral_tbna"):
+                validation_errors.append(
+                    "CPT 31629/31633 present but procedures_performed.peripheral_tbna is not marked."
                 )
 
         # Navigation: 31627

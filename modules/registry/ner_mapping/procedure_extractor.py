@@ -224,6 +224,10 @@ class ProcedureExtractor:
             r"\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b",
             re.IGNORECASE,
         )
+        peripheral_context_re = re.compile(
+            r"\b(?:ion|robotic|navigation|navigational|target|lesion|nodule|mass|cone\s+beam|cbct|tool[- ]?in[- ]?lesion|extended\s+working\s+channel)\b",
+            re.IGNORECASE,
+        )
 
         for entity in all_proc_entities:
             text_lower = entity.text.lower()
@@ -241,8 +245,16 @@ class ProcedureExtractor:
                     continue
                 for keyword in keywords:
                     if self._keyword_hit(text_lower, keyword):
-                        if proc_name == "tbna_conventional" and entity_context and ebus_context_re.search(entity_context):
-                            continue
+                        if proc_name == "tbna_conventional" and entity_context:
+                            # EBUS-TBNA is captured under linear_ebus; do not also set conventional TBNA.
+                            if ebus_context_re.search(entity_context):
+                                continue
+                            # Peripheral/lung TBNA (e.g., navigation/ION targets) should not be
+                            # treated as nodal conventional TBNA.
+                            if peripheral_context_re.search(entity_context):
+                                procedure_flags["peripheral_tbna"] = True
+                                evidence.setdefault("peripheral_tbna", []).append(entity.text)
+                                break
                         # Found a match
                         procedure_flags[proc_name] = True
 

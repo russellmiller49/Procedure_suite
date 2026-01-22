@@ -474,6 +474,45 @@ const SEGMENT_PATTERN_SLICE_RE = /^[rl]?b\s*(?:10|[1-9])(?:\s*\+\s*(?:10|[1-9]))
 const FREQUENCY_COMPACT_RE = /^x\d+$/i;
 
 // =============================================================================
+// Phase 2B-D: Additional Veto Patterns for False Positive Reduction
+// =============================================================================
+
+// Laterality + anatomy pattern (e.g., "left adrenal", "right carina", "bilateral hilum")
+// These phrases are anatomical descriptions, not patient names
+const LATERALITY_ANATOMY_RE = /\b(?:left|right|bilateral|ipsilateral|contralateral)\s+(?:adrenal|lobe|segment|bronchus|bronchi|carina|trachea|hilum|hilar|mediastinum|mediastinal|mainstem|main\s*stem|lung|station|node|pleura|pleural|hemithorax|hemidiaphragm|upper|lower|middle|lingula|lingular|paratracheal|subcarinal|interlobar)\b/i;
+
+// Clinical heading comma phrases that are often misdetected as "Last, First" names
+// Examples: "Elastography, First Target", "Cytology, Flow", "Pathology, Surgical"
+const CLINICAL_HEADING_TERMS = new Set([
+  "elastography", "cytology", "pathology", "histology", "microbiology",
+  "flow", "surgical", "clinical", "molecular", "cultures",
+  "immunohistochemistry", "immunophenotyping", "cytogenetics",
+  "specimen", "specimens", "sample", "samples",
+  "lymphocytes", "macrophages", "histiocytes", "neutrophils",
+  "first", "second", "third", "primary", "secondary", "additional",
+  "target", "lesion", "finding", "impression"
+]);
+
+// Balloon/device size patterns that look like dates: "8/9/10" balloon, "10/11/12" dilation
+// These are sequential sizes, not dates
+const BALLOON_SIZE_CONTEXT_RE = /\b(?:balloon|dilation|dilat|elation|cre|egd|achalasia|stricture|stenosis)\b/i;
+
+// Vent settings context - numbers here are NOT IDs
+const VENT_SETTINGS_CONTEXT_RE = /\b(?:vent(?:ilat(?:or|ion))?|mode|rr|tv|tidal|peep|fio2|pip|pplat|pmean|flow|rate|volume|pressure|respiratory|ventilatory|settings?|parameters?)\b/i;
+
+// Short ID filter: digits 1-4 chars that need strong context to be real IDs
+function isPlausibleId(spanText, context) {
+  // If it's a structured ID pattern (with letters or hyphens), it's more likely real
+  if (/[a-z]/i.test(spanText) || /-/.test(spanText)) return true;
+  // If it's just 1-4 digits, require strong ID context
+  if (/^\d{1,4}$/.test(spanText)) {
+    return /\b(?:mrn|account|fin|csn|id|ssn|patient\s*id|record)\b/i.test(context);
+  }
+  // Longer numeric IDs (5+ digits) are more likely to be real
+  return true;
+}
+
+// =============================================================================
 // Context helpers
 // =============================================================================
 
@@ -929,6 +968,63 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     }
 
     // -------------------------------------------------------------------------
+    // 1c) Phase 2B: Laterality + anatomy pattern veto
+    // Catches: "left adrenal", "right carina", "bilateral hilum"
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      if (LATERALITY_ANATOMY_RE.test(slice)) {
+        veto = true; reason = "laterality_anatomy_phrase";
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 1d) Phase 2C: Clinical heading comma phrase veto
+    // Catches: "Elastography, First", "Cytology, Flow", "Pathology, Surgical"
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      // Check if the span contains a comma pattern "Word, Word"
+      const commaMatch = slice.match(/^([A-Za-z]+)\s*,\s*([A-Za-z]+)/);
+      if (commaMatch) {
+        const firstWord = commaMatch[1].toLowerCase();
+        const secondWord = commaMatch[2].toLowerCase();
+        // Veto if either word is a clinical heading term
+        if (CLINICAL_HEADING_TERMS.has(firstWord) || CLINICAL_HEADING_TERMS.has(secondWord)) {
+          veto = true; reason = "clinical_heading_comma_phrase";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 1e) Phase 2D: Single-token clinical name veto
+    // Catches: "Air", "Still", "Flow", "Serial" when tagged as PATIENT
+    // Only veto if NOT in demographic context (no "Patient:" or "Name:" nearby)
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      const singleTokenStoplist = new Set([
+        "air", "still", "flow", "serial", "pain", "mass", "clear", "free",
+        "deep", "mild", "moderate", "severe", "acute", "chronic",
+        "good", "fair", "poor", "stable", "normal", "adequate",
+        "sterile", "clean", "patent", "open", "closed",
+        "left", "right", "upper", "lower", "middle", "lateral", "medial",
+        "apical", "basal", "anterior", "posterior", "superior", "inferior",
+        "suction", "lavage", "dilation", "ablation", "aspiration",
+        "scope", "probe", "needle", "catheter", "balloon", "stent",
+        "there", "then", "here", "both", "each", "some", "all", "most"
+      ]);
+
+      // Check if span is a single token that's in the stoplist
+      const trimmedLower = trimmed.toLowerCase();
+      if (!trimmedLower.includes(" ") && singleTokenStoplist.has(trimmedLower)) {
+        // Only veto if not in demographic context
+        const ctx = getContext(fullText, start, end, 60);
+        const hasDemographicContext = /\b(?:patient|name|pt)\s*:/i.test(ctx);
+        if (!hasDemographicContext) {
+          veto = true; reason = "single_token_clinical_stoplist";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // 2) Device allow-list from protectedTerms
     // -------------------------------------------------------------------------
     if (!veto && activeIndex.deviceSet && activeIndex.deviceSet.size) {
@@ -1093,6 +1189,49 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
       const ctx = getContext(fullText, start, end, 35);
       if (MEASUREMENT_CONTEXT_PATTERN.test(ctx)) {
         veto = true; reason = "measurement_context";
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 10b) Phase 3A: NER ID post-filter - short digits in vent settings context
+    // Vent parameters like "400, 12, 60, 14, 450" are not IDs
+    // -------------------------------------------------------------------------
+    if (!veto && label === "ID") {
+      // Short numeric strings (1-4 digits) need context validation
+      if (/^\d{1,4}$/.test(compact)) {
+        const ctx = getContext(fullText, start, end, 80);
+        // If in vent settings context, it's not an ID
+        if (VENT_SETTINGS_CONTEXT_RE.test(ctx)) {
+          veto = true; reason = "vent_settings_not_id";
+        }
+        // Also veto if not in strong ID context (MRN, Account, etc.)
+        if (!veto && !isPlausibleId(trimmed, ctx)) {
+          veto = true; reason = "short_digit_no_id_context";
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 10c) Phase 3B: Balloon size DATE veto - "8/9/10" patterns in dilation context
+    // Balloon sizes like "8/9/10" and "10/11/12" are sequential sizes, not dates
+    // -------------------------------------------------------------------------
+    if (!veto && label === "DATE") {
+      // Match slash-separated short numbers that could be balloon sizes
+      if (/^\d{1,2}\/\d{1,2}\/\d{1,2}$/.test(trimmed)) {
+        const ctx = getContext(fullText, start, end, 60);
+        // If in balloon/dilation context, it's a size series, not a date
+        if (BALLOON_SIZE_CONTEXT_RE.test(ctx)) {
+          veto = true; reason = "balloon_size_not_date";
+        }
+        // Also check if this looks more like sizes (small sequential numbers) than a date
+        const parts = trimmed.split('/').map(Number);
+        const allSmall = parts.every(p => p <= 20);
+        const sequential = parts.length === 3 &&
+          (parts[1] === parts[0] + 1 && parts[2] === parts[1] + 1);
+        if (allSmall && sequential) {
+          // Small sequential numbers are likely balloon sizes
+          veto = true; reason = "sequential_sizes_not_date";
+        }
       }
     }
 

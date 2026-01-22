@@ -249,11 +249,27 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
         (r"(?i)\bbrush(?:ings?)?\b", "Text mentions 'brush' or 'brushings'."),
         (r"(?i)triple\s+needle", "Text mentions 'triple needle' (implies brushing/sampling)."),
     ],
-    # Fix for missed conventional TBNA
+    # Fix for missed peripheral TBNA (lung/peripheral targets).
+    # NOTE: Generic "TBNA" also appears in EBUS sections; patterns here require
+    # navigation/peripheral-lesion context to avoid forcing nodal TBNA flags.
+    "procedures_performed.peripheral_tbna.performed": [
+        (
+            r"(?is)\b(?:ion|robotic|navigation|navigational|target|lesion|nodule|mass)\b.{0,200}\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b",
+            "Text indicates peripheral/lung TBNA but extraction missed it.",
+        ),
+        (
+            r"(?is)\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b.{0,200}\b(?:ion|robotic|navigation|navigational|target|lesion|nodule|mass)\b",
+            "Text indicates peripheral/lung TBNA but extraction missed it.",
+        ),
+    ],
+    # Fix for missed conventional (non-EBUS) nodal TBNA.
     "procedures_performed.tbna_conventional.performed": [
-        (r"(?i)\btbna\b", "Text contains 'TBNA' but extraction missed it."),
-        (r"(?i)\btransbronchial\s+needle\s+aspiration\b", "Text contains 'transbronchial needle aspiration'."),
-        (r"(?i)\btransbronchial\s+needle\b", "Text contains 'transbronchial needle'."),
+        (r"(?i)\bconventional\s+tbna\b", "Text explicitly states 'conventional TBNA' but extraction missed it."),
+        (r"(?i)\bblind\s+tbna\b", "Text explicitly states 'blind TBNA' but extraction missed it."),
+        (
+            r"(?is)\b(?:station|ln|lymph\s+node)\b[^.\n]{0,80}\b(?:2R|2L|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)\b[^.\n]{0,120}\b(?:tbna|transbronchial\s+needle)\b",
+            "Text indicates nodal TBNA at a lymph node station but extraction missed it.",
+        ),
     ],
     # Fix for missed navigational bronchoscopy
     "procedures_performed.navigational_bronchoscopy.performed": [
@@ -360,7 +376,15 @@ def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str |
             return True
 
     if field_path == "procedures_performed.tbna_conventional.performed":
-        window = note_text[max(0, start - 60) : min(len(note_text), end + 60)]
+        # TBNA language inside an EBUS paragraph should not trigger conventional TBNA.
+        lookback_start = max(0, start - 800)
+        paragraph_break = note_text.rfind("\n\n", lookback_start, start)
+        if paragraph_break != -1:
+            lookback_start = paragraph_break + 2
+        paragraph_end = note_text.find("\n\n", end)
+        if paragraph_end == -1:
+            paragraph_end = min(len(note_text), end + 800)
+        window = note_text[lookback_start:paragraph_end]
         if _TBNA_EBUS_CONTEXT_RE.search(window):
             return True
 
@@ -376,6 +400,15 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
     warnings: list[str] = []
 
     for field_path, rules in REQUIRED_PATTERNS.items():
+        # TBNA is satisfied by either peripheral TBNA or EBUS-TBNA sampling; do not
+        # emit a conventional TBNA omission when those are present.
+        if field_path == "procedures_performed.tbna_conventional.performed":
+            if _is_field_populated(record, "procedures_performed.peripheral_tbna.performed"):
+                continue
+            if _is_field_populated(record, "procedures_performed.linear_ebus.node_events") or _is_field_populated(
+                record, "procedures_performed.linear_ebus.stations_sampled"
+            ):
+                continue
         if _is_field_populated(record, field_path):
             continue
 
@@ -403,6 +436,15 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
 
     updated = False
     for field_path, rules in REQUIRED_PATTERNS.items():
+        # Never force conventional nodal TBNA when peripheral TBNA or EBUS-TBNA
+        # sampling is already present (prevents phantom tbna_conventional alongside EBUS).
+        if field_path == "procedures_performed.tbna_conventional.performed":
+            if _is_field_populated(record, "procedures_performed.peripheral_tbna.performed"):
+                continue
+            if _is_field_populated(record, "procedures_performed.linear_ebus.node_events") or _is_field_populated(
+                record, "procedures_performed.linear_ebus.stations_sampled"
+            ):
+                continue
         if _is_field_populated(record, field_path):
             continue
 

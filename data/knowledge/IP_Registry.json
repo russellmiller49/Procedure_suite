@@ -788,6 +788,27 @@
             }
           }
         },
+        "peripheral_tbna": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Transbronchial needle aspiration of lung/peripheral lesions (non-nodal, distinct from EBUS-TBNA)",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "targets_sampled": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
         "linear_ebus": {
           "type": [
             "object",

@@ -195,7 +195,7 @@ function formatProceduresPerformed(procs) {
     // Simple boolean procedures
     const simpleProcs = [
         'diagnostic_bronchoscopy', 'bal', 'bronchial_wash', 'brushings',
-        'endobronchial_biopsy', 'tbna_conventional', 'linear_ebus', 'radial_ebus',
+        'endobronchial_biopsy', 'tbna_conventional', 'peripheral_tbna', 'linear_ebus', 'radial_ebus',
         'navigational_bronchoscopy', 'therapeutic_aspiration', 'foreign_body_removal',
         'cryotherapy', 'photodynamic_therapy', 'brachytherapy_catheter',
         'bronchial_thermoplasty', 'whole_lung_lavage', 'rigid_bronchoscopy'
@@ -1166,6 +1166,7 @@ function buildRegistryDisplayRows(payload) {
         procedures_performed: "Procedures",
         pleural_procedures: "Pleural Procedures",
         tbna_conventional: "TBNA",
+        peripheral_tbna: "Peripheral TBNA",
         radial_ebus: "Radial EBUS",
         navigational_bronchoscopy: "Navigational Bronchoscopy",
         transbronchial_biopsy: "Transbronchial Biopsy",

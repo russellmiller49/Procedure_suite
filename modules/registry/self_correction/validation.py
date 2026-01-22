@@ -15,6 +15,7 @@ ALLOWED_PATHS: set[str] = {
     "/procedures_performed/transbronchial_biopsy/performed",
     "/procedures_performed/transbronchial_cryobiopsy/performed",
     "/procedures_performed/tbna_conventional/performed",
+    "/procedures_performed/peripheral_tbna/performed",
     "/procedures_performed/linear_ebus/performed",
     "/procedures_performed/radial_ebus/performed",
     "/procedures_performed/navigational_bronchoscopy/performed",
@@ -33,6 +34,7 @@ ALLOWED_PATHS: set[str] = {
 ALLOWED_PATH_PREFIXES: set[str] = {
     "/procedures_performed/navigational_bronchoscopy",
     "/procedures_performed/tbna_conventional",
+    "/procedures_performed/peripheral_tbna",
     "/procedures_performed/brushings",
     "/procedures_performed/mechanical_debulking",
     "/procedures_performed/therapeutic_aspiration",

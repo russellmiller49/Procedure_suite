@@ -6,6 +6,7 @@ for EBUS, Navigation, CAO, BLVR, Cryobiopsy, and Thoracoscopy procedures.
 
 from __future__ import annotations
 
+import re
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -1254,15 +1255,16 @@ def derive_procedures_from_granular(
         has_cryo = "Cryoprobe" in all_tools or any((t.get("number_of_cryo_biopsies") or 0) > 0 for t in navigation_targets)
 
         if has_needle:
-            tbna = procedures.get("tbna_conventional") or {}
-            if not tbna.get("performed"):
-                tbna["performed"] = True
-            existing_sites = tbna.get("stations_sampled") or []
+            peripheral_tbna = procedures.get("peripheral_tbna") or {}
+            if not peripheral_tbna.get("performed"):
+                peripheral_tbna["performed"] = True
+
+            existing_targets = peripheral_tbna.get("targets_sampled") or []
             is_placeholder = (
-                len(existing_sites) == 1 and str(existing_sites[0]).strip().lower() in {"lung mass"}
+                len(existing_targets) == 1 and str(existing_targets[0]).strip().lower() in {"lung mass"}
             )
-            if not existing_sites or is_placeholder:
-                sites = [
+            if not existing_targets or is_placeholder:
+                targets = [
                     t.get("target_location_text")
                     for t in navigation_targets
                     if t.get("target_location_text") and (
@@ -1270,13 +1272,25 @@ def derive_procedures_from_granular(
                         or any("needle" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
                     )
                 ]
-                tbna["stations_sampled"] = sites or ["Lung Mass"]
-            if not tbna.get("passes_per_station"):
-                pass_targets = [t for t in navigation_targets if (t.get("number_of_needle_passes") or 0) > 0]
-                total_passes = sum((t.get("number_of_needle_passes") or 0) for t in pass_targets)
-                if total_passes and pass_targets:
-                    tbna["passes_per_station"] = max(1, round(total_passes / len(pass_targets)))
-            procedures["tbna_conventional"] = tbna
+                if not targets:
+                    targets = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
+                peripheral_tbna["targets_sampled"] = targets or ["Lung Mass"]
+
+            procedures["peripheral_tbna"] = peripheral_tbna
+        else:
+            # If peripheral TBNA is already asserted elsewhere, backfill targets from
+            # navigation targets even when tool counts are missing (common in LLM-only runs).
+            peripheral_tbna = procedures.get("peripheral_tbna") or {}
+            if peripheral_tbna.get("performed") is True:
+                existing_targets = peripheral_tbna.get("targets_sampled") or []
+                is_placeholder = (
+                    len(existing_targets) == 1 and str(existing_targets[0]).strip().lower() in {"lung mass"}
+                )
+                if not existing_targets or is_placeholder:
+                    targets = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
+                    if targets:
+                        peripheral_tbna["targets_sampled"] = targets
+                        procedures["peripheral_tbna"] = peripheral_tbna
 
         if has_forceps:
             tbbx = procedures.get("transbronchial_biopsy") or {}
@@ -1310,6 +1324,41 @@ def derive_procedures_from_granular(
             if not cryo.get("performed"):
                 cryo["performed"] = True
             procedures["transbronchial_cryobiopsy"] = cryo
+
+    # ==========================================================================
+    # 5.1 Normalize TBNA: keep nodal TBNA separate from peripheral targets
+    # ==========================================================================
+    tbna = procedures.get("tbna_conventional") or {}
+    peripheral_tbna = procedures.get("peripheral_tbna") or {}
+    tbna_sites = tbna.get("stations_sampled") or []
+
+    station_token_re = re.compile(
+        r"^(?:2R|2L|3P|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)$",
+        re.IGNORECASE,
+    )
+    has_non_station_site = any(
+        (str(site).strip() and not station_token_re.match(str(site).strip()))
+        for site in tbna_sites
+        if site is not None
+    )
+
+    if tbna.get("performed") is True and has_non_station_site:
+        # Treat free-text/non-station sites as peripheral TBNA targets.
+        if not peripheral_tbna.get("performed"):
+            peripheral_tbna["performed"] = True
+        if not (peripheral_tbna.get("targets_sampled") or []):
+            peripheral_tbna["targets_sampled"] = [str(s) for s in tbna_sites if s]
+        procedures["peripheral_tbna"] = peripheral_tbna
+        procedures.pop("tbna_conventional", None)
+
+    # If both peripheral TBNA and linear EBUS are present, suppress conventional nodal TBNA
+    # unless explicitly supported elsewhere (prevents phantom tbna_conventional alongside EBUS).
+    if (
+        (procedures.get("peripheral_tbna") or {}).get("performed") is True
+        and (procedures.get("linear_ebus") or {}).get("performed") is True
+        and (procedures.get("tbna_conventional") or {}).get("performed") is True
+    ):
+        procedures.pop("tbna_conventional", None)
 
     # ==========================================================================
     # 6. Derive BLVR performed from blvr_valve_placements
@@ -1427,6 +1476,12 @@ def derive_procedures_from_granular(
     if tbna.get("performed") is True and not (tbna.get("stations_sampled") or []):
         warnings.append(
             "procedures_performed.tbna_conventional.performed=true but stations_sampled is empty/missing"
+        )
+
+    peripheral_tbna = procedures.get("peripheral_tbna") or {}
+    if peripheral_tbna.get("performed") is True and not (peripheral_tbna.get("targets_sampled") or []):
+        warnings.append(
+            "procedures_performed.peripheral_tbna.performed=true but targets_sampled is empty/missing"
         )
 
     bronchial_wash = procedures.get("bronchial_wash") or {}

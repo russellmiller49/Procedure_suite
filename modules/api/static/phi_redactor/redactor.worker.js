@@ -49,6 +49,65 @@ function getMergeMode(config) {
 }
 
 // =============================================================================
+// Phase 4: PER-LABEL AI THRESHOLDS
+// =============================================================================
+
+/**
+ * Default thresholds by label type.
+ * Quantized models often have worse calibration; ID should be stricter.
+ *
+ * - PATIENT: 0.50 (moderate - names are important to catch)
+ * - ID: 0.70 (stricter - short numbers often false positives)
+ * - DATE: 0.45 (relaxed - dates are lower risk)
+ * - GEO: 0.55 (moderate)
+ * - CONTACT: 0.55 (moderate)
+ */
+const DEFAULT_THRESHOLDS_BY_LABEL = {
+  PATIENT: 0.50,
+  ID: 0.70,
+  DATE: 0.45,
+  GEO: 0.55,
+  CONTACT: 0.55,
+};
+
+// Quantized model threshold bump (added to base thresholds)
+const QUANTIZED_THRESHOLD_BUMP = 0.05;
+
+/**
+ * Get the effective threshold for a given label.
+ * Supports both legacy single-threshold and per-label threshold configs.
+ *
+ * @param {Object} config - Worker config from main thread
+ * @param {string} label - Entity label (PATIENT, ID, DATE, GEO, CONTACT)
+ * @param {boolean} isQuantized - Whether using quantized model
+ * @returns {number} Threshold value
+ */
+function getThresholdForLabel(config, label, isQuantized = false) {
+  const normLabel = String(label || "").toUpperCase().replace(/^[BI]-/, "");
+
+  // Check for per-label thresholds in config
+  if (config?.aiThresholdsByLabel && typeof config.aiThresholdsByLabel === "object") {
+    const labelThreshold = config.aiThresholdsByLabel[normLabel];
+    if (typeof labelThreshold === "number") {
+      return isQuantized ? labelThreshold + QUANTIZED_THRESHOLD_BUMP : labelThreshold;
+    }
+  }
+
+  // Fall back to single threshold if provided
+  if (typeof config?.aiThreshold === "number") {
+    // For ID label, always bump up slightly even with single threshold
+    if (normLabel === "ID") {
+      return config.aiThreshold + 0.15;
+    }
+    return config.aiThreshold;
+  }
+
+  // Use default per-label thresholds
+  const baseThreshold = DEFAULT_THRESHOLDS_BY_LABEL[normLabel] ?? 0.45;
+  return isQuantized ? baseThreshold + QUANTIZED_THRESHOLD_BUMP : baseThreshold;
+}
+
+// =============================================================================
 // HYBRID REGEX DETECTION (guarantees headers/IDs)
 // =============================================================================
 
@@ -77,6 +136,76 @@ const HEADER_NAME_STOPWORDS = new Set([
   "date", "dob", "dod", "mrn", "id", "age", "sex", "gender",
   "phone", "address", "medications", "medication", "anesthesia", "sedation", "general"
 ]);
+
+// =============================================================================
+// HEADER ZONE + CLINICAL CONTEXT GATING (Phase 1 - False Positive Reduction)
+// =============================================================================
+
+// Maximum characters from document start to consider "header zone" for name patterns
+// Patient demographics typically appear in the first ~1200 chars of procedure notes
+const HEADER_ZONE_MAX_CHARS = 1200;
+
+// Clinical terms that should NEVER be treated as patient names
+// Used to gate "Last, First" patterns (e.g., "Elastography, First" is NOT a name)
+const NAME_REGEX_CLINICAL_STOPLIST = new Set([
+  // Pathology/lab report headers
+  "elastography", "cytology", "pathology", "histology", "microbiology",
+  "cultures", "specimen", "immunohistochemistry", "flow",
+  // Cell types (from path reports)
+  "lymphocytes", "macrophages", "histiocytes", "neutrophils", "eosinophils",
+  "epithelial", "squamous", "columnar", "ciliated",
+  // Anatomical segments/regions
+  "apical", "basal", "anterior", "posterior", "lateral", "medial",
+  "superior", "inferior", "proximal", "distal", "segmental", "subsegmental",
+  // Findings/descriptors
+  "first", "second", "third", "target", "additional", "primary", "secondary",
+  // Common clinical nouns that start capitalized
+  "lesion", "nodule", "mass", "tumor", "stenosis", "obstruction",
+  "serial", "irrigation", "dilation", "aspiration", "suction",
+  // Directions/locations
+  "left", "right", "bilateral", "central", "peripheral",
+  // Anatomy terms
+  "adrenal", "bronchus", "carina", "trachea", "hilum", "mediastinum",
+  "lobe", "segment", "mainstem", "lingula", "station"
+]);
+
+// Clinical single-word terms that should not match FIRST_NAME_CLINICAL_RE
+// These appear as "Air came", "Still is" etc in clinical prose
+const SINGLE_NAME_CLINICAL_STOPLIST = new Set([
+  // Common clinical words mistaken for first names
+  "air", "still", "serial", "flow", "pain", "mass", "clear", "free",
+  "deep", "mild", "moderate", "severe", "acute", "chronic",
+  "good", "fair", "poor", "stable", "normal", "adequate",
+  "sterile", "clean", "patent", "open", "closed",
+  // Anatomical/positional
+  "left", "right", "upper", "lower", "middle", "lateral", "medial",
+  "apical", "basal", "anterior", "posterior", "superior", "inferior",
+  // Clinical procedures/actions
+  "suction", "lavage", "dilation", "ablation", "biopsy", "aspiration",
+  // Equipment/device terms
+  "scope", "probe", "needle", "catheter", "balloon", "stent",
+  // Common sentence starters
+  "there", "then", "here", "both", "each", "some", "all", "most"
+]);
+
+// Helper: check if a word is in the clinical stoplist (case-insensitive)
+function isInClinicalStoplist(word) {
+  if (!word) return false;
+  return NAME_REGEX_CLINICAL_STOPLIST.has(word.toLowerCase());
+}
+
+// Helper: check if span is within header zone (first N chars of document)
+function isInHeaderZone(matchIndex, headerZoneChars = HEADER_ZONE_MAX_CHARS) {
+  return matchIndex < headerZoneChars;
+}
+
+// Helper: check if text has patient demographic context nearby
+function hasPatientDemographicContext(text, matchIndex, windowSize = 80) {
+  const start = Math.max(0, matchIndex - windowSize);
+  const end = Math.min(text.length, matchIndex + windowSize);
+  const context = text.slice(start, end).toLowerCase();
+  return /\b(?:patient|name|mrn|dob|age|year[\s-]*old|pt\b|subject)\b/i.test(context);
+}
 
 // Matches: "MRN: 12345" or "ID: 55-22-11" or "DOD NUMBER: 194174412" or "DOD#: 12345678"
 // IMPORTANT: Must contain at least one digit to avoid matching medical acronyms like "rEBUS"
@@ -975,9 +1104,15 @@ function runRegexDetectors(text) {
   }
 
   // 5j) Standalone first name followed by clinical verb: "liam came in", "Frank underwent"
+  // GATED: Skip single-word clinical terms like "Air", "Still", "Flow"
   for (const match of text.matchAll(FIRST_NAME_CLINICAL_RE)) {
     const nameGroup = match[1];
     if (nameGroup && match.index != null) {
+      // Phase 1 gating: Skip if name is a single-word clinical term
+      if (SINGLE_NAME_CLINICAL_STOPLIST.has(nameGroup.toLowerCase())) {
+        continue;
+      }
+
       const nameEnd = match.index + nameGroup.length;
       // Skip if followed by credentials or preceded by provider context
       if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
@@ -1125,9 +1260,23 @@ function runRegexDetectors(text) {
   }
 
   // 5m) Name at start with clinical context: "Brenda Lewis transplant patient with stenosis"
+  // GATED: Skip if first or second word is a clinical term (e.g., "Serial irrigation")
   for (const match of text.matchAll(NAME_START_CLINICAL_CONTEXT_RE)) {
     const nameGroup = match[1];
     if (nameGroup && match.index != null) {
+      // Phase 1 gating: Parse name parts and check clinical stoplist
+      const nameParts = nameGroup.trim().split(/\s+/);
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts[1] || "";
+
+      // Skip if either name part is a clinical term
+      if (SINGLE_NAME_CLINICAL_STOPLIST.has(firstName.toLowerCase()) ||
+          SINGLE_NAME_CLINICAL_STOPLIST.has(lastName.toLowerCase()) ||
+          isInClinicalStoplist(firstName) ||
+          isInClinicalStoplist(lastName)) {
+        continue;
+      }
+
       const nameEnd = match.index + nameGroup.length;
       if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
         spans.push({
@@ -1142,10 +1291,24 @@ function runRegexDetectors(text) {
   }
 
   // 5n) Lowercase name after "for": "diag bronch for charlene king she has hilar adenopathy"
+  // GATED: Skip if either word is a clinical term (e.g., "dilation to")
   for (const match of text.matchAll(LOWERCASE_FOR_NAME_RE)) {
     const nameGroup = match[1];
     const fullMatch = match[0];
     if (nameGroup && match.index != null) {
+      // Phase 1 gating: Parse name parts and check clinical stoplist
+      const nameParts = nameGroup.trim().split(/\s+/);
+      const firstName = nameParts[0] || "";
+      const secondName = nameParts[1] || "";
+
+      // Skip if either word is a clinical term
+      if (SINGLE_NAME_CLINICAL_STOPLIST.has(firstName.toLowerCase()) ||
+          SINGLE_NAME_CLINICAL_STOPLIST.has(secondName.toLowerCase()) ||
+          isInClinicalStoplist(firstName) ||
+          isInClinicalStoplist(secondName)) {
+        continue;
+      }
+
       // Find where the name starts within the match (after "for ")
       const groupOffset = fullMatch.toLowerCase().indexOf(nameGroup.toLowerCase());
       if (groupOffset !== -1) {
@@ -1165,10 +1328,22 @@ function runRegexDetectors(text) {
   }
 
   // 5o) "Last, First M" format with trailing initial: "Carey , Cloyd D", "Smith, John Jr"
+  // GATED: Skip if either part matches clinical stoplist (e.g., "Elastography, First")
   for (const match of text.matchAll(LAST_FIRST_INITIAL_RE)) {
     const nameGroup = match[1];
     if (nameGroup && match.index != null) {
       const nameEnd = match.index + nameGroup.length;
+
+      // Phase 1 gating: Parse "Last, First" and check clinical stoplist
+      const commaParts = nameGroup.split(/\s*,\s*/);
+      const lastName = commaParts[0]?.trim() || "";
+      const firstNamePart = commaParts[1]?.trim().split(/\s+/)[0] || "";
+
+      // Skip if either name part is a clinical term
+      if (isInClinicalStoplist(lastName) || isInClinicalStoplist(firstNamePart)) {
+        continue;
+      }
+
       // Skip if followed by credentials (likely provider) or preceded by provider context
       if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
         spans.push({
@@ -1349,7 +1524,7 @@ function getEntityText(ent) {
   return String(text).replace(/^##/, "");
 }
 
-async function runNER(chunk, aiThreshold) {
+async function runNER(chunk, config = {}, isQuantized = false) {
   if (!classifier) return [];
   const raw = await classifier(chunk, {
     aggregation_strategy: "simple",
@@ -1358,6 +1533,7 @@ async function runNER(chunk, aiThreshold) {
 
   const rawList = normalizeRawOutput(raw);
   log("[PHI] raw spans (simple) count:", rawList.length);
+  if (debug) log("[PHI] using per-label thresholds, isQuantized:", isQuantized);
 
   const spans = [];
   let offsets = null;
@@ -1485,14 +1661,23 @@ async function runNER(chunk, aiThreshold) {
 
     if (typeof start !== "number" || typeof end !== "number" || end <= start) continue;
     if (end - start < 1) continue;
-    if (typeof score === "number" && score < aiThreshold) continue;
+
+    // Get label for threshold lookup
+    const entLabel = normalizeLabel(ent?.entity_group || ent?.entity || ent?.label);
+
+    // Phase 4: Apply per-label thresholds
+    const labelThreshold = getThresholdForLabel(config, entLabel, isQuantized);
+    if (typeof score === "number" && score < labelThreshold) {
+      if (debug) log("[PHI] skipping span below threshold:", entLabel, score, "<", labelThreshold);
+      continue;
+    }
 
     searchCursor = Math.max(searchCursor, end);
 
     spans.push({
       start,
       end,
-      label: normalizeLabel(ent?.entity_group || ent?.entity || ent?.label),
+      label: entLabel,
       score: typeof score === "number" ? score : 0.0,
       source: "ner",
     });
@@ -1699,6 +1884,21 @@ function addSessionNameMatches(spans, text, options = {}) {
 
   if (!spans || spans.length === 0 || !text) return spans;
 
+  // Helper: check if a phrase contains clinical terms (should not be session-tracked)
+  function containsClinicalTerms(phrase) {
+    const words = phrase.toLowerCase().split(/\s+/);
+    for (const word of words) {
+      if (SINGLE_NAME_CLINICAL_STOPLIST.has(word) || NAME_REGEX_CLINICAL_STOPLIST.has(word)) {
+        return true;
+      }
+    }
+    // Also check for laterality + anatomy patterns
+    if (/\b(left|right|bilateral)\s+(adrenal|lobe|segment|bronchus|carina|hilum|mainstem)/i.test(phrase)) {
+      return true;
+    }
+    return false;
+  }
+
   // Collect confirmed high-confidence PATIENT names
   const confirmedNames = new Set();
   for (const span of spans) {
@@ -1706,7 +1906,8 @@ function addSessionNameMatches(spans, text, options = {}) {
     if (labelNorm === "PATIENT" && (span.score ?? 0) >= 0.85) {
       const nameText = text.slice(span.start, span.end).trim();
       // Only track names with at least 4 characters (avoid initials)
-      if (nameText.length >= 4) {
+      // Phase 1 gating: Skip clinical phrases like "left adrenal", "apical segment"
+      if (nameText.length >= 4 && !containsClinicalTerms(nameText)) {
         confirmedNames.add(nameText);
       }
     }
@@ -2127,7 +2328,8 @@ self.onmessage = async (e) => {
 
       await loadModel(config);
 
-      const aiThreshold = typeof config.aiThreshold === "number" ? config.aiThreshold : 0.45;
+      // Phase 4: Determine if using quantized model for threshold adjustments
+      const isQuantized = !config.forceUnquantized && classifier === classifierQuantized;
 
       const allSpans = [];
       const windowCount = Math.max(1, Math.ceil(Math.max(0, text.length - OVERLAP) / STEP));
@@ -2144,8 +2346,8 @@ self.onmessage = async (e) => {
 
         windowIndex += 1;
 
-        // 1) ML spans (robust offsets)
-        const nerSpans = await runNER(chunk, aiThreshold);
+        // 1) ML spans (robust offsets) - now with per-label thresholds
+        const nerSpans = await runNER(chunk, config, isQuantized);
 
         // 2) Regex injection spans (header guarantees)
         const regexSpans = runRegexDetectors(chunk);

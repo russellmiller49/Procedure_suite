@@ -233,41 +233,46 @@ def derive_all_codes_with_meta(
                 rationales["31632"] = f"transbronchial_biopsy.locations spans lobes={sorted(lobes)}"
 
     # Conventional (non-EBUS) TBNA (31629) with add-on 31633 for additional lobes.
-    tbna = _proc(record, "tbna_conventional")
-    if _performed(tbna):
-        added_31629 = False
-        # Guardrail: avoid double-dipping when the same station list is already attributed
-        # to linear EBUS sampling (31652/31653). Conventional TBNA is bundled into EBUS-TBNA.
-        tbna_stations = _get(tbna, "stations_sampled") or []
-        if _performed(_proc(record, "linear_ebus")) and tbna_stations:
-            ebus_stations, _station_source = _stations_sampled(record)
-            if set(str(s).strip().upper() for s in tbna_stations if s) <= set(
-                str(s).strip().upper() for s in ebus_stations if s
-            ):
-                warnings.append(
-                    "Suppressed 31629: tbna_conventional stations overlap with EBUS sampling (bundled into 31652/31653)"
-                )
-            else:
-                codes.append("31629")
-                rationales["31629"] = "tbna_conventional.performed=true"
-                added_31629 = True
+    tbna_nodal = _proc(record, "tbna_conventional")
+    peripheral_tbna = _proc(record, "peripheral_tbna")
+
+    ebus_stations, station_source = _stations_sampled(record)
+    ebus_station_count = len(set(s for s in ebus_stations if s))
+    has_ebus_sampling = _performed(_proc(record, "linear_ebus")) and ebus_station_count > 0
+
+    added_31629 = False
+    if _performed(peripheral_tbna):
+        codes.append("31629")
+        rationales["31629"] = "peripheral_tbna.performed=true"
+        added_31629 = True
+        if has_ebus_sampling:
+            warnings.append(
+                "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling"
+            )
+            rationales["31629"] = (
+                "peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)"
+            )
+    elif _performed(tbna_nodal):
+        # NCCI: Conventional nodal TBNA is bundled into EBUS-TBNA when EBUS sampling is performed.
+        if has_ebus_sampling:
+            warnings.append(
+                "Suppressed 31629: tbna_conventional bundled into EBUS-TBNA (31652/31653)"
+            )
         else:
             codes.append("31629")
             rationales["31629"] = "tbna_conventional.performed=true"
             added_31629 = True
 
-        if added_31629:
-            locations = _get(tbna, "locations") or _get(tbna, "sites")
-            if locations:
-                lobes = _lobe_tokens([str(x) for x in locations if x])
-                if len(lobes) >= 2:
-                    codes.append("31633")
-                    rationales["31633"] = f"tbna_conventional.locations spans lobes={sorted(lobes)}"
+    if added_31629 and _performed(peripheral_tbna):
+        targets = _get(peripheral_tbna, "targets_sampled") or []
+        lobes = _lobe_tokens([str(x) for x in targets if x])
+        if len(lobes) >= 2:
+            codes.append("31633")
+            rationales["31633"] = f"peripheral_tbna.targets_sampled spans lobes={sorted(lobes)}"
 
     # Linear EBUS TBNA (31652/31653) based on station count.
     if _performed(_proc(record, "linear_ebus")):
-        stations, station_source = _stations_sampled(record)
-        station_count = len(set(s for s in stations if s))
+        station_count = ebus_station_count
         if station_count >= 3:
             codes.append("31653")
             rationales["31653"] = (

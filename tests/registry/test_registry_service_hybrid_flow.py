@@ -137,17 +137,16 @@ class TestCPTRegistryMapping:
         assert result2["procedures_performed"]["bal"]["performed"] is True
 
     def test_tblb_mapping(self) -> None:
-        """31628/31629 should map to transbronchial_biopsy."""
+        """31628 should map to transbronchial_biopsy."""
         result = aggregate_registry_fields(["31628"])
         assert result["procedures_performed"]["transbronchial_biopsy"]["performed"] is True
 
-    def test_tblb_with_fluoro_has_flag(self) -> None:
-        """31629 (TBLB with fluoroscopy) should set fluoroscopy_used flag."""
+    def test_peripheral_tbna_mapping(self) -> None:
+        """31629 should map to peripheral_tbna (distinct from nodal EBUS-TBNA)."""
         result = aggregate_registry_fields(["31629"])
 
-        tblb = result["procedures_performed"]["transbronchial_biopsy"]
-        assert tblb["performed"] is True
-        assert tblb["fluoroscopy_used"] is True
+        tbna = result["procedures_performed"]["peripheral_tbna"]
+        assert tbna["performed"] is True
 
     def test_blvr_valve_placement_mapping(self) -> None:
         """31647/31648 (BLVR valve) should set procedure_type to Valve placement."""

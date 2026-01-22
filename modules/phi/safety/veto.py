@@ -234,6 +234,18 @@ def _span_starts_with_punct(tokens: List[str], start: int, label: str) -> bool:
     return False
 
 
+def _span_is_all_punct(tokens: List[str], start: int, end: int) -> bool:
+    """Check if span consists entirely of punctuation tokens.
+
+    This catches cases like standalone "(", ",", ")" being tagged as entities.
+    These are NEVER valid PHI and should always be vetoed.
+    """
+    for i in range(start, end + 1):
+        if not _is_punctuation_token(tokens[i]):
+            return False
+    return True
+
+
 def _is_stable_cpt_split(tokens: List[str], i: int) -> str | None:
     if i + 1 >= len(tokens):
         return None
@@ -367,8 +379,13 @@ def apply_protected_veto(
             continue
         should_drop = False
 
+        # Check if span is entirely punctuation (e.g., "(", ",", ")")
+        # This is the FIRST check - punctuation-only spans are NEVER valid PHI
+        if _span_is_all_punct(tokens, start, end):
+            should_drop = True
+
         # Check if span contains protected device/anatomy term
-        if _is_protected_in_span(tokens, start, end):
+        elif _is_protected_in_span(tokens, start, end):
             should_drop = True
 
         # Check if span is stopword-only (e.g., just "a")

@@ -49,6 +49,7 @@ def make_record(**kwargs) -> MagicMock:
         "brushings",
         "endobronchial_biopsy",
         "tbna_conventional",
+        "peripheral_tbna",
         "linear_ebus",
         "radial_ebus",
         "navigational_bronchoscopy",
@@ -77,6 +78,12 @@ def make_record(**kwargs) -> MagicMock:
             proc.performed = False
         setattr(procedures_performed, name, proc)
 
+    # Ensure common list-like fields are real lists (avoids MagicMock iteration surprises).
+    procedures_performed.linear_ebus.stations_sampled = []
+    procedures_performed.linear_ebus.node_events = []
+    procedures_performed.tbna_conventional.stations_sampled = []
+    procedures_performed.peripheral_tbna.targets_sampled = []
+
     record.procedures_performed = procedures_performed
     record.established_tracheostomy_route = kwargs.get("established_tracheostomy_route", False)
 
@@ -94,6 +101,10 @@ def make_record(**kwargs) -> MagicMock:
         stations = kwargs.get("stations_sampled", [])
         linear = procedures_performed.linear_ebus
         linear.stations_sampled = stations
+
+    if kwargs.get("peripheral_tbna"):
+        targets = kwargs.get("peripheral_tbna_targets_sampled", [])
+        procedures_performed.peripheral_tbna.targets_sampled = targets
 
     return record
 
@@ -353,7 +364,7 @@ class TestTBNAExtractor:
     def test_extract_tbna(self):
         text = "TBNA was performed with 22G needle."
         result = extract_tbna_conventional(text)
-        assert result.get("tbna_conventional", {}).get("performed") is True
+        assert result.get("peripheral_tbna", {}).get("performed") is True
 
     def test_extract_tbna_skips_ebus_context(self):
         text = (
@@ -374,11 +385,8 @@ class TestTBNAExtractor:
             "7 node - TBNA was performed.\n"
         )
         result = extract_tbna_conventional(text)
-        assert result.get("tbna_conventional", {}).get("performed") is True
-        stations = [str(s).upper() for s in (result.get("tbna_conventional", {}).get("stations_sampled") or [])]
-        assert "4L" not in stations
-        assert "11RI" not in stations
-        assert "7" not in stations
+        assert result.get("peripheral_tbna", {}).get("performed") is True
+        assert "tbna_conventional" not in result
 
 
 class TestBrushingsExtractor:
@@ -444,6 +452,27 @@ class TestEBUSStationCounts:
         assert "31652" not in codes
         assert "31653" not in codes
         assert any("stations_sampled missing" in w for w in warnings)
+
+class TestTBNABundling:
+    def test_tbna_conventional_bundled_into_ebus(self):
+        record = make_record(linear_ebus=True, stations_sampled=["4R", "7", "11L"], tbna_conventional=True)
+        codes, _rationales, warnings = derive_all_codes_with_meta(record)
+        assert "31653" in codes
+        assert "31629" not in codes
+        assert any("Suppressed 31629" in w for w in warnings)
+
+    def test_peripheral_tbna_kept_with_modifier_when_ebus(self):
+        record = make_record(
+            linear_ebus=True,
+            stations_sampled=["4R", "7", "11L"],
+            peripheral_tbna=True,
+            peripheral_tbna_targets_sampled=["LUL nodule", "RML nodule"],
+        )
+        codes, _rationales, warnings = derive_all_codes_with_meta(record)
+        assert "31653" in codes
+        assert "31629" in codes
+        assert "31633" in codes
+        assert any("Modifier 59" in w for w in warnings)
 
 
 class TestTracheostomyCPTLogic:

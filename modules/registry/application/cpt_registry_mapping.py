@@ -52,10 +52,10 @@ CPT_TO_REGISTRY_MAPPING: dict[str, RegistryFieldMapping] = {
         hints={"biopsy_technique": "forceps"},
     ),
 
-    # TBLB with fluoroscopy
+    # TBNA (legacy schema does not distinguish; mapped to tblb_performed)
     "31629": RegistryFieldMapping(
         fields={"tblb_performed": True},
-        hints={"biopsy_technique": "forceps_fluoro"},
+        hints={"biopsy_technique": "tbna"},
     ),
 
     # EBUS-TBNA 1-2 stations
@@ -277,13 +277,13 @@ def aggregate_registry_fields(
     if code_set & {"31624", "31625"}:
         procedures["bal"] = {"performed": True}
 
-    # Transbronchial lung biopsy (non-nav): 31628, 31629 (with fluoro)
-    if code_set & {"31628", "31629"}:
-        tblb = {"performed": True}
-        # 31629 indicates fluoroscopy guidance
-        if "31629" in code_set:
-            tblb["fluoroscopy_used"] = True
-        procedures["transbronchial_biopsy"] = tblb
+    # Transbronchial lung biopsy (forceps/cryo): 31628 (single lobe), 31632 (additional lobes)
+    if "31628" in code_set or "31632" in code_set:
+        procedures["transbronchial_biopsy"] = {"performed": True}
+
+    # Peripheral/lung TBNA (non-nodal): 31629 (single lobe), 31633 (additional lobes)
+    if "31629" in code_set or "31633" in code_set:
+        procedures["peripheral_tbna"] = {"performed": True}
 
     # Navigation bronchoscopy: 31627
     if "31627" in code_set:

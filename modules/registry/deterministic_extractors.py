@@ -1297,9 +1297,12 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
             stations = _extract_ln_stations_from_text(context)
             if stations:
                 tbna["stations_sampled"] = stations
-            else:
-                tbna["stations_sampled"] = ["Lung Mass"]
-            return {"tbna_conventional": tbna}
+                return {"tbna_conventional": tbna}
+
+            # If no nodal station context is found, treat this as peripheral/lung TBNA.
+            peripheral_tbna: dict[str, Any] = {"performed": True}
+            peripheral_tbna["targets_sampled"] = ["Lung Mass"]
+            return {"peripheral_tbna": peripheral_tbna}
 
     return {}
 
