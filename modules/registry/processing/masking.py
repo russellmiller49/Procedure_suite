@@ -10,7 +10,7 @@ from modules.common.text_cleaning import (
 
 
 PATTERNS: list[str] = [
-    r"(?ims)^IP\b[^\n]{0,60}CODE\s+MOD\s+DETAILS.*?(?=^\\s*(?:ANESTHESIA|MONITORING|INSTRUMENT|ESTIMATED\\s+BLOOD\\s+LOSS|COMPLICATIONS|PROCEDURE\\s+IN\\s+DETAIL|DESCRIPTION\\s+OF\\s+PROCEDURE)\\b|\\Z)",
+    r"(?ims)^\s*IP\b[^\n]{0,60}CODE\s+MOD\s+DETAILS.*?(?=^\s*(?:ANESTHESIA|MONITORING|INSTRUMENT|ESTIMATED\s+BLOOD\s+LOSS|COMPLICATIONS|PROCEDURE\s+IN\s+DETAIL|DESCRIPTION\s+OF\s+PROCEDURE)\b|\Z)",
     r"(?ims)^CPT\s+CODES?:.*?(?=\n\n|\Z)",
     r"(?ims)^BILLING:.*?(?=\n\n|\Z)",
     r"(?ims)^CODING\s+SUMMARY.*?(?=\n\n|\Z)",
@@ -23,15 +23,24 @@ NON_PROCEDURAL_HEADINGS: tuple[str, ...] = (
     "HISTORY",
     "CONSENT",
     "PLAN",
+    "IMPRESSION/PLAN",
+    "IMPRESSION / PLAN",
+    "ASSESSMENT/PLAN",
+    "ASSESSMENT / PLAN",
     "RECOMMENDATION",
     "RECOMMENDATIONS",
     "ASSESSMENT",
 )
 
 _HEADING_INLINE_RE = re.compile(
-    r"^(?P<header>[A-Za-z][A-Za-z /_-]{0,80})\s*:\s*(?P<rest>.*)$",
+    r"^\s*(?P<header>[A-Za-z][A-Za-z /_-]{0,80})\s*:\s*(?P<rest>.*)$",
     re.MULTILINE,
 )
+
+_PROCEDURE_HEADER_LINE_RE = re.compile(
+    r"(?im)^(?P<header>\s*(?:PROCEDURES?\s+PERFORMED|PROCEDURE\s+PERFORMED|PROCEDURES|PROCEDURE))\s*:\s*(?P<rest>.*)$"
+)
+_CPT_CODE_RE = re.compile(r"\b\d{5}\b")
 
 
 def mask_offset_preserving(text: str, patterns: Iterable[str] = PATTERNS) -> str:
@@ -52,13 +61,15 @@ def mask_extraction_noise(text: str) -> tuple[str, dict[str, object]]:
     sections = _find_non_procedural_section_spans(text or "")
     section_spans = [(start, end) for start, end, _ in sections]
     table_spans = find_empty_table_row_spans(text or "", keywords=DEFAULT_TABLE_TOOL_KEYWORDS)
-    spans = section_spans + table_spans
+    procedure_header_spans, procedure_header_line_count = _find_procedure_header_cpt_spans(text or "")
+    spans = section_spans + table_spans + procedure_header_spans
 
     masked = _mask_spans(base, spans)
     meta = {
         "masked_non_procedural_sections": sorted({title for _, _, title in sections}),
         "masked_non_procedural_section_count": len(sections),
         "masked_empty_table_rows": len(table_spans),
+        "masked_procedure_header_cpt_lines": procedure_header_line_count,
     }
     return masked, meta
 
@@ -93,6 +104,62 @@ def _find_non_procedural_section_spans(text: str) -> list[tuple[int, int, str]]:
             continue
         spans.append((body_start, body_end, header))
     return spans
+
+
+def _find_procedure_header_cpt_spans(text: str) -> tuple[list[tuple[int, int]], int]:
+    """Mask CPT/definition lines inside PROCEDURE/PROCEDURES PERFORMED blocks.
+
+    Many notes include CPT definitions under procedure headings (e.g., "31641... eg laser"),
+    which can cause downstream "menu reading" false positives. This masks only the
+    CPT-bearing lines while preserving offsets.
+    """
+    if not text:
+        return ([], 0)
+
+    lines = text.splitlines(keepends=True)
+    spans: list[tuple[int, int]] = []
+    masked_lines = 0
+
+    offset = 0
+    idx = 0
+    while idx < len(lines):
+        line = lines[idx]
+        match = _PROCEDURE_HEADER_LINE_RE.match(line)
+        if not match:
+            offset += len(line)
+            idx += 1
+            continue
+
+        # Scan forward until the next heading-like line to bound this section.
+        section_end_idx = idx + 1
+        while section_end_idx < len(lines):
+            next_line = lines[section_end_idx]
+            if _HEADING_INLINE_RE.match(next_line):
+                break
+            section_end_idx += 1
+
+        # Mask CPT-bearing content on the header line (after the colon).
+        rest = match.group("rest") or ""
+        if _CPT_CODE_RE.search(rest):
+            start = offset + match.start("rest")
+            end = offset + len(line)
+            spans.append((start, end))
+            masked_lines += 1
+
+        # Mask CPT-bearing lines within the section body.
+        inner_offset = offset + len(line)
+        for inner_line in lines[idx + 1 : section_end_idx]:
+            if _CPT_CODE_RE.search(inner_line):
+                spans.append((inner_offset, inner_offset + len(inner_line)))
+                masked_lines += 1
+            inner_offset += len(inner_line)
+
+        # Advance.
+        for consumed in lines[idx:section_end_idx]:
+            offset += len(consumed)
+        idx = section_end_idx
+
+    return spans, masked_lines
 
 
 def _mask_spans(text: str, spans: list[tuple[int, int]]) -> str:

@@ -1,492 +1,14 @@
 ================================================================================
 REGISTRY PIPELINE BATCH SMOKE TEST
 ================================================================================
-Date: 2026-01-21T15:06:43.533097
+Date: 2026-01-21T15:30:50.139665
 Notes tested: 30
 Notes directory: /home/rjm/projects/proc_suite/data/knowledge/patient_note_texts
 Self-correction: True
 Real LLM enabled: True
 ================================================================================
 
-================================================================================NOTE: 8075695================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-  - procedures_performed.transbronchial_biopsy.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-  - procedures_performed.transbronchial_biopsy.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings, tbna_conventional
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31628: NER found keyword, but context suggests negation/history.
-  - 31652: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: FB002================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.foreign_body_removal.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.foreign_body_removal.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for foreign_body_removal
-  - 31624: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 8319821================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Extract warnings:
-  - 31623: NER found keyword, but context suggests negation/history.
-  - 31624: NER found keyword, but context suggests negation/history.
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31629: NER found keyword, but context suggests negation/history.
-  - 31653: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: IP_SYN_4_style_9================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_stent.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-Extract warnings:
-  - 31636: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: MRN_SYN_4_style_5================================================================================Performed flags (extract_record):
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-Extract warnings:
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31652: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: RAB-0001================================================================================Performed flags (extract_record):
-  - procedures_performed.brushings.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.transbronchial_biopsy.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.brushings.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.transbronchial_biopsy.performed
-Extract warnings:
-  - 31623: NER found keyword, but context suggests negation/history.
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31628: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: MRN_SYN_8_style_4================================================================================Performed flags (extract_record):
-  - procedures_performed.linear_ebus.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.linear_ebus.performed
-Extract warnings:
-  - 31653: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 8011977================================================================================Performed flags (extract_record):
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.thermal_ablation.performed
-Performed flags added by deterministic uplift:
-  - procedures_performed.airway_stent.performed
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.thermal_ablation.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for thermal_ablation
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: IP_SYN_4_style_1================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for therapeutic_aspiration
-  - 31636: NER found keyword, but context suggests negation/history.
-  - 31641: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions:
-  - 31635 (prob=1.00, bucket=HEADER_EXPLICIT)
-Self-correction diagnostics:
-  - SELF_CORRECT_SKIPPED: 31635: Path not allowed: /procedures_performed/rigid_bronchoscopy/performed
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: S31640-016================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-Extract warnings:
-  - 31624: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions:
-  - 31640 (prob=0.95, bucket=HIGH_CONF)
-Self-correction diagnostics:
-  - SELF_CORRECT_SKIPPED: 31640: Path not allowed: /procedures_performed/flexible_bronchoscopy/performed
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: SYN_1_1_3553================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for therapeutic_aspiration
-  - 31636: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 6497801================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Extract warnings:
-  - 31624: NER found keyword, but context suggests negation/history.
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31629: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions:
-  - 31628 (prob=0.83, bucket=HIGH_CONF)
-  - 31623 (prob=0.62, bucket=HIGH_CONF)
-Self-correction diagnostics:
-  - SELF_CORRECT_SKIPPED: 31628: keyword guard failed (no keyword hit)
-  - SELF_CORRECT_SKIPPED: 31623: keyword guard failed (no keyword hit)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 7464709================================================================================Performed flags (extract_record):
-  - pleural_procedures.chest_tube.performed
-  - pleural_procedures.medical_thoracoscopy.performed
-  - pleural_procedures.pleurodesis.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - pleural_procedures.chest_tube.performed
-  - pleural_procedures.medical_thoracoscopy.performed
-  - pleural_procedures.pleurodesis.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.chest_tube
-  - 32560: NER found keyword, but context suggests negation/history.
-  - 32601: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions:
-  - 32609 (prob=0.82, bucket=HIGH_CONF)
-Self-correction diagnostics:
-  - SELF_CORRECT_SKIPPED: 32609: keyword guard failed (no keywords configured)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 5444444================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-Extract warnings:
-  - 31623: NER found keyword, but context suggests negation/history.
-  - 31624: NER found keyword, but context suggests negation/history.
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31653: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: IP2025038================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_dilation.performed
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_dilation.performed
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-Extract warnings:
-  - 31630: NER found keyword, but context suggests negation/history.
-  - 31636: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 6483927_style_1================================================================================Performed flags (extract_record):
-  - pleural_procedures.ipc.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - pleural_procedures.ipc.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.ipc
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 9808285================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.tbna_conventional.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.tbna_conventional.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings, navigational_bronchoscopy
-  - 31629: NER found keyword, but context suggests negation/history.
-  - 31653: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: A47829C================================================================================Performed flags (extract_record):
-  - procedures_performed.brushings.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.brushings.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for brushings
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31629: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions:
-  - 31628 (prob=0.77, bucket=HIGH_CONF)
-Self-correction diagnostics:
-  - SELF_CORRECT_SKIPPED: 31628: judge returned null
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 6632936================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-Extract warnings:
-  - 31623: NER found keyword, but context suggests negation/history.
-  - 31624: NER found keyword, but context suggests negation/history.
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31653: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 7404564================================================================================Performed flags (extract_record):
-  - procedures_performed.rigid_bronchoscopy.performed
-Performed flags added by deterministic uplift:
-  - procedures_performed.airway_stent.performed
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-Extract warnings: (none)
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: SYN_015_0_2================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.thermal_ablation.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.thermal_ablation.performed
-Extract warnings:
-  - 31636: NER found keyword, but context suggests negation/history.
-  - 31641: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 7945805================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.brushings.performed
-  - procedures_performed.linear_ebus.performed
-  - procedures_performed.navigational_bronchoscopy.performed
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.tbna_conventional.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings, radial_ebus, tbna_conventional
-  - 31627: NER found keyword, but context suggests negation/history.
-  - 31653: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: REDACTED================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for rigid_bronchoscopy, therapeutic_aspiration
-  - 31636: NER found keyword, but context suggests negation/history.
-  - 31641: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: SYNPOOR008================================================================================Performed flags (extract_record):
-  - procedures_performed.bal.performed
-  - procedures_performed.linear_ebus.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.bal.performed
-  - procedures_performed.linear_ebus.performed
-Extract warnings:
-  - 31624: NER found keyword, but context suggests negation/history.
-  - 31653: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: IP2025052================================================================================Performed flags (extract_record):
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.transbronchial_cryobiopsy.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.radial_ebus.performed
-  - procedures_performed.transbronchial_cryobiopsy.performed
-Extract warnings:
-  - 31628: NER found keyword, but context suggests negation/history.
-  - 31654: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: IP32609-005================================================================================Performed flags (extract_record):
-  - pleural_procedures.chest_tube.performed
-  - pleural_procedures.medical_thoracoscopy.performed
-  - pleural_procedures.pleurodesis.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - pleural_procedures.chest_tube.performed
-  - pleural_procedures.medical_thoracoscopy.performed
-  - pleural_procedures.pleurodesis.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.chest_tube
-  - 32560: NER found keyword, but context suggests negation/history.
-  - 32601: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions:
-  - 32609 (prob=0.74, bucket=HIGH_CONF)
-Self-correction diagnostics:
-  - SELF_CORRECT_SKIPPED: 32609: keyword guard failed (no keywords configured)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: SYN_2_2_1459================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_dilation.performed
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.thermal_ablation.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_dilation.performed
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.rigid_bronchoscopy.performed
-  - procedures_performed.thermal_ablation.performed
-Extract warnings:
-  - 31636: NER found keyword, but context suggests negation/history.
-  - 31641: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: IP_SYN_4_style_6================================================================================Performed flags (extract_record):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Performed flags added by deterministic uplift: (none)
-Performed flags (after uplift):
-  - procedures_performed.airway_stent.performed
-  - procedures_performed.cryotherapy.performed
-  - procedures_performed.therapeutic_aspiration.performed
-Extract warnings:
-  - DETERMINISTIC_UPLIFT: added performed=true for therapeutic_aspiration
-  - 31636: NER found keyword, but context suggests negation/history.
-  - 31641: NER found keyword, but context suggests negation/history.
-Omission warnings: (none)
-Audit high-conf omissions: (none)
-Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: 7144622================================================================================Performed flags (extract_record):
+================================================================================NOTE: 7144622================================================================================Performed flags (extract_record):
   - procedures_performed.bal.performed
   - procedures_performed.brushings.performed
   - procedures_performed.linear_ebus.performed
@@ -508,21 +30,452 @@ Extract warnings:
 Omission warnings: (none)
 Audit high-conf omissions: (none)
 Self-correction applied: (none)
-STATUS: SUCCESS================================================================================NOTE: MRN_SYN_4_style_3================================================================================Performed flags (extract_record):
+STATUS: SUCCESS================================================================================NOTE: 9142556================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
   - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31653: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: RAB-0007================================================================================Performed flags (extract_record):
+  - procedures_performed.brushings.performed
   - procedures_performed.navigational_bronchoscopy.performed
   - procedures_performed.radial_ebus.performed
   - procedures_performed.transbronchial_biopsy.performed
 Performed flags added by deterministic uplift: (none)
 Performed flags (after uplift):
-  - procedures_performed.linear_ebus.performed
+  - procedures_performed.brushings.performed
   - procedures_performed.navigational_bronchoscopy.performed
   - procedures_performed.radial_ebus.performed
   - procedures_performed.transbronchial_biopsy.performed
 Extract warnings:
+  - 31623: NER found keyword, but context suggests negation/history.
   - 31627: NER found keyword, but context suggests negation/history.
   - 31628: NER found keyword, but context suggests negation/history.
   - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: S31640-010================================================================================Performed flags (extract_record):
+  - procedures_performed.rigid_bronchoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.rigid_bronchoscopy.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 31640 (prob=0.99, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31640: Path not allowed: /procedures_performed/rigid_bronchoscopy/mechanical_debulking
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: MRN_SYN_2_style_8================================================================================Performed flags (extract_record):
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - 31629: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP2025035================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Extract warnings:
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31628: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 9942473================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31629: NER found keyword, but context suggests negation/history.
+  - 31653: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP_SYN_4_var_7================================================================================Performed flags (extract_record):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31629: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: PQ5847================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for radial_ebus
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+Audit high-conf omissions:
+  - 31629 (prob=0.75, bucket=HIGH_CONF)
+  - 31628 (prob=0.70, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31629: keyword guard failed (no keyword hit)
+  - SELF_CORRECT_SKIPPED: 31628: keyword guard failed (no keyword hit)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 7516219================================================================================Performed flags (extract_record):
+  - pleural_procedures.chest_tube.performed
+  - pleural_procedures.medical_thoracoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - pleural_procedures.chest_tube.performed
+  - pleural_procedures.medical_thoracoscopy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.chest_tube
+  - 32601: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 32609 (prob=0.83, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 32609: keyword guard failed (no keywords configured)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYNPOOR007================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - 31624: NER found keyword, but context suggests negation/history.
+  - 31625: NER found keyword, but context suggests negation/history.
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31628: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP_SYN_0_style_6================================================================================Performed flags (extract_record):
+  - procedures_performed.therapeutic_aspiration.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.therapeutic_aspiration.performed
+Extract warnings:
+  - 31645: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: S31640-008================================================================================Performed flags (extract_record):
+  - procedures_performed.rigid_bronchoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.rigid_bronchoscopy.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 31640 (prob=0.98, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31640: Quote not found verbatim in focused procedure text: 'Rigid bronchoscopy with mechanical debulking of le...'
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP2026001================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+Extract warnings:
+  - 31624: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 7465133================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - 31623: NER found keyword, but context suggests negation/history.
+  - 31624: NER found keyword, but context suggests negation/history.
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31629: NER found keyword, but context suggests negation/history.
+  - 31653: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 6184729================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.tbna_conventional.performed
+  - procedures_performed.transbronchial_biopsy.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.tbna_conventional.performed
+  - procedures_performed.transbronchial_biopsy.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, transbronchial_cryobiopsy
+  - 31625: NER found keyword, but context suggests negation/history.
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31628: NER found keyword, but context suggests negation/history.
+  - 31629: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 31654 (prob=0.85, bucket=HIGH_CONF)
+  - 31623 (prob=0.40, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31654: keyword guard failed (no keyword hit)
+  - SELF_CORRECT_SKIPPED: 31623: keyword guard failed (no keyword hit)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 6283947================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for tbna_conventional
+  - 31653: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 5938271_style_9================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+Extract warnings:
+  - 31624: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 31654 (prob=0.48, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31654: keyword guard failed (no keyword hit)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 5894732================================================================================Performed flags (extract_record):
+  - procedures_performed.percutaneous_tracheostomy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.percutaneous_tracheostomy.performed
+Extract warnings:
+  - 31600: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_1_5_9126================================================================================Performed flags (extract_record): (none)
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift): (none)
+Extract warnings: (none)
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'chest tube' but extraction missed it. (Pattern: '(?i)\bchest\s+tube\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP_SYN_5_var_9================================================================================Performed flags (extract_record): (none)
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift): (none)
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: MRN_SYN_6_style_4================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_2_3_2705================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.bal.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.bal.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for cryotherapy
+  - 31624: NER found keyword, but context suggests negation/history.
+  - 31636: NER found keyword, but context suggests negation/history.
+  - 31641: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 7459735================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings, radial_ebus, tbna_conventional
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31653: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP2025005================================================================================Performed flags (extract_record):
+  - procedures_performed.brushings.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.brushings.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - 31623: NER found keyword, but context suggests negation/history.
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 5938271_style_4================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - 31624: NER found keyword, but context suggests negation/history.
+  - 31628: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP2025006================================================================================Performed flags (extract_record):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Extract warnings:
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31628: NER found keyword, but context suggests negation/history.
+  - 31654: NER found keyword, but context suggests negation/history.
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'chest tube' but extraction missed it. (Pattern: '(?i)\bchest\s+tube\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: S31640-024================================================================================Performed flags (extract_record):
+  - established_tracheostomy_route
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - established_tracheostomy_route
+Extract warnings: (none)
+Omission warnings:
+  - SILENT_FAILURE: Text contains 'tracheostomy' but extraction missed it. (Pattern: '(?i)\btracheostomy\b')
+Audit high-conf omissions:
+  - 31640 (prob=0.98, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31640: Path not allowed: /procedures_performed/flexible_bronchoscopy/performed
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: MRN_SYN_0_style_3================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+Extract warnings:
+  - 31653: NER found keyword, but context suggests negation/history.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 8521654================================================================================Performed flags (extract_record):
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for brushings, radial_ebus
+  - 31627: NER found keyword, but context suggests negation/history.
+  - 31653: NER found keyword, but context suggests negation/history.
 Omission warnings: (none)
 Audit high-conf omissions: (none)
 Self-correction applied: (none)

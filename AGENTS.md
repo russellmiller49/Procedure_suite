@@ -43,6 +43,12 @@ Key path: `modules/registry/application/registry_service.py:_extract_fields_extr
   - Path B: registry ML predictor (if available); falls back safely when unavailable
 - **Deterministic uplift:** in `parallel_ner`, common missed flags are filled from deterministic extractors
   (BAL/EBBx/radial EBUS/cryotherapy + navigational bronchoscopy backstops + pleural chest tube/pigtail + IPC/tunneled pleural catheter + chest ultrasound) and evidence spans are attached.
+- **Context/negation guardrails (extraction quality):**
+  - **Stents**: inspection-only phrases (e.g., “stent … in good position”) should *not* trigger stent placement (`31636`).
+  - **Chest tubes**: discontinue/removal phrases (e.g., “D/c chest tube”) should *not* trigger insertion (`32551`).
+  - **TBNA**: EBUS-TBNA should *not* populate `tbna_conventional` (prevents double-coding `31629` alongside `31652/31653`).
+  - **Radial EBUS**: explicit “radial probe …” language should set `radial_ebus.performed` even without concentric/eccentric markers.
+  - **Menu masking**: `mask_extraction_noise()` strips CPT/menu blocks (e.g., `IP ... CODE MOD DETAILS`) before extraction to prevent “menu reading” hallucinations.
 - **Omission scan:** `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` emits
   `SILENT_FAILURE:` warnings for high-value missed procedures; these should surface to the UI via `/api/v1/process`.
 - **LLM self-correction:** enable with `REGISTRY_SELF_CORRECT_ENABLED=1` (recommended). For faster responses, set
@@ -60,6 +66,9 @@ See `modules/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
 ## Granular NER Model Workflow
 
 - Train: see `docs/GRANULAR_NER_UPDATE_WORKFLOW.md`
+- Stent labels: `DEV_STENT` (device interaction) vs `NEG_STENT` (explicit absence) vs `CTX_STENT_PRESENT` (present/in good position, no intervention).
+- Auto-label helper: `python scripts/label_neg_stent.py` (dry-run by default; use `--write` to persist).
+- Training allowlist lives in `scripts/train_registry_ner.py:ALLOWED_LABEL_TYPES`.
 - Typical command:
   - `python scripts/train_registry_ner.py --data data/ml_training/granular_ner/ner_bio_format_refined.jsonl --output-dir artifacts/registry_biomedbert_ner_v2 ...`
 - Run server with the model:

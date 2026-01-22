@@ -40,6 +40,13 @@ These clinical facts are used downstream to deterministically derive billing cod
 3. **Evidence Required**: You must quote the exact text snippet that proves the procedure was performed.
 4. **Conservative**: If the text is ambiguous or the procedure is clearly NOT performed (e.g., "Rigid bronchoscopy was NOT used"), return `null`.
 
+### IMPORTANT SCHEMA PATHS (use these exact keys)
+- **BLVR / endobronchial valve**: patch `procedures_performed.blvr` (e.g., `/procedures_performed/blvr/performed`, `/procedures_performed/blvr/procedure_type`).
+- **Tumor excision / mechanical debulking (31640 family)**: patch `/procedures_performed/mechanical_debulking/performed`.
+- **Airway dilation / balloon bronchoplasty (31630 family)**: patch `procedures_performed.airway_dilation`.
+- **Rigid bronchoscopy**: patch `/procedures_performed/rigid_bronchoscopy/performed`.
+- Do **NOT** invent new fields like `bronchial_valve_insertion`, `balloon_dilation`, `endobronchial_excision`, or `flexible_bronchoscopy`.
+
 ### OUTPUT FORMAT
 Return a JSON object with the following structure:
 {

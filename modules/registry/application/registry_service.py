@@ -878,6 +878,7 @@ class RegistryService:
                         AIRWAY_DILATION_PATTERNS,
                         AIRWAY_STENT_DEVICE_PATTERNS,
                         BAL_PATTERNS,
+                        BLVR_PATTERNS,
                         BRUSHINGS_PATTERNS,
                         CHEST_TUBE_PATTERNS,
                         CHEST_ULTRASOUND_PATTERNS,
@@ -1040,6 +1041,8 @@ class RegistryService:
                                         _add_first_span(field_key, list(AIRWAY_DILATION_PATTERNS))
                                     elif proc_name == "airway_stent":
                                         _add_first_span(field_key, list(AIRWAY_STENT_DEVICE_PATTERNS))
+                                    elif proc_name == "blvr":
+                                        _add_first_span(field_key, list(BLVR_PATTERNS))
                                     elif proc_name == "foreign_body_removal":
                                         _add_first_span(
                                             field_key,

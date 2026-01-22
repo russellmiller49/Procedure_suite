@@ -703,6 +703,16 @@ FOREIGN_BODY_REMOVAL_PATTERNS = [
     r"\bretriev(?:e|ed|al)\b[^.\n]{0,60}\bforeign\s+body\b",
 ]
 
+# BLVR (endobronchial valve) patterns (31647 family)
+BLVR_PATTERNS = [
+    r"\b(spiration|zephyr)\b",
+    r"\b(endobronchial|bronchial)\s+valve\b",
+    r"\bvalve\s+(?:deployment|placement|insertion)\b",
+    r"\bolympus\b[^.\n]{0,40}\bvalve\b",
+    r"\b(?:lung\s+volume\s+reduction|bronchoscopic\s+lung\s+volume\s+reduction)\b",
+    r"\bchartis\b",
+]
+
 _CPT_LINE_PATTERN = re.compile(r"^\s*\d{5}\b")
 _PROCEDURE_DETAIL_SECTION_PATTERN = re.compile(
     r"(?im)^\s*(?:procedure\s+in\s+detail|description\s+of\s+procedure|procedure\s+description)\s*:?"
@@ -1048,6 +1058,61 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
             proc["stent_type"] = stent_type
 
     return {"airway_stent": proc}
+
+
+def extract_blvr(note_text: str) -> Dict[str, Any]:
+    """Extract BLVR (endobronchial valve) indicator.
+
+    Conservative by default: only fires on high-signal valve/BLVR terms.
+    """
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
+    if not text_lower.strip():
+        return {}
+
+    match = None
+    for pattern in BLVR_PATTERNS:
+        match = re.search(pattern, text_lower, re.IGNORECASE)
+        if match:
+            break
+    if not match:
+        return {}
+
+    proc: dict[str, Any] = {"performed": True}
+
+    if "zephyr" in text_lower:
+        proc["valve_type"] = "Zephyr (Pulmonx)"
+    elif "spiration" in text_lower:
+        proc["valve_type"] = "Spiration (Olympus)"
+
+    placement_present = bool(
+        re.search(
+            r"\bvalve\b[^.\n]{0,80}\b(?:place|placed|deploy|deployed|insert|inserted)\w*\b",
+            text_lower,
+            re.IGNORECASE,
+        )
+        or re.search(
+            r"\b(?:place|placed|deploy|deployed|insert|inserted)\w*\b[^.\n]{0,80}\bvalve\b",
+            text_lower,
+            re.IGNORECASE,
+        )
+    )
+    removal_present = bool(
+        re.search(
+            r"\bvalve\b[^.\n]{0,80}\b(?:remov|retriev|extract|explant)\w*\b",
+            text_lower,
+            re.IGNORECASE,
+        )
+    )
+    if placement_present:
+        proc["procedure_type"] = "Valve placement"
+    elif removal_present:
+        proc["procedure_type"] = "Valve removal"
+    elif "chartis" in text_lower:
+        proc["procedure_type"] = "Valve assessment"
+
+    return {"blvr": proc}
 
 
 def extract_foreign_body_removal(note_text: str) -> Dict[str, Any]:
@@ -1721,6 +1786,10 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if stent_data:
         seed_data.setdefault("procedures_performed", {}).update(stent_data)
 
+    blvr_data = extract_blvr(note_text)
+    if blvr_data:
+        seed_data.setdefault("procedures_performed", {}).update(blvr_data)
+
     foreign_body_data = extract_foreign_body_removal(note_text)
     if foreign_body_data:
         seed_data.setdefault("procedures_performed", {}).update(foreign_body_data)
@@ -1821,6 +1890,7 @@ __all__ = [
     "extract_therapeutic_aspiration",
     "extract_airway_dilation",
     "extract_airway_stent",
+    "extract_blvr",
     "extract_foreign_body_removal",
     "extract_endobronchial_biopsy",
     "extract_radial_ebus",
@@ -1854,6 +1924,7 @@ __all__ = [
     "AIRWAY_STENT_REMOVAL_PATTERNS",
     "AIRWAY_DILATION_PATTERNS",
     "FOREIGN_BODY_REMOVAL_PATTERNS",
+    "BLVR_PATTERNS",
     "ESTABLISHED_TRACH_ROUTE_PATTERNS",
     "ESTABLISHED_TRACH_NEW_PATTERNS",
     "CHEST_ULTRASOUND_PATTERNS",

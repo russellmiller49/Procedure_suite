@@ -40,11 +40,13 @@ _STENT_NEGATION_PATTERNS = [
 ]
 
 _STENT_PLACEMENT_CONTEXT_RE = re.compile(
-    r"\bstent\b[^.\n]{0,60}\b(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|seat|seated)\b",
+    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|seat|seated|expand|expanded|expanding)\b"
+    r"|(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
     re.IGNORECASE,
 )
 _STENT_STRONG_PLACEMENT_RE = re.compile(
-    r"\bstent\b[^.\n]{0,60}\b(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated)\b",
+    r"\b(?:stent\b[^.\n]{0,30}\b(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated|expand|expanded|expanding)\b"
+    r"|(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
     re.IGNORECASE,
 )
 _STENT_REMOVAL_CONTEXT_RE = re.compile(
@@ -52,7 +54,7 @@ _STENT_REMOVAL_CONTEXT_RE = re.compile(
     re.IGNORECASE,
 )
 _STENT_INSPECTION_RE = re.compile(
-    r"\bstent\b[^.\n]{0,60}\b(evaluat|inspect|inspection|patent|in\s+good\s+position|position\s+confirmed)\b",
+    r"\bstent\b[^.\n]{0,60}\b(evaluat|inspect|inspection|patent|intact|visible|in\s+good\s+position|in\s+place|position\s+confirmed)\b",
     re.IGNORECASE,
 )
 
@@ -146,7 +148,9 @@ class ClinicalGuardrails:
         stent = procedures.get("airway_stent") if isinstance(procedures, dict) else None
         if isinstance(stent, dict) and stent.get("performed") is True:
             negated = any(p.search(text_lower) for p in _STENT_NEGATION_PATTERNS)
-            removal_present = bool(_STENT_REMOVAL_CONTEXT_RE.search(text_lower)) or stent.get("airway_stent_removal") is True
+            removal_text_present = bool(_STENT_REMOVAL_CONTEXT_RE.search(text_lower))
+            removal_flag = stent.get("airway_stent_removal") is True
+            removal_present = removal_text_present or removal_flag
             placement_present = bool(_STENT_PLACEMENT_CONTEXT_RE.search(text_lower))
             strong_placement = bool(_STENT_STRONG_PLACEMENT_RE.search(text_lower))
             inspection_only = bool(_STENT_INSPECTION_RE.search(text_lower))
@@ -160,7 +164,15 @@ class ClinicalGuardrails:
                     if self._clear_stent(record_data):
                         warnings.append("Stent placement negated; treating as not performed.")
                         changed = True
-            elif inspection_only and not placement_present and not removal_present:
+            elif removal_text_present and not placement_present and not strong_placement:
+                if self._set_stent_action(record_data, "Removal"):
+                    warnings.append("Stent removal language; treating as removal only.")
+                    changed = True
+            elif removal_flag and not removal_text_present and inspection_only and not placement_present:
+                if self._clear_stent(record_data):
+                    warnings.append("Stent removal flag not supported by text; treating as not performed.")
+                    changed = True
+            elif inspection_only and not placement_present and not removal_text_present:
                 if self._clear_stent(record_data):
                     warnings.append("Stent inspection-only language; treating as not performed.")
                     changed = True

@@ -178,11 +178,18 @@ CPT_KEYWORDS: dict[str, list[str]] = {
 REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
     # Fixes missed tracheostomy (Report #3)
     "procedures_performed.percutaneous_tracheostomy.performed": [
-        (r"(?i)\btracheostomy\b", "Text contains 'tracheostomy' but extraction missed it."),
-        (r"(?i)\bportex\b", "Text contains 'Portex' (trach device) but extraction missed it."),
-        (r"(?i)\bshiley\b", "Text contains 'Shiley' (trach device) but extraction missed it."),
-        (r"(?i)\bperc\s+trach\b", "Text contains 'perc trach' but extraction missed it."),
-        (r"(?i)\bpercutaneous\s+tracheostomy\b", "Text contains 'percutaneous tracheostomy' but extraction missed it."),
+        (
+            r"(?is)\b(?:perform|create|place|insert)\w*\b.{0,20}\btracheostomy\b",
+            "Text indicates tracheostomy creation but extraction missed it.",
+        ),
+        (
+            r"(?is)\b(?:perform|create|place|insert)\w*\b.{0,20}\bperc(?:utaneous)?\s+trach\b",
+            "Text indicates percutaneous trach creation but extraction missed it.",
+        ),
+        (
+            r"(?is)\bpercutaneous\s+tracheostomy\b.{0,40}\b(?:perform|create|place|insert)\w*\b",
+            "Text indicates percutaneous tracheostomy but extraction missed it.",
+        ),
     ],
     # Fixes missed endobronchial biopsy (Report #2)
     "procedures_performed.endobronchial_biopsy.performed": [
@@ -337,6 +344,15 @@ def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str |
 
     if re.search(rf"(?i)^[^.\n]{{0,60}}\b{_NEGATION_CUES}\b", after):
         return True
+
+    if field_path == "procedures_performed.percutaneous_tracheostomy.performed":
+        window = note_text[max(0, start - 80) : min(len(note_text), end + 80)]
+        if re.search(r"(?i)\bexisting\s+tracheostomy\b", window):
+            return True
+        if re.search(r"(?i)\b(?:through|via)\s+tracheostomy\b", window):
+            return True
+        if re.search(r"(?i)\btracheostomy\s+tube\b", window):
+            return True
 
     if field_path == "pleural_procedures.chest_tube.performed":
         window = note_text[max(0, start - 30) : min(len(note_text), end + 30)]

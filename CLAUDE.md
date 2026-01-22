@@ -50,6 +50,24 @@ When `REGISTRY_EXTRACTION_ENGINE=parallel_ner`, the extraction-first pipeline ru
 Evidence returned to the UI should be V3-shaped:
 `{"source","text","span":[start,end],"confidence"}`
 
+## Context/Negation Guardrails (Extraction Quality)
+
+The deterministic layer includes guardrails to reduce “keyword-only” hallucinations:
+
+- **Stents**: inspection-only phrases (e.g., “stent … in good position”) should *not* trigger stent placement (`31636`).
+- **Chest tubes**: discontinue/removal phrases (e.g., “D/c chest tube”) should *not* trigger insertion (`32551`).
+- **TBNA**: EBUS-TBNA should *not* populate `tbna_conventional` (prevents double-coding `31629` alongside `31652/31653`).
+- **Radial EBUS**: explicit “radial probe …” language should set `radial_ebus.performed` even without concentric/eccentric markers.
+- **Menu masking**: `mask_extraction_noise()` strips CPT/menu blocks (e.g., `IP ... CODE MOD DETAILS`) before extraction to prevent “menu reading” hallucinations.
+
+## Granular NER — Stent Label Taxonomy
+
+- `DEV_STENT`: stent mentioned as a device with an interaction (placed/deployed/removed/exchanged/migrated).
+- `NEG_STENT`: explicit absence (e.g., “no stent was placed”, “stent not indicated”).
+- `CTX_STENT_PRESENT`: stent present/in good position with no intervention evidence.
+- Labeling helper: `scripts/label_neg_stent.py` (dry-run by default; use `--write` to persist changes).
+- Training allowlist: update `scripts/train_registry_ner.py:ALLOWED_LABEL_TYPES` when adding new label types.
+
 ## LLM Self-Correction (Recommended)
 
 - Enable by default with `REGISTRY_SELF_CORRECT_ENABLED=1`. This allows the server to call an external LLM on **scrubbed text**

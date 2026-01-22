@@ -211,6 +211,30 @@ python scripts/registry_pipeline_smoke_batch.py --output my_results_V2.txt --sel
 **Note:** The batch script automatically sets `REGISTRY_USE_STUB_LLM=1` and `GEMINI_OFFLINE=1` for offline testing. To test with real LLM/self-correction, ensure `REGISTRY_SELF_CORRECT_ENABLED=1` is set in your environment and pass the `--self-correct` flag.
 The single-note smoke test supports `--real-llm`, which disables stub/offline defaults for that run.
 
+#### LLM usage + cost reporting (tokens / $)
+
+If you want your batch runs to print **LLM token usage** and an **estimated USD cost**:
+
+- **Enable per-call logging**: `OPENAI_LOG_USAGE_PER_CALL=1`
+- **Enable end-of-run summary**: `OPENAI_LOG_USAGE_SUMMARY=1`
+- **Configure pricing** (so `$` can be estimated): `OPENAI_PRICING_JSON=...`
+
+Example (bash):
+
+```bash
+export OPENAI_PRICING_JSON='{"gpt-5-mini":{"input_per_1k":0.00025,"output_per_1k":0.00200},"gpt-5.2":{"input_per_1k":0.00175,"output_per_1k":0.01400}}'
+OPENAI_LOG_USAGE_PER_CALL=1 OPENAI_LOG_USAGE_SUMMARY=1 \
+python scripts/registry_pipeline_smoke_batch.py --output my_results.txt --self-correct --real-llm
+or
+export OPENAI_PRICING_JSON='{"gpt-5-mini":{"input_per_1k":0.00025,"output_per_1k":0.00200},"gpt-5.2":{"input_per_1k":0.00175,"output_per_1k":0.01400}}'
+OPENAI_LOG_USAGE_PER_CALL=1 OPENAI_LOG_USAGE_SUMMARY=1 \
+python scripts/unified_pipeline_batch.py --output my_results.txt --real-llm
+```
+
+Notes:
+- `OPENAI_PRICING_JSON` must be set **once** (include multiple models in a single JSON object).
+- Cost reporting currently applies to **OpenAI-compatible** calls (`LLM_PROVIDER=openai_compat`). If pricing is not configured, tokens/latency still print and cost will show as “pricing not configured”.
+
 ### 3c. Unified Pipeline Batch Test
 
 Test the full unified pipeline (same as the UI at `/ui/`) on multiple random notes:

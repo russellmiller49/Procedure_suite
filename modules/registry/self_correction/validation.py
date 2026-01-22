@@ -22,6 +22,8 @@ ALLOWED_PATHS: set[str] = {
     "/procedures_performed/airway_stent/performed",
     "/procedures_performed/foreign_body_removal/performed",
     "/procedures_performed/eus_b/performed",
+    "/procedures_performed/blvr/performed",
+    "/procedures_performed/rigid_bronchoscopy/performed",
     "/pleural_procedures/ipc/performed",
     "/pleural_procedures/thoracentesis/performed",
     "/pleural_procedures/chest_tube/performed",
@@ -41,6 +43,8 @@ ALLOWED_PATH_PREFIXES: set[str] = {
     "/procedures_performed/airway_stent",
     "/procedures_performed/foreign_body_removal",
     "/procedures_performed/eus_b",
+    "/procedures_performed/blvr",
+    "/procedures_performed/rigid_bronchoscopy",
     "/pleural_procedures/ipc",
     "/pleural_procedures/thoracentesis",
     "/pleural_procedures/chest_tube",
@@ -48,6 +52,13 @@ ALLOWED_PATH_PREFIXES: set[str] = {
 }
 
 _WS_RE = re.compile(r"\s+")
+
+_PATCH_PATH_ALIASES: dict[str, str] = {
+    "/procedures_performed/bronchial_valve_insertion": "/procedures_performed/blvr",
+    "/procedures_performed/endobronchial_excision": "/procedures_performed/mechanical_debulking",
+    "/procedures_performed/balloon_dilation": "/procedures_performed/airway_dilation",
+    "/procedures_performed/rigid_bronchoscopy/mechanical_debulking": "/procedures_performed/mechanical_debulking",
+}
 
 
 def _normalize_whitespace(text: str) -> str:
@@ -102,6 +113,11 @@ def validate_proposal(
             return False, "Patch operation must be an object"
 
         path = op.get("path")
+        if isinstance(path, str):
+            canonical = _canonicalize_patch_path(path)
+            if canonical != path:
+                op["path"] = canonical
+                path = canonical
         if not _path_allowed(path, allowed_paths, allowed_prefixes):
             return False, f"Path not allowed: {path}"
 
@@ -148,6 +164,16 @@ def _path_allowed(path: object, allowed_paths: set[str], allowed_prefixes: set[s
         if path == prefix or path.startswith(f"{prefix}/"):
             return True
     return False
+
+
+def _canonicalize_patch_path(path: str) -> str:
+    if not path.startswith("/"):
+        return path
+    for alias_prefix, canonical_prefix in _PATCH_PATH_ALIASES.items():
+        if path == alias_prefix or path.startswith(f"{alias_prefix}/"):
+            suffix = path[len(alias_prefix):]
+            return f"{canonical_prefix}{suffix}"
+    return path
 
 
 def _env_int(name: str, default: int) -> int:

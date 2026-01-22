@@ -75,6 +75,7 @@ IMPORTANT_DIRS = [
 IMPORTANT_FILES = [
     "README.md",
     "CLAUDE.md",
+    "AGENTS.md",
     "pyproject.toml",
     "requirements.txt",
     "Makefile",
@@ -84,11 +85,13 @@ IMPORTANT_FILES = [
     "modules/registry/application/registry_service.py",
     "modules/agents/contracts.py",
     "modules/agents/run_pipeline.py",
+    "docs/AGENTS.md",
     "docs/DEVELOPMENT.md",
     "docs/ARCHITECTURE.md",
     "docs/INSTALLATION.md",
     "docs/USER_GUIDE.md",
-    "claude/commands/phi-redactor.md",
+    ".claude/commands/phi-redactor.md",
+    ".claude/commands/registry-data-prep.md",
 ]
 
 DETAIL_DEFAULT_INCLUDE_DIRS = [

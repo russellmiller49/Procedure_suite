@@ -62,3 +62,14 @@ def test_validate_proposal_normalizes_whitespace_in_quote_matching() -> None:
     note_text = "Brushings\nperformed"
     is_valid, reason = validate_proposal(proposal, note_text)
     assert is_valid, reason
+
+
+def test_validate_proposal_canonicalizes_known_alias_paths() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[{"op": "add", "path": "/procedures_performed/balloon_dilation/performed", "value": True}],
+        evidence_quote="balloon dilation",
+    )
+    is_valid, reason = validate_proposal(proposal, "balloon dilation")
+    assert is_valid, reason
+    assert proposal.json_patch[0]["path"] == "/procedures_performed/airway_dilation/performed"
