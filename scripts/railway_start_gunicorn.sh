@@ -34,6 +34,13 @@ echo "[railway_start_gunicorn] PORT=${PORT}"
 echo "[railway_start_gunicorn] WORKERS=${WORKERS}"
 echo "[railway_start_gunicorn] TIMEOUT=${TIMEOUT}"
 
+# Optional: bootstrap granular NER ONNX bundle from S3 at container start.
+# If configured, this must succeed; otherwise the service should fail fast.
+if [[ -n "${GRANULAR_NER_BUNDLE_S3_URI_ONNX:-${GRANULAR_NER_BUNDLE_S3_URI:-}}" ]]; then
+  echo "[railway_start_gunicorn] Bootstrapping granular NER bundle from S3..."
+  python scripts/bootstrap_granular_ner_bundle.py
+fi
+
 # NOTE: `uvicorn.workers.UvicornWorker` is the traditional integration; check uvicorn docs for the
 # recommended worker package/version for your deployment.
 exec gunicorn "modules.api.fastapi_app:app" \

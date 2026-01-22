@@ -23,6 +23,10 @@ This project is typically deployed as **two Railway services**:
 - `MODEL_BUNDLE_S3_URI_ONNX` (either a tarball bundle OR an S3 prefix of artifacts)
   - Tarball bundle: `s3://procedure-suite-models/deploy/registry/<version>/onnx/bundle.tar.gz`
   - Classifiers prefix (auto-picks newest `model_int8.onnx` under the prefix): `s3://procedure-suite-models/classifiers/`
+- Optional (recommended): Granular NER ONNX bundle from S3
+  - `GRANULAR_NER_BUNDLE_S3_URI_ONNX=s3://<bucket>/<path>/granular_ner_onnx_bundle.tar.gz`
+  - `GRANULAR_NER_RUNTIME_DIR` (optional; default `data/models/granular_ner_runtime`)
+  - This will set `GRANULAR_NER_MODEL_DIR` automatically at start.
 - AWS credentials + region (via Railway env vars):
   - `AWS_ACCESS_KEY_ID`
   - `AWS_SECRET_ACCESS_KEY`
