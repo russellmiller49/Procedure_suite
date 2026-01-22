@@ -1257,7 +1257,11 @@ def derive_procedures_from_granular(
             tbna = procedures.get("tbna_conventional") or {}
             if not tbna.get("performed"):
                 tbna["performed"] = True
-            if not tbna.get("stations_sampled"):
+            existing_sites = tbna.get("stations_sampled") or []
+            is_placeholder = (
+                len(existing_sites) == 1 and str(existing_sites[0]).strip().lower() in {"lung mass"}
+            )
+            if not existing_sites or is_placeholder:
                 sites = [
                     t.get("target_location_text")
                     for t in navigation_targets

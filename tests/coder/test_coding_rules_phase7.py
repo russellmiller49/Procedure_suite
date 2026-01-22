@@ -329,6 +329,19 @@ class TestLinearEBUSExtractor:
         result = extract_linear_ebus(text)
         assert result == {}
 
+    def test_extract_linear_ebus_excludes_negated_station(self):
+        text = (
+            "PROCEDURE IN DETAIL:\n"
+            "Linear EBUS bronchoscopy performed.\n"
+            "4L node - decision to not perform transbronchial sampling of this lymph node.\n"
+            "11Ri lymph node - TBNA was performed.\n"
+            "Station 7 lymph node - TBNA was performed.\n"
+        )
+        result = extract_linear_ebus(text)
+        assert result.get("linear_ebus", {}).get("performed") is True
+        stations = {str(s).strip().upper() for s in (result.get("linear_ebus", {}).get("stations_sampled") or [])}
+        assert stations == {"11RI", "7"}
+
 class TestNavigationExtractor:
     def test_extract_navigation_platform(self):
         text = "Ion robotic bronchoscopy was performed for a peripheral lesion."
@@ -340,7 +353,32 @@ class TestTBNAExtractor:
     def test_extract_tbna(self):
         text = "TBNA was performed with 22G needle."
         result = extract_tbna_conventional(text)
-        assert result == {"tbna_conventional": {"performed": True}}
+        assert result.get("tbna_conventional", {}).get("performed") is True
+
+    def test_extract_tbna_skips_ebus_context(self):
+        text = (
+            "Lymph node sizing was performed by EBUS and sampling by transbronchial needle aspiration "
+            "was performed using 25-gauge needle."
+        )
+        result = extract_tbna_conventional(text)
+        assert result == {}
+
+    def test_extract_tbna_does_not_steal_ebus_stations(self):
+        text = (
+            "PROCEDURE IN DETAIL:\n"
+            "Transbronchial needle aspiration was performed with 21G needle.\n"
+            "\n"
+            "The endobronchial ultrasound-capable (EBUS) bronchoscope was introduced.\n"
+            "4L node - decision to not perform transbronchial sampling of this lymph node.\n"
+            "11Ri node - TBNA was performed.\n"
+            "7 node - TBNA was performed.\n"
+        )
+        result = extract_tbna_conventional(text)
+        assert result.get("tbna_conventional", {}).get("performed") is True
+        stations = [str(s).upper() for s in (result.get("tbna_conventional", {}).get("stations_sampled") or [])]
+        assert "4L" not in stations
+        assert "11RI" not in stations
+        assert "7" not in stations
 
 
 class TestBrushingsExtractor:

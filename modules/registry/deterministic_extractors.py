@@ -766,8 +766,15 @@ def _extract_ln_stations_from_text(note_text: str) -> list[str]:
         re.IGNORECASE,
     )
     sampling_negation_re = re.compile(
-        r"\b(?:not\s+(?:sampled|biopsied|aspirated)|site\s+was\s+not\s+sampled|without\s+biops|no\s+biops(?:y|ies)"
-        r"|biops(?:y|ies)\s+were\s+not\s+taken)\b",
+        r"\b(?:"
+        r"not\s+(?:sampled|biopsied|aspirated)"
+        r"|site\s+was\s+not\s+sampled"
+        r"|without\s+biops"
+        r"|no\s+biops(?:y|ies)"
+        r"|biops(?:y|ies)\s+were\s+not\s+taken"
+        r"|not\b[^.\n]{0,40}\bperform\b[^.\n]{0,80}\b(?:transbronchial\s+)?(?:sampling|sample|tbna|fna|aspirat|biops)\w*"
+        r"|decision\b[^.\n]{0,80}\bnot\b[^.\n]{0,40}\bperform\b[^.\n]{0,80}\b(?:transbronchial\s+)?(?:sampling|sample|tbna|fna|aspirat|biops)\w*"
+        r")\b",
         re.IGNORECASE,
     )
     station_context_re = re.compile(r"\b(?:station(?:s)?|stn|level|site|ln|node(?:s)?|lymph)\b", re.IGNORECASE)
@@ -1235,7 +1242,9 @@ def extract_navigational_bronchoscopy(note_text: str) -> Dict[str, Any]:
 
 def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
     """Extract conventional TBNA indicator."""
-    raw_text = note_text or ""
+    preferred_text, used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text) if used_detail else _strip_cpt_definition_lines(preferred_text)
+    raw_text = preferred_text or ""
     if not raw_text.strip():
         return {}
 
@@ -1244,10 +1253,37 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
         re.IGNORECASE,
     )
 
+    def _local_context(text: str, start: int, end: int, before_lines: int = 4, after_lines: int = 4) -> str:
+        line_start = start
+        for _ in range(before_lines + 1):
+            prev_nl = text.rfind("\n", 0, line_start)
+            if prev_nl == -1:
+                line_start = 0
+                break
+            line_start = prev_nl
+        if line_start != 0:
+            line_start += 1
+
+        line_end = end
+        for _ in range(after_lines + 1):
+            next_nl = text.find("\n", line_end)
+            if next_nl == -1:
+                line_end = len(text)
+                break
+            line_end = next_nl + 1
+
+        return text[line_start:line_end]
+
     for pattern in TBNA_CONVENTIONAL_PATTERNS:
         for match in re.finditer(pattern, raw_text, re.IGNORECASE):
-            window = raw_text[max(0, match.start() - 80) : min(len(raw_text), match.end() + 80)]
-            if ebus_context_re.search(window):
+            # Treat TBNA mentions inside an EBUS paragraph as EBUS-TBNA, not conventional TBNA.
+            lookback_start = max(0, match.start() - 800)
+            paragraph_break = raw_text.rfind("\n\n", lookback_start, match.start())
+            if paragraph_break != -1:
+                lookback_start = paragraph_break + 2
+            ebus_lookback = raw_text[lookback_start:match.start()]
+            ebus_lookahead = raw_text[match.end() : min(len(raw_text), match.end() + 40)]
+            if ebus_context_re.search(ebus_lookback) or ebus_context_re.search(ebus_lookahead):
                 continue
 
             before = raw_text[max(0, match.start() - 120) : match.start()]
@@ -1255,9 +1291,14 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
                 continue
 
             tbna: dict[str, Any] = {"performed": True}
-            stations = _extract_ln_stations_from_text(note_text)
+            # Only look backward (and same line) for station context to avoid
+            # "stealing" EBUS station lists that appear later in the note.
+            context = _local_context(raw_text, match.start(), match.end(), before_lines=2, after_lines=0)
+            stations = _extract_ln_stations_from_text(context)
             if stations:
                 tbna["stations_sampled"] = stations
+            else:
+                tbna["stations_sampled"] = ["Lung Mass"]
             return {"tbna_conventional": tbna}
 
     return {}

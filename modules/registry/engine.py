@@ -1606,10 +1606,35 @@ class RegistryEngine:
 
         # Conventional TBNA (31629) and transbronchial biopsy (31628) frequently appear
         # in sampling bullets; seed them explicitly when documented.
-        if re.search(r"\btbna\b", lowered) and not re.search(
-            r"\b(?:no|not|without)\b[^.\n]{0,40}\btbna\b",
-            lowered,
-        ):
+        tbna_trigger_re = re.compile(
+            r"\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b"
+        )
+        tbna_negation_re = re.compile(
+            r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b"
+        )
+        ebus_context_re = re.compile(
+            r"\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b"
+        )
+
+        def _has_non_ebus_tbna(text_lower: str) -> bool:
+            for match in tbna_trigger_re.finditer(text_lower):
+                window = text_lower[max(0, match.start() - 160) : min(len(text_lower), match.end() + 160)]
+                if tbna_negation_re.search(window):
+                    continue
+
+                # Treat TBNA mentions inside an EBUS paragraph as EBUS-TBNA.
+                lookback_start = max(0, match.start() - 800)
+                paragraph_break = text_lower.rfind("\n\n", lookback_start, match.start())
+                if paragraph_break != -1:
+                    lookback_start = paragraph_break + 2
+                ebus_lookback = text_lower[lookback_start:match.start()]
+                ebus_lookahead = text_lower[match.end() : min(len(text_lower), match.end() + 40)]
+                if ebus_context_re.search(ebus_lookback) or ebus_context_re.search(ebus_lookahead):
+                    continue
+                return True
+            return False
+
+        if _has_non_ebus_tbna(lowered):
             _set_if_missing("tbna_conventional", {"performed": True})
 
         has_tblb = bool(re.search(r"\btblb\b", lowered) or re.search(r"transbronchial\s+lung\s+biops", lowered))
