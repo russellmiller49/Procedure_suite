@@ -11,8 +11,8 @@
 import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2";
 import { applyVeto } from "./protectedVeto.js";
 
-const MODEL_PATH = "./vendor/phi_distilbert_ner/";
-const MODEL_ID = "phi_distilbert_ner";
+const MODEL_PATH = "./vendor/phi_distilbert_ner_quant/";
+const MODEL_ID = "phi_distilbert_ner_quant";
 const MODEL_BASE_URL = new URL("./vendor/", import.meta.url).toString();
 const TASK = "token-classification";
 

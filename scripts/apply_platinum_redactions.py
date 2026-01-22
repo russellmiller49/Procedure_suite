@@ -239,7 +239,7 @@ def get_evidence_redactor():
         protect_device_names=True,
         protect_anatomical_terms=True,
     )
-    _EVIDENCE_REDACTOR = PHIRedactor(config=config, use_piiranha=False)
+    _EVIDENCE_REDACTOR = PHIRedactor(config=config, use_ner_model=False)
     return _EVIDENCE_REDACTOR
 
 

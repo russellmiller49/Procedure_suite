@@ -33,7 +33,6 @@ Git: `main` @ `59db072`
      2073  scripts/clean_ner.py
      2224  scripts/self_correct_registry.py
      2368  scripts/prodigy_prepare_registry_batch.py
-     2748  scripts/download_piiranha_model.py
      2998  scripts/phi_audit.py
      3095  scripts/create_blank_update_scripts_from_patient_note_texts.py
      3216  scripts/find_phi_failures.py
@@ -577,7 +576,6 @@ Git: `main` @ `59db072`
       290  modules/reporting/templates/addons/intrapleural_fibrinolysis.jinja
       293  modules/reporting/templates/addons/tunneled_pleural_catheter_removal.jinja
       300  modules/reporting/templates/addons/whole_lung_lavage.jinja
-      310  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/quantize_config.json
       331  modules/reporting/templates/addons/indwelling_tunneled_pleural_catheter_placement.jinja
       338  modules/reporting/templates/addons/chest_tube_pleurx_catheter_discharge.jinja
       346  modules/reporting/templates/addons/therapeutic_aspiration.jinja
@@ -661,7 +659,6 @@ Git: `main` @ `59db072`
       942  tests/fixtures/stent_rmb_and_dilation_lul.txt
       951  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/config.json
       951  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
-      970  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/special_tokens_map.json
       982  modules/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
      1095  modules/reporting/templates/addons/percutaneous_tracheostomy_revision.jinja
      1193  tests/fixtures/ppl_nav_radial_tblb.txt
@@ -673,7 +670,6 @@ Git: `main` @ `59db072`
      1473  docs/DEPLOY_RAILWAY.md
      1797  modules/api/static/phi_redactor/allowlist_trie.json
      1817  modules/reporting/templates/addons/post_blvr_management_protocol.jinja
-     1822  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/config.json
      1925  modules/reporting/templates/addons/general_bronchoscopy_note.jinja
      1961  modules/phi/README.md
      1992  tests/fixtures/complex_tracheal_stenosis.txt
@@ -729,7 +725,6 @@ Git: `main` @ `59db072`
     17850  modules/api/static/phi_demo.js
     17982  modules/phi/adapters/redaction-service.js
     18925  docs/MAKEFILE_COMMANDS.md
-    19704  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer_config.json
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
     27821  modules/registry/ip_registry_improvements.md
@@ -1059,7 +1054,6 @@ Git: `main` @ `59db072`
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
-     too_large>200000B  modules/api/static/phi_redactor/vendor/piiranha-v1-detect-personal-information-ONNX/tokenizer.json
 ```
 
 ## Inlined file contents
@@ -1979,7 +1973,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/download_piiranha_model.py`
 - Size: `2748` bytes
 ```
 #!/usr/bin/env python3
@@ -2014,10 +2007,8 @@ def main() -> None:
     )
     parser.add_argument(
         "--repo-id",
-        default="onnx-community/piiranha-v1-detect-personal-information-ONNX",
         help=(
             "Hugging Face repo id to download. Default is the ONNX-converted repo used by the PHI UI. "
-            "For the original model, use: iiiorg/piiranha-v1-detect-personal-information"
         ),
     )
     args = parser.parse_args()
@@ -2027,7 +2018,6 @@ def main() -> None:
 
     # For non-full mode, we only support the ONNX-converted repo because the UI worker expects the
     # `onnx/` subfolder artifacts to exist.
-    if not args.full and repo_id != "onnx-community/piiranha-v1-detect-personal-information-ONNX":
         raise SystemExit(
             "--repo-id is only supported with --full (the UI vendor snapshot requires the ONNX repo)."
         )
@@ -2042,7 +2032,6 @@ def main() -> None:
         / "static"
         / "phi_redactor"
         / "vendor"
-        / "piiranha-v1-detect-personal-information-ONNX"
     )
     local_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2057,14 +2046,11 @@ def main() -> None:
             "onnx/**",
         ]
 
-    print(f"[piiranha] Downloading snapshot: {repo_id}")
-    print(f"[piiranha] Destination: {local_dir}")
     out = snapshot_download(
         repo_id=repo_id,
         local_dir=str(local_dir),
         allow_patterns=allow_patterns,
     )
-    print(f"[piiranha] Done: {out}")
 
 
 if __name__ == "__main__":
@@ -7984,13 +7970,11 @@ Randomly selects notes from golden JSON files and runs PHI redaction,
 producing side-by-side comparison of original and redacted content.
 
 Usage:
-    python scripts/test_phi_redaction_sample.py [--count N] [--output FILE] [--no-piiranha]
 
 Examples:
     python scripts/test_phi_redaction_sample.py                    # 10 random notes to stdout
     python scripts/test_phi_redaction_sample.py --count 5          # 5 random notes
     python scripts/test_phi_redaction_sample.py --output test.txt  # Save to file
-    python scripts/test_phi_redaction_sample.py --no-piiranha        # Regex-only mode (faster)
 
 Author: Claude Code
 """
@@ -8126,7 +8110,6 @@ def main():
         help="Output file path (default: stdout)"
     )
     parser.add_argument(
-        "--no-piiranha",
         action="store_true",
         help="Disable Piiranha ML model (regex-only, faster)"
     )
@@ -8181,18 +8164,15 @@ def main():
     print(f"Selected {sample_size} random notes.", file=sys.stderr)
 
     # Initialize redactor
-    print(f"Initializing PHI Redactor (Piiranha: {not args.no_piiranha})...", file=sys.stderr)
     config = RedactionConfig(
         redact_procedure_dates=not args.keep_dates
     )
-    redactor = PHIRedactor(config=config, use_piiranha=not args.no_piiranha)
 
     # Process notes
     output_lines = []
     output_lines.append("=" * 80)
     output_lines.append("PHI REDACTION TEST REPORT")
     output_lines.append(f"Sample size: {sample_size} notes")
-    output_lines.append(f"Mode: {'Regex + Piiranha' if not args.no_piiranha else 'Regex-only'}")
     output_lines.append("=" * 80)
     output_lines.append("")
 
@@ -9216,7 +9196,6 @@ def main() -> int:
         default=Path("data/ml_training/distilled_phi_labels.cleaned.jsonl"),
     )
     parser.add_argument("--student-tokenizer", type=str, default="distilbert-base-uncased")
-    parser.add_argument("--label-schema", choices=["piiranha", "standard"], default="standard")
     parser.add_argument(
         "--drop-zipcode-if-cpt",
         action=argparse.BooleanOptionalAction,
@@ -15551,7 +15530,6 @@ def get_evidence_redactor():
         protect_device_names=True,
         protect_anatomical_terms=True,
     )
-    _EVIDENCE_REDACTOR = PHIRedactor(config=config, use_piiranha=False)
     return _EVIDENCE_REDACTOR
 
 

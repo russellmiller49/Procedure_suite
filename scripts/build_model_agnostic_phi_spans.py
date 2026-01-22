@@ -459,11 +459,11 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT_PATH)
     parser.add_argument("--limit-notes", type=int, default=None)
     parser.add_argument(
-        "--use-piiranha",
-        action=argparse.BooleanOptionalAction,
-        default=True,
+        "--no-ner",
+        action="store_true",
+        help="Disable NER model (regex-only)",
     )
-    parser.add_argument("--piiranha-threshold", type=float, default=0.5)
+    parser.add_argument("--ner-threshold", type=float, default=0.5)
     parser.add_argument("--label-schema", choices=["standard"], default="standard")
     parser.add_argument("--provider-policy", choices=["keep", "drop", "label"], default="drop")
     parser.add_argument("--provider-label", type=str, default="PROVIDER")
@@ -487,10 +487,10 @@ def main() -> int:
         return 1
 
     config = RedactionConfig(
-        piiranha_threshold=args.piiranha_threshold,
+        ner_threshold=args.ner_threshold,
         protect_physician_names=True,
     )
-    redactor = PHIRedactor(config=config, use_piiranha=args.use_piiranha)
+    redactor = PHIRedactor(config=config, use_ner_model=not args.no_ner)
 
     counters = {
         "files_scanned": 0,

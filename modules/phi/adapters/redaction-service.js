@@ -1,7 +1,9 @@
 import { pipeline, env } from '@huggingface/transformers';
 
 // Configure for browser usage
-env.allowLocalModels = false;
+env.allowLocalModels = true;
+env.allowRemoteModels = false;
+env.localModelPath = new URL('../../api/static/phi_redactor/vendor/', import.meta.url).toString();
 env.useBrowserCache = true;
 
 // =============================================================================
@@ -20,6 +22,8 @@ export const DEFAULT_CONFIG = {
     protectAnatomicalTerms: true,
     aiThreshold: 0.85
 };
+
+const MODEL_ID = 'phi_distilbert_ner_quant';
 
 // =============================================================================
 // PROTECTION LISTS (Terms that should NEVER be redacted)
@@ -209,7 +213,7 @@ export class RedactionService {
         
         this.model = await pipeline(
             'token-classification',
-            'onnx-community/piiranha-v1-detect-personal-information-ONNX',
+            MODEL_ID,
             { quantized: true }
         );
     }

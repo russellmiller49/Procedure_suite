@@ -178,7 +178,7 @@ def main() -> int:
         default=Path("data/ml_training/distilled_phi_labels.cleaned.jsonl"),
     )
     parser.add_argument("--student-tokenizer", type=str, default="distilbert-base-uncased")
-    parser.add_argument("--label-schema", choices=["piiranha", "standard"], default="standard")
+    parser.add_argument("--label-schema", choices=["teacher", "standard"], default="standard")
     parser.add_argument(
         "--drop-zipcode-if-cpt",
         action=argparse.BooleanOptionalAction,

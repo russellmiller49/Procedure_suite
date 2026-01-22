@@ -1,19 +1,20 @@
 """
-Hybrid Regex + Piiranha PHI Redaction for Interventional Pulmonology Procedural Notes
-====================================================================================
+Hybrid Regex + DistilBERT NER PHI Redaction for Interventional Pulmonology Procedural Notes
+==========================================================================================
 
-Combines rule-based regex patterns with ML-based entity recognition (Piiranha)
+Combines rule-based regex patterns with ML-based entity recognition (DistilBERT NER)
 for comprehensive PHI de-identification while preserving clinically relevant information.
 
 Design Philosophy:
 1. REGEX FIRST: Fast, deterministic rules for structured PHI patterns
-2. ML SECOND: Piiranha catches contextual PHI that regex misses
+2. ML SECOND: NER catches contextual PHI that regex misses
 3. PROTECT LAYER: Whitelist patterns that should never be redacted
 
 Author: Russell (IP Physician / Developer)
 """
 
 import json
+import os
 import re
 import uuid
 import logging
@@ -44,7 +45,7 @@ class Detection:
     end: int
     text: str
     confidence: float
-    source: str  # "regex" or "piiranha"
+    source: str  # "regex" or "ner"
     action: RedactionAction = RedactionAction.REDACT
 
 
@@ -60,7 +61,7 @@ class RedactionConfig:
     protect_physician_names: bool = True
     protect_device_names: bool = True
     protect_anatomical_terms: bool = True
-    piiranha_threshold: float = 0.5
+    ner_threshold: float = 0.5
 
 
 # =============================================================================
@@ -288,12 +289,11 @@ EMAIL_RE = re.compile(
 
 
 # =============================================================================
-# 3. PIIRANHA CONFIGURATION
+# 3. NER CONFIGURATION
 # =============================================================================
 
-# Piiranha label mapping (Piiranha uses standard NER labels)
-# Map Piiranha labels to redaction actions
-PIIRANHA_LABEL_ACTIONS = {
+# Map NER labels to redaction actions
+NER_LABEL_ACTIONS = {
     # Redact these (standard PHI labels)
     "GIVENNAME": RedactionAction.REDACT,
     "SURNAME": RedactionAction.REDACT,
@@ -327,78 +327,79 @@ PIIRANHA_LABEL_ACTIONS = {
 
 class PHIRedactor:
     """
-    Hybrid PHI redactor combining regex patterns with Piiranha ML model.
-    
+    Hybrid PHI redactor combining regex patterns with a DistilBERT NER model.
+
     Pipeline:
     1. Identify protection zones (physicians, devices, anatomy)
     2. Apply regex patterns for structured PHI
-    3. Apply Piiranha for contextual PHI
+    3. Apply NER for contextual PHI
     4. Resolve overlaps (protection wins)
     5. Apply redactions
     """
-    
-    def __init__(self, config: Optional[RedactionConfig] = None, use_piiranha: bool = True):
+
+    def __init__(self, config: Optional[RedactionConfig] = None, use_ner_model: bool = True):
         self.config = config or RedactionConfig()
-        self.use_piiranha = use_piiranha
-        self.piiranha_pipeline = None
-        
-        if use_piiranha:
-            self._load_piiranha()
-    
-    def _load_piiranha(self):
-        """Load full Piiranha model from HuggingFace with fallback to local."""
+        self.use_ner_model = use_ner_model
+        self.ner_pipeline = None
+
+        if use_ner_model:
+            self._load_ner_model()
+
+    def _load_ner_model(self):
+        """Load the PHI NER model with a local-first policy."""
         try:
             from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline
             from pathlib import Path
-            
-            # Use the full Piiranha model from HuggingFace
-            model_id = "iiiorg/piiranha-v1-detect-personal-information"
-            
+        except ImportError:
+            logger.warning("Transformers not installed - using regex-only mode")
+            self.use_ner_model = False
+            return
+
+        model_id = os.getenv("PHI_NER_MODEL_ID")
+        model_path = Path(os.getenv("PHI_NER_MODEL_DIR", "artifacts/phi_distilbert_ner"))
+
+        if model_id:
             try:
-                # Try loading from HuggingFace directly (will download if needed)
-                logger.info(f"Loading Piiranha model from HuggingFace: {model_id}")
+                logger.info("Loading PHI NER model from HuggingFace: %s", model_id)
                 model = AutoModelForTokenClassification.from_pretrained(model_id)
                 tokenizer = AutoTokenizer.from_pretrained(model_id)
-                self.piiranha_pipeline = pipeline(
+                self.ner_pipeline = pipeline(
                     "token-classification",
                     model=model,
                     tokenizer=tokenizer,
                     aggregation_strategy="simple",
                     device=-1,  # CPU by default
                 )
-                logger.info(f"Loaded Piiranha model from HuggingFace: {model_id}")
-            except Exception as e:
-                # Fallback to local path if HuggingFace download fails
-                logger.warning(f"Could not load from HuggingFace ({e}), trying local path...")
-                model_path = Path("data/models/hf/piiranha-v1-detect-personal-information")
-                
-                if model_path.exists():
-                    try:
-                        model = AutoModelForTokenClassification.from_pretrained(
-                            str(model_path), 
-                            local_files_only=True
-                        )
-                        tokenizer = AutoTokenizer.from_pretrained(
-                            str(model_path), 
-                            local_files_only=True
-                        )
-                        self.piiranha_pipeline = pipeline(
-                            "token-classification",
-                            model=model,
-                            tokenizer=tokenizer,
-                            aggregation_strategy="simple",
-                            device=-1,  # CPU by default
-                        )
-                        logger.info(f"Loaded Piiranha model from local path: {model_path}")
-                    except Exception as e2:
-                        logger.warning(f"Could not load Piiranha model from local path: {e2} - using regex-only mode")
-                        self.use_piiranha = False
-                else:
-                    logger.warning(f"Piiranha model not found locally and HuggingFace load failed - using regex-only mode")
-                    self.use_piiranha = False
-        except ImportError:
-            logger.warning("Transformers not installed - using regex-only mode")
-            self.use_piiranha = False
+                logger.info("Loaded PHI NER model from HuggingFace: %s", model_id)
+                return
+            except Exception as exc:
+                logger.warning("Could not load from HuggingFace (%s), trying local path...", exc)
+
+        if model_path.exists():
+            try:
+                model = AutoModelForTokenClassification.from_pretrained(
+                    str(model_path),
+                    local_files_only=True,
+                )
+                tokenizer = AutoTokenizer.from_pretrained(
+                    str(model_path),
+                    local_files_only=True,
+                )
+                self.ner_pipeline = pipeline(
+                    "token-classification",
+                    model=model,
+                    tokenizer=tokenizer,
+                    aggregation_strategy="simple",
+                    device=-1,  # CPU by default
+                )
+                logger.info("Loaded PHI NER model from local path: %s", model_path)
+                return
+            except Exception as exc:
+                logger.warning("Could not load PHI NER model from local path: %s - using regex-only mode", exc)
+        else:
+            logger.warning("PHI NER model not found at %s - using regex-only mode", model_path)
+
+        self.use_ner_model = False
     
     def _find_protection_zones(self, text: str) -> List[Tuple[int, int, str]]:
         """
@@ -599,18 +600,18 @@ class PHIRedactor:
         
         return detections
     
-    def _apply_piiranha(self, text: str) -> List[Detection]:
-        """Apply Piiranha model to detect contextual PHI."""
-        if not self.use_piiranha or self.piiranha_pipeline is None:
+    def _apply_ner_model(self, text: str) -> List[Detection]:
+        """Apply the NER model to detect contextual PHI."""
+        if not self.use_ner_model or self.ner_pipeline is None:
             return []
         
         detections = []
         try:
-            # Piiranha pipeline returns entities with start, end, entity_group, score, word
-            entities = self.piiranha_pipeline(text)
+            # NER pipeline returns entities with start, end, entity_group, score, word
+            entities = self.ner_pipeline(text)
             
             for entity in entities:
-                # Get label from entity_group, entity, or label field (Piiranha uses entity_group)
+                # Get label from entity_group, entity, or label field (NER uses entity_group)
                 label = (
                     entity.get("entity_group") or 
                     entity.get("entity") or 
@@ -624,10 +625,10 @@ class PHIRedactor:
                 score = entity.get("score", 0.5)
                 
                 # Filter by threshold
-                if score < self.config.piiranha_threshold:
+                if score < self.config.ner_threshold:
                     continue
                 
-                action = PIIRANHA_LABEL_ACTIONS.get(label, RedactionAction.REDACT)
+                action = NER_LABEL_ACTIONS.get(label, RedactionAction.REDACT)
                 
                 # Get text from word field (aggregation_strategy="simple" provides this)
                 entity_text = entity.get("word", "")
@@ -643,11 +644,11 @@ class PHIRedactor:
                     end=entity.get("end", 0),
                     text=entity_text,
                     confidence=score,
-                    source="piiranha",
+                    source="ner",
                     action=action
                 ))
         except Exception as e:
-            logger.error(f"Piiranha prediction error: {e}")
+            logger.error(f"NER prediction error: {e}")
         
         return detections
     
@@ -777,11 +778,11 @@ class PHIRedactor:
         patient_names = self._learn_patient_names(text, regex_detections)
         name_mentions = self._detect_name_mentions(text, patient_names)
         
-        # Step 4: Apply Piiranha
-        piiranha_detections = self._apply_piiranha(text)
+        # Step 4: Apply NER model
+        ner_detections = self._apply_ner_model(text)
         
         # Step 5: Combine all detections
-        all_detections = regex_detections + name_mentions + piiranha_detections
+        all_detections = regex_detections + name_mentions + ner_detections
         
         # Step 6: Filter out protected zones
         filtered_detections = [
@@ -856,32 +857,32 @@ def process_json_structure(data: Any, redactor: PHIRedactor, target_fields: Opti
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Hybrid Regex + Piiranha PHI Redaction for Procedural Notes"
+        description="Hybrid Regex + DistilBERT NER PHI Redaction for Procedural Notes"
     )
     parser.add_argument("input_file", help="Path to input file (JSON or text)")
     parser.add_argument("output_file", help="Path to save redacted output")
     parser.add_argument("--fields", nargs='+', 
                         help="Specific JSON keys to scrub (e.g., 'note_text' 'body')")
-    parser.add_argument("--no-piiranha", action="store_true",
-                        help="Disable Piiranha (regex-only mode)")
+    parser.add_argument("--no-ner", action="store_true",
+                        help="Disable NER model (regex-only mode)")
     parser.add_argument("--keep-dates", action="store_true",
                         help="Do not redact procedure dates")
     parser.add_argument("--audit", action="store_true",
                         help="Output audit log alongside results")
     parser.add_argument("--threshold", type=float, default=0.5,
-                        help="Piiranha confidence threshold (default: 0.5)")
+                        help="NER confidence threshold (default: 0.5)")
     
     args = parser.parse_args()
     
     # Configure
     config = RedactionConfig(
         redact_procedure_dates=not args.keep_dates,
-        piiranha_threshold=args.threshold
+        ner_threshold=args.threshold
     )
     
     # Initialize redactor
-    print(f"Initializing PHI Redactor (Piiranha: {not args.no_piiranha})...")
-    redactor = PHIRedactor(config=config, use_piiranha=not args.no_piiranha)
+    print(f"Initializing PHI Redactor (NER: {not args.no_ner})...")
+    redactor = PHIRedactor(config=config, use_ner_model=not args.no_ner)
     
     # Read input
     print(f"Reading {args.input_file}...")

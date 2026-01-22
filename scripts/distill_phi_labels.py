@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT))
 
 DEFAULT_IN_DIR = Path("data/knowledge/golden_extractions")
 DEFAULT_OUT_PATH = Path("data/ml_training/distilled_phi_labels.jsonl")
-DEFAULT_TEACHER_MODEL = Path("data/models/hf/piiranha-v1-detect-personal-information")
+DEFAULT_TEACHER_MODEL = Path("artifacts/phi_distilbert_ner")
 DEFAULT_STUDENT_TOKENIZER = "distilbert-base-uncased"
 
 PROVIDER_PREFIXES = (
@@ -214,7 +214,7 @@ def line_bounds(text: str, idx: int) -> tuple[int, int]:
 
 
 def normalize_entity_group(entity_group: str, schema: str, provider_label: str) -> str:
-    if schema == "piiranha":
+    if schema == "teacher":
         return entity_group
     if entity_group == provider_label:
         return provider_label
@@ -839,7 +839,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--label-schema",
-        choices=["piiranha", "standard"],
+        choices=["teacher", "standard"],
         default="standard",
     )
     parser.add_argument(
@@ -1052,7 +1052,7 @@ def main() -> int:
                             "teacher_model": str(args.teacher_model),
                             "student_tokenizer": args.student_tokenizer,
                             "label_schema": args.label_schema,
-                            "origin": "piiranha-distilled",
+                            "origin": "teacher-distilled",
                         }
                         out_f.write(json.dumps(output, ensure_ascii=False) + "\n")
                         counters["windows_emitted"] += 1

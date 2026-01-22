@@ -11,7 +11,11 @@ This project is typically deployed as **two Railway services**:
 
 ### Start command
 
-- `scripts/railway_start.sh`
+- `bash scripts/railway_start_gunicorn.sh`
+
+### Build command
+
+- `python scripts/verify_phi_redactor_vendor_assets.py`
 
 ### Required env vars (production)
 

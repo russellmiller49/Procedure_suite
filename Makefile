@@ -51,14 +51,14 @@ distill-phi:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
 		--in-dir data/knowledge/golden_extractions \
 		--out data/ml_training/distilled_phi_labels.jsonl \
-		--teacher-model data/models/hf/piiranha-v1-detect-personal-information \
+		--teacher-model artifacts/phi_distilbert_ner \
 		--device cpu
 
 distill-phi-silver:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
 		--in-dir data/knowledge/golden_extractions \
 		--out data/ml_training/distilled_phi_labels.jsonl \
-		--teacher-model data/models/hf/piiranha-v1-detect-personal-information \
+		--teacher-model artifacts/phi_distilbert_ner \
 		--label-schema standard \
 		--device $(DEVICE)
 
