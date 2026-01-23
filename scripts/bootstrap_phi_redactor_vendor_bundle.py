@@ -161,6 +161,7 @@ def ensure_phi_redactor_vendor_bundle() -> BootstrapResult:
 
     existing_config = vendor_dir / "config.json"
     if existing_config.exists() and state_uri == uri:
+        _normalize_model_layout(vendor_dir)
         try:
             manifest = json.loads((vendor_dir / "manifest.json").read_text())
         except Exception:
