@@ -437,6 +437,24 @@ def phi_redactor_worker_js() -> FileResponse:
         raise HTTPException(status_code=404, detail="Static files disabled")
     return _phi_redactor_response(_phi_redactor_static_dir() / "redactor.worker.js")
 
+@app.get("/ui/redactor.worker.legacy.js")
+def phi_redactor_worker_legacy_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "redactor.worker.legacy.js")
+
+@app.get("/ui/protectedVeto.legacy.js")
+def phi_redactor_protected_veto_legacy_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "protectedVeto.legacy.js")
+
+@app.get("/ui/transformers.min.js")
+def phi_redactor_transformers_min_js() -> FileResponse:
+    if not _static_files_enabled():
+        raise HTTPException(status_code=404, detail="Static files disabled")
+    return _phi_redactor_response(_phi_redactor_static_dir() / "transformers.min.js")
+
 
 @app.get("/ui/phi_redactor/styles.css")
 def phi_redactor_styles_css() -> FileResponse:
