@@ -371,15 +371,11 @@ async function main() {
   }
   await window.__monacoReady;
 
-  if (!globalThis.crossOriginIsolated) {
+  const crossOriginIsolated = globalThis.crossOriginIsolated === true;
+  if (!crossOriginIsolated) {
     setStatus(
-      "Cross-origin isolation is OFF (SharedArrayBuffer unavailable). Open /ui/ and verify COOP/COEP headers."
+      "Cross-origin isolation is OFF (SharedArrayBuffer unavailable). Running in single-threaded mode."
     );
-    runBtn.disabled = true;
-    cancelBtn.disabled = true;
-    applyBtn.disabled = true;
-    revertBtn.disabled = true;
-    submitBtn.disabled = true;
   }
 
   const editor = monaco.editor.create(document.getElementById("editor"), {
@@ -558,136 +554,192 @@ async function main() {
     revertBtn.disabled = running || originalText === model.getValue();
   });
 
-  const worker = new Worker(`/ui/redactor.worker.js?v=${Date.now()}`, {
-    type: "module",
-  });
+  let worker = null;
   let workerReady = false;
   let lastWorkerMessageAt = Date.now();
   let aiModelReady = false;
   let aiModelFailed = false;
   let aiModelError = null;
+  let legacyFallbackAttempted = false;
+  let usingLegacyWorker = false;
 
-  worker.addEventListener("error", (ev) => {
-    setStatus(`Worker error: ${ev.message || "failed to load"}`);
-    setProgress("");
-    running = false;
-    cancelBtn.disabled = true;
-    runBtn.disabled = true;
-    applyBtn.disabled = true;
-  });
+  function buildWorkerUrl(name) {
+    return `/ui/${name}?v=${Date.now()}`;
+  }
 
-  worker.addEventListener("messageerror", () => {
-    setStatus("Worker message error (serialization failed)");
-    setProgress("");
-    running = false;
-    cancelBtn.disabled = true;
-    runBtn.disabled = true;
-    applyBtn.disabled = true;
-  });
-
-  worker.postMessage({ type: "init", debug: WORKER_CONFIG.debug, config: WORKER_CONFIG });
-
-  worker.onmessage = (e) => {
-    const msg = e.data;
-    if (!msg || typeof msg.type !== "string") return;
-    lastWorkerMessageAt = Date.now();
-
-    if (msg.type === "ready") {
-      workerReady = true;
-      setStatus("Ready (local model loaded)");
-      setProgress("");
-      runBtn.disabled = !globalThis.crossOriginIsolated;
-      return;
+  function startWorker({ forceLegacy = false } = {}) {
+    if (worker) {
+      try {
+        worker.terminate();
+      } catch (err) {
+        // ignore
+      }
     }
 
-    if (msg.type === "progress") {
-      const stage = msg.stage ? String(msg.stage) : null;
-      if (stage) {
-        if (stage.startsWith("AI model ready")) {
-          aiModelReady = true;
-          aiModelFailed = false;
-          aiModelError = null;
-          if (!running) setStatus("Ready (AI model loaded)");
-        } else if (stage.startsWith("AI model failed")) {
-          aiModelReady = false;
-          aiModelFailed = true;
-          aiModelError = stage.includes(":") ? stage.split(":").slice(1).join(":").trim() : null;
-          const shortErr =
-            aiModelError && aiModelError.length > 120
-              ? `${aiModelError.slice(0, 117)}…`
-              : aiModelError;
-          if (!running) {
-            setStatus(
-              shortErr
-                ? `Ready (regex-only; AI failed: ${shortErr})`
-                : "Ready (regex-only; AI model failed)"
-            );
+    workerReady = false;
+    aiModelReady = false;
+    aiModelFailed = false;
+    aiModelError = null;
+
+    let nextWorker = null;
+    let nextIsLegacy = forceLegacy;
+
+    if (!forceLegacy) {
+      try {
+        nextWorker = new Worker(buildWorkerUrl("redactor.worker.js"), { type: "module" });
+        nextIsLegacy = false;
+      } catch (err) {
+        legacyFallbackAttempted = true;
+        nextIsLegacy = true;
+        setStatus("Module worker unsupported; falling back to legacy worker…");
+      }
+    }
+
+    if (!nextWorker) {
+      nextWorker = new Worker(buildWorkerUrl("redactor.worker.legacy.js"));
+      nextIsLegacy = true;
+    }
+
+    worker = nextWorker;
+    usingLegacyWorker = nextIsLegacy;
+    attachWorkerHandlers(worker);
+    worker.postMessage({ type: "init", debug: WORKER_CONFIG.debug, config: WORKER_CONFIG });
+  }
+
+  function attachWorkerHandlers(activeWorker) {
+    activeWorker.addEventListener("error", (ev) => {
+      if (!usingLegacyWorker && !legacyFallbackAttempted) {
+        legacyFallbackAttempted = true;
+        setStatus("Module worker failed to load; falling back to legacy worker…");
+        setProgress("");
+        running = false;
+        cancelBtn.disabled = true;
+        runBtn.disabled = true;
+        applyBtn.disabled = true;
+        startWorker({ forceLegacy: true });
+        return;
+      }
+      setStatus(`Worker error: ${ev.message || "failed to load"}`);
+      setProgress("");
+      running = false;
+      cancelBtn.disabled = true;
+      runBtn.disabled = true;
+      applyBtn.disabled = true;
+    });
+
+    activeWorker.addEventListener("messageerror", () => {
+      setStatus("Worker message error (serialization failed)");
+      setProgress("");
+      running = false;
+      cancelBtn.disabled = true;
+      runBtn.disabled = true;
+      applyBtn.disabled = true;
+    });
+
+    activeWorker.onmessage = (e) => {
+      const msg = e.data;
+      if (!msg || typeof msg.type !== "string") return;
+      lastWorkerMessageAt = Date.now();
+
+      if (msg.type === "ready") {
+        workerReady = true;
+        setStatus("Ready (local model loaded)");
+        setProgress("");
+        runBtn.disabled = !workerReady;
+        return;
+      }
+
+      if (msg.type === "progress") {
+        const stage = msg.stage ? String(msg.stage) : null;
+        if (stage) {
+          if (stage.startsWith("AI model ready")) {
+            aiModelReady = true;
+            aiModelFailed = false;
+            aiModelError = null;
+            if (!running) setStatus("Ready (AI model loaded)");
+          } else if (stage.startsWith("AI model failed")) {
+            aiModelReady = false;
+            aiModelFailed = true;
+            aiModelError = stage.includes(":") ? stage.split(":").slice(1).join(":").trim() : null;
+            const shortErr =
+              aiModelError && aiModelError.length > 120
+                ? `${aiModelError.slice(0, 117)}…`
+                : aiModelError;
+            if (!running) {
+              setStatus(
+                shortErr
+                  ? `Ready (regex-only; AI failed: ${shortErr})`
+                  : "Ready (regex-only; AI model failed)"
+              );
+            }
           }
-        }
-        if (msg.windowCount && msg.windowIndex) {
-          setProgress(`${stage} (${msg.windowIndex}/${msg.windowCount})`);
+          if (msg.windowCount && msg.windowIndex) {
+            setProgress(`${stage} (${msg.windowIndex}/${msg.windowCount})`);
+          } else {
+            setProgress(stage);
+          }
         } else {
-          setProgress(stage);
+          const percent = msg.windowCount
+            ? Math.round((msg.windowIndex / msg.windowCount) * 100)
+            : 0;
+          setProgress(`Processing window ${msg.windowIndex}/${msg.windowCount} (${percent}%)`);
         }
-      } else {
-        const percent = msg.windowCount
-          ? Math.round((msg.windowIndex / msg.windowCount) * 100)
-          : 0;
-        setProgress(`Processing window ${msg.windowIndex}/${msg.windowCount} (${percent}%)`);
+        return;
       }
-      return;
-    }
 
-    if (msg.type === "detections_delta") {
-      for (const det of msg.detections || []) detectionsById.set(det.id, det);
-      detections = Array.from(detectionsById.values());
-      renderDetections();
-      return;
-    }
-
-    if (msg.type === "done") {
-      running = false;
-      cancelBtn.disabled = true;
-      runBtn.disabled = !workerReady || !globalThis.crossOriginIsolated;
-      applyBtn.disabled = false; // Enable even with 0 detections
-      revertBtn.disabled = originalText === model.getValue();
-
-      detections = Array.isArray(msg.detections) ? msg.detections : [];
-      detectionsById = new Map(detections.map((d) => [d.id, d]));
-
-      const detectionCount = detections.length;
-      if (detectionCount === 0) {
-        const modeNote = aiModelReady
-          ? "AI+regex"
-          : aiModelFailed
-          ? "regex-only (AI failed)"
-          : "regex-only (AI loading)";
-        setStatus(`Done (0 detections) — ${modeNote}`);
-      } else {
-        const modeNote = aiModelReady
-          ? "AI+regex"
-          : aiModelFailed
-          ? "regex-only (AI failed)"
-          : "regex-only (AI loading)";
-        setStatus(
-          `Done (${detectionCount} detection${detectionCount === 1 ? "" : "s"}) — ${modeNote}`
-        );
+      if (msg.type === "detections_delta") {
+        for (const det of msg.detections || []) detectionsById.set(det.id, det);
+        detections = Array.from(detectionsById.values());
+        renderDetections();
+        return;
       }
-      setProgress("");
-      renderDetections();
-      return;
-    }
 
-    if (msg.type === "error") {
-      running = false;
-      cancelBtn.disabled = true;
-      runBtn.disabled = !workerReady || !globalThis.crossOriginIsolated;
-      applyBtn.disabled = !hasRunDetection;
-      setStatus(`Error: ${msg.message || "unknown"}`);
-      setProgress("");
-      return;
-    }
-  };
+      if (msg.type === "done") {
+        running = false;
+        cancelBtn.disabled = true;
+        runBtn.disabled = !workerReady;
+        applyBtn.disabled = false; // Enable even with 0 detections
+        revertBtn.disabled = originalText === model.getValue();
+
+        detections = Array.isArray(msg.detections) ? msg.detections : [];
+        detectionsById = new Map(detections.map((d) => [d.id, d]));
+
+        const detectionCount = detections.length;
+        if (detectionCount === 0) {
+          const modeNote = aiModelReady
+            ? "AI+regex"
+            : aiModelFailed
+            ? "regex-only (AI failed)"
+            : "regex-only (AI loading)";
+          setStatus(`Done (0 detections) — ${modeNote}`);
+        } else {
+          const modeNote = aiModelReady
+            ? "AI+regex"
+            : aiModelFailed
+            ? "regex-only (AI failed)"
+            : "regex-only (AI loading)";
+          setStatus(
+            `Done (${detectionCount} detection${detectionCount === 1 ? "" : "s"}) — ${modeNote}`
+          );
+        }
+        setProgress("");
+        renderDetections();
+        return;
+      }
+
+      if (msg.type === "error") {
+        running = false;
+        cancelBtn.disabled = true;
+        runBtn.disabled = !workerReady;
+        applyBtn.disabled = !hasRunDetection;
+        setStatus(`Error: ${msg.message || "unknown"}`);
+        setProgress("");
+        return;
+      }
+    };
+  }
+
+  startWorker();
 
   cancelBtn.addEventListener("click", () => {
     if (!running) return;
