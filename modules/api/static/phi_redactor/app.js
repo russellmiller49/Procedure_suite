@@ -563,6 +563,18 @@ async function main() {
   let legacyFallbackAttempted = false;
   let usingLegacyWorker = false;
 
+  function shouldForceLegacyWorker() {
+    const params = new URLSearchParams(location.search);
+    if (params.get("legacy") === "1") return true;
+
+    const ua = navigator.userAgent || "";
+    const isIOSDevice =
+      /iPad|iPhone|iPod/i.test(ua) || (ua.includes("Mac") && "ontouchend" in document);
+    const isSafari =
+      /Safari/i.test(ua) && !/Chrome|CriOS|FxiOS|EdgiOS|OPR/i.test(ua);
+    return isIOSDevice && isSafari;
+  }
+
   function buildWorkerUrl(name) {
     return `/ui/${name}?v=${Date.now()}`;
   }
@@ -739,7 +751,12 @@ async function main() {
     };
   }
 
-  startWorker();
+  const forceLegacy = shouldForceLegacyWorker();
+  if (forceLegacy) {
+    legacyFallbackAttempted = true;
+    setStatus("Using legacy worker for Safari compatibility…");
+  }
+  startWorker({ forceLegacy });
 
   cancelBtn.addEventListener("click", () => {
     if (!running) return;

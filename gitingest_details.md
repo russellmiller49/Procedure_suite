@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-22T18:20:51-08:00`
-Git: `main` @ `59869a3`
+Generated: `2026-01-23T09:09:31-08:00`
+Git: `main` @ `9c82e47`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -743,7 +743,7 @@ Git: `main` @ `59869a3`
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
     86731  modules/api/static/app.js
     93124  modules/api/static/phi_redactor/redactor.worker.js
-    93212  modules/api/static/phi_redactor/redactor.worker.legacy.js
+    93152  modules/api/static/phi_redactor/redactor.worker.legacy.js
 ```
 
 ## Skipped (reason)
@@ -1066,6 +1066,7 @@ Git: `main` @ `59869a3`
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
+     too_large>200000B  modules/api/static/phi_redactor/transformers.min.js
 ```
 
 ## Inlined file contents
