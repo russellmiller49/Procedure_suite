@@ -47,6 +47,16 @@ echo "[railway_start] =============================================="
 echo "[railway_start] Starting FastAPI (uvicorn)..."
 echo "[railway_start] =============================================="
 
+# Optional: bootstrap registry model bundle from S3 before app starts.
+# The FastAPI lifespan validator requires a populated runtime bundle when MODEL_BACKEND=onnx.
+if [[ -n "${MODEL_BUNDLE_S3_URI_ONNX:-${MODEL_BUNDLE_S3_URI_PYTORCH:-${MODEL_BUNDLE_S3_URI:-}}}" ]]; then
+  echo "[railway_start] Bootstrapping registry model bundle from S3..."
+  python - <<'PY'
+from modules.registry.model_bootstrap import ensure_registry_model_bundle
+ensure_registry_model_bundle()
+PY
+fi
+
 # Step 2: Start uvicorn
 # Using exec to replace the shell process with uvicorn
 # This ensures proper signal handling for graceful shutdown

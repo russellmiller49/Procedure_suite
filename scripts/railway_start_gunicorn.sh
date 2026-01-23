@@ -41,6 +41,16 @@ if [[ -n "${GRANULAR_NER_BUNDLE_S3_URI_ONNX:-${GRANULAR_NER_BUNDLE_S3_URI:-}}" ]
   python scripts/bootstrap_granular_ner_bundle.py
 fi
 
+# Optional: bootstrap registry model bundle from S3 before app starts.
+# The FastAPI lifespan validator requires a populated runtime bundle when MODEL_BACKEND=onnx.
+if [[ -n "${MODEL_BUNDLE_S3_URI_ONNX:-${MODEL_BUNDLE_S3_URI_PYTORCH:-${MODEL_BUNDLE_S3_URI:-}}}" ]]; then
+  echo "[railway_start_gunicorn] Bootstrapping registry model bundle from S3..."
+  python - <<'PY'
+from modules.registry.model_bootstrap import ensure_registry_model_bundle
+ensure_registry_model_bundle()
+PY
+fi
+
 # NOTE: `uvicorn.workers.UvicornWorker` is the traditional integration; check uvicorn docs for the
 # recommended worker package/version for your deployment.
 exec gunicorn "modules.api.fastapi_app:app" \
@@ -49,4 +59,3 @@ exec gunicorn "modules.api.fastapi_app:app" \
   --worker-class "uvicorn.workers.UvicornWorker" \
   --preload \
   --timeout "${TIMEOUT}"
-
