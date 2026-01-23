@@ -14,7 +14,7 @@ importScripts(`${BASE_URL}transformers.legacy.js?v=${CACHE_BUST}`);
 importScripts(`${BASE_URL}protectedVeto.legacy.js?v=${CACHE_BUST}`);
 
 const { pipeline, env } = self.transformers || {};
-const applyVeto = self.applyVeto;
+// applyVeto is already in global scope from importScripts(protectedVeto.legacy.js)
 
 const MODEL_PATH = "./vendor/phi_distilbert_ner_quant/";
 const MODEL_ID = "phi_distilbert_ner_quant";
