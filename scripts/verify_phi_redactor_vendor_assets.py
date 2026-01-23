@@ -26,9 +26,10 @@ def main() -> int:
     if not config_path.exists():
         _error(f"Missing config.json: {config_path}", errors)
 
-    onnx_files = list(VENDOR_DIR.glob("*.onnx"))
-    if not onnx_files:
-        _error(f"Missing model .onnx file in {VENDOR_DIR}", errors)
+    onnx_dir = VENDOR_DIR / "onnx"
+    onnx_model = onnx_dir / "model.onnx"
+    if not onnx_model.exists():
+        _error(f"Missing model.onnx: {onnx_model}", errors)
 
     tokenizer_json = VENDOR_DIR / "tokenizer.json"
     tokenizer_config = VENDOR_DIR / "tokenizer_config.json"

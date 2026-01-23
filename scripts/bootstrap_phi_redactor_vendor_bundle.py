@@ -81,6 +81,29 @@ def _replace_tree(src_dir: Path, dest_dir: Path) -> None:
     shutil.copytree(src_dir, dest_dir)
 
 
+def _normalize_model_layout(root: Path) -> None:
+    """Ensure transformers.js-compatible layout (onnx/model.onnx)."""
+    onnx_dir = root / "onnx"
+    onnx_dir.mkdir(parents=True, exist_ok=True)
+
+    # Preferred destination
+    dest = onnx_dir / "model.onnx"
+    if dest.exists():
+        return
+
+    candidates = [
+        onnx_dir / "model_quantized.onnx",
+        root / "model.onnx",
+        root / "model_quantized.onnx",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            shutil.copy2(candidate, dest)
+            return
+
+    raise FileNotFoundError("Unable to locate model.onnx or model_quantized.onnx in bundle")
+
+
 def _read_bootstrap_state(dest_dir: Path) -> dict[str, Any]:
     path = dest_dir / BOOTSTRAP_STATE_FILENAME
     if not path.exists():
@@ -113,6 +136,14 @@ def _vendor_dir() -> Path:
 
 
 def ensure_phi_redactor_vendor_bundle() -> BootstrapResult:
+    # Local dev convenience: load .env if present.
+    try:
+        from dotenv import load_dotenv  # type: ignore
+
+        load_dotenv()
+    except Exception:
+        pass
+
     uri = (_configured_uri() or "").strip()
     vendor_dir = _vendor_dir()
 
@@ -146,6 +177,7 @@ def ensure_phi_redactor_vendor_bundle() -> BootstrapResult:
         extracted = td_path / "extracted"
         _extract_tarball_to_dir(tar_path, extracted)
         root = _flatten_single_root(extracted)
+        _normalize_model_layout(root)
 
         manifest: dict[str, Any] = {
             "bundle_type": "phi_redactor_vendor",
