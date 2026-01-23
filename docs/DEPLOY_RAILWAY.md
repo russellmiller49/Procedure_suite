@@ -15,7 +15,7 @@ This project is typically deployed as **two Railway services**:
 
 ### Build command
 
-- `python scripts/verify_phi_redactor_vendor_assets.py`
+- `python scripts/bootstrap_phi_redactor_vendor_bundle.py && python scripts/verify_phi_redactor_vendor_assets.py`
 
 ### Required env vars (production)
 
@@ -27,6 +27,9 @@ This project is typically deployed as **two Railway services**:
   - `GRANULAR_NER_BUNDLE_S3_URI_ONNX=s3://<bucket>/<path>/granular_ner_onnx_bundle.tar.gz`
   - `GRANULAR_NER_RUNTIME_DIR` (optional; default `data/models/granular_ner_runtime`)
   - This will set `GRANULAR_NER_MODEL_DIR` automatically at start.
+- Optional (recommended): PHI redactor vendor bundle from S3
+  - `PHI_REDACTOR_VENDOR_BUNDLE_S3_URI=s3://<bucket>/<path>/phi_redactor_vendor_bundle.tar.gz`
+  - `PHI_REDACTOR_VENDOR_DIR` (optional; default `modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant`)
 - AWS credentials + region (via Railway env vars):
   - `AWS_ACCESS_KEY_ID`
   - `AWS_SECRET_ACCESS_KEY`
