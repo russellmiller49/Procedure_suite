@@ -41,6 +41,12 @@ if [[ -n "${GRANULAR_NER_BUNDLE_S3_URI_ONNX:-${GRANULAR_NER_BUNDLE_S3_URI:-}}" ]
   python scripts/bootstrap_granular_ner_bundle.py
 fi
 
+# Optional: bootstrap PHI redactor vendor bundle from S3 before app starts.
+if [[ -n "${PHI_REDACTOR_VENDOR_BUNDLE_S3_URI:-${PHI_REDACTOR_VENDOR_BUNDLE_S3_URI_ONNX:-}}" ]]; then
+  echo "[railway_start_gunicorn] Bootstrapping PHI redactor vendor bundle from S3..."
+  python scripts/bootstrap_phi_redactor_vendor_bundle.py
+fi
+
 # Optional: bootstrap registry model bundle from S3 before app starts.
 # The FastAPI lifespan validator requires a populated runtime bundle when MODEL_BACKEND=onnx.
 if [[ -n "${MODEL_BUNDLE_S3_URI_ONNX:-${MODEL_BUNDLE_S3_URI_PYTORCH:-${MODEL_BUNDLE_S3_URI:-}}}" ]]; then
