@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-21T16:54:29-08:00`
-Git: `main` @ `59db072`
+Generated: `2026-01-22T18:20:51-08:00`
+Git: `main` @ `59869a3`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -32,6 +32,7 @@ Git: `main` @ `59db072`
      2032  scripts/evaluate_cpt.py
      2073  scripts/clean_ner.py
      2224  scripts/self_correct_registry.py
+     2273  scripts/verify_phi_redactor_vendor_assets.py
      2368  scripts/prodigy_prepare_registry_batch.py
      2998  scripts/phi_audit.py
      3095  scripts/create_blank_update_scripts_from_patient_note_texts.py
@@ -54,6 +55,8 @@ Git: `main` @ `59db072`
      5540  scripts/build_registry_bundle.py
      5917  scripts/ingest_phase0_data.py
      5946  scripts/normalize_phi_labels.py
+     6097  scripts/bootstrap_granular_ner_bundle.py
+     6388  scripts/bootstrap_phi_redactor_vendor_bundle.py
      6413  scripts/add_training_case.py
      6433  scripts/eval_registry_granular.py
      6757  scripts/merge_registry_prodigy.py
@@ -67,11 +70,11 @@ Git: `main` @ `59db072`
      7803  scripts/dedupe_granular_ner.py
      7994  scripts/export_phi_gold_standard.py
      8166  scripts/export_patient_note_texts.py
-     8233  scripts/test_phi_redaction_sample.py
+     8191  scripts/test_phi_redaction_sample.py
      8397  scripts/prodigy_prepare_registry_relabel_batch.py
      9036  scripts/find_critical_failures.py
      9076  scripts/fit_thresholds_from_eval.py
-     9265  scripts/clean_distilled_phi_labels.py
+     9264  scripts/clean_distilled_phi_labels.py
      9583  scripts/registry_label_overlap_report.py
      9603  scripts/align_synthetic_names.py
      9739  scripts/registry_pipeline_smoke.py
@@ -88,13 +91,13 @@ Git: `main` @ `59db072`
     15178  scripts/registry_pipeline_smoke_batch.py
     15511  scripts/verify_registry_human_data.py
     15806  scripts/sanitize_dataset.py
-    16359  scripts/apply_platinum_redactions.py
+    16360  scripts/apply_platinum_redactions.py
     16517  scripts/generate_gitingest.py
     16578  scripts/eval_hybrid_pipeline.py
     16862  scripts/label_neg_stent.py
     17034  scripts/prodigy_prepare_phi_batch.py
+    18193  scripts/build_model_agnostic_phi_spans.py
     18203  scripts/generate_synthetic_phi_data.py
-    18208  scripts/build_model_agnostic_phi_spans.py
     20528  scripts/audit_model_fp.py
     20931  scripts/train_roberta_pm3.py
     23467  scripts/fix_alignment.py
@@ -103,7 +106,7 @@ Git: `main` @ `59db072`
     26361  scripts/train_registry_ner.py
     27149  scripts/golden_to_csv.py
     34569  scripts/validate_golden_extractions.py
-    37469  scripts/distill_phi_labels.py
+    37440  scripts/distill_phi_labels.py
     48966  scripts/train_roberta.py
       272  scripts/phi_test_node/package.json
     10951  scripts/phi_test_node/results.txt
@@ -111,6 +114,7 @@ Git: `main` @ `59db072`
         0  tests/unit/__init__.py
        16  config/__init__.py
        17  tests/ml_coder/__init__.py
+       22  tests/phi/__init__.py
        24  modules/coder/adapters/__init__.py
        24  tests/integration/api/__init__.py
        26  tests/helpers/__init__.py
@@ -414,9 +418,9 @@ Git: `main` @ `59db072`
      6438  modules/domain/procedure_store/repository.py
      6451  tests/phi/test_service.py
      6485  proc_schemas/clinical/pleural.py
-     6546  modules/registry/self_correction/validation.py
      6596  tests/registry/test_registry_qa_regressions.py
      6632  modules/coder/cli.py
+     6646  modules/registry/self_correction/validation.py
      6646  tests/unit/test_protected_veto.py
      6904  modules/reporting/ip_addons.py
      6955  tests/integration/api/test_startup_warmup.py
@@ -458,7 +462,6 @@ Git: `main` @ `59db072`
     10466  modules/api/routes_registry.py
     10791  tests/unit/test_inmemory_procedure_store.py
     10938  tests/registry/test_ebus_config_station_count.py
-    11061  modules/registry/ner_mapping/procedure_extractor.py
     11181  tests/test_phi_redaction_contract.py
     11253  modules/registry/application/registry_builder.py
     11289  modules/coder/adapters/nlp/keyword_mapping_loader.py
@@ -466,6 +469,7 @@ Git: `main` @ `59db072`
     11467  modules/api/routes/phi.py
     11691  modules/registry/legacy/adapters/pleural.py
     11747  modules/registry/evidence/verifier.py
+    11881  modules/registry/ner_mapping/procedure_extractor.py
     12196  tests/registry/test_self_correction_loop.py
     12198  modules/api/dependencies.py
     12339  modules/registry_cleaning/schema_utils.py
@@ -483,8 +487,9 @@ Git: `main` @ `59db072`
     14397  modules/registry/ml/models.py
     14466  tests/integration/coder/test_hybrid_policy.py
     14585  docs/phi_review_system/backend/models.py
-    14603  modules/registry/audit/raw_ml_auditor.py
-    14835  modules/registry/application/cpt_registry_mapping.py
+    14655  modules/registry/audit/raw_ml_auditor.py
+    14876  tests/phi/test_veto_regression.py
+    14963  modules/registry/application/cpt_registry_mapping.py
     15142  modules/registry/v2_booleans.py
     15243  tests/unit/test_dsl.py
     15267  modules/domain/coding_rules/json_rules_evaluator.py
@@ -500,11 +505,10 @@ Git: `main` @ `59db072`
     15800  modules/ner/inference.py
     15857  tests/registry/test_normalization.py
     16032  modules/coder/rules_engine.py
-    16366  modules/phi/safety/veto.py
     16486  modules/extraction/postprocessing/clinical_guardrails.py
     16608  tests/integration/api/test_metrics_endpoint.py
-    16762  tests/coder/test_coding_rules_phase7.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
+    17010  modules/phi/safety/veto.py
     17161  proc_schemas/clinical/airway.py
     17268  modules/common/openai_responses.py
     17313  modules/coder/reconciliation/reconciler.py
@@ -516,6 +520,7 @@ Git: `main` @ `59db072`
     18997  tests/coder/test_registry_coder.py
     19326  modules/registry/schema.py
     19783  tests/integration/api/test_registry_endpoints.py
+    19861  tests/coder/test_coding_rules_phase7.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
     20223  modules/domain/coding_rules/rule_engine.py
@@ -523,7 +528,7 @@ Git: `main` @ `59db072`
     20430  modules/registry/model_bootstrap.py
     20539  modules/registry/extractors/llm_detailed.py
     21220  modules/coder/adapters/llm/openai_compat_advisor.py
-    21406  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+    21433  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     21460  modules/coder/adapters/persistence/supabase_procedure_store.py
     21479  tests/coder/test_reconciliation.py
     21518  tests/test_registry_normalization.py
@@ -532,10 +537,10 @@ Git: `main` @ `59db072`
     22569  modules/phi/adapters/presidio_scrubber.py
     22644  modules/ml_coder/data_prep.py
     22670  tests/ml_coder/test_registry_data_prep.py
-    22715  modules/registry/self_correction/keyword_guard.py
     23485  docs/phi_review_system/backend/endpoints.py
     24069  tests/ml_advisor/conftest.py
     24922  tests/integration/api/test_coder_run_endpoint.py
+    25374  modules/registry/self_correction/keyword_guard.py
     25665  modules/coder/application/smart_hybrid_policy.py
     25902  modules/reporting/macro_engine.py
     27507  modules/ml_coder/label_hydrator.py
@@ -546,10 +551,10 @@ Git: `main` @ `59db072`
     29893  modules/domain/coding_rules/coding_rules_engine.py
     30063  modules/api/ml_advisor_router.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
-    33189  tests/registry/test_registry_service_hybrid_flow.py
+    33132  tests/registry/test_registry_service_hybrid_flow.py
     35268  tests/coding/test_rules_validation.py
+    35381  modules/phi/adapters/phi_redactor_hybrid.py
     35981  modules/registry/ml/action_predictor.py
-    35997  modules/phi/adapters/phi_redactor_hybrid.py
     36538  modules/coder/dictionary.py
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
@@ -559,13 +564,15 @@ Git: `main` @ `59db072`
     42913  modules/api/routes/procedure_codes.py
     43756  tests/registry/test_granular_registry_models.py
     54786  modules/autocode/ip_kb/ip_kb.py
-    56478  modules/registry/schema_granular.py
-    61733  modules/registry/prompts.py
+    59446  modules/registry/schema_granular.py
+    61822  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    68218  modules/registry/deterministic_extractors.py
+    70414  modules/registry/deterministic_extractors.py
     95831  modules/registry/postprocess.py
-   103627  modules/registry/application/registry_service.py
-   110004  modules/registry/engine.py
+   104803  modules/registry/application/registry_service.py
+   111342  modules/registry/engine.py
+       94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
+      181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  modules/reporting/templates/addons/eus_b.jinja
       247  modules/reporting/templates/addons/peg_removal_exchange.jinja
@@ -667,15 +674,16 @@ Git: `main` @ `59db072`
      1232  docs/REPORTER_STYLE_GUIDE.md
      1359  modules/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1432  modules/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
-     1473  docs/DEPLOY_RAILWAY.md
      1797  modules/api/static/phi_redactor/allowlist_trie.json
      1817  modules/reporting/templates/addons/post_blvr_management_protocol.jinja
      1925  modules/reporting/templates/addons/general_bronchoscopy_note.jinja
      1961  modules/phi/README.md
      1992  tests/fixtures/complex_tracheal_stenosis.txt
      2045  docs/model_release_runbook.md
+     2196  docs/DEPLOY_RAILWAY.md
      2342  modules/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
-     2612  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
+     2922  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
+     2922  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/protected_terms.json
      3085  modules/reporting/templates/ebus_tbna.jinja
      3086  modules/reporting/templates/cryobiopsy.jinja
      3087  modules/reporting/templates/pleuroscopy.jinja
@@ -723,26 +731,30 @@ Git: `main` @ `59db072`
     16515  docs/ARCHITECTURE.md
     17732  docs/phi_review_system/README.md
     17850  modules/api/static/phi_demo.js
-    17982  modules/phi/adapters/redaction-service.js
+    18104  modules/phi/adapters/redaction-service.js
     18925  docs/MAKEFILE_COMMANDS.md
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
     27821  modules/registry/ip_registry_improvements.md
-    29598  modules/api/static/phi_redactor/app.js
+    31116  modules/api/static/phi_redactor/app.js
     39777  docs/USER_GUIDE.md
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
-    54018  modules/api/static/phi_redactor/protectedVeto.js
-    84457  modules/api/static/phi_redactor/redactor.worker.js
-    86668  modules/api/static/app.js
+    61430  modules/api/static/phi_redactor/protectedVeto.js
+    61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
+    86731  modules/api/static/app.js
+    93124  modules/api/static/phi_redactor/redactor.worker.js
+    93212  modules/api/static/phi_redactor/redactor.worker.legacy.js
 ```
 
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  scripts/generate_gitingest.py
+ inline_cap_reached>75  scripts/eval_hybrid_pipeline.py
  inline_cap_reached>75  scripts/label_neg_stent.py
  inline_cap_reached>75  scripts/prodigy_prepare_phi_batch.py
- inline_cap_reached>75  scripts/generate_synthetic_phi_data.py
  inline_cap_reached>75  scripts/build_model_agnostic_phi_spans.py
+ inline_cap_reached>75  scripts/generate_synthetic_phi_data.py
  inline_cap_reached>75  scripts/audit_model_fp.py
  inline_cap_reached>75  scripts/train_roberta_pm3.py
  inline_cap_reached>75  scripts/fix_alignment.py
@@ -954,8 +966,8 @@ Git: `main` @ `59db072`
  inline_cap_reached>75  modules/registry/slots/therapeutics.py
  inline_cap_reached>75  modules/domain/procedure_store/repository.py
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/coder/cli.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/reporting/ip_addons.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
  inline_cap_reached>75  modules/agents/run_pipeline.py
@@ -980,13 +992,13 @@ Git: `main` @ `59db072`
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
  inline_cap_reached>75  modules/api/routes_registry.py
- inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
  inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  modules/registry/evidence/verifier.py
+ inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
@@ -1006,8 +1018,8 @@ Git: `main` @ `59db072`
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
  inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/coder/rules_engine.py
- inline_cap_reached>75  modules/phi/safety/veto.py
  inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
+ inline_cap_reached>75  modules/phi/safety/veto.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  modules/common/openai_responses.py
  inline_cap_reached>75  modules/coder/reconciliation/reconciler.py
@@ -1035,8 +1047,8 @@ Git: `main` @ `59db072`
  inline_cap_reached>75  modules/ml_coder/registry_data_prep.py
  inline_cap_reached>75  modules/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  modules/api/ml_advisor_router.py
- inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
+ inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/coder/dictionary.py
  inline_cap_reached>75  modules/common/llm.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
@@ -1894,6 +1906,79 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/verify_phi_redactor_vendor_assets.py`
+- Size: `2273` bytes
+```
+#!/usr/bin/env python3
+"""Verify PHI redactor vendor assets are present for the IU bundle."""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+VENDOR_DIR = Path("modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant")
+
+
+def _error(message: str, errors: list[str]) -> None:
+    errors.append(message)
+
+
+def main() -> int:
+    errors: list[str] = []
+
+    if not VENDOR_DIR.exists():
+        _error(f"Missing vendor directory: {VENDOR_DIR}", errors)
+    elif not VENDOR_DIR.is_dir():
+        _error(f"Vendor path is not a directory: {VENDOR_DIR}", errors)
+
+    config_path = VENDOR_DIR / "config.json"
+    if not config_path.exists():
+        _error(f"Missing config.json: {config_path}", errors)
+
+    onnx_dir = VENDOR_DIR / "onnx"
+    onnx_model = onnx_dir / "model.onnx"
+    if not onnx_model.exists():
+        _error(f"Missing model.onnx: {onnx_model}", errors)
+
+    tokenizer_json = VENDOR_DIR / "tokenizer.json"
+    tokenizer_config = VENDOR_DIR / "tokenizer_config.json"
+    vocab_txt = VENDOR_DIR / "vocab.txt"
+    vocab_json = VENDOR_DIR / "vocab.json"
+    merges_txt = VENDOR_DIR / "merges.txt"
+
+    has_tokenizer_bundle = tokenizer_json.exists()
+    has_tokenizer_parts = tokenizer_config.exists() and (vocab_txt.exists() or vocab_json.exists() or merges_txt.exists())
+    if not (has_tokenizer_bundle or has_tokenizer_parts):
+        _error(
+            "Missing tokenizer files: expected tokenizer.json or tokenizer_config.json + vocab files",
+            errors,
+        )
+
+    if config_path.exists():
+        try:
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            if "id2label" not in config and "label2id" not in config:
+                _error("config.json is missing label map keys (id2label/label2id)", errors)
+        except Exception as exc:  # pragma: no cover - guard for malformed config
+            _error(f"Failed to parse config.json: {exc}", errors)
+
+    if errors:
+        for message in errors:
+            print(f"[verify_phi_redactor_vendor_assets] ERROR: {message}", file=sys.stderr)
+        return 1
+
+    print("[verify_phi_redactor_vendor_assets] OK: PHI redactor vendor assets present")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `scripts/prodigy_prepare_registry_batch.py`
 - Size: `2368` bytes
 ```
@@ -1969,94 +2054,6 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-```
-
----
-- Size: `2748` bytes
-```
-#!/usr/bin/env python3
-"""
-Download the Piiranha ONNX PHI detection model from Hugging Face.
-
-Two modes:
-- default: download a UI-usable snapshot into `modules/api/static/phi_redactor/vendor/...`
-  so `/ui/phi_redactor/` can load it from same-origin static files.
-- --full: download the full snapshot into `data/models/hf/...` for other local workflows.
-"""
-
-from __future__ import annotations
-
-import argparse
-from pathlib import Path
-
-
-def main() -> None:
-    try:
-        from huggingface_hub import snapshot_download
-    except Exception as e:  # pragma: no cover
-        raise SystemExit(
-            "huggingface_hub is required. Install it (e.g. `pip install huggingface_hub`)."
-        ) from e
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--full",
-        action="store_true",
-        help="Download full snapshot (into data/models/hf/...) for other workflows.",
-    )
-    parser.add_argument(
-        "--repo-id",
-        help=(
-            "Hugging Face repo id to download. Default is the ONNX-converted repo used by the PHI UI. "
-        ),
-    )
-    args = parser.parse_args()
-
-    repo_id = args.repo_id
-    repo_root = Path(__file__).resolve().parents[1]
-
-    # For non-full mode, we only support the ONNX-converted repo because the UI worker expects the
-    # `onnx/` subfolder artifacts to exist.
-        raise SystemExit(
-            "--repo-id is only supported with --full (the UI vendor snapshot requires the ONNX repo)."
-        )
-
-    repo_slug = repo_id.split("/", 1)[1] if "/" in repo_id else repo_id
-    local_dir = (
-        repo_root / "data" / "models" / "hf" / repo_slug
-        if args.full
-        else repo_root
-        / "modules"
-        / "api"
-        / "static"
-        / "phi_redactor"
-        / "vendor"
-    )
-    local_dir.mkdir(parents=True, exist_ok=True)
-
-    # Default keeps download tight: config/tokenizer + onnx artifacts.
-    allow_patterns = None
-    if not args.full:
-        allow_patterns = [
-            "*.json",
-            "*.txt",
-            "*.model",
-            "tokenizer/**",
-            "onnx/**",
-        ]
-
-    out = snapshot_download(
-        repo_id=repo_id,
-        local_dir=str(local_dir),
-        allow_patterns=allow_patterns,
-    )
-
-
-if __name__ == "__main__":
-    main()
-
-
 
 ```
 
@@ -5048,6 +5045,424 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/bootstrap_granular_ner_bundle.py`
+- Size: `6097` bytes
+```
+#!/usr/bin/env python3
+"""Bootstrap the granular NER ONNX bundle into a local runtime directory.
+
+This is intended for Railway deployment where large ONNX artifacts are stored in S3
+and fetched at container start.
+
+Env vars:
+- GRANULAR_NER_BUNDLE_S3_URI_ONNX: s3://<bucket>/<key>/bundle.tar.gz
+  - Fallback: GRANULAR_NER_BUNDLE_S3_URI
+- GRANULAR_NER_RUNTIME_DIR: where to unpack the bundle (default: data/models/granular_ner_runtime)
+
+On success, sets:
+- GRANULAR_NER_MODEL_DIR=<GRANULAR_NER_RUNTIME_DIR>
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import tarfile
+import tempfile
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+
+BOOTSTRAP_STATE_FILENAME = ".bootstrap_state.json"
+
+
+@dataclass(frozen=True)
+class BootstrapResult:
+    runtime_dir: Path
+    downloaded: bool
+    manifest: dict[str, Any]
+
+
+def _parse_s3_uri(uri: str) -> tuple[str, str]:
+    if not uri.startswith("s3://"):
+        raise ValueError(f"Not an s3:// URI: {uri}")
+    no_scheme = uri[len("s3://") :]
+    bucket, _, key = no_scheme.partition("/")
+    if not bucket or not key:
+        raise ValueError(f"Invalid s3:// URI: {uri}")
+    return bucket, key
+
+
+def _download_s3_key(bucket: str, key: str, dest: Path) -> None:
+    # Lazy import so local dev can run without boto3 unless bootstrap is enabled.
+    import boto3  # type: ignore
+
+    client = boto3.client("s3")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+
+    tmp_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(prefix=dest.name, dir=str(dest.parent), delete=False) as tf:
+            tmp_path = Path(tf.name)
+        client.download_file(bucket, key, str(tmp_path))
+        os.replace(str(tmp_path), str(dest))
+    finally:
+        if tmp_path and tmp_path.exists():
+            try:
+                tmp_path.unlink()
+            except Exception:
+                pass
+
+
+def _extract_tarball_to_dir(tar_gz_path: Path, dest_dir: Path) -> None:
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    with tarfile.open(tar_gz_path, "r:gz") as tf:
+        tf.extractall(path=dest_dir)
+
+
+def _flatten_single_root(extracted_dir: Path) -> Path:
+    children = [p for p in extracted_dir.iterdir() if p.name not in (".DS_Store",)]
+    if len(children) == 1 and children[0].is_dir():
+        return children[0]
+    return extracted_dir
+
+
+def _replace_tree(src_dir: Path, dest_dir: Path) -> None:
+    if dest_dir.exists():
+        shutil.rmtree(dest_dir)
+    dest_dir.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(src_dir, dest_dir)
+
+
+def _read_bootstrap_state(runtime_dir: Path) -> dict[str, Any]:
+    path = runtime_dir / BOOTSTRAP_STATE_FILENAME
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text())
+    except Exception:
+        return {}
+
+
+def _write_bootstrap_state(runtime_dir: Path, state: dict[str, Any]) -> None:
+    runtime_dir.mkdir(parents=True, exist_ok=True)
+    path = runtime_dir / BOOTSTRAP_STATE_FILENAME
+    path.write_text(json.dumps(state, indent=2, sort_keys=True))
+
+
+def _configured_uri() -> str | None:
+    return os.getenv("GRANULAR_NER_BUNDLE_S3_URI_ONNX") or os.getenv("GRANULAR_NER_BUNDLE_S3_URI")
+
+
+def _runtime_dir() -> Path:
+    return Path(os.getenv("GRANULAR_NER_RUNTIME_DIR", "data/models/granular_ner_runtime"))
+
+
+def ensure_granular_ner_bundle() -> BootstrapResult:
+    uri = (_configured_uri() or "").strip()
+    runtime_dir = _runtime_dir()
+
+    if not uri:
+        # Nothing to do; still expose resolved model dir if it's already present.
+        if runtime_dir.exists():
+            os.environ.setdefault("GRANULAR_NER_MODEL_DIR", str(runtime_dir))
+        return BootstrapResult(runtime_dir=runtime_dir, downloaded=False, manifest={})
+
+    if not uri.endswith(".tar.gz"):
+        raise ValueError(
+            "GRANULAR_NER_BUNDLE_S3_URI_ONNX must point to a .tar.gz bundle "
+            f"(got: {uri})."
+        )
+
+    existing_manifest_path = runtime_dir / "manifest.json"
+    state = _read_bootstrap_state(runtime_dir)
+    state_uri = (state.get("configured_source_uri") or "").strip()
+
+    if existing_manifest_path.exists() and state_uri == uri:
+        # Bundle URIs are immutable; matching state is sufficient.
+        os.environ["GRANULAR_NER_MODEL_DIR"] = str(runtime_dir)
+        try:
+            manifest = json.loads(existing_manifest_path.read_text())
+        except Exception:
+            manifest = {}
+        return BootstrapResult(runtime_dir=runtime_dir, downloaded=False, manifest=manifest)
+
+    bucket, key = _parse_s3_uri(uri)
+
+    with tempfile.TemporaryDirectory(prefix="granular_ner_bundle_") as td:
+        td_path = Path(td)
+        tar_path = td_path / "bundle.tar.gz"
+        _download_s3_key(bucket=bucket, key=key, dest=tar_path)
+
+        extracted = td_path / "extracted"
+        _extract_tarball_to_dir(tar_path, extracted)
+        root = _flatten_single_root(extracted)
+
+        # Add/override minimal manifest for provenance.
+        manifest: dict[str, Any] = {
+            "bundle_type": "granular_ner",
+            "model_backend": "onnx",
+            "source_uri": uri,
+            "source_type": "s3_tarball",
+        }
+        (root / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
+
+        _replace_tree(root, runtime_dir)
+
+    _write_bootstrap_state(
+        runtime_dir,
+        {
+            "configured_source_uri": uri,
+        },
+    )
+    os.environ["GRANULAR_NER_MODEL_DIR"] = str(runtime_dir)
+    return BootstrapResult(runtime_dir=runtime_dir, downloaded=True, manifest=manifest)
+
+
+def main() -> int:
+    result = ensure_granular_ner_bundle()
+    uri = _configured_uri()
+    if uri:
+        action = "downloaded" if result.downloaded else "cached"
+        print(
+            f"[bootstrap_granular_ner_bundle] {action} granular NER bundle into {result.runtime_dir} "
+            f"(source={uri})"
+        )
+        print(f"[bootstrap_granular_ner_bundle] GRANULAR_NER_MODEL_DIR={os.environ.get('GRANULAR_NER_MODEL_DIR')}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+```
+
+---
+### `scripts/bootstrap_phi_redactor_vendor_bundle.py`
+- Size: `6388` bytes
+```
+#!/usr/bin/env python3
+"""Bootstrap the PHI redactor vendor bundle into the UI vendor directory.
+
+Intended for Railway deployment where large model assets live in S3.
+
+Env vars:
+- PHI_REDACTOR_VENDOR_BUNDLE_S3_URI: s3://<bucket>/<key>/bundle.tar.gz
+  - Fallback: PHI_REDACTOR_VENDOR_BUNDLE_S3_URI_ONNX
+- PHI_REDACTOR_VENDOR_DIR: destination directory
+  (default: modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant)
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import tarfile
+import tempfile
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+BOOTSTRAP_STATE_FILENAME = ".bootstrap_state.json"
+
+
+@dataclass(frozen=True)
+class BootstrapResult:
+    vendor_dir: Path
+    downloaded: bool
+    manifest: dict[str, Any]
+
+
+def _parse_s3_uri(uri: str) -> tuple[str, str]:
+    if not uri.startswith("s3://"):
+        raise ValueError(f"Not an s3:// URI: {uri}")
+    no_scheme = uri[len("s3://") :]
+    bucket, _, key = no_scheme.partition("/")
+    if not bucket or not key:
+        raise ValueError(f"Invalid s3:// URI: {uri}")
+    return bucket, key
+
+
+def _download_s3_key(bucket: str, key: str, dest: Path) -> None:
+    import boto3  # type: ignore
+
+    client = boto3.client("s3")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+
+    tmp_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(prefix=dest.name, dir=str(dest.parent), delete=False) as tf:
+            tmp_path = Path(tf.name)
+        client.download_file(bucket, key, str(tmp_path))
+        os.replace(str(tmp_path), str(dest))
+    finally:
+        if tmp_path and tmp_path.exists():
+            try:
+                tmp_path.unlink()
+            except Exception:
+                pass
+
+
+def _extract_tarball_to_dir(tar_gz_path: Path, dest_dir: Path) -> None:
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    with tarfile.open(tar_gz_path, "r:gz") as tf:
+        tf.extractall(path=dest_dir)
+
+
+def _flatten_single_root(extracted_dir: Path) -> Path:
+    children = [p for p in extracted_dir.iterdir() if p.name not in (".DS_Store",)]
+    if len(children) == 1 and children[0].is_dir():
+        return children[0]
+    return extracted_dir
+
+
+def _replace_tree(src_dir: Path, dest_dir: Path) -> None:
+    if dest_dir.exists():
+        shutil.rmtree(dest_dir)
+    dest_dir.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(src_dir, dest_dir)
+
+
+def _normalize_model_layout(root: Path) -> None:
+    """Ensure transformers.js-compatible layout (onnx/model.onnx)."""
+    onnx_dir = root / "onnx"
+    onnx_dir.mkdir(parents=True, exist_ok=True)
+
+    # Preferred destination
+    dest = onnx_dir / "model.onnx"
+    if dest.exists():
+        return
+
+    candidates = [
+        onnx_dir / "model_quantized.onnx",
+        root / "model.onnx",
+        root / "model_quantized.onnx",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            shutil.copy2(candidate, dest)
+            return
+
+    raise FileNotFoundError("Unable to locate model.onnx or model_quantized.onnx in bundle")
+
+
+def _read_bootstrap_state(dest_dir: Path) -> dict[str, Any]:
+    path = dest_dir / BOOTSTRAP_STATE_FILENAME
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text())
+    except Exception:
+        return {}
+
+
+def _write_bootstrap_state(dest_dir: Path, state: dict[str, Any]) -> None:
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    path = dest_dir / BOOTSTRAP_STATE_FILENAME
+    path.write_text(json.dumps(state, indent=2, sort_keys=True))
+
+
+def _configured_uri() -> str | None:
+    return os.getenv("PHI_REDACTOR_VENDOR_BUNDLE_S3_URI") or os.getenv(
+        "PHI_REDACTOR_VENDOR_BUNDLE_S3_URI_ONNX"
+    )
+
+
+def _vendor_dir() -> Path:
+    return Path(
+        os.getenv(
+            "PHI_REDACTOR_VENDOR_DIR",
+            "modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant",
+        )
+    )
+
+
+def ensure_phi_redactor_vendor_bundle() -> BootstrapResult:
+    # Local dev convenience: load .env if present.
+    try:
+        from dotenv import load_dotenv  # type: ignore
+
+        load_dotenv()
+    except Exception:
+        pass
+
+    uri = (_configured_uri() or "").strip()
+    vendor_dir = _vendor_dir()
+
+    if not uri:
+        return BootstrapResult(vendor_dir=vendor_dir, downloaded=False, manifest={})
+
+    if not uri.endswith(".tar.gz"):
+        raise ValueError(
+            "PHI_REDACTOR_VENDOR_BUNDLE_S3_URI must point to a .tar.gz bundle "
+            f"(got: {uri})."
+        )
+
+    state = _read_bootstrap_state(vendor_dir)
+    state_uri = (state.get("configured_source_uri") or "").strip()
+
+    existing_config = vendor_dir / "config.json"
+    if existing_config.exists() and state_uri == uri:
+        _normalize_model_layout(vendor_dir)
+        try:
+            manifest = json.loads((vendor_dir / "manifest.json").read_text())
+        except Exception:
+            manifest = {}
+        return BootstrapResult(vendor_dir=vendor_dir, downloaded=False, manifest=manifest)
+
+    bucket, key = _parse_s3_uri(uri)
+
+    with tempfile.TemporaryDirectory(prefix="phi_redactor_vendor_") as td:
+        td_path = Path(td)
+        tar_path = td_path / "bundle.tar.gz"
+        _download_s3_key(bucket=bucket, key=key, dest=tar_path)
+
+        extracted = td_path / "extracted"
+        _extract_tarball_to_dir(tar_path, extracted)
+        root = _flatten_single_root(extracted)
+        _normalize_model_layout(root)
+
+        manifest: dict[str, Any] = {
+            "bundle_type": "phi_redactor_vendor",
+            "model_backend": "onnx",
+            "source_uri": uri,
+            "source_type": "s3_tarball",
+        }
+        (root / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
+
+        _replace_tree(root, vendor_dir)
+
+    _write_bootstrap_state(
+        vendor_dir,
+        {
+            "configured_source_uri": uri,
+        },
+    )
+    return BootstrapResult(vendor_dir=vendor_dir, downloaded=True, manifest=manifest)
+
+
+def main() -> int:
+    result = ensure_phi_redactor_vendor_bundle()
+    uri = _configured_uri()
+    if uri:
+        action = "downloaded" if result.downloaded else "cached"
+        print(
+            f"[bootstrap_phi_redactor_vendor_bundle] {action} PHI vendor bundle into {result.vendor_dir} "
+            f"(source={uri})"
+        )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `scripts/add_training_case.py`
 - Size: `6413` bytes
 ```
@@ -7959,7 +8374,7 @@ if __name__ == "__main__":
 
 ---
 ### `scripts/test_phi_redaction_sample.py`
-- Size: `8233` bytes
+- Size: `8191` bytes
 ```
 #!/usr/bin/env python3
 """
@@ -7970,11 +8385,13 @@ Randomly selects notes from golden JSON files and runs PHI redaction,
 producing side-by-side comparison of original and redacted content.
 
 Usage:
+    python scripts/test_phi_redaction_sample.py [--count N] [--output FILE] [--no-ner]
 
 Examples:
     python scripts/test_phi_redaction_sample.py                    # 10 random notes to stdout
     python scripts/test_phi_redaction_sample.py --count 5          # 5 random notes
     python scripts/test_phi_redaction_sample.py --output test.txt  # Save to file
+    python scripts/test_phi_redaction_sample.py --no-ner             # Regex-only mode (faster)
 
 Author: Claude Code
 """
@@ -8110,8 +8527,9 @@ def main():
         help="Output file path (default: stdout)"
     )
     parser.add_argument(
+        "--no-ner",
         action="store_true",
-        help="Disable Piiranha ML model (regex-only, faster)"
+        help="Disable NER model (regex-only, faster)"
     )
     parser.add_argument(
         "--keep-dates",
@@ -8164,15 +8582,18 @@ def main():
     print(f"Selected {sample_size} random notes.", file=sys.stderr)
 
     # Initialize redactor
+    print(f"Initializing PHI Redactor (NER: {not args.no_ner})...", file=sys.stderr)
     config = RedactionConfig(
         redact_procedure_dates=not args.keep_dates
     )
+    redactor = PHIRedactor(config=config, use_ner_model=not args.no_ner)
 
     # Process notes
     output_lines = []
     output_lines.append("=" * 80)
     output_lines.append("PHI REDACTION TEST REPORT")
     output_lines.append(f"Sample size: {sample_size} notes")
+    output_lines.append(f"Mode: {'Regex + NER' if not args.no_ner else 'Regex-only'}")
     output_lines.append("=" * 80)
     output_lines.append("")
 
@@ -9014,7 +9435,7 @@ if __name__ == "__main__":
 
 ---
 ### `scripts/clean_distilled_phi_labels.py`
-- Size: `9265` bytes
+- Size: `9264` bytes
 ```
 #!/usr/bin/env python3
 """Clean existing distilled PHI JSONL by removing obvious false positives."""
@@ -9196,6 +9617,7 @@ def main() -> int:
         default=Path("data/ml_training/distilled_phi_labels.cleaned.jsonl"),
     )
     parser.add_argument("--student-tokenizer", type=str, default="distilbert-base-uncased")
+    parser.add_argument("--label-schema", choices=["teacher", "standard"], default="standard")
     parser.add_argument(
         "--drop-zipcode-if-cpt",
         action=argparse.BooleanOptionalAction,
@@ -15287,7 +15709,7 @@ if __name__ == "__main__":
 
 ---
 ### `scripts/apply_platinum_redactions.py`
-- Size: `16359` bytes
+- Size: `16360` bytes
 ```
 #!/usr/bin/env python3
 """
@@ -15530,6 +15952,7 @@ def get_evidence_redactor():
         protect_device_names=True,
         protect_anatomical_terms=True,
     )
+    _EVIDENCE_REDACTOR = PHIRedactor(config=config, use_ner_model=False)
     return _EVIDENCE_REDACTOR
 
 
@@ -15765,1044 +16188,5 @@ def main():
 
 if __name__ == "__main__":
     exit(main())
-
-```
-
----
-### `scripts/generate_gitingest.py`
-- Size: `16517` bytes
-```
-#!/usr/bin/env python3
-"""
-Generate gitingest.md - A token-budget friendly snapshot of the repo structure
-and curated important files for LLM/context ingestion.
-"""
-
-import argparse
-import os
-import subprocess
-from datetime import datetime
-from pathlib import Path
-from typing import Iterable, Set
-
-
-# Configuration
-EXCLUDED_DIRS = {
-    ".git",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".venv",
-    "build",
-    "coverage",
-    "data",
-    "dist",
-    "distilled",
-    "node_modules",
-    "proc_suite.egg-info",
-    "reports",
-    "validation_results",
-    "venv",
-    "__pycache__",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".mypy_cache",
-}
-
-EXCLUDED_FILE_EXTENSIONS = {
-    ".bin",
-    ".db",
-    ".gif",
-    ".jpeg",
-    ".jpg",
-    ".map",
-    ".onnx",
-    ".parquet",
-    ".pdf",
-    ".pkl",
-    ".png",
-    ".pt",
-    ".pth",
-    ".pickle",
-    ".webp",
-    ".xlsx",
-    ".xls",
-    ".tar.gz",
-    ".zip",
-    ".pyc",
-    ".pyo",
-}
-
-IMPORTANT_DIRS = [
-    "modules/",
-    "proc_report/",
-    "proc_autocode/",
-    "proc_nlp/",
-    "proc_registry/",
-    "proc_schemas/",
-    "schemas/",
-    "configs/",
-    "scripts/",
-    "tests/",
-]
-
-IMPORTANT_FILES = [
-    "README.md",
-    "CLAUDE.md",
-    "AGENTS.md",
-    "pyproject.toml",
-    "requirements.txt",
-    "Makefile",
-    "runtime.txt",
-    "modules/api/fastapi_app.py",
-    "modules/coder/application/coding_service.py",
-    "modules/registry/application/registry_service.py",
-    "modules/agents/contracts.py",
-    "modules/agents/run_pipeline.py",
-    "docs/AGENTS.md",
-    "docs/DEVELOPMENT.md",
-    "docs/ARCHITECTURE.md",
-    "docs/INSTALLATION.md",
-    "docs/USER_GUIDE.md",
-    ".claude/commands/phi-redactor.md",
-    ".claude/commands/registry-data-prep.md",
-]
-
-DETAIL_DEFAULT_INCLUDE_DIRS = [
-    "modules/",
-    "proc_nlp/",
-    "proc_schemas/",
-    "config/",
-    "scripts/",
-    "tests/",
-    "docs/",
-]
-
-DETAIL_DEFAULT_INCLUDE_EXTENSIONS = {
-    ".j2",
-    ".jinja",
-    ".js",
-    ".json",
-    ".md",
-    ".py",
-    ".toml",
-    ".ts",
-    ".txt",
-    ".yaml",
-    ".yml",
-}
-
-
-def get_git_info() -> tuple[str, str]:
-    """Get current git branch and commit hash."""
-    try:
-        branch = (
-            subprocess.check_output(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"], stderr=subprocess.DEVNULL
-            )
-            .decode()
-            .strip()
-        )
-        commit = (
-            subprocess.check_output(
-                ["git", "rev-parse", "--short", "HEAD"], stderr=subprocess.DEVNULL
-            )
-            .decode()
-            .strip()
-        )
-        return branch, commit
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return "unknown", "unknown"
-
-
-def should_exclude_path(path: Path, repo_root: Path) -> bool:
-    """Check if a path should be excluded."""
-    try:
-        rel_path = path.relative_to(repo_root)
-    except ValueError:
-        return True
-    
-    # Check if any part of the path matches excluded dirs
-    parts = rel_path.parts
-    if any(part in EXCLUDED_DIRS for part in parts):
-        return True
-
-    # Check file extension
-    if path.is_file():
-        for ext in EXCLUDED_FILE_EXTENSIONS:
-            if str(path).endswith(ext):
-                return True
-
-    return False
-
-
-def build_tree(root: Path, repo_root: Path, depth: int = 0) -> list[str]:
-    """Build a directory tree structure matching the existing format."""
-    lines = []
-    indent = "  " * depth
-
-    # Get all items in current directory
-    try:
-        items = sorted(
-            [p for p in root.iterdir() if not should_exclude_path(p, repo_root)],
-            key=lambda p: (p.is_file(), p.name.lower()),
-        )
-    except PermissionError:
-        return lines
-
-    for item in items:
-        # Get relative path from repo root
-        rel_path = item.relative_to(repo_root)
-        path_str = str(rel_path).replace("\\", "/")
-        
-        lines.append(f"{indent}- {path_str}/" if item.is_dir() else f"{indent}- {path_str}")
-
-        if item.is_dir():
-            lines.extend(build_tree(item, repo_root, depth + 1))
-
-    return lines
-
-
-def get_repo_tree(repo_root: Path) -> str:
-    """Generate the repository tree structure."""
-    # Start with the root directory name
-    root_name = repo_root.name if repo_root.name else "."
-    tree_lines = [f"- {root_name}/"]
-    
-    # Build the rest of the tree
-    tree_lines.extend(build_tree(repo_root, repo_root, depth=1))
-    
-    return "\n".join(tree_lines)
-
-
-def read_file_content(file_path: Path) -> str:
-    """Read file content, handling encoding issues."""
-    try:
-        with open(file_path, "r", encoding="utf-8", errors="replace") as f:
-            return f.read()
-    except Exception as e:
-        return f"# Error reading file: {e}"
-
-
-def is_probably_text_file(file_path: Path, probe_bytes: int = 8192) -> bool:
-    """
-    Heuristic to avoid including binary/unreadable files.
-    - Reject if NUL bytes are present in a small prefix.
-    - Reject if UTF-8 strict decode fails on that prefix.
-    """
-    try:
-        with open(file_path, "rb") as f:
-            chunk = f.read(probe_bytes)
-        if b"\x00" in chunk:
-            return False
-        try:
-            chunk.decode("utf-8", errors="strict")
-        except UnicodeDecodeError:
-            return False
-        return True
-    except Exception:
-        return False
-
-
-def looks_minified_text(text: str) -> bool:
-    """Best-effort detection of minified bundles (very long lines / low newline density)."""
-    if not text:
-        return False
-    max_line_len = max((len(line) for line in text.splitlines()), default=0)
-    if max_line_len >= 2000:
-        return True
-    if len(text) >= 100_000:
-        newline_ratio = text.count("\n") / max(1, len(text))
-        if newline_ratio < 0.0005:
-            return True
-    return False
-
-
-def iter_detail_candidate_files(
-    repo_root: Path, include_dirs: Iterable[str], include_exts: Set[str]
-) -> list[Path]:
-    """Return repo-relative, filtered candidate files under include_dirs."""
-    candidates: list[Path] = []
-    for dir_str in include_dirs:
-        dir_path = (repo_root / dir_str).resolve()
-        if not dir_path.exists() or not dir_path.is_dir():
-            continue
-
-        for root, dirnames, filenames in os.walk(dir_path):
-            root_path = Path(root)
-            # Prune excluded dirs early
-            dirnames[:] = [
-                d for d in dirnames if not should_exclude_path(root_path / d, repo_root)
-            ]
-
-            for name in filenames:
-                p = root_path / name
-                if should_exclude_path(p, repo_root):
-                    continue
-                if include_exts and p.suffix.lower() not in include_exts:
-                    continue
-                candidates.append(p)
-
-    # Stable ordering: prioritize scripts and python, then smaller files.
-    def sort_key(p: Path) -> tuple[int, int, int, str]:
-        rel = str(p.relative_to(repo_root)).replace("\\", "/")
-        in_scripts = 0 if rel.startswith("scripts/") else 1
-        is_py = 0 if p.suffix.lower() == ".py" else 1
-        try:
-            size = p.stat().st_size
-        except Exception:
-            size = 10**9
-        return (in_scripts, is_py, size, rel.lower())
-
-    candidates.sort(key=sort_key)
-    return candidates
-
-
-def generate_gitingest_details(
-    repo_root: Path,
-    output_path: Path,
-    include_dirs: Iterable[str],
-    include_exts: Set[str],
-    max_bytes: int,
-    max_files: int,
-    inline_mode: str,  # "none" | "curated" | "all"
-) -> None:
-    """Generate a more granular, text-only companion document for deeper LLM context."""
-    print(f"Generating gitingest_details.md from {repo_root}...")
-
-    branch, commit = get_git_info()
-    timestamp = datetime.now().astimezone().isoformat(timespec="seconds")
-
-    candidates = iter_detail_candidate_files(repo_root, include_dirs, include_exts)
-
-    included_manifest: list[tuple[str, int]] = []
-    inlined: list[str] = []
-    inlined_files = 0
-    skipped: list[tuple[str, str]] = []
-
-    def should_inline(rel_path: str, suffix: str) -> bool:
-        if inline_mode == "none":
-            return False
-        if inline_mode == "all":
-            return True
-        # curated
-        if rel_path.startswith("scripts/") and suffix in {".py", ".md"}:
-            return True
-        if rel_path.startswith("modules/") and suffix == ".py":
-            return True
-        if rel_path.startswith("proc_nlp/") and suffix == ".py":
-            return True
-        if rel_path.startswith("proc_schemas/") and suffix == ".py":
-            return True
-        return False
-
-    for p in candidates:
-        rel = str(p.relative_to(repo_root)).replace("\\", "/")
-        try:
-            size = p.stat().st_size
-        except Exception:
-            skipped.append((rel, "stat_failed"))
-            continue
-
-        if size > max_bytes:
-            skipped.append((rel, f"too_large>{max_bytes}B"))
-            continue
-        if not p.is_file():
-            skipped.append((rel, "not_a_file"))
-            continue
-        if not is_probably_text_file(p):
-            skipped.append((rel, "binary_or_non_utf8"))
-            continue
-
-        included_manifest.append((rel, size))
-
-        suffix = p.suffix.lower()
-        if should_inline(rel, suffix):
-            if inlined_files >= max_files:
-                skipped.append((rel, f"inline_cap_reached>{max_files}"))
-                continue
-
-            text = read_file_content(p)
-            if suffix in {".js", ".ts"} and looks_minified_text(text):
-                skipped.append((rel, "minified_bundle"))
-                continue
-
-            inlined_files += 1
-            inlined.extend(
-                [
-                    "---",
-                    f"### `{rel}`",
-                    f"- Size: `{size}` bytes",
-                    "```",
-                    text,
-                    "```",
-                    "",
-                ]
-            )
-
-    content_parts = [
-        "# Procedure Suite — gitingest (details)",
-        "",
-        f"Generated: `{timestamp}`",
-        f"Git: `{branch}` @ `{commit}`",
-        "",
-        "## What this file is",
-        "- A **second** document you can provide to an LLM when more detail is needed.",
-        "- Focuses on **text-readable** code/docs and skips binaries, oversized files, and (best-effort) minified bundles.",
-        "",
-        "## Selection settings",
-        f"- Include dirs: `{', '.join(include_dirs)}`",
-        f"- Include extensions: `{'`, `'.join(sorted(include_exts))}`",
-        f"- Max file size: `{max_bytes}` bytes",
-        f"- Inline mode: `{inline_mode}`",
-        f"- Inline cap (files): `{max_files}`",
-        "",
-        "## Manifest (filtered candidates)",
-        "",
-    ]
-
-    if included_manifest:
-        content_parts.append("```")
-        for rel, size in included_manifest:
-            content_parts.append(f"{size:>9}  {rel}")
-        content_parts.append("```")
-    else:
-        content_parts.append("_No matching text files found under the provided include dirs._")
-
-    content_parts.extend(["", "## Skipped (reason)", ""])
-    if skipped:
-        content_parts.append("```")
-        for rel, reason in skipped[:500]:
-            content_parts.append(f"{reason:>22}  {rel}")
-        if len(skipped) > 500:
-            content_parts.append(f"... and {len(skipped) - 500} more")
-        content_parts.append("```")
-    else:
-        content_parts.append("_Nothing skipped._")
-
-    content_parts.extend(["", "## Inlined file contents", ""])
-    if inlined:
-        content_parts.extend(inlined)
-    else:
-        content_parts.append("_Inline mode was `none`, or no files met the inline criteria._")
-
-    print(f"Writing to {output_path}...")
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(content_parts))
-    print(f"✅ Successfully generated {output_path}")
-
-
-def generate_gitingest(repo_root: Path, output_path: Path) -> None:
-    """Generate the gitingest.md file."""
-    print(f"Generating gitingest.md from {repo_root}...")
-
-    # Get git info
-    branch, commit = get_git_info()
-    # Format timestamp with timezone (matching original format)
-    timestamp = datetime.now().astimezone().isoformat(timespec="seconds")
-
-    # Generate repo tree
-    print("Building repository tree...")
-    repo_tree = get_repo_tree(repo_root)
-
-    # Build the markdown content
-    content_parts = [
-        "# Procedure Suite — gitingest (curated)",
-        "",
-        f"Generated: `{timestamp}`",
-        f"Git: `{branch}` @ `{commit}`",
-        "",
-        "## What this file is",
-        "- A **token-budget friendly** snapshot of the repo **structure** + a curated set of **important files**.",
-        "- Intended for LLM/context ingestion; excludes large artifacts (models, datasets, caches).",
-        "",
-        "## Exclusions (high level)",
-        f"- Directories: `{', '.join(sorted(EXCLUDED_DIRS))}`",
-        f"- File types: `{'`, `'.join(sorted(EXCLUDED_FILE_EXTENSIONS))}`",
-        "",
-        "## Repo tree (pruned)",
-        "```",
-        repo_tree,
-        "```",
-        "",
-        "## Important directories (not inlined)",
-    ]
-
-    # Add important directories
-    for dir_name in IMPORTANT_DIRS:
-        content_parts.append(f"- `{dir_name}`")
-
-    content_parts.extend([
-        "",
-        "## Important files (inlined)",
-        "",
-    ])
-
-    # Add important files
-    print("Inlining important files...")
-    for file_path_str in IMPORTANT_FILES:
-        file_path = repo_root / file_path_str
-        if file_path.exists():
-            print(f"  Reading {file_path_str}...")
-            file_content = read_file_content(file_path)
-            content_parts.extend([
-                "---",
-                f"### `{file_path_str}`",
-                "```",
-                file_content,
-                "```",
-                "",
-            ])
-        else:
-            print(f"  Warning: {file_path_str} not found, skipping...")
-
-    # Write the file
-    print(f"Writing to {output_path}...")
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(content_parts))
-
-    print(f"✅ Successfully generated {output_path}")
-
-
-def main():
-    """Main entry point."""
-    parser = argparse.ArgumentParser(
-        description="Generate curated gitingest markdown documents for LLM ingestion."
-    )
-    parser.add_argument(
-        "--output",
-        default="gitingest.md",
-        help="Path (relative to repo root) for the base curated gitingest output.",
-    )
-    parser.add_argument(
-        "--no-base",
-        action="store_true",
-        help="Skip generating the base gitingest.md file.",
-    )
-    parser.add_argument(
-        "--details",
-        action="store_true",
-        help="Also generate a second, more granular details document.",
-    )
-    parser.add_argument(
-        "--details-output",
-        default="gitingest_details.md",
-        help="Path (relative to repo root) for the details output.",
-    )
-    parser.add_argument(
-        "--details-include",
-        action="append",
-        default=[],
-        help="Directory (relative to repo root) to include in details scan. Can be repeated.",
-    )
-    parser.add_argument(
-        "--details-max-bytes",
-        type=int,
-        default=200_000,
-        help="Max size per manifested/inlined file in details doc (bytes).",
-    )
-    parser.add_argument(
-        "--details-max-files",
-        type=int,
-        default=75,
-        help="Max number of files to inline into details doc.",
-    )
-    parser.add_argument(
-        "--details-inline",
-        choices=["none", "curated", "all"],
-        default="curated",
-        help="Inline file contents mode for details doc.",
-    )
-    args = parser.parse_args()
-
-    repo_root = Path(__file__).parent.parent
-
-    if not args.no_base:
-        output_path = repo_root / args.output
-        generate_gitingest(repo_root, output_path)
-
-    if args.details:
-        include_dirs = args.details_include or DETAIL_DEFAULT_INCLUDE_DIRS
-        details_output = repo_root / args.details_output
-        generate_gitingest_details(
-            repo_root=repo_root,
-            output_path=details_output,
-            include_dirs=include_dirs,
-            include_exts=DETAIL_DEFAULT_INCLUDE_EXTENSIONS,
-            max_bytes=args.details_max_bytes,
-            max_files=args.details_max_files,
-            inline_mode=args.details_inline,
-        )
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-### `scripts/eval_hybrid_pipeline.py`
-- Size: `16578` bytes
-```
-#!/usr/bin/env python3
-"""
-Evaluation script for the ML-first Smart Hybrid Pipeline.
-
-Compares:
-- Old pipeline: ML-only predictions
-- New pipeline: SmartHybridOrchestrator (ML → Rules → LLM)
-
-Evaluates against:
-- data/ml_training/test.csv (standard holdout)
-- data/ml_training/edge_cases_holdout.csv (synthetic edge cases)
-
-Output metrics:
-- Per-code P/R/F1
-- Overall micro/macro F1
-- LLM usage rate (when LLM fallback was triggered)
-- Fast path rate (ML+Rules without LLM)
-- Rules rejection/modification rate
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-from collections import defaultdict
-from dataclasses import asdict, dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Set
-
-import pandas as pd
-
-# Ensure imports resolve
-import sys
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from modules.ml_coder.predictor import MLCoderPredictor
-from modules.coder.rules_engine import CodingRulesEngine
-from modules.coder.adapters.llm.gemini_advisor import MockLLMAdvisor, LLMCodeSuggestion
-from modules.coder.application.smart_hybrid_policy import (
-    SmartHybridOrchestrator,
-    OrchestratorResult,
-)
-
-
-@dataclass
-class CodeMetrics:
-    """Per-code evaluation metrics."""
-    tp: int = 0
-    fp: int = 0
-    fn: int = 0
-
-    @property
-    def precision(self) -> float:
-        if self.tp + self.fp == 0:
-            return 0.0
-        return self.tp / (self.tp + self.fp)
-
-    @property
-    def recall(self) -> float:
-        if self.tp + self.fn == 0:
-            return 0.0
-        return self.tp / (self.tp + self.fn)
-
-    @property
-    def f1(self) -> float:
-        p, r = self.precision, self.recall
-        if p + r == 0:
-            return 0.0
-        return 2 * p * r / (p + r)
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "tp": self.tp,
-            "fp": self.fp,
-            "fn": self.fn,
-            "precision": round(self.precision, 4),
-            "recall": round(self.recall, 4),
-            "f1": round(self.f1, 4),
-        }
-
-
-@dataclass
-class EvalResult:
-    """Overall evaluation results."""
-    dataset_name: str
-    total_samples: int
-    exact_match: int = 0
-    ml_only_exact_match: int = 0
-
-    # Per-code metrics
-    per_code_metrics: Dict[str, CodeMetrics] = field(default_factory=dict)
-    ml_only_per_code: Dict[str, CodeMetrics] = field(default_factory=dict)
-
-    # Pipeline behavior
-    llm_called_count: int = 0
-    fast_path_count: int = 0
-    rules_modified_count: int = 0
-
-    # Difficulty distribution
-    high_conf_count: int = 0
-    gray_zone_count: int = 0
-    low_conf_count: int = 0
-
-    # Errors
-    errors: List[Dict[str, Any]] = field(default_factory=list)
-
-    def micro_f1(self, metrics: Dict[str, CodeMetrics]) -> float:
-        """Calculate micro-averaged F1."""
-        total_tp = sum(m.tp for m in metrics.values())
-        total_fp = sum(m.fp for m in metrics.values())
-        total_fn = sum(m.fn for m in metrics.values())
-
-        precision = total_tp / (total_tp + total_fp) if (total_tp + total_fp) > 0 else 0.0
-        recall = total_tp / (total_tp + total_fn) if (total_tp + total_fn) > 0 else 0.0
-
-        if precision + recall == 0:
-            return 0.0
-        return 2 * precision * recall / (precision + recall)
-
-    def macro_f1(self, metrics: Dict[str, CodeMetrics]) -> float:
-        """Calculate macro-averaged F1."""
-        if not metrics:
-            return 0.0
-        f1_scores = [m.f1 for m in metrics.values()]
-        return sum(f1_scores) / len(f1_scores)
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "dataset_name": self.dataset_name,
-            "total_samples": self.total_samples,
-            "hybrid_pipeline": {
-                "exact_match": self.exact_match,
-                "exact_match_rate": round(self.exact_match / max(1, self.total_samples), 4),
-                "micro_f1": round(self.micro_f1(self.per_code_metrics), 4),
-                "macro_f1": round(self.macro_f1(self.per_code_metrics), 4),
-                "per_code": {k: v.to_dict() for k, v in sorted(self.per_code_metrics.items())},
-            },
-            "ml_only_baseline": {
-                "exact_match": self.ml_only_exact_match,
-                "exact_match_rate": round(self.ml_only_exact_match / max(1, self.total_samples), 4),
-                "micro_f1": round(self.micro_f1(self.ml_only_per_code), 4),
-                "macro_f1": round(self.macro_f1(self.ml_only_per_code), 4),
-                "per_code": {k: v.to_dict() for k, v in sorted(self.ml_only_per_code.items())},
-            },
-            "pipeline_behavior": {
-                "llm_called_count": self.llm_called_count,
-                "llm_usage_rate": round(self.llm_called_count / max(1, self.total_samples), 4),
-                "fast_path_count": self.fast_path_count,
-                "fast_path_rate": round(self.fast_path_count / max(1, self.total_samples), 4),
-                "rules_modified_count": self.rules_modified_count,
-            },
-            "difficulty_distribution": {
-                "high_conf": self.high_conf_count,
-                "gray_zone": self.gray_zone_count,
-                "low_conf": self.low_conf_count,
-            },
-            "error_count": len(self.errors),
-        }
-
-
-def parse_codes(codes_str: str) -> Set[str]:
-    """Parse comma-separated CPT codes into a set."""
-    if pd.isna(codes_str) or not codes_str:
-        return set()
-    return set(c.strip() for c in str(codes_str).split(",") if c.strip())
-
-
-def update_metrics(
-    metrics: Dict[str, CodeMetrics],
-    predicted: Set[str],
-    gold: Set[str],
-) -> None:
-    """Update per-code metrics based on predicted vs gold codes."""
-    # True positives
-    for code in predicted & gold:
-        if code not in metrics:
-            metrics[code] = CodeMetrics()
-        metrics[code].tp += 1
-
-    # False positives
-    for code in predicted - gold:
-        if code not in metrics:
-            metrics[code] = CodeMetrics()
-        metrics[code].fp += 1
-
-    # False negatives
-    for code in gold - predicted:
-        if code not in metrics:
-            metrics[code] = CodeMetrics()
-        metrics[code].fn += 1
-
-
-class OracleMLBasedLLMAdvisor(MockLLMAdvisor):
-    """
-    Mock LLM advisor that returns gold labels for evaluation purposes.
-
-    In production evaluation, we want to isolate the ML+Rules behavior,
-    so we make the LLM an oracle that always returns the correct answer.
-    This lets us measure how much the pipeline relies on LLM.
-    """
-
-    def __init__(self):
-        super().__init__()
-        self._gold_codes: Set[str] = set()
-
-    def set_gold_codes(self, codes: Set[str]) -> None:
-        """Set the gold codes for the current sample."""
-        self._gold_codes = codes
-
-    def suggest_codes(self, report_text: str) -> List[LLMCodeSuggestion]:
-        return [
-            LLMCodeSuggestion(code=c, confidence=0.95, rationale="Oracle response")
-            for c in self._gold_codes
-        ]
-
-    def suggest_with_context(
-        self, report_text: str, context: dict
-    ) -> List[LLMCodeSuggestion]:
-        return self.suggest_codes(report_text)
-
-
-def evaluate_dataset(
-    df: pd.DataFrame,
-    dataset_name: str,
-    ml_predictor: MLCoderPredictor,
-    rules_engine: CodingRulesEngine,
-    use_oracle_llm: bool = True,
-    ml_threshold: float = 0.5,
-) -> EvalResult:
-    """
-    Evaluate the hybrid pipeline on a dataset.
-
-    Args:
-        df: DataFrame with note_text and verified_cpt_codes columns
-        dataset_name: Name for reporting
-        ml_predictor: ML predictor instance
-        rules_engine: Rules engine instance
-        use_oracle_llm: If True, use oracle LLM that returns gold codes
-        ml_threshold: Threshold for ML-only baseline predictions
-
-    Returns:
-        EvalResult with all metrics
-    """
-    result = EvalResult(dataset_name=dataset_name, total_samples=len(df))
-
-    # Create orchestrator with oracle LLM for evaluation
-    oracle_llm = OracleMLBasedLLMAdvisor()
-    orchestrator = SmartHybridOrchestrator(
-        ml_predictor=ml_predictor,
-        rules_engine=rules_engine,
-        llm_advisor=oracle_llm,
-    )
-
-    for idx, row in df.iterrows():
-        note_text = str(row["note_text"])
-        gold_codes = parse_codes(row["verified_cpt_codes"])
-
-        if not gold_codes:
-            result.total_samples -= 1
-            continue
-
-        # Set oracle gold codes for this sample
-        oracle_llm.set_gold_codes(gold_codes)
-
-        try:
-            # Run hybrid pipeline
-            hybrid_result = orchestrator.get_codes(note_text)
-            predicted = set(hybrid_result.codes)
-
-            # Track pipeline behavior
-            if hybrid_result.metadata.get("llm_called", False):
-                result.llm_called_count += 1
-            if hybrid_result.source == "ml_rules_fastpath":
-                result.fast_path_count += 1
-
-            # Check if rules modified the output
-            ml_candidates = set(hybrid_result.metadata.get("ml_candidates", []))
-            llm_raw = set(hybrid_result.metadata.get("llm_raw_codes", []))
-            if ml_candidates != predicted and llm_raw != predicted:
-                result.rules_modified_count += 1
-
-            # Track difficulty distribution
-            difficulty = hybrid_result.metadata.get("ml_difficulty", "")
-            if "high" in difficulty:
-                result.high_conf_count += 1
-            elif "gray" in difficulty:
-                result.gray_zone_count += 1
-            else:
-                result.low_conf_count += 1
-
-            # Update hybrid metrics
-            update_metrics(result.per_code_metrics, predicted, gold_codes)
-            if predicted == gold_codes:
-                result.exact_match += 1
-
-            # ML-only baseline (no rules, no LLM)
-            ml_only_codes = set(ml_predictor.predict(note_text, threshold=ml_threshold))
-            update_metrics(result.ml_only_per_code, ml_only_codes, gold_codes)
-            if ml_only_codes == gold_codes:
-                result.ml_only_exact_match += 1
-
-            # Log discrepancies for analysis
-            if predicted != gold_codes:
-                result.errors.append({
-                    "idx": idx,
-                    "note_preview": note_text[:200],
-                    "gold": sorted(gold_codes),
-                    "predicted": sorted(predicted),
-                    "ml_only": sorted(ml_only_codes),
-                    "source": hybrid_result.source,
-                    "difficulty": difficulty,
-                    "false_positives": sorted(predicted - gold_codes),
-                    "false_negatives": sorted(gold_codes - predicted),
-                })
-
-        except Exception as e:
-            result.errors.append({
-                "idx": idx,
-                "error": str(e),
-                "note_preview": note_text[:200],
-            })
-
-    return result
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Evaluate hybrid coding pipeline")
-    parser.add_argument(
-        "--test-csv",
-        type=Path,
-        default=Path("data/ml_training/test.csv"),
-        help="Path to test CSV",
-    )
-    parser.add_argument(
-        "--edge-csv",
-        type=Path,
-        default=Path("data/ml_training/edge_cases_holdout.csv"),
-        help="Path to edge cases CSV",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path("data/eval_results"),
-        help="Output directory for metrics JSON",
-    )
-    parser.add_argument(
-        "--ml-threshold",
-        type=float,
-        default=0.5,
-        help="Threshold for ML-only baseline predictions",
-    )
-    parser.add_argument(
-        "--skip-edge",
-        action="store_true",
-        help="Skip edge cases evaluation",
-    )
-    args = parser.parse_args()
-
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-
-    print("Loading ML predictor...")
-    ml_predictor = MLCoderPredictor()
-    print(f"  Labels: {len(ml_predictor.labels)}")
-    print(f"  Thresholds: upper={ml_predictor.thresholds.upper}, lower={ml_predictor.thresholds.lower}")
-
-    print("\nLoading rules engine...")
-    rules_engine = CodingRulesEngine()
-
-    results = []
-
-    # Evaluate test set
-    if args.test_csv.exists():
-        print(f"\nEvaluating test set: {args.test_csv}")
-        test_df = pd.read_csv(args.test_csv)
-        print(f"  Samples: {len(test_df)}")
-
-        test_result = evaluate_dataset(
-            test_df,
-            "test_holdout",
-            ml_predictor,
-            rules_engine,
-            ml_threshold=args.ml_threshold,
-        )
-        results.append(test_result)
-
-        print(f"\n  Test Results (Hybrid Pipeline):")
-        print(f"    Exact match rate: {test_result.exact_match}/{test_result.total_samples} ({test_result.exact_match/max(1,test_result.total_samples)*100:.1f}%)")
-        print(f"    Micro F1: {test_result.micro_f1(test_result.per_code_metrics):.4f}")
-        print(f"    Macro F1: {test_result.macro_f1(test_result.per_code_metrics):.4f}")
-        print(f"\n  Test Results (ML-Only Baseline):")
-        print(f"    Exact match rate: {test_result.ml_only_exact_match}/{test_result.total_samples} ({test_result.ml_only_exact_match/max(1,test_result.total_samples)*100:.1f}%)")
-        print(f"    Micro F1: {test_result.micro_f1(test_result.ml_only_per_code):.4f}")
-        print(f"\n  Pipeline Behavior:")
-        print(f"    Fast path rate: {test_result.fast_path_count}/{test_result.total_samples} ({test_result.fast_path_count/max(1,test_result.total_samples)*100:.1f}%)")
-        print(f"    LLM usage rate: {test_result.llm_called_count}/{test_result.total_samples} ({test_result.llm_called_count/max(1,test_result.total_samples)*100:.1f}%)")
-        print(f"    Rules modified: {test_result.rules_modified_count}")
-        print(f"\n  Difficulty Distribution:")
-        print(f"    HIGH_CONF: {test_result.high_conf_count}")
-        print(f"    GRAY_ZONE: {test_result.gray_zone_count}")
-        print(f"    LOW_CONF: {test_result.low_conf_count}")
-    else:
-        print(f"\nTest CSV not found: {args.test_csv}")
-
-    # Evaluate edge cases
-    if not args.skip_edge and args.edge_csv.exists():
-        print(f"\nEvaluating edge cases: {args.edge_csv}")
-        edge_df = pd.read_csv(args.edge_csv)
-        print(f"  Samples: {len(edge_df)}")
-
-        edge_result = evaluate_dataset(
-            edge_df,
-            "edge_cases",
-            ml_predictor,
-            rules_engine,
-            ml_threshold=args.ml_threshold,
-        )
-        results.append(edge_result)
-
-        print(f"\n  Edge Case Results (Hybrid Pipeline):")
-        print(f"    Exact match rate: {edge_result.exact_match}/{edge_result.total_samples} ({edge_result.exact_match/max(1,edge_result.total_samples)*100:.1f}%)")
-        print(f"    Micro F1: {edge_result.micro_f1(edge_result.per_code_metrics):.4f}")
-        print(f"\n  Edge Case Results (ML-Only Baseline):")
-        print(f"    Exact match rate: {edge_result.ml_only_exact_match}/{edge_result.total_samples} ({edge_result.ml_only_exact_match/max(1,edge_result.total_samples)*100:.1f}%)")
-        print(f"    Micro F1: {edge_result.micro_f1(edge_result.ml_only_per_code):.4f}")
-        print(f"\n  Pipeline Behavior:")
-        print(f"    Fast path rate: {edge_result.fast_path_count}/{edge_result.total_samples} ({edge_result.fast_path_count/max(1,edge_result.total_samples)*100:.1f}%)")
-        print(f"    LLM usage rate: {edge_result.llm_called_count}/{edge_result.total_samples} ({edge_result.llm_called_count/max(1,edge_result.total_samples)*100:.1f}%)")
-    elif not args.skip_edge:
-        print(f"\nEdge cases CSV not found: {args.edge_csv}")
-
-    # Save results
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = args.output_dir / f"eval_hybrid_{timestamp}.json"
-
-    combined_results = {
-        "timestamp": timestamp,
-        "ml_threshold": args.ml_threshold,
-        "datasets": [r.to_dict() for r in results],
-    }
-
-    with open(output_file, "w") as f:
-        json.dump(combined_results, f, indent=2)
-
-    print(f"\nResults saved to: {output_file}")
-
-    # Also save errors log for analysis
-    errors_file = args.output_dir / f"eval_errors_{timestamp}.jsonl"
-    with open(errors_file, "w") as f:
-        for result in results:
-            for error in result.errors:
-                error["dataset"] = result.dataset_name
-                f.write(json.dumps(error) + "\n")
-
-    if any(r.errors for r in results):
-        print(f"Error log saved to: {errors_file}")
-
-
-if __name__ == "__main__":
-    main()
 
 ```

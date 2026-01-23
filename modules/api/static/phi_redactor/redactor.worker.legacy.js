@@ -8,7 +8,7 @@
  *  - Smarter merge rules: prefer regex spans over overlapping ML spans to avoid double-highlights
  */
 
-importScripts("https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js");
+importScripts("./transformers.min.js");
 importScripts("./protectedVeto.legacy.js");
 
 const { pipeline, env } = self.transformers || {};
