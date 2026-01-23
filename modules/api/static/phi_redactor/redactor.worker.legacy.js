@@ -8,8 +8,10 @@
  *  - Smarter merge rules: prefer regex spans over overlapping ML spans to avoid double-highlights
  */
 
-importScripts("./transformers.min.js");
-importScripts("./protectedVeto.legacy.js");
+const BASE_URL = new URL("./", self.location).toString();
+const CACHE_BUST = Date.now();
+importScripts(`${BASE_URL}transformers.min.js?v=${CACHE_BUST}`);
+importScripts(`${BASE_URL}protectedVeto.legacy.js?v=${CACHE_BUST}`);
 
 const { pipeline, env } = self.transformers || {};
 const applyVeto = self.applyVeto;
