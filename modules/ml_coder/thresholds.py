@@ -28,8 +28,8 @@ class Thresholds:
         per_code: Per-code upper threshold overrides for specific CPT codes
     """
 
-    upper: float = 0.7
-    lower: float = 0.4
+    upper: float = 0.85
+    lower: float = 0.60
     per_code: dict[str, float] = field(default_factory=dict)
 
     def upper_for(self, code: str) -> float:
