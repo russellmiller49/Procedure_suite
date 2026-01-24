@@ -106,11 +106,13 @@ This document is the **Single Source of Truth** for developers and AI assistants
 - Keep CPT-to-registry mapping current in `cpt_registry_mapping.py`
 - Update V2→V3 boolean mapping in `v2_booleans.py` when schema changes
 
-**Critical**: When changing the registry schema, update:
-1. `data/knowledge/IP_Registry.json` - Schema definition
-2. `schemas/IP_Registry.json` - JSON Schema for validation
-3. `modules/registry/v2_booleans.py` - Boolean field list
+**Critical (v3 / extraction-first)**: When changing the registry schema, update:
+1. `data/knowledge/IP_Registry.json` - Canonical v3 nested schema (drives dynamic `RegistryRecord`)
+2. `modules/registry/schema.py` / `modules/registry/schema_granular.py` - Custom type overrides + granular helpers
+3. `modules/registry/v2_booleans.py` - Boolean field list (ML label order)
 4. `modules/registry/application/cpt_registry_mapping.py` - CPT mappings
+
+Note: `schemas/IP_Registry.json` is a legacy flat schema used by `modules/registry_cleaning/`. Do not try to keep it identical to the v3 schema unless you also migrate the cleaning pipeline.
 
 ### 3. ML Agent
 
