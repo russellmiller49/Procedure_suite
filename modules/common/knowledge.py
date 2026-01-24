@@ -109,15 +109,44 @@ def knowledge_hash() -> str | None:
 
 def get_rvu(cpt: str) -> dict[str, float] | None:
     data = get_knowledge()
+    normalized = cpt.strip().lstrip("+")
+
+    # Prefer the consolidated master index when present.
+    master = data.get("master_code_index")
+    if isinstance(master, dict):
+        entry = master.get(normalized)
+        if isinstance(entry, dict):
+            simplified = entry.get("rvu_simplified")
+            if isinstance(simplified, dict):
+                return {
+                    "work": float(simplified.get("work", 0.0)),
+                    "pe": float(simplified.get("pe", 0.0)),
+                    "mp": float(simplified.get("mp", 0.0)),
+                }
+
+            financials = entry.get("financials")
+            if isinstance(financials, dict):
+                cms_2026 = financials.get("cms_pfs_2026")
+                if isinstance(cms_2026, dict):
+                    work = cms_2026.get("work_rvu")
+                    pe = cms_2026.get("facility_pe_rvu")
+                    mp = cms_2026.get("mp_rvu")
+                    if work is not None and pe is not None and mp is not None:
+                        return {"work": float(work), "pe": float(pe), "mp": float(mp)}
+
+    # Legacy fallback: rvus map (some add-ons are stored with '+' prefixes).
     rvus = data.get("rvus", {})
+    if not isinstance(rvus, dict):
+        return None
+
     entry = rvus.get(cpt)
     if not entry and not cpt.startswith("+"):
-        # Knowledge base stores some add-on RVUs with a '+' prefix (e.g. +31627).
         entry = rvus.get(f"+{cpt}")
     if not entry and cpt.startswith("+"):
         entry = rvus.get(cpt.lstrip("+"))
-    if not entry:
+    if not isinstance(entry, dict):
         return None
+
     return {
         "work": float(entry.get("work", 0.0)),
         "pe": float(entry.get("pe", 0.0)),

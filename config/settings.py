@@ -12,7 +12,7 @@ class CoderSettings(BaseSettings):
 
     model_version: str = "gemini-2.5-flash"
     kb_path: str = "data/knowledge/ip_coding_billing_v2_9.json"
-    kb_version: str = "v2_9"
+    kb_version: str = "v3_0"
     keyword_mapping_dir: str = "data/keyword_mappings"
     keyword_mapping_version: str = "v1"
 
@@ -22,9 +22,9 @@ class CoderSettings(BaseSettings):
     context_window_chars: int = 200
 
     # CMS conversion factor (updated annually by CMS)
-    # CY 2025 Medicare Physician Fee Schedule Conversion Factor
+    # CY 2026 Medicare Physician Fee Schedule Conversion Factor (non-QP)
     # Override via CODER_CMS_CONVERSION_FACTOR environment variable
-    cms_conversion_factor: float = 32.3562
+    cms_conversion_factor: float = 33.4009
 
     model_config = {"env_prefix": "CODER_"}
 

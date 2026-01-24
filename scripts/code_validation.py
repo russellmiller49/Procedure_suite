@@ -112,7 +112,7 @@ def collect_billable_codes(data: dict) -> Set[str]:
     billable |= _codes_from_dict_keys(data.get("rvus_pleural", {}))
     billable |= _codes_from_dict_keys(data.get("rvus_sedation_em", {}))
 
-    # 6) hcpcs top-level keys (contains true HCPCS + some CPT codes in this JSON)
+    # 6) hcpcs top-level keys (HCPCS Level II device/drug codes; alphanumeric only)
     billable |= _codes_from_dict_keys(data.get("hcpcs", {}))
 
     # 7) pleural cpt maps (redundant but harmless; helps if future versions omit other sections)
