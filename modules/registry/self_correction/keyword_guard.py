@@ -249,6 +249,29 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
         (r"(?i)\bbrush(?:ings?)?\b", "Text mentions 'brush' or 'brushings'."),
         (r"(?i)triple\s+needle", "Text mentions 'triple needle' (implies brushing/sampling)."),
     ],
+    # Fix for missed transbronchial biopsy (forceps TBLB/TBBx) in peripheral/radial cases.
+    "procedures_performed.transbronchial_biopsy.performed": [
+        (
+            r"(?i)\b(?:transbronchial\s+(?:lung\s+)?biops(?:y|ies)|transbronchial\s+forceps\s+biops(?:y|ies)|tbbx|tblb)\b",
+            "Text indicates transbronchial (lung) biopsy but extraction missed it.",
+        ),
+        (
+            r"(?is)\b(?:radial\s+(?:ebus|ultrasound)|rebus|miniprobe)\b.{0,250}\b(?:forceps\b.{0,40}\bbiops(?:y|ies)|biops(?:y|ies)\b.{0,40}\bforceps)\b",
+            "Text indicates peripheral biopsy with radial EBUS guidance but extraction missed transbronchial biopsy.",
+        ),
+        (
+            r"(?is)\b(?:guide\s+sheath|sheath\s+catheter|large\s+sheath|guide\s+catheter)\b.{0,250}\b(?:forceps\b.{0,40}\bbiops(?:y|ies)|biops(?:y|ies)\b.{0,40}\bforceps)\b",
+            "Text indicates peripheral biopsy through a sheath but extraction missed transbronchial biopsy.",
+        ),
+        (
+            r"(?is)\bfluoro(?:scop\w*)?\b.{0,250}\b(?:guide\s+sheath|sheath)\b.{0,250}\b(?:biops(?:y|ies)|forceps)\b",
+            "Text indicates peripheral biopsy with fluoroscopic + sheath guidance but extraction missed transbronchial biopsy.",
+        ),
+        (
+            r"(?i)\bperipheral\s+needle\s+forceps\b",
+            "Text indicates peripheral forceps biopsy but extraction missed transbronchial biopsy.",
+        ),
+    ],
     # Fix for missed peripheral TBNA (lung/peripheral targets).
     # NOTE: Generic "TBNA" also appears in EBUS sections; patterns here require
     # navigation/peripheral-lesion context to avoid forcing nodal TBNA flags.
@@ -260,6 +283,14 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
         (
             r"(?is)\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b.{0,250}\b(?:ion|robotic|navigation|navigational|\benb\b|monarch|galaxy|superdimension|peripheral|target\s+lesion|lesion|nodule|(?:lung|pulmonary)\s+(?:lesion|nodule|mass))\b",
             "Text indicates peripheral/lung TBNA but extraction missed it.",
+        ),
+        (
+            r"(?is)\bendobronchial\s+needle\s+biops(?:y|ies)\b.{0,120}\b(?:nodule|lesion|tumou?r|mass)\b",
+            "Text indicates non-EBUS needle biopsy of a lesion but extraction missed it.",
+        ),
+        (
+            r"(?is)\b(?:nodule|lesion|tumou?r|mass)\b.{0,120}\bendobronchial\s+needle\s+biops(?:y|ies)\b",
+            "Text indicates non-EBUS needle biopsy of a lesion but extraction missed it.",
         ),
     ],
     # Fix for missed conventional (non-EBUS) nodal TBNA.
@@ -347,39 +378,35 @@ _TBNA_EBUS_CONTEXT_RE = re.compile(
 _EBUS_STATION_TOKEN_RE = re.compile(
     r"(?i)\b(?:2R|2L|4R|4L|7|10R|10L|11R(?:S|I)?|11L(?:S|I)?)\b"
 )
-_PERIPHERAL_TBNA_STRONG_CUES_RE = re.compile(
-    r"(?i)\b(?:"
-    r"ion|robotic|navigation|navigational|\benb\b|monarch|galaxy|superdimension|"
-    r"peripheral|target\s+lesion|"
-    r"(?:lung|pulmonary)\s+(?:lesion|nodule|mass)|"
-    r"(?:lesion|nodule)\b"
-    r")\b"
+_TBNA_TERM_RE = re.compile(
+    r"(?i)\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b"
 )
-
-
-def _paragraph_window(note_text: str, start: int, end: int) -> str:
-    lookback_start = max(0, start - 800)
-    paragraph_break = note_text.rfind("\n\n", lookback_start, start)
-    if paragraph_break != -1:
-        lookback_start = paragraph_break + 2
-    paragraph_end = note_text.find("\n\n", end)
-    if paragraph_end == -1:
-        paragraph_end = min(len(note_text), end + 800)
-    return note_text[lookback_start:paragraph_end]
 
 
 def _looks_like_ebus_nodal_tbna_only(note_text: str, match: re.Match[str]) -> bool:
     """Return True when the match sits in an EBUS nodal TBNA paragraph (not peripheral TBNA)."""
     if not note_text:
         return False
-    window = _paragraph_window(note_text, match.start(), match.end())
-    if not _TBNA_EBUS_CONTEXT_RE.search(window):
+    # Prefer a local window around the match: notes often contain both an EBUS
+    # section (stations) and separate non-EBUS needle sampling elsewhere; using
+    # the full paragraph can incorrectly suppress distinct-site TBNA.
+    local_start = max(0, match.start() - 300)
+    local_end = min(len(note_text), match.end() + 300)
+    window = note_text[local_start:local_end]
+
+    tbna_hit = _TBNA_TERM_RE.search(window)
+    if not tbna_hit:
         return False
-    if not (_EBUS_STATION_TOKEN_RE.search(window) or re.search(r"(?i)\bstation\(s\)?\b", window)):
+
+    # Focus the disambiguation around the TBNA wording itself (not an entire
+    # long paragraph that may include unrelated peripheral-biopsy content).
+    tbna_abs_start = local_start + tbna_hit.start()
+    tbna_abs_end = local_start + tbna_hit.end()
+    tbna_window = note_text[max(0, tbna_abs_start - 180) : min(len(note_text), tbna_abs_end + 180)]
+
+    if not _TBNA_EBUS_CONTEXT_RE.search(tbna_window):
         return False
-    # If strong peripheral cues are present in the same paragraph, do not suppress:
-    # peripheral TBNA can co-occur with EBUS (distinct site).
-    if _PERIPHERAL_TBNA_STRONG_CUES_RE.search(window):
+    if not (_EBUS_STATION_TOKEN_RE.search(tbna_window) or re.search(r"(?i)\bstation\(s\)?\b", tbna_window)):
         return False
     return True
 

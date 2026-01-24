@@ -13,14 +13,35 @@ Run with: pytest tests/ml_advisor/test_router.py -v
 
 import json
 import os
+from collections.abc import Generator
 from pathlib import Path
 from typing import Any
+from unittest.mock import patch
 
 import pytest
 from fastapi.testclient import TestClient
 
 from modules.proc_ml_advisor.schemas import ProcedureCategory
 from modules.api.ml_advisor_router import get_advisor_config
+
+
+@pytest.fixture(autouse=True)
+def _skip_registry_runtime_bundle_verification() -> Generator[None, None, None]:
+    # The FastAPI app lifespan validates registry runtime bundles on startup.
+    # In unit tests, the heavyweight model artifacts may not be present, so we
+    # patch this to bypass the startup guardrail.
+    with patch("modules.registry.model_runtime.verify_registry_runtime_bundle", return_value=[]):
+        yield
+
+
+@pytest.fixture
+def test_client(
+    _skip_registry_runtime_bundle_verification,
+) -> Generator[TestClient, None, None]:
+    from modules.api.fastapi_app import app
+
+    with TestClient(app) as client:
+        yield client
 
 
 def make_override_config(

@@ -1123,7 +1123,10 @@ class RegistryEngine:
         }
 
         pass_count_pattern = r"\d{1,2}|zero|one|two|three|four|five|six|seven|eight|nine|ten"
-        pass_phrase_pattern = rf"\b(?P<count>{pass_count_pattern})\b\s+(?:needle\s+)?passes?\b"
+        pass_phrase_pattern = (
+            rf"\b(?P<count>{pass_count_pattern})\b\s+"
+            rf"(?:needle\s+)?(?:passes?|biops(?:y|ies)|samples?)\b"
+        )
 
         def _parse_count(raw: str) -> int | None:
             if not raw:

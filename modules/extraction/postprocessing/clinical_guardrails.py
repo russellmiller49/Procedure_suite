@@ -120,6 +120,19 @@ class ClinicalGuardrails:
         radial_present = radial_marker or explicit_radial
         linear_marker = bool(_LINEAR_MARKER_PATTERN.search(text_lower))
         station_data_present = self._linear_station_data_present(record_data)
+        peripheral_context_present = bool(
+            re.search(
+                r"\b(?:"
+                r"peripheral\s+bronchoscopy|"
+                r"fluoro(?:scop\w*)?|"
+                r"guide\s+sheath|sheath\s+catheter|large\s+sheath|"
+                r"nodule|target\s+lesion|pulmonary\s+nodule|lung\s+nodule|"
+                r"transbronchial\s+(?:lung\s+)?biops|tbbx|tblb|"
+                r"brush(?:ings?)?\b"
+                r")\b",
+                text_lower,
+            )
+        )
 
         if radial_present:
             changed |= self._set_procedure_performed(record_data, "radial_ebus", True)
@@ -139,7 +152,10 @@ class ClinicalGuardrails:
         if radial_present and not linear_marker and not station_data_present:
             changed |= self._set_procedure_performed(record_data, "linear_ebus", False)
 
-        if radial_present and (linear_marker or station_data_present):
+        # Combined linear (staging) + radial (peripheral localization) EBUS is common.
+        # Only force manual review when there is no peripheral-context evidence that
+        # explains why both marker families appear.
+        if radial_present and (linear_marker or station_data_present) and not peripheral_context_present:
             needs_review = True
             warnings.append("Radial vs linear EBUS markers both present; review required.")
 

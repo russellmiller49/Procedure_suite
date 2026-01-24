@@ -1423,6 +1423,8 @@ class RegistryService:
             extraction_warnings.extend(nav_target_warnings)
 
         from modules.registry.postprocess import (
+            enrich_ebus_node_event_outcomes,
+            enrich_linear_ebus_needle_gauge,
             populate_ebus_node_events_fallback,
             sanitize_ebus_events,
         )
@@ -1433,6 +1435,12 @@ class RegistryService:
         ebus_sanitize_warnings = sanitize_ebus_events(record, masked_note_text)
         if ebus_sanitize_warnings:
             extraction_warnings.extend(ebus_sanitize_warnings)
+        ebus_outcome_warnings = enrich_ebus_node_event_outcomes(record, masked_note_text)
+        if ebus_outcome_warnings:
+            extraction_warnings.extend(ebus_outcome_warnings)
+        ebus_gauge_warnings = enrich_linear_ebus_needle_gauge(record, masked_note_text)
+        if ebus_gauge_warnings:
+            extraction_warnings.extend(ebus_gauge_warnings)
 
         guardrail_outcome = self.clinical_guardrails.apply_record_guardrails(
             masked_note_text, record

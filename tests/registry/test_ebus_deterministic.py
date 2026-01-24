@@ -72,6 +72,18 @@ def test_parse_ebus_station_passes_station7_label_style(engine):
     assert passes.get("7") == 2
 
 
+def test_parse_ebus_station_passes_samples_collected(engine):
+    note = "A total of 7 samples were collected from station 2R."
+    passes = engine._parse_ebus_station_passes(note)
+    assert passes.get("2R") == 7
+
+
+def test_parse_ebus_station_passes_biopsies_wording(engine):
+    note = "Station 11L: 5 biopsies were performed."
+    passes = engine._parse_ebus_station_passes(note)
+    assert passes.get("11L") == 5
+
+
 def test_parse_ebus_station_passes_does_not_false_positive_age(engine):
     note = "Age 7 years. Five needle passes were performed."
     passes = engine._parse_ebus_station_passes(note)

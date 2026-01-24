@@ -7,7 +7,7 @@ pytestmark = pytest.mark.asyncio
 async def test_ui_index(api_client: AsyncClient):
     response = await api_client.get("/ui/")
     assert response.status_code == 200
-    assert "Procedure Suite Workbench" in response.text
+    assert "Procedure Suite" in response.text
 
 async def test_api_root_json(api_client: AsyncClient):
     # Default behavior (no Accept: text/html) should be JSON

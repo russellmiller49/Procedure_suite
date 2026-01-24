@@ -91,8 +91,8 @@ def test_derive_procedures_from_granular_up_propagates_sampling_tools_paths() ->
         existing_procedures={},
     )
 
-    assert updated["tbna_conventional"]["performed"] is True
-    assert "RUL posterior segment lesion" in (updated["tbna_conventional"].get("stations_sampled") or [])
+    assert updated["peripheral_tbna"]["performed"] is True
+    assert "RUL posterior segment lesion" in (updated["peripheral_tbna"].get("targets_sampled") or [])
     assert updated["transbronchial_biopsy"]["performed"] is True
     assert updated["transbronchial_biopsy"]["number_of_samples"] == 3
     assert updated["bronchial_wash"]["performed"] is True

@@ -2789,7 +2789,9 @@
         "Used for pleurodesis; report number of units used.",
         "Typically reported with 32560 for chemical pleurodesis or 32650 for thoracoscopic pleurodesis."
       ]
-    },
+    }
+  },
+  "cpt_index": {
     "32997": {
       "code": "32997",
       "description": "Total lung lavage (unilateral)",

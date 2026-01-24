@@ -145,6 +145,8 @@ __all__ = [
     # Registry-record-level guardrails
     "populate_ebus_node_events_fallback",
     "sanitize_ebus_events",
+    "enrich_ebus_node_event_outcomes",
+    "enrich_linear_ebus_needle_gauge",
 ]
 
 
@@ -2854,4 +2856,134 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
         setattr(linear, "stations_sampled", sorted(set(stations_sampled)) if stations_sampled else None)
 
     warnings.append("EBUS_REGEX_FALLBACK: populated node_events from station lines.")
+    return warnings
+
+
+_EBUS_ROSE_MARKER_RE = re.compile(
+    r"\b(?:rose|rapid\s+on[-\s]?site|on[-\s]?site\s+path|onsite\s+path|on[-\s]?site\s+cytolog)\b",
+    re.IGNORECASE,
+)
+_EBUS_ROSE_BENIGN_RE = re.compile(
+    r"\b(?:benign|reactive|lymphocytes?|adequate\s+lymphocytes?|granulom(?:a|as)|negative\s+for\s+malignan|no\s+malignan|did\s+not\s+identify\s+malignan)\b",
+    re.IGNORECASE,
+)
+_EBUS_ROSE_MALIGNANT_RE = re.compile(
+    r"\b(?:malignan(?:t|cy)|carcinoma|adenocarcinoma|squamous|small\s+cell|positive\s+for\s+malignan)\b",
+    re.IGNORECASE,
+)
+_EBUS_ROSE_SUSPICIOUS_RE = re.compile(r"\bsuspici(?:ous|on)\b", re.IGNORECASE)
+_EBUS_ROSE_NONDx_RE = re.compile(
+    r"\b(?:non[-\s]?diagnostic|nondiagnostic|inadequate|insufficient|scant)\b",
+    re.IGNORECASE,
+)
+_EBUS_NEGATED_MALIGNANCY_RE = re.compile(
+    r"\b(?:no|not|without|negative\s+for|did\s+not\s+identify)\b[^.\n]{0,40}\bmalignan",
+    re.IGNORECASE,
+)
+
+
+def _infer_ebus_node_outcome_from_rose_window(rose_window: str, station: str) -> str | None:
+    """Infer NodeOutcomeType from ROSE/onsite-path wording near a station token."""
+    if not rose_window or not station:
+        return None
+
+    station_token = station.strip().upper()
+    if not station_token:
+        return None
+
+    lowered = rose_window.lower()
+    station_lower = station_token.lower()
+
+    # Require the station token to appear in the window to avoid applying global ROSE
+    # statements (e.g., "ROSE negative") to every station.
+    if station_lower not in lowered and f"station {station_lower}" not in lowered:
+        return None
+
+    # Check a tight neighborhood around each station mention.
+    for match in re.finditer(re.escape(station_lower), lowered):
+        local = lowered[max(0, match.start() - 140) : min(len(lowered), match.end() + 140)]
+
+        if _EBUS_ROSE_NONDx_RE.search(local):
+            return "nondiagnostic"
+        if _EBUS_ROSE_SUSPICIOUS_RE.search(local):
+            return "suspicious"
+        if _EBUS_ROSE_MALIGNANT_RE.search(local) and not _EBUS_NEGATED_MALIGNANCY_RE.search(local):
+            return "malignant"
+        if _EBUS_ROSE_BENIGN_RE.search(local):
+            return "benign"
+
+    return None
+
+
+def enrich_ebus_node_event_outcomes(record: RegistryRecord, full_text: str) -> list[str]:
+    """Enrich EBUS node_events outcomes from ROSE/onsite-path wording when possible."""
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    node_events = getattr(linear, "node_events", None) if linear is not None else None
+    if not isinstance(node_events, list) or not node_events:
+        return warnings
+    if not full_text:
+        return warnings
+
+    # Build ROSE windows (bounded slices) for efficient station lookups.
+    rose_windows: list[str] = []
+    for marker in _EBUS_ROSE_MARKER_RE.finditer(full_text):
+        start = max(0, marker.start() - 600)
+        end = min(len(full_text), marker.end() + 600)
+        rose_windows.append(full_text[start:end])
+
+    if not rose_windows:
+        return warnings
+
+    for event in node_events:
+        if getattr(event, "action", None) != "needle_aspiration":
+            continue
+        station = getattr(event, "station", None)
+        if not isinstance(station, str) or not station.strip():
+            continue
+
+        outcome = getattr(event, "outcome", None)
+        if outcome not in (None, "unknown", "deferred_to_final_path"):
+            continue
+
+        inferred: str | None = None
+        for window in rose_windows:
+            inferred = _infer_ebus_node_outcome_from_rose_window(window, station)
+            if inferred:
+                break
+
+        if inferred:
+            setattr(event, "outcome", inferred)
+            warnings.append(f"AUTO_EBUS_OUTCOME: {station.strip().upper()} -> {inferred}")
+
+    return warnings
+
+
+def enrich_linear_ebus_needle_gauge(record: RegistryRecord, full_text: str) -> list[str]:
+    """Populate procedures_performed.linear_ebus.needle_gauge from note text when missing."""
+    warnings: list[str] = []
+
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    if linear is None or getattr(linear, "performed", None) is not True:
+        return warnings
+
+    existing = getattr(linear, "needle_gauge", None)
+    if existing:
+        return warnings
+
+    if not full_text:
+        return warnings
+
+    match = re.search(r"\b(19|21|22|25)\s*[-]?\s*(?:G|gauge)\b", full_text, re.IGNORECASE)
+    if not match:
+        match = re.search(r"\b(19|21|22|25)\s+gauge\s+needle\b", full_text, re.IGNORECASE)
+    if not match:
+        return warnings
+
+    gauge = int(match.group(1))
+    setattr(linear, "needle_gauge", f"{gauge}G")
+    warnings.append("AUTO_EBUS_NEEDLE_GAUGE: parsed from note text")
+
     return warnings
