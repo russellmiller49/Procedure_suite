@@ -254,11 +254,11 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
     # navigation/peripheral-lesion context to avoid forcing nodal TBNA flags.
     "procedures_performed.peripheral_tbna.performed": [
         (
-            r"(?is)\b(?:ion|robotic|navigation|navigational|target|lesion|nodule|mass)\b.{0,200}\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b",
+            r"(?is)\b(?:ion|robotic|navigation|navigational|\benb\b|monarch|galaxy|superdimension|peripheral|target\s+lesion|lesion|nodule|(?:lung|pulmonary)\s+(?:lesion|nodule|mass))\b.{0,250}\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b",
             "Text indicates peripheral/lung TBNA but extraction missed it.",
         ),
         (
-            r"(?is)\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b.{0,200}\b(?:ion|robotic|navigation|navigational|target|lesion|nodule|mass)\b",
+            r"(?is)\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b.{0,250}\b(?:ion|robotic|navigation|navigational|\benb\b|monarch|galaxy|superdimension|peripheral|target\s+lesion|lesion|nodule|(?:lung|pulmonary)\s+(?:lesion|nodule|mass))\b",
             "Text indicates peripheral/lung TBNA but extraction missed it.",
         ),
     ],
@@ -344,6 +344,44 @@ _CHEST_TUBE_INSERTION_CUES_RE = re.compile(
 _TBNA_EBUS_CONTEXT_RE = re.compile(
     r"(?i)\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b"
 )
+_EBUS_STATION_TOKEN_RE = re.compile(
+    r"(?i)\b(?:2R|2L|4R|4L|7|10R|10L|11R(?:S|I)?|11L(?:S|I)?)\b"
+)
+_PERIPHERAL_TBNA_STRONG_CUES_RE = re.compile(
+    r"(?i)\b(?:"
+    r"ion|robotic|navigation|navigational|\benb\b|monarch|galaxy|superdimension|"
+    r"peripheral|target\s+lesion|"
+    r"(?:lung|pulmonary)\s+(?:lesion|nodule|mass)|"
+    r"(?:lesion|nodule)\b"
+    r")\b"
+)
+
+
+def _paragraph_window(note_text: str, start: int, end: int) -> str:
+    lookback_start = max(0, start - 800)
+    paragraph_break = note_text.rfind("\n\n", lookback_start, start)
+    if paragraph_break != -1:
+        lookback_start = paragraph_break + 2
+    paragraph_end = note_text.find("\n\n", end)
+    if paragraph_end == -1:
+        paragraph_end = min(len(note_text), end + 800)
+    return note_text[lookback_start:paragraph_end]
+
+
+def _looks_like_ebus_nodal_tbna_only(note_text: str, match: re.Match[str]) -> bool:
+    """Return True when the match sits in an EBUS nodal TBNA paragraph (not peripheral TBNA)."""
+    if not note_text:
+        return False
+    window = _paragraph_window(note_text, match.start(), match.end())
+    if not _TBNA_EBUS_CONTEXT_RE.search(window):
+        return False
+    if not (_EBUS_STATION_TOKEN_RE.search(window) or re.search(r"(?i)\bstation\(s\)?\b", window)):
+        return False
+    # If strong peripheral cues are present in the same paragraph, do not suppress:
+    # peripheral TBNA can co-occur with EBUS (distinct site).
+    if _PERIPHERAL_TBNA_STRONG_CUES_RE.search(window):
+        return False
+    return True
 
 
 def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str | None = None) -> bool:
@@ -415,6 +453,9 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
         for pattern, msg in rules:
             match = re.search(pattern, note_text or "")
             if match and not _match_is_negated(note_text or "", match, field_path=field_path):
+                if field_path == "procedures_performed.peripheral_tbna.performed":
+                    if _looks_like_ebus_nodal_tbna_only(note_text or "", match):
+                        continue
                 warning = f"SILENT_FAILURE: {msg} (Pattern: '{pattern}')"
                 warnings.append(warning)
                 logger.warning(warning, extra={"field": field_path, "pattern": pattern})
@@ -454,6 +495,9 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
                 continue
             if _match_is_negated(note_text or "", match, field_path=field_path):
                 continue
+            if field_path == "procedures_performed.peripheral_tbna.performed":
+                if _looks_like_ebus_nodal_tbna_only(note_text or "", match):
+                    continue
 
             if field_path.startswith("granular_data.navigation_targets"):
                 granular = record_data.get("granular_data")

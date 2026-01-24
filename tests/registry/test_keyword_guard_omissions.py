@@ -31,3 +31,14 @@ def test_scan_for_omissions_warns_for_missing_thermal_ablation() -> None:
     warnings = scan_for_omissions(note_text, record)
     assert any("electrocautery" in w.lower() for w in warnings) or any("argon" in w.lower() for w in warnings)
 
+
+def test_scan_for_omissions_does_not_misfire_peripheral_tbna_on_ebus_station_mass_phrase() -> None:
+    record = RegistryRecord.model_validate(
+        {"procedures_performed": {"linear_ebus": {"performed": True, "stations_sampled": ["11L"]}}}
+    )
+    note_text = (
+        "Linear EBUS: Multiple EBUS-TBNA passes were obtained from the following station(s):\n\n"
+        "11L (abnormally large lymph node versus mass)\n"
+    )
+    warnings = scan_for_omissions(note_text, record)
+    assert not any("peripheral/lung tbna" in w.lower() for w in warnings)

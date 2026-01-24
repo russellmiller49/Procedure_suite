@@ -2724,6 +2724,10 @@ _EBUS_STATION_TOKEN_RE = re.compile(
     r"\b(2R|2L|4R|4L|7|10R|10L|11R(?:S|I)?|11L(?:S|I)?)\b",
     re.IGNORECASE,
 )
+_EBUS_STATION_LIST_HEADER_RE = re.compile(
+    r"\b(?:following\s+station\(s\)|following\s+stations?|stations?\s+(?:sampled|biopsied|aspirated)|lymph\s+node\s+stations?\s+(?:sampled|biopsied))\b",
+    re.IGNORECASE,
+)
 _EBUS_INSPECTION_HINTS_RE = re.compile(
     r"\b(?:inspect|inspection|visualiz|view|survey|assess|measure|measurement)\b",
     re.IGNORECASE,
@@ -2755,19 +2759,56 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
     station_events: dict[str, NodeInteraction] = {}
     stations_sampled: list[str] = []
     in_sampled_section = False
+    in_station_list = False
+    station_list_default_sampling = False
+    station_list_seen_station = False
 
     for line in full_text.splitlines():
         if _EBUS_SAMPLED_SECTION_RE.search(line):
             in_sampled_section = True
             continue
+        if _EBUS_STATION_LIST_HEADER_RE.search(line) and re.search(r"(?i)\b(?:tbna|needle|aspirat|sample|biops)\w*\b", line):
+            in_station_list = True
+            station_list_default_sampling = True
+            station_list_seen_station = False
+            continue
+        if _EBUS_STATION_LIST_HEADER_RE.search(line) and _EBUS_INSPECTION_HINTS_RE.search(line):
+            in_station_list = True
+            station_list_default_sampling = False
+            station_list_seen_station = False
+            continue
         if not line.strip():
             in_sampled_section = False
+            if in_station_list:
+                # Many notes put a blank line between a "following station(s):" header
+                # and the actual station lines. Keep the section open across blank lines.
+                continue
+            station_list_default_sampling = False
 
         if not _EBUS_FALLBACK_STATION_RE.search(line):
-            if not (in_sampled_section or "lymph node" in line.lower()):
+            if not (in_sampled_section or in_station_list or "lymph node" in line.lower()):
                 continue
 
+        has_station_token = bool(_EBUS_STATION_TOKEN_RE.search(line)) or bool(
+            _EBUS_FALLBACK_STATION_RE.search(line)
+        )
+        if in_station_list:
+            if has_station_token:
+                station_list_seen_station = True
+            else:
+                # End the station-list section once we move past station lines.
+                if station_list_seen_station and not re.search(r"(?i)\blymph\s+node\b", line):
+                    if not _EBUS_SAMPLING_INDICATORS_RE.search(line) and not _EBUS_INSPECTION_HINTS_RE.search(line):
+                        in_station_list = False
+                        station_list_default_sampling = False
+                        station_list_seen_station = False
+                        # Re-evaluate this line outside the station-list context.
+                        if not _EBUS_FALLBACK_STATION_RE.search(line) and "lymph node" not in line.lower():
+                            continue
+
         sampling = bool(_EBUS_SAMPLING_INDICATORS_RE.search(line)) or in_sampled_section
+        if in_station_list and not sampling:
+            sampling = station_list_default_sampling
         negated = bool(_EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(line))
         inspection = bool(_EBUS_INSPECTION_HINTS_RE.search(line))
         if _EBUS_MEASURE_ONLY_RE.search(line) and not sampling:
@@ -2781,7 +2822,7 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
         station_tokens: list[str] = []
         for match in _EBUS_FALLBACK_STATION_RE.finditer(line):
             station_tokens.append(match.group(1) or "")
-        if in_sampled_section or "lymph node" in line.lower():
+        if in_sampled_section or in_station_list or "lymph node" in line.lower():
             for match in _EBUS_STATION_TOKEN_RE.finditer(line):
                 station_tokens.append(match.group(1) or "")
 
