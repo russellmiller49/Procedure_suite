@@ -54,7 +54,11 @@ _STENT_REMOVAL_CONTEXT_RE = re.compile(
     re.IGNORECASE,
 )
 _STENT_INSPECTION_RE = re.compile(
-    r"\bstent\b[^.\n]{0,60}\b(evaluat|inspect|inspection|patent|intact|visible|in\s+good\s+position|in\s+place|position\s+confirmed)\b",
+    r"\b(?:"
+    r"(?:stent|bms)\b[^.\n]{0,80}\b(evaluat|inspect|inspection|patent|intact|visible|in\s+good\s+position|in\s+place|position\s+confirmed)\b"
+    r"|"
+    r"(evaluat|inspect|inspection|patent|intact|visible|in\s+good\s+position|in\s+place|position\s+confirmed)\b[^.\n]{0,80}\b(?:stent|bms)\b"
+    r")\b",
     re.IGNORECASE,
 )
 
@@ -76,6 +80,11 @@ _REMOVE_TERMS = (
     "dc",
 )
 
+_CHEST_TUBE_DATE_OF_INSERTION_RE = re.compile(
+    r"\bdate\s+of\s+(?:the\s+)?chest\s+tube\s+insertion\b",
+    re.IGNORECASE,
+)
+
 
 @dataclass
 class GuardrailOutcome:
@@ -95,6 +104,7 @@ class ClinicalGuardrails:
 
         record_data = record.model_dump()
         text_lower = (note_text or "").lower()
+        chest_tube_insertion_date_line = bool(_CHEST_TUBE_DATE_OF_INSERTION_RE.search(text_lower))
 
         # Airway dilation false positives (skin/subcutaneous/chest wall/tract context).
         if _DILATION_CONTEXT_PATTERN.search(text_lower):
@@ -189,8 +199,39 @@ class ClinicalGuardrails:
                     warnings.append("Stent removal flag not supported by text; treating as not performed.")
                     changed = True
             elif inspection_only and not placement_present and not removal_text_present:
-                if self._clear_stent(record_data):
-                    warnings.append("Stent inspection-only language; treating as not performed.")
+                if self._set_stent_assessment_only(record_data):
+                    warnings.append("Stent inspection-only language; treating as assessment only.")
+                    changed = True
+
+        # Endobronchial biopsy false positives in peripheral cases.
+        endobronchial_biopsy = (
+            procedures.get("endobronchial_biopsy") if isinstance(procedures, dict) else None
+        )
+        if isinstance(endobronchial_biopsy, dict) and endobronchial_biopsy.get("performed") is True:
+            no_endobronchial_lesions = bool(
+                re.search(r"\bno\s+endobronchial\s+lesions?\b", text_lower, re.IGNORECASE)
+            )
+            explicit_endobronchial_biopsy = bool(
+                re.search(r"\bendobronchial\s+biops(?:y|ies)\b|\bebbx\b", text_lower, re.IGNORECASE)
+            )
+            peripheral_case = bool(
+                re.search(
+                    r"\b(?:"
+                    r"peripheral|nodule|lung\s+(?:nodule|lesion|mass)|pulmonary\s+(?:nodule|lesion|mass)|"
+                    r"navigation|navigational|electromagnetic\s+navigation|\benb\b|ion\b|robotic|"
+                    r"radial\s+(?:ebus|probe|ultrasound)|rebus|miniprobe|"
+                    r"transbronchial\s+(?:lung\s+)?biops|tbbx|tblb"
+                    r")\b",
+                    text_lower,
+                    re.IGNORECASE,
+                )
+            )
+
+            if no_endobronchial_lesions and peripheral_case and not explicit_endobronchial_biopsy:
+                if self._set_procedure_performed(record_data, "endobronchial_biopsy", False):
+                    warnings.append(
+                        "Endobronchial biopsy excluded due to peripheral case + 'no endobronchial lesions' context."
+                    )
                     changed = True
 
         # IPC vs chest tube disambiguation.
@@ -198,35 +239,49 @@ class ClinicalGuardrails:
         tube_present = self._contains_any(text_lower, _CHEST_TUBE_TERMS)
         pleural_flagged = self._pleural_procedure_flagged(record_data)
         if pleural_flagged and (ipc_present or tube_present):
+            if chest_tube_insertion_date_line:
+                tube_cleared = self._set_pleural_performed(record_data, "chest_tube", False)
+                if tube_cleared:
+                    warnings.append("Chest tube excluded due to 'Date of chest tube insertion' history line.")
+                    changed = True
+            has_device_flag = bool(self._pleural_device_flagged(record_data))
             ipc_insert = any(self._has_action_near(text_lower, term, _INSERT_TERMS) for term in _IPC_TERMS)
             tube_insert = any(self._has_action_near(text_lower, term, _INSERT_TERMS) for term in _CHEST_TUBE_TERMS)
             ipc_remove = any(self._has_action_near(text_lower, term, _REMOVE_TERMS) for term in _IPC_TERMS)
             tube_remove = any(self._has_action_near(text_lower, term, _REMOVE_TERMS) for term in _CHEST_TUBE_TERMS)
+            if chest_tube_insertion_date_line:
+                tube_insert = False
 
-            removal_only = False
-            if tube_present and tube_remove and not tube_insert and not ipc_insert:
-                changed |= self._set_pleural_performed(record_data, "chest_tube", False)
-                warnings.append("Chest tube discontinue/removal language; treating as not performed.")
-                removal_only = True
-            if ipc_present and ipc_remove and not ipc_insert and not tube_insert:
-                changed |= self._set_pleural_performed(record_data, "ipc", False)
-                warnings.append("IPC discontinue/removal language; treating as not performed.")
-                removal_only = True
-            if removal_only:
+            # If a pleural procedure is flagged (e.g., fibrinolytic instillation) but there is
+            # no explicit device action, avoid inferring a device placement solely from mention
+            # of "chest tube"/"PleurX"/etc in historical/route context.
+            if not has_device_flag and not any((ipc_insert, tube_insert, ipc_remove, tube_remove)):
                 pass
             else:
-                preferred = self._resolve_pleural_device(text_lower, ipc_present, tube_present)
-                if preferred == "ipc":
-                    changed |= self._set_pleural_performed(record_data, "ipc", True)
+                removal_only = False
+                if tube_present and tube_remove and not tube_insert and not ipc_insert:
                     changed |= self._set_pleural_performed(record_data, "chest_tube", False)
-                    warnings.append("IPC inferred from tunneled/IPC device language.")
-                elif preferred == "chest_tube":
-                    changed |= self._set_pleural_performed(record_data, "chest_tube", True)
+                    warnings.append("Chest tube discontinue/removal language; treating as not performed.")
+                    removal_only = True
+                if ipc_present and ipc_remove and not ipc_insert and not tube_insert:
                     changed |= self._set_pleural_performed(record_data, "ipc", False)
-                    warnings.append("Chest tube inferred from pigtail/Wayne/tube thoracostomy language.")
-                elif ipc_present and tube_present:
-                    needs_review = True
-                    warnings.append("IPC vs chest tube conflict; review required.")
+                    warnings.append("IPC discontinue/removal language; treating as not performed.")
+                    removal_only = True
+                if removal_only:
+                    pass
+                else:
+                    preferred = self._resolve_pleural_device(text_lower, ipc_present, tube_present)
+                    if preferred == "ipc":
+                        changed |= self._set_pleural_performed(record_data, "ipc", True)
+                        changed |= self._set_pleural_performed(record_data, "chest_tube", False)
+                        warnings.append("IPC inferred from tunneled/IPC device language.")
+                    elif preferred == "chest_tube":
+                        changed |= self._set_pleural_performed(record_data, "chest_tube", True)
+                        changed |= self._set_pleural_performed(record_data, "ipc", False)
+                        warnings.append("Chest tube inferred from pigtail/Wayne/tube thoracostomy language.")
+                    elif ipc_present and tube_present:
+                        needs_review = True
+                        warnings.append("IPC vs chest tube conflict; review required.")
 
         updated = RegistryRecord(**record_data) if changed else record
         return GuardrailOutcome(
@@ -337,6 +392,22 @@ class ClinicalGuardrails:
         record_data["procedures_performed"] = procedures
         return current != action
 
+    def _set_stent_assessment_only(self, record_data: dict[str, Any]) -> bool:
+        procedures = record_data.get("procedures_performed")
+        if not isinstance(procedures, dict):
+            procedures = {}
+        stent = procedures.get("airway_stent")
+        if not isinstance(stent, dict):
+            stent = {}
+        current_action = stent.get("action")
+        current_removal = stent.get("airway_stent_removal")
+        stent["performed"] = True
+        stent["action"] = "Assessment only"
+        stent["airway_stent_removal"] = False
+        procedures["airway_stent"] = stent
+        record_data["procedures_performed"] = procedures
+        return current_action != "Assessment only" or current_removal is not False
+
     def _clear_stent(self, record_data: dict[str, Any]) -> bool:
         procedures = record_data.get("procedures_performed")
         if not isinstance(procedures, dict):
@@ -367,6 +438,16 @@ class ClinicalGuardrails:
         if not isinstance(pleural, dict):
             return False
         for proc in pleural.values():
+            if isinstance(proc, dict) and proc.get("performed") is True:
+                return True
+        return False
+
+    def _pleural_device_flagged(self, record_data: dict[str, Any]) -> bool:
+        pleural = record_data.get("pleural_procedures")
+        if not isinstance(pleural, dict):
+            return False
+        for name in ("ipc", "chest_tube"):
+            proc = pleural.get(name)
             if isinstance(proc, dict) and proc.get("performed") is True:
                 return True
         return False

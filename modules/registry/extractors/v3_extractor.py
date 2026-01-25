@@ -11,7 +11,7 @@ from modules.common.exceptions import LLMError
 from modules.common.model_capabilities import filter_payload_for_model, is_gpt5
 from modules.common.logger import get_logger
 from modules.infra.llm_control import backoff_seconds, llm_slot, parse_retry_after_seconds
-from modules.registry.schema.ip_v3 import IPRegistryV3
+from modules.registry.schema.ip_v3_extraction import IPRegistryV3
 
 logger = get_logger("registry.v3_extractor")
 

@@ -118,6 +118,7 @@ def default_evidence_prefixes_for_code(code: str) -> list[str]:
         "32558": ["pleural_procedures.chest_tube"],
         "32560": ["pleural_procedures.pleurodesis"],
         "32561": ["pleural_procedures.fibrinolytic_therapy"],
+        "32562": ["pleural_procedures.fibrinolytic_therapy"],
         "32601": ["pleural_procedures.medical_thoracoscopy"],
         "43238": ["procedures_performed.eus_b"],
         "76604": ["procedures_performed.chest_ultrasound"],

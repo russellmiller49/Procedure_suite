@@ -36,3 +36,10 @@ def test_keyword_guard_passes_for_mechanical_debulking_31640() -> None:
         cpt="31640",
         evidence_text="Rigid bronchoscopy with mechanical debulking using a microdebrider.",
     )
+
+
+def test_keyword_guard_passes_for_fibrinolysis_32562() -> None:
+    assert keyword_guard_passes(
+        cpt="32562",
+        evidence_text="Intrapleural fibrinolysis with tPA/DNase instillation via chest tube (subsequent day).",
+    )

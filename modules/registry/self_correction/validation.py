@@ -28,6 +28,7 @@ ALLOWED_PATHS: set[str] = {
     "/pleural_procedures/ipc/performed",
     "/pleural_procedures/thoracentesis/performed",
     "/pleural_procedures/chest_tube/performed",
+    "/pleural_procedures/fibrinolytic_therapy/performed",
     # Add other safe fields as needed
 }
 
@@ -50,6 +51,7 @@ ALLOWED_PATH_PREFIXES: set[str] = {
     "/pleural_procedures/ipc",
     "/pleural_procedures/thoracentesis",
     "/pleural_procedures/chest_tube",
+    "/pleural_procedures/fibrinolytic_therapy",
     "/granular_data",
 }
 
@@ -60,6 +62,7 @@ _PATCH_PATH_ALIASES: dict[str, str] = {
     "/procedures_performed/endobronchial_excision": "/procedures_performed/mechanical_debulking",
     "/procedures_performed/balloon_dilation": "/procedures_performed/airway_dilation",
     "/procedures_performed/rigid_bronchoscopy/mechanical_debulking": "/procedures_performed/mechanical_debulking",
+    "/pleural_procedures/fibrinolysis_instillation": "/pleural_procedures/fibrinolytic_therapy",
 }
 
 

@@ -452,12 +452,15 @@ def derive_all_codes_with_meta(
     if stent is not None:
         action = _get(stent, "action")
         removal_flag = _get(stent, "airway_stent_removal")
+        assessment_only = isinstance(action, str) and action.strip().lower().startswith("assessment")
         is_removal = removal_flag is True or _stent_action_is_removal(action)
-        is_placement = _performed(stent) and not is_removal
+        is_placement = _performed(stent) and not is_removal and not assessment_only
         if not is_placement and _stent_action_is_placement(action):
             is_placement = True
 
-        if is_removal:
+        if assessment_only and not is_removal:
+            pass
+        elif is_removal:
             codes.append("31638")
             rationales["31638"] = "airway_stent.airway_stent_removal=true or action indicates removal"
             if is_placement and "31636" not in codes:
@@ -468,16 +471,13 @@ def derive_all_codes_with_meta(
             rationales["31636"] = "airway_stent.performed=true and no removal flag"
 
     # Mechanical debulking (tumor excision) → 31640
-    # Note: If both excision (31640) and destruction (31641) modalities are recorded,
-    # default to 31641 to avoid double-coding without anatomic granularity.
     if _performed(_proc(record, "mechanical_debulking")):
+        codes.append("31640")
+        rationales["31640"] = "mechanical_debulking.performed=true"
         if _performed(_proc(record, "thermal_ablation")) or _performed(_proc(record, "cryotherapy")):
             warnings.append(
-                "mechanical_debulking.performed=true but destruction modality also present; defaulting to 31641"
+                "Both excision (31640) and destruction (31641) modalities present; ensure documentation supports reporting both (often residual tumor treated)."
             )
-        else:
-            codes.append("31640")
-            rationales["31640"] = "mechanical_debulking.performed=true"
 
     # Thermal ablation (tumor destruction) → 31641
     if _performed(_proc(record, "thermal_ablation")):
@@ -636,9 +636,26 @@ def derive_all_codes_with_meta(
         codes.append("32560")
         rationales["32560"] = "pleural_procedures.pleurodesis.performed=true"
 
-    if _performed(_pleural(record, "fibrinolytic_therapy")):
-        codes.append("32561")
-        rationales["32561"] = "pleural_procedures.fibrinolytic_therapy.performed=true"
+    fibrinolytic = _pleural(record, "fibrinolytic_therapy")
+    if _performed(fibrinolytic):
+        number_of_doses = _get(fibrinolytic, "number_of_doses")
+        subsequent_day = False
+        if isinstance(number_of_doses, int):
+            subsequent_day = number_of_doses >= 2
+        else:
+            try:
+                subsequent_day = int(str(number_of_doses)) >= 2
+            except (TypeError, ValueError):
+                subsequent_day = False
+
+        if subsequent_day:
+            codes.append("32562")
+            rationales["32562"] = (
+                "pleural_procedures.fibrinolytic_therapy.performed=true and number_of_doses>=2 (subsequent day)"
+            )
+        else:
+            codes.append("32561")
+            rationales["32561"] = "pleural_procedures.fibrinolytic_therapy.performed=true"
 
     # --- Sedation (moderate sedation billing) ---
     sedation = _get(record, "sedation")

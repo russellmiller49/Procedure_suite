@@ -14,7 +14,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from modules.registry.schema.ip_v3 import (
+from modules.registry.schema.ip_v3_extraction import (
     EvidenceSpan,
     IPRegistryV3,
     LesionDetails,

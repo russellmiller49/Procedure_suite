@@ -15,7 +15,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from modules.common.exceptions import LLMError
 from modules.registry.pipelines.v3_pipeline import run_v3_extraction
-from modules.registry.schema.ip_v3 import IPRegistryV3, ProcedureEvent
+from modules.registry.schema.ip_v3_extraction import IPRegistryV3, ProcedureEvent
 
 
 def _norm(value: str | None) -> str | None:

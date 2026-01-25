@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.schema.ip_v3 import IPRegistryV3
+from modules.registry.schema.ip_v3_extraction import IPRegistryV3
 
 
 def run_v3_extraction(note_text: str) -> IPRegistryV3:
@@ -15,4 +15,3 @@ def run_v3_extraction(note_text: str) -> IPRegistryV3:
 
 
 __all__ = ["run_v3_extraction"]
-

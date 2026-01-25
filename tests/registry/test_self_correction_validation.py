@@ -73,3 +73,14 @@ def test_validate_proposal_canonicalizes_known_alias_paths() -> None:
     is_valid, reason = validate_proposal(proposal, "balloon dilation")
     assert is_valid, reason
     assert proposal.json_patch[0]["path"] == "/procedures_performed/airway_dilation/performed"
+
+
+def test_validate_proposal_canonicalizes_fibrinolysis_instillation_alias_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[{"op": "add", "path": "/pleural_procedures/fibrinolysis_instillation/performed", "value": True}],
+        evidence_quote="tPA/DNase instillation",
+    )
+    is_valid, reason = validate_proposal(proposal, "tPA/DNase instillation via chest tube")
+    assert is_valid, reason
+    assert proposal.json_patch[0]["path"] == "/pleural_procedures/fibrinolytic_therapy/performed"

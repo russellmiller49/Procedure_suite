@@ -360,7 +360,7 @@ File: modules/registry/extractors/v3_extractor.py
 
 Implement the LLM extraction using Pydantic schemas.
 
-Imports: IPRegistryV3 (from modules.registry.schema.ip_v3), and your LLM client.
+Imports: IPRegistryV3 (from modules.registry.schema.ip_v3_extraction), and your LLM client.
 
 Function: def extract_v3_draft(focused_text: str) -> IPRegistryV3
 

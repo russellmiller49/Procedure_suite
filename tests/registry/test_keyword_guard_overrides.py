@@ -53,3 +53,40 @@ def test_apply_required_overrides_adds_peripheral_tbna_for_endobronchial_needle_
     assert pp.peripheral_tbna is not None
     assert pp.peripheral_tbna.performed is True
     assert any("needle biopsy of a lesion" in w.lower() for w in warnings)
+
+
+def test_apply_required_overrides_sets_fibrinolysis_without_chest_tube_insertion_for_date_of_insertion_line() -> None:
+    record = RegistryRecord()
+    note_text = (
+        "PROCEDURE:\n"
+        "32562 Instillation(s), via chest tube/catheter, agent for fibrinolysis; subsequent day\n\n"
+        "Date of chest tube insertion: 12/15/25\n"
+        "10 mg/5 mg tPA/DNase dose #: 3\n"
+    )
+
+    updated, warnings = apply_required_overrides(note_text, record)
+    pleural = updated.pleural_procedures
+    assert pleural is not None
+    assert pleural.fibrinolytic_therapy is not None
+    assert pleural.fibrinolytic_therapy.performed is True
+    assert set(pleural.fibrinolytic_therapy.agents or []) == {"tPA", "DNase"}
+    assert pleural.fibrinolytic_therapy.tpa_dose_mg == 10.0
+    assert pleural.fibrinolytic_therapy.dnase_dose_mg == 5.0
+    assert pleural.fibrinolytic_therapy.number_of_doses == 3
+    assert pleural.chest_tube is None or pleural.chest_tube.performed is not True
+    assert any("fibrinolytic_therapy.performed" in w for w in warnings)
+
+
+def test_apply_required_overrides_adds_mechanical_debulking_for_snare_en_bloc_language() -> None:
+    record = RegistryRecord()
+    note_text = (
+        "An electrocautery snare was utilized to ensnare the endobronchial tumor and remove it from its stalk. "
+        "The mass was removed en bloc with the bronchoscope.\n"
+    )
+
+    updated, warnings = apply_required_overrides(note_text, record)
+    pp = updated.procedures_performed
+    assert pp is not None
+    assert pp.mechanical_debulking is not None
+    assert pp.mechanical_debulking.performed is True
+    assert any("mechanical_debulking" in w for w in warnings)

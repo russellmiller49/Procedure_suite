@@ -10,7 +10,7 @@ from modules.registry.deterministic_extractors import (
     extract_airway_stent,
 )
 from modules.registry.schema import RegistryRecord
-from modules.registry.schema.ip_v3 import IPRegistryV3, ProcedureEvent
+from modules.registry.schema.ip_v3_extraction import IPRegistryV3, ProcedureEvent
 
 
 _NON_ALNUM_RE = re.compile(r"[^a-z0-9]+")

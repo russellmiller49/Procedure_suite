@@ -2849,6 +2849,27 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                 stations_sampled.append(station)
 
     if not station_events:
+        # Some notes clearly document EBUS-TBNA sampling but omit station tokens
+        # (e.g., "Lymph node sizing and sampling were performed using EBUS-TBNA ...").
+        tbna_match = re.search(r"(?is)\bebus[-\s]?tbna\b", full_text)
+        if not tbna_match:
+            tbna_match = re.search(
+                r"(?is)\b(?:convex\s+probe|cp-?ebus)\b[^.\n]{0,240}"
+                r"\b(?:tbna|transbronchial\s+needle|needle\s+aspirat|needle\s+pass|passes|fna|biops)\w*\b",
+                full_text,
+            )
+        if tbna_match and not _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(tbna_match.group(0) or ""):
+            snippet = re.sub(r"\s+", " ", (tbna_match.group(0) or "").strip())
+            station_events["UNSPECIFIED"] = NodeInteraction(
+                station="UNSPECIFIED",
+                action="needle_aspiration",
+                outcome=None,
+                evidence_quote=snippet[:280] if snippet else "EBUS-TBNA sampling documented (stations not specified).",
+            )
+            setattr(linear, "node_events", list(station_events.values()))
+            if hasattr(linear, "stations_sampled"):
+                setattr(linear, "stations_sampled", ["UNSPECIFIED"])
+            warnings.append("EBUS_FALLBACK: sampling documented but stations missing; added placeholder node_event.")
         return warnings
 
     setattr(linear, "node_events", list(station_events.values()))

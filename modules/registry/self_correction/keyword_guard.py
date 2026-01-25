@@ -26,6 +26,9 @@ CPT_KEYWORDS: dict[str, list[str]] = {
     "32555": ["thoracentesis", "pleural fluid removed", "tap"],
     # Pleural: chest tube / thoracostomy
     "32551": ["chest tube", "tube thoracostomy", "thoracostomy"],
+    # Pleural: intrapleural fibrinolysis (initial/subsequent day)
+    "32561": ["fibrinolysis", "fibrinolytic", "tpa", "alteplase", "dnase", "dornase"],
+    "32562": ["fibrinolysis", "fibrinolytic", "tpa", "alteplase", "dnase", "dornase", "subsequent day"],
     # Pleural: percutaneous pleural drainage catheter (pigtail) without/with imaging
     "32556": ["pigtail catheter", "pleural drainage", "seldinger"],
     "32557": ["pigtail catheter", "pleural drainage", "ultrasound", "imaging guidance", "seldinger"],
@@ -347,11 +350,37 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
         (r"(?i)\bapc\b", "Text mentions 'APC' (Argon Plasma Coagulation)."),
         (r"(?i)argon\s+plasma", "Text mentions 'Argon Plasma'."),
     ],
+    # Fix for missed mechanical debulking / excision (31640 family)
+    "procedures_performed.mechanical_debulking.performed": [
+        (r"(?i)\bmechanical\s+debulk(?:ing)?\b", "Text explicitly mentions mechanical debulking."),
+        (
+            r"(?is)\b(?:snare|microdebrider|microdebrid\w*|rigid\s+coring)\b.{0,220}\b(?:en\s+bloc|resect|excise|excision|remove(?:d)?)\b",
+            "Text indicates mechanical excision/debulking (e.g., snare resection / en bloc removal).",
+        ),
+    ],
     # Pleural: chest tube / pleural drainage catheter placement
     "pleural_procedures.chest_tube.performed": [
         (r"(?i)\bpigtail\s+catheter\b", "Text mentions 'pigtail catheter' (pleural drain)."),
-        (r"(?i)\bchest\s+tube\b", "Text mentions 'chest tube' but extraction missed it."),
+        (
+            r"(?is)\b(?:placed|placement|insert(?:ed|ion)?|tube\s+thoracostomy|thoracostomy|seldinger)\b"
+            r"[^.\n]{0,80}\bchest\s+tube\b"
+            r"|\bchest\s+tube\b[^.\n]{0,80}\b(?:placed|placement|insert(?:ed|ion)?|tube\s+thoracostomy|thoracostomy|seldinger)\b",
+            "Text indicates chest tube placement/insertion but extraction missed it.",
+        ),
         (r"(?i)\btube\s+thoracostomy\b", "Text mentions 'tube thoracostomy'."),
+    ],
+    # Pleural: intrapleural fibrinolysis via chest tube/catheter (32561/32562)
+    "pleural_procedures.fibrinolytic_therapy.performed": [
+        (r"\b32561\b", "Text lists CPT 32561 (intrapleural fibrinolysis; initial day)."),
+        (r"\b32562\b", "Text lists CPT 32562 (intrapleural fibrinolysis; subsequent day)."),
+        (
+            r"(?is)\binstillat\w*\b[^.\n]{0,120}\b(?:tpa|alteplase|dnase|dornase|fibrinolys(?:is|tic))\b",
+            "Text indicates intrapleural fibrinolytic instillation (tPA/DNase).",
+        ),
+        (
+            r"(?is)\b(?:tpa|alteplase)\b[^.\n]{0,120}\b(?:dnase|dornase)\b",
+            "Text indicates combined tPA/DNase intrapleural therapy.",
+        ),
     ],
     # Diagnostic chest ultrasound (76604)
     "procedures_performed.chest_ultrasound.performed": [
@@ -436,7 +465,9 @@ def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str |
             return True
 
     if field_path == "pleural_procedures.chest_tube.performed":
-        window = note_text[max(0, start - 30) : min(len(note_text), end + 30)]
+        window = note_text[max(0, start - 80) : min(len(note_text), end + 160)]
+        if re.search(r"(?i)\bdate\s+of\s+(?:the\s+)?chest\s+tube\s+insertion\b", window):
+            return True
         if _CHEST_TUBE_REMOVAL_CUES_RE.search(window) and not _CHEST_TUBE_INSERTION_CUES_RE.search(window):
             return True
 
@@ -525,6 +556,59 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
             if field_path == "procedures_performed.peripheral_tbna.performed":
                 if _looks_like_ebus_nodal_tbna_only(note_text or "", match):
                     continue
+
+            if field_path == "pleural_procedures.fibrinolytic_therapy.performed":
+                pleural = record_data.get("pleural_procedures")
+                if pleural is None or not isinstance(pleural, dict):
+                    pleural = {}
+
+                fibrinolytic = pleural.get("fibrinolytic_therapy")
+                if fibrinolytic is None or not isinstance(fibrinolytic, dict):
+                    fibrinolytic = {}
+
+                fibrinolytic["performed"] = True
+
+                agents: list[str] = []
+                if re.search(r"(?i)\b(?:tpa|alteplase)\b", note_text or ""):
+                    agents.append("tPA")
+                if re.search(r"(?i)\b(?:dnase|dornase)", note_text or ""):
+                    agents.append("DNase")
+                if agents:
+                    seen: set[str] = set()
+                    fibrinolytic["agents"] = [a for a in agents if not (a in seen or seen.add(a))]
+
+                dose_match = re.search(
+                    r"(?is)\b(\d+(?:\.\d+)?)\s*mg\s*/\s*(\d+(?:\.\d+)?)\s*mg\b[^.\n]{0,60}"
+                    r"\b(?:tpa|alteplase)\b[^.\n]{0,60}\b(?:dnase|dornase)",
+                    note_text or "",
+                )
+                if dose_match:
+                    fibrinolytic["tpa_dose_mg"] = float(dose_match.group(1))
+                    fibrinolytic["dnase_dose_mg"] = float(dose_match.group(2))
+
+                dose_num = re.search(
+                    r"(?i)dose\s*#\s*[:=]?\s*[_ ]*(\d{1,2})(?=[_ ]|\b)",
+                    note_text or "",
+                )
+                if dose_num:
+                    fibrinolytic["number_of_doses"] = int(dose_num.group(1))
+                elif re.search(r"(?i)\bsubsequent\s+day\b", note_text or "") or re.search(r"\b32562\b", note_text or ""):
+                    fibrinolytic["number_of_doses"] = 2
+                if fibrinolytic.get("number_of_doses") in (0, "0") and re.search(r"\b32562\b", note_text or ""):
+                    fibrinolytic["number_of_doses"] = 2
+
+                pleural["fibrinolytic_therapy"] = fibrinolytic
+                record_data["pleural_procedures"] = pleural
+                evidence.setdefault(field_path, []).append(
+                    Span(
+                        text=match.group(0).strip(),
+                        start=match.start(),
+                        end=match.end(),
+                    )
+                )
+                warnings.append(f"HARD_OVERRIDE: {msg} -> {field_path}=true")
+                updated = True
+                break
 
             if field_path.startswith("granular_data.navigation_targets"):
                 granular = record_data.get("granular_data")

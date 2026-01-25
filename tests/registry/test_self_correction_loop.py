@@ -111,7 +111,7 @@ def test_self_correction_successful_patch_mechanical_debulking_31640(monkeypatch
             json_patch=[
                 {"op": "add", "path": "/procedures_performed/mechanical_debulking/performed", "value": True}
             ],
-            evidence_quote="mechanical debulking",
+            evidence_quote="tumor excision",
         )
     )
     monkeypatch.setattr(RegistryCorrectionJudge, "propose_correction", mocked)
@@ -122,7 +122,7 @@ def test_self_correction_successful_patch_mechanical_debulking_31640(monkeypatch
     service = RegistryService(hybrid_orchestrator=orchestrator, registry_engine=_StubRegistryEngine())
     note_text = (
         "PROCEDURE:\n"
-        "Rigid bronchoscopy with mechanical debulking of left mainstem tumor.\n"
+        "Rigid bronchoscopy with tumor excision of left mainstem tumor.\n"
         "No thermal ablation was used.\n"
     )
     result = service.extract_fields(note_text)

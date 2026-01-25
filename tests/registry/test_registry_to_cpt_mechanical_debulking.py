@@ -11,7 +11,7 @@ def test_registry_to_cpt_derives_31640_from_mechanical_debulking() -> None:
     assert warnings == []
 
 
-def test_registry_to_cpt_prefers_31641_when_destruction_also_present() -> None:
+def test_registry_to_cpt_allows_31640_and_31641_when_both_modalities_present() -> None:
     record = RegistryRecord(
         procedures_performed={
             "mechanical_debulking": {"performed": True},
@@ -21,6 +21,5 @@ def test_registry_to_cpt_prefers_31641_when_destruction_also_present() -> None:
     codes, _rationales, warnings = derive_all_codes_with_meta(record)
 
     assert "31641" in codes
-    assert "31640" not in codes
-    assert any("defaulting to 31641" in warning for warning in warnings)
-
+    assert "31640" in codes
+    assert any("both excision (31640) and destruction (31641)" in warning.lower() for warning in warnings)

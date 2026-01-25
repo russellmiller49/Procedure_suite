@@ -1,10 +1,13 @@
-"""IP Registry Schema v3.
+"""IP Registry Schema v3 (registry entry schema).
 
 This is the next-generation schema with enhanced features:
 - Structured event timeline
 - Enhanced complication modeling
 - Better laterality tracking
 - Procedure outcome flags
+
+Note: this is **not** the LLM-facing V3 extraction event-log schema used by the
+extraction engine. That extraction schema lives at `modules.registry.schema.ip_v3_extraction`.
 """
 
 from __future__ import annotations
@@ -14,56 +17,12 @@ from typing import List, Optional, Literal
 
 from pydantic import BaseModel, Field
 
+from proc_schemas.shared.ebus_events import NodeInteraction
+
 
 # =============================================================================
 # EBUS Node Interaction (Granular)
 # =============================================================================
-
-NodeActionType = Literal[
-    "inspected_only",       # Visual/Ultrasound only (NO needle)
-    "needle_aspiration",    # TBNA / FNA
-    "core_biopsy",          # FNB / Core needle
-    "forceps_biopsy"        # Mini-forceps
-]
-
-NodeOutcomeType = Literal[
-    "benign",
-    "malignant",
-    "suspicious",
-    "nondiagnostic",
-    "deferred_to_final_path",
-    "unknown"
-]
-
-
-class NodeInteraction(BaseModel):
-    """Represents a specific interaction with a lymph node station.
-
-    DISTINCTION: 'inspected_only' vs 'needle_aspiration' is critical.
-    """
-
-    station: str = Field(
-        ...,
-        description="The standardized lymph node station (e.g., '4R', '7', '11L').",
-    )
-    action: NodeActionType = Field(
-        ...,
-        description=(
-            "The specific action taken. Use 'inspected_only' if described as "
-            "'sized', 'viewed', or 'not biopsied'."
-        ),
-    )
-    outcome: Optional[NodeOutcomeType] = Field(
-        None,
-        description="The immediate interpretation (ROSE) or final pathology if mentioned.",
-    )
-    evidence_quote: str = Field(
-        ...,
-        description=(
-            "CRITICAL: The verbatim quote from the text proving the specific action occurred. "
-            "E.g., 'FNA of station 7 performed'."
-        ),
-    )
 
 
 class LinearEBUS(BaseModel):
