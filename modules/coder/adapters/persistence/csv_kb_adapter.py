@@ -149,6 +149,48 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
             return None, None
         return payload, year
 
+    def _lookup_fee_schedule_description(self, code: str, entry: dict) -> str | None:
+        fee_schedules = self._raw_data.get("fee_schedules")
+        if not isinstance(fee_schedules, dict) or not fee_schedules:
+            return None
+
+        sources = entry.get("fee_schedule_sources")
+        source_names: list[str] = []
+        if isinstance(sources, str) and sources.strip():
+            source_names = [sources.strip()]
+        elif isinstance(sources, list):
+            source_names = [s.strip() for s in sources if isinstance(s, str) and s.strip()]
+
+        def _desc_from_schedule(schedule_name: str) -> str | None:
+            schedule = fee_schedules.get(schedule_name)
+            if not isinstance(schedule, dict):
+                return None
+            codes = schedule.get("codes")
+            if not isinstance(codes, dict):
+                return None
+            item = codes.get(code)
+            if not isinstance(item, dict):
+                return None
+            desc = item.get("description")
+            if isinstance(desc, str) and desc.strip():
+                return desc.strip()
+            return None
+
+        # Prefer the entry's stated fee_schedule_sources (if present).
+        for schedule_name in source_names:
+            desc = _desc_from_schedule(schedule_name)
+            if desc:
+                return desc
+
+        # Fallback: if sources are missing/misconfigured, try any schedule.
+        if not source_names:
+            for schedule_name in fee_schedules:
+                desc = _desc_from_schedule(schedule_name)
+                if desc:
+                    return desc
+
+        return None
+
     def _load_procedures_from_master_index(self, master_index: dict) -> None:
         """Load ProcedureInfo from KB master_code_index (authoritative)."""
         for code, entry in master_index.items():
@@ -167,7 +209,9 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
             attrs = attributes if isinstance(attributes, dict) else {}
             is_addon = bool(attrs.get("is_add_on")) or normalized in self._addon_codes
 
-            description = str(entry.get("descriptor") or entry.get("description") or "")
+            short_descriptor = str(entry.get("descriptor") or entry.get("description") or "")
+            professional_desc = self._lookup_fee_schedule_description(normalized, entry) or ""
+            description = professional_desc or short_descriptor
             category = str(entry.get("family") or "general")
 
             cms_financials, cms_year = self._pick_latest_cms_financials(entry)
@@ -191,6 +235,9 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
             raw_data = dict(entry)
             raw_data["code"] = normalized
             raw_data["description"] = description
+            raw_data["descriptor_short"] = short_descriptor
+            if professional_desc:
+                raw_data["description_professional"] = professional_desc
             raw_data["category"] = category
             raw_data["is_add_on"] = is_addon
             raw_data["global_days"] = attrs.get("global_days")
