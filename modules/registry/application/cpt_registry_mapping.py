@@ -118,18 +118,31 @@ CPT_TO_REGISTRY_MAPPING: dict[str, RegistryFieldMapping] = {
         v3_only_fields={"ablation_technique": "thermoplasty"},
     ),
 
-    # Endobronchial valve placement (BLVR)
+    # Endobronchial valve / BLVR family
+    # - 31647: valve insertion (initial lobe)
+    # - 31651: valve insertion (each additional lobe)
+    # - 31648: valve removal (initial lobe)
+    # - 31649: valve removal (each additional lobe)
+    # - 31634: Chartis / balloon occlusion assessment (pre-BLVR assessment)
     "31647": RegistryFieldMapping(
         fields={"blvr_performed": True},
         hints={"procedure_type": "blvr_valve_initial"},
     ),
-    "31648": RegistryFieldMapping(
+    "31651": RegistryFieldMapping(
         fields={"blvr_performed": True},
         hints={"procedure_type": "blvr_valve_additional"},
     ),
     "31649": RegistryFieldMapping(
         fields={"blvr_performed": True},
-        hints={"procedure_type": "blvr_valve_removal"},
+        hints={"procedure_type": "blvr_valve_removal_additional"},
+    ),
+    "31648": RegistryFieldMapping(
+        fields={"blvr_performed": True},
+        hints={"procedure_type": "blvr_valve_removal_initial"},
+    ),
+    "31634": RegistryFieldMapping(
+        fields={"blvr_performed": True},
+        hints={"procedure_type": "blvr_valve_assessment_chartis"},
     ),
 
     # Thoracentesis (not directly in IP registry but may indicate pleural involvement)
@@ -303,15 +316,22 @@ def aggregate_registry_fields(
         dilation["technique"] = "Balloon"  # 31630/31631 are balloon dilation codes
         procedures["airway_dilation"] = dilation
 
-    # BLVR valve: 31647 (initial), 31648 (each additional), 31649 (removal)
-    blvr_codes = {"31647", "31648", "31649"}
-    if blvr_codes & code_set:
+    # BLVR / endobronchial valves:
+    # - 31647: valve insertion initial lobe
+    # - 31651: valve insertion additional lobes
+    # - 31648/31649: valve removal (initial/additional lobes)
+    # - 31634: Chartis / balloon occlusion assessment
+    blvr_codes = {"31634", "31647", "31648", "31649", "31651"}
+    if code_set & blvr_codes:
         blvr = {"performed": True}
-        # CPT family is valve-based BLVR
-        if "31649" in code_set:
+        has_insertion = bool(code_set & {"31647", "31651"})
+        has_removal = bool(code_set & {"31648", "31649"}) and not has_insertion
+        if has_insertion:
+            blvr["procedure_type"] = "Valve placement"
+        elif has_removal:
             blvr["procedure_type"] = "Valve removal"
         else:
-            blvr["procedure_type"] = "Valve placement"
+            blvr["procedure_type"] = "Valve assessment"
         procedures["blvr"] = blvr
 
     # Bronchial thermoplasty: 31660 (initial lobe), 31661 (additional lobes)

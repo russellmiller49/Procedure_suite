@@ -42,7 +42,11 @@ class NCCIEngine:
         for rule in self._pairs:
             c1 = rule.get("column1")
             c2 = rule.get("column2")
-            modifier_allowed = bool(rule.get("modifier_allowed", False))
+            indicator = rule.get("modifier_indicator")
+            if indicator not in {"0", "1"}:
+                # Backward compatibility: older files used `modifier_allowed: bool`
+                indicator = "1" if bool(rule.get("modifier_allowed", False)) else "0"
+            modifier_allowed = indicator == "1"
 
             if not c1 or not c2:
                 continue

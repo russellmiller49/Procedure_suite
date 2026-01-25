@@ -1,4 +1,4 @@
-# Generated from data/knowledge/ip_coding_billing_v2_9.json
+# Generated from data/knowledge/ip_coding_billing_v3_0.json
 # Total codes: 109
 VALID_IP_CODES = {
     "31600", "31601", "31603", "31605", "31610", "31611", "31612", "31613", "31614", "31615",

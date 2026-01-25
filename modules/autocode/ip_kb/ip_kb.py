@@ -43,12 +43,11 @@ class IPCodingKnowledgeBase:
     """
     Knowledge base for IP CPT coding.
 
-    Synonyms and bundling rules are derived from canonical sources:
-    - ip_golden_knowledge_v2_2.json (golden coding rules)
-    - data/synthetic_CPT_corrected.json (validated coding patterns)
+    Primary source of truth is the `ip_coding_billing` knowledge base JSON:
+    - `code_lists` / add-on metadata
+    - `synonyms` / `terminology_mappings` phrase lists (so adding a new synonym is a one-file edit)
 
-    The ip_coding_billing knowledge base (currently v2.7) is used for RVU lookups
-    and code metadata.
+    Bundling logic remains derived from canonical rules (see `canonical_rules.py`).
     """
 
     # Map internal group names to v2.7 code_lists keys for compatibility
@@ -99,6 +98,15 @@ class IPCodingKnowledgeBase:
 
     def _contains_any(self, text: str, phrases: Iterable[str]) -> bool:
         return any(p.lower() in text for p in phrases)
+
+    def _synonym_terms(self, key: str) -> List[str]:
+        synonyms = self.raw.get("synonyms", {})
+        if not isinstance(synonyms, Mapping):
+            return []
+        values = synonyms.get(key, [])
+        if isinstance(values, list):
+            return [v for v in values if isinstance(v, str)]
+        return []
 
     def _build_indexes(self) -> None:
         # 1) Code lists
@@ -500,36 +508,29 @@ class IPCodingKnowledgeBase:
 
         # ========== Navigation Detection ==========
         # Avoid short-token substring false positives (e.g., "ion" in "insertion").
-        nav_platform = self._contains_any(
-            text,
-            [p for p in canonical_rules.NAVIGATION_SYNONYMS if p not in ("ion", "enb", "emn")],
-        ) or bool(re.search(r"\b(?:ion|enb|emn)\b", text))
-        # Additional platform-specific triggers
-        nav_platform = nav_platform or any(
-            (
-                bool(re.search(r"\b" + re.escape(term) + r"\b", text))
-                if term in {"ion", "emn", "enb"}
-                else term in text
-            )
-            for term in [
-                "ion", "ion robotic", "superdimension", "emn", "enb",
-                "robotic bronchoscopy", "robotic navigation",
-                "electromagnetic navigation", "spin thoracic"
-            ]
+        navigation_terms = self._synonym_terms("navigation_terms") or canonical_rules.NAVIGATION_SYNONYMS
+        short_tokens = {"ion", "enb", "emn"}
+        nav_platform = any(
+            bool(re.search(rf"\b{re.escape(term)}\b", text)) if term in short_tokens else term in text
+            for term in (t.lower() for t in navigation_terms)
         )
-        nav_concept = any(
-            term in text for term in [
-                "navigation", "navigational", "pathway", "registration",
-                "ct-based", "ct based", "virtual", "3d", "guidance"
-            ]
-        )
-        # Direct platform terms that imply navigation without needing concept
-        nav_direct = any(
-            term in text for term in [
-                "ion robotic", "enb", "emn-guided", "emn guided",
-                "electromagnetic navigation", "robotic bronchoscopy"
-            ]
-        )
+
+        nav_concept_terms = self._synonym_terms("navigation_concept_terms") or [
+            "navigation",
+            "navigational",
+            "pathway",
+            "registration",
+            "ct-based",
+            "ct based",
+            "virtual",
+            "3d",
+            "guidance",
+        ]
+        nav_concept = any(term in text for term in (t.lower() for t in nav_concept_terms))
+
+        # Any platform term is considered "direct" navigation evidence.
+        # This ensures adding a new platform synonym is a one-file KB edit.
+        nav_direct = nav_platform
 
         # Navigation FAILURE/ABORT detection - these indicate nav was NOT successfully performed
         nav_failure_patterns = [
@@ -552,7 +553,8 @@ class IPCodingKnowledgeBase:
 
         # ========== EBUS Detection ==========
         # Radial EBUS
-        radial_hit = self._contains_any(text, canonical_rules.RADIAL_EBUS_SYNONYMS)
+        radial_terms = self._synonym_terms("radial_ebus_terms") or canonical_rules.RADIAL_EBUS_SYNONYMS
+        radial_hit = self._contains_any(text, radial_terms)
         radial_negated = False
         if radial_hit:
             radial_negated = bool(
@@ -579,8 +581,10 @@ class IPCodingKnowledgeBase:
             matched_groups.add("bronchoscopy_ebus_radial")
 
         # Linear EBUS - detect stations
-        linear_hit = self._contains_any(text, canonical_rules.LINEAR_EBUS_SYNONYMS)
-        station_hit = self._contains_any(text, canonical_rules.EBUS_STATION_SYNONYMS)
+        linear_terms = self._synonym_terms("linear_ebus_terms") or canonical_rules.LINEAR_EBUS_SYNONYMS
+        station_terms = self._synonym_terms("ebus_station_terms") or canonical_rules.EBUS_STATION_SYNONYMS
+        linear_hit = self._contains_any(text, linear_terms)
+        station_hit = self._contains_any(text, station_terms)
 
         # Count stations for 31652 vs 31653
         # Pattern 1: "stations 4R, 7, 10R" or "station 4R"
@@ -650,7 +654,8 @@ class IPCodingKnowledgeBase:
 
         # ========== Biopsy Detection ==========
         # TBLB (transbronchial lung biopsy)
-        tblb_hit = self._contains_any(text, canonical_rules.TBLB_SYNONYMS)
+        tblb_terms = self._synonym_terms("tblb_terms") or canonical_rules.TBLB_SYNONYMS
+        tblb_hit = self._contains_any(text, tblb_terms)
         if tblb_hit:
             matched_groups.add("bronchoscopy_biopsy_parenchymal")
 
@@ -744,7 +749,8 @@ class IPCodingKnowledgeBase:
 
         # ========== Therapeutic Procedures ==========
         # Ablation/destruction (31641)
-        ablation_hit = self._contains_any(text, canonical_rules.ABLATION_SYNONYMS)
+        ablation_terms = self._synonym_terms("ablation_terms") or canonical_rules.ABLATION_SYNONYMS
+        ablation_hit = self._contains_any(text, ablation_terms)
         if ablation_hit:
             matched_groups.add("bronchoscopy_airway_stenosis")
 
@@ -850,17 +856,20 @@ class IPCodingKnowledgeBase:
             matched_groups.add("bronchoscopy_stent_revision")
 
         # Dilation
-        dilation_hit = self._contains_any(text, canonical_rules.DILATION_SYNONYMS)
+        dilation_terms = self._synonym_terms("dilation_terms") or canonical_rules.DILATION_SYNONYMS
+        dilation_hit = self._contains_any(text, dilation_terms)
         if dilation_hit:
             matched_groups.add("bronchoscopy_airway_dilation")
 
         # Therapeutic aspiration
-        aspiration_hit = self._contains_any(text, canonical_rules.THERAPEUTIC_ASPIRATION_SYNONYMS)
+        aspiration_terms = self._synonym_terms("aspiration_terms") or canonical_rules.THERAPEUTIC_ASPIRATION_SYNONYMS
+        aspiration_hit = self._contains_any(text, aspiration_terms)
         if aspiration_hit:
             matched_groups.add("bronchoscopy_therapeutic_aspiration")
 
         # Foreign body removal (including valve retrieval)
-        fb_hit = self._contains_any(text, canonical_rules.FOREIGN_BODY_SYNONYMS)
+        foreign_body_terms = self._synonym_terms("foreign_body_terms") or canonical_rules.FOREIGN_BODY_SYNONYMS
+        fb_hit = self._contains_any(text, foreign_body_terms)
         if fb_hit:
             matched_groups.add("bronchoscopy_foreign_body")
 
@@ -920,7 +929,8 @@ class IPCodingKnowledgeBase:
             matched_groups.add("tunneled_pleural_catheter_removal")
 
         # Thoracentesis
-        thoracentesis_hit = self._contains_any(text, canonical_rules.THORACENTESIS_SYNONYMS)
+        thoracentesis_terms = self._synonym_terms("thoracentesis_terms") or canonical_rules.THORACENTESIS_SYNONYMS
+        thoracentesis_hit = self._contains_any(text, thoracentesis_terms)
         if thoracentesis_hit:
             matched_groups.add("thoracentesis")
 
@@ -965,7 +975,8 @@ class IPCodingKnowledgeBase:
             matched_groups.add("pleural_drainage")
 
         # Pleurodesis
-        pleurodesis_hit = self._contains_any(text, canonical_rules.PLEURODESIS_SYNONYMS)
+        pleurodesis_terms = self._synonym_terms("pleurodesis_terms") or canonical_rules.PLEURODESIS_SYNONYMS
+        pleurodesis_hit = self._contains_any(text, pleurodesis_terms)
         if pleurodesis_hit:
             matched_groups.add("pleural_pleurodesis")
 
@@ -983,7 +994,8 @@ class IPCodingKnowledgeBase:
         # 3. Select code based on anatomic site biopsied
         # 4. Must have explicit anatomic + biopsy language
 
-        thoracoscopy_hit = self._contains_any(text, canonical_rules.THORACOSCOPY_SYNONYMS)
+        thoracoscopy_terms = self._synonym_terms("thoracoscopy_terms") or canonical_rules.THORACOSCOPY_SYNONYMS
+        thoracoscopy_hit = self._contains_any(text, thoracoscopy_terms)
 
         # Detect biopsy language
         has_biopsy = any(
@@ -994,14 +1006,21 @@ class IPCodingKnowledgeBase:
         )
 
         # Detect anatomic sites
-        pleural_site = self._contains_any(text, canonical_rules.THORACOSCOPY_PLEURAL_SYNONYMS)
-        pericardial_site = self._contains_any(text, canonical_rules.THORACOSCOPY_PERICARDIAL_SYNONYMS)
-        mediastinal_site = self._contains_any(text, canonical_rules.THORACOSCOPY_MEDIASTINAL_SYNONYMS)
-        lung_site = self._contains_any(text, canonical_rules.THORACOSCOPY_LUNG_SYNONYMS)
+        pleural_site_terms = self._synonym_terms("thoracoscopy_pleural_site_terms") or canonical_rules.THORACOSCOPY_PLEURAL_SYNONYMS
+        pericardial_site_terms = self._synonym_terms("thoracoscopy_pericardial_site_terms") or canonical_rules.THORACOSCOPY_PERICARDIAL_SYNONYMS
+        mediastinal_site_terms = self._synonym_terms("thoracoscopy_mediastinal_site_terms") or canonical_rules.THORACOSCOPY_MEDIASTINAL_SYNONYMS
+        lung_site_terms = self._synonym_terms("thoracoscopy_lung_site_terms") or canonical_rules.THORACOSCOPY_LUNG_SYNONYMS
+
+        pleural_site = self._contains_any(text, pleural_site_terms)
+        pericardial_site = self._contains_any(text, pericardial_site_terms)
+        mediastinal_site = self._contains_any(text, mediastinal_site_terms)
+        lung_site = self._contains_any(text, lung_site_terms)
 
         # Detect drain handling (for bundling rule)
-        temporary_drain = self._contains_any(text, canonical_rules.THORACOSCOPY_BUNDLED_DRAIN_TERMS)
-        permanent_drain = self._contains_any(text, canonical_rules.THORACOSCOPY_SEPARATE_DRAIN_TERMS)
+        bundled_drain_terms = self._synonym_terms("thoracoscopy_bundled_drain_terms") or canonical_rules.THORACOSCOPY_BUNDLED_DRAIN_TERMS
+        separate_drain_terms = self._synonym_terms("thoracoscopy_separate_drain_terms") or canonical_rules.THORACOSCOPY_SEPARATE_DRAIN_TERMS
+        temporary_drain = self._contains_any(text, bundled_drain_terms)
+        permanent_drain = self._contains_any(text, separate_drain_terms)
 
         # Build evidence dict
         evidence["thoracoscopy"] = {
@@ -1102,7 +1121,8 @@ class IPCodingKnowledgeBase:
                 matched_groups.add("bronchoscopy_bal")
 
         # PDT
-        pdt_hit = self._contains_any(text, canonical_rules.PDT_SYNONYMS)
+        pdt_terms = self._synonym_terms("pdt_terms") or canonical_rules.PDT_SYNONYMS
+        pdt_hit = self._contains_any(text, pdt_terms)
         if pdt_hit:
             matched_groups.add("pdt_endobronchial")
 

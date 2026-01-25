@@ -143,6 +143,69 @@
         }
       }
     },
+    "providers_team": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Normalized provider team array (backward compatible). When absent, servers/clients may derive from the legacy `providers` object.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "attending",
+              "fellow",
+              "assistant",
+              "anesthesia",
+              "other",
+              null
+            ]
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "npi": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{10}$"
+          },
+          "fellow_pgy_level": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 4,
+            "maximum": 8
+          },
+          "assistant_role": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "RN",
+              "RT",
+              "Tech",
+              "Resident",
+              "PA",
+              "NP",
+              "Medical Student",
+              null
+            ]
+          }
+        }
+      }
+    },
     "patient_demographics": {
       "type": [
         "object",
@@ -3281,6 +3344,13 @@
           "minimum": 0,
           "maximum": 100
         },
+        "pdl1_tps_text": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "PD-L1 TPS as reported when expressed with operators/ranges (e.g., '<1%', '>50%')."
+        },
         "microbiology_results": {
           "type": [
             "string",
@@ -3344,6 +3414,47 @@
                 "default": 1,
                 "minimum": 1,
                 "description": "Number of units (for RVU multiplication)"
+              },
+              "derived_from": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "description": "Traceability pointers/IDs describing which structured registry fields drove this CPT line (e.g., 'procedures_performed.linear_ebus').",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "evidence": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "description": "Evidence items supporting this CPT line (V3 evidence contract for UI highlighting).",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "span": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  }
+                }
               }
             },
             "required": [

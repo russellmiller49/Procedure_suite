@@ -39,7 +39,7 @@ This guide covers deploying Procedure Suite in production with:
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role key (not anon key!) | `eyJhbGc...` |
 | `PROCEDURE_STORE_BACKEND` | Storage backend | `supabase` |
 | `METRICS_BACKEND` | Metrics collection mode | `prometheus` |
-| `PSUITE_KNOWLEDGE_FILE` | Path to knowledge base JSON | `data/knowledge/ip_coding_billing_v2_9.json` |
+| `PSUITE_KNOWLEDGE_FILE` | Path to knowledge base JSON | `data/knowledge/ip_coding_billing_v3_0.json` |
 
 ### Optional Configuration
 
@@ -192,7 +192,7 @@ export SUPABASE_URL="..."
 export SUPABASE_SERVICE_ROLE_KEY="..."
 export PROCEDURE_STORE_BACKEND=supabase
 export METRICS_BACKEND=prometheus
-export PSUITE_KNOWLEDGE_FILE="data/knowledge/ip_coding_billing_v2_9.json"
+export PSUITE_KNOWLEDGE_FILE="data/knowledge/ip_coding_billing_v3_0.json"
 
 # Run with gunicorn
 gunicorn modules.api.fastapi_app:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000

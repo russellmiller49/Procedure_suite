@@ -2,7 +2,7 @@
 
 This document provides a quick reference for the core Interventional Pulmonology CPT codes supported by the system. 
 
-> **Note**: The authoritative source for logic and RVUs is `data/knowledge/ip_coding_billing_v2_9.json`.
+> **Note**: The authoritative source for logic and RVUs is `data/knowledge/ip_coding_billing_v3_0.json`.
 
 ## Bronchoscopy Family
 
@@ -97,4 +97,4 @@ The system enforces NCCI edits automatically. Common rules:
 3. **Navigation**: `+31627` is an add-on and must accompany a primary bronchoscopy code (31622+).
 4. **Sedation**: `99152` (Moderate sedation) cannot be billed if General Anesthesia is used.
 
-*For specific edit pairs, see `data/knowledge/ip_coding_billing_v2_9.json`.*
+*For specific edit pairs, see `data/knowledge/ip_coding_billing_v3_0.json`.*

@@ -34,6 +34,18 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
   - `PROCSUITE_ALLOW_LEGACY_ENDPOINTS` controls ID-based extraction endpoints (expected to be locked out in prod).
   - `PROCSUITE_ALLOW_REQUEST_MODE_OVERRIDE` controls request-mode overrides.
 
+## Recent Updates (2026-01-24)
+
+- **BLVR CPT derivation:** valve placement now maps to `31647` (initial lobe) + `31651` (each additional lobe), and valve removal maps to `31648` (initial lobe) + `31649` (each additional lobe).
+- **Chartis bundling:** `31634` is derived only when Chartis is documented; suppressed when Chartis is in the same lobe as valve placement, and flagged for modifier documentation when distinct lobes are present.
+- **Moderate sedation threshold:** `99152`/`99153` are derived only when `sedation.type="Moderate"`, `anesthesia_provider="Proceduralist"`, and intraservice minutes ≥10 (computed from start/end if needed).
+- **Coding support + traceability:** extraction-first now populates `registry.coding_support` (rules applied + QA flags) and enriches `registry.billing.cpt_codes[]` with `description`, `derived_from`, and evidence spans.
+- **Providers normalization:** added `providers_team[]` (auto-derived from legacy `providers` when missing).
+- **Registry schema:** added `pathology_results.pdl1_tps_text` to preserve values like `"<1%"` or `">50%"`.
+- **KB hygiene (Phase 0–2):** added `docs/KNOWLEDGE_INVENTORY.md`, `docs/KNOWLEDGE_RELEASE_CHECKLIST.md`, and `make validate-knowledge-release` for safer knowledge/schema updates.
+- **KB version gating:** loaders now enforce KB filename semantic version ↔ internal `"version"` (override: `PSUITE_KNOWLEDGE_ALLOW_VERSION_MISMATCH=1`).
+- **Single source of truth:** runtime code metadata/RVUs come from `master_code_index`, and synonym phrase lists are centralized in KB `synonyms`.
+
 ## Extraction‑First Pipeline Notes
 
 Key path: `modules/registry/application/registry_service.py:_extract_fields_extraction_first()`

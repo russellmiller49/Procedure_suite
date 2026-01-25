@@ -36,6 +36,18 @@ This toolkit enables:
     ./scripts/devserver.sh
     ```
 
+## Recent Updates (2026-01-24)
+
+- **BLVR CPT derivation:** valve placement uses `31647` (initial lobe) + `31651` (each additional lobe); valve removal uses `31648` (initial lobe) + `31649` (each additional lobe).
+- **Chartis bundling:** `31634` is derived only when Chartis is documented; suppressed when Chartis is in the same lobe as valve placement, and flagged for modifier documentation when distinct lobes are present.
+- **Moderate sedation threshold:** `99152`/`99153` are derived only when `sedation.type="Moderate"`, `anesthesia_provider="Proceduralist"`, and intraservice minutes ≥10 (computed from start/end if needed).
+- **Coding support + traceability:** extraction-first now populates `registry.coding_support` (rules applied + QA flags) and enriches `registry.billing.cpt_codes[]` with `description`, `derived_from`, and evidence spans.
+- **Providers normalization:** added `providers_team[]` (auto-derived from legacy `providers` when missing).
+- **Registry schema:** added `pathology_results.pdl1_tps_text` to preserve values like `"<1%"` or `">50%"`.
+- **KB hygiene (Phase 0–2):** added `docs/KNOWLEDGE_INVENTORY.md`, `docs/KNOWLEDGE_RELEASE_CHECKLIST.md`, and `make validate-knowledge-release` for safer knowledge/schema updates.
+- **KB version gating:** loaders now enforce KB filename semantic version ↔ internal `"version"` (override: `PSUITE_KNOWLEDGE_ALLOW_VERSION_MISMATCH=1`).
+- **Single source of truth:** runtime code metadata/RVUs come from `master_code_index`, and synonym phrase lists are centralized in KB `synonyms`.
+
 ## Key Modules
 
 | Module | Description |
@@ -109,7 +121,7 @@ Registry extraction follows a hybrid approach:
 
 | File | Purpose |
 |------|---------|
-| `data/knowledge/ip_coding_billing_v2_9.json` | CPT codes, RVUs, bundling rules |
+| `data/knowledge/ip_coding_billing_v3_0.json` | CPT codes, RVUs, bundling rules |
 | `data/knowledge/IP_Registry.json` | Registry schema definition |
 | `data/knowledge/golden_extractions/` | Training data for ML models |
 | `schemas/IP_Registry.json` | JSON Schema for validation |
@@ -139,7 +151,7 @@ make preflight
 - Always edit `modules/api/fastapi_app.py` (not `api/app.py` - deprecated)
 - Use `CodingService` from `modules/coder/application/coding_service.py`
 - Use `RegistryService` from `modules/registry/application/registry_service.py`
-- Knowledge base is at `data/knowledge/ip_coding_billing_v2_9.json`
+- Knowledge base is at `data/knowledge/ip_coding_billing_v3_0.json`
 - Run `make test` before committing
 
 ## Environment Variables

@@ -122,6 +122,127 @@ def _lobe_tokens(values: list[str]) -> set[str]:
     return lobes
 
 
+def _normalize_lobe(value: Any) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    upper = text.upper()
+    if upper in {"RUL", "RML", "RLL", "LUL", "LLL"}:
+        return upper
+    if upper == "LINGULA":
+        return "Lingula"
+    return None
+
+
+def _blvr_valve_lobes(record: RegistryRecord, *, blvr_proc: Any | None) -> set[str]:
+    lobes: set[str] = set()
+    granular = _get(record, "granular_data")
+    placements = _get(granular, "blvr_valve_placements") if granular is not None else None
+    if isinstance(placements, (list, tuple)):
+        for placement in placements:
+            lobe = _normalize_lobe(_get(placement, "target_lobe"))
+            if lobe:
+                lobes.add(lobe)
+
+    # Fallback to the aggregate blvr.target_lobe when the registry indicates a valve procedure
+    if lobes:
+        return lobes
+    if blvr_proc is None:
+        return lobes
+    procedure_type = _get(blvr_proc, "procedure_type")
+    if procedure_type not in {"Valve placement", "Valve removal"}:
+        return lobes
+    if not _performed(blvr_proc):
+        return lobes
+    lobe = _normalize_lobe(_get(blvr_proc, "target_lobe"))
+    if lobe:
+        lobes.add(lobe)
+    return lobes
+
+
+def _blvr_chartis_lobes(record: RegistryRecord, *, blvr_proc: Any | None) -> set[str]:
+    lobes: set[str] = set()
+    granular = _get(record, "granular_data")
+    measurements = _get(granular, "blvr_chartis_measurements") if granular is not None else None
+    if isinstance(measurements, (list, tuple)):
+        for measurement in measurements:
+            lobe = _normalize_lobe(_get(measurement, "lobe_assessed"))
+            if lobe:
+                lobes.add(lobe)
+
+    # Fallback to aggregate collateral_ventilation_assessment + target_lobe
+    if blvr_proc is None:
+        return lobes
+    cv = _get(blvr_proc, "collateral_ventilation_assessment")
+    if not cv or "chartis" not in str(cv).lower():
+        return lobes
+    lobe = _normalize_lobe(_get(blvr_proc, "target_lobe"))
+    if lobe:
+        lobes.add(lobe)
+    return lobes
+
+
+def _time_to_minutes(value: Any) -> int | None:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return int(value)
+
+    try:
+        from datetime import time as dt_time
+
+        if isinstance(value, dt_time):
+            return int(value.hour) * 60 + int(value.minute)
+    except Exception:
+        # Defensive: don't let weird typing issues break deterministic CPT derivation.
+        return None
+
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return None
+        parts = text.split(":")
+        if len(parts) < 2:
+            return None
+        try:
+            hour = int(parts[0])
+            minute = int(parts[1])
+        except ValueError:
+            return None
+        if hour < 0 or hour > 23 or minute < 0 or minute > 59:
+            return None
+        return hour * 60 + minute
+
+    return None
+
+
+def _sedation_intraservice_minutes(record: RegistryRecord) -> int | None:
+    sedation = _get(record, "sedation")
+    if sedation is None:
+        return None
+
+    minutes = _get(sedation, "intraservice_minutes")
+    if isinstance(minutes, int):
+        return minutes
+    if isinstance(minutes, float):
+        return int(minutes)
+    if isinstance(minutes, str) and minutes.strip().isdigit():
+        try:
+            return int(minutes.strip())
+        except ValueError:
+            return None
+
+    start = _time_to_minutes(_get(sedation, "start_time"))
+    end = _time_to_minutes(_get(sedation, "end_time"))
+    if start is None or end is None:
+        return None
+    if end < start:
+        end += 24 * 60
+    return end - start
+
+
 def _dilation_in_distinct_lobe_from_destruction(record: RegistryRecord) -> bool:
     """Check if dilation was performed in a different lobe than destruction.
 
@@ -371,18 +492,53 @@ def derive_all_codes_with_meta(
 
     # BLVR valve family
     blvr = _proc(record, "blvr")
-    if _performed(blvr):
-        procedure_type = _get(blvr, "procedure_type")
-        num_valves = _get(blvr, "number_of_valves")
-        if procedure_type == "Valve removal":
+    blvr_procedure_type = _get(blvr, "procedure_type")
+    valve_lobes = _blvr_valve_lobes(record, blvr_proc=blvr)
+    chartis_lobes = _blvr_chartis_lobes(record, blvr_proc=blvr)
+
+    # Valve placement / removal codes
+    if _performed(blvr) and blvr_procedure_type == "Valve removal":
+        codes.append("31648")
+        rationale = "blvr.procedure_type='Valve removal'"
+        if valve_lobes:
+            rationale += f" (lobes={sorted(valve_lobes)})"
+        rationales["31648"] = rationale
+        if len(valve_lobes) >= 2:
             codes.append("31649")
-            rationales["31649"] = "blvr.procedure_type='Valve removal'"
+            rationales["31649"] = f"Valve removal in multiple lobes={sorted(valve_lobes)} (add-on lobe)"
+
+    elif _performed(blvr) and (blvr_procedure_type == "Valve placement" or valve_lobes):
+        codes.append("31647")
+        rationale = "blvr.procedure_type='Valve placement'"
+        if valve_lobes:
+            rationale += f" (lobes={sorted(valve_lobes)})"
+        rationales["31647"] = rationale
+        if len(valve_lobes) >= 2:
+            codes.append("31651")
+            rationales["31651"] = f"Valve placement in multiple lobes={sorted(valve_lobes)} (add-on lobe)"
+
+    # Chartis (balloon occlusion) code with same-lobe bundling vs valves
+    if chartis_lobes:
+        if valve_lobes:
+            overlap = chartis_lobes & valve_lobes
+            distinct = chartis_lobes - valve_lobes
+            if not distinct:
+                warnings.append(
+                    f"Suppressed 31634 (Chartis): bundled with BLVR valve procedure in same lobe(s)={sorted(overlap)}"
+                )
+            else:
+                codes.append("31634")
+                rationales["31634"] = f"Chartis documented in distinct lobe(s)={sorted(distinct)}"
+                warnings.append(
+                    "31634 (Chartis) distinct from valve lobe(s); consider modifier -59/-XS and ensure documentation supports distinctness"
+                )
+                if overlap:
+                    warnings.append(
+                        f"Chartis also documented in valve lobe(s)={sorted(overlap)} (bundled for those lobes)"
+                    )
         else:
-            codes.append("31647")
-            rationales["31647"] = "blvr.procedure_type!='Valve removal' (default to valve placement family)"
-            if isinstance(num_valves, int) and num_valves >= 2:
-                codes.append("31648")
-                rationales["31648"] = f"blvr.number_of_valves={num_valves} (>=2)"
+            codes.append("31634")
+            rationales["31634"] = f"Chartis documented (lobes={sorted(chartis_lobes)})"
 
     # Bronchial thermoplasty: 31660 initial + 31661 additional lobes.
     bt = _proc(record, "bronchial_thermoplasty")
@@ -484,6 +640,40 @@ def derive_all_codes_with_meta(
         codes.append("32561")
         rationales["32561"] = "pleural_procedures.fibrinolytic_therapy.performed=true"
 
+    # --- Sedation (moderate sedation billing) ---
+    sedation = _get(record, "sedation")
+    sedation_type = _get(sedation, "type")
+    anesthesia_provider = _get(sedation, "anesthesia_provider")
+    if sedation_type == "Moderate":
+        if anesthesia_provider != "Proceduralist":
+            if anesthesia_provider:
+                warnings.append(
+                    f"Moderate sedation present but anesthesia_provider={anesthesia_provider!r}; not deriving 99152/99153"
+                )
+            else:
+                warnings.append(
+                    "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153"
+                )
+        else:
+            minutes = _sedation_intraservice_minutes(record)
+            if minutes is None:
+                warnings.append(
+                    "Moderate sedation by proceduralist present but intraservice_minutes missing; not deriving 99152/99153"
+                )
+            elif minutes < 10:
+                warnings.append(
+                    f"Moderate sedation intraservice_minutes={minutes} (<10); suppressing 99152/99153"
+                )
+            else:
+                codes.append("99152")
+                rationales["99152"] = (
+                    f"sedation.type='Moderate' and anesthesia_provider='Proceduralist' and intraservice_minutes={minutes}"
+                )
+                # Conservative: only emit 99153 when at least one full additional 15-min block exists.
+                if minutes >= 30:
+                    codes.append("99153")
+                    rationales["99153"] = f"sedation.intraservice_minutes={minutes} (>=30 implies add-on time beyond initial 15 min)"
+
     # ---------------------------------------------------------------------
     # Post-processing: mutual exclusions & add-on safety
     # ---------------------------------------------------------------------
@@ -518,7 +708,7 @@ def derive_all_codes_with_meta(
             rationales.pop("31630", None)
 
     # Add-on codes require a primary bronchoscopy.
-    addon_codes = {"31626", "31627", "31632", "31648", "31654", "31661"}
+    addon_codes = {"31626", "31627", "31632", "31633", "31649", "31651", "31654", "31661"}
     primary_bronch = {
         "31622",
         "31623",
@@ -526,11 +716,13 @@ def derive_all_codes_with_meta(
         "31625",
         "31628",
         "31629",
+        "31634",
         "31635",
         "31640",
         "31641",
         "31645",
         "31647",
+        "31648",
         "31652",
         "31653",
         "31660",

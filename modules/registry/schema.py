@@ -139,6 +139,14 @@ def _schema_type(prop: dict[str, Any], path: tuple[str, ...]) -> Any:
         item_type = _schema_type(items, path + ("item",))
         return list[item_type]  # type: ignore[index]
     if typ == "object" or prop.get("properties"):
+        properties = prop.get("properties") or {}
+        additional = prop.get("additionalProperties")
+        if not properties:
+            if additional is True:
+                return dict[str, Any]
+            if isinstance(additional, dict):
+                value_type = _schema_type(additional, path + ("value",))
+                return dict[str, value_type]  # type: ignore[index]
         return _build_submodel(path, prop)
     return Any
 
@@ -392,6 +400,61 @@ def _build_registry_model() -> type[BaseModel]:
                     if values.get(key) is None and val is not None:
                         values[key] = val
 
+            return values
+
+        @model_validator(mode="before")
+        @classmethod
+        def migrate_providers_team(cls, values: Any):
+            """Populate providers_team from legacy providers (backward compatible)."""
+            if not isinstance(values, dict):
+                return values
+            if values.get("providers_team") is not None:
+                return values
+
+            providers = values.get("providers")
+            if providers is None:
+                return values
+            if isinstance(providers, BaseModel):
+                providers_dict = providers.model_dump()
+            elif isinstance(providers, dict):
+                providers_dict = dict(providers)
+            else:
+                return values
+
+            team: list[dict[str, Any]] = []
+
+            attending_name = providers_dict.get("attending_name")
+            if attending_name:
+                team.append(
+                    {
+                        "role": "attending",
+                        "name": attending_name,
+                        "npi": providers_dict.get("attending_npi"),
+                    }
+                )
+
+            fellow_name = providers_dict.get("fellow_name")
+            if fellow_name:
+                team.append(
+                    {
+                        "role": "fellow",
+                        "name": fellow_name,
+                        "fellow_pgy_level": providers_dict.get("fellow_pgy_level"),
+                    }
+                )
+
+            assistant_name = providers_dict.get("assistant_name")
+            if assistant_name:
+                team.append(
+                    {
+                        "role": "assistant",
+                        "name": assistant_name,
+                        "assistant_role": providers_dict.get("assistant_role"),
+                    }
+                )
+
+            if team:
+                values["providers_team"] = team
             return values
 
     RegistryRecord.__name__ = "RegistryRecord"

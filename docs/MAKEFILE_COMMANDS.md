@@ -101,12 +101,39 @@ make validate-schemas
 **Description**: Validate the knowledge base JSON file.
 
 **What it does**:
-- Checks that `data/knowledge/ip_coding_billing_v2_9.json` is valid JSON
+- Checks that `data/knowledge/ip_coding_billing_v3_0.json` is valid JSON
 - Prints confirmation message on success
 
 **Usage**:
 ```bash
 make validate-kb
+```
+
+### `make validate-knowledge-release`
+**Description**: Validate KB + schema integration (no external network calls).
+
+**What it does**:
+- Loads the KB via both the lightweight JSON loader and the main KB adapter
+- Builds/validates the dynamic `RegistryRecord` model from `data/knowledge/IP_Registry.json`
+- Runs a no-op extraction in the `parallel_ner` pathway to catch runtime/import regressions
+- Runs deterministic Registry → CPT derivation (should not crash)
+
+**Usage**:
+```bash
+make validate-knowledge-release
+```
+
+### `make knowledge-diff`
+**Description**: Generate a diff report between two KB JSON files.
+
+**What it does**:
+- Reports codes added/removed in `master_code_index`
+- Reports descriptor / RVU changes for overlapping codes
+- Reports add-on code list changes
+
+**Usage**:
+```bash
+make knowledge-diff OLD_KB=path/to/old_kb.json NEW_KB=data/knowledge/ip_coding_billing_v3_0.json
 ```
 
 ---
@@ -419,7 +446,7 @@ make export-phi-client-model    # Update UI model
 **What it does**:
 - Processes notes using hybrid coding approach (ML + keyword matching)
 - Input: `data/knowledge/synthetic_notes_with_registry2.json`
-- Knowledge base: `data/knowledge/ip_coding_billing_v2_9.json`
+- Knowledge base: `data/knowledge/ip_coding_billing_v3_0.json`
 - Output: `outputs/coder_suggestions.jsonl`
 
 **Usage**:

@@ -6,6 +6,7 @@ import hashlib
 import json
 import logging
 import os
+import re
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,11 +21,12 @@ DEFAULT_KNOWLEDGE_FILE = (
     Path(__file__).resolve().parents[2]
     / "data"
     / "knowledge"
-    / "ip_coding_billing_v2_9.json"
+    / "ip_coding_billing_v3_0.json"
 )
 
 KNOWLEDGE_ENV_VAR = "PSUITE_KNOWLEDGE_FILE"
 KNOWLEDGE_WATCH_ENV_VAR = "PSUITE_KNOWLEDGE_WATCH"
+KNOWLEDGE_ALLOW_VERSION_MISMATCH_ENV_VAR = "PSUITE_KNOWLEDGE_ALLOW_VERSION_MISMATCH"
 
 _WATCH_INTERVAL_SECONDS = 1.0
 
@@ -33,6 +35,44 @@ logger = logging.getLogger(__name__)
 
 class KnowledgeValidationError(RuntimeError):
     """Raised when the knowledge document fails schema validation."""
+
+
+def _allow_version_mismatch() -> bool:
+    value = os.environ.get(KNOWLEDGE_ALLOW_VERSION_MISMATCH_ENV_VAR, "").strip().lower()
+    return value in {"1", "true", "yes"}
+
+
+def _extract_semver_from_filename(path: Path) -> tuple[int, int] | None:
+    match = re.search(r"_v(\d+)[._](\d+)\.json$", path.name)
+    if not match:
+        return None
+    return int(match.group(1)), int(match.group(2))
+
+
+def _extract_semver_from_kb_version(value: object) -> tuple[int, int] | None:
+    if not isinstance(value, str):
+        return None
+    parts = value.strip().lstrip("v").split(".")
+    if len(parts) < 2:
+        return None
+    try:
+        return int(parts[0]), int(parts[1])
+    except ValueError:
+        return None
+
+
+def _validate_filename_semver_matches_version(document: dict[str, Any], target: Path) -> None:
+    if _allow_version_mismatch():
+        return
+    file_semver = _extract_semver_from_filename(target)
+    kb_semver = _extract_semver_from_kb_version(document.get("version"))
+    if not file_semver or not kb_semver:
+        return
+    if file_semver != kb_semver:
+        raise KnowledgeValidationError(
+            f"KB filename semver v{file_semver[0]}_{file_semver[1]} does not match internal version "
+            f"{document.get('version')!r} ({target}). Set {KNOWLEDGE_ALLOW_VERSION_MISMATCH_ENV_VAR}=1 to override."
+        )
 
 
 @dataclass(frozen=True)
@@ -262,6 +302,7 @@ def _refresh_cache(target: Path, mtime: float | None = None) -> None:
     raw = target.read_bytes()
     data = json.loads(raw.decode("utf-8"))
     _validate_document(data)
+    _validate_filename_semver_matches_version(data, target)
     resolved_mtime = mtime if mtime is not None else target.stat().st_mtime
     global _cache, _knowledge_path, _mtime, _checksum, _version
     _cache = data
@@ -338,5 +379,6 @@ __all__ = [
     "KnowledgeValidationError",
     "KNOWLEDGE_ENV_VAR",
     "KNOWLEDGE_WATCH_ENV_VAR",
+    "KNOWLEDGE_ALLOW_VERSION_MISMATCH_ENV_VAR",
     "DEFAULT_KNOWLEDGE_FILE",
 ]

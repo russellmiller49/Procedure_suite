@@ -832,6 +832,11 @@ class RegistryService:
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
 
+                from modules.registry.application.pathology_extraction import apply_pathology_extraction
+
+                record, pathology_warnings = apply_pathology_extraction(record, masked_note_text)
+                warnings.extend(pathology_warnings)
+
                 return record, warnings, meta
             except NotImplementedError as exc:
                 warnings.append(str(exc))
@@ -1181,6 +1186,11 @@ class RegistryService:
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
 
+                from modules.registry.application.pathology_extraction import apply_pathology_extraction
+
+                record, pathology_warnings = apply_pathology_extraction(record, masked_note_text)
+                warnings.extend(pathology_warnings)
+
                 # Add review warnings if parallel pathway flagged discrepancies
                 if parallel_result.needs_review:
                     warnings.extend(parallel_result.review_reasons)
@@ -1219,6 +1229,11 @@ class RegistryService:
         warnings.extend(verifier_warnings)
         warnings.extend(sanitize_ebus_events(record, masked_note_text))
         warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
+
+        from modules.registry.application.pathology_extraction import apply_pathology_extraction
+
+        record, pathology_warnings = apply_pathology_extraction(record, masked_note_text)
+        warnings.extend(pathology_warnings)
 
         return record, warnings, meta
 
@@ -1809,8 +1824,17 @@ class RegistryService:
                     "but deterministic derivation missed it"
                 )
 
+        derivation_warnings = list(derivation.warnings)
+        code_rationales = {c.code: c.rationale for c in derivation.codes}
+
         # Populate billing CPT codes deterministically (never from the LLM).
         if derived_codes:
+            from modules.registry.application.coding_support_builder import (
+                build_coding_support_payload,
+                build_traceability_for_code,
+                get_kb_repo,
+            )
+
             record_data = record.model_dump()
             billing = record_data.get("billing")
             if not isinstance(billing, dict):
@@ -1823,12 +1847,24 @@ class RegistryService:
                 isinstance(peripheral_tbna, dict) and peripheral_tbna.get("performed") is True
             )
 
+            kb_repo = get_kb_repo()
+
             cpt_payload: list[dict[str, Any]] = []
             for code in derived_codes:
                 code_str = str(code).strip()
                 if not code_str:
                     continue
-                item: dict[str, Any] = {"code": code_str}
+
+                proc_info = kb_repo.get_procedure_info(code_str)
+                item: dict[str, Any] = {
+                    "code": code_str,
+                    "description": proc_info.description if proc_info else None,
+                }
+                derived_from, evidence_items = build_traceability_for_code(record=record, code=code_str)
+                if derived_from:
+                    item["derived_from"] = derived_from
+                if evidence_items:
+                    item["evidence"] = evidence_items
                 if (
                     code_str == "31629"
                     and has_ebus_sampling_code
@@ -1839,11 +1875,18 @@ class RegistryService:
 
             billing["cpt_codes"] = cpt_payload
             record_data["billing"] = billing
+
+            record_data["coding_support"] = build_coding_support_payload(
+                record=record,
+                codes=derived_codes,
+                code_rationales=code_rationales,
+                derivation_warnings=derivation_warnings,
+                kb_repo=kb_repo,
+            )
+
             record = RegistryRecord(**record_data)
 
-        derivation_warnings = list(derivation.warnings)
         warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings) + list(coverage_warnings)
-        code_rationales = {c.code: c.rationale for c in derivation.codes}
         mapped_fields = (
             aggregate_registry_fields(derived_codes, version="v3") if derived_codes else {}
         )
@@ -2157,12 +2200,12 @@ class RegistryService:
                     "CPT 31630/31631 present but procedures_performed.airway_dilation is not marked."
                 )
 
-        # BLVR (valve): 31647, 31648, 31649
-        blvr_codes = {"31647", "31648", "31649"}
+        # BLVR / valves / Chartis: 31634, 31647, 31651, 31648, 31649
+        blvr_codes = {"31634", "31647", "31648", "31649", "31651"}
         if blvr_codes & codes:
             if not _proc_is_set(procedures, "blvr"):
                 validation_errors.append(
-                    "CPT 31647/31648/31649 present but procedures_performed.blvr is not marked."
+                    "CPT 31634/31647/31651/31648/31649 present but procedures_performed.blvr is not marked."
                 )
 
         # Thermoplasty: 31660, 31661

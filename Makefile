@@ -5,7 +5,7 @@ SHELL := /bin/bash
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
 SETUP_STAMP := .setup.stamp
 PYTHON := python
-KB_PATH := data/knowledge/ip_coding_billing_v2_9.json
+KB_PATH := data/knowledge/ip_coding_billing_v3_0.json
 SCHEMA_PATH := data/knowledge/IP_Registry.json
 NOTES_PATH := data/knowledge/synthetic_notes_with_registry2.json
 PORT ?= 8000
@@ -38,6 +38,18 @@ validate-schemas:
 validate-kb:
 	@echo "Validating knowledge base at $(KB_PATH)..."
 	$(CONDA_ACTIVATE) && $(PYTHON) -c "import json; json.load(open('$(KB_PATH)'))" && echo "KB JSON valid"
+
+# Validate KB + schema integration (no-op extraction)
+validate-knowledge-release:
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/validate_knowledge_release.py --kb $(KB_PATH) --schema $(SCHEMA_PATH)
+
+# Knowledge diff report (set OLD_KB=...; NEW_KB defaults to KB_PATH)
+OLD_KB ?=
+NEW_KB ?= $(KB_PATH)
+
+knowledge-diff:
+	@if [ -z "$(OLD_KB)" ]; then echo "ERROR: Set OLD_KB=path/to/old_kb.json"; exit 2; fi
+	$(CONDA_ACTIVATE) && $(PYTHON) scripts/knowledge_diff_report.py --old $(OLD_KB) --new $(NEW_KB)
 
 # Run the smart-hybrid coder over notes
 run-coder:

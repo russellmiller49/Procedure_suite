@@ -16,6 +16,18 @@ This guide explains how to use the Procedure Suite tools for generating reports,
   when high-confidence omissions are detected (slower but higher quality).
   - Self-correction is gated by a CPT keyword guard; skips will include `SELF_CORRECT_SKIPPED:` warnings when enabled.
 
+## Recent Updates (2026-01-24)
+
+- **BLVR CPT derivation:** valve placement uses `31647` (initial lobe) + `31651` (each additional lobe); valve removal uses `31648` (initial lobe) + `31649` (each additional lobe).
+- **Chartis bundling:** `31634` is derived only when Chartis is documented; suppressed when Chartis is in the same lobe as valve placement, and flagged for modifier documentation when distinct lobes are present.
+- **Moderate sedation threshold:** `99152`/`99153` are derived only when `sedation.type="Moderate"`, `anesthesia_provider="Proceduralist"`, and intraservice minutes ≥10 (computed from start/end if needed).
+- **Coding support + traceability:** extraction-first now populates `registry.coding_support` (rules applied + QA flags) and enriches `registry.billing.cpt_codes[]` with `description`, `derived_from`, and evidence spans.
+- **Providers normalization:** added `providers_team[]` (auto-derived from legacy `providers` when missing).
+- **Registry schema:** added `pathology_results.pdl1_tps_text` to preserve values like `"<1%"` or `">50%"`.
+- **KB hygiene (Phase 0–2):** added `docs/KNOWLEDGE_INVENTORY.md`, `docs/KNOWLEDGE_RELEASE_CHECKLIST.md`, and `make validate-knowledge-release` for safer knowledge/schema updates.
+- **KB version gating:** loaders now enforce KB filename semantic version ↔ internal `"version"` (override: `PSUITE_KNOWLEDGE_ALLOW_VERSION_MISMATCH=1`).
+- **Single source of truth:** runtime code metadata/RVUs come from `master_code_index`, and synonym phrase lists are centralized in KB `synonyms`.
+
 ## How the System Works (Plain Language)
 
 The Procedure Suite is an intelligent medical coding assistant that reads procedure notes and suggests appropriate CPT billing codes. Here's how it works in simple terms:
@@ -466,7 +478,7 @@ Note: `MODEL_BACKEND=onnx` (the devserver default) may skip the registry ML clas
 
 ## 📊 Key Files
 
-- **`data/knowledge/ip_coding_billing_v2_9.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
+- **`data/knowledge/ip_coding_billing_v3_0.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
 - **`schemas/IP_Registry.json`**: The "Law". Defines the valid structure for registry data.
 - **`reports/`**: Where output logs and validation summaries are saved.
 

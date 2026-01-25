@@ -175,8 +175,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--kb-path",
         type=Path,
-        default=Path("data/knowledge/ip_coding_billing_v2_9.json"),
-        help="Path to knowledge base JSON file (default: data/knowledge/ip_coding_billing_v2_9.json)",
+        default=Path("data/knowledge/ip_coding_billing_v3_0.json"),
+        help="Path to knowledge base JSON file (default: data/knowledge/ip_coding_billing_v3_0.json)",
     )
     parser.add_argument(
         "--keep-addon-plus",

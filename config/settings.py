@@ -11,7 +11,7 @@ class CoderSettings(BaseSettings):
     """Settings for the CPT coding pipeline."""
 
     model_version: str = "gemini-2.5-flash"
-    kb_path: str = "data/knowledge/ip_coding_billing_v2_9.json"
+    kb_path: str = "data/knowledge/ip_coding_billing_v3_0.json"
     kb_version: str = "v3_0"
     keyword_mapping_dir: str = "data/keyword_mappings"
     keyword_mapping_version: str = "v1"
