@@ -145,8 +145,10 @@ __all__ = [
     # Registry-record-level guardrails
     "populate_ebus_node_events_fallback",
     "sanitize_ebus_events",
+    "reconcile_ebus_sampling_from_specimen_log",
     "enrich_ebus_node_event_outcomes",
     "enrich_linear_ebus_needle_gauge",
+    "enrich_medical_thoracoscopy_biopsies_taken",
 ]
 
 
@@ -2570,9 +2572,12 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
 
 
 _EBUS_SAMPLING_INDICATORS_RE = re.compile(
-    r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|ing)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+    r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
     re.IGNORECASE,
 )
+
+_EBUS_SAMPLING_CRITERIA_RE = re.compile(r"\bsampling\s+criteria\b", re.IGNORECASE)
+_EBUS_SIZE_MM_RE = re.compile(r"\b\d+(?:\.\d+)?\s*mm\b", re.IGNORECASE)
 
 _EBUS_EXPLICIT_NEGATION_PHRASES_RE = re.compile(
     r"\b(?:"
@@ -2667,6 +2672,41 @@ def _station_has_sampling_negation(full_text: str, station: str) -> bool:
     return False
 
 
+def _station_has_strong_sampling_evidence(full_text: str, station: str) -> bool:
+    pattern = _ebus_station_pattern(station)
+    if pattern is None:
+        return False
+
+    text = full_text or ""
+    for line in text.splitlines():
+        if not pattern.search(line):
+            continue
+        if _EBUS_SAMPLING_INDICATORS_RE.search(line) and not _EBUS_SAMPLING_CRITERIA_RE.search(line):
+            return True
+    return False
+
+
+def _station_has_measure_only_context(full_text: str, station: str) -> bool:
+    """True when a station is discussed only as measured/criteria-met (not sampled)."""
+    pattern = _ebus_station_pattern(station)
+    if pattern is None:
+        return False
+
+    text = full_text or ""
+    for line in text.splitlines():
+        if not pattern.search(line):
+            continue
+        if _EBUS_SAMPLING_INDICATORS_RE.search(line) and not _EBUS_SAMPLING_CRITERIA_RE.search(line):
+            continue
+        if _EBUS_SAMPLING_CRITERIA_RE.search(line):
+            return True
+        if _EBUS_MEASURE_ONLY_RE.search(line):
+            return True
+        if _EBUS_SIZE_MM_RE.search(line):
+            return True
+    return False
+
+
 def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
     """Correct EBUS node events when the note explicitly negates sampling.
 
@@ -2684,24 +2724,35 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
 
     sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
     for event in node_events:
-        if getattr(event, "action", None) != "needle_aspiration":
+        action = getattr(event, "action", None)
+        if action not in sampling_actions:
             continue
         station = getattr(event, "station", None)
         if not isinstance(station, str) or not station.strip():
             continue
         station_token = station.strip().upper()
-        if not _station_has_sampling_negation(full_text, station_token):
-            continue
+        reason: str | None = None
+        if _station_has_sampling_negation(full_text, station_token):
+            reason = "Found negation for"
+        elif (
+            not _station_has_strong_sampling_evidence(full_text, station_token)
+            and _station_has_measure_only_context(full_text, station_token)
+        ):
+            reason = "Criteria/measurement without sampling for"
 
-        original_quote = getattr(event, "evidence_quote", None)
-        setattr(event, "action", "inspected_only")
-        marker = f"AUTO-CORRECTED: Found negation for {station_token}"
-        if isinstance(original_quote, str) and original_quote.strip():
-            setattr(event, "evidence_quote", f"{marker} | {original_quote}")
-        else:
-            setattr(event, "evidence_quote", marker)
+        if reason:
+            original_quote = getattr(event, "evidence_quote", None)
+            setattr(event, "action", "inspected_only")
+            marker = f"AUTO-CORRECTED: {reason} {station_token}"
+            if isinstance(original_quote, str) and original_quote.strip():
+                setattr(event, "evidence_quote", f"{marker} | {original_quote}")
+            else:
+                setattr(event, "evidence_quote", marker)
 
-        warnings.append(f"AUTO_CORRECTED_EBUS_NEGATION: {station_token}")
+            if reason.startswith("Found negation"):
+                warnings.append(f"AUTO_CORRECTED_EBUS_NEGATION: {station_token}")
+            else:
+                warnings.append(f"AUTO_CORRECTED_EBUS_CRITERIA_ONLY: {station_token}")
 
     # Keep legacy aggregate station lists consistent when present.
     sampled: list[str] = []
@@ -2726,6 +2777,111 @@ _EBUS_STATION_TOKEN_RE = re.compile(
     r"\b(2R|2L|4R|4L|7|10R|10L|11R(?:S|I)?|11L(?:S|I)?)\b",
     re.IGNORECASE,
 )
+
+_EBUS_SPECIMEN_SECTION_HEADER_RE = re.compile(r"(?im)^\s*specimens?\b.*:?$")
+_EBUS_SPECIMEN_TBNA_LINE_RE = re.compile(
+    r"\b(?:tbna|fna|transbronchial\s+needle|needle\s+aspirat)\w*\b",
+    re.IGNORECASE,
+)
+_EBUS_SPECIMEN_SECTION_STOP_RE = re.compile(
+    r"(?im)^\s*(?:complications?|estimated\s+blood\s+loss|ebl|post[- ]procedure|disposition|recommendations?)\b"
+)
+
+
+def _extract_tbna_stations_from_specimen_log(full_text: str) -> dict[str, str]:
+    if not full_text:
+        return {}
+
+    header = _EBUS_SPECIMEN_SECTION_HEADER_RE.search(full_text)
+    if not header:
+        return {}
+
+    from modules.ner.entity_types import normalize_station
+
+    stations: dict[str, str] = {}
+    tail = full_text[header.end() :]
+    for line in tail.splitlines():
+        if not line.strip():
+            if stations:
+                break
+            continue
+        if _EBUS_SPECIMEN_SECTION_STOP_RE.search(line) and stations:
+            break
+        if not _EBUS_SPECIMEN_TBNA_LINE_RE.search(line):
+            continue
+        for match in _EBUS_STATION_TOKEN_RE.finditer(line):
+            station = normalize_station(match.group(1) or "")
+            if station:
+                stations.setdefault(station, line.strip())
+
+    return stations
+
+
+def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text: str) -> list[str]:
+    """Restrict linear EBUS stations_sampled to specimen-log TBNA stations when available.
+
+    Some notes list stations measured/surveyed in narrative, but the specimen log
+    is the most reliable source of what was actually sampled/sent.
+    """
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    if linear is None or getattr(linear, "performed", False) is not True:
+        return warnings
+    if not full_text:
+        return warnings
+
+    station_to_line = _extract_tbna_stations_from_specimen_log(full_text)
+    if not station_to_line:
+        return warnings
+
+    confirmed = sorted(station_to_line.keys())
+    existing = getattr(linear, "node_events", None)
+    node_events = list(existing) if isinstance(existing, list) else []
+
+    sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+
+    confirmed_meta: dict[str, dict[str, str]] = {}
+    for station, line in station_to_line.items():
+        token = str(station).strip().upper()
+        if token:
+            confirmed_meta[token] = {"station": str(station).strip(), "evidence_quote": str(line).strip()}
+
+    from modules.registry.schema import NodeInteraction
+
+    seen_confirmed: set[str] = set()
+    for event in node_events:
+        station = getattr(event, "station", None)
+        if not isinstance(station, str) or not station.strip():
+            continue
+        station_token = station.strip().upper()
+        meta = confirmed_meta.get(station_token)
+        if meta:
+            seen_confirmed.add(station_token)
+            setattr(event, "action", "needle_aspiration")
+            setattr(event, "evidence_quote", meta.get("evidence_quote") or getattr(event, "evidence_quote", None))
+        elif getattr(event, "action", None) in sampling_actions:
+            setattr(event, "action", "inspected_only")
+
+    for station_token, meta in confirmed_meta.items():
+        if station_token in seen_confirmed:
+            continue
+        node_events.append(
+            NodeInteraction(
+                station=meta["station"],
+                action="needle_aspiration",
+                outcome=None,
+                evidence_quote=meta["evidence_quote"] or f"TBNA of {meta['station']} documented in specimen log.",
+            )
+        )
+
+    setattr(linear, "node_events", node_events)
+    if hasattr(linear, "stations_sampled"):
+        setattr(linear, "stations_sampled", confirmed if confirmed else None)
+
+    warnings.append(f"EBUS_SPECIMEN_OVERRIDE: stations_sampled={confirmed} from specimen log TBNA entries.")
+    return warnings
+
 _EBUS_STATION_LIST_HEADER_RE = re.compile(
     r"\b(?:following\s+station\(s\)|following\s+stations?|stations?\s+(?:sampled|biopsied|aspirated)|lymph\s+node\s+stations?\s+(?:sampled|biopsied))\b",
     re.IGNORECASE,
@@ -3007,4 +3163,56 @@ def enrich_linear_ebus_needle_gauge(record: RegistryRecord, full_text: str) -> l
     setattr(linear, "needle_gauge", f"{gauge}G")
     warnings.append("AUTO_EBUS_NEEDLE_GAUGE: parsed from note text")
 
+    return warnings
+
+
+_PLEURAL_THORACOSCOPY_BIOPSY_RE = re.compile(
+    r"\bbiops(?:y|ies)\b[^.\n]{0,120}\bpleur(?:a|al|e)?\b"
+    r"|\bpleur(?:a|al|e)?\b[^.\n]{0,120}\bbiops(?:y|ies)\b",
+    re.IGNORECASE,
+)
+
+
+def enrich_medical_thoracoscopy_biopsies_taken(record: RegistryRecord, full_text: str) -> list[str]:
+    """Set pleural_procedures.medical_thoracoscopy.biopsies_taken when pleural biopsies are documented."""
+    warnings: list[str] = []
+    pleural = getattr(record, "pleural_procedures", None)
+    thor = getattr(pleural, "medical_thoracoscopy", None) if pleural is not None else None
+    if thor is None or getattr(thor, "performed", None) is not True:
+        return warnings
+
+    if getattr(thor, "biopsies_taken", None) is True:
+        return warnings
+
+    if not full_text:
+        return warnings
+
+    match = _PLEURAL_THORACOSCOPY_BIOPSY_RE.search(full_text)
+    if not match:
+        return warnings
+
+    setattr(thor, "biopsies_taken", True)
+
+    try:
+        from modules.common.spans import Span
+
+        evidence = getattr(record, "evidence", None)
+        if not isinstance(evidence, dict):
+            evidence = {}
+        evidence.setdefault("pleural_procedures.medical_thoracoscopy.biopsies_taken", []).append(
+            Span(
+                text=(match.group(0) or "").strip(),
+                start=int(match.start()),
+                end=int(match.end()),
+                confidence=0.9,
+            )
+        )
+        record.evidence = evidence
+    except Exception:
+        # Evidence is best-effort; do not fail postprocess.
+        pass
+
+    warnings.append(
+        "AUTO_THORACOSCOPY_BIOPSY: set pleural_procedures.medical_thoracoscopy.biopsies_taken=true from note text"
+    )
     return warnings

@@ -51,6 +51,17 @@ class ConfidenceCombiner:
     REVIEW_CONFIDENCE_FLOOR = 0.5
     ML_HIGH_CONF_THRESHOLD = 0.90
     ML_LOW_CONF_THRESHOLD = 0.10
+    REVIEW_ON_LOW_ML_PROB_CODES = {
+        # High-risk "history/presence" mentions frequently trigger false positives.
+        "31636",
+        "31637",
+        "31638",
+        "32550",
+        "32551",
+        "32552",
+        "32556",
+        "32557",
+    }
 
     def combine(
         self,
@@ -73,13 +84,21 @@ class ConfidenceCombiner:
         """
         if deterministic_found:
             if ml_probability < self.ML_LOW_CONF_THRESHOLD:
-                confidence = max(self.REVIEW_CONFIDENCE_FLOOR, entity_confidence)
-                explanation = (
-                    "FLAG_FOR_REVIEW: NER found keyword, but context suggests "
-                    f"negation/history (ML prob: {ml_probability:.2f})"
-                )
-                needs_review = True
-                review_reason = "NER found keyword, but context suggests negation/history."
+                if code in self.REVIEW_ON_LOW_ML_PROB_CODES:
+                    confidence = max(self.REVIEW_CONFIDENCE_FLOOR, entity_confidence)
+                    explanation = (
+                        "FLAG_FOR_REVIEW: NER evidence found but ML probability is very low "
+                        f"(ML prob: {ml_probability:.2f})"
+                    )
+                    needs_review = True
+                    review_reason = (
+                        "NER evidence found, but ML probability is very low; verify context (history/negation/aborted)."
+                    )
+                else:
+                    confidence = min(0.99, max(self.AUTO_CODE_CONFIDENCE, entity_confidence))
+                    explanation = f"AUTO_CODE: NER evidence found (ML prob: {ml_probability:.2f})"
+                    needs_review = False
+                    review_reason = None
             else:
                 confidence = min(0.99, max(self.AUTO_CODE_CONFIDENCE, entity_confidence))
                 explanation = (

@@ -1440,7 +1440,9 @@ class RegistryService:
         from modules.registry.postprocess import (
             enrich_ebus_node_event_outcomes,
             enrich_linear_ebus_needle_gauge,
+            enrich_medical_thoracoscopy_biopsies_taken,
             populate_ebus_node_events_fallback,
+            reconcile_ebus_sampling_from_specimen_log,
             sanitize_ebus_events,
         )
 
@@ -1450,12 +1452,18 @@ class RegistryService:
         ebus_sanitize_warnings = sanitize_ebus_events(record, masked_note_text)
         if ebus_sanitize_warnings:
             extraction_warnings.extend(ebus_sanitize_warnings)
+        ebus_specimen_warnings = reconcile_ebus_sampling_from_specimen_log(record, masked_note_text)
+        if ebus_specimen_warnings:
+            extraction_warnings.extend(ebus_specimen_warnings)
         ebus_outcome_warnings = enrich_ebus_node_event_outcomes(record, masked_note_text)
         if ebus_outcome_warnings:
             extraction_warnings.extend(ebus_outcome_warnings)
         ebus_gauge_warnings = enrich_linear_ebus_needle_gauge(record, masked_note_text)
         if ebus_gauge_warnings:
             extraction_warnings.extend(ebus_gauge_warnings)
+        pleural_biopsy_warnings = enrich_medical_thoracoscopy_biopsies_taken(record, masked_note_text)
+        if pleural_biopsy_warnings:
+            extraction_warnings.extend(pleural_biopsy_warnings)
 
         guardrail_outcome = self.clinical_guardrails.apply_record_guardrails(
             masked_note_text, record

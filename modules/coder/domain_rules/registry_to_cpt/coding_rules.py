@@ -628,9 +628,17 @@ def derive_all_codes_with_meta(
                 codes.append("32551")
                 rationales["32551"] = "pleural_procedures.chest_tube.performed=true (tube thoracostomy)"
 
-    if _performed(_pleural(record, "medical_thoracoscopy")):
-        codes.append("32601")
-        rationales["32601"] = "pleural_procedures.medical_thoracoscopy.performed=true"
+    thoracoscopy = _pleural(record, "medical_thoracoscopy")
+    if _performed(thoracoscopy):
+        biopsies_taken = _get(thoracoscopy, "biopsies_taken")
+        if biopsies_taken is True:
+            codes.append("32609")
+            rationales["32609"] = (
+                "pleural_procedures.medical_thoracoscopy.performed=true and biopsies_taken=true"
+            )
+        else:
+            codes.append("32601")
+            rationales["32601"] = "pleural_procedures.medical_thoracoscopy.performed=true"
 
     if _performed(_pleural(record, "pleurodesis")):
         codes.append("32560")

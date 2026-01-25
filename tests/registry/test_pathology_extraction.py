@@ -38,3 +38,17 @@ def test_pathology_extracts_pdl1_range_text() -> None:
     assert record.pathology_results.molecular_markers.get("ALK") is not None
 
     assert "pathology_results.pdl1_tps_text" in record.evidence
+
+
+def test_pathology_does_not_extract_histology_from_staging_indication_line() -> None:
+    note = (
+        "Endobronchial Ultrasound Findings and Sampling\n"
+        "Lymph node sizing and sampling were performed for non–small cell lung cancer staging using an Olympus 22-gauge EBUS-TBNA needle. "
+        "Samples were obtained from the following stations and sent for routine cytology:\n"
+        "Station 4L: Rapid on-site evaluation indicated adequate tissue.\n"
+    )
+
+    record, warnings = apply_pathology_extraction(RegistryRecord(), note)
+
+    assert record.pathology_results is None
+    assert warnings == []

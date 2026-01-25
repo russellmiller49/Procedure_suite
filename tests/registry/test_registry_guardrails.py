@@ -194,3 +194,51 @@ def test_sanitize_ebus_events_flips_on_benign_ultrasound_characteristics_without
     linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
     assert linear.node_events[0].action == "inspected_only"
     assert "AUTO_CORRECTED_EBUS_NEGATION: 4R" in warnings
+
+
+def test_sanitize_ebus_events_drops_sampling_for_criteria_only_stations() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "linear_ebus": {
+                    "performed": True,
+                    "stations_sampled": ["10R", "11L", "11RS", "2R", "4L", "4R", "7"],
+                    "node_events": [
+                        {"station": "10R", "action": "needle_aspiration", "outcome": None, "evidence_quote": "10R"},
+                        {"station": "4L", "action": "needle_aspiration", "outcome": None, "evidence_quote": "4L"},
+                        {"station": "11Rs", "action": "needle_aspiration", "outcome": None, "evidence_quote": "11Rs"},
+                        {"station": "7", "action": "needle_aspiration", "outcome": None, "evidence_quote": "7"},
+                        {"station": "4R", "action": "needle_aspiration", "outcome": None, "evidence_quote": "4R"},
+                        {"station": "2R", "action": "needle_aspiration", "outcome": None, "evidence_quote": "2R"},
+                        {"station": "11L", "action": "needle_aspiration", "outcome": None, "evidence_quote": "11L"},
+                    ],
+                }
+            }
+        }
+    )
+
+    note_text = (
+        "A systematic hilar and mediastinal lymph node survey was carried out. "
+        "Sampling criteria (5mm short axis diameter) were met in station 11Rs (6.7mm), 10R (5.7mm), 4R (9.1mm), "
+        "2R (7.1 mm), 7 (15.7mm), 4L (6.9mm), and 11L (21.1mm) lymph nodes.\n"
+        "Sampling by transbronchial needle aspiration was performed beginning with the 11Rs lymph node followed by 7, "
+        "and 4R, 2R lymph nodes using an Olympus EBUSTBNA 22 gauge needle.\n"
+        "We then moved to the large 11L lymph node and took 8 additional passes.\n"
+    )
+
+    warnings = sanitize_ebus_events(record, note_text)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    by_station = {e.station.upper(): e for e in (linear.node_events or [])}
+
+    assert by_station["10R"].action == "inspected_only"
+    assert by_station["4L"].action == "inspected_only"
+    assert by_station["7"].action == "needle_aspiration"
+    assert by_station["4R"].action == "needle_aspiration"
+    assert by_station["2R"].action == "needle_aspiration"
+    assert by_station["11RS"].action == "needle_aspiration"
+    assert by_station["11L"].action == "needle_aspiration"
+
+    assert linear.stations_sampled == ["11L", "11RS", "2R", "4R", "7"]
+    assert "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 10R" in warnings
+    assert "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L" in warnings

@@ -12,6 +12,31 @@ from modules.common.spans import Span
 from modules.registry.schema import RegistryRecord
 
 
+_HYPHEN_TRANSLATION = str.maketrans(
+    {
+        "\u2010": "-",
+        "\u2011": "-",
+        "\u2012": "-",
+        "\u2013": "-",
+        "\u2014": "-",
+        "\u2015": "-",
+        "\u2212": "-",
+        "\ufe63": "-",
+        "\uff0d": "-",
+    }
+)
+
+_PATHOLOGY_CONTEXT_RE = re.compile(r"\b(?:patholog|cytolog|histolog|cytopatholog)\w*\b", re.IGNORECASE)
+_PATHOLOGY_RESULT_CUE_RE = re.compile(
+    r"\b(?:final|diagnos(?:is|es)|consistent\s+with|positive\s+for|reve(?:al|aled)|show(?:s|ed)|confirm(?:ed|s))\b",
+    re.IGNORECASE,
+)
+_PATHOLOGY_SENT_FOR_CUE_RE = re.compile(
+    r"\b(?:sent|submit(?:ted)?|submitted|await|pending)\b[^.\n]{0,80}\b(?:patholog|cytolog|histolog|cytopatholog)\w*\b",
+    re.IGNORECASE,
+)
+
+
 @dataclass(frozen=True)
 class _Extraction:
     value: Any
@@ -39,10 +64,42 @@ def _first_match(patterns: list[str], text: str) -> re.Match[str] | None:
     return None
 
 
+def _normalize_hyphens(text: str) -> str:
+    """Normalize unicode hyphen/dash characters to '-' without changing string length."""
+    return (text or "").translate(_HYPHEN_TRANSLATION)
+
+
+def _histology_is_result_context(text: str, start: int, end: int) -> bool:
+    """Return True if histology appears in a pathology-results context (not just staging/indication)."""
+    if not text or start < 0 or end <= start:
+        return False
+
+    window_start = max(0, start - 260)
+    window_end = min(len(text), end + 260)
+    window = text[window_start:window_end]
+
+    if _PATHOLOGY_CONTEXT_RE.search(window) is None:
+        return False
+
+    # If the only context is that samples were *sent for* pathology/cytology (no result yet), skip.
+    if _PATHOLOGY_SENT_FOR_CUE_RE.search(window) is not None and _PATHOLOGY_RESULT_CUE_RE.search(window) is None:
+        return False
+
+    # Common result formats: "FINAL PATHOLOGY:" or "Cytology: <result>"
+    if re.search(r"(?i)\b(?:patholog|cytolog|histolog|cytopatholog)\w*\s*[:\-]", window) is not None:
+        return True
+    if _PATHOLOGY_RESULT_CUE_RE.search(window) is not None:
+        return True
+
+    return False
+
+
 def _extract_histology(text: str, knowledge: dict[str, Any]) -> _Extraction | None:
     histology = knowledge.get("histology")
     if not isinstance(histology, dict) or not histology:
         return None
+
+    normalized = _normalize_hyphens(text)
 
     # Prefer specific histology types by iterating in KB order.
     for _key, cfg in histology.items():
@@ -55,11 +112,21 @@ def _extract_histology(text: str, knowledge: dict[str, Any]) -> _Extraction | No
         if not isinstance(patterns, list) or not patterns:
             continue
 
-        match = _first_match([str(p) for p in patterns if p], text)
+        match = _first_match([str(p) for p in patterns if p], normalized)
         if not match:
             continue
 
         start, end = match.span(0)
+
+        # Avoid matching "small cell ..." inside "non-small cell ..." (common staging/indication phrase).
+        if str(_key).strip().lower() == "small_cell":
+            prefix = normalized[max(0, start - 8) : start].lower()
+            if re.search(r"non\s*[- ]\s*$", prefix):
+                continue
+
+        if not _histology_is_result_context(normalized, start, end):
+            continue
+
         return _Extraction(value=label.strip(), start=start, end=end, text=text[start:end])
 
     return None
