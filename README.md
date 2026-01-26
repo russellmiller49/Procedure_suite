@@ -36,6 +36,15 @@ This toolkit enables:
     ./scripts/devserver.sh
     ```
 
+## Recent Updates (2026-01-25)
+
+- **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `modules/registry/schema/ebus_events.py`.
+- **Granular split:** models moved to `modules/registry/schema/granular_models.py` and logic to `modules/registry/schema/granular_logic.py`; `modules/registry/schema_granular.py` is a compat shim.
+- **V2 dynamic builder:** moved to `modules/registry/schema/v2_dynamic.py`; `modules/registry/schema.py` is now a thin entrypoint preserving the `__path__` hack.
+- **V3 extraction schema:** renamed to `modules/registry/schema/ip_v3_extraction.py` with a compatibility re-export at `modules/registry/schema/ip_v3.py`; the rich registry entry schema remains at `proc_schemas/registry/ip_v3.py`.
+- **V3→V2 adapter:** now in `modules/registry/schema/adapters/v3_to_v2.py` with a compat shim at `modules/registry/adapters/v3_to_v2.py`.
+- **Refactor notes/tests:** see `NOTES_SCHEMA_REFACTOR.md` and `tests/registry/test_schema_refactor_smoke.py`.
+
 ## Recent Updates (2026-01-24)
 
 - **BLVR CPT derivation:** valve placement uses `31647` (initial lobe) + `31651` (each additional lobe); valve removal uses `31648` (initial lobe) + `31649` (each additional lobe).
@@ -188,4 +197,4 @@ make preflight
 
 ---
 
-*Last updated: December 2025*
+*Last updated: January 2026*

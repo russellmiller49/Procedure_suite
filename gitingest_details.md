@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-24T21:36:22-08:00`
-Git: `main` @ `c5d3c57`
+Generated: `2026-01-25T12:04:42-08:00`
+Git: `main` @ `52787b9`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -201,6 +201,7 @@ Git: `main` @ `c5d3c57`
       651  tests/unit/test_schemas.py
       666  proc_schemas/__init__.py
       692  tests/registry/test_provider_name_sanitization.py
+      695  tests/coder/test_kb_professional_descriptions.py
       706  modules/registry/extraction/structurer.py
       715  modules/ml_coder/__init__.py
       715  modules/registry/slots/base.py
@@ -213,6 +214,7 @@ Git: `main` @ `c5d3c57`
       802  tests/coder/test_candidate_expansion.py
       816  modules/phi/adapters/encryption_insecure_demo.py
       831  modules/registry/slots/imaging.py
+      833  tests/coder/test_parallel_confidence_combiner.py
       839  modules/agents/summarizer/summarizer_agent.py
       840  modules/common/logger.py
       843  tests/registry/test_navigation_fiducials.py
@@ -304,6 +306,7 @@ Git: `main` @ `c5d3c57`
      1877  tests/integration/api/test_health_endpoint.py
      1880  tests/registry/test_new_extractors.py
      1909  modules/coder/ncci.py
+     1914  tests/registry/test_registry_to_cpt_thoracoscopy_biopsy.py
      1929  modules/coder/constants.py
      1961  tests/api/test_phi_demo_cases.py
      1984  tests/registry/test_keyword_guard_omissions.py
@@ -423,7 +426,6 @@ Git: `main` @ `c5d3c57`
      5186  tests/coding/test_rules_engine_phase1.py
      5334  modules/api/phi_demo_store.py
      5394  modules/api/gemini_client.py
-     5424  modules/coder/parallel_pathway/confidence_combiner.py
      5641  modules/coder/ebus_rules.py
      5653  modules/phi/models.py
      5773  modules/api/schemas/base.py
@@ -433,6 +435,7 @@ Git: `main` @ `c5d3c57`
      6042  tests/api/test_fastapi.py
      6130  modules/registry/processing/masking.py
      6131  tests/api/test_phi_redaction.py
+     6150  modules/coder/parallel_pathway/confidence_combiner.py
      6184  tests/integration/test_phi_workflow_end_to_end.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
@@ -518,18 +521,17 @@ Git: `main` @ `c5d3c57`
     15328  modules/registry/inference_onnx.py
     15346  tests/registry/test_action_predictor.py
     15436  modules/autocode/ip_kb/canonical_rules.py
-    15444  modules/registry/application/coding_support_builder.py
     15467  modules/api/services/qa_pipeline.py
     15495  modules/ml_coder/registry_training.py
     15516  modules/registry/ner_mapping/station_extractor.py
+    15558  modules/registry/application/coding_support_builder.py
     15601  tests/reporter/test_ip_addons.py
     15653  tests/registry/test_extraction_quality.py
     15655  modules/coder/reconciliation/pipeline.py
     15800  modules/ner/inference.py
     15857  tests/registry/test_normalization.py
-    15900  modules/registry/application/cpt_registry_mapping.py
     16032  modules/coder/rules_engine.py
-    16448  modules/coder/adapters/persistence/csv_kb_adapter.py
+    16171  modules/registry/application/cpt_registry_mapping.py
     16608  tests/integration/api/test_metrics_endpoint.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
     17010  modules/phi/safety/veto.py
@@ -540,6 +542,7 @@ Git: `main` @ `c5d3c57`
     17854  modules/coder/adapters/llm/gemini_advisor.py
     17939  tests/unit/test_template_coverage.py
     17947  modules/registry/normalization.py
+    18428  modules/coder/adapters/persistence/csv_kb_adapter.py
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
     19783  tests/integration/api/test_registry_endpoints.py
@@ -572,7 +575,7 @@ Git: `main` @ `c5d3c57`
     27702  modules/coder/adapters/registry_coder.py
     28626  modules/ml_coder/registry_data_prep.py
     29049  modules/registry/schema/granular_logic.py
-    29252  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+    29584  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     29699  modules/registry/schema/granular_models.py
     29893  modules/domain/coding_rules/coding_rules_engine.py
     30063  modules/api/ml_advisor_router.py
@@ -594,9 +597,9 @@ Git: `main` @ `c5d3c57`
     61822  modules/registry/prompts.py
     63511  modules/reporting/engine.py
     70414  modules/registry/deterministic_extractors.py
-   107332  modules/registry/application/registry_service.py
-   110192  modules/registry/postprocess.py
+   107591  modules/registry/application/registry_service.py
    111411  modules/registry/engine.py
+   112061  modules/registry/postprocess.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
@@ -993,7 +996,6 @@ Git: `main` @ `c5d3c57`
  inline_cap_reached>75  modules/api/schemas/qa.py
  inline_cap_reached>75  modules/api/phi_demo_store.py
  inline_cap_reached>75  modules/api/gemini_client.py
- inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/coder/ebus_rules.py
  inline_cap_reached>75  modules/phi/models.py
  inline_cap_reached>75  modules/api/schemas/base.py
@@ -1001,6 +1003,7 @@ Git: `main` @ `c5d3c57`
  inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
  inline_cap_reached>75  modules/ner/entity_types.py
  inline_cap_reached>75  modules/registry/processing/masking.py
+ inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/registry_cleaning/consistency_utils.py
  inline_cap_reached>75  modules/registry/slots/therapeutics.py
  inline_cap_reached>75  modules/domain/procedure_store/repository.py
@@ -1050,21 +1053,21 @@ Git: `main` @ `c5d3c57`
  inline_cap_reached>75  modules/domain/coding_rules/json_rules_evaluator.py
  inline_cap_reached>75  modules/registry/inference_onnx.py
  inline_cap_reached>75  modules/autocode/ip_kb/canonical_rules.py
- inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
  inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
+ inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
  inline_cap_reached>75  modules/ner/inference.py
- inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  modules/coder/rules_engine.py
- inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
+ inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  modules/phi/safety/veto.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  modules/common/openai_responses.py
  inline_cap_reached>75  modules/coder/reconciliation/reconciler.py
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
+ inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
  inline_cap_reached>75  modules/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
@@ -1102,8 +1105,8 @@ Git: `main` @ `c5d3c57`
  inline_cap_reached>75  modules/reporting/engine.py
  inline_cap_reached>75  modules/registry/deterministic_extractors.py
  inline_cap_reached>75  modules/registry/application/registry_service.py
- inline_cap_reached>75  modules/registry/postprocess.py
  inline_cap_reached>75  modules/registry/engine.py
+ inline_cap_reached>75  modules/registry/postprocess.py
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
