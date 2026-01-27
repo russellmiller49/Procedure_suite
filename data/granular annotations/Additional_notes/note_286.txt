@@ -1,0 +1,83 @@
+NOTE_ID: note_286	SOURCE_FILE: note_286.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 29 year old-year-old female who presents with respiratory failure and chronic tracheostomy.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+ 
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a three separate and distinct nodules in the LMSB - proximal, mid and distal were biopsied. This resulted in >40% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31625 Endobronchial Biopsy(s). 
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             2.5 mg
+Fentanyl          75 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   11:19 AM
+ 
+Physician/patient face-to-face anesthesia stop time:   11:36 AM
+ 
+Total moderate sedation time was 17 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by Maribel Dean. 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of sedation, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The bronchoscope was introduced into the existing tracheostomy tube. The tracheostomy tube is in good position. There were three endobronchial lesions along the medial LMSB. One proximal approximately 1 cm, middle LMSB < 0.5 cm and distal LMSB < 0.5 cm. 
+ 
+Each area underwent endobronchial biopsy x1. Total of 3 separate biopsies were obtained.
+ 
+Successful therapeutic aspiration was performed to clean out the LLL, RLL, RML and RUL from mucus plug. 
+ 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8).  Instilled 40 cc of NS, suction returned with 10 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+The cuff was deflated and the tracheostomy tube was easily removed.  The stoma appeared widely patent with minimal granulation tissue visualized.  The new tracheostomy tube was then placed with obturator in place.  The obturator was removed, inner cannula was placed and the cuff inflated. Position was confirmed in the trachea with the bronchoscope.
+ 
+Percutaneous tracheostomy was changed from:
+Shiley cuffed Trach ISO/ID size 7.5 mm
+ 
+To 
+Shiley cuffed Trach ISO/ID size 7.5 mm
+ 
+without issue.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+SPECIMEN(S): 
+BAL LLL
+LMSB endobronchial lesions for pathology
+ 
+IMPRESSION/PLAN: [REDACTED] is a 29 year old-year-old female who presents for bronchoscopy for respiratory failure.
+[ ] f/u results of BAL and biopsy - orders placed for STAT IP clinic visit
+[ ] tracheostomy tube change in 3 months - orders placed today
+ 
+
+

@@ -1,0 +1,93 @@
+NOTE_ID:  note_265 SOURCE_FILE: note_265.txt 
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+INDICATION FOR OPERATION:  [REDACTED] is a 66 year old-year-old male who presents with COPD for bronchoscopic lung volume reduction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J44.9 COPD
+ 
+POSTOPERATIVE DIAGNOSIS:  J44.9 COPD
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+31635 Foreign body removal
+31647 Bronchial valve insert initial lobe 
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required deployment of measurement and endobronchial valve placement to multiple airways . This resulted in >50% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31647 Bronchial valve insert initial lobe . 
+
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The endotracheal tube is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through ETT.
+Larynx: Not assessed due to bronchoscopy introduction through ETT.
+Vocal Cords: Not assessed due to bronchoscopy introduction through ETT.
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+Balloon Occlusion was performed to confirm lobe selection.
+‌ YES ‌ 
+ 
+Chartis System was used to confirm no/minimal collateral ventilation 
+‌ YES
+ 
+Airleak stop or reduced was confirmed
+‌ YES ‌ 
+ 
+The following lobes were intervened:
+‌  Left Lower 
+‌
+The following valve were used:
+‌ Spiration (Olympus) 
+Valve sizes used and corresponding segments below:
+ 
+Airway	Valve
+LLL anterior subsegment	Olympus Spiration size 5
+LLL posterior subsegement	Olympus Spiration size 7
+LLL lateral subsegment	Olympus Spiration size 7
+LLL medial/accessory subsegment	Olympus Spiration size 7
+LLL superior subsegment	Olympus Spiration size 9 placed initially then removed.
+ 
+Olympus Spiration size 7 placed
+ 
+Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--LUL BAL (cell count, micro, cyto)
+ 
+IMPRESSION/PLAN: [REDACTED] is a 66 year old-year-old male who presents for bronchoscopy for bronchoscopic lung volume reduction. Endobronchial valves were placed without immediate complication.
+ 
+--Post procedure CXR
+--Follow up BAL results
+--Hospital admission for observation/PTX watch
+ 
+

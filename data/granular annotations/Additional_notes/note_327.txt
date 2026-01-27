@@ -1,0 +1,53 @@
+NOTE_ID: note_327	SOURCE_FILE: note_327.txt
+INDICATION FOR OPERATION: [REDACTED] is a 60 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31623 Dx bronchoscope/brushing    
+31624 Dx bronchoscope/lavage (BAL)    
+ 
+ 
+ANESTHESIA: 
+Local ONLY
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   <5mL
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+The flexible therapeutic bronchoscope was inserted into the LMA and advanced to the carina. Bilateral airway inspection taken to the segmental level showed the trachea was of normal calibre. The carina was sharp. The right anastomosis looked patent. The left mainstem anastomosis had good patency due to a metallic stent in good position in left mainstem. The stent was impacted with mucous. There was normal anatomic branching to segmental level. There were no endobronchial lesions. There were no mucosal abnormalities.
+ 
+Bronchial alveolar lavage was performed at Left mainstem.  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+Endobronchial brushing was performed with Protected cytology brush at left mainstem.  Total 1 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+Successful therapeutic aspiration was performed to clean out the Left Mainstem from mucus plug. 
+ 
+Prior to withdrawal of the bronchoscope, inspection demonstrated no evidence of bleeding.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+Left mainstem wash
+Left mainstem brush
+ 
+IMPRESSION/PLAN:[REDACTED] is a 60 year old-year-old male who presents for bronchoscopy for stent inspection.
+[ ] repeat bronch in 2-4 weeks. At two weeks stent patency was good. There was no significant granulation tissue ingrowth, there was moderate amount of mucous impaction. Could stick with two week inspection or could stretch to 4 weeks.
+[ ] continue stent hydration protocol at current frequency.
+ 
+

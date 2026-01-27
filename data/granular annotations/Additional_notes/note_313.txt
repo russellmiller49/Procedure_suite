@@ -1,0 +1,69 @@
+NOTE_ID: note_313	SOURCE_FILE: note_313.txt
+INDICATION FOR OPERATION:  [REDACTED]is a 73 year old-year-old male who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31899NFD BRONCHOSCOPY W/ APPLICATION OF TRANEXAMIC ACID
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and 82 Surgical assistance provided by an attending when a qualified resident physician was not available. 
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a significant tumor debulking and ablation. This resulted in >80% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+  
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Patient was intubated with ardnt 7fr blocker and 8.0 ET tube.   Blocker was placed outside of ET tube and was inflated to 6cc to complete block off the airway. 
+ 
+Endobronchial obstruction at LB 9 was treated with the following modalities:
+ 
+
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	snare	Force coag 4	5 secs	Removed part of tumor
+APC	1.5mm	Forced 4	10secs	Coagulated tumor
+MWA	minicatheter	90oC	3, 3, 3, 5, 2, 3 minutes	Tumor ablated
+CoreCath	 	 	 	 
+Cryoprobe	 	 	 	 
+ 
+Prior to treatment, affected airway was note to be 0% patent.  After treatment, the airway was 100% patent. 
+ 
+Blocker was intermittently inflated to achieve hemostasis. 
+ 
+10cc of TXA and 10cc of EPI was instilled in 2 cc aliquots for a total of 5 times.  Ice saline was instilled (>150cc) to achieve hemostasis. 
+ 
+Significant effort, time, intensity was used to achieve complete opening of the airway with very bleedy tumor.   
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Tumor 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 73 year old-year-old male who presents for bronchoscopy for tumor debulking and ablation.
+- monitor overnight for repeat bleeding
+- consider short term bronch in 2-7 days. 
+ 
+
+

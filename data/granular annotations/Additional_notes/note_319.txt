@@ -1,0 +1,86 @@
+NOTE_ID: note_319	SOURCE_FILE: note_319.txt
+INDICATION FOR OPERATION:  [REDACTED]is a 80 year old-year-old male who presents with Recurrent Effusion.  The nature, purpose, risks, benefits and alternatives to Tunnel Pleural Catheter Placement were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Recurrent Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32550 Insertion of indwelling tunneled pleural catheter with cuff
+ 
+Mod 62 Co-surgeons performing separate parts of the procedure
+
+ 
+SEDATION: MAC per Anesthesia
+
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: 
+
+? Lateral Decubitus:  ?  ? Left with right side up
+ 
+CHEST ULTRASOUND FINDINGS:  ? Image saved and uploaded to PACS
+Hemithorax:   ? Right  ? Left 
+ 
+Pleural Effusion: 
+Volume:       ? Moderate    
+Echogenicity:   ? Anechoic  ? 
+Loculations:  ? None  ?Thin  ? Thick 
+Diaphragmatic Motion:  ? Normal 
+Lung: 
+Lung sliding before procedure:   ? Present  ?  
+Lung sliding post procedure:   ? Present  ?  
+Lung consolidation/atelectasis: ? Present  ?   
+Pleura:  ? Normal  ? 
+ 
+
+ 
+Insertion site prepped and draped in sterile fashion.
+ 
+ANESTHESIA:   Lidocaine 1%: 10 ml       
+Entry Site: 
+? Right 6th Intercostal Space    ? Posterior-axillary  ? 
+ 
+Sutured: ? Yes ? 
+ 
+PROCEDURE FINDINGS: 
+A guidewire was inserted through the pleuroscopy insertion site (see separate documentation for pleuroscopy).  A 5mm skin incision was made approximately 5 cm away from the guidewire insertion site.  The tunneling device was used to tunnel the catheter in the subcutaneous tissue.  The introducer sheath was placed and the guidewire removed.  The catheter was then placed into the pleural space via the introducer sheath. The pleural entry site was closed with an absorbable suture.  The catheter was secured to the skin using 2-0 nylon.  Sterile dressings were applied.
+ 
+Tunnel: Length 20 cm    
+ Exit site: 6th Intercostal space ?Mid-axillary  ?
+ 
+Fluid Removed: 1550 ml 
+? Serous  ? 
+ 
+Pleural pressures:   If not measured, please check here ?X
+Drainage device:  ? Capped ? Pleurovac  ? Drainage Bag  ? Heimlich Valve  ? Pneumostat  ? Other: 
+Suction: ? No ?Yes, - 20 cmH20 
+ 
+ 
+SPECIMEN(S): 
+ LDH                        ?Glucose       ?T. Protein    ?Cholesterol
+?Cell Count   ? ADA             ?        ?Amylase 
+?Gram Stain/ Culture            ?AFB                         ?Fungal Culture 
+?Cytology      ?Flow Cytometry                               ?Other: 
+ 
+CXR ordered: ? Yes 
+ 
+ 
+COMPLICATIONS:
+?None ?
+ 
+IMPRESSION/PLAN: [REDACTED]is a 80 year old-year-old male who presents for Tunnel Pleural Catheter Placement.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+--Follow up pleural fluid studies
+--IP RN to provide TPC teaching to patient and family
+--Patient will need follow up in appx 1 week in Interventional Pulmonology pleural clinic for suture removal
+ 
+DISPOSITION: Nursing Unit
+ 
+

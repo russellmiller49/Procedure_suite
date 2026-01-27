@@ -145,6 +145,15 @@ CPT_KEYWORDS: dict[str, list[str]] = {
         "type 1 elastographic",
         "type 2 elastographic",
     ],
+    "76981": [
+        "elastography",
+        "elastrography",
+        "type 1 elastographic",
+        "type 2 elastographic",
+        "stiff",
+        "soft (green",
+        "blue)",
+    ],
     "77012": [
         "cone beam ct",
         "cone-beam ct",
@@ -170,7 +179,18 @@ CPT_KEYWORDS: dict[str, list[str]] = {
     "31638": ["stent", "removal", "removed", "retrieved", "extracted", "forceps", "silicone", "metal", "metallic"],
     # Therapeutics: foreign body removal
     "31635": ["foreign body", "removed", "remove", "extracted", "retrieved", "forceps"],
+    # BLVR valve family (initial + add-on lobe)
+    "31647": ["valve", "zephyr", "spiration", "endobronchial valve", "blvr"],
+    "31651": ["valve", "zephyr", "spiration", "endobronchial valve", "blvr"],
+    # Thoracoscopy / pleuroscopy (biopsy / lysis of adhesions)
+    "32609": ["thoracoscopy", "pleuroscopy", "biopsy of pleura", "lysis of adhesions"],
+    "32653": ["thoracoscopy", "pleuroscopy", "biopsy of pleura", "lysis of adhesions"],
 }
+
+# High-confidence bypass: allow self-correction when RAW-ML has very high confidence
+# but evidence text is partially masked (e.g., CPT/menu blocks removed).
+HIGH_CONF_BYPASS_CPTS: frozenset[str] = frozenset({"31647", "31651", "32609", "32653"})
+HIGH_CONF_BYPASS_THRESHOLD = 0.90
 
 # -----------------------------------------------------------------------------
 # Omission Detection ("Safety Net")
@@ -229,6 +249,17 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
         (
             r"(?is)\b(?:ebus|endobronchial\s+ultrasound)\b.{0,200}\b(?:station|level)\s*\d+[RL]?\b",
             "Text mentions EBUS station/level numbers but extraction missed linear EBUS.",
+        ),
+    ],
+    # Fix for missed EBUS elastography (schema uses linear_ebus.* fields).
+    "procedures_performed.linear_ebus.elastography_used": [
+        (
+            r"(?i)\b(?:ebus[-\s]*)?elastograph(?:y|ic)\b",
+            "Text indicates EBUS elastography but extraction missed it.",
+        ),
+        (
+            r"(?i)\btype\s*[123]\s*elastographic\s+pattern\b",
+            "Text documents elastographic pattern types but extraction missed elastography.",
         ),
     ],
     # Fix for missed EUS-B
@@ -440,6 +471,24 @@ def _looks_like_ebus_nodal_tbna_only(note_text: str, match: re.Match[str]) -> bo
     return True
 
 
+def _looks_like_ebus_nodal_context(note_text: str, match: re.Match[str]) -> bool:
+    """Return True when a match sits in an EBUS lymph-node context (not lung parenchyma)."""
+    if not note_text:
+        return False
+
+    local_start = max(0, match.start() - 260)
+    local_end = min(len(note_text), match.end() + 260)
+    window = note_text[local_start:local_end]
+
+    if not _TBNA_EBUS_CONTEXT_RE.search(window):
+        return False
+    if _EBUS_STATION_TOKEN_RE.search(window):
+        return True
+    if re.search(r"(?i)\blymph\s+node(?:s)?\b", window):
+        return True
+    return False
+
+
 def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str | None = None) -> bool:
     """Return True when a keyword match is negated in local context."""
     if not note_text:
@@ -514,6 +563,9 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
                 if field_path == "procedures_performed.peripheral_tbna.performed":
                     if _looks_like_ebus_nodal_tbna_only(note_text or "", match):
                         continue
+                if field_path == "procedures_performed.transbronchial_biopsy.performed":
+                    if _looks_like_ebus_nodal_context(note_text or "", match):
+                        continue
                 warning = f"SILENT_FAILURE: {msg} (Pattern: '{pattern}')"
                 warnings.append(warning)
                 logger.warning(warning, extra={"field": field_path, "pattern": pattern})
@@ -555,6 +607,9 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
                 continue
             if field_path == "procedures_performed.peripheral_tbna.performed":
                 if _looks_like_ebus_nodal_tbna_only(note_text or "", match):
+                    continue
+            if field_path == "procedures_performed.transbronchial_biopsy.performed":
+                if _looks_like_ebus_nodal_context(note_text or "", match):
                     continue
 
             if field_path == "pleural_procedures.fibrinolytic_therapy.performed":
@@ -712,8 +767,16 @@ def keyword_guard_passes(*, cpt: str, evidence_text: str) -> bool:
     return ok
 
 
-def keyword_guard_check(*, cpt: str, evidence_text: str) -> tuple[bool, str]:
+def keyword_guard_check(*, cpt: str, evidence_text: str, ml_prob: float | None = None) -> tuple[bool, str]:
     """Return (passes, reason) for keyword gating."""
+    if ml_prob is not None:
+        try:
+            prob = float(ml_prob)
+        except (TypeError, ValueError):
+            prob = None
+        if prob is not None and prob >= HIGH_CONF_BYPASS_THRESHOLD and str(cpt) in HIGH_CONF_BYPASS_CPTS:
+            return True, f"high_conf_prob>={HIGH_CONF_BYPASS_THRESHOLD:.2f} bypass"
+
     keywords = CPT_KEYWORDS.get(str(cpt), [])
     if not keywords:
         return False, "no keywords configured"

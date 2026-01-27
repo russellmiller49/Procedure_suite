@@ -1,0 +1,104 @@
+
+NOTE_ID:  note_279 SOURCE_FILE: note_279.txt 
+ 
+INDICATION FOR OPERATION:  [REDACTED] is a 37 year old-year-old female who presents with tracheal stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: Tracheal stenosis
+ 
+POSTOPERATIVE DIAGNOSIS:  Tracheal stenosis
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP  CODE MOD DETAILS: Unusual Procedure:
+This patient required multiple modalities for relief of tracheal stenosis. This resulted in >50% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ 
+
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Tracheoscope
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Not fully assessed due to bronchoscopy introduction through LMA.
+Vocal Cords: Normal without mass/lesions
+Trachea: Proximal tracheal with concentric stenosis
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+TRACHEAL STENOSIS
+
+ 
+After induction of muscle relaxants, tooth or gum protector was placed. The red rigid (tracheoscope) barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid bronchoscope was advanced carefully while minimizing contact with them. Once the rigid bronchoscope was positioned at the mid-trachea, jet ventilation was initiated and chest wall movement was confirmed. 
+ 
+Endobronchial obstruction at Trachea (Proximal 1/3) was treated with the following modalities:
+ 
+
+Modality	Tools	Setting/Mode	Results
+Mechanical	Red Tracheoscope
+ 
+2.0mm  Pulmonary Forceps
+ 
+2.8mm Large Capacity Forceps	N/A
+ 
+ 
+N/A
+ 
+ 
+ 
+N/A
+ 	Excellent relief of stenosis
+ 
+Prior to treatment, affected airway was note to be 20% patent.  After treatment, the airway was 40% patent. 
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Instilled 60 cc of NS, suction returned with 30 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+TRACHEAL STENOSIS AT THE CONCLUSION OF THE PROCEDURE
+ 
+
+ 
+
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--Forceps biopsies
+--RML BAL (cell count, micro, cyto)
+ 
+IMPRESSION/PLAN: [REDACTED]  is a 37 year old-year-old female who presents for bronchoscopy for evaluation of tracheal stenosis. Patient was noted to have tracheal stenosis at the subglottic space/proximal 1/3 of the trachea. The patient's stenosis was relieved with dilation using the rigid tracheoscope barrel and via forceps. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--Post procedure CXR
+--Follow up BAL results
+--Follow-up in outpatient Interventional Pulmonology clinic as scheduled on 1/20/2026
+--Repeat bronchoscopy in appx 1 month with Cryospray available
+ 
+

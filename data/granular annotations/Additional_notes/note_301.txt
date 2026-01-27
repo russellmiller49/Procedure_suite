@@ -1,0 +1,62 @@
+NOTE_ID: note_301	SOURCE_FILE: note_301.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 70 year old-year-old male who presents with shortness of breath and reduced FEV1 after bilateral lung transplant.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+ 
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+The patient was intubated atraumatically with black ventilating rigid bronchoscope after being sedated by anesthesia.
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Right Mainstem, and lingula from mucus. 
+ 
+The right anastomosis was intact with some irregularity along the posterior membrane
+The left anastomosis was narrowed down to 6-7 mm and the therapeutic bronchoscope was able to be advanced with some difficulty through the stenosis. There was minimal secretions distal to the stenosis.  The stenosis appeared to narrow to 1.5 cm from the left hilum. The superior lingular bronchus was narrowed due to cartilage.  
+ 
+Bronchial alveolar lavage was performed at Anterior Segment of LUL (LB3).  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+Balloon dilation was performed at Left Mainstem.  10/11/12 Elation balloon was used to perform dilation to 11 mm at the Left Mainstem.  Total 3 inflations with dilation time of 30 seconds each. Following dilation the airway exhibits signs of conforming back to the stenotic appearance. 
+ 
+The following stent (Bona stent 12 x 30) was placed in the Left Mainstem. With resolution of the stenosis. The stent required balloon dilation after deployment using and elation 10, 11, 12 balloon to 10 mm for 5 seconds. All airways were patent after placement.
+ 
+LMSB - 5.7 cm
+Left hilum to distal end of stenosis 1.5 cm
+Stenosis - 2.3 cm
+Proximal end of stenosis to main carina - 3 cm
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+BAL - LUL
+ 
+IMPRESSION/PLAN: [REDACTED] is a 70 year old-year-old male who presents for bronchoscopy for stenosis of the LMSB.
+- stent hygiene with albuterol and hypertonic saline 3%
+- f/u in 2-3 weeks for bronchoscopy
+
+
+

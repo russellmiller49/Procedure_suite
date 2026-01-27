@@ -285,7 +285,7 @@ class TestTherapeuticAspirationExtractor:
         result = extract_therapeutic_aspiration(text)
 
         assert result.get("therapeutic_aspiration", {}).get("performed") is True
-        assert result.get("therapeutic_aspiration", {}).get("material") == "Blood clot"
+        assert result.get("therapeutic_aspiration", {}).get("material") == "Blood/clot"
 
     def test_extract_routine_suction_not_therapeutic(self):
         """Should not detect routine suction as therapeutic aspiration."""

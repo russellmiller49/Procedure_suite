@@ -1,0 +1,72 @@
+NOTE_ID: note_354	SOURCE_FILE: note_354.txt
+INDICATION FOR OPERATION: [REDACTED]is a 64 year old-year-old male who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords, main carina, right carina 1, and left carina 2.
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus and mucus plug. 
+ 
+ 
+Initial Airway Examination Findings:
+ 
+There were a weblike obstruction in the airways arrowed 6mm at the distal end of LMS near LC2. 
+ 
+ 
+Endobronchial obstruction at left carina 2, left upper lobe take-off, and LMS was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	knife	Endocut I	1-3 seconds	Cut was done at the LUL and LMS
+ 
+Proximal left mainstem bronchus was treated with Balloon dilation was performed at LMS.  12/13.5/15 Elation balloon was used to perform dilation to 13.5 mm at the Left Mainstem.  Total 1 inflations with dilation time of 120 seconds each.
+ 
+Balloon dilation was performed at left upper lobe bronchus stenosis.  6/7/8 Elation balloon was used to perform dilation to 8mm at the left upper lobe bronchus stenosis.  Total 1 inflations with dilation time of 120 seconds each.  
+ 
+Minimal bleeding from procedures above easily controlled with suction and cold saline flushes.
+ 
+Prior to treatment, proximal left mainstem bronchus was note to be 40% patent.  After treatment, the airway was 80% patent.  
+Prior to treatment, left upper lobe bronchus was note to be 30% patent.  After treatment, the airway was 50% patent.  
+ 
+Bronchial alveolar lavage was performed at Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+ 
+IMPRESSION/PLAN:[REDACTED]is a 64 year old-year-old male who presents for bronchoscopy for airway stenosis.
+ 
+- continue stent free trial
+- return to bronch evaluation in 12 weeks 
+- intro to Dr. Laura Frye at UT Southwest. 
+ 

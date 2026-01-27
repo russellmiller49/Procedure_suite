@@ -1,0 +1,67 @@
+NOTE_ID: note_320	SOURCE_FILE: note_320.txt
+INDICATION FOR OPERATION: [REDACTED] is a 54 year old-year-old male who presents with abnormal chest imaging.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+ 
+XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             5 mg
+Fentanyl          175 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   1030
+ 
+Physician/patient face-to-face anesthesia stop time:   1119
+ 
+Total moderate sedation time was 49 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by Matt Reed. 
+ 
+The airway was inspected. The laryngopharynx was normal appearing, somewhat floppy. Lidocaine was applied to the vocal cords and the airway. There were thick mucus plugs throughout the airway. The right lower lobe anatomy was slightly deviated.
+ 
+Successful therapeutic aspiration was performed to clean out the Subglottic, Trachea (Proximal 1/3), Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus, mucus plug, and blood. 
+ 
+Some suction trauma occurred. 
+
+The mucus plugs were suctioned, saline was used to irrigate the airway and suctioned. Lidocaine was applied again.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+None
+ 
+IMPRESSION/PLAN:[REDACTED] is a 54 year old-year-old male who presents for bronchoscopy for abnormal chest imaging.
+ 
+-Follow up CXR
+ 
+

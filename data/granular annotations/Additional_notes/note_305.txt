@@ -1,0 +1,83 @@
+NOTE_ID: note_305	SOURCE_FILE: note_305.txt
+INDICATION FOR OPERATION:  [REDACTED]is a 36 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31630 Balloon dilation
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure
+ 
+Dilation, excision, and multiple modes of ablation were needed due to the severity of the airway stenosis. 
+ 
+The case took > 120 minutes
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Tracheoscope
+Flexible Therapeutic Bronchoscope
+Disposable Bronchoscope 
+ 
+ESTIMATED BLOOD LOSS:   Moderate
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The airway was inspected. Lidocaine was applied to the vocal cords and the airway. The trachea was narrowed and secretions were noted and suctioned. The distal trachea was narrowest and it required some pressure to pass the therapeutic bronchoscope past the stenosis. 
+ 
+Successful therapeutic aspiration was performed to clean out the Vocal Cord, Subglottic, Trachea (Proximal 1/3), Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and mucus plug. 
+ 
+The black (12 mm) rigid tracheoscope was used, after the LMA was removed, to intubate the patient. The upper airway was inspected and normal appearing. The jet ventilator was connected to the rigid bronchoscope.
+ 
+The rigid bronchoscope was used to shave the area of tracheal stenosis and dilate the airway. This included the subglottis, proximal trachea, mid trachea, and distal trachea. The rigid bronchoscope was used to dilate the airway for five minutes. 
+ 
+Fragments of scar and tissue which were left after the shaving and dilating, these fragments were excised with alligator forceps.
+ 
+The cryospray was used to freeze the area at all four portions of the trachea. This required 7 areas of the trachea to be intervened on, the distal trachea was intervened upon twice. Each area freeze consisted of three cryo spray activations. Each cryo spray activation consisted of five minute freeze and 40-60 second thaws. 
+ 
+The rigid bronchoscope was used to dilate the trachea again for five minutes. 
+ 
+Endobronchial obstruction at Trachea (Middle 1/3) and Trachea (Distal 1/3) was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	knife	4, 1, 4	2-5 seconds	Radial cuts
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	 	 	 	 
+ 
+Prior to treatment, affected airway was note to be 60% patent.  After treatment, the airway was 70% patent. 
+ 
+Additional dilation was performed by the rigid bronchoscope for five minutes. 
+ 
+The patient was extubated with the rigid bronchoscope and the airway was cleared of secretions and blood via the therapeutic bronchoscope.
+ 
+Successful therapeutic aspiration was performed to clean out the Supraglottic, Vocal Cord, Subglottic, Trachea (Proximal 1/3), Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and blood. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Tracheal biopsies
+ 
+IMPRESSION/PLAN: [REDACTED]is a 36 year old-year-old female who presents for bronchoscopy for airway stenosis.
+ 
+-Plan for repeat bronchoscopy in 3-5 weeks

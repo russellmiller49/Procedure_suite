@@ -1,0 +1,51 @@
+NOTE_ID: note_329	SOURCE_FILE: note_329.txt
+INDICATION FOR OPERATION: [REDACTED] is a 60 year old-year-old male who presents with lung .  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+ 
+ 
+General Anesthesia
+
+RT: Juliet Barnia
+ 
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem and Left Mainstem from mucus. 
+ 
+There were significant malacia noted in LMS about 2cm from the main carina.  After traversing through this, the stent was noted to be in good position.  Lightly covered by mucus. 
+ 
+Bronchial washing was performed at Left Mainstem.  Instilled 20 cc of NS, suction returned with 15 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Washing
+ 
+IMPRESSION/PLAN:[REDACTED] is a 60 year old-year-old male who presents for bronchoscopy for stent evaluation.
+ 
+- completed - return for bronch evaluation in 6 weeks
+- consider longer stent in discussion with lung transplant

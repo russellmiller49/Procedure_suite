@@ -84,3 +84,72 @@ def test_validate_proposal_canonicalizes_fibrinolysis_instillation_alias_path() 
     is_valid, reason = validate_proposal(proposal, "tPA/DNase instillation via chest tube")
     assert is_valid, reason
     assert proposal.json_patch[0]["path"] == "/pleural_procedures/fibrinolytic_therapy/performed"
+
+
+def test_validate_proposal_canonicalizes_tunneled_pleural_catheter_alias_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[
+            {"op": "add", "path": "/pleural_procedures/tunneled_pleural_catheter/performed", "value": True}
+        ],
+        evidence_quote="tunneled pleural catheter",
+    )
+    is_valid, reason = validate_proposal(proposal, "tunneled pleural catheter inserted")
+    assert is_valid, reason
+    assert proposal.json_patch[0]["path"] == "/pleural_procedures/ipc/performed"
+
+
+def test_validate_proposal_allows_established_tracheostomy_route_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[{"op": "add", "path": "/established_tracheostomy_route", "value": True}],
+        evidence_quote="established tracheostomy",
+    )
+    is_valid, reason = validate_proposal(proposal, "bronchoscopy through established tracheostomy")
+    assert is_valid, reason
+
+
+def test_validate_proposal_canonicalizes_ebus_elastography_alias_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[
+            {"op": "add", "path": "/procedures_performed/ebus_elastography/performed", "value": True}
+        ],
+        evidence_quote="EBUS elastography",
+    )
+    is_valid, reason = validate_proposal(proposal, "EBUS elastography was performed")
+    assert is_valid, reason
+    assert proposal.json_patch[0]["path"] == "/procedures_performed/linear_ebus/elastography_used"
+
+
+def test_validate_proposal_canonicalizes_linear_ebus_elastography_performed_alias_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[
+            {"op": "add", "path": "/procedures_performed/linear_ebus/elastography_performed", "value": True}
+        ],
+        evidence_quote="EBUS elastography",
+    )
+    is_valid, reason = validate_proposal(proposal, "EBUS elastography was performed")
+    assert is_valid, reason
+    assert proposal.json_patch[0]["path"] == "/procedures_performed/linear_ebus/elastography_used"
+
+
+def test_validate_proposal_expands_ebus_elastography_root_object_patch() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[
+            {
+                "op": "add",
+                "path": "/procedures_performed/ebus_elastography",
+                "value": {"performed": True, "pattern": "Type 1 elastographic pattern"},
+            }
+        ],
+        evidence_quote="EBUS elastography",
+    )
+    is_valid, reason = validate_proposal(proposal, "EBUS elastography was performed")
+    assert is_valid, reason
+    assert {op["path"] for op in proposal.json_patch} == {
+        "/procedures_performed/linear_ebus/elastography_used",
+        "/procedures_performed/linear_ebus/elastography_pattern",
+    }

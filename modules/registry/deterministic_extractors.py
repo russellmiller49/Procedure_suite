@@ -627,6 +627,12 @@ CHEST_ULTRASOUND_IMAGE_DOC_PATTERNS = [
     r"\bwith\s+image\s+documentation\b",
 ]
 
+# Thoracentesis patterns
+THORACENTESIS_PATTERNS = [
+    r"\bthoracentesis\b",
+    r"\bpleural\s+tap\b",
+]
+
 # Chest tube / pleural drainage catheter patterns
 CHEST_TUBE_PATTERNS = [
     r"\bpigtail\s+catheter\b",
@@ -642,6 +648,7 @@ IPC_PATTERNS = [
     r"\bindwelling\s+pleural\s+catheter\b",
     r"\bipc\b[^.\n]{0,30}\b(?:catheter|drain)\b",
     r"\brocket\b[^.\n]{0,40}\b(?:ipc|catheter|pleur)\b",
+    r"\btunne(?:l|ll)ed\s+catheter\b",
 ]
 
 # Therapeutic aspiration patterns (exclude routine suction)
@@ -717,6 +724,53 @@ _CPT_LINE_PATTERN = re.compile(r"^\s*\d{5}\b")
 _PROCEDURE_DETAIL_SECTION_PATTERN = re.compile(
     r"(?im)^\s*(?:procedure\s+in\s+detail|description\s+of\s+procedure|procedure\s+description)\s*:?"
 )
+
+DIAGNOSTIC_BRONCHOSCOPY_PATTERNS = [
+    r"\bthe\s+airway\s+was\s+inspected\b",
+    r"\bairway\s+was\s+inspected\b",
+    r"\binitial\s+airway\s+inspection\s+findings\b",
+    r"\bbronchoscope\b[^.\n]{0,80}\b(?:introduc|advance|insert)\w*\b",
+    r"\b(?:introduc|advance|insert)\w*\b[^.\n]{0,80}\bbronchoscope\b",
+    r"\bbronchoscopy\b[^.\n]{0,80}\b(?:perform|completed)\w*\b",
+]
+
+_CHECKBOX_TOKEN_RE = re.compile(
+    r"(?im)(?<!\d)(?P<val>[01])\s*[^\w\n]{0,6}\s*(?P<label>[A-Za-z][A-Za-z /()_-]{0,80})"
+)
+
+
+def _checkbox_selected(note_text: str, *, label_patterns: list[str]) -> bool | None:
+    """Return True/False if checkbox-style selection is present, else None.
+
+    Supports templates that encode options as "1 <Label>" / "0 <Label>" where the
+    separator may be a dash, bullet, or zero-width character.
+    """
+    if not note_text:
+        return None
+
+    compiled = [re.compile(pat, re.IGNORECASE) for pat in label_patterns]
+    selected = False
+    deselected = False
+    for match in _CHECKBOX_TOKEN_RE.finditer(note_text):
+        try:
+            val = int(match.group("val"))
+        except Exception:
+            continue
+        label = (match.group("label") or "").strip()
+        if not label:
+            continue
+        if not any(p.search(label) for p in compiled):
+            continue
+        if val == 1:
+            selected = True
+        elif val == 0:
+            deselected = True
+
+    if selected:
+        return True
+    if deselected:
+        return False
+    return None
 
 
 def _strip_cpt_definition_lines(text: str) -> str:
@@ -869,7 +923,7 @@ def extract_therapeutic_aspiration(note_text: str) -> Dict[str, Any]:
                 if "mucus" in text_lower or "plug" in text_lower:
                     material = "Mucus plug"
                 elif "clot" in text_lower or "blood" in text_lower:
-                    material = "Blood clot"
+                    material = "Blood/clot"
                 result = {"therapeutic_aspiration": {"performed": True}}
                 if material:
                     result["therapeutic_aspiration"]["material"] = material
@@ -1120,6 +1174,47 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
         proc["procedure_type"] = "Valve assessment"
 
     return {"blvr": proc}
+
+
+def extract_diagnostic_bronchoscopy(note_text: str) -> Dict[str, Any]:
+    """Extract diagnostic bronchoscopy (31622 family).
+
+    Purpose: backstop cases where the only bronchoscopy service is airway inspection.
+    Avoid firing from consent/indication text by preferring the procedure-detail section.
+    """
+    preferred_text, used_detail_section = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
+    full_lower = (note_text or "").lower()
+    if not text_lower.strip():
+        return {}
+
+    # Hard negations: aborted/not performed.
+    if re.search(
+        r"(?i)\b(?:procedure\s+aborted|bronchoscopy\s+aborted|bronchoscopy\s+not\s+performed|unable\s+to\s+perform\s+bronchoscopy)\b",
+        text_lower,
+    ):
+        return {}
+
+    # Require some evidence of intraprocedural airway inspection / scope use.
+    hits = any(re.search(pat, text_lower, re.IGNORECASE) for pat in DIAGNOSTIC_BRONCHOSCOPY_PATTERNS)
+    if not hits:
+        return {}
+
+    # If we didn't find a procedure-detail section, be conservative: require a very strong cue.
+    if not used_detail_section and not re.search(
+        r"(?i)\b(?:the\s+airway\s+was\s+inspected|initial\s+airway\s+inspection\s+findings)\b",
+        text_lower,
+    ):
+        return {}
+
+    # Ensure we're in bronchoscopy context, not generic airway exam wording.
+    # (The scope context is often in the header/instrument section, while the
+    # detail section just says "airway was inspected".)
+    if "bronchoscop" not in full_lower and "bronchoscope" not in full_lower:
+        return {}
+
+    return {"diagnostic_bronchoscopy": {"performed": True}}
 
 
 def extract_foreign_body_removal(note_text: str) -> Dict[str, Any]:
@@ -1513,6 +1608,13 @@ def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
     text = note_text or ""
     text_lower = text.lower()
 
+    change_cue = re.search(
+        r"(?i)\btrach(?:eostomy)?\b[^.\n]{0,60}\b(?:change|exchange|tube\s+change|changed)\b|\bafter\s+establishment\b[^.\n]{0,60}\btract\b",
+        text_lower,
+    )
+    if change_cue:
+        return {}
+
     patterns = [
         r"\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b",
         r"\bperc\s+trach\b",
@@ -1567,6 +1669,13 @@ def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
     text_lower = text.lower()
     if not text_lower.strip():
         return {}
+
+    change_cue = re.search(
+        r"(?i)\btrach(?:eostomy)?\b[^.\n]{0,60}\b(?:change|exchange|tube\s+change|changed)\b|\bafter\s+establishment\b[^.\n]{0,60}\btract\b",
+        text_lower,
+    )
+    if change_cue:
+        return {"established_tracheostomy_route": True}
 
     for pattern in ESTABLISHED_TRACH_NEW_PATTERNS:
         if re.search(pattern, text_lower, re.IGNORECASE):
@@ -1624,7 +1733,7 @@ def extract_chest_ultrasound(note_text: str) -> Dict[str, Any]:
     Conservative: requires explicit "CHEST ULTRASOUND FINDINGS" or CPT 76604 context.
     """
     text = note_text or ""
-    if not re.search(r"(?i)\bchest\s+ultrasound\s+findings\b|\b76604\b", text):
+    if not re.search("|".join(CHEST_ULTRASOUND_PATTERNS), text, re.IGNORECASE):
         return {}
 
     proc: dict[str, Any] = {"performed": True}
@@ -1639,6 +1748,41 @@ def extract_chest_ultrasound(note_text: str) -> Dict[str, Any]:
     return {"chest_ultrasound": proc}
 
 
+def extract_thoracentesis(note_text: str) -> Dict[str, Any]:
+    """Extract thoracentesis indicators for pleural procedures."""
+    text = note_text or ""
+    if not re.search("|".join(THORACENTESIS_PATTERNS), text, re.IGNORECASE):
+        return {}
+
+    thora: dict[str, Any] = {"performed": True}
+
+    side_match = re.search(r"(?im)^\s*(left|right|bilateral)\s+thoracentesis\b", text)
+    if not side_match:
+        side_match = re.search(r"(?im)^\s*entry\s+site:\s*(left|right|bilateral)\b", text)
+    if not side_match:
+        side_match = re.search(r"(?i)\bthoracentesis\b[^.\n]{0,60}\b(left|right|bilateral)\b", text)
+    if side_match:
+        thora["side"] = side_match.group(1).capitalize()
+
+    if re.search(r"(?i)\bultrasound[-\s]*(?:guided|guidance)\b", text):
+        thora["guidance"] = "Ultrasound"
+    elif re.search(r"(?i)\blandmark\b|\bblind\b", text):
+        thora["guidance"] = "None/Landmark"
+
+    if re.search(
+        r"(?i)\btherapeutic\b[^.\n]{0,60}\bthoracentesis\b|\bthoracentesis\b[^.\n]{0,60}\btherapeutic\b",
+        text,
+    ):
+        thora["indication"] = "Therapeutic"
+    elif re.search(
+        r"(?i)\bdiagnostic\b[^.\n]{0,60}\bthoracentesis\b|\bthoracentesis\b[^.\n]{0,60}\bdiagnostic\b",
+        text,
+    ):
+        thora["indication"] = "Diagnostic"
+
+    return {"thoracentesis": thora}
+
+
 def extract_chest_tube(note_text: str) -> Dict[str, Any]:
     """Extract chest tube / pleural drainage catheter insertion (32556/32557/32551 family)."""
     text = note_text or ""
@@ -1646,12 +1790,30 @@ def extract_chest_tube(note_text: str) -> Dict[str, Any]:
 
     has_pigtail = re.search(r"(?i)\bpigtail\s+catheter\b", text) is not None
     has_chest_tube = re.search(r"(?i)\bchest\s+tube\b", text) is not None
-    has_insertion = re.search(r"(?i)\b(insert(?:ed)?|place(?:d)?|advanced)\b", text) is not None
+    has_insertion = (
+        re.search(r"(?i)\b(insert(?:ed)?|placed|placement|insertion|introduc(?:e|ed))\b", text) is not None
+    )
+    has_incision = re.search(r"(?i)\bincision\b|\bincised\b|\bcut\s+down\b", text) is not None
 
-    if not ((has_pigtail and has_insertion) or (has_chest_tube and has_insertion)):
+    maintenance_only = False
+    if (has_pigtail or has_chest_tube) and not has_insertion and not has_incision:
+        maintenance_only = bool(
+            re.search(
+                r"(?is)\bexisting\b[^.\n]{0,80}\b(?:chest\s+tube|pigtail\s+catheter)\b",
+                text,
+            )
+            or re.search(
+                r"(?is)\b(?:chest\s+tube|pigtail\s+catheter)\b[^.\n]{0,120}\b(?:left\s+in\s+place|remain(?:s|ed)?\s+in\s+place|to\s+suction|on\s+suction|connected\s+to\s+suction)\b",
+                text,
+            )
+        )
+
+    if not ((has_pigtail and has_insertion) or (has_chest_tube and has_insertion) or maintenance_only):
         return {}
 
     proc: dict[str, Any] = {"performed": True, "action": "Insertion"}
+    if maintenance_only:
+        proc["action"] = "Repositioning"
 
     side = _extract_checked_side(note_text, "Entry Site") or _extract_checked_side(
         note_text, "Hemithorax"
@@ -1659,7 +1821,7 @@ def extract_chest_tube(note_text: str) -> Dict[str, Any]:
     if side in {"Left", "Right"}:
         proc["side"] = side
 
-    if "pleural effusion" in text_lower or re.search(r"(?i)\beffusion\b", text):
+    if not maintenance_only and ("pleural effusion" in text_lower or re.search(r"(?i)\beffusion\b", text)):
         proc["indication"] = "Effusion drainage"
 
     if has_pigtail:
@@ -1687,12 +1849,13 @@ def extract_chest_tube(note_text: str) -> Dict[str, Any]:
         except ValueError:
             pass
 
-    if re.search(r"(?i)\bultrasound\b", text):
-        proc["guidance"] = "Ultrasound"
-    elif re.search(r"(?i)\bct\b|\bcomputed tomography\b", text):
-        proc["guidance"] = "CT"
-    elif re.search(r"(?i)\bfluoro(?:scopy)?\b", text):
-        proc["guidance"] = "Fluoroscopy"
+    if not maintenance_only:
+        if re.search(r"(?i)\bultrasound\b", text):
+            proc["guidance"] = "Ultrasound"
+        elif re.search(r"(?i)\bct\b|\bcomputed tomography\b", text):
+            proc["guidance"] = "CT"
+        elif re.search(r"(?i)\bfluoro(?:scopy)?\b", text):
+            proc["guidance"] = "Fluoroscopy"
 
     return {"chest_tube": proc}
 
@@ -1701,6 +1864,19 @@ def extract_ipc(note_text: str) -> Dict[str, Any]:
     """Extract indwelling pleural catheter (IPC / tunneled pleural catheter)."""
     text = note_text or ""
     text_lower = text.lower()
+
+    checkbox = _checkbox_selected(
+        note_text,
+        label_patterns=[
+            r"tunne(?:l|ll)ed\s+pleural\s+catheter",
+            r"indwelling\s+pleural\s+catheter",
+            r"\bipc\b",
+            r"\bpleurx\b",
+            r"\baspira\b",
+        ],
+    )
+    if checkbox is False:
+        return {}
 
     matched_pattern: str | None = None
     for pattern in IPC_PATTERNS:
@@ -1717,20 +1893,44 @@ def extract_ipc(note_text: str) -> Dict[str, Any]:
     if matched_pattern.startswith(r"\bipc\b") and not re.search(r"(?i)\b(?:pleur|effusion)\b", text):
         return {}
 
+    if matched_pattern == r"\btunne(?:l|ll)ed\s+catheter\b" and not re.search(
+        r"(?i)\b(?:pleur|effusion)\b", text
+    ):
+        return {}
+
     proc: dict[str, Any] = {"performed": True}
 
-    # Action: prioritize explicit removal language.
-    if re.search(r"(?i)\b(removal|removed|pull(?:ed)?)\b", text):
+    device = (
+        r"(?:pleurx|aspira|tunne(?:l|ll)ed\s+pleural\s+catheter|tunne(?:l|ll)ed\s+catheter|indwelling\s+pleural\s+catheter|ipc)"
+    )
+
+    def _action_window_hit(*, verbs: list[str]) -> bool:
+        verb_union = "|".join(verbs)
+        patterns = [
+            rf"\b{device}\b[^.\n]{{0,80}}\b(?:{verb_union})\w*\b",
+            rf"\b(?:{verb_union})\w*\b[^.\n]{{0,80}}\b{device}\b",
+        ]
+        return any(re.search(p, text_lower, re.IGNORECASE) for p in patterns)
+
+    insertion_hit = _action_window_hit(
+        verbs=["placement", "place", "insert", "insertion", "tunnel", "seldinger", "introduc", "advance"]
+    )
+    removal_hit = _action_window_hit(verbs=["remov", "pull", "extract", "retriev", "exchange"])
+    if removal_hit and not insertion_hit:
         proc["action"] = "Removal"
-    elif re.search(r"(?i)\b(placement|place(?:d)?|insert(?:ed)?|insertion|tunnel(?:ed)?|seldinger)\b", text):
+    elif insertion_hit:
         proc["action"] = "Insertion"
 
-    right = re.search(r"(?i)\b(rt|right)\b", text) is not None
-    left = re.search(r"(?i)\b(lt|left)\b", text) is not None
-    if right and not left:
-        proc["side"] = "Right"
-    elif left and not right:
-        proc["side"] = "Left"
+    side = _extract_checked_side(note_text, "Entry Site") or _extract_checked_side(note_text, "Hemithorax")
+    if side in {"Left", "Right"}:
+        proc["side"] = side
+    else:
+        right = re.search(rf"(?i)\b(rt|right)\b[^.\n]{{0,40}}\b{device}\b", text) is not None
+        left = re.search(rf"(?i)\b(lt|left)\b[^.\n]{{0,40}}\b{device}\b", text) is not None
+        if right and not left:
+            proc["side"] = "Right"
+        elif left and not right:
+            proc["side"] = "Left"
 
     if re.search(r"(?i)\bpleurx\b", text):
         proc["catheter_brand"] = "PleurX"
@@ -1834,6 +2034,10 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if blvr_data:
         seed_data.setdefault("procedures_performed", {}).update(blvr_data)
 
+    diagnostic_bronch_data = extract_diagnostic_bronchoscopy(note_text)
+    if diagnostic_bronch_data:
+        seed_data.setdefault("procedures_performed", {}).update(diagnostic_bronch_data)
+
     foreign_body_data = extract_foreign_body_removal(note_text)
     if foreign_body_data:
         seed_data.setdefault("procedures_performed", {}).update(foreign_body_data)
@@ -1906,6 +2110,11 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if chest_us_data:
         seed_data.setdefault("procedures_performed", {}).update(chest_us_data)
 
+    # Pleural: thoracentesis
+    thoracentesis_data = extract_thoracentesis(note_text)
+    if thoracentesis_data:
+        seed_data.setdefault("pleural_procedures", {}).update(thoracentesis_data)
+
     # Pleural: chest tube / pleural drainage catheter
     chest_tube_data = extract_chest_tube(note_text)
     if chest_tube_data:
@@ -1950,6 +2159,7 @@ __all__ = [
     "extract_established_tracheostomy_route",
     "extract_neck_ultrasound",
     "extract_chest_ultrasound",
+    "extract_thoracentesis",
     "extract_chest_tube",
     "extract_ipc",
     "BAL_PATTERNS",
@@ -1972,6 +2182,7 @@ __all__ = [
     "ESTABLISHED_TRACH_ROUTE_PATTERNS",
     "ESTABLISHED_TRACH_NEW_PATTERNS",
     "CHEST_ULTRASOUND_PATTERNS",
+    "THORACENTESIS_PATTERNS",
     "CHEST_TUBE_PATTERNS",
     "IPC_PATTERNS",
 ]

@@ -1,0 +1,78 @@
+NOTE_ID: note_342	SOURCE_FILE: note_342.txt
+INDICATION FOR OPERATION: [REDACTED] is a 69 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31628 TBBX single lobe     
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+General Anesthesia
+
+ 
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   30mL
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+The flexible therapeutic bronchoscope was inserted into the LMA and advanced through the vocal cords into the airway. Bilateral airway inspection showed complex stenosis and malacic area at anastomosis on left mainstem. Right anastomosis was normal with a clip visible in the airway lumen. The anatomic segmental branching was normal. There was granulation tissue partially obstruction left anastomosis from 10 o clock to 5 o clock position. 
+ 
+Endobronchial biopsy was performed at Left Mainstem anastomosis.  Lesion was successfully removed.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology.
+ 
+Endobronchial obstruction at Left Mainstem was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	2.4mm	30 s freeze and thaw cycle 4 applications 10 o clock, 12 o clock 2o clock 4 o clock	 	Improved luminal patency
+ 
+Balloon dilation was performed at Left Mainstem.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the Left Mainstem.  Total 3 inflations with dilation time of 60s seconds each.
+ 
+Prior to treatment, affected airway was note to be 60% patent.  After treatment, the airway was 80% patent. 
+ 
+Transbronchial biopsy was performed with alligator forceps at Anteromedial Segment of LLL (Lb7/8) and Lateral-basal Segment of LLL (LB9).  Total 8 samples were collected.  Samples sent for Pathology. 
+ 
+Bronchial alveolar lavage was performed at Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+LLL TBBx
+LMSB EBBx
+Lingula BAL
+ 
+IMPRESSION/PLAN:[REDACTED] is a 69 year old-year-old male who presents for bronchoscopy for bronchial stenosis and Tbbx to rule out rejection
+ 
+[ ] cxr in pacu
+[ ] Stenosis is complex and partially malacic with some granulation tissue. Will likely need a stent trial in short interval, follow up in clinic
+ 
+ 
+Caleb James Taylor, MD, MPH
+12/11/2023
+ 
+ 
+I confirm that I was present for all portions of the service, including a review of the patient's history and other pertinent data. I personally examined the patient, and formulated the evaluation and/or treatment plan. I was present for the entirety of the procedure.  I have reviewed the note of Taylor, Caleb James, MD, MPH  and agree with the findings documented in the note, with any exceptions as noted below.

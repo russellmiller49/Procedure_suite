@@ -1,0 +1,76 @@
+NOTE_ID: note_331	SOURCE_FILE: note_331.txt
+INDICATION FOR OPERATION: [REDACTED] is a 61 year old-year-old male who presents with bronchial stenosis.  
+ 
+CONSENT: Consent obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to the procedure were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate decision-maker agreed to proceed with procedure.  The patient or surrogate decision-maker read and signed the provided consent form or provided consent over the phone. If consent was provided over the phone, then the consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31640 Bronchoscopy with excision 
+31635 Foreign body removal
+ 
+ 59 Similar to 51 but for uncommonly combined procedures. Can be used if a diagnostic procedure is performed which provides information which leads to a therapeutic procedure (XE/XS/XP/XU) for 31625
+ 
+ANESTHESIA: General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.
+ 
+After induction of muscle relaxants an iGel was placed by anesthesia. The bronchoscope was introduced into the iGel and advanced to the level of the vocal cords. 
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords, main carina, right carina 1, and left carina 2.
+ 
+Initial Airway Examination Findings:
+Pharynx: Normal.
+Larynx: Normal.
+Vocal Chords: Normal without mass/lesions
+Trachea: Normal. Moderate amount of thick mucus in the 
+Main Carina: Sharp.  
+Right Lung Proximal Airways: Right lung with well-healed RMSB anastomsis.  Otherwise normal anatomic branching to first subsegmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways:  Covered metallic stent (10x40 microtech) identified in the left mainstem bronchus.  T The stent was filled with moderate amount of tan, non-obstructing secretions.  Suctioned to clear.  Stent is patent to the LUL and LLL. There is mild amount of non-obstructing granulation tissue at distal end of stent.
+Mucosa: As described above and below.
+Secretions: As described above.  All secretions were suctioned to clear (therapeutic aspiration). 
+ 
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left mainstem bronchus stent, left upper lobe, left lower lobe from mucus.  Special attention to moderate mucus built up within LMSB stent, LUL and LLL.
+ 
+Foreign body removal of the 10x40 Microtech stent was performed using forceps. The stent was removed enbloc without residual material. 
+ 
+The underlying mucosa was moderately friable and there was some additional mild to moderate granulation tissue in the mid LMSB.  Component of hard cartilaginous ledge at the level of the LMSB anastomosis that the therapeutic bronchoscope could easily traverse.
+ 
+Bronchial alveolar lavage was performed at lingula (LB4/LB5).  Instilled 40 cc of NS, suction returned with 12 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal). 
+ 
+Endobronchial stenosis and granulation tissue was noted and excised with mechanical debridement using the rigid bronchoscope barrel and bevel to gently excise/mechanically debride areas of left mainstem bronchus granulation tissue. 
+ 
+Endobronchial biopsy was performed at left mainstem bronchus x 3 with.  Lesions were successfully removed.  Samples sent for Pathology and culture.
+ 
+The LMSB remained patent on 6 and 0 of PEEP without significant collapse. Decision was made to proceed with stent holiday
+ 
+Residual secretions and saline suctioned to clear.  No significant bleeding.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient had airway device removed in the operating room and transported to the recovery room in stable condition.
+ 
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    none
+ 
+SPECIMEN(S): 
+-Left mainstem stent (foreign body removal):  Pathology
+-LLL BAL - cell count and culture
+-Left mainstem bronchus EBBx:  Pathology and culture
+ 
+IMPRESSION/PLAN:[REDACTED] is a 61 year old-year-old male who presents for bronchoscopy for stent removal and excision of granulation tissue.
+ 
+-Obtain CXR in PACU.
+-Plan for stent holiday, office visit
+
+

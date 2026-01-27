@@ -1,0 +1,94 @@
+NOTE_ID: note_332	SOURCE_FILE: note_332.txt
+INDICATION FOR OPERATION: [REDACTED] is a 61 year old-year-old male who presents with bronchial stenosis.  
+ 
+CONSENT: Consent obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to the procedure were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate decision-maker agreed to proceed with procedure.  The patient or surrogate decision-maker read and signed the provided consent form or provided consent over the phone. If consent was provided over the phone, then the consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+
+ 
+ANESTHESIA: General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.
+ 
+After induction of muscle relaxants, tooth or gum protector was placed. The black ventilating perforated rigid bronchoscope barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid bronchoscope was advanced carefully while minimizing contact with them. Once the rigid bronchoscope was positioned at the mid-trachea, jet ventilation was initiated and chest wall movement was confirmed.
+ 
+Flexible Therapeutic Bronchoscope was advanced through the rigid barrel to complete airway evaluation.
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords, main carina, right carina 1, and left carina 2.
+ 
+Initial Airway Examination Findings:
+Pharynx: Normal.
+Larynx: Normal.
+Vocal Chords: Normal without mass/lesions
+Trachea: Normal.
+Main Carina: Sharp.  Small area of granulation tissue at anterior aspect of main carina.
+Right Lung Proximal Airways: Right lung with well-healed RMSB anastomsis.  Otherwise normal anatomic branching to first subsegmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways:  Covered metallic stent (10x30 BonaStent) identified in distal left mainstem bronchus.  There is moderate amount of heaping granulation tissue at proximal end of stent - primarily from 4 o'clock to 7 o'clock position; partially obstructing proximal end of stent.  The stent was filled with moderate amount of tan, non-obstructing secretions.  Suctioned to clear.  Stent is patent to the LUL and LLL. There is mild amount of non-obstructing granulation tissue at distal end of stent.
+Mucosa: As described above and below.
+Secretions: As described above.  All secretions were suctioned to clear (therapeutic aspiration). 
+ 
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left mainstem bronchus stent, left upper lobe, left lower lobe from mucus.  Special attention to moderate mucus built up within LMSB stent. 
+ 
+Rigid bronchoscope barrel was advanced into the mid left mainstem bronchus and the bevel was used to help lift some metal struts from the surrounding granulation tissue.
+ 
+Foreign body removal of the 10x30 BonaStent was performed using single action forceps.  Foreign body was removed in one piece without residual material in the bronchus through the the rigid bronchoscope barrel.
+ 
+The underlying mucosa was moderately friable and there was some additional mild to moderate granulation tissue noted near where the distal end of stent was previously positioned.  Component of hard cartilaginous ledge at the level of the LMSB anastomosis.  This ledge limited advancing the rigid bronchoscope into the distal LMSB.  The is also a component of bronchomalacia/dynamic airway collapse in the mid and distal LMSB - airway collapse of ~50%.
+ 
+Bronchial alveolar lavage was performed at lingula (LB4/LB5).  Instilled 40 cc of NS, suction returned with 10 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal). 
+ 
+Endobronchial stenosis and granulation tissue was noted and excised with mechanical debridement using the rigid bronchoscope barrel and bevel to gently excise/mechanically debride areas of left mainstem bronchus granulation tissue. 
+ 
+Endobronchial biopsy was performed at left mainstem bronchus.  Lesion was successfully removed.  Samples sent for Pathology. 
+ 
+Endobronchial obstruction at left mainstem bronchus stenosis was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+Cryoprobe	1.7mm probe	Cryo	30 second overlapping freezes	Overlapping freezes at areas of granulation tissue in the mid leftstem bronchus and distal left mainstem bronchus (where the proximal and distal portions of the stent previously were positioned).
+ 
+Airway measurement performed.  Area of stenosis and granulation tissue extended from the LC2 carina to 3.9cm proximal to the LC2 carina.
+ 
+Through-the-scope 10 mm x 40 mm MicroTech covered metallic stent was deployed under direct visualization using the flexible therapeutic bronchoscope.  No Bonastents were available at time of procedure.
+ 
+Balloon dilation was performed at left mainstem bronchus stent to fully expand the stent.  10/11/12 Elation balloon was used to perform dilation to 11mm and 12 mm at the left mainstem bronchus stent.  Balloon dilation performed at proximal stent, mid stent, and distal stent - including traversing into the LUL bronchus and LLL bronchus.  Total 5 inflations with dilation time of 30 seconds each.  Inspection confirmed LMS bronchus stent was well-positioned with good patency to LUL and LLL bronchi. 
+ 
+Prior to treatment, affected left mainstem bronchus airway was note to be 75% patent.  After treatment, the airway was 90% patent.  
+ 
+Residual secretions and saline suctioned to clear.  No significant bleeding.
+ 
+Rigid bronchoscope was extubated.  LMA was placed by anesthesia team.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient had airway device removed in the operating room and transported to the recovery room in stable condition.
+ 
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    No significant complications.  Small amount of bruising on right upper lip after procedure.
+ 
+SPECIMEN(S): 
+-Left mainstem stent (foreign body removal):  Pathology
+-Lingula BAL:  cell count, micro/cultures
+-Left mainstem bronchus EBBx:  Pathology
+ 
+IMPRESSION/PLAN:[REDACTED] is a 61 year old-year-old male who presents for bronchoscopy for stent exchange and excision of granulation tissue.
+ 
+-Obtain CXR in PACU.
+-Plan for bronchoscopy with stent check in 4 weeks.  If MicroTech stent not fitting well or leading to mucus accumulation, then may need to transition back to BonaStent (would consider 10 mm x 40 mm or 10 mm x 30 mm BonaStent).
+ 

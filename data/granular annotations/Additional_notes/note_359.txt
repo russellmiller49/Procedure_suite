@@ -1,0 +1,64 @@
+NOTE_ID: note_359	SOURCE_FILE: note_359.txt
+PROCEDURE: Flexible bronchoscopy with BAL and TBBX under moderate sedation
+INDICATION : Lung Transplant 
+
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient. The patient read and signed the provided consent form. The consent was witnessed by an assisting medical proffesional.
+ 
+MONITORING : Continuous telemetry, BP and oxygen saturation monitored
+INSTRUMENT : Olympus Video Bronchoscope
+ANESTHESIA : Moderate IV sedation with: fentanyl 50 mcg IV and Versed 2 mg IV; Local anesthesia with: Lidocaine 2% Solution ~8ml via adomizer
+Sedation time was 15 min during this procedure
+Sedation start time 09:06 AM
+Sedation end time 09:21 AM
+ 
+Time out: Immediately prior to procedure a time out was called to verify the correct patient, procedure, equipment, support staff and site/side  marked as required.  
+ 
+SUMMARY : Initially a time-out was performed prior to the procedure, confirming the patient's name, procedure type and procedure location. After the patient was properly positioned and sedated and topical anesthesia applied, the bronchoscope was introduced through the mouth with O2 being administered at all times / with the patient continuously on the ventilator. This was done without difficulty. The bronchoscope was passed by the carina, which was examined for sharpness, position and texture. The bronchial orifices were systematically identified, evaluated and suctioned free of secretions and close attention was paid to color, texture, positions, size and patency.
+ 
+FINDINGS
+Pharynx: Normal 
+Larynx: Normal 
+Vocal Chords: Normal 
+
+ 
+Trachea: Normal 
+
+ 
+Carina: Sharp
+
+ 
+Bronchial Tree
+Right Lung: Normal anastamosis, no strictures, ischemia or black eschar
+ 
+
+ 
+ 
+Left Lung: Normal anastamosis, no strictures, ischemia or black eschar, but there is a malacia noted
+
+ 
+ 
+
+ 
+ 
+No evidence of mass, lesions, bleeding or other intra-bronchial pathology.
+Mucosa: normal
+Secretions: none. 
+ 
+Studies/samples: 
+1. BAL 1: 40 cc instilled in the RLL and 22 cc returned
+2. Biopsies: 9 TBBX attempted and 7 samples obtained from the RLL
+- EBL: none
+Complications: None
+ 
+ 
+IMPRESSION: 
+Flexible bronchoscopy with BAL and TBBX under moderate sedation
+For TBBX, it is an Excision (cutting out tissue e.g. oval fenestrated forceps) 
+ 
+Post procedure, no dyspnea, chest pain or changes to his voice
+Exam: CTA over the area of the lavage and biopsy, no voice change or crepitus noted
+Samples sent for microbiology and pathology
+ 
+
+

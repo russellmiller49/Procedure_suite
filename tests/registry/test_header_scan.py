@@ -45,6 +45,21 @@ def test_header_scan_extracts_codes() -> None:
     assert _scan_header_for_codes(note) == {"31653"}
 
 
+def test_header_scan_skips_indication_for_operation_noise() -> None:
+    note = (
+        "INDICATION FOR OPERATION: 74 year old female with tracheal stenosis.\n"
+        "PROCEDURE:\n"
+        "31622 Dx bronchoscopy/cell washing\n"
+        "PROCEDURE IN DETAIL: The airway was inspected.\n"
+        "ANESTHESIA: General\n"
+    )
+    header = _extract_procedure_header_block(note)
+    assert header is not None
+    assert "31622" in header
+    assert "tracheal stenosis" not in header.lower()
+    assert _scan_header_for_codes(note) == {"31622"}
+
+
 def test_header_trigger_adds_high_conf_omissions(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
     monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")

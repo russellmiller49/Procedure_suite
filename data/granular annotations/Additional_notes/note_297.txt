@@ -1,0 +1,103 @@
+NOTE_ID: note_297	SOURCE_FILE: note_297.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 66 year old-year-old female who presents with tracheal stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure
+ 
+Patient required multiple modalities to relieve airway stenoses at the RUL orifice as well as the RLL medial basal subsegment orifice. These included mechanical techniques, cryotherapy, and APC.
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required multiple modalities to relieve airway stenoses at the RUL orifice as well as the RLL medial basal subsegment orifice. These included mechanical techniques, cryotherapy, and APC.. This resulted in >100% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Normal.
+Vocal Cords: Normal without mass/lesions
+Trachea: A-frame deformity at site of prior tracheostomy though without significant stenosis from this. Just distal to this, at the mid trachea there was mild stenotic band along the 8 o'clock to 2 o'clock surface of the airway. 
+However, there was significant EDAC throughout the airways as quantified below. 
+Main Carina: Sharp
+Right Lung Proximal Airways: RUL and RLL medial basal subsegment with severely narrowed orifice (1-2mm). Otherwise, normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+ 
+TRACHEA
+
+ 
+NARROWED RUL ORIFICE 
+
+ 
+NARROWED RLL MEDIAL BASAL SUBSEGMENT ORIFICE
+
+ 
+Balloon dilation was performed at RUL Carina (RC1).  Boston Scientific Mustang 3mm and 5mm balloon was used to perform dilation to 3mm and 5 mm at the RUL Carina (RC1).  Total 2 inflations with dilation time of 30 seconds each. 
+ 
+Balloon dilation was attempted at RUL Carina (RC1) with  6/7/8 Elation balloon however the balloon was unable to be passed into the airways and this balloon dilation was aborted.
+ 
+Balloon dilation was performed at RLL medial basal subsegment (RB7).  Boston Scientific Mustang 3mm and 5mm balloon was used to perform dilation to 3mm and 5 mm at the RUL Carina (RC1).  Total 2 inflations with dilation time of 60 seconds each. 
+ 
+In sum, stenoses at RUL Carina (RC1) and RLL medial basal subsegment (RB7) orifice were treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Mechanical	Precise forceps	N/A	N/A	Good relief of stenosis
+Electrocautery	Cook Needle Knife	Endocut I, Effect 3 (3d, 2i)	1-2 second cuts	Good relief of stenosis
+Cryoprobe	1.7mm Cryoprobe	N/A	30-second freeze cycles	Good application of cryotherapy
+ 
+Bronchial alveolar lavage was performed at Apical Segment of RUL (RB1), Posterior Segment of RUL (RB2), and Anterior Segment of RUL (RB3).  Instilled 80 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+RUL ORIFICE AT THE CONCLUSION OF THE PROCEDURE
+
+ 
+RLL MEDIAL BASAL SUBSEGMENT AT THE CONCLUSION OF THE PROCEDURE
+
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--RUL BAL (cell count, micro, cyto)
+ 
+IMPRESSION/PLAN: [REDACTED] is a 66 year old-year-old female who presents for bronchoscopy for evaluation of airway stenoses. The patient's trachea was patent and there were was no significant stenosis requiring intervention. The RUL and RLL medial basal orifice were noted to be stenotic and were treated with a combination of mechanical dilation via forceps and balloon dilation, electrocautery knife, and cryotherapy. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--Post-procedure CXR
+--Follow up BAL results
+--Follow-up in outpatient Interventional Pulmonology clinic as scheduled on [REDACTED]
+--Repeat bronchoscopy in appx 4 weeks
+

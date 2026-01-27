@@ -1,0 +1,46 @@
+
+
+NOTE_ID:  note_280 SOURCE_FILE: note_280.txt 
+ 
+DATE OF PROCEDURE: [REDACTED]
+ 
+CC Referred Physician:  Provider, Not In System, MD
+No address on file
+ 
+INDICATION FOR OPERATION:  [REDACTED] is a 65 year old-year-old male who presents with need for tracheostomy replacement
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: Tracheostomy
+ 
+POSTOPERATIVE DIAGNOSIS:  Tracheostomy
+ 
+PROCEDURE:  
+31502 Tracheotomy tube change prior to establishment of fistula tract
+
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+ 
+Upper airway was suctioned and cleared.  Endotracheal suctioning performed.  The cuff was deflated and the tracheostomy tube was easily removed.  The stoma appeared widely patent and no granulation tissue was immediately visualized.  The new tracheostomy tube was then placed with obturator in place.  The obturator was removed, inner cannula was placed. 
+ 
+Percutaneous tracheostomy was changed from:
+Portex cuffed Trach ISO/ID size 8.0mm
+ 
+To 
+Portex uncuffed Trach ISO/ID size 7.0mm
+ 
+without issue.
+ 
+ 
+ 
+IMPRESSION/PLAN:[REDACTED] is a 65 year old-year-old male who presents for trach downsizing. 
+ 
+- call IP back if needs decannulation of trach
+ 
+
+

@@ -1,0 +1,54 @@
+NOTE_ID: note_288	SOURCE_FILE: note_288.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 32 year old-year-old female who presents with prolonged need for artificial nutrition.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: prolonged need for artificial nutrition
+ 
+POSTOPERATIVE DIAGNOSIS:  prolonged need for artificial nutrition
+ 
+PROCEDURE:  
+43246 Esophagogastroduodenoscopy, flexible, transoral; with directed placement of percutaneous gastrostomy tube
+ 
+25 Added to the E&M Encounter bill which is separate from a procedure if it is done the same day
+  
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Under sterile prep and draping, the abdomen was evaluated and 2 cm below the costal margin on the left, the likely point of insertion was identified. 
+The scope was introduced through the mouth without difficulty and with continuous insufflation, the stomach was reached within 30 seconds. Then, the point of digital pressure was identified in the stomach and transillumination was accomplished successfully and without any doubts. 
+At this point, a 1cm incision was carried out in the skin and a 14ga angiocath was introduced. Using modified Seldinger technique, the angiocath was advanced and a wire was introduced. Using pull through technique, the guide wire was pulled through the mouth and linked to the 20Fr PEG catheter in usual fashion. Thereafter, the wire was pulled through the abdominal wall and the PEG tube positioned correctly with the bumper at 2.0 cm. The remaining air was suctioned out and complete apposition of the stomach and esophagus was seen. There were no complications. 
+The total procedural time was 35min.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+SPECIMEN(S): 
+None
+ 
+IMPRESSION/PLAN: [REDACTED] is a 32 year old-year-old female who presents for bronchoscopy for PEG tube placement.
+ 
+- PEG can be used for medications 6 hrs post procedure (@16:30)
+- PEG (or NG tube) can be used for feeds 6 hrs post procedure (@16:30), as long as tolerating initial free water flushing. No enteral feeding prior.
+- OK to restart systemic anticoagulation @18:00, if needed.
+- the bumper initially was set at 2.0 cm. It should be mobile to twisting without drainage or expanding erythema at the skin. 
+- If required to place gauze underneath the skin bumper, please use only 1 thin layer and change as needed, as this can lead to tension on the gastric cuff and result in complication. 
+- Please call the Interventional pulmonary fellow on call should there be any issues with the PEG. 
+
+ 
+

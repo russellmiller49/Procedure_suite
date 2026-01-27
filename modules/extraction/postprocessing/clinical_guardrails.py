@@ -85,6 +85,12 @@ _CHEST_TUBE_DATE_OF_INSERTION_RE = re.compile(
     re.IGNORECASE,
 )
 
+_CHECKBOX_NEGATIVE_DASH_RE = re.compile(r"(?im)^\s*0\s*[—\-]\s*(?P<label>.+?)\s*$")
+_CHECKBOX_NEGATIVE_BRACKET_RE = re.compile(r"(?im)^\s*\[\s*\]\s*(?P<label>.+?)\s*$")
+_CHECKBOX_TOKEN_RE = re.compile(
+    r"(?im)(?<!\d)(?P<val>[01])\s*[^\w\n]{0,6}\s*(?P<label>[A-Za-z][A-Za-z /()_-]{0,80})"
+)
+
 
 @dataclass
 class GuardrailOutcome:
@@ -105,6 +111,26 @@ class ClinicalGuardrails:
         record_data = record.model_dump()
         text_lower = (note_text or "").lower()
         chest_tube_insertion_date_line = bool(_CHEST_TUBE_DATE_OF_INSERTION_RE.search(text_lower))
+
+        # Checkbox guardrail: EMR templates often use "0- Item" or "[ ] Item" to indicate NOT selected.
+        checkbox_warnings, checkbox_changed = self._apply_checkbox_negative_guardrail(
+            note_text or "", record_data
+        )
+        if checkbox_changed:
+            warnings.extend(checkbox_warnings)
+            changed = True
+
+        # BLVR checkbox/table corrections: fix valve type, lobe selection, Chartis result, and count.
+        blvr_warnings, blvr_changed = self._apply_blvr_guardrails(note_text or "", record_data)
+        if blvr_changed:
+            warnings.extend(blvr_warnings)
+            changed = True
+
+        # Thoracoscopy backstop: ensure thoracoscopy fields populate from narrative/checkboxes.
+        thor_warnings, thor_changed = self._apply_thoracoscopy_guardrails(note_text or "", record_data)
+        if thor_changed:
+            warnings.extend(thor_warnings)
+            changed = True
 
         # Airway dilation false positives (skin/subcutaneous/chest wall/tract context).
         if _DILATION_CONTEXT_PATTERN.search(text_lower):
@@ -235,7 +261,20 @@ class ClinicalGuardrails:
                     changed = True
 
         # IPC vs chest tube disambiguation.
+        ipc_checkbox = self._checkbox_state(
+            note_text or "",
+            (
+                "tunneled pleural catheter",
+                "tunnelled pleural catheter",
+                "indwelling pleural catheter",
+                "ipc",
+                "pleurx",
+                "aspira",
+            ),
+        )
         ipc_present = self._contains_any(text_lower, _IPC_TERMS)
+        if ipc_checkbox is False:
+            ipc_present = False
         tube_present = self._contains_any(text_lower, _CHEST_TUBE_TERMS)
         pleural_flagged = self._pleural_procedure_flagged(record_data)
         if pleural_flagged and (ipc_present or tube_present):
@@ -310,6 +349,285 @@ class ClinicalGuardrails:
 
     def _contains_any(self, text: str, terms: tuple[str, ...]) -> bool:
         return any(term in text for term in terms)
+
+    def _checkbox_state(self, note_text: str, candidates: tuple[str, ...]) -> bool | None:
+        selected = False
+        deselected = False
+        text = note_text or ""
+        for match in _CHECKBOX_TOKEN_RE.finditer(text):
+            val = (match.group("val") or "").strip()
+            label = (match.group("label") or "").strip().lower()
+            if not label:
+                continue
+            if not any(candidate in label for candidate in candidates):
+                continue
+            if val == "1":
+                selected = True
+            elif val == "0":
+                deselected = True
+        if selected:
+            return True
+        if deselected:
+            return False
+        return None
+
+    def _apply_checkbox_negative_guardrail(
+        self, note_text: str, record_data: dict[str, Any]
+    ) -> tuple[list[str], bool]:
+        """Force explicit checkbox negatives to False.
+
+        Some templates encode unchecked options as:
+          - "0- Chest tube"
+          - "[ ] Tunneled Pleural Catheter"
+        These should never be interpreted as performed/true.
+        """
+        warnings: list[str] = []
+        changed = False
+
+        def _match_label(label: str, candidates: tuple[str, ...]) -> bool:
+            label_lower = label.lower()
+            return any(candidate in label_lower for candidate in candidates)
+
+        negative_labels: list[str] = []
+        for match in _CHECKBOX_NEGATIVE_DASH_RE.finditer(note_text):
+            negative_labels.append(match.group("label") or "")
+        for match in _CHECKBOX_NEGATIVE_BRACKET_RE.finditer(note_text):
+            negative_labels.append(match.group("label") or "")
+        for match in _CHECKBOX_TOKEN_RE.finditer(note_text):
+            if (match.group("val") or "").strip() != "0":
+                continue
+            negative_labels.append(match.group("label") or "")
+
+        for raw_label in negative_labels:
+            label = (raw_label or "").strip()
+            if not label:
+                continue
+
+            if _match_label(
+                label,
+                (
+                    "tunneled pleural catheter",
+                    "tunnelled pleural catheter",
+                    "indwelling pleural catheter",
+                    "pleurx",
+                    "ipc",
+                ),
+            ):
+                if self._clear_pleural_proc(record_data, "ipc"):
+                    warnings.append("Checkbox negative: forcing pleural_procedures.ipc.performed=false")
+                    changed = True
+                continue
+
+            if _match_label(label, ("chest tube", "tube thoracostomy", "pigtail")):
+                if self._clear_pleural_proc(record_data, "chest_tube"):
+                    warnings.append("Checkbox negative: forcing pleural_procedures.chest_tube.performed=false")
+                    changed = True
+                continue
+
+            if _match_label(label, ("pneumothorax", "ptx")):
+                if self._set_complication_pneumothorax_occurred(record_data, False):
+                    warnings.append("Checkbox negative: forcing complications.pneumothorax.occurred=false")
+                    changed = True
+                continue
+
+        return warnings, changed
+
+    def _apply_thoracoscopy_guardrails(
+        self, note_text: str, record_data: dict[str, Any]
+    ) -> tuple[list[str], bool]:
+        """Backstop thoracoscopy extraction from narrative + checkbox lines."""
+        warnings: list[str] = []
+        changed = False
+        text_lower = (note_text or "").lower()
+        if not re.search(r"\bthoracoscop|\bpleuroscopy|\bmedical\s+thoracoscopy", text_lower, re.IGNORECASE):
+            return warnings, changed
+
+        pleural = record_data.get("pleural_procedures")
+        if not isinstance(pleural, dict):
+            pleural = {}
+        thor = pleural.get("medical_thoracoscopy")
+        if not isinstance(thor, dict):
+            thor = {}
+
+        if thor.get("performed") is not True:
+            thor["performed"] = True
+            warnings.append("Backstop: detected thoracoscopy language; setting medical_thoracoscopy.performed=true")
+            changed = True
+
+        # Biopsy Taken: 0 No / 1 Yes
+        for raw_line in (note_text or "").splitlines():
+            if "biopsy taken" not in raw_line.lower():
+                continue
+            if re.search(r"(?i)\b1\D{0,6}yes\b", raw_line):
+                if thor.get("biopsies_taken") is not True:
+                    thor["biopsies_taken"] = True
+                    changed = True
+                num_match = re.search(r"(?i)\bnumber\s*:\s*(\d{1,3})\b", raw_line)
+                if num_match and thor.get("number_of_biopsies") in (None, "", 0):
+                    try:
+                        thor["number_of_biopsies"] = int(num_match.group(1))
+                    except ValueError:
+                        pass
+                    else:
+                        changed = True
+            break
+
+        if re.search(r"(?i)\blysis\s+of\s+adhesions\b|\badhesiolysis\b", note_text):
+            if thor.get("adhesiolysis_performed") is not True:
+                thor["adhesiolysis_performed"] = True
+                changed = True
+
+        pleural["medical_thoracoscopy"] = thor
+        record_data["pleural_procedures"] = pleural
+
+        # Chest tube "existing ... left in place" should not be treated as new insertion.
+        if re.search(r"(?i)\bchest\s+tube/s\b[^.\n]{0,160}\bexisting\b[^.\n]{0,120}\bleft\s+in\s+place\b", note_text):
+            chest_tube = pleural.get("chest_tube")
+            if not isinstance(chest_tube, dict):
+                chest_tube = {}
+            if chest_tube.get("performed") is not True:
+                chest_tube["performed"] = True
+                changed = True
+            if chest_tube.get("action") in (None, "", "Insertion"):
+                chest_tube["action"] = "Repositioning"
+                changed = True
+            pleural["chest_tube"] = chest_tube
+            record_data["pleural_procedures"] = pleural
+
+        return warnings, changed
+
+    def _apply_blvr_guardrails(self, note_text: str, record_data: dict[str, Any]) -> tuple[list[str], bool]:
+        """Correct BLVR fields when checkbox/table structure is present in the note."""
+        warnings: list[str] = []
+        changed = False
+
+        procedures = record_data.get("procedures_performed")
+        if not isinstance(procedures, dict):
+            return warnings, changed
+        blvr = procedures.get("blvr")
+        if not isinstance(blvr, dict) or blvr.get("performed") is not True:
+            return warnings, changed
+
+        # Manufacturer selection (checkbox-aware)
+        spiration = self._checkbox_state(note_text, ("spiration",))
+        zephyr = self._checkbox_state(note_text, ("zephyr",))
+        desired_valve_type: str | None = None
+        if spiration is True and zephyr is not True:
+            desired_valve_type = "Spiration (Olympus)"
+        elif zephyr is True and spiration is not True:
+            desired_valve_type = "Zephyr (Pulmonx)"
+        elif spiration is True and zephyr is True:
+            warnings.append("NEEDS_REVIEW: Both Zephyr and Spiration selected in BLVR checkbox list.")
+
+        if desired_valve_type and blvr.get("valve_type") != desired_valve_type:
+            blvr["valve_type"] = desired_valve_type
+            warnings.append("BLVR valve_type corrected from checkbox selection.")
+            changed = True
+
+        # Lobe selection (checkbox-aware)
+        lobe_map = {
+            "left upper": "LUL",
+            "left lower": "LLL",
+            "right upper": "RUL",
+            "right middle": "RML",
+            "right lower": "RLL",
+            "lingula": "Lingula",
+        }
+        selected_lobes: list[str] = []
+        for label, code in lobe_map.items():
+            if self._checkbox_state(note_text, (label,)) is True:
+                selected_lobes.append(code)
+        if len(selected_lobes) == 1:
+            if blvr.get("target_lobe") != selected_lobes[0]:
+                blvr["target_lobe"] = selected_lobes[0]
+                changed = True
+        elif len(selected_lobes) > 1:
+            warnings.append(f"NEEDS_REVIEW: Multiple BLVR lobes selected: {sorted(set(selected_lobes))}")
+
+        # Chartis (checkbox-aware): capture "no/minimal collateral ventilation" as Chartis negative.
+        chartis_idx = (note_text or "").lower().find("chartis system")
+        chartis_window = note_text[chartis_idx : chartis_idx + 240] if chartis_idx != -1 else note_text
+        chartis_yes = bool(re.search(r"(?i)\b1\D{0,6}yes\b", chartis_window))
+        if chartis_yes and re.search(r"(?i)\bno/minimal\s+collateral\s+ventilation\b", note_text):
+            if blvr.get("collateral_ventilation_assessment") != "Chartis negative":
+                blvr["collateral_ventilation_assessment"] = "Chartis negative"
+                changed = True
+
+        # Promote procedure_type when valve placement details are present.
+        placement_indicator = bool(
+            re.search(r"(?i)\bvalves?\b[^.\n]{0,80}\bplaced\b", note_text)
+            or re.search(r"(?i)\bvalve\s+sizes\s+used\b", note_text)
+        )
+        if placement_indicator and blvr.get("procedure_type") in (None, "", "Valve assessment"):
+            blvr["procedure_type"] = "Valve placement"
+            changed = True
+
+        # Valve table count heuristic (+ foreign body removal when a valve is removed).
+        valve_block = ""
+        match = re.search(r"(?i)\bvalve\s+sizes\s+used\b", note_text)
+        if match:
+            valve_block = note_text[match.end() : match.end() + 2000]
+            stop = re.search(
+                r"(?i)\n(?:bronchial\s+alveolar\s+lavage|the\s+patient\s+tolerated|specimen\\(s\\)|impression/plan|impression|plan)\b",
+                valve_block,
+            )
+            if stop:
+                valve_block = valve_block[: stop.start()]
+
+        sizes: list[str] = []
+        segments: list[str] = []
+        removed_valve = False
+        for line in valve_block.splitlines():
+            clean = line.strip()
+            if not clean:
+                continue
+            if re.search(r"(?i)^\s*airway\s*\t\s*valve\b", clean):
+                continue
+            if not re.search(r"(?i)\b(zephyr|spiration)\b", clean):
+                continue
+            size_match = re.search(r"(?i)\bsize\s*([0-9]+(?:\.[0-9]+)?)\b", clean)
+            if not size_match:
+                continue
+            is_removed = bool(re.search(r"(?i)\bremoved\b|\bretriev|\bextract|\bexplant", clean))
+            if is_removed:
+                removed_valve = True
+                continue
+
+            sizes.append(size_match.group(1))
+            seg = None
+            if "\t" in clean:
+                seg = clean.split("\t", 1)[0].strip()
+            else:
+                marker = re.search(r"(?i)\b(?:olympus|pulmonx|zephyr|spiration)\b", clean)
+                if marker:
+                    seg = clean[: marker.start()].strip() or None
+            if seg:
+                segments.append(seg)
+
+        count = len(sizes)
+        if count:
+            try:
+                existing_count = int(blvr.get("number_of_valves")) if blvr.get("number_of_valves") is not None else None
+            except Exception:
+                existing_count = None
+            if existing_count is None or existing_count < count:
+                blvr["number_of_valves"] = count
+                changed = True
+            if not blvr.get("valve_sizes") or len(blvr.get("valve_sizes") or []) < count:
+                blvr["valve_sizes"] = sizes
+                changed = True
+            if segments and not blvr.get("segments_treated"):
+                blvr["segments_treated"] = segments
+                changed = True
+
+        if removed_valve:
+            if self._set_procedure_performed(record_data, "foreign_body_removal", True):
+                warnings.append("BLVR valve removal noted; setting foreign_body_removal.performed=true")
+                changed = True
+
+        procedures["blvr"] = blvr
+        record_data["procedures_performed"] = procedures
+        return warnings, changed
 
     def _has_action_near(self, text: str, term: str, actions: tuple[str, ...], window: int = 80) -> bool:
         start = 0
@@ -431,6 +749,30 @@ class ClinicalGuardrails:
         proc["performed"] = value
         pleural[proc_name] = proc
         record_data["pleural_procedures"] = pleural
+        return current != value
+
+    def _clear_pleural_proc(self, record_data: dict[str, Any], proc_name: str) -> bool:
+        pleural = record_data.get("pleural_procedures")
+        if not isinstance(pleural, dict):
+            pleural = {}
+        prior = pleural.get(proc_name)
+        prior_performed = prior.get("performed") if isinstance(prior, dict) else None
+        prior_extra = isinstance(prior, dict) and any(k != "performed" for k in prior.keys())
+        pleural[proc_name] = {"performed": False}
+        record_data["pleural_procedures"] = pleural
+        return prior_performed is not False or prior_extra
+
+    def _set_complication_pneumothorax_occurred(self, record_data: dict[str, Any], value: bool) -> bool:
+        complications = record_data.get("complications")
+        if not isinstance(complications, dict):
+            complications = {}
+        pneumothorax = complications.get("pneumothorax")
+        if not isinstance(pneumothorax, dict):
+            pneumothorax = {}
+        current = pneumothorax.get("occurred")
+        pneumothorax["occurred"] = value
+        complications["pneumothorax"] = pneumothorax
+        record_data["complications"] = complications
         return current != value
 
     def _pleural_procedure_flagged(self, record_data: dict[str, Any]) -> bool:

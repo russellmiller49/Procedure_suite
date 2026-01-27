@@ -1,0 +1,42 @@
+NOTE_ID: note_323	SOURCE_FILE: note_323.txt
+INDICATION FOR OPERATION: [REDACTED] is a 54 year old-year-old male who presents with Pneumothorax.  The nature, purpose, risks, benefits and alternatives to Instillation of agents for pleurodesis were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Pneumothorax
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+32560 Instillation, via chest tube/catheter, agent for pleurodesis (eg, talc for recurrent or persistent pneumothorax)
+ 
+Hydromorphone given 
+
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: 
+? Supine  ?
+ 
+Date of chest tube/TPC insertion: 01-11-26
+ 
+Side: right
+ 
+1000 mg doxycycline was instilled through the chest tube or TPC.  A total volume of 100 ml was instilled. 
+ 
+Patient tolerated the procedure well without any immediate complications. 
+ 
+ 
+COMPLICATIONS:
+?None ?
+ 
+IMPRESSION/PLAN:[REDACTED] is a 54 year old-year-old male who presents for Instillation of agents for pleurodesis.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+-Control pain
+-Unclamp chest tube at ~1415 [REDACTED] and place to suction
+ 
+DISPOSITION: Home
+ 
+ 

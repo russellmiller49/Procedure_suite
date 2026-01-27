@@ -1,0 +1,85 @@
+NOTE_ID:  note_269 SOURCE_FILE: note_269.txt
+DATE OF PROCEDURE: [REDACTED]
+ 
+CC Referred Physician:  [REDACTED]
+[REDACTED] W [REDACTED] Dr
+[REDACTED]
+ 
+INDICATION FOR OPERATION:  [REDACTED] is a 64 year old-year-old female who presents with Complicated Effusion.  The nature, purpose, risks, benefits and alternatives to Instillation of agents for fibrinolysis (subsequent) were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32562 Instillation(s), via chest tube/catheter, agent for fibrinolysis (eg, fibrinolytic agent for break up of multiloculated effusion); subsequent day
+ 
+ 
+ 
+ATTENDING:  
+[REDACTED]
+ 
+ASSISTANT:  [REDACTED]
+ 
+Support Staff: 
+RN: [REDACTED]
+ 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: 
+‌ Supine  ‌ Sitting   
+‌ Lateral Decubitus:  ‌ Right ‌ Left 
+ 
+ 
+CHEST ULTRASOUND FINDINGS:  ‌ Image saved and printed 
+Hemithorax:   ‌ Right  ‌ Left 
+ 
+Pleural Effusion: 
+Volume:       ‌ None  ‌ Minimal  ‌ Small  ‌ Moderate  ‌ Large 
+Echogenicity:   ‌ Anechoic  ‌ Hypoechoic  ‌ Isoechoic  ‌ Hyperechoic 
+Loculations:  ‌ None  ‌Thin  ‌ Thick 
+Diaphragmatic Motion:  ‌ Normal  ‌ Diminished  ‌ Absent  
+Lung: 
+Lung sliding before procedure:   ‌ Present  ‌ Absent 
+Lung sliding post procedure:   ‌ Present  ‌ Absent 
+Lung consolidation/atelectasis: ‌ Present  ‌  Absent 
+Pleura:  ‌ Normal  ‌ Thick  ‌ Nodular 
+ 
+Hemithorax:   ‌ Right  ‌ Left 
+ 
+Pleural Effusion: 
+Volume:       ‌ None  ‌ Minimal  ‌ Small  ‌ Moderate  ‌ Large 
+Echogenicity:   ‌ Anechoic  ‌ Hypoechoic  ‌ Isoechoic  ‌ Hyperechoic 
+Loculations:  ‌ None  ‌Thin  ‌ Thick 
+Diaphragmatic Motion:  ‌ Normal  ‌ Diminished  ‌ Absent  
+Lung: 
+Lung sliding before procedure:   ‌ Present  ‌ Absent 
+Lung sliding post procedure:   ‌ Present  ‌ Absent 
+Lung consolidation/atelectasis: ‌ Present  ‌  Absent 
+Pleura:  ‌ Normal  ‌ Thick  ‌ Nodular 
+ 
+ 
+Date of chest tube insertion: [REDACTED]
+ 
+Side: right
+‌  10 mg/5 mg tPA/Dnasedose #:__2 
+ 
+Instilled at 1320, plan to place back to -20cm suction ~1420
+ 
+COMPLICATIONS:
+‌None ‌Bleeding-EBL: ___ ml ‌Pneumothorax ‌Re- Expansion Pulmonary Edema 
+‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED] is a 64 year old-year-old female who presents for Instillation of agents for fibrinolysis (subsequent).  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+DISPOSITION: Same inpatient level of care
+ 
+ 
+[REDACTED]
+[REDACTED] 

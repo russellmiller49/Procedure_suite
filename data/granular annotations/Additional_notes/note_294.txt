@@ -1,0 +1,52 @@
+NOTE_ID: note_294	SOURCE_FILE: note_294.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 59 year old-year-old male who presents with PNA.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+ 
+25 Added to the E&M Encounter bill which is separate from a procedure if it is done the same day
+ 
+ 
+ANESTHESIA: 
+Local ONLY
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The oropharynx and vocal cords appear normal. The subglottic space is normal. The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy are normal; there are no endobronchial lesions. Moderate clear secretions on the left, copious thick clear and white secretions in the right airways, largely in RLL. 
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , Left Mainstem, RML Carina (RC2), and Left Carina (LC2) from mucus and mucus plug. 
+ 
+Bronchial alveolar lavage was performed at Anterior-basal Segment of RLL (RB8).  Instilled 80 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+- RLL BAL
+ 
+IMPRESSION/PLAN: [REDACTED] is a 59 year old-year-old male who presents for bronchoscopy for PNA.
+ 
+- f/u BAL studies
+- cont secretion clearance protocol 
+ 

@@ -1,0 +1,70 @@
+NOTE_ID:  note_273 SOURCE_FILE: note_273.txt 
+INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with respiratory failure and recurrent hemoptysis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+PROCEDURE:  
+31500 Intubation, endotracheal, emergency procedure
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31636 Dilate and bronchial stent initial bronchus
+31634 Balloon occlusion or placement of occlusive substance 
+31635 Foreign body removal
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+IP CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required increased time and intensity for oral intubation, airway clearance/aspiration, foreign body (stent removal), and placement of bronchial blocker in this critically ill patient requiring VV-ECMO support. This resulted in >150% increased work due to Increased intensity, Time, Technical difficulty of procedure, Severity of patient's condition, and Physical and mental effort required. Apply to: 31500 Intubation, endotracheal, emergency procedure
+31624 Dx bronchoscope/lavage (BAL)    
+31634 Balloon occlusion or placement of occlusive substance 
+31635 Foreign body removal. 
+Placement of stent in the LUL with vascular device 
+ATTENDING:  
+[REDACTED] 
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Disposable Bronchoscope
+ESTIMATED BLOOD LOSS:   Minimum
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+ images are also uploaded to PACS system or in the media section of the patient's chart. 
+PATIENT POSITION: Supine
+Initial Airway Inspection Findings:
+The tracheostomy tube is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Larynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Vocal Cords: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Copious secretions noted at right-sided airways, particularly RUL and RLL. Otherwise, normal anatomic branching to segmental level.  No evidence of mass, lesions, or other endobronchial pathology.
+Left Lung Proximal Airways: Stent well-seated at LMSB with distal end at LLL truncus basalis. Copious thick secretions throughout. LUL and LB6 jailed off by stent, otherwise normal anatomic branching to segmental level.
+Mucosa: Normal.
+Secretions: Copious thick and thin secretions throughout.  
+LMSB STENT
+
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), and RML Carina (RC2) from mucus. 
+Fiberoptic intubation via oral pathway was performed to introduce a 5.0 MLT ETT into the right mainstem bronchus, thus securing ventilation to the right-sided airways in case of hemoptysis. This was done due to high risk of bleeding from the LUL known aspergilloma
+VIEW OF MLT ETT IN THE RMSB
+
+Next, pulmonary forceps were used to grasp the LMSB stent and extract it en bloc with the bronchoscope through the tracheostomy tube.
+VIEW OF DISTAL LMSB AFTER STENT REMOVAL
+
+Bronchial alveolar lavage was performed at Superior Segment of LLL (LB6), Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 80 cc of NS, suction returned with 40 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+Balloon occlusion was performed at LUL Lingula Carina (Lc1) with a 6/7/8 Elation balloon to size the airway. 
+A vascular plug (Amplatzer Vascular Plug II, 7mm x 10mm) was passed through the bronchoscope working channel and introduced into the left upper lobe.
+DEPLOYMENT OF VASCULAR PLUG INTO LUL
+VIEW OF LUL AND LINGULA AT THE CONCLUSION OF THE PROCEDURE
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was in stable condition. 
+SPECIMEN(S): 
+--LMSB stent (path)
+--LLL BAL (cell count, micro, cyto)
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy for evaluation and management of hemoptysis. An Amplatzer vascular plug was placed in the LUL without incident. The patient tolerated the procedure and there were no immediate complications.
+--Follow up BAL results
+--Plan for repeat bronchoscopy tomorrow
+--Ok to discontinue stent hydration regimen
+--Ok to resume gentle in-line suctioning
+--Begin sedation holidays/weaning/SAT as early as tomorrow pending bronchoscopic re-evaluation
+--Continued care per primary team
+[REDACTED]

@@ -1,0 +1,107 @@
+NOTE_ID: note_349	SOURCE_FILE: note_349.txt
+INDICATION FOR OPERATION: [REDACTED]is a 35 year old-year-old female who presents with Recurrent Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Tunnel Pleural Catheter Placement were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+75989 Radiological guidance (use with IPC placement)
+32550 Insertion of indwelling tunneled pleural catheter with cuff
+ 
+ 
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             4 mg
+Fentanyl          125 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   0933
+ 
+Physician/patient face-to-face anesthesia stop time:   1010
+ 
+Total moderate sedation time was 37 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by Rebecca Cleary. 
+ 
+RN: Rebecca Cleary and Andrew Karn
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+
+Patient Position
+
+Lateral decubitus
+
+Left with right side up
+
+Chest Ultrasound Findings
+
+Images saved and uploaded to PACS
+
+Hemithorax: Right
+
+Pleural Effusion
+
+Volume: Moderate
+
+Echogenicity: Hypoechoic
+
+Loculations: None
+
+Diaphragmatic motion: Diminished
+
+Lung
+
+Lung sliding before procedure: Absent
+
+Lung consolidation/atelectasis: Present
+
+Pleura:Normal
+
+Insertion site prepared and draped in sterile fashion.
+
+Anesthesia: Lidocaine 1%: 15 mL
+
+Entry Site: Right 3 4 intercostal space
+
+Mid-axillary line
+
+Sutured No
+
+Procedure Findings
+
+A finder needle was used to enter the pleural space in the right 3 4th intercostal space along the mid-axillary line. Bloody pleural fluid was aspirated. The needle was withdrawn and a guidewire was placed into the pleural space through the catheter. Two 5-mm skin incisions were made at the guidewire entry site, as well as approximately 5 6 cm away (anteriorly and inferiorly). The tunneling device was used to tunnel the catheter through the subcutaneous tissue. Serial dilation over the guidewire was performed, and an introducer sheath was placed. The guidewire was removed, and the catheter was advanced into the pleural space via the introducer sheath. The pleural entry site was closed with absorbable suture. The catheter was secured to the skin using 2-0 nylon. Sterile dressings were applied.
+
+Tunnel length: 5.5 cm
+
+Exit site: Other   mid-clavicular
+
+Fluid Removed: 800 mL, stopped due to coughing
+
+Character: Bloody
+
+Drainage Device
+
+Other: Vacutainer
+
+Specimen: None
+
+Post-Procedure Imaging
+
+Chest X-ray ordered: Yes
+
+Complications None
+
+IMPRESSION/PLAN:[REDACTED]is a 35 year old-year-old female who presents for Chest Ultrasound and Tunnel Pleural Catheter Placement.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+ 
+DISPOSITION: Home
+[ ] f/u as scheduled
+ 

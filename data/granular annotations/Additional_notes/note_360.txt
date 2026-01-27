@@ -1,0 +1,44 @@
+NOTE_ID: note_360	SOURCE_FILE: note_360.txt
+PROCEDURE: Flexible Bronchoscopy, Bronchoalveolar Lavage (BAL) and Transbronchial Lung Biopsies under moderate sedation
+INDICATION : S/P Lung transplant for airway (anastomosis) evaluation and evaluation for subclinical lung rejection
+  
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient. The patient read and signed the provided consent form. The consent was witnessed by an assisting medical professional.
+  
+MONITORING : Continuous telemetry, BP and oxygen saturation monitored
+INSTRUMENT : Olympus Video Bronchoscope
+ANESTHESIA : Moderate IV sedation with: Fentanyl 50 mcg, midazolam (versed) 5 mg; Local anesthesia with: Lidocaine 2% Solution ~ 3 ml via nebulizer + 4 mL via atomizer + 8 mL direct instillation.
+  
+SUMMARY : Initially a time-out was performed prior to the procedure, confirming the patient's name, procedure type and procedure location. Topical anaesthesia using nebulized 2% lidocaine was given via a mouth piece + an atomizer. The patient was properly positioned and with supplemental oxygen via nasal cannula in place, conscious sedation was achieved using small doses of iv midazolam and iv fentanyl.  The bronchoscope was then introduced through the mouth with O2 being administered at all times. This was done without difficulty. The bronchoscope was passed by the vocal cords, the trachea and then the carina, which was examined for sharpness, position and texture. The bronchial orifices were systematically identified, evaluated and suctioned free of secretions. Close attention was paid to color, texture, positions, size and patency of the airways. Bronchoalveolar lavage was then performed with 140 mL of normal saline instilled to right lower lobe followed by aspiration from same site till clear. Transbronchial biopsies were then obtained. A total of 10 biopsies were performed (2 from RUL, 4 from RML, and 4 from RLL). Bleeding was controlled with saline lavage and bronchoscope tamponade as needed.  Once the bleeding is determined to be controlled, the bronchoscopy was withdrawn out.
+  
+FINDINGS
+Pharynx: Normal 
+Larynx: Normal 
+Vocal Chords: Normal 
+Trachea: Normal 
+Carina: Sharp
+Bronchial Tree
+Right Lung: Normal anastamosis, small amount of circumferential yellow color eschar
+Left Lung: Normal anastamosis, small amount of circumferential yellow color eschar
+No evidence of mass, lesions, bleeding or other intra-bronchial pathology.
+ 
+Secretions: None. Suctioned to clear (therapeutic aspiration). 
+ 
+Estimated blood loss: 
+ 
+Studies/samples: 
+1. Bronchial washings with 140 mL to RLL with total of 45 mL fluid return.
+2. BAL sample sent for cultures (bacteria, fungal and AFB), galactomannan, and cytology.
+3. Transbronchial biopsies sent for pathology and C4d stain
+ 
+Complications: None
+ 
+Sedation Time:
+Sedation started at 11:07 AM
+Sedation ended at 11:23 AM
+ 
+Post procedure:
+1. Activities:  Able to move 4 extremities voluntarily in command
+2. Respiration:  Able to breath deeply and cough freely
+3. Circulation: BP +/- 20 mm Hg of pre-anesthesia level
+4. Consciousness:  Fully awake, speaking in full sentences
+5. Oxygen saturation: 95%

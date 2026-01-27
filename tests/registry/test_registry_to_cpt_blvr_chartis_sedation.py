@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from modules.common.spans import Span
 from modules.registry.schema import RegistryRecord
 
 
@@ -112,3 +113,36 @@ def test_moderate_sedation_uses_times_when_minutes_missing() -> None:
     assert "99153" in codes  # 30 minutes implies add-on time beyond initial 15
     assert not any("not deriving 99152" in str(w).lower() for w in warnings)
 
+
+def test_blvr_fallback_derives_31647_when_granular_missing_and_family_blvr() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedure_families": ["BLVR"],
+            "procedures_performed": {"blvr": {"performed": True}},
+        }
+    )
+
+    codes, rationales, warnings = derive_all_codes_with_meta(record)
+    assert "31647" in codes
+    assert "31651" not in codes
+    assert "31648" not in codes
+    assert "procedure_families includes BLVR" in rationales["31647"]
+    assert not any("chartis" in str(w).lower() for w in warnings)
+
+
+def test_blvr_mixed_manufacturer_emits_needs_review_warning() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "blvr": {"performed": True, "procedure_type": "Valve placement", "valve_type": "Zephyr (Pulmonx)"}
+            },
+            "evidence": {
+                "procedures_performed.blvr.valve_type": [
+                    Span(text="Spiration valve also referenced", start=0, end=10)
+                ]
+            },
+        }
+    )
+
+    _codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert any("mixed blvr valve manufacturers" in str(w).lower() for w in warnings)

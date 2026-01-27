@@ -10,11 +10,9 @@ from modules.common.text_cleaning import (
 
 
 PATTERNS: list[str] = [
-    r"(?ims)^\s*IP\b[^\n]{0,60}CODE\s+MOD\s+DETAILS.*?(?=^\s*(?:ANESTHESIA|MONITORING|INSTRUMENT|ESTIMATED\s+BLOOD\s+LOSS|COMPLICATIONS|PROCEDURE\s+IN\s+DETAIL|DESCRIPTION\s+OF\s+PROCEDURE)\b|\Z)",
     r"(?ims)^CPT\s+CODES?:.*?(?=\n\n|\Z)",
     r"(?ims)^BILLING:.*?(?=\n\n|\Z)",
     r"(?ims)^CODING\s+SUMMARY.*?(?=\n\n|\Z)",
-    r"(?im)^\s*(?:CPT:?)?\s*\d{5}\b.*$",
 ]
 
 NON_PROCEDURAL_HEADINGS: tuple[str, ...] = (
@@ -41,6 +39,18 @@ _PROCEDURE_HEADER_LINE_RE = re.compile(
     r"(?im)^(?P<header>\s*(?:PROCEDURES?\s+PERFORMED|PROCEDURE\s+PERFORMED|PROCEDURES|PROCEDURE))\s*:\s*(?P<rest>.*)$"
 )
 _CPT_CODE_RE = re.compile(r"\b\d{5}\b")
+_CPT_LINE_RE = re.compile(r"(?im)^\s*(?:CPT:?)?\s*\d{5}\b.*$")
+
+_IP_CODE_MOD_DETAILS_HEADER_RE = re.compile(
+    r"(?im)^\s*IP\b[^\n]{0,60}CODE\s+MOD\s+DETAILS\s*:?\s*$"
+)
+_IP_BLOCK_END_RE = re.compile(
+    r"(?im)^\s*(?:ANESTHESIA|MONITORING|INSTRUMENT|ESTIMATED\s+BLOOD\s+LOSS|COMPLICATIONS|PROCEDURE\s+IN\s+DETAIL|DESCRIPTION\s+OF\s+PROCEDURE)\b"
+)
+_CPT_CONTEXT_PRESERVE_RE = re.compile(
+    r"\b(?:zephyr|spiration|endobronchial\s+valve|bronchial\s+valve|blvr)\b",
+    re.IGNORECASE,
+)
 
 
 def mask_offset_preserving(text: str, patterns: Iterable[str] = PATTERNS) -> str:
@@ -52,6 +62,9 @@ def mask_offset_preserving(text: str, patterns: Iterable[str] = PATTERNS) -> str
             chunk = masked[start:end]
             chunk_mask = re.sub(r"[^\n]", " ", chunk)
             masked = masked[:start] + chunk_mask + masked[end:]
+
+    masked = _mask_ip_code_mod_details_cpt_codes(masked)
+    masked = _mask_cpt_definition_lines(masked)
     return masked
 
 
@@ -72,6 +85,68 @@ def mask_extraction_noise(text: str) -> tuple[str, dict[str, object]]:
         "masked_procedure_header_cpt_lines": procedure_header_line_count,
     }
     return masked, meta
+
+
+def _mask_ip_code_mod_details_cpt_codes(text: str) -> str:
+    """Mask CPT digits inside 'IP ... CODE MOD DETAILS' blocks while preserving details.
+
+    These blocks are often selection-driven (not pure CPT menus). We mask only the
+    5-digit CPT codes to reduce "menu reading" while keeping clinically relevant
+    details (e.g., BLVR valve sizing, laterality, bilateral flags).
+    """
+    if not text:
+        return text
+
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    in_block = False
+
+    for line in lines:
+        if _IP_CODE_MOD_DETAILS_HEADER_RE.search(line):
+            in_block = True
+            out.append(line)
+            continue
+
+        if in_block and _IP_BLOCK_END_RE.search(line):
+            in_block = False
+            out.append(line)
+            continue
+
+        if not in_block:
+            out.append(line)
+            continue
+
+        out.append(_CPT_CODE_RE.sub(lambda m: " " * len(m.group(0)), line))
+
+    return "".join(out)
+
+
+def _mask_cpt_definition_lines(text: str) -> str:
+    """Mask CPT-definition lines, preserving high-signal BLVR valve context.
+
+    Some templates embed clinically meaningful BLVR valve details on lines that
+    start with a CPT code (e.g., "31647 Zephyr size 4.0 ..."). For these lines we
+    mask the code digits only and keep the remainder so extraction can still
+    recover valve sizing/manufacturer when granular data is missing.
+    """
+    if not text:
+        return text
+
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    for line in lines:
+        if not _CPT_LINE_RE.match(line):
+            out.append(line)
+            continue
+
+        if _CPT_CONTEXT_PRESERVE_RE.search(line):
+            out.append(_CPT_CODE_RE.sub(lambda m: " " * len(m.group(0)), line))
+            continue
+
+        # Default behavior: mask entire CPT-bearing line.
+        out.append(re.sub(r"[^\n]", " ", line))
+
+    return "".join(out)
 
 
 def _normalize_heading(value: str) -> str:

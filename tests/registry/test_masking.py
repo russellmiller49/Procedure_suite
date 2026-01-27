@@ -32,7 +32,7 @@ def test_mask_offset_preserving_masks_header_only() -> None:
     )
     masked = mask_offset_preserving(raw)
 
-    match = re.search(PATTERNS[1], raw)
+    match = re.search(PATTERNS[0], raw)
     assert match is not None
 
     masked_segment = masked[match.start() : match.end()]

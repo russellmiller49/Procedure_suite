@@ -1,0 +1,62 @@
+NOTE_ID: note_291	SOURCE_FILE: note_291.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 58 year old-year-old male who presents with respiratory failure.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31600 Incision of windpipe (perc trach)
+76536 Ultrasound of Neck
+ 
+59 Similar to 51 but for uncommonly combined procedures. Can be used if a diagnostic procedure is performed which provides information which leads to a therapeutic procedure (XE/XS/XP/XU)
+ 
+ANESTHESIA: 
+Etomidate and rocuronium
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION:supine 
+ 
+Initial Airway Inspection Findings:
+ 
+Neck Ultrasound was performed to evaluate for any abnormal vessel, mass, structures at the site of percutaneous tracheostomy.  There were no significant vessels/mass were noted overlying the tracheostomy site on examination from the laryngeal prominence to the sternal notch.   
+ 
+The bronchoscope was introduced into the ETT. The ETT is in appropriate position. 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Bronchial alveolar lavage was performed at Anterior-basal Segment of RLL (RB8).  Instilled 60 cc of NS, suction returned with 27 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The bronchoscope was retracted into the ETT tube and the ET tube retracted into the subglottic space under direct visualization.  The inferior border of the cricoid along with the proximal tracheal rings were visualized.  Next, the anterior neck was prepped and draped in the usual sterile fashion.  Lidocaine 1% 8ml ml was injected into the anterior neck.  A 1 cm incision was made vertically with a #10 blade down through the subcutaneous tissue, just inferior to the cricoid cartilage.  A syringe with 1% Lidocaine was then attached to the introducer needle and passed between the 2nd and 3rd tracheal rings and into the trachea under direct visualization.  This needle was removed and the 18 gauge introducer catheter over needle was then advanced into this position under direct visualization.   The inner needle was removed and the introducer catheter left in place.  Next, a J-wire was passed through the catheter, also visualized with the bronchoscope.  The site was then dilated using the 14Fr introducing dilator passed over the wire.  
+ 
+The 14 Fr dilator was then removed from the guide wire and an 8 Fr guiding catheter placed over the guide wire until the safety ridge on the guiding catheter was at skin level.  The Blue Rhino dilator was placed over the guiding catheter until the positioning mark was visualized via the bronchoscope.  The blue Rhino dilator was then removed leaving the guiding catheter and guide wire assembly in place, all under direct visualization bronchoscopically.
+ 
+Finally a Shiley pXLT cuffed tracheostomy tube with appropriate dilator was introduced over the guiding catheter into the trachea under direct visualization.  The dilator, guiding catheter, and J-wire were then removed and the tracheostomy tube left in place.  This was confirmed to be in good position bronchoscopically.  The Endotracheal tube was then removed and the ventilator connected to the tracheostomy tube.   Surgicel was placed preemptively around the tracheostomy site to reduce bleeding.  A Lyofoam drain sponge was placed under the tracheostomy tube prior to suturing into place.  The patient tolerated the procedure well.  There were no complications. The staff physician was present throughout the entire procedure.  
+ 
+The ETT was removed under direct visualization and the upper trachea, vocal cords and epiglottis were identified. These were normal. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in their room.
+ 
+SPECIMEN(S): 
+BAL RLL
+ 
+IMPRESSION/PLAN: [REDACTED] is a 58 year old-year-old male who presents for bronchoscopy for respiratory failure.
+[ ] f/u BAL results
+[ ] tracheostomy tube suture removal in 5-7 days
+[ ] tracheostomy tube in 7-14 days depending on recovery
+ 
+

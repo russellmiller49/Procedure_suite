@@ -1,0 +1,80 @@
+NOTE_ID: note_298	SOURCE_FILE: note_298.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 68 year old-year-old male who presents with BPF.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J93.82 Other airleaks
+ 
+POSTOPERATIVE DIAGNOSIS:  J93.82 Other airleaks
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+31634 Balloon occlusion or placement of occlusive substance 
+31647 Bronchial valve insert initial lobe 
+31648 Bronchial valve removal initial  lobe
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and 25 Added to the E&M Encounter bill which is separate from a procedure if it is done the same day
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a numerous balloon occlusions in all the airways in the RLL and application of numerous occlusive substances which extended procedural time by an additional 60min. This resulted in >70% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31634 Balloon occlusion or placement of occlusive substance . 
+ 
+
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+At the star of the procedure there was no air leak from either of the two atriums (anterior and posterior chest tubes)
+ 
+The endotracheal tube is in good position. The visualized portion of the trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Airway exam notable for intact suture lines at the b/l MSB anastomoses. Large burden of purulent secretions in the RLL. After clearing of the secretions, the EBV's at RB9 and RB10 were noted to be ill-seated with incomplete seal around their target airways.
+ 
+Successful therapeutic aspiration was performed to clean out the Bronchus Intermedius , RML Carina (RC2), and RLL from mucus and mucus plug. 
+ 
+After removal of mucus plugs from RLL, the anterior chest tube started to have grade 4 air leak again. None from the posterior chest tube. 
+ 
+Bronchial alveolar lavage was performed at Anterior-basal Segment of RLL (RB8).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The two EBV's (Spiration 6 in RB9 and Spiration 6 in RB10) were removed using alligator forceps and placed into formalin. 
+ 
+Next, a 4Fr Fogarty balloon was used to serially occlude every segmental airway in the RLL. There was no change in air leak with occlusion of any of these airways except for RB10 where on three separate attempts there was complete cessation of air leak with occlusion and immediate return with deflation of the balloon. This correlated to suspicion from the CT Chest that had been reviewed from yesterday. Of note, air leak did not change at all with occlusion of RB9 which previously had EBV. 
+ 
+Once target airway had been identified, numerous strips of surgicel that had been cut into pieces (~5mm x ~50mm) were pulled into the working channel of the bronchsocope with cupped forceps and serially delivered into the target airway to create a surgicel plug. 
+Next, ~4cc of ABPP was administered into the target airway, on top of the surgicel plug. Lastly, ~2cc of tisseel glue was administered into the airway. 
+ 
+Finally, after appropriate measurements were taken, a size 7 Spiration (Olympus) endobronchial valve was placed into RB10 with good positioning and perfect seal. 
+ 
+Air leak resolved entirely after these interventions. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+- RLL BAL
+- Foreign body (prior EBV's)
+ 
+IMPRESSION/PLAN: [REDACTED] is a 68 year old-year-old male who presents for bronchoscopy for BPF. Now s/p plug (surgicel, ABPP, tisseel glue) and EBV into the culprit airway (RB10) with resolution of PAL. 
+ 
+- both chest tubes to waterseal
+- CXR now and daily CXR's thereafter while chest tubes are in place 
+- bedrest today, OOBTC tomorrow
+- f/u BAL studies
+- consider ID consult for PNA/empyema
+- will eventually need bronch for EBV removal in 6-8 weeks as long as PAL remains resolved 
+

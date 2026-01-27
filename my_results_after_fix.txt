@@ -1,0 +1,453 @@
+================================================================================
+REGISTRY PIPELINE BATCH SMOKE TEST
+================================================================================
+Date: 2026-01-26T14:44:50.651237
+Notes tested: 30
+Notes directory: /home/rjm/projects/proc_suite/data/knowledge/patient_note_texts
+Self-correction: True
+Real LLM enabled: False
+================================================================================
+
+================================================================================NOTE: 6483927================================================================================Performed flags (extract_record):
+  - pleural_procedures.ipc.performed
+  - pleural_procedures.thoracentesis.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - pleural_procedures.ipc.performed
+  - pleural_procedures.thoracentesis.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.ipc
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP_SYN_4_var_3================================================================================Performed flags (extract_record):
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for peripheral_tbna
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_0_8_9690================================================================================Performed flags (extract_record): (none)
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift): (none)
+Extract warnings: (none)
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'pigtail catheter' (pleural drain). (Pattern: '(?i)\bpigtail\s+catheter\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 8801003================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: TK9472================================================================================Performed flags (extract_record):
+  - procedures_performed.brushings.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.brushings.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings: (none)
+Omission warnings:
+  - SILENT_FAILURE: Text indicates transbronchial (lung) biopsy but extraction missed it. (Pattern: '(?i)\b(?:transbronchial\s+(?:lung\s+)?biops(?:y|ies)|transbronchial\s+forceps\s+biops(?:y|ies)|tbbx|tblb)\b')
+Audit high-conf omissions:
+  - 31627 (prob=0.83, bucket=GRAY_ZONE)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31627: judge returned null
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP_SYN_2_style_3================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 6184729_style_7================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.blvr.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.blvr.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for blvr
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 31654 (prob=0.50, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31654: keyword guard failed (no keyword hit)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 8734481================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for airway_stent, thermal_ablation
+Omission warnings:
+  - SILENT_FAILURE: Text explicitly mentions mechanical debulking. (Pattern: '(?i)\bmechanical\s+debulk(?:ing)?\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: MRN_SYN_3_style_1================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: MR_REDACTED================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 10L
+  - PATHOLOGY_EXTRACTED: histology=Small cell carcinoma
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction diagnostics:
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 10L
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP2025029================================================================================Performed flags (extract_record):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for peripheral_ablation
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 31627 (prob=0.90, bucket=GRAY_ZONE)
+  - 31641 (prob=0.77, bucket=GRAY_ZONE)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31627: judge returned null
+  - SELF_CORRECT_SKIPPED: 31641: judge returned null
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP32650-006================================================================================Performed flags (extract_record):
+  - pleural_procedures.chest_tube.performed
+  - pleural_procedures.medical_thoracoscopy.performed
+  - pleural_procedures.pleurodesis.performed
+  - pleural_procedures.thoracentesis.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - pleural_procedures.chest_tube.performed
+  - pleural_procedures.medical_thoracoscopy.performed
+  - pleural_procedures.pleurodesis.performed
+  - pleural_procedures.thoracentesis.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.chest_tube, pleural_procedures.thoracentesis
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 32650 (prob=0.71, bucket=GRAY_ZONE)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 32650: keyword guard failed (no keywords configured)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_BRONCH_2_5================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 6148150================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for navigational_bronchoscopy
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: VINCEYOUND65================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.therapeutic_aspiration.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.therapeutic_aspiration.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, diagnostic_bronchoscopy, thermal_ablation
+  - 31636: NER evidence found, but ML probability is very low; verify context (history/negation/aborted).
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_2_2_8635================================================================================Performed flags (extract_record):
+  - pleural_procedures.chest_tube.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - pleural_procedures.chest_tube.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.chest_tube
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_PT_1_1================================================================================Performed flags (extract_record):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings: (none)
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+  - SILENT_FAILURE: Text indicates peripheral/lung TBNA but extraction missed it. (Pattern: '(?is)\b(?:ion|robotic|navigation|navigational|\benb\b|monarch|galaxy|superdimension|peripheral|target\s+lesion|lesion|nodule|(?:lung|pulmonary)\s+(?:lesion|nodule|mass))\b.{0,250}\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: PQ5847================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for radial_ebus
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+Audit high-conf omissions:
+  - 31629 (prob=0.75, bucket=HIGH_CONF)
+  - 31628 (prob=0.70, bucket=HIGH_CONF)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31629: keyword guard failed (no keyword hit)
+  - SELF_CORRECT_SKIPPED: 31628: keyword guard failed (no keyword hit)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 7784979================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings, peripheral_tbna
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: MRN_SYN_5_style_6================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: MRN_SYN_4_style_4================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for navigational_bronchoscopy
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_PT_3_8================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_PT_3_7================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 9219076================================================================================Performed flags (extract_record):
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for brushings, radial_ebus
+  - PATHOLOGY_EXTRACTED: histology=Squamous cell carcinoma
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_015_3_7================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_dilation.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_dilation.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: IP_SYN_0_style_9================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+Extract warnings: (none)
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_015_2_8================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - 31636: NER evidence found, but ML probability is very low; verify context (history/negation/aborted).
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 8472025================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings
+  - PATHOLOGY_EXTRACTED: histology=NSCLC, NOS
+Omission warnings:
+  - SILENT_FAILURE: Text indicates transbronchial (lung) biopsy but extraction missed it. (Pattern: '(?i)\b(?:transbronchial\s+(?:lung\s+)?biops(?:y|ies)|transbronchial\s+forceps\s+biops(?:y|ies)|tbbx|tblb)\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: SYN_3_6_4438================================================================================Performed flags (extract_record):
+  - pleural_procedures.chest_tube.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - pleural_procedures.chest_tube.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.chest_tube
+Omission warnings:
+  - SILENT_FAILURE: Text indicates combined tPA/DNase intrapleural therapy. (Pattern: '(?is)\b(?:tpa|alteplase)\b[^.\n]{0,120}\b(?:dnase|dornase)\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: 8858293================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.brushings.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, brushings, peripheral_tbna
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================
+SUMMARY
+================================================================================
+Total notes tested: 30
+Successful: 30
+Failed: 0
+Success rate: 100.0%
+================================================================================

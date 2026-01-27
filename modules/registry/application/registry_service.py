@@ -80,12 +80,20 @@ def focus_note_for_extraction(note_text: str) -> tuple[str, dict[str, Any]]:
 
 
 _HEADER_START_RE = re.compile(
-    r"(?:\bPROCEDURE\b|\bPROCEDURES\b|\bOPERATION\b|\bOPERATIONS\b)\s*:?",
-    re.IGNORECASE,
+    r"^\s*(?:PROCEDURES?|OPERATIONS?)\b\s*:?",
+    re.IGNORECASE | re.MULTILINE,
 )
 _HEADER_END_RE = re.compile(
-    r"(?:\bANESTHESIA\b|\bINDICATION\b|\bDESCRIPTION\b|\bFINDINGS\b)",
-    re.IGNORECASE,
+    r"^\s*(?:"
+    r"ANESTHESIA"
+    r"|INDICATION"
+    r"|DESCRIPTION"
+    r"|FINDINGS"
+    r"|PROCEDURE\s+IN\s+DETAIL"
+    r"|DESCRIPTION\s+OF\s+PROCEDURE"
+    r"|PROCEDURE\s+DESCRIPTION"
+    r")\b",
+    re.IGNORECASE | re.MULTILINE,
 )
 _CPT_RE = re.compile(r"\b([37]\d{4})\b")
 
@@ -890,6 +898,7 @@ class RegistryService:
                         CRYOPROBE_PATTERN,
                         CRYOTHERAPY_PATTERNS,
                         CRYOBIOPSY_PATTERN,
+                        DIAGNOSTIC_BRONCHOSCOPY_PATTERNS,
                         IPC_PATTERNS,
                         NAVIGATIONAL_BRONCHOSCOPY_PATTERNS,
                         PERIPHERAL_ABLATION_PATTERNS,
@@ -902,12 +911,25 @@ class RegistryService:
                         run_deterministic_extractors,
                     )
 
-                    seed = run_deterministic_extractors(masked_note_text)
+                    # Use an offset-preserving mask that removes CPT/menu noise but keeps
+                    # non-procedural headings (e.g., INDICATION) so deterministic extractors
+                    # can still populate clinical_context while the LLM/NER path stays masked.
+                    from modules.registry.processing.masking import mask_offset_preserving
+
+                    seed_text = mask_offset_preserving(raw_note_text or "")
+                    seed = run_deterministic_extractors(seed_text)
                     seed_procs = seed.get("procedures_performed") if isinstance(seed, dict) else None
                     seed_pleural = seed.get("pleural_procedures") if isinstance(seed, dict) else None
                     seed_established_trach = (
                         seed.get("established_tracheostomy_route") is True if isinstance(seed, dict) else False
                     )
+                    seed_has_context = False
+                    if isinstance(seed, dict):
+                        for key in ("primary_indication", "sedation_type", "patient_age", "gender", "airway_type"):
+                            val = seed.get(key)
+                            if val not in (None, "", [], {}):
+                                seed_has_context = True
+                                break
                     fiducial_candidate = "fiducial" in (masked_note_text or "").lower()
 
                     if (
@@ -915,6 +937,7 @@ class RegistryService:
                         or (isinstance(seed_pleural, dict) and seed_pleural)
                         or seed_established_trach
                         or fiducial_candidate
+                        or seed_has_context
                     ):
                         record_data = record.model_dump()
                         record_procs = record_data.get("procedures_performed") or {}
@@ -967,6 +990,298 @@ class RegistryService:
                                         )
                                         return
                                 offset += len(raw_line)
+
+                        def _add_first_literal(field: str, literal: str) -> None:
+                            if not literal:
+                                return
+                            match = re.search(re.escape(literal), raw_note_text or "", re.IGNORECASE)
+                            if not match:
+                                tokens = re.split(r"\s+", literal.strip())
+                                if len(tokens) >= 2:
+                                    pattern = r"\s+".join(re.escape(tok) for tok in tokens if tok)
+                                    if pattern:
+                                        match = re.search(pattern, raw_note_text or "", re.IGNORECASE)
+                            if not match:
+                                return
+                            evidence.setdefault(field, []).append(
+                                Span(text=match.group(0).strip(), start=match.start(), end=match.end())
+                            )
+
+                        def _apply_seed_context(seed_data: dict[str, Any]) -> None:
+                            """Merge deterministic clinical/sedation/demographics into the v3 schema blocks.
+
+                            Important: Only fill missing values, and avoid applying "defaults" that are not
+                            explicitly evidenced in the note (e.g., ASA default=3 or GA→ETT default).
+                            """
+
+                            nonlocal other_modified
+
+                            if not isinstance(seed_data, dict) or not seed_data:
+                                return
+
+                            # Patient demographics
+                            age = seed_data.get("patient_age")
+                            gender = seed_data.get("gender")
+                            if age is not None or gender:
+                                demo = record_data.get("patient_demographics") or {}
+                                if not isinstance(demo, dict):
+                                    demo = {}
+                                demo_changed = False
+                                if age is not None and demo.get("age_years") is None:
+                                    demo["age_years"] = age
+                                    demo_changed = True
+                                if gender and not demo.get("gender"):
+                                    # Normalize common shorthand
+                                    g = str(gender).strip()
+                                    if g.lower() in {"m"}:
+                                        g = "Male"
+                                    elif g.lower() in {"f"}:
+                                        g = "Female"
+                                    demo["gender"] = g
+                                    demo_changed = True
+                                if demo_changed:
+                                    record_data["patient_demographics"] = demo
+                                    other_modified = True
+                                    if age is not None:
+                                        _add_first_literal("patient_demographics.age_years", str(age))
+                                    if gender:
+                                        _add_first_literal("patient_demographics.gender", str(gender))
+
+                            # Clinical context
+                            clinical = record_data.get("clinical_context") or {}
+                            if not isinstance(clinical, dict):
+                                clinical = {}
+                            clinical_changed = False
+
+                            primary_indication = seed_data.get("primary_indication")
+                            if primary_indication and not clinical.get("primary_indication"):
+                                clinical["primary_indication"] = primary_indication
+                                clinical_changed = True
+                                _add_first_literal(
+                                    "clinical_context.primary_indication",
+                                    str(primary_indication),
+                                )
+
+                            # Indication category heuristic (only when primary_indication present)
+                            if clinical.get("primary_indication") and not clinical.get("indication_category"):
+                                ind_lower = str(clinical.get("primary_indication") or "").lower()
+                                category = None
+                                if re.search(r"\b(?:stenosis|stricture)\b", ind_lower):
+                                    category = "Stricture/Stenosis"
+                                elif re.search(r"\bmalacia\b", ind_lower):
+                                    category = "Tracheobronchomalacia"
+                                elif re.search(r"\bhemoptysis\b", ind_lower):
+                                    category = "Hemoptysis"
+                                elif re.search(r"\b(?:lung|pulmonary)\s+nodule\b|\bnodule\b", ind_lower):
+                                    category = "Lung Nodule Evaluation"
+                                if category:
+                                    clinical["indication_category"] = category
+                                    clinical_changed = True
+
+                            # ASA class: avoid applying default=3 when ASA not explicitly documented.
+                            asa_val = seed_data.get("asa_class")
+                            if asa_val is not None and clinical.get("asa_class") is None:
+                                if re.search(r"(?i)\bASA\b", masked_note_text or ""):
+                                    clinical["asa_class"] = asa_val
+                                    clinical_changed = True
+                                    _add_first_span_skip_cpt_headers(
+                                        "clinical_context.asa_class",
+                                        [r"\bASA(?:\s+Classification)?[\s:]+[IViv123456]+(?:-E)?\b"],
+                                    )
+
+                            if clinical_changed:
+                                record_data["clinical_context"] = clinical
+                                other_modified = True
+
+                            # Sedation: map seed sedation_type→sedation.type (schema v3)
+                            sed_type = seed_data.get("sedation_type")
+                            if isinstance(sed_type, str) and sed_type.strip():
+                                sedation = record_data.get("sedation") or {}
+                                if not isinstance(sedation, dict):
+                                    sedation = {}
+                                if not sedation.get("type"):
+                                    sedation["type"] = sed_type.strip()
+                                    record_data["sedation"] = sedation
+                                    other_modified = True
+                                    sed_patterns: list[str] = []
+                                    if sed_type.strip().lower() == "general":
+                                        sed_patterns = [r"\bgeneral\s+anesthesia\b", r"\banesthesia\b"]
+                                    elif sed_type.strip().lower() == "mac":
+                                        sed_patterns = [
+                                            r"\bmonitored\s+anesthesia\s+care\b",
+                                            r"\bmac\b",
+                                        ]
+                                    elif sed_type.strip().lower() == "moderate":
+                                        sed_patterns = [r"\bmoderate\s+sedation\b", r"\bconscious\s+sedation\b"]
+                                    elif sed_type.strip().lower() == "local only":
+                                        sed_patterns = [r"\blocal\s+anesthesia\b", r"\blidocaine\b"]
+                                    if sed_patterns:
+                                        _add_first_span_skip_cpt_headers("sedation.type", sed_patterns)
+
+                                    # Provider inference only when explicitly stated
+                                    if not sedation.get("anesthesia_provider"):
+                                        if re.search(r"(?i)\bCRNA\b", masked_note_text or ""):
+                                            sedation["anesthesia_provider"] = "CRNA"
+                                        elif re.search(r"(?i)\banesthesiolog(?:ist|y)\b", masked_note_text or ""):
+                                            sedation["anesthesia_provider"] = "Anesthesiologist"
+                                        if sedation.get("anesthesia_provider"):
+                                            record_data["sedation"] = sedation
+                                            _add_first_span_skip_cpt_headers(
+                                                "sedation.anesthesia_provider",
+                                                [
+                                                    r"\bCRNA\b",
+                                                    r"\banesthesiolog(?:ist|y)\b",
+                                                ],
+                                            )
+
+                            # Procedure setting: apply airway_type only if explicitly evidenced.
+                            airway_type = seed_data.get("airway_type")
+                            if isinstance(airway_type, str) and airway_type.strip():
+                                airway_type_norm = airway_type.strip()
+                                patterns_by_type: dict[str, list[str]] = {
+                                    "ETT": [r"\bett\b|endotracheal\s+tube|intubat\w*"],
+                                    "LMA": [r"\blma\b|laryngeal\s+mask"],
+                                    "iGel": [r"\bi-?gel\b"],
+                                    "Tracheostomy": [
+                                        r"\bvia\s+(?:an?\s+)?tracheostom\w*\b",
+                                        r"\bthrough\s+(?:an?\s+)?trach(?:eostom\w*)?\b",
+                                        r"\btrach(?:eostom\w*)?\s+tube\b",
+                                    ],
+                                }
+                                airway_patterns = patterns_by_type.get(airway_type_norm)
+                                if airway_patterns and any(
+                                    re.search(pat, raw_note_text or "", re.IGNORECASE) for pat in airway_patterns
+                                ):
+                                    setting = record_data.get("procedure_setting") or {}
+                                    if not isinstance(setting, dict):
+                                        setting = {}
+                                    if not setting.get("airway_type"):
+                                        setting["airway_type"] = airway_type_norm
+                                        record_data["procedure_setting"] = setting
+                                        other_modified = True
+                                        _add_first_span_skip_cpt_headers(
+                                            "procedure_setting.airway_type",
+                                            airway_patterns,
+                                        )
+
+                        def _populate_diagnostic_bronchoscopy_findings() -> None:
+                            """Fill diagnostic bronchoscopy findings/abnormalities when missing."""
+                            nonlocal proc_modified
+
+                            record_procs_local = record_data.get("procedures_performed") or {}
+                            if not isinstance(record_procs_local, dict):
+                                return
+                            proc = record_procs_local.get("diagnostic_bronchoscopy") or {}
+                            if not isinstance(proc, dict):
+                                return
+                            if proc.get("performed") is not True:
+                                return
+
+                            abnormalities = proc.get("airway_abnormalities")
+                            if abnormalities is None:
+                                abnormalities = []
+                            if not isinstance(abnormalities, list):
+                                abnormalities = []
+
+                            detail_lower = (masked_note_text or "").lower()
+                            full_text = raw_note_text or ""
+                            full_lower = full_text.lower()
+                            found: list[str] = []
+
+                            if "secretions" in detail_lower and "Secretions" not in abnormalities:
+                                abnormalities.append("Secretions")
+                                found.append("secretions")
+                            if re.search(r"\b(tracheomalacia)\b", detail_lower):
+                                if "Tracheomalacia" not in abnormalities:
+                                    abnormalities.append("Tracheomalacia")
+                                    found.append("tracheomalacia")
+                            elif re.search(r"\b(bronchomalacia)\b", detail_lower):
+                                if "Bronchomalacia" not in abnormalities:
+                                    abnormalities.append("Bronchomalacia")
+                                    found.append("bronchomalacia")
+                            elif "malacia" in detail_lower and "Tracheomalacia" not in abnormalities:
+                                abnormalities.append("Tracheomalacia")
+                                found.append("malacia")
+
+                            # "Stenosis" often appears in INDICATION, which is masked for the LLM/NER path.
+                            # Use the raw note as a backstop (avoids missing stenosis for cases explicitly
+                            # scoped to stenosis).
+                            if "stenosis" in full_lower and "Stenosis" not in abnormalities:
+                                if not re.search(r"(?i)\bno\s+stenosis\b", full_text):
+                                    abnormalities.append("Stenosis")
+                                    found.append("stenosis")
+
+                            # Vocal cord abnormality should only be set when explicitly abnormal near the mention
+                            # (avoid false positives from unrelated "abnormal" elsewhere in the note).
+                            if "Vocal cord abnormality" not in abnormalities:
+                                m = re.search(r"(?i)\bvocal\s+cords?\b[^.\n]{0,160}", full_text)
+                                if m:
+                                    sentence = (m.group(0) or "").lower()
+                                    if "normal" not in sentence and re.search(
+                                        r"\b(?:abnormal|paraly|paralysis|immobil|immobile|lesion|dysfunction)\w*\b",
+                                        sentence,
+                                    ):
+                                        abnormalities.append("Vocal cord abnormality")
+                                        found.append("vocal_cord_abnormality")
+
+                            findings_changed = False
+                            if abnormalities and proc.get("airway_abnormalities") in (None, [], {}):
+                                proc["airway_abnormalities"] = abnormalities
+                                findings_changed = True
+                                # Evidence anchors for the abnormalities
+                                if "secretions" in found:
+                                    _add_first_span_skip_cpt_headers(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        [r"\bsecretions?\b[^.\n]{0,80}\b(?:suction|clear)\w*\b", r"\bsecretions?\b"],
+                                    )
+                                if any(tok in found for tok in ("tracheomalacia", "bronchomalacia", "malacia")):
+                                    _add_first_span_skip_cpt_headers(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        [r"\b(?:tracheo|broncho)?malacia\b"],
+                                    )
+                                if "stenosis" in found:
+                                    _add_first_literal(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        "tracheal stenosis",
+                                    )
+                                    _add_first_literal(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        "stenosis",
+                                    )
+                                if "vocal_cord_abnormality" in found:
+                                    _add_first_span_skip_cpt_headers(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        [
+                                            r"\bvocal\s+cords?\b[^.\n]{0,120}\b(?:abnormal|paraly|paralysis|immobil|immobile|lesion|dysfunction)\w*\b"
+                                        ],
+                                    )
+
+                            if not proc.get("inspection_findings"):
+                                parts: list[str] = []
+                                patterns = [
+                                    r"\bvocal\s+cords?\b[^.\n]{0,160}",
+                                    r"\bprevious\s+tracheostomy\s+site\b[^.\n]{0,160}",
+                                    r"\bmalacia\b[^.\n]{0,160}",
+                                    r"\bsecretions?\b[^.\n]{0,160}",
+                                ]
+                                for pat in patterns:
+                                    match = re.search(pat, masked_note_text or "", re.IGNORECASE)
+                                    if match:
+                                        snippet = match.group(0).strip()
+                                        if snippet and snippet not in parts:
+                                            parts.append(snippet)
+                                if parts:
+                                    proc["inspection_findings"] = " ".join(parts)[:700]
+                                    findings_changed = True
+                                    _add_first_span_skip_cpt_headers(
+                                        "procedures_performed.diagnostic_bronchoscopy.inspection_findings",
+                                        [r"\binitial\s+airway\s+inspection\s+findings\b", r"\bthe\s+airway\s+was\s+inspected\b"],
+                                    )
+
+                            if findings_changed:
+                                record_procs_local["diagnostic_bronchoscopy"] = proc
+                                record_data["procedures_performed"] = record_procs_local
+                                proc_modified = True
 
                         if isinstance(seed_procs, dict):
                             for proc_name, proc_data in seed_procs.items():
@@ -1076,6 +1391,11 @@ class RegistryService:
                                         ):
                                             cryo_patterns.append(CRYOPROBE_PATTERN)
                                         _add_first_span_skip_cpt_headers(field_key, cryo_patterns)
+                                    elif proc_name == "diagnostic_bronchoscopy":
+                                        _add_first_span_skip_cpt_headers(
+                                            field_key,
+                                            list(DIAGNOSTIC_BRONCHOSCOPY_PATTERNS),
+                                        )
                                     elif proc_name == "chest_ultrasound":
                                         _add_first_span(
                                             field_key,
@@ -1122,6 +1442,22 @@ class RegistryService:
                             record_data["established_tracheostomy_route"] = True
                             other_modified = True
 
+                        # Fill common missing clinical context/sedation/demographics from deterministic extractors.
+                        _apply_seed_context(seed)
+
+                        # Backstop diagnostic bronchoscopy findings/abnormalities when present.
+                        _populate_diagnostic_bronchoscopy_findings()
+
+                        # Prefer real code evidence when explicit CPT codes appear in the procedure header.
+                        header_codes = _scan_header_for_codes(raw_note_text)
+                        if header_codes:
+                            for code in sorted(header_codes):
+                                match = re.search(rf"\b{re.escape(code)}\b", raw_note_text or "")
+                                if match:
+                                    evidence.setdefault("code_evidence", []).append(
+                                        Span(text=match.group(0), start=match.start(), end=match.end())
+                                    )
+
                         if fiducial_candidate:
                             from modules.registry.processing.navigation_fiducials import (
                                 apply_navigation_fiducials,
@@ -1140,7 +1476,7 @@ class RegistryService:
                             record_data["procedures_performed"] = record_procs
                         if pleural_modified:
                             record_data["pleural_procedures"] = record_pleural
-                        if proc_modified or pleural_modified:
+                        if evidence and (proc_modified or pleural_modified or other_modified):
                             record_data["evidence"] = evidence
 
                         if proc_modified or pleural_modified or other_modified:
@@ -1577,7 +1913,11 @@ class RegistryService:
                 for pred in report.high_conf_omissions:
                     if pred.bucket in {"HEADER_EXPLICIT", "STRUCTURAL_FAILURE"}:
                         return True
-                    passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=evidence)
+                    try:
+                        ml_prob = float(pred.prob)
+                    except Exception:
+                        ml_prob = None
+                    passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=evidence, ml_prob=ml_prob)
                     if passes or reason == "no keywords configured":
                         return True
                 return False
@@ -1636,7 +1976,13 @@ class RegistryService:
                     if bypass_guard:
                         passes, reason = True, "bucket bypass"
                     else:
-                        passes, reason = keyword_guard_check(cpt=pred.cpt, evidence_text=guard_evidence)
+                        try:
+                            ml_prob = float(pred.prob)
+                        except Exception:
+                            ml_prob = None
+                        passes, reason = keyword_guard_check(
+                            cpt=pred.cpt, evidence_text=guard_evidence, ml_prob=ml_prob
+                        )
                     if not passes:
                         self_correct_warnings.append(
                             f"SELF_CORRECT_SKIPPED: {pred.cpt}: keyword guard failed ({reason})"

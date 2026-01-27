@@ -1,0 +1,68 @@
+NOTE_ID:  note_272 SOURCE_FILE: note_272.txt 
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+ 
+DATE OF PROCEDURE: [REDACTED]
+ 
+ 
+INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with hemoptysis and respiratory failure.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+ 
+ATTENDING:  
+[REDACTED]
+ 
+ANESTHESIA: 
+Continued IV infusions with 2 mg dilaudid bolus
+ 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+ images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The tracheostomy tube is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Larynx: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Vocal Cords: Not assessed due to bronchoscopy introduction through tracheostomy tube.
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Bloody secretions and blood clot noted at right-sided airways, particularly RML and RB6 subsegment. Otherwise, normal anatomic branching to segmental level.  No evidence of mass, lesions, or other endobronchial pathology.
+Left Lung Proximal Airways: Stent well-seated at LMSB with distal end at LLL truncus basalis. Moderate bloody as well as clear secretions. LUL and LB6 jailed off by stent, otherwise normal anatomic branching to segmental level.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear with some blood.  
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), and RML Carina (RC2) from mucus, blood, and blood clots. 
+ 
+Blood secretions in the RML
+Thin, white-yellow mucus in the LLL antero-medial, lateral and posterior segments
+Defect seen in stent at 2 o'clock position with bubbling from it
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was in stable condition. 
+ 
+SPECIMEN(S): 
+--None
+ 
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy for evaluation of airways and reassessment of stent position and hemoptysis. Tolerated the procedure well and there were no immediate complications.
+ 
+--Plan for repeat bronchoscopy in OR later this week for endobronchial blocker placement (plan for Amplatzer vascular plug)
+--Continue stent hydration
+--Continued care per primary team
+ 

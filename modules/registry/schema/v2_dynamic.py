@@ -371,6 +371,53 @@ def _build_registry_model() -> type[BaseModel]:
 
         @model_validator(mode="before")
         @classmethod
+        def canonicalize_literal_values(cls, values: Any):
+            """Normalize common literal mismatches before field validation.
+
+            This is a choke point to prevent Pydantic Literal crashes when upstream
+            extractors or self-correction patches use near-miss values.
+            """
+            if not isinstance(values, dict):
+                return values
+
+            procedures_raw = values.get("procedures_performed")
+            if procedures_raw is None:
+                return values
+
+            if isinstance(procedures_raw, BaseModel):
+                procedures: dict[str, Any] = procedures_raw.model_dump()
+            elif isinstance(procedures_raw, dict):
+                procedures = dict(procedures_raw)
+            else:
+                return values
+
+            aspiration_raw = procedures.get("therapeutic_aspiration")
+            if isinstance(aspiration_raw, BaseModel):
+                aspiration: dict[str, Any] = aspiration_raw.model_dump()
+            elif isinstance(aspiration_raw, dict):
+                aspiration = dict(aspiration_raw)
+            else:
+                aspiration = {}
+
+            material = aspiration.get("material")
+            if isinstance(material, str):
+                material_norm = material.strip()
+                material_key = material_norm.lower()
+                if material_key in {"blood clot", "bloodclot", "blood_clot"}:
+                    aspiration["material"] = "Blood/clot"
+                elif material_key in {"blood/clot", "blood / clot"}:
+                    aspiration["material"] = "Blood/clot"
+                elif material_key in {"secretions/mucus", "mucus/secretions"}:
+                    aspiration["material"] = "Mucus plug"
+
+            if aspiration:
+                procedures["therapeutic_aspiration"] = aspiration
+                values["procedures_performed"] = procedures
+
+            return values
+
+        @model_validator(mode="before")
+        @classmethod
         def migrate_providers_team(cls, values: Any):
             """Populate providers_team from legacy providers (backward compatible)."""
             if not isinstance(values, dict):

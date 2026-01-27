@@ -1,0 +1,65 @@
+NOTE_ID: note_328	SOURCE_FILE: note_328.txt
+INDICATION FOR OPERATION: [REDACTED] is a 60 year old-year-old male who presents with bronchial stent evaluation.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+ 
+General Anesthesia
+
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+LMS stent (10x30 bonastent) was in place with mild granulation tissue. 
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+ 
+Bronchial alveolar lavage was performed at Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5).  Instilled 40 cc of NS, suction returned with 10 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+Endobronchial obstruction at distal end of stent in the Left Mainstem was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+APC	Straight fire 	Pulse effect 2, 20w	4 sec pulses	Ablated granulation tissue at the distal end of LMS, right by the orifice to the LLL
+ 
+Prior to treatment, affected airway was note to be 90% patent.  After treatment, the airway was 100% patent. 
+ 
+The existing bonastent (foreign body) was removed without issue.  
+ 
+Inspection was done after irrigation of the LMS with ice saline (20cc).  Bronchial washing was performed at Left Mainstem.  Instilled 20 cc of NS, suction returned with 10 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+ 
+Endobronchial biopsy was done at proximal LMS where the proximal stent ended, tissue was sent for pathology. 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Washing, BAL 
+EBBX 
+ 
+IMPRESSION/PLAN:[REDACTED] is a 60 year old-year-old male who presents for bronchoscopy for stent evaluation.  
+- providing a stent free trial 
+- f/u in 4-6 weeks for evaluation (bronchoscopy) 
+- if restenosis occurs will put in 10x30 Bonastent

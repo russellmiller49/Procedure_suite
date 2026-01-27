@@ -1,0 +1,78 @@
+NOTE_ID: note_287	SOURCE_FILE: note_287.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 29 year old-year-old female who presents with respiratory failure.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31899NFJ TRACHEOSTOMY CHANGE AFTER ESTABLISHMENT OF FISTULA TRACT; WITHOUT AN E/M SERVICE OR OTHER ENDOSCOPY PROCEDURE
+31615 Visualization of windpipe (Tracheobronchoscopy through established tracheostomy incision)
+ 
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             2 mg
+Fentanyl          50 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   1205
+ 
+Physician/patient face-to-face anesthesia stop time:   1215
+ 
+Total moderate sedation time was 10 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by Matt Reed. 
+ 
+Lidocaine was applied via the tracheostomy tube.
+ 
+The airway was inspected and the anatomy was normal bilaterally. Secretions were noted and suctioned.
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and mucus plug. 
+ 
+The cuff was deflated and the tracheostomy tube was easily removed.  The stoma appeared widely patent with minimal granulation tissue visualized.  The new tracheostomy tube was then placed with obturator in place.  The obturator was removed, inner cannula was placed and the cuff inflated.
+ 
+Percutaneous tracheostomy was changed from:
+Shiley cuffed Trach ISO/ID size 7.5 mm
+ 
+To 
+Shiley cuffed Trach ISO/ID size 7.5 mm
+ 
+without issue.
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and mucus plug. 
+ 
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was in stable condition. 
+ 
+SPECIMEN(S): 
+None
+ 
+IMPRESSION/PLAN: [REDACTED] is a 29 year old-year-old female who presents for bronchoscopy for respiratory failure.
+ 
+-Follow up tracheostomy tube change in ~3 months
+ 
+

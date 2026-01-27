@@ -1,0 +1,63 @@
+NOTE_ID:  note_267 SOURCE_FILE: note_267.txt
+DATE OF PROCEDURE: 1/12/2026
+ 
+
+ 
+INDICATION FOR OPERATION:  [Redacted] is a 74 year old-year-old female who presents with tracheal stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31622 Dx bronchoscope/cell washing          
+ 
+ATTENDING:  
+[Redacted]
+ 
+ASSISTANT:   -
+ 
+Support Staff: 
+RN: [Redacted]
+RT: [Redacted]
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The airway was inspected. The vocal cords were normal appearing. 
+ 
+The subglottis and trachea were inspected and the previous tracheostomy site was noted. There was minimal extraneous tissue in the area.
+ 
+The remainder of the airway was inspected with normal appearing anatomy bilaterally with some malacia noted and normal appearing mucosa. 
+ 
+There were some secretions noted throughout the airway and these were suctioned and cleared.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+None
+ 
+IMPRESSION/PLAN: [Redacted] is a 74 year old-year-old female who presents for bronchoscopy for tracheal stenosis.
+ 
+-Plan for follow up bronchoscopy in 3-6 months to reassess the site of stenosis
+ 
+[Redacted]
+[Redacted]

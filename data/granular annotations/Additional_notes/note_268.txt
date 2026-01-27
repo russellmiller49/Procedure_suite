@@ -1,0 +1,118 @@
+NOTE_ID:  note_268 SOURCE_FILE: note_268.txt
+
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+ 
+DATE OF PROCEDURE: [REDACTED]
+ 
+CC Referred Physician:  Ingraham, Christopher Robert, MD
+[REDACTED]
+ 
+INDICATION FOR OPERATION:  [REDACTED] is a 64 year old female who presents with Pleural Effusion.  
+ 
+CONSENT : Obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to Chest Ultrasound and Thoracentesis were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate decision-maker agreed to proceed with procedure.  The patient or surrogate decision-maker read and signed the provided consent form or provided consent over the phone. If consent was provided over the phone, then the consent was witnessed by an assisting medical professional.
+ 
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart.
+ 
+PREOPERATIVE DIAGNOSIS:  Pleural Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32555 Aspirate pleura with imaging (thoracentesis)
+ 
+25 Added to the E&M Encounter bill which is separate from a procedure if it is done the same day and 50 Bilateral Procedures (Procedure done on both sides of the body)
+ 
+IP UCSD CODE MOD DETAILS: Unusual Procedure (50 MODIFIER):
+This patient required a bilateral procedure today when this procedure would typically be unilateral. Apply to:
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+ 
+ 
+Local Anesthesia (Lidocaine)
+ 
+ 
+ATTENDING:  [REDACTED]
+ASSISTANT:    [REDACTED]
+ 
+Support Staff: 
+RN: [REDACTED]
+RT: N/A
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE(S) IN DETAIL:
+A timeout was performed (confirming the patient's name, MRN, DOB, procedure type, and procedure location).
+ 
+PATIENT POSITION:  Sitting
+ 
+RIGHT CHEST ULTRASOUND PROCEDURE:
+FINDINGS:
+Hemithorax:  RIGHT
+Pleural Effusion: 
+Volume:  None
+Echogenicity:  N/A
+Loculations:  N/A
+Diaphragmatic Motion:  Normal
+Lung: 
+Lung sliding before procedure:  Present
+Lung sliding post procedure:  N/A
+Lung consolidation/atelectasis:  Absent
+Pleura:  Normal
+Image(s) saved and uploaded:  YES - saved to the imaging PACS system
+ 
+LEFT CHEST ULTRASOUND PROCEDURE:
+FINDINGS:
+Hemithorax:  LEFT
+Pleural Effusion: 
+Volume:  Moderate
+Echogenicity:  Anechoic
+Loculations:  None
+Diaphragmatic Motion:  Normal
+Lung: 
+Lung sliding before procedure:  Absent
+Lung sliding post procedure:  Present
+Lung consolidation/atelectasis:  Present
+Pleura:  Normal
+Image(s) saved and uploaded:  YES - saved to the imaging PACS system
+ 
+LEFT THORACENTESIS PROCEDURE:
+Anatomic landmarks and ultrasound-guidance were utilized to determine the appropriate insertion site.  Insertion site marked.  Thoracentesis Kit was used. 
+ 
+ANESTHESIA:   Lidocaine 1%: 8 mL      Other:  
+ 
+Entry Site: LEFT 5th Intercostal Space in the Mid-scapular line
+ 
+Procedure was performed using sterile technique throughout.  Insertion site prepped and draped in sterile fashion.  1% lidocaine was used to anesthesize the skin, subcutaneous tissue, superior aspect of the inferior rib periosteum and parietal pleura. A #10 scalpel blade was used to nick the skin at the insertion site.  A thoracentesis over-the-needle catheter was inserted using the Seldinger technique. The needle and over-the-needle catheter were introduced through the skin incision into the pleural space while applying negative aspiration pressure.  Entry into pleural space was confirmed by aspiration of amber-colored fluid.  While holding the insertion needle stable, the catheter was then threaded into the pleural space without difficulty.  The insertion needle was removed.  Pleural fluid was aspirated through the catheter via manual aspiration without difficulty - see fluid description and aspirated volume below.  The catheter was then removed while patient exhaled.  Pressure briefly held until minimal bleeding stopped and bandage applied over site.
+ 
+Fluid Description:  Serosanguinous
+Fluid Volume Removed: 510 ml 
+ 
+Drainage method:   Drainage Bag
+Pleural pressures:   Not measured.
+ 
+Reason pleural fluid aspiration was stopped:  Unable to manually aspirate any further fluid.
+ 
+SPECIMEN(S): 
+‌None
+‌Analyses - TProt, LDH, Glucose, and Cholesterol, Bili
+‌Cell Count
+‌Cultures - Gram Stain/Bacterial Culture, Blood culture bottle bedside innoculation, AFB, and Fungal
+‌Cytology  
+‌Other:  
+ 
+CXR ordered: yes
+ 
+ESTIMATED BLOOD LOSS:  Minimum
+COMPLICATIONS:  None.  There were no immediate complications.
+ 
+IMPRESSION/PLAN: [REDACTED] is a 64 year old-year-old female who presents for Chest Ultrasound and Thoracentesis.  The patient tolerated the procedure well.  
+ 
+DISPOSITION: Nursing Unit
+ 
+- f/u CXR
+- f/u studies
+ 
+ [REDACTED]
+Interventional Pulmonology 
+
+ 
+[REDACTED]

@@ -1,0 +1,123 @@
+NOTE_ID: note_338	SOURCE_FILE: note_338.txt
+INDICATION FOR OPERATION: [REDACTED] is a 62 year old-year-old male who presents with bronchial stenosis as complication of lung transplant.  
+ 
+CONSENT: Consent obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to the procedure were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate decision-maker agreed to proceed with procedure.  The patient or surrogate decision-maker read and signed the provided consent form or provided consent over the phone. If consent was provided over the phone, then the consent was witnessed by an assisting medical professional.  
+ 
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure (22 MODIFIER):
+This patient required cryospray therapy, which required considerably more procedural set-up, team support, time, and clinical expertise. This resulted in >50% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+PROCEDURE IN DETAIL:
+A timeout was performed (confirming the patient's name, procedure type, and procedure location).  Sedation initiated.  LMA placed.
+ 
+The Flexible Therapeutic Bronchoscope was advanced for airway examination.  Endobronchial topical lidocaine applied to the vocal cords, main carina, right carina 1, and left carina 2.
+ 
+Initial Airway Examination Findings:
+Pharynx: Normal.
+Larynx: Normal.
+Vocal Chords: Normal without mass/lesions.  Appropriate adduction and abduction of vocal cords.
+Trachea: Normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: RMSB anastomosis is intact without significant stenosis.  Normal anatomic branching to the first subsegmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways:  Metallic covered stent in mid/distal LMSB in good position.  Minimal granulation tissue at the proximal and distal aspects of the stent.  Mild yellow mucus adhered to the stent wall, which was suctioned to clear.  LUL and LLL are otherwise normal anatomic branching to the first subsegmental level.  No other evidence of mass, lesions, bleeding or other endobronchial pathology.  When the stent was in place, mild malacia noted at the proximal end.  After stent extraction:  severe bronchomalacia was noted with 95% collapse of the mid-LMSB and 30% collapse of the distal LMSB.  There is mild to moderate true stenosis at distal-LMSB; there is minimal true stenosis at the mid-LMSB.  The anastomosis was intact and able to appreciate blue sutures under the mucosa; the underlying mucosa in mid/distal LMSB was mildly friable.
+Mucosa: Normal except as described above.
+Secretions: Moderate, thin, and clear  All secretions were suctioned to clear (therapeutic aspiration). 
+ 
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left mainstem bronchus stent, left upper lobe, left lower lobe from mucus. 
+ 
+After induction of muscle relaxants, tooth or gum protector was placed. The black long ventilating rigid bronchoscope barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid bronchoscope was advanced carefully while minimizing contact with them. Once the rigid bronchoscope was positioned at the mid-trachea, jet ventilation was initiated and chest wall movement was confirmed.  The rigid bronchoscope was then advanced into the proximal left mainstem bronchus.
+ 
+The Flexible Therapeutic Bronchoscope was advanced through the rigid barrel.
+ 
+Foreign body removal performed:  Using alligator forceps, the Microtech 12mmx30mm metallic stent was extracted en bloc through the rigid barrel.
+ 
+Underly mucosa mildly irritated and friable, but no open mucosa noted.  See further description of LMSB airway after stent extraction above.  Combination of bronchial stenosis and bronchial malacia, but most prominent issue appeared to be bronchomalacia.
+ 
+Endobronchial obstruction at mid-left mainstem bronchus stenosis and malacia was treated with the following modalities:
+Modality	Tools	Setting/Mode	Duration	Results
+CryoSpray	Cryospray probe	Normal Flow	Mid-LMSB:  4 cycles of 5 seconds each
+Distal-LMSB:  5 cycles of 5 seconds each	Excellent application of cryospray circumferentially at the mid-LMSB and distal-LMSB.
+ 
+Mechanical excision of mild granulation tissue and airway debris in the mid-left mainstem bronchus was performed via mechanical coring with the rigid bronchoscope.
+ 
+Balloon dilation was performed at distal left mainstem bronchus.  10/11/12 Elation balloon was used to perform dilation to 12 mm at the distal left mainstem bronchus.  Total 1 inflations with dilation time of 60 seconds each. 
+ 
+Balloon dilation was performed at distal left mainstem bronchus.  12/13.5/15 Elation balloon was used to perform dilation to 13.5 mm and 15mm at the distal left mainstem bronchus.  Total 2 inflations with dilation time of 60 seconds each. 
+ 
+Balloon dilation was performed at mid- left mainstem bronchus.  12/13.5/15 Elation balloon was used to perform dilation to 15mm at the distal left mainstem bronchus.  Total 1 inflations with dilation time of 60 seconds each. 
+ 
+Airway looked patent while rigid bronchoscope in place in the LMSB.  However, once the rigid bronchoscope barrel was withdrawn into the trachea, severe bronchomalacia was again noted.
+ 
+Severe bronchomalacia of mid-LMSB:
+
+ 
+Airway Measurements:  
+2.3cm of some bronchial stenosis and moderate malacia at distal LMSB (from LC2 to proximal end of true stenosis).  
+Additional 2cm of severe malacia in the mid-LMSB (from LC2 to proximal end of severe malacia).  
+For total of ~4.3cm of stenosis + malacia involvement in the mid/distal LMSB.
+ 
+Our last 12mm x 30mm metallic stent had been used the day prior, so no 12mm x 30mm stents were available to replace.
+ 
+The following stent (12mm x 40mm Bonastent) was placed in the mid/distal left mainstem bronchus.
+ 
+Balloon dilation was performed within the new left mainstem bronchus stent.  12/13.5/15 Elation balloon was used to perform dilation to 13.5mm at the new left mainstem bronchus stent - including from the LMSB into the LUL and LLL.  Total 3 inflations with dilation time of 15 seconds each.
+ 
+All airways were patent, although LLL superior segment (LB6) was mildly/partially obstructed by the distal end of the stent, but otherwise ventilating.
+ 
+Prior to treatment, affected airway was note to be 5% patent (during periods of severe malacia).  After treatment, the airway was 100% patent.  
+ 
+Images of new LMSB stent:
+
+
+
+ 
+Bronchoscopy evaluation confirmed no injury to the vocal cords, trachea, or distal airways.  Residual secretions and trivial blood suctioned to clear.
+ 
+Due to history of post-procedure laryngospasm, the cords were bathed with 12mL of lidocaine at the completion of the procedure.  Despite this precaution, patient did have recurrence of transient laryngospam, requiring additional paralytic until it resolved.  Patient able to have LMA removed without further incident.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient's LMA was removed in the operating room and transported to the recovery room in stable condition.
+ 
+ESTIMATED BLOOD LOSS:   Trivial
+COMPLICATIONS:    None
+ 
+SPECIMEN(S): 
+Lingula BAL:  cell count, cultures/micro, cytology
+Extracted LMSB stent:  pathology
+ 
+ 
+IMPRESSION/PLAN:[REDACTED] is a 62 year old-year-old male who presents for bronchoscopy for cryospray treatment, dilation, and stent exchange.
+ 
+-Primary issue is bronchomalacia rather than bronchial stenosis at this time.  Able to dilate entire LMSB to 15mm, but patient with severe bronchomalacia of the mid- and distal-LMSB, with 95% collapse of the mid-LMSB.
+-Preoperatively, had discussed possible stent removal vs stent exchange with the patient.  Intraoperatively, persistent severe bronchomalacia was noted after stent removal, so a new stent was placed (after cryospray treatment).
+ 
+-Repeat bronchoscopy in ~12 weeks for stent check.  Could consider stent removal, but would recommend having a bronchoscopy already scheduled within 1-2 weeks after the procedure in case he does not tolerate the stent removal well, given the extreme severity of the LMS bronchomalacia.
+-Follow-up in IP clinic ~4 weeks before the procedure to further discuss risks/benefits of stent removal in context of severe bronchomalacia.
+ 

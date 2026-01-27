@@ -1,0 +1,118 @@
+NOTE_ID: note_306	SOURCE_FILE: note_306.txt
+INDICATION FOR OPERATION:  [REDACTED]is a 36 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31646 Therapeutic aspiration subsequent episodes
+31622 Dx bronchoscope/cell washing          
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure (22 MODIFIER):
+This patient required multiple modalities for relief of stenosis - including dilation with the rigid tracheoscope barrel and balloon dilation.  The patient required cryospray, which necessitates increased personnel and resource support in the OR in order to safely perform and unusual clinical expertise. This resulted in >80% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 
+31630 Balloon dilation
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Mild
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Normal.
+Larynx: Normal.
+Vocal Cords: Normal without mass/lesions
+Trachea: : On initial evaluation the patient was noted to have mucus collected at the subglottic space. There was a very small diverticula noted at the anterior mid-trachea - at approximately 12 o'clock location. Additionally, there were multiple areas of stenosis along the trachea with the narrowest region at the distal 1/3 such that the therapeutic scope was unable to be passed across the stenosis.  There was a slight ridge of tissue at the 7-8 o'clock location - this ridge was improved from previous.  Balloon dilation was performed (see below) which allowed the bronchoscope to traverse past the distal tracheal stenosis and assess the remaining airways 
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Friable
+Secretions: Moderate thick and thin secretions/mucus
+ 
+Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left upper lobe, left lower lobe from mucus. 
+ 
+MUCUS AT SUBGLOTTIC SPACE
+
+ 
+DIVERTICULA AT ANTERIOR MID TRACHEA
+
+ 
+STENOSIS AT DISTAL TRACHEA
+
+ 
+Balloon dilation was performed at Trachea (Distal 1/3).  8/9/10 Elation balloon was used to perform dilation to 10 mm at the Trachea (Distal 1/3).  Total 3 inflations with dilation time of 30 seconds each.
+ 
+Bronchial washing was performed at Trachea (Distal 1/3).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+After induction of muscle relaxants, tooth or gum protector was placed. The black rigid short non-ventilating tracheoscope barrel (12.00 - 11.00 mm) was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The patient was noted to have a very mobile epiglottis and tight oropharynx making intubation with the tracheoscope challenging but not insurmountable.  The vocal cords were identified and the rigid tracheoscope was advanced carefully while minimizing contact with them. Once the rigid tracheoscope was positioned at the proximal-trachea, jet ventilation was initiated and chest wall movement was confirmed.
+ 
+Due to stenosis, further advanced of the rigid tracheoscope was challenging without causing mucosal trauma - which we wanted to avoid in hopes of treating with cryospray.
+ 
+Balloon dilation was performed at Trachea (Proximal 1/3).  10/11/12 Elation balloon was used to perform dilation to 12 mm at the Trachea (Distal 1/3).  Total 1 inflations with dilation time of 30 seconds each.
+ 
+Balloon dilation was performed at Trachea (Distal 1/3).  10/11/12 Elation balloon was used to perform dilation to 12 mm at the Trachea (Distal 1/3).  Total 1 inflations with dilation time of 30 seconds each.
+ 
+The rigid tracheoscope was then advanced further into the proximal trachea and into the distal trachea.  
+Dilation was performed using the rigid tracheoscope of the proximal trachea and mid-trachea.  The rigid tracheoscope was used to perform dilation to 12 mm in the proximal trachea and rigid trachea.  This was a single dilation that was performed for 10+ minutes.  While dilating 
+ 
+Cryospray was then performed at the distal tracheal stenosis causing endotracheal/endobronchial obstruction as follows:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Cryospray cryotherapy	STERIS CryoSpray catheter 	Low-flow	10-second applications x 6 cycles.  
+Despite priming outside of the airway, application of cryospray was limited by repeat chest rise.  Only one of these cycles was a complete 10-second treatment.  Most cycles lasted 5-8 seconds. Therefore, additional cycles performed at the site to compensate for the shortened durations. 	Overall, good application of spray cryotherapy to the area of distal tracheal stenosis.
+ 
+Patient also with prolonged episodes of hypoxia after each cryospray treatment, especially when treatments performed close together (when allowing only for the standard 1 minute between treatments).  This improved with increasing Jet ventilation driving pressure from 24 --> 28 --> 30.  Likely related to reduced air flow/ventilation past the area of distal stenosis.
+ 
+Balloon dilation was performed at Trachea (Distal 1/3).  10/11/12 Elation balloon was used to perform dilation to 12 mm at the Trachea (Distal 1/3).  Total 1 inflations with dilation time of 30 seconds each.
+ 
+Balloon dilation was performed at Trachea (Distal 1/3).  12/13.5/15 Elation balloon was used to perform dilation to 13.5 mm and 15 mm at the Trachea (Distal 1/3).  Total 2 inflations with dilation time of 30 seconds and 60 seconds, respectively.
+ 
+After dilation, there was a mild mucosal tear without perforation was noted at the left postero-lateral aspect of the distal trachea (7 o'clock to 8 o'clock region).  This area had mild oozing of blood - Nashville Grade II bleeding.  This was treated with a combination of cold saline and Epinephrine (total 0.4mg).
+ 
+DISTAL TRACHEAL STENOSIS AT CONCLUSION OF PROCEDURE
+
+ 
+
+ 
+
+ 
+Prior to treatment, the distal trachea airway was note to be 40% patent.  After treatment, the airway was 80% patent.  
+ 
+Rigid bronchoscope was extubated.  LMA replaced by anesthesia team.  Flexible therapeutic bronchoscope advanced again - confirmed no injury to the vocal cords proxima or mid trachea from the rigid scope.
+ 
+Residual secretions, saline, and minimal blood suctioned to clear.  No active bleeding.  Flexible bronchoscope was removed.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--Tracheal wash (cell count, micro, cyto)
+ 
+IMPRESSION/PLAN: [REDACTED]is a 36 year old-year-old female who presents for bronchoscopy for evaluation of airway stenosis. The patient underwent balloon dilation and spray cryotherapy. There were no immediate complications.
+ 
+--Post procedure CXR
+--Follow up tracheal washing results - f/u in clinic in 1-2 weeks to review results.
+--Repeat bronchoscopy in appx 4 weeks
+ 
+ 

@@ -25,10 +25,13 @@ ALLOWED_PATHS: set[str] = {
     "/procedures_performed/eus_b/performed",
     "/procedures_performed/blvr/performed",
     "/procedures_performed/rigid_bronchoscopy/performed",
+    "/procedures_performed/linear_ebus/elastography_used",
+    "/procedures_performed/linear_ebus/elastography_pattern",
     "/pleural_procedures/ipc/performed",
     "/pleural_procedures/thoracentesis/performed",
     "/pleural_procedures/chest_tube/performed",
     "/pleural_procedures/fibrinolytic_therapy/performed",
+    "/established_tracheostomy_route",
     # Add other safe fields as needed
 }
 
@@ -63,7 +66,15 @@ _PATCH_PATH_ALIASES: dict[str, str] = {
     "/procedures_performed/balloon_dilation": "/procedures_performed/airway_dilation",
     "/procedures_performed/rigid_bronchoscopy/mechanical_debulking": "/procedures_performed/mechanical_debulking",
     "/pleural_procedures/fibrinolysis_instillation": "/pleural_procedures/fibrinolytic_therapy",
+    "/pleural_procedures/tunneled_pleural_catheter": "/pleural_procedures/ipc",
+    "/procedures_performed/linear_ebus/elastography_performed": "/procedures_performed/linear_ebus/elastography_used",
+    "/procedures_performed/ebus_elastography/performed": "/procedures_performed/linear_ebus/elastography_used",
+    "/procedures_performed/ebus_elastography/method": "/procedures_performed/linear_ebus/elastography_pattern",
+    "/procedures_performed/ebus_elastography/pattern": "/procedures_performed/linear_ebus/elastography_pattern",
 }
+
+_EBUS_ELASTOGRAPHY_ROOT = "/procedures_performed/ebus_elastography"
+_EBUS_ELASTOGRAPHY_ROOT_CANONICAL = "/procedures_performed/linear_ebus"
 
 
 def _normalize_whitespace(text: str) -> str:
@@ -101,6 +112,8 @@ def validate_proposal(
     patches = getattr(proposal, "json_patch", [])
     if not isinstance(patches, list) or not patches:
         return False, "Empty patch"
+
+    _canonicalize_elastography_root_patch_ops(patches)
 
     if max_patch_ops is None:
         max_patch_ops = _env_int("REGISTRY_SELF_CORRECT_MAX_PATCH_OPS", 5)
@@ -179,6 +192,76 @@ def _canonicalize_patch_path(path: str) -> str:
             suffix = path[len(alias_prefix):]
             return f"{canonical_prefix}{suffix}"
     return path
+
+
+def _canonicalize_elastography_root_patch_ops(patches: list[dict[str, Any]]) -> None:
+    """Rewrite object-level /procedures_performed/ebus_elastography patches into canonical fields.
+
+    Some proposals treat ebus_elastography as its own object; the registry schema stores
+    elastography under procedures_performed.linear_ebus.*.
+    """
+    expanded: list[dict[str, Any]] = []
+
+    for op in patches:
+        path = op.get("path")
+        if path != _EBUS_ELASTOGRAPHY_ROOT:
+            expanded.append(op)
+            continue
+
+        value = op.get("value")
+        verb = op.get("op")
+        verb_out = verb if verb in ("add", "replace") else "add"
+
+        rewritten: list[dict[str, Any]] = []
+        performed: bool | None = None
+        pattern: str | None = None
+
+        if isinstance(value, bool):
+            performed = value
+        elif isinstance(value, dict):
+            raw_performed = value.get("performed")
+            if isinstance(raw_performed, bool):
+                performed = raw_performed
+            raw_pattern = value.get("pattern")
+            if isinstance(raw_pattern, str) and raw_pattern.strip():
+                pattern = raw_pattern.strip()
+            raw_method = value.get("method")
+            if pattern is None and isinstance(raw_method, str) and raw_method.strip():
+                pattern = raw_method.strip()
+        elif isinstance(value, str) and value.strip():
+            performed = True
+            pattern = value.strip()
+
+        if performed is not None:
+            rewritten.append(
+                {
+                    "op": verb_out,
+                    "path": f"{_EBUS_ELASTOGRAPHY_ROOT_CANONICAL}/elastography_used",
+                    "value": performed,
+                }
+            )
+
+        if pattern is not None:
+            # If a pattern/method is provided without performed, treat as performed.
+            if performed is None:
+                rewritten.append(
+                    {
+                        "op": verb_out,
+                        "path": f"{_EBUS_ELASTOGRAPHY_ROOT_CANONICAL}/elastography_used",
+                        "value": True,
+                    }
+                )
+            rewritten.append(
+                {
+                    "op": verb_out,
+                    "path": f"{_EBUS_ELASTOGRAPHY_ROOT_CANONICAL}/elastography_pattern",
+                    "value": pattern,
+                }
+            )
+
+        expanded.extend(rewritten or [op])
+
+    patches[:] = expanded
 
 
 def _env_int(name: str, default: int) -> int:

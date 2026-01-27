@@ -1,0 +1,72 @@
+NOTE_ID: note_312	SOURCE_FILE: note_312.txt
+INDICATION FOR OPERATION:  [REDACTED]is a 70 year old-year-old male who presents with left anastomotic stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: Left anastomotic dehiscence 
+ 
+POSTOPERATIVE DIAGNOSIS:  Left anastomotic dehiscence 
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ 
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+The patient was sedated and an iGel was placed by anesthesia. The bronchoscope was introduced into the iGel and advanced to the level of the vocal cords. A total of 4 mL of 2% lidocaine was instilled into the vocal cords. 
+ 
+The bronchoscope was advanced through vocal cords into the trachea. There were several areas consistent with TPO. The right anastomosis has a staple herniating through at the 1 o'clock position. There was no evidence of dehiscence.  The left anastomosis was covered by a bona stent. The stent was in adequate position. The distal end of the stent had some granulation tissue and stenosis. 
+The RUL anterior segment had narrowing due to collapse of cartilage.
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), and Left Mainstem from mucus. 
+ 
+Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2).  Instilled 60 cc of NS, suction returned with 30 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+Endobronchial obstruction at distal LMSB was treated with the following modalities:
+ 
+
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	1.5	25W/2	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	2.4	 	10 seconds	 
+ 
+Prior to treatment, affected airway was note to be 90% patent.  After treatment, the airway was 95% patent. 
+ 
+Endobronchial tumor was noted and excised with mechanical debridement with forceps and this was send for pathology. There was no evidence of active bleeding and the bronchoscope was removed. 
+ 
+Balloon dilation was performed at distal LMSB.  10/11/12 Elation balloon was used to perform dilation to 11 mm at the distal LMSB.  Total 2 inflations with dilation time of 60 seconds each.
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+BAL LUL
+Endobronchial tissue distal LMSB
+ 
+IMPRESSION/PLAN: [REDACTED]is a 70 year old-year-old male who presents for bronchoscopy for tracheal stenosis s/p stenting on 1/5/2024.
+Stent check/removal in 4 weeks
+ 
+
+

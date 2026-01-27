@@ -53,3 +53,55 @@ def test_postprocess_sets_medical_thoracoscopy_biopsies_taken_from_text() -> Non
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
     assert "32609" in codes
 
+
+def test_thoracoscopy_bundles_same_side_chest_tube_insertion() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "pleural_procedures": {
+                "medical_thoracoscopy": {"performed": True, "side": "Left"},
+                "chest_tube": {
+                    "performed": True,
+                    "action": "Insertion",
+                    "side": "Left",
+                    "tube_type": "Pigtail",
+                    "guidance": "Ultrasound",
+                },
+            }
+        }
+    )
+
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert "32601" in codes
+    assert not any(code in codes for code in ("32551", "32556", "32557"))
+    assert any("suppressed chest tube insertion" in str(w).lower() for w in warnings)
+
+
+def test_thoracoscopy_allows_contralateral_chest_tube_insertion() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "pleural_procedures": {
+                "medical_thoracoscopy": {"performed": True, "side": "Left"},
+                "chest_tube": {
+                    "performed": True,
+                    "action": "Insertion",
+                    "side": "Right",
+                    "tube_type": "Pigtail",
+                    "guidance": "Ultrasound",
+                },
+            }
+        }
+    )
+
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert "32601" in codes
+    assert "32557" in codes
+    assert any("contralateral" in str(w).lower() for w in warnings)
+
+
+def test_chest_tube_repositioning_does_not_bill_insertion_codes() -> None:
+    record = RegistryRecord.model_validate(
+        {"pleural_procedures": {"chest_tube": {"performed": True, "action": "Repositioning"}}}
+    )
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert not any(code in codes for code in ("32551", "32556", "32557"))
+    assert any("skipping insertion codes" in str(w).lower() for w in warnings)

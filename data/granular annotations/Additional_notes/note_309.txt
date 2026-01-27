@@ -1,0 +1,61 @@
+NOTE_ID: note_309	SOURCE_FILE: note_309.txt
+INDICATION FOR OPERATION:  [REDACTED]is a 62 year old-year-old female who presents with chronic cough and abnormal CT.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: chronic cough
+ 
+POSTOPERATIVE DIAGNOSIS:  chronic cough
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+  
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+ 
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided:
+Versed             2.5 mg
+Fentanyl          75 mcg
+ 
+Physician/patient face-to-face anesthesia start time:   09:09
+ 
+Physician/patient face-to-face anesthesia stop time:   09:24
+ 
+Total moderate sedation time was 15 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by Matt Reed, RN. 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: supine
+ 
+Initial Airway Inspection Findings:
+ 
+After adequate sedation the bronchoscope was introduced into the mouth and advanced to the level of the epiglottis. A total of 6 mL of 2% lidocaine was instilled for topical anesthesia. The vocal cords are normal in structure and function. The bronchoscope was advanced through the vocal cords into the trachea. The tracheobronchial tree was examined to the subsegmental level bilaterally. The mucosa was normal. The RML was mildly narrowed and the mucosa of the RML was friable. 
+ 
+Successful therapeutic aspiration was performed to clean out the RML, distal BI, RLL superior segment from mucus. 
+ 
+Bronchial alveolar lavage was performed at Medial Segment of RML (RB5).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+There was no active bleeding
+The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+SPECIMEN(S): 
+BAL RML
+ 
+IMPRESSION/PLAN: [REDACTED]is a 62 year old-year-old female who presents for bronchoscopy for chronic cough and abnormal CT chest.
+[ ] f/u results in clinic as scheduled

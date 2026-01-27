@@ -1,0 +1,95 @@
+
+NOTE_ID:  note_270 SOURCE_FILE: note_270.txt
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+ 
+DATE OF PROCEDURE: [REDACTED]
+
+INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31636 Dilate and bronchial stent initial bronchus
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31634 Balloon occlusion or placement of occlusive substance 
+31635 Foreign body removal
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a meticulous removal of extensive clot throughout the left sided airway tree. This resulted in >100% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal. 
+ 
+ATTENDING:  
+[REDACTED]
+ 
+ASSISTANT: [REDACTED]
+ 
+Support Staff: 
+RN: [REDACTED]
+RT: [REDACTED]
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+ images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The tracheostomy tube (Shiley 7.5ID cuffed) is in good position. The visualized portion of the trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Airway exam notable for large clot burden obstructing the entire LMSB. Moderate bloody secretions spilled over in the right airways. Once the secretions on the right had been cleared, the large RUL cavity with aspergilloma could be visualized from RB2 and RB3. 
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, RUL Carina (RC1), and RML Carina (RC2) from mucus, blood, and blood clots. 
+ 
+The LMSB clot could not easily be removed with suctioning. Trach was too small to accommodate the bronchial blocker that was in place and the therapeutic bronchoscope. The bronchial blocker that was in the tracheostomy was removed.
+ 
+Patient was fiberoptically intubated through the mouth with a 5.0ETT with Arndt bronchial blocker coupled on the outside. The blocker was parked in the proximal LMSB and the ETT was RMSB intubated to protect the right sided airways. Therapeutic scope was then introduced through the trach for rest of bronchoscopy. 
+ 
+Combination of hydrodissection, high suction on the neptune were used to assist with removal of foreign body (clot) in LMSB. This also required cryoextraction due to organized nature and extent of clot burden. This required meticulous removal of clot for about 100 minutes .
+ 
+Endobronchial obstruction at Left Mainstem was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	1.7mm probe	 	2-6sec	Cryoextraction
+ 
+Prior to treatment, LMSB and LLL was note to be 0% patent.  After treatment, the airway was 100% patent. 
+ 
+There was moderate clot in the LUL which was left untouched. No active bleeding. Some purulent secretions were removed from LLL once clot burden was removed.
+ 
+Measurements were taken and a 12x30mm Microtech stent was placed in the LLL/LMSB. Distal end of the stent is in the LLL truncus basalis (jailing off LB6 and LUL). Proximal end of stent is in the mid LMSB (~20mm from MC). 
+ 
+The patient tolerated the procedure well.  There were no immediate complications. 
+ 
+Images could not be uploaded to the OneDrive- they have been uploaded to the Media Tab. 
+ 
+SPECIMEN(S): 
+None 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy for stent placement.
+ 
+- CXR now
+- start stent hydration therapy
+- low threshold for abx for bacterial PNA in light of bronchoscopic findings 
+- no deep suctioning

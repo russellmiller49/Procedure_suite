@@ -9,9 +9,37 @@ Rules here must accept ONLY RegistryRecord and must not parse raw note text.
 
 from __future__ import annotations
 
+import re
+from datetime import date
 from typing import Any
 
 from modules.registry.schema import RegistryRecord
+
+
+_BLVR_PLACEMENT_CONTEXT_RE = re.compile(
+    r"\b(?:"
+    r"valve\b[^.\n]{0,80}\b(?:deploy|deployed|insert|inserted|place|placed|placement)\w*\b"
+    r"|"
+    r"(?:deploy|deployed|insert|inserted|place|placed|placement)\w*\b[^.\n]{0,80}\bvalve\b"
+    r")\b",
+    re.IGNORECASE,
+)
+_BLVR_REMOVAL_CONTEXT_RE = re.compile(
+    r"\bvalve\b[^.\n]{0,80}\b(?:remov|retriev|extract|explant)\w*\b",
+    re.IGNORECASE,
+)
+_BLVR_VALVE_SIZE_HINT_RE = re.compile(
+    r"(?is)\b(?:spiration|zephyr)\b.{0,80}\bsize\b",
+)
+_FIBRINOLYSIS_SUBSEQUENT_TOKEN_RE = re.compile(
+    r"\b(?:subsequent|day\s*2|day\s*3|dose\s*#?\s*2|dose\s*#?\s*3|32562)\b",
+    re.IGNORECASE,
+)
+_CHEST_TUBE_INSERTION_DATE_RE = re.compile(
+    r"\bdate\s+of\s+(?:the\s+)?chest\s+tube\s+insertion\b",
+    re.IGNORECASE,
+)
+_DATE_TOKEN_RE = re.compile(r"\b(\d{4}-\d{2}-\d{2}|\d{1,2}[/-]\d{1,2}[/-]\d{2,4})\b")
 
 
 def _get(obj: Any, name: str) -> Any:
@@ -184,6 +212,31 @@ def _blvr_chartis_lobes(record: RegistryRecord, *, blvr_proc: Any | None) -> set
     return lobes
 
 
+def _evidence_text_for_prefixes(record: RegistryRecord, prefixes: tuple[str, ...]) -> str:
+    evidence = _get(record, "evidence")
+    if not isinstance(evidence, dict):
+        return ""
+
+    chunks: list[str] = []
+    for key, spans in evidence.items():
+        if not isinstance(key, str):
+            continue
+        if not any(key.startswith(prefix) for prefix in prefixes):
+            continue
+        if not spans:
+            continue
+        for span in spans:
+            if isinstance(span, str):
+                text = span
+            elif isinstance(span, dict):
+                text = span.get("text") or span.get("quote") or ""
+            else:
+                text = getattr(span, "text", "") or getattr(span, "quote", "") or ""
+            if text:
+                chunks.append(str(text))
+    return "\n".join(chunks)
+
+
 def _time_to_minutes(value: Any) -> int | None:
     if value is None:
         return None
@@ -218,6 +271,53 @@ def _time_to_minutes(value: Any) -> int | None:
     return None
 
 
+def _parse_date(value: Any) -> date | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", text):
+        try:
+            return date.fromisoformat(text)
+        except ValueError:
+            return None
+
+    match = re.fullmatch(r"(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})", text)
+    if not match:
+        return None
+    try:
+        month = int(match.group(1))
+        day_val = int(match.group(2))
+        year = int(match.group(3))
+    except ValueError:
+        return None
+
+    if year < 100:
+        year = year + 2000 if year < 70 else year + 1900
+    try:
+        return date(year, month, day_val)
+    except ValueError:
+        return None
+
+
+def _extract_chest_tube_insertion_date(record: RegistryRecord) -> date | None:
+    evidence_text = _evidence_text_for_prefixes(record, ("",))
+    if not evidence_text:
+        return None
+
+    match = _CHEST_TUBE_INSERTION_DATE_RE.search(evidence_text)
+    if not match:
+        return None
+
+    window = evidence_text[match.end() : match.end() + 80]
+    date_match = _DATE_TOKEN_RE.search(window) or _DATE_TOKEN_RE.search(evidence_text)
+    if not date_match:
+        return None
+    return _parse_date(date_match.group(1))
+
+
 def _sedation_intraservice_minutes(record: RegistryRecord) -> int | None:
     sedation = _get(record, "sedation")
     if sedation is None:
@@ -241,6 +341,19 @@ def _sedation_intraservice_minutes(record: RegistryRecord) -> int | None:
     if end < start:
         end += 24 * 60
     return end - start
+
+
+def _normalize_pleural_side(value: Any) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip().lower()
+    if not text:
+        return None
+    if text.startswith("r"):
+        return "Right"
+    if text.startswith("l"):
+        return "Left"
+    return None
 
 
 def _dilation_in_distinct_lobe_from_destruction(record: RegistryRecord) -> bool:
@@ -417,6 +530,52 @@ def derive_all_codes_with_meta(
                     "linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653"
                 )
 
+        elastography_used = _get(_proc(record, "linear_ebus"), "elastography_used") is True
+        elastography_pattern = _get(_proc(record, "linear_ebus"), "elastography_pattern")
+        if elastography_used or (isinstance(elastography_pattern, str) and elastography_pattern.strip()):
+            header_code_text = _evidence_text_for_prefixes(record, ("code_evidence",))
+            target_stations: set[str] = set()
+            node_events = _get(_proc(record, "linear_ebus"), "node_events")
+            if isinstance(node_events, (list, tuple)):
+                for event in node_events:
+                    station = _get(event, "station")
+                    if station:
+                        target_stations.add(str(station).upper().strip())
+
+            stations_detail = _get(_proc(record, "linear_ebus"), "stations_detail")
+            if isinstance(stations_detail, (list, tuple)):
+                for detail in stations_detail:
+                    if isinstance(detail, dict):
+                        station = detail.get("station")
+                    else:
+                        station = _get(detail, "station")
+                    if station:
+                        target_stations.add(str(station).upper().strip())
+
+            if not target_stations:
+                stations = _get(_proc(record, "linear_ebus"), "stations_sampled")
+                if isinstance(stations, (list, tuple)):
+                    for station in stations:
+                        if station:
+                            target_stations.add(str(station).upper().strip())
+
+            target_count = len({s for s in target_stations if s})
+            if target_count <= 0:
+                target_count = 1
+
+            # CPT 76982 is first target lesion; 76983 is each additional target lesion.
+            codes.append("76982")
+            rationales["76982"] = f"linear_ebus elastography used (targets={target_count})"
+            if target_count >= 2:
+                codes.append("76983")
+                rationales["76983"] = f"linear_ebus elastography used and targets={target_count} (>=2 implies add-on)"
+
+            # Some templates document 76981 explicitly alongside 76982/76983; include it only
+            # when the note header lists it and elastography is present.
+            if "76981" in (header_code_text or "") and "76981" not in codes:
+                codes.append("76981")
+                rationales["76981"] = "linear_ebus elastography used and header lists 76981"
+
     # Radial EBUS (add-on code for peripheral lesion localization)
     if _performed(_proc(record, "radial_ebus")):
         codes.append("31654")
@@ -451,24 +610,25 @@ def derive_all_codes_with_meta(
     stent = _proc(record, "airway_stent")
     if stent is not None:
         action = _get(stent, "action")
-        removal_flag = _get(stent, "airway_stent_removal")
-        assessment_only = isinstance(action, str) and action.strip().lower().startswith("assessment")
-        is_removal = removal_flag is True or _stent_action_is_removal(action)
-        is_placement = _performed(stent) and not is_removal and not assessment_only
-        if not is_placement and _stent_action_is_placement(action):
-            is_placement = True
+        action_text = str(action).strip().lower() if action is not None else ""
+        removal_flag = _get(stent, "airway_stent_removal") is True
 
-        if assessment_only and not is_removal:
+        assessment_only = action_text.startswith("assessment")
+        revision_action = "revision" in action_text or "reposition" in action_text
+        placement_action = "placement" in action_text
+        removal_action = action_text.startswith("remov") or _stent_action_is_removal(action) or removal_flag
+
+        if assessment_only:
             pass
-        elif is_removal:
+        elif revision_action or removal_action:
             codes.append("31638")
-            rationales["31638"] = "airway_stent.airway_stent_removal=true or action indicates removal"
-            if is_placement and "31636" not in codes:
-                codes.append("31636")
-                rationales["31636"] = "airway_stent indicates revision/placement with removal"
-        elif is_placement:
+            if revision_action:
+                rationales["31638"] = "airway_stent.action indicates revision/repositioning"
+            else:
+                rationales["31638"] = "airway_stent indicates removal/exchange"
+        elif placement_action or (_performed(stent) and not removal_action):
             codes.append("31636")
-            rationales["31636"] = "airway_stent.performed=true and no removal flag"
+            rationales["31636"] = "airway_stent indicates placement"
 
     # Mechanical debulking (tumor excision) → 31640
     if _performed(_proc(record, "mechanical_debulking")):
@@ -497,9 +657,25 @@ def derive_all_codes_with_meta(
     chartis_lobes = _blvr_chartis_lobes(record, blvr_proc=blvr)
 
     # Valve placement / removal codes
-    if _performed(blvr) and blvr_procedure_type == "Valve removal":
+    if _performed(blvr) and (
+        blvr_procedure_type == "Valve removal"
+        or (
+            blvr_procedure_type in {None, "Valve assessment"}
+            and _BLVR_REMOVAL_CONTEXT_RE.search(
+                _evidence_text_for_prefixes(
+                    record,
+                    ("procedures_performed.blvr", "granular_data.blvr_valve_placements"),
+                )
+                or ""
+            )
+        )
+    ):
         codes.append("31648")
-        rationale = "blvr.procedure_type='Valve removal'"
+        rationale = (
+            "blvr.procedure_type='Valve removal'"
+            if blvr_procedure_type == "Valve removal"
+            else "blvr.performed=true and removal language detected (fallback)"
+        )
         if valve_lobes:
             rationale += f" (lobes={sorted(valve_lobes)})"
         rationales["31648"] = rationale
@@ -507,15 +683,94 @@ def derive_all_codes_with_meta(
             codes.append("31649")
             rationales["31649"] = f"Valve removal in multiple lobes={sorted(valve_lobes)} (add-on lobe)"
 
-    elif _performed(blvr) and (blvr_procedure_type == "Valve placement" or valve_lobes):
-        codes.append("31647")
-        rationale = "blvr.procedure_type='Valve placement'"
-        if valve_lobes:
-            rationale += f" (lobes={sorted(valve_lobes)})"
-        rationales["31647"] = rationale
-        if len(valve_lobes) >= 2:
-            codes.append("31651")
-            rationales["31651"] = f"Valve placement in multiple lobes={sorted(valve_lobes)} (add-on lobe)"
+    elif _performed(blvr):
+        blvr_text = " ".join(
+            str(v)
+            for v in (
+                _get(blvr, "procedure_type"),
+                _get(blvr, "target_lobe"),
+                _get(blvr, "valve_type"),
+                _get(blvr, "segments_treated"),
+                _get(blvr, "valve_sizes"),
+                _get(blvr, "number_of_valves"),
+            )
+            if v is not None and str(v).strip()
+        )
+        blvr_text += "\n" + _evidence_text_for_prefixes(
+            record,
+            (
+                "procedures_performed.blvr",
+                "granular_data.blvr_valve_placements",
+            ),
+        )
+
+        has_zephyr = "zephyr" in blvr_text.lower()
+        has_spiration = "spiration" in blvr_text.lower()
+        if has_zephyr and has_spiration:
+            warnings.append(
+                "NEEDS_REVIEW: Mixed BLVR valve manufacturers detected (Zephyr + Spiration); default to Zephyr when attribution is unclear."
+            )
+
+        explicit_31647 = bool(re.search(r"\b31647\b", blvr_text))
+        explicit_31651 = bool(re.search(r"\b31651\b", blvr_text))
+
+        placement_keywords = bool(_BLVR_PLACEMENT_CONTEXT_RE.search(blvr_text))
+        valve_size_hints = {m.group(0).strip().lower() for m in _BLVR_VALVE_SIZE_HINT_RE.finditer(blvr_text)}
+        valve_size_hint_count = len(valve_size_hints)
+
+        placement_signal = (
+            blvr_procedure_type == "Valve placement"
+            or explicit_31647
+            or explicit_31651
+            or valve_lobes
+            or _get(blvr, "number_of_valves") not in {None, 0, "0"}
+            or bool(_get(blvr, "valve_sizes"))
+            or placement_keywords
+            or bool(valve_size_hints)
+        )
+
+        forced_by_family = False
+        families_raw = _get(record, "procedure_families") or []
+        families = {str(f).strip().upper() for f in families_raw if f}
+        if (
+            not placement_signal
+            and "BLVR" in families
+            and blvr_procedure_type in {None, "Valve assessment"}
+            and not chartis_lobes
+        ):
+            placement_signal = True
+            forced_by_family = True
+
+        if placement_signal and blvr_procedure_type != "Coil placement":
+            codes.append("31647")
+            if blvr_procedure_type == "Valve placement":
+                rationale = "blvr.procedure_type='Valve placement'"
+            elif explicit_31647 or explicit_31651:
+                rationale = "blvr.performed=true and header/billing mentions BLVR CPT (fallback)"
+            elif placement_keywords:
+                rationale = "blvr.performed=true and valve placement language detected (fallback)"
+            elif valve_size_hints:
+                rationale = f"blvr.performed=true and valve size mentions detected (fallback, n={valve_size_hint_count})"
+            elif forced_by_family:
+                rationale = "blvr.performed=true and procedure_families includes BLVR (fallback)"
+            else:
+                rationale = "blvr.performed=true and placement inferred (fallback)"
+
+            if valve_lobes:
+                rationale += f" (lobes={sorted(valve_lobes)})"
+            rationales["31647"] = rationale
+
+            if len(valve_lobes) >= 2 or explicit_31651:
+                codes.append("31651")
+                if len(valve_lobes) >= 2:
+                    rationales["31651"] = f"Valve placement in multiple lobes={sorted(valve_lobes)} (add-on lobe)"
+                else:
+                    rationales["31651"] = "header/billing explicitly mentions 31651 (add-on lobe)"
+
+            if not valve_lobes and (placement_keywords or explicit_31647 or valve_size_hints):
+                warnings.append(
+                    "BLVR valve placement inferred but target lobe(s) missing; verify lobes to support 31651 add-on lobe billing."
+                )
 
     # Chartis (balloon occlusion) code with same-lobe bundling vs valves
     if chartis_lobes:
@@ -603,9 +858,33 @@ def derive_all_codes_with_meta(
         tube_size_fr = _get(chest_tube, "tube_size_fr")
         guidance = _get(chest_tube, "guidance")
 
-        if action == "Removal":
-            warnings.append("pleural_procedures.chest_tube.action='Removal'; skipping insertion codes")
+        action_text = str(action).strip().lower() if action is not None else ""
+        if action in {"Removal", "Repositioning", "Exchange"} or action_text.startswith(
+            ("remov", "reposition", "exchange", "mainten")
+        ):
+            warnings.append(
+                f"pleural_procedures.chest_tube.action={action!r}; skipping insertion codes (bundled/not separately billable)"
+            )
         else:
+            thoracoscopy = _pleural(record, "medical_thoracoscopy")
+            if _performed(thoracoscopy):
+                thor_side = _normalize_pleural_side(_get(thoracoscopy, "side"))
+                tube_side = _normalize_pleural_side(_get(chest_tube, "side"))
+                contralateral = bool(thor_side and tube_side and thor_side != tube_side)
+                if not contralateral:
+                    warnings.append(
+                        "Suppressed chest tube insertion CPT: bundled with medical thoracoscopy unless contralateral/distinct site is documented."
+                    )
+                    chest_tube = None
+                else:
+                    warnings.append(
+                        "Chest tube insertion appears contralateral to medical thoracoscopy; consider modifier -59/-XS and ensure documentation supports distinctness."
+                    )
+
+        if chest_tube is not None and _performed(chest_tube) and not (
+            action in {"Removal", "Repositioning", "Exchange"}
+            or action_text.startswith(("remov", "reposition", "exchange", "mainten"))
+        ):
             imaging = guidance in {"Ultrasound", "CT", "Fluoroscopy"}
             is_small_bore = False
             if tube_type == "Pigtail":
@@ -640,6 +919,13 @@ def derive_all_codes_with_meta(
             codes.append("32601")
             rationales["32601"] = "pleural_procedures.medical_thoracoscopy.performed=true"
 
+        adhesiolysis = _get(thoracoscopy, "adhesiolysis_performed")
+        if adhesiolysis is True:
+            codes.append("32653")
+            rationales["32653"] = (
+                "pleural_procedures.medical_thoracoscopy.performed=true and adhesiolysis_performed=true"
+            )
+
     if _performed(_pleural(record, "pleurodesis")):
         codes.append("32560")
         rationales["32560"] = "pleural_procedures.pleurodesis.performed=true"
@@ -647,23 +933,56 @@ def derive_all_codes_with_meta(
     fibrinolytic = _pleural(record, "fibrinolytic_therapy")
     if _performed(fibrinolytic):
         number_of_doses = _get(fibrinolytic, "number_of_doses")
-        subsequent_day = False
+        header_text = _get(_get(record, "clinical_context"), "primary_indication")
+        indication_text = _get(fibrinolytic, "indication")
+        evidence_text = _evidence_text_for_prefixes(
+            record,
+            (
+                "clinical_context.primary_indication",
+                "pleural_procedures.fibrinolytic_therapy",
+            ),
+        )
+        combined = " ".join(
+            str(v)
+            for v in (
+                header_text,
+                indication_text,
+                evidence_text,
+            )
+            if v is not None and str(v).strip()
+        )
+        subsequent_by_token = bool(_FIBRINOLYSIS_SUBSEQUENT_TOKEN_RE.search(combined))
+
+        subsequent_by_doses = False
         if isinstance(number_of_doses, int):
-            subsequent_day = number_of_doses >= 2
+            subsequent_by_doses = number_of_doses >= 2
         else:
             try:
-                subsequent_day = int(str(number_of_doses)) >= 2
+                subsequent_by_doses = int(str(number_of_doses)) >= 2
             except (TypeError, ValueError):
-                subsequent_day = False
+                subsequent_by_doses = False
+
+        subsequent_day = subsequent_by_token or subsequent_by_doses
 
         if subsequent_day:
             codes.append("32562")
-            rationales["32562"] = (
-                "pleural_procedures.fibrinolytic_therapy.performed=true and number_of_doses>=2 (subsequent day)"
-            )
+            if subsequent_by_token and not subsequent_by_doses:
+                rationales["32562"] = (
+                    "pleural_procedures.fibrinolytic_therapy.performed=true and subsequent-day token found in header/indication"
+                )
+            else:
+                rationales["32562"] = (
+                    "pleural_procedures.fibrinolytic_therapy.performed=true and number_of_doses>=2 (subsequent day)"
+                )
         else:
             codes.append("32561")
             rationales["32561"] = "pleural_procedures.fibrinolytic_therapy.performed=true"
+            procedure_date = _parse_date(_get(record, "procedure_date"))
+            insertion_date = _extract_chest_tube_insertion_date(record)
+            if procedure_date is not None and insertion_date is not None and insertion_date < procedure_date:
+                warnings.append(
+                    f"AUDIT_WARNING: 32561 (initial fibrinolysis) selected but chest tube insertion date {insertion_date.isoformat()} precedes procedure_date {procedure_date.isoformat()}; consider 32562 if this is a subsequent instillation."
+                )
 
     # --- Sedation (moderate sedation billing) ---
     sedation = _get(record, "sedation")
@@ -719,6 +1038,17 @@ def derive_all_codes_with_meta(
         derived = [c for c in derived if c != "32556"]
         rationales.pop("32556", None)
 
+    # Bundling: stent revision/exchange (31638) supersedes removal/placement in same site.
+    if "31638" in derived:
+        dropped_stent_codes = [c for c in ("31635", "31636") if c in derived]
+        if dropped_stent_codes:
+            derived = [c for c in derived if c not in {"31635", "31636"}]
+            for c in dropped_stent_codes:
+                rationales.pop(c, None)
+            warnings.append(
+                "CPT_CONFLICT_STENT_CYCLE: dropped 31635/31636 because 31638 covers stent revision/exchange"
+            )
+
     # Bundling: Dilation (31630) vs Destruction (31641) / Excision (31640)
     # If destruction/excision is present, bundle dilation unless in distinct lobe
     destruction_codes = {"31641", "31640"}
@@ -733,7 +1063,7 @@ def derive_all_codes_with_meta(
             rationales.pop("31630", None)
 
     # Add-on codes require a primary bronchoscopy.
-    addon_codes = {"31626", "31627", "31632", "31633", "31649", "31651", "31654", "31661"}
+    addon_codes = {"31626", "31627", "31632", "31633", "31649", "31651", "31654", "31661", "76983"}
     primary_bronch = {
         "31622",
         "31623",

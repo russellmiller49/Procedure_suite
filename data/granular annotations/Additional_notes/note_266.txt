@@ -1,0 +1,98 @@
+
+NOTE_ID:  note_266 SOURCE_FILE: note_266.txt
+DATE OF PROCEDURE: [Redacted]
+ 
+CC Referred Physician:  Self, Referred
+No address on file
+ 
+INDICATION FOR OPERATION:  [Redacted]  is a 62 year old-year-old female who presents with Complicated Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound and Thoracoscopy with biopsy were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Complicated Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32609 Thoracoscopy; with biopsy(ies) of pleura
+32653 Thoracoscopy, surgical; with removal of intrapleural foreign body or fibrin deposit
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) - there was extensive small loculate adhesions that required increased time and expertise to removed and uncover the thickened pleural. Total time with lysis of adhesions was approximately 2 hours. 
+ 
+MAC
+ 
+ATTENDING:  
+[Redacted]  
+ASSISTANT:   [Redacted]  
+Support Staff: 
+RN: [Redacted] 
+
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: 
+0‌ Supine  0‌ Sitting   
+0‌ Lateral Decubitus:  0‌ Right 1‌ Left with right side up
+ 
+CHEST ULTRASOUND FINDINGS:  1‌ Image saved and  up loaded to PACS
+Hemithorax:   1‌ Right before and after instillation of 1 L of fluid. This was done to ensure adequate space for trochar insertion  0‌ Left 
+ 
+Pleural Effusion: 
+Volume:       0‌ None  0‌ Minimal  1‌ Small and then large after instillation of fluid 0‌ Moderate  0‌ Large 
+Echogenicity:   0‌ Anechoic  0‌ Hypoechoic  1‌ Isoechoic  0‌ Hyperechoic 
+Loculations:  0‌ None  1‌Thin  0‌ Thick 
+Diaphragmatic Motion:  0‌ Normal  1‌ Diminished  0‌ Absent  
+Lung: 
+Lung sliding before procedure:   0‌ Present  1‌ Absent 
+Lung sliding post procedure:   0‌ Present  0‌ Absent 
+Lung consolidation/atelectasis: 1‌ Present  0‌  Absent 
+Pleura:  0‌ Normal  1‌ Thick  0‌ Nodular 
+ 
+Insertion site prepped and draped in sterile fashion.
+ 
+ANESTHESIA:   Lidocaine 1%: __15____ ml      Other: ______ 
+Entry Site: 
+1‌ Right _7-8__ Intercostal Space   0‌ Left  ___ Intercostal Space 
+0‌ Mid-clavicular   0‌ Mid-axillary  0‌ Mid-scapular  1‌ Other: posterior axillary line 
+ 
+PROCEDURE FINDINGS: 
+A time-out was performed in which the patient, operative procedure and operative sites were confirmed among with the nursing, surgical and anesthesia teams.  
+ 
+Initial thoracoscopic survey demonstrates multiple adhesions covering the pleural, lung with thick rind.  
+ 
+Biopsy Taken:  0‌ No  1‌ Yes, number: 6 of the pleural and > 20 samples of adhesions
+Pleurodesis:     1‌ No  0‌ Yes, 
+Chest tube/s:   0‌ 6Fr  0‌ 8Fr   0‌ 12FR   1‌ 14Fr existing was left in place 0‌ 16Fr   0‌ 18Fr  0‌ 24Fr   0‌ 32 Fr   0‌ Tunneled Pleural Catheter 
+Sutured: 1‌ Yes 0‌ No 
+ 
+Fluid Removed: __320___ ml 
+            Total insitlled was 2250
+0‌ Serous  1‌ Serosanguinous 0‌ Bloody  0‌ Chylous 0‌ Other: 
+ 
+Drainage device:   1‌ Pleurovac    0‌ Drainage Bag  0‌ Heimlich Valve  0‌ Pneumostat  0‌ Other: 
+Suction: 0‌ No 1‌Yes, - _20__ cmH20 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.   
+ 
+SPECIMEN(S): 
+Right parietal pleural - pathology, culture and flow cytometry
+ 
+CXR ordered: 1‌ Yes 0‌ No 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [Redacted]  is a 62 year old-year-old female who presents for Chest Ultrasound, Thoracoscopy with biopsy, and Thoracoscopy with lysis of adhesions.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+ 
+DISPOSITION: Nursing Unit
+[ ] f/u CXR
+[ ] keep chest tube to suction overnight
+[ ] will need follow up in pleural clinic for results
+ 
+
+

@@ -1,0 +1,58 @@
+NOTE_ID:  note_271 SOURCE_FILE: note_271.txt 
+DATE OF PROCEDURE: REDACTED]
+INDICATION FOR OPERATION:  [REDACTED]is a 33 year old-year-old female who presents with respiratory failure.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+ 
+25 Added to the E&M Encounter bill which is separate from a procedure if it is done the same day
+ 
+ 
+ATTENDING:  
+[REDACTED]
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+ images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The tracheostomy tube is in good position. The visualized portion of the trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Airway exam notable for mild amount of bloody secretions throughout the right sided airways with mild mucosal injury from scope trauma at the distal BI. The left airways show stent well seated in the mid LMSB with distal end still in LLL truncus basalis. Moderate bloody secretions in the LLL. 
+ 
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , Left Mainstem, RUL Carina (RC1), RML Carina (RC2), and LLL from mucus, blood, and blood clots. 
+ 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8).  Instilled 80 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications. 
+ 
+SPECIMEN(S): 
+- LLL BAL 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 33 year old-year-old female who presents for bronchoscopy for respiratory failure. Stent in good position, mild to moderate bloody secretions aspirated. BAL from LLL sent. 
+ 
+- f/u BAL 
+- cont stent hydration
+- no deep in-line suctioning 
+ 
+[REDACTED]

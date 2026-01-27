@@ -1,0 +1,64 @@
+NOTE_ID: note_325	SOURCE_FILE: note_325.txt
+INDICATION FOR OPERATION: [REDACTED] is a 60 year old-year-old male who presents with airway stenosis with occlusion of endobronchial stent.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31636 Dilate and bronchial stent initial bronchus
+31635 Foreign body removal
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a stent placement. This resulted in >40% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31636 Dilate and bronchial stent initial bronchus. 
+ 
+ ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope 2.8mm working channel - BF-1TH190
+Flexible Therapeutic Bronchoscope 3.2mm working channel - BF-XT190
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+Through an LMA, a therapeutic scope was advanced.  Distal trachea and main carina normal.  Right lung with well-healed anastomosis; right lung otherwise normal in anatomy.  Left mainstem bronchus stent was nearly fully occluded with impacted, tenacious yellow secretions.  Unable to adequately suction the secretions and adhered to the stent wall.  Was able to pass the bronchoscope beyond the secretions and the LUL and LLL anatomy was normal.  
+ 
+Based on this evaluation, the LMA was removed and patient was intubated under direct visualization with a rigid bronchoscope (black bronchial 12mm, ventilated) into the trachea.  High-frequency jet ventilation was attached to the rigid bronchoscope via HFJV adapter; ventilation rate set to 60.  The rigid bronchoscope was then subsequently advanced into the left mainstem bronchus to visualize the stent.  Rigid forceps were used for removal of foreign body (occluded stent) through the rigid bronchoscope.  Then a therapeutic bronchoscope was advanced through the rigid bronchoscope to complete inspection of exposed Left mainstem bronchus.  LMS bronchus was stenotic with a cartilaginous ledge at the level of the anastomosis and LMS bronchus had dynamic airway collapse <50%.  No overlying plaques or eschars.  Therapeutic aspiration of LLL performed.
+ 
+Airway measurement was performed from LC2 carina and determined that the area of LMS bronchus stenosis spanned from the distal LMS bronchus to 28mm above the LC2 carina.  Therefore, decision made to place a silicone 30mm x 12mm stent within the left mainstem.  Stent loaded on stent loader and advanced into LMS bronchus and deployed.  On first deployment, the stent would not advance distal enough, as had become obstructed by the cartilaginous ledge.  Attempts at repositioning with rigid forceps were unsuccessfull.  Therefore, rigid forceps were used to remove the stent.  Stent was reloaded on the stent loader and advanced again.  This time, able to bypass the cartilaginous ledge.  Rigid forceps was used to further advance the stent to abut the LC2 carina.  Stent was moderately compressed/buckled.  Balloon dilation to 12mm was attempted, but stent remained not fully deployed (buckled).  Therefore, the oversized silicone stent was removed with rigid forceps.  
+ 
+Decision made for new through-the-scope BonaStent 30mm x 10mm stent placement.  Via therapeutic bronchscope (3.2mm working channel), the new stent was deployed under direct visualization.  Stent was balloon dilated to 11mm and used adjust position of stent to abut the LC2 carina and to fully expand the stent.  Inspection confirmed LMS bronchus stent was well-positioned with good patency to LUL and LLL bronchi.
+ 
+Bronchial alveolar lavage was performed at Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5).  Instilled 60 cc of NS, suction returned with 25 cc of NS. Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Aspergillus galactomannan Ag.  
+ 
+Successful therapeutic aspiration was performed to clean out the LUL, lingula, and LLL from mucus.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+BAL of lingula - studies as noted above.
+ 
+IMPRESSION/PLAN:[REDACTED] is a 60 year old-year-old male who presents for bronchoscopy for airway stenosis with occlusion of endobronchial stent.
+ 
+-Removal of prior BonaStent (30mm x 10mm stent) which was nearly fully occluded with impacted, tenacious secretions.
+-Initial placement of 30mm x 12mm silicone stent, but stented determined to be oversized so removed.
+-Successful placement of new BonaStent 30mm x 10mm stent.
+-BAL of LB1/LB2 - sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Aspergillus galactomannan Ag
+ 
+ 

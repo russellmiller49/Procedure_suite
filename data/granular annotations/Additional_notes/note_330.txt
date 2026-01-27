@@ -1,0 +1,91 @@
+NOTE_ID: note_330	SOURCE_FILE: note_330.txt
+INDICATION FOR OPERATION: [REDACTED] is a 60 year old-year-old male who presents with worsening dyspnea on exertion and wheezing.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required a pt with complex stenosis, post obstructive pneumonia with bleeding airways. The airways required multiple dilation to remove foreign body . This resulted in >50% increased work due to Increased intensity, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31630 Balloon dilation
+31636 Dilate and bronchial stent initial bronchus
+31635 Foreign body removal. 
+ 
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+The patient was sedated and an iGel was placed by anesthesia. The bronchoscope was advanced to the level of the vocal cords. The vocal cords are normal in structure. A total of 6 mL of 1% lidocaine was instilled onto the vocal cords. The bronchoscope was advanced through the vocal cords into the trachea. 
+ 
+The airways were examined to the subsegmental level bilaterally. The Right anastomosis was intact without stenosis. The LMSB had stenosis just distal to the anastomosis. The stenosis was approximately 4 mm and the therapeutic and P190 bronchoscope could not be advanced through the stenosis. The stent was seen distal to the stenosis. Proximal to the stenosis the airway had some malacia
+ 
+The iGel was removed and the patient was intubated atraumatically with a black ventilating rigid bronchoscope. 
+ 
+Balloon dilation was performed at Left Mainstem.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the Left Mainstem.  Total 3 inflations with dilation time of 30 seconds each. After dilation the P-190 bronchoscope could be advanced through the stenosis. 
+ 
+The stent was seen distal to the stenosis and the LUL was occluded by the stent. Using the bronchoscope the stent was lifted and a large amount of white-yellow pus was therapeutically aspirated. 
+ 
+Bronchial alveolar lavage was performed at Anterior Segment of LUL (LB3).  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+Endobronchial tumor was noted and excised with mechanical debridement from the LMSB. 
+ 
+The proximal end of the stent was now able to be visualized. Using rat tooth forceps the stent was grasped and removed enbloc through the rigid bronchoscope. No residual material was left in the airway
+ 
+Endobronchial obstruction at Left Mainstem was treated with the following modalities:
+ 
+
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	1.1	10 -30 second freeze thaw cycles	Total of 6 treatments	Improvement in airway diameter to 8mm
+ 
+Prior to treatment, affected airway was note to be 20% patent.  After treatment, the airway was 60% patent. 
+ 
+Balloon dilation was performed at Left Mainstem.  6/7/8 Elation balloon was used to perform dilation to 8 mm at the Left Mainstem.  Total 2 inflations with dilation time of 60 seconds each. After this dilation the therapeutic bronchoscope could be advanced through the stenosis.
+ 
+The following stent (Bona stent 10 x 30) was placed in the Left Mainstem. 
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+BAL - LUL
+Foreign body removal - path
+LMSB bronchus tissue/tumor path
+ 
+IMPRESSION/PLAN:[REDACTED] is a 60 year old-year-old male who presents for bronchoscopy for worsening dyspnea on exertion, wheezing and difficulty with getting mucus out. Stent found have migrated distally with airway obstruction of the LUL and post obstructive pneumonia. 
+Pt to be admitted for IV antibiotics 
+Please resume stent hygiene with albuterol neb, followed by 3% saline nebulizer. This should be done TID. 
+Add guaifenesin 1200 mg po BID
+Please keep NPO after midnight until pulmonary team is able to see patient to assess if additional bronchoscopy is needed
+CXR in PACU
+

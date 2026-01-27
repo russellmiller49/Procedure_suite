@@ -1,0 +1,65 @@
+NOTE_ID: note_347	SOURCE_FILE: note_347.txt
+INDICATION FOR OPERATION: [REDACTED] is a 72 year old-year-old male who presents with lung transplant.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.8 Other nonspecific abnormal finding of lung field.
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.8 Other nonspecific abnormal finding of lung field.
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31628 TBBX single lobe     
+31654 Radial EBUS for peripheral lesion
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The airway was inspected. The trachea was normal appearing. The right anastomosis site was intact and appropriate. The right lung was normal appearing. 
+ 
+The left mainstem was malacic and there was anatomy distortion of the left lung. 
+ 
+Findings were reviewed and compared to prior bronchoscopies. There was minimal change
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Proximal 1/3), Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+Radial EBUS was performed to confirm that the absence of large blood vessels in the right middle lobe. Otherwise aerated lung was noted
+ 
+Transbronchial biopsy was performed with cup forceps at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Total 8 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Cytology.
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and blood. 
+ 
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+right middle lobe transbronchial biopsies, bronchoalveolar lavage
+ 
+IMPRESSION/PLAN:[REDACTED] is a 72 year old-year-old male who presents for bronchoscopy for lung transplant.
+ 
+-No signs of stenosis are noted. There is malacia and stenting could be considered
+-Follow up CXR
+-Follow up bronchoscopic lab work
+ 
+
+

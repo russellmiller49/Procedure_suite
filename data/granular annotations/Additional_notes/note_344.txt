@@ -1,0 +1,50 @@
+NOTE_ID: note_344	SOURCE_FILE: note_344.txt
+INDICATION FOR OPERATION: [REDACTED] is a 70 year old-year-old male who presents with bronchial stenosis of left mainstem bronchus after transplant.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+ 
+General Anesthesia
+
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:    <5mL
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+The therapeutic bronchoscope was inserted into the LMA and advanced to the carina. Bilateral airway inspection showed anastomosis on right was intact. No significant obstruction by granulation tissue. There was normal anatomic branching on right. Similarly left anastomosis was seen.  Stent was 60% obstructed with mucous. Once this was cleared the left mainstem was able traversed and inspected and there was normal anatomic branching. 
+ 
+Bronchial alveolar lavage was performed at  Left mainstem .  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+Successful therapeutic aspiration was performed to clean out the  Left mainstem  from mucus plug. Sample sent for cell count and culture.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+L mainstem BAL
+ 
+IMPRESSION/PLAN:[REDACTED] is a 70 year old-year-old male who presents for bronchoscopy for stent inspection. Stent place 1/5.  On 1/19 had been plugged by mucous, added guaifenisin and flutter valve to his regimen. He was planned for another bronch in 2-3 weeks, original plan of 4-6 weeks is too long based on how this stent appeared during last bronch. 
+ 
+[ ] follow up cultures from mucous. 
+[ ] repeat bronch in 2-3 weeks for stent evaluation  
+ 

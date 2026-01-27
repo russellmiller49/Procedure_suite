@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """Batch smoke test for registry pipeline on random notes.
 
-This script randomly selects N notes from data/knowledge/patient_note_texts,
-runs the registry pipeline smoke test on each, and saves all output to a text file.
+This script randomly selects N notes from a notes directory, runs the registry
+pipeline smoke test on each, and saves all output to a text file.
+
+Supported note formats in --notes-dir:
+- *.json: dict of note_id->note_text (we pick the first non "_syn_" key)
+- *.txt: one note per file
 """
 from __future__ import annotations
 
@@ -241,31 +245,56 @@ def _run_smoke_test(note_text: str, note_id: str, self_correct: bool = False) ->
 
 
 def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
-    """Load all notes from JSON files in the directory.
-    
+    """Load notes from JSON and/or TXT files in a directory.
+
     Returns a dict mapping note_id to note_text.
-    Only includes the main note (key without '_syn_' suffix) from each file.
+
+    - For *.json files: expects a dict of key->text and selects the first key that
+      does NOT contain "_syn_" (to avoid synthetic variants), matching prior behavior.
+    - For *.txt files: note_id is the filename stem, and note_text is file contents.
     """
-    notes = {}
-    
-    for json_file in sorted(notes_dir.glob("*.json")):
+    notes: dict[str, str] = {}
+
+    json_files = sorted(notes_dir.glob("*.json"))
+    txt_files = sorted(notes_dir.glob("*.txt"))
+
+    # Backwards-compatible: keep supporting JSON sources, but allow TXT-only dirs.
+    for json_file in json_files:
         try:
             with open(json_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            
+
+            if not isinstance(data, dict):
+                raise ValueError("Expected JSON object mapping note keys to text")
+
             # Find the main note (key without '_syn_' suffix)
             main_key = None
             for key in data.keys():
-                if "_syn_" not in key:
+                if isinstance(key, str) and "_syn_" not in key:
                     main_key = key
                     break
-            
-            if main_key and isinstance(data[main_key], str):
+
+            if main_key and isinstance(data.get(main_key), str):
                 note_id = json_file.stem
                 notes[note_id] = data[main_key]
         except Exception as exc:
             print(f"Warning: Failed to load {json_file}: {exc}", file=sys.stderr)
-    
+
+    for txt_file in txt_files:
+        try:
+            note_text = txt_file.read_text(encoding="utf-8")
+            note_id = txt_file.stem
+            # Prefer JSON if both exist for same stem, but warn so it's visible.
+            if note_id in notes:
+                print(
+                    f"Warning: Duplicate note_id '{note_id}' from {txt_file}; keeping JSON version",
+                    file=sys.stderr,
+                )
+                continue
+            notes[note_id] = note_text
+        except Exception as exc:
+            print(f"Warning: Failed to load {txt_file}: {exc}", file=sys.stderr)
+
     return notes
 
 
@@ -283,7 +312,10 @@ def main() -> int:
         "--notes-dir",
         type=Path,
         default=ROOT / "data" / "knowledge" / "patient_note_texts",
-        help="Directory containing note JSON files (default: data/knowledge/patient_note_texts)",
+        help=(
+            "Directory containing note files (*.json or *.txt) "
+            "(default: data/knowledge/patient_note_texts)"
+        ),
     )
     parser.add_argument(
         "--output",

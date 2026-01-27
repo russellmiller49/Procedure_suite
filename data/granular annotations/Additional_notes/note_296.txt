@@ -1,0 +1,74 @@
+NOTE_ID: note_296	SOURCE_FILE: note_296.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 66 year old-year-old female who presents with COPD.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31623 Dx bronchoscope/brushing    
+31624 Dx bronchoscope/lavage (BAL)    
+31625 Endobronchial Biopsy(s)
+ 
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required) and XS Separate Structure, a service that is distinct because it was performed on a separate organ/structure
+IP UCSD CODE MOD DETAILS: Unusual Procedure:
+This patient required a biopsy, dilation, and brushing of multiple separate airways to achieve the clinical effect. This resulted in >60% increased work due to Increased intensity, Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31623 Dx bronchoscope/brushing    
+31625 Endobronchial Biopsy(s)
+31630 Balloon dilation. 
+  
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    Valve placement aborted due to airway findings
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The airway was inspected. The vocal cords were normal appearing. The trachea and right lung were normal appearing. The left upper lobe was normal appearing. 
+ 
+The left lower lobe had some scaring from previous valve placements. The left lower lobe anterior and medial segments were scarred. The anterior basilar segment was >90% obstructed and the Medial segment was >50% scarred.
+ 
+ 
+Endobronchial biopsy was performed at left lower lobe anterior basilar segment.  Lesion was successfully removed.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Cytology.
+ 
+Endobronchial biopsy was performed at left lower lobe medial basilar segment.  Lesion was successfully removed.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Cytology.
+ 
+Balloon dilation was performed at left lower lobe anterior basilar segment.  Mustang balloon was used to perform dilation to 4 mm at the left lower lobe anterior basilar segment.  Total 1 inflations with dilation time of 60 seconds each.
+ 
+Balloon dilation was performed at left lower lobe medial basilar segment.  Mustang balloon was used to perform dilation to 4 mm at the left lower lobe medial basilar segment.  Total 1 inflations with dilation time of 60 seconds each.
+ 
+Endobronchial brushing was performed with Protected cytology brush at left lower lobe anterior basilar segment.  Total 1 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+Endobronchial brushing was performed with Protected cytology brush at left lower lobe lateral basilar segment.  Total 1 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+ 
+Bronchial alveolar lavage was performed at Superior Segment of LLL (LB6), Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 40 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+Bronchial alveolar lavage was performed at Superior Segment of LLL (LB6), Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 40 cc of NS, suction returned with 25 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Left lower lobe medial basilar segment Brushing, Biopsy
+Left lower lobe anterior basilar segment Brushing, Biopsy
+Left lower lobe Bronchoalveolar lavage 
+ 
+IMPRESSION/PLAN: [REDACTED] is a 66 year old-year-old female who presents for bronchoscopy for COPD.
+ 
+-Valve placement aborted due to lung scarring
+-Plan for follow up to review findings and bronchoscopic lab work
+-Plan to postpone valve placement a few more weeks

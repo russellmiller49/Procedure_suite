@@ -1,0 +1,67 @@
+NOTE_ID: note_346	SOURCE_FILE: note_346.txt
+INDICATION FOR OPERATION: [REDACTED] is a 70 year old-year-old male who presents with lung stent.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31899 Unlisted Procedure (Trach Change with Mature Tract or Procedure NOS)
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+ 
+
+ 
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+
+The airway was inspected via the LMA. The right anastamosis site was intact. There was a staple visible, it was minimally involved in the airway lumen, so it was left intact.
+ 
+The left anastamosis was covered by the stent. The stent had migrated to mostly cover the left lower lobe orifice. 
+ 
+The jumbo forceps were used gently peel the stent off the airway wall. Then it was slowly pulled back to ensure it was freely mobile. Then the forceps were used to remove the stent en bloc from the airway. The stent was sent for culture.
+ 
+Next the left mainstem was inspected, the anastamosis site was intact. There was some granulation tissue which was bleeding. This was controlled with iced saline. 
+ 
+Endobronchial obstruction at Left Mainstem was treated with the following modalities:
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	2.4 mm	Therapeutic freeze	7-15 seconds	Ablation of the granulation tissue
+ 
+Bronchial alveolar lavage was performed at Superior Segment of LLL (LB6), Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Left lower lobe BAL
+Left mainstem stent
+ 
+IMPRESSION/PLAN:[REDACTED] is a 70 year old-year-old male who presents for bronchoscopy for airway stent inspection.
+ 
+-Stent removed
+-Follow up bronchoscopy in ~2-3 weeks to reinspect the site of previous stent
+

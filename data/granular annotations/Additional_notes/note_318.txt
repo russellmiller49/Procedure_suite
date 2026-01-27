@@ -1,0 +1,103 @@
+NOTE_ID: note_318	SOURCE_FILE: note_318.txt
+INDICATION FOR OPERATION:  [REDACTED]is a 80 year old-year-old male who presents with Recurrent Effusion.  The nature, purpose, risks, benefits and alternatives to Chest Ultrasound, Tunnel Pleural Catheter Placement, and Thoracoscopy with biopsy and chemical pleurodesis were discussed with the patient in detail.  Patient indicated a wish to proceed with procedure and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS:  Recurrent Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+ 
+PROCEDURE:  
+76604 Ultrasound, chest (includes mediastinum), real time with image documentation
+32609 Thoracoscopy; with biopsy(ies) of pleura
+32650 Thoracoscopy, surgical; with pleurodesis (eg, mechanical or chemical)
+ 
+SEDATION: MAC per Anesthesia
+  
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+PROCEDURE IN DETAIL:
+All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: 
+ 
+? Lateral Decubitus:  ?  ? Left 
+ 
+CHEST ULTRASOUND FINDINGS:  ? Image saved and uploaded to PACS 
+Hemithorax:   ? Right
+ 
+Pleural Effusion: 
+Volume:         ? Moderate  ?
+Echogenicity:   ? Anechoic  
+Loculations:  ? None
+Diaphragmatic Motion:  ? Normal  ?  
+Lung: 
+Lung sliding before procedure:   ? Present  ?  
+Lung sliding post procedure:   ? Present  ?  
+Lung consolidation/atelectasis: ? Present  ?   
+Pleura:  ? Normal  ? 
+ 
+Insertion site prepped and draped in sterile fashion.
+ 
+ANESTHESIA:   Lidocaine 1%: 10 ml      
+Entry Site: 
+? Right 6th Intercostal Space   
+Posterior-axillary  ?
+PROCEDURE FINDINGS: 
+A time-out was performed in which the patient, operative procedure and operative sites were confirmed among with the nursing, surgical and anesthesia teams.  
+ 
+The skin and underlying tissue at the proposed trocar insertion site was anesthetized with 1% lidocaine. A skin incision of approximately 1cm was made in the 6th intercostal space in the posterior axillary line. The pleural space was accessed under direct visualization using the rigid pleuroscope with optical trocar over the superior border of the lower rib to avoid neuromuscular bundle injury.
+ 
+Initial thoracoscopic survey demonstrates no nodularity along the anterior or posterior chest wall no atop the diaphragm. There is some anthracotic pigment atop the diaphragm and at the visualized lung. Biopsies of the posterior chest wall/parietal pleura were obtained with the use of the cupped and curved rigid forceps.  
+ 
+ANTERIOR CHEST WALL
+
+ 
+ANTERIOR DIAPHRAGM
+
+ 
+POSTERIOR DIAPHRAGM AND CHEST WALL
+
+ 
+VIEW TOWARD APEX/CUPOLA
+
+ 
+POSTERIOR CHEST WALL
+
+ 
+POSTERIOR CHEST WALL
+
+ 
+Biopsy Taken:  ?   ? Yes, number: 8
+Pleurodesis:     ?   ? Yes, 4 g of sterile talc
+Sutured: ? Yes ?  
+ 
+Fluid Removed: 1550 ml 
+? Serous  
+ 
+Drainage device:   ? Pleurovac    ? 
+Suction: ?  ?Yes, - 20 cmH20 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.   
+ 
+SPECIMEN(S): 
+    ? LDH                        ?Glucose       ?T. Protein    ?Cholesterol
+?Cell Count   ? ADA             ?Triglycerides            ?Amylase 
+?Gram Stain/ Culture            ?AFB                         ?Fungal Culture 
+?Cytology      ??Pathology
+ 
+CXR ordered: ? Yes ?
+ 
+COMPLICATIONS:
+?None 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 80 year old-year-old male who presents for Chest Ultrasound and Thoracoscopy with biopsy and chemical pleurodesis.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+--Post procedure CXR
+--Admission to Hospital Medicine for pain control and pleural fluid management
+--Follow up pleural fluid studies
+ 
+ 
+DISPOSITION: Nursing Unit
+ 
+
+

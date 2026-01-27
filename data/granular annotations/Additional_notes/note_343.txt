@@ -1,0 +1,59 @@
+NOTE_ID: note_343	SOURCE_FILE: note_343.txt
+INDICATION FOR OPERATION: [REDACTED] is a 70 year old-year-old male who presents with bronchial stenosis of left mainstem bronchus after transplant.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31635 Foreign body removal
+ 
+General Anesthesia
+
+ 
+ANESTHESIA: 
+Local anesthesia with: SEE MAR
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   <5mL
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+The therapeutic bronchoscope was inserted into the LMA and advanced to the carina. Bilateral airway inspection showed anastomosis on right was intact. No significant obstruction by granulation tissue. There was normal anatomic branching on right. Similarly left anastomosis was seen.  Stent was 90% obstructed with tenacious and thick mucous. Once this was cleared the left mainstem was able traversed and inspected and there was normal anatomic branching. The stent had migrated distally by a few millimeters, though still maintaining adequate patency. 
+ 
+Bronchial alveolar lavage was performed at Left mainstem.  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+Successful therapeutic aspiration was performed to clean out the Left mainstem from mucus plug. The foreign body was able to be aspirated after lavage and scrubbing. Sample sent for cell count and culture.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+ 
+L mainstem BAL
+ 
+IMPRESSION/PLAN:[REDACTED] is a 70 year old-year-old male who presents for bronchoscopy for stent inspection. Stent place 1/5. Already very obstructed with mucous. There is question of possible distal migration as well. We added guaifenisin and flutter valve to his regimen. It isn't clear if he is doing his regimen or how frequently. We asked him to make sure he is doing it TID and in appropriate order to prevent this from getting clogged again. He needs another bronch in 2-3 weeks, original plan of 4-6 weeks is too long based on how this stent appeared. 
+ 
+[ ] follow up cultures from mucous. 
+[ ] repeat bronch in 2-3 weeks for stent evaluation and possible revision (anticoagulation should be held)
+ 
+Caleb James Taylor, MD, MPH
+1/19/2024 
+ 
+I confirm that I was present for all portions of the service, including a review of the patient's history and other pertinent data. I personally examined the patient, and formulated the evaluation and/or treatment plan. I was present for the entirety of the procedure.  I have reviewed the note of Taylor, Caleb James, MD, MPH  and agree with the findings documented in the note, with any exceptions as noted below.
+ 
+Jorge Alberto Munoz Pineda, MD
+1/19/2024

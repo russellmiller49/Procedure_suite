@@ -1,0 +1,101 @@
+NOTE_ID: note_339	SOURCE_FILE: note_339.txt
+INDICATION FOR OPERATION: [REDACTED] is a 62 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31640 Bronchoscopy with excision 
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+31635 Foreign body removal
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP UCSD CODE MOD DETAILS: 
+Unusual Procedure:
+This patient required cryotherapy/Cryospray to multiple areas. This resulted in >50% increased work due to Time, Technical difficulty of procedure, and Physical and mental effort required. Apply to: 31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy). 
+ 
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+Initial Airway Examination Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Not fully assessed due to bronchoscopy introduction through LMA.
+Vocal Cords: Normal without mass/lesions
+Trachea: Normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Lung transplant anastomosis suture site noted, no stenosis. Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: covered metallic stent noted in the distal LMSB. Adherent thick yellow mucus within stent. Distal airways were normal and were examined tot he segmental level.
+Mucosa: Normal with the exception of friable granulation tissue around LMSB stent
+Secretions: As described above.  
+ 
+View of LMSB stent at the outset of the bronchoscopy:
+
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+After induction of muscle relaxants, tooth or gum protector was placed. The black rigid barrel was introduced through the mouth and advanced in the midline while keeping the alignment with the axis of the trachea and minimizing pressure to the teeth. The vocal cords were identified and the rigid bronchoscope was advanced carefully while minimizing contact with them. Once the rigid bronchoscope was positioned at the mid-trachea, jet ventilation was initiated and chest wall movement was confirmed. 
+ 
+The rigid scope was positioned at the proximal left mainstem bronchus and the rigid forceps were introduced through the rigid barrel to grasp the stent. The stent/foreign body was subsequently removed through rigid barrel.
+ 
+The LMSB was re-examined (now without the stent in place) and was noted to have narrowing and erythematous, friable tissue. These areas were treated with mechanical debridement and cryotherapy/Cryospray.
+ 
+Modality	Tools	Setting/Mode	Duration	Results
+Mechanical	Pulmonary forceps (1.7mm)	N/A	N/A	Good granulation tissue debridement
+Cryoprobe	Cryospray probe	Low flow setting
+ 
+Site 1: 6 applications
+ 
+Site 2: 3 applications	10-second applications	Good relief of stenosis and hemostasis
+ 
+VIEW OF AIRWAYS AFTER STENT REMOVAL AND CRYOSPRAY
+ 
+Main Carina:
+
+ 
+View from proximal LMSB:
+
+ 
+Area of granulation tissue and stenosis at distal LMSB:
+
+ 
+View at distal LMSB:
+
+ 
+View at distal LMSB:
+
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--LMSB stent (path)
+--Forceps biopsies of left mainstem bronchus granulation tissue
+ 
+IMPRESSION/PLAN:[REDACTED] is a 62 year old-year-old male who presents for bronchoscopy for evaluation of bronchial stenosis. The patient was noted to have mucus within his previously-placed LMSB stent. The stent was removed to allow for a stent holiday and to re-eval his stenosis. The LMSB was treated with Cryospray. Patient tolerated all of the above and there were no immediate complications.
+ 
+--F/u path results and biopsy results
+--Outpatient follow-up in Interventional Pulmonology clinic as scheduled on [REDACTED]
+--Repeat bronchoscopy for re-evaluation and additional Cryospray therapy on [REDACTED]
+

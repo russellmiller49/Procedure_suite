@@ -1,0 +1,81 @@
+NOTE_ID: note_357	SOURCE_FILE: note_357.txt
+NDICATION FOR OPERATION: [REDACTED] is a 62 year old-year-old male who presents with bronchial stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31624 Dx bronchoscope/lavage (BAL)    
+31640 Bronchoscopy with excision 
+31635 Foreign body removal
+  
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: Supine
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Not fully assessed due to bronchoscopy introduction through LMA.
+Vocal Cords: Normal without mass/lesions
+Trachea: Normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Anastomosis site with sutures in place, no e/o dehiscence. Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: LMSB stent in place with thick yellow mucus within. Distal migration of stent noted with slight occlusion of LUL. Otherwise, normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+DISTAL LMSB STENT
+
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+Pulmonary forceps were used to grasp the LMSB stent and remove it en bloc with the flexible bronchoscope.
+ 
+The LMSB was observed on PEEP of 5 cmH2O and there was mild malacia but more distally, the LMSB was more open and without significant malacia.
+ 
+PEEP was brought down to 0 cm H2O and there was no significant worsening in the patient's LMSB malacia.
+ 
+PROXIMAL LMSB ON PEEP OF 0 CMH2O
+
+ 
+DISTAL LMSB
+
+ 
+Slight granulation tissue was noted at the proximal and mid LMSB. This was removed with pulmonary forceps.
+ 
+Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3).  Instilled 60 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--LMSB stent (path)
+--LMSB forceps biopsies
+--LUL BAL (cell count, micro, cyto)
+ 
+IMPRESSION/PLAN:[REDACTED] is a 62 year old-year-old male who presents for bronchoscopy for evaluation of bronchial stenosis. The patient's LMSB stent was removed and granulation tissue was excised with forceps. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--Post procedure CXR
+--Follow up path, biopsy, and BAL results
+--Repeat bronchoscopy in 2-3 weeks for re-evaluation
+ 
+ 
+

@@ -1,0 +1,70 @@
+NOTE_ID: note_292	SOURCE_FILE: note_292.txt
+INDICATION FOR OPERATION:  [REDACTED] is a 58 year old-year-old male who presents with respiratory failure.  The nature, purpose, risks, benefits and alternatives to EGD and PEG tube placement were discussed with the patient or surrogate decision-maker in detail.  Patient or surrogate decision-maker indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J96.90 Respiratory Failure
+ 
+POSTOPERATIVE DIAGNOSIS:  J96.90 Respiratory Failure
+ 
+PROCEDURE:  
+43246 Esophagogastroduodenoscopy, flexible, transoral; with directed placement of percutaneous gastrostomy tube
+
+ 
+ANESTHESIA: 
+99152 Moderate sedation: initial 15 minutes
+99153 Moderate sedation: each additional 15 minutes 
+ 
+Procedure performed under moderate sedation.  
+ 
+The following medications were provided (concurrent with tracheostomy placement):
+Versed             3 mg
+Fentanyl          100 mcg
+Etomidate20mg
+Rocuronium80mg
+ 
+Physician/patient face-to-face anesthesia start time:   1600
+Physician/patient face-to-face anesthesia stop time:   1829
+Total moderate sedation time was 149 minutes.  
+ 
+Patient was monitored continuously one-to-one throughout the entire procedure by the attending physician while anesthesia was administered.   Sedation was administered by ICU RN. 
+ 
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  All procedure related images were saved and archived in Media folder on Onedrive behind UCSD firewall, relevant images are also uploaded to PACS system or in the media section of the patient's chart. 
+ 
+PATIENT POSITION: Supine
+ 
+Under sterile prep and draping, the abdomen was evaluated and 2 cm below the costal margin on the left, the likely point of insertion was identified. 
+The scope was introduced through the mouth without difficulty and with continuous insufflation, the stomach was reached within 10 seconds. Then, the point of digital pressure was identified in the stomach and transillumination was accomplished successfully and without any doubts. 
+At this point, a 1cm incision was carried out in the skin and a 14ga angiocath was introduced. Using modified Seldinger technique, the angiocath was advanced and a wire was introduced. Using pull through technique, the guide wire was pulled through the mouth and linked to the 20Fr PEG catheter in usual fashion. Thereafter, the wire was pulled through the abdominal wall and the PEG tube positioned correctly with the bumper at 4.5 cm. The remaining air was suctioned out and complete apposition of the stomach and esophagus was seen. There were no complications. 
+The total procedural time was 28 minutes.
+ 
+INSTRUCTIONS:
+PEG can be used for medications 6 hrs post procedure (@2320)
+PEG (or NG tube) can be used for feeds 6 hrs post procedure (@2320). No enteral feeding prior.
+OK to restart systemic anticoagulation @2320, if needed.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was in stable condition. 
+ 
+SPECIMEN(S): 
+--None
+ 
+IMPRESSION/PLAN: [REDACTED] is a 58 year old-year-old male who presents for EGD and Percutaneous Endoscopic Gastrostomy tube placement. Patient tolerated the procedure well and there were no immediate complications.
+ 
+--PEG can be used for medications 6 hrs post procedure (@2320)
+--PEG (or NG tube) can be used for feeds 6 hrs post procedure (@2320). No enteral feeding prior.
+--OK to restart systemic anticoagulation @2320, if needed.
+--If required to place gauze underneath the skin bumper, please use only 1 thin layer and change as needed, as this can lead to tension on the gastric cuff and result in complication.
+--Please call the Interventional pulmonary fellow on call should there be any issues with the PEG. 
+ 
+

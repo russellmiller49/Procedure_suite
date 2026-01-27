@@ -1,0 +1,80 @@
+NOTE_ID: note_337	SOURCE_FILE: note_337.txt
+INDICATION FOR OPERATION: [REDACTED] is a 61 year old-year-old male who presents with respiratory.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31622 Dx bronchoscope/cell washing          
+31624 Dx bronchoscope/lavage (BAL)    
+31636 Dilate and bronchial stent initial bronchus
+31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg. laser therapy, cryotherapy)
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   Minimum
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+ 
+Initial Airway Inspection Findings:
+ 
+The airway was inspected. The vocal cords were normal appearing. Lidocaine was applied to the airway.
+ 
+The right anastomosis site was intact and normal appearing. 
+ 
+The left anastomosis site had narrowing and the scope was unable to pass it. Saline was used to irrigate the left lung and clear secretions. 
+ 
+Successful therapeutic aspiration was performed to clean out the Vocal Cord, Subglottic, Trachea (Proximal 1/3), Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and mucus plug. 
+ 
+ 
+Endobronchial obstruction at Left mainstem was treated with the following modalities:
+ 
+Balloon dilation was performed at left mainstem.  8/9/10 Elation balloon was used to perform dilation to 8 mm to 9 mm 10 mm at the left mainstem.  Total 3 inflations with dilation time of 60 seconds each.
+ 
+Balloon dilation was performed at left mainstem.  10/11/12 Elation balloon was used to perform dilation to 10 mm to 11 mm to 12 mm at the left mainstem.  Total 3 inflations with dilation time of 60 seconds each.
+ 
+ 
+
+Modality	Tools	Setting/Mode	Duration	Results
+Electrocautery	 	 	 	 
+APC	 	 	 	 
+Laser	 	 	 	 
+CoreCath	 	 	 	 
+Cryoprobe	1.7 mm	 	30 second circumferential freeze	 
+ 
+Prior to treatment and dilation, affected airway was note to be 50% patent.  After treatment, the airway was 90% patent. 
+ 
+ 
+The following stent (microtech 12x30 mm) was placed in the left mainstem. 
+ 
+Bronchial alveolar lavage was performed at Superior Segment of LLL (LB6), Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 40 cc of NS, suction returned with 15 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus and blood. 
+ 
+ 
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+Left lower lobe BAL
+ 
+IMPRESSION/PLAN:[REDACTED] is a 61 year old-year-old male who presents for bronchoscopy for airway stenosis.
+ 
+-Follow up bronchoscopy in 3-6 weeks
+-Stent hydration with nebulizer at home
+
+

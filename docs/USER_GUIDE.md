@@ -202,6 +202,13 @@ python scripts/registry_pipeline_smoke_batch.py --notes-dir path/to/notes
 
 python scripts/registry_pipeline_smoke_batch.py --output my_results.txt --self-correct --real-llm
 python scripts/registry_pipeline_smoke_batch.py --output my_results_V2.txt --self-correct --real-llm
+
+python scripts/registry_pipeline_smoke_batch.py \
+  --notes-dir "data/granular annotations/Additional_notes" \
+  --count 96 \
+  --output my_results.txt \
+  --self-correct \
+  --real-llm
 ```
 
 **Output file format:**
@@ -278,6 +285,12 @@ python -c "import os; print('LLM_PROVIDER:', os.getenv('LLM_PROVIDER', 'gemini (
 
 # Check if API keys are set (without showing values)
 python -c "import os; print('GEMINI_API_KEY:', 'SET' if os.getenv('GEMINI_API_KEY') else 'NOT SET'); print('OPENAI_API_KEY:', 'SET' if os.getenv('OPENAI_API_KEY') else 'NOT SET')"
+
+python scripts/unified_pipeline_batch.py \
+  --notes-dir "data/granular annotations/Additional_notes" \
+  --count 20 \
+  --output my_results.txt \
+  --real-llm
 ```
 
 **Output file format:**

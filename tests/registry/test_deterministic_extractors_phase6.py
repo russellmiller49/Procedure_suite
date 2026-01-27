@@ -1,6 +1,7 @@
 import pytest
 
 from modules.registry.deterministic_extractors import (
+    extract_chest_tube,
     extract_ipc,
     extract_navigational_bronchoscopy,
     run_deterministic_extractors,
@@ -48,3 +49,10 @@ def test_run_deterministic_extractors_includes_pleural_ipc():
     text = "Procedure: PleurX catheter placement for malignant pleural effusion."
     seed = run_deterministic_extractors(text)
     assert seed.get("pleural_procedures", {}).get("ipc", {}).get("performed") is True
+
+
+def test_chest_tube_existing_left_in_place_maps_to_repositioning() -> None:
+    text = "Existing chest tube was left in place and connected to suction."
+    out = extract_chest_tube(text)
+    assert out.get("chest_tube", {}).get("performed") is True
+    assert out.get("chest_tube", {}).get("action") == "Repositioning"
