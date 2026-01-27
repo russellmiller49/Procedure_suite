@@ -146,6 +146,7 @@ __all__ = [
     "populate_ebus_node_events_fallback",
     "sanitize_ebus_events",
     "reconcile_ebus_sampling_from_specimen_log",
+    "enrich_ebus_node_event_sampling_details",
     "enrich_ebus_node_event_outcomes",
     "enrich_linear_ebus_needle_gauge",
     "enrich_medical_thoracoscopy_biopsies_taken",
@@ -2859,7 +2860,9 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
         if meta:
             seen_confirmed.add(station_token)
             setattr(event, "action", "needle_aspiration")
-            setattr(event, "evidence_quote", meta.get("evidence_quote") or getattr(event, "evidence_quote", None))
+            existing_quote = getattr(event, "evidence_quote", None)
+            if not (isinstance(existing_quote, str) and existing_quote.strip()):
+                setattr(event, "evidence_quote", meta.get("evidence_quote") or existing_quote)
         elif getattr(event, "action", None) in sampling_actions:
             setattr(event, "action", "inspected_only")
 
@@ -2880,6 +2883,142 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
         setattr(linear, "stations_sampled", confirmed if confirmed else None)
 
     warnings.append(f"EBUS_SPECIMEN_OVERRIDE: stations_sampled={confirmed} from specimen log TBNA entries.")
+    return warnings
+
+
+_EBUS_SITE_HEADER_RE = re.compile(r"(?im)^\s*site\s+(?P<num>\d{1,2})\s*:\s*")
+_EBUS_PASSES_RE = re.compile(
+    r"\b(?P<count>\d{1,2})\b[^.\n]{0,80}\b(?:needle\s+passes?|passes?|endobronchial\s+ultrasound\s+guided\s+transbronchial\s+biops(?:y|ies))\b",
+    re.IGNORECASE,
+)
+_EBUS_ELASTO_TYPE_RE = re.compile(r"\btype\s*(?P<num>[1-3])\b[^.\n]{0,80}\belastograph", re.IGNORECASE)
+
+
+def _compact_evidence_quote(text: str, *, limit: int = 420) -> str:
+    quote = re.sub(r"\s+", " ", (text or "").strip())
+    if len(quote) <= limit:
+        return quote
+    return quote[:limit].rstrip()
+
+
+def enrich_ebus_node_event_sampling_details(record: RegistryRecord, full_text: str) -> list[str]:
+    """Populate per-station EBUS sampling details (passes + elastography) from narrative blocks.
+
+    Motivation: avoid "lazy evidence" where specimen logs overwrite richer narrative
+    details like elastography grading and per-station sampling counts.
+    """
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    if linear is None or getattr(linear, "performed", None) is not True:
+        return warnings
+
+    node_events = getattr(linear, "node_events", None)
+    if not isinstance(node_events, list) or not node_events:
+        return warnings
+    if not full_text:
+        return warnings
+
+    try:
+        from modules.ner.entity_types import normalize_station
+    except Exception:
+        normalize_station = None  # type: ignore[assignment]
+
+    details: dict[str, dict[str, object]] = {}
+    site_headers = list(_EBUS_SITE_HEADER_RE.finditer(full_text))
+    for idx, match in enumerate(site_headers):
+        start = match.start()
+        end = site_headers[idx + 1].start() if idx + 1 < len(site_headers) else len(full_text)
+        block = full_text[start:end].strip()
+        if not block:
+            continue
+
+        station_match = _EBUS_STATION_TOKEN_RE.search(block)
+        if not station_match:
+            continue
+        station_raw = station_match.group(1) or ""
+        station = station_raw.strip().upper()
+        if normalize_station is not None:
+            station = normalize_station(station) or station
+        station = station.strip().upper()
+        if not station:
+            continue
+
+        passes_val: int | None = None
+        m_passes = _EBUS_PASSES_RE.search(block)
+        if m_passes:
+            try:
+                passes_val = int(m_passes.group("count"))
+            except Exception:
+                passes_val = None
+
+        pattern_val: str | None = None
+        m_type = _EBUS_ELASTO_TYPE_RE.search(block)
+        if m_type:
+            try:
+                num = int(m_type.group("num"))
+            except Exception:
+                num = None
+            if num in (1, 2, 3):
+                pattern_val = f"Type {num}"
+
+        evidence_quote = _compact_evidence_quote(block)
+        details[station] = {
+            "passes": passes_val,
+            "elastography_pattern": pattern_val,
+            "evidence_quote": evidence_quote,
+        }
+
+    if not details:
+        return warnings
+
+    updated: list[str] = []
+    for event in node_events:
+        station_raw = getattr(event, "station", None)
+        if not isinstance(station_raw, str) or not station_raw.strip():
+            continue
+        station = station_raw.strip().upper()
+        if normalize_station is not None:
+            station = normalize_station(station) or station
+        station = station.strip().upper()
+        meta = details.get(station)
+        if not meta:
+            continue
+
+        existing_passes = getattr(event, "passes", None)
+        if existing_passes is None and isinstance(meta.get("passes"), int):
+            setattr(event, "passes", meta["passes"])
+
+        existing_pattern = getattr(event, "elastography_pattern", None)
+        if existing_pattern in (None, "") and isinstance(meta.get("elastography_pattern"), str):
+            setattr(event, "elastography_pattern", meta["elastography_pattern"])
+            if getattr(linear, "elastography_used", None) is not True:
+                setattr(linear, "elastography_used", True)
+
+        quote = meta.get("evidence_quote")
+        if isinstance(quote, str) and quote.strip():
+            existing_quote = getattr(event, "evidence_quote", None)
+            existing_text = existing_quote.strip().lower() if isinstance(existing_quote, str) else ""
+            # Prefer narrative excerpts when they contain granularity not present in the
+            # existing quote (which is often specimen-log-derived).
+            needs_upgrade = False
+            if not existing_text:
+                needs_upgrade = True
+            elif isinstance(meta.get("passes"), int) and "pass" not in existing_text and "biops" not in existing_text:
+                needs_upgrade = True
+            elif isinstance(meta.get("elastography_pattern"), str) and "type" not in existing_text:
+                needs_upgrade = True
+            if needs_upgrade:
+                setattr(event, "evidence_quote", quote)
+
+        updated.append(station)
+
+    if updated:
+        warnings.append(
+            "AUTO_EBUS_GRANULARITY: populated passes/elastography for "
+            f"{sort_ebus_stations(set(updated))}"
+        )
+
     return warnings
 
 _EBUS_STATION_LIST_HEADER_RE = re.compile(

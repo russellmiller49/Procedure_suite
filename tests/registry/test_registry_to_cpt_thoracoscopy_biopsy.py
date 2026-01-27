@@ -33,6 +33,22 @@ def test_registry_to_cpt_thoracoscopy_without_biopsy_derives_32601() -> None:
     assert "32609" not in codes
 
 
+def test_registry_to_cpt_thoracoscopy_with_pleurodesis_derives_32650_and_suppresses_32601_and_32560() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "pleural_procedures": {
+                "medical_thoracoscopy": {"performed": True},
+                "pleurodesis": {"performed": True, "agent": "Talc", "talc_dose_grams": 4},
+            }
+        }
+    )
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "32650" in codes
+    assert "32601" not in codes
+    assert "32560" not in codes
+
+
 def test_postprocess_sets_medical_thoracoscopy_biopsies_taken_from_text() -> None:
     record = RegistryRecord.model_validate(
         {

@@ -61,7 +61,7 @@ def test_registry_record_normalizes_therapeutic_aspiration_material() -> None:
     )
     assert record2.procedures_performed
     assert record2.procedures_performed.therapeutic_aspiration
-    assert record2.procedures_performed.therapeutic_aspiration.material in {"Mucus plug", "Other"}
+    assert record2.procedures_performed.therapeutic_aspiration.material in {"Mucus", "Mucus plug", "Other"}
 
 
 def test_registry_to_cpt_derives_elastography_codes() -> None:

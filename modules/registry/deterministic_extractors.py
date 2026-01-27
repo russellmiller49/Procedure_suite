@@ -645,10 +645,13 @@ IPC_PATTERNS = [
     r"\bpleurx\b",
     r"\baspira\b",
     r"\btunne(?:l|ll)ed\s+pleural\s+catheter\b",
+    r"\btunnel(?:ing)?\s+pleural\s+catheter\b",
     r"\bindwelling\s+pleural\s+catheter\b",
     r"\bipc\b[^.\n]{0,30}\b(?:catheter|drain)\b",
     r"\brocket\b[^.\n]{0,40}\b(?:ipc|catheter|pleur)\b",
     r"\btunne(?:l|ll)ed\s+catheter\b",
+    r"\btunnel(?:ing)?\s+catheter\b",
+    r"\btunneling\s+device\b",
 ]
 
 # Therapeutic aspiration patterns (exclude routine suction)
@@ -681,6 +684,10 @@ AIRWAY_STENT_DEVICE_PATTERNS = [
     r"\baerstent\b",
     r"\bultraflex\b",
     r"\bsems\b",
+    # Some bronchoscopy notes refer to an occlusive airway device as a "vascular plug"
+    # without using the term "stent"; this is still billed under 31638 when revised.
+    r"\bvascular\s+plug\b",
+    r"\bendobronchial\s+plug\b",
 ]
 
 AIRWAY_STENT_PLACEMENT_PATTERNS = [
@@ -883,16 +890,52 @@ def extract_bal(note_text: str) -> Dict[str, Any]:
     """Extract BAL (bronchoalveolar lavage) procedure indicator.
 
     Returns:
-        Dict with 'bal': {'performed': True} if BAL detected, empty dict otherwise
+        Dict with 'bal' fields populated when detected, empty dict otherwise
     """
-    text_lower = note_text.lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text = preferred_text or ""
+    text_lower = text.lower()
 
     for pattern in BAL_PATTERNS:
         if re.search(pattern, text_lower, re.IGNORECASE):
             # Check for negation
             negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,40}" + pattern
             if not re.search(negation_check, text_lower, re.IGNORECASE):
-                return {"bal": {"performed": True}}
+                bal: dict[str, Any] = {"performed": True}
+
+                # Location: prefer narrative phrasing over specimen/headers.
+                loc_match = re.search(
+                    r"(?i)\b(?:bronch(?:ial)?\s+alveolar\s+lavage|broncho[-\s]?alveolar\s+lavage|BAL)\b"
+                    r"[^.\n]{0,60}\b(?:was\s+)?performed\b[^.\n]{0,60}\b(?:at|in)\b\s+(?P<loc>[^.\n]{3,140})",
+                    text,
+                )
+                if loc_match:
+                    loc = (loc_match.group("loc") or "").strip().strip(" ,;:-")
+                    if loc and loc.lower() != "bal":
+                        bal["location"] = loc
+
+                instilled_match = re.search(
+                    r"(?i)\b(?:instilled|infused)\s+(?P<num>\d{1,4})\s*(?:cc|ml)\b",
+                    text,
+                )
+                if instilled_match:
+                    try:
+                        bal["volume_instilled_ml"] = int(instilled_match.group("num"))
+                    except Exception:
+                        pass
+
+                recovered_match = re.search(
+                    r"(?i)\b(?:return(?:ed)?|recovered|suction\s*returned)\s+(?:with\s+)?(?P<num>\d{1,4})\s*(?:cc|ml)\b",
+                    text,
+                )
+                if recovered_match:
+                    try:
+                        bal["volume_recovered_ml"] = int(recovered_match.group("num"))
+                    except Exception:
+                        pass
+
+                return {"bal": bal}
     return {}
 
 
@@ -920,10 +963,14 @@ def extract_therapeutic_aspiration(note_text: str) -> Dict[str, Any]:
             if not re.search(negation_check, text_lower, re.IGNORECASE):
                 # Determine material type
                 material = None
-                if "mucus" in text_lower or "plug" in text_lower:
-                    material = "Mucus plug"
-                elif "clot" in text_lower or "blood" in text_lower:
+                if "clot" in text_lower or "blood" in text_lower:
                     material = "Blood/clot"
+                elif "purulent" in text_lower or "pus" in text_lower:
+                    material = "Purulent secretions"
+                elif re.search(r"(?i)\bmucus\s+plug(?:ging)?\b", text_lower):
+                    material = "Mucus plug"
+                elif "mucus" in text_lower:
+                    material = "Mucus"
                 result = {"therapeutic_aspiration": {"performed": True}}
                 if material:
                     result["therapeutic_aspiration"]["material"] = material
@@ -946,7 +993,10 @@ def _stent_action_window_hit(text_lower: str, *, verbs: list[str]) -> bool:
     if not text_lower:
         return False
 
-    device = r"(?:stent|y-?\s*stent|dumon|aero(?:stent)?|aerstent|ultraflex|sems|silicone\s+stent|metal(?:lic)?\s+stent)"
+    device = (
+        r"(?:stent|y-?\s*stent|dumon|aero(?:stent)?|aerstent|ultraflex|sems|"
+        r"silicone\s+stent|metal(?:lic)?\s+stent|vascular\s+plug|endobronchial\s+plug)"
+    )
     verb_union = "|".join(verbs)
     patterns = [
         rf"\b{device}\b[^.\n]{{0,80}}\b(?:{verb_union})\w*\b",
@@ -1081,6 +1131,19 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
     if not has_placement and not has_removal:
         return {}
 
+    revision_window_hit = _stent_action_window_hit(
+        text_lower,
+        verbs=["revis", "reposition", "adjust", "manipulat"],
+    )
+    proximally_hint = bool(
+        re.search(
+            r"\b(?:bring|brought|pull|pulled|move|moved|advance|advanced)\b[^.\n]{0,80}\bproxim(?:al|ally)\b",
+            text_lower,
+            re.IGNORECASE,
+        )
+    )
+    revision_hint = revision_window_hit or proximally_hint
+
     # Exclude explicit history-only removal (e.g., "stent removed 2 years ago").
     removal_history = bool(
         re.search(
@@ -1102,6 +1165,8 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
     if has_removal and has_placement:
         proc["action"] = "Revision/Repositioning"
         proc["airway_stent_removal"] = True
+    elif revision_hint and (has_removal or has_placement):
+        proc["action"] = "Revision/Repositioning"
     elif has_removal:
         proc["action"] = "Removal"
         proc["airway_stent_removal"] = True
@@ -1347,6 +1412,11 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
         r"\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b",
         re.IGNORECASE,
     )
+    nodal_ebus_context_re = re.compile(
+        r"\b(?:endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna|linear\s+ebus)\b",
+        re.IGNORECASE,
+    )
+    note_has_nodal_ebus = bool(nodal_ebus_context_re.search(raw_text))
 
     def _local_context(text: str, start: int, end: int, before_lines: int = 4, after_lines: int = 4) -> str:
         line_start = start
@@ -1369,6 +1439,9 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
 
         return text[line_start:line_end]
 
+    nodal_stations: set[str] = set()
+    peripheral_hit = False
+
     for pattern in TBNA_CONVENTIONAL_PATTERNS:
         for match in re.finditer(pattern, raw_text, re.IGNORECASE):
             # Treat TBNA mentions inside an EBUS paragraph as EBUS-TBNA, not conventional TBNA.
@@ -1385,21 +1458,43 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
             if re.search(r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}$", before, re.IGNORECASE):
                 continue
 
-            tbna: dict[str, Any] = {"performed": True}
-            # Only look backward (and same line) for station context to avoid
-            # "stealing" EBUS station lists that appear later in the note.
-            context = _local_context(raw_text, match.start(), match.end(), before_lines=2, after_lines=0)
-            stations = _extract_ln_stations_from_text(context)
+            # Prefer station tokens on the same line as the TBNA mention; this avoids
+            # "bleeding" stations from specimen logs or later EBUS station lists.
+            line_start = raw_text.rfind("\n", 0, match.start())
+            line_start = 0 if line_start == -1 else line_start + 1
+            line_end = raw_text.find("\n", match.end())
+            line_end = len(raw_text) if line_end == -1 else line_end
+            line = raw_text[line_start:line_end]
+            stations = _extract_ln_stations_from_text(line)
+
+            if not stations:
+                # Some templates put the station token on the preceding line; allow a
+                # one-line lookback but ignore specimen headings.
+                prev_end = line_start - 1
+                if prev_end > 0:
+                    prev_start = raw_text.rfind("\n", 0, prev_end)
+                    prev_start = 0 if prev_start == -1 else prev_start + 1
+                    prev_line = raw_text[prev_start:prev_end]
+                    if prev_line and not re.search(r"(?i)\bspecimen", prev_line):
+                        stations = _extract_ln_stations_from_text(prev_line)
             if stations:
-                tbna["stations_sampled"] = stations
-                return {"tbna_conventional": tbna}
+                # When the note contains nodal EBUS language anywhere, station-based TBNA mentions
+                # are more likely EBUS-TBNA than conventional (prevents phantom tbna_conventional).
+                if note_has_nodal_ebus:
+                    continue
+                for station in stations:
+                    if station:
+                        nodal_stations.add(str(station).upper().strip())
+                continue
 
-            # If no nodal station context is found, treat this as peripheral/lung TBNA.
-            peripheral_tbna: dict[str, Any] = {"performed": True}
-            peripheral_tbna["targets_sampled"] = ["Lung Mass"]
-            return {"peripheral_tbna": peripheral_tbna}
+            peripheral_hit = True
 
-    return {}
+    result: dict[str, Any] = {}
+    if nodal_stations:
+        result["tbna_conventional"] = {"performed": True, "stations_sampled": sorted(nodal_stations)}
+    if peripheral_hit:
+        result["peripheral_tbna"] = {"performed": True, "targets_sampled": ["Lung Mass"]}
+    return result
 
 
 def extract_linear_ebus(note_text: str) -> Dict[str, Any]:
@@ -1893,16 +1988,22 @@ def extract_ipc(note_text: str) -> Dict[str, Any]:
     if matched_pattern.startswith(r"\bipc\b") and not re.search(r"(?i)\b(?:pleur|effusion)\b", text):
         return {}
 
-    if matched_pattern == r"\btunne(?:l|ll)ed\s+catheter\b" and not re.search(
+    if matched_pattern in {
+        r"\btunne(?:l|ll)ed\s+catheter\b",
+        r"\btunnel(?:ing)?\s+catheter\b",
+    } and not re.search(
         r"(?i)\b(?:pleur|effusion)\b", text
     ):
         return {}
 
-    proc: dict[str, Any] = {"performed": True}
+    if matched_pattern == r"\btunneling\s+device\b" and not re.search(r"(?i)\b(?:pleur|effusion)\b", text):
+        return {}
 
-    device = (
-        r"(?:pleurx|aspira|tunne(?:l|ll)ed\s+pleural\s+catheter|tunne(?:l|ll)ed\s+catheter|indwelling\s+pleural\s+catheter|ipc)"
-    )
+    proc: dict[str, Any] = {"performed": True}
+    if matched_pattern == r"\btunneling\s+device\b":
+        proc["action"] = "Insertion"
+
+    device = r"(?:pleurx|aspira|tunne(?:l|ll)ed\s+pleural\s+catheter|tunnel(?:ing)?\s+pleural\s+catheter|tunne(?:l|ll)ed\s+catheter|tunnel(?:ing)?\s+catheter|indwelling\s+pleural\s+catheter|ipc)"
 
     def _action_window_hit(*, verbs: list[str]) -> bool:
         verb_union = "|".join(verbs)
@@ -1951,6 +2052,82 @@ def extract_ipc(note_text: str) -> Dict[str, Any]:
         proc["indication"] = "Malignant effusion"
 
     return {"ipc": proc}
+
+
+def extract_pleurodesis(note_text: str) -> Dict[str, Any]:
+    """Extract pleurodesis signals (32560/32650 family)."""
+    text = note_text or ""
+    text_lower = text.lower()
+
+    checkbox = _checkbox_selected(
+        note_text,
+        label_patterns=[
+            r"\bpleurodesis\b",
+            r"chemical\s+pleurodesis",
+            r"\btalc\b",
+            r"\bdoxycycline\b",
+        ],
+    )
+    if checkbox is False:
+        return {}
+
+    if re.search(r"(?i)\b(?:no|not|without)\b[^.\n]{0,60}\bpleurodesis\b", text):
+        return {}
+
+    has_code = re.search(r"(?i)\b(?:32560|32650)\b", text) is not None
+    has_word = re.search(r"(?i)\bpleurodesis\b", text) is not None
+    has_agent = re.search(
+        r"(?i)\b(?:talc|doxycycline|bleomycin|povidone-iodine|silver\s+nitrate)\b",
+        text,
+    ) is not None
+    has_instillation = re.search(
+        r"(?i)\b(?:instill(?:ed|ation)?|slurry|poudrage|insufflat(?:ed|ion)?|sclerosing\s+agent)\b",
+        text,
+    ) is not None
+
+    if not (has_code or has_word or (has_agent and has_instillation)):
+        return {}
+
+    proc: dict[str, Any] = {"performed": True}
+
+    if re.search(r"(?i)\bpoudrage\b|\binsufflat", text):
+        proc["method"] = "Chemical - poudrage"
+    elif re.search(r"(?i)\bslurry\b|\binstill", text) or re.search(
+        r"(?i)\bthrough\b[^.\n]{0,60}\bchest\s+tube\b", text
+    ):
+        proc["method"] = "Chemical - slurry"
+
+    if "doxycycline" in text_lower:
+        proc["agent"] = "Doxycycline"
+    elif "talc" in text_lower:
+        proc["agent"] = "Talc"
+        dose_match = re.search(
+            r"(?i)\b(\d+(?:\.\d+)?)\s*(?:g|grams)\b[^.\n]{0,60}\btalc\b|\btalc\b[^.\n]{0,60}\b(\d+(?:\.\d+)?)\s*(?:g|grams)\b",
+            text,
+        )
+        if dose_match:
+            raw_dose = dose_match.group(1) or dose_match.group(2)
+            try:
+                dose_val = float(raw_dose)
+            except (TypeError, ValueError):
+                dose_val = None
+            if dose_val is not None and 1 <= dose_val <= 10:
+                proc["talc_dose_grams"] = dose_val
+    elif "bleomycin" in text_lower:
+        proc["agent"] = "Bleomycin"
+    elif "povidone" in text_lower and "iodine" in text_lower:
+        proc["agent"] = "Povidone-iodine"
+    elif "silver nitrate" in text_lower:
+        proc["agent"] = "Silver nitrate"
+
+    if "malignant" in text_lower and "effusion" in text_lower:
+        proc["indication"] = "Malignant effusion"
+    elif "pneumothorax" in text_lower:
+        proc["indication"] = "Recurrent pneumothorax"
+    elif "recurrent" in text_lower and "effusion" in text_lower:
+        proc["indication"] = "Recurrent benign effusion"
+
+    return {"pleurodesis": proc}
 
 
 def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
@@ -2125,6 +2302,10 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if ipc_data:
         seed_data.setdefault("pleural_procedures", {}).update(ipc_data)
 
+    pleurodesis_data = extract_pleurodesis(note_text)
+    if pleurodesis_data:
+        seed_data.setdefault("pleural_procedures", {}).update(pleurodesis_data)
+
     return seed_data
 
 
@@ -2162,6 +2343,7 @@ __all__ = [
     "extract_thoracentesis",
     "extract_chest_tube",
     "extract_ipc",
+    "extract_pleurodesis",
     "BAL_PATTERNS",
     "ENDOBRONCHIAL_BIOPSY_PATTERNS",
     "RADIAL_EBUS_PATTERNS",

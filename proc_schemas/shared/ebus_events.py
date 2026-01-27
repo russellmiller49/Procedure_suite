@@ -38,8 +38,9 @@ class NodeInteraction(BaseModel):
     station: str
     action: NodeActionType
     outcome: NodeOutcomeType | None = None
+    passes: int | None = None
+    elastography_pattern: str | None = None
     evidence_quote: str
 
 
 __all__ = ["NodeActionType", "NodeOutcomeType", "NodeInteraction"]
-

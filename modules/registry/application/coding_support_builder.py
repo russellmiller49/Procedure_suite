@@ -301,6 +301,7 @@ def build_coding_support_payload(
     *,
     record: RegistryRecord,
     codes: list[str],
+    code_units: dict[str, int] | None = None,
     code_rationales: dict[str, str] | None = None,
     derivation_warnings: list[str] | None = None,
     kb_repo: KnowledgeBaseRepository | None = None,
@@ -323,6 +324,7 @@ def build_coding_support_payload(
         proc = kb.get_procedure_info(code)
         is_add_on = kb.is_addon_code(code)
         description = proc.description if proc else None
+        units = int((code_units or {}).get(code, 1) or 1)
 
         selection_status = "selected" if code in selected else "dropped"
         selection_reason = (
@@ -360,7 +362,7 @@ def build_coding_support_payload(
                 "code": code,
                 "description": description,
                 "modifiers": modifiers,
-                "units": 1,
+                "units": units,
                 "role": "add_on" if is_add_on else "primary",
                 "selection_status": selection_status,
                 "selection_reason": selection_reason,

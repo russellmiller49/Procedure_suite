@@ -347,7 +347,7 @@ Locations are AIRWAYS, not lung parenchyma:
 - Trachea, RMS (Right Mainstem), LMS (Left Mainstem), Carina
 - Bronchus Intermedius (BI), lobar carinas (RC1, RC2, LC1, LC2)
 
-Material types: "Mucus plug", "Blood/clot", "Purulent secretions", "Other"
+Material types: "Mucus", "Mucus plug", "Blood/clot", "Purulent secretions", "Other"
 
 DO NOT confuse with transbronchial biopsy (tissue sampling from lung parenchyma).""".strip(),
 

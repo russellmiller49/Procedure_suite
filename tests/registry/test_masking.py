@@ -68,3 +68,23 @@ def test_mask_offset_preserving_masks_cpt_code_line() -> None:
 
     first_line = masked.splitlines()[0]
     assert re.search(r"[^\n ]", first_line) is None
+
+
+def test_mask_offset_preserving_masks_empty_table_rows() -> None:
+    raw = (
+        "Modality\tTools\tSetting/Mode\tDuration\tResults\n"
+        "Electrocautery\tKnife\tSoft coag\t4 sec\tRemoved tumor\n"
+        "APC\t\t\t\t\n"
+        "Laser\t\t\t\t\n"
+    )
+    masked = mask_offset_preserving(raw)
+
+    assert len(masked) == len(raw)
+    assert _newline_positions(masked) == _newline_positions(raw)
+
+    apc_start = raw.index("APC")
+    apc_end = raw.index("\n", apc_start) + 1
+    masked_apc_row = masked[apc_start:apc_end]
+    assert re.search(r"[^\n ]", masked_apc_row) is None
+
+    assert "Electrocautery\tKnife" in masked

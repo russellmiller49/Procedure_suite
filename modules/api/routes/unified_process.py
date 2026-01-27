@@ -146,23 +146,44 @@ async def unified_process(
         conversion_factor = settings.cms_conversion_factor
         total_work = 0.0
         total_payment = 0.0
+        units_by_code: dict[str, int] = {}
+
+        billing = getattr(record, "billing", None)
+        cpt_items = []
+        if isinstance(billing, dict):
+            cpt_items = billing.get("cpt_codes") or []
+        else:
+            cpt_items = getattr(billing, "cpt_codes", None) or []
+        if isinstance(cpt_items, list):
+            for item in cpt_items:
+                if not isinstance(item, dict):
+                    continue
+                code = str(item.get("code") or "").strip().lstrip("+")
+                if not code:
+                    continue
+                try:
+                    units_by_code[code] = int(item.get("units") or 1)
+                except (TypeError, ValueError):
+                    units_by_code[code] = 1
 
         for code in codes:
             proc_info = coding_service.kb_repo.get_procedure_info(code)
             if proc_info:
                 work_rvu = proc_info.work_rvu
                 total_rvu = proc_info.total_facility_rvu
-                payment = total_rvu * conversion_factor
+                units = int(units_by_code.get(code, 1) or 1)
+                payment = total_rvu * conversion_factor * units
 
-                total_work += work_rvu
+                total_work += work_rvu * units
                 total_payment += payment
 
                 per_code_billing.append(
                     {
                         "cpt_code": code,
                         "description": proc_info.description,
-                        "work_rvu": work_rvu,
-                        "total_facility_rvu": total_rvu,
+                        "units": units,
+                        "work_rvu": work_rvu * units,
+                        "total_facility_rvu": total_rvu * units,
                         "facility_payment": round(payment, 2),
                     }
                 )

@@ -43,12 +43,13 @@ def test_reconcile_ebus_sampling_from_specimen_log_restricts_station_count() -> 
     assert by_station["7"].action == "needle_aspiration"
     assert by_station["4R"].action == "inspected_only"
 
-    assert by_station["4L"].evidence_quote == "--TBNA of 4L node station"
-    assert by_station["7"].evidence_quote == "--TBNA of 7 node station"
+    # Specimen log should restrict stations sampled, but must not overwrite
+    # richer narrative evidence already present in node_events.
+    assert by_station["4L"].evidence_quote == "4L - 4 passes"
+    assert by_station["7"].evidence_quote == "7 - 8 passes"
 
     assert any("EBUS_SPECIMEN_OVERRIDE" in w for w in warnings)
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
     assert "31652" in codes
     assert "31653" not in codes
-

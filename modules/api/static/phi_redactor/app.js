@@ -4,7 +4,7 @@ const statusTextEl = document.getElementById("statusText");
 const progressTextEl = document.getElementById("progressText");
 const detectionsListEl = document.getElementById("detectionsList");
 const detectionsCountEl = document.getElementById("detectionsCount");
-const serverResponseEl = document.getElementById("serverResponse");
+let serverResponseEl = document.getElementById("serverResponse");
 
 const runBtn = document.getElementById("runBtn");
 const cancelBtn = document.getElementById("cancelBtn");
@@ -119,23 +119,82 @@ function safeSnippet(text, start, end) {
   return `${oneLine.slice(0, 117)}…`;
 }
 
+function formatNumber(value, digits = 2) {
+  if (!Number.isFinite(value)) return "—";
+  return value.toFixed(digits);
+}
+
+function formatCurrency(value) {
+  if (!Number.isFinite(value)) return "—";
+  return `$${value.toFixed(2)}`;
+}
+
 /**
  * Render the formatted results from the server response.
  * Shows status banner, CPT codes table, and registry form.
  */
 function renderResults(data) {
-  const statusBanner = document.getElementById("statusBanner");
-  const cptSection = document.getElementById("cptSection");
-  const registrySection = document.getElementById("registrySection");
-  const serverResponse = document.getElementById("serverResponse");
+  const container = document.getElementById("resultsContainer");
+  container.innerHTML = ""; // Clear previous results
 
   lastServerResponse = data;
   if (exportBtn) exportBtn.disabled = !data;
 
-  // Show raw JSON in collapsible section
-  serverResponse.textContent = JSON.stringify(data, null, 2);
+  // 1. Status Banner (Keep existing logic or simplify)
+  renderStatusBanner(data, container);
 
-  // Render status banner
+  const codingSupport = data.coding_support || data.registry?.coding_support;
+
+  // 2. CPT Coding Summary (Final Selection)
+  if (codingSupport && codingSupport.coding_summary) {
+    container.appendChild(renderCPTSummary(codingSupport.coding_summary.lines || []));
+  } else if (data.per_code_billing) {
+    // Fallback for legacy responses
+    container.appendChild(renderLegacyCPTTable(data));
+  }
+
+  // 3. Bundling & Suppression Decisions
+  if (codingSupport && codingSupport.coding_rationale) {
+    const rules = codingSupport.coding_rationale.rules_applied || [];
+    if (rules.length > 0) {
+      container.appendChild(renderBundlingDecisions(rules));
+    }
+  }
+
+  // 4. RVU & Payment Summary
+  if (data.per_code_billing) {
+    container.appendChild(renderRVUSummary(data.per_code_billing, data.total_work_rvu, data.estimated_payment));
+  }
+
+  // 5. Clinical Context
+  if (data.registry) {
+    container.appendChild(renderClinicalContext(data.registry));
+  }
+
+  // 6. Procedures Performed (Summary + Details)
+  if (data.registry && data.registry.procedures_performed) {
+    container.appendChild(renderProceduresSection(data.registry.procedures_performed));
+  }
+
+  // 7. Audit & QA Notes
+  if (data.audit_warnings && data.audit_warnings.length > 0) {
+    container.appendChild(renderAuditNotes(data.audit_warnings));
+  }
+
+  // 8. Pipeline Metadata
+  container.appendChild(renderPipelineMetadata(data));
+
+  // Show raw JSON toggle at the bottom
+  const details = document.createElement("details");
+  details.className = "raw-json-toggle";
+  details.innerHTML = `<summary>View Raw JSON</summary><pre id="serverResponse">${JSON.stringify(data, null, 2)}</pre>`;
+  container.appendChild(details);
+  serverResponseEl = details.querySelector("#serverResponse");
+}
+
+function renderStatusBanner(data, container) {
+  const statusBanner = document.createElement("div");
+
   if (data.needs_manual_review) {
     statusBanner.className = "status-banner error";
     statusBanner.textContent = "⚠️ Manual review required";
@@ -147,30 +206,274 @@ function renderResults(data) {
     const difficulty = data.coder_difficulty || "HIGH_CONF";
     statusBanner.textContent = `✓ High confidence extraction (${difficulty})`;
   }
-  statusBanner.classList.remove("hidden");
 
-  // Render CPT table
-  if (data.suggestions?.length > 0 || data.cpt_codes?.length > 0) {
-    renderCPTTable(data);
-    cptSection.classList.remove("hidden");
-  } else {
-    cptSection.classList.add("hidden");
+  container.appendChild(statusBanner);
+}
+
+// --- Helper: Create Section Wrapper ---
+function createSection(title, icon) {
+  const div = document.createElement('div');
+  div.className = 'report-section';
+  div.innerHTML = `<div class="report-header">${icon} ${title}</div><div class="report-body"></div>`;
+  return div;
+}
+
+// --- 2. CPT Coding Summary ---
+function renderCPTSummary(lines) {
+  const section = createSection('CPT Coding Summary (Final Selection)', '💳');
+  if (!Array.isArray(lines) || lines.length === 0) {
+    section.querySelector('.report-body').innerHTML = `
+      <div class="subtle" style="text-align:center;">No CPT summary lines returned</div>
+    `;
+    return section;
+  }
+  const tbody = lines.map(line => `
+        <tr class="${line.selection_status === 'dropped' ? 'opacity-50' : ''}">
+            <td>${line.sequence ?? '-'}</td>
+            <td><strong>${line.code || '-'}</strong></td>
+            <td>${line.description || '-'}</td>
+            <td>${line.units ?? '-'}</td>
+            <td><span class="status-badge ${line.role === 'primary' ? 'role-primary' : 'role-addon'}">${line.role || '-'}</span></td>
+            <td><span class="status-badge status-${(line.selection_status || 'selected').toLowerCase()}">${line.selection_status || 'selected'}</span></td>
+            <td>${line.selection_reason || '-'}</td>
+        </tr>
+    `).join('');
+
+  section.querySelector('.report-body').innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Seq</th><th>CPT Code</th><th>Description</th><th>Units</th><th>Role</th><th>Status</th><th>Selection Rationale</th>
+                </tr>
+            </thead>
+            <tbody>${tbody}</tbody>
+        </table>
+    `;
+  return section;
+}
+
+// --- 3. Bundling & Suppression Decisions ---
+function renderBundlingDecisions(rules) {
+  const section = createSection('Bundling & Suppression Decisions', '🧾');
+
+  // Filter for rules that actually affected codes (dropped/informational)
+  const validRules = rules.filter(r => Array.isArray(r.codes_affected) && r.codes_affected.length > 0);
+
+  if (validRules.length === 0) return document.createDocumentFragment();
+
+  const tbody = validRules.map(rule => `
+        <tr>
+            <td>${rule.codes_affected.join(', ')}</td>
+            <td><span class="status-badge status-${rule.outcome === 'dropped' ? 'dropped' : 'suppressed'}">${rule.outcome === 'dropped' ? 'Dropped' : 'Suppressed'}</span></td>
+            <td>${rule.details || '-'}</td>
+        </tr>
+    `).join('');
+
+  section.querySelector('.report-body').innerHTML = `
+        <table class="data-table">
+            <thead><tr><th>CPT Code</th><th>Action</th><th>Reason</th></tr></thead>
+            <tbody>${tbody}</tbody>
+        </table>
+    `;
+  return section;
+}
+
+// --- 4. RVU & Payment Summary ---
+function renderRVUSummary(billingLines, totalRVU, totalPay) {
+  const section = createSection('RVU & Payment Summary', '💰');
+
+  const rows = (Array.isArray(billingLines) ? billingLines : []).map(line => `
+        <tr>
+            <td><strong>${line.cpt_code || '-'}</strong></td>
+            <td>${line.units ?? '-'}</td>
+            <td>${formatNumber(line.work_rvu)}</td>
+            <td>${formatNumber(line.total_facility_rvu)}</td>
+            <td>${formatCurrency(line.facility_payment)}</td>
+        </tr>
+    `).join('');
+
+  const totals = `
+        <tr class="totals-row">
+            <td colspan="2" style="text-align:right">Totals:</td>
+            <td>${formatNumber(totalRVU)}</td>
+            <td>-</td>
+            <td>${formatCurrency(totalPay)}</td>
+        </tr>
+    `;
+
+  section.querySelector('.report-body').innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr><th>CPT Code</th><th>Units</th><th>Work RVU</th><th>Facility RVU</th><th>Est. Payment ($)</th></tr>
+            </thead>
+            <tbody>${rows}${totals}</tbody>
+        </table>
+    `;
+  return section;
+}
+
+// --- 5. Clinical Context ---
+function renderClinicalContext(registry) {
+  const section = createSection('Clinical Context', '🩺');
+  const fields = [];
+
+  if (registry.clinical_context?.primary_indication) fields.push(['Primary Indication', registry.clinical_context.primary_indication]);
+  if (registry.clinical_context?.bronchus_sign) fields.push(['Bronchus Sign', registry.clinical_context.bronchus_sign]);
+  if (registry.sedation?.type) fields.push(['Sedation Type', registry.sedation.type]);
+  if (registry.procedure_setting?.airway_type) fields.push(['Airway Type', registry.procedure_setting.airway_type]);
+
+  const rows = fields.map(([k, v]) => `<tr><td style="width:30%"><strong>${k}</strong></td><td>${v}</td></tr>`).join('');
+
+  section.querySelector('.report-body').innerHTML = `
+        <table class="data-table"><tbody>${rows}</tbody></table>
+    `;
+  return section;
+}
+
+// --- 6. Procedures Performed ---
+function renderProceduresSection(procedures) {
+  const container = document.createElement('div');
+
+  // A. Main Procedures List
+  const summarySection = createSection('Procedures Performed', '🔍');
+  const summaryRows = Object.entries(procedures).map(([key, data]) => {
+    if (!data || data.performed !== true) return '';
+    const name = key.replace(/_/g, ' ').toUpperCase();
+
+    // Extract key details based on procedure type
+    let details = [];
+    if (typeof data.inspection_findings === "string") {
+      const snippet = data.inspection_findings.length > 50
+        ? `${data.inspection_findings.substring(0, 50)}...`
+        : data.inspection_findings;
+      details.push(`Findings: ${snippet}`);
+    }
+    if (data.material) details.push(`Material: ${data.material}`);
+    if (Array.isArray(data.stations_sampled)) details.push(`Stations: ${data.stations_sampled.join(', ')}`);
+
+    return `
+            <tr>
+                <td><strong>${name}</strong></td>
+                <td><span class="status-badge status-selected">Yes</span></td>
+                <td>${details.join('; ') || '-'}</td>
+            </tr>
+        `;
+  }).filter(Boolean).join('');
+
+  summarySection.querySelector('.report-body').innerHTML = `
+        <table class="data-table">
+            <thead><tr><th>Procedure</th><th>Performed</th><th>Key Details</th></tr></thead>
+            <tbody>${summaryRows}</tbody>
+        </table>
+    `;
+  container.appendChild(summarySection);
+
+  // B. Special Linear EBUS Detail Table
+  if (procedures.linear_ebus && procedures.linear_ebus.performed) {
+    const ebus = procedures.linear_ebus;
+    const ebusSection = createSection('Linear EBUS Details', '📊');
+
+    // General Attributes
+    const stationsSampled = Array.isArray(ebus.stations_sampled) ? ebus.stations_sampled.join(", ") : "-";
+    let attrRows = `
+            <tr><td><strong>Stations Sampled</strong></td><td>${stationsSampled}</td></tr>
+            <tr><td><strong>Needle Gauge</strong></td><td>${ebus.needle_gauge || '-'}</td></tr>
+            <tr><td><strong>Elastography Used</strong></td><td>${ebus.elastography_used ? 'Yes' : 'No'}</td></tr>
+        `;
+
+    let nodeTable = '';
+    if (Array.isArray(ebus.node_events) && ebus.node_events.length > 0) {
+      const nodeRows = ebus.node_events.map(ev => `
+                <tr>
+                    <td>${ev.station || '-'}</td>
+                    <td>${ev.action || '-'}</td>
+                    <td style="font-style:italic; color:#64748b">"${ev.evidence_quote || ''}"</td>
+                </tr>
+            `).join('');
+
+      nodeTable = `
+                <h4 style="margin:1rem 0 0.5rem; font-size:0.9rem; color:#475569">Node Events</h4>
+                <table class="data-table">
+                    <thead><tr><th>Station</th><th>Action</th><th>Documentation Evidence</th></tr></thead>
+                    <tbody>${nodeRows}</tbody>
+                </table>
+            `;
+    }
+
+    ebusSection.querySelector('.report-body').innerHTML = `
+            <table class="data-table" style="margin-bottom:1rem">
+                <thead><tr><th style="width:30%">Attribute</th><th>Value</th></tr></thead>
+                <tbody>${attrRows}</tbody>
+            </table>
+            ${nodeTable}
+        `;
+    container.appendChild(ebusSection);
   }
 
-  // Render registry form
-  if (data.registry) {
-    renderRegistryForm(data.registry);
-    registrySection.classList.remove("hidden");
-  } else {
-    registrySection.classList.add("hidden");
-  }
+  return container;
+}
+
+// --- 7. Audit & QA Notes ---
+function renderAuditNotes(warnings) {
+  const section = createSection('Audit & QA Notes (Condensed)', '⚠️');
+
+  // Simple heuristic to categorize strings like "CATEGORY: Message"
+  const parsed = warnings.map(w => {
+    const match = w.match(/^([A-Z_]+):\s*(.+)$/);
+    return match
+      ? { cat: match[1], msg: match[2] }
+      : { cat: 'General', msg: w };
+  });
+
+  const rows = parsed.map(item => `
+        <tr>
+            <td style="width:25%"><strong>${item.cat}</strong></td>
+            <td>${item.msg}</td>
+        </tr>
+    `).join('');
+
+  section.querySelector('.report-body').innerHTML = `
+        <table class="data-table">
+            <thead><tr><th>Category</th><th>Message</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>
+    `;
+  return section;
+}
+
+// --- 8. Pipeline Metadata ---
+function renderPipelineMetadata(data) {
+  const section = createSection('Pipeline Metadata', '🧠');
+  const meta = {
+    'Pipeline Mode': data.pipeline_mode,
+    'KB Version': data.kb_version,
+    'Policy Version': data.policy_version,
+    'Needs Review': data.needs_manual_review ? 'Yes' : 'No',
+    'Review Status': data.review_status,
+    'Coder Difficulty': data.coder_difficulty,
+    'Processing Time': Number.isFinite(data.processing_time_ms)
+      ? `${Math.round(data.processing_time_ms).toLocaleString()} ms`
+      : '—'
+  };
+
+  const rows = Object.entries(meta).map(([k, v]) => `
+        <tr>
+            <td style="width:30%"><strong>${k}</strong></td>
+            <td>${v || '-'}</td>
+        </tr>
+    `).join('');
+
+  section.querySelector('.report-body').innerHTML = `
+        <table class="data-table"><tbody>${rows}</tbody></table>
+    `;
+  return section;
 }
 
 /**
  * Render the CPT codes table with descriptions, confidence, RVU, and payment.
  */
-function renderCPTTable(data) {
-  const tbody = document.getElementById("cptTableBody");
+function renderLegacyCPTTable(data) {
+  const section = createSection("CPT Codes", "💳");
   const suggestions = data.suggestions || [];
   const billing = data.per_code_billing || [];
 
@@ -232,7 +535,22 @@ function renderCPTTable(data) {
     `;
   }
 
-  tbody.innerHTML = rows;
+  section.querySelector(".report-body").innerHTML = `
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Confidence</th>
+          <th>RVU</th>
+          <th>Payment</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+
+  return section;
 }
 
 /**

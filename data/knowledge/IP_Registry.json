@@ -1530,13 +1530,14 @@
                 "string",
                 "null"
               ],
-              "enum": [
-                "Mucus plug",
-                "Blood/clot",
-                "Purulent secretions",
-                "Other",
-                null
-              ]
+	              "enum": [
+	                "Mucus plug",
+	                "Mucus",
+	                "Blood/clot",
+	                "Purulent secretions",
+	                "Other",
+	                null
+	              ]
             },
             "location": {
               "type": [

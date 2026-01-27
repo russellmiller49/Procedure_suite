@@ -2488,6 +2488,53 @@
         "is_add_on": false
       }
     },
+    "elastography": {
+      "76981": {
+        "description": "Us elastography organ",
+        "work_rvu": 0.59,
+        "facility_pe_rvu": 0.94,
+        "nonfacility_pe_rvu": 0.94,
+        "mp_rvu": 0.1,
+        "total_facility_rvu": 1.63,
+        "total_nonfacility_rvu": 1.63,
+        "mpfs_facility_payment": 54,
+        "mpfs_nonfacility_payment": 54,
+        "global_days": "XXX",
+        "mult_proc_indicator": 0,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "76982": {
+        "description": "Us elastography 1st target",
+        "work_rvu": 0.59,
+        "facility_pe_rvu": 0.88,
+        "nonfacility_pe_rvu": 0.88,
+        "mp_rvu": 0.1,
+        "total_facility_rvu": 1.57,
+        "total_nonfacility_rvu": 1.57,
+        "mpfs_facility_payment": 52,
+        "mpfs_nonfacility_payment": 52,
+        "global_days": "XXX",
+        "mult_proc_indicator": 0,
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "+76983": {
+        "description": "Us elastography addl target",
+        "work_rvu": 0.47,
+        "facility_pe_rvu": 0.61,
+        "nonfacility_pe_rvu": 0.61,
+        "mp_rvu": 0.04,
+        "total_facility_rvu": 1.12,
+        "total_nonfacility_rvu": 1.12,
+        "mpfs_facility_payment": 37,
+        "mpfs_nonfacility_payment": 37,
+        "global_days": "ZZZ",
+        "mult_proc_indicator": 0,
+        "status_code": "A",
+        "is_add_on": true
+      }
+    },
     "_source_files": {
       "non_qp": "PPRRVU2026_Jan_nonQPP.xlsx",
       "qp": "PPRRVU2026_Jan_QPP.xlsx",
@@ -3146,6 +3193,7 @@
     "+31651",
     "+31654",
     "+32562",
+    "+76983",
     "+99153",
     "+99157",
     "+99292"
@@ -7919,6 +7967,108 @@
           "payment_nonfacility_qp": 33
         }
       }
+    },
+    "76981": {
+      "descriptor": "Us elastography organ",
+      "family": "imaging",
+      "type": "cpt",
+      "attributes": {
+        "global_days": "XXX",
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "financials": {
+        "cms_pfs_2026": {
+          "conversion_factor_non_qp": 33.4009,
+          "conversion_factor_qp": 33.5675,
+          "work_rvu": 0.59,
+          "facility_pe_rvu": 0.94,
+          "nonfacility_pe_rvu": 0.94,
+          "mp_rvu": 0.1,
+          "total_facility_rvu": 1.63,
+          "total_nonfacility_rvu": 1.63,
+          "payment_facility_non_qp": 54,
+          "payment_nonfacility_non_qp": 54,
+          "payment_facility_qp": 55,
+          "payment_nonfacility_qp": 55
+        }
+      },
+      "rvu_simplified": {
+        "work": 0.59,
+        "pe": 0.94,
+        "mp": 0.1
+      },
+      "fee_schedule_sources": [
+        "cms_pfs_2026_manual"
+      ]
+    },
+    "76982": {
+      "descriptor": "Us elastography 1st target",
+      "family": "imaging",
+      "type": "cpt",
+      "attributes": {
+        "global_days": "XXX",
+        "status_code": "A",
+        "is_add_on": false
+      },
+      "financials": {
+        "cms_pfs_2026": {
+          "conversion_factor_non_qp": 33.4009,
+          "conversion_factor_qp": 33.5675,
+          "work_rvu": 0.59,
+          "facility_pe_rvu": 0.88,
+          "nonfacility_pe_rvu": 0.88,
+          "mp_rvu": 0.1,
+          "total_facility_rvu": 1.57,
+          "total_nonfacility_rvu": 1.57,
+          "payment_facility_non_qp": 52,
+          "payment_nonfacility_non_qp": 52,
+          "payment_facility_qp": 53,
+          "payment_nonfacility_qp": 53
+        }
+      },
+      "rvu_simplified": {
+        "work": 0.59,
+        "pe": 0.88,
+        "mp": 0.1
+      },
+      "fee_schedule_sources": [
+        "cms_pfs_2026_manual"
+      ]
+    },
+    "76983": {
+      "descriptor": "Us elastography addl target",
+      "family": "imaging",
+      "type": "cpt",
+      "attributes": {
+        "global_days": "ZZZ",
+        "status_code": "A",
+        "is_add_on": true
+      },
+      "financials": {
+        "cms_pfs_2026": {
+          "conversion_factor_non_qp": 33.4009,
+          "conversion_factor_qp": 33.5675,
+          "work_rvu": 0.47,
+          "facility_pe_rvu": 0.61,
+          "nonfacility_pe_rvu": 0.61,
+          "mp_rvu": 0.04,
+          "total_facility_rvu": 1.12,
+          "total_nonfacility_rvu": 1.12,
+          "payment_facility_non_qp": 37,
+          "payment_nonfacility_non_qp": 37,
+          "payment_facility_qp": 38,
+          "payment_nonfacility_qp": 38
+        }
+      },
+      "rvu_simplified": {
+        "work": 0.47,
+        "pe": 0.61,
+        "mp": 0.04
+      },
+      "fee_schedule_sources": [
+        "cms_pfs_2026_manual"
+      ]
     },
     "99151": {
       "descriptor": "Mod sed same phys/qhp <5 yrs",

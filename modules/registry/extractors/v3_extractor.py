@@ -25,17 +25,33 @@ SYSTEM_PROMPT = (
     "You are an expert clinical information extraction system.\n"
     "Extract interventional pulmonology events.\n"
     "You MUST provide a verbatim evidence_quote for every event.\n"
+    "The focused note text may include <primary_narrative> and <supporting_data> blocks.\n"
+    "You MUST prefer evidence quotes from <primary_narrative>.\n"
+    "Only use <supporting_data> when the procedure is not described in the narrative.\n"
     "Output JSON only."
 )
 
 
-def extract_v3_draft(focused_text: str) -> IPRegistryV3:
+def extract_v3_draft(focused_text: str, *, prompt_context: dict[str, Any] | None = None) -> IPRegistryV3:
     schema = IPRegistryV3.model_json_schema()
+
+    context_block = ""
+    if prompt_context:
+        context_block = (
+            "Deterministic anchors (use these to populate target/measurements when mentioned):\n"
+            f"{json.dumps(prompt_context, indent=2)}\n\n"
+        )
 
     user_prompt = (
         "Extract interventional pulmonology events from the focused note text.\n\n"
         "Return ONLY valid JSON that conforms to the provided schema.\n"
         "You MUST provide a verbatim evidence_quote for every event.\n\n"
+        "Granularity requirements:\n"
+        "- If a procedure is documented at a specific station/lobe/segment, you MUST populate ProcedureEvent.target.\n"
+        "- If BAL includes instilled/returned volumes, you MUST populate ProcedureEvent.measurements.\n"
+        "- If linear EBUS uses elastography, capture the specific pattern (e.g., Type 1/2/3, blue pattern) in findings when present.\n"
+        "- When the same procedure occurs at multiple stations/lobes/segments, emit separate events per distinct target.\n\n"
+        f"{context_block}"
         f"Schema:\n{json.dumps(schema, indent=2)}\n\n"
         f"Focused note text:\n{focused_text}\n"
     )

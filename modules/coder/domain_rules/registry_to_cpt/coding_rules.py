@@ -567,14 +567,19 @@ def derive_all_codes_with_meta(
             codes.append("76982")
             rationales["76982"] = f"linear_ebus elastography used (targets={target_count})"
             if target_count >= 2:
+                addon_units = min(target_count - 1, 2)
                 codes.append("76983")
-                rationales["76983"] = f"linear_ebus elastography used and targets={target_count} (>=2 implies add-on)"
+                rationales["76983"] = (
+                    f"linear_ebus elastography used and targets={target_count} (units={addon_units}; MUE cap=2)"
+                )
 
-            # Some templates document 76981 explicitly alongside 76982/76983; include it only
-            # when the note header lists it and elastography is present.
-            if "76981" in (header_code_text or "") and "76981" not in codes:
-                codes.append("76981")
-                rationales["76981"] = "linear_ebus elastography used and header lists 76981"
+            # Parenchyma elastography (76981) is distinct from target-lesion elastography (76982/76983).
+            # When EBUS elastography is documented on lymph nodes/targets, suppress 76981 even if the
+            # header lists it (common templating artifact).
+            if "76981" in (header_code_text or ""):
+                warnings.append(
+                    "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983."
+                )
 
     # Radial EBUS (add-on code for peripheral lesion localization)
     if _performed(_proc(record, "radial_ebus")):
@@ -593,8 +598,13 @@ def derive_all_codes_with_meta(
 
     # Therapeutic aspiration
     if _performed(_proc(record, "therapeutic_aspiration")):
-        codes.append("31645")
-        rationales["31645"] = "therapeutic_aspiration.performed=true"
+        if "31652" in codes or "31653" in codes:
+            warnings.append(
+                "Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed)."
+            )
+        else:
+            codes.append("31645")
+            rationales["31645"] = "therapeutic_aspiration.performed=true"
 
     # Foreign body removal
     if _performed(_proc(record, "foreign_body_removal")):
@@ -626,9 +636,13 @@ def derive_all_codes_with_meta(
                 rationales["31638"] = "airway_stent.action indicates revision/repositioning"
             else:
                 rationales["31638"] = "airway_stent indicates removal/exchange"
-        elif placement_action or (_performed(stent) and not removal_action):
+        elif placement_action:
             codes.append("31636")
-            rationales["31636"] = "airway_stent indicates placement"
+            rationales["31636"] = "airway_stent.action indicates placement"
+        elif _performed(stent):
+            warnings.append(
+                "airway_stent.performed=true but action is missing/ambiguous; suppressing stent placement CPT"
+            )
 
     # Mechanical debulking (tumor excision) → 31640
     if _performed(_proc(record, "mechanical_debulking")):
@@ -837,9 +851,18 @@ def derive_all_codes_with_meta(
         rationales["43238"] = "eus_b.performed=true"
 
     # --- Pleural family ---
-    if _performed(_pleural(record, "ipc")):
-        codes.append("32550")
-        rationales["32550"] = "pleural_procedures.ipc.performed=true"
+    ipc = _pleural(record, "ipc")
+    if _performed(ipc):
+        action = _get(ipc, "action")
+        action_text = str(action).strip().lower() if action is not None else ""
+        insertion_action = action == "Insertion" or action_text.startswith(("insert", "place", "plac", "deploy"))
+        if insertion_action:
+            codes.append("32550")
+            rationales["32550"] = "pleural_procedures.ipc.performed=true and action indicates insertion"
+        else:
+            warnings.append(
+                "pleural_procedures.ipc.performed=true but no insertion action is documented; suppressing 32550"
+            )
 
     thora = _pleural(record, "thoracentesis")
     if _performed(thora):
@@ -865,6 +888,11 @@ def derive_all_codes_with_meta(
             warnings.append(
                 f"pleural_procedures.chest_tube.action={action!r}; skipping insertion codes (bundled/not separately billable)"
             )
+        elif action not in {"Insertion"} and not action_text.startswith(("insert", "place", "plac", "deploy")):
+            warnings.append(
+                f"pleural_procedures.chest_tube.performed=true but action={action!r} is not insertion; suppressing insertion CPT"
+            )
+            chest_tube = None
         else:
             thoracoscopy = _pleural(record, "medical_thoracoscopy")
             if _performed(thoracoscopy):
@@ -908,16 +936,29 @@ def derive_all_codes_with_meta(
                 rationales["32551"] = "pleural_procedures.chest_tube.performed=true (tube thoracostomy)"
 
     thoracoscopy = _pleural(record, "medical_thoracoscopy")
-    if _performed(thoracoscopy):
-        biopsies_taken = _get(thoracoscopy, "biopsies_taken")
-        if biopsies_taken is True:
-            codes.append("32609")
-            rationales["32609"] = (
-                "pleural_procedures.medical_thoracoscopy.performed=true and biopsies_taken=true"
+    pleurodesis = _pleural(record, "pleurodesis")
+
+    thoracoscopy_performed = _performed(thoracoscopy)
+    pleurodesis_performed = _performed(pleurodesis)
+
+    # Surgical thoracoscopy upgrade: thoracoscopy + pleurodesis is reported as 32650
+    # (and chemical pleurodesis 32560 is bundled into the thoracoscopic pleurodesis).
+    if thoracoscopy_performed:
+        if pleurodesis_performed:
+            codes.append("32650")
+            rationales["32650"] = (
+                "pleural_procedures.medical_thoracoscopy.performed=true and pleural_procedures.pleurodesis.performed=true"
             )
         else:
-            codes.append("32601")
-            rationales["32601"] = "pleural_procedures.medical_thoracoscopy.performed=true"
+            biopsies_taken = _get(thoracoscopy, "biopsies_taken")
+            if biopsies_taken is True:
+                codes.append("32609")
+                rationales["32609"] = (
+                    "pleural_procedures.medical_thoracoscopy.performed=true and biopsies_taken=true"
+                )
+            else:
+                codes.append("32601")
+                rationales["32601"] = "pleural_procedures.medical_thoracoscopy.performed=true"
 
         adhesiolysis = _get(thoracoscopy, "adhesiolysis_performed")
         if adhesiolysis is True:
@@ -926,7 +967,8 @@ def derive_all_codes_with_meta(
                 "pleural_procedures.medical_thoracoscopy.performed=true and adhesiolysis_performed=true"
             )
 
-    if _performed(_pleural(record, "pleurodesis")):
+    # Chemical pleurodesis without thoracoscopy (e.g., talc slurry via chest tube).
+    if pleurodesis_performed and not thoracoscopy_performed:
         codes.append("32560")
         rationales["32560"] = "pleural_procedures.pleurodesis.performed=true"
 
@@ -1062,6 +1104,9 @@ def derive_all_codes_with_meta(
             )
             rationales.pop("31630", None)
 
+    # NCCI hard bundles (modifier not allowed): enforce KB-configured unconditional drops.
+    derived = _apply_ncci_hard_bundles(derived, rationales=rationales, warnings=warnings)
+
     # Add-on codes require a primary bronchoscopy.
     addon_codes = {"31626", "31627", "31632", "31633", "31649", "31651", "31654", "31661", "76983"}
     primary_bronch = {
@@ -1090,9 +1135,115 @@ def derive_all_codes_with_meta(
     return derived, rationales, warnings
 
 
+def _apply_ncci_hard_bundles(
+    codes: list[str],
+    *,
+    rationales: dict[str, str],
+    warnings: list[str],
+) -> list[str]:
+    """Apply unconditional NCCI bundles from the knowledge base.
+
+    For modifier_allowed=false pairs, drop the lower-valued code (RVU-based tie-breaker)
+    to guard against occasional primary/secondary ordering drift in KB data.
+    """
+    from modules.common.knowledge import ncci_pairs, total_rvu
+
+    active = list(codes)
+    active_set = set(active)
+
+    for pair in ncci_pairs() or []:
+        if not isinstance(pair, dict):
+            continue
+        if bool(pair.get("modifier_allowed")):
+            continue
+        primary = str(pair.get("primary") or "").strip()
+        secondary = str(pair.get("secondary") or "").strip()
+        if not primary or not secondary:
+            continue
+        if primary not in active_set or secondary not in active_set:
+            continue
+
+        primary_rvu = float(total_rvu(primary) or 0.0)
+        secondary_rvu = float(total_rvu(secondary) or 0.0)
+
+        # Default to dropping KB-defined secondary, but prefer dropping the lower-valued
+        # code when both RVUs are known.
+        drop = secondary
+        keep = primary
+        if primary_rvu > 0 and secondary_rvu > 0:
+            if primary_rvu < secondary_rvu:
+                drop, keep = primary, secondary
+            else:
+                drop, keep = secondary, primary
+
+        if drop not in active_set:
+            continue
+
+        active_set.remove(drop)
+        try:
+            active.remove(drop)
+        except ValueError:
+            pass
+        rationales.pop(drop, None)
+
+        reason = str(pair.get("reason") or "").strip()
+        if reason:
+            warnings.append(f"NCCI_BUNDLE: dropped {drop} (bundled into {keep}): {reason}")
+        else:
+            warnings.append(f"NCCI_BUNDLE: dropped {drop} (bundled into {keep})")
+
+    return active
+
+
 def derive_all_codes(record: RegistryRecord) -> list[str]:
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
     return codes
 
 
-__all__ = ["derive_all_codes", "derive_all_codes_with_meta"]
+def _ebus_elastography_target_count(record: RegistryRecord) -> int:
+    target_stations: set[str] = set()
+
+    node_events = _get(_proc(record, "linear_ebus"), "node_events")
+    if isinstance(node_events, (list, tuple)):
+        for event in node_events:
+            station = _get(event, "station")
+            if station:
+                target_stations.add(str(station).upper().strip())
+
+    stations_detail = _get(_proc(record, "linear_ebus"), "stations_detail")
+    if isinstance(stations_detail, (list, tuple)):
+        for detail in stations_detail:
+            if isinstance(detail, dict):
+                station = detail.get("station")
+            else:
+                station = _get(detail, "station")
+            if station:
+                target_stations.add(str(station).upper().strip())
+
+    if not target_stations:
+        stations = _get(_proc(record, "linear_ebus"), "stations_sampled")
+        if isinstance(stations, (list, tuple)):
+            for station in stations:
+                if station:
+                    target_stations.add(str(station).upper().strip())
+
+    count = len({s for s in target_stations if s})
+    return count if count > 0 else 1
+
+
+def derive_units_for_codes(record: RegistryRecord, codes: list[str]) -> dict[str, int]:
+    """Return derived code units for add-on/multi-unit codes.
+
+    This is intentionally small-scope: most CPTs are single-unit in our current rule set.
+    """
+    units: dict[str, int] = {}
+
+    # 76983 is "each additional target lesion" (add-on); cap at 2 units (MUE).
+    if "76983" in codes:
+        target_count = _ebus_elastography_target_count(record)
+        units["76983"] = max(1, min(target_count - 1, 2))
+
+    return units
+
+
+__all__ = ["derive_all_codes", "derive_all_codes_with_meta", "derive_units_for_codes"]

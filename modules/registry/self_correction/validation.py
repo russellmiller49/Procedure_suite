@@ -31,6 +31,7 @@ ALLOWED_PATHS: set[str] = {
     "/pleural_procedures/thoracentesis/performed",
     "/pleural_procedures/chest_tube/performed",
     "/pleural_procedures/fibrinolytic_therapy/performed",
+    "/pleural_procedures/pleurodesis/performed",
     "/established_tracheostomy_route",
     # Add other safe fields as needed
 }
@@ -55,6 +56,7 @@ ALLOWED_PATH_PREFIXES: set[str] = {
     "/pleural_procedures/thoracentesis",
     "/pleural_procedures/chest_tube",
     "/pleural_procedures/fibrinolytic_therapy",
+    "/pleural_procedures/pleurodesis",
     "/granular_data",
 }
 

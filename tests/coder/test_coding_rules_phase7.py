@@ -239,12 +239,14 @@ class TestBALExtractor:
         text = "Bronchoalveolar lavage was performed in the right middle lobe."
         result = extract_bal(text)
 
-        assert result == {"bal": {"performed": True}}
+        assert result.get("bal", {}).get("performed") is True
+        assert "right middle lobe" in str(result.get("bal", {}).get("location") or "").lower()
 
     def test_extract_bal_bronchial_alveolar_variant(self):
         text = "Bronchial alveolar lavage was performed at the lingula."
         result = extract_bal(text)
-        assert result == {"bal": {"performed": True}}
+        assert result.get("bal", {}).get("performed") is True
+        assert "lingula" in str(result.get("bal", {}).get("location") or "").lower()
 
     def test_extract_bal_abbreviation(self):
         """Should detect BAL abbreviation."""
@@ -383,6 +385,19 @@ class TestTBNAExtractor:
             "4L node - decision to not perform transbronchial sampling of this lymph node.\n"
             "11Ri node - TBNA was performed.\n"
             "7 node - TBNA was performed.\n"
+        )
+        result = extract_tbna_conventional(text)
+        assert result.get("peripheral_tbna", {}).get("performed") is True
+        assert "tbna_conventional" not in result
+
+    def test_extract_tbna_skips_station_tbna_when_ebus_present_elsewhere(self):
+        text = (
+            "The endobronchial ultrasound-capable (EBUS) bronchoscope was introduced.\n"
+            "Site 1: The 11L lymph node was sampled.\n"
+            "\n"
+            "SPECIMEN(S): Station 11L, 4L, 4R TBNA\n"
+            "\n"
+            "Transbronchial needle aspiration was performed with 21G needle through the working channel.\n"
         )
         result = extract_tbna_conventional(text)
         assert result.get("peripheral_tbna", {}).get("performed") is True

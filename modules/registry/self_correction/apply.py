@@ -18,6 +18,7 @@ def apply_patch_to_record(*, record: RegistryRecord, patch: list[dict]) -> Regis
     try:
         for idx, op in enumerate(patch):
             _apply_op(patched, op, idx=idx)
+        _apply_semantic_shims(patched, patch)
     except Exception as exc:  # noqa: BLE001
         raise SelfCorrectionApplyError(f"Failed applying JSON Patch: {exc}") from exc
 
@@ -125,6 +126,33 @@ def _set_child(parent: object, token: str, value: object, *, verb: str) -> None:
             return
 
     raise SelfCorrectionApplyError(f"Cannot set child on non-container type {type(parent).__name__}")
+
+
+def _apply_semantic_shims(doc: dict, patch: list[dict]) -> None:
+    """Small, safe post-patch shims to keep downstream derivation consistent.
+
+    Self-correction patches are intentionally conservative and often set only
+    `.performed=true`. Some downstream CPT derivations are action-gated to avoid
+    false positives, so we fill minimal action defaults when the patch intent is
+    unambiguous.
+    """
+    ipc_enabled = any(
+        isinstance(op, dict)
+        and op.get("path") in {"/pleural_procedures/ipc/performed", "/pleural_procedures/tunneled_pleural_catheter/performed"}
+        and op.get("value") is True
+        for op in patch
+    )
+    if ipc_enabled:
+        pleural = doc.get("pleural_procedures")
+        if not isinstance(pleural, dict):
+            pleural = {}
+            doc["pleural_procedures"] = pleural
+        ipc = pleural.get("ipc")
+        if not isinstance(ipc, dict):
+            ipc = {}
+            pleural["ipc"] = ipc
+        if ipc.get("performed") is True and ipc.get("action") in (None, "", "Unknown"):
+            ipc["action"] = "Insertion"
 
 
 __all__ = ["apply_patch_to_record", "SelfCorrectionApplyError"]

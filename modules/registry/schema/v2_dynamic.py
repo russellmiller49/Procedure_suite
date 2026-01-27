@@ -407,8 +407,10 @@ def _build_registry_model() -> type[BaseModel]:
                     aspiration["material"] = "Blood/clot"
                 elif material_key in {"blood/clot", "blood / clot"}:
                     aspiration["material"] = "Blood/clot"
-                elif material_key in {"secretions/mucus", "mucus/secretions"}:
+                elif material_key in {"mucus plug", "mucusplug", "mucus plugging"}:
                     aspiration["material"] = "Mucus plug"
+                elif material_key in {"secretions/mucus", "mucus/secretions", "mucus"}:
+                    aspiration["material"] = "Mucus"
 
             if aspiration:
                 procedures["therapeutic_aspiration"] = aspiration

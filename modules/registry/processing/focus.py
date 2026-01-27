@@ -5,39 +5,86 @@ import re
 from modules.common.sectionizer import SectionizerService
 
 
-_PROCEDURE_FOCUS_HEADINGS: tuple[str, ...] = (
-    "PROCEDURE",
+_PRIMARY_NARRATIVE_KEYWORDS: tuple[str, ...] = (
+    "PROCEDURE IN DETAIL",
+    "DESCRIPTION OF PROCEDURE",
+    "PROCEDURE DESCRIPTION",
     "FINDINGS",
-    "IMPRESSION",
+    "AIRWAY INSPECTION",
+    "EBUS FINDINGS",
+    "LYMPH NODES EVALUATED",
+)
+
+_SUPPORTING_SECTION_KEYWORDS: tuple[str, ...] = (
+    "PROCEDURE",
     "TECHNIQUE",
     "OPERATIVE REPORT",
+    "ANESTHESIA",
+    "MONITORING",
+    "COMPLICATIONS",
+    "DISPOSITION",
+    "INSTRUMENT",
+)
+
+_SUPPORTING_DATA_KEYWORDS: tuple[str, ...] = (
+    "SPECIMEN",
+    "IMPRESSION",
+    "PLAN",
+    "INDICATION",
 )
 
 
-_TARGET_HEADING_SET = {h.upper() for h in _PROCEDURE_FOCUS_HEADINGS}
+def _canonical_heading(value: str) -> str:
+    """Return a canonicalized heading token for matching.
+
+    Examples:
+    - "EBUS-Findings" -> "EBUS FINDINGS"
+    - "IMPRESSION/PLAN" -> "IMPRESSION PLAN"
+    - "SPECIMEN(S)" -> "SPECIMENS"
+    """
+    raw = (value or "").strip().upper()
+    if not raw:
+        return ""
+    raw = re.sub(r"[/_\\-]+", " ", raw)
+    raw = re.sub(r"[^A-Z0-9 ]+", "", raw)
+    return re.sub(r"\s+", " ", raw).strip()
 
 
-def _normalize_heading(value: str) -> str:
-    return re.sub(r"\s+", " ", (value or "").strip()).upper()
+def _heading_matches_any(heading: str, keywords: tuple[str, ...]) -> bool:
+    if not heading:
+        return False
+    for keyword in keywords:
+        if keyword and keyword in heading:
+            return True
+    return False
 
 
 def _extract_target_sections_by_regex(note_text: str) -> dict[str, list[str]]:
-    pattern = re.compile(r"^(?P<header>[A-Za-z][A-Za-z /_-]{0,80})\s*:\s*(?P<rest>.*)$", re.MULTILINE)
-    matches = list(pattern.finditer(note_text))
-    extracted: dict[str, list[str]] = {h: [] for h in _PROCEDURE_FOCUS_HEADINGS}
+    pattern = re.compile(r"^(?P<header>[A-Za-z][A-Za-z0-9 /()_-]{0,80})\s*:\s*(?P<rest>.*)$", re.MULTILINE)
+    matches = list(pattern.finditer(note_text or ""))
     if not matches:
-        return extracted
+        return {}
 
+    extracted: dict[str, list[str]] = {}
     for idx, match in enumerate(matches):
-        header = _normalize_heading(match.group("header"))
-        if header not in _TARGET_HEADING_SET:
+        header_raw = match.group("header").strip()
+        header = _canonical_heading(header_raw)
+        if not header:
+            continue
+
+        wanted = (
+            _heading_matches_any(header, _PRIMARY_NARRATIVE_KEYWORDS)
+            or _heading_matches_any(header, _SUPPORTING_SECTION_KEYWORDS)
+            or _heading_matches_any(header, _SUPPORTING_DATA_KEYWORDS)
+        )
+        if not wanted:
             continue
 
         body_start = match.start("rest")
         body_end = matches[idx + 1].start() if idx + 1 < len(matches) else len(note_text)
         body = (note_text[body_start:body_end] or "").strip()
         if body:
-            extracted[header].append(body)
+            extracted.setdefault(header_raw, []).append(body)
 
     return extracted
 
@@ -66,57 +113,145 @@ def get_procedure_focus(note_text: str) -> str:
     if not original.strip():
         return note_text
 
-    extracted: dict[str, list[str]] = {h: [] for h in _PROCEDURE_FOCUS_HEADINGS}
+    # Prefer an explicit sectionizer for common headings, but always apply
+    # narrative-first ordering and tagging so downstream extractors prefer
+    # rich procedural details over specimen lists/plan text.
+    extracted: dict[str, list[str]] = {}
 
-    # 1) ParserAgent handles inline headings like "PROCEDURE: text..." well.
+    # 1) ParserAgent handles inline headings like "PROCEDURE: text..." well, but
+    # its segment types are not consistently granular across note styles. Treat
+    # it as a helper for the canonical "PROCEDURE/FINDINGS/IMPRESSION/TECHNIQUE" block.
     try:
         from modules.agents.contracts import ParserIn
         from modules.agents.parser.parser_agent import ParserAgent
 
         parser_out = ParserAgent().run(ParserIn(note_id="", raw_text=original))
         for seg in getattr(parser_out, "segments", []) or []:
-            seg_type = _normalize_heading(getattr(seg, "type", ""))
-            if seg_type not in _TARGET_HEADING_SET:
+            seg_type_raw = str(getattr(seg, "type", "") or "")
+            seg_type = _canonical_heading(seg_type_raw)
+            if not seg_type:
+                continue
+            if not (
+                _heading_matches_any(seg_type, _PRIMARY_NARRATIVE_KEYWORDS)
+                or _heading_matches_any(seg_type, _SUPPORTING_SECTION_KEYWORDS)
+                or _heading_matches_any(seg_type, _SUPPORTING_DATA_KEYWORDS)
+            ):
                 continue
             seg_text = (getattr(seg, "text", "") or "").strip()
             if seg_text:
-                extracted[seg_type].append(seg_text)
+                extracted.setdefault(seg_type_raw.strip(), []).append(seg_text)
     except Exception:
         pass
 
-    # 2) Sectionizer handles isolated headings and formatting quirks.
+    # 2) Sectionizer handles isolated headings and formatting quirks for a small
+    # curated set. Include both narrative and supporting headings.
     try:
-        sectionizer = SectionizerService(headings=_PROCEDURE_FOCUS_HEADINGS)
+        sectionizer = SectionizerService(
+            headings=tuple(
+                sorted(
+                    {
+                        "PROCEDURE",
+                        "PROCEDURE IN DETAIL",
+                        "DESCRIPTION OF PROCEDURE",
+                        "FINDINGS",
+                        "EBUS-FINDINGS",
+                        "EBUS FINDINGS",
+                        "LYMPH NODES EVALUATED",
+                        "AIRWAY INSPECTION",
+                        "TECHNIQUE",
+                        "OPERATIVE REPORT",
+                        "SPECIMEN(S)",
+                        "SPECIMENS",
+                        "IMPRESSION/PLAN",
+                        "IMPRESSION",
+                        "PLAN",
+                        "INDICATION",
+                    }
+                )
+            )
+        )
         sections = sectionizer.sectionize(original)
         for section in sections:
-            title = _normalize_heading(section.title or "")
-            if title not in _TARGET_HEADING_SET:
+            title_raw = (section.title or "").strip()
+            title = _canonical_heading(title_raw)
+            if not title:
+                continue
+            if not (
+                _heading_matches_any(title, _PRIMARY_NARRATIVE_KEYWORDS)
+                or _heading_matches_any(title, _SUPPORTING_SECTION_KEYWORDS)
+                or _heading_matches_any(title, _SUPPORTING_DATA_KEYWORDS)
+            ):
                 continue
             clean = (section.text or "").strip()
             if clean:
-                extracted[title].append(clean)
+                extracted.setdefault(title_raw, []).append(clean)
     except Exception:
         pass
 
-    # 3) Regex fallback for any remaining headings (including "OPERATIVE REPORT: ...").
+    # 3) Regex fallback for any remaining colon-delimited headings.
     regex_extracted = _extract_target_sections_by_regex(original)
-    for title, bodies in regex_extracted.items():
+    for title_raw, bodies in regex_extracted.items():
         for body in bodies:
-            if body not in extracted[title]:
-                extracted[title].append(body)
+            extracted.setdefault(title_raw, [])
+            if body not in extracted[title_raw]:
+                extracted[title_raw].append(body)
 
-    for title in list(extracted.keys()):
+    if not extracted:
+        return note_text
+
+    # De-dupe while preserving insertion ordering from the extractors above.
+    ordered_titles = list(extracted.keys())
+    for title in ordered_titles:
         extracted[title] = _dedupe_bodies(extracted[title])
 
-    focused_parts: list[str] = []
-    for title in _PROCEDURE_FOCUS_HEADINGS:
-        for text in extracted[title]:
-            clean = (text or "").strip()
-            if clean:
-                focused_parts.append(f"{title}:\n{clean}")
+    primary_parts: list[str] = []
+    supporting_parts: list[str] = []
 
-    focused = "\n\n".join(focused_parts).strip()
-    return focused if focused else note_text
+    for title_raw in ordered_titles:
+        title = _canonical_heading(title_raw)
+        bucket = "ignore"
+        if _heading_matches_any(title, _PRIMARY_NARRATIVE_KEYWORDS):
+            bucket = "primary"
+        elif _heading_matches_any(title, _SUPPORTING_DATA_KEYWORDS) or _heading_matches_any(
+            title, _SUPPORTING_SECTION_KEYWORDS
+        ):
+            bucket = "support"
+
+        if bucket == "ignore":
+            continue
+
+        for text in extracted.get(title_raw, []) or []:
+            clean = (text or "").strip()
+            if not clean:
+                continue
+            rendered = f"{title_raw.strip().upper()}:\n{clean}"
+            if bucket == "primary":
+                primary_parts.append(rendered)
+            else:
+                supporting_parts.append(rendered)
+
+    # If we failed to capture any narrative, fall back to supporting headings.
+    if not primary_parts:
+        primary_parts = supporting_parts
+        supporting_parts = []
+
+    primary_text = "\n\n".join(primary_parts).strip()
+    supporting_text = "\n\n".join(supporting_parts).strip()
+
+    if not primary_text and not supporting_text:
+        return note_text
+
+    if supporting_text:
+        return (
+            "<primary_narrative>\n"
+            f"{primary_text}\n"
+            "</primary_narrative>\n\n"
+            "<supporting_data>\n"
+            f"{supporting_text}\n"
+            "</supporting_data>"
+        ).strip()
+
+    return f"<primary_narrative>\n{primary_text}\n</primary_narrative>".strip()
 
 
 __all__ = ["get_procedure_focus"]

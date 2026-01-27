@@ -1775,6 +1775,7 @@ class RegistryService:
 
         from modules.registry.postprocess import (
             enrich_ebus_node_event_outcomes,
+            enrich_ebus_node_event_sampling_details,
             enrich_linear_ebus_needle_gauge,
             enrich_medical_thoracoscopy_biopsies_taken,
             populate_ebus_node_events_fallback,
@@ -1791,6 +1792,9 @@ class RegistryService:
         ebus_specimen_warnings = reconcile_ebus_sampling_from_specimen_log(record, masked_note_text)
         if ebus_specimen_warnings:
             extraction_warnings.extend(ebus_specimen_warnings)
+        ebus_sampling_detail_warnings = enrich_ebus_node_event_sampling_details(record, masked_note_text)
+        if ebus_sampling_detail_warnings:
+            extraction_warnings.extend(ebus_sampling_detail_warnings)
         ebus_outcome_warnings = enrich_ebus_node_event_outcomes(record, masked_note_text)
         if ebus_outcome_warnings:
             extraction_warnings.extend(ebus_outcome_warnings)
@@ -2204,6 +2208,9 @@ class RegistryService:
             kb_repo = get_kb_repo()
 
             cpt_payload: list[dict[str, Any]] = []
+            from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_units_for_codes
+
+            code_units = derive_units_for_codes(record, derived_codes)
             for code in derived_codes:
                 code_str = str(code).strip()
                 if not code_str:
@@ -2214,6 +2221,9 @@ class RegistryService:
                     "code": code_str,
                     "description": proc_info.description if proc_info else None,
                 }
+                units = int(code_units.get(code_str, 1) or 1)
+                if units != 1:
+                    item["units"] = units
                 derived_from, evidence_items = build_traceability_for_code(record=record, code=code_str)
                 if derived_from:
                     item["derived_from"] = derived_from
@@ -2233,6 +2243,7 @@ class RegistryService:
             record_data["coding_support"] = build_coding_support_payload(
                 record=record,
                 codes=derived_codes,
+                code_units=code_units,
                 code_rationales=code_rationales,
                 derivation_warnings=derivation_warnings,
                 kb_repo=kb_repo,

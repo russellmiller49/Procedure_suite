@@ -50,7 +50,11 @@ _STENT_STRONG_PLACEMENT_RE = re.compile(
     re.IGNORECASE,
 )
 _STENT_REMOVAL_CONTEXT_RE = re.compile(
-    r"\bstent\b[^.\n]{0,60}\b(remov|retriev|extract|explant|grasp|pull|peel)\w*\b",
+    r"\b(?:"
+    r"stent\b[^.\n]{0,60}\b(remov|retriev|extract|explant|grasp|pull|peel)\w*\b"
+    r"|"
+    r"(remov|retriev|extract|explant|grasp|pull|peel)\w*\b[^.\n]{0,60}\bstent\b"
+    r")\b",
     re.IGNORECASE,
 )
 _STENT_INSPECTION_RE = re.compile(
@@ -61,8 +65,21 @@ _STENT_INSPECTION_RE = re.compile(
     r")\b",
     re.IGNORECASE,
 )
+_STENT_OBSTRUCTION_RE = re.compile(
+    r"\b(?:stent|bms)\b[^.\n]{0,120}\b(?:obstruct|occlud|impacted|plugged|mucous|mucus)\b",
+    re.IGNORECASE,
+)
 
-_IPC_TERMS = ("pleurx", "aspira", "tunneled", "tunnelled", "indwelling pleural catheter", "ipc")
+_IPC_TERMS = (
+    "pleurx",
+    "aspira",
+    "tunneled",
+    "tunnelled",
+    "tunnel pleural catheter",
+    "tunneling device",
+    "indwelling pleural catheter",
+    "ipc",
+)
 _CHEST_TUBE_TERMS = ("pigtail", "wayne", "pleur-evac", "pleur evac", "tube thoracostomy", "chest tube")
 _INSERT_TERMS = ("insert", "inserted", "placed", "place", "deploy", "deployed", "introduced", "positioned")
 _REMOVE_TERMS = (
@@ -81,7 +98,7 @@ _REMOVE_TERMS = (
 )
 
 _CHEST_TUBE_DATE_OF_INSERTION_RE = re.compile(
-    r"\bdate\s+of\s+(?:the\s+)?chest\s+tube\s+insertion\b",
+    r"\bdate\s+of\s+(?:the\s+)?(?:chest\s+tube(?:\s*/\s*(?:tpc|ipc))?|tpc|ipc)\s+insertion\b",
     re.IGNORECASE,
 )
 
@@ -119,6 +136,40 @@ class ClinicalGuardrails:
         if checkbox_changed:
             warnings.extend(checkbox_warnings)
             changed = True
+
+        # Non-IP GI endoscopy / PEG notes occasionally leak into the pipeline and can trip
+        # bronchoscopy template cues ("Initial Airway Inspection Findings"). If PEG/EGD
+        # language is present, suppress bronchoscopy/pleural procedures entirely.
+        peg_like = bool(
+            re.search(
+                r"(?i)\b(?:peg\b|percutaneous\s+endoscopic\s+gastrostomy|gastrostomy)\b",
+                note_text or "",
+            )
+        )
+        gi_anatomy = bool(
+            re.search(
+                r"(?i)\b(?:stomach|gastric|duodenum|esophagus|pylorus|transillumination)\b",
+                note_text or "",
+            )
+        )
+        if peg_like and gi_anatomy:
+            if record_data.get("procedures_performed") not in (None, {}, []):
+                record_data["procedures_performed"] = {}
+                changed = True
+            if record_data.get("pleural_procedures") not in (None, {}, []):
+                record_data["pleural_procedures"] = {}
+                changed = True
+            if record_data.get("procedure_families") not in (None, [], ""):
+                record_data["procedure_families"] = []
+                changed = True
+            warnings.append("Non-IP PEG/EGD note detected; suppressing bronchoscopy/pleural procedures.")
+            updated = RegistryRecord(**record_data) if changed else record
+            return GuardrailOutcome(
+                record=updated,
+                warnings=warnings,
+                needs_review=True,
+                changed=changed,
+            )
 
         # BLVR checkbox/table corrections: fix valve type, lobe selection, Chartis result, and count.
         blvr_warnings, blvr_changed = self._apply_blvr_guardrails(note_text or "", record_data)
@@ -205,7 +256,9 @@ class ClinicalGuardrails:
             removal_present = removal_text_present or removal_flag
             placement_present = bool(_STENT_PLACEMENT_CONTEXT_RE.search(text_lower))
             strong_placement = bool(_STENT_STRONG_PLACEMENT_RE.search(text_lower))
-            inspection_only = bool(_STENT_INSPECTION_RE.search(text_lower))
+            inspection_only = bool(
+                _STENT_INSPECTION_RE.search(text_lower) or _STENT_OBSTRUCTION_RE.search(text_lower)
+            )
 
             if negated and not strong_placement:
                 if removal_present:
@@ -227,6 +280,10 @@ class ClinicalGuardrails:
             elif inspection_only and not placement_present and not removal_text_present:
                 if self._set_stent_assessment_only(record_data):
                     warnings.append("Stent inspection-only language; treating as assessment only.")
+                    changed = True
+            elif placement_present and not removal_present and not inspection_only:
+                if self._set_stent_action(record_data, "Placement"):
+                    warnings.append("Stent placement language; treating as placement.")
                     changed = True
 
         # Endobronchial biopsy false positives in peripheral cases.
@@ -321,6 +378,29 @@ class ClinicalGuardrails:
                     elif ipc_present and tube_present:
                         needs_review = True
                         warnings.append("IPC vs chest tube conflict; review required.")
+
+        # If a pleural device was flagged but the note contains no device language at all,
+        # treat it as a likely hallucination (e.g., thoracentesis notes accidentally marked as IPC).
+        pleural = record_data.get("pleural_procedures")
+        if isinstance(pleural, dict):
+            ipc_proc = pleural.get("ipc")
+            if isinstance(ipc_proc, dict) and ipc_proc.get("performed") is True and not ipc_present:
+                if self._set_pleural_performed(record_data, "ipc", False):
+                    warnings.append("IPC not supported by note text; clearing pleural_procedures.ipc.performed.")
+                    changed = True
+
+            tube_proc = pleural.get("chest_tube")
+            if (
+                isinstance(tube_proc, dict)
+                and tube_proc.get("performed") is True
+                and not tube_present
+                and not chest_tube_insertion_date_line
+            ):
+                if self._set_pleural_performed(record_data, "chest_tube", False):
+                    warnings.append(
+                        "Chest tube not supported by note text; clearing pleural_procedures.chest_tube.performed."
+                    )
+                    changed = True
 
         updated = RegistryRecord(**record_data) if changed else record
         return GuardrailOutcome(
@@ -440,6 +520,21 @@ class ClinicalGuardrails:
         changed = False
         text_lower = (note_text or "").lower()
         if not re.search(r"\bthoracoscop|\bpleuroscopy|\bmedical\s+thoracoscopy", text_lower, re.IGNORECASE):
+            return warnings, changed
+
+        # Some notes reference a prior/concurrent pleuroscopy ("pleuroscopy insertion site") while documenting
+        # a different procedure. Avoid triggering thoracoscopy solely on that phrase when it is explicitly
+        # delegated to separate documentation.
+        incidental_pleuroscopy_site = bool(
+            re.search(r"(?i)\bpleuroscopy\b[^.\n]{0,60}\binsertion\s+site\b", note_text or "")
+        )
+        separate_documentation = bool(
+            re.search(r"(?i)\b(?:see|per)\s+separate\s+documentation\b|\bseparate\s+documentation\b", note_text or "")
+        )
+        explicit_thoracoscopy = bool(
+            re.search(r"(?i)\bthoracoscop|\bmedical\s+thoracoscopy\b", note_text or "")
+        )
+        if incidental_pleuroscopy_site and separate_documentation and not explicit_thoracoscopy:
             return warnings, changed
 
         pleural = record_data.get("pleural_procedures")

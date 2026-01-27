@@ -28,6 +28,98 @@
   --radius-lg: 12px;
 }
 
+/* --- Report Section Styling --- */
+.report-section {
+  margin-bottom: 2rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.report-header {
+  background: #f8fafc;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.report-body {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* --- Data Tables --- */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  color: #334155;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* --- Badges & Status Indicators --- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.status-selected { background-color: #dcfce7; color: #166534; }
+.status-dropped { background-color: #fee2e2; color: #991b1b; }
+.status-suppressed { background-color: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+.role-primary { background-color: #e0f2fe; color: #075985; }
+.role-addon { background-color: #fef3c7; color: #92400e; }
+
+/* --- Audit Warning Levels --- */
+.audit-row-critical td { border-left: 4px solid #ef4444; }
+.audit-row-warning td { border-left: 4px solid #f59e0b; }
+.audit-row-info td { border-left: 4px solid #3b82f6; }
+
+/* --- Totals Row --- */
+.totals-row td {
+  font-weight: 700;
+  background-color: #f8fafc;
+  border-top: 2px solid #e2e8f0;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
 * {
   box-sizing: border-box;
 }

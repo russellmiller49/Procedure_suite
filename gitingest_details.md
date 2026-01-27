@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-26T13:24:16-08:00`
-Git: `main` @ `91703cd`
+Generated: `2026-01-27T13:15:16-08:00`
+Git: `main` @ `fb827fb`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -23,8 +23,8 @@ Git: `main` @ `91703cd`
      1026  scripts/prepare_data.py
      1173  scripts/merge_registry.py
      1351  scripts/validate_jsonschema.py
-     1357  scripts/check_pydantic_models.py
      1430  scripts/cpt_check.py
+     1505  scripts/check_pydantic_models.py
      1609  scripts/preflight.py
      1728  scripts/verify_registry_runtime_bundle.py
      1833  scripts/check_onnx_inputs.py
@@ -185,8 +185,8 @@ Git: `main` @ `91703cd`
       508  modules/registry/extractors/noop.py
       529  tests/e2e/test_registry_e2e.py
       533  modules/registry/ner_mapping/__init__.py
+      541  modules/registry/deterministic/__init__.py
       545  modules/registry_cleaning/__init__.py
-      551  modules/registry/pipelines/v3_pipeline.py
       553  tests/registry/test_registry_to_cpt_airway_stent_assessment_only.py
       554  modules/registry/schema/ip_v3.py
       561  tests/registry/test_keyword_guard_high_conf_bypass.py
@@ -225,6 +225,7 @@ Git: `main` @ `91703cd`
       874  modules/domain/knowledge_base/models.py
       887  tests/api/test_ui.py
       894  modules/registry/application/__init__.py
+      894  modules/registry/pipelines/v3_pipeline.py
       898  tests/scripts/test_train_roberta_cli.py
       904  tests/unit/test_inference_engine.py
       907  modules/infra/perf.py
@@ -240,7 +241,6 @@ Git: `main` @ `91703cd`
      1027  tests/registry/test_clinical_guardrails_stent_inspection.py
      1072  modules/coder/__init__.py
      1076  tests/registry/test_clinical_guardrails_radial_linear.py
-     1095  proc_schemas/shared/ebus_events.py
      1123  modules/coder/types.py
      1125  modules/ml_coder/valid_ip_codes.py
      1126  tests/registry/test_clinical_guardrails_endobronchial_biopsy.py
@@ -248,6 +248,7 @@ Git: `main` @ `91703cd`
      1140  modules/registry/schema_filter.py
      1143  tests/registry/test_slots_ebus_tblb.py
      1163  modules/registry/slots/disposition.py
+     1168  proc_schemas/shared/ebus_events.py
      1184  tests/registry/test_schema_filter.py
      1200  tests/registry/test_structurer_fallback.py
      1201  tests/unit/test_knowledge.py
@@ -276,11 +277,13 @@ Git: `main` @ `91703cd`
      1423  tests/registry/test_keyword_guard_keywords.py
      1426  tests/registry/test_llm_timeout_fallback.py
      1442  modules/domain/reasoning/models.py
+     1450  tests/registry/test_airway_stent_vascular_plug_revision.py
      1451  tests/coding/test_ebus_rules.py
      1461  modules/phi/db.py
      1476  modules/registry/schema_granular.py
      1477  tests/registry/test_ner_to_registry_mapper.py
      1493  tests/coding/test_hierarchy_normalization.py
+     1511  tests/registry/test_table_row_masking_regressions.py
      1542  modules/domain/knowledge_base/repository.py
      1547  modules/registry/slots/complications.py
      1548  modules/common/rules_engine/ncci.py
@@ -297,7 +300,6 @@ Git: `main` @ `91703cd`
      1761  modules/ml_coder/preprocessing.py
      1763  tests/registry/test_kitchen_sink_extraction_first.py
      1767  tests/utils/case_filter.py
-     1779  tests/registry/test_masking.py
      1828  tests/registry/test_registry_to_cpt_diagnostic_bronchoscopy.py
      1832  config/settings.py
      1835  modules/registry/slots/tblb.py
@@ -327,18 +329,18 @@ Git: `main` @ `91703cd`
      2167  modules/registry/legacy/adapters/base.py
      2167  tests/registry/test_ebus_postprocess_enrichment.py
      2174  tests/test_ip_registry_schema_guardrails.py
-     2192  tests/registry/test_ebus_specimen_override.py
      2196  modules/registry/self_correction/__init__.py
-     2207  tests/registry/test_header_scan.py
      2225  tests/registry/test_sedation_blvr.py
      2237  tests/registry/test_ebus_postprocess_fallback.py
      2250  modules/ml_coder/self_correction.py
      2253  tests/unit/test_phi_distillation.py
      2275  tests/registry/test_pathology_extraction.py
+     2307  tests/registry/test_ebus_specimen_override.py
      2320  modules/registry/slots/sedation.py
      2324  tests/registry/test_schema_refactor_smoke.py
      2346  tests/conftest.py
      2372  tests/scripts/test_prodigy_export_registry_file_mode.py
+     2413  tests/registry/test_masking.py
      2416  modules/common/text_cleaning.py
      2421  tests/registry/test_registry_to_cpt_fibrinolytic_therapy.py
      2448  modules/common/rules_engine/mer.py
@@ -346,10 +348,12 @@ Git: `main` @ `91703cd`
      2487  modules/proc_ml_advisor/__init__.py
      2488  modules/llm/client.py
      2582  modules/reporting/inference.py
+     2601  tests/registry/test_note_281_elastography_regression.py
      2607  tests/registry/test_extraction_first_flow.py
      2612  modules/phi/safety/protected_terms.py
      2664  modules/registry/slots/ebus.py
      2713  modules/common/text_io.py
+     2755  tests/registry/test_header_scan.py
      2768  modules/domain/coding_rules/mer.py
      2788  modules/domain/coding_rules/ncci.py
      2808  modules/domain/rvu/calculator.py
@@ -359,6 +363,7 @@ Git: `main` @ `91703cd`
      2853  modules/api/routes/phi_demo_cases.py
      2879  tests/test_clean_ip_registry.py
      2914  modules/reporter/cli.py
+     2921  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2927  modules/common/rvu_calc.py
      2990  tests/coding/test_sectionizer_integration.py
      2993  tests/unit/test_openai_timeouts.py
@@ -366,6 +371,7 @@ Git: `main` @ `91703cd`
      3066  tests/registry/test_ebus_deterministic.py
      3076  modules/api/adapters/response_adapter.py
      3104  modules/coder/ebus_extractor.py
+     3106  tests/registry/test_note_281_granularity_regression.py
      3131  modules/registry/adapters/schema_registry.py
      3141  tests/unit/test_validation_engine.py
      3163  modules/ml_coder/distillation_io.py
@@ -380,11 +386,11 @@ Git: `main` @ `91703cd`
      3307  modules/registry/legacy/adapter.py
      3391  modules/coder/peripheral_extractor.py
      3399  modules/infra/settings.py
-     3476  tests/registry/test_self_correction_validation.py
+     3471  tests/registry/test_v3_note_281_narrative_first_and_anchors.py
      3513  tests/unit/test_sanitize_dataset.py
      3532  proc_schemas/coding.py
-     3578  tests/registry/test_parallel_ner_uplift_evidence.py
      3622  modules/coder/posthoc.py
+     3624  tests/registry/test_parallel_ner_uplift_evidence.py
      3627  tests/scripts/test_prodigy_prepare_registry.py
      3656  proc_schemas/registry/ip_v2.py
      3682  modules/coder/sectionizer.py
@@ -395,11 +401,9 @@ Git: `main` @ `91703cd`
      3795  modules/common/model_capabilities.py
      3831  modules/api/phi_dependencies.py
      3862  tests/integration/test_pipeline_integrity.py
-     3876  tests/registry/test_registry_to_cpt_thoracoscopy_biopsy.py
      3899  modules/registry/extraction/focus.py
      3944  modules/ml_coder/registry_label_constraints.py
      3958  modules/coder/schema.py
-     3962  modules/registry/processing/focus.py
      3970  modules/agents/contracts.py
      3996  modules/registry/tags.py
      4071  modules/registry/self_correction/prompt_improvement.py
@@ -407,11 +411,11 @@ Git: `main` @ `91703cd`
      4251  modules/registry/slots/stent.py
      4302  tests/api/test_phi_redactor_ui.py
      4339  tests/phi/test_models.py
-     4343  modules/registry/self_correction/apply.py
      4373  tests/registry/test_keyword_guard_overrides.py
      4390  modules/registry_cleaning/logging_utils.py
      4403  tests/phi/test_presidio_scrubber_adapter.py
      4404  modules/registry/audit/compare.py
+     4425  tests/registry/test_registry_to_cpt_thoracoscopy_biopsy.py
      4461  proc_schemas/clinical/common.py
      4486  tests/registry/test_post_fix_regressions.py
      4494  modules/registry/ebus_config.py
@@ -420,6 +424,7 @@ Git: `main` @ `91703cd`
      4534  tests/registry/test_derive_procedures_from_granular_consistency.py
      4568  modules/registry/self_correction/judge.py
      4598  tests/api/test_coding_phi_gating.py
+     4751  tests/registry/test_fixpack_device_action_regressions.py
      4782  modules/common/sectionizer.py
      4845  tests/api/test_unified_process.py
      4978  tests/registry/test_auditor_raw_ml_only.py
@@ -432,8 +437,10 @@ Git: `main` @ `91703cd`
      5334  modules/api/phi_demo_store.py
      5384  tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py
      5394  modules/api/gemini_client.py
+     5481  modules/registry/self_correction/apply.py
      5641  modules/coder/ebus_rules.py
      5653  modules/phi/models.py
+     5706  modules/registry/deterministic/anatomy.py
      5773  modules/api/schemas/base.py
      5870  modules/infra/nlp_warmup.py
      5968  modules/registry/processing/navigation_fiducials.py
@@ -444,6 +451,7 @@ Git: `main` @ `91703cd`
      6184  tests/integration/test_phi_workflow_end_to_end.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
+     6276  tests/registry/test_self_correction_validation.py
      6333  tests/registry/test_audit_compare_report.py
      6351  modules/registry/slots/therapeutics.py
      6438  modules/domain/procedure_store/repository.py
@@ -452,7 +460,6 @@ Git: `main` @ `91703cd`
      6596  tests/registry/test_registry_qa_regressions.py
      6632  modules/coder/cli.py
      6646  tests/unit/test_protected_veto.py
-     6849  modules/registry/self_correction/validation.py
      6904  modules/reporting/ip_addons.py
      6955  tests/integration/api/test_startup_warmup.py
      7110  modules/coder/application/candidate_expansion.py
@@ -465,19 +472,20 @@ Git: `main` @ `91703cd`
      7652  tests/registry/test_registry_extraction_ebus.py
      7672  modules/coder/adapters/ml_ranker.py
      7837  tests/unit/test_no_legacy_imports.py
-     7863  modules/api/routes/unified_process.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
      8227  tests/coder/test_rules_engine.py
      8228  proc_schemas/registry/ip_v3.py
      8415  modules/registry/inference_pytorch.py
-     8424  modules/registry/processing/masking.py
      8427  modules/registry_cleaning/clinical_qc.py
+     8479  modules/registry/processing/focus.py
      8556  modules/registry/ml/evaluate.py
      8618  tests/coder/test_hierarchy_bundling_fixes.py
      8652  modules/coder/application/procedure_type_detector.py
+     8668  modules/registry/processing/masking.py
      8695  tests/coding/test_json_rules_parity.py
      8702  modules/api/coder_adapter.py
+     8750  modules/api/routes/unified_process.py
      9005  modules/api/routes/metrics.py
      9048  modules/registry/schema/adapters/v3_to_v2.py
      9466  tests/ml_coder/test_training_pipeline.py
@@ -489,13 +497,13 @@ Git: `main` @ `91703cd`
     10017  tests/registry/test_registry_guardrails.py
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
+    10323  modules/registry/self_correction/validation.py
     10466  modules/api/routes_registry.py
     10791  tests/unit/test_inmemory_procedure_store.py
     10938  tests/registry/test_ebus_config_station_count.py
     11181  tests/test_phi_redaction_contract.py
     11253  modules/registry/application/registry_builder.py
     11289  modules/coder/adapters/nlp/keyword_mapping_loader.py
-    11430  modules/registry/extractors/v3_extractor.py
     11467  modules/api/routes/phi.py
     11598  modules/common/knowledge.py
     11691  modules/registry/legacy/adapters/pleural.py
@@ -506,6 +514,7 @@ Git: `main` @ `91703cd`
     12198  modules/api/dependencies.py
     12339  modules/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
+    12517  modules/registry/extractors/v3_extractor.py
     12640  tests/ml_coder/test_data_prep.py
     12657  docs/phi_review_system/backend/schemas.py
     12997  tests/coder/test_smart_hybrid_policy.py
@@ -530,10 +539,10 @@ Git: `main` @ `91703cd`
     15467  modules/api/services/qa_pipeline.py
     15495  modules/ml_coder/registry_training.py
     15516  modules/registry/ner_mapping/station_extractor.py
-    15558  modules/registry/application/coding_support_builder.py
     15601  tests/reporter/test_ip_addons.py
     15653  tests/registry/test_extraction_quality.py
     15655  modules/coder/reconciliation/pipeline.py
+    15666  modules/registry/application/coding_support_builder.py
     15800  modules/ner/inference.py
     15857  tests/registry/test_normalization.py
     16032  modules/coder/rules_engine.py
@@ -552,14 +561,13 @@ Git: `main` @ `91703cd`
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
     19783  tests/integration/api/test_registry_endpoints.py
-    19861  tests/coder/test_coding_rules_phase7.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
     20223  modules/domain/coding_rules/rule_engine.py
     20317  modules/coder/parallel_pathway/orchestrator.py
     20430  modules/registry/model_bootstrap.py
     20539  modules/registry/extractors/llm_detailed.py
-    20770  modules/registry/schema/v2_dynamic.py
+    20678  tests/coder/test_coding_rules_phase7.py
     21220  modules/coder/adapters/llm/openai_compat_advisor.py
     21460  modules/coder/adapters/persistence/supabase_procedure_store.py
     21479  tests/coder/test_reconciliation.py
@@ -569,6 +577,7 @@ Git: `main` @ `91703cd`
     22569  modules/phi/adapters/presidio_scrubber.py
     22644  modules/ml_coder/data_prep.py
     22670  tests/ml_coder/test_registry_data_prep.py
+    22897  modules/registry/schema/v2_dynamic.py
     23485  docs/phi_review_system/backend/endpoints.py
     24069  tests/ml_advisor/conftest.py
     24922  tests/integration/api/test_coder_run_endpoint.py
@@ -585,27 +594,27 @@ Git: `main` @ `91703cd`
     30063  modules/api/ml_advisor_router.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
     33132  tests/registry/test_registry_service_hybrid_flow.py
-    34791  modules/registry/self_correction/keyword_guard.py
     35268  tests/coding/test_rules_validation.py
     35381  modules/phi/adapters/phi_redactor_hybrid.py
     35981  modules/registry/ml/action_predictor.py
-    36340  modules/extraction/postprocessing/clinical_guardrails.py
+    36446  modules/registry/self_correction/keyword_guard.py
     36538  modules/coder/dictionary.py
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
-    40107  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     40683  modules/common/llm.py
+    40690  modules/extraction/postprocessing/clinical_guardrails.py
     41901  modules/proc_ml_advisor/schemas.py
     42913  modules/api/routes/procedure_codes.py
     43561  modules/api/fastapi_app.py
     43756  tests/registry/test_granular_registry_models.py
+    49120  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     56440  modules/autocode/ip_kb/ip_kb.py
-    61822  modules/registry/prompts.py
+    61831  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    77507  modules/registry/deterministic_extractors.py
+    85660  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
-   112061  modules/registry/postprocess.py
-   126604  modules/registry/application/registry_service.py
+   117586  modules/registry/postprocess.py
+   130147  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
@@ -721,6 +730,8 @@ Git: `main` @ `91703cd`
      2342  modules/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
      2922  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
      2922  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/protected_terms.json
+     2954  tests/fixtures/notes/note_315.txt
+     3054  tests/fixtures/notes/note_289.txt
      3085  modules/reporting/templates/ebus_tbna.jinja
      3086  modules/reporting/templates/cryobiopsy.jinja
      3087  modules/reporting/templates/pleuroscopy.jinja
@@ -740,7 +751,9 @@ Git: `main` @ `91703cd`
      4096  docs/DEPLOY_ARCH.md
      4198  docs/REGISTRY_PRODIGY_WORKFLOW.md
      4233  tests/fixtures/notes/kitchen_sink_ion_nav_ebus_fiducial_dilation.txt
+     4437  tests/fixtures/notes/note_274.txt
      4544  docs/Production_Readiness_Review.md
+     4595  tests/fixtures/notes/note_275.txt
      4606  docs/CODEX_PRODUCTION_PLAN.md
      4745  docs/Multi_agent_collaboration/Architect Priming Script.md
      5429  docs/ml_first_hybrid_policy.md
@@ -748,6 +761,7 @@ Git: `main` @ `91703cd`
      6862  modules/reporting/templates/macros/04_blvr_cryo.j2
      7031  docs/Registry_ML_summary.md
      7218  docs/IPregistry_update_plan.md
+     7332  tests/fixtures/notes/note_281.txt
      7368  docs/Multi_agent_collaboration/Multi‑Agent Architecture.md
      7469  modules/reporting/templates/macros/06_other_interventions.j2
      8655  modules/reporting/EXTRACTION_RULES.md
@@ -774,8 +788,8 @@ Git: `main` @ `91703cd`
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
     27821  modules/registry/ip_registry_improvements.md
-    31743  modules/api/static/phi_redactor/app.js
     41682  docs/USER_GUIDE.md
+    43484  modules/api/static/phi_redactor/app.js
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     61430  modules/api/static/phi_redactor/protectedVeto.js
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
@@ -859,8 +873,8 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/agents/structurer/structurer_agent.py
  inline_cap_reached>75  modules/registry/extractors/noop.py
  inline_cap_reached>75  modules/registry/ner_mapping/__init__.py
+ inline_cap_reached>75  modules/registry/deterministic/__init__.py
  inline_cap_reached>75  modules/registry_cleaning/__init__.py
- inline_cap_reached>75  modules/registry/pipelines/v3_pipeline.py
  inline_cap_reached>75  modules/registry/schema/ip_v3.py
  inline_cap_reached>75  modules/coder/code_families.py
  inline_cap_reached>75  modules/phi/adapters/__init__.py
@@ -886,6 +900,7 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/reporting/coder_view.py
  inline_cap_reached>75  modules/domain/knowledge_base/models.py
  inline_cap_reached>75  modules/registry/application/__init__.py
+ inline_cap_reached>75  modules/registry/pipelines/v3_pipeline.py
  inline_cap_reached>75  modules/infra/perf.py
  inline_cap_reached>75  modules/registry/__init__.py
  inline_cap_reached>75  modules/ml_coder/utils.py
@@ -894,11 +909,11 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/engine.py
  inline_cap_reached>75  modules/api/guards.py
  inline_cap_reached>75  modules/coder/__init__.py
- inline_cap_reached>75  proc_schemas/shared/ebus_events.py
  inline_cap_reached>75  modules/coder/types.py
  inline_cap_reached>75  modules/ml_coder/valid_ip_codes.py
  inline_cap_reached>75  modules/registry/schema_filter.py
  inline_cap_reached>75  modules/registry/slots/disposition.py
+ inline_cap_reached>75  proc_schemas/shared/ebus_events.py
  inline_cap_reached>75  modules/common/exceptions.py
  inline_cap_reached>75  modules/registry/slots/pleura.py
  inline_cap_reached>75  modules/api/schemas/__init__.py
@@ -985,12 +1000,10 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/registry/extraction/focus.py
  inline_cap_reached>75  modules/ml_coder/registry_label_constraints.py
  inline_cap_reached>75  modules/coder/schema.py
- inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/agents/contracts.py
  inline_cap_reached>75  modules/registry/tags.py
  inline_cap_reached>75  modules/registry/self_correction/prompt_improvement.py
  inline_cap_reached>75  modules/registry/slots/stent.py
- inline_cap_reached>75  modules/registry/self_correction/apply.py
  inline_cap_reached>75  modules/registry_cleaning/logging_utils.py
  inline_cap_reached>75  modules/registry/audit/compare.py
  inline_cap_reached>75  proc_schemas/clinical/common.py
@@ -1002,8 +1015,10 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/api/schemas/qa.py
  inline_cap_reached>75  modules/api/phi_demo_store.py
  inline_cap_reached>75  modules/api/gemini_client.py
+ inline_cap_reached>75  modules/registry/self_correction/apply.py
  inline_cap_reached>75  modules/coder/ebus_rules.py
  inline_cap_reached>75  modules/phi/models.py
+ inline_cap_reached>75  modules/registry/deterministic/anatomy.py
  inline_cap_reached>75  modules/api/schemas/base.py
  inline_cap_reached>75  modules/infra/nlp_warmup.py
  inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
@@ -1014,7 +1029,6 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/domain/procedure_store/repository.py
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
  inline_cap_reached>75  modules/coder/cli.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/reporting/ip_addons.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
  inline_cap_reached>75  modules/agents/run_pipeline.py
@@ -1022,25 +1036,26 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/domain/coding_rules/evidence_context.py
  inline_cap_reached>75  modules/registry/model_runtime.py
  inline_cap_reached>75  modules/coder/adapters/ml_ranker.py
- inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/coder/adapters/persistence/inmemory_procedure_store.py
  inline_cap_reached>75  proc_schemas/registry/ip_v3.py
  inline_cap_reached>75  modules/registry/inference_pytorch.py
- inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/registry_cleaning/clinical_qc.py
+ inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/registry/ml/evaluate.py
  inline_cap_reached>75  modules/coder/application/procedure_type_detector.py
+ inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/api/coder_adapter.py
+ inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/api/routes/metrics.py
  inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  modules/ml_coder/training.py
  inline_cap_reached>75  modules/phi/service.py
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/api/routes_registry.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
- inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
  inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/common/knowledge.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
@@ -1049,6 +1064,7 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
+ inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
  inline_cap_reached>75  modules/coder/rules.py
@@ -1062,8 +1078,8 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
  inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
- inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
+ inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/coder/rules_engine.py
  inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
@@ -1079,12 +1095,12 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  modules/registry/model_bootstrap.py
  inline_cap_reached>75  modules/registry/extractors/llm_detailed.py
- inline_cap_reached>75  modules/registry/schema/v2_dynamic.py
  inline_cap_reached>75  modules/coder/adapters/llm/openai_compat_advisor.py
  inline_cap_reached>75  modules/coder/adapters/persistence/supabase_procedure_store.py
  inline_cap_reached>75  modules/registry/legacy/adapters/airway.py
  inline_cap_reached>75  modules/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  modules/ml_coder/data_prep.py
+ inline_cap_reached>75  modules/registry/schema/v2_dynamic.py
  inline_cap_reached>75  modules/coder/application/smart_hybrid_policy.py
  inline_cap_reached>75  modules/reporting/macro_engine.py
  inline_cap_reached>75  modules/ml_coder/label_hydrator.py
@@ -1096,16 +1112,16 @@ Git: `main` @ `91703cd`
  inline_cap_reached>75  modules/registry/schema/granular_models.py
  inline_cap_reached>75  modules/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  modules/api/ml_advisor_router.py
- inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
- inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
+ inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/dictionary.py
- inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/common/llm.py
+ inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
  inline_cap_reached>75  modules/api/fastapi_app.py
+ inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  modules/registry/prompts.py
  inline_cap_reached>75  modules/reporting/engine.py
@@ -1357,67 +1373,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/check_pydantic_models.py`
-- Size: `1357` bytes
-```
-#!/usr/bin/env python3
-"""
-Smoke-test imports for core Pydantic models and key services.
-
-This is intentionally simple: if any import fails, the script exits non-zero
-so `make validate-schemas` / CI will catch it.
-"""
-
-import importlib
-import sys
-
-MODULES = [
-    # Clinical schemas
-    "proc_schemas.clinical.airway",
-    "proc_schemas.clinical.pleural",
-
-    # Reasoning + coding lifecycle models
-    "proc_schemas.reasoning",
-    "proc_schemas.coding",
-
-    # Registry models
-    "proc_schemas.registry.ip_v2",
-    "proc_schemas.registry.ip_v3",
-
-    # Reporter agents contracts
-    "modules.agents.contracts",
-
-    # Coder application (pulls in smart_hybrid policy etc.)
-    "modules.coder.application.coding_service",
-    "modules.coder.application.smart_hybrid_policy",
-]
-
-
-def main() -> int:
-    failed = False
-
-    for mod in MODULES:
-        try:
-            importlib.import_module(mod)
-            print(f"Imported OK: {mod}")
-        except Exception as exc:  # noqa: BLE001
-            failed = True
-            print(f"FAILED to import {mod}: {exc}", file=sys.stderr)
-
-    if failed:
-        print("One or more modules failed to import.", file=sys.stderr)
-        return 1
-
-    print("All Pydantic model imports OK.")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
 ### `scripts/cpt_check.py`
 - Size: `1430` bytes
 ```
@@ -1464,6 +1419,73 @@ def main() -> int:
                             return 0
 
     print("done, bad=", bad)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `scripts/check_pydantic_models.py`
+- Size: `1505` bytes
+```
+#!/usr/bin/env python3
+"""
+Smoke-test imports for core Pydantic models and key services.
+
+This is intentionally simple: if any import fails, the script exits non-zero
+so `make validate-schemas` / CI will catch it.
+"""
+
+import importlib
+import sys
+from pathlib import Path
+
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+MODULES = [
+    # Clinical schemas
+    "proc_schemas.clinical.airway",
+    "proc_schemas.clinical.pleural",
+
+    # Reasoning + coding lifecycle models
+    "proc_schemas.reasoning",
+    "proc_schemas.coding",
+
+    # Registry models
+    "proc_schemas.registry.ip_v2",
+    "proc_schemas.registry.ip_v3",
+
+    # Reporter agents contracts
+    "modules.agents.contracts",
+
+    # Coder application (pulls in smart_hybrid policy etc.)
+    "modules.coder.application.coding_service",
+    "modules.coder.application.smart_hybrid_policy",
+]
+
+
+def main() -> int:
+    failed = False
+
+    for mod in MODULES:
+        try:
+            importlib.import_module(mod)
+            print(f"Imported OK: {mod}")
+        except Exception as exc:  # noqa: BLE001
+            failed = True
+            print(f"FAILED to import {mod}: {exc}", file=sys.stderr)
+
+    if failed:
+        print("One or more modules failed to import.", file=sys.stderr)
+        return 1
+
+    print("All Pydantic model imports OK.")
     return 0
 
 
