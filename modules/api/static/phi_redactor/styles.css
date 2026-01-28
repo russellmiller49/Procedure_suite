@@ -428,6 +428,12 @@ button.secondary:hover:not(:disabled) {
   justify-content: space-between;
 }
 
+.result-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .resultBody {
   margin: 0;
   padding: 16px;
@@ -1014,6 +1020,100 @@ button.secondary:hover:not(:disabled) {
   font-size: 12px;
   overflow: auto;
   max-height: 300px;
+}
+
+.flat-tables-host {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flat-table-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+}
+
+.flat-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+
+.flat-table-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.flat-table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.flat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.flat-table th {
+  text-align: left;
+  padding: 8px 10px;
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.flat-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  vertical-align: top;
+}
+
+.flat-table tr:last-child td {
+  border-bottom: none;
+}
+
+.flat-input,
+.flat-select {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.flat-input:focus,
+.flat-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.flat-readonly {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.flat-table-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.row-action-btn {
+  padding: 6px 10px;
+  font-size: 12px;
 }
 
 /* Monaco Decorations - PHI Detection */

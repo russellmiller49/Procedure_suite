@@ -12,10 +12,18 @@ const applyBtn = document.getElementById("applyBtn");
 const revertBtn = document.getElementById("revertBtn");
 const submitBtn = document.getElementById("submitBtn");
 const exportBtn = document.getElementById("exportBtn");
+const exportTablesBtn = document.getElementById("exportTablesBtn");
+const newNoteBtn = document.getElementById("newNoteBtn");
 const addRedactionBtn = document.getElementById("addRedactionBtn");
 const entityTypeSelect = document.getElementById("entityTypeSelect");
+const editedResponseEl = document.getElementById("editedResponse");
+const flattenedTablesHost = document.getElementById("flattenedTablesHost");
 
 let lastServerResponse = null;
+let flatTablesBase = null;
+let flatTablesState = null;
+let editedPayload = null;
+let editedDirty = false;
 
 /**
  * Get merge mode from query param or localStorage.
@@ -44,12 +52,42 @@ const WORKER_CONFIG = {
   mergeMode: getConfiguredMergeMode(),
 };
 
+const YES_NO_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Yes", label: "Yes" },
+  { value: "No", label: "No" },
+];
+const ROLE_OPTIONS = [
+  { value: "primary", label: "Primary" },
+  { value: "add_on", label: "Add On" },
+];
+const STATUS_OPTIONS = [
+  { value: "Dropped", label: "Dropped" },
+  { value: "Suppressed", label: "Suppressed" },
+];
+const RULE_OUTCOME_OPTIONS = [
+  { value: "dropped", label: "Dropped" },
+  { value: "suppressed", label: "Suppressed" },
+  { value: "informational", label: "Informational" },
+  { value: "allowed", label: "Allowed" },
+];
+const EBUS_ACTION_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "inspected_only", label: "Inspected only" },
+  { value: "needle_aspiration", label: "Needle aspiration" },
+  { value: "core_biopsy", label: "Core biopsy" },
+  { value: "forceps_biopsy", label: "Forceps biopsy" },
+  { value: "other", label: "Other" },
+];
+
 runBtn.disabled = true;
 cancelBtn.disabled = true;
 applyBtn.disabled = true;
 revertBtn.disabled = true;
 submitBtn.disabled = true;
 if (exportBtn) exportBtn.disabled = true;
+if (exportTablesBtn) exportTablesBtn.disabled = true;
+if (newNoteBtn) newNoteBtn.disabled = true;
 if (statusTextEl) statusTextEl.textContent = "Booting UI…";
 
 function setStatus(text) {
@@ -345,6 +383,73 @@ function getBillingByCode(data) {
     if (code) map.set(code, b);
   });
   return map;
+}
+
+function deepClone(value) {
+  if (typeof structuredClone === "function") return structuredClone(value);
+  return JSON.parse(JSON.stringify(value));
+}
+
+function parseList(value) {
+  if (Array.isArray(value)) return value.filter((v) => String(v || "").trim() !== "");
+  const text = String(value || "").trim();
+  if (!text) return [];
+  return text
+    .split(",")
+    .map((v) => v.trim())
+    .filter(Boolean);
+}
+
+function parseNumber(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function toYesNo(value) {
+  if (value === true) return "Yes";
+  if (value === false) return "No";
+  const s = String(value || "").toLowerCase();
+  if (s === "yes" || s === "true") return "Yes";
+  if (s === "no" || s === "false") return "No";
+  return "";
+}
+
+function parseYesNo(value) {
+  const s = String(value || "").toLowerCase();
+  if (s === "yes" || s === "true") return true;
+  if (s === "no" || s === "false") return false;
+  return null;
+}
+
+function ensurePath(obj, path) {
+  const parts = path.split(".");
+  let curr = obj;
+  for (let i = 0; i < parts.length; i += 1) {
+    const key = parts[i];
+    if (!curr[key] || typeof curr[key] !== "object") curr[key] = {};
+    curr = curr[key];
+  }
+  return curr;
+}
+
+function setByPath(obj, path, value) {
+  const parts = path.split(".");
+  let curr = obj;
+  for (let i = 0; i < parts.length - 1; i += 1) {
+    const key = parts[i];
+    if (!curr[key] || typeof curr[key] !== "object") curr[key] = {};
+    curr = curr[key];
+  }
+  curr[parts[parts.length - 1]] = value;
+}
+
+function resetEditedState() {
+  flatTablesBase = null;
+  flatTablesState = null;
+  editedPayload = null;
+  editedDirty = false;
+  if (editedResponseEl) editedResponseEl.textContent = "(no edits yet)";
 }
 
 function collectRegistryCodeEvidence(data, code) {
@@ -1358,6 +1463,885 @@ function renderEvidenceTraceability(data) {
   }
 }
 
+function buildFlattenedTables(data) {
+  const registry = getRegistry(data);
+  const tables = [];
+
+  const codingLines = getCodingLines(data);
+  const selectedLines = codingLines.filter(
+    (ln) => String(ln?.selection_status || "selected").toLowerCase() === "selected"
+  );
+  const suppressedLines = codingLines.filter(
+    (ln) => String(ln?.selection_status || "").toLowerCase() !== "selected"
+  );
+
+  tables.push({
+    id: "coding_selected",
+    title: "CPT Codes – Selected",
+    columns: [
+      { key: "code", label: "CPT Code", type: "text" },
+      { key: "description", label: "Description", type: "text" },
+      { key: "units", label: "Units", type: "number" },
+      { key: "role", label: "Role", type: "select", options: ROLE_OPTIONS },
+      { key: "rationale", label: "Rationale", type: "text" },
+    ],
+    rows: selectedLines.map((ln) => ({
+      code: normalizeCptCode(ln?.code),
+      description: ln?.description || "",
+      units: Number.isFinite(ln?.units) ? String(ln.units) : "",
+      role: String(ln?.role || (ln?.is_add_on ? "add_on" : "primary") || "primary").toLowerCase(),
+      rationale: ln?.selection_reason || ln?.rationale || "",
+    })),
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No selected CPT codes.",
+  });
+
+  tables.push({
+    id: "coding_suppressed",
+    title: "CPT Codes – Dropped / Suppressed",
+    columns: [
+      { key: "code", label: "CPT Code", type: "text" },
+      { key: "status", label: "Status", type: "select", options: STATUS_OPTIONS },
+      { key: "reason", label: "Reason", type: "text" },
+    ],
+    rows: suppressedLines.map((ln) => {
+      const statusRaw = String(ln?.selection_status || "").toLowerCase();
+      const status =
+        statusRaw === "suppressed" || /suppress/i.test(String(ln?.selection_reason || ""))
+          ? "Suppressed"
+          : "Dropped";
+      return {
+        code: normalizeCptCode(ln?.code),
+        status,
+        reason: ln?.selection_reason || "",
+      };
+    }),
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No dropped/suppressed CPT codes.",
+  });
+
+  const perCode = Array.isArray(getCodingRationale(data)?.per_code)
+    ? getCodingRationale(data).per_code
+    : [];
+  tables.push({
+    id: "coding_rationale",
+    title: "Coding Logic & Rationale",
+    columns: [
+      { key: "code", label: "CPT Code", type: "text" },
+      { key: "summary", label: "Summary", type: "text" },
+    ],
+    rows: perCode.map((pc) => ({
+      code: normalizeCptCode(pc?.code),
+      summary: pc?.summary || "",
+    })),
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No coding rationale entries.",
+  });
+
+  const rules = Array.isArray(getCodingRationale(data)?.rules_applied)
+    ? getCodingRationale(data).rules_applied
+    : [];
+  tables.push({
+    id: "rules_applied",
+    title: "Rules Applied (Bundling & Policy)",
+    columns: [
+      { key: "rule_type", label: "Rule Type", type: "text" },
+      { key: "codes_affected", label: "Codes Affected", type: "text" },
+      { key: "outcome", label: "Outcome", type: "select", options: RULE_OUTCOME_OPTIONS },
+      { key: "details", label: "Details", type: "text" },
+    ],
+    rows: rules.map((r) => ({
+      rule_type: r?.rule_type || "",
+      codes_affected: Array.isArray(r?.codes_affected) ? r.codes_affected.join(", ") : "",
+      outcome: String(r?.outcome || "").toLowerCase() || "informational",
+      details: r?.details || "",
+    })),
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No rules applied.",
+  });
+
+  const billing = getPerCodeBilling(data);
+  tables.push({
+    id: "financial_summary",
+    title: "Financial Summary",
+    columns: [
+      { key: "cpt_code", label: "CPT Code", type: "text" },
+      { key: "units", label: "Units", type: "number" },
+      { key: "work_rvu", label: "Work RVU", type: "number" },
+      { key: "total_facility_rvu", label: "Facility RVU", type: "number" },
+      { key: "facility_payment", label: "Payment", type: "number" },
+      { key: "notes", label: "Notes", type: "text" },
+    ],
+    rows: billing.map((b) => ({
+      cpt_code: normalizeCptCode(b?.cpt_code),
+      units: Number.isFinite(b?.units) ? String(b.units) : "",
+      work_rvu: Number.isFinite(b?.work_rvu) ? String(b.work_rvu) : "",
+      total_facility_rvu: Number.isFinite(b?.total_facility_rvu) ? String(b.total_facility_rvu) : "",
+      facility_payment: Number.isFinite(b?.facility_payment) ? String(b.facility_payment) : "",
+      notes: b?.notes || "",
+    })),
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No financial summary lines.",
+  });
+
+  const groupedWarnings = groupWarnings(data?.audit_warnings || []);
+  const auditRows = [];
+  for (const [category, messages] of groupedWarnings.entries()) {
+    (Array.isArray(messages) ? messages : []).forEach((msg) => {
+      auditRows.push({ category, notes: msg || "" });
+    });
+  }
+  const validationErrors = Array.isArray(data?.validation_errors) ? data.validation_errors : [];
+  validationErrors.forEach((msg) => auditRows.push({ category: "Validation", notes: String(msg || "") }));
+
+  tables.push({
+    id: "audit_flags",
+    title: "Audit & Quality Flags",
+    columns: [
+      { key: "category", label: "Category", type: "text" },
+      { key: "notes", label: "Notes", type: "text" },
+    ],
+    rows: auditRows,
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No audit flags.",
+  });
+
+  const clinicalRows = [];
+  const ctx = registry?.clinical_context || {};
+  const sed = registry?.sedation || {};
+  const setting = registry?.procedure_setting || {};
+  clinicalRows.push({
+    field: "Primary indication",
+    value: ctx?.primary_indication || "",
+    __meta: { path: "registry.clinical_context.primary_indication", valueType: "text" },
+  });
+  clinicalRows.push({
+    field: "Indication category",
+    value: ctx?.indication_category || "",
+    __meta: { path: "registry.clinical_context.indication_category", valueType: "text" },
+  });
+  clinicalRows.push({
+    field: "Bronchus sign",
+    value: toYesNo(ctx?.bronchus_sign),
+    __meta: {
+      path: "registry.clinical_context.bronchus_sign",
+      valueType: "boolean",
+      inputType: "select",
+      options: YES_NO_OPTIONS,
+    },
+  });
+  clinicalRows.push({
+    field: "Sedation type",
+    value: sed?.type || "",
+    __meta: { path: "registry.sedation.type", valueType: "text" },
+  });
+  clinicalRows.push({
+    field: "Anesthesia provider",
+    value: sed?.anesthesia_provider || "",
+    __meta: { path: "registry.sedation.anesthesia_provider", valueType: "text" },
+  });
+  clinicalRows.push({
+    field: "Airway type",
+    value: setting?.airway_type || "",
+    __meta: { path: "registry.procedure_setting.airway_type", valueType: "text" },
+  });
+  clinicalRows.push({
+    field: "Procedure location",
+    value: setting?.location || "",
+    __meta: { path: "registry.procedure_setting.location", valueType: "text" },
+  });
+  clinicalRows.push({
+    field: "Patient position",
+    value: setting?.patient_position || "",
+    __meta: { path: "registry.procedure_setting.patient_position", valueType: "text" },
+  });
+
+  tables.push({
+    id: "clinical_context",
+    title: "Patient & Clinical Context",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: clinicalRows,
+    allowAdd: false,
+    allowDelete: false,
+  });
+
+  const procedures = registry?.procedures_performed || {};
+  const procKeys = Object.keys(procedures);
+  procKeys.sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)));
+  const procRows = procKeys.map((key) => ({
+    procedure: titleCaseKey(key),
+    performed: toYesNo(isPerformedProcedure(procedures[key])),
+    details: summarizeProcedure(key, procedures[key]),
+    __meta: { procKey: key },
+  }));
+
+  tables.push({
+    id: "procedures_summary",
+    title: "Procedures Performed (Summary)",
+    columns: [
+      { key: "procedure", label: "Procedure", readOnly: true },
+      { key: "performed", label: "Performed", type: "select", options: YES_NO_OPTIONS },
+      { key: "details", label: "Key Details", type: "text" },
+    ],
+    rows: procRows,
+    allowAdd: false,
+    allowDelete: false,
+  });
+
+  const diag = registry?.procedures_performed?.diagnostic_bronchoscopy || {};
+  tables.push({
+    id: "diagnostic_findings",
+    title: "Diagnostic Bronchoscopy Findings",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Airway abnormalities",
+        value: Array.isArray(diag?.airway_abnormalities) ? diag.airway_abnormalities.join(", ") : "",
+        __meta: {
+          path: "registry.procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+          valueType: "list",
+        },
+      },
+      {
+        field: "Findings (free text)",
+        value: diag?.inspection_findings || "",
+        __meta: {
+          path: "registry.procedures_performed.diagnostic_bronchoscopy.inspection_findings",
+          valueType: "text",
+        },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+  });
+
+  const bal = registry?.procedures_performed?.bal || {};
+  tables.push({
+    id: "bal_details",
+    title: "BAL Details",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Location",
+        value: bal?.location || "",
+        __meta: { path: "registry.procedures_performed.bal.location", valueType: "text" },
+      },
+      {
+        field: "Instilled (mL)",
+        value: Number.isFinite(bal?.volume_instilled_ml) ? String(bal.volume_instilled_ml) : "",
+        __meta: { path: "registry.procedures_performed.bal.volume_instilled_ml", valueType: "number" },
+      },
+      {
+        field: "Recovered (mL)",
+        value: Number.isFinite(bal?.volume_recovered_ml) ? String(bal.volume_recovered_ml) : "",
+        __meta: { path: "registry.procedures_performed.bal.volume_recovered_ml", valueType: "number" },
+      },
+      {
+        field: "Appearance",
+        value: bal?.appearance || "",
+        __meta: { path: "registry.procedures_performed.bal.appearance", valueType: "text" },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+  });
+
+  const ebus = registry?.procedures_performed?.linear_ebus || {};
+  tables.push({
+    id: "linear_ebus_summary",
+    title: "Linear EBUS Technical Summary",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Stations sampled",
+        value: Array.isArray(ebus?.stations_sampled) ? ebus.stations_sampled.join(", ") : "",
+        __meta: {
+          path: "registry.procedures_performed.linear_ebus.stations_sampled",
+          valueType: "list",
+        },
+      },
+      {
+        field: "Needle gauge",
+        value: ebus?.needle_gauge || "",
+        __meta: { path: "registry.procedures_performed.linear_ebus.needle_gauge", valueType: "text" },
+      },
+      {
+        field: "Elastography used",
+        value: toYesNo(ebus?.elastography_used),
+        __meta: {
+          path: "registry.procedures_performed.linear_ebus.elastography_used",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Elastography pattern",
+        value: ebus?.elastography_pattern || "",
+        __meta: {
+          path: "registry.procedures_performed.linear_ebus.elastography_pattern",
+          valueType: "text",
+        },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+  });
+
+  const nodeEvents = Array.isArray(ebus?.node_events) ? ebus.node_events : [];
+  tables.push({
+    id: "ebus_node_events",
+    title: "Linear EBUS Node Events",
+    columns: [
+      { key: "station", label: "Station", type: "text" },
+      { key: "action", label: "Action", type: "select", options: EBUS_ACTION_OPTIONS },
+      { key: "passes", label: "Passes", type: "number" },
+      { key: "elastography_pattern", label: "Elastography", type: "text" },
+      { key: "evidence_quote", label: "Evidence", type: "text" },
+    ],
+    rows: nodeEvents.map((ev) => ({
+      station: ev?.station || "",
+      action: ev?.action || "",
+      passes: Number.isFinite(ev?.passes) ? String(ev.passes) : "",
+      elastography_pattern: ev?.elastography_pattern || "",
+      evidence_quote: ev?.evidence_quote || "",
+    })),
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No node events.",
+  });
+
+  const evidence = getEvidence(data);
+  const evRows = [];
+  if (evidence && typeof evidence === "object") {
+    Object.keys(evidence)
+      .sort((a, b) => a.localeCompare(b))
+      .forEach((field) => {
+        const items = evidence[field];
+        if (!Array.isArray(items)) return;
+        items.forEach((item) => {
+          const text = String(item?.text || item?.quote || "").trim();
+          const span = Array.isArray(item?.span) ? item.span : null;
+          evRows.push({
+            field,
+            evidence: text || "(evidence)",
+            span: fmtSpan(span),
+            confidence: typeof item?.confidence === "number" ? item.confidence.toFixed(2) : "—",
+            source: item?.source || "",
+          });
+        });
+      });
+  }
+
+  tables.push({
+    id: "evidence_traceability",
+    title: "Evidence Traceability (Read-only)",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "evidence", label: "Evidence", readOnly: true },
+      { key: "span", label: "Span", readOnly: true },
+      { key: "confidence", label: "Confidence", readOnly: true },
+      { key: "source", label: "Source", readOnly: true },
+    ],
+    rows: evRows.slice(0, 250),
+    allowAdd: false,
+    allowDelete: false,
+    readOnly: true,
+    note:
+      evRows.length > 250 ? `Showing first 250 evidence items (${evRows.length} total).` : "",
+  });
+
+  return tables;
+}
+
+function renderFlattenedTables(data) {
+  if (!flattenedTablesHost) return;
+  if (!data) {
+    flattenedTablesHost.innerHTML =
+      '<div class="dash-empty" style="padding: 12px;">No results to show.</div>';
+    return;
+  }
+
+  const tables = buildFlattenedTables(data);
+  flatTablesBase = deepClone(tables);
+  flatTablesState = deepClone(tables);
+  editedDirty = false;
+  if (editedResponseEl) editedResponseEl.textContent = "(no edits yet)";
+  renderFlatTablesFromState();
+}
+
+function renderFlatTablesFromState() {
+  if (!flattenedTablesHost) return;
+  clearEl(flattenedTablesHost);
+
+  const tables = Array.isArray(flatTablesState) ? flatTablesState : [];
+  if (tables.length === 0) {
+    flattenedTablesHost.innerHTML =
+      '<div class="dash-empty" style="padding: 12px;">No tables available.</div>';
+    return;
+  }
+
+  tables.forEach((table, tableIndex) => {
+    const section = document.createElement("div");
+    section.className = "flat-table-section";
+
+    const header = document.createElement("div");
+    header.className = "flat-table-header";
+
+    const title = document.createElement("div");
+    title.className = "flat-table-title";
+    title.textContent = table.title || table.id;
+
+    const actions = document.createElement("div");
+    actions.className = "flat-table-actions";
+
+    if (table.allowAdd) {
+      const addBtn = document.createElement("button");
+      addBtn.type = "button";
+      addBtn.className = "secondary row-action-btn";
+      addBtn.textContent = "Add row";
+      addBtn.addEventListener("click", () => {
+        const newRow = {};
+        table.columns.forEach((col) => {
+          if (col.readOnly) return;
+          if (col.type === "select" && Array.isArray(col.options) && col.options.length > 0) {
+            newRow[col.key] = col.options[0].value ?? "";
+          } else {
+            newRow[col.key] = "";
+          }
+        });
+        table.rows.push(newRow);
+        editedDirty = true;
+        renderFlatTablesFromState();
+        updateEditedPayload();
+      });
+      actions.appendChild(addBtn);
+    }
+
+    header.appendChild(title);
+    header.appendChild(actions);
+    section.appendChild(header);
+
+    const tableEl = document.createElement("table");
+    tableEl.className = "flat-table";
+
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    table.columns.forEach((col) => {
+      const th = document.createElement("th");
+      th.textContent = col.label || col.key;
+      headRow.appendChild(th);
+    });
+    if (table.allowDelete) {
+      const th = document.createElement("th");
+      th.textContent = "Remove";
+      headRow.appendChild(th);
+    }
+    thead.appendChild(headRow);
+    tableEl.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    if (!Array.isArray(table.rows) || table.rows.length === 0) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = table.columns.length + (table.allowDelete ? 1 : 0);
+      td.className = "dash-empty";
+      td.textContent = table.emptyMessage || "No rows.";
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    } else {
+      table.rows.forEach((row, rowIndex) => {
+        const tr = document.createElement("tr");
+        table.columns.forEach((col) => {
+          const td = document.createElement("td");
+          const rawValue = row[col.key] ?? "";
+          const meta = row.__meta || {};
+          const inputType = meta.inputType || col.type;
+          const options = meta.options || col.options;
+
+          if (col.readOnly || table.readOnly) {
+            const span = document.createElement("span");
+            span.className = "flat-readonly";
+            span.textContent = String(rawValue ?? "");
+            td.appendChild(span);
+          } else if (inputType === "select") {
+            const select = document.createElement("select");
+            select.className = "flat-select";
+            (Array.isArray(options) ? options : []).forEach((opt) => {
+              const option = document.createElement("option");
+              option.value = opt.value;
+              option.textContent = opt.label ?? opt.value;
+              select.appendChild(option);
+            });
+            select.value = rawValue ?? "";
+            select.addEventListener("change", () => {
+              row[col.key] = select.value;
+              editedDirty = true;
+              updateEditedPayload();
+            });
+            td.appendChild(select);
+          } else {
+            const input = document.createElement("input");
+            input.className = "flat-input";
+            input.type = inputType === "number" ? "number" : "text";
+            input.value = rawValue ?? "";
+            input.addEventListener("input", () => {
+              row[col.key] = input.value;
+              editedDirty = true;
+              updateEditedPayload();
+            });
+            td.appendChild(input);
+          }
+          tr.appendChild(td);
+        });
+
+        if (table.allowDelete) {
+          const td = document.createElement("td");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "secondary row-action-btn";
+          btn.textContent = "Remove";
+          btn.addEventListener("click", () => {
+            table.rows.splice(rowIndex, 1);
+            editedDirty = true;
+            renderFlatTablesFromState();
+            updateEditedPayload();
+          });
+          td.appendChild(btn);
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      });
+    }
+
+    tableEl.appendChild(tbody);
+    section.appendChild(tableEl);
+
+    if (table.note) {
+      const note = document.createElement("div");
+      note.className = "flat-table-note";
+      note.textContent = table.note;
+      section.appendChild(note);
+    }
+
+    flattenedTablesHost.appendChild(section);
+  });
+}
+
+function exportableRows(table) {
+  return table.rows.map((row) => {
+    const obj = {};
+    table.columns.forEach((col) => {
+      obj[col.key] = row[col.key] ?? "";
+    });
+    return obj;
+  });
+}
+
+function getTablesForExport() {
+  const tables = Array.isArray(flatTablesState) ? flatTablesState : [];
+  return tables.map((table) => ({
+    id: table.id,
+    title: table.title,
+    columns: table.columns,
+    rows: exportableRows(table),
+  }));
+}
+
+function updateEditedPayload() {
+  if (!editedResponseEl) return;
+  if (!editedDirty || !lastServerResponse || !flatTablesState) {
+    editedResponseEl.textContent = "(no edits yet)";
+    editedPayload = null;
+    return;
+  }
+
+  const payload = deepClone(lastServerResponse);
+  applyEditsToPayload(payload, flatTablesState);
+
+  payload.edited_for_training = true;
+  payload.edited_at = new Date().toISOString();
+  payload.edited_source = "ui_flattened_tables";
+  payload.edited_tables = getTablesForExport().map((table) => ({
+    id: table.id,
+    title: table.title,
+    rows: table.rows,
+  }));
+
+  editedPayload = payload;
+  editedResponseEl.textContent = JSON.stringify(payload, null, 2);
+}
+
+function applyEditsToPayload(payload, tables) {
+  const tableMap = new Map();
+  (Array.isArray(tables) ? tables : []).forEach((t) => tableMap.set(t.id, t));
+
+  const selectedRows = tableMap.get("coding_selected")?.rows || [];
+  const suppressedRows = tableMap.get("coding_suppressed")?.rows || [];
+  const combinedLines = [];
+  let sequence = 1;
+
+  selectedRows.forEach((row) => {
+    const code = normalizeCptCode(row?.code);
+    if (!code) return;
+    combinedLines.push({
+      sequence: sequence++,
+      code,
+      description: row?.description || null,
+      units: parseNumber(row?.units) ?? 1,
+      role: row?.role || "primary",
+      selection_status: "selected",
+      selection_reason: row?.rationale || null,
+    });
+  });
+
+  suppressedRows.forEach((row) => {
+    const code = normalizeCptCode(row?.code);
+    if (!code) return;
+    const status = String(row?.status || "").toLowerCase() === "suppressed" ? "suppressed" : "dropped";
+    combinedLines.push({
+      sequence: sequence++,
+      code,
+      description: null,
+      units: 1,
+      role: "primary",
+      selection_status: status,
+      selection_reason: row?.reason || null,
+    });
+  });
+
+  ensurePath(payload, "registry");
+  ensurePath(payload, "registry.coding_support");
+  ensurePath(payload, "registry.coding_support.coding_summary");
+  payload.registry.coding_support.coding_summary.lines = combinedLines;
+
+  const rationaleRows = tableMap.get("coding_rationale")?.rows || [];
+  ensurePath(payload, "registry.coding_support.coding_rationale");
+  const existingRationale = Array.isArray(payload.registry.coding_support.coding_rationale.per_code)
+    ? payload.registry.coding_support.coding_rationale.per_code
+    : [];
+  const rationaleByCode = new Map();
+  existingRationale.forEach((pc) => {
+    const code = normalizeCptCode(pc?.code);
+    if (code) rationaleByCode.set(code, pc);
+  });
+  rationaleRows.forEach((row) => {
+    const code = normalizeCptCode(row?.code);
+    if (!code) return;
+    const base = rationaleByCode.get(code) || { code };
+    base.summary = row?.summary || null;
+    rationaleByCode.set(code, base);
+  });
+  payload.registry.coding_support.coding_rationale.per_code = Array.from(rationaleByCode.values());
+
+  const rulesRows = tableMap.get("rules_applied")?.rows || [];
+  payload.registry.coding_support.coding_rationale.rules_applied = rulesRows
+    .map((row) => ({
+      rule_type: row?.rule_type || null,
+      codes_affected: parseList(row?.codes_affected),
+      outcome: String(row?.outcome || "").toLowerCase() || null,
+      details: row?.details || null,
+    }))
+    .filter((row) => row.rule_type || row.codes_affected.length || row.details);
+
+  const billingRows = tableMap.get("financial_summary")?.rows || [];
+  const existingBilling = Array.isArray(payload.per_code_billing) ? payload.per_code_billing : [];
+  const billingByCode = new Map();
+  existingBilling.forEach((b) => {
+    const code = normalizeCptCode(b?.cpt_code);
+    if (code) billingByCode.set(code, b);
+  });
+
+  payload.per_code_billing = billingRows
+    .map((row) => {
+      const code = normalizeCptCode(row?.cpt_code);
+      if (!code) return null;
+      const base = billingByCode.get(code) || {};
+      return {
+        ...base,
+        cpt_code: code,
+        units: parseNumber(row?.units),
+        work_rvu: parseNumber(row?.work_rvu),
+        total_facility_rvu: parseNumber(row?.total_facility_rvu),
+        facility_payment: parseNumber(row?.facility_payment),
+        notes: row?.notes || null,
+      };
+    })
+    .filter(Boolean);
+
+  const auditRows = tableMap.get("audit_flags")?.rows || [];
+  payload.audit_warnings = auditRows
+    .map((row) => {
+      const cat = String(row?.category || "").trim();
+      const note = String(row?.notes || "").trim();
+      if (!cat && !note) return null;
+      return cat ? `${cat}: ${note || "—"}` : note;
+    })
+    .filter(Boolean);
+
+  const clinicalRows = tableMap.get("clinical_context")?.rows || [];
+  clinicalRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "boolean") value = parseYesNo(value);
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
+  const procRows = tableMap.get("procedures_summary")?.rows || [];
+  ensurePath(payload, "registry.procedures_performed");
+  procRows.forEach((row) => {
+    const meta = row.__meta || {};
+    const procKey = meta.procKey;
+    if (!procKey) return;
+    if (!payload.registry.procedures_performed[procKey]) {
+      payload.registry.procedures_performed[procKey] = {};
+    }
+    const performed = parseYesNo(row?.performed);
+    if (performed !== null) payload.registry.procedures_performed[procKey].performed = performed;
+    const details = String(row?.details || "").trim();
+    if (details) payload.registry.procedures_performed[procKey].ui_notes = details;
+  });
+
+  const diagRows = tableMap.get("diagnostic_findings")?.rows || [];
+  diagRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
+  const balRows = tableMap.get("bal_details")?.rows || [];
+  balRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
+  const ebusRows = tableMap.get("linear_ebus_summary")?.rows || [];
+  ebusRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "boolean") value = parseYesNo(value);
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
+  const nodeRows = tableMap.get("ebus_node_events")?.rows || [];
+  if (nodeRows.length > 0) {
+    ensurePath(payload, "registry.procedures_performed.linear_ebus");
+    payload.registry.procedures_performed.linear_ebus.node_events = nodeRows
+      .map((row) => ({
+        station: row?.station || null,
+        action: row?.action || null,
+        passes: parseNumber(row?.passes),
+        elastography_pattern: row?.elastography_pattern || null,
+        evidence_quote: row?.evidence_quote || null,
+      }))
+      .filter((row) => row.station || row.action || row.passes || row.elastography_pattern || row.evidence_quote);
+  }
+}
+
+function getOptionLabel(options, value) {
+  if (!Array.isArray(options)) return value ?? "";
+  const match = options.find((opt) => String(opt.value) === String(value));
+  return match ? match.label ?? match.value : value ?? "";
+}
+
+function buildExcelHtml(tables) {
+  const blocks = tables.map((table) => {
+    const headers = table.columns.map((c) => `<th>${safeHtml(c.label || c.key)}</th>`).join("");
+    const rows = table.rows
+      .map((row) => {
+        const cells = table.columns
+          .map((c) => {
+            const raw = row[c.key] ?? "";
+            const display =
+              c.type === "select" ? getOptionLabel(c.options, raw) : raw;
+            return `<td>${safeHtml(display ?? "")}</td>`;
+          })
+          .join("");
+        return `<tr>${cells}</tr>`;
+      })
+      .join("");
+    return `
+      <h3>${safeHtml(table.title || table.id)}</h3>
+      <table border="1">
+        <thead><tr>${headers}</tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <br />
+    `;
+  });
+
+  return `
+    <html>
+      <head><meta charset="UTF-8"></head>
+      <body>${blocks.join("")}</body>
+    </html>
+  `;
+}
+
+function exportTablesToExcel() {
+  const tables = getTablesForExport();
+  if (!tables || tables.length === 0) {
+    setStatus("No tables to export");
+    return;
+  }
+  const html = buildExcelHtml(tables);
+  const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = `procedure_suite_tables_${Date.now()}.xls`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+  setStatus("Exported tables");
+}
+
 /**
  * Transforms API data into a unified "Golden Record"
  * FIX: Now prioritizes backend rationale over generic placeholders
@@ -1604,13 +2588,31 @@ function renderResults(data) {
 
   lastServerResponse = data;
   if (exportBtn) exportBtn.disabled = !data;
+  if (exportTablesBtn) exportTablesBtn.disabled = !data;
+  if (newNoteBtn) newNoteBtn.disabled = !data;
 
   container.classList.remove("hidden");
   renderDashboard(data);
+  renderFlattenedTables(data);
 
   if (serverResponseEl) {
     serverResponseEl.textContent = JSON.stringify(data, null, 2);
   }
+}
+
+function clearResultsUi() {
+  const container = document.getElementById("resultsContainer");
+  if (container) container.classList.add("hidden");
+  lastServerResponse = null;
+  if (serverResponseEl) serverResponseEl.textContent = "(none)";
+  if (flattenedTablesHost) {
+    flattenedTablesHost.innerHTML =
+      '<div class="dash-empty" style="padding: 12px;">No results yet.</div>';
+  }
+  if (exportBtn) exportBtn.disabled = true;
+  if (exportTablesBtn) exportTablesBtn.disabled = true;
+  if (newNoteBtn) newNoteBtn.disabled = true;
+  resetEditedState();
 }
 
 function renderStatusBanner(data, container) {
@@ -2379,6 +3381,7 @@ async function main() {
     revertBtn.disabled = true;
     lastServerResponse = null;
     if (exportBtn) exportBtn.disabled = true;
+    clearResultsUi();
   }
 
   function updateDecorations() {
@@ -2884,6 +3887,8 @@ async function main() {
       return;
     }
     submitBtn.disabled = true;
+    if (newNoteBtn) newNoteBtn.disabled = true;
+    clearResultsUi();
     setStatus("Submitting scrubbed note…");
     serverResponseEl.textContent = "(submitting...)";
 
@@ -2935,6 +3940,7 @@ async function main() {
       setStatus("Submit error - check console for details");
     } finally {
       submitBtn.disabled = false;
+      if (newNoteBtn) newNoteBtn.disabled = running;
     }
   });
 
@@ -2956,6 +3962,32 @@ async function main() {
       anchor.remove();
       URL.revokeObjectURL(url);
       setStatus("Exported results");
+    });
+  }
+
+  if (exportTablesBtn) {
+    exportTablesBtn.addEventListener("click", () => {
+      exportTablesToExcel();
+    });
+  }
+
+  if (newNoteBtn) {
+    newNoteBtn.addEventListener("click", () => {
+      if (running) return;
+      suppressDirtyFlag = true;
+      try {
+        if (!usingPlainEditor && editor) editor.setValue("");
+        else model.setValue("");
+      } finally {
+        suppressDirtyFlag = false;
+      }
+      originalText = "";
+      hasRunDetection = false;
+      setScrubbedConfirmed(false);
+      clearDetections();
+      setStatus("Ready for new note");
+      setProgress("");
+      if (runBtn) runBtn.disabled = !workerReady;
     });
   }
 

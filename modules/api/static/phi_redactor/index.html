@@ -68,6 +68,7 @@
           <button id="applyBtn" class="primary" disabled>Apply Redactions</button>
           <button id="revertBtn" class="secondary" disabled>Revert</button>
           <button id="submitBtn" class="success" disabled>Submit Scrubbed Note</button>
+          <button id="newNoteBtn" class="secondary" disabled>New Note</button>
 
           <!-- Manual Redaction Controls -->
           <div class="manual-redaction-group">
@@ -105,7 +106,10 @@
               <span class="section-number">2</span>
               Clinical Review
             </div>
-            <button id="exportBtn" class="secondary" disabled>Export Changes</button>
+            <div class="result-actions">
+              <button id="exportBtn" class="secondary" disabled>Export JSON</button>
+              <button id="exportTablesBtn" class="secondary" disabled>Export Tables</button>
+            </div>
           </div>
 	          <div id="resultsContainer" class="resultsContainer hidden">
 	            <div id="statusBannerHost"></div>
@@ -380,6 +384,16 @@
             <details class="raw-json-toggle">
               <summary>View Raw JSON</summary>
               <pre id="serverResponse">(none)</pre>
+            </details>
+
+            <details class="raw-json-toggle">
+              <summary>Flattened Tables (Editable)</summary>
+              <div id="flattenedTablesHost" class="flat-tables-host"></div>
+            </details>
+
+            <details class="raw-json-toggle">
+              <summary>Edited JSON (Training)</summary>
+              <pre id="editedResponse">(no edits yet)</pre>
             </details>
           </div>
         </div>
