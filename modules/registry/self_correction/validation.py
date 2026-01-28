@@ -54,6 +54,9 @@ ALLOWED_PATH_PREFIXES: set[str] = {
     "/procedures_performed/blvr",
     "/procedures_performed/rigid_bronchoscopy",
     "/procedures_performed/intubation",
+    # Allow self-correction to seed the nested pleural_procedures object when missing.
+    # Individual pleural child paths remain explicitly allowlisted below.
+    "/pleural_procedures",
     "/pleural_procedures/ipc",
     "/pleural_procedures/thoracentesis",
     "/pleural_procedures/chest_tube",
