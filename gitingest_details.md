@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-27T17:14:14-08:00`
-Git: `main` @ `ce4b7e6`
+Generated: `2026-01-28T13:25:43-08:00`
+Git: `main` @ `dbb6e32`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -219,7 +219,6 @@ Git: `main` @ `ce4b7e6`
       833  tests/coder/test_parallel_confidence_combiner.py
       839  modules/agents/summarizer/summarizer_agent.py
       840  modules/common/logger.py
-      843  tests/registry/test_navigation_fiducials.py
       852  tests/ml_coder/test_registry_label_constraints.py
       863  modules/reporting/coder_view.py
       874  modules/domain/knowledge_base/models.py
@@ -299,6 +298,7 @@ Git: `main` @ `ce4b7e6`
      1731  modules/domain/text/negation.py
      1761  modules/ml_coder/preprocessing.py
      1763  tests/registry/test_kitchen_sink_extraction_first.py
+     1767  tests/registry/test_navigation_fiducials.py
      1767  tests/utils/case_filter.py
      1828  tests/registry/test_registry_to_cpt_diagnostic_bronchoscopy.py
      1832  config/settings.py
@@ -382,6 +382,7 @@ Git: `main` @ `ce4b7e6`
      3204  proc_nlp/normalize_proc.py
      3252  modules/infra/cache.py
      3264  tests/coder/test_ncci_bundling_excludes_financials.py
+     3267  tests/registry/test_note_300_multilobe_navigation_regression.py
      3277  tests/registry/test_focusing_audit_guardrail.py
      3307  modules/registry/legacy/adapter.py
      3391  modules/coder/peripheral_extractor.py
@@ -442,19 +443,19 @@ Git: `main` @ `ce4b7e6`
      5706  modules/registry/deterministic/anatomy.py
      5773  modules/api/schemas/base.py
      5870  modules/infra/nlp_warmup.py
-     5968  modules/registry/processing/navigation_fiducials.py
      6019  modules/ner/entity_types.py
      6042  tests/api/test_fastapi.py
      6131  tests/api/test_phi_redaction.py
      6150  modules/coder/parallel_pathway/confidence_combiner.py
-     6156  tests/api/test_phi_redactor_ui.py
      6184  tests/integration/test_phi_workflow_end_to_end.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
      6276  tests/registry/test_self_correction_validation.py
      6333  tests/registry/test_audit_compare_report.py
      6351  modules/registry/slots/therapeutics.py
+     6398  modules/registry/processing/navigation_fiducials.py
      6438  modules/domain/procedure_store/repository.py
+     6439  tests/api/test_phi_redactor_ui.py
      6451  tests/phi/test_service.py
      6485  proc_schemas/clinical/pleural.py
      6596  tests/registry/test_registry_qa_regressions.py
@@ -491,6 +492,7 @@ Git: `main` @ `ce4b7e6`
      9466  tests/ml_coder/test_training_pipeline.py
      9471  tests/ml_coder/test_case_difficulty.py
      9490  modules/ml_coder/training.py
+     9709  modules/registry/processing/navigation_targets.py
      9738  modules/phi/service.py
      9850  tests/unit/test_extraction_adapters.py
      9870  modules/reporting/validation.py
@@ -589,10 +591,10 @@ Git: `main` @ `ce4b7e6`
     27607  modules/registry/transform.py
     27702  modules/coder/adapters/registry_coder.py
     28626  modules/ml_coder/registry_data_prep.py
-    29049  modules/registry/schema/granular_logic.py
     29699  modules/registry/schema/granular_models.py
     29893  modules/domain/coding_rules/coding_rules_engine.py
     30063  modules/api/ml_advisor_router.py
+    30872  modules/registry/schema/granular_logic.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
     33132  tests/registry/test_registry_service_hybrid_flow.py
     35268  tests/coding/test_rules_validation.py
@@ -606,16 +608,16 @@ Git: `main` @ `ce4b7e6`
     41901  modules/proc_ml_advisor/schemas.py
     42913  modules/api/routes/procedure_codes.py
     43561  modules/api/fastapi_app.py
-    43756  tests/registry/test_granular_registry_models.py
+    43852  tests/registry/test_granular_registry_models.py
     48887  modules/extraction/postprocessing/clinical_guardrails.py
-    51798  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+    52780  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     56440  modules/autocode/ip_kb/ip_kb.py
     62046  modules/registry/prompts.py
     63511  modules/reporting/engine.py
     90679  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
    120666  modules/registry/postprocess.py
-   130908  modules/registry/application/registry_service.py
+   142007  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
@@ -790,13 +792,13 @@ Git: `main` @ `ce4b7e6`
     21781  modules/reporting/templates/macros/template_schema.json
     27821  modules/registry/ip_registry_improvements.md
     41682  docs/USER_GUIDE.md
-    50380  modules/api/static/phi_redactor/app.js
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     61430  modules/api/static/phi_redactor/protectedVeto.js
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
-    86731  modules/api/static/app.js
+    90791  modules/api/static/app.js
     93797  modules/api/static/phi_redactor/redactor.worker.js
     94017  modules/api/static/phi_redactor/redactor.worker.legacy.js
+   133503  modules/api/static/phi_redactor/app.js
 ```
 
 ## Skipped (reason)
@@ -1022,11 +1024,11 @@ Git: `main` @ `ce4b7e6`
  inline_cap_reached>75  modules/registry/deterministic/anatomy.py
  inline_cap_reached>75  modules/api/schemas/base.py
  inline_cap_reached>75  modules/infra/nlp_warmup.py
- inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
  inline_cap_reached>75  modules/ner/entity_types.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/registry_cleaning/consistency_utils.py
  inline_cap_reached>75  modules/registry/slots/therapeutics.py
+ inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
  inline_cap_reached>75  modules/domain/procedure_store/repository.py
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
  inline_cap_reached>75  modules/coder/cli.py
@@ -1049,6 +1051,7 @@ Git: `main` @ `ce4b7e6`
  inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/ml_coder/training.py
+ inline_cap_reached>75  modules/registry/processing/navigation_targets.py
  inline_cap_reached>75  modules/phi/service.py
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
@@ -1109,10 +1112,10 @@ Git: `main` @ `ce4b7e6`
  inline_cap_reached>75  modules/registry/transform.py
  inline_cap_reached>75  modules/coder/adapters/registry_coder.py
  inline_cap_reached>75  modules/ml_coder/registry_data_prep.py
- inline_cap_reached>75  modules/registry/schema/granular_logic.py
  inline_cap_reached>75  modules/registry/schema/granular_models.py
  inline_cap_reached>75  modules/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  modules/api/ml_advisor_router.py
+ inline_cap_reached>75  modules/registry/schema/granular_logic.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py

@@ -1,0 +1,102 @@
+
+    <html>
+      <head><meta charset="UTF-8"></head>
+      <body>
+      <h3>CPT Codes – Selected</h3>
+      <table border="1">
+        <thead><tr><th>CPT Code</th><th>Description</th><th>Units</th><th>Role</th><th>Rationale</th></tr></thead>
+        <tbody><tr><td>31623</td><td>Bronchoscopy; with brushing or protected brushings</td><td>1</td><td>Primary</td><td>brushings.performed=true</td></tr><tr><td>31624</td><td>Bronchoscopy; with bronchoalveolar lavage</td><td>1</td><td>Primary</td><td>bal.performed=true</td></tr><tr><td>31626</td><td>Bronchoscopy; with placement of fiducial markers</td><td>1</td><td>Primary</td><td>granular_data.navigation_targets indicates fiducial marker placement</td></tr><tr><td>31627</td><td>Navigational bronchoscopy</td><td>1</td><td>Add On</td><td>navigational_bronchoscopy.performed=true</td></tr><tr><td>31628</td><td>Bronchoscopy; with transbronchial lung biopsy(s), single lobe</td><td>1</td><td>Primary</td><td>transbronchial_biopsy.performed=true</td></tr><tr><td>31629</td><td>Bronchoscopy; with transbronchial needle aspiration biopsy(s)</td><td>1</td><td>Primary</td><td>peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)</td></tr><tr><td>31653</td><td>Bronchoscopy; with EBUS sampling, 3 or more nodal stations</td><td>1</td><td>Primary</td><td>linear_ebus.performed=true and sampled_station_count=3 (&gt;=3) from node_events</td></tr><tr><td>31654</td><td>Bronch ebus ivntj perph les</td><td>1</td><td>Add On</td><td>radial_ebus.performed=true</td></tr><tr><td>76377</td><td></td><td>1</td><td>Primary</td><td>equipment.augmented_fluoroscopy=true (3D reconstruction/rendering documented)</td></tr><tr><td>76982</td><td>Us elastography 1st target</td><td>1</td><td>Primary</td><td>linear_ebus elastography used (targets=5)</td></tr><tr><td>76983</td><td>Us elastography addl target</td><td>2</td><td>Add On</td><td>linear_ebus elastography used and targets=5 (units=2; MUE cap=2)</td></tr><tr><td>77012</td><td></td><td>1</td><td>Primary</td><td>equipment.cbct_used=true</td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>CPT Codes – Dropped / Suppressed</h3>
+      <table border="1">
+        <thead><tr><th>CPT Code</th><th>Status</th><th>Reason</th></tr></thead>
+        <tbody><tr><td>31622</td><td>Dropped</td><td>Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure</td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Coding Logic &amp; Rationale</h3>
+      <table border="1">
+        <thead><tr><th>CPT Code</th><th>Summary</th></tr></thead>
+        <tbody><tr><td>31623</td><td>brushings.performed=true</td></tr><tr><td>31624</td><td>bal.performed=true</td></tr><tr><td>31626</td><td>granular_data.navigation_targets indicates fiducial marker placement</td></tr><tr><td>31627</td><td>navigational_bronchoscopy.performed=true</td></tr><tr><td>31628</td><td>transbronchial_biopsy.performed=true</td></tr><tr><td>31629</td><td>peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)</td></tr><tr><td>31653</td><td>linear_ebus.performed=true and sampled_station_count=3 (&gt;=3) from node_events</td></tr><tr><td>31654</td><td>radial_ebus.performed=true</td></tr><tr><td>76377</td><td>equipment.augmented_fluoroscopy=true (3D reconstruction/rendering documented)</td></tr><tr><td>76982</td><td>linear_ebus elastography used (targets=5)</td></tr><tr><td>76983</td><td>linear_ebus elastography used and targets=5 (units=2; MUE cap=2)</td></tr><tr><td>77012</td><td>equipment.cbct_used=true</td></tr><tr><td>31622</td><td>Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure</td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Rules Applied (Bundling &amp; Policy)</h3>
+      <table border="1">
+        <thead><tr><th>Rule Type</th><th>Codes Affected</th><th>Outcome</th><th>Details</th></tr></thead>
+        <tbody><tr><td>bundling</td><td>31622</td><td>Dropped</td><td>Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure</td></tr><tr><td>documentation</td><td>31629</td><td>flagged</td><td>31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling</td></tr><tr><td>local</td><td>76981, 76982, 76983</td><td>Informational</td><td>Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983.</td></tr><tr><td>local</td><td>31645, 31652, 31653</td><td>Informational</td><td>Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed).</td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Financial Summary</h3>
+      <table border="1">
+        <thead><tr><th>CPT Code</th><th>Units</th><th>Work RVU</th><th>Facility RVU</th><th>Payment</th><th>Notes</th></tr></thead>
+        <tbody><tr><td>31623</td><td>1</td><td>2.56</td><td>3.57</td><td>119.24</td><td></td></tr><tr><td>31624</td><td>1</td><td>2.56</td><td>3.62</td><td>120.91</td><td></td></tr><tr><td>31626</td><td>1</td><td>3.81</td><td>5.33</td><td>178.03</td><td></td></tr><tr><td>31627</td><td>1</td><td>1.95</td><td>2.55</td><td>85.17</td><td></td></tr><tr><td>31628</td><td>1</td><td>3.46</td><td>4.75</td><td>158.65</td><td></td></tr><tr><td>31629</td><td>1</td><td>3.66</td><td>5.04</td><td>168.34</td><td></td></tr><tr><td>31653</td><td>1</td><td>4.84</td><td>6.56</td><td>219.11</td><td></td></tr><tr><td>31654</td><td>1</td><td>1.37</td><td>1.79</td><td>59.79</td><td></td></tr><tr><td>76982</td><td>1</td><td>0.59</td><td>1.57</td><td>52.44</td><td></td></tr><tr><td>76983</td><td>1</td><td>0.47</td><td>1.12</td><td>37.41</td><td></td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Audit &amp; Quality Flags</h3>
+      <table border="1">
+        <thead><tr><th>Category</th><th>Notes</th></tr></thead>
+        <tbody><tr><td>DETERMINISTIC_UPLIFT</td><td>added performed=true for diagnostic_bronchoscopy, linear_ebus, peripheral_tbna, therapeutic_aspiration, transbronchial_cryobiopsy</td></tr><tr><td>Other</td><td>procedures_performed.brushings.performed=true but locations is empty/missing</td></tr><tr><td>Other</td><td>procedures_performed.transbronchial_biopsy.performed=true but locations is empty/missing</td></tr><tr><td>Other</td><td>Radial EBUS inferred from radial probe keywords.</td></tr><tr><td>Other</td><td>Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure</td></tr><tr><td>Other</td><td>31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling</td></tr><tr><td>EBUS_REGEX_FALLBACK</td><td>populated node_events from station lines.</td></tr><tr><td>SILENT_FAILURE</td><td>Text indicates EBUS elastography but extraction missed it. (Pattern: '(?i)\b(?:ebus[-\s]*)?elastograph(?:y|ic)\b')</td></tr><tr><td>SILENT_FAILURE</td><td>Text indicates transbronchial (lung) biopsy but extraction missed it. (Pattern: '(?i)\b(?:transbronchial\s+(?:lung\s+)?biops(?:y|ies)|transbronchial\s+forceps\s+biops(?:y|ies)|tbbx|tblb)\b')</td></tr><tr><td>HARD_OVERRIDE</td><td>Text indicates EBUS elastography but extraction missed it. -&gt; procedures_performed.linear_ebus.elastography_used=true</td></tr><tr><td>HARD_OVERRIDE</td><td>Text indicates transbronchial (lung) biopsy but extraction missed it. -&gt; procedures_performed.transbronchial_biopsy.performed=true</td></tr><tr><td>NAV_TARGET_HEURISTIC</td><td>added 1 navigation target(s) from text</td></tr><tr><td>AUTO_EBUS_GRANULARITY</td><td>populated passes/elastography for ['4R', '4L', '7', '11L', '11RI']</td></tr><tr><td>AUTO_EBUS_NEEDLE_GAUGE</td><td>parsed from note text</td></tr><tr><td>Suppressed 76981</td><td>header lists parenchyma elastography but EBUS elastography targets derive 76982/76983.</td></tr><tr><td>Suppressed 31645</td><td>therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed).</td></tr><tr><td>SELF_CORRECT_SKIPPED</td><td>31622: Quote not found verbatim in focused procedure text: 'INSTRUMENT : 
+Flexible Therapeutic Bronchoscope
+Li...'</td></tr><tr><td>SELF_CORRECT_SKIPPED</td><td>31632: Quote not found verbatim in focused procedure text: 'Target right lower lobe
+
+Transbronchial cryobiopsy...'</td></tr><tr><td>SELF_CORRECT_SKIPPED</td><td>31633: Quote not found verbatim in focused procedure text: 'Target right lower lobe 
+Robotic navigation bronch...'</td></tr><tr><td>HEADER_EXPLICIT</td><td>header lists ['31622', '31632', '31633'] but deterministic derivation missed them</td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Patient &amp; Clinical Context</h3>
+      <table border="1">
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody><tr><td>Primary indication</td><td>FOR OPERATION: [REDACTED] is a 29 year old-year-old male who presents with lung abnormalities. The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail. Patient indicated a wish to proceed with surgery and informed consent was signed.</td></tr><tr><td>Indication category</td><td></td></tr><tr><td>Bronchus sign</td><td></td></tr><tr><td>Sedation type</td><td>General</td></tr><tr><td>Anesthesia provider</td><td></td></tr><tr><td>Airway type</td><td></td></tr><tr><td>Procedure location</td><td></td></tr><tr><td>Patient position</td><td></td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Procedures Performed (Summary)</h3>
+      <table border="1">
+        <thead><tr><th>Procedure</th><th>Performed</th><th>Key Details</th></tr></thead>
+        <tbody><tr><td>BAL</td><td>Yes</td><td>Location: Apical-Posterior Segment of LUL (LB1/2), Anterior Segment of LUL (LB3), Superior Segment of Lingula (LB4), and Inferior Segment of Lingula ( · Instilled: 20 mL · Recovered: 5 mL</td></tr><tr><td>Brushings</td><td>Yes</td><td>—</td></tr><tr><td>Diagnostic Bronchoscopy</td><td>Yes</td><td>—</td></tr><tr><td>Linear EBUS</td><td>Yes</td><td>Stations: 11L, 11RI, 7 · Needle: 21G · Elastography: Yes</td></tr><tr><td>Navigational Bronchoscopy</td><td>Yes</td><td>—</td></tr><tr><td>Peripheral TBNA</td><td>Yes</td><td>—</td></tr><tr><td>Radial EBUS</td><td>Yes</td><td>—</td></tr><tr><td>Therapeutic Aspiration</td><td>Yes</td><td>Material: Mucus plug · Location: Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2)</td></tr><tr><td>Transbronchial Biopsy</td><td>Yes</td><td>—</td></tr><tr><td>Transbronchial Cryobiopsy</td><td>Yes</td><td>—</td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Diagnostic Bronchoscopy Findings</h3>
+      <table border="1">
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody><tr><td>Airway abnormalities</td><td></td></tr><tr><td>Findings (free text)</td><td></td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>BAL Details</h3>
+      <table border="1">
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody><tr><td>Location</td><td>Apical-Posterior Segment of LUL (LB1/2), Anterior Segment of LUL (LB3), Superior Segment of Lingula (LB4), and Inferior Segment of Lingula (</td></tr><tr><td>Instilled (mL)</td><td>20</td></tr><tr><td>Recovered (mL)</td><td>5</td></tr><tr><td>Appearance</td><td></td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Linear EBUS Technical Summary</h3>
+      <table border="1">
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody><tr><td>Stations sampled</td><td>11L, 11RI, 7</td></tr><tr><td>Needle gauge</td><td>21G</td></tr><tr><td>Elastography used</td><td>Yes</td></tr><tr><td>Elastography pattern</td><td></td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Linear EBUS Node Events</h3>
+      <table border="1">
+        <thead><tr><th>Station</th><th>Action</th><th>Passes</th><th>Elastography</th><th>Evidence</th></tr></thead>
+        <tbody><tr><td>11L</td><td>Needle aspiration</td><td>4</td><td>Type 2</td><td>Site 1: The 11L lymph node was &lt; 10 mm on CT  and Non-Hypermetabolic via PET-CT scan. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given this heterogeneous and indeterminate appearance, TBNA was directed at representative areas to ensure comprehensive sampling and to minimize the risk of underdiagnosis.</td></tr><tr><td>7</td><td>Needle aspiration</td><td>4</td><td>Type 2</td><td>Site 2: The 7 (subcarinal) node was &lt; 10 mm on CT  and Hypermetabolic via PET-CT scan. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given this heterogeneous and indeterminate appearance, TBNA was directed at representative areas to ensure comprehensive sampling and to minimize the risk of underdiagnosis.</td></tr><tr><td>11Ri</td><td>Needle aspiration</td><td>4</td><td>Type 2</td><td>Site 3: The 11Ri lymph node was &lt; 10 mm on CT  and Non-Hypermetabolic via PET-CT scan. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given this heterogeneous and indeterminate appearance, TBNA was directed at representative areas to ensure comprehensive sampling and to minimize the risk of underdiagnosis.</td></tr><tr><td>4L</td><td>Inspected only</td><td></td><td>Type 2</td><td>Site 4: The 4L (lower paratracheal) node was &lt; 10 mm on CT  and Non-Hypermetabolic via PET-CT scan. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated.  Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given the ultrasound appearance, biopsies were not taken.</td></tr><tr><td>4R</td><td>Inspected only</td><td></td><td>Type 2</td><td>Site 5: The 4R (lower paratracheal) node was &lt; 10 mm on CT  and Hypermetabolic via PET-CT scan. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions. Given the ultrasound appearance, biopsies were not taken.</td></tr></tbody>
+      </table>
+      <br />
+    
+      <h3>Evidence Traceability (Read-only)</h3>
+      <table border="1">
+        <thead><tr><th>Field</th><th>Evidence</th><th>Span</th><th>Confidence</th><th>Source</th></tr></thead>
+        <tbody><tr><td>clinical_context.primary_indication</td><td>FOR OPERATION:  [REDACTED] is a 29 year old-year-old male who presents with lung abnormalities.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.</td><td>56–348</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31622</td><td>909–914</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31623</td><td>955–960</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31624</td><td>991–996</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31626</td><td>1150–1155</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31627</td><td>1209–1214</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31628</td><td>1031–1036</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31629</td><td>1091–1096</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31632</td><td>1060–1065</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31633</td><td>1118–1123</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31645</td><td>863–868</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31653</td><td>1441–1446</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>31654</td><td>1480–1485</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>76377</td><td>1339–1344</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>76981</td><td>1521–1526</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>76982</td><td>1573–1578</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>76983</td><td>1625–1630</td><td>1.00</td><td>registry_span</td></tr><tr><td>code_evidence</td><td>77012</td><td>1262–1267</td><td>1.00</td><td>registry_span</td></tr><tr><td>equipment.augmented_fluoroscopy</td><td>3D rendering</td><td>2633–2645</td><td>1.00</td><td>registry_span</td></tr><tr><td>equipment.cbct_used</td><td>CIOS</td><td>2620–2624</td><td>1.00</td><td>registry_span</td></tr><tr><td>equipment.navigation_platform</td><td>ION</td><td>2706–2709</td><td>1.00</td><td>registry_span</td></tr><tr><td>ner_spans</td><td>Transbronchial Cryo biopsies</td><td>1993–2021</td><td>0.79</td><td>ner_span</td></tr><tr><td>ner_spans</td><td>Robotic Navigation</td><td>2023–2041</td><td>0.92</td><td>ner_span</td></tr><tr><td>ner_spans</td><td>Bronchoalveolar lavages</td><td>2074–2097</td><td>0.90</td><td>ner_span</td></tr><tr><td>ner_spans</td><td>Brushings</td><td>2122–2131</td><td>0.62</td><td>ner_span</td></tr><tr><td>ner_spans</td><td>Radial EBUS</td><td>2159–2170</td><td>0.90</td><td>ner_span</td></tr><tr><td>ner_spans</td><td>ronchoscopy</td><td>2517–2528</td><td>0.61</td><td>ner_span</td></tr><tr><td>ner_spans</td><td>Radial EBUS</td><td>2735–2746</td><td>0.74</td><td>ner_span</td></tr><tr><td>procedures_performed.diagnostic_bronchoscopy.performed</td><td>Initial Airway Inspection Findings</td><td>3555–3589</td><td>1.00</td><td>registry_span</td></tr><tr><td>procedures_performed.linear_ebus.elastography_used</td><td>elastography</td><td>9846–9858</td><td>1.00</td><td>registry_span</td></tr><tr><td>procedures_performed.therapeutic_aspiration.performed</td><td>therapeutic aspiration</td><td>3908–3930</td><td>1.00</td><td>registry_span</td></tr><tr><td>procedures_performed.transbronchial_biopsy.performed</td><td>TBBX</td><td>2443–2447</td><td>1.00</td><td>registry_span</td></tr><tr><td>procedures_performed.transbronchial_cryobiopsy.performed</td><td>Transbronchial Cryo</td><td>1993–2012</td><td>1.00</td><td>registry_span</td></tr><tr><td>sedation.type</td><td>ANESTHESIA</td><td>2777–2787</td><td>1.00</td><td>registry_span</td></tr></tbody>
+      </table>
+      <br />
+    </body>
+    </html>
+  

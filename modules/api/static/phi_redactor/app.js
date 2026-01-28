@@ -259,6 +259,8 @@ function titleCaseKey(key) {
     therapeutic_aspiration: "Therapeutic Aspiration",
     tbna_conventional: "Conventional TBNA",
     peripheral_tbna: "Peripheral TBNA",
+    ipc: "IPC",
+    chest_tube: "Chest Tube",
   };
   if (special[raw]) return special[raw];
 
@@ -1085,8 +1087,25 @@ function isPerformedProcedure(procObj) {
   return false;
 }
 
+function hasMeaningfulValue(value) {
+  if (value === null || value === undefined) return false;
+  if (typeof value === "string") return value.trim() !== "";
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === "object") return Object.keys(value).length > 0;
+  return true; // number/boolean/etc.
+}
+
+function hasProcedureDetails(procObj) {
+  if (!procObj || typeof procObj !== "object" || Array.isArray(procObj)) return false;
+  for (const [k, v] of Object.entries(procObj)) {
+    if (k === "performed" || k === "summary") continue;
+    if (hasMeaningfulValue(v)) return true;
+  }
+  return false;
+}
+
 function summarizeProcedure(procKey, procObj) {
-  if (!isPerformedProcedure(procObj)) return "—";
+  const performed = isPerformedProcedure(procObj);
   const p = procObj && typeof procObj === "object" ? procObj : {};
 
   if (procKey === "diagnostic_bronchoscopy") {
@@ -1104,6 +1123,82 @@ function summarizeProcedure(procKey, procObj) {
     if (Number.isFinite(p.volume_instilled_ml)) parts.push(`Instilled: ${p.volume_instilled_ml} mL`);
     if (Number.isFinite(p.volume_recovered_ml)) parts.push(`Recovered: ${p.volume_recovered_ml} mL`);
     return parts.join(" · ") || "—";
+  }
+
+  if (procKey === "chest_tube") {
+    const parts = [];
+    if (p.action) parts.push(String(p.action).trim());
+    if (p.tube_type) parts.push(String(p.tube_type).trim());
+    if (p.tube_size_fr) parts.push(`${p.tube_size_fr} Fr`);
+    if (p.guidance) parts.push(`${String(p.guidance).trim()} guided`);
+    return parts.join(" · ") || (performed ? "Performed" : "—");
+  }
+
+  if (procKey === "thoracentesis") {
+    const parts = [];
+    if (p.side) parts.push(String(p.side).trim());
+    if (p.guidance) parts.push(`${String(p.guidance).trim()} guided`);
+    const vol =
+      Number.isFinite(p.volume_removed_ml) ? p.volume_removed_ml : Number.isFinite(p.volume_drained_ml) ? p.volume_drained_ml : null;
+    if (Number.isFinite(vol)) parts.push(`${vol} mL removed`);
+    if (p.fluid_appearance) parts.push(String(p.fluid_appearance).trim());
+    if (p.manometry_performed !== null && p.manometry_performed !== undefined) {
+      parts.push(`Manometry: ${p.manometry_performed ? "Yes" : "No"}`);
+    }
+    return parts.join(" · ") || (performed ? "Performed" : "—");
+  }
+
+  if (procKey === "ipc") {
+    const parts = [];
+    if (p.action) parts.push(String(p.action).trim());
+    if (p.side) parts.push(String(p.side).trim());
+    if (p.catheter_brand) parts.push(String(p.catheter_brand).trim());
+    if (p.tunneled !== null && p.tunneled !== undefined) parts.push(p.tunneled ? "Tunneled" : "Not tunneled");
+    return parts.join(" · ") || (performed ? "Performed" : "—");
+  }
+
+  if (procKey === "pleural_biopsy") {
+    const parts = [];
+    if (p.side) parts.push(String(p.side).trim());
+    if (p.guidance) parts.push(`${String(p.guidance).trim()} guided`);
+    if (p.needle_type) parts.push(String(p.needle_type).trim());
+    if (Number.isFinite(p.number_of_samples)) parts.push(`${p.number_of_samples} samples`);
+    return parts.join(" · ") || (performed ? "Performed" : "—");
+  }
+
+  if (procKey === "pleurodesis") {
+    const parts = [];
+    if (p.method) parts.push(String(p.method).trim());
+    if (p.agent) parts.push(String(p.agent).trim());
+    if (Number.isFinite(p.talc_dose_grams)) parts.push(`${p.talc_dose_grams} g`);
+    if (p.indication) parts.push(String(p.indication).trim());
+    return parts.join(" · ") || (performed ? "Performed" : "—");
+  }
+
+  if (procKey === "fibrinolytic_therapy") {
+    const parts = [];
+    if (Array.isArray(p.agents) && p.agents.length > 0) parts.push(p.agents.filter(Boolean).join(", "));
+    if (Number.isFinite(p.tpa_dose_mg)) parts.push(`tPA ${p.tpa_dose_mg} mg`);
+    if (Number.isFinite(p.dnase_dose_mg)) parts.push(`DNase ${p.dnase_dose_mg} mg`);
+    if (Number.isFinite(p.number_of_doses)) parts.push(`${p.number_of_doses} dose(s)`);
+    if (p.indication) parts.push(String(p.indication).trim());
+    return parts.join(" · ") || (performed ? "Performed" : "—");
+  }
+
+  if (procKey === "medical_thoracoscopy") {
+    const parts = [];
+    if (p.side) parts.push(String(p.side).trim());
+    if (p.scope_type) parts.push(String(p.scope_type).trim());
+    if (p.anesthesia_type) parts.push(String(p.anesthesia_type).trim());
+    if (p.biopsies_taken !== null && p.biopsies_taken !== undefined) {
+      parts.push(`Biopsies: ${p.biopsies_taken ? "Yes" : "No"}`);
+    }
+    if (Number.isFinite(p.number_of_biopsies)) parts.push(`${p.number_of_biopsies} biopsy(ies)`);
+    if (p.adhesiolysis_performed !== null && p.adhesiolysis_performed !== undefined) {
+      parts.push(`Adhesiolysis: ${p.adhesiolysis_performed ? "Yes" : "No"}`);
+    }
+    if (p.findings) parts.push(`Findings: ${String(p.findings).trim()}`);
+    return parts.join(" · ") || (performed ? "Performed" : "—");
   }
 
   if (procKey === "linear_ebus") {
@@ -1152,27 +1247,40 @@ function renderProceduresSummaryTable(data) {
 
   const registry = getRegistry(data);
   const procs = registry?.procedures_performed;
-  if (!procs || typeof procs !== "object") {
+  const pleural = registry?.pleural_procedures;
+  const hasProcs = procs && typeof procs === "object";
+  const hasPleural = pleural && typeof pleural === "object";
+
+  if (!hasProcs && !hasPleural) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     td.colSpan = 3;
     td.className = "dash-empty";
-    td.textContent = "No procedures_performed available.";
+    td.textContent = "No procedures available.";
     tr.appendChild(td);
     tbody.appendChild(tr);
     return;
   }
 
-  const keys = Object.keys(procs);
-  keys.sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)));
+  const items = [];
+  if (hasProcs) {
+    Object.keys(procs)
+      .sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)))
+      .forEach((k) => items.push({ section: "procedures_performed", key: k, obj: procs[k] }));
+  }
+  if (hasPleural) {
+    Object.keys(pleural)
+      .sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)))
+      .forEach((k) => items.push({ section: "pleural_procedures", key: k, obj: pleural[k] }));
+  }
 
-  const items = keys.map((k) => ({ key: k, obj: procs[k], performed: isPerformedProcedure(procs[k]) }));
-  items.sort((a, b) => {
+  const withPerformed = items.map((it) => ({ ...it, performed: isPerformedProcedure(it.obj) }));
+  withPerformed.sort((a, b) => {
     if (a.performed !== b.performed) return a.performed ? -1 : 1;
     return titleCaseKey(a.key).localeCompare(titleCaseKey(b.key));
   });
 
-  if (items.length === 0) {
+  if (withPerformed.length === 0) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     td.colSpan = 3;
@@ -1183,13 +1291,17 @@ function renderProceduresSummaryTable(data) {
     return;
   }
 
-  items.forEach(({ key, obj, performed }) => {
+  withPerformed.forEach(({ key, obj, performed }) => {
     const tr = document.createElement("tr");
     if (!performed) tr.classList.add("opacity-50");
 
     const tdName = document.createElement("td");
     tdName.style.fontWeight = "600";
-    tdName.textContent = titleCaseKey(key);
+    const actionSuffix =
+      (key === "chest_tube" || key === "ipc") && obj && typeof obj === "object" && typeof obj.action === "string"
+        ? String(obj.action).trim()
+        : "";
+    tdName.textContent = actionSuffix ? `${titleCaseKey(key)} ${actionSuffix}` : titleCaseKey(key);
 
     const tdPerf = document.createElement("td");
     const badge = document.createElement("span");
@@ -1220,8 +1332,11 @@ function renderDiagnosticFindings(data) {
 
   const proc = getRegistry(data)?.procedures_performed?.diagnostic_bronchoscopy;
   const performed = isPerformedProcedure(proc);
-  toggleCard("diagnosticFindingsCard", performed);
-  if (!performed) return;
+  const hasData = performed || hasProcedureDetails(proc);
+  toggleCard("diagnosticFindingsCard", hasData);
+  const card = document.getElementById("diagnosticFindingsCard");
+  if (card) card.classList.toggle("opacity-50", hasData && !performed);
+  if (!hasData) return;
 
   const abn = Array.isArray(proc?.airway_abnormalities) ? proc.airway_abnormalities.filter(Boolean) : [];
   const rows = [
@@ -1247,8 +1362,11 @@ function renderBalDetails(data) {
 
   const proc = getRegistry(data)?.procedures_performed?.bal;
   const performed = isPerformedProcedure(proc);
-  toggleCard("balDetailsCard", performed);
-  if (!performed) return;
+  const hasData = performed || hasProcedureDetails(proc);
+  toggleCard("balDetailsCard", hasData);
+  const card = document.getElementById("balDetailsCard");
+  if (card) card.classList.toggle("opacity-50", hasData && !performed);
+  if (!hasData) return;
 
   const rows = [
     ["Location", proc?.location || "—"],
@@ -1275,14 +1393,18 @@ function renderLinearEbusSummary(data) {
 
   const proc = getRegistry(data)?.procedures_performed?.linear_ebus;
   const performed = isPerformedProcedure(proc);
-  toggleCard("linearEbusSummaryCard", performed);
-  if (!performed) return;
+  const events = Array.isArray(proc?.node_events) ? proc.node_events : [];
+  const hasData = performed || hasProcedureDetails(proc) || events.length > 0;
+  toggleCard("linearEbusSummaryCard", hasData);
+  const card = document.getElementById("linearEbusSummaryCard");
+  if (card) card.classList.toggle("opacity-50", hasData && !performed);
+  if (!hasData) return;
 
   const stations =
     Array.isArray(proc?.stations_sampled) && proc.stations_sampled.length > 0
       ? proc.stations_sampled.filter(Boolean)
-      : Array.isArray(proc?.node_events)
-        ? proc.node_events
+      : Array.isArray(events)
+        ? events
             .filter((e) => e?.action && e.action !== "inspected_only" && e.station)
             .map((e) => e.station)
         : [];
@@ -1315,8 +1437,10 @@ function renderEbusNodeEvents(data) {
   const proc = getRegistry(data)?.procedures_performed?.linear_ebus;
   const performed = isPerformedProcedure(proc);
   const events = Array.isArray(proc?.node_events) ? proc.node_events : [];
-  const show = performed && events.length > 0;
+  const show = events.length > 0;
   toggleCard("ebusNodeEventsCard", show);
+  const card = document.getElementById("ebusNodeEventsCard");
+  if (card) card.classList.toggle("opacity-50", show && !performed);
   if (!show) return;
 
   const actionLabel = (action) => {
@@ -1675,14 +1799,30 @@ function buildFlattenedTables(data) {
   });
 
   const procedures = registry?.procedures_performed || {};
-  const procKeys = Object.keys(procedures);
-  procKeys.sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)));
-  const procRows = procKeys.map((key) => ({
-    procedure: titleCaseKey(key),
-    performed: toYesNo(isPerformedProcedure(procedures[key])),
-    details: summarizeProcedure(key, procedures[key]),
-    __meta: { procKey: key },
-  }));
+  const pleuralProcs = registry?.pleural_procedures || {};
+  const procRows = [];
+
+  Object.keys(procedures)
+    .sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)))
+    .forEach((key) => {
+      procRows.push({
+        procedure: titleCaseKey(key),
+        performed: toYesNo(isPerformedProcedure(procedures[key])),
+        details: summarizeProcedure(key, procedures[key]),
+        __meta: { section: "procedures_performed", procKey: key },
+      });
+    });
+
+  Object.keys(pleuralProcs)
+    .sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)))
+    .forEach((key) => {
+      procRows.push({
+        procedure: titleCaseKey(key),
+        performed: toYesNo(isPerformedProcedure(pleuralProcs[key])),
+        details: summarizeProcedure(key, pleuralProcs[key]),
+        __meta: { section: "pleural_procedures", procKey: key },
+      });
+    });
 
   tables.push({
     id: "procedures_summary",
@@ -2213,18 +2353,15 @@ function applyEditsToPayload(payload, tables) {
   });
 
   const procRows = tableMap.get("procedures_summary")?.rows || [];
-  ensurePath(payload, "registry.procedures_performed");
   procRows.forEach((row) => {
     const meta = row.__meta || {};
     const procKey = meta.procKey;
+    const section = meta.section === "pleural_procedures" ? "pleural_procedures" : "procedures_performed";
     if (!procKey) return;
-    if (!payload.registry.procedures_performed[procKey]) {
-      payload.registry.procedures_performed[procKey] = {};
-    }
+    ensurePath(payload, `registry.${section}`);
+    if (!payload.registry[section][procKey]) payload.registry[section][procKey] = {};
     const performed = parseYesNo(row?.performed);
-    if (performed !== null) payload.registry.procedures_performed[procKey].performed = performed;
-    const details = String(row?.details || "").trim();
-    if (details) payload.registry.procedures_performed[procKey].ui_notes = details;
+    if (performed !== null) payload.registry[section][procKey].performed = performed;
   });
 
   const diagRows = tableMap.get("diagnostic_findings")?.rows || [];
