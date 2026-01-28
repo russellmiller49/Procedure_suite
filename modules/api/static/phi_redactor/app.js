@@ -1104,6 +1104,20 @@ function hasProcedureDetails(procObj) {
   return false;
 }
 
+function deriveLinearEbusElastographyPattern(procObj) {
+  const direct = String(procObj?.elastography_pattern || "").trim();
+  if (direct) return direct;
+
+  const events = Array.isArray(procObj?.node_events) ? procObj.node_events : [];
+  const patterns = events
+    .map((ev) => String(ev?.elastography_pattern || "").trim())
+    .filter(Boolean);
+  const unique = Array.from(new Set(patterns));
+  if (unique.length === 0) return "";
+  if (unique.length === 1) return unique[0];
+  return unique.join(", ");
+}
+
 function summarizeProcedure(procKey, procObj) {
   const performed = isPerformedProcedure(procObj);
   const p = procObj && typeof procObj === "object" ? procObj : {};
@@ -1207,6 +1221,8 @@ function summarizeProcedure(procKey, procObj) {
     if (stations.length > 0) parts.push(`Stations: ${stations.join(", ")}`);
     if (p.needle_gauge) parts.push(`Needle: ${p.needle_gauge}`);
     if (p.elastography_used !== null && p.elastography_used !== undefined) parts.push(`Elastography: ${p.elastography_used ? "Yes" : "No"}`);
+    const pattern = deriveLinearEbusElastographyPattern(p);
+    if (pattern) parts.push(`Pattern: ${pattern}`);
     return parts.join(" · ") || "—";
   }
 
@@ -1400,6 +1416,7 @@ function renderLinearEbusSummary(data) {
   if (card) card.classList.toggle("opacity-50", hasData && !performed);
   if (!hasData) return;
 
+  const derivedPattern = deriveLinearEbusElastographyPattern(proc);
   const stations =
     Array.isArray(proc?.stations_sampled) && proc.stations_sampled.length > 0
       ? proc.stations_sampled.filter(Boolean)
@@ -1414,7 +1431,7 @@ function renderLinearEbusSummary(data) {
     ["Stations sampled", uniqueStations.length ? uniqueStations.join(", ") : "—"],
     ["Needle gauge", proc?.needle_gauge || "—"],
     ["Elastography used", proc?.elastography_used === null || proc?.elastography_used === undefined ? "—" : (proc.elastography_used ? "Yes" : "No")],
-    ["Elastography pattern", proc?.elastography_pattern || "—"],
+    ["Elastography pattern", derivedPattern || "—"],
   ];
 
   rows.forEach(([k, v]) => {
@@ -1935,7 +1952,7 @@ function buildFlattenedTables(data) {
       },
       {
         field: "Elastography pattern",
-        value: ebus?.elastography_pattern || "",
+        value: deriveLinearEbusElastographyPattern(ebus),
         __meta: {
           path: "registry.procedures_performed.linear_ebus.elastography_pattern",
           valueType: "text",
