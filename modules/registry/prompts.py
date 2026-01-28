@@ -517,11 +517,13 @@ IMPORTANT: Return True if ANY radial EBUS terminology appears in the note.
 Return True when ANY of these phrases appear (case-insensitive):
 - "Radial EBUS", "r-EBUS", "radial probe", "radial ultrasound", "radial EBUS-guided"
 - "Radial EBUS catheter", "Radial EBUS probe"
-- "Concentric" view (implies radial EBUS was used)
-- "Eccentric" view (implies radial EBUS was used)
-- "Concentric solid lesion pattern" or similar descriptions
+- "Concentric view" / "Eccentric view" **of the lesion/target** (radial EBUS view terminology)
+- "Concentric solid lesion pattern" or similar **lesion/target** descriptions
 - "Guide sheath" with peripheral biopsy
 - For cryobiopsy/ILD: "radial probe", "parenchymal pattern", "absence of vessels"
+
+DO NOT trigger radial EBUS from airway stenosis language:
+- "concentric stenosis", "eccentric narrowing", "tracheal stenosis" are NOT radial EBUS evidence.
 
 Radial EBUS is used for:
 1. Peripheral nodule/lesion localization
@@ -529,7 +531,7 @@ Radial EBUS is used for:
 3. Any peripheral bronchoscopy with ultrasound confirmation
 
 Return False only if explicitly stated "no radial EBUS" or "radial EBUS not used".
-Return Null only if the procedure is purely linear EBUS mediastinal staging with NO mention of radial probe/concentric/eccentric views.
+Return Null only if the procedure is purely linear EBUS mediastinal staging with NO mention of radial probe or concentric/eccentric *view of the lesion/target*.
 
 CRITICAL: If you see "Radial EBUS" anywhere in the note, return True.""".strip(),
     "nav_rebus_view": """
@@ -569,7 +571,7 @@ MUST RETURN null/[] for:
 - Transbronchial cryobiopsy for ILD
 - Peripheral nodule biopsies (even with robotic/navigation)
 - Any procedure where "Radial EBUS" is mentioned
-- Procedures that only mention "concentric" or "eccentric" views (these are radial EBUS)
+- Procedures that mention "concentric/eccentric view" **of the lesion/target** (radial EBUS view terminology)
 
 COMMON HALLUCINATION TO AVOID:
 - Do NOT add station "7" just because the procedure involved bronchoscopy

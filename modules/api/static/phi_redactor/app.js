@@ -119,6 +119,71 @@ function safeSnippet(text, start, end) {
   return `${oneLine.slice(0, 117)}…`;
 }
 
+function safeHtml(str) {
+  return String(str || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function highlightSpanInEditor(start, end) {
+  try {
+    if (!window.editor) return;
+    const model = window.editor.getModel();
+    if (!model) return;
+
+    const s = model.getPositionAt(Math.max(0, start));
+    const e = model.getPositionAt(Math.max(0, end));
+    const range = new monaco.Range(s.lineNumber, s.column, e.lineNumber, e.column);
+
+    window.editor.setSelection(range);
+    window.editor.revealRangeInCenter(range);
+    window.editor.focus();
+  } catch (err) {
+    console.warn("Failed to highlight evidence span", err);
+  }
+}
+
+window.__highlightEvidence = (start, end) => highlightSpanInEditor(start, end);
+
+function normalizeSpans(spans) {
+  // Accept shapes:
+  // {start,end,text} or {span:[start,end],text} or {start,end,snippet}
+  if (!Array.isArray(spans)) return [];
+  return spans
+    .map((sp) => ({
+      text: sp.text ?? sp.snippet ?? "",
+      start: sp.start ?? sp.span?.[0] ?? sp.span?.start ?? 0,
+      end: sp.end ?? sp.span?.[1] ?? sp.span?.end ?? 0,
+    }))
+    .filter(
+      (sp) =>
+        Number.isFinite(sp.start) && Number.isFinite(sp.end) && sp.end > sp.start
+    );
+}
+
+function renderEvidenceChips(spans) {
+  const normalized = normalizeSpans(spans);
+  if (normalized.length === 0) return "—";
+
+  return normalized
+    .map(
+      (sp) => `
+    <button class="ev-chip" title="Click to highlight ${sp.start}-${sp.end}"
+      onclick="window.__highlightEvidence(${sp.start}, ${sp.end})">
+      ${safeHtml(sp.text || "(evidence)")}
+      <span class="ev-range">(${sp.start}-${sp.end})</span>
+    </button>
+  `
+    )
+    .join(" ");
+}
+
+function getEvidenceMap(data) {
+  // Prefer registry.evidence; fall back to top-level evidence
+  return data?.registry?.evidence || data?.evidence || {};
+}
+
 function formatNumber(value, digits = 2) {
   if (!Number.isFinite(value)) return "—";
   return value.toFixed(digits);
@@ -145,9 +210,17 @@ function renderResults(data) {
 
   const codingSupport = data.coding_support || data.registry?.coding_support;
 
-  // 2. CPT Coding Summary (Final Selection)
+  // 2. CPT Transparency + Coding Summary (Final Selection)
   if (codingSupport && codingSupport.coding_summary) {
-    container.appendChild(renderCPTSummary(codingSupport.coding_summary.lines || []));
+    if (data.registry) {
+      container.appendChild(renderCPTRawHeader(data.registry, codingSupport, data));
+      container.appendChild(renderCPTDerivedEvidence(data.registry, data));
+    }
+
+    const qaByCode = buildQaByCode(codingSupport);
+    container.appendChild(
+      renderCPTSummary(codingSupport.coding_summary.lines || [], qaByCode)
+    );
   } else if (data.per_code_billing) {
     // Fallback for legacy responses
     container.appendChild(renderLegacyCPTTable(data));
@@ -168,12 +241,12 @@ function renderResults(data) {
 
   // 5. Clinical Context
   if (data.registry) {
-    container.appendChild(renderClinicalContext(data.registry));
+    container.appendChild(renderClinicalContext(data.registry, data));
   }
 
   // 6. Procedures Performed (Summary + Details)
   if (data.registry && data.registry.procedures_performed) {
-    container.appendChild(renderProceduresSection(data.registry.procedures_performed));
+    container.appendChild(renderProceduresSection(data.registry.procedures_performed, data));
   }
 
   // 7. Audit & QA Notes
@@ -218,8 +291,104 @@ function createSection(title, icon) {
   return div;
 }
 
+function buildQaByCode(codingSupport) {
+  const qaByCode = {};
+  const perCode = codingSupport?.coding_rationale?.per_code || [];
+  perCode.forEach((pc) => {
+    if (!pc?.code) return;
+    qaByCode[pc.code] = pc.qa_flags || [];
+  });
+  return qaByCode;
+}
+
+function renderCPTRawHeader(registry, codingSupport, data) {
+  const section = createSection("CPT Codes – Raw (Header)", "🧾");
+
+  const ev = getEvidenceMap(data);
+  const header = ev.code_evidence || []; // [{text,start,end}] in schema
+  if (!Array.isArray(header) || header.length === 0) {
+    section.querySelector(
+      ".report-body"
+    ).innerHTML = `<div class="subtle" style="text-align:center;">No header CPT codes found</div>`;
+    return section;
+  }
+
+  const derivedSet = new Set((registry?.billing?.cpt_codes || []).map((c) => c.code));
+  const decisionByCode = new Map(
+    (codingSupport?.coding_summary?.lines || []).map((ln) => [
+      ln.code,
+      (ln.selection_status || "selected").toLowerCase(),
+    ])
+  );
+
+  const rows = header
+    .map((ce) => {
+      const code = typeof ce === "string" ? ce : ce?.text;
+      if (!code) return "";
+
+      const status = (
+        decisionByCode.get(code) || (derivedSet.has(code) ? "derived_only" : "header_only")
+      ).toLowerCase();
+      const bodyEv = derivedSet.has(code) ? "Yes" : "No";
+      const evidenceHtml = typeof ce === "string" ? "—" : renderEvidenceChips([ce]);
+
+      return `
+      <tr>
+        <td><strong>${safeHtml(code)}</strong></td>
+        <td><span class="status-badge status-${safeHtml(status)}">${safeHtml(status)}</span></td>
+        <td>${bodyEv}</td>
+        <td>${evidenceHtml}</td>
+      </tr>
+    `;
+    })
+    .filter(Boolean)
+    .join("");
+
+  section.querySelector(".report-body").innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>Code</th><th>Status</th><th>Body evidence?</th><th>Evidence</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+  return section;
+}
+
+function renderCPTDerivedEvidence(registry, data) {
+  const section = createSection("CPT Codes – Derived (Body Evidence)", "🔎");
+  const derived = registry?.billing?.cpt_codes || [];
+
+  if (!Array.isArray(derived) || derived.length === 0) {
+    section.querySelector(
+      ".report-body"
+    ).innerHTML = `<div class="subtle" style="text-align:center;">No derived CPT codes</div>`;
+    return section;
+  }
+
+  const rows = derived
+    .map((c) => {
+      const derivedFrom = Array.isArray(c.derived_from) ? c.derived_from.join(", ") : "";
+      return `
+    <tr>
+      <td><strong>${safeHtml(c.code)}</strong></td>
+      <td>${safeHtml(c.description || "-")}</td>
+      <td>${safeHtml(derivedFrom || "-")}</td>
+      <td>${renderEvidenceChips(c.evidence || [])}</td>
+    </tr>
+  `;
+    })
+    .join("");
+
+  section.querySelector(".report-body").innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>Code</th><th>Description</th><th>Derived From</th><th>Evidence</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+  return section;
+}
+
 // --- 2. CPT Coding Summary ---
-function renderCPTSummary(lines) {
+function renderCPTSummary(lines, qaByCode = {}) {
   const section = createSection('CPT Coding Summary (Final Selection)', '💳');
   if (!Array.isArray(lines) || lines.length === 0) {
     section.querySelector('.report-body').innerHTML = `
@@ -227,23 +396,46 @@ function renderCPTSummary(lines) {
     `;
     return section;
   }
-  const tbody = lines.map(line => `
+  const tbody = lines
+    .map((line) => {
+      const code = line.code || "-";
+      const qa =
+        (qaByCode[code] || [])
+          .map(
+            (q) =>
+              `<div class="qa-line">${safeHtml(
+                (q.severity || "info").toUpperCase()
+              )}: ${safeHtml(q.message || "")}</div>`
+          )
+          .join("") || "—";
+
+      const evidence = renderEvidenceChips(line.note_spans || []);
+
+      return `
         <tr class="${line.selection_status === 'dropped' ? 'opacity-50' : ''}">
-            <td>${line.sequence ?? '-'}</td>
-            <td><strong>${line.code || '-'}</strong></td>
-            <td>${line.description || '-'}</td>
-            <td>${line.units ?? '-'}</td>
-            <td><span class="status-badge ${line.role === 'primary' ? 'role-primary' : 'role-addon'}">${line.role || '-'}</span></td>
-            <td><span class="status-badge status-${(line.selection_status || 'selected').toLowerCase()}">${line.selection_status || 'selected'}</span></td>
-            <td>${line.selection_reason || '-'}</td>
+            <td>${safeHtml(line.sequence ?? '-')}</td>
+            <td><strong>${safeHtml(code)}</strong></td>
+            <td>${safeHtml(line.description || '-')}</td>
+            <td>${safeHtml(line.units ?? '-')}</td>
+            <td><span class="status-badge ${
+              line.role === "primary" ? "role-primary" : "role-addon"
+            }">${safeHtml(line.role || "-")}</span></td>
+            <td><span class="status-badge status-${safeHtml(
+              (line.selection_status || "selected").toLowerCase()
+            )}">${safeHtml(line.selection_status || "selected")}</span></td>
+            <td>${safeHtml(line.selection_reason || '-')}</td>
+            <td>${evidence}</td>
+            <td>${qa}</td>
         </tr>
-    `).join('');
+    `;
+    })
+    .join('');
 
   section.querySelector('.report-body').innerHTML = `
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Seq</th><th>CPT Code</th><th>Description</th><th>Units</th><th>Role</th><th>Status</th><th>Selection Rationale</th>
+                    <th>Seq</th><th>CPT Code</th><th>Description</th><th>Units</th><th>Role</th><th>Status</th><th>Selection Rationale</th><th>Evidence</th><th>QA</th>
                 </tr>
             </thead>
             <tbody>${tbody}</tbody>
@@ -313,56 +505,100 @@ function renderRVUSummary(billingLines, totalRVU, totalPay) {
 }
 
 // --- 5. Clinical Context ---
-function renderClinicalContext(registry) {
+function renderClinicalContext(registry, data) {
   const section = createSection('Clinical Context', '🩺');
-  const fields = [];
+  const ev = getEvidenceMap(data);
 
-  if (registry.clinical_context?.primary_indication) fields.push(['Primary Indication', registry.clinical_context.primary_indication]);
-  if (registry.clinical_context?.bronchus_sign) fields.push(['Bronchus Sign', registry.clinical_context.bronchus_sign]);
-  if (registry.sedation?.type) fields.push(['Sedation Type', registry.sedation.type]);
-  if (registry.procedure_setting?.airway_type) fields.push(['Airway Type', registry.procedure_setting.airway_type]);
+  const rows = [];
 
-  const rows = fields.map(([k, v]) => `<tr><td style="width:30%"><strong>${k}</strong></td><td>${v}</td></tr>`).join('');
+  if (registry.clinical_context?.primary_indication) {
+    rows.push([
+      "Primary Indication",
+      registry.clinical_context.primary_indication,
+      renderEvidenceChips(ev["clinical_context.primary_indication"] || []),
+    ]);
+  }
+  if (registry.clinical_context?.bronchus_sign) {
+    rows.push(["Bronchus Sign", registry.clinical_context.bronchus_sign, "—"]);
+  }
+  if (registry.sedation?.type) {
+    rows.push([
+      "Sedation Type",
+      registry.sedation.type,
+      renderEvidenceChips(ev["sedation.type"] || []),
+    ]);
+  }
+  if (registry.procedure_setting?.airway_type) {
+    rows.push([
+      "Airway Type",
+      registry.procedure_setting.airway_type,
+      renderEvidenceChips(ev["procedure_setting.airway_type"] || []),
+    ]);
+  }
 
-  section.querySelector('.report-body').innerHTML = `
-        <table class="data-table"><tbody>${rows}</tbody></table>
-    `;
+  if (rows.length === 0) {
+    section.querySelector(
+      ".report-body"
+    ).innerHTML = `<div class="subtle" style="text-align:center;">No clinical context found</div>`;
+    return section;
+  }
+
+  section.querySelector(".report-body").innerHTML = `
+    <table class="data-table">
+      <thead><tr><th style="width:25%">Field</th><th>Value</th><th>Evidence</th></tr></thead>
+      <tbody>
+        ${rows
+          .map(
+            ([k, v, e]) =>
+              `<tr><td><strong>${safeHtml(k)}</strong></td><td>${safeHtml(
+                v
+              )}</td><td>${e}</td></tr>`
+          )
+          .join("")}
+      </tbody>
+    </table>
+  `;
   return section;
 }
 
 // --- 6. Procedures Performed ---
-function renderProceduresSection(procedures) {
+function renderProceduresSection(procedures, data) {
   const container = document.createElement('div');
+  const ev = getEvidenceMap(data);
 
   // A. Main Procedures List
   const summarySection = createSection('Procedures Performed', '🔍');
-  const summaryRows = Object.entries(procedures).map(([key, data]) => {
-    if (!data || data.performed !== true) return '';
+  const summaryRows = Object.entries(procedures).map(([key, proc]) => {
+    if (!proc || proc.performed !== true) return '';
     const name = key.replace(/_/g, ' ').toUpperCase();
+    const evKey = `procedures_performed.${key}.performed`;
+    const evidenceHtml = renderEvidenceChips(ev[evKey] || []);
 
     // Extract key details based on procedure type
     let details = [];
-    if (typeof data.inspection_findings === "string") {
-      const snippet = data.inspection_findings.length > 50
-        ? `${data.inspection_findings.substring(0, 50)}...`
-        : data.inspection_findings;
+    if (typeof proc.inspection_findings === "string") {
+      const snippet = proc.inspection_findings.length > 50
+        ? `${proc.inspection_findings.substring(0, 50)}...`
+        : proc.inspection_findings;
       details.push(`Findings: ${snippet}`);
     }
-    if (data.material) details.push(`Material: ${data.material}`);
-    if (Array.isArray(data.stations_sampled)) details.push(`Stations: ${data.stations_sampled.join(', ')}`);
+    if (proc.material) details.push(`Material: ${proc.material}`);
+    if (Array.isArray(proc.stations_sampled))
+      details.push(`Stations: ${proc.stations_sampled.join(', ')}`);
 
     return `
             <tr>
-                <td><strong>${name}</strong></td>
+                <td><strong>${safeHtml(name)}</strong></td>
                 <td><span class="status-badge status-selected">Yes</span></td>
-                <td>${details.join('; ') || '-'}</td>
+                <td>${safeHtml(details.join('; ') || '-')}</td>
+                <td>${evidenceHtml}</td>
             </tr>
         `;
   }).filter(Boolean).join('');
 
   summarySection.querySelector('.report-body').innerHTML = `
         <table class="data-table">
-            <thead><tr><th>Procedure</th><th>Performed</th><th>Key Details</th></tr></thead>
+            <thead><tr><th>Procedure</th><th>Performed</th><th>Key Details</th><th>Evidence</th></tr></thead>
             <tbody>${summaryRows}</tbody>
         </table>
     `;
@@ -705,6 +941,8 @@ async function main() {
     fontSize: 13,
     automaticLayout: true,
   });
+  // Expose for evidence click-to-highlight
+  window.editor = editor;
 
   const model = editor.getModel();
   let originalText = model.getValue();

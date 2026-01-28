@@ -1,0 +1,1142 @@
+🩺 Extraction Quality Report: Batch Analysis
+Date: 2026-01-27 Notes Evaluated: 4 (note_279, note_276, note_358, note_272) Overall Score: 70/100 Summary: The pipeline demonstrates strong parsing of complex headers and basic boolean detection, but suffers from significant "evidence grounding" failures where CPT definitions or history/indication text are mistaken for performed procedures.
+
+📋 Note: note_279
+Context: Tracheal stenosis. Rigid & flexible bronchoscopy. Pipeline Output: 31624, 31640, 31641, 31645, 31654.
+
+Status: ⚠️ WARNING (Hallucination of Modalities)
+
+1. Accuracy (Precision)
+Hallucination (Thermal Ablation/Laser): The JSON claims thermal_ablation was performed (Evidence: "laser").
+
+Reality: The text "laser" appears only in the header defining the CPT code: "31641 Destruction of tumor ... (eg. laser therapy...)". The PROCEDURE IN DETAIL table lists only "Mechanical" (Forceps). No laser or thermal ablation was actually used.
+
+Hallucination (Cryotherapy): The JSON claims cryotherapy was performed (Evidence: "cryotherapy").
+
+Reality: Same as above. "Cryotherapy" is only in the CPT definition line in the header. The procedure detail mentions "Mechanical" modalities only.
+
+Hallucination (Radial EBUS/31654): The JSON codes 31654 (Radial EBUS).
+
+Reality: The note describes "Rigid Tracheoscope" and "Flexible Therapeutic Bronchoscope". There is NO mention of radial EBUS, ultrasound, or peripheral lesions. The pipeline likely inferred this from a keyword hallucination or misinterpretation of "concentric stenosis" (visual finding) as "concentric view" (ultrasound finding).
+
+2. Completeness (Recall)
+Missed Detail (Rigid Dilation): The note describes "dilation using the rigid tracheoscope barrel". The pipeline picked up 31640/31641 (which cover the work), but the structured airway_dilation object is missing or not explicitly linked to the rigid method in the extracted events.
+
+3. Logic & Coding
+CPT Logic: The pipeline output 31641 (Destruction). While "Mechanical... Excellent relief" can support 31641 (relief of stenosis by any method other than excision), the pipeline justified it with "laser", which is false. The code might be correct (for rigid dilation/relief), but the evidence is wrong.
+
+📋 Note: note_276
+Context: BLVR (Lung Volume Reduction) with Valves (Zephyr & Spiration). Pipeline Output: 31624, 31645, 31647.
+
+Status: ❌ FAIL (Critical Omission of Device & Billing)
+
+1. Accuracy (Precision)
+Partial Device Match: JSON lists valve_type: "Zephyr (Pulmonx)".
+
+Reality: The note explicitly states: "RML medial subsegment Spiration size 9, RML lateral subsegment Spiration size 7". The patient received both Zephyr and Spiration valves. The JSON missed the Spiration valves entirely.
+
+2. Completeness (Recall)
+Missed CPT (+31651): The note clearly documents valves placed in two lobes (Right Upper and Right Middle).
+
+JSON: Only reports 31647 (Initial lobe). It missed +31651 (Additional lobe) despite the header explicitly listing it ("31651 Bronchial valve insert additional lobe") and the text describing two lobes treated.
+
+Missed CPT (31634): Note header lists "31634 Balloon occlusion". Body says "Balloon Occlusion was performed to confirm lobe selection."
+
+JSON: Missed 31634. Note: Often bundled into 31647, but if the pipeline intends to capture performed procedures, this is a recall failure.
+
+3. Logic & Coding
+Granularity Failure: The blvr object lists 4 segments treated (correct) but the Billing logic failed to translate "RUL + RML" into "Two Lobes" for CPT generation.
+
+📋 Note: note_358
+Context: Lung Transplant surveillance. BAL, TBBX. Pipeline Output: 31624, 31628.
+
+Status: ✅ PASS
+
+1. Accuracy (Precision)
+Confirmed: bal (31624) and transbronchial_biopsy (31628) are correctly extracted.
+
+Evidence: Quotes are accurate ("BAL", "TBBX").
+
+2. Completeness (Recall)
+No issues: Note is simple, extraction matches perfectly.
+
+📋 Note: note_272
+Context: Hemoptysis, respiratory failure. Stent assessment (existing). Pipeline Output: 31636 (Stent Placement), 31645.
+
+Status: ❌ FAIL (Critical Clinical Hallucination)
+
+1. Accuracy (Precision)
+Hallucination (Stent Placement - 31636): The JSON outputs 31636 (Placement of bronchial stent) and sets airway_stent.action to "Placement".
+
+Reality: The note says: "Left Lung... Stent well-seated... Defect seen in stent... reassessment of stent position". This is a surveillance/inspection of an existing stent. No new stent was placed. This is a massive billing error (overcoding).
+
+2. Completeness (Recall)
+Captured: Therapeutic aspiration (31645) was correctly captured ("clean out... mucus, blood").
+
+3. Logic & Coding
+Logic Failure: The NER/Regex likely triggered on the word "Stent" and defaulted to "Placement" without resolving the context ("well-seated", "reassessment").
+
+🛠 Corrected JSON Snippets (Examples)
+For Note 279 (Removing Hallucinated Evidence):
+
+JSON
+"procedures_performed": {
+  "thermal_ablation": { "performed": false }, // NOT "laser" from header
+  "cryotherapy": { "performed": false },      // NOT "cryotherapy" from header
+  "mechanical_debulking": {
+    "performed": true,
+    "method": "Forceps/Rigid",
+    "location": "Trachea"
+  }
+}
+For Note 272 (Fixing Stent Action):
+
+JSON
+"procedures_performed": {
+  "airway_stent": {
+    "performed": true,
+    "action": "Assessment only", // WAS "Placement"
+    "airway_stent_removal": false
+  }
+},
+"billing": {
+  "cpt_codes": [
+    { "code": "31645" } // REMOVED 31636
+  ]
+}
+🚨 Final Recommendations for Engineering
+Strict Header Exclusion: The pipeline is aggressively extracting entities (Laser, Cryo, CPT codes) from the Indication/Header sections where they are listed as definitions or potential options. Implement "Section Focusing" to force extraction to look only in PROCEDURE IN DETAIL or FINDINGS for evidence.
+
+Verb Association: "Stent" logic needs to look for "placed", "deployed", or "inserted" vs "inspected", "well-seated", or "viewed".
+
+BLVR Logic: The segments -> lobes aggregation logic needs fixing to ensure +31651 is triggered when multiple distinct lobes are treated.
+
+NOTE: note_311
+🩺 Extraction Quality Report
+Score: 70 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Contradictory Extraction (EBUS 11Rs):
+
+In procedures_performed.linear_ebus.node_events, the entry for Station "11Rs" lists action: "inspected_only".
+
+However, the evidence_quote for that very same entry reads: "Site 3: The 11Rs lymph node... The site was sampled... 4 endobronchial ultrasound guided transbronchial biopsies were performed...".
+
+Impact: The system correctly identified 3 stations for the CPT 31653 code calculation, but the granular data is internally inconsistent (Action says inspected, Quote says sampled).
+
+Granular Data Hallucination/Failure:
+
+granular_data.navigation_targets -> Target 1 location is listed as "Unknown target".
+
+Note Evidence: The note explicitly states "Target 1: RML... Lateral Segment of RML (RB4)". The extractor failed to parse the location text for the first target.
+
+2. Completeness (Recall)
+Missed Procedures (Revenue Impact):
+
+Missing +31632 (TBLB Add'l Lobe): The note clearly describes TBBX in "Target 1: RML" and "Target 2: LUL". The JSON only captured the primary 31628. The audit log shows "SELF_CORRECT_SKIPPED: 31632: Quote not found verbatim", indicating the strict evidence gate incorrectly rejected valid clinical data.
+
+Missing +31633 (TBNA Add'l Lobe): The note describes peripheral TBNA in both RML and LUL. The JSON only captured the primary 31629.
+
+Missing Granularity:
+
+The procedures_performed.transbronchial_biopsy.locations array is empty/null, despite specific segments (RB4, LB1/2) being documented.
+
+3. Logic & Coding
+✅ NCCI Logic Success: The pipeline correctly dropped CPT 31645 (Therapeutic Aspiration) despite it being listed in the header and performed ("Successful therapeutic aspiration was performed...").
+
+Reason: Per ncci_ptp.v1.json, 31645 is bundled into 31653 (EBUS 3+ stations) with a modifier indicator of '0' (not allowed). This demonstrates robust bundling logic.
+
+✅ Modifier Usage: The system correctly applied Modifier 59 to CPT 31629 (Peripheral TBNA) to distinguish it from the bundled EBUS-TBNA (31653), which is standard best practice for distinct sites.
+
+✅ EBUS Quantification: The system correctly counted 3 distinct stations (11L, 7, 11R/11Rs) to promote 31652 -> 31653.
+
+4. Corrected JSON Snippet (Billing Section)
+The cpt_codes array requires the addition of the "Add-on" codes for the LUL work.
+
+JSON
+"billing": {
+  "cpt_codes": [
+    // ... existing codes (31623, 31624, 31626, 31627, 31653, 31654, 76982, 76983)...
+    {
+      "code": "31628",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+      "units": 1
+    },
+    {
+      "code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "modifiers": ["59"],
+      "units": 1
+    },
+    {
+      "code": "31632",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), each additional lobe",
+      "units": 1,
+      "derived_from": ["procedures_performed.transbronchial_biopsy"]
+    },
+    {
+      "code": "31633",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s), each additional lobe",
+      "units": 1,
+      "derived_from": ["procedures_performed.peripheral_tbna"]
+    }
+  ]
+}
+
+NOTE: note_274
+🩺 Extraction Quality Report
+Score: 65 / 100 Status: ❌ FAIL
+
+1. Accuracy (Precision)
+Mismatch (Aspiration Material): JSON asserts therapeutic_aspiration.material is "Blood/clot", but the note explicitly states "Successful therapeutic aspiration was performed to clean out... from mucus". While the indication mentions hemoptysis, the performed action targeted mucus.
+
+Logic Error (Stent Removal): JSON sets airway_stent_removal to True, but the action is correctly identified as "Revision/Repositioning". The note describes grasping the plug and pulling it proximally ("bring it more proximally"). It was not removed from the patient.
+
+2. Completeness (Recall)
+Missed Procedure (Intubation - 31500): The note explicitly documents "31500 Intubation, endotracheal, emergency procedure" in the header and describes "Fiberoptic intubation via oral pathway... to introduce a 5.0 MLT ETT" in the text. The JSON omitted this entirely from billing.cpt_codes.
+
+Root Cause: The audit logs show "SELF_CORRECT_SKIPPED: 31500: Path not allowed", suggesting the V3 schema procedures_performed lacks a slot for "Intubation/Emergency Airway", causing the CPT derivation to drop the code.
+
+3. Logic & Coding
+CPT Consistency:
+
+31638 (Stent Revision): Correctly extracted and supported by evidence ("Revision of tracheal/bronchial stent").
+
+31645 (Therapeutic Aspiration): Correctly extracted, though the material was misidentified.
+
+31500 (Intubation): Missing. This is a critical revenue loss as it was explicitly performed and requested in the header with Modifier 22.
+
+4. Corrected JSON Snippet
+JSON
+{
+  "procedures_performed": {
+    "therapeutic_aspiration": {
+      "performed": true,
+      "material": "Mucus plug"  // Corrected from "Blood/clot"
+    },
+    "airway_stent": {
+      "performed": true,
+      "airway_stent_removal": false, // Corrected from true
+      "action": "Revision/Repositioning"
+    }
+  },
+  "billing": {
+    "cpt_codes": [
+      { "code": "31638", "description": "Bronchoscopy; with revision..." },
+      { "code": "31645", "description": "Bronchoscopy; with therapeutic aspiration..." },
+      { 
+        "code": "31500", 
+        "description": "Intubation, endotracheal, emergency procedure",
+        "modifier": "22",
+        "derived_from": ["note_text_explicit"] 
+      }
+    ]
+  }
+}
+
+NOTE: note_275
+🩺 Extraction Quality Report
+Score: 90 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Hallucinations: None. All extracted booleans and fields have direct textual support.
+
+Mismatch:
+
+Airway Stent Removal: The JSON sets airway_stent_removal: true. The text describes "manipulation/revision" and "grasp... bring it more proximally". While this is a revision (31638), the device was not removed from the patient. "Removal" usually implies 31636/31638 logic distinct from just moving it. However, 31638 covers both.
+
+Sedation Type: JSON says type: "Moderate". The text lists Vecuronium (a paralytic) and Intubation (31500). Paralytics are contraindicated in moderate sedation; they indicate General Anesthesia/Deep Sedation. The pipeline blindly trusted the "99152" header over the clinical reality of the drug list.
+
+2. Completeness (Recall)
+Missed Procedures:
+
+31500 (Emergency Intubation): The header explicitly lists "31500 Intubation...". The text describes "Fiberoptic intubation via oral pathway... due to high risk of bleeding". The JSON Audit Warnings admit: SELF_CORRECT_SKIPPED: 31500: Path not allowed. This is a system configuration error causing a missed billable code.
+
+Missed Details:
+
+Modifier 22: The text explicitly requests Modifier 22 for "Substantially greater work" on codes 31500 and 31638. The JSON cpt_codes output lacks this modifier.
+
+Device Details: The "5.0 MLT ETT" is described but likely not captured in the equipment or procedure_setting (though those sections aren't fully visible, the missed 31500 suggests it wasn't processed as a procedure).
+
+3. Logic & Coding
+CPT Consistency:
+
+31638: Correctly extracted for "Revision of tracheal/bronchial stent".
+
+31645: Correctly extracted for "Successful therapeutic aspiration".
+
+99152/99153: Correctly dropped (despite the header) because the logic "Moderate sedation present but anesthesia_provider missing" triggered. This accidental correctness saved the system from billing mod sed when paralytics were used.
+
+Schema Compliance:
+
+The schema does not appear to have a dedicated slot for "Intubation" in procedures_performed based on the audit warning Path not allowed: /procedures_performed/intubation. This confirms a schema gap for non-bronchoscopic airway procedures.
+
+4. Corrected JSON Snippet (Billing Section)
+JSON
+"billing": {
+  "cpt_codes": [
+    {
+      "code": "31638",
+      "modifier": "22",
+      "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+      "units": 1
+    },
+    {
+      "code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration...",
+      "units": 1
+    },
+    {
+      "code": "31500",
+      "modifier": "22",
+      "description": "Intubation, endotracheal, emergency procedure",
+      "units": 1
+    }
+  ]
+}
+
+NOTE: note_359
+🩺 Extraction Quality Report
+Score: 88 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Hallucinations: None. All extracted boolean flags (bal.performed, transbronchial_biopsy.performed) are supported by the text.
+
+Mismatch: None.
+
+2. Completeness (Recall)
+Missed Procedures: None. (BAL and TBLB were correctly identified).
+
+Missed Details (Granularity): The extraction correctly identified what happened but missed where and how much:
+
+BAL Location: Text specifies "RLL"; JSON procedures_performed.bal lacks the location field.
+
+TBLB Location: Text specifies "RLL"; JSON procedures_performed.transbronchial_biopsy lacks locations.
+
+TBLB Count: Text specifies "7 samples obtained"; JSON lacks number_of_samples.
+
+Sedation Details: Text explicitly states "15 min", start "09:06 AM", end "09:21 AM", and agents (fentanyl/versed). The JSON sedation object is missing intraservice_minutes, start_time, end_time, and medications.
+
+Findings: Text notes "Left Lung... malacia noted"; this is missing from clinical context or findings.
+
+3. Logic & Coding
+CPT Consistency: Valid.
+
+31624 (BAL) and 31628 (TBLB) are the correct codes for the procedures described.
+
+31622 (Diagnostic) was correctly bundled/omitted.
+
+Sedation Logic: The pipeline dropped 99152 due to missing anesthesia_provider. This is a safe "fail-closed" logic, though the text strongly implies moderate sedation managed by the procedural team (which would be billable if the provider were confirmed).
+
+Schema Compliance: The output adheres to the schema structure, but the granular fields within procedures_performed are unpopulated despite evidence existing.
+
+4. Corrected JSON Snippet
+Here is how the procedures_performed and sedation sections should look based on the note text:
+
+JSON
+{
+  "sedation": {
+    "type": "Moderate",
+    "start_time": "09:06",
+    "end_time": "09:21",
+    "intraservice_minutes": 15,
+    "agents_used": ["Fentanyl", "Versed", "Lidocaine"]
+  },
+  "procedures_performed": {
+    "bal": {
+      "performed": true,
+      "location": "RLL",
+      "volume_instilled_ml": 40,
+      "volume_recovered_ml": 22
+    },
+    "transbronchial_biopsy": {
+      "performed": true,
+      "locations": ["RLL"],
+      "number_of_samples": 7
+    }
+  }
+}
+
+NOTE: note_289
+
+🩺 Extraction Quality Report
+Score: 88 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Mismatch (Aspiration Material): JSON states therapeutic_aspiration.material: "Blood/clot". The note explicitly states "clean out... from mucus". There is no mention of blood or clots requiring aspiration.
+
+Evidence Validation:
+
+31641 Evidence: "Cryotherapy" (span 2400-2411) -> Valid.
+
+31645 Evidence: "therapeutic aspiration" (span 1961-1983) -> Valid.
+
+2. Completeness (Recall)
+Missed Details (Cryotherapy): The note provides specific granular details for Cryotherapy in a table: "1.7mm" probe and "15 sec freeze thaw". The JSON only returns {"performed": true}, omitting probe_size_mm and freeze_time_seconds which are supported by the V3 schema.
+
+Missed Details (Thermal Ablation): The note specifies "Soft coag" and "4sec". The JSON omits these settings.
+
+Missed Details (Outcomes): The note explicitly quantifies airway patency ("50% patent" pre to "80% patent" post). The JSON outcomes section is missing entirely or not shown in this snippet (if it exists in the full schema, it was missed here).
+
+3. Logic & Coding
+CPT Consistency: ✅ PASS.
+
+31641 correctly coded for Electrocautery/Cryotherapy.
+
+31645 correctly coded for Therapeutic Aspiration.
+
+31622 correctly bundled (dropped) per NCCI rules.
+
+Bundling Logic: The system correctly identified that Cryotherapy and Electrocautery map to the same code (31641) and did not duplicate.
+
+4. Corrected JSON Snippet
+JSON
+{
+  "procedures_performed": {
+    "therapeutic_aspiration": {
+      "performed": true,
+      "material": "Mucus plug",  // Corrected from "Blood/clot"
+      "location": "Right Mainstem, Bronchus Intermedius, Left Mainstem"
+    },
+    "cryotherapy": {
+      "performed": true,
+      "probe_size_mm": 1.7,      // Added from text
+      "freeze_cycles": null,     // "multiple cycles" implies >1 but integer unknown
+      "indication": "Tumor debulking" // Inferred from "Destruction of tumor"
+    },
+    "thermal_ablation": {
+        "performed": true,
+        "modality": "Electrocautery",
+        "location": "Vocal Cord, Subglottic, Trachea"
+    }
+  }
+}
+
+NOTE: note_294
+
+🩺 Extraction Quality Report
+Score: 90 / 100 Status: ✅ PASS
+
+1. Accuracy (Precision)
+Hallucinations: None.
+
+Mismatch:
+
+Therapeutic Aspiration Material: JSON records material: "Blood/clot". The note explicitly states "mucus and mucus plug" and "ESTIMATED BLOOD LOSS: None". There is no evidence of blood/clot aspiration.
+
+2. Completeness (Recall)
+Missed Procedures: None.
+
+Missed Details:
+
+Therapeutic Aspiration Locations: The JSON therapeutic_aspiration.location field is missing/null. The note provides specific targets: "Right Mainstem, Bronchus Intermedius, Left Mainstem, RML Carina (RC2), and Left Carina (LC2)".
+
+BAL Details: Accurately captured "Anterior-basal Segment of RLL (RB8)" and exact volumes (80cc/15cc).
+
+3. Logic & Coding
+CPT Consistency:
+
+31624 (BAL): Correctly selected.
+
+31645 (Therapeutic Aspiration): Correctly selected.
+
+31622 (Diagnostic): Correctly identified as performed but dropped/bundled (selection_status: "dropped"), which adheres to standard NCCI bundling rules for bronchoscopy families.
+
+Schema Compliance: Valid.
+
+4. Corrected JSON Snippet
+JSON
+"therapeutic_aspiration": {
+  "performed": true,
+  "material": "Mucus plug", 
+  "location": "Right Mainstem, Bronchus Intermedius, Left Mainstem, RML Carina (RC2), Left Carina (LC2)"
+}
+
+NOTE: note_360
+🩺 Extraction Quality Report
+Score: 65 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Hallucination / Invalid Code (31645): The pipeline extracted therapeutic_aspiration: True and billed CPT 31645.
+
+Evidence: The note explicitly states in Findings: "Secretions: None." immediately followed by "Suctioned to clear (therapeutic aspiration)." This is likely a contradictory template macro.
+
+Context: The "Bleeding was controlled..." mentioned in the summary refers to iatrogenic bleeding post-biopsy, which is bundled into the biopsy codes (31628). It is not separately billable as 31645.
+
+Granularity Mismatch: The JSON correctly identifies transbronchial_biopsy as True but failed to populate the locations or number_of_samples fields defined in the schema, despite verifiable text.
+
+2. Completeness (Recall)
+CRITICAL: Missed Biopsy Locations: The note clearly states: "A total of 10 biopsies were performed (2 from RUL, 4 from RML, and 4 from RLL)."
+
+The pipeline failed to extract RUL, RML, and RLL into the registry data.
+
+Missed Procedure Details:
+
+transbronchial_biopsy.number_of_samples: Note says "10", JSON is missing this field.
+
+bal.volume_instilled_ml: Note says "140 mL", JSON is missing this field.
+
+bal.location: Note says "right lower lobe" (RLL), JSON is missing this field.
+
+3. Logic & Coding
+Major Under-Coding (Financial Impact): Due to the missing biopsy locations, the auto-coder generated only 31628 (Single Lobe).
+
+Correct Coding: Should be 31628 (First Lobe) + 31632 x 2 (Additional Lobes: RML, RLL).
+
+Impact: Significant revenue loss (approx. 2.08 RVU or ~$69 unadjusted facility payment missed).
+
+Sedation Logic: The pipeline correctly dropped 99152/99153 based on the rule "anesthesia_provider missing". The note implies the proceduralist managed it ("conscious sedation was achieved..."), but without an explicit "independent observer" documented, dropping the code is the safe/correct compliance decision.
+
+4. Corrected JSON Snippet
+Below is the corrected procedures_performed block capturing the missing granularity and correcting the aspiration flag.
+
+JSON
+"procedures_performed": {
+  "bal": {
+    "performed": true,
+    "location": "RLL",
+    "volume_instilled_ml": 140
+  },
+  "transbronchial_biopsy": {
+    "performed": true,
+    "locations": [
+      "RUL",
+      "RML",
+      "RLL"
+    ],
+    "number_of_samples": 10,
+    "forceps_type": "Standard"
+  },
+  "therapeutic_aspiration": {
+    "performed": false,
+    "material": null
+  }
+}
+Corrected Billing Output:
+
+31624 (BAL)
+
+31628 (TBLB, Initial Lobe)
+
++31632 (TBLB, Add'l Lobe) - Units: 2
+
+(31645 Removed)
+
+NOTE: note_318
+
+🩺 Extraction Quality Report
+Score: 90 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Hallucinations: None. The data present is grounded in the text.
+
+Mismatch:
+
+Pleurodesis Indication: JSON sets pleurodesis.indication to "Recurrent benign effusion". The note specifies "Recurrent Effusion" (Pre/Post-op Diagnosis) but does not classify it as benign. This is an unsupported inference.
+
+IPC Logic Conflict: The JSON correctly sets ipc.performed: false (it was only discussed in indications, not performed). However, the audit_warnings log states "DETERMINISTIC_UPLIFT: added performed=true for ... pleural_procedures.ipc", followed immediately by "IPC not supported by note text; clearing...". While the final output is correct, the pipeline logic "waffled" on this fact.
+
+2. Completeness (Recall)
+Missed Procedures (Clinical):
+
+Pleural Biopsy: The note explicitly states "Biopsies of the posterior chest wall/parietal pleura were obtained... number: 8". The JSON medical_thoracoscopy object lacks biopsies_taken: true or number_of_biopsies: 8.
+
+Volume Drained: Note states "Fluid Removed: 1550 ml". This data point is missing from the extraction.
+
+Missed CPT Codes:
+
+32609 (Thoracoscopy w/ Biopsy): This code is listed in the note's header and supported by the body ("Biopsies... obtained"). It is missing from the JSON cpt_codes list. The audit_warnings reveal why: "SELF_CORRECT_SKIPPED: 32609: Quote not found verbatim...". The system failed to verify the evidence (likely due to whitespace/formatting) and erroneously dropped a valid code.
+
+3. Logic & Coding
+CPT Consistency:
+
+32650 vs 32609: The system output 32650 (Thoracoscopy w/ Pleurodesis) but dropped 32609. While NCCI edits often bundle these, the system's reason for dropping it (evidence verification failure) is a bug, not a coding decision. The registry data should reflect the biopsy regardless of the billing outcome.
+
+Schema Compliance:
+
+Valid structure, but the evidence block for 32650 relies on "pleural_procedures.medical_thoracoscopy.performed=true", yet that object fails to capture the biopsy detail which is a key part of the procedure's complexity.
+
+4. Corrected JSON Snippet
+The pleural_procedures section requires the missing granular details.
+
+JSON
+"pleural_procedures": {
+  "medical_thoracoscopy": {
+    "performed": true,
+    "side": "Right",
+    "biopsies_taken": true,
+    "number_of_biopsies": 8,
+    "findings": "no nodularity along the anterior or posterior chest wall... anthracotic pigment"
+  },
+  "pleurodesis": {
+    "performed": true,
+    "agent": "Talc",
+    "talc_dose_grams": 4.0,
+    "indication": "Recurrent Effusion"
+  }
+  // Ideally, fluid removal should be captured here or in a generic drainage field
+}
+
+NOTE: note_342
+
+🩺 Extraction Quality Report
+Score: 65 / 100 Status: ❌ FAIL
+
+1. Accuracy (Precision)
+CRITICAL HALLUCINATION (Stent Revision): The JSON output claims airway_stent.performed = true with action = "Revision/Repositioning" and generated CPT code 31638.
+
+Reality: The note states: "Right anastomosis was normal with a clip visible" and "Will likely need a stent trial in short interval".
+
+Error: The system likely hallucinated the "clip" or the "granulation tissue" removal as a stent revision. No stent was manipulated, removed, or placed. This is a major compliance risk.
+
+Mismatch (Stent Removal): The JSON flag airway_stent_removal: true is also incorrect. No stent was removed.
+
+2. Completeness (Recall)
+Missed 31645 (Therapeutic Aspiration): The Header explicitly lists 31645 Therapeutic aspiration. The text does not explicitly detail a separate aspiration event (often bundled), but the Extraction Engine marked this as "SELF_CORRECT_SKIPPED" and dropped it. Given the header, this should likely be flagged for human review rather than silently dropped, though clinically it is often minor.
+
+Granularity Missing (TBLB): While transbronchial_biopsy.performed is True, the specific locations (LLL, LB7/8, LB9) documented in the note were not populated in the procedures_performed.transbronchial_biopsy.locations array in the JSON, despite being found in the evidence spans.
+
+3. Logic & Coding
+Bundling Logic (Success): The system correctly dropped 31630 (Balloon Dilation) because 31641 (Destruction/Cryotherapy) was performed at the same site (Left Mainstem). This correctly follows NCCI edits.
+
+Bundling Logic (Success): The system correctly dropped 31622 (Diagnostic) as it is bundled into the therapeutic codes.
+
+CPT Consistency (Failure): The inclusion of 31638 is invalid based on the text.
+
+4. Corrected JSON Snippet
+Removing the hallucinated stent event and CPT 31638.
+
+JSON
+{
+  "procedures_performed": {
+    "diagnostic_bronchoscopy": { "performed": true },
+    "bal": {
+      "performed": true,
+      "location": "Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5)",
+      "volume_instilled_ml": 60.0,
+      "volume_recovered_ml": 20.0
+    },
+    "endobronchial_biopsy": { "performed": true, "locations": ["Left Mainstem"] },
+    "transbronchial_biopsy": { "performed": true, "locations": ["LLL"] },
+    "airway_dilation": { "performed": true, "method": "Balloon" },
+    "airway_stent": { 
+      "performed": false, 
+      "airway_stent_removal": false 
+    },
+    "cryotherapy": { "performed": true }
+  },
+  "billing": {
+    "cpt_codes": [
+      { "code": "31624", "description": "BAL" },
+      { "code": "31625", "description": "EBBx" },
+      { "code": "31628", "description": "TBLB" },
+      { "code": "31641", "description": "Destruction/Relief of Stenosis (Cryo)" }
+      // 31630 Bundled into 31641
+      // 31638 REMOVED (Hallucination)
+    ]
+  }
+}
+
+NOTE: note_284
+🩺 Extraction Quality Report
+Score: 55 / 100 Status: ❌ FAIL
+
+1. Accuracy (Precision)
+Hallucination (Critical - Pathology Outcome):
+
+Station 11L: JSON states outcome: "malignant". Note states: "ROSE Cytology was reported as adequate and suggestive of anthracosis."
+
+Station 11Ri: JSON states outcome: "malignant". Note states: "ROSE Cytology was reported as not adequate... Specimen was inadequate."
+
+Impact: The extraction pipeline defaulted to "malignant" for all sampled nodes, which is a dangerous clinical data error.
+
+Mismatch (Granularity):
+
+Needle Gauge: JSON lists only "25G". Note explicitly states: "using 25-gauge Needle and 22-gauge Needle."
+
+2. Completeness (Recall)
+Missed EBUS Targets (Critical for Coding):
+
+The JSON only captured nodes 11L and 11Ri.
+
+Missed: Left upper lobe mass (8 passes, EBUS-guided).
+
+Missed: Right lower lobe mass (6 passes, EBUS-guided).
+
+Impact: Missing these 2 targets caused the CPT code to be calculated incorrectly (see Section 3).
+
+Missed Procedures:
+
+Mechanical Debulking: Note states: "Alligator forceps were used to perform further excision." JSON mechanical_debulking is absent.
+
+Airway Dilation: Note states: "the airway was probed with forceps and dilated." JSON airway_dilation is absent.
+
+3. Logic & Coding
+CPT Undercoding:
+
+JSON: Calculated 31652 (EBUS 1-2 stations) based on finding only 11L and 11Ri.
+
+Note/Reality: 4 distinct sites were sampled (11L, 11Ri, LUL Mass, RLL Mass). This requires CPT 31653 (3+ stations/sites). The note header explicitly lists 31653.
+
+Evidence Consistency: The evidence_quote fields for 11L and 11Ri are accurate verbatim pulls, but the outcome field derived from them contradicts the text within those very quotes.
+
+4. Corrected JSON Snippet
+Correction for EBUS and Billing Logic:
+
+JSON
+{
+  "procedures_performed": {
+    "linear_ebus": {
+      "performed": true,
+      "stations_sampled": ["11L", "11Ri", "Lung Mass"],
+      "needle_gauge": "25G", 
+      "node_events": [
+        {
+          "station": "11L",
+          "outcome": "benign", 
+          "passes": 6,
+          "elastography_pattern": "Type 2"
+        },
+        {
+          "station": "11Ri",
+          "outcome": "inadequate",
+          "passes": 5,
+          "elastography_pattern": "Type 2"
+        },
+        {
+          "station": "Lung Mass", 
+          "label": "Left upper lobe mass",
+          "outcome": "malignant",
+          "passes": 8,
+          "elastography_pattern": "Type 3"
+        },
+        {
+          "station": "Lung Mass",
+          "label": "Right lower lobe mass",
+          "outcome": "malignant",
+          "passes": 6,
+          "elastography_pattern": "Type 2"
+        }
+      ]
+    },
+    "mechanical_debulking": {
+      "performed": true,
+      "method": "Forceps debulking",
+      "location": "Right lower lobe superior segment"
+    }
+  },
+  "billing": {
+    "cpt_codes": [
+      {
+        "code": "31653",
+        "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations"
+      }
+    ]
+  }
+}
+
+NOTE: note_303
+
+🩺 Extraction Quality Report
+Score: 82 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Mismatch (Critical - Clinical Data Corruption):
+
+EBUS Needle Gauge: The JSON reports linear_ebus.needle_gauge: "21G".
+
+Note Text: The EBUS section explicitly states: "sampling by transbronchial needle aspiration was performed using 22-gauge Needle."
+
+Root Cause: The extractor likely conflated the peripheral TBNA needle (21G) with the EBUS needle (22G).
+
+Mismatch (Data Selection):
+
+BAL Volumes: The JSON selected the first BAL instance (20cc instilled / 5cc returned). The note documents a second, larger BAL later in the text ("Instilled 40 cc... returned 15 cc") sent for Cell Count. The pipeline should prioritize the most significant lavage or capture both.
+
+2. Completeness (Recall)
+Missed Billing Code (Revenue Impact):
+
+76377 (3D Reconstruction): This code appears in the note header and the text ("3-D reconstructions were performed on an independent workstation... I personally interpreted...").
+
+Pipeline Failure: The audit_warnings log indicates SELF_CORRECT_SKIPPED: 76377: Quote not found verbatim. The strict evidence verifier likely failed due to whitespace/formatting differences (e.g., "3-D" vs "3D"), causing the code to be dropped despite being valid.
+
+Missed Modifier:
+
+31628 Mod 22: The note explicitly requests "Apply to: 31628... Modifier 22" due to the difficulty of cryobiopsy. The JSON captures 31628 but omits the modifier.
+
+Missed Detail (Granularity):
+
+Stations Inspected: The note lists "11Ri lymph node" and "11L lymph node" in the inspection list. The JSON node_events omits these, likely because they didn't have a dedicated "Site X" paragraph like the others.
+
+3. Logic & Coding
+CPT Consistency: ✅ Valid.
+
+31652: Correctly coded for 2 stations sampled (7, 11Rs).
+
+31629-59: Correctly applied modifier 59 to peripheral TBNA to unbundle it from EBUS.
+
+Elastography (76982/76983): Correctly calculated units based on 4 distinct sites evaluated (7, 11Rs, 4R, 4L) and correctly applied the MUE cap of 2 units for the add-on code 76983.
+
+Schema Compliance: ✅ Valid.
+
+Structure is compliant. evidence_quote fields in node_events are populated with high-quality verbatim text.
+
+4. Corrected JSON Snippet
+JSON
+{
+  "registry": {
+    "procedures_performed": {
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": ["11RS", "7"],
+        "needle_gauge": "22G",  // Corrected from 21G
+        "elastography_used": true,
+        "node_events": [
+          // ... existing events ...
+          {
+            "station": "11L",
+            "action": "inspected_only",
+            "evidence_quote": "11L lymph node"
+          },
+          {
+            "station": "11Ri",
+            "action": "inspected_only",
+            "evidence_quote": "11Ri lymph node"
+          }
+        ]
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        // ... other codes ...
+        {
+          "code": "31628",
+          "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+          "modifiers": ["22"], // Added Modifier 22 per note instruction
+          "units": 1
+        },
+        {
+          "code": "76377", // Added missed code
+          "description": "3D rendering with interpretation and reporting of CT, US, Tomo modality",
+          "units": 1,
+          "evidence": [
+             {
+               "source": "registry_span",
+               "text": "3-D reconstructions were performed on an independent workstation",
+               "confidence": 1.0
+             }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+NOTE: note_354
+
+🩺 Extraction Quality Report
+Score: 85 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Mismatch (Aspiration Material): The JSON procedures_performed.therapeutic_aspiration.material is set to "Blood/clot", but the Note explicitly states: "clean out... mucus and mucus plug".
+
+Precision (Coding): The pipeline correctly dropped CPT 31630 (Balloon Dilation) despite it being listed in the header. The note documents that both the LMS and LUL were treated with both electrocautery (knife) and balloon dilation. Under NCCI rules, dilation of a stenosis is bundled into the destruction/excision (31641) of the same site. The pipeline correctly prioritized 31641.
+
+2. Completeness (Recall)
+Missed Details (outcomes): The Note contains highly specific quantitative outcome data that is missing from the JSON procedures_performed or granular_data (if applicable):
+
+LMS: Pre 40% -> Post 80%.
+
+LUL: Pre 30% -> Post 50%.
+
+Missed Details (Device Specifics): The JSON identifies method: "Balloon" and modality: "Electrocautery", but fails to extract the specific device sizes documented:
+
+"12/13.5/15 Elation balloon".
+
+"6/7/8 Elation balloon".
+
+3. Logic & Coding
+CPT Consistency: ✅ Valid.
+
+31624 (BAL): Correctly selected (Lingula sampled).
+
+31645 (Aspiration): Correctly selected (Initial aspiration of mucus plugs separate from the intervention).
+
+31641 (Destruction): Correctly selected as the primary therapeutic code for the stenosis.
+
+31630 (Dilation): Correctly Dropped (Bundled). The system noted: "31630 (dilation) bundled into destruction/excision code". This demonstrates robust logic over blindly following the header.
+
+Schema Compliance: The procedures_performed objects are populated, but they are "flat" (boolean/string) rather than containing the rich nested event data (locations, sizes) available in the text.
+
+4. Corrected JSON Snippet
+Correction for the aspiration mismatch and adding missed granularity to the therapeutic objects.
+
+JSON
+{
+  "procedures_performed": {
+    "therapeutic_aspiration": {
+      "performed": true,
+      "material": "Mucus plug", 
+      "location": "Right Mainstem, Bronchus Intermedius, Left Mainstem"
+    },
+    "airway_dilation": {
+      "performed": true,
+      "method": "Balloon",
+      "locations": ["Left Mainstem", "Left Upper Lobe"],
+      "balloon_diameter_mm": 13.5
+    },
+    "thermal_ablation": {
+      "performed": true,
+      "modality": "Electrocautery",
+      "location": "LUL and LMS"
+    }
+  }
+}
+
+NOTE: note_280
+
+🩺 Extraction Quality Report
+Score: 15 / 100 Status: ❌ FAIL
+
+1. Accuracy (Precision)
+CRITICAL HALLUCINATION (Phantom Instrument): The Extraction Pipeline generated CPT codes 31615 (Tracheobronchoscopy) and 31645 (Bronchoscopy w/ therapeutic aspiration).
+
+Reality: The note describes a Tracheostomy Tube Change (Header: "31502 Tracheotomy tube change"). There is zero documentation of a bronchoscope being introduced, visualization of the lower airways, or inspection of the bronchial tree.
+
+Error: Suctioning via a tracheostomy tube during a change is a standard nursing/respiratory maneuver, not a billable bronchoscopic therapeutic aspiration.
+
+Procedure Misclassification:
+
+JSON: percutaneous_tracheostomy.performed: true
+
+Note: The note describes the removal and replacement of an existing tube ("changed from... to..."), not the performance of a percutaneous tracheostomy insertion. While semantically related, flagging this as "performed" triggers the wrong coding logic.
+
+2. Completeness (Recall)
+Missed Granularity: The note explicitly provides the device details: "Portex cuffed... size 8.0mm" changed to "Portex uncuffed... size 7.0mm".
+
+JSON: The percutaneous_tracheostomy object lacks the size or device_name fields despite them being defined in the V3 schema and present in the text.
+
+Missed Diagnosis/Indication: The JSON picked up the Indication text correctly but failed to map the "Bronchus sign" (correctly "Not assessed") or other context meaningfully beyond the raw string.
+
+3. Logic & Coding
+Billing Fraud Risk: Billing 31615 and 31645 for a bedside trach tube change (CPT 31502, often bundled or E/M) is a severe compliance risk (billing for a bronchoscopy that did not happen).
+
+Audit Warning Ignored: The system correctly identified "HEADER_EXPLICIT: header lists ['31502']" in the audit warnings, yet proceeded to output 31615 and 31645 in the final cpt_codes block. The system failed to respect the explicit header signal to suppress bronchoscopy codes.
+
+Evidence Misattribution:
+
+The evidence for 31645 ("airway was suctioned and cleared") is insufficient to support a bronchoscopic intervention code without evidence of a scope.
+
+4. Corrected JSON Snippet
+Since 31502 (Trach tube change) appears to be absent from the provided ip_coding_billing_v3.0.json reference file, the correct output for an Interventional Pulmonology registry (focused on Bronch/Pleural) should ideally reflect that no IP procedures were performed, or capture the tube change without attaching Bronchoscopy CPTs.
+
+JSON
+{
+  "registry": {
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": { "performed": false },
+      "therapeutic_aspiration": { "performed": false },
+      "percutaneous_tracheostomy": { 
+        "performed": false, 
+        "notes": "Tracheostomy tube change only - 31502" 
+      }
+    },
+    "billing": {
+      "cpt_codes": [] 
+    },
+    "procedure_setting": {
+      "airway_device_type": "Tracheostomy",
+      "comments": "Exchange from Portex 8.0mm cuffed to 7.0mm uncuffed"
+    }
+  }
+}
+Summary of Fixes Required:
+Scope Verification: Ensure 316xx codes never fire unless terms like "bronchoscope", "scope", "visualized", "inspection", or specific bronchoscopic anatomy (carina, RUL, etc.) are present. "Suctioning" alone is not enough.
+
+Tube Change Logic: Implement logic to distinguish "Trach Placement" from "Trach Change".
+
+Header Authority: If the header explicitly states a non-IP code (like 31502), the system should be extremely hesitant to hallucinate IP codes (31615).
+
+NOTE: note_352
+
+🩺 Extraction Quality Report
+Score: 95 / 100 Status: ✅ PASS
+
+1. Accuracy (Precision)
+Hallucinations: None. All primary findings are supported by the text.
+
+Mismatch:
+
+Therapeutic Aspiration Material: The JSON lists "material": "Blood/clot". However, the note explicitly states: "Successful therapeutic aspiration was performed to clean out... from mucus" and mentions "There were secretions". The "ESTIMATED BLOOD LOSS" is "None". This is a specific entity extraction error (Mucus vs Blood).
+
+2. Completeness (Recall)
+Missed Procedures: None. The system correctly extracted the therapeutic aspiration (31645) and the diagnostic bronchoscopy (31622), effectively identifying the stent assessment without hallucinating a stent placement or revision code.
+
+Missed Details:
+
+Stent Type: The note explicitly mentions a "Y stent". The JSON airway_stent object leaves stent_type null/missing, despite "Y stent" appearing in the NER spans.
+
+Aspiration Locations: The note lists highly granular locations ("Trachea (Middle 1/3)... RUL Carina (RC1)..."). The JSON therapeutic_aspiration object has a location field which was left null.
+
+3. Logic & Coding
+CPT Consistency: Excellent.
+
+31645: Correctly prioritized as the primary therapeutic service.
+
+31622: Correctly identified but dropped ("bundled") because a therapeutic procedure (31645) was performed.
+
+Stent Logic: Correctly determined that "stent check" and "suctioning" constitute maintenance (31645) or inspection, not a billable stent revision (31638), adhering to the stent_maintenance_31645 policy.
+
+Schema Compliance: Valid.
+
+4. Corrected JSON Snippet (Optional)
+Correction for the material mismatch and missing details:
+
+JSON
+    "procedures_performed": {
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug",  // Corrected from "Blood/clot"
+        "location": "Trachea, Mainstems, Carinas (RC1, RC2, LC1, LC2)" // Enriched
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action": "Assessment only",
+        "stent_type": "Y-Stent" // Added from text
+      }
+    }
+
+NOTE: note_334
+
+🩺 Extraction Quality Report
+Score: 85/100 Status: ⚠️ WARNING
+
+Summary: The extraction pipeline successfully identified the correct CPT codes and procedure types, correctly applying bundling logic (dropping 31622). However, it failed on precision (hallucinated aspiration material) and granular recall (missed specific cryotherapy details clearly present in the text).
+
+1. Accuracy (Precision)
+Hallucination (Critical):
+
+Field: procedures_performed.therapeutic_aspiration.material
+
+JSON Value: "Blood/clot"
+
+Note Truth: The note explicitly states: "clean out... from mucus and mucus plug." and "Moderate to large burden of white secretions." The "Estimated Blood Loss" is "None".
+
+Impact: Misrepresents the clinical indication (hemorrhage control vs. secretion clearance).
+
+2. Completeness (Recall)
+Missed Granularity (Cryotherapy):
+
+The schema supports granular details for cryotherapy, and the note provided them, but the JSON returned a generic true object.
+
+Missed: probe_size_mm (Note: "2.4mm probe")
+
+Missed: freeze_cycles or duration (Note: "30sec freeze")
+
+Missed: location (Note: "Endobronchial obstruction at LMSB")
+
+Missed Granularity (Airway Stent):
+
+Field: airway_stent
+
+Issue: While correctly identified as "Assessment only" (no movement), the location ("LMSB") and stent_type/condition ("partially occluded (~50%) by mucus") were not extracted into the schema, despite being key context.
+
+3. Logic & Coding
+CPT Consistency: ✅ Perfect.
+
+Correctly captured 31624 (BAL), 31645 (Aspiration), and 31641 (Destruction/Cryo).
+
+Correctly bundled 31622 (Diagnostic) despite it appearing in the procedure header, citing the diagnostic_with_surgical rule.
+
+Evidence Linking: ✅ Good.
+
+Evidence spans for CPT codes are accurate verbatim quotes from the text.
+
+4. Corrected JSON Snippet
+Below is the corrected procedures_performed block addressing the hallucination and missing details.
+
+JSON
+"procedures_performed": {
+  "diagnostic_bronchoscopy": {
+    "performed": true,
+    "inspection_findings": "LMSB stent was in good position, partially occluded (~50%) by mucus. Granulation tissue at edges.",
+    "airway_abnormalities": [
+      "Secretions",
+      "Stenosis",
+      "Granulation tissue"
+    ]
+  },
+  "bal": {
+    "performed": true,
+    "location": "Anteromedial Segment of LLL (Lb7/8)",
+    "volume_instilled_ml": 60.0,
+    "volume_recovered_ml": 15.0
+  },
+  "therapeutic_aspiration": {
+    "performed": true,
+    "material": "Mucus plug", 
+    "location": "Trachea (Distal 1/3), Left Mainstem, LUL Lingula Carina"
+  },
+  "airway_stent": {
+    "performed": true,
+    "action": "Assessment only",
+    "location": "Left mainstem",
+    "indication": "Malignant obstruction" 
+  },
+  "cryotherapy": {
+    "performed": true,
+    "location": "LMSB (proximal and distal edge of stent)",
+    "probe_size_mm": 2.4,
+    "indication": "Tumor debulking"
+  }
+}
+
+NOTE: note_319
+
+🩺 Extraction Quality Report
+Score: 90 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Hallucinations: None. All extracted fields (chest_ultrasound, ipc, catheter_brand="Other") are supported by the text.
+
+Evidence: The evidence spans for 32550 ("tunneling device") and 76604 ("CHEST ULTRASOUND FINDINGS") are verifiable and accurate.
+
+2. Completeness (Recall)
+Missed Side: The note explicitly states "Hemithorax: Left" and "Left with right side up". The JSON pleural_procedures.ipc object is missing the side: "Left" field.
+
+Missed Modifier: The note explicitly lists "Mod 62 Co-surgeons performing separate parts of the procedure". The JSON billing.cpt_codes entry for 32550 has no modifier listed.
+
+Missed Volume: The note records "Fluid Removed: 1550 ml". While thoracentesis is correctly marked false (bundled into IPC), this volume data is clinically significant and currently lost because the IPC schema doesn't capture initial drainage volume, or it wasn't extracted to a generic outcome field.
+
+3. Logic & Coding
+CPT Consistency: Valid.
+
+32550 (IPC Insertion) correctly extracted.
+
+76604 (Ultrasound) correctly extracted.
+
+Bundling: The system correctly did not extract 32554 (Thoracentesis) despite fluid removal, adhering to the rule that fluid removal during IPC placement is bundled.
+
+4. Corrected JSON Snippet
+JSON
+"pleural_procedures": {
+  "ipc": {
+    "performed": true,
+    "action": "Insertion",
+    "side": "Left",  // Added
+    "catheter_brand": "Other"
+  }
+},
+"billing": {
+  "cpt_codes": [
+    {
+      "code": "32550",
+      "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+      "modifier": "62", // Added
+      "derived_from": ["pleural_procedures.ipc"],
+      "evidence": [...]
+    },
+    ...
+  ]
+}

@@ -398,6 +398,11 @@ def derive_all_codes_with_meta(
     rationales: dict[str, str] = {}
     warnings: list[str] = []
 
+    # --- Airway management ---
+    if _performed(_proc(record, "intubation")):
+        codes.append("31500")
+        rationales["31500"] = "intubation.performed=true"
+
     # --- Bronchoscopy family ---
     diagnostic = _proc(record, "diagnostic_bronchoscopy")
     if _performed(diagnostic):

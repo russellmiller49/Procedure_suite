@@ -88,3 +88,19 @@ def test_mask_offset_preserving_masks_empty_table_rows() -> None:
     assert re.search(r"[^\n ]", masked_apc_row) is None
 
     assert "Electrocautery\tKnife" in masked
+
+
+def test_mask_offset_preserving_masks_cpt_definition_continuation_lines() -> None:
+    raw = (
+        "PROCEDURE:\n"
+        "31641 Destruction of tumor OR relief of stenosis by any method other than excision (eg.\n"
+        "  laser therapy, cryotherapy)\n"
+        "\n"
+        "PROCEDURE IN DETAIL:\n"
+        "Mechanical debulking performed.\n"
+    )
+    masked = mask_offset_preserving(raw)
+
+    assert len(masked) == len(raw)
+    assert "laser" not in masked.lower()
+    assert "cryotherapy" not in masked.lower()

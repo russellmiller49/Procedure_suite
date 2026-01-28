@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-27T13:15:16-08:00`
-Git: `main` @ `fb827fb`
+Generated: `2026-01-27T15:23:21-08:00`
+Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -340,7 +340,6 @@ Git: `main` @ `fb827fb`
      2324  tests/registry/test_schema_refactor_smoke.py
      2346  tests/conftest.py
      2372  tests/scripts/test_prodigy_export_registry_file_mode.py
-     2413  tests/registry/test_masking.py
      2416  modules/common/text_cleaning.py
      2421  tests/registry/test_registry_to_cpt_fibrinolytic_therapy.py
      2448  modules/common/rules_engine/mer.py
@@ -365,6 +364,7 @@ Git: `main` @ `fb827fb`
      2914  modules/reporter/cli.py
      2921  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2927  modules/common/rvu_calc.py
+     2936  tests/registry/test_masking.py
      2990  tests/coding/test_sectionizer_integration.py
      2993  tests/unit/test_openai_timeouts.py
      3060  modules/common/umls_linking.py
@@ -471,6 +471,7 @@ Git: `main` @ `fb827fb`
      7599  modules/registry/model_runtime.py
      7652  tests/registry/test_registry_extraction_ebus.py
      7672  modules/coder/adapters/ml_ranker.py
+     7672  tests/registry/test_extraction_quality_fixpack_jan2026.py
      7837  tests/unit/test_no_legacy_imports.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
@@ -482,7 +483,6 @@ Git: `main` @ `fb827fb`
      8556  modules/registry/ml/evaluate.py
      8618  tests/coder/test_hierarchy_bundling_fixes.py
      8652  modules/coder/application/procedure_type_detector.py
-     8668  modules/registry/processing/masking.py
      8695  tests/coding/test_json_rules_parity.py
      8702  modules/api/coder_adapter.py
      8750  modules/api/routes/unified_process.py
@@ -497,13 +497,14 @@ Git: `main` @ `fb827fb`
     10017  tests/registry/test_registry_guardrails.py
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
-    10323  modules/registry/self_correction/validation.py
+    10413  modules/registry/self_correction/validation.py
     10466  modules/api/routes_registry.py
     10791  tests/unit/test_inmemory_procedure_store.py
     10938  tests/registry/test_ebus_config_station_count.py
     11181  tests/test_phi_redaction_contract.py
     11253  modules/registry/application/registry_builder.py
     11289  modules/coder/adapters/nlp/keyword_mapping_loader.py
+    11300  modules/registry/processing/masking.py
     11467  modules/api/routes/phi.py
     11598  modules/common/knowledge.py
     11691  modules/registry/legacy/adapters/pleural.py
@@ -602,16 +603,16 @@ Git: `main` @ `fb827fb`
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
     40683  modules/common/llm.py
-    40690  modules/extraction/postprocessing/clinical_guardrails.py
     41901  modules/proc_ml_advisor/schemas.py
     42913  modules/api/routes/procedure_codes.py
     43561  modules/api/fastapi_app.py
     43756  tests/registry/test_granular_registry_models.py
-    49120  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+    48370  modules/extraction/postprocessing/clinical_guardrails.py
+    49289  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     56440  modules/autocode/ip_kb/ip_kb.py
-    61831  modules/registry/prompts.py
+    62046  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    85660  modules/registry/deterministic_extractors.py
+    89186  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
    117586  modules/registry/postprocess.py
    130147  modules/registry/application/registry_service.py
@@ -789,7 +790,7 @@ Git: `main` @ `fb827fb`
     21781  modules/reporting/templates/macros/template_schema.json
     27821  modules/registry/ip_registry_improvements.md
     41682  docs/USER_GUIDE.md
-    43484  modules/api/static/phi_redactor/app.js
+    50380  modules/api/static/phi_redactor/app.js
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     61430  modules/api/static/phi_redactor/protectedVeto.js
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
@@ -1043,7 +1044,6 @@ Git: `main` @ `fb827fb`
  inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/registry/ml/evaluate.py
  inline_cap_reached>75  modules/coder/application/procedure_type_detector.py
- inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/api/coder_adapter.py
  inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/api/routes/metrics.py
@@ -1056,6 +1056,7 @@ Git: `main` @ `fb827fb`
  inline_cap_reached>75  modules/api/routes_registry.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
+ inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/common/knowledge.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
@@ -1117,10 +1118,10 @@ Git: `main` @ `fb827fb`
  inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/dictionary.py
  inline_cap_reached>75  modules/common/llm.py
- inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
  inline_cap_reached>75  modules/api/fastapi_app.py
+ inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  modules/registry/prompts.py

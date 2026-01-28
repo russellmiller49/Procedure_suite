@@ -137,17 +137,79 @@ def _mask_cpt_definition_lines(text: str) -> str:
 
     lines = text.splitlines(keepends=True)
     out: list[str] = []
+    after_cpt_definition_line = False
+    continuation_paren_balance = 0
+    continuation_force_next = False
+    continuation_example_mode = False
+
+    example_token_re = re.compile(
+        r"(?i)\b(?:laser|cryotherapy|cryo(?:probe|spray)?|thermal|apc|argon|radiofrequency|microwave)\b"
+    )
+
+    def _mask_full_line(raw: str) -> str:
+        return re.sub(r"[^\n]", " ", raw)
+
+    def _stop_continuation(raw: str) -> bool:
+        return not raw.strip() or _HEADING_INLINE_RE.match(raw) or _CPT_LINE_RE.match(raw)
+
     for line in lines:
+        if after_cpt_definition_line or continuation_paren_balance or continuation_force_next or continuation_example_mode:
+            if _stop_continuation(line):
+                after_cpt_definition_line = False
+                continuation_paren_balance = 0
+                continuation_force_next = False
+                continuation_example_mode = False
+            else:
+                is_indented = bool(re.match(r"^\s+\S", line))
+                has_example_tokens = bool(example_token_re.search(line))
+                should_mask = False
+
+                if continuation_paren_balance > 0:
+                    should_mask = True
+                elif continuation_force_next:
+                    should_mask = True
+                elif continuation_example_mode and is_indented and has_example_tokens:
+                    should_mask = True
+                elif is_indented and has_example_tokens:
+                    should_mask = True
+                    continuation_example_mode = True
+
+                after_cpt_definition_line = False
+                if should_mask:
+                    out.append(_mask_full_line(line))
+                    continuation_paren_balance += line.count("(") - line.count(")")
+                    if continuation_paren_balance <= 0:
+                        continuation_paren_balance = 0
+                    continuation_force_next = False
+                    continue
+
+                continuation_paren_balance = 0
+                continuation_force_next = False
+                continuation_example_mode = False
+
         if not _CPT_LINE_RE.match(line):
             out.append(line)
             continue
 
         if _CPT_CONTEXT_PRESERVE_RE.search(line):
             out.append(_CPT_CODE_RE.sub(lambda m: " " * len(m.group(0)), line))
+            after_cpt_definition_line = False
+            continuation_paren_balance = 0
+            continuation_force_next = False
+            continuation_example_mode = False
             continue
 
         # Default behavior: mask entire CPT-bearing line.
-        out.append(re.sub(r"[^\n]", " ", line))
+        out.append(_mask_full_line(line))
+        after_cpt_definition_line = True
+
+        continuation_paren_balance = line.count("(") - line.count(")")
+        if continuation_paren_balance < 0:
+            continuation_paren_balance = 0
+
+        tail = line.rstrip().lower()
+        continuation_force_next = tail.endswith("eg.") or tail.endswith("e.g.") or tail.endswith("(")
+        continuation_example_mode = False
 
     return "".join(out)
 

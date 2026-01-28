@@ -11,7 +11,18 @@ _NAV_FAILURE_PATTERN = re.compile(
     r"(mis-?regist|unable|aborted|fail|suboptimal).{0,50}(navigat|registration)",
     re.IGNORECASE | re.DOTALL,
 )
-_RADIAL_MARKER_PATTERN = re.compile(r"\b(concentric|eccentric)\b", re.IGNORECASE)
+_RADIAL_MARKER_PATTERN = re.compile(
+    r"\b(?:"
+    r"(?:concentric|eccentric)\b[^.\n]{0,15}\bview\b"
+    r"|"
+    r"\bview\b[^.\n]{0,15}\b(?:concentric|eccentric)\b"
+    r"|"
+    r"\b(?:radial|r-?ebus|rp-?ebus|miniprobe)\b[^.\n]{0,50}\b(?:concentric|eccentric)\b"
+    r"|"
+    r"\b(?:concentric|eccentric)\b[^.\n]{0,50}\b(?:radial|r-?ebus|rp-?ebus|miniprobe)\b"
+    r")\b",
+    re.IGNORECASE,
+)
 _LINEAR_MARKER_PATTERN = re.compile(
     r"\b(convex|mediastinal|station\s*\d{1,2}[A-Za-z]?)\b",
     re.IGNORECASE,
@@ -44,6 +55,11 @@ _STENT_PLACEMENT_CONTEXT_RE = re.compile(
     r"|(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
     re.IGNORECASE,
 )
+_STENT_PLACEMENT_ACTION_CONTEXT_RE = re.compile(
+    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|expand|expanded|expanding)\b"
+    r"|(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
+    re.IGNORECASE,
+)
 _STENT_STRONG_PLACEMENT_RE = re.compile(
     r"\b(?:stent\b[^.\n]{0,30}\b(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated|expand|expanded|expanding)\b"
     r"|(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
@@ -59,9 +75,9 @@ _STENT_REMOVAL_CONTEXT_RE = re.compile(
 )
 _STENT_INSPECTION_RE = re.compile(
     r"\b(?:"
-    r"(?:stent|bms)\b[^.\n]{0,80}\b(evaluat|inspect|inspection|patent|intact|visible|in\s+good\s+position|in\s+place|position\s+confirmed)\b"
+    r"(?:stent|bms)\b[^.\n]{0,80}\b(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+good\s+position|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b"
     r"|"
-    r"(evaluat|inspect|inspection|patent|intact|visible|in\s+good\s+position|in\s+place|position\s+confirmed)\b[^.\n]{0,80}\b(?:stent|bms)\b"
+    r"(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+good\s+position|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b[^.\n]{0,80}\b(?:stent|bms)\b"
     r")\b",
     re.IGNORECASE,
 )
@@ -196,7 +212,15 @@ class ClinicalGuardrails:
                 changed = True
 
         # Radial vs linear EBUS disambiguation.
-        radial_marker = bool(_RADIAL_MARKER_PATTERN.search(text_lower))
+        radial_marker_match = _RADIAL_MARKER_PATTERN.search(text_lower)
+        radial_marker = False
+        if radial_marker_match:
+            # Block common false positives like "concentric stenosis" or "eccentric narrowing".
+            window_start = max(0, radial_marker_match.start() - 160)
+            window_end = min(len(text_lower), radial_marker_match.end() + 160)
+            local_window = text_lower[window_start:window_end]
+            if not re.search(r"\b(?:stenosis|stricture|narrowing)\b", local_window):
+                radial_marker = True
         explicit_radial = bool(
             re.search(
                 r"\b(?:radial\s+ebus|radial\s+probe|r-?ebus|rp-?ebus|miniprobe)\b",
@@ -255,10 +279,26 @@ class ClinicalGuardrails:
             removal_flag = stent.get("airway_stent_removal") is True
             removal_present = removal_text_present or removal_flag
             placement_present = bool(_STENT_PLACEMENT_CONTEXT_RE.search(text_lower))
+            placement_action_present = bool(_STENT_PLACEMENT_ACTION_CONTEXT_RE.search(text_lower))
             strong_placement = bool(_STENT_STRONG_PLACEMENT_RE.search(text_lower))
             inspection_only = bool(
                 _STENT_INSPECTION_RE.search(text_lower) or _STENT_OBSTRUCTION_RE.search(text_lower)
             )
+
+            # Best-effort stent type enrichment (helps note_352-style "Y stent" mentions).
+            if not stent.get("stent_type") and re.search(r"\by-?\s*stent\b", text_lower, re.IGNORECASE):
+                stent["stent_type"] = "Y-Stent"
+                changed = True
+
+            # Revision semantics: don't label revision/repositioning as "removal" without explicit removal language.
+            action_text = str(stent.get("action") or "").strip().lower()
+            revision_action = "revision" in action_text or "reposition" in action_text
+            if revision_action and removal_flag and not removal_text_present:
+                stent["airway_stent_removal"] = False
+                warnings.append("Stent revision/repositioning without removal language; clearing airway_stent_removal.")
+                changed = True
+                removal_flag = False
+                removal_present = removal_text_present
 
             if negated and not strong_placement:
                 if removal_present:
@@ -277,7 +317,7 @@ class ClinicalGuardrails:
                 if self._clear_stent(record_data):
                     warnings.append("Stent removal flag not supported by text; treating as not performed.")
                     changed = True
-            elif inspection_only and not placement_present and not removal_text_present:
+            elif inspection_only and not placement_action_present and not removal_text_present:
                 if self._set_stent_assessment_only(record_data):
                     warnings.append("Stent inspection-only language; treating as assessment only.")
                     changed = True
@@ -643,7 +683,14 @@ class ClinicalGuardrails:
         chartis_idx = (note_text or "").lower().find("chartis system")
         chartis_window = note_text[chartis_idx : chartis_idx + 240] if chartis_idx != -1 else note_text
         chartis_yes = bool(re.search(r"(?i)\b1\D{0,6}yes\b", chartis_window))
-        if chartis_yes and re.search(r"(?i)\bno/minimal\s+collateral\s+ventilation\b", note_text):
+        balloon_idx = (note_text or "").lower().find("balloon occlusion")
+        balloon_window = note_text[balloon_idx : balloon_idx + 240] if balloon_idx != -1 else ""
+        balloon_yes = bool(re.search(r"(?i)\b1\D{0,6}yes\b", balloon_window)) or bool(
+            re.search(r"(?i)\bballoon\s+occlusion\b[^.\n]{0,80}\bperformed\b", note_text)
+        )
+        chartis_performed = chartis_yes or balloon_yes
+
+        if chartis_performed and re.search(r"(?i)\bno/minimal\s+collateral\s+ventilation\b", note_text):
             if blvr.get("collateral_ventilation_assessment") != "Chartis negative":
                 blvr["collateral_ventilation_assessment"] = "Chartis negative"
                 changed = True
@@ -671,6 +718,7 @@ class ClinicalGuardrails:
 
         sizes: list[str] = []
         segments: list[str] = []
+        placements: list[dict[str, object]] = []
         removed_valve = False
         for line in valve_block.splitlines():
             clean = line.strip()
@@ -688,7 +736,8 @@ class ClinicalGuardrails:
                 removed_valve = True
                 continue
 
-            sizes.append(size_match.group(1))
+            valve_size = size_match.group(1)
+            sizes.append(valve_size)
             seg = None
             if "\t" in clean:
                 seg = clean.split("\t", 1)[0].strip()
@@ -698,6 +747,21 @@ class ClinicalGuardrails:
                     seg = clean[: marker.start()].strip() or None
             if seg:
                 segments.append(seg)
+            valve_type: str | None = None
+            lower = clean.lower()
+            if "zephyr" in lower:
+                valve_type = "Zephyr (Pulmonx)"
+            elif "spiration" in lower:
+                valve_type = "Spiration (Olympus)"
+            if valve_type is None and blvr.get("valve_type") in ("Zephyr (Pulmonx)", "Spiration (Olympus)"):
+                valve_type = blvr.get("valve_type")
+            placements.append(
+                {
+                    "segment": seg or "",
+                    "valve_size": valve_size,
+                    "valve_type": valve_type,
+                }
+            )
 
         count = len(sizes)
         if count:
@@ -718,6 +782,108 @@ class ClinicalGuardrails:
         if removed_valve:
             if self._set_procedure_performed(record_data, "foreign_body_removal", True):
                 warnings.append("BLVR valve removal noted; setting foreign_body_removal.performed=true")
+                changed = True
+
+        # Promote BLVR valve table rows into granular_data.blvr_valve_placements for accurate lobe counting.
+        def _infer_target_lobe(segment: str) -> str | None:
+            upper = (segment or "").upper()
+            if "RUL" in upper or "RIGHT UPPER" in upper:
+                return "RUL"
+            if "RML" in upper or "RIGHT MIDDLE" in upper:
+                return "RML"
+            if "RLL" in upper or "RIGHT LOWER" in upper:
+                return "RLL"
+            if "LUL" in upper or "LEFT UPPER" in upper:
+                return "LUL"
+            if "LLL" in upper or "LEFT LOWER" in upper:
+                return "LLL"
+            if "LING" in upper:
+                return "Lingula"
+            return None
+
+        granular = record_data.get("granular_data")
+        if not isinstance(granular, dict):
+            granular = {}
+
+        existing_valves = granular.get("blvr_valve_placements")
+        if not isinstance(existing_valves, list):
+            existing_valves = []
+
+        valve_number = len(existing_valves) + 1
+        added_valves = 0
+        for placement in placements:
+            segment = str(placement.get("segment") or "").strip()
+            if not segment:
+                continue
+            target_lobe = _infer_target_lobe(segment)
+            if target_lobe is None:
+                continue
+            valve_type = placement.get("valve_type")
+            if valve_type not in ("Zephyr (Pulmonx)", "Spiration (Olympus)"):
+                continue
+            valve_size = str(placement.get("valve_size") or "").strip()
+            if not valve_size:
+                continue
+
+            existing_valves.append(
+                {
+                    "valve_number": valve_number,
+                    "target_lobe": target_lobe,
+                    "segment": segment,
+                    "valve_size": valve_size,
+                    "valve_type": valve_type,
+                    "deployment_successful": True,
+                }
+            )
+            valve_number += 1
+            added_valves += 1
+
+        if added_valves:
+            granular["blvr_valve_placements"] = existing_valves
+            record_data["granular_data"] = granular
+            changed = True
+
+        # Capture Chartis/balloon occlusion as granular measurements so CPT logic can bundle 31634 correctly.
+        if chartis_performed:
+            cv_negative = bool(
+                re.search(r"(?i)\bno/minimal\s+collateral\s+ventilation\b", note_text)
+                or re.search(r"(?i)\bno\s+collateral\s+ventilation\b", note_text)
+            )
+            cv_positive = bool(re.search(r"(?i)\bcollateral\s+ventilation\b[^.\n]{0,40}\bpresent\b", note_text))
+            cv_result = "Indeterminate"
+            if cv_negative:
+                cv_result = "CV Negative"
+            elif cv_positive:
+                cv_result = "CV Positive"
+
+            valve_lobes: set[str] = set()
+            for valve in existing_valves:
+                lobe = valve.get("target_lobe")
+                if lobe in {"RUL", "RML", "RLL", "LUL", "LLL", "Lingula"}:
+                    valve_lobes.add(lobe)
+            if not valve_lobes and isinstance(blvr.get("target_lobe"), str):
+                inferred = _infer_target_lobe(blvr.get("target_lobe") or "")
+                if inferred:
+                    valve_lobes.add(inferred)
+
+            existing_meas = granular.get("blvr_chartis_measurements")
+            if not isinstance(existing_meas, list):
+                existing_meas = []
+            existing_lobes = {
+                m.get("lobe_assessed")
+                for m in existing_meas
+                if isinstance(m, dict) and m.get("lobe_assessed") in {"RUL", "RML", "RLL", "LUL", "LLL", "Lingula"}
+            }
+            added_meas = 0
+            for lobe in sorted(valve_lobes):
+                if lobe in existing_lobes:
+                    continue
+                existing_meas.append({"lobe_assessed": lobe, "cv_result": cv_result})
+                added_meas += 1
+
+            if added_meas:
+                granular["blvr_chartis_measurements"] = existing_meas
+                record_data["granular_data"] = granular
                 changed = True
 
         procedures["blvr"] = blvr

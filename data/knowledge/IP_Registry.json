@@ -810,6 +810,42 @@
             }
           }
         },
+        "intubation": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Endotracheal intubation performed as a distinct procedure (e.g., emergency/fiberoptic airway management).",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "route": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tube_size": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
         "bal": {
           "type": [
             "object",

@@ -957,25 +957,111 @@ def extract_therapeutic_aspiration(note_text: str) -> Dict[str, Any]:
             return {}
 
     for pattern in THERAPEUTIC_ASPIRATION_PATTERNS:
-        if re.search(pattern, text_lower, re.IGNORECASE):
+        match = re.search(pattern, text_lower, re.IGNORECASE)
+        if match:
             # Check for negation
             negation_check = r"\b(?:no|not|without)\b[^.\n]{0,40}" + pattern
             if not re.search(negation_check, text_lower, re.IGNORECASE):
-                # Determine material type
-                material = None
-                if "clot" in text_lower or "blood" in text_lower:
-                    material = "Blood/clot"
-                elif "purulent" in text_lower or "pus" in text_lower:
+                # Determine material type from a local window around the match
+                window = 250
+                window_start = max(0, match.start() - window)
+                window_end = min(len(text_lower), match.end() + window)
+                local_window = text_lower[window_start:window_end]
+
+                material = "Other"
+                if "purulent" in local_window or "pus" in local_window:
                     material = "Purulent secretions"
-                elif re.search(r"(?i)\bmucus\s+plug(?:ging)?\b", text_lower):
+                elif any(token in local_window for token in ("mucus", "mucous", "plug")):
                     material = "Mucus plug"
-                elif "mucus" in text_lower:
-                    material = "Mucus"
+                elif any(token in local_window for token in ("blood", "clot", "bloody", "blood-tinged")):
+                    material = "Blood/clot"
+                elif "secretions" in local_window:
+                    material = "Mucus plug"
+
+                location: str | None = None
+                loc_match = re.search(
+                    r"(?i)\btherapeutic\s+aspiration\b[^.\n]{0,140}\bclean\s+out\b\s+(?:the\s+)?(?P<loc>[^.\n]{3,400}?)\s+\bfrom\b",
+                    note_text,
+                )
+                if loc_match:
+                    candidate = (loc_match.group("loc") or "").strip().strip(" ,;:-")
+                    if candidate:
+                        location = candidate
+
                 result = {"therapeutic_aspiration": {"performed": True}}
-                if material:
-                    result["therapeutic_aspiration"]["material"] = material
+                result["therapeutic_aspiration"]["material"] = material
+                if location:
+                    result["therapeutic_aspiration"]["location"] = location
                 return result
     return {}
+
+
+def extract_intubation(note_text: str) -> Dict[str, Any]:
+    """Extract emergency endotracheal intubation (31500) indicator.
+
+    This is intentionally conservative to avoid coding routine anesthesia intubation.
+    """
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
+    if not text_lower.strip():
+        return {}
+
+    fiberoptic = bool(re.search(r"\bfiber\s*optic\s+intubat(?:ion|ed|ing)\b", text_lower)) or bool(
+        re.search(r"\bfiberoptic\s+intubat(?:ion|ed|ing)\b", text_lower)
+    )
+    endotracheal_intubation = bool(re.search(r"\bendotracheal\s+intubat(?:ion|ed|ing)\b", text_lower))
+    ett_placed = bool(
+        re.search(
+            r"\b(?:ett|endotracheal\s+tube)\b[^.\n]{0,60}\b(?:was\s+)?(?:placed|inserted)\b",
+            text_lower,
+        )
+    )
+    intubation_mentioned = bool(re.search(r"\bintubat(?:ion|ed|ing)\b", text_lower))
+
+    tube_match = re.search(
+        r"\b(?P<size>\d{1,2}(?:\.\d+)?)\s*(?:mm\s*)?(?:(?P<mlt>mlt)\s*)?(?:ett|endotracheal\s+tube)\b"
+        r"|\b(?P<size2>\d{1,2}(?:\.\d+)?)\s*(?P<mlt2>mlt)\b",
+        text_lower,
+    )
+    tube_size = None
+    if tube_match:
+        size = tube_match.group("size") or tube_match.group("size2")
+        mlt = tube_match.group("mlt") or tube_match.group("mlt2")
+        if size:
+            tube_size = f"{size} MLT" if mlt else size
+
+    route = None
+    if re.search(r"\bvia\s+oral\b|\boral\s+pathway\b|\borotracheal\b", text_lower):
+        route = "Oral"
+    elif re.search(r"\bvia\s+nasal\b|\bnasal\s+pathway\b|\bnasotracheal\b", text_lower):
+        route = "Nasal"
+
+    strong_trigger = fiberoptic or endotracheal_intubation or ett_placed
+    qualified = strong_trigger or (
+        intubation_mentioned
+        and (
+            tube_size is not None
+            or route is not None
+            or "emerg" in text_lower
+            or "selective" in text_lower
+            or "difficult airway" in text_lower
+        )
+    )
+    if not qualified:
+        return {}
+
+    proc: dict[str, Any] = {"performed": True}
+    if fiberoptic:
+        proc["method"] = "Fiberoptic"
+    elif endotracheal_intubation:
+        proc["method"] = "Endotracheal"
+    if route:
+        proc["route"] = route
+    if tube_size:
+        proc["tube_size"] = tube_size
+
+    return {"intubation": proc}
 
 
 def _has_airway_stent_action(text_lower: str, *, action_patterns: list[str]) -> bool:
@@ -2198,6 +2284,11 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     ta_data = extract_therapeutic_aspiration(note_text)
     if ta_data:
         seed_data.setdefault("procedures_performed", {}).update(ta_data)
+
+    # Emergency endotracheal intubation (31500)
+    intubation_data = extract_intubation(note_text)
+    if intubation_data:
+        seed_data.setdefault("procedures_performed", {}).update(intubation_data)
 
     dilation_data = extract_airway_dilation(note_text)
     if dilation_data:
