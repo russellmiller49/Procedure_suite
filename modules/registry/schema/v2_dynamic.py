@@ -411,6 +411,25 @@ def _build_registry_model() -> type[BaseModel]:
                     aspiration["material"] = "Mucus plug"
                 elif material_key in {"secretions/mucus", "mucus/secretions", "mucus"}:
                     aspiration["material"] = "Mucus"
+                else:
+                    # Keyword-based normalization (avoid inferring "Purulent" from "thick" alone).
+                    if (
+                        "purulent" in material_key
+                        or "pus" in material_key
+                        or "infect" in material_key
+                        or ("white-yellow" in material_key)
+                        or ("yellow-white" in material_key)
+                        or ("white" in material_key and "yellow" in material_key)
+                    ):
+                        aspiration["material"] = "Purulent secretions"
+                    elif "blood" in material_key or "clot" in material_key:
+                        aspiration["material"] = "Blood/clot"
+                    elif "plug" in material_key and ("mucus" in material_key or "mucous" in material_key):
+                        aspiration["material"] = "Mucus plug"
+                    elif "mucus" in material_key or "mucous" in material_key:
+                        aspiration["material"] = "Mucus"
+                    elif "secretions" in material_key:
+                        aspiration["material"] = "Mucus"
 
             if aspiration:
                 procedures["therapeutic_aspiration"] = aspiration

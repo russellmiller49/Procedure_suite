@@ -594,6 +594,8 @@ TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS = [
 
 # Peripheral ablation patterns (MWA/RFA/cryoablation)
 PERIPHERAL_ABLATION_PATTERNS = [
+    r"\bavuecue\b",
+    r"\bmicrowave\s+catheter\b",
     r"\bmicrowave\s+ablation\b",
     r"\bmwa\b",
     r"\bradiofrequency\s+ablation\b",
@@ -715,6 +717,8 @@ FOREIGN_BODY_REMOVAL_PATTERNS = [
     r"\bforeign\s+body\s+remov",
     r"\bforeign\s+body\b[^.\n]{0,60}\b(?:remov|retriev|extract|grasp)\w*",
     r"\bretriev(?:e|ed|al)\b[^.\n]{0,60}\bforeign\s+body\b",
+    r"\b(?:fracture[dm]|broken|migrated)\s+(?:piece|fragment|segment|portion)\s+of\s+(?:the\s+)?stent\b",
+    r"\bstent\s+(?:fragment|piece)\s+was\s+(?:removed|retrieved|extracted)\b",
 ]
 
 # BLVR (endobronchial valve) patterns (31647 family)
@@ -838,7 +842,7 @@ def _extract_ln_stations_from_text(note_text: str) -> list[str]:
         r")\b",
         re.IGNORECASE,
     )
-    station_context_re = re.compile(r"\b(?:station(?:s)?|stn|level|site|ln|node(?:s)?|lymph)\b", re.IGNORECASE)
+    station_context_re = re.compile(r"\b(?:station(?:s)?|stn|level|ln|node(?:s)?|lymph)\b", re.IGNORECASE)
     station_token_re = re.compile(
         r"(?<![0-9A-Z])(2R|2L|3p|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)(?![0-9A-Z])",
         re.IGNORECASE,
@@ -874,6 +878,8 @@ def _extract_ln_stations_from_text(note_text: str) -> list[str]:
             # Avoid interpreting bare digits (e.g., "7") as stations when they look like counts ("7 passes").
             if candidate_norm.isdigit() and not alpha_station_present:
                 prefix = line[max(0, match.start() - 20) : match.start()]
+                if re.search(r"(?i)\b(?:site|case|patient)\s+#?\s*$", prefix):
+                    continue
                 if not station_context_re.search(prefix):
                     continue
 
@@ -1469,14 +1475,34 @@ def extract_rigid_bronchoscopy(note_text: str) -> Dict[str, Any]:
             negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
             if re.search(negation_check, text_lower, re.IGNORECASE):
                 continue
-            return {"rigid_bronchoscopy": {"performed": True}}
+            proc: dict[str, Any] = {"performed": True}
+
+            # Best-effort rigid scope size (inner diameter, mm)
+            size_match = re.search(
+                r"(?i)\b(\d+(?:\.\d+)?)\s*-?\s*mm\s+(?:rigid|ventilating|tracheoscope|barrel)\b",
+                preferred_text or "",
+            )
+            if not size_match:
+                size_match = re.search(
+                    r"(?i)\brigid(?:\s+bronch(?:oscope|oscop))?\b[^.\n]{0,40}\b(\d+(?:\.\d+)?)\s*-?\s*mm\b",
+                    preferred_text or "",
+                )
+            if size_match:
+                try:
+                    proc["rigid_scope_size"] = float(size_match.group(1))
+                except Exception:
+                    pass
+
+            return {"rigid_bronchoscopy": proc}
 
     return {}
 
 
 def extract_navigational_bronchoscopy(note_text: str) -> Dict[str, Any]:
     """Extract navigational/robotic bronchoscopy indicator."""
-    text_lower = (note_text or "").lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
     for pattern in NAVIGATIONAL_BRONCHOSCOPY_PATTERNS:
         if re.search(pattern, text_lower, re.IGNORECASE):
             negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
@@ -1715,7 +1741,9 @@ def extract_transbronchial_cryobiopsy(note_text: str) -> Dict[str, Any]:
 
 def extract_peripheral_ablation(note_text: str) -> Dict[str, Any]:
     """Extract peripheral ablation indicator with modality when possible."""
-    text_lower = (note_text or "").lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
     negation = re.search(
         r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}\b"
         r"(?:ablation|mwa|rfa|cryoablation)\b",
@@ -1728,6 +1756,8 @@ def extract_peripheral_ablation(note_text: str) -> Dict[str, Any]:
     has_mwa = bool(
         re.search(r"\bmicrowave\s+ablation\b", text_lower, re.IGNORECASE)
         or re.search(r"\bmwa\b", text_lower, re.IGNORECASE)
+        or re.search(r"\bavuecue\b", text_lower, re.IGNORECASE)
+        or re.search(r"\bmicrowave\s+catheter\b", text_lower, re.IGNORECASE)
     )
     has_rfa = bool(
         re.search(r"\bradiofrequency\s+ablation\b", text_lower, re.IGNORECASE)

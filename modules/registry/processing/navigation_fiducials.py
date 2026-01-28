@@ -42,6 +42,22 @@ def apply_navigation_fiducials(data: dict[str, Any], text: str) -> bool:
     if re.search(r"\b(?:no|not|without)\b", fiducial_lower):
         return False
 
+    def _is_placeholder_location(value: object) -> bool:
+        if value is None:
+            return True
+        s = str(value).strip().lower()
+        if not s:
+            return True
+        return s in {
+            "unknown",
+            "unknown target",
+            "target",
+            "target lesion",
+            "target lesion 1",
+            "target lesion 2",
+            "target lesion 3",
+        }
+
     def _extract_target_location() -> str:
         for pattern in (
             r"\bengage(?:d)?\s+the\s+([^\n.]{3,200})",
@@ -123,7 +139,7 @@ def apply_navigation_fiducials(data: dict[str, Any], text: str) -> bool:
         if target0.get("target_number") in (None, ""):
             target0["target_number"] = 1
             modified = True
-        if target0.get("target_location_text") in (None, ""):
+        if _is_placeholder_location(target0.get("target_location_text")):
             target0["target_location_text"] = location
             modified = True
         if extracted_lobe is not None and target0.get("target_lobe") in (None, ""):

@@ -159,6 +159,10 @@ const NAME_REGEX_CLINICAL_STOPLIST = new Set([
   // Cell types (from path reports)
   "lymphocytes", "macrophages", "histiocytes", "neutrophils", "eosinophils",
   "epithelial", "squamous", "columnar", "ciliated",
+  // Lymph node wording (often appears as headings like "Lymph Nodes Evaluated:")
+  "lymph", "node", "nodes",
+  // Demographic nouns that should never be interpreted as a name
+  "patient",
   // Anatomical segments/regions
   "apical", "basal", "anterior", "posterior", "lateral", "medial",
   "superior", "inferior", "proximal", "distal", "segmental", "subsegmental",
@@ -949,6 +953,17 @@ function runRegexDetectors(text) {
     const nameGroup = match[1];
     const fullMatch = match[0];
     if (nameGroup && match.index != null) {
+      // Phase 1 gating: Skip obvious clinical phrases (e.g., "peripheral lesion")
+      const nameParts = nameGroup.trim().split(/\s+/);
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts[1] || "";
+      if (SINGLE_NAME_CLINICAL_STOPLIST.has(firstName.toLowerCase()) ||
+          SINGLE_NAME_CLINICAL_STOPLIST.has(lastName.toLowerCase()) ||
+          isInClinicalStoplist(firstName) ||
+          isInClinicalStoplist(lastName)) {
+        continue;
+      }
+
       const groupOffset = fullMatch.indexOf(nameGroup);
       if (groupOffset !== -1) {
         const nameStart = match.index + groupOffset;

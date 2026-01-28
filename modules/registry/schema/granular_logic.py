@@ -164,33 +164,33 @@ def derive_procedures_from_granular(
         if not cryo.get("performed"):
             cryo["performed"] = True
 
-            # Sum biopsies across all sites
-            total_biopsies = sum(site.get("number_of_biopsies", 0) or 0 for site in cryobiopsy_sites)
-            if total_biopsies:
-                cryo["number_of_samples"] = total_biopsies
+        # Sum biopsies across all sites
+        total_biopsies = sum(site.get("number_of_biopsies", 0) or 0 for site in cryobiopsy_sites)
+        if total_biopsies and cryo.get("number_of_samples") in (None, "", 0):
+            cryo["number_of_samples"] = total_biopsies
 
-            # Get probe size (use first site's if uniform)
-            probe_sizes = [site.get("probe_size_mm") for site in cryobiopsy_sites if site.get("probe_size_mm")]
-            if probe_sizes:
-                cryo["cryoprobe_size_mm"] = probe_sizes[0]
+        # Get probe size (use first site's if uniform)
+        probe_sizes = [site.get("probe_size_mm") for site in cryobiopsy_sites if site.get("probe_size_mm")]
+        if probe_sizes and cryo.get("probe_size_mm") in (None, ""):
+            cryo["probe_size_mm"] = probe_sizes[0]
 
-            # Get freeze time (use first site's)
-            freeze_times = [
-                site.get("freeze_time_seconds") for site in cryobiopsy_sites if site.get("freeze_time_seconds")
-            ]
-            if freeze_times:
-                cryo["freeze_time_seconds"] = freeze_times[0]
+        # Get freeze time (use first site's)
+        freeze_times = [
+            site.get("freeze_time_seconds") for site in cryobiopsy_sites if site.get("freeze_time_seconds")
+        ]
+        if freeze_times and cryo.get("freeze_time_seconds") in (None, ""):
+            cryo["freeze_time_seconds"] = freeze_times[0]
 
-            # Get locations
-            locations = [
-                f"{site.get('lobe', '')} {site.get('segment', '')}".strip()
-                for site in cryobiopsy_sites
-                if site.get("lobe")
-            ]
-            if locations:
-                cryo["locations"] = locations
+        # Get locations
+        locations = [
+            f"{site.get('lobe', '')} {site.get('segment', '')}".strip()
+            for site in cryobiopsy_sites
+            if site.get("lobe")
+        ]
+        if locations and not (cryo.get("locations_biopsied") or []):
+            cryo["locations_biopsied"] = locations
 
-            procedures["transbronchial_cryobiopsy"] = cryo
+        procedures["transbronchial_cryobiopsy"] = cryo
 
         # Clear incorrect transbronchial_biopsy.forceps_type = "Cryoprobe"
         tbbx = procedures.get("transbronchial_biopsy")
@@ -463,7 +463,39 @@ def derive_procedures_from_granular(
             cryo = procedures.get("transbronchial_cryobiopsy") or {}
             if not cryo.get("performed"):
                 cryo["performed"] = True
+            if not (cryo.get("locations_biopsied") or []):
+                cryo_locations = [
+                    t.get("target_location_text")
+                    for t in navigation_targets
+                    if t.get("target_location_text")
+                    and (
+                        (t.get("number_of_cryo_biopsies") or 0) > 0
+                        or any("cryo" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
+                    )
+                ]
+                if not cryo_locations:
+                    cryo_locations = [
+                        t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")
+                    ]
+                if cryo_locations:
+                    cryo["locations_biopsied"] = cryo_locations
+
+            if cryo.get("number_of_samples") in (None, "", 0):
+                total = sum((t.get("number_of_cryo_biopsies") or 0) for t in navigation_targets)
+                if total:
+                    cryo["number_of_samples"] = total
             procedures["transbronchial_cryobiopsy"] = cryo
+        else:
+            # If cryobiopsy is asserted elsewhere, backfill biopsy locations from navigation
+            # targets even when tool counts are missing (common in LLM-only runs).
+            cryo = procedures.get("transbronchial_cryobiopsy") or {}
+            if cryo.get("performed") is True and not (cryo.get("locations_biopsied") or []):
+                cryo_locations = [
+                    t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")
+                ]
+                if cryo_locations:
+                    cryo["locations_biopsied"] = cryo_locations
+                    procedures["transbronchial_cryobiopsy"] = cryo
 
     # ==========================================================================
     # 5.1 Normalize TBNA: keep nodal TBNA separate from peripheral targets
@@ -628,4 +660,3 @@ def derive_procedures_from_granular(
 
 
 __all__ = ["validate_ebus_consistency", "derive_aggregate_fields", "derive_procedures_from_granular"]
-

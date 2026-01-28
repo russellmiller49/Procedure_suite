@@ -50,12 +50,15 @@ applyBtn.disabled = true;
 revertBtn.disabled = true;
 submitBtn.disabled = true;
 if (exportBtn) exportBtn.disabled = true;
+if (statusTextEl) statusTextEl.textContent = "Booting UI…";
 
 function setStatus(text) {
+  if (!statusTextEl) return;
   statusTextEl.textContent = text;
 }
 
 function setProgress(text) {
+  if (!progressTextEl) return;
   progressTextEl.textContent = text || "";
 }
 
@@ -128,7 +131,18 @@ function safeHtml(str) {
 
 function highlightSpanInEditor(start, end) {
   try {
-    if (!window.editor) return;
+    // Fallback: if Monaco is still loading/unavailable, highlight in the basic textarea.
+    if (!window.editor) {
+      const ta = document.getElementById("fallbackTextarea");
+      if (!ta) return;
+      const textLength = ta.value.length;
+      const s = clamp(Number(start) || 0, 0, textLength);
+      const e = clamp(Number(end) || 0, 0, textLength);
+      ta.focus();
+      ta.setSelectionRange(s, e);
+      return;
+    }
+
     const model = window.editor.getModel();
     if (!model) return;
 
@@ -194,75 +208,1409 @@ function formatCurrency(value) {
   return `$${value.toFixed(2)}`;
 }
 
+function titleCaseKey(key) {
+  const raw = String(key || "");
+  if (!raw) return "—";
+
+  const special = {
+    bal: "BAL",
+    linear_ebus: "Linear EBUS",
+    radial_ebus: "Radial EBUS",
+    navigational_bronchoscopy: "Navigational Bronchoscopy",
+    diagnostic_bronchoscopy: "Diagnostic Bronchoscopy",
+    therapeutic_aspiration: "Therapeutic Aspiration",
+    tbna_conventional: "Conventional TBNA",
+    peripheral_tbna: "Peripheral TBNA",
+  };
+  if (special[raw]) return special[raw];
+
+  return raw
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function normalizeCptCode(code) {
+  return String(code || "").trim().replace(/^\+/, "");
+}
+
+function clearEl(node) {
+  if (!node) return;
+  while (node.firstChild) node.removeChild(node.firstChild);
+}
+
+function fmtBool(val) {
+  if (val === null || val === undefined) return "—";
+  return val ? "Yes" : "No";
+}
+
+function fmtMaybe(val) {
+  if (val === null || val === undefined) return "—";
+  const s = String(val).trim();
+  return s ? s : "—";
+}
+
+function fmtSpan(span) {
+  const start = span?.[0];
+  const end = span?.[1];
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return "—";
+  return `${start}–${end}`;
+}
+
+function splitWarning(w) {
+  const text = String(w || "").trim();
+  if (!text) return null;
+  const idx = text.indexOf(":");
+  if (idx > 0 && idx < 48) {
+    return { category: text.slice(0, idx).trim() || "Other", message: text.slice(idx + 1).trim() || "—" };
+  }
+  return { category: "Other", message: text };
+}
+
+function groupWarnings(warnings) {
+  const grouped = new Map();
+  (Array.isArray(warnings) ? warnings : []).forEach((w) => {
+    const parsed = splitWarning(w);
+    if (!parsed) return;
+    if (!grouped.has(parsed.category)) grouped.set(parsed.category, []);
+    grouped.get(parsed.category).push(parsed.message);
+  });
+  return grouped;
+}
+
+function getRegistry(data) {
+  return data?.registry || {};
+}
+
+function getCodingSupport(data) {
+  const cs = getRegistry(data)?.coding_support;
+  return cs && typeof cs === "object" ? cs : null;
+}
+
+function getCodingLines(data) {
+  const cs = getCodingSupport(data);
+  const lines = cs?.coding_summary?.lines;
+  if (Array.isArray(lines) && lines.length > 0) return lines;
+
+  // Fallback: synthesize from suggestions/cpt_codes (selected-only)
+  const suggestions = Array.isArray(data?.suggestions) ? data.suggestions : [];
+  if (suggestions.length > 0) {
+    return suggestions.map((s, idx) => ({
+      sequence: idx + 1,
+      code: normalizeCptCode(s.code),
+      description: s.description || null,
+      units: 1,
+      role: "primary",
+      selection_status: "selected",
+      selection_reason: s.rationale || null,
+      note_spans: null,
+    }));
+  }
+
+  const codes = Array.isArray(data?.cpt_codes) ? data.cpt_codes : [];
+  if (codes.length > 0) {
+    return codes.map((c, idx) => ({
+      sequence: idx + 1,
+      code: normalizeCptCode(c),
+      description: null,
+      units: 1,
+      role: "primary",
+      selection_status: "selected",
+      selection_reason: null,
+      note_spans: null,
+    }));
+  }
+
+  return [];
+}
+
+function getCodingRationale(data) {
+  const cs = getCodingSupport(data);
+  const cr = cs?.coding_rationale;
+  return cr && typeof cr === "object" ? cr : {};
+}
+
+function getEvidence(data) {
+  return data?.evidence || getRegistry(data)?.evidence || {};
+}
+
+function getPerCodeBilling(data) {
+  const lines = Array.isArray(data?.per_code_billing) ? data.per_code_billing : [];
+  return lines;
+}
+
+function getBillingByCode(data) {
+  const map = new Map();
+  getPerCodeBilling(data).forEach((b) => {
+    const code = normalizeCptCode(b?.cpt_code);
+    if (code) map.set(code, b);
+  });
+  return map;
+}
+
+function collectRegistryCodeEvidence(data, code) {
+  const registry = getRegistry(data);
+  const items = registry?.billing?.cpt_codes;
+  if (!Array.isArray(items)) return [];
+  const match = items.find((c) => normalizeCptCode(c?.code) === code);
+  const ev = match?.evidence;
+  return Array.isArray(ev) ? ev : [];
+}
+
+function makeEvidenceChip(span) {
+  const start = span?.start ?? span?.span?.[0];
+  const end = span?.end ?? span?.span?.[1];
+  const text = span?.text ?? span?.snippet ?? span?.quote ?? "";
+  const btn = document.createElement("button");
+  btn.className = "ev-chip";
+  btn.type = "button";
+  btn.title = Number.isFinite(start) && Number.isFinite(end) ? `Click to highlight ${start}-${end}` : "Evidence";
+  btn.appendChild(document.createTextNode(String(text || "(evidence)")));
+  if (Number.isFinite(start) && Number.isFinite(end) && end > start) {
+    const range = document.createElement("span");
+    range.className = "ev-range";
+    range.textContent = `(${start}-${end})`;
+    btn.appendChild(range);
+    btn.addEventListener("click", () => highlightSpanInEditor(start, end));
+  } else {
+    btn.disabled = true;
+  }
+  return btn;
+}
+
+function makeEvidenceDetails(spans, summaryText = "Evidence") {
+  const normalized = normalizeSpans(spans);
+  if (normalized.length === 0) return null;
+
+  const details = document.createElement("details");
+  details.className = "inline-details";
+  const summary = document.createElement("summary");
+  summary.textContent = summaryText;
+  details.appendChild(summary);
+
+  const wrap = document.createElement("div");
+  wrap.style.marginTop = "8px";
+  normalized.slice(0, 6).forEach((sp) => wrap.appendChild(makeEvidenceChip(sp)));
+  details.appendChild(wrap);
+  return details;
+}
+
+/**
+ * Main Orchestrator: Renders the clean clinical dashboard
+ */
+function renderDashboard(data) {
+  renderStatusBannerHost(data);
+  renderStatCards(data);
+
+  renderBillingSelected(data);
+  renderBillingSuppressed(data);
+  renderCodingRationaleTable(data);
+  renderRulesAppliedTable(data);
+  renderFinancialSummary(data);
+  renderAuditFlags(data);
+  renderPipelineMetadata(data);
+
+  renderClinicalContextTable(data);
+  renderProceduresSummaryTable(data);
+  renderDiagnosticFindings(data);
+  renderBalDetails(data);
+  renderLinearEbusSummary(data);
+  renderEbusNodeEvents(data);
+  renderEvidenceTraceability(data);
+
+  renderDebugLogs(data);
+}
+
+/**
+ * 1. Renders the Executive Summary (Stat Cards)
+ */
+function renderStatCards(data) {
+  const container = document.getElementById("statCards");
+  if (!container) return;
+
+  // Determine review status
+  let statusText = "Ready";
+  let statusClass = "";
+  if (data.needs_manual_review || (data.audit_warnings && data.audit_warnings.length > 0)) {
+    statusText = "⚠️ Review Required";
+    statusClass = "warning";
+  }
+
+  // Format currency and RVU
+  const payment = data.estimated_payment
+    ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(data.estimated_payment)
+    : "$0.00";
+  const rvu = data.total_work_rvu ? data.total_work_rvu.toFixed(2) : "0.00";
+
+  container.innerHTML = `
+    <div class="stat-card">
+      <span class="stat-label">Review Status</span>
+      <div class="stat-value ${statusClass}">${statusText}</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Total wRVU</span>
+      <div class="stat-value">${rvu}</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Est. Payment</span>
+      <div class="stat-value currency">${payment}</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">CPT Count</span>
+      <div class="stat-value">${(data.per_code_billing || []).length}</div>
+    </div>
+  `;
+}
+
+function renderStatusBannerHost(data) {
+  const host = document.getElementById("statusBannerHost");
+  if (!host) return;
+
+  clearEl(host);
+
+  const banner = document.createElement("div");
+
+  const warnings = Array.isArray(data?.audit_warnings) ? data.audit_warnings : [];
+  const hasError = Boolean(data?.error);
+  const needsReview = data?.review_status === "pending_phi_review" || data?.needs_manual_review;
+
+  if (hasError) {
+    banner.className = "status-banner error";
+    banner.textContent = `Error: ${String(data.error)}`;
+  } else if (needsReview) {
+    banner.className = "status-banner error";
+    banner.textContent = "⚠️ Manual review required";
+  } else if (warnings.length > 0) {
+    banner.className = "status-banner warning";
+    banner.textContent = `⚠️ ${warnings.length} warning(s) – review recommended`;
+  } else {
+    banner.className = "status-banner success";
+    banner.textContent = "✓ Extraction complete";
+  }
+
+  host.appendChild(banner);
+}
+
+function renderBillingSelected(data) {
+  const tbody = document.getElementById("billingSelectedBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const billingByCode = getBillingByCode(data);
+  const codingLines = getCodingLines(data);
+  const selected = codingLines.filter(
+    (ln) => String(ln?.selection_status || "selected").toLowerCase() === "selected"
+  );
+
+  if (selected.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.className = "dash-empty";
+    td.textContent = "No selected codes.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  selected.forEach((ln) => {
+    const code = normalizeCptCode(ln?.code);
+    const billing = billingByCode.get(code);
+    const desc = ln?.description || billing?.description || "—";
+    const units = Number.isFinite(ln?.units) ? ln.units : Number.isFinite(billing?.units) ? billing.units : 1;
+    const roleRaw = String(ln?.role || (ln?.is_add_on ? "add_on" : "primary") || "primary");
+    const role = roleRaw.toLowerCase() === "add_on" ? "add_on" : "primary";
+    const reason = ln?.selection_reason || ln?.rationale || "";
+
+    const tr = document.createElement("tr");
+
+    const tdCode = document.createElement("td");
+    const codeSpan = document.createElement("span");
+    codeSpan.className = "code-cell";
+    codeSpan.textContent = code || "—";
+    tdCode.appendChild(codeSpan);
+
+    const tdDesc = document.createElement("td");
+    const descDiv = document.createElement("div");
+    descDiv.style.fontWeight = "600";
+    descDiv.textContent = String(desc || "—");
+    tdDesc.appendChild(descDiv);
+
+    if (reason) {
+      const reasonDiv = document.createElement("div");
+      reasonDiv.className = "qa-line";
+      reasonDiv.textContent = `Rationale: ${String(reason)}`;
+      tdDesc.appendChild(reasonDiv);
+    }
+
+    const combinedEvidence = [];
+    if (Array.isArray(ln?.note_spans)) combinedEvidence.push(...ln.note_spans);
+    combinedEvidence.push(...collectRegistryCodeEvidence(data, code));
+    const evDetails = makeEvidenceDetails(combinedEvidence, "Evidence");
+    if (evDetails) tdDesc.appendChild(evDetails);
+
+    const tdUnits = document.createElement("td");
+    tdUnits.textContent = String(units ?? "—");
+
+    const tdRole = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.className = `status-badge ${role === "add_on" ? "role-addon" : "role-primary"}`;
+    badge.textContent = role === "add_on" ? "Add On" : "Primary";
+    tdRole.appendChild(badge);
+
+    tr.appendChild(tdCode);
+    tr.appendChild(tdDesc);
+    tr.appendChild(tdUnits);
+    tr.appendChild(tdRole);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderBillingSuppressed(data) {
+  const tbody = document.getElementById("billingSuppressedBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const codingLines = getCodingLines(data);
+  const rules = Array.isArray(getCodingRationale(data)?.rules_applied)
+    ? getCodingRationale(data).rules_applied
+    : [];
+  const warnings = Array.isArray(data?.audit_warnings) ? data.audit_warnings : [];
+
+  const entries = new Map(); // code -> {status, reason}
+
+  // 1) Prefer explicit coding_support dropped lines (stable order)
+  codingLines.forEach((ln) => {
+    const status = String(ln?.selection_status || "").toLowerCase();
+    if (status === "selected") return;
+    const code = normalizeCptCode(ln?.code);
+    if (!code) return;
+    const reason = String(ln?.selection_reason || "").trim() || "Dropped by rule";
+    const inferred = /^suppressed\b/i.test(reason) ? "Suppressed" : "Dropped";
+    entries.set(code, { status: inferred, reason });
+  });
+
+  // 2) Add any rule-driven dropped codes not already present
+  rules.forEach((r) => {
+    const affected = Array.isArray(r?.codes_affected) ? r.codes_affected : [];
+    const outcome = String(r?.outcome || "").toLowerCase();
+    if (outcome !== "dropped" && outcome !== "suppressed") return;
+    affected.forEach((c) => {
+      const code = normalizeCptCode(c);
+      if (!code || entries.has(code)) return;
+      entries.set(code, { status: "Dropped", reason: String(r?.details || "Dropped by rule") });
+    });
+  });
+
+  // 3) Add suppressed codes hinted by warnings (e.g., "Suppressed 31645: ...")
+  warnings.forEach((w) => {
+    const text = String(w || "");
+    const match = text.match(/\bSuppressed\s+(\d{5})\b/i);
+    if (!match) return;
+    const code = match[1];
+    if (entries.has(code)) return;
+    entries.set(code, { status: "Suppressed", reason: text.replace(/\s+/g, " ").trim() });
+  });
+
+  if (entries.size === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 3;
+    td.className = "dash-empty";
+    td.textContent = "No codes dropped/suppressed.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  for (const [code, info] of entries.entries()) {
+    const tr = document.createElement("tr");
+    const tdCode = document.createElement("td");
+    const codeSpan = document.createElement("span");
+    codeSpan.className = "code-cell";
+    codeSpan.textContent = code;
+    tdCode.appendChild(codeSpan);
+
+    const tdStatus = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.className = `status-badge ${info.status === "Suppressed" ? "status-suppressed" : "status-dropped"}`;
+    badge.textContent = info.status;
+    tdStatus.appendChild(badge);
+
+    const tdReason = document.createElement("td");
+    tdReason.textContent = String(info.reason || "—");
+
+    tr.appendChild(tdCode);
+    tr.appendChild(tdStatus);
+    tr.appendChild(tdReason);
+    tbody.appendChild(tr);
+  }
+}
+
+function renderCodingRationaleTable(data) {
+  const tbody = document.getElementById("codingRationaleBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const codingLines = getCodingLines(data);
+  const perCode = Array.isArray(getCodingRationale(data)?.per_code) ? getCodingRationale(data).per_code : [];
+  const perCodeByCode = new Map();
+  perCode.forEach((pc) => {
+    const code = normalizeCptCode(pc?.code);
+    if (code) perCodeByCode.set(code, pc);
+  });
+
+  const codesInOrder = [];
+  codingLines.forEach((ln) => {
+    const code = normalizeCptCode(ln?.code);
+    if (code && !codesInOrder.includes(code)) codesInOrder.push(code);
+  });
+  // Include any per_code entries not present in coding_lines
+  Array.from(perCodeByCode.keys())
+    .sort((a, b) => a.localeCompare(b))
+    .forEach((code) => {
+      if (!codesInOrder.includes(code)) codesInOrder.push(code);
+    });
+
+  if (codesInOrder.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 3;
+    td.className = "dash-empty";
+    td.textContent = "No coding rationale returned.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  codesInOrder.forEach((code) => {
+    const pc = perCodeByCode.get(code);
+    const summary = pc?.summary || codingLines.find((ln) => normalizeCptCode(ln?.code) === code)?.selection_reason || "—";
+
+    const tr = document.createElement("tr");
+
+    const tdCode = document.createElement("td");
+    const codeSpan = document.createElement("span");
+    codeSpan.className = "code-cell";
+    codeSpan.textContent = code;
+    tdCode.appendChild(codeSpan);
+
+    const tdLogic = document.createElement("td");
+    tdLogic.textContent = String(summary || "—");
+
+    const tdEvidence = document.createElement("td");
+
+    const docEv = Array.isArray(pc?.documentation_evidence) ? pc.documentation_evidence : [];
+    const spans = docEv
+      .map((e) => ({
+        text: e?.snippet || e?.text || "",
+        start: e?.span?.start,
+        end: e?.span?.end,
+      }))
+      .filter((e) => Number.isFinite(e.start) && Number.isFinite(e.end) && e.end > e.start);
+
+    const evDetails = makeEvidenceDetails(spans, "Evidence");
+    if (evDetails) tdEvidence.appendChild(evDetails);
+    else tdEvidence.appendChild(document.createTextNode("—"));
+
+    const qaFlags = Array.isArray(pc?.qa_flags) ? pc.qa_flags : [];
+    if (qaFlags.length > 0) {
+      const qaWrap = document.createElement("div");
+      qaWrap.style.marginTop = "8px";
+      qaFlags.forEach((q) => {
+        const line = document.createElement("div");
+        line.className = "qa-line";
+        const sev = String(q?.severity || "info").toUpperCase();
+        const msg = String(q?.message || "");
+        line.textContent = `${sev}: ${msg}`;
+        qaWrap.appendChild(line);
+      });
+      tdEvidence.appendChild(qaWrap);
+    }
+
+    tr.appendChild(tdCode);
+    tr.appendChild(tdLogic);
+    tr.appendChild(tdEvidence);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderRulesAppliedTable(data) {
+  const tbody = document.getElementById("rulesAppliedBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const rules = Array.isArray(getCodingRationale(data)?.rules_applied)
+    ? getCodingRationale(data).rules_applied
+    : [];
+
+  if (rules.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.className = "dash-empty";
+    td.textContent = "No rules applied returned.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  rules.forEach((r) => {
+    const tr = document.createElement("tr");
+    const tdType = document.createElement("td");
+    const type = String(r?.rule_type || "—");
+    const id = r?.rule_id ? String(r.rule_id) : "";
+    tdType.textContent = id ? `${type} (${id})` : type;
+
+    const tdCodes = document.createElement("td");
+    const codes = Array.isArray(r?.codes_affected) ? r.codes_affected.map(normalizeCptCode).filter(Boolean) : [];
+    tdCodes.textContent = codes.length ? codes.join(", ") : "—";
+
+    const tdOutcome = document.createElement("td");
+    tdOutcome.textContent = fmtMaybe(r?.outcome);
+
+    const tdDetails = document.createElement("td");
+    tdDetails.textContent = fmtMaybe(r?.details);
+
+    tr.appendChild(tdType);
+    tr.appendChild(tdCodes);
+    tr.appendChild(tdOutcome);
+    tr.appendChild(tdDetails);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderFinancialSummary(data) {
+  const totalRvuEl = document.getElementById("financialTotalRVU");
+  const totalPayEl = document.getElementById("financialTotalPayment");
+  const tbody = document.getElementById("financialSummaryBody");
+  if (!tbody) return;
+
+  if (totalRvuEl) totalRvuEl.textContent = Number.isFinite(data?.total_work_rvu) ? data.total_work_rvu.toFixed(2) : "—";
+  if (totalPayEl) totalPayEl.textContent = Number.isFinite(data?.estimated_payment) ? formatCurrency(data.estimated_payment) : "—";
+
+  clearEl(tbody);
+
+  const billing = getPerCodeBilling(data);
+  const selectedUnits = new Map();
+  getCodingLines(data)
+    .filter((ln) => String(ln?.selection_status || "selected").toLowerCase() === "selected")
+    .forEach((ln) => {
+      const code = normalizeCptCode(ln?.code);
+      if (!code) return;
+      const units = Number.isFinite(ln?.units) ? ln.units : 1;
+      selectedUnits.set(code, units);
+    });
+
+  if (!Array.isArray(billing) || billing.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 6;
+    td.className = "dash-empty";
+    td.textContent = "No financial breakdown available.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  billing.forEach((b) => {
+    const code = normalizeCptCode(b?.cpt_code);
+    const units = Number.isFinite(b?.units) ? b.units : 1;
+    const selUnits = selectedUnits.get(code);
+    const mismatch =
+      Number.isFinite(selUnits) && Number.isFinite(units) && selUnits !== units;
+
+    const tr = document.createElement("tr");
+
+    const tdCode = document.createElement("td");
+    const codeSpan = document.createElement("span");
+    codeSpan.className = "code-cell";
+    codeSpan.textContent = code || "—";
+    tdCode.appendChild(codeSpan);
+
+    const tdUnits = document.createElement("td");
+    tdUnits.textContent = String(units);
+
+    const tdWork = document.createElement("td");
+    tdWork.textContent = formatNumber(b?.work_rvu);
+
+    const tdFac = document.createElement("td");
+    tdFac.textContent = formatNumber(b?.total_facility_rvu);
+
+    const tdPay = document.createElement("td");
+    tdPay.textContent = formatCurrency(b?.facility_payment);
+
+    const tdNotes = document.createElement("td");
+    if (mismatch) {
+      tdNotes.textContent = `⚠ Units mismatch (selected ${selUnits}, billed ${units})`;
+    } else {
+      tdNotes.textContent = "—";
+    }
+
+    tr.appendChild(tdCode);
+    tr.appendChild(tdUnits);
+    tr.appendChild(tdWork);
+    tr.appendChild(tdFac);
+    tr.appendChild(tdPay);
+    tr.appendChild(tdNotes);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderAuditFlags(data) {
+  const tbody = document.getElementById("auditFlagsBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const grouped = groupWarnings(data?.audit_warnings || []);
+  const validationErrors = Array.isArray(data?.validation_errors) ? data.validation_errors : [];
+  if (validationErrors.length > 0) grouped.set("Validation errors", validationErrors.map((e) => String(e || "—")));
+
+  if (grouped.size === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 2;
+    td.className = "dash-empty";
+    td.textContent = "No audit or validation flags.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  for (const [category, messages] of grouped.entries()) {
+    const tr = document.createElement("tr");
+    const tdCat = document.createElement("td");
+    tdCat.textContent = category;
+
+    const tdMsg = document.createElement("td");
+    const list = document.createElement("div");
+    (Array.isArray(messages) ? messages : []).forEach((m) => {
+      const line = document.createElement("div");
+      line.className = "qa-line";
+      line.textContent = `• ${String(m || "—")}`;
+      list.appendChild(line);
+    });
+    tdMsg.appendChild(list);
+
+    tr.appendChild(tdCat);
+    tr.appendChild(tdMsg);
+    tbody.appendChild(tr);
+  }
+}
+
+function renderPipelineMetadata(data) {
+  const tbody = document.getElementById("pipelineMetadataBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const rows = [
+    ["Needs manual review", data?.needs_manual_review ? "Yes" : "No"],
+    ["Review status", fmtMaybe(data?.review_status)],
+    ["Coder difficulty", fmtMaybe(data?.coder_difficulty)],
+    ["Pipeline mode", fmtMaybe(data?.pipeline_mode)],
+    ["KB version", fmtMaybe(data?.kb_version)],
+    ["Policy version", fmtMaybe(data?.policy_version)],
+    [
+      "Processing time",
+      Number.isFinite(data?.processing_time_ms)
+        ? `${Math.round(data.processing_time_ms).toLocaleString()} ms`
+        : "—",
+    ],
+  ];
+
+  rows.forEach(([k, v]) => {
+    const tr = document.createElement("tr");
+    const tdK = document.createElement("td");
+    tdK.textContent = k;
+    const tdV = document.createElement("td");
+    tdV.textContent = fmtMaybe(v);
+    tr.appendChild(tdK);
+    tr.appendChild(tdV);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderClinicalContextTable(data) {
+  const tbody = document.getElementById("clinicalContextBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const registry = getRegistry(data);
+  const ctx = registry?.clinical_context || {};
+  const sed = registry?.sedation || {};
+  const setting = registry?.procedure_setting || {};
+
+  const rows = [
+    ["Primary indication", ctx?.primary_indication],
+    ["Indication category", ctx?.indication_category],
+    ["Bronchus sign", ctx?.bronchus_sign === null || ctx?.bronchus_sign === undefined ? null : (ctx?.bronchus_sign ? "Yes" : "No")],
+    ["Sedation type", sed?.type],
+    ["Anesthesia provider", sed?.anesthesia_provider],
+    ["Airway type", setting?.airway_type],
+    ["Procedure location", setting?.location],
+    ["Patient position", setting?.patient_position],
+  ].filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "");
+
+  if (rows.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 2;
+    td.className = "dash-empty";
+    td.textContent = "No clinical context available.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  rows.forEach(([k, v]) => {
+    const tr = document.createElement("tr");
+    const tdK = document.createElement("td");
+    tdK.textContent = k;
+    const tdV = document.createElement("td");
+    tdV.textContent = fmtMaybe(v);
+    tr.appendChild(tdK);
+    tr.appendChild(tdV);
+    tbody.appendChild(tr);
+  });
+}
+
+function isPerformedProcedure(procObj) {
+  if (procObj === true) return true;
+  if (procObj === false || procObj === null || procObj === undefined) return false;
+  if (typeof procObj === "object" && typeof procObj.performed === "boolean") return procObj.performed;
+  return false;
+}
+
+function summarizeProcedure(procKey, procObj) {
+  if (!isPerformedProcedure(procObj)) return "—";
+  const p = procObj && typeof procObj === "object" ? procObj : {};
+
+  if (procKey === "diagnostic_bronchoscopy") {
+    const abn = Array.isArray(p.airway_abnormalities) ? p.airway_abnormalities.filter(Boolean) : [];
+    const findings = String(p.inspection_findings || "").trim();
+    const parts = [];
+    if (abn.length > 0) parts.push(`Abnormalities: ${abn.join(", ")}`);
+    if (findings) parts.push(`Findings: ${findings}`);
+    return parts.join(" · ") || "—";
+  }
+
+  if (procKey === "bal") {
+    const parts = [];
+    if (p.location) parts.push(`Location: ${p.location}`);
+    if (Number.isFinite(p.volume_instilled_ml)) parts.push(`Instilled: ${p.volume_instilled_ml} mL`);
+    if (Number.isFinite(p.volume_recovered_ml)) parts.push(`Recovered: ${p.volume_recovered_ml} mL`);
+    return parts.join(" · ") || "—";
+  }
+
+  if (procKey === "linear_ebus") {
+    const stations = Array.isArray(p.stations_sampled) ? p.stations_sampled.filter(Boolean) : [];
+    const parts = [];
+    if (stations.length > 0) parts.push(`Stations: ${stations.join(", ")}`);
+    if (p.needle_gauge) parts.push(`Needle: ${p.needle_gauge}`);
+    if (p.elastography_used !== null && p.elastography_used !== undefined) parts.push(`Elastography: ${p.elastography_used ? "Yes" : "No"}`);
+    return parts.join(" · ") || "—";
+  }
+
+  if (procKey === "therapeutic_aspiration") {
+    const parts = [];
+    if (p.material) parts.push(`Material: ${p.material}`);
+    if (p.location) parts.push(`Location: ${p.location}`);
+    return parts.join(" · ") || "—";
+  }
+
+  if (procKey === "radial_ebus") {
+    const parts = [];
+    if (p.probe_position) parts.push(`Probe: ${p.probe_position}`);
+    if (p.guide_sheath_used !== null && p.guide_sheath_used !== undefined) parts.push(`Guide sheath: ${p.guide_sheath_used ? "Yes" : "No"}`);
+    return parts.join(" · ") || "—";
+  }
+
+  if (procKey === "navigational_bronchoscopy") {
+    const parts = [];
+    if (p.target_reached !== null && p.target_reached !== undefined) parts.push(`Target reached: ${p.target_reached ? "Yes" : "No"}`);
+    if (Number.isFinite(p.divergence_mm)) parts.push(`Divergence: ${p.divergence_mm} mm`);
+    if (p.confirmation_method) parts.push(`Confirmed by: ${p.confirmation_method}`);
+    return parts.join(" · ") || "—";
+  }
+
+  // Fallback: surface a few common fields without being noisy
+  const parts = [];
+  if (p.location) parts.push(`Location: ${p.location}`);
+  if (Array.isArray(p.locations) && p.locations.length > 0) parts.push(`Locations: ${p.locations.join(", ")}`);
+  if (Number.isFinite(p.number_of_samples)) parts.push(`${p.number_of_samples} samples`);
+  return parts.join(" · ") || "—";
+}
+
+function renderProceduresSummaryTable(data) {
+  const tbody = document.getElementById("proceduresSummaryBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const registry = getRegistry(data);
+  const procs = registry?.procedures_performed;
+  if (!procs || typeof procs !== "object") {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 3;
+    td.className = "dash-empty";
+    td.textContent = "No procedures_performed available.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  const keys = Object.keys(procs);
+  keys.sort((a, b) => titleCaseKey(a).localeCompare(titleCaseKey(b)));
+
+  const items = keys.map((k) => ({ key: k, obj: procs[k], performed: isPerformedProcedure(procs[k]) }));
+  items.sort((a, b) => {
+    if (a.performed !== b.performed) return a.performed ? -1 : 1;
+    return titleCaseKey(a.key).localeCompare(titleCaseKey(b.key));
+  });
+
+  if (items.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 3;
+    td.className = "dash-empty";
+    td.textContent = "No procedures found.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  items.forEach(({ key, obj, performed }) => {
+    const tr = document.createElement("tr");
+    if (!performed) tr.classList.add("opacity-50");
+
+    const tdName = document.createElement("td");
+    tdName.style.fontWeight = "600";
+    tdName.textContent = titleCaseKey(key);
+
+    const tdPerf = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.className = `status-badge ${performed ? "status-selected" : "status-suppressed"}`;
+    badge.textContent = performed ? "Yes" : "No";
+    tdPerf.appendChild(badge);
+
+    const tdDetails = document.createElement("td");
+    tdDetails.textContent = summarizeProcedure(key, obj);
+
+    tr.appendChild(tdName);
+    tr.appendChild(tdPerf);
+    tr.appendChild(tdDetails);
+    tbody.appendChild(tr);
+  });
+}
+
+function toggleCard(cardId, visible) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.classList.toggle("hidden", !visible);
+}
+
+function renderDiagnosticFindings(data) {
+  const tbody = document.getElementById("diagnosticFindingsBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const proc = getRegistry(data)?.procedures_performed?.diagnostic_bronchoscopy;
+  const performed = isPerformedProcedure(proc);
+  toggleCard("diagnosticFindingsCard", performed);
+  if (!performed) return;
+
+  const abn = Array.isArray(proc?.airway_abnormalities) ? proc.airway_abnormalities.filter(Boolean) : [];
+  const rows = [
+    ["Airway abnormalities", abn.length ? abn.join(", ") : "—"],
+    ["Findings (free text)", proc?.inspection_findings || "—"],
+  ];
+  rows.forEach(([k, v]) => {
+    const tr = document.createElement("tr");
+    const tdK = document.createElement("td");
+    tdK.textContent = k;
+    const tdV = document.createElement("td");
+    tdV.textContent = fmtMaybe(v);
+    tr.appendChild(tdK);
+    tr.appendChild(tdV);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderBalDetails(data) {
+  const tbody = document.getElementById("balDetailsBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const proc = getRegistry(data)?.procedures_performed?.bal;
+  const performed = isPerformedProcedure(proc);
+  toggleCard("balDetailsCard", performed);
+  if (!performed) return;
+
+  const rows = [
+    ["Location", proc?.location || "—"],
+    ["Instilled (mL)", Number.isFinite(proc?.volume_instilled_ml) ? String(proc.volume_instilled_ml) : "—"],
+    ["Recovered (mL)", Number.isFinite(proc?.volume_recovered_ml) ? String(proc.volume_recovered_ml) : "—"],
+    ["Appearance", proc?.appearance || "—"],
+  ];
+  rows.forEach(([k, v]) => {
+    const tr = document.createElement("tr");
+    const tdK = document.createElement("td");
+    tdK.textContent = k;
+    const tdV = document.createElement("td");
+    tdV.textContent = fmtMaybe(v);
+    tr.appendChild(tdK);
+    tr.appendChild(tdV);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderLinearEbusSummary(data) {
+  const tbody = document.getElementById("linearEbusSummaryBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const proc = getRegistry(data)?.procedures_performed?.linear_ebus;
+  const performed = isPerformedProcedure(proc);
+  toggleCard("linearEbusSummaryCard", performed);
+  if (!performed) return;
+
+  const stations =
+    Array.isArray(proc?.stations_sampled) && proc.stations_sampled.length > 0
+      ? proc.stations_sampled.filter(Boolean)
+      : Array.isArray(proc?.node_events)
+        ? proc.node_events
+            .filter((e) => e?.action && e.action !== "inspected_only" && e.station)
+            .map((e) => e.station)
+        : [];
+  const uniqueStations = Array.from(new Set(stations));
+
+  const rows = [
+    ["Stations sampled", uniqueStations.length ? uniqueStations.join(", ") : "—"],
+    ["Needle gauge", proc?.needle_gauge || "—"],
+    ["Elastography used", proc?.elastography_used === null || proc?.elastography_used === undefined ? "—" : (proc.elastography_used ? "Yes" : "No")],
+    ["Elastography pattern", proc?.elastography_pattern || "—"],
+  ];
+
+  rows.forEach(([k, v]) => {
+    const tr = document.createElement("tr");
+    const tdK = document.createElement("td");
+    tdK.textContent = k;
+    const tdV = document.createElement("td");
+    tdV.textContent = fmtMaybe(v);
+    tr.appendChild(tdK);
+    tr.appendChild(tdV);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderEbusNodeEvents(data) {
+  const tbody = document.getElementById("ebusNodeEventsBody");
+  if (!tbody) return;
+  clearEl(tbody);
+
+  const proc = getRegistry(data)?.procedures_performed?.linear_ebus;
+  const performed = isPerformedProcedure(proc);
+  const events = Array.isArray(proc?.node_events) ? proc.node_events : [];
+  const show = performed && events.length > 0;
+  toggleCard("ebusNodeEventsCard", show);
+  if (!show) return;
+
+  const actionLabel = (action) => {
+    const a = String(action || "");
+    if (a === "inspected_only") return "Inspected only";
+    if (a === "needle_aspiration") return "Needle aspiration";
+    if (a === "core_biopsy") return "Core biopsy";
+    if (a === "forceps_biopsy") return "Forceps biopsy";
+    return a || "—";
+  };
+
+  events.forEach((ev) => {
+    const tr = document.createElement("tr");
+
+    const tdStation = document.createElement("td");
+    tdStation.textContent = fmtMaybe(ev?.station);
+
+    const tdAction = document.createElement("td");
+    tdAction.textContent = actionLabel(ev?.action);
+
+    const tdPasses = document.createElement("td");
+    tdPasses.textContent = Number.isFinite(ev?.passes) ? String(ev.passes) : "—";
+
+    const tdElast = document.createElement("td");
+    tdElast.textContent = fmtMaybe(ev?.elastography_pattern);
+
+    const tdEvidence = document.createElement("td");
+    const quote = String(ev?.evidence_quote || "").trim();
+    if (!quote) {
+      tdEvidence.textContent = "—";
+    } else {
+      const details = document.createElement("details");
+      details.className = "inline-details";
+      const summary = document.createElement("summary");
+      summary.textContent = safeSnippet(quote, 0, quote.length);
+      details.appendChild(summary);
+      const body = document.createElement("div");
+      body.style.marginTop = "8px";
+      const pre = document.createElement("pre");
+      pre.style.whiteSpace = "pre-wrap";
+      pre.style.margin = "0";
+      pre.textContent = quote;
+      body.appendChild(pre);
+      details.appendChild(body);
+      tdEvidence.appendChild(details);
+    }
+
+    tr.appendChild(tdStation);
+    tr.appendChild(tdAction);
+    tr.appendChild(tdPasses);
+    tr.appendChild(tdElast);
+    tr.appendChild(tdEvidence);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderEvidenceTraceability(data) {
+  const host = document.getElementById("evidenceTraceabilityHost");
+  if (!host) return;
+  clearEl(host);
+
+  const evidence = getEvidence(data);
+  if (!evidence || typeof evidence !== "object") {
+    const empty = document.createElement("div");
+    empty.className = "dash-empty";
+    empty.textContent = "No evidence available.";
+    host.appendChild(empty);
+    return;
+  }
+
+  const fields = Object.keys(evidence).sort((a, b) => a.localeCompare(b));
+  const rows = [];
+  fields.forEach((field) => {
+    const items = evidence[field];
+    if (!Array.isArray(items)) return;
+    items.forEach((item) => rows.push({ field, item }));
+  });
+
+  if (rows.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "dash-empty";
+    empty.textContent = "No evidence spans.";
+    host.appendChild(empty);
+    return;
+  }
+
+  const wrap = document.createElement("div");
+  wrap.className = "dash-table-wrap";
+
+  const table = document.createElement("table");
+  table.className = "dash-table";
+
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  ["Field", "Evidence", "Span", "Confidence", "Source"].forEach((h) => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  rows.slice(0, 250).forEach(({ field, item }) => {
+    const tr = document.createElement("tr");
+
+    const tdField = document.createElement("td");
+    tdField.textContent = field;
+
+    const tdEv = document.createElement("td");
+    const text = String(item?.text || item?.quote || "").trim();
+    const span = Array.isArray(item?.span) ? item.span : null;
+    const chip = makeEvidenceChip({ text: safeSnippet(text || "(evidence)", 0, Math.min(text.length || 0, 240)), span });
+    tdEv.appendChild(chip);
+
+    const tdSpan = document.createElement("td");
+    tdSpan.textContent = fmtSpan(span);
+
+    const tdConf = document.createElement("td");
+    tdConf.textContent = typeof item?.confidence === "number" ? item.confidence.toFixed(2) : "—";
+
+    const tdSource = document.createElement("td");
+    tdSource.textContent = fmtMaybe(item?.source);
+
+    tr.appendChild(tdField);
+    tr.appendChild(tdEv);
+    tr.appendChild(tdSpan);
+    tr.appendChild(tdConf);
+    tr.appendChild(tdSource);
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  host.appendChild(wrap);
+
+  if (rows.length > 250) {
+    const note = document.createElement("div");
+    note.className = "qa-line";
+    note.style.marginTop = "8px";
+    note.textContent = `Showing first 250 evidence items (${rows.length} total).`;
+    host.appendChild(note);
+  }
+}
+
+/**
+ * Transforms API data into a unified "Golden Record"
+ * FIX: Now prioritizes backend rationale over generic placeholders
+ */
+function transformToUnifiedTable(rawData) {
+  const unifiedMap = new Map();
+
+  // Helper: Get explanation from specific coding_support backend map
+  const getBackendRationale = (code) => {
+    if (rawData.registry?.coding_support?.code_rationales?.[code]) {
+      return rawData.registry.coding_support.code_rationales[code];
+    }
+    // Fallback to "evidence" array if available
+    const billingEntry = rawData.registry?.billing?.cpt_codes?.find((c) => c.code === code);
+    if (billingEntry?.evidence?.length > 0) {
+      return billingEntry.evidence.map((e) => e.text).join("; ");
+    }
+    return null;
+  };
+
+  // 1. Process Header Codes (Raw)
+  (rawData.header_codes || []).forEach((item) => {
+    unifiedMap.set(item.code, {
+      code: item.code,
+      desc: item.description || "Unknown Procedure",
+      inHeader: true,
+      inBody: false,
+      status: "pending",
+      rationale: "Found in header scan",
+      rvu: 0.0,
+      payment: 0.0,
+    });
+  });
+
+  // 2. Process Derived Codes (Body)
+  (rawData.derived_codes || []).forEach((item) => {
+    const existing = unifiedMap.get(item.code) || {
+      code: item.code,
+      inHeader: false,
+      rvu: 0.0,
+      payment: 0.0,
+    };
+
+    existing.desc = item.description || existing.desc;
+    existing.inBody = true;
+
+    // FIX: Grab specific backend rationale if available
+    const backendReason = getBackendRationale(item.code);
+    if (backendReason) {
+      existing.rationale = backendReason;
+    } else {
+      existing.rationale = "Derived from procedure actions";
+    }
+
+    unifiedMap.set(item.code, existing);
+  });
+
+  // 3. Process Final Selection (The "Truth")
+  (rawData.per_code_billing || []).forEach((item) => {
+    const existing = unifiedMap.get(item.cpt_code) || {
+      code: item.cpt_code,
+      inHeader: false,
+      inBody: true,
+      rationale: "Selected",
+    };
+
+    existing.code = item.cpt_code; // Ensure code is set
+    existing.desc = item.description || existing.desc;
+    existing.status = item.status || "selected";
+    existing.rvu = item.work_rvu;
+    existing.payment = item.facility_payment;
+
+    // FIX: Ensure suppression/bundling logic is visible
+    if (item.work_rvu === 0) {
+      existing.status = "Bundled/Suppressed";
+      // If we have a specific bundling warning, append it
+      const warning = (rawData.audit_warnings || []).find((w) => w.includes(item.cpt_code));
+      if (warning) existing.rationale = warning;
+    } else {
+      // Refresh rationale from backend to ensure it's not "Derived..."
+      const backendReason = getBackendRationale(item.cpt_code);
+      if (backendReason) existing.rationale = backendReason;
+    }
+
+    unifiedMap.set(item.cpt_code, existing);
+  });
+
+  // Sort: High Value -> Suppressed -> Header Only
+  return Array.from(unifiedMap.values()).sort((a, b) => {
+    if (a.rvu > 0 && b.rvu === 0) return -1;
+    if (b.rvu > 0 && a.rvu === 0) return 1;
+    return a.code.localeCompare(b.code);
+  });
+}
+
+/**
+ * 2. Renders the Unified Billing Reconciliation Table
+ * Merges Header, Derived, and Final codes into one view.
+ */
+function renderUnifiedTable(data) {
+  const tbody = document.getElementById("unifiedTableBody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+
+  const sortedRows = transformToUnifiedTable(data);
+
+  // Render Rows
+  sortedRows.forEach((row) => {
+    const tr = document.createElement("tr");
+
+    // Logic Badges
+    let sourceBadge = "";
+    if (row.inHeader && row.inBody) sourceBadge = `<span class="badge badge-both">Match</span>`;
+    else if (row.inHeader) sourceBadge = `<span class="badge badge-header">Header Only</span>`;
+    else sourceBadge = `<span class="badge badge-body">Derived</span>`;
+
+    // Status Badge
+    let statusBadge = `<span class="badge badge-primary">Primary</span>`;
+    if (row.rvu === 0 || row.status === "Bundled/Suppressed") {
+      statusBadge = `<span class="badge badge-bundled">Bundled</span>`;
+      tr.classList.add("row-suppressed");
+    }
+
+    // Rationale cleaning
+    const rationale = row.rationale || (row.inBody ? "Derived from procedure actions" : "Found in header scan");
+    const rvuDisplay = Number.isFinite(row.rvu) ? row.rvu.toFixed(2) : "0.00";
+    const paymentDisplay = Number.isFinite(row.payment) ? row.payment.toFixed(2) : "0.00";
+
+    tr.innerHTML = `
+      <td><span class="code-cell">${row.code}</span></td>
+      <td>
+        <span class="desc-text">${row.desc || "Unknown Procedure"}</span>
+        ${sourceBadge}
+      </td>
+      <td>${statusBadge}</td>
+      <td><span class="rationale-text">${rationale}</span></td>
+      <td><strong>${rvuDisplay}</strong></td>
+      <td>$${paymentDisplay}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/**
+ * Renders the Clinical/Registry Data Table (Restored)
+ * Flattens nested registry objects into a clean key-value view.
+ */
+function renderRegistrySummary(data) {
+  const tbody = document.getElementById("registryTableBody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+
+  const registry = data.registry || {};
+
+  // 1. Clinical Context (Top Priority)
+  if (registry.clinical_context) {
+    addRegistryRow(tbody, "Indication", registry.clinical_context.primary_indication);
+    if (registry.clinical_context.indication_category) {
+      addRegistryRow(tbody, "Category", registry.clinical_context.indication_category);
+    }
+  }
+
+  // 2. Anesthesia/Sedation
+  if (registry.sedation) {
+    const sedationStr = `${registry.sedation.type || "Not specified"} (${registry.sedation.anesthesia_provider || "Provider unknown"})`;
+    addRegistryRow(tbody, "Sedation", sedationStr);
+  }
+
+  // 3. EBUS Details (Granular)
+  if (registry.procedures_performed?.linear_ebus?.performed) {
+    const ebus = registry.procedures_performed.linear_ebus;
+    const stations = Array.isArray(ebus.stations_sampled) ? ebus.stations_sampled.join(", ") : "None";
+    const needle = ebus.needle_gauge || "Not specified";
+    addRegistryRow(
+      tbody,
+      "Linear EBUS",
+      `<strong>Stations:</strong> ${stations} <br> <span style="font-size:11px; color:#64748b;">Gauge: ${needle} | Elastography: ${ebus.elastography_used ? "Yes" : "No"}</span>`
+    );
+  }
+
+  // 4. Other Procedures (Iterate generic performed flags)
+  const procs = registry.procedures_performed || {};
+  Object.keys(procs).forEach((key) => {
+    if (key === "linear_ebus") return; // Handled above
+    const p = procs[key];
+    if (p === true || (p && p.performed)) {
+      // Convert snake_case to Title Case (e.g., radial_ebus -> Radial Ebus)
+      const label = key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+
+      // Extract useful details if they exist (e.g., "lobes", "sites")
+      let details = "Performed";
+      if (p?.sites) details = `Sites: ${Array.isArray(p.sites) ? p.sites.join(", ") : p.sites}`;
+      else if (p?.target_lobes) details = `Lobes: ${p.target_lobes.join(", ")}`;
+      else if (p?.action) details = p.action;
+
+      addRegistryRow(tbody, label, details);
+    }
+  });
+}
+
+// Helper to append rows
+function addRegistryRow(tbody, label, content) {
+  if (!content) return;
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td style="font-weight:600; color:#475569;">${label}</td>
+    <td>${content}</td>
+  `;
+  tbody.appendChild(tr);
+}
+
+/**
+ * 3. Renders Technical Logs (Collapsed by default)
+ */
+function renderDebugLogs(data) {
+  const logBox = document.getElementById("systemLogs");
+  if (!logBox) return;
+
+  let logs = [];
+
+  // Collect all warnings and logs
+  if (data.audit_warnings) logs.push(...data.audit_warnings.map((w) => `[AUDIT] ${w}`));
+  if (data.warnings) logs.push(...data.warnings.map((w) => `[WARN] ${w}`));
+  if (data.self_correction) {
+    data.self_correction.forEach((sc) => {
+      logs.push(`[SELF-CORRECT] Applied patch for ${sc.trigger.target_cpt}: ${sc.trigger.reason}`);
+    });
+  }
+
+  if (logs.length === 0) {
+    logBox.textContent = "No system warnings or overrides.";
+  } else {
+    logBox.textContent = logs.join("\n");
+  }
+}
+
 /**
  * Render the formatted results from the server response.
  * Shows status banner, CPT codes table, and registry form.
  */
 function renderResults(data) {
   const container = document.getElementById("resultsContainer");
-  container.innerHTML = ""; // Clear previous results
+  if (!container) return;
 
   lastServerResponse = data;
   if (exportBtn) exportBtn.disabled = !data;
 
-  // 1. Status Banner (Keep existing logic or simplify)
-  renderStatusBanner(data, container);
+  container.classList.remove("hidden");
+  renderDashboard(data);
 
-  const codingSupport = data.coding_support || data.registry?.coding_support;
-
-  // 2. CPT Transparency + Coding Summary (Final Selection)
-  if (codingSupport && codingSupport.coding_summary) {
-    if (data.registry) {
-      container.appendChild(renderCPTRawHeader(data.registry, codingSupport, data));
-      container.appendChild(renderCPTDerivedEvidence(data.registry, data));
-    }
-
-    const qaByCode = buildQaByCode(codingSupport);
-    container.appendChild(
-      renderCPTSummary(codingSupport.coding_summary.lines || [], qaByCode)
-    );
-  } else if (data.per_code_billing) {
-    // Fallback for legacy responses
-    container.appendChild(renderLegacyCPTTable(data));
+  if (serverResponseEl) {
+    serverResponseEl.textContent = JSON.stringify(data, null, 2);
   }
-
-  // 3. Bundling & Suppression Decisions
-  if (codingSupport && codingSupport.coding_rationale) {
-    const rules = codingSupport.coding_rationale.rules_applied || [];
-    if (rules.length > 0) {
-      container.appendChild(renderBundlingDecisions(rules));
-    }
-  }
-
-  // 4. RVU & Payment Summary
-  if (data.per_code_billing) {
-    container.appendChild(renderRVUSummary(data.per_code_billing, data.total_work_rvu, data.estimated_payment));
-  }
-
-  // 5. Clinical Context
-  if (data.registry) {
-    container.appendChild(renderClinicalContext(data.registry, data));
-  }
-
-  // 6. Procedures Performed (Summary + Details)
-  if (data.registry && data.registry.procedures_performed) {
-    container.appendChild(renderProceduresSection(data.registry.procedures_performed, data));
-  }
-
-  // 7. Audit & QA Notes
-  if (data.audit_warnings && data.audit_warnings.length > 0) {
-    container.appendChild(renderAuditNotes(data.audit_warnings));
-  }
-
-  // 8. Pipeline Metadata
-  container.appendChild(renderPipelineMetadata(data));
-
-  // Show raw JSON toggle at the bottom
-  const details = document.createElement("details");
-  details.className = "raw-json-toggle";
-  details.innerHTML = `<summary>View Raw JSON</summary><pre id="serverResponse">${JSON.stringify(data, null, 2)}</pre>`;
-  container.appendChild(details);
-  serverResponseEl = details.querySelector("#serverResponse");
 }
 
 function renderStatusBanner(data, container) {
@@ -677,34 +2025,6 @@ function renderAuditNotes(warnings) {
   return section;
 }
 
-// --- 8. Pipeline Metadata ---
-function renderPipelineMetadata(data) {
-  const section = createSection('Pipeline Metadata', '🧠');
-  const meta = {
-    'Pipeline Mode': data.pipeline_mode,
-    'KB Version': data.kb_version,
-    'Policy Version': data.policy_version,
-    'Needs Review': data.needs_manual_review ? 'Yes' : 'No',
-    'Review Status': data.review_status,
-    'Coder Difficulty': data.coder_difficulty,
-    'Processing Time': Number.isFinite(data.processing_time_ms)
-      ? `${Math.round(data.processing_time_ms).toLocaleString()} ms`
-      : '—'
-  };
-
-  const rows = Object.entries(meta).map(([k, v]) => `
-        <tr>
-            <td style="width:30%"><strong>${k}</strong></td>
-            <td>${v || '-'}</td>
-        </tr>
-    `).join('');
-
-  section.querySelector('.report-body').innerHTML = `
-        <table class="data-table"><tbody>${rows}</tbody></table>
-    `;
-  return section;
-}
-
 /**
  * Render the CPT codes table with descriptions, confidence, RVU, and payment.
  */
@@ -919,32 +2239,71 @@ function renderRegistryForm(registry) {
 }
 
 async function main() {
-  if (!window.__monacoReady) {
-    setStatus("Monaco loader missing");
-    return;
+  const editorHost = document.getElementById("editor");
+  const fallbackTextarea = document.getElementById("fallbackTextarea");
+
+  // Let users paste/typing immediately; Monaco boot can lag on first load.
+  if (fallbackTextarea) {
+    fallbackTextarea.classList.remove("hidden");
+    fallbackTextarea.disabled = false;
   }
-  await window.__monacoReady;
+
+  setStatus("Ready to type (model loading in background)...");
+
+  let usingPlainEditor = true;
+  let editor = null;
+  let model = null;
+
+  // Try to boot Monaco quickly, but never hang the app if it stalls.
+  if (window.__monacoReady) {
+    try {
+      await Promise.race([
+        window.__monacoReady,
+        new Promise((_, reject) => setTimeout(() => reject(new Error("Monaco load timeout")), 2500)),
+      ]);
+      usingPlainEditor = false;
+    } catch {
+      usingPlainEditor = true;
+    }
+  }
 
   const crossOriginIsolated = globalThis.crossOriginIsolated === true;
   if (!crossOriginIsolated) {
     setStatus(
       "Cross-origin isolation is OFF (SharedArrayBuffer unavailable). Running in single-threaded mode."
     );
+  } else if (usingPlainEditor) {
+    setStatus("Loading… (basic editor mode; Monaco still initializing)");
   }
 
-  const editor = monaco.editor.create(document.getElementById("editor"), {
-    value: "",
-    language: "plaintext",
-    theme: "vs-dark",
-    minimap: { enabled: false },
-    wordWrap: "on",
-    fontSize: 13,
-    automaticLayout: true,
-  });
-  // Expose for evidence click-to-highlight
-  window.editor = editor;
+  if (!usingPlainEditor && editorHost) {
+    const initialValue = fallbackTextarea ? fallbackTextarea.value : "";
+    if (fallbackTextarea) fallbackTextarea.remove();
 
-  const model = editor.getModel();
+    editor = monaco.editor.create(editorHost, {
+      value: initialValue,
+      language: "plaintext",
+      theme: "vs-dark",
+      minimap: { enabled: false },
+      wordWrap: "on",
+      fontSize: 13,
+      automaticLayout: true,
+    });
+    // Expose for evidence click-to-highlight
+    window.editor = editor;
+    model = editor.getModel();
+  } else {
+    // Monaco unavailable/slow: use the built-in textarea as the editor surface.
+    window.editor = null;
+    model = {
+      getValue: () => (fallbackTextarea ? fallbackTextarea.value : ""),
+      setValue: (value) => {
+        if (!fallbackTextarea) return;
+        fallbackTextarea.value = String(value ?? "");
+      },
+    };
+  }
+
   let originalText = model.getValue();
   let hasRunDetection = false;
   let scrubbedConfirmed = false;
@@ -959,17 +2318,36 @@ async function main() {
   let currentSelection = null;
 
   // Track selection changes for manual redaction
-  editor.onDidChangeCursorSelection((e) => {
-    const selection = e.selection;
-    const hasSelection = !selection.isEmpty();
+  if (!usingPlainEditor && editor) {
+    editor.onDidChangeCursorSelection((e) => {
+      const selection = e.selection;
+      const hasSelection = !selection.isEmpty();
 
-    currentSelection = hasSelection ? selection : null;
+      currentSelection = hasSelection ? selection : null;
 
-    // Only enable Add button if we have a selection and aren't running detection
-    if (addRedactionBtn) {
-      addRedactionBtn.disabled = !hasSelection || running;
-    }
-  });
+      // Only enable Add button if we have a selection and aren't running detection
+      if (addRedactionBtn) {
+        addRedactionBtn.disabled = !hasSelection || running;
+      }
+    });
+  } else if (fallbackTextarea) {
+    const updateSelection = () => {
+      const start = fallbackTextarea.selectionStart;
+      const end = fallbackTextarea.selectionEnd;
+      const hasSelection = Number.isFinite(start) && Number.isFinite(end) && end > start;
+
+      currentSelection = hasSelection ? { start, end } : null;
+
+      if (addRedactionBtn) {
+        addRedactionBtn.disabled = !hasSelection || running;
+      }
+    };
+
+    fallbackTextarea.addEventListener("select", updateSelection);
+    fallbackTextarea.addEventListener("mouseup", updateSelection);
+    fallbackTextarea.addEventListener("keyup", updateSelection);
+    updateSelection();
+  }
 
   function setScrubbedConfirmed(value) {
     scrubbedConfirmed = value;
@@ -990,7 +2368,11 @@ async function main() {
     detections = [];
     detectionsById = new Map();
     excluded = new Set();
-    decorations = editor.deltaDecorations(decorations, []);
+    if (!usingPlainEditor && editor) {
+      decorations = editor.deltaDecorations(decorations, []);
+    } else {
+      decorations = [];
+    }
     detectionsListEl.innerHTML = "";
     detectionsCountEl.textContent = "0";
     applyBtn.disabled = true;
@@ -1000,6 +2382,8 @@ async function main() {
   }
 
   function updateDecorations() {
+    if (usingPlainEditor || !editor) return;
+
     const text = model.getValue();
     const lineStarts = buildLineStartOffsets(text);
     const textLength = text.length;
@@ -1104,11 +2488,19 @@ async function main() {
     revertBtn.disabled = running || originalText === model.getValue();
   }
 
-  model.onDidChangeContent(() => {
-    if (suppressDirtyFlag) return;
-    setScrubbedConfirmed(false);
-    revertBtn.disabled = running || originalText === model.getValue();
-  });
+  if (!usingPlainEditor && typeof model?.onDidChangeContent === "function") {
+    model.onDidChangeContent(() => {
+      if (suppressDirtyFlag) return;
+      setScrubbedConfirmed(false);
+      revertBtn.disabled = running || originalText === model.getValue();
+    });
+  } else if (fallbackTextarea) {
+    fallbackTextarea.addEventListener("input", () => {
+      if (suppressDirtyFlag) return;
+      setScrubbedConfirmed(false);
+      revertBtn.disabled = running || originalText === model.getValue();
+    });
+  }
 
   let worker = null;
   let workerReady = false;
@@ -1118,6 +2510,13 @@ async function main() {
   let aiModelError = null;
   let legacyFallbackAttempted = false;
   let usingLegacyWorker = false;
+  let workerInitTimer = null;
+
+  function clearWorkerInitTimer() {
+    if (!workerInitTimer) return;
+    clearTimeout(workerInitTimer);
+    workerInitTimer = null;
+  }
 
   function shouldForceLegacyWorker() {
     const params = new URLSearchParams(location.search);
@@ -1172,10 +2571,19 @@ async function main() {
     usingLegacyWorker = nextIsLegacy;
     attachWorkerHandlers(worker);
     worker.postMessage({ type: "init", debug: WORKER_CONFIG.debug, config: WORKER_CONFIG });
+    clearWorkerInitTimer();
+    workerInitTimer = setTimeout(() => {
+      if (!workerReady) {
+        setStatus(
+          "Worker initializing… (first load can take a few minutes). If this stalls, check DevTools."
+        );
+      }
+    }, 8000);
   }
 
   function attachWorkerHandlers(activeWorker) {
     activeWorker.addEventListener("error", (ev) => {
+      clearWorkerInitTimer();
       if (!usingLegacyWorker && !legacyFallbackAttempted) {
         legacyFallbackAttempted = true;
         setStatus("Module worker failed to load; falling back to legacy worker…");
@@ -1196,6 +2604,7 @@ async function main() {
     });
 
     activeWorker.addEventListener("messageerror", () => {
+      clearWorkerInitTimer();
       setStatus("Worker message error (serialization failed)");
       setProgress("");
       running = false;
@@ -1210,6 +2619,7 @@ async function main() {
       lastWorkerMessageAt = Date.now();
 
       if (msg.type === "ready") {
+        clearWorkerInitTimer();
         workerReady = true;
         setStatus("Ready (local model loaded)");
         setProgress("");
@@ -1296,6 +2706,7 @@ async function main() {
       }
 
       if (msg.type === "error") {
+        clearWorkerInitTimer();
         running = false;
         cancelBtn.disabled = true;
         runBtn.disabled = !workerReady;
@@ -1357,27 +2768,39 @@ async function main() {
       .filter((d) => Number.isFinite(d.start) && Number.isFinite(d.end) && d.end > d.start)
       .sort((a, b) => b.start - a.start);
 
-    const text = model.getValue();
-    const lineStarts = buildLineStartOffsets(text);
-    const textLength = text.length;
-
-    const edits = spans.map((d) => {
-      const startPos = offsetToPosition(d.start, lineStarts, textLength);
-      const endPos = offsetToPosition(d.end, lineStarts, textLength);
-      return {
-        range: new monaco.Range(
-          startPos.lineNumber,
-          startPos.column,
-          endPos.lineNumber,
-          endPos.column
-        ),
-        text: "[REDACTED]",
-      };
-    });
-
     suppressDirtyFlag = true;
     try {
-      editor.executeEdits("phi-redactor", edits);
+      if (!usingPlainEditor && editor) {
+        const text = model.getValue();
+        const lineStarts = buildLineStartOffsets(text);
+        const textLength = text.length;
+
+        const edits = spans.map((d) => {
+          const startPos = offsetToPosition(d.start, lineStarts, textLength);
+          const endPos = offsetToPosition(d.end, lineStarts, textLength);
+          return {
+            range: new monaco.Range(
+              startPos.lineNumber,
+              startPos.column,
+              endPos.lineNumber,
+              endPos.column
+            ),
+            text: "[REDACTED]",
+          };
+        });
+
+        editor.executeEdits("phi-redactor", edits);
+      } else {
+        let text = model.getValue();
+        // Apply replacements from the end to preserve offsets.
+        for (const d of spans) {
+          const start = clamp(d.start, 0, text.length);
+          const end = clamp(d.end, 0, text.length);
+          if (end <= start) continue;
+          text = `${text.slice(0, start)}[REDACTED]${text.slice(end)}`;
+        }
+        model.setValue(text);
+      }
     } finally {
       suppressDirtyFlag = false;
     }
@@ -1390,7 +2813,8 @@ async function main() {
   revertBtn.addEventListener("click", () => {
     suppressDirtyFlag = true;
     try {
-      editor.setValue(originalText);
+      if (!usingPlainEditor && editor) editor.setValue(originalText);
+      else model.setValue(originalText);
     } finally {
       suppressDirtyFlag = false;
     }
@@ -1404,10 +2828,20 @@ async function main() {
   // Manual redaction: Add button click handler
   if (addRedactionBtn) {
     addRedactionBtn.addEventListener("click", () => {
-      if (!currentSelection || currentSelection.isEmpty()) return;
+      if (!currentSelection) return;
 
-      const startOffset = model.getOffsetAt(currentSelection.getStartPosition());
-      const endOffset = model.getOffsetAt(currentSelection.getEndPosition());
+      let startOffset = 0;
+      let endOffset = 0;
+      if (!usingPlainEditor) {
+        if (typeof currentSelection.isEmpty === "function" && currentSelection.isEmpty()) return;
+        startOffset = model.getOffsetAt(currentSelection.getStartPosition());
+        endOffset = model.getOffsetAt(currentSelection.getEndPosition());
+      } else {
+        startOffset = Number(currentSelection.start) || 0;
+        endOffset = Number(currentSelection.end) || 0;
+        if (endOffset <= startOffset) return;
+      }
+
       const selectedText = model.getValue().slice(startOffset, endOffset);
       const entityType = entityTypeSelect ? entityTypeSelect.value : "OTHER";
 
@@ -1430,7 +2864,12 @@ async function main() {
       renderDetections();
 
       // Reset UI: Clear selection and disable button
-      editor.setSelection(new monaco.Selection(0, 0, 0, 0));
+      if (!usingPlainEditor && editor) {
+        editor.setSelection(new monaco.Selection(0, 0, 0, 0));
+      } else if (fallbackTextarea) {
+        fallbackTextarea.focus();
+        fallbackTextarea.setSelectionRange(0, 0);
+      }
       currentSelection = null;
       addRedactionBtn.disabled = true;
 

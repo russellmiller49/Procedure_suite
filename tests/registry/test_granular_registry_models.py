@@ -823,8 +823,9 @@ class TestDeriveProceduresFromGranular:
 
         assert procedures["transbronchial_cryobiopsy"]["performed"] is True
         assert procedures["transbronchial_cryobiopsy"]["number_of_samples"] == 5
-        assert procedures["transbronchial_cryobiopsy"]["cryoprobe_size_mm"] == 1.1
+        assert procedures["transbronchial_cryobiopsy"]["probe_size_mm"] == 1.1
         assert procedures["transbronchial_cryobiopsy"]["freeze_time_seconds"] == 6
+        assert procedures["transbronchial_cryobiopsy"]["locations_biopsied"] == ["LLL Posterior-Basal"]
 
     def test_radial_ebus_derivation(self):
         """Test that navigation_targets with rebus_used populates radial_ebus.performed."""
@@ -1086,7 +1087,7 @@ class TestRobotNavigationEBUSRegression:
         # 3. Transbronchial cryobiopsy should be derived from cryobiopsy_sites
         assert procs["transbronchial_cryobiopsy"]["performed"] is True
         assert procs["transbronchial_cryobiopsy"]["number_of_samples"] == 5
-        assert procs["transbronchial_cryobiopsy"]["cryoprobe_size_mm"] == 1.1
+        assert procs["transbronchial_cryobiopsy"]["probe_size_mm"] == 1.1
 
         # 4. Radial EBUS should have performed=True (derived from navigation_targets)
         assert procs["radial_ebus"]["performed"] is True

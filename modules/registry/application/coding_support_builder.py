@@ -277,6 +277,42 @@ def _parse_warnings_into_rule_applications(
             )
             continue
 
+        # Destruction bundled into excision (default same-lesion assumption)
+        if text.startswith("31641 (destruction) bundled into 31640"):
+            dropped_codes["31641"] = text
+            per_code_qa_flags.setdefault("31640", []).append(
+                {
+                    "severity": "warning",
+                    "rule_id": "excision_with_destruction",
+                    "message": text,
+                }
+            )
+            _add_rule(
+                rule_id="excision_with_destruction",
+                rule_type="bundling",
+                outcome="dropped",
+                codes_affected=["31641"],
+                details=text,
+            )
+            continue
+
+        if text.startswith("31641 requires Modifier 59"):
+            per_code_qa_flags.setdefault("31641", []).append(
+                {
+                    "severity": "warning",
+                    "rule_id": "excision_with_destruction",
+                    "message": text,
+                }
+            )
+            _add_rule(
+                rule_id="excision_with_destruction",
+                rule_type="documentation",
+                outcome="flagged",
+                codes_affected=["31641"],
+                details=text,
+            )
+            continue
+
         # Otherwise, treat as an informational global rule note.
         codes = sorted(set(_CPT_RE.findall(text)))
         if codes:
@@ -336,6 +372,8 @@ def build_coding_support_payload(
         modifiers: list[str] | None = None
         if code == "31629" and any("Modifier 59" in w for w in warnings):
             modifiers = ["59"]
+        if code == "31641" and any(str(w).startswith("31641 requires Modifier 59") for w in warnings):
+            modifiers = sorted(set((modifiers or []) + ["59"]))
 
         evidence_items: list[dict[str, Any]] = []
         note_spans: list[dict[str, Any]] = []

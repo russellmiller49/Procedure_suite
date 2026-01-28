@@ -89,6 +89,9 @@ _HEADER_END_RE = re.compile(
     r"|INDICATION"
     r"|DESCRIPTION"
     r"|FINDINGS"
+    r"|EXTUBATION"
+    r"|RECOVERY"
+    r"|DISPOSITION"
     r"|PROCEDURE\s+IN\s+DETAIL"
     r"|DESCRIPTION\s+OF\s+PROCEDURE"
     r"|PROCEDURE\s+DESCRIPTION"
@@ -831,6 +834,7 @@ class RegistryService:
 
                 from modules.registry.evidence.verifier import verify_evidence_integrity
                 from modules.registry.postprocess import (
+                    cull_hollow_ebus_claims,
                     populate_ebus_node_events_fallback,
                     sanitize_ebus_events,
                 )
@@ -839,6 +843,7 @@ class RegistryService:
                 warnings.extend(verifier_warnings)
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
+                warnings.extend(cull_hollow_ebus_claims(record, masked_note_text))
 
                 from modules.registry.application.pathology_extraction import apply_pathology_extraction
 
@@ -1283,6 +1288,113 @@ class RegistryService:
                                 record_data["procedures_performed"] = record_procs_local
                                 proc_modified = True
 
+                        def _populate_navigation_equipment() -> None:
+                            """Populate equipment navigation/CBCT flags when strongly evidenced."""
+                            nonlocal other_modified
+
+                            equipment = record_data.get("equipment") or {}
+                            if not isinstance(equipment, dict):
+                                equipment = {}
+
+                            changed = False
+                            lowered = (masked_note_text or "").lower()
+
+                            # Navigation platform (schema enum values)
+                            if not equipment.get("navigation_platform"):
+                                platform_raw = None
+                                if re.search(r"(?i)\bintuitive\s+ion\b|\bion\b", masked_note_text or ""):
+                                    platform_raw = "Ion"
+                                elif re.search(r"(?i)\bmonarch\b", masked_note_text or ""):
+                                    platform_raw = "Monarch"
+                                elif re.search(r"(?i)\bgalaxy\b|\bnoah\b", masked_note_text or ""):
+                                    platform_raw = "Galaxy"
+                                elif re.search(r"(?i)\bsuperdimension\b|\bEMN\b|\belectromagnetic\s+navigation\b", masked_note_text or ""):
+                                    platform_raw = "superDimension"
+                                elif re.search(r"(?i)\billumisite\b", masked_note_text or ""):
+                                    platform_raw = "ILLUMISITE"
+                                elif re.search(r"(?i)\bspin(?:drive)?\b", masked_note_text or ""):
+                                    platform_raw = "SPiN"
+                                elif re.search(r"(?i)\blungvision\b", masked_note_text or ""):
+                                    platform_raw = "LungVision"
+                                elif re.search(r"(?i)\barchimedes\b", masked_note_text or ""):
+                                    platform_raw = "ARCHIMEDES"
+
+                                if platform_raw:
+                                    from modules.registry.postprocess import normalize_navigation_platform
+
+                                    normalized = normalize_navigation_platform(platform_raw)
+                                    if normalized:
+                                        equipment["navigation_platform"] = normalized
+                                        changed = True
+                                        _add_first_span_skip_cpt_headers(
+                                            "equipment.navigation_platform",
+                                            [
+                                                r"\bintuitive\s+ion\b",
+                                                r"\bion\b",
+                                                r"\bmonarch\b",
+                                                r"\bgalaxy\b",
+                                                r"\bnoah\b",
+                                                r"\bsuperdimension\b",
+                                                r"\belectromagnetic\s+navigation\b",
+                                                r"\billumisite\b",
+                                                r"\bspin(?:drive)?\b",
+                                                r"\blungvision\b",
+                                                r"\barchimedes\b",
+                                            ],
+                                        )
+
+                            # Cone-beam CT usage
+                            if equipment.get("cbct_used") is None:
+                                if re.search(
+                                    r"(?i)\bcone[-\s]?beam\s+ct\b|\bcbct\b|\bcios\b|\bspin\s+system\b|\blow\s+dose\s+spin\b",
+                                    masked_note_text or "",
+                                ):
+                                    equipment["cbct_used"] = True
+                                    changed = True
+                                    _add_first_span_skip_cpt_headers(
+                                        "equipment.cbct_used",
+                                        [
+                                            r"\bcone[-\s]?beam\s+ct\b",
+                                            r"\bcbct\b",
+                                            r"\bcios\b",
+                                            r"\bspin\s+system\b",
+                                            r"\blow\s+dose\s+spin\b",
+                                        ],
+                                    )
+
+                            # 3D rendering / reconstruction (proxy via augmented_fluoroscopy flag)
+                            if equipment.get("augmented_fluoroscopy") is None:
+                                if re.search(
+                                    r"(?i)\b3[-\s]?d\s+(?:reconstruction|reconstructions|rendering)\b|\b3d\s+(?:reconstruction|rendering)\b",
+                                    masked_note_text or "",
+                                ):
+                                    equipment["augmented_fluoroscopy"] = True
+                                    changed = True
+                                    _add_first_span_skip_cpt_headers(
+                                        "equipment.augmented_fluoroscopy",
+                                        [
+                                            r"\b3[-\s]?d\s+reconstructions?\b",
+                                            r"\b3d\s+reconstructions?\b",
+                                            r"\b3[-\s]?d\s+rendering\b",
+                                            r"\b3d\s+rendering\b",
+                                            r"\bplanning\s+station\b",
+                                        ],
+                                    )
+
+                            # Fluoroscopy is commonly present when CBCT/fiducials are used.
+                            if equipment.get("fluoroscopy_used") is None:
+                                if (
+                                    equipment.get("cbct_used") is True
+                                    or "fluoroscopy" in lowered
+                                    or re.search(r"(?i)\bunder\s+fluoroscopy\s+guidance\b", masked_note_text or "")
+                                ):
+                                    equipment["fluoroscopy_used"] = True
+                                    changed = True
+
+                            if changed:
+                                record_data["equipment"] = equipment
+                                other_modified = True
+
                         if isinstance(seed_procs, dict):
                             for proc_name, proc_data in seed_procs.items():
                                 if not isinstance(proc_data, dict):
@@ -1448,6 +1560,9 @@ class RegistryService:
                         # Backstop diagnostic bronchoscopy findings/abnormalities when present.
                         _populate_diagnostic_bronchoscopy_findings()
 
+                        # Backstop navigation/CBCT imaging signals for downstream coding.
+                        _populate_navigation_equipment()
+
                         # Prefer real code evidence when explicit CPT codes appear in the procedure header.
                         header_codes = _scan_header_for_codes(raw_note_text)
                         if header_codes:
@@ -1513,6 +1628,7 @@ class RegistryService:
 
                 from modules.registry.evidence.verifier import verify_evidence_integrity
                 from modules.registry.postprocess import (
+                    cull_hollow_ebus_claims,
                     populate_ebus_node_events_fallback,
                     sanitize_ebus_events,
                 )
@@ -1521,6 +1637,7 @@ class RegistryService:
                 warnings.extend(verifier_warnings)
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
+                warnings.extend(cull_hollow_ebus_claims(record, masked_note_text))
 
                 from modules.registry.application.pathology_extraction import apply_pathology_extraction
 
@@ -1557,6 +1674,7 @@ class RegistryService:
 
         from modules.registry.evidence.verifier import verify_evidence_integrity
         from modules.registry.postprocess import (
+            cull_hollow_ebus_claims,
             populate_ebus_node_events_fallback,
             sanitize_ebus_events,
         )
@@ -1565,6 +1683,7 @@ class RegistryService:
         warnings.extend(verifier_warnings)
         warnings.extend(sanitize_ebus_events(record, masked_note_text))
         warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
+        warnings.extend(cull_hollow_ebus_claims(record, masked_note_text))
 
         from modules.registry.application.pathology_extraction import apply_pathology_extraction
 
@@ -1634,8 +1753,14 @@ class RegistryService:
             if not nav_hint:
                 return record_in, []
 
+            from modules.registry.processing.navigation_targets import (
+                extract_cryobiopsy_sites,
+                extract_navigation_targets,
+            )
+
+            parsed_targets = extract_navigation_targets(text)
             target_lines = [line for line in text.splitlines() if re.search(r"(?i)target lesion", line)]
-            if not target_lines:
+            if not parsed_targets and not target_lines:
                 return record_in, []
 
             record_data = record_in.model_dump()
@@ -1649,26 +1774,94 @@ class RegistryService:
             else:
                 targets = []
 
-            existing_count = len(targets)
-            needed_count = len(target_lines)
-            if existing_count >= needed_count:
-                return record_in, []
+            def _is_placeholder_location(value: object) -> bool:
+                if value is None:
+                    return True
+                s = str(value).strip().lower()
+                if not s:
+                    return True
+                return s in {
+                    "unknown",
+                    "unknown target",
+                    "target",
+                    "target lesion",
+                    "target lesion 1",
+                    "target lesion 2",
+                    "target lesion 3",
+                } or s.startswith("target lesion")
 
-            for idx in range(existing_count, needed_count):
-                line = target_lines[idx].strip()
-                targets.append(
-                    {
-                        "target_number": idx + 1,
-                        "target_location_text": line or f"Target lesion {idx + 1}",
-                    }
+            warnings: list[str] = []
+            updated = False
+
+            if parsed_targets:
+                # Merge parsed targets (from explicit TARGET headings) into existing targets.
+                max_len = max(len(targets), len(parsed_targets))
+                merged: list[dict[str, Any]] = []
+                for idx in range(max_len):
+                    base = targets[idx] if idx < len(targets) else {}
+                    parsed = parsed_targets[idx] if idx < len(parsed_targets) else {}
+                    out = dict(base)
+
+                    # Always normalize target_number to 1..N for consistency.
+                    out["target_number"] = idx + 1
+
+                    for key, value in parsed.items():
+                        if value in (None, "", [], {}):
+                            continue
+                        if key == "target_location_text":
+                            if _is_placeholder_location(out.get(key)):
+                                out[key] = value
+                                updated = True
+                            continue
+                        if key == "fiducial_marker_placed":
+                            if value is True and out.get(key) is not True:
+                                out[key] = True
+                                updated = True
+                            continue
+                        if out.get(key) in (None, "", [], {}):
+                            out[key] = value
+                            updated = True
+
+                    merged.append(out)
+
+                targets = merged
+                warnings.append(
+                    f"NAV_TARGET_HEURISTIC: parsed {len(parsed_targets)} navigation target(s) from target headings"
                 )
+            else:
+                existing_count = len(targets)
+                needed_count = len(target_lines)
+                if existing_count >= needed_count:
+                    return record_in, []
+
+                for idx in range(existing_count, needed_count):
+                    line = target_lines[idx].strip()
+                    targets.append(
+                        {
+                            "target_number": idx + 1,
+                            "target_location_text": line or f"Target lesion {idx + 1}",
+                        }
+                    )
+                added = needed_count - existing_count
+                warnings.append(f"NAV_TARGET_HEURISTIC: added {added} navigation target(s) from text")
+                updated = True
 
             granular["navigation_targets"] = targets
+
+            # Cryobiopsy sites: populate granular per-site detail when target sections include cryobiopsy.
+            existing_sites = granular.get("cryobiopsy_sites")
+            if not existing_sites:
+                sites = extract_cryobiopsy_sites(text)
+                if sites:
+                    granular["cryobiopsy_sites"] = sites
+                    warnings.append(f"CRYOBIOPSY_SITE_HEURISTIC: added {len(sites)} cryobiopsy site(s) from text")
+                    updated = True
+
             record_data["granular_data"] = granular
             record_out = RegistryRecord(**record_data)
-
-            added = needed_count - existing_count
-            return record_out, [f"NAV_TARGET_HEURISTIC: added {added} navigation target(s) from text"]
+            if not updated:
+                return record_in, []
+            return record_out, warnings
 
         def _coverage_failures(note_text: str, record_in: RegistryRecord) -> list[str]:
             failures: list[str] = []
@@ -1741,6 +1934,7 @@ class RegistryService:
 
                 from modules.registry.evidence.verifier import verify_evidence_integrity
                 from modules.registry.postprocess import (
+                    cull_hollow_ebus_claims,
                     populate_ebus_node_events_fallback,
                     sanitize_ebus_events,
                 )
@@ -1749,6 +1943,7 @@ class RegistryService:
                 warnings.extend(verifier_warnings)
                 warnings.extend(sanitize_ebus_events(record_out, note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record_out, note_text))
+                warnings.extend(cull_hollow_ebus_claims(record_out, note_text))
                 return record_out, warnings
             except Exception as exc:
                 warnings.append(f"STRUCTURER_FALLBACK_FAILED: {exc}")
@@ -1773,7 +1968,14 @@ class RegistryService:
         if nav_target_warnings:
             extraction_warnings.extend(nav_target_warnings)
 
+        # Re-run granular→aggregate propagation after any heuristics/overrides that
+        # update granular_data (e.g., navigation targets, cryobiopsy sites).
+        record, granular_warnings = _apply_granular_up_propagation(record)
+        if granular_warnings:
+            extraction_warnings.extend(granular_warnings)
+
         from modules.registry.postprocess import (
+            cull_hollow_ebus_claims,
             enrich_ebus_node_event_outcomes,
             enrich_ebus_node_event_sampling_details,
             enrich_linear_ebus_needle_gauge,
@@ -1801,6 +2003,9 @@ class RegistryService:
         ebus_gauge_warnings = enrich_linear_ebus_needle_gauge(record, masked_note_text)
         if ebus_gauge_warnings:
             extraction_warnings.extend(ebus_gauge_warnings)
+        ebus_hollow_warnings = cull_hollow_ebus_claims(record, masked_note_text)
+        if ebus_hollow_warnings:
+            extraction_warnings.extend(ebus_hollow_warnings)
         pleural_biopsy_warnings = enrich_medical_thoracoscopy_biopsies_taken(record, masked_note_text)
         if pleural_biopsy_warnings:
             extraction_warnings.extend(pleural_biopsy_warnings)
@@ -1861,6 +2066,18 @@ class RegistryService:
 
                 derived_code_set = {str(c) for c in (current_codes or [])}
                 missing_header_codes = sorted(header_codes - derived_code_set)
+                if missing_header_codes:
+                    # Suppress known "header template" codes that are intentionally dropped by
+                    # deterministic bundling/mutual-exclusion rules.
+                    suppressed: set[str] = set()
+                    if "31653" in derived_code_set:
+                        suppressed.add("31652")
+                    if "31652" in derived_code_set or "31653" in derived_code_set:
+                        suppressed.add("31645")
+                    if "76982" in derived_code_set or "76983" in derived_code_set:
+                        suppressed.add("76981")
+                    if suppressed:
+                        missing_header_codes = [c for c in missing_header_codes if c not in suppressed]
                 if missing_header_codes:
                     warning = (
                         "HEADER_EXPLICIT: header lists "

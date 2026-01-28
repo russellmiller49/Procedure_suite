@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 from types import SimpleNamespace
 
 import pytest
@@ -52,6 +53,51 @@ def test_phi_redactor_assets_have_coop_coep_headers(client: TestClient) -> None:
         assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp", (
             f"Missing COEP header for {path}"
         )
+
+def test_phi_redactor_index_has_formatted_report_sections(client: TestClient) -> None:
+    resp = client.get("/ui/phi_redactor/index.html")
+    assert resp.status_code == 200
+    assert 'id="billingSelectedBody"' in resp.text
+    assert 'id="evidenceTraceabilityHost"' in resp.text
+
+def test_phi_redactor_worker_stoplist_includes_lymph_nodes(client: TestClient) -> None:
+    """Regression: don't treat "Lymph Nodes" headings as patient names."""
+    resp = client.get("/ui/phi_redactor/redactor.worker.js")
+    assert resp.status_code == 200
+    body = resp.text
+    assert re.search(
+        r"const\s+NAME_REGEX_CLINICAL_STOPLIST\s*=\s*new\s+Set\(\[[\s\S]*?\"lymph\"[\s\S]*?\"node\"[\s\S]*?\"nodes\"",
+        body,
+        re.MULTILINE,
+    ), "Expected lymph/node/nodes in NAME_REGEX_CLINICAL_STOPLIST"
+
+
+def test_phi_redactor_worker_gates_procedure_for_clinical_phrases(client: TestClient) -> None:
+    """Regression: don't flag 'EBUS for peripheral lesion' as a patient name."""
+    resp = client.get("/ui/phi_redactor/redactor.worker.js")
+    assert resp.status_code == 200
+    body = resp.text
+    assert re.search(
+        r"for\s*\(const\s+match\s+of\s+text\.matchAll\(PROCEDURE_FOR_NAME_RE\)\)\s*\{[\s\S]*?isInClinicalStoplist\(firstName\)[\s\S]*?continue;",
+        body,
+        re.MULTILINE,
+    ), "Expected clinical stoplist gating inside PROCEDURE_FOR_NAME_RE loop"
+
+
+def test_phi_redactor_legacy_worker_has_same_regression_fixes(client: TestClient) -> None:
+    resp = client.get("/ui/redactor.worker.legacy.js")
+    assert resp.status_code == 200
+    body = resp.text
+    assert re.search(
+        r"const\s+NAME_REGEX_CLINICAL_STOPLIST\s*=\s*new\s+Set\(\[[\s\S]*?\"lymph\"[\s\S]*?\"node\"[\s\S]*?\"nodes\"",
+        body,
+        re.MULTILINE,
+    ), "Expected lymph/node/nodes in legacy NAME_REGEX_CLINICAL_STOPLIST"
+    assert re.search(
+        r"for\s*\(const\s+match\s+of\s+text\.matchAll\(PROCEDURE_FOR_NAME_RE\)\)\s*\{[\s\S]*?isInClinicalStoplist\(firstName\)[\s\S]*?continue;",
+        body,
+        re.MULTILINE,
+    ), "Expected clinical stoplist gating inside legacy PROCEDURE_FOR_NAME_RE loop"
 
 
 def test_unified_process_already_scrubbed_bypasses_server_scrubber(

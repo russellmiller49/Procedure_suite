@@ -462,7 +462,7 @@ def derive_all_codes_with_meta(
         for proc in (tbbx, cryo_tbbx):
             if proc is None:
                 continue
-            locations = _get(proc, "locations") or _get(proc, "sites")
+            locations = _get(proc, "locations") or _get(proc, "locations_biopsied") or _get(proc, "sites")
             if locations:
                 break
         if locations:
@@ -566,25 +566,49 @@ def derive_all_codes_with_meta(
 
             target_count = len({s for s in target_stations if s})
             if target_count <= 0:
-                target_count = 1
-
-            # CPT 76982 is first target lesion; 76983 is each additional target lesion.
-            codes.append("76982")
-            rationales["76982"] = f"linear_ebus elastography used (targets={target_count})"
-            if target_count >= 2:
-                addon_units = min(target_count - 1, 2)
-                codes.append("76983")
-                rationales["76983"] = (
-                    f"linear_ebus elastography used and targets={target_count} (units={addon_units}; MUE cap=2)"
+                # Guardrail: don't bill elastography if the record has no extracted targets.
+                # Allow a conservative fallback only when evidence mentions elastography on
+                # explicit node/station tokens (e.g., "11L", "Station 7").
+                evidence_text = _evidence_text_for_prefixes(
+                    record,
+                    ("procedures_performed.linear_ebus", "procedures_performed.linear_ebus.node_events", "code_evidence"),
                 )
-
-            # Parenchyma elastography (76981) is distinct from target-lesion elastography (76982/76983).
-            # When EBUS elastography is documented on lymph nodes/targets, suppress 76981 even if the
-            # header lists it (common templating artifact).
-            if "76981" in (header_code_text or ""):
-                warnings.append(
-                    "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983."
+                has_station_token = bool(
+                    re.search(
+                        r"(?i)\b(2R|2L|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?)\b",
+                        evidence_text or "",
+                    )
                 )
+                has_elastography_token = bool(re.search(r"(?i)\belastograph\w*\b", evidence_text or ""))
+                if has_station_token and has_elastography_token:
+                    target_count = 1
+                else:
+                    warnings.append(
+                        "Suppressed 76982/76983: elastography indicated but no EBUS targets/stations extracted."
+                    )
+                    target_count = 0
+
+            if target_count <= 0:
+                # Nothing billable without target evidence.
+                pass
+            else:
+                # CPT 76982 is first target lesion; 76983 is each additional target lesion.
+                codes.append("76982")
+                rationales["76982"] = f"linear_ebus elastography used (targets={target_count})"
+                if target_count >= 2:
+                    addon_units = min(target_count - 1, 2)
+                    codes.append("76983")
+                    rationales["76983"] = (
+                        f"linear_ebus elastography used and targets={target_count} (units={addon_units}; MUE cap=2)"
+                    )
+
+                # Parenchyma elastography (76981) is distinct from target-lesion elastography (76982/76983).
+                # When EBUS elastography is documented on lymph nodes/targets, suppress 76981 even if the
+                # header lists it (common templating artifact).
+                if "76981" in (header_code_text or ""):
+                    warnings.append(
+                        "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983."
+                    )
 
     # Radial EBUS (add-on code for peripheral lesion localization)
     if _performed(_proc(record, "radial_ebus")):
@@ -600,6 +624,22 @@ def derive_all_codes_with_meta(
     if _fiducial_marker_placed(record):
         codes.append("31626")
         rationales["31626"] = "granular_data.navigation_targets indicates fiducial marker placement"
+
+    # Imaging adjuncts commonly documented in robotic/navigation cases
+    equipment = _get(record, "equipment")
+    cbct_used = _get(equipment, "cbct_used") is True
+    nav_platform = _get(equipment, "navigation_platform")
+    augmented = _get(equipment, "augmented_fluoroscopy") is True
+
+    # 77012: CT guidance (used here as a proxy for documented cone-beam CT guidance in navigation cases)
+    if cbct_used and (_performed(_proc(record, "navigational_bronchoscopy")) or nav_platform):
+        codes.append("77012")
+        rationales["77012"] = "equipment.cbct_used=true"
+
+    # 76377: 3D rendering / reconstruction (requires explicit 3D rendering/reconstruction evidence)
+    if augmented and (cbct_used or nav_platform) and (_performed(_proc(record, "navigational_bronchoscopy")) or nav_platform):
+        codes.append("76377")
+        rationales["76377"] = "equipment.augmented_fluoroscopy=true (3D reconstruction/rendering documented)"
 
     # Therapeutic aspiration
     if _performed(_proc(record, "therapeutic_aspiration")):
@@ -653,10 +693,6 @@ def derive_all_codes_with_meta(
     if _performed(_proc(record, "mechanical_debulking")):
         codes.append("31640")
         rationales["31640"] = "mechanical_debulking.performed=true"
-        if _performed(_proc(record, "thermal_ablation")) or _performed(_proc(record, "cryotherapy")):
-            warnings.append(
-                "Both excision (31640) and destruction (31641) modalities present; ensure documentation supports reporting both (often residual tumor treated)."
-            )
 
     # Thermal ablation (tumor destruction) → 31641
     if _performed(_proc(record, "thermal_ablation")):
@@ -861,12 +897,16 @@ def derive_all_codes_with_meta(
         action = _get(ipc, "action")
         action_text = str(action).strip().lower() if action is not None else ""
         insertion_action = action == "Insertion" or action_text.startswith(("insert", "place", "plac", "deploy"))
+        removal_action = action == "Removal" or action_text.startswith(("remov", "withdraw", "pull", "discontinue", "d/c", "dc", "explant"))
         if insertion_action:
             codes.append("32550")
             rationales["32550"] = "pleural_procedures.ipc.performed=true and action indicates insertion"
+        elif removal_action:
+            codes.append("32552")
+            rationales["32552"] = "pleural_procedures.ipc.performed=true and action indicates removal"
         else:
             warnings.append(
-                "pleural_procedures.ipc.performed=true but no insertion action is documented; suppressing 32550"
+                "pleural_procedures.ipc.performed=true but action is missing/ambiguous; suppressing 32550/32552"
             )
 
     thora = _pleural(record, "thoracentesis")
@@ -1094,6 +1134,27 @@ def derive_all_codes_with_meta(
                 rationales.pop(c, None)
             warnings.append(
                 "CPT_CONFLICT_STENT_CYCLE: dropped 31635/31636 because 31638 covers stent revision/exchange"
+            )
+
+    # Bundling: Destruction (31641) is integral to Excision (31640) on the same lesion.
+    # Default (safe): assume same lesion unless granular/anatomic location proves otherwise.
+    if "31640" in derived and "31641" in derived:
+        excision_loc = _get(_proc(record, "mechanical_debulking"), "location")
+        destruction_loc = _get(_proc(record, "thermal_ablation"), "location")
+
+        excision_lobes = _lobe_tokens([str(excision_loc)]) if excision_loc else set()
+        destruction_lobes = _lobe_tokens([str(destruction_loc)]) if destruction_loc else set()
+        distinct_locations = bool(excision_lobes and destruction_lobes and excision_lobes.isdisjoint(destruction_lobes))
+
+        if distinct_locations:
+            warnings.append(
+                "31641 requires Modifier 59: destruction performed on distinct lesion from excision (31640)."
+            )
+        else:
+            derived = [c for c in derived if c != "31641"]
+            rationales.pop("31641", None)
+            warnings.append(
+                "31641 (destruction) bundled into 31640 (excision). If performed on separate lesion, add 31641 with modifier 59/XS."
             )
 
     # Bundling: Dilation (31630) vs Destruction (31641) / Excision (31640)

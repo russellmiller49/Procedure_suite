@@ -29,8 +29,17 @@ _SUPPORTING_SECTION_KEYWORDS: tuple[str, ...] = (
 _SUPPORTING_DATA_KEYWORDS: tuple[str, ...] = (
     "SPECIMEN",
     "IMPRESSION",
-    "PLAN",
+)
+
+_EXCLUDED_FOCUS_KEYWORDS: tuple[str, ...] = (
+    # Exclude history/indication/plan content from procedure extraction context.
+    "HISTORY",
     "INDICATION",
+    "PLAN",
+)
+
+_POST_PROCEDURE_TAIL_RE = re.compile(
+    r"(?i)\b(?:prior\s+to\s+extubation|extubat(?:ion|ed)|transported\s+to\s+(?:the\s+)?recovery|recovery\s+room|pacu)\b"
 )
 
 
@@ -59,6 +68,21 @@ def _heading_matches_any(heading: str, keywords: tuple[str, ...]) -> bool:
     return False
 
 
+def _heading_excluded(heading: str) -> bool:
+    if not heading:
+        return False
+    return any(token in heading for token in _EXCLUDED_FOCUS_KEYWORDS)
+
+
+def _trim_post_procedure_tail(text: str) -> str:
+    if not text:
+        return ""
+    match = _POST_PROCEDURE_TAIL_RE.search(text)
+    if not match:
+        return text
+    return text[: match.start()].rstrip()
+
+
 def _extract_target_sections_by_regex(note_text: str) -> dict[str, list[str]]:
     pattern = re.compile(r"^(?P<header>[A-Za-z][A-Za-z0-9 /()_-]{0,80})\s*:\s*(?P<rest>.*)$", re.MULTILINE)
     matches = list(pattern.finditer(note_text or ""))
@@ -70,6 +94,8 @@ def _extract_target_sections_by_regex(note_text: str) -> dict[str, list[str]]:
         header_raw = match.group("header").strip()
         header = _canonical_heading(header_raw)
         if not header:
+            continue
+        if _heading_excluded(header):
             continue
 
         wanted = (
@@ -131,6 +157,8 @@ def get_procedure_focus(note_text: str) -> str:
             seg_type = _canonical_heading(seg_type_raw)
             if not seg_type:
                 continue
+            if _heading_excluded(seg_type):
+                continue
             if not (
                 _heading_matches_any(seg_type, _PRIMARY_NARRATIVE_KEYWORDS)
                 or _heading_matches_any(seg_type, _SUPPORTING_SECTION_KEYWORDS)
@@ -162,10 +190,7 @@ def get_procedure_focus(note_text: str) -> str:
                         "OPERATIVE REPORT",
                         "SPECIMEN(S)",
                         "SPECIMENS",
-                        "IMPRESSION/PLAN",
                         "IMPRESSION",
-                        "PLAN",
-                        "INDICATION",
                     }
                 )
             )
@@ -175,6 +200,8 @@ def get_procedure_focus(note_text: str) -> str:
             title_raw = (section.title or "").strip()
             title = _canonical_heading(title_raw)
             if not title:
+                continue
+            if _heading_excluded(title):
                 continue
             if not (
                 _heading_matches_any(title, _PRIMARY_NARRATIVE_KEYWORDS)
@@ -224,6 +251,10 @@ def get_procedure_focus(note_text: str) -> str:
             clean = (text or "").strip()
             if not clean:
                 continue
+            if bucket == "primary":
+                clean = _trim_post_procedure_tail(clean)
+                if not clean:
+                    continue
             rendered = f"{title_raw.strip().upper()}:\n{clean}"
             if bucket == "primary":
                 primary_parts.append(rendered)

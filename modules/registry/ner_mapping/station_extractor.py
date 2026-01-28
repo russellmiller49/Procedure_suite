@@ -222,17 +222,23 @@ class EBUSStationExtractor:
 
     def _normalize_station(self, text: str) -> Optional[str]:
         """Normalize a station string to canonical format."""
-        result = normalize_station(text)
+        raw = str(text or "")
+
+        # Avoid false positives from enumerators like "Site 5:" (common note formatting).
+        if re.search(r"(?i)^\s*(?:site|case|patient)\s*#?\s*\d{1,2}\b", raw):
+            return None
+
+        result = normalize_station(raw)
         if result:
             return result
 
         # Try to extract station from longer text
         # e.g., "station 4R" or "level 7"
-        match = re.search(
-            r"\b(2[RL]|4[RL]|5|7|8|9|10[RL]|11[RL]s?i?)\b",
-            text,
-            re.IGNORECASE,
-        )
+        match = re.search(r"\b(2[RL]|4[RL]|10[RL]|11[RL]s?i?)\b", raw, re.IGNORECASE)
+        if match:
+            return normalize_station(match.group(1))
+
+        match = re.search(r"(?i)\b(?:station|level)\s*(5|7|8|9)\b", raw)
         if match:
             return normalize_station(match.group(1))
 

@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-27T15:23:21-08:00`
-Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
+Generated: `2026-01-27T17:14:14-08:00`
+Git: `main` @ `ce4b7e6`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -237,7 +237,6 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
       975  modules/coder/domain_rules/registry_to_cpt/engine.py
       996  modules/api/guards.py
       999  tests/phi/test_fernet_encryption_adapter.py
-     1026  tests/registry/test_registry_to_cpt_mechanical_debulking.py
      1027  tests/registry/test_clinical_guardrails_stent_inspection.py
      1072  modules/coder/__init__.py
      1076  tests/registry/test_clinical_guardrails_radial_linear.py
@@ -291,6 +290,7 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
      1561  tests/test_openai_responses_parse.py
      1568  modules/coder/reconciliation/__init__.py
      1582  modules/registry/ml/__init__.py
+     1609  tests/registry/test_registry_to_cpt_mechanical_debulking.py
      1675  modules/infra/llm_control.py
      1676  tests/scripts/test_prodigy_export_registry.py
      1687  tests/scripts/test_export_patient_note_texts.py
@@ -409,7 +409,6 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
      4071  modules/registry/self_correction/prompt_improvement.py
      4202  tests/unit/test_phi_platinum_filters.py
      4251  modules/registry/slots/stent.py
-     4302  tests/api/test_phi_redactor_ui.py
      4339  tests/phi/test_models.py
      4373  tests/registry/test_keyword_guard_overrides.py
      4390  modules/registry_cleaning/logging_utils.py
@@ -448,6 +447,7 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
      6042  tests/api/test_fastapi.py
      6131  tests/api/test_phi_redaction.py
      6150  modules/coder/parallel_pathway/confidence_combiner.py
+     6156  tests/api/test_phi_redactor_ui.py
      6184  tests/integration/test_phi_workflow_end_to_end.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
@@ -479,7 +479,6 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
      8228  proc_schemas/registry/ip_v3.py
      8415  modules/registry/inference_pytorch.py
      8427  modules/registry_cleaning/clinical_qc.py
-     8479  modules/registry/processing/focus.py
      8556  modules/registry/ml/evaluate.py
      8618  tests/coder/test_hierarchy_bundling_fixes.py
      8652  modules/coder/application/procedure_type_detector.py
@@ -488,6 +487,7 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
      8750  modules/api/routes/unified_process.py
      9005  modules/api/routes/metrics.py
      9048  modules/registry/schema/adapters/v3_to_v2.py
+     9393  modules/registry/processing/focus.py
      9466  tests/ml_coder/test_training_pipeline.py
      9471  tests/ml_coder/test_case_difficulty.py
      9490  modules/ml_coder/training.py
@@ -497,8 +497,8 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
     10017  tests/registry/test_registry_guardrails.py
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
-    10413  modules/registry/self_correction/validation.py
     10466  modules/api/routes_registry.py
+    10601  modules/registry/self_correction/validation.py
     10791  tests/unit/test_inmemory_procedure_store.py
     10938  tests/registry/test_ebus_config_station_count.py
     11181  tests/test_phi_redaction_contract.py
@@ -539,18 +539,18 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
     15436  modules/autocode/ip_kb/canonical_rules.py
     15467  modules/api/services/qa_pipeline.py
     15495  modules/ml_coder/registry_training.py
-    15516  modules/registry/ner_mapping/station_extractor.py
     15601  tests/reporter/test_ip_addons.py
     15653  tests/registry/test_extraction_quality.py
     15655  modules/coder/reconciliation/pipeline.py
-    15666  modules/registry/application/coding_support_builder.py
     15800  modules/ner/inference.py
+    15828  modules/registry/ner_mapping/station_extractor.py
     15857  tests/registry/test_normalization.py
     16032  modules/coder/rules_engine.py
     16171  modules/registry/application/cpt_registry_mapping.py
     16608  tests/integration/api/test_metrics_endpoint.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
     17010  modules/phi/safety/veto.py
+    17103  modules/registry/application/coding_support_builder.py
     17161  proc_schemas/clinical/airway.py
     17268  modules/common/openai_responses.py
     17313  modules/coder/reconciliation/reconciler.py
@@ -578,8 +578,8 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
     22569  modules/phi/adapters/presidio_scrubber.py
     22644  modules/ml_coder/data_prep.py
     22670  tests/ml_coder/test_registry_data_prep.py
-    22897  modules/registry/schema/v2_dynamic.py
     23485  docs/phi_review_system/backend/endpoints.py
+    24045  modules/registry/schema/v2_dynamic.py
     24069  tests/ml_advisor/conftest.py
     24922  tests/integration/api/test_coder_run_endpoint.py
     25665  modules/coder/application/smart_hybrid_policy.py
@@ -607,15 +607,15 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
     42913  modules/api/routes/procedure_codes.py
     43561  modules/api/fastapi_app.py
     43756  tests/registry/test_granular_registry_models.py
-    48370  modules/extraction/postprocessing/clinical_guardrails.py
-    49289  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+    48887  modules/extraction/postprocessing/clinical_guardrails.py
+    51798  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     56440  modules/autocode/ip_kb/ip_kb.py
     62046  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    89186  modules/registry/deterministic_extractors.py
+    90679  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
-   117586  modules/registry/postprocess.py
-   130147  modules/registry/application/registry_service.py
+   120666  modules/registry/postprocess.py
+   130908  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
@@ -795,8 +795,8 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
     61430  modules/api/static/phi_redactor/protectedVeto.js
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
     86731  modules/api/static/app.js
-    93124  modules/api/static/phi_redactor/redactor.worker.js
-    93344  modules/api/static/phi_redactor/redactor.worker.legacy.js
+    93797  modules/api/static/phi_redactor/redactor.worker.js
+    94017  modules/api/static/phi_redactor/redactor.worker.legacy.js
 ```
 
 ## Skipped (reason)
@@ -1041,19 +1041,19 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
  inline_cap_reached>75  proc_schemas/registry/ip_v3.py
  inline_cap_reached>75  modules/registry/inference_pytorch.py
  inline_cap_reached>75  modules/registry_cleaning/clinical_qc.py
- inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/registry/ml/evaluate.py
  inline_cap_reached>75  modules/coder/application/procedure_type_detector.py
  inline_cap_reached>75  modules/api/coder_adapter.py
  inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/api/routes/metrics.py
  inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
+ inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/ml_coder/training.py
  inline_cap_reached>75  modules/phi/service.py
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/api/routes_registry.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  modules/registry/processing/masking.py
@@ -1078,13 +1078,13 @@ Git: `fix/extraction-quality-pack-jan2026` @ `b156b88`
  inline_cap_reached>75  modules/autocode/ip_kb/canonical_rules.py
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
- inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
- inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  modules/ner/inference.py
+ inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/coder/rules_engine.py
  inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  modules/phi/safety/veto.py
+ inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  modules/common/openai_responses.py
  inline_cap_reached>75  modules/coder/reconciliation/reconciler.py

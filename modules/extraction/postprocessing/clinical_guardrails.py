@@ -67,22 +67,30 @@ _STENT_STRONG_PLACEMENT_RE = re.compile(
 )
 _STENT_REMOVAL_CONTEXT_RE = re.compile(
     r"\b(?:"
-    r"stent\b[^.\n]{0,60}\b(remov|retriev|extract|explant|grasp|pull|peel)\w*\b"
+    r"stent\b[^.\n]{0,60}\b(remov|retriev|extract|explant|grasp|pull|peel|exchang|replac)\w*\b"
     r"|"
-    r"(remov|retriev|extract|explant|grasp|pull|peel)\w*\b[^.\n]{0,60}\bstent\b"
+    r"(remov|retriev|extract|explant|grasp|pull|peel|exchang|replac)\w*\b[^.\n]{0,60}\bstent\b"
     r")\b",
     re.IGNORECASE,
 )
 _STENT_INSPECTION_RE = re.compile(
     r"\b(?:"
-    r"(?:stent|bms)\b[^.\n]{0,80}\b(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+good\s+position|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b"
+    r"(?:stent|bms)\b[^.\n]{0,80}\b(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+(?:good|adequate)\s+position|adequately\s+positioned|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b"
     r"|"
-    r"(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+good\s+position|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b[^.\n]{0,80}\b(?:stent|bms)\b"
+    r"(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+(?:good|adequate)\s+position|adequately\s+positioned|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b[^.\n]{0,80}\b(?:stent|bms)\b"
     r")\b",
     re.IGNORECASE,
 )
 _STENT_OBSTRUCTION_RE = re.compile(
     r"\b(?:stent|bms)\b[^.\n]{0,120}\b(?:obstruct|occlud|impacted|plugged|mucous|mucus)\b",
+    re.IGNORECASE,
+)
+_STENT_CLEANING_RE = re.compile(
+    r"\b(?:"
+    r"(?:stent|bms)\b[^.\n]{0,120}\b(?:clean(?:ed|ing)?|debrid(?:ed|ement)?|suction(?:ed|ing)?|clear(?:ed|ing)?)\b"
+    r"|"
+    r"(?:clean(?:ed|ing)?|debrid(?:ed|ement)?|suction(?:ed|ing)?|clear(?:ed|ing)?)\b[^.\n]{0,120}\b(?:stent|bms)\b"
+    r")\b",
     re.IGNORECASE,
 )
 
@@ -282,7 +290,9 @@ class ClinicalGuardrails:
             placement_action_present = bool(_STENT_PLACEMENT_ACTION_CONTEXT_RE.search(text_lower))
             strong_placement = bool(_STENT_STRONG_PLACEMENT_RE.search(text_lower))
             inspection_only = bool(
-                _STENT_INSPECTION_RE.search(text_lower) or _STENT_OBSTRUCTION_RE.search(text_lower)
+                _STENT_INSPECTION_RE.search(text_lower)
+                or _STENT_OBSTRUCTION_RE.search(text_lower)
+                or _STENT_CLEANING_RE.search(text_lower)
             )
 
             # Best-effort stent type enrichment (helps note_352-style "Y stent" mentions).
@@ -314,8 +324,8 @@ class ClinicalGuardrails:
                     warnings.append("Stent removal language; treating as removal only.")
                     changed = True
             elif removal_flag and not removal_text_present and inspection_only and not placement_present:
-                if self._clear_stent(record_data):
-                    warnings.append("Stent removal flag not supported by text; treating as not performed.")
+                if self._set_stent_assessment_only(record_data):
+                    warnings.append("Stent removal/revision not supported by text; treating as assessment only.")
                     changed = True
             elif inspection_only and not placement_action_present and not removal_text_present:
                 if self._set_stent_assessment_only(record_data):

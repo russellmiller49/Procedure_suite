@@ -89,7 +89,14 @@
           Apply redactions before submitting. The server receives only scrubbed text.
         </div>
 
-        <div id="editor" class="editor"></div>
+        <div id="editor" class="editor">
+          <textarea
+            id="fallbackTextarea"
+            class="fallback-textarea"
+            placeholder="Paste a procedure note here…"
+            spellcheck="false"
+          ></textarea>
+        </div>
 
         <!-- Section 2: Clinical Review -->
         <div class="result">
@@ -100,34 +107,276 @@
             </div>
             <button id="exportBtn" class="secondary" disabled>Export Changes</button>
           </div>
-          <div id="resultsContainer" class="resultsContainer">
-            <!-- Status banner -->
-            <div id="statusBanner" class="status-banner hidden"></div>
+	          <div id="resultsContainer" class="resultsContainer hidden">
+	            <div id="statusBannerHost"></div>
+	            <div id="statCards" class="stat-card-container">
+	            </div>
 
-            <!-- CPT Codes Table -->
-            <div id="cptSection" class="result-section hidden">
-              <h3>CPT Codes</h3>
-              <table class="result-table">
-                <thead>
-                  <tr>
-                    <th>Code</th>
-                    <th>Description</th>
-                    <th>Confidence</th>
-                    <th>RVU</th>
-                    <th>Payment</th>
-                  </tr>
-                </thead>
-                <tbody id="cptTableBody"></tbody>
-              </table>
+	            <div class="dash-grid">
+	              <div class="dash-col">
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">1</span>
+	                      CPT Codes – Derived (Selected)
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="12%">CPT Code</th>
+	                          <th width="58%">Description & Rationale</th>
+	                          <th width="10%">Units</th>
+	                          <th width="20%">Role</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="billingSelectedBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">2</span>
+	                      CPT Codes – Dropped / Suppressed
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="12%">CPT Code</th>
+	                          <th width="18%">Status</th>
+	                          <th width="70%">Reason / Logic</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="billingSuppressedBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">3</span>
+	                      Coding Logic &amp; Rationale (Per Code)
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="12%">CPT Code</th>
+	                          <th width="48%">Selection Logic</th>
+	                          <th width="40%">Supporting Documentation Evidence</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="codingRationaleBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">4</span>
+	                      Rules Applied (Bundling &amp; Policy)
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="20%">Rule Type</th>
+	                          <th width="20%">Codes Affected</th>
+	                          <th width="15%">Outcome</th>
+	                          <th width="45%">Details</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="rulesAppliedBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">5</span>
+	                      Financial Summary
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <div class="dash-metrics">
+	                      <div class="dash-metric">
+	                        <div class="dash-metric-label">Total work RVU</div>
+	                        <div class="dash-metric-value" id="financialTotalRVU">—</div>
+	                      </div>
+	                      <div class="dash-metric">
+	                        <div class="dash-metric-label">Estimated payment</div>
+	                        <div class="dash-metric-value" id="financialTotalPayment">—</div>
+	                      </div>
+	                    </div>
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="12%">CPT</th>
+	                          <th width="10%">Units</th>
+	                          <th width="18%">Work RVU</th>
+	                          <th width="20%">Facility RVU</th>
+	                          <th width="20%">Payment</th>
+	                          <th width="20%">Notes</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="financialSummaryBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">6</span>
+	                      Audit &amp; Quality Flags (Condensed)
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="30%">Category</th>
+	                          <th width="70%">Notes</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="auditFlagsBody"></tbody>
+	                    </table>
+	                    <details class="dash-details">
+	                      <summary>Pipeline metadata</summary>
+	                      <table class="dash-table kv-table">
+	                        <tbody id="pipelineMetadataBody"></tbody>
+	                      </table>
+	                    </details>
+	                  </div>
+	                </div>
+	              </div>
+
+	              <div class="dash-col">
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">7</span>
+	                      Patient &amp; Clinical Context
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table kv-table">
+	                      <tbody id="clinicalContextBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">8</span>
+	                      Procedures Performed (Summary)
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="35%">Procedure</th>
+	                          <th width="15%">Performed</th>
+	                          <th width="50%">Key Details</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="proceduresSummaryBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card" id="diagnosticFindingsCard">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">9</span>
+	                      Diagnostic Bronchoscopy Findings
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table kv-table">
+	                      <tbody id="diagnosticFindingsBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card" id="balDetailsCard">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">10</span>
+	                      BAL Details
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table kv-table">
+	                      <tbody id="balDetailsBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card" id="linearEbusSummaryCard">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">11</span>
+	                      Linear EBUS Technical Summary
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table kv-table">
+	                      <tbody id="linearEbusSummaryBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+
+	                <div class="dash-card" id="ebusNodeEventsCard">
+	                  <div class="dash-card-header">
+	                    <div class="section-title">
+	                      <span class="section-number">12</span>
+	                      Linear EBUS Node Events (Granular)
+	                    </div>
+	                  </div>
+	                  <div class="dash-card-body">
+	                    <table class="dash-table">
+	                      <thead>
+	                        <tr>
+	                          <th width="12%">Station</th>
+	                          <th width="36%">Action</th>
+	                          <th width="10%">Passes</th>
+	                          <th width="20%">Elastography</th>
+	                          <th width="22%">Evidence</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody id="ebusNodeEventsBody"></tbody>
+	                    </table>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
+	            <details class="raw-json-toggle">
+	              <summary>Evidence Traceability</summary>
+	              <div id="evidenceTraceabilityHost"></div>
+	            </details>
+
+	            <div class="debug-section no-print">
+	              <details class="debug-details">
+	                <summary>System Logic & Debugging Logs</summary>
+	                <div id="systemLogs" class="log-box">
+                </div>
+              </details>
             </div>
 
-            <!-- Registry Data (Editable) -->
-            <div id="registrySection" class="result-section hidden">
-              <h3>Registry Data</h3>
-              <div id="registryForm"></div>
-            </div>
-
-            <!-- Raw JSON toggle -->
             <details class="raw-json-toggle">
               <summary>View Raw JSON</summary>
               <pre id="serverResponse">(none)</pre>

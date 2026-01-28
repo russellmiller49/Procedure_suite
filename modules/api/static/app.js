@@ -1807,6 +1807,289 @@ async function runUnifiedWithConfirmedEntities(options) {
     return extractResp.json();
 }
 
+/**
+ * Main Orchestrator: Renders the clean clinical dashboard
+ */
+function renderDashboard(data) {
+    renderStatCards(data);
+    renderUnifiedTable(data);
+    renderRegistrySummary(data);
+    renderDebugLogs(data);
+}
+
+/**
+ * 1. Renders the Executive Summary (Stat Cards)
+ */
+function renderStatCards(data) {
+    const container = document.getElementById('statCards');
+    if (!container) return;
+
+    // Determine review status
+    let statusText = "Ready";
+    let statusClass = "";
+    if (data.needs_manual_review || (data.audit_warnings && data.audit_warnings.length > 0)) {
+        statusText = "⚠️ Review Required";
+        statusClass = "warning";
+    }
+
+    // Format currency and RVU
+    const payment = data.estimated_payment
+        ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(data.estimated_payment)
+        : '$0.00';
+    const rvu = data.total_work_rvu ? data.total_work_rvu.toFixed(2) : '0.00';
+
+    container.innerHTML = `
+        <div class="stat-card">
+            <span class="stat-label">Review Status</span>
+            <div class="stat-value ${statusClass}">${statusText}</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">Total wRVU</span>
+            <div class="stat-value">${rvu}</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">Est. Payment</span>
+            <div class="stat-value currency">${payment}</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">CPT Count</span>
+            <div class="stat-value">${(data.per_code_billing || []).length}</div>
+        </div>
+    `;
+}
+
+/**
+ * Transforms API data into a unified "Golden Record"
+ * FIX: Now prioritizes backend rationale over generic placeholders
+ */
+function transformToUnifiedTable(rawData) {
+    const unifiedMap = new Map();
+
+    // Helper: Get explanation from specific coding_support backend map
+    const getBackendRationale = (code) => {
+        if (rawData.registry?.coding_support?.code_rationales?.[code]) {
+            return rawData.registry.coding_support.code_rationales[code];
+        }
+        // Fallback to "evidence" array if available
+        const billingEntry = rawData.registry?.billing?.cpt_codes?.find(c => c.code === code);
+        if (billingEntry?.evidence?.length > 0) {
+            return billingEntry.evidence.map(e => e.text).join('; ');
+        }
+        return null;
+    };
+
+    // 1. Process Header Codes (Raw)
+    (rawData.header_codes || []).forEach(item => {
+        unifiedMap.set(item.code, {
+            code: item.code,
+            desc: item.description || "Unknown Procedure",
+            inHeader: true,
+            inBody: false,
+            status: 'pending',
+            rationale: "Found in header scan", // Default start
+            rvu: 0.00,
+            payment: 0.00
+        });
+    });
+
+    // 2. Process Derived Codes (Body)
+    (rawData.derived_codes || []).forEach(item => {
+        const existing = unifiedMap.get(item.code) || {
+            code: item.code,
+            inHeader: false,
+            rvu: 0.00,
+            payment: 0.00
+        };
+
+        existing.desc = item.description || existing.desc;
+        existing.inBody = true;
+
+        // FIX: Grab specific backend rationale if available
+        const backendReason = getBackendRationale(item.code);
+        if (backendReason) {
+            existing.rationale = backendReason;
+        } else {
+            existing.rationale = "Derived from procedure actions";
+        }
+
+        unifiedMap.set(item.code, existing);
+    });
+
+    // 3. Process Final Selection (The "Truth")
+    (rawData.per_code_billing || []).forEach(item => {
+        const existing = unifiedMap.get(item.cpt_code) || {
+            code: item.cpt_code,
+            inHeader: false,
+            inBody: true,
+            rationale: "Selected"
+        };
+
+        existing.code = item.cpt_code; // Ensure code is set
+        existing.desc = item.description || existing.desc;
+        existing.status = item.status || 'selected';
+        existing.rvu = item.work_rvu;
+        existing.payment = item.facility_payment;
+
+        // FIX: Ensure suppression/bundling logic is visible
+        if (item.work_rvu === 0) {
+            existing.status = 'Bundled/Suppressed';
+            // If we have a specific bundling warning, append it
+            const warning = (rawData.audit_warnings || []).find(w => w.includes(item.cpt_code));
+            if (warning) existing.rationale = warning;
+        } else {
+            // Refresh rationale from backend to ensure it's not "Derived..."
+            const backendReason = getBackendRationale(item.cpt_code);
+            if (backendReason) existing.rationale = backendReason;
+        }
+
+        unifiedMap.set(item.cpt_code, existing);
+    });
+
+    // Sort: High Value -> Suppressed -> Header Only
+    return Array.from(unifiedMap.values()).sort((a, b) => {
+        if (a.rvu > 0 && b.rvu === 0) return -1;
+        if (b.rvu > 0 && a.rvu === 0) return 1;
+        return a.code.localeCompare(b.code);
+    });
+}
+
+/**
+ * 2. Renders the Unified Billing Reconciliation Table
+ * Merges Header, Derived, and Final codes into one view.
+ */
+function renderUnifiedTable(data) {
+    const tbody = document.getElementById('unifiedTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    const sortedRows = transformToUnifiedTable(data);
+
+    // Render Rows
+    sortedRows.forEach(row => {
+        const tr = document.createElement('tr');
+
+        // Logic Badges
+        let sourceBadge = '';
+        if (row.inHeader && row.inBody) sourceBadge = `<span class="badge badge-both">Match</span>`;
+        else if (row.inHeader) sourceBadge = `<span class="badge badge-header">Header Only</span>`;
+        else sourceBadge = `<span class="badge badge-body">Derived</span>`;
+
+        // Status Badge
+        let statusBadge = `<span class="badge badge-primary">Primary</span>`;
+        if (row.rvu === 0 || row.status === 'Bundled/Suppressed') {
+            statusBadge = `<span class="badge badge-bundled">Bundled</span>`;
+            tr.classList.add('row-suppressed');
+        }
+
+        // Rationale cleaning
+        const rationale = row.rationale || (row.inBody ? 'Derived from procedure actions' : 'Found in header scan');
+        const rvuDisplay = Number.isFinite(row.rvu) ? row.rvu.toFixed(2) : '0.00';
+        const paymentDisplay = Number.isFinite(row.payment) ? row.payment.toFixed(2) : '0.00';
+
+        tr.innerHTML = `
+            <td><span class="code-cell">${row.code}</span></td>
+            <td>
+                <span class="desc-text">${row.desc || 'Unknown Procedure'}</span>
+                ${sourceBadge}
+            </td>
+            <td>${statusBadge}</td>
+            <td><span class="rationale-text">${rationale}</span></td>
+            <td><strong>${rvuDisplay}</strong></td>
+            <td>$${paymentDisplay}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+/**
+ * Renders the Clinical/Registry Data Table (Restored)
+ * Flattens nested registry objects into a clean key-value view.
+ */
+function renderRegistrySummary(data) {
+    const tbody = document.getElementById('registryTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    const registry = data.registry || {};
+
+    // 1. Clinical Context (Top Priority)
+    if (registry.clinical_context) {
+        addRegistryRow(tbody, "Indication", registry.clinical_context.primary_indication);
+        if (registry.clinical_context.indication_category) {
+            addRegistryRow(tbody, "Category", registry.clinical_context.indication_category);
+        }
+    }
+
+    // 2. Anesthesia/Sedation
+    if (registry.sedation) {
+        const sedationStr = `${registry.sedation.type || 'Not specified'} (${registry.sedation.anesthesia_provider || 'Provider unknown'})`;
+        addRegistryRow(tbody, "Sedation", sedationStr);
+    }
+
+    // 3. EBUS Details (Granular)
+    if (registry.procedures_performed?.linear_ebus?.performed) {
+        const ebus = registry.procedures_performed.linear_ebus;
+        const stations = Array.isArray(ebus.stations_sampled) ? ebus.stations_sampled.join(", ") : "None";
+        const needle = ebus.needle_gauge || "Not specified";
+        addRegistryRow(tbody, "Linear EBUS", `<strong>Stations:</strong> ${stations} <br> <span style="font-size:11px; color:#64748b;">Gauge: ${needle} | Elastography: ${ebus.elastography_used ? 'Yes' : 'No'}</span>`);
+    }
+
+    // 4. Other Procedures (Iterate generic performed flags)
+    const procs = registry.procedures_performed || {};
+    Object.keys(procs).forEach(key => {
+        if (key === 'linear_ebus') return; // Handled above
+        const p = procs[key];
+        if (p === true || (p && p.performed)) {
+            // Convert snake_case to Title Case (e.g., radial_ebus -> Radial Ebus)
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+            // Extract useful details if they exist (e.g., "lobes", "sites")
+            let details = "Performed";
+            if (p?.sites) details = `Sites: ${Array.isArray(p.sites) ? p.sites.join(', ') : p.sites}`;
+            else if (p?.target_lobes) details = `Lobes: ${p.target_lobes.join(', ')}`;
+            else if (p?.action) details = p.action;
+
+            addRegistryRow(tbody, label, details);
+        }
+    });
+}
+
+// Helper to append rows
+function addRegistryRow(tbody, label, content) {
+    if (!content) return;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td style="font-weight:600; color:#475569;">${label}</td>
+        <td>${content}</td>
+    `;
+    tbody.appendChild(tr);
+}
+
+/**
+ * 3. Renders Technical Logs (Collapsed by default)
+ */
+function renderDebugLogs(data) {
+    const logBox = document.getElementById('systemLogs');
+    if (!logBox) return;
+
+    let logs = [];
+
+    // Collect all warnings and logs
+    if (data.audit_warnings) logs.push(...data.audit_warnings.map(w => `[AUDIT] ${w}`));
+    if (data.warnings) logs.push(...data.warnings.map(w => `[WARN] ${w}`));
+    if (data.self_correction) {
+        data.self_correction.forEach(sc => {
+            logs.push(`[SELF-CORRECT] Applied patch for ${sc.trigger.target_cpt}: ${sc.trigger.reason}`);
+        });
+    }
+
+    if (logs.length === 0) {
+        logBox.textContent = "No system warnings or overrides.";
+    } else {
+        logBox.textContent = logs.join('\n');
+    }
+}
+
 async function run() {
     const text = document.getElementById('input-text').value;
     if (!text.trim()) {
@@ -1827,6 +2110,7 @@ async function run() {
                 mode: document.getElementById('unified-disable-llm').checked ? 'engine_only' : null
             });
             console.log('API Response (via PHI):', lastResult);
+            renderDashboard(lastResult);
             renderResult();
             return;
         } else if (currentMode === 'coder') {
@@ -1863,10 +2147,22 @@ async function run() {
         if (lastResult.financials) {
             console.log('Financials data:', lastResult.financials);
         }
+        if (currentMode === 'unified') {
+            renderDashboard(lastResult);
+        }
         renderResult();
 
     } catch (error) {
-        document.getElementById('result-area').innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+        const legacy = document.getElementById('legacyResults');
+        const dashboard = document.getElementById('resultsContainer');
+        const rawJson = document.getElementById('rawJson');
+
+        if (dashboard) dashboard.classList.add('hidden');
+        if (rawJson) rawJson.classList.add('hidden');
+        if (legacy) {
+            legacy.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            legacy.classList.remove('hidden');
+        }
     } finally {
         showLoading(false);
     }
@@ -1885,159 +2181,34 @@ function showResultTab(tab) {
     document.querySelectorAll('#result-tabs .nav-link').forEach(el => el.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
 
-    const area = document.getElementById('result-area');
-    
+    const dashboard = document.getElementById('resultsContainer');
+    const legacy = document.getElementById('legacyResults');
+    const rawJson = document.getElementById('rawJson');
+
     if (tab === 'json') {
-        area.innerHTML = `<pre>${JSON.stringify(lastResult, null, 2)}</pre>`;
+        if (rawJson) {
+            rawJson.textContent = JSON.stringify(lastResult, null, 2);
+            rawJson.classList.remove('hidden');
+        }
+        if (dashboard) dashboard.classList.add('hidden');
+        if (legacy) legacy.classList.add('hidden');
         return;
     }
 
+    if (rawJson) rawJson.classList.add('hidden');
+
     // Formatted View Logic
     if (currentMode === 'unified') {
-        // Unified mode: Registry + CPT codes combined
-        let html = `<h4>Unified Results <span class="badge bg-primary">Extraction-First</span></h4>`;
+        if (legacy) legacy.classList.add('hidden');
+        if (dashboard) dashboard.classList.remove('hidden');
+        renderDashboard(lastResult);
+        return;
+    }
 
-        // Pipeline metadata
-        if (lastResult.pipeline_mode) {
-            html += `<div class="d-flex flex-wrap gap-2 mb-3">`;
-            html += `<span class="badge bg-secondary">Pipeline: ${lastResult.pipeline_mode}</span>`;
-            if (lastResult.coder_difficulty) {
-                const diffBadge = {
-                    'HIGH_CONF': 'bg-success',
-                    'GRAY_ZONE': 'bg-warning text-dark',
-                    'LOW_CONF': 'bg-danger'
-                }[lastResult.coder_difficulty] || 'bg-secondary';
-                html += `<span class="badge ${diffBadge}">Confidence: ${lastResult.coder_difficulty}</span>`;
-            }
-            if (lastResult.needs_manual_review) {
-                html += `<span class="badge bg-warning text-dark">Manual Review Needed</span>`;
-            }
-            html += `</div>`;
-        }
+    if (dashboard) dashboard.classList.add('hidden');
+    if (legacy) legacy.classList.remove('hidden');
 
-        // CPT Codes section
-        html += `<div class="card mb-3 border-primary">`;
-        html += `<div class="card-header bg-primary text-white"><strong>CPT Codes</strong></div>`;
-        html += `<div class="card-body">`;
-
-        if (lastResult.cpt_codes && lastResult.cpt_codes.length > 0) {
-            html += `<div class="d-flex flex-wrap gap-2 mb-2">`;
-            lastResult.cpt_codes.forEach(code => {
-                html += `<span class="badge bg-primary fs-6">${code}</span>`;
-            });
-            html += `</div>`;
-        } else {
-            html += `<p class="text-muted mb-0">No CPT codes derived.</p>`;
-        }
-
-        // Suggestions with confidence
-        if (lastResult.suggestions && lastResult.suggestions.length > 0) {
-            html += `<hr><h6>Code Details</h6>`;
-            html += `<table class="table table-sm table-striped mb-0">`;
-            html += `<thead><tr><th>Code</th><th>Description</th><th>Confidence</th><th>Review</th></tr></thead>`;
-            html += `<tbody>`;
-            lastResult.suggestions.forEach(s => {
-                const confPct = (s.confidence * 100).toFixed(0);
-                const confBadge = s.confidence >= 0.9 ? 'bg-success' : s.confidence >= 0.7 ? 'bg-warning text-dark' : 'bg-danger';
-                const reviewBadge = s.review_flag === 'required' ? 'bg-danger' : s.review_flag === 'recommended' ? 'bg-warning text-dark' : 'bg-secondary';
-                html += `<tr>`;
-                html += `<td><code>${s.code}</code></td>`;
-                html += `<td>${s.description}</td>`;
-                html += `<td><span class="badge ${confBadge}">${confPct}%</span></td>`;
-                html += `<td><span class="badge ${reviewBadge}">${s.review_flag}</span></td>`;
-                html += `</tr>`;
-                if (s.rationale) {
-                    html += `<tr><td colspan="4"><small class="text-muted">${s.rationale}</small></td></tr>`;
-                }
-            });
-            html += `</tbody></table>`;
-        }
-        html += `</div></div>`;
-
-        // Financials section (if included)
-        if (lastResult.total_work_rvu !== null || lastResult.estimated_payment !== null) {
-            html += `<div class="card mb-3 border-success">`;
-            html += `<div class="card-header bg-success text-white"><strong>RVU & Payment</strong></div>`;
-            html += `<div class="card-body">`;
-            html += `<div class="row">`;
-            html += `<div class="col-md-6"><strong>Total Work RVU:</strong> ${lastResult.total_work_rvu?.toFixed(2) || 'N/A'}</div>`;
-            html += `<div class="col-md-6"><strong>Estimated Payment:</strong> $${lastResult.estimated_payment?.toFixed(2) || 'N/A'}</div>`;
-            html += `</div>`;
-
-            if (lastResult.per_code_billing && lastResult.per_code_billing.length > 0) {
-                html += `<hr><h6>Per-Code Breakdown</h6>`;
-                html += `<table class="table table-sm table-striped mb-0">`;
-                html += `<thead><tr><th>CPT</th><th>Work RVU</th><th>Payment</th></tr></thead>`;
-                html += `<tbody>`;
-                lastResult.per_code_billing.forEach(pcb => {
-                    html += `<tr>`;
-                    html += `<td><code>${pcb.cpt_code || pcb.code || 'N/A'}</code></td>`;
-                    html += `<td>${pcb.work_rvu?.toFixed(2) || 'N/A'}</td>`;
-                    html += `<td>$${pcb.payment?.toFixed(2) || pcb.allowed_facility_payment?.toFixed(2) || 'N/A'}</td>`;
-                    html += `</tr>`;
-                });
-                html += `</tbody></table>`;
-            }
-            html += `</div></div>`;
-        }
-
-        // Registry Extraction section
-        html += `<div class="card mb-3 border-info">`;
-        html += `<div class="card-header bg-info text-white"><strong>Registry Extraction</strong></div>`;
-        html += `<div class="card-body">`;
-
-        if (lastResult.registry && Object.keys(lastResult.registry).length > 0) {
-            const registryRows = buildRegistryDisplayRows({ record: lastResult.registry });
-            if (registryRows.length > 0) {
-                html += `<table class="table table-sm table-striped mb-0">`;
-                html += `<thead><tr><th>Field</th><th>Value</th></tr></thead>`;
-                html += `<tbody>`;
-                registryRows.forEach(row => {
-                    html += `<tr><td>${row.field}</td><td>${row.value}</td></tr>`;
-                });
-                html += `</tbody></table>`;
-            } else {
-                html += `<p class="text-muted mb-0">No registry fields extracted.</p>`;
-            }
-        } else {
-            html += `<p class="text-muted mb-0">No registry data available.</p>`;
-        }
-        html += `</div></div>`;
-
-        // Evidence section (if explain=true)
-        if (lastResult.evidence && Object.keys(lastResult.evidence).length > 0) {
-            html += `<div class="card mb-3 border-secondary">`;
-            html += `<div class="card-header bg-secondary text-white"><strong>Evidence</strong></div>`;
-            html += `<div class="card-body">`;
-            html += `<pre class="mb-0" style="max-height: 300px; overflow: auto;">${JSON.stringify(lastResult.evidence, null, 2)}</pre>`;
-            html += `</div></div>`;
-        }
-
-        // Warnings & Errors
-        if (lastResult.audit_warnings && lastResult.audit_warnings.length > 0) {
-            html += `<div class="alert alert-warning"><strong>Audit Warnings:</strong><ul class="mb-0">`;
-            lastResult.audit_warnings.forEach(w => { html += `<li>${w}</li>`; });
-            html += `</ul></div>`;
-        }
-
-        if (lastResult.validation_errors && lastResult.validation_errors.length > 0) {
-            html += `<div class="alert alert-danger"><strong>Validation Errors:</strong><ul class="mb-0">`;
-            lastResult.validation_errors.forEach(e => { html += `<li>${e}</li>`; });
-            html += `</ul></div>`;
-        }
-
-        // Versions
-        if (lastResult.kb_version || lastResult.policy_version || lastResult.processing_time_ms) {
-            html += `<div class="small text-muted mt-3">`;
-            if (lastResult.kb_version) html += `KB: ${lastResult.kb_version} · `;
-            if (lastResult.policy_version) html += `Policy: ${lastResult.policy_version} · `;
-            if (lastResult.processing_time_ms) html += `Time: ${lastResult.processing_time_ms.toFixed(0)}ms`;
-            html += `</div>`;
-        }
-
-        area.innerHTML = html;
-
-    } else if (currentMode === 'coder') {
+    if (currentMode === 'coder') {
         // Coder formatting
         let html = `<h4>Billing Codes</h4>`;
 
@@ -2144,7 +2315,7 @@ function showResultTab(tab) {
             html += `</div>`;
         }
         
-        area.innerHTML = html;
+        if (legacy) legacy.innerHTML = html;
 
     } else if (currentMode === 'registry') {
         // Replace the generic Object.entries + JSON.stringify behavior with a curated view model.
@@ -2165,7 +2336,7 @@ function showResultTab(tab) {
             html += `<h5 class="mt-4">Evidence</h5><pre>${JSON.stringify(lastResult.evidence, null, 2)}</pre>`;
         }
 
-        area.innerHTML = html;
+        if (legacy) legacy.innerHTML = html;
 
         const headerLabel = document.getElementById('registry-header-label');
         if (headerLabel) {
@@ -2253,7 +2424,7 @@ function showResultTab(tab) {
             html += `<h6>Registry Extraction</h6><pre class="bg-light p-2 border rounded">${JSON.stringify(extraction, null, 2)}</pre>`;
         }
 
-        area.innerHTML = html;
+        if (legacy) legacy.innerHTML = html;
     }
 }
 

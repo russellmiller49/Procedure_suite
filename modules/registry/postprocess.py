@@ -145,6 +145,7 @@ __all__ = [
     # Registry-record-level guardrails
     "populate_ebus_node_events_fallback",
     "sanitize_ebus_events",
+    "cull_hollow_ebus_claims",
     "reconcile_ebus_sampling_from_specimen_log",
     "enrich_ebus_node_event_sampling_details",
     "enrich_ebus_node_event_outcomes",
@@ -2770,8 +2771,76 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
     return warnings
 
 
+_PROCEDURE_DETAIL_SECTION_PATTERN = re.compile(
+    r"(?im)^\s*(?:procedure\s+in\s+detail|description\s+of\s+procedure|procedure\s+description)\s*:?"
+)
+_LINEAR_EBUS_MARKER_RE = re.compile(r"(?i)\b(?:ebus|endobronchial\s+ultrasound)\b")
+
+
+def cull_hollow_ebus_claims(record: RegistryRecord, full_text: str) -> list[str]:
+    """Cull hallucinated linear EBUS when no station evidence exists.
+
+    If linear_ebus.performed is true but there are no extracted node_events and no
+    stations_sampled, require an explicit EBUS marker in the PROCEDURE IN DETAIL
+    narrative (headers ignored). If absent, flip performed to false.
+    """
+    warnings: list[str] = []
+
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    if linear is None or getattr(linear, "performed", None) is not True:
+        return warnings
+
+    node_events = getattr(linear, "node_events", None)
+    if isinstance(node_events, list) and node_events:
+        return warnings
+
+    stations_sampled = getattr(linear, "stations_sampled", None)
+    if isinstance(stations_sampled, list) and stations_sampled:
+        return warnings
+
+    # If the note doesn't have a clear procedure-detail section, do not cull;
+    # the record may still be correct but the narrative is formatted differently.
+    text = full_text or ""
+    match = _PROCEDURE_DETAIL_SECTION_PATTERN.search(text)
+    if not match:
+        return warnings
+
+    procedure_detail = text[match.end() :].lstrip("\r\n ")
+    if _LINEAR_EBUS_MARKER_RE.search(procedure_detail):
+        return warnings
+
+    # No stations/events and no EBUS marker in the narrative body => treat as hallucination.
+    setattr(linear, "performed", False)
+    if hasattr(linear, "stations_sampled"):
+        setattr(linear, "stations_sampled", None)
+    if hasattr(linear, "stations_planned"):
+        setattr(linear, "stations_planned", None)
+    if hasattr(linear, "stations_detail"):
+        setattr(linear, "stations_detail", None)
+    if hasattr(linear, "passes_per_station"):
+        setattr(linear, "passes_per_station", None)
+    if hasattr(linear, "needle_gauge"):
+        setattr(linear, "needle_gauge", None)
+    if hasattr(linear, "needle_type"):
+        setattr(linear, "needle_type", None)
+    if hasattr(linear, "elastography_used"):
+        setattr(linear, "elastography_used", None)
+    if hasattr(linear, "elastography_pattern"):
+        setattr(linear, "elastography_pattern", None)
+    if hasattr(linear, "doppler_used"):
+        setattr(linear, "doppler_used", None)
+    if hasattr(linear, "node_events"):
+        setattr(linear, "node_events", [])
+
+    warnings.append(
+        "AUTO_CORRECTED: Culled hollow linear_ebus claim (no stations/text evidence)."
+    )
+    return warnings
+
+
 _EBUS_FALLBACK_STATION_RE = re.compile(
-    r"\b(?:station|site)\s*(\d{1,2}[RL]?(?:s|i)?)\b",
+    r"\b(?:station|level)\s*(\d{1,2}[RL]?(?:s|i)?)\b",
     re.IGNORECASE,
 )
 _EBUS_STATION_TOKEN_RE = re.compile(
@@ -3121,7 +3190,12 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
             station_tokens.append(match.group(1) or "")
         if in_sampled_section or in_station_list or "lymph node" in line.lower():
             for match in _EBUS_STATION_TOKEN_RE.finditer(line):
-                station_tokens.append(match.group(1) or "")
+                token = match.group(1) or ""
+                if token.isdigit():
+                    prefix = line[: match.start(1)]
+                    if re.search(r"(?i)\b(?:site|case|patient)\s+#?\s*$", prefix):
+                        continue
+                station_tokens.append(token)
 
         for token in station_tokens:
             station = normalize_station(token)
