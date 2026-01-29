@@ -36,6 +36,13 @@ This toolkit enables:
     ./scripts/devserver.sh
     ```
 
+    Then open:
+    - UI (Clinical Dashboard / PHI Redactor): `http://localhost:8000/ui/`
+    - Workflow overview: `http://localhost:8000/ui/workflow.html`
+
+    The UI flow is: paste note -> run PHI detection -> apply redactions -> submit scrubbed note -> review results.
+    Optional: edit values in **Flattened Tables (Editable)** (generates **Edited JSON (Training)**) and export JSON/tables.
+
 ## Recent Updates (2026-01-25)
 
 - **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `modules/registry/schema/ebus_events.py`.
@@ -67,7 +74,7 @@ This toolkit enables:
 | **`modules/registry/`** | Registry extraction with RegistryService and RegistryEngine |
 | **`modules/agents/`** | 3-agent pipeline: Parser → Summarizer → Structurer |
 | **`modules/reporter/`** | Template-based synoptic report generator |
-| **`/ui/phi_demo.html`** | Synthetic PHI demo UI for scrubbing → vault → review → reidentify |
+| **`modules/api/static/phi_redactor/`** | Main UI (served at `/ui/`): client-side PHI scrubbing + clinical dashboard |
 
 ## System Architecture
 
@@ -183,7 +190,7 @@ make preflight
 | `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks (seconds) | `180` |
 | `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks (seconds) | `60` |
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
-| `PROCSUITE_PIPELINE_MODE` | Pipeline mode: `current` or `extraction_first` | `current` |
+| `PROCSUITE_PIPELINE_MODE` | Pipeline mode (startup-enforced): `extraction_first` | `extraction_first` |
 | `REGISTRY_EXTRACTION_ENGINE` | Registry extraction engine: `engine`, `agents_focus_then_engine`, or `agents_structurer` | `engine` |
 | `REGISTRY_AUDITOR_SOURCE` | Registry auditor source (extraction-first): `raw_ml` or `disabled` | `raw_ml` |
 | `REGISTRY_ML_AUDIT_USE_BUCKETS` | Audit set = `high_conf + gray_zone` when `1`; else use `top_k + min_prob` | `1` |

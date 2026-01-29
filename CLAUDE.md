@@ -38,6 +38,21 @@ In production (`CODER_REQUIRE_PHI_REVIEW=true` or `PROCSUITE_ENV=production`), a
 
 Client-side PHI scrubbing is the long-term direction; the server can still scrub when `already_scrubbed=false`.
 
+## UI (Clinical Dashboard / PHI Redactor)
+
+The devserver mounts the PHI redactor UI as the main UI:
+
+- UI: `http://localhost:8000/ui/` (static files: `modules/api/static/phi_redactor/`)
+- Workflow tab: `http://localhost:8000/ui/workflow.html`
+
+Notable workflow features:
+
+- **New Note** clears the editor and all prior outputs (tables + JSON) between cases.
+- **Flattened Tables (Editable)** is collapsed by default; edits generate a second payload under **Edited JSON (Training)**:
+  - `edited_for_training=true`, `edited_at`, `edited_source=ui_flattened_tables`, and `edited_tables[]`.
+- **Export JSON** downloads the raw server response; **Export Tables** downloads the flattened tables as an Excel-readable `.xls` (HTML).
+- Clinical tables should reflect **clinical reality** from `registry` (performed/details) even when a related CPT code is bundled/suppressed.
+
 ## Recent Updates (2026-01-25)
 
 - **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `modules/registry/schema/ebus_events.py`.

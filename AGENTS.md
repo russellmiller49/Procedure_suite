@@ -34,6 +34,18 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
   - `PROCSUITE_ALLOW_LEGACY_ENDPOINTS` controls ID-based extraction endpoints (expected to be locked out in prod).
   - `PROCSUITE_ALLOW_REQUEST_MODE_OVERRIDE` controls request-mode overrides.
 
+## UI (PHI Redactor / Clinical Dashboard)
+
+- Served by `./scripts/devserver.sh` at `/ui/` (static files live in `modules/api/static/phi_redactor/`).
+- Workflow explainer page: `/ui/workflow.html` (links from the top bar).
+- **New Note**: clears the editor + all prior tables/JSON output to avoid confusion during long-running submits.
+- **Flattened Tables (Editable)** (collapsed by default): provides an edit-friendly view of key tables; some fields use dropdowns.
+  - When any flattened table value is edited, the UI generates a second payload under **Edited JSON (Training)** with:
+    - `edited_for_training=true`, `edited_at`, `edited_source=ui_flattened_tables`, and `edited_tables[]`.
+- **Export JSON** downloads the raw server response; **Export Tables** downloads the flattened tables as an Excel-readable `.xls` (HTML).
+- Clinical tables are **registry-driven** (e.g., `registry.*.performed`) and should not hide true clinical events due to billing bundling/suppression
+  (non-performed rows/cards may render dimmed when details exist).
+
 ## Recent Updates (2026-01-25)
 
 - **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `modules/registry/schema/ebus_events.py`.
