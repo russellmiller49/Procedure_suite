@@ -8,7 +8,7 @@ IMPORTANT: This is the authoritative source of truth for V2 -> V3-style boolean
 mapping. All consumers (ML data prep, registry service, etc.) should import from
 this module to ensure consistent semantics.
 
-NOTE: If data/knowledge/IP_Registry.json changes (e.g., new procedures added),
+NOTE: If the registry schema changes (e.g., new procedures added),
 update PROCEDURE_BOOLEAN_FIELDS and the mapping logic in extract_v2_booleans().
 """
 

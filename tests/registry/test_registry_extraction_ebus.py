@@ -4,6 +4,11 @@ from tests.utils.case_filter import load_synthetic_cases, filter_cases
 
 # Load cases once
 ALL_CASES = load_synthetic_cases()
+if not ALL_CASES:
+    pytest.skip(
+        "Synthetic registry cases fixture not available (data/synthetic_notes_with_registry.jsonl)",
+        allow_module_level=True,
+    )
 
 
 def _get_linear_ebus_field(record, field_name):

@@ -15,14 +15,9 @@ from typing import Any, cast
 
 from jsonschema import Draft7Validator
 
-from .knowledge_schema import KNOWLEDGE_SCHEMA
+from config.settings import KnowledgeSettings
 
-DEFAULT_KNOWLEDGE_FILE = (
-    Path(__file__).resolve().parents[2]
-    / "data"
-    / "knowledge"
-    / "ip_coding_billing_v3_0.json"
-)
+from .knowledge_schema import KNOWLEDGE_SCHEMA
 
 KNOWLEDGE_ENV_VAR = "PSUITE_KNOWLEDGE_FILE"
 KNOWLEDGE_WATCH_ENV_VAR = "PSUITE_KNOWLEDGE_WATCH"
@@ -70,8 +65,10 @@ def _validate_filename_semver_matches_version(document: dict[str, Any], target: 
         return
     if file_semver != kb_semver:
         raise KnowledgeValidationError(
-            f"KB filename semver v{file_semver[0]}_{file_semver[1]} does not match internal version "
-            f"{document.get('version')!r} ({target}). Set {KNOWLEDGE_ALLOW_VERSION_MISMATCH_ENV_VAR}=1 to override."
+            "KB filename semver "
+            f"v{file_semver[0]}_{file_semver[1]} does not match internal version "
+            f"{document.get('version')!r} ({target}). "
+            f"Set {KNOWLEDGE_ALLOW_VERSION_MISMATCH_ENV_VAR}=1 to override."
         )
 
 
@@ -292,10 +289,7 @@ def knowledge_snapshot(top_n: int = 20) -> KnowledgeSnapshot:
 def _resolve_path(override: str | Path | None) -> Path:
     if override:
         return Path(override).expanduser().resolve()
-    env_value = os.environ.get(KNOWLEDGE_ENV_VAR)
-    if env_value:
-        return Path(env_value).expanduser().resolve()
-    return DEFAULT_KNOWLEDGE_FILE
+    return KnowledgeSettings().kb_path
 
 
 def _refresh_cache(target: Path, mtime: float | None = None) -> None:
@@ -380,5 +374,4 @@ __all__ = [
     "KNOWLEDGE_ENV_VAR",
     "KNOWLEDGE_WATCH_ENV_VAR",
     "KNOWLEDGE_ALLOW_VERSION_MISMATCH_ENV_VAR",
-    "DEFAULT_KNOWLEDGE_FILE",
 ]

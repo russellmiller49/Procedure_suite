@@ -11,10 +11,10 @@ import json
 from pathlib import Path
 from typing import Any
 
+from config.settings import KnowledgeSettings
 
-# Path to the parsed addon templates JSON
-# Path is: modules/reporting/ip_addons.py -> reporting -> modules -> repo_root
-_ADDONS_JSON_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "ip_addon_templates_parsed.json"
+def _addons_json_path() -> Path:
+    return KnowledgeSettings().addon_templates_path
 
 # Module-level cache
 _ADDONS_DATA: dict[str, Any] | None = None
@@ -24,18 +24,19 @@ _ADDON_METADATA: dict[str, dict[str, Any]] = {}
 
 
 def _load_addons() -> None:
-    """Load addon templates from JSON file at import time."""
+    """Load addon templates from JSON file (lazy cached)."""
     global _ADDONS_DATA, _ADDONS_BY_SLUG, _ADDONS_BY_CATEGORY, _ADDON_METADATA
 
     if _ADDONS_DATA is not None:
         return
 
-    if not _ADDONS_JSON_PATH.exists():
+    addons_path = _addons_json_path()
+    if not addons_path.exists():
         _ADDONS_DATA = {"templates": []}
         return
 
     try:
-        _ADDONS_DATA = json.loads(_ADDONS_JSON_PATH.read_text(encoding="utf-8"))
+        _ADDONS_DATA = json.loads(addons_path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError) as exc:
         raise RuntimeError(f"Failed to load addon templates: {exc}") from exc
 
@@ -63,10 +64,6 @@ def _load_addons() -> None:
         _ADDONS_BY_CATEGORY[category].append(template)
 
 
-# Load at module import time
-_load_addons()
-
-
 def get_addon_body(slug: str) -> str | None:
     """Get the body text of an addon template by its slug.
 
@@ -77,6 +74,7 @@ def get_addon_body(slug: str) -> str | None:
     Returns:
         The body text of the template, or None if not found
     """
+    _load_addons()
     return _ADDONS_BY_SLUG.get(slug)
 
 
@@ -89,6 +87,7 @@ def get_addon_metadata(slug: str) -> dict[str, Any] | None:
     Returns:
         Dict with title, category, cpt_codes, and body; or None if not found
     """
+    _load_addons()
     return _ADDON_METADATA.get(slug)
 
 
@@ -98,6 +97,7 @@ def list_addon_slugs() -> list[str]:
     Returns:
         List of all slug identifiers
     """
+    _load_addons()
     return list(_ADDONS_BY_SLUG.keys())
 
 
@@ -110,6 +110,7 @@ def list_addons_by_category(category: str) -> list[dict[str, Any]]:
     Returns:
         List of template dicts in that category
     """
+    _load_addons()
     return _ADDONS_BY_CATEGORY.get(category, [])
 
 
@@ -119,6 +120,7 @@ def list_categories() -> list[str]:
     Returns:
         List of category names
     """
+    _load_addons()
     if _ADDONS_DATA:
         return _ADDONS_DATA.get("categories", list(_ADDONS_BY_CATEGORY.keys()))
     return []
@@ -130,6 +132,7 @@ def get_addon_count() -> int:
     Returns:
         Number of addon templates loaded
     """
+    _load_addons()
     return len(_ADDONS_BY_SLUG)
 
 
@@ -142,6 +145,7 @@ def find_addons_by_cpt(cpt_code: str) -> list[dict[str, Any]]:
     Returns:
         List of template metadata dicts that include this CPT code
     """
+    _load_addons()
     results = []
     cpt_str = str(cpt_code)
     for slug, meta in _ADDON_METADATA.items():
@@ -166,6 +170,7 @@ def render_addon(slug: str, context: dict[str, Any] | None = None) -> str | None
     Returns:
         The rendered addon text, or None if slug not found
     """
+    _load_addons()
     body = get_addon_body(slug)
     if body is None:
         return None
@@ -193,6 +198,7 @@ def get_addon_title(slug: str) -> str | None:
     Returns:
         The title string, or None if not found
     """
+    _load_addons()
     meta = _ADDON_METADATA.get(slug)
     return meta.get("title") if meta else None
 
@@ -203,6 +209,7 @@ def validate_addons() -> dict[str, list[str]]:
     Returns:
         Dict with 'errors' and 'warnings' lists
     """
+    _load_addons()
     errors = []
     warnings = []
     seen_slugs = set()

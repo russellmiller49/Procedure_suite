@@ -1,4 +1,4 @@
-"""Registry data structures built from the JSON schema in data/knowledge/IP_Registry.json.
+"""Registry data structures built from the configured JSON schema.
 
 Implementation note: this module holds the dynamic RegistryRecord builder and related
 type overrides. The stable public import surface remains `modules.registry.schema`.
@@ -8,11 +8,11 @@ from __future__ import annotations
 
 import json
 import re
-from pathlib import Path
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, create_model, field_serializer, model_validator
 
+from config.settings import KnowledgeSettings
 from modules.common.spans import Span
 
 from modules.registry.schema.ebus_events import NodeActionType, NodeInteraction, NodeOutcomeType
@@ -26,7 +26,8 @@ from modules.registry.schema_granular import (
     validate_ebus_consistency,
 )
 
-_SCHEMA_PATH = Path(__file__).resolve().parents[3] / "data" / "knowledge" / "IP_Registry.json"
+_SCHEMA_PATH = KnowledgeSettings().registry_schema_path
+
 
 class LinearEBUSProcedure(BaseModel):
     """Custom type override for procedures_performed.linear_ebus.

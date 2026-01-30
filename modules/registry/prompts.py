@@ -1,7 +1,7 @@
 """Prompts for LLM-based registry extraction.
 
 Two prompt modes are supported:
-- Legacy prompt (v2): field list derived from `data/knowledge/IP_Registry.json`.
+- Legacy prompt (v2): field list derived from the configured registry schema.
 - Schema-driven prompt (v3): embeds the Pydantic JSON schema so the model sees
   nested structures like EBUS `node_events` (avoids old flat-list outputs).
 """
@@ -12,6 +12,8 @@ import json
 import os
 from functools import lru_cache
 from pathlib import Path
+
+from config.settings import KnowledgeSettings
 
 _SYSTEM_PROMPT_PATH = Path(__file__).parent / "registry_system_prompt.txt"
 _DEFAULT_SCHEMA_VERSION = "v3"
@@ -36,7 +38,7 @@ PROMPT_HEADER = (
     "Do not infer that a procedure occurred without verbatim evidence of the action."
 )
 
-_SCHEMA_PATH = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "IP_Registry.json"
+_SCHEMA_PATH = KnowledgeSettings().registry_schema_path
 _PROMPT_CACHE: str | None = None
 _FIELD_INSTRUCTIONS_CACHE: dict[str, str] | None = None
 _FIELD_INSTRUCTION_OVERRIDES: dict[str, str] = {

@@ -15,7 +15,7 @@ from __future__ import annotations
 import os
 import re
 from dataclasses import dataclass, field
-from typing import Dict, Optional, Set, Any
+from typing import Any, Dict, Optional, Set, TYPE_CHECKING
 
 from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
 from modules.domain.coding_rules.coding_rules_engine import CodingRulesEngine
@@ -23,6 +23,9 @@ from modules.domain.coding_rules.evidence_context import EvidenceContext
 from observability.logging_config import get_logger
 
 logger = get_logger("rule_engine")
+
+if TYPE_CHECKING:  # pragma: no cover
+    from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 
 
 @dataclass
@@ -72,6 +75,10 @@ class RuleEngine:
         self,
         kb_repo: KnowledgeBaseRepository,
         rules_mode: Optional[str] = None,
+        *,
+        code_families_config: dict[str, object] | None = None,
+        ncci_data: dict[str, object] | None = None,
+        ip_kb: "IPCodingKnowledgeBase | None" = None,
     ):
         """Initialize the rule engine.
 
@@ -82,16 +89,20 @@ class RuleEngine:
         """
         self.kb_repo = kb_repo
         self.rules_mode = rules_mode or os.getenv("CODING_RULES_MODE", "python")
+        self.code_families_config = code_families_config
+        self.ncci_data = ncci_data
 
         # Initialize the IP KB for group/evidence extraction
         # This is the clinical knowledge base that detects procedures from text
         try:
-            from pathlib import Path
             from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 
-            # Default KB path (same as config.kb_path default)
-            default_kb_path = Path("data/knowledge/ip_coding_billing_v3_0.json")
-            self._ip_kb = IPCodingKnowledgeBase(default_kb_path)
+            if ip_kb is not None and isinstance(ip_kb, IPCodingKnowledgeBase):
+                self._ip_kb = ip_kb
+            else:
+                from config.settings import KnowledgeSettings
+
+                self._ip_kb = IPCodingKnowledgeBase(KnowledgeSettings().kb_path)
             self._ip_kb_available = True
             logger.info(
                 "IP Knowledge Base initialized",

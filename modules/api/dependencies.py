@@ -10,7 +10,7 @@ from functools import lru_cache
 
 from fastapi import Depends
 
-from config.settings import CoderSettings
+from config.settings import CoderSettings, KnowledgeSettings
 
 # QA Pipeline imports
 from modules.api.services.qa_pipeline import (
@@ -33,6 +33,7 @@ from modules.coder.application.smart_hybrid_policy import (
     build_hybrid_orchestrator,
 )
 from modules.domain.coding_rules.rule_engine import RuleEngine
+from modules.domain.knowledge_base.repository import KnowledgeBaseRepository
 from modules.domain.procedure_store.repository import ProcedureStore
 from modules.registry.adapters.schema_registry import get_schema_registry
 from modules.registry.application.registry_service import RegistryService
@@ -57,6 +58,68 @@ _procedure_store: ProcedureStore | None = None
 def get_coder_settings() -> CoderSettings:
     """Get cached CoderSettings from environment."""
     return CoderSettings()
+
+
+@lru_cache(maxsize=1)
+def get_knowledge_settings() -> KnowledgeSettings:
+    """Get cached KnowledgeSettings from environment."""
+    return KnowledgeSettings()
+
+
+@lru_cache(maxsize=1)
+def get_kb_document() -> dict[str, object]:
+    """Load and cache the raw KB JSON document once per process."""
+    from modules.common.knowledge import get_knowledge
+
+    settings = get_knowledge_settings()
+    data = get_knowledge(settings.kb_path)
+    if not isinstance(data, dict):
+        return {}
+    return dict(data)
+
+
+@lru_cache(maxsize=1)
+def get_kb_repo() -> KnowledgeBaseRepository:
+    """Create a cached KB repository instance from the centralized KB path."""
+    settings = get_knowledge_settings()
+    try:
+        return JsonKnowledgeBaseAdapter(settings.kb_path, raw_data=get_kb_document())
+    except TypeError:
+        # Backwards compatibility: older adapter signature.
+        return JsonKnowledgeBaseAdapter(settings.kb_path)
+
+
+@lru_cache(maxsize=1)
+def get_code_families_config() -> dict[str, object]:
+    """Load and cache the static code family hierarchy config."""
+    import json
+
+    settings = get_knowledge_settings()
+    with settings.families_path.open(encoding="utf-8") as handle:
+        data = json.load(handle)
+    return dict(data) if isinstance(data, dict) else {}
+
+
+@lru_cache(maxsize=1)
+def get_ncci_ptp_config() -> dict[str, object]:
+    """Load and cache NCCI PTP bundling rules."""
+    import json
+
+    settings = get_knowledge_settings()
+    with settings.ncci_path.open(encoding="utf-8") as handle:
+        data = json.load(handle)
+    return dict(data) if isinstance(data, dict) else {}
+
+
+@lru_cache(maxsize=1)
+def get_addon_templates_document() -> dict[str, object]:
+    """Load and cache add-on templates JSON."""
+    import json
+
+    settings = get_knowledge_settings()
+    with settings.addon_templates_path.open(encoding="utf-8") as handle:
+        data = json.load(handle)
+    return dict(data) if isinstance(data, dict) else {}
 
 
 @lru_cache(maxsize=1)
@@ -85,7 +148,7 @@ def get_coding_service() -> CodingService:
     )
 
     # 1. Knowledge base repository
-    kb_repo = JsonKnowledgeBaseAdapter(config.kb_path)
+    kb_repo = get_kb_repo()
     logger.info(f"Loaded KB version: {kb_repo.version}")
 
     # 2. Keyword mapping repository
@@ -98,7 +161,28 @@ def get_coding_service() -> CodingService:
 
     # 4. Rule engine (with CodingRulesEngine mode from environment)
     rules_mode = os.getenv("CODING_RULES_MODE", "python")
-    rule_engine = RuleEngine(kb_repo, rules_mode=rules_mode)
+    families_cfg = get_code_families_config()
+    ncci_cfg = get_ncci_ptp_config()
+
+    ip_kb = None
+    try:
+        from modules.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
+
+        ip_kb = IPCodingKnowledgeBase(get_kb_document())
+    except Exception as exc:
+        logger.warning(
+            "IPCodingKnowledgeBase unavailable (%s); using fallback keyword matching",
+            exc,
+        )
+        ip_kb = None
+
+    rule_engine = RuleEngine(
+        kb_repo,
+        rules_mode=rules_mode,
+        code_families_config=families_cfg,
+        ncci_data=ncci_cfg,
+        ip_kb=ip_kb,
+    )
     logger.info(
         f"Rule engine version: {rule_engine.version}",
         extra={"rules_mode": rules_mode},
@@ -168,6 +252,12 @@ def reset_coding_service_cache() -> None:
     """
     get_coding_service.cache_clear()
     get_coder_settings.cache_clear()
+    get_knowledge_settings.cache_clear()
+    get_kb_document.cache_clear()
+    get_kb_repo.cache_clear()
+    get_code_families_config.cache_clear()
+    get_ncci_ptp_config.cache_clear()
+    get_addon_templates_document.cache_clear()
 
 
 @lru_cache(maxsize=1)
@@ -194,7 +284,14 @@ def get_registry_service() -> RegistryService:
     schema_registry = get_schema_registry()
 
     # Build hybrid orchestrator for ML-first coding
-    hybrid_orchestrator = build_hybrid_orchestrator()
+    from modules.coder.ncci import NCCIEngine
+    from modules.coder.rules_engine import CodingRulesEngine
+
+    rules_engine = CodingRulesEngine(
+        families_cfg=get_code_families_config(),
+        ncci_engine=NCCIEngine(ptp_cfg=get_ncci_ptp_config()),
+    )
+    hybrid_orchestrator = build_hybrid_orchestrator(rules_engine=rules_engine)
     logger.info("SmartHybridOrchestrator built for RegistryService")
 
     service = RegistryService(
@@ -217,6 +314,8 @@ def reset_registry_service_cache() -> None:
     Useful for testing or when settings change.
     """
     get_registry_service.cache_clear()
+    get_code_families_config.cache_clear()
+    get_ncci_ptp_config.cache_clear()
 
 
 def get_procedure_store() -> ProcedureStore:

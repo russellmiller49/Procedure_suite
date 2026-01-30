@@ -29,6 +29,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+from config.settings import KnowledgeSettings
 from modules.ml_coder.registry_label_schema import REGISTRY_LABELS
 from modules.ml_coder.valid_ip_codes import VALID_IP_CODES
 
@@ -498,7 +499,7 @@ def main():
     # 3. Load Synthetic Data (Golden JSONs)
     synthetic_rows = []
     # Search in the canonical golden extractions directory
-    golden_dir = Path('data/knowledge/golden_extractions_final')
+    golden_dir = KnowledgeSettings().kb_path.parent / "golden_extractions_final"
     json_files = glob.glob(str(golden_dir / 'golden_*.json'))
     
     print(f"Loading synthetic data from {len(json_files)} JSON files...")

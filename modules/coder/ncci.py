@@ -7,15 +7,16 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
+from config.settings import KnowledgeSettings
+
 NCCI_BUNDLED_REASON_PREFIX = "ncci:bundled_into:"
 
 
 @lru_cache()
-def load_ncci_ptp() -> Dict[str, Any]:
+def load_ncci_ptp(path: str | Path | None = None) -> Dict[str, Any]:
     """Load NCCI procedure-to-procedure rules."""
-    root = Path(__file__).resolve().parents[2]
-    path = root / "data" / "knowledge" / "ncci_ptp.v1.json"
-    with path.open() as f:
+    cfg_path = Path(path) if path is not None else KnowledgeSettings().ncci_path
+    with cfg_path.open(encoding="utf-8") as f:
         data: Dict[str, Any] = json.load(f)
     return data
 

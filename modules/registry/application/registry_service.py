@@ -804,6 +804,35 @@ class RegistryService:
         meta["masked_note_text"] = masked_note_text
         meta["masking_meta"] = mask_meta
 
+        schema_version = os.getenv("REGISTRY_SCHEMA_VERSION", "v3").strip().lower()
+        meta["schema_version"] = schema_version
+
+        disease_scan_text: str | None = None
+
+        def _apply_disease_burden_overrides(record_in: RegistryRecord) -> RegistryRecord:
+            nonlocal disease_scan_text
+
+            if schema_version != "v3":
+                return record_in
+
+            try:
+                if disease_scan_text is None:
+                    from modules.registry.processing.masking import mask_offset_preserving
+
+                    disease_scan_text = mask_offset_preserving(raw_note_text or "")
+
+                from modules.registry.processing.disease_burden import apply_disease_burden_overrides
+
+                record_out, burden_warnings = apply_disease_burden_overrides(
+                    record_in,
+                    note_text=disease_scan_text,
+                )
+                warnings.extend(burden_warnings)
+                return record_out
+            except Exception as exc:
+                warnings.append(f"DISEASE_BURDEN_OVERRIDE_FAILED: {type(exc).__name__}")
+                return record_in
+
         text_for_extraction = masked_note_text
         if extraction_engine == "engine":
             pass
@@ -850,6 +879,7 @@ class RegistryService:
                 record, pathology_warnings = apply_pathology_extraction(record, masked_note_text)
                 warnings.extend(pathology_warnings)
 
+                record = _apply_disease_burden_overrides(record)
                 return record, warnings, meta
             except NotImplementedError as exc:
                 warnings.append(str(exc))
@@ -1673,6 +1703,7 @@ class RegistryService:
                 if parallel_result.needs_review:
                     warnings.extend(parallel_result.review_reasons)
 
+                record = _apply_disease_burden_overrides(record)
                 return record, warnings, meta
             except Exception as exc:
                 warnings.append(f"Parallel NER pathway failed ({exc}); falling back to engine")
@@ -1715,6 +1746,7 @@ class RegistryService:
         record, pathology_warnings = apply_pathology_extraction(record, masked_note_text)
         warnings.extend(pathology_warnings)
 
+        record = _apply_disease_burden_overrides(record)
         return record, warnings, meta
 
     def _extract_fields_extraction_first(self, raw_note_text: str) -> RegistryExtractionResult:
@@ -2219,10 +2251,6 @@ class RegistryService:
         record, ebus_station_warnings = _apply_linear_ebus_station_detail_heuristics(nav_scan_text, record)
         if ebus_station_warnings:
             extraction_warnings.extend(ebus_station_warnings)
-
-        record, cao_detail_warnings = _apply_cao_detail_heuristics(nav_scan_text, record)
-        if cao_detail_warnings:
-            extraction_warnings.extend(cao_detail_warnings)
 
         # Re-run granular→aggregate propagation after any heuristics/overrides that
         # update granular_data (e.g., navigation targets, cryobiopsy sites).

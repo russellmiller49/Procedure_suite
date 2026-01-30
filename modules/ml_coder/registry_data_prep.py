@@ -36,6 +36,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from config.settings import KnowledgeSettings
 from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
 from modules.ml_coder.registry_label_constraints import apply_label_constraints
 
@@ -617,7 +618,7 @@ def filter_rare_labels(
 
 
 def prepare_registry_training_splits(
-    golden_dir: Path | str = None,
+    golden_dir: Path | str | None = None,
     human_labels_csv: Path | str | None = None,
     min_label_count: int = 5,
     train_ratio: float = 0.70,
@@ -635,8 +636,8 @@ def prepare_registry_training_splits(
     5. Ensures encounter-level grouping (no data leakage)
 
     Args:
-        golden_dir: Directory with golden_*.json files. Defaults to
-                    data/knowledge/golden_extractions_final or golden_extractions
+        golden_dir: Directory with golden_*.json files. Defaults to common
+                    golden-extraction subdirectories under the KB directory.
         human_labels_csv: Optional CSV of human labels to merge as Tier-0
         min_label_count: Minimum positive examples required per label
         train_ratio: Training set fraction (default 0.70)
@@ -657,10 +658,11 @@ def prepare_registry_training_splits(
     """
     # Resolve golden directory
     if golden_dir is None:
+        knowledge_dir = KnowledgeSettings().kb_path.parent
         candidates = [
-            Path("data/knowledge/golden_extractions_final"),
-            Path("data/knowledge/golden_extractions_scrubbed"),
-            Path("data/knowledge/golden_extractions"),
+            knowledge_dir / "golden_extractions_final",
+            knowledge_dir / "golden_extractions_scrubbed",
+            knowledge_dir / "golden_extractions",
         ]
         for candidate in candidates:
             if candidate.exists():

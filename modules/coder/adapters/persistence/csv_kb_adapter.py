@@ -61,15 +61,21 @@ def _validate_filename_semver_matches_version(kb_version: object, kb_path: Path)
 class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
     """Adapter that loads KB from the ip_coding_billing JSON format."""
 
-    def __init__(self, data_path: str | Path):
+    def __init__(self, data_path: str | Path, *, raw_data: dict | None = None):
         self._data_path = Path(data_path)
         self._raw_data: dict = {}
+        self._raw_data_provided = raw_data is not None
         self._procedures: dict[str, ProcedureInfo] = {}
         self._ncci_pairs: dict[str, list[NCCIPair]] = {}
         self._mer_groups: dict[str, str] = {}
         self._addon_codes: set[str] = set()
         self._all_codes: set[str] = set()
         self._version: str = ""
+
+        if raw_data is not None:
+            if not isinstance(raw_data, dict):
+                raise KnowledgeBaseError("KB raw_data must be a dict")
+            self._raw_data = raw_data
 
         self._load_data()
 
@@ -83,14 +89,15 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
 
     def _load_data(self) -> None:
         """Load and parse the knowledge base JSON file."""
-        if not self._data_path.is_file():
-            raise KnowledgeBaseError(f"KB file not found: {self._data_path}")
+        if not self._raw_data_provided:
+            if not self._data_path.is_file():
+                raise KnowledgeBaseError(f"KB file not found: {self._data_path}")
 
-        try:
-            with self._data_path.open() as f:
-                self._raw_data = json.load(f)
-        except json.JSONDecodeError as e:
-            raise KnowledgeBaseError(f"Invalid JSON in KB file: {e}")
+            try:
+                with self._data_path.open() as f:
+                    self._raw_data = json.load(f)
+            except json.JSONDecodeError as e:
+                raise KnowledgeBaseError(f"Invalid JSON in KB file: {e}")
 
         self._version = self._raw_data.get("version", "unknown")
         _validate_filename_semver_matches_version(self._version, self._data_path)

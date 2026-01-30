@@ -27,7 +27,8 @@ if [[ "${PROCSUITE_FAST_MODE:-0}" == "1" ]]; then
 fi
 
 # Knowledge base
-export PSUITE_KNOWLEDGE_FILE="${PSUITE_KNOWLEDGE_FILE:-data/knowledge/ip_coding_billing_v3_0.json}"
+# - Override via `PSUITE_KNOWLEDGE_FILE` (preferred) or `CODER_KB_PATH` (legacy).
+# - Defaults are resolved in `config/settings.py:KnowledgeSettings`.
 
 # Enable LLM Advisor for dev server to verify reliability fixes
 export CODER_USE_LLM_ADVISOR="${CODER_USE_LLM_ADVISOR:-true}"
@@ -56,7 +57,7 @@ echo "[devserver] Starting Procedure Suite API (dev mode)"
 echo "[devserver] =============================================="
 echo "[devserver] PORT=${PORT:-8000}"
 echo "[devserver] MODEL_BACKEND=${MODEL_BACKEND}"
-echo "[devserver] PSUITE_KNOWLEDGE_FILE=${PSUITE_KNOWLEDGE_FILE}"
+echo "[devserver] PSUITE_KNOWLEDGE_FILE=${PSUITE_KNOWLEDGE_FILE-<unset>}"
 echo "[devserver] ENABLE_UMLS_LINKER=${ENABLE_UMLS_LINKER}"
 echo "[devserver] OMP_NUM_THREADS=${OMP_NUM_THREADS}"
 echo "[devserver] =============================================="

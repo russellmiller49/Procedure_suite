@@ -35,7 +35,10 @@ def test_note_002_regression(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
     monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
 
-    note_text = Path("data/granular annotations/notes_text/note_002.txt").read_text()
+    note_path = Path("data/granular annotations/notes_text/note_002.txt")
+    if not note_path.is_file():
+        pytest.skip(f"Fixture note not available: {note_path}")
+    note_text = note_path.read_text(encoding="utf-8")
 
     result = RegistryService().extract_fields(note_text)
     record = result.record

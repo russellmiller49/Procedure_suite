@@ -8,10 +8,11 @@ import os
 from pathlib import Path
 from typing import List
 
+from config.settings import KnowledgeSettings
 from modules.common.llm import GeminiLLM, OpenAILLM
 from modules.registry.prompts import FIELD_INSTRUCTIONS
 
-_SCHEMA_PATH = Path(__file__).resolve().parents[3] / "data" / "knowledge" / "IP_Registry.json"
+_SCHEMA_PATH = KnowledgeSettings().registry_schema_path
 
 
 @dataclass

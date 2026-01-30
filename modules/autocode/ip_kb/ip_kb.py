@@ -75,10 +75,15 @@ class IPCodingKnowledgeBase:
         "pdt_endobronchial": [],  # No mapping available; would need KB update
     }
 
-    def __init__(self, json_path: Path | str):
-        self.json_path = Path(json_path)
-        with open(self.json_path, "r") as f:
-            self.raw = json.load(f)
+    def __init__(self, json_source: Path | str | Mapping[str, Any]):
+        self.json_path: Path | None
+        if isinstance(json_source, (str, Path)):
+            self.json_path = Path(json_source)
+            with self.json_path.open(encoding="utf-8") as handle:
+                self.raw = json.load(handle)
+        else:
+            self.json_path = None
+            self.raw = dict(json_source)
 
         self.metadata: Dict[str, Any] = self.raw.get("metadata", {})
         self.code_to_groups: Dict[str, Set[str]] = {}

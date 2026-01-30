@@ -356,9 +356,9 @@ def render_procedure_bundle(bundle: dict[str, Any], addon_getter: callable = Non
         except ImportError:
             # Fall back to loading directly
             import json
-            from pathlib import Path
-            # Path is: modules/reporting/macro_engine.py -> reporting -> modules -> repo_root
-            _addons_path = Path(__file__).resolve().parents[2] / "data" / "knowledge" / "ip_addon_templates_parsed.json"
+            from config.settings import KnowledgeSettings
+
+            _addons_path = KnowledgeSettings().addon_templates_path
             if _addons_path.exists():
                 _data = json.loads(_addons_path.read_text(encoding="utf-8"))
                 _by_slug = {t["slug"]: t["body"] for t in _data.get("templates", [])}

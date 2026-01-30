@@ -2,18 +2,70 @@
 
 from __future__ import annotations
 
-from pydantic_settings import BaseSettings
-from pydantic import Field
+from pathlib import Path
 from typing import Optional
+
+from pydantic import AliasChoices, Field, model_validator
+from pydantic_settings import BaseSettings
+
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _resolve_repo_path(path: Path) -> Path:
+    if path.is_absolute():
+        return path
+    return (_REPO_ROOT / path).resolve()
+
+
+class KnowledgeSettings(BaseSettings):
+    """Centralized configuration for local knowledge/config files.
+
+    This is the single source of truth for file paths used across the app. It
+    preserves backwards compatibility with legacy environment variables during
+    the transition period.
+    """
+
+    kb_path: Path = Field(
+        default=Path("data/knowledge/ip_coding_billing_v3_0.json"),
+        validation_alias=AliasChoices("CODER_KB_PATH", "PSUITE_KNOWLEDGE_FILE"),
+    )
+    ncci_path: Path = Field(
+        default=Path("data/knowledge/ncci_ptp.v1.json"),
+        validation_alias="PSUITE_NCCI_FILE",
+    )
+    families_path: Path = Field(
+        default=Path("data/knowledge/code_families.v1.json"),
+        validation_alias="PSUITE_FAMILIES_FILE",
+    )
+    registry_schema_path: Path = Field(
+        default=Path("data/knowledge/IP_Registry.json"),
+        validation_alias="PSUITE_REGISTRY_SCHEMA_FILE",
+    )
+    addon_templates_path: Path = Field(
+        default=Path("data/knowledge/ip_addon_templates_parsed.json"),
+        validation_alias="PSUITE_ADDON_TEMPLATES_FILE",
+    )
+
+    model_config = {"extra": "ignore"}
+
+    @model_validator(mode="after")
+    def _resolve_paths(self) -> "KnowledgeSettings":
+        self.kb_path = _resolve_repo_path(self.kb_path)
+        self.ncci_path = _resolve_repo_path(self.ncci_path)
+        self.families_path = _resolve_repo_path(self.families_path)
+        self.registry_schema_path = _resolve_repo_path(self.registry_schema_path)
+        self.addon_templates_path = _resolve_repo_path(self.addon_templates_path)
+        return self
 
 
 class CoderSettings(BaseSettings):
     """Settings for the CPT coding pipeline."""
 
     model_version: str = "gemini-2.5-flash"
-    kb_path: str = "data/knowledge/ip_coding_billing_v3_0.json"
+    kb_path: Path = Field(default_factory=lambda: KnowledgeSettings().kb_path)
     kb_version: str = "v3_0"
-    keyword_mapping_dir: str = "data/keyword_mappings"
+    keyword_mapping_dir: Path = Path("data/keyword_mappings")
     keyword_mapping_version: str = "v1"
 
     # Smart hybrid thresholds
@@ -27,6 +79,12 @@ class CoderSettings(BaseSettings):
     cms_conversion_factor: float = 33.4009
 
     model_config = {"env_prefix": "CODER_"}
+
+    @model_validator(mode="after")
+    def _resolve_paths(self) -> "CoderSettings":
+        self.kb_path = _resolve_repo_path(self.kb_path)
+        self.keyword_mapping_dir = _resolve_repo_path(self.keyword_mapping_dir)
+        return self
 
 
 class ReporterSettings(BaseSettings):

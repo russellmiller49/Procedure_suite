@@ -164,18 +164,19 @@ def _append_modality(site: dict[str, Any], modality: str) -> None:
     apps.append({"modality": modality})
 
 
-def extract_cao_interventions_detail(note_text: str) -> list[dict[str, Any]]:
-    """Extract CAO site detail into v3 granular format.
-
-    Returns a list of dicts compatible with granular_data.cao_interventions_detail.
-    """
+def _extract_cao_interventions_detail(
+    note_text: str,
+    *,
+    collect_pct_candidates: bool,
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, set[int]]]]:
     text = _maybe_unescape_newlines(note_text or "")
     if not text.strip():
-        return []
+        return [], {}
     if not _CAO_HINT_RE.search(text):
-        return []
+        return [], {}
 
     sites: dict[str, dict[str, Any]] = {}
+    pct_candidates: dict[str, dict[str, set[int]]] = {}
     current_location: str | None = None
     post_context_remaining = 0
     fallback_location = "Trachea" if re.search(r"(?i)\btrachea\b", text) else None
@@ -188,6 +189,17 @@ def extract_cao_interventions_detail(note_text: str) -> list[dict[str, Any]]:
     def _assign_pct(loc: str, pct: int, *, is_post: bool) -> None:
         pct_int = max(0, min(100, int(pct)))
         site = _get_site(loc)
+
+        if collect_pct_candidates:
+            entry = pct_candidates.setdefault(
+                loc,
+                {"pre_obstruction_pct": set(), "post_obstruction_pct": set()},
+            )
+            if is_post:
+                entry["post_obstruction_pct"].add(pct_int)
+            else:
+                entry["pre_obstruction_pct"].add(pct_int)
+
         if is_post:
             existing = site.get("post_obstruction_pct")
             if existing is None:
@@ -212,7 +224,7 @@ def extract_cao_interventions_detail(note_text: str) -> list[dict[str, Any]]:
             is_post = True
 
         # Determine location context for sentences with no explicit location on the match.
-        locations_in_sentence = []
+        locations_in_sentence: list[str] = []
         for canonical, pattern in _LOCATION_PATTERNS:
             if pattern.search(sentence):
                 locations_in_sentence.append(canonical)
@@ -395,4 +407,20 @@ def extract_cao_interventions_detail(note_text: str) -> list[dict[str, Any]]:
         if item.get("stent_placed_at_site") is True:
             filtered.append(item)
             continue
-    return filtered
+    return filtered, pct_candidates
+
+
+def extract_cao_interventions_detail(note_text: str) -> list[dict[str, Any]]:
+    """Extract CAO site detail into v3 granular format.
+
+    Returns a list of dicts compatible with granular_data.cao_interventions_detail.
+    """
+    details, _ = _extract_cao_interventions_detail(note_text, collect_pct_candidates=False)
+    return details
+
+
+def extract_cao_interventions_detail_with_candidates(
+    note_text: str,
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, set[int]]]]:
+    """Extract CAO site detail plus per-site obstruction-% candidates."""
+    return _extract_cao_interventions_detail(note_text, collect_pct_candidates=True)
