@@ -10,10 +10,14 @@ The Procedure Suite is a modular system for automated medical coding, registry e
 - **Application services** (orchestration, workflows)
 - **Adapters** (LLM, ML, database, API)
 
-> **Architectural Pivot:** The system is currently **ML‑First** for CPT coding and
-> **hybrid‑first** for registry extraction. A pivot to **Extraction‑First**
-> (registry → deterministic CPT) is in progress; “Target” sections in docs
-> describe that end state.
+> **Current Production Mode (2026-01):** The server enforces
+> `PROCSUITE_PIPELINE_MODE=extraction_first` at startup. The authoritative
+> endpoint is `POST /api/v1/process`, and its primary pipeline is
+> **Extraction‑First**: **Registry extraction → deterministic Registry→CPT**
+> (with auditing + optional self-correction).
+>
+> **Legacy note:** CPT-first / hybrid-first flows still exist in code for older
+> endpoints and tooling, but are expected to be gated/disabled in production.
 
 ## Directory Structure
 
@@ -54,8 +58,9 @@ The FastAPI application serving REST endpoints.
 **Endpoints:**
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/v1/coder/run` | POST | Run CPT coding on procedure note |
-| `/v1/registry/run` | POST | Extract registry data from note |
+| `/api/v1/process` | POST | **Authoritative** unified extraction-first pipeline (UI uses this) |
+| `/v1/coder/run` | POST | Legacy CPT coding endpoint (gated in production) |
+| `/v1/registry/run` | POST | Legacy registry extraction endpoint (gated in production) |
 | `/v1/report/render` | POST | Generate synoptic report |
 | `/health` | GET | Health check |
 
@@ -78,7 +83,7 @@ modules/coder/
 └── engine.py                   # Legacy coder (deprecated)
 ```
 
-**CodingService 8-Step Pipeline:**
+**CodingService 8-Step Pipeline (legacy coding endpoints / tooling):**
 1. Rule engine → rule_codes + confidence
 2. (Optional) ML ranker → ml_confidence
 3. LLM advisor → advisor_codes + confidence
@@ -117,7 +122,7 @@ Registry data extraction from procedure notes.
 ```
 modules/registry/
 ├── application/
-│   ├── registry_service.py     # Main service (hybrid-first)
+│   ├── registry_service.py     # Main service (extraction-first; hybrid-first legacy still present)
 │   ├── registry_builder.py     # Build registry entries
 │   └── cpt_registry_mapping.py # CPT → registry field mapping
 ├── adapters/
@@ -225,37 +230,39 @@ Synoptic report generation from structured data.
 ### Registry Extraction Flow
 
 ```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   Raw Note  │ ──▶ │  CPT Coder  │ ──▶ │ CPT Mapping │
-└─────────────┘     └─────────────┘     │ (Bool Flags)│
-                                        └──────┬──────┘
-                                               │
-                    ┌──────────────────────────┼──────────────────────────┐
-                    │                          │                          │
-                    ▼                          ▼                          ▼
-           ┌────────────────┐       ┌─────────────────┐       ┌────────────────┐
-           │  CPT-Derived   │       │ Deterministic   │       │  LLM Extract   │
-           │    Fields      │       │   Extractors    │       │  (Engine)      │
-           └───────┬────────┘       └────────┬────────┘       └───────┬────────┘
-                   │                         │                        │
-                   └─────────────────────────┼────────────────────────┘
-                                             │
-                                             ▼
-                                    ┌─────────────────┐
-                                    │  Reconciliation │
-                                    │  (Merge Fields) │
-                                    └────────┬────────┘
-                                             │
-                                             ▼
-                                    ┌─────────────────┐
-                                    │   Validation    │
-                                    │ (JSON Schema)   │
-                                    └────────┬────────┘
-                                             │
-                                             ▼
-                                    ┌─────────────────┐
-                                    │ RegistryRecord  │
-                                    └─────────────────┘
+┌───────────────┐
+│    Raw Note   │
+└───────┬───────┘
+        │
+        ▼
+┌──────────────────────────────────────────┐
+│ Registry extraction (engine selected by  │
+│ REGISTRY_EXTRACTION_ENGINE; production   │
+│ requires parallel_ner)                   │
+└───────────────────┬──────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────┐
+│ RegistryRecord (V3-shaped)   │
+└───────────────┬──────────────┘
+                │
+                ▼
+┌──────────────────────────────────────────┐
+│ Deterministic Registry→CPT derivation    │
+│ (no raw note parsing)                    │
+└───────────────────┬──────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────────────────┐
+│ Audit + guardrails + optional self-fix   │
+│ (RAW-ML auditor, keyword guard, etc.)    │
+└───────────────────┬──────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────┐
+│ Codes + evidence + review    │
+│ flags (returned by /process) │
+└──────────────────────────────┘
 ```
 
 ## Schema System
@@ -268,7 +275,7 @@ Synoptic report generation from structured data.
 - `proc_schemas/coding.py` - CodeSuggestion, CodingResult
 - `proc_schemas/registry/ip_v2.py` - IPRegistryV2
 - `proc_schemas/registry/ip_v3.py` - IPRegistryV3
-- `modules/registry/schema.py` - RegistryRecord (dynamic)
+- `modules/registry/schema.py` - RegistryRecord (extraction record model)
 
 ### Registry Procedure Flags
 
@@ -317,17 +324,23 @@ Key configuration classes:
 | `OPENAI_TIMEOUT_READ_REGISTRY_SECONDS` | Read timeout for registry tasks (default: `180`) |
 | `OPENAI_TIMEOUT_READ_DEFAULT_SECONDS` | Read timeout for default tasks (default: `60`) |
 | `PROCSUITE_SKIP_WARMUP` | Skip model warmup |
+| `PROCSUITE_PIPELINE_MODE` | **Startup-enforced:** must be `extraction_first` |
+| `REGISTRY_EXTRACTION_ENGINE` | Extraction engine (production requires `parallel_ner`) |
+| `REGISTRY_SCHEMA_VERSION` | Registry schema version (production requires `v3`) |
+| `REGISTRY_AUDITOR_SOURCE` | Auditor source (production requires `raw_ml`) |
 
 ## Dependencies
 
 ### External Services
-- **Gemini API** - LLM for code suggestion and extraction
+- **OpenAI-compatible API** (`LLM_PROVIDER=openai_compat`) - LLM judge/self-correction and (in legacy modes) extraction
+- **Gemini API** (optional) - Alternative LLM provider for extraction/self-correction in non-openai_compat setups
 - **spaCy** - NLP for entity extraction
 
 ### Key Libraries
 - FastAPI - Web framework
 - Pydantic - Data validation
 - scikit-learn - ML models
+- onnxruntime - ONNX model inference (when `MODEL_BACKEND=onnx`)
 - Jinja2 - Report templating
 
 ## Testing Strategy
@@ -358,4 +371,4 @@ make validate-registry              # Registry validation
 
 ---
 
-*Last updated: December 2025*
+*Last updated: 2026-01-30*

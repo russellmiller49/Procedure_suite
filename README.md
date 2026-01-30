@@ -9,6 +9,8 @@ This toolkit enables:
 
 ## Documentation
 
+- **[Docs Home](docs/README.md)**: Start here — reading order and documentation map.
+- **[Repo Guide](docs/REPO_GUIDE.md)**: End-to-end explanation of how the repo functions.
 - **[Installation & Setup](docs/INSTALLATION.md)**: Setup guide for Python, spaCy models, and API keys.
 - **[Repo Index](docs/REPO_INDEX.md)**: One-page map of the repo (entrypoints, key folders, knowledge assets).
 - **[User Guide](docs/USER_GUIDE.md)**: How to use the CLI tools and API endpoints.
@@ -79,10 +81,11 @@ This toolkit enables:
 
 ## System Architecture
 
-> **Note:** The repository is in an architectural pivot toward **Extraction‑First**
-> (Registry extraction → deterministic CPT rules). The current production pipeline
-> remains ML‑First for CPT and hybrid‑first for registry; sections below describe
-> current behavior unless explicitly labeled as “Target.”
+> **Note (Current as of 2026-01):** The server enforces `PROCSUITE_PIPELINE_MODE=extraction_first`
+> at startup. The **authoritative production endpoint** is `POST /api/v1/process`, and its
+> primary pipeline is **Extraction‑First**: **Registry extraction → deterministic Registry→CPT rules**.
+> The older **CPT-first (ML-first) hybrid** flows still exist in code for legacy endpoints and
+> tooling, but are expected to be gated/disabled in production.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -92,41 +95,44 @@ This toolkit enables:
                                   ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │                    FastAPI Layer (modules/api/)                      │
-│  • /v1/coder/run - CPT coding endpoint                              │
-│  • /v1/registry/run - Registry extraction endpoint                  │
+│  • /api/v1/process - Unified extraction-first endpoint (prod)       │
+│  • /v1/coder/run - Legacy CPT coding endpoint (gated)               │
+│  • /v1/registry/run - Legacy registry extraction endpoint (gated)   │
 │  • /v1/report/render - Report generation endpoint                   │
 └─────────────────────────────────────────────────────────────────────┘
-         │                        │                        │
-         ▼                        ▼                        ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  CodingService  │    │ RegistryService │    │    Reporter     │
-│  (8-step pipe)  │    │ (Hybrid-first)  │    │ (Jinja temps)   │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
          │                        │
          ▼                        ▼
 ┌─────────────────┐    ┌─────────────────┐
-│ SmartHybrid     │    │ RegistryEngine  │
-│ Orchestrator    │    │ (LLM Extract)   │
-│ ML→Rules→LLM    │    │                 │
-└─────────────────┘    └─────────────────┘
+│ RegistryService │    │    Reporter     │
+│ (Extraction-    │    │ (Jinja temps)   │
+│  First)         │    └─────────────────┘
+└─────────────────┘
+         │
+         ▼
+┌──────────────────────────────┐
+│ RegistryRecord (V3-shaped)   │
+└──────────────────────────────┘
+         │
+         ▼
+┌──────────────────────────────┐
+│ Deterministic Registry→CPT   │
+│ (no note parsing)            │
+└──────────────────────────────┘
 ```
 
-### ML-First Hybrid Pipeline (CodingService)
+### Extraction-First Pipeline (Current: `/api/v1/process`)
 
-The coding system uses a **SmartHybridOrchestrator** that prioritizes ML predictions:
+The production pipeline (as exercised by the UI at `/ui/` and `POST /api/v1/process`) is:
 
-1. **ML Prediction** → Predict CPT codes with confidence scores
-2. **Difficulty Classification** → HIGH_CONF / GRAY_ZONE / LOW_CONF
-3. **Decision Gate**:
-   - HIGH_CONF + rules pass → Use ML codes directly (fast path, no LLM)
-   - GRAY_ZONE or rules fail → LLM as judge
-   - LOW_CONF → LLM as primary coder
-4. **Rules Validation** → NCCI/MER compliance checks
-5. **Final Codes** → CodeSuggestion objects for review
+1. **(Optional) PHI redaction** (skipped when `already_scrubbed=true`)
+2. **Registry extraction** from note text (engine selected by `REGISTRY_EXTRACTION_ENGINE`, production requires `parallel_ner`)
+3. **Deterministic Registry→CPT derivation** from the extracted `RegistryRecord` (no raw note parsing)
+4. **RAW-ML auditing** (and optional self-correction) to detect omissions/mismatches
+5. **UI-ready response** with evidence spans + review flags
 
-### Hybrid-First Registry Extraction (RegistryService)
+### Legacy CPT-First / Hybrid-First Flows (kept for tooling, gated in prod)
 
-Registry extraction follows a hybrid approach:
+Some older endpoints and internal tools still use a CPT-first hybrid approach:
 
 1. **CPT Coding** → Get codes from SmartHybridOrchestrator
 2. **CPT Mapping** → Map CPT codes to registry boolean flags

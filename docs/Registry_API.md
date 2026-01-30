@@ -1,6 +1,10 @@
-# Registry API
+# Registry API (Legacy)
 
-The Registry API provides endpoints for extracting structured registry fields from procedure notes using a hybrid-first ML pipeline.
+This document describes **legacy** registry endpoints.
+
+**Authoritative production endpoint:** `POST /api/v1/process` (see `modules/api/routes/unified_process.py`).
+
+The current production direction is **extraction-first** (registry extraction → deterministic Registry→CPT derivation) when `PROCSUITE_PIPELINE_MODE=extraction_first`.
 
 ## Endpoints
 

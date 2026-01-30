@@ -1,11 +1,12 @@
-"""Unified (Registry + Coder) Process Endpoint.
+"""Unified Extraction-First Process Endpoint.
 
 This module provides the `/api/v1/process` endpoint which combines:
-1. PHI Scrubbing (optional)
-2. Hybrid-first Registry Extraction (RegistryService)
-   - CPT Coding (SmartHybridOrchestrator)
-   - Registry Field Extraction (RegistryEngine)
-3. Response normalization for the UI
+1. PHI scrubbing (optional; skipped when `already_scrubbed=true`)
+2. Extraction-first registry pipeline (`RegistryService.extract_fields`)
+   - extract registry from note text (engine selected by `REGISTRY_EXTRACTION_ENGINE`)
+   - deterministically derive CPT codes from the extracted `RegistryRecord`
+   - optional audit/self-correction to surface omissions and review flags
+3. Response shaping for the UI (codes + evidence + review status)
 """
 
 from __future__ import annotations
