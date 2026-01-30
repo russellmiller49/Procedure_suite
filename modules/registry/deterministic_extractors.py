@@ -254,6 +254,8 @@ def extract_primary_indication(note_text: str) -> Optional[str]:
     Returns:
         Indication text or None
     """
+    text = _maybe_unescape_newlines(note_text or "")
+
     # Pattern 1: INDICATION: section
     indication_patterns = [
         r"(?:INDICATION|INDICATIONS)[\s:]+(.+?)(?=\n\n|\n[A-Z]{2,}|\Z)",
@@ -262,9 +264,13 @@ def extract_primary_indication(note_text: str) -> Optional[str]:
     ]
 
     for pattern in indication_patterns:
-        match = re.search(pattern, note_text, re.IGNORECASE | re.DOTALL)
+        match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
         if match:
-            indication = match.group(1).strip()
+            raw = match.group(1).strip()
+            # Drop common "Target:" lines that often follow the indication header.
+            lines = [ln.strip() for ln in raw.splitlines() if ln.strip()]
+            lines = [ln for ln in lines if not re.match(r"(?i)^target(?:s)?\\b\\s*:?", ln)]
+            indication = " ".join(lines).strip()
             # Clean up whitespace
             indication = re.sub(r"\s+", " ", indication)
             # Limit length
@@ -273,6 +279,18 @@ def extract_primary_indication(note_text: str) -> Optional[str]:
             return indication
 
     return None
+
+
+def _maybe_unescape_newlines(text: str) -> str:
+    """Convert literal '\\n'/'\\r' sequences into real newlines when the note looks escaped."""
+    raw = text or ""
+    if not raw.strip():
+        return raw
+    if "\n" in raw or "\r" in raw:
+        return raw
+    if "\\n" not in raw and "\\r" not in raw:
+        return raw
+    return raw.replace("\\r\\n", "\n").replace("\\n", "\n").replace("\\r", "\n")
 
 
 def extract_disposition(note_text: str) -> Optional[str]:
@@ -319,6 +337,162 @@ def extract_disposition(note_text: str) -> Optional[str]:
         return match.group(1).strip()
 
     return None
+
+
+def _normalize_outcomes_disposition(note_text: str) -> str | None:
+    """Normalize disposition to the v3 outcomes.disposition enum values."""
+    text = note_text or ""
+    lower = text.lower()
+    if not lower.strip():
+        return None
+
+    # ICU
+    if re.search(r"(?i)\b(?:micu|sicu|icu)\b", lower) or "critical care" in lower:
+        return "ICU admission"
+
+    # Explicit inpatient routing
+    if re.search(r"(?i)\balready\s+inpatient\b", lower):
+        if re.search(r"(?i)\btransfer(?:red)?\b[^.\n]{0,80}\bicu\b", lower):
+            return "Already inpatient - transfer to ICU"
+        if re.search(r"(?i)\breturn(?:ed)?\b[^.\n]{0,80}\bfloor\b", lower):
+            return "Already inpatient - return to floor"
+
+    # Observation
+    if re.search(r"(?i)\b(?:overnight\s+observation|obs(?:ervation)?\b|observation\s+unit)\b", lower):
+        return "Observation unit"
+
+    # Floor admission
+    if re.search(r"(?i)\b(?:admit(?:ted)?|transfer(?:red)?)\b[^.\n]{0,80}\b(?:floor|ward|telemetry)\b", lower):
+        return "Floor admission"
+
+    # Outpatient discharge
+    if re.search(r"(?i)\b(?:outpatient)\b", lower) and re.search(r"(?i)\bdischarg(?:e|ed)\b", lower):
+        return "Outpatient discharge"
+    if re.search(r"(?i)\b(?:discharg(?:e|ed)|dc)\b[^.\n]{0,80}\bhome\b", lower):
+        return "Outpatient discharge"
+    if re.search(r"(?i)\bdischarg(?:e|ed)\b", lower) and re.search(r"(?i)\bhome\b", lower):
+        return "Outpatient discharge"
+    if re.search(r"(?i)\bdischarg(?:e|ed)\b", lower) and re.search(r"(?i)\bif\s+stable\b", lower):
+        return "Outpatient discharge"
+
+    return None
+
+
+def extract_follow_up_plan_text(note_text: str) -> str | None:
+    """Extract a concise follow-up/disposition/plan free-text block."""
+    text = _maybe_unescape_newlines(note_text or "")
+    if not text.strip():
+        return None
+
+    header_re = re.compile(
+        r"(?im)^\s*(?P<header>disposition|follow-?up|recommendations?|impression/plan|plan)\s*:\s*(?P<rest>.*)$"
+    )
+    stop_header_re = re.compile(r"(?m)^\s*[A-Z][A-Z0-9 /-]{2,}\s*:\s*")
+
+    blocks: list[str] = []
+    lines = text.splitlines()
+    idx = 0
+    while idx < len(lines):
+        line = lines[idx] or ""
+        match = header_re.match(line)
+        if not match:
+            idx += 1
+            continue
+
+        rest = (match.group("rest") or "").strip()
+        buf: list[str] = []
+        if rest:
+            buf.append(rest)
+
+        j = idx + 1
+        while j < len(lines):
+            nxt = lines[j] or ""
+            if not nxt.strip():
+                break
+            if header_re.match(nxt):
+                break
+            if stop_header_re.match(nxt) and not re.search(r"(?i)^\s*(?:follow-?up|plan|recommendations?|disposition)\b", nxt):
+                break
+            buf.append(nxt.strip())
+            j += 1
+
+        if buf:
+            blocks.append(" ".join(buf).strip())
+
+        idx = j if j > idx else idx + 1
+
+    if not blocks:
+        return None
+
+    merged = " ".join(blocks)
+    merged = re.sub(r"\s+", " ", merged).strip()
+    if not merged:
+        return None
+    return merged[:900]
+
+
+def extract_procedure_completed(note_text: str) -> tuple[bool | None, str | None]:
+    """Return (procedure_completed, procedure_aborted_reason)."""
+    text = _maybe_unescape_newlines(note_text or "")
+    if not text.strip():
+        return None, None
+
+    aborted_reason = None
+    aborted_match = re.search(
+        r"(?i)\b(?:procedure\s+)?(?:aborted|terminated)\b[^.\n]{0,120}",
+        text,
+    )
+    if aborted_match:
+        snippet = aborted_match.group(0).strip()
+        reason_match = re.search(
+            r"(?i)\b(?:due\s+to|because|secondary\s+to)\b\s*(?P<reason>[^.\n]{3,200})",
+            snippet,
+        )
+        if reason_match:
+            aborted_reason = reason_match.group("reason").strip()
+        else:
+            aborted_reason = snippet[:200]
+        return False, aborted_reason
+
+    # Conservative "completed" markers.
+    if re.search(
+        r"(?i)\b(?:procedure\s+was\s+completed|procedure\s+completed|completed\s+without\s+complications?)\b",
+        text,
+    ):
+        return True, None
+    if re.search(r"(?i)\bpatient\s+tolerated\s+the\s+procedure\s+well\b", text):
+        return True, None
+    if re.search(r"(?i)\bno\s+(?:immediate\s+)?complications?\b", text):
+        return True, None
+    if re.search(r"(?i)\bthe\s+patient\s+was\s+stable\b", text) and re.search(r"(?i)\btransferred\b", text):
+        return True, None
+
+    return None, None
+
+
+def extract_outcomes(note_text: str) -> Dict[str, Any]:
+    """Extract v3 outcomes fields when explicitly supported by the note."""
+    text = _maybe_unescape_newlines(note_text or "")
+    if not text.strip():
+        return {}
+
+    outcomes: dict[str, Any] = {}
+
+    plan = extract_follow_up_plan_text(text)
+    if plan:
+        outcomes["follow_up_plan_text"] = plan
+
+    completed, aborted_reason = extract_procedure_completed(text)
+    if completed is not None:
+        outcomes["procedure_completed"] = completed
+    if aborted_reason:
+        outcomes["procedure_aborted_reason"] = aborted_reason
+
+    disp = _normalize_outcomes_disposition(text)
+    if disp:
+        outcomes["disposition"] = disp
+
+    return {"outcomes": outcomes} if outcomes else {}
 
 
 def extract_bleeding_severity(note_text: str) -> Optional[str]:
@@ -898,6 +1072,7 @@ def extract_bal(note_text: str) -> Dict[str, Any]:
     Returns:
         Dict with 'bal' fields populated when detected, empty dict otherwise
     """
+    note_text = _maybe_unescape_newlines(note_text or "")
     preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
     preferred_text = _strip_cpt_definition_lines(preferred_text)
     text = preferred_text or ""
@@ -930,6 +1105,16 @@ def extract_bal(note_text: str) -> Dict[str, Any]:
                         bal["volume_instilled_ml"] = int(instilled_match.group("num"))
                     except Exception:
                         pass
+                else:
+                    instilled_match = re.search(
+                        r"(?i)\b(?P<num>\d{1,4})\s*(?:cc|ml)\b[^.\n]{0,40}\b(?:ns\s+)?(?:instilled|infused)\b",
+                        text,
+                    )
+                    if instilled_match:
+                        try:
+                            bal["volume_instilled_ml"] = int(instilled_match.group("num"))
+                        except Exception:
+                            pass
 
                 recovered_match = re.search(
                     r"(?i)\b(?:return(?:ed)?|recovered|suction\s*returned)\s+(?:with\s+)?(?P<num>\d{1,4})\s*(?:cc|ml)\b",
@@ -940,6 +1125,16 @@ def extract_bal(note_text: str) -> Dict[str, Any]:
                         bal["volume_recovered_ml"] = int(recovered_match.group("num"))
                     except Exception:
                         pass
+                else:
+                    recovered_match = re.search(
+                        r"(?i)\b(?P<num>\d{1,4})\s*(?:cc|ml)\s*(?:return(?:ed)?|recovered)\b",
+                        text,
+                    )
+                    if recovered_match:
+                        try:
+                            bal["volume_recovered_ml"] = int(recovered_match.group("num"))
+                        except Exception:
+                            pass
 
                 return {"bal": bal}
     return {}
@@ -1025,6 +1220,20 @@ def extract_intubation(note_text: str) -> Dict[str, Any]:
     )
     intubation_mentioned = bool(re.search(r"\bintubat(?:ion|ed|ing)\b", text_lower))
 
+    # Guardrail: only treat as 31500-eligible when explicitly special/emergent.
+    emergency_context = bool(re.search(r"\b(?:emergent|emergency|code\s+blue|crash)\b", text_lower))
+    difficult_context = bool(
+        re.search(r"\b(?:difficult\s+airway|failed\s+intubation|multiple\s+attempts)\b", text_lower)
+    )
+    selective_context = bool(
+        re.search(
+            r"\b(?:selective|mainstem)\b[^.\n]{0,80}\bintubat(?:ion|ed|ing)\b|\bintubat(?:ion|ed|ing)\b[^.\n]{0,80}\b(?:mainstem|bronchus)\b",
+            text_lower,
+            re.IGNORECASE,
+        )
+        or re.search(r"\binto\s+the\s+(?:right|left)\s+main(?:\s*|-)?stem\b", text_lower, re.IGNORECASE)
+    )
+
     tube_match = re.search(
         r"\b(?P<size>\d{1,2}(?:\.\d+)?)\s*(?:mm\s*)?(?:(?P<mlt>mlt)\s*)?(?:ett|endotracheal\s+tube)\b"
         r"|\b(?P<size2>\d{1,2}(?:\.\d+)?)\s*(?P<mlt2>mlt)\b",
@@ -1043,18 +1252,10 @@ def extract_intubation(note_text: str) -> Dict[str, Any]:
     elif re.search(r"\bvia\s+nasal\b|\bnasal\s+pathway\b|\bnasotracheal\b", text_lower):
         route = "Nasal"
 
-    strong_trigger = fiberoptic or endotracheal_intubation or ett_placed
-    qualified = strong_trigger or (
-        intubation_mentioned
-        and (
-            tube_size is not None
-            or route is not None
-            or "emerg" in text_lower
-            or "selective" in text_lower
-            or "difficult airway" in text_lower
-        )
-    )
-    if not qualified:
+    special_context = fiberoptic or emergency_context or difficult_context or selective_context
+    if not special_context:
+        return {}
+    if not (intubation_mentioned or endotracheal_intubation or ett_placed):
         return {}
 
     proc: dict[str, Any] = {"performed": True}
@@ -1101,6 +1302,7 @@ _STENT_PLACEMENT_NEGATION_PATTERNS = [
     r"\bdecision\b[^.\n]{0,80}\bnot\b[^.\n]{0,40}\b(?:place|insert|deploy|perform)\w*\b[^.\n]{0,80}\bstent\b",
     r"\bno\s+additional\s+stents?\b[^.\n]{0,40}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
     r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,40}\bstent(?:s)?\b[^.\n]{0,40}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
+    r"\b(?:refus(?:ed|al)|reluctan(?:t|ce)|hesitan(?:t|cy)|did\s+not\s+want)\b[^.\n]{0,80}\bstent(?:s)?\b[^.\n]{0,80}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
 ]
 
 _STENT_PLACEMENT_VERBS_RE = re.compile(
@@ -1938,6 +2140,23 @@ def _extract_checked_side(note_text: str, header: str) -> str | None:
     return None
 
 
+def _extract_checked_option(note_text: str, header: str, options: list[str]) -> str | None:
+    """Extract a checked option label from checkbox-style lines.
+
+    Example pattern: "Volume: 0 None 1 Minimal 0 Small ..."
+    """
+    if not note_text:
+        return None
+    header_lower = header.lower()
+    for line in note_text.splitlines():
+        if header_lower not in line.lower():
+            continue
+        for option in options:
+            if re.search(rf"(?i)\b1\D{{0,10}}{re.escape(option)}\b", line):
+                return option
+    return None
+
+
 def extract_chest_ultrasound(note_text: str) -> Dict[str, Any]:
     """Extract chest ultrasound indicator (76604 family).
 
@@ -1955,6 +2174,66 @@ def extract_chest_ultrasound(note_text: str) -> Dict[str, Any]:
     hemithorax = _extract_checked_side(note_text, "Hemithorax")
     if hemithorax is not None:
         proc["hemithorax"] = hemithorax
+
+    volume = _extract_checked_option(note_text, "Volume", ["None", "Minimal", "Small", "Moderate", "Large"])
+    if volume is not None:
+        proc["effusion_volume"] = volume
+
+    echogenicity = _extract_checked_option(
+        note_text, "Echogenicity", ["Anechoic", "Hypoechoic", "Isoechoic", "Hyperechoic"]
+    )
+    if echogenicity is not None:
+        proc["effusion_echogenicity"] = echogenicity
+
+    loculations = _extract_checked_option(note_text, "Loculations", ["None", "Thin", "Thick"])
+    if loculations is not None:
+        proc["effusion_loculations"] = loculations
+
+    diaphragm = _extract_checked_option(note_text, "Diaphragmatic Motion", ["Normal", "Diminished", "Absent"])
+    if diaphragm is not None:
+        proc["diaphragmatic_motion"] = diaphragm
+
+    lung_pre = _extract_checked_option(note_text, "Lung sliding before", ["Present", "Absent"])
+    if lung_pre is not None:
+        proc["lung_sliding_pre"] = lung_pre
+
+    lung_post = _extract_checked_option(note_text, "Lung sliding post", ["Present", "Absent"])
+    if lung_post is not None:
+        proc["lung_sliding_post"] = lung_post
+
+    consolidation = _extract_checked_option(note_text, "Lung consolidation/atelectasis", ["Present", "Absent"])
+    if consolidation is not None:
+        proc["lung_consolidation_present"] = consolidation == "Present"
+
+    pleura = _extract_checked_option(note_text, "Pleura", ["Normal", "Thick", "Nodular"])
+    if pleura is not None:
+        proc["pleura_characteristics"] = pleura
+
+    # Free-text findings often include key disease-burden/outcome statements.
+    finding_lines: list[str] = []
+    for raw_line in (note_text or "").splitlines():
+        line = (raw_line or "").strip()
+        if not line:
+            continue
+        if re.search(r"(?i)\bno\s+drainable\s+fluid\b", line):
+            finding_lines.append(line)
+            continue
+        if re.search(r"(?i)\batelectasis\b", line) or re.search(r"(?i)\bcollection\b", line):
+            finding_lines.append(line)
+            continue
+    if finding_lines:
+        summary = " ".join(finding_lines)
+        proc["impression_text"] = summary[:500]
+
+    plan_lines: list[str] = []
+    for raw_line in (note_text or "").splitlines():
+        line = (raw_line or "").strip()
+        if not line:
+            continue
+        if re.search(r"(?i)\b(?:d/c|dc|discontinue|remove|removed)\b[^.\n]{0,40}\bchest\s+tube\b", line):
+            plan_lines.append(line)
+    if plan_lines:
+        proc["plan_text"] = " ".join(plan_lines)[:300]
 
     return {"chest_ultrasound": proc}
 
@@ -2259,6 +2538,7 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
         Dict of extracted field values
     """
     seed_data: Dict[str, Any] = {}
+    note_text = _maybe_unescape_newlines(note_text or "")
 
     # Demographics
     demographics = extract_demographics(note_text)
@@ -2287,6 +2567,10 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     disposition = extract_disposition(note_text)
     if disposition:
         seed_data["disposition"] = disposition
+
+    outcomes_data = extract_outcomes(note_text)
+    if outcomes_data:
+        seed_data.update(outcomes_data)
 
     # Bleeding severity
     bleeding = extract_bleeding_severity(note_text)
@@ -2438,6 +2722,9 @@ __all__ = [
     "extract_institution_name",
     "extract_primary_indication",
     "extract_disposition",
+    "extract_follow_up_plan_text",
+    "extract_procedure_completed",
+    "extract_outcomes",
     "extract_bleeding_severity",
     "extract_bleeding_intervention_required",
     "extract_providers",

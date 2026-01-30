@@ -162,7 +162,7 @@ def test_sanitize_ebus_events_flips_needle_aspiration_when_not_biopsied() -> Non
 
     by_station = {e.station.upper(): e for e in events}
     assert by_station["4R"].action == "inspected_only"
-    assert "AUTO-CORRECTED" in by_station["4R"].evidence_quote
+    assert "not biopsied" in by_station["4R"].evidence_quote.lower()
     assert by_station["7"].action == "needle_aspiration"
 
     assert linear.stations_sampled == ["7"]

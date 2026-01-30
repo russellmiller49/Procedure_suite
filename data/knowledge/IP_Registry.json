@@ -2396,6 +2396,109 @@
                 "Bilateral",
                 null
               ]
+            },
+            "effusion_volume": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "None",
+                "Minimal",
+                "Small",
+                "Moderate",
+                "Large",
+                null
+              ]
+            },
+            "effusion_echogenicity": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Anechoic",
+                "Hypoechoic",
+                "Isoechoic",
+                "Hyperechoic",
+                null
+              ]
+            },
+            "effusion_loculations": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "None",
+                "Thin",
+                "Thick",
+                null
+              ]
+            },
+            "diaphragmatic_motion": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Normal",
+                "Diminished",
+                "Absent",
+                null
+              ]
+            },
+            "lung_sliding_pre": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Present",
+                "Absent",
+                null
+              ]
+            },
+            "lung_sliding_post": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Present",
+                "Absent",
+                null
+              ]
+            },
+            "lung_consolidation_present": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "pleura_characteristics": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Normal",
+                "Thick",
+                "Nodular",
+                null
+              ]
+            },
+            "impression_text": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "plan_text": {
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         }
@@ -4861,6 +4964,20 @@
                   "number",
                   "null"
                 ]
+              },
+              "lesion_morphology": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Lesion morphology (e.g., polypoid, fungating) when documented"
+              },
+              "lesion_count_text": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Lesion count when approximate (e.g., '>50')"
               },
               "pre_obstruction_pct": {
                 "type": [

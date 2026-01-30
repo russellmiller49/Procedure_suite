@@ -181,3 +181,39 @@ def test_note352_aspiration_material_location_and_y_stent_type_capture() -> None
     assert "31645" in codes
     assert "31636" not in codes
     assert "31638" not in codes
+
+
+def test_stent_discussed_but_refused_clears_31636() -> None:
+    note_text = (
+        "Of note we considered airway stent placement; however the patient was reluctant to have stent placed.\n"
+        "If I need to debulk again I will strongly advocate for placement of a covered tracheal stent.\n"
+    )
+
+    record = RegistryRecord(procedures_performed={"airway_stent": {"performed": True, "action": "Placement"}})
+    outcome = ClinicalGuardrails().apply_record_guardrails(note_text, record)
+    updated = outcome.record
+    assert updated is not None
+    assert updated.procedures_performed is not None
+    stent = updated.procedures_performed.airway_stent
+    assert stent is not None
+    assert stent.performed is False
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
+    assert "31636" not in codes
+
+
+def test_routine_anesthesia_ett_does_not_trigger_31500() -> None:
+    note_text = "Following induction of general anesthesia a 7.5 ETT was placed and secured."
+
+    seed = run_deterministic_extractors(note_text)
+    assert seed.get("procedures_performed", {}).get("intubation") in (None, {})
+
+    record = RegistryRecord(procedures_performed={"intubation": {"performed": True}})
+    updated = ClinicalGuardrails().apply_record_guardrails(note_text, record).record
+    assert updated is not None
+    assert updated.procedures_performed is not None
+    assert updated.procedures_performed.intubation is not None
+    assert updated.procedures_performed.intubation.performed is False
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
+    assert "31500" not in codes

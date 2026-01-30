@@ -79,6 +79,63 @@ const EBUS_ACTION_OPTIONS = [
   { value: "forceps_biopsy", label: "Forceps biopsy" },
   { value: "other", label: "Other" },
 ];
+const DISPOSITION_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Outpatient discharge", label: "Outpatient discharge" },
+  { value: "Observation unit", label: "Observation unit" },
+  { value: "Floor admission", label: "Floor admission" },
+  { value: "ICU admission", label: "ICU admission" },
+  { value: "Already inpatient - return to floor", label: "Already inpatient - return to floor" },
+  { value: "Already inpatient - transfer to ICU", label: "Already inpatient - transfer to ICU" },
+  { value: "Transfer to another facility", label: "Transfer to another facility" },
+  { value: "OR", label: "OR" },
+  { value: "Death", label: "Death" },
+];
+
+const HEMITHORAX_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Right", label: "Right" },
+  { value: "Left", label: "Left" },
+  { value: "Bilateral", label: "Bilateral" },
+];
+const CHEST_US_EFFUSION_VOLUME_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "None", label: "None" },
+  { value: "Minimal", label: "Minimal" },
+  { value: "Small", label: "Small" },
+  { value: "Moderate", label: "Moderate" },
+  { value: "Large", label: "Large" },
+];
+const CHEST_US_ECHOGENICITY_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Anechoic", label: "Anechoic" },
+  { value: "Hypoechoic", label: "Hypoechoic" },
+  { value: "Isoechoic", label: "Isoechoic" },
+  { value: "Hyperechoic", label: "Hyperechoic" },
+];
+const CHEST_US_LOCULATIONS_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "None", label: "None" },
+  { value: "Thin", label: "Thin" },
+  { value: "Thick", label: "Thick" },
+];
+const CHEST_US_DIAPHRAGM_MOTION_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Normal", label: "Normal" },
+  { value: "Diminished", label: "Diminished" },
+  { value: "Absent", label: "Absent" },
+];
+const CHEST_US_LUNG_SLIDING_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Present", label: "Present" },
+  { value: "Absent", label: "Absent" },
+];
+const CHEST_US_PLEURA_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Normal", label: "Normal" },
+  { value: "Thick", label: "Thick" },
+  { value: "Nodular", label: "Nodular" },
+];
 
 runBtn.disabled = true;
 cancelBtn.disabled = true;
@@ -287,6 +344,46 @@ function fmtMaybe(val) {
   if (val === null || val === undefined) return "—";
   const s = String(val).trim();
   return s ? s : "—";
+}
+
+function isLikelyHeaderDump(text) {
+  const s = String(text || "").trim();
+  if (!s) return false;
+  const lower = s.toLowerCase();
+  if (lower.startsWith("pt:") || lower.startsWith("patient:")) return true;
+  if (lower.includes("||")) return true;
+  if (/\bmrn\b\s*:/i.test(s)) return true;
+  if (/\bdob\b\s*:/i.test(s)) return true;
+  if (/\battending\b\s*:/i.test(s)) return true;
+  if (/\bfellow\b\s*:/i.test(s)) return true;
+  return false;
+}
+
+function cleanLocationForDisplay(value) {
+  const s = String(value || "").trim();
+  if (!s) return "";
+  if (isLikelyHeaderDump(s)) return "";
+  return s.replace(/\s+/g, " ").trim();
+}
+
+function cleanLocationsListForDisplay(value) {
+  const arr = Array.isArray(value) ? value : [];
+  const cleaned = arr
+    .map((v) => cleanLocationForDisplay(v))
+    .filter((v) => v && String(v).trim() !== "");
+  return cleaned;
+}
+
+function cleanIndicationForDisplay(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  let s = raw;
+  s = s.replace(/\\bPROCEDURE\\b[\\s\\S]*$/i, "").trim();
+  s = s.replace(/\\bTARGET(?:S)?\\b\\s*:[\\s\\S]*$/i, "").trim();
+  s = s.split(/\n\\s*\n/)[0] || s;
+  s = s.replace(/\s+/g, " ").trim();
+  if (s.length > 220) s = `${s.slice(0, 220)}…`;
+  return s;
 }
 
 function fmtSpan(span) {
@@ -1047,7 +1144,7 @@ function renderClinicalContextTable(data) {
   const setting = registry?.procedure_setting || {};
 
   const rows = [
-    ["Primary indication", ctx?.primary_indication],
+    ["Primary indication", cleanIndicationForDisplay(ctx?.primary_indication)],
     ["Indication category", ctx?.indication_category],
     ["Bronchus sign", ctx?.bronchus_sign === null || ctx?.bronchus_sign === undefined ? null : (ctx?.bronchus_sign ? "Yes" : "No")],
     ["Sedation type", sed?.type],
@@ -1133,10 +1230,26 @@ function summarizeProcedure(procKey, procObj) {
 
   if (procKey === "bal") {
     const parts = [];
-    if (p.location) parts.push(`Location: ${p.location}`);
+    const loc = cleanLocationForDisplay(p.location);
+    if (loc) parts.push(`Location: ${loc}`);
     if (Number.isFinite(p.volume_instilled_ml)) parts.push(`Instilled: ${p.volume_instilled_ml} mL`);
     if (Number.isFinite(p.volume_recovered_ml)) parts.push(`Recovered: ${p.volume_recovered_ml} mL`);
     return parts.join(" · ") || "—";
+  }
+
+  if (procKey === "chest_ultrasound") {
+    const parts = [];
+    if (p.hemithorax) parts.push(String(p.hemithorax).trim());
+    if (p.effusion_volume) parts.push(`Effusion: ${String(p.effusion_volume).trim()}`);
+    if (p.effusion_echogenicity) parts.push(String(p.effusion_echogenicity).trim());
+    if (p.effusion_loculations) parts.push(`Loculations: ${String(p.effusion_loculations).trim()}`);
+    return parts.join(" · ") || (performed ? "Performed" : "—");
+  }
+
+  if (procKey === "rigid_bronchoscopy") {
+    const parts = [];
+    if (Number.isFinite(p.rigid_scope_size)) parts.push(`${p.rigid_scope_size} mm`);
+    return parts.join(" · ") || (performed ? "Performed" : "—");
   }
 
   if (procKey === "chest_tube") {
@@ -1216,6 +1329,7 @@ function summarizeProcedure(procKey, procObj) {
   }
 
   if (procKey === "linear_ebus") {
+    if (!performed) return "—";
     const stations = Array.isArray(p.stations_sampled) ? p.stations_sampled.filter(Boolean) : [];
     const parts = [];
     if (stations.length > 0) parts.push(`Stations: ${stations.join(", ")}`);
@@ -1229,7 +1343,8 @@ function summarizeProcedure(procKey, procObj) {
   if (procKey === "therapeutic_aspiration") {
     const parts = [];
     if (p.material) parts.push(`Material: ${p.material}`);
-    if (p.location) parts.push(`Location: ${p.location}`);
+    const loc = cleanLocationForDisplay(p.location);
+    if (loc) parts.push(`Location: ${loc}`);
     return parts.join(" · ") || "—";
   }
 
@@ -1250,8 +1365,10 @@ function summarizeProcedure(procKey, procObj) {
 
   // Fallback: surface a few common fields without being noisy
   const parts = [];
-  if (p.location) parts.push(`Location: ${p.location}`);
-  if (Array.isArray(p.locations) && p.locations.length > 0) parts.push(`Locations: ${p.locations.join(", ")}`);
+  const loc = cleanLocationForDisplay(p.location);
+  if (loc) parts.push(`Location: ${loc}`);
+  const locations = cleanLocationsListForDisplay(p.locations);
+  if (locations.length > 0) parts.push(`Locations: ${locations.join(", ")}`);
   if (Number.isFinite(p.number_of_samples)) parts.push(`${p.number_of_samples} samples`);
   return parts.join(" · ") || "—";
 }
@@ -1759,7 +1876,7 @@ function buildFlattenedTables(data) {
   const setting = registry?.procedure_setting || {};
   clinicalRows.push({
     field: "Primary indication",
-    value: ctx?.primary_indication || "",
+    value: cleanIndicationForDisplay(ctx?.primary_indication) || "",
     __meta: { path: "registry.clinical_context.primary_indication", valueType: "text" },
   });
   clinicalRows.push({
@@ -1854,6 +1971,151 @@ function buildFlattenedTables(data) {
     allowDelete: false,
   });
 
+  const granular = registry?.granular_data || {};
+  const navigationTargets = Array.isArray(granular?.navigation_targets) ? granular.navigation_targets : [];
+  tables.push({
+    id: "navigation_targets",
+    title: "Navigation Targets (Lesion Characteristics)",
+    columns: [
+      { key: "target_number", label: "Target #", readOnly: true },
+      { key: "target_location_text", label: "Location", type: "text" },
+      { key: "target_lobe", label: "Lobe", type: "text" },
+      { key: "target_segment", label: "Segment", type: "text" },
+      { key: "lesion_size_mm", label: "Size (mm)", type: "number" },
+      { key: "ct_characteristics", label: "CT Characteristics", type: "text" },
+      { key: "pet_suv_max", label: "PET SUV Max", type: "number" },
+      { key: "bronchus_sign", label: "Bronchus Sign", type: "text" },
+      { key: "registration_error_mm", label: "Registration Error (mm)", type: "number" },
+      { key: "rebus_view", label: "rEBUS View", type: "text" },
+      { key: "sampling_tools_used", label: "Sampling Tools", type: "text" },
+      { key: "number_of_needle_passes", label: "Needle Passes", type: "number" },
+      { key: "number_of_forceps_biopsies", label: "Forceps Specimens", type: "number" },
+      { key: "number_of_cryo_biopsies", label: "Cryobiopsy Specimens", type: "number" },
+      { key: "rose_result", label: "ROSE Result", type: "text" },
+      { key: "notes", label: "Notes", type: "text" },
+    ],
+    rows: navigationTargets.map((t, idx) => ({
+      target_number: String(t?.target_number ?? idx + 1),
+      target_location_text: cleanLocationForDisplay(t?.target_location_text) || "",
+      target_lobe: t?.target_lobe || "",
+      target_segment: t?.target_segment || "",
+      lesion_size_mm: Number.isFinite(t?.lesion_size_mm) ? String(t.lesion_size_mm) : "",
+      ct_characteristics: t?.ct_characteristics || "",
+      pet_suv_max: Number.isFinite(t?.pet_suv_max) ? String(t.pet_suv_max) : "",
+      bronchus_sign: t?.bronchus_sign || "",
+      registration_error_mm: Number.isFinite(t?.registration_error_mm) ? String(t.registration_error_mm) : "",
+      rebus_view: t?.rebus_view || "",
+      sampling_tools_used: Array.isArray(t?.sampling_tools_used) ? t.sampling_tools_used.join(", ") : "",
+      number_of_needle_passes: Number.isFinite(t?.number_of_needle_passes) ? String(t.number_of_needle_passes) : "",
+      number_of_forceps_biopsies: Number.isFinite(t?.number_of_forceps_biopsies) ? String(t.number_of_forceps_biopsies) : "",
+      number_of_cryo_biopsies: Number.isFinite(t?.number_of_cryo_biopsies) ? String(t.number_of_cryo_biopsies) : "",
+      rose_result: t?.rose_result || "",
+      notes: t?.notes || "",
+    })),
+    allowAdd: false,
+    allowDelete: false,
+    emptyMessage: "No navigation targets.",
+  });
+
+  const ebusStations = Array.isArray(granular?.linear_ebus_stations_detail) ? granular.linear_ebus_stations_detail : [];
+  tables.push({
+    id: "linear_ebus_stations_detail",
+    title: "Linear EBUS Stations (Morphology)",
+    columns: [
+      { key: "station", label: "Station", readOnly: true },
+      { key: "sampled", label: "Sampled", type: "select", options: YES_NO_OPTIONS },
+      { key: "short_axis_mm", label: "Short Axis (mm)", type: "number" },
+      { key: "long_axis_mm", label: "Long Axis (mm)", type: "number" },
+      { key: "shape", label: "Shape", type: "text" },
+      { key: "margin", label: "Margin", type: "text" },
+      { key: "echogenicity", label: "Echogenicity", type: "text" },
+      { key: "chs_present", label: "CHS Present", type: "select", options: YES_NO_OPTIONS },
+      { key: "necrosis_present", label: "Necrosis", type: "select", options: YES_NO_OPTIONS },
+      { key: "calcification_present", label: "Calcification", type: "select", options: YES_NO_OPTIONS },
+      { key: "needle_gauge", label: "Needle Gauge", type: "text" },
+      { key: "number_of_passes", label: "Passes", type: "number" },
+      { key: "rose_result", label: "ROSE Result", type: "text" },
+      { key: "morphologic_impression", label: "Morphologic Impression", type: "text" },
+    ],
+    rows: ebusStations.map((s) => ({
+      station: s?.station || "",
+      sampled: toYesNo(s?.sampled),
+      short_axis_mm: Number.isFinite(s?.short_axis_mm) ? String(s.short_axis_mm) : "",
+      long_axis_mm: Number.isFinite(s?.long_axis_mm) ? String(s.long_axis_mm) : "",
+      shape: s?.shape || "",
+      margin: s?.margin || "",
+      echogenicity: s?.echogenicity || "",
+      chs_present: toYesNo(s?.chs_present),
+      necrosis_present: toYesNo(s?.necrosis_present),
+      calcification_present: toYesNo(s?.calcification_present),
+      needle_gauge: s?.needle_gauge ? String(s.needle_gauge) : "",
+      number_of_passes: Number.isFinite(s?.number_of_passes) ? String(s.number_of_passes) : "",
+      rose_result: s?.rose_result || "",
+      morphologic_impression: s?.morphologic_impression || "",
+    })),
+    allowAdd: false,
+    allowDelete: false,
+    emptyMessage: "No station detail entries.",
+  });
+
+  const caoSites = Array.isArray(granular?.cao_interventions_detail) ? granular.cao_interventions_detail : [];
+  tables.push({
+    id: "cao_interventions_detail",
+    title: "Central Airway Obstruction (Sites)",
+    columns: [
+      { key: "location", label: "Location", readOnly: true },
+      { key: "obstruction_type", label: "Obstruction Type", type: "text" },
+      { key: "etiology", label: "Etiology", type: "text" },
+      { key: "lesion_morphology", label: "Morphology", type: "text" },
+      { key: "lesion_count_text", label: "Lesion Count", type: "text" },
+      { key: "length_mm", label: "Length (mm)", type: "number" },
+      { key: "pre_obstruction_pct", label: "Pre Obstruction (%)", type: "number" },
+      { key: "post_obstruction_pct", label: "Post Obstruction (%)", type: "number" },
+      { key: "pre_diameter_mm", label: "Pre Diameter (mm)", type: "number" },
+      { key: "post_diameter_mm", label: "Post Diameter (mm)", type: "number" },
+      { key: "modalities_applied", label: "Modalities (Summary)", readOnly: true },
+      { key: "stent_placed_at_site", label: "Stent Placed", type: "select", options: YES_NO_OPTIONS },
+      { key: "hemostasis_required", label: "Hemostasis Required", type: "select", options: YES_NO_OPTIONS },
+      { key: "notes", label: "Notes", type: "text" },
+    ],
+    rows: caoSites.map((site) => {
+      const modalities = Array.isArray(site?.modalities_applied) ? site.modalities_applied : [];
+      const modalitySummary = modalities
+        .map((m) => {
+          const name = String(m?.modality || "").trim();
+          if (!name) return null;
+          const parts = [];
+          if (Number.isFinite(m?.power_setting_watts)) parts.push(`${m.power_setting_watts}W`);
+          if (Number.isFinite(m?.balloon_diameter_mm)) parts.push(`${m.balloon_diameter_mm}mm`);
+          if (Number.isFinite(m?.freeze_time_seconds)) parts.push(`${m.freeze_time_seconds}s`);
+          if (Number.isFinite(m?.number_of_applications)) parts.push(`x${m.number_of_applications}`);
+          return parts.length ? `${name} (${parts.join(", ")})` : name;
+        })
+        .filter(Boolean)
+        .join(" · ");
+
+      return {
+        location: cleanLocationForDisplay(site?.location) || "",
+        obstruction_type: site?.obstruction_type || "",
+        etiology: site?.etiology || "",
+        lesion_morphology: site?.lesion_morphology || "",
+        lesion_count_text: site?.lesion_count_text || "",
+        length_mm: Number.isFinite(site?.length_mm) ? String(site.length_mm) : "",
+        pre_obstruction_pct: Number.isFinite(site?.pre_obstruction_pct) ? String(site.pre_obstruction_pct) : "",
+        post_obstruction_pct: Number.isFinite(site?.post_obstruction_pct) ? String(site.post_obstruction_pct) : "",
+        pre_diameter_mm: Number.isFinite(site?.pre_diameter_mm) ? String(site.pre_diameter_mm) : "",
+        post_diameter_mm: Number.isFinite(site?.post_diameter_mm) ? String(site.post_diameter_mm) : "",
+        modalities_applied: modalitySummary,
+        stent_placed_at_site: toYesNo(site?.stent_placed_at_site),
+        hemostasis_required: toYesNo(site?.hemostasis_required),
+        notes: site?.notes || "",
+      };
+    }),
+    allowAdd: false,
+    allowDelete: false,
+    emptyMessage: "No CAO sites.",
+  });
+
   const diag = registry?.procedures_performed?.diagnostic_bronchoscopy || {};
   tables.push({
     id: "diagnostic_findings",
@@ -1895,7 +2157,7 @@ function buildFlattenedTables(data) {
     rows: [
       {
         field: "Location",
-        value: bal?.location || "",
+        value: cleanLocationForDisplay(bal?.location) || "",
         __meta: { path: "registry.procedures_performed.bal.location", valueType: "text" },
       },
       {
@@ -1918,7 +2180,237 @@ function buildFlattenedTables(data) {
     allowDelete: false,
   });
 
+  const chestUs = registry?.procedures_performed?.chest_ultrasound || {};
+  const chestUsPerformed = isPerformedProcedure(chestUs);
+  if (chestUsPerformed || hasProcedureDetails(chestUs)) {
+    tables.push({
+      id: "chest_ultrasound_details",
+      title: "Chest Ultrasound Findings",
+      columns: [
+        { key: "field", label: "Field", readOnly: true },
+        { key: "value", label: "Value", type: "text" },
+      ],
+      rows: [
+        {
+          field: "Performed",
+          value: toYesNo(chestUsPerformed),
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.performed",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "Image documentation",
+          value: toYesNo(chestUs?.image_documentation),
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.image_documentation",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "Hemithorax",
+          value: chestUs?.hemithorax || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.hemithorax",
+            valueType: "text",
+            inputType: "select",
+            options: HEMITHORAX_OPTIONS,
+          },
+        },
+        {
+          field: "Effusion volume",
+          value: chestUs?.effusion_volume || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.effusion_volume",
+            valueType: "text",
+            inputType: "select",
+            options: CHEST_US_EFFUSION_VOLUME_OPTIONS,
+          },
+        },
+        {
+          field: "Effusion echogenicity",
+          value: chestUs?.effusion_echogenicity || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.effusion_echogenicity",
+            valueType: "text",
+            inputType: "select",
+            options: CHEST_US_ECHOGENICITY_OPTIONS,
+          },
+        },
+        {
+          field: "Effusion loculations",
+          value: chestUs?.effusion_loculations || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.effusion_loculations",
+            valueType: "text",
+            inputType: "select",
+            options: CHEST_US_LOCULATIONS_OPTIONS,
+          },
+        },
+        {
+          field: "Diaphragmatic motion",
+          value: chestUs?.diaphragmatic_motion || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.diaphragmatic_motion",
+            valueType: "text",
+            inputType: "select",
+            options: CHEST_US_DIAPHRAGM_MOTION_OPTIONS,
+          },
+        },
+        {
+          field: "Lung sliding (pre)",
+          value: chestUs?.lung_sliding_pre || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.lung_sliding_pre",
+            valueType: "text",
+            inputType: "select",
+            options: CHEST_US_LUNG_SLIDING_OPTIONS,
+          },
+        },
+        {
+          field: "Lung sliding (post)",
+          value: chestUs?.lung_sliding_post || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.lung_sliding_post",
+            valueType: "text",
+            inputType: "select",
+            options: CHEST_US_LUNG_SLIDING_OPTIONS,
+          },
+        },
+        {
+          field: "Consolidation/atelectasis present",
+          value: toYesNo(chestUs?.lung_consolidation_present),
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.lung_consolidation_present",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "Pleura",
+          value: chestUs?.pleura_characteristics || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.pleura_characteristics",
+            valueType: "text",
+            inputType: "select",
+            options: CHEST_US_PLEURA_OPTIONS,
+          },
+        },
+        {
+          field: "Impression (free text)",
+          value: chestUs?.impression_text || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.impression_text",
+            valueType: "text",
+          },
+        },
+        {
+          field: "Plan (free text)",
+          value: chestUs?.plan_text || "",
+          __meta: {
+            path: "registry.procedures_performed.chest_ultrasound.plan_text",
+            valueType: "text",
+          },
+        },
+      ],
+      allowAdd: false,
+      allowDelete: false,
+    });
+  }
+
+  const outcomes = registry?.outcomes || {};
+  const outcomesHasAny = outcomes && typeof outcomes === "object" && Object.keys(outcomes).length > 0;
+  tables.push({
+    id: "outcomes",
+    title: "Outcomes & Disposition",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Procedure completed",
+        value: toYesNo(outcomes?.procedure_completed),
+        __meta: {
+          path: "registry.outcomes.procedure_completed",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Aborted reason",
+        value: outcomes?.procedure_aborted_reason || "",
+        __meta: {
+          path: "registry.outcomes.procedure_aborted_reason",
+          valueType: "text",
+        },
+      },
+      {
+        field: "Disposition",
+        value: outcomes?.disposition || "",
+        __meta: {
+          path: "registry.outcomes.disposition",
+          valueType: "text",
+          inputType: "select",
+          options: DISPOSITION_OPTIONS,
+        },
+      },
+      {
+        field: "Preliminary diagnosis",
+        value: outcomes?.preliminary_diagnosis || "",
+        __meta: {
+          path: "registry.outcomes.preliminary_diagnosis",
+          valueType: "text",
+        },
+      },
+      {
+        field: "Preliminary staging",
+        value: outcomes?.preliminary_staging || "",
+        __meta: {
+          path: "registry.outcomes.preliminary_staging",
+          valueType: "text",
+        },
+      },
+      {
+        field: "Follow-up imaging ordered",
+        value: toYesNo(outcomes?.follow_up_imaging_ordered),
+        __meta: {
+          path: "registry.outcomes.follow_up_imaging_ordered",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Follow-up imaging type",
+        value: outcomes?.follow_up_imaging_type || "",
+        __meta: {
+          path: "registry.outcomes.follow_up_imaging_type",
+          valueType: "text",
+        },
+      },
+      {
+        field: "Follow-up plan (free text)",
+        value: outcomes?.follow_up_plan_text || "",
+        __meta: {
+          path: "registry.outcomes.follow_up_plan_text",
+          valueType: "text",
+        },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+    emptyMessage: outcomesHasAny ? "" : "No outcomes documented.",
+  });
+
   const ebus = registry?.procedures_performed?.linear_ebus || {};
+  const ebusPerformed = isPerformedProcedure(ebus);
   tables.push({
     id: "linear_ebus_summary",
     title: "Linear EBUS Technical Summary",
@@ -1929,7 +2421,7 @@ function buildFlattenedTables(data) {
     rows: [
       {
         field: "Stations sampled",
-        value: Array.isArray(ebus?.stations_sampled) ? ebus.stations_sampled.join(", ") : "",
+        value: ebusPerformed && Array.isArray(ebus?.stations_sampled) ? ebus.stations_sampled.join(", ") : "",
         __meta: {
           path: "registry.procedures_performed.linear_ebus.stations_sampled",
           valueType: "list",
@@ -1937,12 +2429,12 @@ function buildFlattenedTables(data) {
       },
       {
         field: "Needle gauge",
-        value: ebus?.needle_gauge || "",
+        value: ebusPerformed ? ebus?.needle_gauge || "" : "",
         __meta: { path: "registry.procedures_performed.linear_ebus.needle_gauge", valueType: "text" },
       },
       {
         field: "Elastography used",
-        value: toYesNo(ebus?.elastography_used),
+        value: ebusPerformed ? toYesNo(ebus?.elastography_used) : "",
         __meta: {
           path: "registry.procedures_performed.linear_ebus.elastography_used",
           valueType: "boolean",
@@ -1952,7 +2444,7 @@ function buildFlattenedTables(data) {
       },
       {
         field: "Elastography pattern",
-        value: deriveLinearEbusElastographyPattern(ebus),
+        value: ebusPerformed ? deriveLinearEbusElastographyPattern(ebus) : "",
         __meta: {
           path: "registry.procedures_performed.linear_ebus.elastography_pattern",
           valueType: "text",
@@ -2408,6 +2900,36 @@ function applyEditsToPayload(payload, tables) {
     setByPath(payload, meta.path, value);
   });
 
+  const chestUsRows = tableMap.get("chest_ultrasound_details")?.rows || [];
+  chestUsRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "boolean") value = parseYesNo(value);
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
+  const outcomesRows = tableMap.get("outcomes")?.rows || [];
+  outcomesRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "boolean") value = parseYesNo(value);
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
   const ebusRows = tableMap.get("linear_ebus_summary")?.rows || [];
   ebusRows.forEach((row) => {
     const meta = row.__meta || {};
@@ -2434,6 +2956,177 @@ function applyEditsToPayload(payload, tables) {
         evidence_quote: row?.evidence_quote || null,
       }))
       .filter((row) => row.station || row.action || row.passes || row.elastography_pattern || row.evidence_quote);
+  }
+
+  const navRows = tableMap.get("navigation_targets")?.rows || [];
+  const existingNav = Array.isArray(payload?.registry?.granular_data?.navigation_targets)
+    ? payload.registry.granular_data.navigation_targets
+    : [];
+  if (navRows.length > 0) {
+    ensurePath(payload, "registry.granular_data");
+    payload.registry.granular_data.navigation_targets = navRows.map((row, idx) => {
+      const base = existingNav[idx] && typeof existingNav[idx] === "object" ? existingNav[idx] : {};
+      const out = { ...base };
+
+      out.target_number = base?.target_number ?? idx + 1;
+
+      const loc = String(row?.target_location_text || "").trim();
+      if (loc) out.target_location_text = loc;
+
+      const lobe = String(row?.target_lobe || "").trim();
+      out.target_lobe = lobe ? lobe : null;
+
+      const segment = String(row?.target_segment || "").trim();
+      out.target_segment = segment ? segment : null;
+
+      const size = parseNumber(row?.lesion_size_mm);
+      out.lesion_size_mm = size;
+
+      const ct = String(row?.ct_characteristics || "").trim();
+      out.ct_characteristics = ct ? ct : null;
+
+      const suv = parseNumber(row?.pet_suv_max);
+      out.pet_suv_max = suv;
+
+      const bs = String(row?.bronchus_sign || "").trim();
+      out.bronchus_sign = bs ? bs : null;
+
+      const regErr = parseNumber(row?.registration_error_mm);
+      out.registration_error_mm = regErr;
+
+      const view = String(row?.rebus_view || "").trim();
+      out.rebus_view = view ? view : null;
+
+      const tools = parseList(row?.sampling_tools_used);
+      out.sampling_tools_used = tools.length ? tools : null;
+
+      const needlePasses = parseNumber(row?.number_of_needle_passes);
+      out.number_of_needle_passes = needlePasses === null ? null : Math.trunc(needlePasses);
+
+      const forceps = parseNumber(row?.number_of_forceps_biopsies);
+      out.number_of_forceps_biopsies = forceps === null ? null : Math.trunc(forceps);
+
+      const cryo = parseNumber(row?.number_of_cryo_biopsies);
+      out.number_of_cryo_biopsies = cryo === null ? null : Math.trunc(cryo);
+
+      const roseResult = String(row?.rose_result || "").trim();
+      out.rose_result = roseResult ? roseResult : null;
+      out.rose_performed = roseResult ? true : null;
+
+      const notes = String(row?.notes || "").trim();
+      out.notes = notes ? notes : null;
+
+      return out;
+    });
+  }
+
+  const stationRows = tableMap.get("linear_ebus_stations_detail")?.rows || [];
+  const existingStations = Array.isArray(payload?.registry?.granular_data?.linear_ebus_stations_detail)
+    ? payload.registry.granular_data.linear_ebus_stations_detail
+    : [];
+  if (stationRows.length > 0) {
+    ensurePath(payload, "registry.granular_data");
+    payload.registry.granular_data.linear_ebus_stations_detail = stationRows.map((row, idx) => {
+      const base = existingStations[idx] && typeof existingStations[idx] === "object" ? existingStations[idx] : {};
+      const out = { ...base };
+
+      const station = String(row?.station || "").trim();
+      if (station) out.station = station;
+
+      const sampled = parseYesNo(row?.sampled);
+      out.sampled = sampled;
+
+      const shortAxis = parseNumber(row?.short_axis_mm);
+      out.short_axis_mm = shortAxis;
+
+      const longAxis = parseNumber(row?.long_axis_mm);
+      out.long_axis_mm = longAxis;
+
+      const shape = String(row?.shape || "").trim();
+      out.shape = shape ? shape : null;
+
+      const margin = String(row?.margin || "").trim();
+      out.margin = margin ? margin : null;
+
+      const echo = String(row?.echogenicity || "").trim();
+      out.echogenicity = echo ? echo : null;
+
+      const chs = parseYesNo(row?.chs_present);
+      out.chs_present = chs;
+
+      const nec = parseYesNo(row?.necrosis_present);
+      out.necrosis_present = nec;
+
+      const calc = parseYesNo(row?.calcification_present);
+      out.calcification_present = calc;
+
+      const gauge = String(row?.needle_gauge || "").trim();
+      out.needle_gauge = gauge ? gauge : null;
+
+      const passes = parseNumber(row?.number_of_passes);
+      out.number_of_passes = passes === null ? null : Math.trunc(passes);
+
+      const rose = String(row?.rose_result || "").trim();
+      out.rose_result = rose ? rose : null;
+
+      const imp = String(row?.morphologic_impression || "").trim();
+      out.morphologic_impression = imp ? imp : null;
+
+      return out;
+    });
+  }
+
+  const caoRows = tableMap.get("cao_interventions_detail")?.rows || [];
+  const existingCao = Array.isArray(payload?.registry?.granular_data?.cao_interventions_detail)
+    ? payload.registry.granular_data.cao_interventions_detail
+    : [];
+  if (caoRows.length > 0) {
+    ensurePath(payload, "registry.granular_data");
+    payload.registry.granular_data.cao_interventions_detail = caoRows.map((row, idx) => {
+      const base = existingCao[idx] && typeof existingCao[idx] === "object" ? existingCao[idx] : {};
+      const out = { ...base };
+
+      const loc = String(row?.location || "").trim();
+      if (loc) out.location = loc;
+
+      const obstruction = String(row?.obstruction_type || "").trim();
+      out.obstruction_type = obstruction ? obstruction : null;
+
+      const etiology = String(row?.etiology || "").trim();
+      out.etiology = etiology ? etiology : null;
+
+      const morph = String(row?.lesion_morphology || "").trim();
+      out.lesion_morphology = morph ? morph : null;
+
+      const countText = String(row?.lesion_count_text || "").trim();
+      out.lesion_count_text = countText ? countText : null;
+
+      const length = parseNumber(row?.length_mm);
+      out.length_mm = length;
+
+      const prePct = parseNumber(row?.pre_obstruction_pct);
+      out.pre_obstruction_pct = prePct === null ? null : Math.trunc(prePct);
+
+      const postPct = parseNumber(row?.post_obstruction_pct);
+      out.post_obstruction_pct = postPct === null ? null : Math.trunc(postPct);
+
+      const preDiam = parseNumber(row?.pre_diameter_mm);
+      out.pre_diameter_mm = preDiam;
+
+      const postDiam = parseNumber(row?.post_diameter_mm);
+      out.post_diameter_mm = postDiam;
+
+      const stent = parseYesNo(row?.stent_placed_at_site);
+      out.stent_placed_at_site = stent;
+
+      const hemo = parseYesNo(row?.hemostasis_required);
+      out.hemostasis_required = hemo;
+
+      const notes = String(row?.notes || "").trim();
+      out.notes = notes ? notes : null;
+
+      return out;
+    });
   }
 }
 
@@ -3018,7 +3711,7 @@ function renderClinicalContext(registry, data) {
   if (registry.clinical_context?.primary_indication) {
     rows.push([
       "Primary Indication",
-      registry.clinical_context.primary_indication,
+      cleanIndicationForDisplay(registry.clinical_context.primary_indication),
       renderEvidenceChips(ev["clinical_context.primary_indication"] || []),
     ]);
   }

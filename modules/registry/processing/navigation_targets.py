@@ -39,7 +39,33 @@ _ENGAGE_LOCATION_RE = re.compile(
 _TARGET_LESION_SIZE_CM_RE = re.compile(r"(?is)\btarget\s+lesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*cm\b")
 _TARGET_LESION_SIZE_MM_RE = re.compile(r"(?is)\btarget\s+lesion\b[^.\n]{0,80}\b(\d+(?:\.\d+)?)\s*mm\b")
 
-_REBUS_VIEW_RE = re.compile(r"(?is)\bradial\s+ebus\b[^.\n]{0,240}\b(concentric|eccentric|adjacent|not visualized)\b")
+_REBUS_VIEW_RE = re.compile(
+    r"(?is)\b(?:radial\s+ebus|rebus)\b.{0,240}?\b(concentric|eccentric|adjacent|not visualized)\b"
+)
+_REGISTRATION_ERROR_RE = re.compile(
+    r"(?is)\bregistration\b[^.\n]{0,200}\berror\b[^.\n]{0,60}\b(\d+(?:\.\d+)?)\s*mm\b"
+)
+_REGISTRATION_ERROR_FALLBACK_RE = re.compile(r"(?is)\berror\s+of\s+(\d+(?:\.\d+)?)\s*mm\b")
+_TARGET_SEGMENT_OF_LOBE_RE = re.compile(
+    r"(?is)\btarget\s+lesion\b[^.\n]{0,260}\bin\s+(?:the\s+)?(?P<segment>[A-Za-z][A-Za-z -]{0,60}?Segment)\s+of\s+(?:the\s+)?(?P<lobe>RUL|RML|RLL|LUL|LLL|LINGULA)\b"
+)
+_BRONCHUS_CODE_RE = re.compile(r"\b([LR]B\d{1,2})\b", re.IGNORECASE)
+_NEEDLE_GAUGE_RE = re.compile(r"(?i)\b(19|21|22|25)\s*[- ]?(?:g|gauge)\b")
+_PASSES_RE = re.compile(r"(?i)\b(\d{1,2})\s+passes?\b")
+_SPECIMEN_COUNT_RE = re.compile(r"(?i)\b(\d{1,2})\s+(?:specimens?|samples?|biops(?:y|ies))\b")
+
+_CT_CHARACTERISTICS_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("Part-solid", re.compile(r"(?i)\b(?:part[-\s]?solid|semi[-\s]?solid)\b")),
+    ("Ground-glass", re.compile(r"(?i)\b(?:ground[-\s]?glass|groundglass|ggo)\b")),
+    ("Cavitary", re.compile(r"(?i)\b(?:cavitary|cavit(?:y|ation))\b")),
+    ("Calcified", re.compile(r"(?i)\b(?:calcified|calcification)\b")),
+    ("Solid", re.compile(r"(?i)\bsolid\b")),
+)
+
+_INLINE_TARGET_RE = re.compile(
+    r"\bTarget(?:\s+Lesion)?\s*[:\-]\s*(?P<loc>[^\n\r]+)",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 _FIDUCIAL_SENTENCE_RE = re.compile(r"(?i)\b(fiducial(?:\s+marker)?s?\b[^\n]{0,260})")
 _FIDUCIAL_ACTION_RE = re.compile(r"(?i)\b(?:plac(?:ed|ement)|deploy\w*|position\w*|insert\w*)\b")
@@ -49,6 +75,24 @@ _CRYO_RE = re.compile(r"(?i)\btransbronchial\s+cryo(?:biopsy|biopsies)\b|\bcryob
 _CRYO_PROBE_SIZE_RE = re.compile(r"(?i)\b(\d(?:\.\d)?)\s*mm\s*cryo\s*probe\b")
 _CRYO_FREEZE_RE = re.compile(r"(?i)\bfreeze\s+time\b[^.\n]{0,40}\b(\d{1,2})\s*seconds?\b")
 _TOTAL_SAMPLES_RE = re.compile(r"(?i)\btotal\s+(\d{1,2})\s+samples?\b")
+
+_ROSE_LINE_RE = re.compile(r"(?im)^\s*ROSE(?:\s+Result)?\s*[:\-]\s*(?P<result>.+?)\s*$")
+_ROSE_HEADER_RE = re.compile(r"(?im)^\s*ROSE(?:\s+Result)?\s*[:\-]\s*$")
+
+_COUNT_WORDS: dict[str, int] = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+    "eleven": 11,
+    "twelve": 12,
+}
 
 
 def _canonical_header(value: str) -> str:
@@ -77,10 +121,118 @@ def _coerce_float(value: str | None) -> float | None:
         return None
 
 
+def _coerce_int(value: str | None) -> int | None:
+    if value is None:
+        return None
+    raw = str(value).strip()
+    if not raw:
+        return None
+    if raw.isdigit():
+        try:
+            return int(raw)
+        except Exception:
+            return None
+    return _COUNT_WORDS.get(raw.lower())
+
+
 def _first_line_containing(text: str, pattern: re.Pattern[str]) -> str | None:
     for line in (text or "").splitlines():
         if pattern.search(line):
             return line.strip() or None
+    return None
+
+
+def _detect_ct_characteristics(text: str) -> str | None:
+    raw = (text or "").strip()
+    if not raw:
+        return None
+    for label, pattern in _CT_CHARACTERISTICS_PATTERNS:
+        if pattern.search(raw):
+            return label
+    return None
+
+
+_INLINE_TARGET_STOP_WORDS: tuple[str, ...] = (
+    "PROCEDURE",
+    "INDICATION",
+    "TECHNIQUE",
+    "DESCRIPTION",
+)
+
+
+def _trim_at_stop_words(value: str) -> str:
+    text = (value or "").strip()
+    if not text:
+        return ""
+    for stop_word in _INLINE_TARGET_STOP_WORDS:
+        match = re.search(rf"(?i)\b{re.escape(stop_word)}\b", text)
+        if match:
+            text = text[: match.start()].strip()
+    return text
+
+
+def _truncate_location(value: str, *, max_len: int = 100) -> str:
+    """Truncate location strings to a safe length (prevents accidental whole-note capture)."""
+    cleaned = _trim_at_stop_words(value)
+    if len(cleaned) <= max_len:
+        return cleaned
+    clipped = cleaned[:max_len].rsplit(" ", 1)[0].strip()
+    if not clipped:
+        clipped = cleaned[:max_len].strip()
+    return clipped
+
+
+def _maybe_unescape_newlines(text: str) -> str:
+    """Convert literal '\\n'/'\\r' sequences into real newlines when the note looks escaped."""
+    raw = text or ""
+    if not raw.strip():
+        return raw
+    if "\n" in raw or "\r" in raw:
+        return raw
+    if "\\n" not in raw and "\\r" not in raw:
+        return raw
+    return raw.replace("\\r\\n", "\n").replace("\\n", "\n").replace("\\r", "\n")
+
+
+def _infer_lobe_from_text(text: str) -> str | None:
+    upper = (text or "").upper()
+    for token in ("RUL", "RML", "RLL", "LUL", "LLL"):
+        if re.search(rf"\b{token}\b", upper):
+            return token
+    if "LINGULA" in upper:
+        return "Lingula"
+    if "LEFT UPPER" in upper:
+        return "LUL"
+    if "LEFT LOWER" in upper:
+        return "LLL"
+    if "RIGHT UPPER" in upper:
+        return "RUL"
+    if "RIGHT MIDDLE" in upper:
+        return "RML"
+    if "RIGHT LOWER" in upper:
+        return "RLL"
+    return None
+
+
+def _extract_rose_result(text: str) -> str | None:
+    raw = text or ""
+    if not raw.strip():
+        return None
+    inline = _ROSE_LINE_RE.search(raw)
+    if inline:
+        result = (inline.group("result") or "").strip()
+        return result or None
+
+    header = _ROSE_HEADER_RE.search(raw)
+    if not header:
+        return None
+
+    # Common template: "ROSE Result:" on its own line, then the result on the next non-empty line.
+    tail = raw[header.end() :]
+    for line in tail.splitlines()[:6]:
+        candidate = (line or "").strip()
+        if candidate:
+            return candidate
     return None
 
 
@@ -108,17 +260,183 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
     if not text.strip():
         return []
 
-    matches = list(_TARGET_HEADER_RE.finditer(text))
+    scan_text = _maybe_unescape_newlines(text)
+
+    matches = list(_TARGET_HEADER_RE.finditer(scan_text))
     if not matches:
-        return []
+        # Fallback: support inline patterns like "Target: 20mm nodule in LLL" without
+        # relying on explicit "... LOBE TARGET" section headings.
+        targets: list[dict[str, Any]] = []
+        for match in _INLINE_TARGET_RE.finditer(scan_text):
+            raw_loc_full = (match.group("loc") or "").strip()
+            raw_loc_full = _trim_at_stop_words(raw_loc_full)
+            raw_loc = _truncate_location(raw_loc_full)
+            if not raw_loc:
+                continue
+            if len(raw_loc) <= 2:
+                continue
+
+            target: dict[str, Any] = {
+                "target_number": len(targets) + 1,
+                "target_location_text": raw_loc,
+            }
+
+            lobe = _infer_lobe_from_text(raw_loc_full)
+            if lobe:
+                target["target_lobe"] = lobe
+
+            lesion_size_mm: float | None = None
+            size_match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*cm\b", raw_loc_full)
+            if size_match:
+                lesion_size_mm = _coerce_float(size_match.group(1))
+                if lesion_size_mm is not None:
+                    lesion_size_mm *= 10.0
+            else:
+                size_match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*mm\b", raw_loc_full)
+                if size_match:
+                    lesion_size_mm = _coerce_float(size_match.group(1))
+            if lesion_size_mm is not None:
+                target["lesion_size_mm"] = lesion_size_mm
+
+            ct_char = _detect_ct_characteristics(raw_loc_full)
+            if ct_char:
+                target["ct_characteristics"] = ct_char
+
+            targets.append(target)
+
+        # When there is a single target, enrich it with global navigation details found elsewhere
+        # in the note (segment/bronchus, registration error, rEBUS view, sampling tools/counts).
+        if len(targets) == 1:
+            target = targets[0]
+            lobe = _normalize_lobe(target.get("target_lobe")) or _infer_lobe_from_text(
+                str(target.get("target_location_text") or "")
+            )
+
+            seg_match = _TARGET_SEGMENT_OF_LOBE_RE.search(scan_text)
+            if seg_match:
+                seg_lobe = _normalize_lobe(seg_match.group("lobe")) or lobe
+                segment = (seg_match.group("segment") or "").strip() or None
+                if seg_lobe:
+                    target["target_lobe"] = seg_lobe
+                    lobe = seg_lobe
+                if segment:
+                    target["target_segment"] = segment
+
+            bronchus: str | None = None
+            bronchus_matches = [m.group(1).upper() for m in _BRONCHUS_CODE_RE.finditer(scan_text)]
+            if bronchus_matches and lobe:
+                desired_prefix = "L" if (lobe.startswith("L") or lobe == "Lingula") else "R"
+                bronchus = next((b for b in bronchus_matches if b.startswith(desired_prefix)), None)
+            elif bronchus_matches:
+                bronchus = bronchus_matches[0]
+
+            if lobe and target.get("target_segment"):
+                segment = str(target.get("target_segment") or "").strip()
+                if bronchus:
+                    target["target_location_text"] = f"{lobe} ({bronchus} {segment})"
+                else:
+                    target["target_location_text"] = f"{lobe} ({segment})"
+
+            if not target.get("ct_characteristics"):
+                ct_char = _detect_ct_characteristics(str(target.get("target_location_text") or ""))
+                if ct_char:
+                    target["ct_characteristics"] = ct_char
+
+            reg_err = None
+            reg = _REGISTRATION_ERROR_RE.search(scan_text)
+            if reg:
+                reg_err = _coerce_float(reg.group(1))
+            else:
+                # Conservative fallback: only accept generic "error of Xmm" when the note
+                # also contains an explicit registration marker.
+                if re.search(r"(?i)\bregistration\b", scan_text):
+                    reg2 = _REGISTRATION_ERROR_FALLBACK_RE.search(scan_text)
+                    if reg2:
+                        reg_err = _coerce_float(reg2.group(1))
+            if reg_err is not None:
+                target["registration_error_mm"] = reg_err
+
+            rebus_match = _REBUS_VIEW_RE.search(scan_text)
+            if rebus_match:
+                view = (rebus_match.group(1) or "").strip().title()
+                if view:
+                    target["rebus_used"] = True
+                    target["rebus_view"] = view
+
+            tools: list[str] = []
+            tbna_match = re.search(r"(?i)\btransbronchial\s+needle\s+aspiration\b|\btbna\b", scan_text)
+            if tbna_match:
+                gauge_match = _NEEDLE_GAUGE_RE.search(scan_text[tbna_match.start() : tbna_match.start() + 500])
+                gauge = gauge_match.group(1) if gauge_match else None
+                tools.append(f"Needle ({gauge}G)" if gauge else "Needle")
+
+                passes_match = _PASSES_RE.search(scan_text[tbna_match.start() : tbna_match.start() + 500])
+                if passes_match:
+                    try:
+                        target["number_of_needle_passes"] = int(passes_match.group(1))
+                    except Exception:
+                        pass
+
+            cryo_match = _CRYO_RE.search(scan_text)
+            if cryo_match:
+                window = scan_text[cryo_match.start() : cryo_match.start() + 700]
+                probe_size = None
+                probe_match = _CRYO_PROBE_SIZE_RE.search(window)
+                if probe_match:
+                    probe_size = probe_match.group(1)
+                if probe_size:
+                    tools.append(f"Cryoprobe ({probe_size}mm)")
+                else:
+                    tools.append("Cryoprobe")
+
+                # Best-effort count for cryobiopsy samples (supports digits or small number words).
+                count = None
+                m_total = _TOTAL_SAMPLES_RE.search(window)
+                if m_total:
+                    count = _coerce_int(m_total.group(1))
+                if count is None:
+                    m_count = re.search(
+                        r"(?i)\b(?P<count>\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b"
+                        r"[^.\n]{0,40}\b(?:samples?|specimens?|biops(?:y|ies))\b",
+                        window,
+                    )
+                    if m_count:
+                        count = _coerce_int(m_count.group("count"))
+                if isinstance(count, int):
+                    target["number_of_cryo_biopsies"] = count
+
+            forceps_match = re.search(r"(?i)\bforceps\s+biops(?:y|ies)\b|\btransbronchial\s+forceps\s+biops(?:y|ies)\b", scan_text)
+            if forceps_match:
+                tools.append("Forceps")
+                window = scan_text[forceps_match.start() : forceps_match.start() + 500]
+                spec_match = _SPECIMEN_COUNT_RE.search(window)
+                if spec_match:
+                    try:
+                        target["number_of_forceps_biopsies"] = int(spec_match.group(1))
+                    except Exception:
+                        pass
+
+            brush_match = re.search(r"(?i)\bbrushings?\b|\bcytology\s+brush\b", scan_text)
+            if brush_match:
+                tools.append("Brush")
+
+            if tools:
+                target["sampling_tools_used"] = tools
+
+            rose_text = _extract_rose_result(scan_text)
+            if rose_text:
+                target["rose_performed"] = True
+                target["rose_result"] = rose_text[:240]
+
+        return targets
 
     targets: list[dict[str, Any]] = []
     for idx, match in enumerate(matches):
         header_raw = match.group("header") or ""
         header = _canonical_header(header_raw)
         section_start = match.end()
-        section_end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
-        section = text[section_start:section_end] if section_end > section_start else ""
+        section_end = matches[idx + 1].start() if idx + 1 < len(matches) else len(scan_text)
+        section = scan_text[section_start:section_end] if section_end > section_start else ""
 
         lobe = _TARGET_LOBE_FROM_HEADER.get(header)
 
@@ -161,7 +479,7 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
 
         target: dict[str, Any] = {
             "target_number": idx + 1,
-            "target_location_text": location_text or "Unknown target",
+            "target_location_text": _truncate_location(location_text or "Unknown target"),
         }
         if lobe:
             target["target_lobe"] = lobe
@@ -172,6 +490,9 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
         if rebus_view is not None:
             target["rebus_used"] = True
             target["rebus_view"] = rebus_view
+        ct_char = _detect_ct_characteristics(section)
+        if ct_char is not None:
+            target["ct_characteristics"] = ct_char
         if fiducial_placed:
             target["fiducial_marker_placed"] = True
         if fiducial_details:

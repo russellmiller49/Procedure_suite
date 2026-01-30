@@ -193,8 +193,12 @@ def _build_registry_model() -> type[BaseModel]:
         @field_serializer("procedure_setting")
         @classmethod
         def serialize_procedure_setting(cls, value):
-            """Temporarily suppress procedure_setting from serialized payloads."""
-            return None
+            """Serialize nested procedure_setting (required by the UI)."""
+            if value is None:
+                return None
+            if isinstance(value, BaseModel):
+                return value.model_dump()
+            return value
 
         @model_validator(mode="before")
         @classmethod

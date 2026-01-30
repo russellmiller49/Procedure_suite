@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-28T13:25:43-08:00`
-Git: `main` @ `dbb6e32`
+Generated: `2026-01-30T08:05:29-08:00`
+Git: `reorg` @ `d301bb7`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -213,6 +213,7 @@ Git: `main` @ `dbb6e32`
       775  proc_nlp/__init__.py
       781  proc_schemas/envelope_models.py
       785  modules/domain/coding_rules/__init__.py
+      793  tests/registry/test_deterministic_extractors_outcomes.py
       802  tests/coder/test_candidate_expansion.py
       816  modules/phi/adapters/encryption_insecure_demo.py
       831  modules/registry/slots/imaging.py
@@ -239,6 +240,7 @@ Git: `main` @ `dbb6e32`
      1027  tests/registry/test_clinical_guardrails_stent_inspection.py
      1072  modules/coder/__init__.py
      1076  tests/registry/test_clinical_guardrails_radial_linear.py
+     1107  tests/registry/test_clinical_guardrails_tbna_peripheral_context.py
      1123  modules/coder/types.py
      1125  modules/ml_coder/valid_ip_codes.py
      1126  tests/registry/test_clinical_guardrails_endobronchial_biopsy.py
@@ -365,6 +367,7 @@ Git: `main` @ `dbb6e32`
      2921  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2927  modules/common/rvu_calc.py
      2936  tests/registry/test_masking.py
+     2954  tests/registry/test_linear_ebus_stations_detail.py
      2990  tests/coding/test_sectionizer_integration.py
      2993  tests/unit/test_openai_timeouts.py
      3060  modules/common/umls_linking.py
@@ -379,6 +382,8 @@ Git: `main` @ `dbb6e32`
      3169  proc_nlp/umls_linker.py
      3186  modules/registry/summarize.py
      3188  modules/common/rules_engine/dsl.py
+     3201  tests/registry/test_cao_interventions_detail.py
+     3202  tests/registry/test_navigation_targets_inline_target.py
      3204  proc_nlp/normalize_proc.py
      3252  modules/infra/cache.py
      3264  tests/coder/test_ncci_bundling_excludes_financials.py
@@ -472,7 +477,6 @@ Git: `main` @ `dbb6e32`
      7599  modules/registry/model_runtime.py
      7652  tests/registry/test_registry_extraction_ebus.py
      7672  modules/coder/adapters/ml_ranker.py
-     7672  tests/registry/test_extraction_quality_fixpack_jan2026.py
      7837  tests/unit/test_no_legacy_imports.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
@@ -488,15 +492,15 @@ Git: `main` @ `dbb6e32`
      8750  modules/api/routes/unified_process.py
      9005  modules/api/routes/metrics.py
      9048  modules/registry/schema/adapters/v3_to_v2.py
+     9292  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9393  modules/registry/processing/focus.py
      9466  tests/ml_coder/test_training_pipeline.py
      9471  tests/ml_coder/test_case_difficulty.py
      9490  modules/ml_coder/training.py
-     9709  modules/registry/processing/navigation_targets.py
      9738  modules/phi/service.py
      9850  tests/unit/test_extraction_adapters.py
      9870  modules/reporting/validation.py
-    10017  tests/registry/test_registry_guardrails.py
+    10023  tests/registry/test_registry_guardrails.py
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
     10466  modules/api/routes_registry.py
@@ -519,6 +523,7 @@ Git: `main` @ `dbb6e32`
     12446  docs/phi_review_system/backend/dependencies.py
     12517  modules/registry/extractors/v3_extractor.py
     12640  tests/ml_coder/test_data_prep.py
+    12647  modules/registry/processing/linear_ebus_stations_detail.py
     12657  docs/phi_review_system/backend/schemas.py
     12997  tests/coder/test_smart_hybrid_policy.py
     13192  tests/unit/test_openai_responses_primary.py
@@ -552,6 +557,7 @@ Git: `main` @ `dbb6e32`
     16608  tests/integration/api/test_metrics_endpoint.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
     17010  modules/phi/safety/veto.py
+    17037  modules/registry/processing/cao_interventions_detail.py
     17103  modules/registry/application/coding_support_builder.py
     17161  proc_schemas/clinical/airway.py
     17268  modules/common/openai_responses.py
@@ -570,19 +576,20 @@ Git: `main` @ `dbb6e32`
     20317  modules/coder/parallel_pathway/orchestrator.py
     20430  modules/registry/model_bootstrap.py
     20539  modules/registry/extractors/llm_detailed.py
-    20678  tests/coder/test_coding_rules_phase7.py
     21220  modules/coder/adapters/llm/openai_compat_advisor.py
+    21232  tests/coder/test_coding_rules_phase7.py
     21460  modules/coder/adapters/persistence/supabase_procedure_store.py
     21479  tests/coder/test_reconciliation.py
     21518  tests/test_registry_normalization.py
+    22104  modules/registry/processing/navigation_targets.py
     22317  tests/reporter/test_macro_engine_features.py
     22456  modules/registry/legacy/adapters/airway.py
     22569  modules/phi/adapters/presidio_scrubber.py
     22644  modules/ml_coder/data_prep.py
     22670  tests/ml_coder/test_registry_data_prep.py
     23485  docs/phi_review_system/backend/endpoints.py
-    24045  modules/registry/schema/v2_dynamic.py
     24069  tests/ml_advisor/conftest.py
+    24183  modules/registry/schema/v2_dynamic.py
     24922  tests/integration/api/test_coder_run_endpoint.py
     25665  modules/coder/application/smart_hybrid_policy.py
     25902  modules/reporting/macro_engine.py
@@ -591,10 +598,9 @@ Git: `main` @ `dbb6e32`
     27607  modules/registry/transform.py
     27702  modules/coder/adapters/registry_coder.py
     28626  modules/ml_coder/registry_data_prep.py
-    29699  modules/registry/schema/granular_models.py
+    29883  modules/registry/schema/granular_models.py
     29893  modules/domain/coding_rules/coding_rules_engine.py
     30063  modules/api/ml_advisor_router.py
-    30872  modules/registry/schema/granular_logic.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
     33132  tests/registry/test_registry_service_hybrid_flow.py
     35268  tests/coding/test_rules_validation.py
@@ -605,19 +611,20 @@ Git: `main` @ `dbb6e32`
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
     40683  modules/common/llm.py
+    40861  modules/registry/schema/granular_logic.py
     41901  modules/proc_ml_advisor/schemas.py
     42913  modules/api/routes/procedure_codes.py
     43561  modules/api/fastapi_app.py
-    43852  tests/registry/test_granular_registry_models.py
-    48887  modules/extraction/postprocessing/clinical_guardrails.py
+    43918  tests/registry/test_granular_registry_models.py
     52780  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+    53728  modules/extraction/postprocessing/clinical_guardrails.py
     56440  modules/autocode/ip_kb/ip_kb.py
     62046  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-    90679  modules/registry/deterministic_extractors.py
+   101740  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
-   120666  modules/registry/postprocess.py
-   142007  modules/registry/application/registry_service.py
+   123127  modules/registry/postprocess.py
+   157083  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
@@ -798,7 +805,7 @@ Git: `main` @ `dbb6e32`
     90791  modules/api/static/app.js
     93797  modules/api/static/phi_redactor/redactor.worker.js
     94017  modules/api/static/phi_redactor/redactor.worker.legacy.js
-   133503  modules/api/static/phi_redactor/app.js
+   167997  modules/api/static/phi_redactor/app.js
 ```
 
 ## Skipped (reason)
@@ -1051,7 +1058,6 @@ Git: `main` @ `dbb6e32`
  inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/ml_coder/training.py
- inline_cap_reached>75  modules/registry/processing/navigation_targets.py
  inline_cap_reached>75  modules/phi/service.py
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
@@ -1069,6 +1075,7 @@ Git: `main` @ `dbb6e32`
  inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
+ inline_cap_reached>75  modules/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
  inline_cap_reached>75  modules/coder/rules.py
@@ -1087,6 +1094,7 @@ Git: `main` @ `dbb6e32`
  inline_cap_reached>75  modules/coder/rules_engine.py
  inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  modules/phi/safety/veto.py
+ inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  modules/common/openai_responses.py
@@ -1101,6 +1109,7 @@ Git: `main` @ `dbb6e32`
  inline_cap_reached>75  modules/registry/extractors/llm_detailed.py
  inline_cap_reached>75  modules/coder/adapters/llm/openai_compat_advisor.py
  inline_cap_reached>75  modules/coder/adapters/persistence/supabase_procedure_store.py
+ inline_cap_reached>75  modules/registry/processing/navigation_targets.py
  inline_cap_reached>75  modules/registry/legacy/adapters/airway.py
  inline_cap_reached>75  modules/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  modules/ml_coder/data_prep.py
@@ -1115,17 +1124,17 @@ Git: `main` @ `dbb6e32`
  inline_cap_reached>75  modules/registry/schema/granular_models.py
  inline_cap_reached>75  modules/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  modules/api/ml_advisor_router.py
- inline_cap_reached>75  modules/registry/schema/granular_logic.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/dictionary.py
  inline_cap_reached>75  modules/common/llm.py
+ inline_cap_reached>75  modules/registry/schema/granular_logic.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
  inline_cap_reached>75  modules/api/fastapi_app.py
- inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+ inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  modules/registry/prompts.py
  inline_cap_reached>75  modules/reporting/engine.py

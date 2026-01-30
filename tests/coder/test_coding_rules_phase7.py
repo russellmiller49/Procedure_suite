@@ -269,6 +269,18 @@ class TestBALExtractor:
 
         assert result == {}
 
+    def test_extract_bal_volume_first_phrase_with_escaped_newlines(self):
+        text = (
+            "Protected cytology brushings obtained.\\n\\n"
+            "Bronchoalveolar lavage performed at LB10. 60mL NS instilled with 22mL return."
+        )
+        result = extract_bal(text)
+
+        assert result.get("bal", {}).get("performed") is True
+        assert result.get("bal", {}).get("location") == "LB10"
+        assert result.get("bal", {}).get("volume_instilled_ml") == 60
+        assert result.get("bal", {}).get("volume_recovered_ml") == 22
+
 
 class TestTherapeuticAspirationExtractor:
     """Tests for therapeutic aspiration deterministic extractor."""

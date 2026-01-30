@@ -10,6 +10,7 @@ This toolkit enables:
 ## Documentation
 
 - **[Installation & Setup](docs/INSTALLATION.md)**: Setup guide for Python, spaCy models, and API keys.
+- **[Repo Index](docs/REPO_INDEX.md)**: One-page map of the repo (entrypoints, key folders, knowledge assets).
 - **[User Guide](docs/USER_GUIDE.md)**: How to use the CLI tools and API endpoints.
 - **[Registry Prodigy Workflow](docs/REGISTRY_PRODIGY_WORKFLOW.md)**: Human-in-the-loop “Diamond Loop” for the registry procedure classifier.
 - **[Development Guide](docs/DEVELOPMENT.md)**: **CRITICAL** for contributors and AI Agents. Defines the system architecture and coding standards.

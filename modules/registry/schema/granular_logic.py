@@ -206,13 +206,15 @@ def derive_procedures_from_granular(
         any_rebus = any(target.get("rebus_used") or target.get("rebus_view") for target in navigation_targets)
 
         radial_ebus = procedures.get("radial_ebus") or {}
-        if any_rebus and not radial_ebus.get("performed"):
-            radial_ebus["performed"] = True
-            # Get probe position from first target with a view
-            for target in navigation_targets:
-                if target.get("rebus_view"):
-                    radial_ebus["probe_position"] = target["rebus_view"]
-                    break
+        if any_rebus:
+            if not radial_ebus.get("performed"):
+                radial_ebus["performed"] = True
+            if not radial_ebus.get("probe_position"):
+                # Get probe position from first target with a view
+                for target in navigation_targets:
+                    if target.get("rebus_view"):
+                        radial_ebus["probe_position"] = target["rebus_view"]
+                        break
             procedures["radial_ebus"] = radial_ebus
         elif radial_ebus.get("probe_position") and not radial_ebus.get("performed"):
             # probe_position is set but performed is not - fix it
@@ -234,8 +236,20 @@ def derive_procedures_from_granular(
             if station.get("sampled") is True or station.get("sampled") is None
         ]
 
-        if sampled_stations and not linear_ebus.get("stations_sampled"):
-            linear_ebus["stations_sampled"] = sampled_stations
+        if sampled_stations:
+            existing_sampled = linear_ebus.get("stations_sampled") or []
+            if not isinstance(existing_sampled, list):
+                existing_sampled = []
+            existing_norm = [str(s).strip() for s in existing_sampled if str(s).strip()]
+            merged = list(existing_norm)
+            for st in sampled_stations:
+                if not st:
+                    continue
+                st_norm = str(st).strip()
+                if st_norm and st_norm not in merged:
+                    merged.append(st_norm)
+            if merged:
+                linear_ebus["stations_sampled"] = merged
 
         if not linear_ebus.get("performed"):
             linear_ebus["performed"] = True
@@ -353,6 +367,72 @@ def derive_procedures_from_granular(
     # 5. Derive navigational_bronchoscopy.sampling_tools_used from navigation_targets
     # ==========================================================================
     if navigation_targets:
+        def _nav_primary_location_text() -> str | None:
+            for t in navigation_targets:
+                loc = t.get("target_location_text")
+                if not isinstance(loc, str):
+                    continue
+                loc_clean = loc.strip()
+                lower = loc_clean.lower()
+                if (
+                    "||" in lower
+                    or lower.startswith("pt:")
+                    or lower.startswith("patient:")
+                    or re.search(r"(?i)\b(?:mrn|dob)\b\s*:", loc_clean)
+                ):
+                    continue
+                if loc_clean:
+                    return loc_clean
+            return None
+
+        def _nav_primary_location_parts() -> dict[str, str] | None:
+            bronchus_re = re.compile(r"\b([LR]B\d{1,2})\b", re.IGNORECASE)
+            for t in navigation_targets:
+                loc = t.get("target_location_text")
+                if not isinstance(loc, str):
+                    continue
+                loc_clean = loc.strip()
+                lower = loc_clean.lower()
+                if (
+                    "||" in lower
+                    or lower.startswith("pt:")
+                    or lower.startswith("patient:")
+                    or re.search(r"(?i)\b(?:mrn|dob)\b\s*:", loc_clean)
+                ):
+                    continue
+
+                parts: dict[str, str] = {}
+                lobe = t.get("target_lobe")
+                if isinstance(lobe, str) and lobe.strip():
+                    parts["lobe"] = lobe.strip()
+                segment = t.get("target_segment")
+                if isinstance(segment, str) and segment.strip():
+                    parts["segment"] = segment.strip()
+                match = bronchus_re.search(loc_clean)
+                if match:
+                    parts["bronchus"] = match.group(1).upper()
+                if parts:
+                    return parts
+            return None
+
+        def _shorten_segment(segment: str) -> str:
+            value = (segment or "").strip()
+            value = re.sub(r"(?i)\bsegment\b", "", value).strip()
+            value = re.sub(r"\s+", " ", value).strip(" -")
+            return value
+
+        def _nav_target_lobe_label(target: dict[str, Any]) -> str | None:
+            lobe = target.get("target_lobe")
+            if isinstance(lobe, str) and lobe.strip():
+                return lobe.strip()
+            loc = str(target.get("target_location_text") or "")
+            for token in ("RUL", "RML", "RLL", "LUL", "LLL"):
+                if re.search(rf"(?i)\b{token}\b", loc):
+                    return token
+            if re.search(r"(?i)\blingula\b", loc):
+                return "Lingula"
+            return None
+
         nav_bronch = procedures.get("navigational_bronchoscopy") or {}
         if not nav_bronch.get("performed"):
             nav_bronch["performed"] = True
@@ -426,10 +506,22 @@ def derive_procedures_from_granular(
                     len(existing_targets) == 1 and str(existing_targets[0]).strip().lower() in {"lung mass"}
                 )
                 if not existing_targets or is_placeholder:
-                    targets = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
-                    if targets:
-                        peripheral_tbna["targets_sampled"] = targets
+                    primary_loc = _nav_primary_location_text()
+                    if primary_loc:
+                        peripheral_tbna["targets_sampled"] = [primary_loc]
                         procedures["peripheral_tbna"] = peripheral_tbna
+                        warnings.append(
+                            f"BACKFILL: Assigned target '{primary_loc}' to peripheral_tbna.targets_sampled"
+                        )
+                    else:
+                        primary_parts = _nav_primary_location_parts()
+                        if primary_parts and primary_parts.get("lobe"):
+                            lobe = primary_parts["lobe"]
+                            peripheral_tbna["targets_sampled"] = [lobe]
+                            procedures["peripheral_tbna"] = peripheral_tbna
+                            warnings.append(
+                                f"BACKFILL: Assigned target '{lobe}' to peripheral_tbna.targets_sampled"
+                            )
 
         if has_forceps:
             tbbx = procedures.get("transbronchial_biopsy") or {}
@@ -437,14 +529,33 @@ def derive_procedures_from_granular(
                 tbbx["performed"] = True
             if not tbbx.get("locations"):
                 tbbx_locations = [
-                    t.get("target_location_text")
+                    (
+                        f"{_nav_target_lobe_label(t)} {_shorten_segment(str(t.get('target_segment') or ''))}".strip()
+                        if _nav_target_lobe_label(t) and str(t.get("target_segment") or "").strip()
+                        else (_nav_target_lobe_label(t) or t.get("target_location_text"))
+                    )
                     for t in navigation_targets
-                    if t.get("target_location_text")
+                    if (_nav_target_lobe_label(t) or t.get("target_location_text"))
                     and (
                         (t.get("number_of_forceps_biopsies") or 0) > 0
                         or any("forceps" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
                     )
                 ]
+                if not tbbx_locations:
+                    primary_loc = _nav_primary_location_text()
+                    primary_parts = _nav_primary_location_parts()
+                    loc_label = None
+                    if primary_parts and primary_parts.get("lobe") and primary_parts.get("segment"):
+                        loc_label = f"{primary_parts['lobe']} {_shorten_segment(primary_parts['segment'])}".strip()
+                    elif primary_parts and primary_parts.get("lobe"):
+                        loc_label = primary_parts.get("lobe")
+                    elif primary_loc:
+                        loc_label = primary_loc
+                    if loc_label:
+                        tbbx_locations = [loc_label]
+                        warnings.append(
+                            f"BACKFILL: Assigned target '{loc_label}' to transbronchial_biopsy.locations"
+                        )
                 if tbbx_locations:
                     tbbx["locations"] = tbbx_locations
             if not tbbx.get("number_of_samples"):
@@ -452,12 +563,72 @@ def derive_procedures_from_granular(
                 if total_biopsies:
                     tbbx["number_of_samples"] = total_biopsies
             procedures["transbronchial_biopsy"] = tbbx
+        else:
+            # If transbronchial biopsy is asserted elsewhere, backfill locations from navigation
+            # targets when missing (common when the note introduces a target once and later
+            # biopsy sentences omit the lobe/segment).
+            tbbx = procedures.get("transbronchial_biopsy") or {}
+            if tbbx.get("performed") is True and not (tbbx.get("locations") or []):
+                primary_loc = _nav_primary_location_text()
+                primary_parts = _nav_primary_location_parts()
+                loc_label = None
+                if primary_parts and primary_parts.get("lobe") and primary_parts.get("segment"):
+                    loc_label = f"{primary_parts['lobe']} {_shorten_segment(primary_parts['segment'])}".strip()
+                elif primary_parts and primary_parts.get("lobe"):
+                    loc_label = primary_parts.get("lobe")
+                elif primary_loc:
+                    loc_label = primary_loc
+                if loc_label:
+                    tbbx["locations"] = [loc_label]
+                    procedures["transbronchial_biopsy"] = tbbx
+                    warnings.append(
+                        f"BACKFILL: Assigned target '{loc_label}' to transbronchial_biopsy.locations"
+                    )
 
         if has_brush:
             brushings = procedures.get("brushings") or {}
             if not brushings.get("performed"):
                 brushings["performed"] = True
+            if not (brushings.get("locations") or []):
+                primary_loc = _nav_primary_location_text()
+                primary_parts = _nav_primary_location_parts()
+                tokens: list[str] = []
+                if primary_parts:
+                    lobe = primary_parts.get("lobe")
+                    bronchus = primary_parts.get("bronchus")
+                    if lobe:
+                        tokens.append(lobe)
+                    if bronchus and bronchus not in tokens:
+                        tokens.append(bronchus)
+                if tokens:
+                    brushings["locations"] = tokens
+                    warnings.append(f"BACKFILL: Assigned target '{tokens}' to brushings.locations")
+                elif primary_loc:
+                    brushings["locations"] = [primary_loc]
+                    warnings.append(f"BACKFILL: Assigned target '{primary_loc}' to brushings.locations")
             procedures["brushings"] = brushings
+        else:
+            # If brushings are asserted elsewhere, backfill locations from navigation targets when missing.
+            brushings = procedures.get("brushings") or {}
+            if brushings.get("performed") is True and not (brushings.get("locations") or []):
+                primary_loc = _nav_primary_location_text()
+                primary_parts = _nav_primary_location_parts()
+                tokens = []
+                if primary_parts:
+                    lobe = primary_parts.get("lobe")
+                    bronchus = primary_parts.get("bronchus")
+                    if lobe:
+                        tokens.append(lobe)
+                    if bronchus and bronchus not in tokens:
+                        tokens.append(bronchus)
+                if tokens:
+                    brushings["locations"] = tokens
+                    procedures["brushings"] = brushings
+                    warnings.append(f"BACKFILL: Assigned target '{tokens}' to brushings.locations")
+                elif primary_loc:
+                    brushings["locations"] = [primary_loc]
+                    procedures["brushings"] = brushings
+                    warnings.append(f"BACKFILL: Assigned target '{primary_loc}' to brushings.locations")
 
         if has_cryo:
             cryo = procedures.get("transbronchial_cryobiopsy") or {}
@@ -584,6 +755,33 @@ def derive_procedures_from_granular(
                 airway_dilation = procedures.get("airway_dilation") or {}
                 airway_dilation["performed"] = True
                 procedures["airway_dilation"] = airway_dilation
+
+            mechanical_method: str | None = None
+            if any("cryoextraction" in m for m in modalities):
+                mechanical_method = "Cryoextraction"
+            elif any("microdebrider" in m for m in modalities):
+                mechanical_method = "Microdebrider"
+            elif any("rigid coring" in m for m in modalities):
+                mechanical_method = "Rigid coring"
+            elif any("mechanical debulking" in m for m in modalities):
+                mechanical_method = "Forceps debulking"
+
+            if mechanical_method:
+                mechanical = procedures.get("mechanical_debulking") or {}
+                mechanical["performed"] = True
+                if not mechanical.get("method"):
+                    mechanical["method"] = mechanical_method
+                if not mechanical.get("location"):
+                    locations = sorted(
+                        {
+                            str(detail.get("location")).strip()
+                            for detail in cao_details
+                            if detail.get("location") and str(detail.get("location")).strip()
+                        }
+                    )
+                    if locations:
+                        mechanical["location"] = ", ".join(locations)
+                procedures["mechanical_debulking"] = mechanical
 
             if any(m.startswith("apc") or "electrocautery" in m or "laser" in m for m in modalities):
                 thermal_ablation = procedures.get("thermal_ablation") or {}

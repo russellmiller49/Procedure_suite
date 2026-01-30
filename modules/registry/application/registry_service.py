@@ -1169,6 +1169,31 @@ class RegistryService:
                                             airway_patterns,
                                         )
 
+                            # Outcomes: disposition / follow-up plan / completion.
+                            outcomes_seed = seed_data.get("outcomes")
+                            if isinstance(outcomes_seed, dict) and outcomes_seed:
+                                outcomes = record_data.get("outcomes") or {}
+                                if not isinstance(outcomes, dict):
+                                    outcomes = {}
+                                outcomes_changed = False
+
+                                for key in (
+                                    "procedure_completed",
+                                    "procedure_aborted_reason",
+                                    "disposition",
+                                    "follow_up_plan_text",
+                                ):
+                                    value = outcomes_seed.get(key)
+                                    if value in (None, "", [], {}):
+                                        continue
+                                    if outcomes.get(key) in (None, "", [], {}):
+                                        outcomes[key] = value
+                                        outcomes_changed = True
+
+                                if outcomes_changed:
+                                    record_data["outcomes"] = outcomes
+                                    other_modified = True
+
                         def _populate_diagnostic_bronchoscopy_findings() -> None:
                             """Fill diagnostic bronchoscopy findings/abnormalities when missing."""
                             nonlocal proc_modified
@@ -1746,6 +1771,8 @@ class RegistryService:
                 return RegistryRecord(), []
 
             text = note_text or ""
+            if ("\n" not in text and "\r" not in text) and ("\\n" in text or "\\r" in text):
+                text = text.replace("\\r\\n", "\n").replace("\\n", "\n").replace("\\r", "\n")
             nav_hint = re.search(
                 r"(?i)\b(navigational bronchoscopy|robotic bronchoscopy|electromagnetic navigation|\benb\b|\bion\b|monarch|galaxy|planning station)\b",
                 text,
@@ -1780,6 +1807,14 @@ class RegistryService:
                 s = str(value).strip().lower()
                 if not s:
                     return True
+                if "||" in s:
+                    return True
+                if re.search(r"(?i)^(?:pt|patient)\\s*:", s):
+                    return True
+                if re.search(r"(?i)\\b(?:mrn|dob)\\b\\s*:", s):
+                    return True
+                if re.search(r"(?i)\\b(?:attending|fellow)\\b\\s*:", s):
+                    return True
                 return s in {
                     "unknown",
                     "unknown target",
@@ -1790,11 +1825,43 @@ class RegistryService:
                     "target lesion 3",
                 } or s.startswith("target lesion")
 
+            def _is_more_specific_location(existing_value: object, candidate_value: object) -> bool:
+                existing = str(existing_value or "").strip()
+                candidate = str(candidate_value or "").strip()
+                if not candidate:
+                    return False
+                if not existing:
+                    return True
+                existing_lower = existing.lower()
+                candidate_lower = candidate.lower()
+                existing_has_bronchus = bool(re.search(r"\\b[LR]B\\d{1,2}\\b", existing, re.IGNORECASE))
+                candidate_has_bronchus = bool(re.search(r"\\b[LR]B\\d{1,2}\\b", candidate, re.IGNORECASE))
+                if candidate_has_bronchus and not existing_has_bronchus:
+                    return True
+                if "segment" in candidate_lower and "segment" not in existing_lower:
+                    return True
+                if ("(" in candidate and ")" in candidate) and ("(" not in existing or ")" not in existing):
+                    return True
+                return False
+
+            def _sanitize_target_location(value: str) -> str:
+                raw = (value or "").strip()
+                if not raw:
+                    return ""
+                for stop_word in ("PROCEDURE", "INDICATION", "TECHNIQUE", "DESCRIPTION"):
+                    match = re.search(rf"(?i)\b{re.escape(stop_word)}\b", raw)
+                    if match:
+                        raw = raw[: match.start()].strip()
+                if len(raw) > 100:
+                    clipped = raw[:100].rsplit(" ", 1)[0].strip()
+                    raw = clipped or raw[:100].strip()
+                return raw
+
             warnings: list[str] = []
             updated = False
 
             if parsed_targets:
-                # Merge parsed targets (from explicit TARGET headings) into existing targets.
+                # Merge parsed targets (from TARGET headings / "Target:" lines) into existing targets.
                 max_len = max(len(targets), len(parsed_targets))
                 merged: list[dict[str, Any]] = []
                 for idx in range(max_len):
@@ -1809,7 +1876,9 @@ class RegistryService:
                         if value in (None, "", [], {}):
                             continue
                         if key == "target_location_text":
-                            if _is_placeholder_location(out.get(key)):
+                            if _is_placeholder_location(out.get(key)) or _is_more_specific_location(
+                                out.get(key), value
+                            ):
                                 out[key] = value
                                 updated = True
                             continue
@@ -1826,7 +1895,7 @@ class RegistryService:
 
                 targets = merged
                 warnings.append(
-                    f"NAV_TARGET_HEURISTIC: parsed {len(parsed_targets)} navigation target(s) from target headings"
+                    f"NAV_TARGET_HEURISTIC: parsed {len(parsed_targets)} navigation target(s) from target text"
                 )
             else:
                 existing_count = len(targets)
@@ -1835,7 +1904,7 @@ class RegistryService:
                     return record_in, []
 
                 for idx in range(existing_count, needed_count):
-                    line = target_lines[idx].strip()
+                    line = _sanitize_target_location(target_lines[idx])
                     targets.append(
                         {
                             "target_number": idx + 1,
@@ -1862,6 +1931,182 @@ class RegistryService:
             if not updated:
                 return record_in, []
             return record_out, warnings
+
+        def _apply_linear_ebus_station_detail_heuristics(
+            note_text: str, record_in: RegistryRecord
+        ) -> tuple[RegistryRecord, list[str]]:
+            if record_in is None:
+                return RegistryRecord(), []
+
+            text = note_text or ""
+            if not re.search(r"(?i)\b(?:ebus|endobronchial\s+ultrasound|ebus-tbna)\b", text):
+                return record_in, []
+
+            from modules.registry.processing.linear_ebus_stations_detail import (
+                extract_linear_ebus_stations_detail,
+            )
+
+            parsed = extract_linear_ebus_stations_detail(text)
+            if not parsed:
+                return record_in, []
+
+            record_data = record_in.model_dump()
+            granular = record_data.get("granular_data")
+            if granular is None or not isinstance(granular, dict):
+                granular = {}
+
+            existing_raw = granular.get("linear_ebus_stations_detail")
+            existing: list[dict[str, Any]] = []
+            if isinstance(existing_raw, list):
+                existing = [dict(item) for item in existing_raw if isinstance(item, dict)]
+
+            by_station: dict[str, dict[str, Any]] = {}
+            order: list[str] = []
+            for item in existing:
+                station = str(item.get("station") or "").strip()
+                if not station:
+                    continue
+                if station not in by_station:
+                    order.append(station)
+                by_station[station] = item
+
+            added = 0
+            for item in parsed:
+                if not isinstance(item, dict):
+                    continue
+                station = str(item.get("station") or "").strip()
+                if not station:
+                    continue
+                existing_item = by_station.get(station)
+                if existing_item is None:
+                    by_station[station] = dict(item)
+                    order.append(station)
+                    added += 1
+                    continue
+                updated = False
+                for key, value in item.items():
+                    if key == "station":
+                        continue
+                    if value in (None, "", [], {}):
+                        continue
+                    if existing_item.get(key) in (None, "", [], {}):
+                        existing_item[key] = value
+                        updated = True
+                if updated:
+                    by_station[station] = existing_item
+
+            merged = [by_station[s] for s in order if s in by_station]
+            granular["linear_ebus_stations_detail"] = merged
+
+            record_data["granular_data"] = granular
+            record_out = RegistryRecord(**record_data)
+            return (
+                record_out,
+                [f"EBUS_STATION_DETAIL_HEURISTIC: parsed {len(parsed)} station detail entr{'y' if len(parsed) == 1 else 'ies'} from text"],
+            )
+
+        def _apply_cao_detail_heuristics(
+            note_text: str, record_in: RegistryRecord
+        ) -> tuple[RegistryRecord, list[str]]:
+            if record_in is None:
+                return RegistryRecord(), []
+
+            text = note_text or ""
+            if not re.search(
+                r"(?i)\b(?:central\s+airway|airway\s+obstruction|rigid\s+bronchos|debulk|tumou?r\s+ablation|stent)\b",
+                text,
+            ):
+                return record_in, []
+
+            from modules.registry.processing.cao_interventions_detail import (
+                extract_cao_interventions_detail,
+            )
+
+            parsed = extract_cao_interventions_detail(text)
+            if not parsed:
+                return record_in, []
+
+            record_data = record_in.model_dump()
+            granular = record_data.get("granular_data")
+            if granular is None or not isinstance(granular, dict):
+                granular = {}
+
+            existing_raw = granular.get("cao_interventions_detail")
+            existing: list[dict[str, Any]] = []
+            if isinstance(existing_raw, list):
+                existing = [dict(item) for item in existing_raw if isinstance(item, dict)]
+
+            def _key(item: dict[str, Any]) -> str:
+                return str(item.get("location") or "").strip()
+
+            by_loc: dict[str, dict[str, Any]] = {}
+            order: list[str] = []
+            for item in existing:
+                loc = _key(item)
+                if not loc:
+                    continue
+                if loc not in by_loc:
+                    order.append(loc)
+                by_loc[loc] = item
+
+            added = 0
+            for item in parsed:
+                if not isinstance(item, dict):
+                    continue
+                loc = _key(item)
+                if not loc:
+                    continue
+                existing_item = by_loc.get(loc)
+                if existing_item is None:
+                    by_loc[loc] = dict(item)
+                    order.append(loc)
+                    added += 1
+                    continue
+
+                updated = False
+                for key, value in item.items():
+                    if key == "location":
+                        continue
+                    if value in (None, "", [], {}):
+                        continue
+                    if key == "modalities_applied":
+                        existing_apps = existing_item.get("modalities_applied")
+                        if not isinstance(existing_apps, list):
+                            existing_apps = []
+                        existing_mods = {
+                            str(a.get("modality"))
+                            for a in existing_apps
+                            if isinstance(a, dict) and a.get("modality")
+                        }
+                        new_apps = []
+                        if isinstance(value, list):
+                            for app in value:
+                                if not isinstance(app, dict):
+                                    continue
+                                mod = app.get("modality")
+                                if not mod or str(mod) in existing_mods:
+                                    continue
+                                new_apps.append(app)
+                        if new_apps:
+                            existing_apps.extend(new_apps)
+                            existing_item["modalities_applied"] = existing_apps
+                            updated = True
+                        continue
+                    if existing_item.get(key) in (None, "", [], {}):
+                        existing_item[key] = value
+                        updated = True
+                if updated:
+                    by_loc[loc] = existing_item
+
+            merged = [by_loc[loc] for loc in order if loc in by_loc]
+            granular["cao_interventions_detail"] = merged
+
+            record_data["granular_data"] = granular
+            record_out = RegistryRecord(**record_data)
+            return (
+                record_out,
+                [f"CAO_DETAIL_HEURISTIC: parsed {len(parsed)} CAO site entr{'y' if len(parsed) == 1 else 'ies'} from text"],
+            )
 
         def _coverage_failures(note_text: str, record_in: RegistryRecord) -> list[str]:
             failures: list[str] = []
@@ -1964,9 +2209,20 @@ class RegistryService:
         if override_warnings:
             extraction_warnings.extend(override_warnings)
 
-        record, nav_target_warnings = _apply_navigation_target_heuristics(masked_note_text, record)
+        from modules.registry.processing.masking import mask_offset_preserving
+
+        nav_scan_text = mask_offset_preserving(raw_note_text or "")
+        record, nav_target_warnings = _apply_navigation_target_heuristics(nav_scan_text, record)
         if nav_target_warnings:
             extraction_warnings.extend(nav_target_warnings)
+
+        record, ebus_station_warnings = _apply_linear_ebus_station_detail_heuristics(nav_scan_text, record)
+        if ebus_station_warnings:
+            extraction_warnings.extend(ebus_station_warnings)
+
+        record, cao_detail_warnings = _apply_cao_detail_heuristics(nav_scan_text, record)
+        if cao_detail_warnings:
+            extraction_warnings.extend(cao_detail_warnings)
 
         # Re-run granular→aggregate propagation after any heuristics/overrides that
         # update granular_data (e.g., navigation targets, cryobiopsy sites).
@@ -2016,6 +2272,88 @@ class RegistryService:
         record = guardrail_outcome.record or record
         if guardrail_outcome.warnings:
             extraction_warnings.extend(guardrail_outcome.warnings)
+
+        # Reconcile granular validation warnings against the final record state.
+        # Guardrails and other postprocess steps may flip performed flags after
+        # granular propagation has already emitted structural warnings.
+        def _reconcile_granular_validation_warnings(record_in: RegistryRecord) -> tuple[RegistryRecord, set[str]]:
+            warnings_in = getattr(record_in, "granular_validation_warnings", None)
+            if not isinstance(warnings_in, list) or not warnings_in:
+                return record_in, set()
+
+            procs = getattr(record_in, "procedures_performed", None)
+
+            def _performed(proc_name: str) -> bool:
+                if procs is None:
+                    return False
+                proc = getattr(procs, proc_name, None)
+                if proc is None:
+                    return False
+                return bool(getattr(proc, "performed", False))
+
+            linear_performed = _performed("linear_ebus")
+            tbna_performed = _performed("tbna_conventional")
+            peripheral_tbna_performed = _performed("peripheral_tbna")
+            brushings_performed = _performed("brushings")
+            tbbx_performed = _performed("transbronchial_biopsy")
+            bronchial_wash_performed = _performed("bronchial_wash")
+
+            removed: set[str] = set()
+            cleaned: list[str] = []
+            seen: set[str] = set()
+            for warning in warnings_in:
+                if not isinstance(warning, str) or not warning.strip():
+                    continue
+                if (
+                    "procedures_performed.linear_ebus.performed=true" in warning
+                    and not linear_performed
+                ):
+                    removed.add(warning)
+                    continue
+                if (
+                    "procedures_performed.tbna_conventional.performed=true" in warning
+                    and not tbna_performed
+                ):
+                    removed.add(warning)
+                    continue
+                if (
+                    "procedures_performed.peripheral_tbna.performed=true" in warning
+                    and not peripheral_tbna_performed
+                ):
+                    removed.add(warning)
+                    continue
+                if "procedures_performed.brushings.performed=true" in warning and not brushings_performed:
+                    removed.add(warning)
+                    continue
+                if (
+                    "procedures_performed.transbronchial_biopsy.performed=true" in warning
+                    and not tbbx_performed
+                ):
+                    removed.add(warning)
+                    continue
+                if (
+                    "procedures_performed.bronchial_wash.performed=true" in warning
+                    and not bronchial_wash_performed
+                ):
+                    removed.add(warning)
+                    continue
+                if warning in seen:
+                    continue
+                seen.add(warning)
+                cleaned.append(warning)
+
+            if not removed and len(cleaned) == len(warnings_in):
+                return record_in, set()
+
+            record_data = record_in.model_dump()
+            record_data["granular_validation_warnings"] = cleaned
+            return RegistryRecord(**record_data), removed
+
+        record, removed_granular_warnings = _reconcile_granular_validation_warnings(record)
+        if removed_granular_warnings:
+            extraction_warnings = [
+                w for w in extraction_warnings if not (isinstance(w, str) and w in removed_granular_warnings)
+            ]
 
         derivation = derive_registry_to_cpt(record)
         derived_codes = [c.code for c in derivation.codes]

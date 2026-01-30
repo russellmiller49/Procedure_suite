@@ -535,6 +535,10 @@ class CAOInterventionDetail(BaseModel):
         "Benign - web/stenosis", "Benign - other", "Infectious", "Other"
     ] | None = None
     length_mm: float | None = Field(None, ge=0)
+
+    # Lesion characteristics (free-text when numeric precision is not possible, e.g. ">50 lesions").
+    lesion_morphology: str | None = None
+    lesion_count_text: str | None = None
     
     # Pre/Post measurements
     pre_obstruction_pct: int | None = Field(None, ge=0, le=100)

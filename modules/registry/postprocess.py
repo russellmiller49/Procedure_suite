@@ -2745,11 +2745,45 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
         if reason:
             original_quote = getattr(event, "evidence_quote", None)
             setattr(event, "action", "inspected_only")
-            marker = f"AUTO-CORRECTED: {reason} {station_token}"
-            if isinstance(original_quote, str) and original_quote.strip():
-                setattr(event, "evidence_quote", f"{marker} | {original_quote}")
+
+            # Evidence must remain verifiable (note-derived). Prefer the line that triggered
+            # the correction (negation or criteria-only context) over internal debug markers.
+            replacement_quote: str | None = None
+            pattern = _ebus_station_pattern(station_token)
+            if pattern is not None and full_text:
+                for raw_line in (full_text or "").splitlines():
+                    line = (raw_line or "").strip()
+                    if not line:
+                        continue
+                    if not pattern.search(line):
+                        continue
+                    if reason.startswith("Found negation"):
+                        if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(line):
+                            replacement_quote = line
+                            break
+                        if _EBUS_MEASURE_ONLY_RE.search(line) and not _EBUS_SAMPLING_INDICATORS_RE.search(line):
+                            replacement_quote = line
+                            break
+                        if _EBUS_BENIGN_ONLY_PHRASES_RE.search(line):
+                            replacement_quote = line
+                            break
+                    else:
+                        if _EBUS_SAMPLING_CRITERIA_RE.search(line):
+                            replacement_quote = line
+                            break
+                        if _EBUS_MEASURE_ONLY_RE.search(line) and not _EBUS_SAMPLING_INDICATORS_RE.search(line):
+                            replacement_quote = line
+                            break
+                        if _EBUS_SIZE_MM_RE.search(line) and not _EBUS_SAMPLING_INDICATORS_RE.search(line):
+                            replacement_quote = line
+                            break
+
+            if replacement_quote:
+                setattr(event, "evidence_quote", _compact_evidence_quote(replacement_quote, limit=280))
+            elif isinstance(original_quote, str) and original_quote.strip():
+                setattr(event, "evidence_quote", _compact_evidence_quote(original_quote, limit=280))
             else:
-                setattr(event, "evidence_quote", marker)
+                setattr(event, "evidence_quote", f"Station {station_token}: inspected only.")
 
             if reason.startswith("Found negation"):
                 warnings.append(f"AUTO_CORRECTED_EBUS_NEGATION: {station_token}")
@@ -2765,6 +2799,17 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
         station = getattr(event, "station", None)
         if isinstance(station, str) and station.strip():
             sampled.append(station.strip().upper())
+
+    granular = getattr(record, "granular_data", None)
+    stations_detail = getattr(granular, "linear_ebus_stations_detail", None) if granular is not None else None
+    if isinstance(stations_detail, list) and stations_detail:
+        for detail in stations_detail:
+            sampled_flag = getattr(detail, "sampled", None)
+            if sampled_flag is False:
+                continue
+            station = getattr(detail, "station", None)
+            if isinstance(station, str) and station.strip():
+                sampled.append(station.strip().upper())
     if hasattr(linear, "stations_sampled"):
         setattr(linear, "stations_sampled", sorted(set(sampled)) if sampled else None)
 

@@ -169,12 +169,13 @@ class TestAirwayStentModel:
 
 
 class TestProcedureSettingSerialization:
-    """Ensure procedure_setting serializes to None for compatibility."""
+    """Ensure procedure_setting serializes as a nested object."""
 
-    def test_procedure_setting_serialized_to_none(self):
+    def test_procedure_setting_serialized(self):
         record = RegistryRecord(procedure_setting={"airway_type": "ETT"})
         dumped = record.model_dump()
-        assert dumped.get("procedure_setting") is None
+        assert isinstance(dumped.get("procedure_setting"), dict)
+        assert dumped["procedure_setting"].get("airway_type") == "ETT"
 
 
 class TestNavigationTargetModel:

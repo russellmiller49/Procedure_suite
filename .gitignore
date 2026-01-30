@@ -70,3 +70,4 @@ artifacts/
 /pm3_*.json
 *.tar.gz
 *.zip
+node_modules/

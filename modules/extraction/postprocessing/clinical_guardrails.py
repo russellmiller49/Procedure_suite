@@ -48,6 +48,11 @@ _STENT_NEGATION_PATTERNS = [
         r"[^.\n]{0,40}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
         re.IGNORECASE,
     ),
+    re.compile(
+        r"\b(?:refus(?:ed|al)|reluctan(?:t|ce)|hesitan(?:t|cy)|did\s+not\s+want)\b"
+        r"[^.\n]{0,80}\bstent(?:s)?\b[^.\n]{0,80}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
+        re.IGNORECASE,
+    ),
 ]
 
 _STENT_PLACEMENT_CONTEXT_RE = re.compile(
@@ -270,6 +275,12 @@ class ClinicalGuardrails:
 
         if radial_present and not linear_marker and not station_data_present:
             changed |= self._set_procedure_performed(record_data, "linear_ebus", False)
+            # Avoid confusing "ghost" attributes (e.g., needle gauge) when radial EBUS is
+            # present but linear EBUS-TBNA is not supported by station/staging evidence.
+            procedures = record_data.get("procedures_performed")
+            if isinstance(procedures, dict):
+                procedures["linear_ebus"] = {"performed": False}
+                record_data["procedures_performed"] = procedures
 
         # Combined linear (staging) + radial (peripheral localization) EBUS is common.
         # Only force manual review when there is no peripheral-context evidence that
@@ -293,6 +304,15 @@ class ClinicalGuardrails:
                 _STENT_INSPECTION_RE.search(text_lower)
                 or _STENT_OBSTRUCTION_RE.search(text_lower)
                 or _STENT_CLEANING_RE.search(text_lower)
+            )
+            hypothetical_only = bool(
+                re.search(
+                    r"\b(?:consider(?:ed|ation)|discuss(?:ed|ion|ing)|advocat(?:e|ed|ing)|recommend(?:ed|ation)?|plan(?:ned)?|would\b|if\b)\b"
+                    r"[^.\n]{0,220}\b(?:airway\s+)?stent(?:s)?\b",
+                    text_lower,
+                    re.IGNORECASE,
+                )
+                and re.search(r"\b(?:placement|insertion)\b", text_lower, re.IGNORECASE)
             )
 
             # Best-effort stent type enrichment (helps note_352-style "Y stent" mentions).
@@ -319,6 +339,17 @@ class ClinicalGuardrails:
                     if self._clear_stent(record_data):
                         warnings.append("Stent placement negated; treating as not performed.")
                         changed = True
+            elif (
+                hypothetical_only
+                and not strong_placement
+                and not placement_present
+                and not placement_action_present
+                and not removal_present
+                and not inspection_only
+            ):
+                if self._clear_stent(record_data):
+                    warnings.append("Stent placement discussed/considered only; treating as not performed.")
+                    changed = True
             elif removal_text_present and not placement_present and not strong_placement:
                 if self._set_stent_action(record_data, "Removal"):
                     warnings.append("Stent removal language; treating as removal only.")
@@ -334,6 +365,68 @@ class ClinicalGuardrails:
             elif placement_present and not removal_present and not inspection_only:
                 if self._set_stent_action(record_data, "Placement"):
                     warnings.append("Stent placement language; treating as placement.")
+                    changed = True
+
+        # TBNA conventional vs peripheral (lung lesion) guardrails.
+        tbna = procedures.get("tbna_conventional") if isinstance(procedures, dict) else None
+        if isinstance(tbna, dict) and tbna.get("performed") is True:
+            stations = tbna.get("stations_sampled") or []
+            stations_present = bool(stations)
+            has_station_token = bool(
+                re.search(r"\b(?:2R|2L|4R|4L|7|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)\b", text_lower)
+            )
+            has_nodal_context = bool(
+                re.search(
+                    r"\b(?:mediastinal|hilar|lymph\s+node\s+survey|systematic\b[^.\n]{0,80}\bstag|station\s*\d{1,2})\b",
+                    text_lower,
+                    re.IGNORECASE,
+                )
+            )
+            has_peripheral_context = bool(
+                re.search(
+                    r"\b(?:"
+                    r"pulmonary\s+nodule|lung\s+nodule|pulmonary\s+lesion|lung\s+lesion|nodule|lesion|mass|"
+                    r"transbronchial\s+needle\s+aspiration|tbna\b|"
+                    r"rb\d{1,2}\b|lb\d{1,2}\b|segment|subsegment|"
+                    r"navigation|navigational|robotic|electromagnetic|\benb\b|\bion\b|monarch|"
+                    r"radial\s+(?:ebus|probe|ultrasound)|rebus|miniprobe"
+                    r")\b",
+                    text_lower,
+                    re.IGNORECASE,
+                )
+            )
+
+            if not stations_present and has_peripheral_context and not has_station_token and not has_nodal_context:
+                if self._set_procedure_performed(record_data, "tbna_conventional", False):
+                    warnings.append(
+                        "TBNA conventional marked without stations in a peripheral-lesion context; treating as not performed."
+                    )
+                    changed = True
+                if self._set_procedure_performed(record_data, "peripheral_tbna", True):
+                    warnings.append("Peripheral TBNA inferred from lung lesion TBNA context.")
+                    changed = True
+
+        # Routine anesthesia intubation should not trigger emergency intubation (31500).
+        intubation = procedures.get("intubation") if isinstance(procedures, dict) else None
+        if isinstance(intubation, dict) and intubation.get("performed") is True:
+            special_intubation_context = bool(
+                re.search(
+                    r"\b(?:"
+                    r"fiber\s*optic\s+intubat|fiberoptic\s+intubat|"
+                    r"selective\b[^.\n]{0,80}\bintubat|"
+                    r"into\s+the\s+(?:right|left)\s+main(?:\s*|-)?stem|"
+                    r"difficult\s+airway|failed\s+intubation|multiple\s+attempts|"
+                    r"emergent|emergency|code\s+blue|crash"
+                    r")\b",
+                    text_lower,
+                    re.IGNORECASE,
+                )
+            )
+            if not special_intubation_context:
+                if self._set_procedure_performed(record_data, "intubation", False):
+                    warnings.append(
+                        "Intubation appears routine/anesthesia-only; suppressing emergency intubation flag (31500)."
+                    )
                     changed = True
 
         # Endobronchial biopsy false positives in peripheral cases.
