@@ -80,9 +80,16 @@ const DEVICE_CONTEXT_KEYWORDS = [
 ];
 
 const ROBOTIC_PLATFORMS = new Set([
-  "ion", "monarch", "galaxy", "superdimension", "illumisite", "lungvision", "veran", "archimedes"
+  "ion", "monarch", "galaxy", "superdimension", "illumisite", "lungvision", "veran", "archimedes",
+  // Additional navigation / platform terms
+  "spin", "emn", "body vision", "bodyvision", "navilink", "navilink 3d"
 ]);
-const ROBOTIC_CONTEXT_RE = /\b(?:robotic|bronchoscopy|system|platform|robot|catheter|controller|console)\b/i;
+const ROBOTIC_CONTEXT_RE = /\b(?:robotic|bronchoscopy|system|platform|navigation|robot|catheter|controller|console)\b/i;
+
+// Citation / guideline context: keep author and guideline names visible so references aren't mangled.
+const GUIDELINE_CITATION_CONTEXT_RE =
+  /\b(?:et\s+al|guideline(?:s)?|statement|consensus|society|task\s+force|committee|recommendation(?:s)?|accp|chest|ats|ers|nccn|uspstf|fleischner)\b/i;
+const CITATION_YEAR_RE = /\b(?:19|20)\d{2}\b/;
 
 // Stopwords to prevent "patient [REDACTED] stable" when the model hallucinates a name span
 // - ALWAYS: function words and clinical verbs that are commonly mis-tagged as names
@@ -170,6 +177,9 @@ const CLINICAL_ALLOW_LIST = makeNormalizedSet([
   "lidocaine", "fentanyl", "midazolam", "versed", "propofol", "epinephrine",
   "ga", "ett", "asa", "npo", "nkda", "ebl", "ptx", "cxr", "cbct", "pacu", "icu",
   "saline", "normal saline", "ns",
+
+  // Navigation / imaging platforms (avoid citation/device-name mangling)
+  "emn", "superdimension", "spin", "navilink", "navilink 3d", "body vision", "bodyvision",
 
   // IP-specific abbreviations (commonly mis-tagged)
   "ip", "interventional pulmonology", "pulmonology",
@@ -572,6 +582,27 @@ function isDeviceManufacturerContext(slice, fullText, start, end) {
 
   for (const keyword of DEVICE_CONTEXT_KEYWORDS) {
     if (afterLower.includes(keyword) || aroundLower.includes(keyword)) return true;
+  }
+  return false;
+}
+
+function isGuidelineCitation(slice, fullText, start, end) {
+  const sTrim = String(slice || "").trim();
+  if (!sTrim) return false;
+
+  // Only consider short name-like spans (avoid large multi-word spans).
+  const norm = normalizeTerm(sTrim);
+  if (!norm || norm.split(" ").length > 3) return false;
+
+  const ctx = getContext(fullText, start, end, 90);
+  if (!GUIDELINE_CITATION_CONTEXT_RE.test(ctx)) return false;
+
+  // Require a strong citation signal.
+  if (/\bet\s+al\b/i.test(ctx)) return true;
+  if (CITATION_YEAR_RE.test(ctx)) return true;
+  // "Fleischner Society" / "CHEST guideline" type references.
+  if (/\b(?:society|guideline|guidelines|statement|consensus|recommendation|committee|task\s+force)\b/i.test(ctx)) {
+    return true;
   }
   return false;
 }
@@ -1242,6 +1273,15 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     if (!veto && protectProviders && NAME_LIKE_LABELS.has(label)) {
       if (isProviderName(slice, fullText, start, end)) {
         veto = true; reason = "provider_role_or_credential";
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 11b) Guideline citation protection (authors / society names in references)
+    // -------------------------------------------------------------------------
+    if (!veto && NAME_LIKE_LABELS.has(label)) {
+      if (isGuidelineCitation(slice, fullText, start, end)) {
+        veto = true; reason = "guideline_citation";
       }
     }
 

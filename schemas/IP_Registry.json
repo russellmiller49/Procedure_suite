@@ -213,6 +213,77 @@
       "type": ["string", "null"],
       "description": "Follow-up plan"
     },
+    "clinical_context": {
+      "type": ["object", "null"],
+      "description": "Nested clinical context (forward-compatible with extraction-first registry record).",
+      "additionalProperties": true,
+      "properties": {
+        "target_lesion": {
+          "type": ["object", "null"],
+          "description": "Detailed target lesion disease burden fields.",
+          "additionalProperties": true,
+          "properties": {
+            "long_axis_mm": {
+              "type": ["number", "null"],
+              "minimum": 0
+            },
+            "short_axis_mm": {
+              "type": ["number", "null"],
+              "minimum": 0
+            },
+            "craniocaudal_mm": {
+              "type": ["number", "null"],
+              "minimum": 0
+            },
+            "morphology": {
+              "type": ["string", "null"]
+            },
+            "suv_max": {
+              "type": ["number", "null"],
+              "minimum": 0
+            },
+            "location": {
+              "type": ["string", "null"]
+            },
+            "size_text": {
+              "type": ["string", "null"]
+            }
+          }
+        }
+      }
+    },
+    "procedures_performed": {
+      "type": ["object", "null"],
+      "description": "Nested procedures_performed (forward-compatible with extraction-first registry record).",
+      "additionalProperties": true,
+      "properties": {
+        "therapeutic_outcomes": {
+          "type": ["object", "null"],
+          "description": "Therapeutic outcomes / response metrics.",
+          "additionalProperties": true,
+          "properties": {
+            "pre_obstruction_pct": {
+              "type": ["integer", "null"],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "post_obstruction_pct": {
+              "type": ["integer", "null"],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "pre_diameter_mm": {
+              "type": ["number", "null"],
+              "minimum": 0
+            },
+            "post_diameter_mm": {
+              "type": ["number", "null"],
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
     "evidence": {
       "type": "object",
       "additionalProperties": true,

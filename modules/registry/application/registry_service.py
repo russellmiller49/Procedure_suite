@@ -821,7 +821,7 @@ class RegistryService:
 
                     disease_scan_text = mask_offset_preserving(raw_note_text or "")
 
-                from modules.registry.processing.disease_burden import apply_disease_burden_overrides
+                from modules.registry.extractors.disease_burden import apply_disease_burden_overrides
 
                 record_out, burden_warnings = apply_disease_burden_overrides(
                     record_in,

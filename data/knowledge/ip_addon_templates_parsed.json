@@ -39,7 +39,13 @@
       "cpt_codes": [
         "31502"
       ],
-      "body": "Upper airway was suctioned and cleared. Endotracheal suctioning performed. The cuff was deflated and the existing tracheostomy tube removed. The stoma was widely patent without granulation tissue. A new tracheostomy tube was placed with obturator in place, the obturator was removed, the inner cannula inserted, and the cuff inflated. Position and patency were confirmed. The patient tolerated the procedure well."
+      "params": [
+        "old_trach_type",
+        "old_size",
+        "new_trach_type",
+        "new_size"
+      ],
+      "body": "Upper airway was suctioned and cleared. Endotracheal suctioning performed. The cuff was deflated and the existing tracheostomy tube ([old_trach_type] [old_size]) removed. The stoma was widely patent without granulation tissue. A new tracheostomy tube ([new_trach_type] [new_size]) was placed with obturator in place, the obturator was removed, the inner cannula inserted, and the cuff inflated. Position and patency were confirmed. The patient tolerated the procedure well."
     },
     {
       "slug": "tracheostomy_planned_percutaneous_bronchoscopic_assistance",
@@ -70,9 +76,11 @@
     },
     {
       "slug": "tracheostomy_decannulation_bedside",
-      "title": "Tracheostomy Decannulation (Bedside)  [CPT: verify]",
+      "title": "Tracheostomy Decannulation (Bedside) (CPT 31502)",
       "category": "TRACHEOSTOMY / UPPER AIRWAY PROCEDURES",
-      "cpt_codes": [],
+      "cpt_codes": [
+        "31502"
+      ],
       "body": "Indication: [tolerated capping/speaking valve; adequate cough; secretion burden acceptable]. The tracheostomy tube [type/size] was removed at bedside after oropharyngeal and tracheal suctioning. The stoma was dressed with occlusive gauze and secured. Patient instructed to apply pressure over stoma during speech/cough. Observation for [hours] with pulse oximetry was uneventful. Follow\u2011up: dressing changes daily; return precautions reviewed."
     },
     {

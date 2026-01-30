@@ -102,13 +102,25 @@ def get_code_families_config() -> dict[str, object]:
 
 @lru_cache(maxsize=1)
 def get_ncci_ptp_config() -> dict[str, object]:
-    """Load and cache NCCI PTP bundling rules."""
+    """Load and cache merged NCCI PTP bundling rules (KB + external).
+
+    Precedence: external file overrides internal KB for conflicting pairs.
+    """
     import json
 
     settings = get_knowledge_settings()
     with settings.ncci_path.open(encoding="utf-8") as handle:
-        data = json.load(handle)
-    return dict(data) if isinstance(data, dict) else {}
+        external = json.load(handle)
+    if not isinstance(external, dict):
+        external = {}
+
+    from modules.coder.ncci import merge_ncci_sources
+
+    merged = merge_ncci_sources(
+        kb_document=dict(get_kb_document()),
+        external_cfg=external,
+    )
+    return dict(merged) if isinstance(merged, dict) else {}
 
 
 @lru_cache(maxsize=1)

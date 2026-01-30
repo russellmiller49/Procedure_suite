@@ -35,6 +35,13 @@ class LesionDetails(BaseModel):
 
     lesion_type: str | None = None
     size_mm: float | None = None
+    long_axis_mm: float | None = None
+    short_axis_mm: float | None = None
+    craniocaudal_mm: float | None = None
+    morphology: str | None = None
+    suv_max: float | None = None
+    location: str | None = None
+    size_text: str | None = None
 
 
 class Outcomes(BaseModel):
@@ -42,6 +49,10 @@ class Outcomes(BaseModel):
 
     airway_lumen_pre: str | None = None
     airway_lumen_post: str | None = None
+    pre_obstruction_pct: int | None = None
+    post_obstruction_pct: int | None = None
+    pre_diameter_mm: float | None = None
+    post_diameter_mm: float | None = None
     symptoms: str | None = None
     pleural: str | None = None
     complications: str | None = None

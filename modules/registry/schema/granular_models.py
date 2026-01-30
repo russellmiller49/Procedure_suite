@@ -55,6 +55,44 @@ class ClinicalContext(BaseModel):
 
     model_config = ConfigDict(extra="ignore")
 
+    class TargetLesion(BaseModel):
+        """Structured target lesion disease burden fields (axes, morphology, SUV, location)."""
+
+        model_config = ConfigDict(extra="ignore")
+
+        long_axis_mm: float | None = Field(
+            None,
+            ge=0,
+            description="Long-axis diameter in mm",
+        )
+        short_axis_mm: float | None = Field(
+            None,
+            ge=0,
+            description="Short-axis diameter in mm",
+        )
+        craniocaudal_mm: float | None = Field(
+            None,
+            ge=0,
+            description="Third-axis (craniocaudal) diameter in mm when documented",
+        )
+        morphology: str | None = Field(
+            None,
+            description="Lesion morphology/CT characteristics (e.g., solid, part-solid, ground-glass, spiculated, cavitary)",
+        )
+        suv_max: float | None = Field(
+            None,
+            ge=0,
+            description="Maximum SUV on PET if applicable",
+        )
+        location: str | None = Field(
+            None,
+            description="Anatomic location of the target lesion (lobe/segment) when documented",
+        )
+        size_text: str | None = Field(
+            None,
+            description="Verbatim lesion size string when useful (e.g., '2.5 x 1.7 cm')",
+        )
+
     asa_class: int | None = Field(
         None,
         ge=1,
@@ -111,6 +149,10 @@ class ClinicalContext(BaseModel):
         description="Maximum SUV on PET if applicable",
     )
     bronchus_sign: Literal["Positive", "Negative", "Not assessed"] | None = None
+    target_lesion: TargetLesion | None = Field(
+        default=None,
+        description="Detailed target lesion disease burden fields.",
+    )
 
     @field_validator("bronchus_sign", mode="before")
     @classmethod

@@ -387,6 +387,68 @@
             null
           ],
           "description": "CT bronchus sign for peripheral lesions"
+        },
+        "target_lesion": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Detailed target lesion disease burden (axes, morphology, SUV, location).",
+          "properties": {
+            "long_axis_mm": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "description": "Long-axis diameter in mm"
+            },
+            "short_axis_mm": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "description": "Short-axis diameter in mm"
+            },
+            "craniocaudal_mm": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "description": "Third-axis (craniocaudal) diameter in mm when documented"
+            },
+            "morphology": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Lesion morphology/CT characteristics (e.g., solid, part-solid, ground-glass, spiculated, cavitary)"
+            },
+            "suv_max": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "description": "Maximum SUV on PET if applicable"
+            },
+            "location": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Anatomic location of the target lesion (lobe/segment) when documented"
+            },
+            "size_text": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Verbatim lesion size string when useful (e.g., '2.5 x 1.7 cm')"
+            }
+          }
         }
       }
     },
@@ -1889,6 +1951,49 @@
                 "string",
                 "null"
               ]
+            }
+          }
+        },
+        "therapeutic_outcomes": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Therapeutic outcomes / response metrics (e.g., pre/post obstruction, airway diameter).",
+          "properties": {
+            "pre_obstruction_pct": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Pre-intervention obstruction percent (0-100) when explicitly documented"
+            },
+            "post_obstruction_pct": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Post-intervention obstruction percent (0-100) when explicitly documented"
+            },
+            "pre_diameter_mm": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "description": "Pre-intervention airway diameter in mm when explicitly documented"
+            },
+            "post_diameter_mm": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "description": "Post-intervention airway diameter in mm when explicitly documented"
             }
           }
         },

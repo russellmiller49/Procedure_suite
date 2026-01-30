@@ -54,6 +54,7 @@ def _load_addons() -> None:
             "title": template.get("title", ""),
             "category": template.get("category", ""),
             "cpt_codes": template.get("cpt_codes", []),
+            "params": template.get("params", []) or [],
             "body": body,
         }
 

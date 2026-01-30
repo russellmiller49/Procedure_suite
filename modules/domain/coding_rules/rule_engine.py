@@ -214,6 +214,20 @@ class RuleEngine:
             # Add any warnings from rules
             warnings.extend(rules_result.warnings)
 
+            # Optional NCCI bundling notes (merged KB + external config injected via DI).
+            # We do not remove codes here; we only surface a warning so downstream
+            # policy/validation layers can decide how to handle bundled codes.
+            if self.ncci_data:
+                try:
+                    from modules.coder.ncci import NCCIEngine
+
+                    ncci_engine = NCCIEngine(ptp_cfg=self.ncci_data)
+                    ncci_result = ncci_engine.apply(set(rules_result.codes))
+                    for secondary, primary in sorted(ncci_result.bundled.items()):
+                        warnings.append(f"NCCI_BUNDLE: {secondary} bundled into {primary}")
+                except Exception as exc:
+                    warnings.append(f"NCCI_BUNDLE_FAILED: {type(exc).__name__}")
+
             return RuleEngineResult(candidates=result_candidates, warnings=warnings)
 
         except Exception as e:

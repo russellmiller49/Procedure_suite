@@ -21,6 +21,20 @@ def project_v3_to_v2(v3_registry: IPRegistryV3) -> RegistryRecord:
     ebus_stations_sampled: set[str] = set()
     ebus_needle_gauges: list[str] = []
 
+    lesion_size_mm_candidates: list[float] = []
+    lesion_long_axis_mm_candidates: list[float] = []
+    lesion_short_axis_mm_candidates: list[float] = []
+    lesion_craniocaudal_mm_candidates: list[float] = []
+    lesion_suv_max_candidates: list[float] = []
+    lesion_location_candidates: list[str] = []
+    lesion_morphology_candidates: list[str] = []
+    lesion_size_text_candidates: list[str] = []
+
+    pre_obstruction_pct_candidates: list[int] = []
+    post_obstruction_pct_candidates: list[int] = []
+    pre_diameter_mm_candidates: list[float] = []
+    post_diameter_mm_candidates: list[float] = []
+
     def _ensure_proc(name: str) -> dict:
         proc = procedures_performed.get(name)
         if proc is None:
@@ -80,10 +94,69 @@ def project_v3_to_v2(v3_registry: IPRegistryV3) -> RegistryRecord:
         counts = Counter(gauges)
         return counts.most_common(1)[0][0]
 
+    def _unique_float(values: list[float], *, places: int = 1) -> float | None:
+        if not values:
+            return None
+        uniques = {round(float(v), places) for v in values}
+        return next(iter(uniques)) if len(uniques) == 1 else None
+
+    def _unique_int(values: list[int]) -> int | None:
+        if not values:
+            return None
+        uniques = {int(v) for v in values}
+        return next(iter(uniques)) if len(uniques) == 1 else None
+
+    def _unique_str(values: list[str]) -> str | None:
+        cleaned = [str(v).strip() for v in values if isinstance(v, str) and str(v).strip()]
+        uniques = {v for v in cleaned}
+        return next(iter(uniques)) if len(uniques) == 1 else None
+
     for event in v3_registry.procedures:
         typ = _event_type(event)
         station = _station(event)
         location = _location_str(event)
+
+        lesion = getattr(event, "lesion", None)
+        if lesion is not None:
+            raw = getattr(lesion, "size_mm", None)
+            if isinstance(raw, (int, float)):
+                lesion_size_mm_candidates.append(float(raw))
+            raw = getattr(lesion, "long_axis_mm", None)
+            if isinstance(raw, (int, float)):
+                lesion_long_axis_mm_candidates.append(float(raw))
+            raw = getattr(lesion, "short_axis_mm", None)
+            if isinstance(raw, (int, float)):
+                lesion_short_axis_mm_candidates.append(float(raw))
+            raw = getattr(lesion, "craniocaudal_mm", None)
+            if isinstance(raw, (int, float)):
+                lesion_craniocaudal_mm_candidates.append(float(raw))
+            raw = getattr(lesion, "suv_max", None)
+            if isinstance(raw, (int, float)):
+                lesion_suv_max_candidates.append(float(raw))
+            raw = getattr(lesion, "location", None)
+            if isinstance(raw, str) and raw.strip():
+                lesion_location_candidates.append(raw)
+            raw = getattr(lesion, "morphology", None)
+            if isinstance(raw, str) and raw.strip():
+                lesion_morphology_candidates.append(raw)
+            raw = getattr(lesion, "size_text", None)
+            if isinstance(raw, str) and raw.strip():
+                lesion_size_text_candidates.append(raw)
+
+        outcomes = getattr(event, "outcomes", None)
+        if outcomes is not None:
+            raw = getattr(outcomes, "pre_obstruction_pct", None)
+            if isinstance(raw, int):
+                pre_obstruction_pct_candidates.append(raw)
+            raw = getattr(outcomes, "post_obstruction_pct", None)
+            if isinstance(raw, int):
+                post_obstruction_pct_candidates.append(raw)
+            raw = getattr(outcomes, "pre_diameter_mm", None)
+            if isinstance(raw, (int, float)):
+                pre_diameter_mm_candidates.append(float(raw))
+            raw = getattr(outcomes, "post_diameter_mm", None)
+            if isinstance(raw, (int, float)):
+                post_diameter_mm_candidates.append(float(raw))
 
         if typ in {"diagnostic", "diagnostic_bronchoscopy"}:
             _ensure_proc("diagnostic_bronchoscopy")
@@ -219,6 +292,64 @@ def project_v3_to_v2(v3_registry: IPRegistryV3) -> RegistryRecord:
         if typ in {"fibrinolytic_therapy"}:
             _ensure_pleural("fibrinolytic_therapy")
             continue
+
+    clinical_context: dict[str, object] = {}
+    target_lesion: dict[str, object] = {}
+
+    lesion_size_mm = _unique_float(lesion_size_mm_candidates)
+    if lesion_size_mm is not None:
+        clinical_context["lesion_size_mm"] = lesion_size_mm
+
+    lesion_suv_max = _unique_float(lesion_suv_max_candidates)
+    if lesion_suv_max is not None:
+        clinical_context["suv_max"] = lesion_suv_max
+        target_lesion["suv_max"] = lesion_suv_max
+
+    long_axis_mm = _unique_float(lesion_long_axis_mm_candidates)
+    if long_axis_mm is not None:
+        target_lesion["long_axis_mm"] = long_axis_mm
+
+    short_axis_mm = _unique_float(lesion_short_axis_mm_candidates)
+    if short_axis_mm is not None:
+        target_lesion["short_axis_mm"] = short_axis_mm
+
+    craniocaudal_mm = _unique_float(lesion_craniocaudal_mm_candidates)
+    if craniocaudal_mm is not None:
+        target_lesion["craniocaudal_mm"] = craniocaudal_mm
+
+    morphology = _unique_str(lesion_morphology_candidates)
+    if morphology is not None:
+        target_lesion["morphology"] = morphology
+
+    lesion_location = _unique_str(lesion_location_candidates)
+    if lesion_location is not None:
+        clinical_context["lesion_location"] = lesion_location
+        target_lesion["location"] = lesion_location
+
+    size_text = _unique_str(lesion_size_text_candidates)
+    if size_text is not None:
+        target_lesion["size_text"] = size_text
+
+    if target_lesion:
+        clinical_context["target_lesion"] = target_lesion
+    if clinical_context:
+        record_data["clinical_context"] = clinical_context
+
+    therapeutic_outcomes: dict[str, object] = {}
+    pre_obstruction = _unique_int(pre_obstruction_pct_candidates)
+    if pre_obstruction is not None:
+        therapeutic_outcomes["pre_obstruction_pct"] = pre_obstruction
+    post_obstruction = _unique_int(post_obstruction_pct_candidates)
+    if post_obstruction is not None:
+        therapeutic_outcomes["post_obstruction_pct"] = post_obstruction
+    pre_diameter = _unique_float(pre_diameter_mm_candidates)
+    if pre_diameter is not None:
+        therapeutic_outcomes["pre_diameter_mm"] = pre_diameter
+    post_diameter = _unique_float(post_diameter_mm_candidates)
+    if post_diameter is not None:
+        therapeutic_outcomes["post_diameter_mm"] = post_diameter
+    if therapeutic_outcomes:
+        procedures_performed.setdefault("therapeutic_outcomes", {}).update(therapeutic_outcomes)
 
     if procedures_performed:
         record_data["procedures_performed"] = procedures_performed
