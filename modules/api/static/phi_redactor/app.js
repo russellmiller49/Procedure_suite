@@ -16,6 +16,7 @@ const exportTablesBtn = document.getElementById("exportTablesBtn");
 const newNoteBtn = document.getElementById("newNoteBtn");
 const addRedactionBtn = document.getElementById("addRedactionBtn");
 const entityTypeSelect = document.getElementById("entityTypeSelect");
+const redactProvidersToggle = document.getElementById("redactProvidersToggle");
 const editedResponseEl = document.getElementById("editedResponse");
 const flattenedTablesHost = document.getElementById("flattenedTablesHost");
 const feedbackPanelEl = document.getElementById("feedbackPanel");
@@ -56,6 +57,19 @@ function getConfiguredMergeMode() {
   return "union"; // default: safer mode
 }
 
+function getConfiguredRedactProviders() {
+  const params = new URLSearchParams(location.search);
+  const qp = params.get("redact_providers");
+  if (qp === "1") return true;
+  if (qp === "0") return false;
+
+  const ls = localStorage.getItem("phi_redact_providers");
+  if (ls === "1") return true;
+  if (ls === "0") return false;
+
+  return true; // default: safer - treat clinician names as PHI
+}
+
 const WORKER_CONFIG = {
   aiThreshold: 0.5,
   debug: true,
@@ -64,7 +78,45 @@ const WORKER_CONFIG = {
   forceUnquantized: true,
   // Merge mode: "union" (default, safer) or "best_of" (legacy)
   mergeMode: getConfiguredMergeMode(),
+  // If false, clinician/provider/staff names are treated as PHI and can be redacted.
+  protectProviders: false,
 };
+
+function buildWorkerConfigForRun() {
+  const cfg = { ...WORKER_CONFIG };
+  const redactProviders = redactProvidersToggle ? Boolean(redactProvidersToggle.checked) : true;
+  cfg.protectProviders = !redactProviders;
+  return cfg;
+}
+
+function ensureDetectionIds(list) {
+  const seen = new Map();
+  const input = Array.isArray(list) ? list : [];
+  return input.map((d) => {
+    if (d && typeof d.id === "string" && d.id) return d;
+    const label = String(d?.label ?? "OTHER");
+    const source = String(d?.source ?? "unknown");
+    const start = Number.isFinite(d?.start) ? d.start : -1;
+    const end = Number.isFinite(d?.end) ? d.end : -1;
+    const base = `${label}:${source}:${start}:${end}`;
+    const n = (seen.get(base) || 0) + 1;
+    seen.set(base, n);
+    const id = n === 1 ? base : `${base}:${n}`;
+    return { ...d, id };
+  });
+}
+
+if (redactProvidersToggle) {
+  const initial = getConfiguredRedactProviders();
+  redactProvidersToggle.checked = initial;
+  redactProvidersToggle.addEventListener("change", () => {
+    try {
+      localStorage.setItem("phi_redact_providers", redactProvidersToggle.checked ? "1" : "0");
+    } catch {
+      // ignore storage failures (private mode)
+    }
+  });
+}
 
 const YES_NO_OPTIONS = [
   { value: "", label: "—" },
@@ -4604,7 +4656,7 @@ async function main() {
         applyBtn.disabled = false; // Enable even with 0 detections
         revertBtn.disabled = originalText === model.getValue();
 
-        detections = Array.isArray(msg.detections) ? msg.detections : [];
+        detections = ensureDetectionIds(msg.detections);
         detectionsById = new Map(detections.map((d) => [d.id, d]));
 
         const detectionCount = detections.length;
@@ -4678,12 +4730,12 @@ async function main() {
     setStatus("Detecting… (client-side)");
     setProgress("");
 
-    worker.postMessage({
-      type: "start",
-      text: originalText,
-      config: WORKER_CONFIG,
-    });
-  });
+        worker.postMessage({
+          type: "start",
+          text: originalText,
+          config: buildWorkerConfigForRun(),
+        });
+      });
 
   applyBtn.addEventListener("click", () => {
     if (!hasRunDetection) return;

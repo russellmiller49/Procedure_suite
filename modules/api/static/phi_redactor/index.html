@@ -61,14 +61,18 @@
           </div>
         </div>
 
-        <div class="controls">
-          <button id="runBtn">Run Detection</button>
-          <button id="cancelBtn" class="secondary" disabled>Cancel</button>
-          <div class="spacer"></div>
-          <button id="applyBtn" class="primary" disabled>Apply Redactions</button>
-          <button id="revertBtn" class="secondary" disabled>Revert</button>
-          <button id="submitBtn" class="success" disabled>Submit Scrubbed Note</button>
-          <button id="newNoteBtn" class="secondary" disabled>New Note</button>
+	        <div class="controls">
+	          <button id="runBtn">Run Detection</button>
+	          <button id="cancelBtn" class="secondary" disabled>Cancel</button>
+	          <div class="spacer"></div>
+	          <label class="inline-toggle" title="If enabled, clinician/provider names are treated as PHI and will be redacted.">
+	            <input id="redactProvidersToggle" type="checkbox" checked />
+	            Redact clinician names
+	          </label>
+	          <button id="applyBtn" class="primary" disabled>Apply Redactions</button>
+	          <button id="revertBtn" class="secondary" disabled>Revert</button>
+	          <button id="submitBtn" class="success" disabled>Submit Scrubbed Note</button>
+	          <button id="newNoteBtn" class="secondary" disabled>New Note</button>
 
           <!-- Manual Redaction Controls -->
           <div class="manual-redaction-group">

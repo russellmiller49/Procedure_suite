@@ -173,6 +173,10 @@ const NAME_REGEX_CLINICAL_STOPLIST = new Set([
   "serial", "irrigation", "dilation", "aspiration", "suction",
   // Procedure / modality terms that can look like names
   "radial", "ebus",
+  // Specialties/roles often mis-detected as "Last, First"
+  "pulmonology", "critical", "medicine", "anesthesia", "radiology", "pathology",
+  // Common EHR/vitals labels that can be mis-detected as names
+  "range", "ending", "pressure", "cuff", "calc", "injection", "once", "vitals", "family",
   // Directions/locations
   "left", "right", "bilateral", "central", "peripheral",
   // Anatomy terms
@@ -198,7 +202,13 @@ const SINGLE_NAME_CLINICAL_STOPLIST = new Set([
   // Equipment/device terms
   "scope", "probe", "needle", "catheter", "balloon", "stent",
   // Common sentence starters
-  "there", "then", "here", "both", "each", "some", "all", "most"
+  "there", "then", "here", "both", "each", "some", "all", "most",
+  // Vitals/labels
+  "range", "ending", "pressure", "cuff", "calc", "injection", "once", "vitals", "family", "no",
+  // Common clinical adjectives that appear after "for"
+  "progressive", "inflammation",
+  // Specialties (avoid session name amplification)
+  "pulmonology", "critical", "medicine"
 ]);
 
 // Helper: check if a word is in the clinical stoplist (case-insensitive)
@@ -382,13 +392,33 @@ const NAME_START_CLINICAL_CONTEXT_RE =
 // E.g., "diag bronch for charlene king she has hilar adenopathy"
 // Requires pronoun or clinical word after name to confirm patient context
 const LOWERCASE_FOR_NAME_RE =
-  /\bfor\s+([a-z]+\s+[a-z]+)\s+(?:she|he|they|who|to|we|and|patient|pt|with|has|had|is|was|the|a|for|due|because|secondary)\b/gi;
+  /\bfor\s+([a-z]+\s+[a-z]+)\s+(?:she|he|they|who|patient|pt|with|has|had|is|was)\b/gi;
 
 // Matches "Last, First M" or "Last , First M" format with trailing initial/suffix
 // Common in footers, headers, and patient identifiers: "Carey , Cloyd D", "Smith, John Jr"
 // Captures full name including trailing initial (D, M, etc.) or suffix (Jr, Sr, III)
 const LAST_FIRST_INITIAL_RE =
   /\b([A-Z][a-z]+\s*,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?|\s+(?:Jr|Sr|II|III|IV)\.?)?)\b/g;
+
+// Provider/staff role lines: "Staff: Miller", "Fellow: Derek Booth"
+const PROVIDER_ROLE_LINE_RE =
+  /^(?:Staff|Fellow|Attending|Proceduralist|Surgeon|Operator|Anesthesiologist|Physician|Provider)\s*:\s*([A-Z][A-Za-z'’.-]+(?:\s+[A-Z][A-Za-z'’.-]+){0,3}|[A-Z]{2,}(?:\s+[A-Z]{2,}){0,5})\b/gim;
+
+// Credentialed names: "Derek Booth, DO", "Jane Doe, MD"
+const CREDENTIAL_NAME_RE =
+  /\b([A-Z][A-Za-z'’.-]+(?:\s+[A-Z][A-Za-z'’.-]+){1,3})\s*,\s*(?:MD|DO|RN|RT|PA|NP|CRNA|PhD|FCCP|DAABIP)\b/g;
+
+// All-caps "LAST, FIRST ..." formats often used in signatures/headers
+const ALLCAPS_LAST_FIRST_RE =
+  /\b([A-Z]{2,}(?:\s+[A-Z]{2,}){0,4}\s*,\s*[A-Z]{2,}(?:\s+[A-Z]{2,}){0,4})\b/g;
+
+// Signature blocks: underscore separator followed by an ALL-CAPS name line
+const SIGNATURE_BLOCK_ALLCAPS_RE =
+  /^_{5,}\s*\n([A-Z]{2,}(?:\s+[A-Z]{2,}){1,5})\b/gm;
+
+// Facility acronyms + city: "NMRTC San Diego"
+const FACILITY_ACRONYM_CITY_RE =
+  /\b(?:NMRTC|NMCSD|NMCP|NMCL|NMC)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2}\b/g;
 
 // Facility / institution patterns (treated as PHI → GEO)
 // Goal: prevent partial redactions like "[REDACTED] Ridge Medical Center" by capturing the full facility span.
@@ -634,6 +664,11 @@ function runRegexDetectors(text) {
   NAME_START_CLINICAL_CONTEXT_RE.lastIndex = 0;
   LOWERCASE_FOR_NAME_RE.lastIndex = 0;
   LAST_FIRST_INITIAL_RE.lastIndex = 0;
+  PROVIDER_ROLE_LINE_RE.lastIndex = 0;
+  CREDENTIAL_NAME_RE.lastIndex = 0;
+  ALLCAPS_LAST_FIRST_RE.lastIndex = 0;
+  SIGNATURE_BLOCK_ALLCAPS_RE.lastIndex = 0;
+  FACILITY_ACRONYM_CITY_RE.lastIndex = 0;
   DATE_DDMMMYYYY_RE.lastIndex = 0;
   DATE_DDMMMYYYY_SPACED_RE.lastIndex = 0;
   DATE_SLASH_RE.lastIndex = 0;
@@ -1381,6 +1416,74 @@ function runRegexDetectors(text) {
     }
   }
 
+  // 5p) Provider/staff role lines: "Staff: Miller", "Fellow: Derek Booth"
+  for (const match of text.matchAll(PROVIDER_ROLE_LINE_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        spans.push({
+          start: match.index + groupOffset,
+          end: match.index + groupOffset + nameGroup.length,
+          label: "PATIENT",
+          score: 0.98,
+          source: "regex_provider_role",
+        });
+      }
+    }
+  }
+
+  // 5q) Credentialed provider names: "Derek Booth, DO"
+  for (const match of text.matchAll(CREDENTIAL_NAME_RE)) {
+    const nameGroup = match[1];
+    const fullMatch = match[0];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        spans.push({
+          start: match.index + groupOffset,
+          end: match.index + groupOffset + nameGroup.length,
+          label: "PATIENT",
+          score: 0.98,
+          source: "regex_provider_credential",
+        });
+      }
+    }
+  }
+
+  // 5r) All-caps "LAST, FIRST" signature formats: "BOOTH, DEREK ALLEN"
+  for (const match of text.matchAll(ALLCAPS_LAST_FIRST_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      spans.push({
+        start: match.index,
+        end: match.index + nameGroup.length,
+        label: "PATIENT",
+        score: 0.97,
+        source: "regex_provider_allcaps_last_first",
+      });
+    }
+  }
+
+  // 5s) Signature blocks with underscore separators + ALL-CAPS name line
+  for (const match of text.matchAll(SIGNATURE_BLOCK_ALLCAPS_RE)) {
+    const fullMatch = match[0];
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const groupOffset = fullMatch.indexOf(nameGroup);
+      if (groupOffset !== -1) {
+        spans.push({
+          start: match.index + groupOffset,
+          end: match.index + groupOffset + nameGroup.length,
+          label: "PATIENT",
+          score: 0.98,
+          source: "regex_provider_signature_block",
+        });
+      }
+    }
+  }
+
   // 6) DOB header dates: "DOB: 01/15/1960"
   for (const match of text.matchAll(DOB_HEADER_RE)) {
     const dateGroup = match[1];
@@ -1484,7 +1587,7 @@ function runRegexDetectors(text) {
 
   // 12) Facility/institution names
   // Ensures facility names are redacted as PHI (GEO) and avoids partial-token redactions.
-  for (const re of [FACILITY_NAME_RE, FACILITY_CAMEL_HEALTH_RE, FACILITY_ENDING_HEALTH_RE, STATE_MEDICINE_RE]) {
+  for (const re of [FACILITY_NAME_RE, FACILITY_CAMEL_HEALTH_RE, FACILITY_ENDING_HEALTH_RE, STATE_MEDICINE_RE, FACILITY_ACRONYM_CITY_RE]) {
     re.lastIndex = 0;
     for (const match of text.matchAll(re)) {
       if (match.index == null) continue;
@@ -1889,6 +1992,29 @@ function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function attachStableIds(spans, fullText) {
+  const seen = new Map();
+  const input = Array.isArray(spans) ? spans : [];
+  return input.map((s) => {
+    if (s && typeof s.id === "string" && s.id) return s;
+    const label = String(s?.label ?? "OTHER");
+    const source = String(s?.source ?? "unknown");
+    const start = Number.isFinite(s?.start) ? s.start : -1;
+    const end = Number.isFinite(s?.end) ? s.end : -1;
+    const base = `${label}:${source}:${start}:${end}`;
+    const n = (seen.get(base) || 0) + 1;
+    seen.set(base, n);
+    const id = n === 1 ? base : `${base}:${n}`;
+    const text =
+      typeof s?.text === "string"
+        ? s.text
+        : typeof fullText === "string" && start >= 0 && end > start
+        ? fullText.slice(start, end)
+        : undefined;
+    return { ...s, id, text };
+  });
+}
+
 /**
  * Session-based name tracking for document consistency.
  *
@@ -1910,7 +2036,12 @@ function addSessionNameMatches(spans, text, options = {}) {
 
   // Helper: check if a phrase contains clinical terms (should not be session-tracked)
   function containsClinicalTerms(phrase) {
-    const words = phrase.toLowerCase().split(/\s+/);
+    const words = phrase
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
     for (const word of words) {
       if (SINGLE_NAME_CLINICAL_STOPLIST.has(word) || NAME_REGEX_CLINICAL_STOPLIST.has(word)) {
         return true;
@@ -2429,7 +2560,9 @@ self.onmessage = async (e) => {
 
         // 9) Apply veto BEFORE final overlap resolution
         const beforeVetoCount = merged.length;
-        merged = applyVeto(merged, text, protectedTerms, { debug });
+        const vetoOpts = { debug };
+        if (typeof config.protectProviders === "boolean") vetoOpts.protectProviders = config.protectProviders;
+        merged = applyVeto(merged, text, protectedTerms, vetoOpts);
         if (debug) {
           log("[PHI] vetoedCount:", beforeVetoCount - merged.length);
           log("[PHI] afterVeto:", merged.length);
@@ -2468,7 +2601,9 @@ self.onmessage = async (e) => {
 
         // 10) Apply veto
         const beforeVetoCount = merged.length;
-        merged = applyVeto(merged, text, protectedTerms, { debug });
+        const vetoOpts = { debug };
+        if (typeof config.protectProviders === "boolean") vetoOpts.protectProviders = config.protectProviders;
+        merged = applyVeto(merged, text, protectedTerms, vetoOpts);
         if (debug) {
           log("[PHI] vetoedCount:", beforeVetoCount - merged.length);
           log("[PHI] afterVeto:", merged.length);
@@ -2479,6 +2614,7 @@ self.onmessage = async (e) => {
         if (debug) log("[PHI] afterSessionNames:", merged.length);
       }
 
+      merged = attachStableIds(merged, text);
       post("done", { detections: merged });
     } catch (err) {
       post("error", { message: String(err?.message || err) });
