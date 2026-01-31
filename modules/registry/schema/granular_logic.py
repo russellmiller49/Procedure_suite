@@ -481,19 +481,46 @@ def derive_procedures_from_granular(
 
             existing_targets = peripheral_tbna.get("targets_sampled") or []
             is_placeholder = len(existing_targets) == 1 and str(existing_targets[0]).strip().lower() in {"lung mass"}
+            targets = [
+                t.get("target_location_text")
+                for t in navigation_targets
+                if t.get("target_location_text")
+                and (
+                    (t.get("number_of_needle_passes") or 0) > 0
+                    or any("needle" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
+                )
+            ]
+            if not targets:
+                targets = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
+
             if not existing_targets or is_placeholder:
-                targets = [
-                    t.get("target_location_text")
-                    for t in navigation_targets
-                    if t.get("target_location_text")
-                    and (
-                        (t.get("number_of_needle_passes") or 0) > 0
-                        or any("needle" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
-                    )
-                ]
-                if not targets:
-                    targets = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
                 peripheral_tbna["targets_sampled"] = targets or ["Lung Mass"]
+            elif targets:
+                existing_clean = [str(x) for x in existing_targets if str(x).strip()]
+                if len(existing_clean) == 1 and len(targets) > 1:
+                    existing_lower = existing_clean[0].strip().lower()
+                    if existing_lower and any(
+                        existing_lower in str(candidate).strip().lower() for candidate in targets if candidate
+                    ):
+                        peripheral_tbna["targets_sampled"] = targets
+                    else:
+                        merged = list(existing_clean)
+                        for candidate in targets:
+                            if not candidate:
+                                continue
+                            if candidate not in merged:
+                                merged.append(candidate)
+                        if merged != existing_targets:
+                            peripheral_tbna["targets_sampled"] = merged
+                else:
+                    merged = list(existing_clean)
+                    for candidate in targets:
+                        if not candidate:
+                            continue
+                        if candidate not in merged:
+                            merged.append(candidate)
+                    if merged != existing_targets:
+                        peripheral_tbna["targets_sampled"] = merged
 
             procedures["peripheral_tbna"] = peripheral_tbna
         else:
@@ -589,23 +616,47 @@ def derive_procedures_from_granular(
             brushings = procedures.get("brushings") or {}
             if not brushings.get("performed"):
                 brushings["performed"] = True
-            if not (brushings.get("locations") or []):
-                primary_loc = _nav_primary_location_text()
-                primary_parts = _nav_primary_location_parts()
-                tokens: list[str] = []
-                if primary_parts:
-                    lobe = primary_parts.get("lobe")
-                    bronchus = primary_parts.get("bronchus")
-                    if lobe:
-                        tokens.append(lobe)
-                    if bronchus and bronchus not in tokens:
-                        tokens.append(bronchus)
-                if tokens:
-                    brushings["locations"] = tokens
-                    warnings.append(f"BACKFILL: Assigned target '{tokens}' to brushings.locations")
-                elif primary_loc:
-                    brushings["locations"] = [primary_loc]
-                    warnings.append(f"BACKFILL: Assigned target '{primary_loc}' to brushings.locations")
+            bronchus_re = re.compile(r"\b([LR]B\d{1,2})\b", re.IGNORECASE)
+            desired_tokens: list[str] = []
+            seen_tokens: set[str] = set()
+
+            for target in navigation_targets:
+                lobe = _nav_target_lobe_label(target)
+                if lobe and lobe not in seen_tokens:
+                    desired_tokens.append(lobe)
+                    seen_tokens.add(lobe)
+
+                loc = target.get("target_location_text")
+                if not isinstance(loc, str) or not loc.strip():
+                    continue
+                match = bronchus_re.search(loc)
+                if not match:
+                    continue
+                bronchus = match.group(1).upper()
+                if bronchus and bronchus not in seen_tokens:
+                    desired_tokens.append(bronchus)
+                    seen_tokens.add(bronchus)
+
+            existing_locations = brushings.get("locations") or []
+            existing_tokens = [str(x) for x in existing_locations if isinstance(x, str) and x.strip()]
+            existing_all_tokens = existing_tokens and all((" " not in x) and (len(x) <= 12) for x in existing_tokens)
+
+            if existing_tokens and existing_all_tokens and desired_tokens:
+                merged = list(existing_tokens)
+                for token in desired_tokens:
+                    if token not in merged:
+                        merged.append(token)
+                if merged != existing_locations:
+                    brushings["locations"] = merged
+            elif not existing_locations:
+                if desired_tokens:
+                    brushings["locations"] = desired_tokens
+                    warnings.append(f"BACKFILL: Assigned target '{desired_tokens}' to brushings.locations")
+                else:
+                    primary_loc = _nav_primary_location_text()
+                    if primary_loc:
+                        brushings["locations"] = [primary_loc]
+                        warnings.append(f"BACKFILL: Assigned target '{primary_loc}' to brushings.locations")
             procedures["brushings"] = brushings
         else:
             # If brushings are asserted elsewhere, backfill locations from navigation targets when missing.
@@ -634,22 +685,48 @@ def derive_procedures_from_granular(
             cryo = procedures.get("transbronchial_cryobiopsy") or {}
             if not cryo.get("performed"):
                 cryo["performed"] = True
-            if not (cryo.get("locations_biopsied") or []):
-                cryo_locations = [
-                    t.get("target_location_text")
-                    for t in navigation_targets
-                    if t.get("target_location_text")
-                    and (
-                        (t.get("number_of_cryo_biopsies") or 0) > 0
-                        or any("cryo" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
-                    )
-                ]
-                if not cryo_locations:
-                    cryo_locations = [
-                        t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")
-                    ]
+            cryo_locations = [
+                t.get("target_location_text")
+                for t in navigation_targets
+                if t.get("target_location_text")
+                and (
+                    (t.get("number_of_cryo_biopsies") or 0) > 0
+                    or any("cryo" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
+                )
+            ]
+            if not cryo_locations:
+                cryo_locations = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
+
+            existing_locations = cryo.get("locations_biopsied") or []
+            if not existing_locations:
                 if cryo_locations:
                     cryo["locations_biopsied"] = cryo_locations
+            elif cryo_locations:
+                existing_clean = [str(x) for x in existing_locations if str(x).strip()]
+                if len(existing_clean) == 1 and len(cryo_locations) > 1:
+                    existing_lower = existing_clean[0].strip().lower()
+                    if existing_lower and any(
+                        existing_lower in str(candidate).strip().lower() for candidate in cryo_locations if candidate
+                    ):
+                        cryo["locations_biopsied"] = cryo_locations
+                    else:
+                        merged = list(existing_clean)
+                        for candidate in cryo_locations:
+                            if not candidate:
+                                continue
+                            if candidate not in merged:
+                                merged.append(candidate)
+                        if merged != existing_locations:
+                            cryo["locations_biopsied"] = merged
+                else:
+                    merged = list(existing_clean)
+                    for candidate in cryo_locations:
+                        if not candidate:
+                            continue
+                        if candidate not in merged:
+                            merged.append(candidate)
+                    if merged != existing_locations:
+                        cryo["locations_biopsied"] = merged
 
             if cryo.get("number_of_samples") in (None, "", 0):
                 total = sum((t.get("number_of_cryo_biopsies") or 0) for t in navigation_targets)

@@ -1281,6 +1281,94 @@ button.secondary:hover:not(:disabled) {
   white-space: pre-wrap;
 }
 
+/* --- REGISTRY RUNS: FEEDBACK & CORRECTIONS --- */
+.feedback-panel {
+  margin-top: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.feedback-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.feedback-field input,
+.feedback-field textarea {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.feedback-field input:focus,
+.feedback-field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.feedback-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.feedback-actions #feedbackStatus {
+  margin-left: auto;
+}
+
+/* Dialog modal */
+dialog.modal {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  max-width: 560px;
+  width: calc(100% - 24px);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+dialog.modal::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.modal-content {
+  padding: 16px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  opacity: 1;
+}
+
+.modal-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
 /* --- PRINT OPTIMIZATIONS --- */
 @media print {
   .no-print { display: none !important; }

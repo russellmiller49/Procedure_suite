@@ -396,6 +396,8 @@ def _build_registry_model() -> type[BaseModel]:
             else:
                 return values
 
+            updated = False
+
             aspiration_raw = procedures.get("therapeutic_aspiration")
             if isinstance(aspiration_raw, BaseModel):
                 aspiration: dict[str, Any] = aspiration_raw.model_dump()
@@ -436,10 +438,47 @@ def _build_registry_model() -> type[BaseModel]:
                     elif "secretions" in material_key:
                         aspiration["material"] = "Mucus"
 
-            if aspiration:
+            if aspiration and aspiration != aspiration_raw:
                 procedures["therapeutic_aspiration"] = aspiration
-                values["procedures_performed"] = procedures
+                updated = True
 
+            blvr_raw = procedures.get("blvr")
+            if isinstance(blvr_raw, BaseModel):
+                blvr: dict[str, Any] = blvr_raw.model_dump()
+            elif isinstance(blvr_raw, dict):
+                blvr = dict(blvr_raw)
+            else:
+                blvr = {}
+
+            procedure_type = blvr.get("procedure_type")
+            if isinstance(procedure_type, str):
+                cleaned = procedure_type.strip()
+                if cleaned:
+                    normalized_key = re.sub(r"[^a-z0-9]+", " ", cleaned.lower()).strip()
+                    mapping: dict[str, str] = {
+                        "valve placement": "Valve placement",
+                        "placement": "Valve placement",
+                        "insert": "Valve placement",
+                        "insertion": "Valve placement",
+                        "valve insertion": "Valve placement",
+                        "valve removal": "Valve removal",
+                        "removal": "Valve removal",
+                        "remove": "Valve removal",
+                        "extraction": "Valve removal",
+                        "valve assessment": "Valve assessment",
+                        "assessment": "Valve assessment",
+                        "chartis": "Valve assessment",
+                        "coil placement": "Coil placement",
+                        "coil": "Coil placement",
+                    }
+                    normalized = mapping.get(normalized_key)
+                    if normalized and normalized != cleaned:
+                        blvr["procedure_type"] = normalized
+                        procedures["blvr"] = blvr
+                        updated = True
+
+            if updated:
+                values["procedures_performed"] = procedures
             return values
 
         @model_validator(mode="before")

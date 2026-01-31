@@ -18,12 +18,26 @@ const addRedactionBtn = document.getElementById("addRedactionBtn");
 const entityTypeSelect = document.getElementById("entityTypeSelect");
 const editedResponseEl = document.getElementById("editedResponse");
 const flattenedTablesHost = document.getElementById("flattenedTablesHost");
+const feedbackPanelEl = document.getElementById("feedbackPanel");
+const runIdDisplayEl = document.getElementById("runIdDisplay");
+const submitterNameEl = document.getElementById("submitterName");
+const feedbackRatingEl = document.getElementById("feedbackRating");
+const feedbackCommentEl = document.getElementById("feedbackComment");
+const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
+const saveCorrectionsBtn = document.getElementById("saveCorrectionsBtn");
+const feedbackStatusEl = document.getElementById("feedbackStatus");
+const phiConfirmModalEl = document.getElementById("phiConfirmModal");
 
 let lastServerResponse = null;
 let flatTablesBase = null;
 let flatTablesState = null;
 let editedPayload = null;
 let editedDirty = false;
+let currentRunId = null;
+let feedbackSubmitted = false;
+
+const TESTER_MODE = new URLSearchParams(location.search).get("tester") === "1";
+if (TESTER_MODE && feedbackPanelEl) feedbackPanelEl.open = true;
 
 /**
  * Get merge mode from query param or localStorage.
@@ -146,6 +160,8 @@ if (exportBtn) exportBtn.disabled = true;
 if (exportTablesBtn) exportTablesBtn.disabled = true;
 if (newNoteBtn) newNoteBtn.disabled = true;
 if (statusTextEl) statusTextEl.textContent = "Booting UI…";
+resetRunState();
+if (submitterNameEl) submitterNameEl.addEventListener("input", updateFeedbackButtons);
 
 function setStatus(text) {
   if (!statusTextEl) return;
@@ -155,6 +171,61 @@ function setStatus(text) {
 function setProgress(text) {
   if (!progressTextEl) return;
   progressTextEl.textContent = text || "";
+}
+
+function setFeedbackStatus(text) {
+  if (!feedbackStatusEl) return;
+  feedbackStatusEl.textContent = text || "";
+}
+
+function getSubmitterName() {
+  return String(submitterNameEl?.value || "").trim();
+}
+
+function updateFeedbackButtons() {
+  const hasName = getSubmitterName().length > 0;
+
+  if (runIdDisplayEl) {
+    runIdDisplayEl.textContent = currentRunId ? `Run ID: ${currentRunId}` : "Run ID: (not persisted)";
+  }
+
+  if (submitFeedbackBtn) {
+    submitFeedbackBtn.disabled = !currentRunId || feedbackSubmitted || !hasName;
+  }
+  if (saveCorrectionsBtn) {
+    saveCorrectionsBtn.disabled = !currentRunId || !editedPayload;
+  }
+}
+
+function resetRunState() {
+  currentRunId = null;
+  feedbackSubmitted = false;
+  setFeedbackStatus("");
+  updateFeedbackButtons();
+}
+
+function setRunId(runId) {
+  currentRunId = runId || null;
+  feedbackSubmitted = false;
+  setFeedbackStatus("");
+  updateFeedbackButtons();
+}
+
+async function confirmPhiRemoval() {
+  if (!phiConfirmModalEl || typeof phiConfirmModalEl.showModal !== "function") {
+    return window.confirm(
+      "Confirm PHI removal before persistence. The server must store scrubbed-only text."
+    );
+  }
+
+  return new Promise((resolve) => {
+    const onClose = () => {
+      phiConfirmModalEl.removeEventListener("close", onClose);
+      resolve(phiConfirmModalEl.returnValue === "confirm");
+    };
+    phiConfirmModalEl.addEventListener("close", onClose);
+    phiConfirmModalEl.showModal();
+  });
 }
 
 function clamp(n, min, max) {
@@ -549,6 +620,7 @@ function resetEditedState() {
   editedPayload = null;
   editedDirty = false;
   if (editedResponseEl) editedResponseEl.textContent = "(no edits yet)";
+  updateFeedbackButtons();
 }
 
 function collectRegistryCodeEvidence(data, code) {
@@ -2720,6 +2792,7 @@ function updateEditedPayload() {
   if (!editedDirty || !lastServerResponse || !flatTablesState) {
     editedResponseEl.textContent = "(no edits yet)";
     editedPayload = null;
+    updateFeedbackButtons();
     return;
   }
 
@@ -2737,6 +2810,7 @@ function updateEditedPayload() {
 
   editedPayload = payload;
   editedResponseEl.textContent = JSON.stringify(payload, null, 2);
+  updateFeedbackButtons();
 }
 
 function applyEditsToPayload(payload, tables) {
@@ -3451,6 +3525,7 @@ function clearResultsUi() {
   const container = document.getElementById("resultsContainer");
   if (container) container.classList.add("hidden");
   lastServerResponse = null;
+  resetRunState();
   if (serverResponseEl) serverResponseEl.textContent = "(none)";
   if (flattenedTablesHost) {
     flattenedTablesHost.innerHTML =
@@ -4740,18 +4815,103 @@ async function main() {
     serverResponseEl.textContent = "(submitting...)";
 
     try {
-      const requestBody = {
-        note: model.getValue(),
+      const submitterName = getSubmitterName();
+      const noteText = model.getValue();
+
+      const processBody = {
+        note: noteText,
         already_scrubbed: true,
       };
-      console.log("Submitting to /api/v1/process", { noteLength: requestBody.note.length });
-      
+
+      const shouldAttemptPersistence = !TESTER_MODE || submitterName.length > 0;
+
+      if (shouldAttemptPersistence) {
+        const confirmed = await confirmPhiRemoval();
+        if (!confirmed) {
+          serverResponseEl.textContent = "(cancelled)";
+          setStatus("Submit cancelled");
+          return;
+        }
+
+        const persistBody = {
+          ...processBody,
+          submitter_name: submitterName || null,
+        };
+
+        console.log("Submitting to /api/v1/registry/runs", { noteLength: noteText.length });
+        const persistRes = await fetch("/api/v1/registry/runs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(persistBody),
+        });
+
+        const persistText = await persistRes.text();
+        let persistData;
+        try {
+          persistData = persistText ? JSON.parse(persistText) : null;
+        } catch (parseErr) {
+          console.error("Failed to parse JSON response:", parseErr);
+          persistData = { error: "Invalid JSON response", raw: persistText };
+        }
+
+        if (persistRes.ok) {
+          console.log("Persist success:", persistData);
+          const runId = persistData?.run_id;
+          const result = persistData?.result;
+          if (!runId || !result) {
+            throw new Error("Registry runs response missing run_id/result");
+          }
+          setRunId(runId);
+          setFeedbackStatus("Run persisted. You can submit feedback and save corrections.");
+          renderResults(result);
+          setStatus("Submitted + persisted (scrubbed text only)");
+          return;
+        }
+
+        if (persistRes.status === 400) {
+          serverResponseEl.textContent = JSON.stringify(
+            { error: persistData, status: persistRes.status, statusText: persistRes.statusText },
+            null,
+            2
+          );
+          setFeedbackStatus("Persistence rejected. Re-check redaction and retry.");
+          setStatus("Persistence rejected (PHI risk)");
+          return;
+        }
+
+        const detailText = String(persistData?.detail || "").toLowerCase();
+        const persistenceDisabled =
+          persistRes.status === 404 ||
+          persistRes.status === 403 ||
+          (persistRes.status === 503 && detailText.includes("persistence") && detailText.includes("disabled"));
+
+        if (!persistenceDisabled) {
+          console.error("Persistence request failed:", persistRes.status, persistData);
+          serverResponseEl.textContent = JSON.stringify(
+            { error: persistData, status: persistRes.status, statusText: persistRes.statusText },
+            null,
+            2
+          );
+          setStatus(`Submit failed (${persistRes.status})`);
+          return;
+        }
+
+        console.warn("Persistence unavailable; falling back to /api/v1/process", persistRes.status);
+        setFeedbackStatus(
+          "Persistence unavailable (REGISTRY_RUNS_PERSIST_ENABLED may be off). Falling back to stateless /api/v1/process."
+        );
+      } else {
+        setFeedbackStatus("Tester mode: enter your name to enable persistence.");
+      }
+
+      console.log("Submitting to /api/v1/process", { noteLength: noteText.length });
+
       const res = await fetch("/api/v1/process", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify(processBody),
       });
-      
+
       console.log("Response status:", res.status, res.statusText);
 
       const bodyText = await res.text();
@@ -4762,7 +4922,7 @@ async function main() {
         console.error("Failed to parse JSON response:", parseErr);
         data = { error: "Invalid JSON response", raw: bodyText };
       }
-      
+
       if (!res.ok) {
         console.error("Request failed:", res.status, data);
         serverResponseEl.textContent = JSON.stringify(
@@ -4773,10 +4933,10 @@ async function main() {
         setStatus(`Submit failed (${res.status})`);
         return;
       }
-      
+
       console.log("Success:", data);
       renderResults(data);
-      setStatus("Submitted (scrubbed text only)");
+      setStatus("Submitted (scrubbed text only; not persisted)");
     } catch (err) {
       console.error("Submit error:", err);
       serverResponseEl.textContent = JSON.stringify(
@@ -4790,6 +4950,106 @@ async function main() {
       if (newNoteBtn) newNoteBtn.disabled = running;
     }
   });
+
+  if (submitFeedbackBtn) {
+    submitFeedbackBtn.addEventListener("click", async () => {
+      if (!currentRunId) return;
+      const name = getSubmitterName();
+      if (!name) {
+        setFeedbackStatus("Name is required to submit feedback.");
+        updateFeedbackButtons();
+        return;
+      }
+
+      const rating = Number.parseInt(String(feedbackRatingEl?.value || "0"), 10);
+      const comment = String(feedbackCommentEl?.value || "").trim() || null;
+
+      setFeedbackStatus("Submitting feedback…");
+
+      try {
+        const res = await fetch(`/api/v1/registry/runs/${currentRunId}/feedback`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reviewer_name: name, rating, comment }),
+        });
+
+        const text = await res.text();
+        let data;
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {
+          data = { raw: text };
+        }
+
+        if (res.status === 409) {
+          feedbackSubmitted = true;
+          updateFeedbackButtons();
+          setFeedbackStatus("Feedback already submitted for this run.");
+          return;
+        }
+
+        if (!res.ok) {
+          setFeedbackStatus(`Feedback submit failed (${res.status}).`);
+          console.error("Feedback submit failed:", res.status, data);
+          return;
+        }
+
+        feedbackSubmitted = true;
+        updateFeedbackButtons();
+        setFeedbackStatus("Feedback submitted. Thank you.");
+      } catch (err) {
+        console.error("Feedback submit error:", err);
+        setFeedbackStatus("Feedback submit error - check console for details.");
+      }
+    });
+  }
+
+  if (saveCorrectionsBtn) {
+    saveCorrectionsBtn.addEventListener("click", async () => {
+      if (!currentRunId) return;
+      if (!editedPayload) {
+        setFeedbackStatus("No edited payload yet. Make edits in Flattened Tables first.");
+        updateFeedbackButtons();
+        return;
+      }
+
+      const name = getSubmitterName();
+      const editedTablesSnapshot = getTablesForExport();
+
+      setFeedbackStatus("Saving corrections…");
+
+      try {
+        const res = await fetch(`/api/v1/registry/runs/${currentRunId}/correction`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            corrected_response_json: editedPayload,
+            edited_tables_json: editedTablesSnapshot,
+            editor_name: name || null,
+          }),
+        });
+
+        const text = await res.text();
+        let data;
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {
+          data = { raw: text };
+        }
+
+        if (!res.ok) {
+          setFeedbackStatus(`Save corrections failed (${res.status}).`);
+          console.error("Save corrections failed:", res.status, data);
+          return;
+        }
+
+        setFeedbackStatus("Corrections saved.");
+      } catch (err) {
+        console.error("Save corrections error:", err);
+        setFeedbackStatus("Save corrections error - check console for details.");
+      }
+    });
+  }
 
   if (exportBtn) {
     exportBtn.addEventListener("click", () => {

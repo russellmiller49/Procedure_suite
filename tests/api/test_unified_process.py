@@ -6,6 +6,7 @@ from fastapi.testclient import TestClient
 from modules.api.dependencies import get_registry_service
 from modules.api.fastapi_app import app
 from modules.api.phi_dependencies import get_phi_scrubber
+from modules.api.phi_redaction import RedactionResult
 from modules.registry.application.registry_service import RegistryExtractionResult, RegistryRecord
 from proc_schemas.registry.ip_v2 import IPRegistryV2
 
@@ -86,8 +87,13 @@ def test_unified_process_needs_scrubbing(mock_registry_service):
     mock_registry_service.extract_fields.return_value = extraction_result
 
     # Mock redaction to happen
-    with patch("modules.api.routes.unified_process.apply_phi_redaction") as mock_redact:
-        mock_redact.return_value.text = "Scrubbed text"
+    with patch("modules.api.services.unified_pipeline.apply_phi_redaction") as mock_redact:
+        mock_redact.return_value = RedactionResult(
+            text="Scrubbed text",
+            was_scrubbed=True,
+            entity_count=1,
+            warning=None,
+        )
         
         payload = {
             "note": "Raw PHI note",

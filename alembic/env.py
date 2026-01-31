@@ -15,6 +15,7 @@ from sqlalchemy import engine_from_config, pool
 from modules.phi.db import metadata as target_metadata
 # Import models so metadata is populated
 import modules.phi.models  # noqa: F401
+import modules.registry_store.models  # noqa: F401
 
 
 config = context.config
@@ -65,4 +66,3 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-

@@ -34,6 +34,12 @@ echo "[railway_start_gunicorn] PORT=${PORT}"
 echo "[railway_start_gunicorn] WORKERS=${WORKERS}"
 echo "[railway_start_gunicorn] TIMEOUT=${TIMEOUT}"
 
+# Optional: run Alembic migrations on start (recommended for single-instance Railway deploys).
+if [[ "${PROCSUITE_RUN_MIGRATIONS_ON_START:-}" =~ ^(1|true|yes)$ ]]; then
+  echo "[railway_start_gunicorn] Running migrations (alembic upgrade head)..."
+  alembic upgrade head
+fi
+
 # Optional: bootstrap granular NER ONNX bundle from S3 at container start.
 # If configured, this must succeed; otherwise the service should fail fast.
 if [[ -n "${GRANULAR_NER_BUNDLE_S3_URI_ONNX:-${GRANULAR_NER_BUNDLE_S3_URI:-}}" ]]; then

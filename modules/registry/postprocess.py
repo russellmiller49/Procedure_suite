@@ -150,7 +150,9 @@ __all__ = [
     "enrich_ebus_node_event_sampling_details",
     "enrich_ebus_node_event_outcomes",
     "enrich_linear_ebus_needle_gauge",
+    "enrich_eus_b_sampling_details",
     "enrich_medical_thoracoscopy_biopsies_taken",
+    "enrich_bal_from_procedure_detail",
 ]
 
 
@@ -3005,7 +3007,7 @@ _EBUS_PASSES_RE = re.compile(
     r"\b(?P<count>\d{1,2})\b[^.\n]{0,80}\b(?:needle\s+passes?|passes?|endobronchial\s+ultrasound\s+guided\s+transbronchial\s+biops(?:y|ies))\b",
     re.IGNORECASE,
 )
-_EBUS_ELASTO_TYPE_RE = re.compile(r"\btype\s*(?P<num>[1-3])\b[^.\n]{0,80}\belastograph", re.IGNORECASE)
+_EBUS_ELASTO_TYPE_RE = re.compile(r"\btype\s*(?P<num>[1-3])\b[^.\n]{0,120}\belasto", re.IGNORECASE)
 
 
 def _compact_evidence_quote(text: str, *, limit: int = 420) -> str:
@@ -3047,10 +3049,31 @@ def enrich_ebus_node_event_sampling_details(record: RegistryRecord, full_text: s
         if not block:
             continue
 
-        station_match = _EBUS_STATION_TOKEN_RE.search(block)
-        if not station_match:
+        # Station token extraction:
+        # - Only trust the *site header line* (avoids matching "7/2025" dates later in the block).
+        # - For digit-only stations like "7", require nearby nodal context (e.g., "(subcarinal) node").
+        site_line = block.splitlines()[0].strip() if block.splitlines() else block
+        station_raw = ""
+        for m_station in _EBUS_STATION_TOKEN_RE.finditer(site_line):
+            token = (m_station.group(1) or "").strip()
+            if not token:
+                continue
+            if token.isdigit():
+                before_char = site_line[m_station.start(1) - 1] if m_station.start(1) > 0 else ""
+                after_char = site_line[m_station.end(1)] if m_station.end(1) < len(site_line) else ""
+                if before_char in {"/", "-"} or after_char in {"/", "-"}:
+                    continue
+                lookbehind = site_line[max(0, m_station.start(1) - 24) : m_station.start(1)].lower()
+                lookahead = site_line[m_station.end(1) : m_station.end(1) + 42].lower()
+                if not (
+                    re.search(r"\b(?:station|level)\b", lookbehind)
+                    or re.search(r"\b(?:node|ln|lymph|subcarinal|paratracheal)\b|\(", lookahead)
+                ):
+                    continue
+            station_raw = token
+            break
+        if not station_raw:
             continue
-        station_raw = station_match.group(1) or ""
         station = station_raw.strip().upper()
         if normalize_station is not None:
             station = normalize_station(station) or station
@@ -3116,6 +3139,10 @@ def enrich_ebus_node_event_sampling_details(record: RegistryRecord, full_text: s
             # Prefer narrative excerpts when they contain granularity not present in the
             # existing quote (which is often specimen-log-derived).
             needs_upgrade = False
+            if re.match(r"(?i)^site\s+\d{1,2}\s*:", quote.strip()) and not re.match(
+                r"(?i)^site\s+\d{1,2}\s*:", existing_text.strip()
+            ):
+                needs_upgrade = True
             if not existing_text:
                 needs_upgrade = True
             elif isinstance(meta.get("passes"), int) and "pass" not in existing_text and "biops" not in existing_text:
@@ -3239,6 +3266,17 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                 if token.isdigit():
                     prefix = line[: match.start(1)]
                     if re.search(r"(?i)\b(?:site|case|patient)\s+#?\s*$", prefix):
+                        continue
+                    before_char = line[match.start(1) - 1] if match.start(1) > 0 else ""
+                    after_char = line[match.end(1)] if match.end(1) < len(line) else ""
+                    if before_char in {"/", "-"} or after_char in {"/", "-"}:
+                        continue
+                    lookbehind = line[max(0, match.start(1) - 24) : match.start(1)].lower()
+                    lookahead = line[match.end(1) : match.end(1) + 42].lower()
+                    if not (
+                        re.search(r"\b(?:station|level)\b", lookbehind)
+                        or re.search(r"\b(?:node|ln|lymph|subcarinal|paratracheal)\b|\(", lookahead)
+                    ):
                         continue
                 station_tokens.append(token)
 
@@ -3424,6 +3462,106 @@ def enrich_linear_ebus_needle_gauge(record: RegistryRecord, full_text: str) -> l
     return warnings
 
 
+_EUS_B_MARKER_RE = re.compile(r"(?i)\bEUS-?B\b")
+_EUS_B_FINDINGS_HEADER_RE = re.compile(r"(?im)^\s*EUS-?B\s+Findings\b")
+_EUS_B_SITES_HEADER_RE = re.compile(r"(?im)^\s*EUS-?B\s+Sites\s+Sampled\s*:\s*$")
+_EUS_B_SITE_LINE_RE = re.compile(r"(?im)^\s*Site\s+\d{1,2}\s*:\s*(?P<rest>.+?)\s*$")
+_EUS_B_NEEDLE_GAUGE_RE = re.compile(r"(?i)\b(19|21|22|25)\s*[- ]?(?:g|gauge)\b")
+_EUS_B_PASSES_RE = re.compile(
+    r"\b(?P<count>\d{1,2})\b[^.\n]{0,80}\b(?:needle\s+passes?|passes?|endoscopic\s+ultrasound\s+guided\s+transbronchial\s+biops(?:y|ies))\b",
+    re.IGNORECASE,
+)
+_EUS_B_ROSE_RE = re.compile(
+    r"(?i)\bOverall\s+EUS-?B\b[^.\n]{0,120}\bROSE\b[^.\n]{0,80}:\s*\"?(?P<val>[A-Za-z][^\"]{0,40})\"?"
+)
+
+
+def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> list[str]:
+    """Populate procedures_performed.eus_b.{sites_sampled,needle_gauge,passes,rose_result} when missing."""
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    eus_b = getattr(procedures, "eus_b", None) if procedures is not None else None
+    if eus_b is None or getattr(eus_b, "performed", None) is not True:
+        return warnings
+    if not full_text:
+        return warnings
+
+    header = _EUS_B_FINDINGS_HEADER_RE.search(full_text)
+    marker = _EUS_B_MARKER_RE.search(full_text) if header is None else header
+    if marker is None:
+        return warnings
+
+    section = full_text[marker.start() :]
+    changed = False
+
+    existing_sites = getattr(eus_b, "sites_sampled", None)
+    if not isinstance(existing_sites, list) or not any(isinstance(s, str) and s.strip() for s in existing_sites):
+        sites: list[str] = []
+        header = _EUS_B_SITES_HEADER_RE.search(section)
+        if header:
+            tail = section[header.end() :]
+            for match in _EUS_B_SITE_LINE_RE.finditer(tail):
+                rest = (match.group("rest") or "").strip()
+                if not rest:
+                    continue
+                site = None
+                m_site = re.search(
+                    r"(?i)\bthe\s+(?P<site>[^.\n]{3,80}?)(?:\s+was|\s+is|\s+were|\s+on\b|\s+in\b|[.,])",
+                    rest,
+                )
+                if m_site:
+                    site = (m_site.group("site") or "").strip()
+                elif re.search(r"(?i)\badrenal\b", rest):
+                    site = "Left adrenal mass"
+                if site:
+                    site = site[0].upper() + site[1:] if site else site
+                    if site not in sites:
+                        sites.append(site)
+                if len(sites) >= 6:
+                    break
+
+        if not sites and re.search(r"(?i)\bleft\s+adrenal\b", section):
+            sites = ["Left adrenal mass"]
+
+        if sites:
+            setattr(eus_b, "sites_sampled", sites)
+            changed = True
+
+    if getattr(eus_b, "needle_gauge", None) in (None, ""):
+        match = _EUS_B_NEEDLE_GAUGE_RE.search(section)
+        if match:
+            try:
+                gauge = int(match.group(1))
+            except Exception:
+                gauge = None
+            if gauge in (19, 21, 22, 25):
+                setattr(eus_b, "needle_gauge", f"{gauge}G")
+                changed = True
+
+    if getattr(eus_b, "passes", None) in (None, 0):
+        match = _EUS_B_PASSES_RE.search(section)
+        if match:
+            try:
+                count = int(match.group("count"))
+            except Exception:
+                count = None
+            if isinstance(count, int) and 1 <= count <= 30:
+                setattr(eus_b, "passes", count)
+                changed = True
+
+    if getattr(eus_b, "rose_result", None) in (None, ""):
+        match = _EUS_B_ROSE_RE.search(section)
+        if match:
+            val = (match.group("val") or "").strip().strip("\"' ")
+            if val:
+                setattr(eus_b, "rose_result", val)
+                changed = True
+
+    if changed:
+        warnings.append("AUTO_EUS_B_DETAIL: populated eus_b sampling details from note text")
+    return warnings
+
+
 _PLEURAL_THORACOSCOPY_BIOPSY_RE = re.compile(
     r"\bbiops(?:y|ies)\b[^.\n]{0,120}\bpleur(?:a|al|e)?\b"
     r"|\bpleur(?:a|al|e)?\b[^.\n]{0,120}\bbiops(?:y|ies)\b",
@@ -3473,4 +3611,138 @@ def enrich_medical_thoracoscopy_biopsies_taken(record: RegistryRecord, full_text
     warnings.append(
         "AUTO_THORACOSCOPY_BIOPSY: set pleural_procedures.medical_thoracoscopy.biopsies_taken=true from note text"
     )
+    return warnings
+
+
+_BAL_STANDARD_LINE_RE = re.compile(
+    r"(?i)\b(?:bronch(?:ial)?\s+alveolar\s+lavage|broncho[-\s]?alveolar\s+lavage|BAL)\b"
+    r"[^.\n]{0,80}\b(?:was\s+)?performed\b[^.\n]{0,80}\b(?:at|in)\b\s+(?P<loc>[^.\n]{3,220})"
+)
+_BAL_MINI_PREFIX_RE = re.compile(r"(?i)\bmini\s+(?:bronch(?:ial)?\s+alveolar\s+lavage|bal)\b")
+_BAL_INSTILLED_RE = re.compile(r"(?i)\binstilled\s+(?P<num>\d{1,4})\s*(?:cc|ml)\b")
+_BAL_RETURN_RE = re.compile(
+    r"(?i)\b(?:suction\s*returned(?:\s+with)?|returned\s+with|recovered)\s+(?P<num>\d{1,4})\s*(?:cc|ml)\b"
+)
+
+
+def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> list[str]:
+    """Prefer explicit standard-BAL documentation over mini-BAL snippets when unambiguous."""
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    bal = getattr(procedures, "bal", None) if procedures is not None else None
+    if bal is None or getattr(bal, "performed", None) is not True:
+        return warnings
+    if not full_text:
+        return warnings
+
+    candidates: list[dict[str, object]] = []
+    for match in _BAL_STANDARD_LINE_RE.finditer(full_text):
+        start = match.start()
+        end = match.end()
+        prefix = full_text[max(0, start - 40) : start]
+        if _BAL_MINI_PREFIX_RE.search(prefix):
+            continue
+
+        loc_raw = (match.group("loc") or "").strip().strip(" ,;:-")
+        if not loc_raw:
+            continue
+        if len(loc_raw) > 180:
+            loc_raw = loc_raw[:180].rsplit(" ", 1)[0].strip() or loc_raw[:180].strip()
+
+        window = full_text[start : min(len(full_text), start + 420)]
+        instilled = None
+        recovered = None
+        m_inst = _BAL_INSTILLED_RE.search(window)
+        if m_inst:
+            try:
+                instilled = float(int(m_inst.group("num")))
+            except Exception:
+                instilled = None
+        m_ret = _BAL_RETURN_RE.search(window)
+        if m_ret:
+            try:
+                recovered = float(int(m_ret.group("num")))
+            except Exception:
+                recovered = None
+
+        candidates.append(
+            {
+                "loc": loc_raw,
+                "instilled": instilled,
+                "recovered": recovered,
+                "span": (start, end),
+            }
+        )
+
+    if not candidates:
+        return warnings
+
+    # Allow multi-site BAL when volumes are consistent (common templated notes):
+    # - multiple "performed at <location>" statements
+    # - shared instilled/recovered volumes
+    locs_in_order: list[str] = []
+    for c in candidates:
+        loc_val = str(c.get("loc") or "").strip()
+        if loc_val and loc_val not in locs_in_order:
+            locs_in_order.append(loc_val)
+
+    instilled_values = {c.get("instilled") for c in candidates if isinstance(c.get("instilled"), float)}
+    recovered_values = {c.get("recovered") for c in candidates if isinstance(c.get("recovered"), float)}
+
+    if len(locs_in_order) > 1 and (len(instilled_values) > 1 or len(recovered_values) > 1):
+        warnings.append(
+            "AMBIGUOUS_BAL_DETAIL: multiple standard BAL candidates in note; not overriding bal fields"
+        )
+        return warnings
+
+    loc = "; ".join(locs_in_order).strip()
+    if len(loc) > 180:
+        loc = loc[:180].rsplit(" ", 1)[0].strip() or loc[:180].strip()
+
+    instilled_val = next(iter(instilled_values), None) if instilled_values else None
+    recovered_val = next(iter(recovered_values), None) if recovered_values else None
+
+    changed = False
+    existing_loc = getattr(bal, "location", None)
+    if isinstance(existing_loc, str):
+        existing_loc_norm = existing_loc.strip()
+    else:
+        existing_loc_norm = ""
+
+    if loc and loc != existing_loc_norm:
+        setattr(bal, "location", loc)
+        changed = True
+
+    if isinstance(instilled_val, float) and instilled_val > 0:
+        existing_instilled = getattr(bal, "volume_instilled_ml", None)
+        if existing_instilled is None or float(existing_instilled) != instilled_val:
+            setattr(bal, "volume_instilled_ml", instilled_val)
+            changed = True
+
+    if isinstance(recovered_val, float) and recovered_val >= 0:
+        existing_recovered = getattr(bal, "volume_recovered_ml", None)
+        if existing_recovered is None or float(existing_recovered) != recovered_val:
+            setattr(bal, "volume_recovered_ml", recovered_val)
+            changed = True
+
+    if not changed:
+        return warnings
+
+    try:
+        from modules.common.spans import Span
+
+        evidence = getattr(record, "evidence", None)
+        if not isinstance(evidence, dict):
+            evidence = {}
+        for cand in candidates:
+            start, end = cand.get("span") or (None, None)
+            if isinstance(start, int) and isinstance(end, int) and end > start:
+                evidence.setdefault("procedures_performed.bal.location", []).append(
+                    Span(text=full_text[start:end].strip(), start=start, end=end, confidence=0.9)
+                )
+        record.evidence = evidence
+    except Exception:
+        pass
+
+    warnings.append("AUTO_BAL_DETAIL: set BAL location/volumes from explicit 'performed at' statement")
     return warnings

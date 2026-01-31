@@ -28,8 +28,14 @@ _POST_CUE_RE = re.compile(
     r"(?i)\b(?:"
     r"at\s+the\s+end|end\s+of\s+the\s+procedure|at\s+conclusion|finally|"
     r"post[-\s]?(?:procedure|intervention|treatment|op)|"
-    r"after\s+(?:debulk|dilat|ablat|treat|interven)|"
+    r"after\s+(?:debulk\w*|dilat\w*|ablat\w*|treat\w*|interven\w*)|"
     r"improv(?:ed|ement)\s+to|reduc(?:ed)?\s+to|decreas(?:ed)?\s+to"
+    r")\b"
+)
+
+_PRE_CUE_RE = re.compile(
+    r"(?i)\b(?:"
+    r"prior\s+to|before|pre[-\s]?(?:procedure|intervention|treatment|op)|baseline"
     r")\b"
 )
 
@@ -179,6 +185,7 @@ def _extract_cao_interventions_detail(
     pct_candidates: dict[str, dict[str, set[int]]] = {}
     current_location: str | None = None
     post_context_remaining = 0
+    pre_context_remaining = 0
     fallback_location = "Trachea" if re.search(r"(?i)\btrachea\b", text) else None
 
     def _get_site(loc: str) -> dict[str, Any]:
@@ -219,9 +226,18 @@ def _extract_cao_interventions_detail(
             continue
 
         is_post = post_context_remaining > 0
+        is_pre = pre_context_remaining > 0
+
         if _POST_CUE_RE.search(sentence):
             post_context_remaining = max(post_context_remaining, 3)
+            pre_context_remaining = 0
             is_post = True
+            is_pre = False
+        elif _PRE_CUE_RE.search(sentence):
+            pre_context_remaining = max(pre_context_remaining, 3)
+            post_context_remaining = 0
+            is_pre = True
+            is_post = False
 
         # Determine location context for sentences with no explicit location on the match.
         locations_in_sentence: list[str] = []
@@ -309,7 +325,8 @@ def _extract_cao_interventions_detail(
             if not (0 <= patency <= 100):
                 continue
             obstruction = 100 - patency
-            _assign_pct(loc, obstruction, is_post=True)
+            # Default to post-procedure patency, but respect explicit "prior/before" cues.
+            _assign_pct(loc, obstruction, is_post=not is_pre)
 
         # 5) Complete obstruction/occlusion with explicit "of <location>" (multi-hit).
         for match in _COMPLETE_OBSTRUCTION_OF_RE.finditer(sentence):
@@ -386,6 +403,8 @@ def _extract_cao_interventions_detail(
 
         if post_context_remaining > 0:
             post_context_remaining -= 1
+        if pre_context_remaining > 0:
+            pre_context_remaining -= 1
 
     # Return in stable order (proximal → distal-ish).
     priority = {"Tracheostomy tube lumen": 0, "Trachea": 1, "Carina": 2, "RMS": 3, "LMS": 4, "BI": 5}

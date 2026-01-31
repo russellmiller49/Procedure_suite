@@ -171,6 +171,8 @@ const NAME_REGEX_CLINICAL_STOPLIST = new Set([
   // Common clinical nouns that start capitalized
   "lesion", "nodule", "mass", "tumor", "stenosis", "obstruction",
   "serial", "irrigation", "dilation", "aspiration", "suction",
+  // Procedure / modality terms that can look like names
+  "radial", "ebus",
   // Directions/locations
   "left", "right", "bilateral", "central", "peripheral",
   // Anatomy terms
@@ -191,6 +193,8 @@ const SINGLE_NAME_CLINICAL_STOPLIST = new Set([
   "apical", "basal", "anterior", "posterior", "superior", "inferior",
   // Clinical procedures/actions
   "suction", "lavage", "dilation", "ablation", "biopsy", "aspiration",
+  // Procedure / modality terms that can look like names
+  "radial", "ebus",
   // Equipment/device terms
   "scope", "probe", "needle", "catheter", "balloon", "stent",
   // Common sentence starters

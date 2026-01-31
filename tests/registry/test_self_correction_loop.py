@@ -135,6 +135,24 @@ def test_self_correction_successful_patch_mechanical_debulking_31640(monkeypatch
     assert result.record.procedures_performed.mechanical_debulking.performed is True
 
 
+def test_apply_patch_to_record_normalizes_blvr_procedure_type_shorthand() -> None:
+    from modules.registry.self_correction.apply import apply_patch_to_record
+
+    record = RegistryRecord()
+    patched = apply_patch_to_record(
+        record=record,
+        patch=[
+            {"op": "add", "path": "/procedures_performed/blvr/performed", "value": True},
+            {"op": "add", "path": "/procedures_performed/blvr/procedure_type", "value": "removal"},
+        ],
+    )
+
+    assert patched.procedures_performed is not None
+    assert patched.procedures_performed.blvr is not None
+    assert patched.procedures_performed.blvr.performed is True
+    assert patched.procedures_performed.blvr.procedure_type == "Valve removal"
+
+
 def test_self_correction_rejects_hallucinated_quote(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
     monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")

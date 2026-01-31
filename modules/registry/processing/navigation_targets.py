@@ -17,6 +17,12 @@ _TARGET_HEADER_RE = re.compile(
     r")\s*:?\s*$"
 )
 
+_NODULE_TARGET_HEADER_RE = re.compile(
+    r"(?im)^\s*(?P<header>"
+    r"(?:RIGHT|LEFT)\s+(?:UPPER|MIDDLE|LOWER)\s+LOBE\b[^\n:]{0,220}?\b(?:NODULE|LESION)\b[^\n:]{0,220}?"
+    r")\s*:\s*$"
+)
+
 _TARGET_LOBE_FROM_HEADER: dict[str, str] = {
     "RIGHT UPPER LOBE TARGET": "RUL",
     "RIGHT MIDDLE LOBE TARGET": "RML",
@@ -263,6 +269,10 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
     scan_text = _maybe_unescape_newlines(text)
 
     matches = list(_TARGET_HEADER_RE.finditer(scan_text))
+    match_mode = "lobe_target"
+    if not matches:
+        matches = list(_NODULE_TARGET_HEADER_RE.finditer(scan_text))
+        match_mode = "nodule_header"
     if not matches:
         # Fallback: support inline patterns like "Target: 20mm nodule in LLL" without
         # relying on explicit "... LOBE TARGET" section headings.
@@ -430,6 +440,24 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
 
         return targets
 
+    def _header_label_suffix(header_text: str) -> str | None:
+        raw = (header_text or "").strip()
+        if not raw:
+            return None
+        # Prefer explicit "nodule #2" style identifiers.
+        m = re.search(r"(?i)\b(?:nodule|lesion)\s*#\s*(\d{1,2})\b", raw)
+        if m:
+            return f"nodule #{m.group(1)}"
+        # Common template: "(labeled as RUL #2)".
+        m = re.search(r"(?i)\blabeled\s+as\s+[A-Z]{2,6}\s*#\s*(\d{1,2})\b", raw)
+        if m:
+            return f"nodule #{m.group(1)}"
+        # Last resort: any "# <num>" marker.
+        m = re.search(r"(?i)#\s*(\d{1,2})\b", raw)
+        if m:
+            return f"nodule #{m.group(1)}"
+        return None
+
     targets: list[dict[str, Any]] = []
     for idx, match in enumerate(matches):
         header_raw = match.group("header") or ""
@@ -439,6 +467,8 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
         section = scan_text[section_start:section_end] if section_end > section_start else ""
 
         lobe = _TARGET_LOBE_FROM_HEADER.get(header)
+        if match_mode == "nodule_header":
+            lobe = _infer_lobe_from_text(header_raw) or lobe
 
         segment: str | None = None
         location_text: str | None = None
@@ -457,6 +487,13 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             # Prefer a meaningful sentence when present; otherwise fall back to the header lobe.
             target_line = _first_line_containing(section, re.compile(r"(?i)\btarget\s+lesion\b"))
             location_text = target_line or f"{lobe} target"
+
+        # When we have rich nodule headers, include the nodule identifier to avoid collapsing
+        # multiple targets that share the same segment (common in RUL RB1 #1/#2 workflows).
+        if match_mode == "nodule_header" and location_text:
+            suffix = _header_label_suffix(header_raw)
+            if suffix and suffix.lower() not in location_text.lower():
+                location_text = f"{location_text} {suffix}"
 
         lesion_size_mm: float | None = None
         cm = _TARGET_LESION_SIZE_CM_RE.search(section)
@@ -520,6 +557,10 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
                     target["number_of_needle_passes"] = int(samples.group(1))
                 except Exception:
                     pass
+
+        brush_match = re.search(r"(?i)\b(?:transbronchial\s+)?brush(?:ing|ings)?\b|\bcytology\s+brush\b", section)
+        if brush_match:
+            target.setdefault("sampling_tools_used", []).append("Brush")
 
         targets.append(target)
 

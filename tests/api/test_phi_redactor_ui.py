@@ -135,17 +135,17 @@ def test_unified_process_already_scrubbed_bypasses_server_scrubber(
     stub_registry = StubRegistryService()
 
     # Hard-fail if the server-side scrubbing helper is invoked.
-    from modules.api import fastapi_app as fastapi_app_module
+    from modules.api.services import unified_pipeline as unified_pipeline_module
 
     def _fail_apply(*_args, **_kwargs):
         raise AssertionError("apply_phi_redaction should not be called when already_scrubbed=true")
 
-    monkeypatch.setattr(fastapi_app_module, "apply_phi_redaction", _fail_apply)
+    monkeypatch.setattr(unified_pipeline_module, "apply_phi_redaction", _fail_apply)
 
     async def _run_cpu_direct(_app, fn, *args):  # noqa: ANN001
         return fn(*args)
 
-    monkeypatch.setattr(fastapi_app_module, "run_cpu", _run_cpu_direct)
+    monkeypatch.setattr(unified_pipeline_module, "run_cpu", _run_cpu_direct)
 
     # Avoid unrelated readiness dependencies
     app.dependency_overrides[require_ready] = lambda: None

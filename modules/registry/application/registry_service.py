@@ -1839,6 +1839,11 @@ class RegistryService:
                 s = str(value).strip().lower()
                 if not s:
                     return True
+                # Common boilerplate lines that are not target locations.
+                if "robotic navigation bronchoscopy was performed" in s:
+                    return True
+                if "partial registration" in s and "target lesion" in s:
+                    return True
                 if "||" in s:
                     return True
                 if re.search(r"(?i)^(?:pt|patient)\\s*:", s):
@@ -1873,6 +1878,10 @@ class RegistryService:
                 if "segment" in candidate_lower and "segment" not in existing_lower:
                     return True
                 if ("(" in candidate and ")" in candidate) and ("(" not in existing or ")" not in existing):
+                    return True
+                if ("nodule" in candidate_lower or "#" in candidate_lower) and (
+                    "nodule" not in existing_lower and "#" not in existing_lower
+                ):
                     return True
                 return False
 
@@ -2260,8 +2269,10 @@ class RegistryService:
 
         from modules.registry.postprocess import (
             cull_hollow_ebus_claims,
+            enrich_bal_from_procedure_detail,
             enrich_ebus_node_event_outcomes,
             enrich_ebus_node_event_sampling_details,
+            enrich_eus_b_sampling_details,
             enrich_linear_ebus_needle_gauge,
             enrich_medical_thoracoscopy_biopsies_taken,
             populate_ebus_node_events_fallback,
@@ -2287,12 +2298,18 @@ class RegistryService:
         ebus_gauge_warnings = enrich_linear_ebus_needle_gauge(record, masked_note_text)
         if ebus_gauge_warnings:
             extraction_warnings.extend(ebus_gauge_warnings)
+        eus_b_detail_warnings = enrich_eus_b_sampling_details(record, masked_note_text)
+        if eus_b_detail_warnings:
+            extraction_warnings.extend(eus_b_detail_warnings)
         ebus_hollow_warnings = cull_hollow_ebus_claims(record, masked_note_text)
         if ebus_hollow_warnings:
             extraction_warnings.extend(ebus_hollow_warnings)
         pleural_biopsy_warnings = enrich_medical_thoracoscopy_biopsies_taken(record, masked_note_text)
         if pleural_biopsy_warnings:
             extraction_warnings.extend(pleural_biopsy_warnings)
+        bal_detail_warnings = enrich_bal_from_procedure_detail(record, masked_note_text)
+        if bal_detail_warnings:
+            extraction_warnings.extend(bal_detail_warnings)
 
         guardrail_outcome = self.clinical_guardrails.apply_record_guardrails(
             masked_note_text, record

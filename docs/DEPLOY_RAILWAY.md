@@ -38,6 +38,7 @@ This project is typically deployed as **two Railway services**:
 Common:
 - `PORT` (Railway provides)
 - `WORKERS` (optional)
+- `PROCSUITE_RUN_MIGRATIONS_ON_START` (optional; set `true` to run `alembic upgrade head` on boot)
 - `CODER_VERSION` (optional; returned in `/qa/run`)
 - `REPORTER_VERSION` (optional; returned in `/qa/run`)
 

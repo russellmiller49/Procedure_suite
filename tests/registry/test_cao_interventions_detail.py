@@ -63,3 +63,17 @@ def test_extract_cao_interventions_detail_tracheal_lesion_count_and_morphology()
     assert trachea["lesion_morphology"] == "Polypoid"
     assert "3" in str(trachea.get("lesion_count_text") or "")
     assert ">50" in str(trachea.get("lesion_count_text") or "")
+
+
+def test_extract_cao_interventions_detail_patency_is_converted_to_obstruction_pct() -> None:
+    note = (
+        "TRACHEAL STENOSIS\n"
+        "Endobronchial obstruction at Trachea (Proximal 1/3) was treated.\n"
+        "Prior to treatment, affected airway was note to be 20% patent.\n"
+        "After treatment, the airway was 40% patent.\n"
+    )
+
+    details = extract_cao_interventions_detail(note)
+    by_loc = _by_location(details)
+    assert by_loc["Trachea"]["pre_obstruction_pct"] == 80
+    assert by_loc["Trachea"]["post_obstruction_pct"] == 60

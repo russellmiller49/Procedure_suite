@@ -42,7 +42,7 @@ _CPT_CODE_RE = re.compile(r"\b\d{5}\b")
 _CPT_LINE_RE = re.compile(r"(?im)^\s*(?:CPT:?)?\s*\d{5}\b.*$")
 
 _IP_CODE_MOD_DETAILS_HEADER_RE = re.compile(
-    r"(?im)^\s*IP\b[^\n]{0,60}CODE\s+MOD\s+DETAILS\s*:?\s*$"
+    r"(?im)^\s*IP\b[^\n]{0,80}CODE\s+MOD\s+DETAILS\b[^\n]*$"
 )
 _IP_BLOCK_END_RE = re.compile(
     r"(?im)^\s*(?:ANESTHESIA|MONITORING|INSTRUMENT|ESTIMATED\s+BLOOD\s+LOSS|COMPLICATIONS|PROCEDURE\s+IN\s+DETAIL|DESCRIPTION\s+OF\s+PROCEDURE)\b"
@@ -50,6 +50,10 @@ _IP_BLOCK_END_RE = re.compile(
 _CPT_CONTEXT_PRESERVE_RE = re.compile(
     r"\b(?:zephyr|spiration|endobronchial\s+valve|bronchial\s+valve|blvr)\b",
     re.IGNORECASE,
+)
+
+_CPT_EXAMPLE_TOKENS_RE = re.compile(
+    r"(?i)\b(?:laser|cryotherap(?:y|ies)|cryo(?:probe|spray)?|thermal|apc|argon|radiofrequency|microwave)\b"
 )
 
 
@@ -100,6 +104,9 @@ def _mask_ip_code_mod_details_cpt_codes(text: str) -> str:
     if not text:
         return text
 
+    def _mask_full_line(raw: str) -> str:
+        return re.sub(r"[^\n]", " ", raw)
+
     lines = text.splitlines(keepends=True)
     out: list[str] = []
     in_block = False
@@ -119,7 +126,26 @@ def _mask_ip_code_mod_details_cpt_codes(text: str) -> str:
             out.append(line)
             continue
 
-        out.append(_CPT_CODE_RE.sub(lambda m: " " * len(m.group(0)), line))
+        # For code-definition list lines inside the modifier block, mask the entire line
+        # unless it contains high-signal BLVR context we explicitly preserve.
+        if _CPT_LINE_RE.match(line) and not _CPT_CONTEXT_PRESERVE_RE.search(line):
+            out.append(_mask_full_line(line))
+            continue
+
+        masked_line = _CPT_CODE_RE.sub(lambda m: " " * len(m.group(0)), line)
+
+        # Some blocks include "Apply to: <CPT definition>" fragments that add CPT-menu
+        # noise (e.g., "(eg. laser therapy, cryotherapy)") inside otherwise clinical
+        # narrative. Mask the apply-to clause when it contains example-only tokens.
+        if _CPT_EXAMPLE_TOKENS_RE.search(masked_line) and not _CPT_CONTEXT_PRESERVE_RE.search(masked_line):
+            m_apply = re.search(r"(?i)\bapply\s+to\s*:", masked_line)
+            if m_apply:
+                idx = m_apply.start()
+                prefix = masked_line[:idx]
+                suffix = _mask_full_line(masked_line[idx:])
+                masked_line = prefix + suffix
+
+        out.append(masked_line)
 
     return "".join(out)
 

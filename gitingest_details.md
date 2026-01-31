@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-30T08:05:29-08:00`
-Git: `reorg` @ `d301bb7`
+Generated: `2026-01-30T15:48:45-08:00`
+Git: `refactor` @ `c524a9a`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -88,6 +88,7 @@ Git: `reorg` @ `d301bb7`
     12126  scripts/export_phi_model_for_transformersjs.py
     12153  scripts/convert_spans_to_bio.py
     13507  scripts/extract_ner_from_excel.py
+    14193  scripts/index_repo.py
     14532  scripts/review_llm_fallback_errors.py
     14742  scripts/quantize_to_onnx.py
     14760  scripts/unified_pipeline_batch.py
@@ -190,11 +191,11 @@ Git: `reorg` @ `d301bb7`
       553  tests/registry/test_registry_to_cpt_airway_stent_assessment_only.py
       554  modules/registry/schema/ip_v3.py
       561  tests/registry/test_keyword_guard_high_conf_bypass.py
-      565  modules/coder/code_families.py
       573  modules/phi/adapters/__init__.py
       576  modules/api/__init__.py
       579  tests/scripts/test_audit_model_fp_logic.py
       602  modules/infra/executors.py
+      607  modules/coder/code_families.py
       610  modules/infra/safe_logging.py
       615  modules/reporting/second_pass/counts_backfill.py
       630  proc_schemas/billing.py
@@ -233,6 +234,7 @@ Git: `reorg` @ `d301bb7`
       926  modules/ml_coder/utils.py
       944  tests/scripts/test_audit_model_fp_cli.py
       968  modules/reporter/schema.py
+      972  modules/registry/extractors/disease_burden.py
       972  modules/registry/self_correction/types.py
       975  modules/coder/domain_rules/registry_to_cpt/engine.py
       996  modules/api/guards.py
@@ -242,10 +244,10 @@ Git: `reorg` @ `d301bb7`
      1076  tests/registry/test_clinical_guardrails_radial_linear.py
      1107  tests/registry/test_clinical_guardrails_tbna_peripheral_context.py
      1123  modules/coder/types.py
-     1125  modules/ml_coder/valid_ip_codes.py
      1126  tests/registry/test_clinical_guardrails_endobronchial_biopsy.py
      1134  tests/unit/test_normalize_phi_labels.py
      1140  modules/registry/schema_filter.py
+     1141  modules/ml_coder/valid_ip_codes.py
      1143  tests/registry/test_slots_ebus_tblb.py
      1163  modules/registry/slots/disposition.py
      1168  proc_schemas/shared/ebus_events.py
@@ -254,7 +256,6 @@ Git: `reorg` @ `d301bb7`
      1201  tests/unit/test_knowledge.py
      1212  modules/common/exceptions.py
      1218  modules/registry/slots/pleura.py
-     1220  tests/coder/test_ncci_ptp_indicator.py
      1224  tests/coding/test_sectionizer.py
      1229  modules/api/schemas/__init__.py
      1270  tests/coding/test_peripheral_rules.py
@@ -298,12 +299,12 @@ Git: `reorg` @ `d301bb7`
      1708  proc_schemas/reasoning.py
      1717  tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
      1731  modules/domain/text/negation.py
+     1731  tests/registry/test_note_279_regression.py
      1761  modules/ml_coder/preprocessing.py
      1763  tests/registry/test_kitchen_sink_extraction_first.py
      1767  tests/registry/test_navigation_fiducials.py
      1767  tests/utils/case_filter.py
      1828  tests/registry/test_registry_to_cpt_diagnostic_bronchoscopy.py
-     1832  config/settings.py
      1835  modules/registry/slots/tblb.py
      1842  tests/registry/test_pleural_extraction.py
      1847  modules/coder/parallel_pathway/reconciler.py
@@ -311,17 +312,15 @@ Git: `reorg` @ `d301bb7`
      1876  modules/reporting/__init__.py
      1877  tests/integration/api/test_health_endpoint.py
      1880  tests/registry/test_new_extractors.py
-     1909  modules/coder/ncci.py
+     1923  tests/coder/test_ncci_ptp_indicator.py
      1929  modules/coder/constants.py
      1961  tests/api/test_phi_demo_cases.py
      1984  tests/registry/test_keyword_guard_omissions.py
      1985  modules/coder/phi_gating.py
      1999  modules/phi/ports.py
-     2001  modules/registry/schema/ip_v3_extraction.py
      2003  modules/registry/legacy/supabase_sink.py
      2027  modules/registry/audit/audit_types.py
      2032  modules/agents/parser/parser_agent.py
-     2046  tests/registry/test_note_002_regression.py
      2093  modules/registry/slots/dilation.py
      2107  modules/ml_coder/training_losses.py
      2136  modules/coder/peripheral_rules.py
@@ -343,6 +342,7 @@ Git: `reorg` @ `d301bb7`
      2346  tests/conftest.py
      2372  tests/scripts/test_prodigy_export_registry_file_mode.py
      2416  modules/common/text_cleaning.py
+     2421  modules/registry/schema/ip_v3_extraction.py
      2421  tests/registry/test_registry_to_cpt_fibrinolytic_therapy.py
      2448  modules/common/rules_engine/mer.py
      2472  modules/reporter/prompts.py
@@ -382,7 +382,6 @@ Git: `reorg` @ `d301bb7`
      3169  proc_nlp/umls_linker.py
      3186  modules/registry/summarize.py
      3188  modules/common/rules_engine/dsl.py
-     3201  tests/registry/test_cao_interventions_detail.py
      3202  tests/registry/test_navigation_targets_inline_target.py
      3204  proc_nlp/normalize_proc.py
      3252  modules/infra/cache.py
@@ -390,6 +389,7 @@ Git: `reorg` @ `d301bb7`
      3267  tests/registry/test_note_300_multilobe_navigation_regression.py
      3277  tests/registry/test_focusing_audit_guardrail.py
      3307  modules/registry/legacy/adapter.py
+     3314  tests/registry/test_disease_burden_extractor.py
      3391  modules/coder/peripheral_extractor.py
      3399  modules/infra/settings.py
      3471  tests/registry/test_v3_note_281_narrative_first_and_anchors.py
@@ -403,17 +403,20 @@ Git: `reorg` @ `d301bb7`
      3694  modules/ml_coder/registry_label_schema.py
      3704  modules/registry/slots/blvr.py
      3706  modules/api/phi_redaction.py
+     3759  tests/registry/test_cao_interventions_detail.py
      3774  modules/common/knowledge_schema.py
      3795  modules/common/model_capabilities.py
      3831  modules/api/phi_dependencies.py
      3862  tests/integration/test_pipeline_integrity.py
      3899  modules/registry/extraction/focus.py
+     3937  config/settings.py
      3944  modules/ml_coder/registry_label_constraints.py
      3958  modules/coder/schema.py
      3970  modules/agents/contracts.py
      3996  modules/registry/tags.py
-     4071  modules/registry/self_correction/prompt_improvement.py
+     4078  modules/registry/self_correction/prompt_improvement.py
      4202  tests/unit/test_phi_platinum_filters.py
+     4218  tests/registry/test_disease_burden_overrides.py
      4251  modules/registry/slots/stent.py
      4339  tests/phi/test_models.py
      4373  tests/registry/test_keyword_guard_overrides.py
@@ -428,6 +431,7 @@ Git: `reorg` @ `d301bb7`
      4522  tests/registry/test_registry_engine_sanitization.py
      4534  tests/registry/test_derive_procedures_from_granular_consistency.py
      4568  modules/registry/self_correction/judge.py
+     4587  tests/registry/test_note_002_regression.py
      4598  tests/api/test_coding_phi_gating.py
      4751  tests/registry/test_fixpack_device_action_regressions.py
      4782  modules/common/sectionizer.py
@@ -453,6 +457,7 @@ Git: `reorg` @ `d301bb7`
      6131  tests/api/test_phi_redaction.py
      6150  modules/coder/parallel_pathway/confidence_combiner.py
      6184  tests/integration/test_phi_workflow_end_to_end.py
+     6204  modules/coder/ncci.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
      6276  tests/registry/test_self_correction_validation.py
@@ -466,8 +471,8 @@ Git: `reorg` @ `d301bb7`
      6596  tests/registry/test_registry_qa_regressions.py
      6632  modules/coder/cli.py
      6646  tests/unit/test_protected_veto.py
-     6904  modules/reporting/ip_addons.py
      6955  tests/integration/api/test_startup_warmup.py
+     7025  modules/reporting/ip_addons.py
      7110  modules/coder/application/candidate_expansion.py
      7176  modules/agents/run_pipeline.py
      7307  tests/integration/coder/test_coding_service.py
@@ -475,8 +480,8 @@ Git: `reorg` @ `d301bb7`
      7505  modules/registry/ner_mapping/entity_to_registry.py
      7526  modules/domain/coding_rules/evidence_context.py
      7599  modules/registry/model_runtime.py
-     7652  tests/registry/test_registry_extraction_ebus.py
      7672  modules/coder/adapters/ml_ranker.py
+     7827  tests/registry/test_registry_extraction_ebus.py
      7837  tests/unit/test_no_legacy_imports.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
@@ -489,9 +494,8 @@ Git: `reorg` @ `d301bb7`
      8652  modules/coder/application/procedure_type_detector.py
      8695  tests/coding/test_json_rules_parity.py
      8702  modules/api/coder_adapter.py
-     8750  modules/api/routes/unified_process.py
+     8981  modules/api/routes/unified_process.py
      9005  modules/api/routes/metrics.py
-     9048  modules/registry/schema/adapters/v3_to_v2.py
      9292  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9393  modules/registry/processing/focus.py
      9466  tests/ml_coder/test_training_pipeline.py
@@ -510,21 +514,20 @@ Git: `reorg` @ `d301bb7`
     11181  tests/test_phi_redaction_contract.py
     11253  modules/registry/application/registry_builder.py
     11289  modules/coder/adapters/nlp/keyword_mapping_loader.py
-    11300  modules/registry/processing/masking.py
+    11392  modules/common/knowledge.py
     11467  modules/api/routes/phi.py
-    11598  modules/common/knowledge.py
     11691  modules/registry/legacy/adapters/pleural.py
     11758  modules/registry/evidence/verifier.py
     11799  modules/registry/application/pathology_extraction.py
     11881  modules/registry/ner_mapping/procedure_extractor.py
-    12184  tests/registry/test_self_correction_loop.py
-    12198  modules/api/dependencies.py
     12339  modules/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
     12517  modules/registry/extractors/v3_extractor.py
+    12533  modules/registry/processing/masking.py
     12640  tests/ml_coder/test_data_prep.py
     12647  modules/registry/processing/linear_ebus_stations_detail.py
     12657  docs/phi_review_system/backend/schemas.py
+    12912  tests/registry/test_self_correction_loop.py
     12997  tests/coder/test_smart_hybrid_policy.py
     13192  tests/unit/test_openai_responses_primary.py
     13453  modules/coder/application/coding_service.py
@@ -538,7 +541,8 @@ Git: `reorg` @ `d301bb7`
     14585  docs/phi_review_system/backend/models.py
     14655  modules/registry/audit/raw_ml_auditor.py
     14876  tests/phi/test_veto_regression.py
-    15142  modules/registry/v2_booleans.py
+    14936  modules/registry/schema/adapters/v3_to_v2.py
+    15130  modules/registry/v2_booleans.py
     15243  tests/unit/test_dsl.py
     15267  modules/domain/coding_rules/json_rules_evaluator.py
     15328  modules/registry/inference_onnx.py
@@ -549,6 +553,7 @@ Git: `reorg` @ `d301bb7`
     15601  tests/reporter/test_ip_addons.py
     15653  tests/registry/test_extraction_quality.py
     15655  modules/coder/reconciliation/pipeline.py
+    15727  modules/api/dependencies.py
     15800  modules/ner/inference.py
     15828  modules/registry/ner_mapping/station_extractor.py
     15857  tests/registry/test_normalization.py
@@ -557,7 +562,6 @@ Git: `reorg` @ `d301bb7`
     16608  tests/integration/api/test_metrics_endpoint.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
     17010  modules/phi/safety/veto.py
-    17037  modules/registry/processing/cao_interventions_detail.py
     17103  modules/registry/application/coding_support_builder.py
     17161  proc_schemas/clinical/airway.py
     17268  modules/common/openai_responses.py
@@ -566,42 +570,44 @@ Git: `reorg` @ `d301bb7`
     17854  modules/coder/adapters/llm/gemini_advisor.py
     17939  tests/unit/test_template_coverage.py
     17947  modules/registry/normalization.py
-    18428  modules/coder/adapters/persistence/csv_kb_adapter.py
+    18735  modules/registry/processing/cao_interventions_detail.py
+    18774  modules/coder/adapters/persistence/csv_kb_adapter.py
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
     19783  tests/integration/api/test_registry_endpoints.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
-    20223  modules/domain/coding_rules/rule_engine.py
     20317  modules/coder/parallel_pathway/orchestrator.py
     20430  modules/registry/model_bootstrap.py
     20539  modules/registry/extractors/llm_detailed.py
     21220  modules/coder/adapters/llm/openai_compat_advisor.py
     21232  tests/coder/test_coding_rules_phase7.py
+    21458  modules/domain/coding_rules/rule_engine.py
     21460  modules/coder/adapters/persistence/supabase_procedure_store.py
     21479  tests/coder/test_reconciliation.py
     21518  tests/test_registry_normalization.py
-    22104  modules/registry/processing/navigation_targets.py
     22317  tests/reporter/test_macro_engine_features.py
     22456  modules/registry/legacy/adapters/airway.py
     22569  modules/phi/adapters/presidio_scrubber.py
-    22644  modules/ml_coder/data_prep.py
     22670  tests/ml_coder/test_registry_data_prep.py
+    22706  modules/ml_coder/data_prep.py
     23485  docs/phi_review_system/backend/endpoints.py
+    23898  modules/registry/processing/navigation_targets.py
     24069  tests/ml_advisor/conftest.py
-    24183  modules/registry/schema/v2_dynamic.py
+    24123  modules/registry/processing/disease_burden.py
     24922  tests/integration/api/test_coder_run_endpoint.py
     25665  modules/coder/application/smart_hybrid_policy.py
-    25902  modules/reporting/macro_engine.py
+    25777  modules/reporting/macro_engine.py
+    25946  modules/registry/schema/v2_dynamic.py
     27507  modules/ml_coder/label_hydrator.py
     27574  modules/api/normalization.py
     27607  modules/registry/transform.py
     27702  modules/coder/adapters/registry_coder.py
-    28626  modules/ml_coder/registry_data_prep.py
-    29883  modules/registry/schema/granular_models.py
+    28725  modules/ml_coder/registry_data_prep.py
     29893  modules/domain/coding_rules/coding_rules_engine.py
     30063  modules/api/ml_advisor_router.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
+    31334  modules/registry/schema/granular_models.py
     33132  tests/registry/test_registry_service_hybrid_flow.py
     35268  tests/coding/test_rules_validation.py
     35381  modules/phi/adapters/phi_redactor_hybrid.py
@@ -611,20 +617,20 @@ Git: `reorg` @ `d301bb7`
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
     40683  modules/common/llm.py
-    40861  modules/registry/schema/granular_logic.py
     41901  modules/proc_ml_advisor/schemas.py
     42913  modules/api/routes/procedure_codes.py
     43561  modules/api/fastapi_app.py
     43918  tests/registry/test_granular_registry_models.py
+    44690  modules/registry/schema/granular_logic.py
     52780  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     53728  modules/extraction/postprocessing/clinical_guardrails.py
-    56440  modules/autocode/ip_kb/ip_kb.py
-    62046  modules/registry/prompts.py
+    56672  modules/autocode/ip_kb/ip_kb.py
+    62051  modules/registry/prompts.py
     63511  modules/reporting/engine.py
    101740  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
-   123127  modules/registry/postprocess.py
-   157083  modules/registry/application/registry_service.py
+   134579  modules/registry/postprocess.py
+   159182  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
@@ -677,15 +683,15 @@ Git: `reorg` @ `d301bb7`
       619  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/label_map.json
       620  modules/reporter/templates/bronchoscopy_synoptic.md.jinja
       622  modules/reporting/templates/addons/endobronchial_valve_placement.jinja
-      632  modules/reporting/templates/addons/tracheostomy_tube_change.jinja
       641  modules/reporting/templates/addons/endobronchial_tumor_destruction.jinja
       644  modules/reporting/templates/addons/stoma_or_tracheal_granulation_mechanical_debridement.jinja
       647  modules/reporting/templates/addons/ultrasound_guided_pleural_biopsy_closed_core.jinja
       655  modules/reporting/templates/addons/chemical_pleurodesis_via_tunneled_pleural_catheter_ipc.jinja
       675  modules/reporting/templates/addons/photodynamic_therapy_pdt_light_application.jinja
-      688  modules/reporting/templates/addons/tracheostomy_decannulation_bedside.jinja
+      686  modules/reporting/templates/addons/tracheostomy_decannulation_bedside.jinja
       689  modules/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
       690  modules/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
+      692  modules/reporting/templates/addons/tracheostomy_tube_change.jinja
       695  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
       695  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
       707  modules/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
@@ -765,9 +771,11 @@ Git: `reorg` @ `d301bb7`
      4544  docs/Production_Readiness_Review.md
      4595  tests/fixtures/notes/note_275.txt
      4606  docs/CODEX_PRODUCTION_PLAN.md
+     4618  docs/README.md
      4745  docs/Multi_agent_collaboration/Architect Priming Script.md
      5429  docs/ml_first_hybrid_policy.md
-     6232  docs/Registry_API.md
+     5787  docs/REPO_INDEX.md
+     6446  docs/Registry_API.md
      6862  modules/reporting/templates/macros/04_blvr_cryo.j2
      7031  docs/Registry_ML_summary.md
      7218  docs/IPregistry_update_plan.md
@@ -790,18 +798,18 @@ Git: `reorg` @ `d301bb7`
     15238  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
     16028  modules/reporting/templates/macros/05_pleural.j2
     16113  docs/AGENTS.md
-    16515  docs/ARCHITECTURE.md
     17732  docs/phi_review_system/README.md
     17850  modules/api/static/phi_demo.js
     18104  modules/phi/adapters/redaction-service.js
+    19502  docs/REPO_GUIDE.md
     19826  docs/MAKEFILE_COMMANDS.md
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
     27821  modules/registry/ip_registry_improvements.md
     41682  docs/USER_GUIDE.md
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
-    61430  modules/api/static/phi_redactor/protectedVeto.js
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
+    63253  modules/api/static/phi_redactor/protectedVeto.js
     90791  modules/api/static/app.js
     93797  modules/api/static/phi_redactor/redactor.worker.js
     94017  modules/api/static/phi_redactor/redactor.worker.legacy.js
@@ -811,6 +819,7 @@ Git: `reorg` @ `d301bb7`
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  scripts/verify_registry_human_data.py
  inline_cap_reached>75  scripts/sanitize_dataset.py
  inline_cap_reached>75  scripts/apply_platinum_redactions.py
  inline_cap_reached>75  scripts/registry_pipeline_smoke_batch.py
@@ -886,10 +895,10 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/registry/deterministic/__init__.py
  inline_cap_reached>75  modules/registry_cleaning/__init__.py
  inline_cap_reached>75  modules/registry/schema/ip_v3.py
- inline_cap_reached>75  modules/coder/code_families.py
  inline_cap_reached>75  modules/phi/adapters/__init__.py
  inline_cap_reached>75  modules/api/__init__.py
  inline_cap_reached>75  modules/infra/executors.py
+ inline_cap_reached>75  modules/coder/code_families.py
  inline_cap_reached>75  modules/infra/safe_logging.py
  inline_cap_reached>75  modules/reporting/second_pass/counts_backfill.py
  inline_cap_reached>75  proc_schemas/billing.py
@@ -915,13 +924,14 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/registry/__init__.py
  inline_cap_reached>75  modules/ml_coder/utils.py
  inline_cap_reached>75  modules/reporter/schema.py
+ inline_cap_reached>75  modules/registry/extractors/disease_burden.py
  inline_cap_reached>75  modules/registry/self_correction/types.py
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/engine.py
  inline_cap_reached>75  modules/api/guards.py
  inline_cap_reached>75  modules/coder/__init__.py
  inline_cap_reached>75  modules/coder/types.py
- inline_cap_reached>75  modules/ml_coder/valid_ip_codes.py
  inline_cap_reached>75  modules/registry/schema_filter.py
+ inline_cap_reached>75  modules/ml_coder/valid_ip_codes.py
  inline_cap_reached>75  modules/registry/slots/disposition.py
  inline_cap_reached>75  proc_schemas/shared/ebus_events.py
  inline_cap_reached>75  modules/common/exceptions.py
@@ -951,11 +961,9 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/registry/slots/tblb.py
  inline_cap_reached>75  modules/coder/parallel_pathway/reconciler.py
  inline_cap_reached>75  modules/reporting/__init__.py
- inline_cap_reached>75  modules/coder/ncci.py
  inline_cap_reached>75  modules/coder/constants.py
  inline_cap_reached>75  modules/coder/phi_gating.py
  inline_cap_reached>75  modules/phi/ports.py
- inline_cap_reached>75  modules/registry/schema/ip_v3_extraction.py
  inline_cap_reached>75  modules/registry/legacy/supabase_sink.py
  inline_cap_reached>75  modules/registry/audit/audit_types.py
  inline_cap_reached>75  modules/agents/parser/parser_agent.py
@@ -969,6 +977,7 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/ml_coder/self_correction.py
  inline_cap_reached>75  modules/registry/slots/sedation.py
  inline_cap_reached>75  modules/common/text_cleaning.py
+ inline_cap_reached>75  modules/registry/schema/ip_v3_extraction.py
  inline_cap_reached>75  modules/common/rules_engine/mer.py
  inline_cap_reached>75  modules/reporter/prompts.py
  inline_cap_reached>75  modules/proc_ml_advisor/__init__.py
@@ -1033,6 +1042,7 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/infra/nlp_warmup.py
  inline_cap_reached>75  modules/ner/entity_types.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
+ inline_cap_reached>75  modules/coder/ncci.py
  inline_cap_reached>75  modules/registry_cleaning/consistency_utils.py
  inline_cap_reached>75  modules/registry/slots/therapeutics.py
  inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
@@ -1055,7 +1065,6 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/api/coder_adapter.py
  inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/api/routes/metrics.py
- inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/ml_coder/training.py
  inline_cap_reached>75  modules/phi/service.py
@@ -1065,16 +1074,15 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
- inline_cap_reached>75  modules/registry/processing/masking.py
- inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/common/knowledge.py
+ inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/registry/application/pathology_extraction.py
  inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
- inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
+ inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
@@ -1082,6 +1090,7 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/ml_coder/registry_predictor.py
  inline_cap_reached>75  modules/registry/ml/models.py
  inline_cap_reached>75  modules/registry/audit/raw_ml_auditor.py
+ inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  modules/registry/v2_booleans.py
  inline_cap_reached>75  modules/domain/coding_rules/json_rules_evaluator.py
  inline_cap_reached>75  modules/registry/inference_onnx.py
@@ -1089,50 +1098,52 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
+ inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/coder/rules_engine.py
  inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  modules/phi/safety/veto.py
- inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  modules/common/openai_responses.py
  inline_cap_reached>75  modules/coder/reconciliation/reconciler.py
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
+ inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
- inline_cap_reached>75  modules/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  modules/registry/model_bootstrap.py
  inline_cap_reached>75  modules/registry/extractors/llm_detailed.py
  inline_cap_reached>75  modules/coder/adapters/llm/openai_compat_advisor.py
+ inline_cap_reached>75  modules/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  modules/coder/adapters/persistence/supabase_procedure_store.py
- inline_cap_reached>75  modules/registry/processing/navigation_targets.py
  inline_cap_reached>75  modules/registry/legacy/adapters/airway.py
  inline_cap_reached>75  modules/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  modules/ml_coder/data_prep.py
- inline_cap_reached>75  modules/registry/schema/v2_dynamic.py
+ inline_cap_reached>75  modules/registry/processing/navigation_targets.py
+ inline_cap_reached>75  modules/registry/processing/disease_burden.py
  inline_cap_reached>75  modules/coder/application/smart_hybrid_policy.py
  inline_cap_reached>75  modules/reporting/macro_engine.py
+ inline_cap_reached>75  modules/registry/schema/v2_dynamic.py
  inline_cap_reached>75  modules/ml_coder/label_hydrator.py
  inline_cap_reached>75  modules/api/normalization.py
  inline_cap_reached>75  modules/registry/transform.py
  inline_cap_reached>75  modules/coder/adapters/registry_coder.py
  inline_cap_reached>75  modules/ml_coder/registry_data_prep.py
- inline_cap_reached>75  modules/registry/schema/granular_models.py
  inline_cap_reached>75  modules/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  modules/api/ml_advisor_router.py
+ inline_cap_reached>75  modules/registry/schema/granular_models.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/dictionary.py
  inline_cap_reached>75  modules/common/llm.py
- inline_cap_reached>75  modules/registry/schema/granular_logic.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
  inline_cap_reached>75  modules/api/fastapi_app.py
+ inline_cap_reached>75  modules/registry/schema/granular_logic.py
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
@@ -1142,6 +1153,7 @@ Git: `reorg` @ `d301bb7`
  inline_cap_reached>75  modules/registry/engine.py
  inline_cap_reached>75  modules/registry/postprocess.py
  inline_cap_reached>75  modules/registry/application/registry_service.py
+    binary_or_non_utf8  docs/ARCHITECTURE.md
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
@@ -13613,6 +13625,480 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/index_repo.py`
+- Size: `14193` bytes
+```
+#!/usr/bin/env python3
+"""
+Index the Procedure Suite repository into a JSONL file.
+
+Why this exists:
+- `docs/REPO_INDEX.md` is a curated "high-signal map" of key entrypoints.
+- This script produces a *mechanical, full-repo* index (file inventory + metadata)
+  for tooling / search / diff / inspection.
+
+Default behavior:
+- Indexes **tracked files** + **unignored untracked files** (via git), which is
+  typically what you want when you say "full repo" (and avoids `.gitignore` noise).
+- Skips hashing/reading for large files by default (configurable).
+
+Usage:
+  python scripts/index_repo.py
+  python scripts/index_repo.py --out repo_index_all.jsonl
+  python scripts/index_repo.py --include-content --max-content-bytes 262144
+  python scripts/index_repo.py --mode walk   # ignore git, walk filesystem
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import hashlib
+import json
+import mimetypes
+import os
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Iterator, Optional
+
+
+DEFAULT_SKIP_DIR_NAMES = {
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    ".turbo",
+    ".idea",
+    ".vscode",
+}
+
+# These are *repo-relative* path prefixes to exclude from indexing by default.
+# Rationale: these folders tend to contain large corpora / training artifacts and
+# can overwhelm indexes (and are often not useful for code navigation).
+DEFAULT_SKIP_PREFIXES = [
+    "data/knowledge/golden_extractions",
+    "data/knowledge/golden_extractions_final",
+    "data/knowledge/golden_extractions_scrubbed",
+    "data/knowledge/golden_registry_v3",
+    "data/knowledge/patient_note_texts",
+    "data/knowledge/patient_note_texts_complete",
+    "data/granular annotations/Additional_notes",
+    "data/granular annotations/Empty_python_scripts_updated",
+    "data/granular annotations/notes_text",
+    "data/granular annotations/phase0_excels",
+    "data/granular annotations/python scripts",
+    "data/granular annotations/Python_update_scripts",
+    "data/granular annotations/python_update_scripts_complete",
+    "example",
+    "format example",
+]
+
+
+@dataclass(frozen=True)
+class GitInfo:
+    branch: Optional[str]
+    commit: Optional[str]
+
+
+def _run_git(repo_root: Path, args: list[str]) -> tuple[int, str, str]:
+    proc = subprocess.run(
+        ["git", "-C", str(repo_root), *args],
+        capture_output=True,
+        text=True,
+    )
+    return proc.returncode, proc.stdout, proc.stderr
+
+
+def _get_git_root(cwd: Path) -> Optional[Path]:
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(cwd), "rev-parse", "--show-toplevel"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except Exception:
+        return None
+    root = proc.stdout.strip()
+    if not root:
+        return None
+    return Path(root)
+
+
+def _get_git_info(repo_root: Path) -> GitInfo:
+    branch = None
+    commit = None
+    rc, out, _ = _run_git(repo_root, ["rev-parse", "--abbrev-ref", "HEAD"])
+    if rc == 0:
+        branch = out.strip() or None
+    rc, out, _ = _run_git(repo_root, ["rev-parse", "--short", "HEAD"])
+    if rc == 0:
+        commit = out.strip() or None
+    return GitInfo(branch=branch, commit=commit)
+
+
+def _iter_files_git(repo_root: Path) -> Iterator[Path]:
+    """
+    Yield repo-relative paths for:
+    - tracked files
+    - unignored untracked files
+    """
+    def _git_ls(args: list[str]) -> list[str]:
+        proc = subprocess.run(
+            ["git", "-C", str(repo_root), "ls-files", "-z", *args],
+            capture_output=True,
+            check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.decode("utf-8", errors="replace"))
+        raw = proc.stdout
+        if not raw:
+            return []
+        return [p for p in raw.decode("utf-8", errors="replace").split("\x00") if p]
+
+    paths = set(_git_ls([]))
+    paths.update(_git_ls(["--others", "--exclude-standard"]))
+
+    for rel in sorted(paths):
+        # Normalize as Path (posix separator from git)
+        yield Path(rel)
+
+
+def _iter_files_walk(repo_root: Path, skip_dir_names: set[str]) -> Iterator[Path]:
+    for root, dirs, files in os.walk(repo_root):
+        dirs[:] = [d for d in dirs if d not in skip_dir_names]
+        for name in files:
+            full = Path(root) / name
+            try:
+                rel = full.relative_to(repo_root)
+            except Exception:
+                continue
+            yield rel
+
+
+def _normalize_skip_prefixes(prefixes: Iterable[str]) -> list[str]:
+    """
+    Normalize skip prefixes to posix paths without leading './' and without
+    trailing slashes (comparison is done with exact match or prefix + '/').
+    """
+    out: list[str] = []
+    for p in prefixes:
+        s = p.strip().replace("\\", "/")
+        if not s:
+            continue
+        if s.startswith("./"):
+            s = s[2:]
+        s = s.rstrip("/")
+        if s:
+            out.append(s)
+    # Ensure deterministic behavior if caller passes duplicates
+    return sorted(set(out))
+
+
+def _should_skip_relpath(rel_posix: str, skip_prefixes: list[str]) -> bool:
+    rel_posix = rel_posix.lstrip("./")
+    for prefix in skip_prefixes:
+        if rel_posix == prefix or rel_posix.startswith(prefix + "/"):
+            return True
+    return False
+
+
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _read_head_bytes(path: Path, n: int) -> bytes:
+    with path.open("rb") as f:
+        return f.read(n)
+
+
+def _looks_text(sample: bytes) -> bool:
+    # Fast heuristic: NUL bytes usually indicate binary.
+    if b"\x00" in sample:
+        return False
+    # If it decodes as UTF-8 (or mostly), treat as text.
+    try:
+        sample.decode("utf-8")
+        return True
+    except UnicodeDecodeError:
+        return False
+
+
+def _count_lines_utf8(path: Path, max_bytes: int) -> Optional[int]:
+    """
+    Count lines for reasonably sized text files only.
+    Returns None when file is too large or non-utf8-ish.
+    """
+    try:
+        size = path.stat().st_size
+    except FileNotFoundError:
+        return None
+    if size > max_bytes:
+        return None
+    try:
+        # Stream decode to avoid reading huge files (still bounded by max_bytes).
+        count = 0
+        with path.open("rb") as f:
+            for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                if not chunk:
+                    break
+                count += chunk.count(b"\n")
+        return count + 1 if size > 0 else 0
+    except Exception:
+        return None
+
+
+def _safe_rel(path: Path) -> str:
+    return path.as_posix()
+
+
+def build_index(
+    repo_root: Path,
+    out_path: Path,
+    *,
+    mode: str,
+    max_hash_bytes: int,
+    include_content: bool,
+    max_content_bytes: int,
+    max_line_count_bytes: int,
+    skip_dir_names: set[str],
+    skip_prefixes: list[str],
+    max_files: Optional[int],
+) -> None:
+    git_info = _get_git_info(repo_root) if mode == "git" else GitInfo(None, None)
+    started_at = dt.datetime.now(dt.timezone.utc).isoformat()
+
+    if mode == "git":
+        files_iter: Iterable[Path] = _iter_files_git(repo_root)
+    elif mode == "walk":
+        files_iter = _iter_files_walk(repo_root, skip_dir_names=skip_dir_names)
+    else:
+        raise ValueError(f"Unknown mode: {mode}")
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    total = 0
+    hashed = 0
+    with out_path.open("w", encoding="utf-8") as out:
+        out.write(
+            json.dumps(
+                {
+                    "type": "repo_meta",
+                    "repo_root": str(repo_root),
+                    "mode": mode,
+                    "git_branch": git_info.branch,
+                    "git_commit": git_info.commit,
+                    "started_at": started_at,
+                    "max_hash_bytes": max_hash_bytes,
+                    "include_content": include_content,
+                    "max_content_bytes": max_content_bytes,
+                    "max_line_count_bytes": max_line_count_bytes,
+                    "skip_prefixes": skip_prefixes,
+                },
+                ensure_ascii=False,
+            )
+            + "\n"
+        )
+
+        for rel in files_iter:
+            if max_files is not None and total >= max_files:
+                break
+
+            full = repo_root / rel
+            rel_str = _safe_rel(rel)
+
+            if _should_skip_relpath(rel_str, skip_prefixes):
+                continue
+
+            try:
+                st = full.lstat()
+            except FileNotFoundError:
+                continue
+
+            mime, _ = mimetypes.guess_type(str(full))
+            rec: dict[str, object] = {
+                "type": "file",
+                "path": rel_str,
+                "size": st.st_size,
+                "mtime": int(st.st_mtime),
+                "is_symlink": full.is_symlink(),
+                "mime": mime or "application/octet-stream",
+            }
+
+            # Text/binary heuristic (cheap sample)
+            is_text = False
+            try:
+                sample = _read_head_bytes(full, 8192) if st.st_size > 0 else b""
+                is_text = _looks_text(sample)
+            except Exception:
+                is_text = False
+            rec["is_text"] = is_text
+
+            if is_text:
+                rec["line_count"] = _count_lines_utf8(full, max_bytes=max_line_count_bytes)
+
+            if st.st_size <= max_hash_bytes and not full.is_symlink():
+                try:
+                    rec["sha256"] = _sha256_file(full)
+                    hashed += 1
+                except Exception:
+                    rec["sha256"] = None
+
+            if include_content and is_text and st.st_size <= max_content_bytes:
+                try:
+                    content = full.read_text(encoding="utf-8", errors="replace")
+                    rec["content"] = content
+                except Exception:
+                    rec["content"] = None
+
+            out.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            total += 1
+
+        out.write(
+            json.dumps(
+                {
+                    "type": "repo_summary",
+                    "total_files_written": total,
+                    "hashed_files": hashed,
+                    "ended_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+                },
+                ensure_ascii=False,
+            )
+            + "\n"
+        )
+
+    print(f"Wrote {total:,} file records to {out_path}")
+
+
+def main(argv: list[str]) -> int:
+    parser = argparse.ArgumentParser(description="Index the proc_suite repo into JSONL.")
+    parser.add_argument(
+        "--root",
+        default=None,
+        help="Repo root (default: detected git root from current working directory).",
+    )
+    parser.add_argument(
+        "--out",
+        default="repo_index_all.jsonl",
+        help="Output JSONL path (default: repo_root/repo_index_all.jsonl).",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["git", "walk"],
+        default="git",
+        help="File discovery mode: 'git' (tracked+unignored) or 'walk' (filesystem).",
+    )
+    parser.add_argument(
+        "--max-hash-bytes",
+        type=int,
+        default=10_000_000,
+        help="Only hash files <= this size in bytes (default: 10,000,000).",
+    )
+    parser.add_argument(
+        "--include-content",
+        action="store_true",
+        help="Include full UTF-8 content for small text files (off by default).",
+    )
+    parser.add_argument(
+        "--max-content-bytes",
+        type=int,
+        default=128_000,
+        help="Only include content for text files <= this size (default: 128,000).",
+    )
+    parser.add_argument(
+        "--max-line-count-bytes",
+        type=int,
+        default=2_000_000,
+        help="Only compute line counts for text files <= this size (default: 2,000,000).",
+    )
+    parser.add_argument(
+        "--skip-dir",
+        action="append",
+        default=[],
+        help="Directory name to skip (can be repeated). Only applies to --mode walk.",
+    )
+    parser.add_argument(
+        "--skip-prefix",
+        action="append",
+        default=[],
+        help="Repo-relative path prefix to skip (can be repeated). Applies to all modes.",
+    )
+    parser.add_argument(
+        "--no-default-skip-prefixes",
+        action="store_true",
+        help="Disable the built-in skip prefixes list.",
+    )
+    parser.add_argument(
+        "--max-files",
+        type=int,
+        default=None,
+        help="Optional cap for quick runs/debugging.",
+    )
+
+    args = parser.parse_args(argv)
+
+    repo_root: Optional[Path]
+    if args.root:
+        repo_root = Path(args.root).resolve()
+    else:
+        repo_root = _get_git_root(Path.cwd())
+
+    if not repo_root or not repo_root.exists():
+        print("ERROR: Could not determine repo root. Pass --root explicitly.", file=sys.stderr)
+        return 2
+
+    out_path = Path(args.out)
+    if not out_path.is_absolute():
+        out_path = repo_root / out_path
+
+    skip_dir_names = set(DEFAULT_SKIP_DIR_NAMES)
+    skip_dir_names.update(args.skip_dir)
+
+    skip_prefixes: list[str] = []
+    if not args.no_default_skip_prefixes:
+        skip_prefixes.extend(DEFAULT_SKIP_PREFIXES)
+    skip_prefixes.extend(args.skip_prefix)
+    skip_prefixes = _normalize_skip_prefixes(skip_prefixes)
+
+    try:
+        build_index(
+            repo_root=repo_root,
+            out_path=out_path,
+            mode=args.mode,
+            max_hash_bytes=args.max_hash_bytes,
+            include_content=args.include_content,
+            max_content_bytes=args.max_content_bytes,
+            max_line_count_bytes=args.max_line_count_bytes,
+            skip_dir_names=skip_dir_names,
+            skip_prefixes=skip_prefixes,
+            max_files=args.max_files,
+        )
+    except KeyboardInterrupt:
+        print("Interrupted.", file=sys.stderr)
+        return 130
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))
+
+```
+
+---
 ### `scripts/review_llm_fallback_errors.py`
 - Size: `14532` bytes
 ```
@@ -14924,466 +15410,6 @@ def main() -> int:
     print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
     
     return 0 if failed_count == 0 else 1
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
-### `scripts/verify_registry_human_data.py`
-- Size: `15511` bytes
-```
-#!/usr/bin/env python3
-"""Verify and cleanup registry human training data files.
-
-This script:
-1. Confirms all records from subset files exist in registry_human.csv (master)
-2. Checks for label conflicts (same encounter_id with different procedure labels)
-3. Reports schema differences (column mismatches)
-4. Identifies any records missing from master
-5. Optionally archives subset files to _archive/registry_human/
-
-Usage:
-    python scripts/verify_registry_human_data.py           # Dry-run (report only)
-    python scripts/verify_registry_human_data.py --execute # Add missing + archive
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import shutil
-import sys
-from dataclasses import dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Any
-
-import pandas as pd
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
-
-# File configuration
-DATA_DIR = ROOT / "data" / "ml_training"
-MASTER_FILE = "registry_human.csv"
-SUBSET_FILES = [
-    "registry_human_updates.csv",
-    "registry_human_v2.csv",
-    "registry_human_rigid_review.csv",
-    "registry_human_v1_backup.csv",
-]
-ARCHIVE_DIR = DATA_DIR / "_archive" / "registry_human"
-
-
-@dataclass
-class VerificationResult:
-    """Results from verifying a subset file against master."""
-
-    subset_name: str
-    total_records: int
-    unique_encounter_ids: int
-    columns: int
-    column_list: list[str] = field(default_factory=list)
-    contained_in_master: int = 0
-    missing_from_master: list[str] = field(default_factory=list)
-    label_conflicts: list[dict[str, Any]] = field(default_factory=list)
-    schema_warnings: list[str] = field(default_factory=list)
-    load_error: str | None = None
-
-
-def _normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """Normalize column names (strip whitespace, BOM)."""
-    df.columns = [str(c).strip().lstrip("\ufeff") for c in df.columns]
-    return df
-
-
-def _ensure_encounter_id(df: pd.DataFrame, name: str) -> pd.DataFrame:
-    """Ensure encounter_id column exists and is populated."""
-    if "encounter_id" not in df.columns:
-        if "note_text" not in df.columns:
-            raise ValueError(f"{name} missing both encounter_id and note_text columns")
-        df["encounter_id"] = df["note_text"].fillna("").astype(str).map(
-            lambda t: compute_encounter_id(t.strip())
-        )
-        return df
-
-    df["encounter_id"] = df["encounter_id"].fillna("").astype(str).str.strip()
-
-    if "note_text" in df.columns:
-        mask = df["encounter_id"] == ""
-        if mask.any():
-            df.loc[mask, "encounter_id"] = df.loc[mask, "note_text"].fillna("").astype(str).map(
-                lambda t: compute_encounter_id(t.strip())
-            )
-    return df
-
-
-def load_csv_safe(path: Path) -> pd.DataFrame | None:
-    """Load CSV with error handling for malformed files."""
-    try:
-        df = pd.read_csv(path)
-        df = _normalize_columns(df)
-        df = _ensure_encounter_id(df, path.name)
-        return df
-    except Exception as e:
-        return None
-
-
-def verify_subset(
-    master_df: pd.DataFrame, subset_path: Path, labels: list[str]
-) -> VerificationResult:
-    """Verify a subset file against the master."""
-    result = VerificationResult(
-        subset_name=subset_path.name,
-        total_records=0,
-        unique_encounter_ids=0,
-        columns=0,
-    )
-
-    if not subset_path.exists():
-        result.load_error = "File not found"
-        return result
-
-    subset_df = load_csv_safe(subset_path)
-    if subset_df is None:
-        result.load_error = "Failed to load (malformed CSV)"
-        return result
-
-    result.total_records = len(subset_df)
-    result.unique_encounter_ids = subset_df["encounter_id"].nunique()
-    result.columns = len(subset_df.columns)
-    result.column_list = list(subset_df.columns)
-
-    # Check schema differences
-    master_label_cols = set(labels) & set(master_df.columns)
-    subset_label_cols = set(labels) & set(subset_df.columns)
-
-    missing_in_subset = master_label_cols - subset_label_cols
-    extra_in_subset = subset_label_cols - master_label_cols
-
-    if missing_in_subset:
-        result.schema_warnings.append(f"Missing columns vs master: {sorted(missing_in_subset)}")
-    if extra_in_subset:
-        result.schema_warnings.append(f"Extra columns vs master: {sorted(extra_in_subset)}")
-
-    # Check containment
-    master_ids = set(master_df["encounter_id"].unique())
-    subset_ids = set(subset_df["encounter_id"].unique())
-
-    contained = subset_ids & master_ids
-    missing = subset_ids - master_ids
-
-    result.contained_in_master = len(contained)
-    result.missing_from_master = sorted(missing)
-
-    # Check label conflicts for contained records
-    common_labels = list(master_label_cols & subset_label_cols)
-    if common_labels and contained:
-        master_idx = master_df.set_index("encounter_id")
-        subset_idx = subset_df.drop_duplicates("encounter_id").set_index("encounter_id")
-
-        for eid in contained:
-            if eid not in master_idx.index or eid not in subset_idx.index:
-                continue
-
-            master_row = master_idx.loc[eid]
-            subset_row = subset_idx.loc[eid]
-
-            conflicts = []
-            for label in common_labels:
-                if label in master_row and label in subset_row:
-                    m_val = int(master_row[label]) if pd.notna(master_row[label]) else 0
-                    s_val = int(subset_row[label]) if pd.notna(subset_row[label]) else 0
-                    if m_val != s_val:
-                        conflicts.append({"label": label, "master": m_val, "subset": s_val})
-
-            if conflicts:
-                result.label_conflicts.append({"encounter_id": eid, "conflicts": conflicts})
-
-    return result
-
-
-def generate_report(
-    results: list[VerificationResult], master_stats: dict[str, Any]
-) -> str:
-    """Generate human-readable verification report."""
-    lines = []
-    ts = datetime.now().isoformat(timespec="seconds")
-
-    lines.append("=" * 80)
-    lines.append("              REGISTRY HUMAN DATA VERIFICATION REPORT")
-    lines.append(f"              Generated: {ts}")
-    lines.append("=" * 80)
-    lines.append("")
-    lines.append(f"MASTER FILE: {MASTER_FILE}")
-    lines.append(f"  - Total records: {master_stats['total_records']}")
-    lines.append(f"  - Unique encounter_ids: {master_stats['unique_ids']}")
-    lines.append(f"  - Columns: {master_stats['columns']}")
-    lines.append("")
-
-    total_missing = []
-    total_conflicts = 0
-
-    for r in results:
-        lines.append("-" * 80)
-        lines.append(f"SUBSET FILE: {r.subset_name}")
-        lines.append("-" * 80)
-
-        if r.load_error:
-            lines.append(f"  ERROR: {r.load_error}")
-            lines.append("")
-            continue
-
-        lines.append(f"  Records: {r.total_records} ({r.unique_encounter_ids} unique encounter_ids)")
-        lines.append(f"  Columns: {r.columns}")
-        lines.append("")
-
-        pct = (r.contained_in_master / r.unique_encounter_ids * 100) if r.unique_encounter_ids > 0 else 0
-        status = "[OK]" if r.contained_in_master == r.unique_encounter_ids else "[MISSING]"
-        lines.append(f"  Containment: {r.contained_in_master}/{r.unique_encounter_ids} ({pct:.1f}%) in master {status}")
-
-        if r.missing_from_master:
-            lines.append(f"  Missing from master: {len(r.missing_from_master)}")
-            for eid in r.missing_from_master[:5]:
-                lines.append(f"    - {eid}")
-            if len(r.missing_from_master) > 5:
-                lines.append(f"    ... and {len(r.missing_from_master) - 5} more")
-            total_missing.extend(r.missing_from_master)
-        lines.append("")
-
-        conflict_status = "[OK]" if not r.label_conflicts else "[CONFLICTS]"
-        lines.append(f"  Label Conflicts: {len(r.label_conflicts)} {conflict_status}")
-        if r.label_conflicts:
-            # Summarize by label
-            label_counts: dict[str, int] = {}
-            for c in r.label_conflicts:
-                for conflict in c["conflicts"]:
-                    label_counts[conflict["label"]] = label_counts.get(conflict["label"], 0) + 1
-            lines.append("    Affected labels:")
-            for label, count in sorted(label_counts.items(), key=lambda x: -x[1]):
-                lines.append(f"      - {label}: {count} conflicts")
-            total_conflicts += len(r.label_conflicts)
-        lines.append("")
-
-        if r.schema_warnings:
-            lines.append("  Schema Warnings:")
-            for w in r.schema_warnings:
-                lines.append(f"    - {w}")
-            lines.append("")
-
-    # Summary
-    lines.append("=" * 80)
-    lines.append("                              SUMMARY")
-    lines.append("=" * 80)
-    lines.append("")
-    lines.append(f"Files verified: {len(results)}")
-    lines.append(f"Total unique missing records: {len(set(total_missing))}")
-    if total_missing:
-        lines.append(f"  Missing encounter_ids: {sorted(set(total_missing))}")
-    lines.append(f"Total records with label conflicts: {total_conflicts}")
-    lines.append("")
-
-    if total_missing:
-        lines.append("RECOMMENDATIONS:")
-        lines.append("1. Add missing records to registry_human.csv")
-        lines.append("2. Then run with --execute to archive subset files")
-    else:
-        lines.append("RECOMMENDATIONS:")
-        lines.append("1. All records accounted for - safe to archive")
-        lines.append("2. Run with --execute to archive subset files")
-
-    lines.append("")
-    lines.append("=" * 80)
-
-    return "\n".join(lines)
-
-
-def add_missing_records(
-    master_df: pd.DataFrame,
-    subset_files: list[Path],
-    missing_ids: set[str],
-    labels: list[str],
-) -> pd.DataFrame:
-    """Add missing records from subset files to master."""
-    if not missing_ids:
-        return master_df
-
-    records_to_add = []
-
-    for subset_path in subset_files:
-        subset_df = load_csv_safe(subset_path)
-        if subset_df is None:
-            continue
-
-        for eid in missing_ids:
-            matches = subset_df[subset_df["encounter_id"] == eid]
-            if not matches.empty:
-                records_to_add.append(matches.iloc[0].to_dict())
-
-    if not records_to_add:
-        return master_df
-
-    # Ensure all label columns exist
-    new_rows = pd.DataFrame(records_to_add)
-    for col in labels:
-        if col not in new_rows.columns:
-            new_rows[col] = 0
-
-    # Align columns with master
-    for col in master_df.columns:
-        if col not in new_rows.columns:
-            new_rows[col] = "" if master_df[col].dtype == object else 0
-
-    # Append and deduplicate
-    result = pd.concat([master_df, new_rows], ignore_index=True)
-    result = result.drop_duplicates(subset=["encounter_id"], keep="last")
-
-    return result
-
-
-def archive_files(files: list[Path], dry_run: bool = True) -> list[dict[str, str]]:
-    """Archive files to _archive/registry_human/ folder."""
-    archived = []
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-    if not dry_run:
-        ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
-
-    for f in files:
-        if not f.exists():
-            continue
-
-        archive_name = f"{f.name}.{ts}"
-        archive_path = ARCHIVE_DIR / archive_name
-
-        if dry_run:
-            print(f"  [DRY-RUN] Would archive: {f.name} -> {archive_path}")
-        else:
-            shutil.move(str(f), str(archive_path))
-            print(f"  Archived: {f.name} -> {archive_path}")
-
-        archived.append({"original": f.name, "archived_as": archive_name})
-
-    return archived
-
-
-def create_manifest(
-    archived: list[dict[str, str]],
-    master_records: int,
-    missing_added: int,
-) -> None:
-    """Create archive manifest JSON."""
-    manifest = {
-        "archived_at": datetime.now().isoformat(timespec="seconds"),
-        "reason": "Consolidated into registry_human.csv (single source of truth)",
-        "master_file": MASTER_FILE,
-        "master_records_after": master_records,
-        "missing_records_added": missing_added,
-        "archived_files": archived,
-    }
-
-    manifest_path = ARCHIVE_DIR / "ARCHIVE_MANIFEST.json"
-    with open(manifest_path, "w") as f:
-        json.dump(manifest, f, indent=2)
-    print(f"  Created manifest: {manifest_path}")
-
-
-def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument(
-        "--execute",
-        action="store_true",
-        help="Execute cleanup (add missing records and archive files). Default is dry-run.",
-    )
-    p.add_argument(
-        "--data-dir",
-        type=Path,
-        default=DATA_DIR,
-        help=f"Data directory (default: {DATA_DIR})",
-    )
-    return p.parse_args(argv)
-
-
-def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
-    data_dir = args.data_dir
-
-    master_path = data_dir / MASTER_FILE
-    if not master_path.exists():
-        print(f"ERROR: Master file not found: {master_path}")
-        return 1
-
-    # Load master
-    master_df = load_csv_safe(master_path)
-    if master_df is None:
-        print(f"ERROR: Failed to load master file: {master_path}")
-        return 1
-
-    master_stats = {
-        "total_records": len(master_df),
-        "unique_ids": master_df["encounter_id"].nunique(),
-        "columns": len(master_df.columns),
-    }
-
-    # Verify each subset
-    results = []
-    labels = list(REGISTRY_LABELS)
-
-    for subset_name in SUBSET_FILES:
-        subset_path = data_dir / subset_name
-        result = verify_subset(master_df, subset_path, labels)
-        results.append(result)
-
-    # Generate and print report
-    report = generate_report(results, master_stats)
-    print(report)
-
-    # Collect all missing IDs
-    all_missing = set()
-    for r in results:
-        all_missing.update(r.missing_from_master)
-
-    if args.execute:
-        print("\n" + "=" * 80)
-        print("                         EXECUTING CLEANUP")
-        print("=" * 80 + "\n")
-
-        # Step 1: Add missing records
-        if all_missing:
-            print(f"Adding {len(all_missing)} missing records to master...")
-            subset_paths = [data_dir / name for name in SUBSET_FILES]
-            master_df = add_missing_records(master_df, subset_paths, all_missing, labels)
-            master_df.to_csv(master_path, index=False)
-            print(f"  Updated: {master_path} (now {len(master_df)} records)")
-        else:
-            print("No missing records to add.")
-
-        # Step 2: Archive subset files
-        print("\nArchiving subset files...")
-        subset_paths = [data_dir / name for name in SUBSET_FILES]
-        archived = archive_files(subset_paths, dry_run=False)
-
-        # Step 3: Create manifest
-        if archived:
-            create_manifest(archived, len(master_df), len(all_missing))
-
-        print("\nCleanup complete!")
-        print(f"  Master file: {master_path} ({len(master_df)} records)")
-        print(f"  Archived files: {len(archived)}")
-
-    else:
-        print("\n[DRY-RUN MODE] No changes made. Use --execute to apply changes.")
-        if all_missing:
-            print(f"  Would add {len(all_missing)} missing records to master")
-        print(f"  Would archive {len([f for f in SUBSET_FILES if (data_dir / f).exists()])} files")
-
-    return 0
 
 
 if __name__ == "__main__":

@@ -395,6 +395,40 @@
               <summary>Edited JSON (Training)</summary>
               <pre id="editedResponse">(no edits yet)</pre>
             </details>
+
+            <details class="raw-json-toggle" id="feedbackPanel">
+              <summary>Feedback &amp; Corrections</summary>
+              <div class="feedback-panel">
+                <div class="subtle" id="runIdDisplay">Run ID: (not persisted)</div>
+
+                <div class="feedback-grid">
+                  <div class="feedback-field">
+                    <label for="submitterName">Name</label>
+                    <input id="submitterName" type="text" placeholder="Your name (no auth yet)" />
+                  </div>
+
+                  <div class="feedback-field">
+                    <label for="feedbackRating">Rating (1–10)</label>
+                    <input id="feedbackRating" type="number" min="1" max="10" step="1" value="8" />
+                  </div>
+                </div>
+
+                <div class="feedback-field">
+                  <label for="feedbackComment">Comment</label>
+                  <textarea
+                    id="feedbackComment"
+                    rows="4"
+                    placeholder="What was right/wrong? What should change?"
+                  ></textarea>
+                </div>
+
+                <div class="feedback-actions">
+                  <button id="submitFeedbackBtn" class="secondary" disabled>Submit feedback</button>
+                  <button id="saveCorrectionsBtn" class="secondary" disabled>Save corrections</button>
+                  <div class="subtle" id="feedbackStatus"></div>
+                </div>
+              </div>
+            </details>
           </div>
         </div>
       </section>
@@ -413,5 +447,22 @@
         </div>
       </aside>
     </main>
+
+    <dialog id="phiConfirmModal" class="modal">
+      <form method="dialog" class="modal-content">
+        <h3>Confirm PHI removal before persistence</h3>
+        <p class="subtle">
+          You are about to save this note + results on the server for training/review. The server
+          must store <strong>scrubbed-only</strong> text. Confirm you have removed PHI.
+        </p>
+        <p class="subtle">
+          <a href="/ui/phi_identifiers" target="_blank" rel="noopener">View PHI identifiers list</a>
+        </p>
+        <div class="modal-actions">
+          <button value="cancel" class="secondary">Cancel</button>
+          <button value="confirm" class="primary">Confirm PHI removal</button>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>

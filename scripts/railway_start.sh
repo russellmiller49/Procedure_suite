@@ -47,6 +47,12 @@ echo "[railway_start] =============================================="
 echo "[railway_start] Starting FastAPI (uvicorn)..."
 echo "[railway_start] =============================================="
 
+# Optional: run Alembic migrations on start (recommended for single-instance Railway deploys).
+if [[ "${PROCSUITE_RUN_MIGRATIONS_ON_START:-}" =~ ^(1|true|yes)$ ]]; then
+  echo "[railway_start] Running migrations (alembic upgrade head)..."
+  alembic upgrade head
+fi
+
 # Optional: bootstrap PHI redactor vendor bundle from S3 before app starts.
 if [[ -n "${PHI_REDACTOR_VENDOR_BUNDLE_S3_URI:-${PHI_REDACTOR_VENDOR_BUNDLE_S3_URI_ONNX:-}}" ]]; then
   echo "[railway_start] Bootstrapping PHI redactor vendor bundle from S3..."

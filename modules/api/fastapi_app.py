@@ -118,6 +118,7 @@ from modules.api.routes.metrics import router as metrics_router
 from modules.api.routes.phi import router as phi_router
 from modules.api.routes.phi_demo_cases import router as phi_demo_router
 from modules.api.routes.procedure_codes import router as procedure_codes_router
+from modules.api.routes.registry_runs import router as registry_runs_router
 from modules.api.routes.unified_process import router as unified_process_router
 from modules.api.routes_registry import _prune_none
 from modules.api.routes_registry import router as registry_extract_router
@@ -376,6 +377,8 @@ app.include_router(metrics_router, tags=["metrics"])
 app.include_router(phi_demo_router)
 # Registry extraction router (hybrid-first pipeline)
 app.include_router(registry_extract_router, tags=["registry"])
+# Registry run persistence router (Diamond Loop)
+app.include_router(registry_runs_router, prefix="/api", tags=["registry-runs"])
 # Unified process router (UI entry point)
 app.include_router(unified_process_router, prefix="/api")
 
@@ -493,6 +496,22 @@ def phi_redactor_sw() -> FileResponse:
     if not _static_files_enabled():
         raise HTTPException(status_code=404, detail="Static files disabled")
     return _phi_redactor_response(_phi_redactor_static_dir() / "sw.js")
+
+
+@app.get("/ui/phi_identifiers", include_in_schema=False)
+def phi_identifiers_doc() -> FileResponse:
+    """Serve the PHI identifiers reference used by the UI confirmation modal."""
+
+    doc_path = Path(__file__).resolve().parents[2] / "docs" / "PHI_IDENTIFIERS.md"
+    if not doc_path.exists() or not doc_path.is_file():
+        raise HTTPException(status_code=404, detail="PHI identifiers doc not found")
+
+    resp = FileResponse(doc_path, media_type="text/markdown")
+    # Required for SharedArrayBuffer in modern browsers (cross-origin isolation).
+    resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    resp.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 # Skip static file mounting when DISABLE_STATIC_FILES is set (useful for testing)
 if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):

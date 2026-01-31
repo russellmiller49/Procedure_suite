@@ -268,6 +268,58 @@ class ONNXRegistryPredictor:
                 thresholds_path,
             )
 
+        # Validate label count vs model output dimension.
+        # If they disagree, prefer a safe fallback that matches the model.
+        try:
+            outputs = self._session.get_outputs()
+            out_shape = outputs[0].shape if outputs else None
+            # Common: [batch, n_labels]
+            output_dim = out_shape[-1] if isinstance(out_shape, list) and out_shape else None
+            if isinstance(output_dim, int) and output_dim > 0 and len(self._label_names) != output_dim:
+                # Best fallback: ACTIVE_LABELS (drops known dormant labels like pleural_biopsy).
+                try:
+                    from modules.ml_coder.registry_label_schema import ACTIVE_LABELS
+
+                    if len(ACTIVE_LABELS) == output_dim:
+                        logger.warning(
+                            "ONNX label mismatch: label_fields=%d but model outputs=%d. "
+                            "Falling back to ACTIVE_LABELS (%d). "
+                            "Fix by regenerating registry_runtime/registry_label_fields.json to match the model bundle.",
+                            len(self._label_names),
+                            output_dim,
+                            len(ACTIVE_LABELS),
+                        )
+                        self._label_names = list(ACTIVE_LABELS)
+                    else:
+                        logger.warning(
+                            "ONNX label mismatch: label_fields=%d but model outputs=%d. "
+                            "Truncating label list to %d (may reduce correctness). "
+                            "Fix by regenerating registry_runtime/registry_label_fields.json to match the model bundle.",
+                            len(self._label_names),
+                            output_dim,
+                            output_dim,
+                        )
+                        self._label_names = list(self._label_names)[:output_dim]
+                except Exception:
+                    logger.warning(
+                        "ONNX label mismatch: label_fields=%d but model outputs=%d. "
+                        "Truncating label list to %d. "
+                        "Fix by regenerating registry_runtime/registry_label_fields.json to match the model bundle.",
+                        len(self._label_names),
+                        output_dim,
+                        output_dim,
+                    )
+                    self._label_names = list(self._label_names)[:output_dim]
+
+                # Ensure thresholds line up with label names after fallback.
+                if isinstance(self._thresholds, dict):
+                    self._thresholds = {k: float(v) for k, v in self._thresholds.items() if k in set(self._label_names)}
+                for name in self._label_names:
+                    self._thresholds.setdefault(name, 0.5)
+        except Exception:
+            # Never fail predictor init due to introspection; predict_proba() will handle errors.
+            pass
+
     def _sigmoid(self, x: np.ndarray) -> np.ndarray:
         """Apply sigmoid activation to logits."""
         return 1 / (1 + np.exp(-np.clip(x, -500, 500)))
@@ -337,6 +389,16 @@ class ONNXRegistryPredictor:
                 )
                 for name in self._label_names
             ]
+
+        # Safety: if the model output length doesn't match label names, don't crash.
+        if len(probs) != len(self._label_names):
+            logger.warning(
+                "ONNX output/label mismatch at runtime: probs=%d labels=%d. Returning empty predictions. "
+                "Fix your model bundle (registry_runtime) to align label_fields.json with ONNX head size.",
+                len(probs),
+                len(self._label_names),
+            )
+            return []
 
         # Build predictions with per-class thresholds
         predictions = []
