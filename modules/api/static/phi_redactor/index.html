@@ -111,20 +111,34 @@
               Clinical Review
             </div>
             <div class="result-actions">
+              <div class="layout-actions">
+                <button id="focusClinicalBtn" class="secondary" disabled title="Expand the clinical editor (hide billing tables)">
+                  Clinical
+                </button>
+                <button id="focusBillingBtn" class="secondary" disabled title="Expand billing tables (hide clinical editor)">
+                  Billing
+                </button>
+                <button id="splitReviewBtn" class="secondary" disabled title="Side-by-side note + review panels">
+                  Split view
+                </button>
+              </div>
               <button id="exportBtn" class="secondary" disabled>Export JSON</button>
               <button id="exportTablesBtn" class="secondary" disabled>Export Tables</button>
+              <button id="exportEditedBtn" class="secondary" disabled>Export Edited JSON</button>
+              <button id="exportPatchBtn" class="secondary" disabled>Export Patch</button>
             </div>
           </div>
-	          <div id="resultsContainer" class="resultsContainer hidden">
-	            <div id="statusBannerHost"></div>
-	            <div id="statCards" class="stat-card-container">
-	            </div>
+		          <div id="resultsContainer" class="resultsContainer hidden">
+		            <div id="statusBannerHost"></div>
+		            <div id="statCards" class="stat-card-container">
+		            </div>
 
-	            <div class="dash-grid">
-	              <div class="dash-col">
-	                <div class="dash-card">
-	                  <div class="dash-card-header">
-	                    <div class="section-title">
+		            <div id="registryLegacyRoot">
+		            <div class="dash-grid">
+		              <div class="dash-col">
+		                <div class="dash-card">
+		                  <div class="dash-card-header">
+		                    <div class="section-title">
 	                      <span class="section-number">1</span>
 	                      CPT Codes – Derived (Selected)
 	                    </div>
@@ -267,13 +281,15 @@
 	                    </details>
 	                  </div>
 	                </div>
-	              </div>
+		              </div>
 
-	              <div class="dash-col">
-	                <div class="dash-card">
-	                  <div class="dash-card-header">
-	                    <div class="section-title">
-	                      <span class="section-number">7</span>
+		              <div class="dash-col">
+		                <div id="registryGridRoot" class="hidden"></div>
+		                <div id="registryLegacyRightRoot">
+		                <div class="dash-card">
+		                  <div class="dash-card-header">
+		                    <div class="section-title">
+		                      <span class="section-number">7</span>
 	                      Patient &amp; Clinical Context
 	                    </div>
 	                  </div>
@@ -355,22 +371,23 @@
 	                    </div>
 	                  </div>
 	                  <div class="dash-card-body">
-	                    <table class="dash-table">
-	                      <thead>
-	                        <tr>
-	                          <th width="12%">Station</th>
+		                    <table class="dash-table">
+		                      <thead>
+		                        <tr>
+		                          <th width="12%">Station</th>
 	                          <th width="36%">Action</th>
 	                          <th width="10%">Passes</th>
 	                          <th width="20%">Elastography</th>
 	                          <th width="22%">Evidence</th>
 	                        </tr>
 	                      </thead>
-	                      <tbody id="ebusNodeEventsBody"></tbody>
-	                    </table>
-	                  </div>
-	                </div>
-	              </div>
-	            </div>
+		                      <tbody id="ebusNodeEventsBody"></tbody>
+		                    </table>
+		                  </div>
+		                </div>
+		                </div>
+		              </div>
+		            </div>
 
 	            <details class="raw-json-toggle">
 	              <summary>Evidence Traceability</summary>
@@ -378,17 +395,18 @@
 	            </details>
 
 	            <div class="debug-section no-print">
-	              <details class="debug-details">
-	                <summary>System Logic & Debugging Logs</summary>
-	                <div id="systemLogs" class="log-box">
-                </div>
-              </details>
-            </div>
+		              <details class="debug-details">
+		                <summary>System Logic & Debugging Logs</summary>
+		                <div id="systemLogs" class="log-box">
+	                </div>
+	              </details>
+	            </div>
+		          </div>
 
-            <details class="raw-json-toggle">
-              <summary>View Raw JSON</summary>
-              <pre id="serverResponse">(none)</pre>
-            </details>
+	            <details class="raw-json-toggle">
+	              <summary>View Raw JSON</summary>
+	              <pre id="serverResponse">(none)</pre>
+	            </details>
 
             <details class="raw-json-toggle">
               <summary>Flattened Tables (Editable)</summary>
@@ -440,9 +458,20 @@
       <aside class="sidePane">
         <div class="sideHeader">
           <div class="sideTitle">Detections</div>
-          <div class="sideMeta">
-            <span id="detectionsCount">0</span>
-            <span class="subtle">items</span>
+          <div class="sideHeaderActions">
+            <div class="sideMeta">
+              <span id="detectionsCount">0</span>
+              <span class="subtle">items</span>
+            </div>
+            <button
+              id="toggleDetectionsPaneBtn"
+              class="secondary icon-btn"
+              type="button"
+              title="Collapse detections panel"
+              aria-label="Collapse detections panel"
+            >
+              ⟨
+            </button>
           </div>
         </div>
         <div id="detectionsList" class="detectionsList"></div>

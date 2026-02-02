@@ -13,6 +13,8 @@ const revertBtn = document.getElementById("revertBtn");
 const submitBtn = document.getElementById("submitBtn");
 const exportBtn = document.getElementById("exportBtn");
 const exportTablesBtn = document.getElementById("exportTablesBtn");
+const exportEditedBtn = document.getElementById("exportEditedBtn");
+const exportPatchBtn = document.getElementById("exportPatchBtn");
 const newNoteBtn = document.getElementById("newNoteBtn");
 const addRedactionBtn = document.getElementById("addRedactionBtn");
 const entityTypeSelect = document.getElementById("entityTypeSelect");
@@ -28,14 +30,29 @@ const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
 const saveCorrectionsBtn = document.getElementById("saveCorrectionsBtn");
 const feedbackStatusEl = document.getElementById("feedbackStatus");
 const phiConfirmModalEl = document.getElementById("phiConfirmModal");
+const registryGridRootEl = document.getElementById("registryGridRoot");
+const registryLegacyRootEl = document.getElementById("registryLegacyRoot");
+const registryLegacyRightRootEl = document.getElementById("registryLegacyRightRoot");
+const focusClinicalBtn = document.getElementById("focusClinicalBtn");
+const focusBillingBtn = document.getElementById("focusBillingBtn");
+const splitReviewBtn = document.getElementById("splitReviewBtn");
+const toggleDetectionsPaneBtn = document.getElementById("toggleDetectionsPaneBtn");
 
 let lastServerResponse = null;
 let flatTablesBase = null;
 let flatTablesState = null;
 let editedPayload = null;
 let editedDirty = false;
+let registryGridEdits = null; // latest export from React RegistryGrid (JSON Patch + fields)
 let currentRunId = null;
 let feedbackSubmitted = false;
+let fieldFeedbackStore = new Map(); // key: path, value: {path, error_type, correction, comment, ...}
+let fieldFeedbackModalEl = null;
+let activeFieldFeedbackContext = null;
+
+let registryGridMonacoGetter = () => null;
+let registryGridMounted = false;
+let registryGridLoadPromise = null;
 
 const TESTER_MODE = new URLSearchParams(location.search).get("tester") === "1";
 if (TESTER_MODE && feedbackPanelEl) feedbackPanelEl.open = true;
@@ -68,6 +85,370 @@ function getConfiguredRedactProviders() {
   if (ls === "0") return false;
 
   return true; // default: safer - treat clinician names as PHI
+}
+
+/**
+ * Feature flag: enable embedded React-based Registry grid.
+ * - Query param: ?reactGrid=1
+ * - localStorage: ui.reactGrid=1
+ */
+function isReactRegistryGridEnabled() {
+  const params = new URLSearchParams(location.search);
+  const qp = params.get("reactGrid");
+  if (qp === "1") return true;
+  if (qp === "0") return false;
+
+  try {
+    const ls = localStorage.getItem("ui.reactGrid");
+    if (ls === "1") return true;
+    if (ls === "0") return false;
+  } catch {
+    // ignore storage failures (private mode)
+  }
+
+  return false;
+}
+
+/**
+ * Review layout helpers (ergonomics).
+ *
+ * Goal: make it easier to review evidence by keeping the Monaco note and the
+ * clinical editor visible together.
+ *
+ * Controls:
+ * - Focus modes: "clinical" (hide billing col), "billing" (hide clinical col), "all"
+ *   - Query param: ?focus=clinical|billing|all
+ *   - localStorage: ui.reviewFocus
+ * - Split review: side-by-side note + review
+ *   - Query param: ?splitReview=1|0
+ *   - localStorage: ui.reviewSplit
+ * - Collapse detections sidebar:
+ *   - Query param: ?detectionsCollapsed=1|0
+ *   - localStorage: ui.detectionsCollapsed
+ */
+const UI_REVIEW_FOCUS_LS_KEY = "ui.reviewFocus";
+const UI_REVIEW_SPLIT_LS_KEY = "ui.reviewSplit";
+const UI_DETECTIONS_COLLAPSED_LS_KEY = "ui.detectionsCollapsed";
+
+function safeGetLocalStorageItem(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeSetLocalStorageItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // ignore storage failures (private mode)
+  }
+}
+
+function readBoolSetting(queryKey, storageKey, defaultValue) {
+  const params = new URLSearchParams(location.search);
+  const qp = params.get(queryKey);
+  if (qp === "1") return true;
+  if (qp === "0") return false;
+  const ls = safeGetLocalStorageItem(storageKey);
+  if (ls === "1") return true;
+  if (ls === "0") return false;
+  return Boolean(defaultValue);
+}
+
+function readEnumSetting(queryKey, storageKey, allowed, defaultValue) {
+  const params = new URLSearchParams(location.search);
+  const qp = params.get(queryKey);
+  if (qp && allowed.includes(qp)) return qp;
+  const ls = safeGetLocalStorageItem(storageKey);
+  if (ls && allowed.includes(ls)) return ls;
+  return defaultValue;
+}
+
+function setButtonActive(btn, active) {
+  if (!btn) return;
+  btn.classList.toggle("active", Boolean(active));
+  btn.setAttribute("aria-pressed", active ? "true" : "false");
+}
+
+function getFocusModeFromBody() {
+  const body = document.body;
+  if (!body) return "all";
+  if (body.classList.contains("ps-focus-clinical")) return "clinical";
+  if (body.classList.contains("ps-focus-billing")) return "billing";
+  return "all";
+}
+
+function applyFocusMode(mode, opts = {}) {
+  const { persist = true } = opts;
+  const body = document.body;
+  if (!body) return;
+
+  const next = mode === "clinical" || mode === "billing" ? mode : "all";
+  body.classList.remove("ps-focus-clinical", "ps-focus-billing");
+  if (next === "clinical") body.classList.add("ps-focus-clinical");
+  if (next === "billing") body.classList.add("ps-focus-billing");
+
+  if (persist) safeSetLocalStorageItem(UI_REVIEW_FOCUS_LS_KEY, next);
+  syncLayoutControls();
+}
+
+function applySplitReview(enabled, opts = {}) {
+  const { persist = true } = opts;
+  const body = document.body;
+  if (!body) return;
+  body.classList.toggle("ps-review-split", Boolean(enabled));
+  if (persist) safeSetLocalStorageItem(UI_REVIEW_SPLIT_LS_KEY, enabled ? "1" : "0");
+
+  // If split is enabled and focus hasn't been explicitly set, default to Clinical
+  // so the grid has enough room to be usable alongside the note.
+  if (enabled) {
+    const params = new URLSearchParams(location.search);
+    const qp = params.get("focus");
+    const stored = safeGetLocalStorageItem(UI_REVIEW_FOCUS_LS_KEY);
+    if (!qp && !stored) applyFocusMode("clinical", { persist: true });
+  }
+
+  syncLayoutControls();
+}
+
+function applyDetectionsCollapsed(enabled, opts = {}) {
+  const { persist = true } = opts;
+  const body = document.body;
+  if (!body) return;
+  body.classList.toggle("ps-detections-collapsed", Boolean(enabled));
+  if (persist) safeSetLocalStorageItem(UI_DETECTIONS_COLLAPSED_LS_KEY, enabled ? "1" : "0");
+  syncLayoutControls();
+}
+
+function syncLayoutControls() {
+  const body = document.body;
+  if (!body) return;
+
+  const focus = getFocusModeFromBody();
+  setButtonActive(focusClinicalBtn, focus === "clinical");
+  setButtonActive(focusBillingBtn, focus === "billing");
+  setButtonActive(splitReviewBtn, body.classList.contains("ps-review-split"));
+
+  if (toggleDetectionsPaneBtn) {
+    const collapsed = body.classList.contains("ps-detections-collapsed");
+    const label = collapsed ? "Expand detections panel" : "Collapse detections panel";
+    toggleDetectionsPaneBtn.title = label;
+    toggleDetectionsPaneBtn.setAttribute("aria-label", label);
+  }
+}
+
+function applyInitialLayoutPrefs() {
+  const body = document.body;
+  if (!body) return;
+
+  const split = readBoolSetting("splitReview", UI_REVIEW_SPLIT_LS_KEY, false);
+  const detectionsCollapsed = readBoolSetting("detectionsCollapsed", UI_DETECTIONS_COLLAPSED_LS_KEY, false);
+
+  let focus = "all";
+  const params = new URLSearchParams(location.search);
+  const focusQp = params.get("focus");
+  const focusStored = safeGetLocalStorageItem(UI_REVIEW_FOCUS_LS_KEY);
+  if (focusQp) focus = focusQp;
+  else if (focusStored) focus = focusStored;
+  else if (split) focus = "clinical";
+
+  focus = readEnumSetting("focus", UI_REVIEW_FOCUS_LS_KEY, ["all", "clinical", "billing"], focus);
+  applyFocusMode(focus, { persist: false });
+  applySplitReview(split, { persist: false });
+  applyDetectionsCollapsed(detectionsCollapsed, { persist: false });
+  syncLayoutControls();
+}
+
+function initLayoutControls() {
+  if (focusClinicalBtn) {
+    focusClinicalBtn.disabled = false;
+    focusClinicalBtn.addEventListener("click", () => {
+      const current = getFocusModeFromBody();
+      applyFocusMode(current === "clinical" ? "all" : "clinical");
+    });
+  }
+  if (focusBillingBtn) {
+    focusBillingBtn.disabled = false;
+    focusBillingBtn.addEventListener("click", () => {
+      const current = getFocusModeFromBody();
+      applyFocusMode(current === "billing" ? "all" : "billing");
+    });
+  }
+  if (splitReviewBtn) {
+    splitReviewBtn.disabled = false;
+    splitReviewBtn.addEventListener("click", () => {
+      const enabled = document.body?.classList.contains("ps-review-split");
+      applySplitReview(!enabled);
+    });
+  }
+  if (toggleDetectionsPaneBtn) {
+    toggleDetectionsPaneBtn.disabled = false;
+    toggleDetectionsPaneBtn.addEventListener("click", () => {
+      const enabled = document.body?.classList.contains("ps-detections-collapsed");
+      applyDetectionsCollapsed(!enabled);
+    });
+  }
+
+  syncLayoutControls();
+}
+
+applyInitialLayoutPrefs();
+
+function showRegistryGridUi() {
+  if (registryLegacyRightRootEl) registryLegacyRightRootEl.classList.add("hidden");
+  if (registryGridRootEl) registryGridRootEl.classList.remove("hidden");
+}
+
+function showRegistryLegacyUi() {
+  if (registryLegacyRightRootEl) registryLegacyRightRootEl.classList.remove("hidden");
+  if (registryGridRootEl) registryGridRootEl.classList.add("hidden");
+}
+
+function setRegistryGridMonacoGetter(getterFn) {
+  registryGridMonacoGetter = typeof getterFn === "function" ? getterFn : () => null;
+}
+
+function getRegistryGridMonacoEditorSafe() {
+  try {
+    return registryGridMonacoGetter?.() || null;
+  } catch {
+    return null;
+  }
+}
+
+function setRegistryGridLoadingPlaceholder(message) {
+  if (!registryGridRootEl) return;
+  const msg = message || "Loading registry grid…";
+  registryGridRootEl.innerHTML = `<div class="dash-empty" style="padding: 12px;">${msg}</div>`;
+}
+
+function loadRegistryGridBundle() {
+  if (registryGridLoadPromise) return registryGridLoadPromise;
+
+  registryGridLoadPromise = new Promise((resolve, reject) => {
+    try {
+      if (window.RegistryGrid && typeof window.RegistryGrid.mount === "function") {
+        resolve(window.RegistryGrid);
+        return;
+      }
+
+      // CSS is best-effort (JS load is the gating factor).
+      const cssId = "registryGridCss";
+      if (!document.getElementById(cssId)) {
+        const link = document.createElement("link");
+        link.id = cssId;
+        link.rel = "stylesheet";
+        link.href = "/ui/registry_grid/registry_grid.css";
+        document.head.appendChild(link);
+      }
+
+      const scriptId = "registryGridScript";
+      const existing = document.getElementById(scriptId);
+      if (existing) {
+        // If the script tag exists but the global isn't ready yet, wait briefly.
+        const maxWaitMs = 10_000;
+        const start = Date.now();
+        const tick = () => {
+          if (window.RegistryGrid && typeof window.RegistryGrid.mount === "function") {
+            resolve(window.RegistryGrid);
+            return;
+          }
+          if (Date.now() - start > maxWaitMs) {
+            reject(new Error("RegistryGrid bundle tag present but global did not initialize"));
+            return;
+          }
+          setTimeout(tick, 50);
+        };
+        tick();
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "/ui/registry_grid/registry_grid.iife.js";
+      script.async = true;
+      script.onload = () => {
+        if (window.RegistryGrid && typeof window.RegistryGrid.mount === "function") {
+          resolve(window.RegistryGrid);
+        } else {
+          reject(new Error("RegistryGrid bundle loaded but window.RegistryGrid is missing"));
+        }
+      };
+      script.onerror = () => reject(new Error("Failed to load /ui/registry_grid/registry_grid.iife.js"));
+      document.head.appendChild(script);
+    } catch (e) {
+      reject(e);
+    }
+  }).catch((e) => {
+    // Allow retry on the next render (e.g., after a fresh build or transient network failure).
+    registryGridLoadPromise = null;
+    throw e;
+  });
+
+  return registryGridLoadPromise;
+}
+
+async function maybeRenderRegistryGrid(data) {
+  if (!registryGridRootEl || !registryLegacyRightRootEl) return false;
+  if (!isReactRegistryGridEnabled()) {
+    unmountRegistryGrid();
+    showRegistryLegacyUi();
+    return false;
+  }
+
+  showRegistryGridUi();
+  setRegistryGridLoadingPlaceholder("Loading registry grid…");
+
+  try {
+    const api = await loadRegistryGridBundle();
+    if (!api || typeof api.mount !== "function") {
+      throw new Error("RegistryGrid API missing mount()");
+    }
+
+    const mountArgs = {
+      rootEl: registryGridRootEl,
+      getMonacoEditor: getRegistryGridMonacoEditorSafe,
+      processResponse: data,
+      onExportEditedJson: setRegistryGridEdits,
+    };
+
+    if (!registryGridMounted) {
+      api.mount(mountArgs);
+      registryGridMounted = true;
+      return true;
+    }
+
+    if (typeof api.update === "function") {
+      api.update({ processResponse: data });
+      return true;
+    }
+
+    // Back-compat: if update() isn't present yet, re-mount.
+    api.mount(mountArgs);
+    return true;
+  } catch (e) {
+    console.error("RegistryGrid failed; falling back to legacy renderer.", e);
+    registryGridMounted = false;
+    try {
+      window.RegistryGrid?.unmount?.();
+    } catch {
+      // ignore
+    }
+    showRegistryLegacyUi();
+    return false;
+  }
+}
+
+function unmountRegistryGrid() {
+  if (!registryGridMounted) return;
+  registryGridMounted = false;
+  try {
+    window.RegistryGrid?.unmount?.();
+  } catch (e) {
+    console.warn("RegistryGrid unmount failed (ignored).", e);
+  }
 }
 
 const WORKER_CONFIG = {
@@ -122,6 +503,24 @@ const YES_NO_OPTIONS = [
   { value: "", label: "—" },
   { value: "Yes", label: "Yes" },
   { value: "No", label: "No" },
+];
+const SEDATION_TYPE_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Moderate", label: "Moderate" },
+  { value: "Deep", label: "Deep" },
+  { value: "General", label: "General" },
+  { value: "MAC", label: "MAC" },
+  { value: "Local Only", label: "Local Only" },
+  { value: "Topical Only", label: "Topical Only" },
+  { value: "None", label: "None" },
+];
+const AIRWAY_TYPE_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Native", label: "Native" },
+  { value: "ETT", label: "ETT" },
+  { value: "LMA", label: "LMA" },
+  { value: "iGel", label: "iGel" },
+  { value: "Tracheostomy", label: "Tracheostomy" },
 ];
 const ROLE_OPTIONS = [
   { value: "primary", label: "Primary" },
@@ -210,6 +609,8 @@ revertBtn.disabled = true;
 submitBtn.disabled = true;
 if (exportBtn) exportBtn.disabled = true;
 if (exportTablesBtn) exportTablesBtn.disabled = true;
+if (exportEditedBtn) exportEditedBtn.disabled = true;
+if (exportPatchBtn) exportPatchBtn.disabled = true;
 if (newNoteBtn) newNoteBtn.disabled = true;
 if (statusTextEl) statusTextEl.textContent = "Booting UI…";
 resetRunState();
@@ -236,6 +637,7 @@ function getSubmitterName() {
 
 function updateFeedbackButtons() {
   const hasName = getSubmitterName().length > 0;
+  const flagCount = fieldFeedbackStore ? fieldFeedbackStore.size : 0;
 
   if (runIdDisplayEl) {
     runIdDisplayEl.textContent = currentRunId ? `Run ID: ${currentRunId}` : "Run ID: (not persisted)";
@@ -246,6 +648,8 @@ function updateFeedbackButtons() {
   }
   if (saveCorrectionsBtn) {
     saveCorrectionsBtn.disabled = !currentRunId || !editedPayload;
+    saveCorrectionsBtn.textContent =
+      flagCount > 0 ? `Save corrections (${flagCount} flag${flagCount === 1 ? "" : "s"})` : "Save corrections";
   }
 }
 
@@ -612,6 +1016,78 @@ function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function decodeJsonPointerSegment(seg) {
+  // JSON Pointer (RFC 6901): "~1" => "/", "~0" => "~" (order matters).
+  return String(seg || "").replace(/~1/g, "/").replace(/~0/g, "~");
+}
+
+function getJsonPointerParent(root, pointer, createMissing = false) {
+  const p = String(pointer || "");
+  if (!p || p === "/") return null;
+  if (!p.startsWith("/")) return null;
+  const parts = p.split("/").slice(1).map(decodeJsonPointerSegment);
+  if (parts.length === 0) return null;
+
+  let curr = root;
+  for (let i = 0; i < parts.length - 1; i += 1) {
+    const key = parts[i];
+    const nextKey = parts[i + 1];
+    if (Array.isArray(curr)) {
+      const idx = key === "-" ? curr.length : Number(key);
+      if (!Number.isInteger(idx) || idx < 0) return null;
+      if (curr[idx] === undefined) {
+        if (!createMissing) return null;
+        curr[idx] = nextKey === "-" || Number.isInteger(Number(nextKey)) ? [] : {};
+      }
+      curr = curr[idx];
+      continue;
+    }
+    if (!curr || typeof curr !== "object") return null;
+    if (curr[key] === undefined) {
+      if (!createMissing) return null;
+      curr[key] = nextKey === "-" || Number.isInteger(Number(nextKey)) ? [] : {};
+    }
+    curr = curr[key];
+  }
+
+  return { parent: curr, key: parts[parts.length - 1] };
+}
+
+function applyJsonPatchOps(root, ops) {
+  const list = Array.isArray(ops) ? ops : [];
+  list.forEach((op) => {
+    if (!op || typeof op !== "object") return;
+    const kind = String(op.op || "").toLowerCase();
+    const path = String(op.path || "");
+    if (!path) return;
+
+    const loc = getJsonPointerParent(root, path, kind === "add");
+    if (!loc) return;
+
+    const { parent, key } = loc;
+    if (Array.isArray(parent)) {
+      const idx = key === "-" ? parent.length : Number(key);
+      if (!Number.isInteger(idx) || idx < 0) return;
+      if (kind === "remove") parent.splice(idx, 1);
+      else if (kind === "add") parent.splice(idx, 0, op.value);
+      else if (kind === "replace") parent[idx] = op.value;
+      return;
+    }
+
+    if (!parent || typeof parent !== "object") return;
+    if (kind === "remove") delete parent[key];
+    else if (kind === "add" || kind === "replace") parent[key] = op.value;
+  });
+}
+
+function setRegistryGridEdits(next) {
+  const obj = next && typeof next === "object" ? next : null;
+  const patch = Array.isArray(obj?.edited_patch) ? obj.edited_patch : [];
+  const fields = Array.isArray(obj?.edited_fields) ? obj.edited_fields : [];
+  registryGridEdits = patch.length || fields.length ? { edited_patch: patch, edited_fields: fields } : null;
+  updateEditedPayload();
+}
+
 function parseList(value) {
   if (Array.isArray(value)) return value.filter((v) => String(v || "").trim() !== "");
   const text = String(value || "").trim();
@@ -671,7 +1147,12 @@ function resetEditedState() {
   flatTablesState = null;
   editedPayload = null;
   editedDirty = false;
+  registryGridEdits = null;
+  fieldFeedbackStore = new Map();
+  activeFieldFeedbackContext = null;
   if (editedResponseEl) editedResponseEl.textContent = "(no edits yet)";
+  if (exportEditedBtn) exportEditedBtn.disabled = true;
+  if (exportPatchBtn) exportPatchBtn.disabled = true;
   updateFeedbackButtons();
 }
 
@@ -2021,7 +2502,12 @@ function buildFlattenedTables(data) {
   clinicalRows.push({
     field: "Sedation type",
     value: sed?.type || "",
-    __meta: { path: "registry.sedation.type", valueType: "text" },
+    __meta: {
+      path: "registry.sedation.type",
+      valueType: "text",
+      inputType: "select",
+      options: SEDATION_TYPE_OPTIONS,
+    },
   });
   clinicalRows.push({
     field: "Anesthesia provider",
@@ -2031,7 +2517,12 @@ function buildFlattenedTables(data) {
   clinicalRows.push({
     field: "Airway type",
     value: setting?.airway_type || "",
-    __meta: { path: "registry.procedure_setting.airway_type", valueType: "text" },
+    __meta: {
+      path: "registry.procedure_setting.airway_type",
+      valueType: "text",
+      inputType: "select",
+      options: AIRWAY_TYPE_OPTIONS,
+    },
   });
   clinicalRows.push({
     field: "Procedure location",
@@ -2657,9 +3148,271 @@ function renderFlattenedTables(data) {
   flatTablesBase = deepClone(tables);
   flatTablesState = deepClone(tables);
   editedDirty = false;
+  fieldFeedbackStore = new Map();
+  activeFieldFeedbackContext = null;
   if (editedResponseEl) editedResponseEl.textContent = "(no edits yet)";
   renderFlatTablesFromState();
 }
+
+function getFlatTableBaseById(tableId) {
+  const base = Array.isArray(flatTablesBase) ? flatTablesBase : [];
+  return base.find((t) => t?.id === tableId) || null;
+}
+
+function getFlatTableRowKey(table, row, rowIndex) {
+  if (table?.allowAdd || table?.allowDelete) return `idx:${rowIndex}`;
+  const meta = row?.__meta || {};
+  if (meta.path) return `path:${meta.path}`;
+  if (meta.procKey) {
+    const section = meta.section === "pleural_procedures" ? "pleural_procedures" : "procedures_performed";
+    return `proc:${section}:${meta.procKey}`;
+  }
+  return `idx:${rowIndex}`;
+}
+
+function buildBaseRowMap(table) {
+  const baseTable = getFlatTableBaseById(table?.id);
+  const map = new Map();
+  const rows = Array.isArray(baseTable?.rows) ? baseTable.rows : [];
+  rows.forEach((row, idx) => map.set(getFlatTableRowKey(table, row, idx), row));
+  return map;
+}
+
+function isFlatCellModified(table, row, rowIndex, colKey, baseRowMap) {
+  const baseRow = baseRowMap?.get(getFlatTableRowKey(table, row, rowIndex));
+  const baseVal = baseRow ? baseRow[colKey] : "";
+  const currVal = row ? row[colKey] : "";
+  return String(currVal ?? "") !== String(baseVal ?? "");
+}
+
+function computeFieldFeedbackPath(table, row, rowIndex, col) {
+  if (!table || !row || !col) return null;
+  if (table.readOnly || col.readOnly) return null;
+
+  const meta = row.__meta || {};
+
+  // Common "field/value" tables.
+  if (meta.path && col.key === "value") return meta.path;
+
+  // Procedures performed summary: performed is the editable canonical signal.
+  if (table.id === "procedures_summary" && col.key === "performed" && meta.procKey) {
+    const section = meta.section === "pleural_procedures" ? "pleural_procedures" : "procedures_performed";
+    return `registry.${section}.${meta.procKey}.performed`;
+  }
+
+  // Granular arrays.
+  if (table.id === "navigation_targets" && col.key !== "target_number") {
+    return `registry.granular_data.navigation_targets[${rowIndex}].${col.key}`;
+  }
+  if (table.id === "linear_ebus_stations_detail") {
+    return `registry.granular_data.linear_ebus_stations_detail[${rowIndex}].${col.key}`;
+  }
+  if (table.id === "cao_interventions_detail") {
+    return `registry.granular_data.cao_interventions_detail[${rowIndex}].${col.key}`;
+  }
+  if (table.id === "ebus_node_events") {
+    return `registry.procedures_performed.linear_ebus.node_events[${rowIndex}].${col.key}`;
+  }
+
+  // Fallback (still useful for QA, even if not a registry field).
+  return `ui_tables.${table.id}[${rowIndex}].${col.key}`;
+}
+
+let fieldFeedbackPathEl = null;
+let fieldFeedbackValueEl = null;
+let fieldFeedbackTypeEl = null;
+let fieldFeedbackCorrectionEl = null;
+let fieldFeedbackCommentEl = null;
+
+function ensureFieldFeedbackModal() {
+  if (fieldFeedbackModalEl) return;
+
+  fieldFeedbackModalEl = document.createElement("dialog");
+  fieldFeedbackModalEl.className = "modal";
+
+  const form = document.createElement("form");
+  form.className = "modal-content";
+  form.method = "dialog";
+
+  const title = document.createElement("h3");
+  title.textContent = "Flag field for review";
+
+  const metaBox = document.createElement("div");
+  metaBox.className = "subtle";
+  metaBox.style.marginBottom = "10px";
+
+  fieldFeedbackPathEl = document.createElement("div");
+  fieldFeedbackPathEl.className = "mono";
+  fieldFeedbackPathEl.style.marginBottom = "6px";
+
+  fieldFeedbackValueEl = document.createElement("div");
+  fieldFeedbackValueEl.className = "subtle";
+
+  metaBox.appendChild(fieldFeedbackPathEl);
+  metaBox.appendChild(fieldFeedbackValueEl);
+
+  const grid = document.createElement("div");
+  grid.className = "field-feedback-grid";
+
+  const typeField = document.createElement("div");
+  typeField.className = "feedback-field";
+  const typeLabel = document.createElement("label");
+  typeLabel.textContent = "Error type";
+  fieldFeedbackTypeEl = document.createElement("select");
+  fieldFeedbackTypeEl.className = "flat-select";
+  [
+    { value: "extraction_miss", label: "Extraction Miss" },
+    { value: "hallucination", label: "Hallucination" },
+    { value: "wrong_value", label: "Wrong Value" },
+  ].forEach((opt) => {
+    const o = document.createElement("option");
+    o.value = opt.value;
+    o.textContent = opt.label;
+    fieldFeedbackTypeEl.appendChild(o);
+  });
+  typeField.appendChild(typeLabel);
+  typeField.appendChild(fieldFeedbackTypeEl);
+
+  const correctionField = document.createElement("div");
+  correctionField.className = "feedback-field";
+  const correctionLabel = document.createElement("label");
+  correctionLabel.textContent = "Correction (optional)";
+  fieldFeedbackCorrectionEl = document.createElement("input");
+  fieldFeedbackCorrectionEl.className = "flat-input";
+  fieldFeedbackCorrectionEl.type = "text";
+  correctionField.appendChild(correctionLabel);
+  correctionField.appendChild(fieldFeedbackCorrectionEl);
+
+  grid.appendChild(typeField);
+  grid.appendChild(correctionField);
+
+  const commentField = document.createElement("div");
+  commentField.className = "feedback-field";
+  const commentLabel = document.createElement("label");
+  commentLabel.textContent = "Comment (optional)";
+  fieldFeedbackCommentEl = document.createElement("textarea");
+  fieldFeedbackCommentEl.className = "flat-input";
+  fieldFeedbackCommentEl.rows = 4;
+  commentField.appendChild(commentLabel);
+  commentField.appendChild(fieldFeedbackCommentEl);
+
+  const actions = document.createElement("div");
+  actions.className = "modal-actions";
+
+  const cancelBtnLocal = document.createElement("button");
+  cancelBtnLocal.value = "cancel";
+  cancelBtnLocal.className = "secondary";
+  cancelBtnLocal.textContent = "Cancel";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.value = "remove";
+  removeBtn.className = "secondary";
+  removeBtn.textContent = "Remove flag";
+
+  const saveBtn = document.createElement("button");
+  saveBtn.value = "save";
+  saveBtn.className = "primary";
+  saveBtn.textContent = "Save flag";
+
+  actions.appendChild(cancelBtnLocal);
+  actions.appendChild(removeBtn);
+  actions.appendChild(saveBtn);
+
+  form.appendChild(title);
+  form.appendChild(metaBox);
+  form.appendChild(grid);
+  form.appendChild(commentField);
+  form.appendChild(actions);
+  fieldFeedbackModalEl.appendChild(form);
+
+  fieldFeedbackModalEl.addEventListener("close", () => {
+    const ctx = activeFieldFeedbackContext;
+    const action = fieldFeedbackModalEl.returnValue;
+    activeFieldFeedbackContext = null;
+    if (!ctx) return;
+
+    if (action === "save") {
+      const now = new Date().toISOString();
+      const prev = fieldFeedbackStore.get(ctx.path);
+      const correction = String(fieldFeedbackCorrectionEl?.value || "").trim() || null;
+      const comment = String(fieldFeedbackCommentEl?.value || "").trim() || null;
+      const entry = {
+        path: ctx.path,
+        error_type: String(fieldFeedbackTypeEl?.value || "wrong_value"),
+        correction,
+        comment,
+        table_id: ctx.tableId || null,
+        column_key: ctx.columnKey || null,
+        label: ctx.label || null,
+        ui_current_value: String(ctx.currentValue ?? ""),
+        created_at: prev?.created_at || now,
+        updated_at: now,
+      };
+      fieldFeedbackStore.set(ctx.path, entry);
+      syncFeedbackButtonsForPath(ctx.path);
+      updateEditedPayload();
+      setFeedbackStatus("Field flag saved.");
+      return;
+    }
+
+    if (action === "remove") {
+      fieldFeedbackStore.delete(ctx.path);
+      syncFeedbackButtonsForPath(ctx.path);
+      updateEditedPayload();
+      setFeedbackStatus("Field flag removed.");
+    }
+  });
+
+  document.body.appendChild(fieldFeedbackModalEl);
+}
+
+function showFieldFeedbackModal(ctx) {
+  if (!ctx?.path) return;
+  ensureFieldFeedbackModal();
+  activeFieldFeedbackContext = ctx;
+
+  const existing = fieldFeedbackStore.get(ctx.path);
+  if (fieldFeedbackPathEl) fieldFeedbackPathEl.textContent = ctx.path;
+  if (fieldFeedbackValueEl) fieldFeedbackValueEl.textContent = `Current value: ${String(ctx.currentValue ?? "")}`;
+  if (fieldFeedbackTypeEl) fieldFeedbackTypeEl.value = existing?.error_type || "wrong_value";
+  if (fieldFeedbackCorrectionEl) fieldFeedbackCorrectionEl.value = existing?.correction || "";
+  if (fieldFeedbackCommentEl) fieldFeedbackCommentEl.value = existing?.comment || "";
+
+  if (typeof fieldFeedbackModalEl.showModal === "function") fieldFeedbackModalEl.showModal();
+  else window.alert("Your browser does not support dialogs. Please update.");
+}
+
+function syncFeedbackButtonsForPath(path) {
+  const has = fieldFeedbackStore.has(path);
+  const raw = String(path || "");
+  const escaped =
+    typeof CSS !== "undefined" && typeof CSS.escape === "function"
+      ? CSS.escape(raw)
+      : raw.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  document.querySelectorAll(`button.feedback-btn[data-feedback-path="${escaped}"]`).forEach((btn) => {
+    btn.classList.toggle("flagged", has);
+  });
+}
+
+function getFlatTableGroupId(tableId) {
+  const id = String(tableId || "");
+  if (id.startsWith("coding_") || id === "rules_applied" || id === "financial_summary") return "coding";
+  if (id === "audit_flags") return "quality";
+  if (id === "clinical_context") return "patient";
+  if (id === "diagnostic_findings") return "diagnostics";
+  if (id === "evidence_traceability") return "evidence";
+  return "procedures";
+}
+
+const FLAT_TABLE_GROUP_META = [
+  { id: "patient", title: "Patient & Context", defaultOpen: true },
+  { id: "procedures", title: "Procedures & Technical Details", defaultOpen: true },
+  { id: "diagnostics", title: "Diagnostics & Pathology", defaultOpen: true },
+  { id: "coding", title: "Coding & Billing", defaultOpen: true },
+  { id: "quality", title: "Audit & Quality Flags", defaultOpen: false },
+  { id: "evidence", title: "Evidence (Read-only)", defaultOpen: false },
+  { id: "other", title: "Other", defaultOpen: false },
+];
 
 function renderFlatTablesFromState() {
   if (!flattenedTablesHost) return;
@@ -2672,150 +3425,266 @@ function renderFlatTablesFromState() {
     return;
   }
 
-  tables.forEach((table, tableIndex) => {
-    const section = document.createElement("div");
-    section.className = "flat-table-section";
+  const grouped = new Map();
+  tables.forEach((table) => {
+    const groupId = getFlatTableGroupId(table?.id);
+    if (!grouped.has(groupId)) grouped.set(groupId, []);
+    grouped.get(groupId).push(table);
+  });
 
-    const header = document.createElement("div");
-    header.className = "flat-table-header";
+  FLAT_TABLE_GROUP_META.forEach((group) => {
+    const groupTables = grouped.get(group.id) || [];
+    if (!groupTables.length) return;
 
-    const title = document.createElement("div");
-    title.className = "flat-table-title";
-    title.textContent = table.title || table.id;
+    const groupEl = document.createElement("details");
+    groupEl.className = "registry-group";
+    groupEl.open = Boolean(group.defaultOpen);
 
-    const actions = document.createElement("div");
-    actions.className = "flat-table-actions";
+    const summary = document.createElement("summary");
+    summary.className = "registry-group-header";
+    summary.textContent = group.title;
+    groupEl.appendChild(summary);
 
-    if (table.allowAdd) {
-      const addBtn = document.createElement("button");
-      addBtn.type = "button";
-      addBtn.className = "secondary row-action-btn";
-      addBtn.textContent = "Add row";
-      addBtn.addEventListener("click", () => {
-        const newRow = {};
-        table.columns.forEach((col) => {
-          if (col.readOnly) return;
-          if (col.type === "select" && Array.isArray(col.options) && col.options.length > 0) {
-            newRow[col.key] = col.options[0].value ?? "";
-          } else {
-            newRow[col.key] = "";
-          }
-        });
-        table.rows.push(newRow);
-        editedDirty = true;
-        renderFlatTablesFromState();
-        updateEditedPayload();
-      });
-      actions.appendChild(addBtn);
-    }
+    const groupBody = document.createElement("div");
+    groupBody.className = "registry-group-body";
 
-    header.appendChild(title);
-    header.appendChild(actions);
-    section.appendChild(header);
+    groupTables.forEach((table) => {
+      const section = document.createElement("div");
+      section.className = "flat-table-section";
 
-    const tableEl = document.createElement("table");
-    tableEl.className = "flat-table";
+      const header = document.createElement("div");
+      header.className = "flat-table-header";
 
-    const thead = document.createElement("thead");
-    const headRow = document.createElement("tr");
-    table.columns.forEach((col) => {
-      const th = document.createElement("th");
-      th.textContent = col.label || col.key;
-      headRow.appendChild(th);
-    });
-    if (table.allowDelete) {
-      const th = document.createElement("th");
-      th.textContent = "Remove";
-      headRow.appendChild(th);
-    }
-    thead.appendChild(headRow);
-    tableEl.appendChild(thead);
+      const title = document.createElement("div");
+      title.className = "flat-table-title";
+      title.textContent = table.title || table.id;
 
-    const tbody = document.createElement("tbody");
-    if (!Array.isArray(table.rows) || table.rows.length === 0) {
-      const tr = document.createElement("tr");
-      const td = document.createElement("td");
-      td.colSpan = table.columns.length + (table.allowDelete ? 1 : 0);
-      td.className = "dash-empty";
-      td.textContent = table.emptyMessage || "No rows.";
-      tr.appendChild(td);
-      tbody.appendChild(tr);
-    } else {
-      table.rows.forEach((row, rowIndex) => {
-        const tr = document.createElement("tr");
-        table.columns.forEach((col) => {
-          const td = document.createElement("td");
-          const rawValue = row[col.key] ?? "";
-          const meta = row.__meta || {};
-          const inputType = meta.inputType || col.type;
-          const options = meta.options || col.options;
+      const actions = document.createElement("div");
+      actions.className = "flat-table-actions";
 
-          if (col.readOnly || table.readOnly) {
-            const span = document.createElement("span");
-            span.className = "flat-readonly";
-            span.textContent = String(rawValue ?? "");
-            td.appendChild(span);
-          } else if (inputType === "select") {
-            const select = document.createElement("select");
-            select.className = "flat-select";
-            (Array.isArray(options) ? options : []).forEach((opt) => {
-              const option = document.createElement("option");
-              option.value = opt.value;
-              option.textContent = opt.label ?? opt.value;
-              select.appendChild(option);
-            });
-            select.value = rawValue ?? "";
-            select.addEventListener("change", () => {
-              row[col.key] = select.value;
-              editedDirty = true;
-              updateEditedPayload();
-            });
-            td.appendChild(select);
-          } else {
-            const input = document.createElement("input");
-            input.className = "flat-input";
-            input.type = inputType === "number" ? "number" : "text";
-            input.value = rawValue ?? "";
-            input.addEventListener("input", () => {
-              row[col.key] = input.value;
-              editedDirty = true;
-              updateEditedPayload();
-            });
-            td.appendChild(input);
-          }
-          tr.appendChild(td);
-        });
-
-        if (table.allowDelete) {
-          const td = document.createElement("td");
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "secondary row-action-btn";
-          btn.textContent = "Remove";
-          btn.addEventListener("click", () => {
-            table.rows.splice(rowIndex, 1);
-            editedDirty = true;
-            renderFlatTablesFromState();
-            updateEditedPayload();
+      if (table.allowAdd) {
+        const addBtn = document.createElement("button");
+        addBtn.type = "button";
+        addBtn.className = "secondary row-action-btn";
+        addBtn.textContent = "Add row";
+        addBtn.addEventListener("click", () => {
+          const newRow = {};
+          table.columns.forEach((col) => {
+            if (col.readOnly) return;
+            if (col.type === "select" && Array.isArray(col.options) && col.options.length > 0) {
+              newRow[col.key] = col.options[0].value ?? "";
+            } else {
+              newRow[col.key] = "";
+            }
           });
-          td.appendChild(btn);
-          tr.appendChild(td);
-        }
-        tbody.appendChild(tr);
+          table.rows.push(newRow);
+          editedDirty = true;
+          renderFlatTablesFromState();
+          updateEditedPayload();
+        });
+        actions.appendChild(addBtn);
+      }
+
+      header.appendChild(title);
+      header.appendChild(actions);
+      section.appendChild(header);
+
+      const tableEl = document.createElement("table");
+      tableEl.className = "flat-table";
+
+      const thead = document.createElement("thead");
+      const headRow = document.createElement("tr");
+      table.columns.forEach((col) => {
+        const th = document.createElement("th");
+        th.textContent = col.label || col.key;
+        headRow.appendChild(th);
       });
-    }
+      if (table.allowDelete) {
+        const th = document.createElement("th");
+        th.textContent = "Remove";
+        headRow.appendChild(th);
+      }
+      thead.appendChild(headRow);
+      tableEl.appendChild(thead);
 
-    tableEl.appendChild(tbody);
-    section.appendChild(tableEl);
+      const tbody = document.createElement("tbody");
+      if (!Array.isArray(table.rows) || table.rows.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = table.columns.length + (table.allowDelete ? 1 : 0);
+        td.className = "dash-empty";
+        td.textContent = table.emptyMessage || "No rows.";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      } else {
+        const baseRowMap = buildBaseRowMap(table);
 
-    if (table.note) {
-      const note = document.createElement("div");
-      note.className = "flat-table-note";
-      note.textContent = table.note;
-      section.appendChild(note);
-    }
+        table.rows.forEach((row, rowIndex) => {
+          const tr = document.createElement("tr");
 
-    flattenedTablesHost.appendChild(section);
+          table.columns.forEach((col) => {
+            const td = document.createElement("td");
+            const rawValue = row[col.key] ?? "";
+            const meta = row.__meta || {};
+            const inputType = meta.inputType || col.type;
+            const options = meta.options || col.options;
+
+            if (col.readOnly || table.readOnly) {
+              const span = document.createElement("span");
+              span.className = "flat-readonly";
+              span.textContent = String(rawValue ?? "");
+              td.appendChild(span);
+              tr.appendChild(td);
+              return;
+            }
+
+            const cellWrap = document.createElement("div");
+            cellWrap.className = "cell-input-wrap";
+
+            const isYesNo =
+              Array.isArray(options) &&
+              options.length === YES_NO_OPTIONS.length &&
+              options.every((o, idx) => o.value === YES_NO_OPTIONS[idx].value);
+
+            const needsToggle = meta.valueType === "boolean" || (inputType === "select" && isYesNo);
+
+            if (needsToggle) {
+              const toggle = document.createElement("div");
+              toggle.className = "bool-toggle";
+
+              const buttons = [
+                { value: "", label: "—", title: "Unset" },
+                { value: "Yes", label: "✅", title: "Yes" },
+                { value: "No", label: "❌", title: "No" },
+              ];
+
+              const setActive = (val) => {
+                Array.from(toggle.querySelectorAll("button")).forEach((btn) => {
+                  btn.classList.toggle("active", btn.dataset.value === String(val ?? ""));
+                });
+              };
+
+              buttons.forEach((b) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "bool-toggle-btn";
+                btn.textContent = b.label;
+                btn.title = b.title;
+                btn.dataset.value = b.value;
+                btn.addEventListener("click", () => {
+                  row[col.key] = b.value;
+                  editedDirty = true;
+                  setActive(b.value);
+                  toggle.classList.toggle(
+                    "cell-modified",
+                    isFlatCellModified(table, row, rowIndex, col.key, baseRowMap)
+                  );
+                  updateEditedPayload();
+                });
+                toggle.appendChild(btn);
+              });
+
+              setActive(rawValue ?? "");
+              toggle.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
+              cellWrap.appendChild(toggle);
+            } else if (inputType === "select") {
+              const select = document.createElement("select");
+              select.className = "flat-select";
+              (Array.isArray(options) ? options : []).forEach((opt) => {
+                const option = document.createElement("option");
+                option.value = opt.value;
+                option.textContent = opt.label ?? opt.value;
+                select.appendChild(option);
+              });
+              select.value = rawValue ?? "";
+              select.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
+              select.addEventListener("change", () => {
+                row[col.key] = select.value;
+                editedDirty = true;
+                select.classList.toggle(
+                  "cell-modified",
+                  isFlatCellModified(table, row, rowIndex, col.key, baseRowMap)
+                );
+                updateEditedPayload();
+              });
+              cellWrap.appendChild(select);
+            } else {
+              const input = document.createElement("input");
+              input.className = "flat-input";
+              input.type = inputType === "number" ? "number" : "text";
+              input.value = rawValue ?? "";
+              input.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
+              input.addEventListener("input", () => {
+                row[col.key] = input.value;
+                editedDirty = true;
+                input.classList.toggle(
+                  "cell-modified",
+                  isFlatCellModified(table, row, rowIndex, col.key, baseRowMap)
+                );
+                updateEditedPayload();
+              });
+              cellWrap.appendChild(input);
+            }
+
+            const feedbackPath = computeFieldFeedbackPath(table, row, rowIndex, col);
+            if (feedbackPath) {
+              const btn = document.createElement("button");
+              btn.type = "button";
+              btn.className = "feedback-btn";
+              btn.textContent = "🚩";
+              btn.dataset.feedbackPath = feedbackPath;
+              btn.title = "Flag this field for review";
+              if (fieldFeedbackStore.has(feedbackPath)) btn.classList.add("flagged");
+              btn.addEventListener("click", () => {
+                showFieldFeedbackModal({
+                  path: feedbackPath,
+                  tableId: table.id,
+                  columnKey: col.key,
+                  label: row?.field || row?.procedure || col.label || col.key,
+                  currentValue: row?.[col.key] ?? "",
+                });
+              });
+              cellWrap.appendChild(btn);
+            }
+
+            td.appendChild(cellWrap);
+            tr.appendChild(td);
+          });
+
+          if (table.allowDelete) {
+            const td = document.createElement("td");
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "secondary row-action-btn";
+            btn.textContent = "Remove";
+            btn.addEventListener("click", () => {
+              table.rows.splice(rowIndex, 1);
+              editedDirty = true;
+              renderFlatTablesFromState();
+              updateEditedPayload();
+            });
+            td.appendChild(btn);
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+        });
+      }
+
+      tableEl.appendChild(tbody);
+      section.appendChild(tableEl);
+
+      if (table.note) {
+        const note = document.createElement("div");
+        note.className = "flat-table-note";
+        note.textContent = table.note;
+        section.appendChild(note);
+      }
+
+      groupBody.appendChild(section);
+    });
+
+    groupEl.appendChild(groupBody);
+    flattenedTablesHost.appendChild(groupEl);
   });
 }
 
@@ -2841,27 +3710,56 @@ function getTablesForExport() {
 
 function updateEditedPayload() {
   if (!editedResponseEl) return;
-  if (!editedDirty || !lastServerResponse || !flatTablesState) {
+  const hasFieldFeedback = fieldFeedbackStore && fieldFeedbackStore.size > 0;
+  const hasRegistryGridEdits = Boolean(
+    registryGridEdits?.edited_patch?.length || registryGridEdits?.edited_fields?.length
+  );
+  if ((!editedDirty && !hasFieldFeedback && !hasRegistryGridEdits) || !lastServerResponse) {
     editedResponseEl.textContent = "(no edits yet)";
     editedPayload = null;
+    if (exportEditedBtn) exportEditedBtn.disabled = true;
+    if (exportPatchBtn) exportPatchBtn.disabled = true;
     updateFeedbackButtons();
     return;
   }
 
   const payload = deepClone(lastServerResponse);
-  applyEditsToPayload(payload, flatTablesState);
+  if (editedDirty && flatTablesState) applyEditsToPayload(payload, flatTablesState);
+  if (hasRegistryGridEdits) {
+    payload.edited_patch = registryGridEdits.edited_patch;
+    payload.edited_fields = registryGridEdits.edited_fields;
+    try {
+      applyJsonPatchOps(payload, registryGridEdits.edited_patch);
+    } catch (e) {
+      console.warn("Failed to apply registry grid JSON Patch (ignored).", e);
+    }
+  }
 
   payload.edited_for_training = true;
   payload.edited_at = new Date().toISOString();
-  payload.edited_source = "ui_flattened_tables";
-  payload.edited_tables = getTablesForExport().map((table) => ({
-    id: table.id,
-    title: table.title,
-    rows: table.rows,
-  }));
+  const sources = [];
+  if (editedDirty || hasFieldFeedback) sources.push("ui_flattened_tables");
+  if (hasRegistryGridEdits) sources.push("ui_registry_grid");
+  payload.edited_sources = sources;
+  payload.edited_source = sources.includes("ui_flattened_tables") ? "ui_flattened_tables" : sources[0] || "ui";
+
+  if (flatTablesState && (editedDirty || hasFieldFeedback)) {
+    payload.edited_tables = getTablesForExport().map((table) => ({
+      id: table.id,
+      title: table.title,
+      rows: table.rows,
+    }));
+  }
+  if (hasFieldFeedback) {
+    payload.edited_field_feedback = Array.from(fieldFeedbackStore.values()).sort((a, b) =>
+      String(a?.path || "").localeCompare(String(b?.path || ""))
+    );
+  }
 
   editedPayload = payload;
   editedResponseEl.textContent = JSON.stringify(payload, null, 2);
+  if (exportEditedBtn) exportEditedBtn.disabled = !editedPayload;
+  if (exportPatchBtn) exportPatchBtn.disabled = !(registryGridEdits?.edited_patch?.length > 0);
   updateFeedbackButtons();
 }
 
@@ -3555,7 +4453,7 @@ function renderDebugLogs(data) {
  * Render the formatted results from the server response.
  * Shows status banner, CPT codes table, and registry form.
  */
-function renderResults(data) {
+async function renderResults(data) {
   const container = document.getElementById("resultsContainer");
   if (!container) return;
 
@@ -3565,8 +4463,18 @@ function renderResults(data) {
   if (newNoteBtn) newNoteBtn.disabled = !data;
 
   container.classList.remove("hidden");
+  const preferGrid = isReactRegistryGridEnabled() && Boolean(registryGridRootEl && registryLegacyRightRootEl);
+
+  // Always render the legacy dashboard (CPT + RVU tables stay on the left).
   renderDashboard(data);
   renderFlattenedTables(data);
+
+  if (preferGrid) {
+    await maybeRenderRegistryGrid(data);
+  } else {
+    unmountRegistryGrid();
+    showRegistryLegacyUi();
+  }
 
   if (serverResponseEl) {
     serverResponseEl.textContent = JSON.stringify(data, null, 2);
@@ -3576,6 +4484,9 @@ function renderResults(data) {
 function clearResultsUi() {
   const container = document.getElementById("resultsContainer");
   if (container) container.classList.add("hidden");
+  unmountRegistryGrid();
+  showRegistryLegacyUi();
+  if (registryGridRootEl) registryGridRootEl.innerHTML = "";
   lastServerResponse = null;
   resetRunState();
   if (serverResponseEl) serverResponseEl.textContent = "(none)";
@@ -3585,6 +4496,8 @@ function clearResultsUi() {
   }
   if (exportBtn) exportBtn.disabled = true;
   if (exportTablesBtn) exportTablesBtn.disabled = true;
+  if (exportEditedBtn) exportEditedBtn.disabled = true;
+  if (exportPatchBtn) exportPatchBtn.disabled = true;
   if (newNoteBtn) newNoteBtn.disabled = true;
   resetEditedState();
 }
@@ -4225,6 +5138,7 @@ async function main() {
   }
 
   setStatus("Ready to type (model loading in background)...");
+  initLayoutControls();
 
   let usingPlainEditor = true;
   let editor = null;
@@ -4268,22 +5182,25 @@ async function main() {
     // Expose for evidence click-to-highlight
     window.editor = editor;
     model = editor.getModel();
-  } else {
-    // Monaco unavailable/slow: use the built-in textarea as the editor surface.
-    window.editor = null;
-    model = {
-      getValue: () => (fallbackTextarea ? fallbackTextarea.value : ""),
+	  } else {
+	    // Monaco unavailable/slow: use the built-in textarea as the editor surface.
+	    window.editor = null;
+	    model = {
+	      getValue: () => (fallbackTextarea ? fallbackTextarea.value : ""),
       setValue: (value) => {
         if (!fallbackTextarea) return;
         fallbackTextarea.value = String(value ?? "");
       },
-    };
-  }
+	    };
+	  }
 
-  let originalText = model.getValue();
-  let hasRunDetection = false;
-  let scrubbedConfirmed = false;
-  let suppressDirtyFlag = false;
+	  // RegistryGrid embed expects a getter for the live Monaco editor (or null in textarea mode).
+	  setRegistryGridMonacoGetter(() => window.editor);
+
+	  let originalText = model.getValue();
+	  let hasRunDetection = false;
+	  let scrubbedConfirmed = false;
+	  let suppressDirtyFlag = false;
 
   let detections = [];
   let detectionsById = new Map();
@@ -4870,10 +5787,14 @@ async function main() {
       const submitterName = getSubmitterName();
       const noteText = model.getValue();
 
-      const processBody = {
-        note: noteText,
-        already_scrubbed: true,
-      };
+	      const processBody = {
+	        note: noteText,
+	        already_scrubbed: true,
+	      };
+	      // Force backend to return evidence spans
+	      processBody.explain = true;
+	      processBody.include_evidence = true;
+	      processBody.return_explain = true;
 
       const shouldAttemptPersistence = !TESTER_MODE || submitterName.length > 0;
 
@@ -4906,16 +5827,25 @@ async function main() {
           persistData = { error: "Invalid JSON response", raw: persistText };
         }
 
-        if (persistRes.ok) {
-          console.log("Persist success:", persistData);
-          const runId = persistData?.run_id;
-          const result = persistData?.result;
-          if (!runId || !result) {
-            throw new Error("Registry runs response missing run_id/result");
-          }
+	        if (persistRes.ok) {
+	          console.log("Persist success:", persistData);
+	          const runId = persistData?.run_id;
+	          const result = persistData?.result;
+	          const resp = result;
+	          console.log("[debug] processResponse keys:", Object.keys(resp || {}));
+	          console.log("[debug] has explain?", !!(resp?.explain || resp?.explanation));
+	          console.log("[debug] evidence candidates:", {
+	            explain: resp?.explain,
+	            evidence: resp?.evidence,
+	            registryEvidence: resp?.registry?.evidence,
+	            registryExplain: resp?.registry?.explain,
+	          });
+	          if (!runId || !result) {
+	            throw new Error("Registry runs response missing run_id/result");
+	          }
           setRunId(runId);
           setFeedbackStatus("Run persisted. You can submit feedback and save corrections.");
-          renderResults(result);
+          await renderResults(result);
           setStatus("Submitted + persisted (scrubbed text only)");
           return;
         }
@@ -4984,12 +5914,21 @@ async function main() {
         );
         setStatus(`Submit failed (${res.status})`);
         return;
-      }
+	      }
 
-      console.log("Success:", data);
-      renderResults(data);
-      setStatus("Submitted (scrubbed text only; not persisted)");
-    } catch (err) {
+	      console.log("Success:", data);
+	      const resp = data;
+	      console.log("[debug] processResponse keys:", Object.keys(resp || {}));
+	      console.log("[debug] has explain?", !!(resp?.explain || resp?.explanation));
+	      console.log("[debug] evidence candidates:", {
+	        explain: resp?.explain,
+	        evidence: resp?.evidence,
+	        registryEvidence: resp?.registry?.evidence,
+	        registryExplain: resp?.registry?.explain,
+	      });
+	      await renderResults(data);
+	      setStatus("Submitted (scrubbed text only; not persisted)");
+	    } catch (err) {
       console.error("Submit error:", err);
       serverResponseEl.textContent = JSON.stringify(
         { error: String(err?.message || err), type: err?.name || "UnknownError" },
@@ -5060,7 +5999,7 @@ async function main() {
     saveCorrectionsBtn.addEventListener("click", async () => {
       if (!currentRunId) return;
       if (!editedPayload) {
-        setFeedbackStatus("No edited payload yet. Make edits in Flattened Tables first.");
+        setFeedbackStatus("No review payload yet. Make table edits or flag fields first.");
         updateFeedbackButtons();
         return;
       }
@@ -5124,6 +6063,55 @@ async function main() {
     });
   }
 
+  if (exportEditedBtn) {
+    exportEditedBtn.addEventListener("click", () => {
+      if (!editedPayload) {
+        setStatus("No edited payload to export yet");
+        return;
+      }
+
+      const payload = JSON.stringify(editedPayload, null, 2);
+      const blob = new Blob([payload], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `procedure_suite_edited_${Date.now()}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      setStatus("Exported edited payload");
+    });
+  }
+
+  if (exportPatchBtn) {
+    exportPatchBtn.addEventListener("click", () => {
+      const patch = registryGridEdits?.edited_patch;
+      if (!Array.isArray(patch) || patch.length === 0) {
+        setStatus("No registry patch to export yet");
+        return;
+      }
+
+      const exportObj = {
+        edited_source: "ui_registry_grid",
+        edited_patch: patch,
+        edited_fields: Array.isArray(registryGridEdits?.edited_fields) ? registryGridEdits.edited_fields : [],
+      };
+
+      const payload = JSON.stringify(exportObj, null, 2);
+      const blob = new Blob([payload], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `procedure_suite_registry_patch_${Date.now()}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      setStatus("Exported registry patch");
+    });
+  }
+
   if (exportTablesBtn) {
     exportTablesBtn.addEventListener("click", () => {
       exportTablesToExcel();
@@ -5144,6 +6132,7 @@ async function main() {
       hasRunDetection = false;
       setScrubbedConfirmed(false);
       clearDetections();
+      clearResultsUi();
       setStatus("Ready for new note");
       setProgress("");
       if (runBtn) runBtn.disabled = !workerReady;

@@ -434,6 +434,28 @@ button.secondary:hover:not(:disabled) {
   gap: 8px;
 }
 
+.layout-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 6px;
+  margin-right: 6px;
+  border-right: 1px solid var(--border-color);
+}
+
+button.icon-btn {
+  padding: 6px 10px;
+  min-width: 34px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+button.secondary.active {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.35);
+  color: var(--text-primary);
+}
+
 .resultBody {
   margin: 0;
   padding: 16px;
@@ -458,6 +480,23 @@ button.secondary:hover:not(:disabled) {
   grid-template-columns: 1.15fr 0.85fr;
   gap: 16px;
   align-items: start;
+}
+
+/* Layout focus: expand a single dashboard column */
+body.ps-focus-clinical .dash-grid {
+  grid-template-columns: 1fr;
+}
+
+body.ps-focus-clinical .dash-grid > .dash-col:first-child {
+  display: none;
+}
+
+body.ps-focus-billing .dash-grid {
+  grid-template-columns: 1fr;
+}
+
+body.ps-focus-billing .dash-grid > .dash-col:last-child {
+  display: none;
 }
 
 .dash-col {
@@ -871,6 +910,12 @@ button.secondary:hover:not(:disabled) {
   border-bottom: 1px solid var(--border-color);
 }
 
+.sideHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .sideTitle {
   font-weight: 600;
   font-size: 14px;
@@ -956,6 +1001,72 @@ button.secondary:hover:not(:disabled) {
   background: var(--bg-card);
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* Collapse detections sidebar to free horizontal space for Monaco + review */
+body.ps-detections-collapsed .layout {
+  grid-template-columns: 1fr 56px;
+}
+
+body.ps-detections-collapsed .sideTitle,
+body.ps-detections-collapsed .sideMeta,
+body.ps-detections-collapsed .detectionsList,
+body.ps-detections-collapsed .sideFooter {
+  display: none;
+}
+
+body.ps-detections-collapsed #toggleDetectionsPaneBtn {
+  transform: rotate(180deg);
+}
+
+/* Split review: show Monaco (left) and Clinical Review (right) side-by-side */
+body.ps-review-split .editorPane {
+  display: grid;
+  grid-template-columns: minmax(420px, 0.9fr) minmax(520px, 1.1fr);
+  grid-template-rows: auto auto auto 1fr;
+  column-gap: 16px;
+}
+
+body.ps-review-split .editorPane .section-header {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+body.ps-review-split .editorPane .controls {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+body.ps-review-split .editorPane .warning {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+body.ps-review-split .editorPane .editor {
+  grid-column: 1;
+  grid-row: 4;
+  height: auto;
+  max-height: none;
+  min-height: 240px;
+}
+
+body.ps-review-split .editorPane .result {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  min-height: 0; /* allow inner resultsContainer to scroll */
+}
+
+body.ps-review-split .editorPane .editor,
+body.ps-review-split .editorPane .result {
+  min-width: 0;
+}
+
+@media (max-width: 1180px) {
+  /* Avoid overly narrow panels on smaller viewports. */
+  body.ps-review-split .editorPane {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* Manual Redaction Controls */
@@ -1045,6 +1156,50 @@ button.secondary:hover:not(:disabled) {
   gap: 16px;
 }
 
+.registry-group {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  overflow: hidden;
+}
+
+.registry-group summary.registry-group-header {
+  cursor: pointer;
+  user-select: none;
+  padding: 10px 12px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 13px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.registry-group summary.registry-group-header::-webkit-details-marker {
+  display: none;
+}
+
+.registry-group summary.registry-group-header::after {
+  content: "▸";
+  color: var(--text-muted);
+  font-size: 12px;
+  transform: rotate(0deg);
+  transition: transform 0.15s ease;
+}
+
+.registry-group[open] summary.registry-group-header::after {
+  transform: rotate(90deg);
+}
+
+.registry-group-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .flat-table-section {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -1110,6 +1265,86 @@ button.secondary:hover:not(:disabled) {
   font-family: inherit;
 }
 
+.cell-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cell-input-wrap .flat-input,
+.cell-input-wrap .flat-select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cell-modified {
+  background-color: #fff3cd !important; /* Amber highlight */
+  border-left: 3px solid #ffc107 !important;
+}
+
+.bool-toggle {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  overflow: hidden;
+}
+
+.bool-toggle-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 6px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.bool-toggle-btn:hover {
+  background: rgba(148, 163, 184, 0.18);
+}
+
+.bool-toggle-btn.active {
+  background: rgba(59, 130, 246, 0.18);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.feedback-btn {
+  width: 34px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.12s ease, border-color 0.12s ease, color 0.12s ease, background 0.12s ease;
+}
+
+.cell-input-wrap:hover .feedback-btn,
+.feedback-btn.flagged {
+  opacity: 1;
+}
+
+.feedback-btn:hover {
+  border-color: var(--primary);
+  color: var(--text-primary);
+}
+
+.feedback-btn.flagged {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
 .flat-input:focus,
 .flat-select:focus {
   outline: none;
@@ -1130,6 +1365,18 @@ button.secondary:hover:not(:disabled) {
 .row-action-btn {
   padding: 6px 10px;
   font-size: 12px;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+}
+
+.field-feedback-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 /* Monaco Decorations - PHI Detection */
