@@ -162,6 +162,23 @@
   color: var(--text-primary, #0f172a);
 }
 
+.ps-edit-badge {
+  margin-left: 8px;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(59, 130, 246, 0.32);
+  background: rgba(59, 130, 246, 0.1);
+  color: rgba(30, 64, 175, 0.95);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.ps-row-edited .ag-cell {
+  background: rgba(59, 130, 246, 0.045);
+}
+
 .ps-cell-ellipsis {
   white-space: nowrap;
   overflow: hidden;

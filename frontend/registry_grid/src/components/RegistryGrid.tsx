@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ColDef, ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
@@ -22,6 +22,8 @@ type TreeIndex = {
   childrenById: Map<string, string[]>;
   groupIds: string[];
 };
+
+type FieldMode = "populated" | "all" | "edited";
 
 function buildTreeIndex(rows: RegistryRow[]): TreeIndex {
   const parentById = new Map<string, string | null>();
@@ -51,6 +53,10 @@ function isPopulatedLeaf(row: RegistryRow): boolean {
   return true;
 }
 
+function hasEditedValue(row: RegistryRow): boolean {
+  return row.editedValueRaw !== null && row.editedValueRaw !== undefined;
+}
+
 function isEditableValueType(valueType: ValueType): boolean {
   return valueType === "boolean" || valueType === "number" || valueType === "string";
 }
@@ -58,13 +64,16 @@ function isEditableValueType(valueType: ValueType): boolean {
 function deriveVisibleRows(
   rows: RegistryRow[],
   index: TreeIndex,
-  showAllFields: boolean,
+  fieldMode: FieldMode,
   collapsedIds: Set<string>,
+  editedIds: Set<string>,
 ): RegistryRow[] {
   const included = new Set<string>();
 
-  if (showAllFields) {
+  if (fieldMode === "all") {
     rows.forEach((r) => included.add(r.id));
+  } else if (fieldMode === "edited") {
+    editedIds.forEach((id) => included.add(id));
   } else {
     for (const row of rows) {
       if (row.isGroup) {
@@ -120,14 +129,27 @@ export function RegistryGrid({
   const gridRef = useRef<AgGridReact<RegistryRow>>(null);
 
   const [quickFilter, setQuickFilter] = useState("");
-  const [showAllFields, setShowAllFields] = useState(false);
+  const [fieldMode, setFieldMode] = useState<FieldMode>("populated");
   const [collapsedIds, setCollapsedIds] = useState<Set<string>>(() => new Set());
 
   const treeIndex = useMemo(() => buildTreeIndex(rows), [rows]);
+  const editedIds = useMemo(() => {
+    const set = new Set<string>();
+    for (const row of rows) {
+      if (!hasEditedValue(row)) continue;
+      set.add(row.id);
+      let parent = treeIndex.parentById.get(row.id) ?? null;
+      while (parent) {
+        set.add(parent);
+        parent = treeIndex.parentById.get(parent) ?? null;
+      }
+    }
+    return set;
+  }, [rows, treeIndex.parentById]);
 
   const visibleRows = useMemo(
-    () => deriveVisibleRows(rows, treeIndex, showAllFields, collapsedIds),
-    [rows, treeIndex, showAllFields, collapsedIds],
+    () => deriveVisibleRows(rows, treeIndex, fieldMode, collapsedIds, editedIds),
+    [rows, treeIndex, fieldMode, collapsedIds, editedIds],
   );
 
   const isCollapsed = useCallback((id: string) => collapsedIds.has(id), [collapsedIds]);
@@ -145,8 +167,7 @@ export function RegistryGrid({
 
   const collapseAll = useCallback(() => setCollapsedIds(new Set(treeIndex.groupIds)), [treeIndex.groupIds]);
 
-  const onQuickFilterChange = useCallback((value: string) => {
-    setQuickFilter(value);
+  const applyQuickFilter = useCallback((value: string) => {
     const api = gridRef.current?.api;
     if (!api) return;
     // ag-Grid API surface has shifted across versions; support both.
@@ -155,6 +176,16 @@ export function RegistryGrid({
     if (typeof anyApi.setQuickFilter === "function") anyApi.setQuickFilter(value);
     else if (typeof anyApi.setGridOption === "function") anyApi.setGridOption("quickFilterText", value);
   }, []);
+
+  useEffect(() => {
+    const handle = window.setTimeout(() => applyQuickFilter(quickFilter), 180);
+    return () => window.clearTimeout(handle);
+  }, [quickFilter, applyQuickFilter]);
+
+  useEffect(() => {
+    // Avoid a blank grid if the user is in "Only edited" mode and clears edits.
+    if (fieldMode === "edited" && !editCount) setFieldMode("populated");
+  }, [fieldMode, editCount]);
 
   const columnDefs = useMemo<ColDef<RegistryRow>[]>(
     () => [
@@ -169,6 +200,7 @@ export function RegistryGrid({
           const collapsed = row.isGroup ? isCollapsed(row.id) : false;
           const indentPx = row.depth * 14;
           const path = row.pathSegments.join(" › ");
+          const isEdited = editedIds.has(row.id);
           return (
             <div className="ps-field-cell" style={{ paddingLeft: `${indentPx}px` }} title={path}>
               {row.isGroup && hasChildren ? (
@@ -186,6 +218,7 @@ export function RegistryGrid({
               <span className={row.isGroup ? "ps-field-label ps-field-group" : "ps-field-label"}>
                 {row.fieldLabel}
               </span>
+              {isEdited ? <span className="ps-edit-badge">edited</span> : null}
             </div>
           );
         },
@@ -331,7 +364,7 @@ export function RegistryGrid({
         },
       },
     ],
-    [treeIndex.childrenById, isCollapsed, toggleCollapse, onEvidenceClick, onEditValue, onClearEdit],
+    [treeIndex.childrenById, isCollapsed, toggleCollapse, onEvidenceClick, onEditValue, onClearEdit, editedIds],
   );
 
   const defaultColDef = useMemo<ColDef>(() => ({ sortable: false, resizable: true, filter: false }), []);
@@ -344,22 +377,31 @@ export function RegistryGrid({
             className="ps-input"
             type="text"
             value={quickFilter}
-            onChange={(e) => onQuickFilterChange(e.target.value)}
+            onChange={(e) => setQuickFilter(e.target.value)}
             placeholder="Filter…"
             aria-label="Quick filter"
           />
           <div className="ps-toggle-group" role="group" aria-label="Field visibility">
             <button
               type="button"
-              className={showAllFields ? "ps-toggle" : "ps-toggle active"}
-              onClick={() => setShowAllFields(false)}
+              className={fieldMode === "populated" ? "ps-toggle active" : "ps-toggle"}
+              onClick={() => setFieldMode("populated")}
             >
               Only populated
             </button>
             <button
               type="button"
-              className={showAllFields ? "ps-toggle active" : "ps-toggle"}
-              onClick={() => setShowAllFields(true)}
+              className={fieldMode === "edited" ? "ps-toggle active" : "ps-toggle"}
+              onClick={() => setFieldMode("edited")}
+              disabled={!editCount}
+              title={!editCount ? "No edits yet" : "Show only edited fields"}
+            >
+              Only edited
+            </button>
+            <button
+              type="button"
+              className={fieldMode === "all" ? "ps-toggle active" : "ps-toggle"}
+              onClick={() => setFieldMode("all")}
             >
               Show all fields
             </button>
@@ -406,6 +448,7 @@ export function RegistryGrid({
           suppressCellFocus
           rowSelection="single"
           getRowId={(p) => p.data.id}
+          getRowClass={(p) => (p.data && editedIds.has(p.data.id) ? "ps-row-edited" : "")}
           headerHeight={34}
           rowHeight={34}
           animateRows={false}

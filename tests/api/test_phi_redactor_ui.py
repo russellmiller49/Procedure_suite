@@ -44,6 +44,9 @@ def test_phi_redactor_assets_have_coop_coep_headers(client: TestClient) -> None:
         "/ui/phi_redactor/styles.css",
         "/ui/phi_redactor/allowlist_trie.json",
         "/ui/phi_redactor/sw.js",
+        # Embedded RegistryGrid assets (served under /ui/* to preserve COOP/COEP)
+        "/ui/registry_grid/registry_grid.iife.js",
+        "/ui/registry_grid/registry_grid.css",
     ):
         resp = client.get(path)
         assert resp.status_code == 200, path
@@ -59,6 +62,20 @@ def test_phi_redactor_index_has_formatted_report_sections(client: TestClient) ->
     assert resp.status_code == 200
     assert 'id="billingSelectedBody"' in resp.text
     assert 'id="evidenceTraceabilityHost"' in resp.text
+    assert 'id="registryGridRoot"' in resp.text
+    assert 'id="exportEditedBtn"' in resp.text
+    assert 'id="exportPatchBtn"' in resp.text
+
+
+def test_registry_grid_bundle_exports_global_api(client: TestClient) -> None:
+    resp = client.get("/ui/registry_grid/registry_grid.iife.js")
+    assert resp.status_code == 200
+    body = resp.text
+    assert "window.RegistryGrid" in body
+    # Minimal contract: mount/update/unmount should exist (string check is enough for smoke coverage).
+    assert "mount" in body
+    assert "update" in body
+    assert "unmount" in body
 
 def test_phi_redactor_worker_stoplist_includes_lymph_nodes(client: TestClient) -> None:
     """Regression: don't treat "Lymph Nodes" headings as patient names."""
