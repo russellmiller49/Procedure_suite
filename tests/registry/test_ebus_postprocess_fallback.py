@@ -24,6 +24,14 @@ def test_populate_ebus_node_events_fallback_parses_following_station_list_with_b
     assert linear.node_events[0].action == "needle_aspiration"
     assert any("EBUS_REGEX_FALLBACK" in w for w in warnings)
 
+    evidence = record.evidence
+    assert evidence.get("procedures_performed.linear_ebus.stations_sampled.0"), "Missing evidence for stations_sampled[0]"
+    assert evidence.get("procedures_performed.linear_ebus.node_events.0.station"), "Missing evidence for node_events[0].station"
+    assert evidence.get("procedures_performed.linear_ebus.node_events.0.evidence_quote"), "Missing evidence for node_events[0].evidence_quote"
+
+    span = evidence["procedures_performed.linear_ebus.node_events.0.station"][0]
+    assert note_text[span.start:span.end].upper() == "11L"
+
 
 def test_populate_ebus_node_events_fallback_adds_placeholder_when_sampling_documented_without_stations() -> None:
     record = RegistryRecord.model_validate({"procedures_performed": {"linear_ebus": {"performed": True}}})
@@ -42,6 +50,14 @@ def test_populate_ebus_node_events_fallback_adds_placeholder_when_sampling_docum
     assert len(linear.node_events) == 1
     assert linear.node_events[0].station == "UNSPECIFIED"
     assert linear.node_events[0].action == "needle_aspiration"
+
+    evidence = record.evidence
+    assert evidence.get("procedures_performed.linear_ebus.stations_sampled.0"), "Missing evidence for stations_sampled[0]"
+    assert evidence.get("procedures_performed.linear_ebus.node_events.0.station"), "Missing evidence for node_events[0].station"
+    assert evidence.get("procedures_performed.linear_ebus.node_events.0.evidence_quote"), "Missing evidence for node_events[0].evidence_quote"
+
+    span = evidence["procedures_performed.linear_ebus.node_events.0.evidence_quote"][0]
+    assert "EBUS-TBNA" in note_text[span.start:span.end].upper()
 
     codes, _rationales, _warn = derive_all_codes_with_meta(record)
     assert "31652" in codes

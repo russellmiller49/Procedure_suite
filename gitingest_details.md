@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-01-30T15:48:45-08:00`
-Git: `refactor` @ `c524a9a`
+Generated: `2026-02-02T14:25:06-08:00`
+Git: `IU_upgrade` @ `076854d`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -150,6 +150,7 @@ Git: `refactor` @ `c524a9a`
       123  modules/domain/reasoning/__init__.py
       123  modules/domain/rvu/__init__.py
       132  modules/registry/legacy/__init__.py
+      132  modules/registry_store/__init__.py
       133  modules/common/rules_engine/__init__.py
       135  proc_schemas/registry/__init__.py
       147  modules/registry/legacy/adapters/__init__.py
@@ -273,6 +274,7 @@ Git: `refactor` @ `c524a9a`
      1380  modules/api/readiness.py
      1382  tests/phi/test_presidio_nlp_backend_smoke.py
      1391  modules/registry/schema.py
+     1397  modules/registry_store/phi_gate.py
      1402  tests/registry/test_clinical_guardrails_checkbox_negative.py
      1412  tests/registry/test_registry_engine_merge_llm_and_seed.py
      1423  tests/registry/test_keyword_guard_keywords.py
@@ -308,6 +310,7 @@ Git: `refactor` @ `c524a9a`
      1835  modules/registry/slots/tblb.py
      1842  tests/registry/test_pleural_extraction.py
      1847  modules/coder/parallel_pathway/reconciler.py
+     1873  modules/registry_store/dependencies.py
      1875  tests/coder/test_parallel_pathway_orchestrator_path_b.py
      1876  modules/reporting/__init__.py
      1877  tests/integration/api/test_health_endpoint.py
@@ -321,6 +324,7 @@ Git: `refactor` @ `c524a9a`
      2003  modules/registry/legacy/supabase_sink.py
      2027  modules/registry/audit/audit_types.py
      2032  modules/agents/parser/parser_agent.py
+     2083  modules/registry_store/models.py
      2093  modules/registry/slots/dilation.py
      2107  modules/ml_coder/training_losses.py
      2136  modules/coder/peripheral_rules.py
@@ -331,6 +335,7 @@ Git: `refactor` @ `c524a9a`
      2167  tests/registry/test_ebus_postprocess_enrichment.py
      2174  tests/test_ip_registry_schema_guardrails.py
      2196  modules/registry/self_correction/__init__.py
+     2222  modules/api/routes/unified_process.py
      2225  tests/registry/test_sedation_blvr.py
      2237  tests/registry/test_ebus_postprocess_fallback.py
      2250  modules/ml_coder/self_correction.py
@@ -435,8 +440,8 @@ Git: `refactor` @ `c524a9a`
      4598  tests/api/test_coding_phi_gating.py
      4751  tests/registry/test_fixpack_device_action_regressions.py
      4782  modules/common/sectionizer.py
-     4845  tests/api/test_unified_process.py
      4978  tests/registry/test_auditor_raw_ml_only.py
+     5027  tests/api/test_unified_process.py
      5045  modules/coder/adapters/nlp/simple_negation_detector.py
      5048  docs/phi_review_system/backend/main.py
      5103  modules/registry/cli.py
@@ -465,7 +470,6 @@ Git: `refactor` @ `c524a9a`
      6351  modules/registry/slots/therapeutics.py
      6398  modules/registry/processing/navigation_fiducials.py
      6438  modules/domain/procedure_store/repository.py
-     6439  tests/api/test_phi_redactor_ui.py
      6451  tests/phi/test_service.py
      6485  proc_schemas/clinical/pleural.py
      6596  tests/registry/test_registry_qa_regressions.py
@@ -475,7 +479,9 @@ Git: `refactor` @ `c524a9a`
      7025  modules/reporting/ip_addons.py
      7110  modules/coder/application/candidate_expansion.py
      7176  modules/agents/run_pipeline.py
+     7218  tests/api/test_phi_redactor_ui.py
      7307  tests/integration/coder/test_coding_service.py
+     7318  tests/api/test_registry_runs.py
      7383  tests/api/test_phi_endpoints.py
      7505  modules/registry/ner_mapping/entity_to_registry.py
      7526  modules/domain/coding_rules/evidence_context.py
@@ -494,7 +500,7 @@ Git: `refactor` @ `c524a9a`
      8652  modules/coder/application/procedure_type_detector.py
      8695  tests/coding/test_json_rules_parity.py
      8702  modules/api/coder_adapter.py
-     8981  modules/api/routes/unified_process.py
+     8797  modules/api/services/unified_pipeline.py
      9005  modules/api/routes/metrics.py
      9292  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9393  modules/registry/processing/focus.py
@@ -545,7 +551,7 @@ Git: `refactor` @ `c524a9a`
     15130  modules/registry/v2_booleans.py
     15243  tests/unit/test_dsl.py
     15267  modules/domain/coding_rules/json_rules_evaluator.py
-    15328  modules/registry/inference_onnx.py
+    15334  modules/api/routes/registry_runs.py
     15346  tests/registry/test_action_predictor.py
     15436  modules/autocode/ip_kb/canonical_rules.py
     15467  modules/api/services/qa_pipeline.py
@@ -571,6 +577,7 @@ Git: `refactor` @ `c524a9a`
     17939  tests/unit/test_template_coverage.py
     17947  modules/registry/normalization.py
     18735  modules/registry/processing/cao_interventions_detail.py
+    18769  modules/registry/inference_onnx.py
     18774  modules/coder/adapters/persistence/csv_kb_adapter.py
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
@@ -619,8 +626,8 @@ Git: `refactor` @ `c524a9a`
     40683  modules/common/llm.py
     41901  modules/proc_ml_advisor/schemas.py
     42913  modules/api/routes/procedure_codes.py
-    43561  modules/api/fastapi_app.py
     43918  tests/registry/test_granular_registry_models.py
+    44511  modules/api/fastapi_app.py
     44690  modules/registry/schema/granular_logic.py
     52780  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     53728  modules/extraction/postprocessing/clinical_guardrails.py
@@ -735,15 +742,17 @@ Git: `refactor` @ `c524a9a`
      1306  docs/KNOWLEDGE_RELEASE_CHECKLIST.md
      1359  modules/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1432  modules/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
+     1764  docs/PHI_IDENTIFIERS.md
      1797  modules/api/static/phi_redactor/allowlist_trie.json
      1817  modules/reporting/templates/addons/post_blvr_management_protocol.jinja
      1925  modules/reporting/templates/addons/general_bronchoscopy_note.jinja
      1961  modules/phi/README.md
      1992  tests/fixtures/complex_tracheal_stenosis.txt
      2045  docs/model_release_runbook.md
-     2196  docs/DEPLOY_RAILWAY.md
+     2295  docs/DEPLOY_RAILWAY.md
      2305  docs/KNOWLEDGE_INVENTORY.md
      2342  modules/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
+     2809  docs/REGISTRY_RUNS.md
      2922  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
      2922  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/protected_terms.json
      2954  tests/fixtures/notes/note_315.txt
@@ -811,9 +820,8 @@ Git: `refactor` @ `c524a9a`
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
     63253  modules/api/static/phi_redactor/protectedVeto.js
     90791  modules/api/static/app.js
-    93797  modules/api/static/phi_redactor/redactor.worker.js
-    94017  modules/api/static/phi_redactor/redactor.worker.legacy.js
-   167997  modules/api/static/phi_redactor/app.js
+    99138  modules/api/static/phi_redactor/redactor.worker.js
+    99358  modules/api/static/phi_redactor/redactor.worker.legacy.js
 ```
 
 ## Skipped (reason)
@@ -863,6 +871,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/domain/reasoning/__init__.py
  inline_cap_reached>75  modules/domain/rvu/__init__.py
  inline_cap_reached>75  modules/registry/legacy/__init__.py
+ inline_cap_reached>75  modules/registry_store/__init__.py
  inline_cap_reached>75  modules/common/rules_engine/__init__.py
  inline_cap_reached>75  proc_schemas/registry/__init__.py
  inline_cap_reached>75  modules/registry/legacy/adapters/__init__.py
@@ -945,6 +954,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/phi/adapters/fernet_encryption.py
  inline_cap_reached>75  modules/api/readiness.py
  inline_cap_reached>75  modules/registry/schema.py
+ inline_cap_reached>75  modules/registry_store/phi_gate.py
  inline_cap_reached>75  modules/domain/reasoning/models.py
  inline_cap_reached>75  modules/phi/db.py
  inline_cap_reached>75  modules/registry/schema_granular.py
@@ -960,6 +970,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/ml_coder/preprocessing.py
  inline_cap_reached>75  modules/registry/slots/tblb.py
  inline_cap_reached>75  modules/coder/parallel_pathway/reconciler.py
+ inline_cap_reached>75  modules/registry_store/dependencies.py
  inline_cap_reached>75  modules/reporting/__init__.py
  inline_cap_reached>75  modules/coder/constants.py
  inline_cap_reached>75  modules/coder/phi_gating.py
@@ -967,6 +978,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/registry/legacy/supabase_sink.py
  inline_cap_reached>75  modules/registry/audit/audit_types.py
  inline_cap_reached>75  modules/agents/parser/parser_agent.py
+ inline_cap_reached>75  modules/registry_store/models.py
  inline_cap_reached>75  modules/registry/slots/dilation.py
  inline_cap_reached>75  modules/ml_coder/training_losses.py
  inline_cap_reached>75  modules/coder/peripheral_rules.py
@@ -974,6 +986,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/reporting/metadata.py
  inline_cap_reached>75  modules/registry/legacy/adapters/base.py
  inline_cap_reached>75  modules/registry/self_correction/__init__.py
+ inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/ml_coder/self_correction.py
  inline_cap_reached>75  modules/registry/slots/sedation.py
  inline_cap_reached>75  modules/common/text_cleaning.py
@@ -1063,7 +1076,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/registry/ml/evaluate.py
  inline_cap_reached>75  modules/coder/application/procedure_type_detector.py
  inline_cap_reached>75  modules/api/coder_adapter.py
- inline_cap_reached>75  modules/api/routes/unified_process.py
+ inline_cap_reached>75  modules/api/services/unified_pipeline.py
  inline_cap_reached>75  modules/api/routes/metrics.py
  inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/ml_coder/training.py
@@ -1093,7 +1106,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  modules/registry/v2_booleans.py
  inline_cap_reached>75  modules/domain/coding_rules/json_rules_evaluator.py
- inline_cap_reached>75  modules/registry/inference_onnx.py
+ inline_cap_reached>75  modules/api/routes/registry_runs.py
  inline_cap_reached>75  modules/autocode/ip_kb/canonical_rules.py
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
@@ -1111,6 +1124,7 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
  inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
+ inline_cap_reached>75  modules/registry/inference_onnx.py
  inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
@@ -1154,12 +1168,14 @@ Git: `refactor` @ `c524a9a`
  inline_cap_reached>75  modules/registry/postprocess.py
  inline_cap_reached>75  modules/registry/application/registry_service.py
     binary_or_non_utf8  docs/ARCHITECTURE.md
+     too_large>200000B  modules/api/static/phi_redactor/app.js
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
      too_large>200000B  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
      too_large>200000B  modules/api/static/phi_redactor/transformers.legacy.js
      too_large>200000B  modules/api/static/phi_redactor/transformers.min.js
+     too_large>200000B  modules/api/static/phi_redactor/registry_grid/registry_grid.iife.js
 ```
 
 ## Inlined file contents

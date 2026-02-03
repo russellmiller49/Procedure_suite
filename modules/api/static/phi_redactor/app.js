@@ -88,15 +88,22 @@ function getConfiguredRedactProviders() {
 }
 
 /**
- * Feature flag: enable embedded React-based Registry grid.
- * - Query param: ?reactGrid=1
- * - localStorage: ui.reactGrid=1
+ * Feature flag (opt-out): embedded React-based Registry grid.
+ * - Default: ON
+ * - Disable: ?reactGrid=0 or localStorage ui.reactGrid=0
+ * - Enable: ?reactGrid=1 or localStorage ui.reactGrid=1
  */
 function isReactRegistryGridEnabled() {
   const params = new URLSearchParams(location.search);
   const qp = params.get("reactGrid");
-  if (qp === "1") return true;
-  if (qp === "0") return false;
+  if (qp === "1" || qp === "0") {
+    try {
+      localStorage.setItem("ui.reactGrid", qp);
+    } catch {
+      // ignore storage failures (private mode)
+    }
+    return qp === "1";
+  }
 
   try {
     const ls = localStorage.getItem("ui.reactGrid");
@@ -106,7 +113,8 @@ function isReactRegistryGridEnabled() {
     // ignore storage failures (private mode)
   }
 
-  return false;
+  // Default ON (opt-out via ?reactGrid=0 or localStorage ui.reactGrid=0).
+  return true;
 }
 
 /**

@@ -53,3 +53,14 @@ def test_reconcile_ebus_sampling_from_specimen_log_restricts_station_count() -> 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
     assert "31652" in codes
     assert "31653" not in codes
+
+    evidence = record.evidence
+    assert evidence.get("procedures_performed.linear_ebus.stations_sampled.0"), "Missing evidence for stations_sampled[0]"
+    assert evidence.get("procedures_performed.linear_ebus.stations_sampled.1"), "Missing evidence for stations_sampled[1]"
+    assert evidence.get("procedures_performed.linear_ebus.node_events.0.station"), "Missing evidence for node_events[0].station"
+    assert evidence.get("procedures_performed.linear_ebus.node_events.2.station"), "Missing evidence for node_events[2].station"
+
+    span_4l = evidence["procedures_performed.linear_ebus.stations_sampled.0"][0]
+    span_7 = evidence["procedures_performed.linear_ebus.stations_sampled.1"][0]
+    assert note_text[span_4l.start:span_4l.end].upper() == "4L"
+    assert note_text[span_7.start:span_7.end] == "7"

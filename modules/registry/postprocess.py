@@ -2905,7 +2905,7 @@ _EBUS_SPECIMEN_SECTION_STOP_RE = re.compile(
 )
 
 
-def _extract_tbna_stations_from_specimen_log(full_text: str) -> dict[str, str]:
+def _extract_tbna_stations_from_specimen_log(full_text: str) -> dict[str, dict[str, object]]:
     if not full_text:
         return {}
 
@@ -2915,21 +2915,52 @@ def _extract_tbna_stations_from_specimen_log(full_text: str) -> dict[str, str]:
 
     from modules.ner.entity_types import normalize_station
 
-    stations: dict[str, str] = {}
+    stations: dict[str, dict[str, object]] = {}
     tail = full_text[header.end() :]
-    for line in tail.splitlines():
-        if not line.strip():
+    cursor = header.end()
+    for raw_line in tail.splitlines(keepends=True):
+        line = raw_line.rstrip("\r\n")
+        stripped = line.strip()
+        if not stripped:
             if stations:
                 break
+            cursor += len(raw_line)
             continue
         if _EBUS_SPECIMEN_SECTION_STOP_RE.search(line) and stations:
             break
         if not _EBUS_SPECIMEN_TBNA_LINE_RE.search(line):
+            cursor += len(raw_line)
             continue
+
+        # Global offsets for the stripped line (best-effort; used for evidence_quote highlighting).
+        leading_ws = len(line) - len(line.lstrip())
+        trailing_len = len(line.rstrip())
+        line_start = cursor + leading_ws
+        line_end = cursor + trailing_len
+
         for match in _EBUS_STATION_TOKEN_RE.finditer(line):
             station = normalize_station(match.group(1) or "")
-            if station:
-                stations.setdefault(station, line.strip())
+            if not station:
+                continue
+
+            token_start = cursor + match.start(1)
+            token_end = cursor + match.end(1)
+            if token_end <= token_start:
+                continue
+
+            stations.setdefault(
+                station,
+                {
+                    "station": station,
+                    "evidence_quote": stripped,
+                    "token_start": int(token_start),
+                    "token_end": int(token_end),
+                    "line_start": int(line_start),
+                    "line_end": int(line_end),
+                },
+            )
+
+        cursor += len(raw_line)
 
     return stations
 
@@ -2948,21 +2979,28 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
     if not full_text:
         return warnings
 
-    station_to_line = _extract_tbna_stations_from_specimen_log(full_text)
-    if not station_to_line:
+    station_to_meta = _extract_tbna_stations_from_specimen_log(full_text)
+    if not station_to_meta:
         return warnings
 
-    confirmed = sorted(station_to_line.keys())
+    confirmed = sorted(station_to_meta.keys())
     existing = getattr(linear, "node_events", None)
     node_events = list(existing) if isinstance(existing, list) else []
 
     sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
 
-    confirmed_meta: dict[str, dict[str, str]] = {}
-    for station, line in station_to_line.items():
+    confirmed_meta: dict[str, dict[str, object]] = {}
+    for station, meta in station_to_meta.items():
         token = str(station).strip().upper()
         if token:
-            confirmed_meta[token] = {"station": str(station).strip(), "evidence_quote": str(line).strip()}
+            confirmed_meta[token] = {
+                "station": str(station).strip(),
+                "evidence_quote": str(meta.get("evidence_quote") or "").strip(),
+                "token_start": meta.get("token_start"),
+                "token_end": meta.get("token_end"),
+                "line_start": meta.get("line_start"),
+                "line_end": meta.get("line_end"),
+            }
 
     from modules.registry.schema import NodeInteraction
 
@@ -2997,6 +3035,61 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
     setattr(linear, "node_events", node_events)
     if hasattr(linear, "stations_sampled"):
         setattr(linear, "stations_sampled", confirmed if confirmed else None)
+
+    # Best-effort evidence spans for UI highlighting.
+    try:
+        from modules.common.spans import Span
+
+        evidence = getattr(record, "evidence", None)
+        if not isinstance(evidence, dict):
+            evidence = {}
+
+        for idx, station in enumerate(confirmed):
+            meta = station_to_meta.get(station) if isinstance(station, str) else None
+            if not isinstance(meta, dict):
+                continue
+            start = meta.get("token_start")
+            end = meta.get("token_end")
+            if isinstance(start, int) and isinstance(end, int) and end > start:
+                evidence.setdefault(
+                    f"procedures_performed.linear_ebus.stations_sampled.{idx}",
+                    [],
+                ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
+
+        for idx, event in enumerate(node_events):
+            station = getattr(event, "station", None)
+            if not isinstance(station, str) or not station.strip():
+                continue
+            meta = confirmed_meta.get(station.strip().upper())
+            if not isinstance(meta, dict):
+                continue
+
+            start = meta.get("token_start")
+            end = meta.get("token_end")
+            if isinstance(start, int) and isinstance(end, int) and end > start:
+                evidence.setdefault(
+                    f"procedures_performed.linear_ebus.node_events.{idx}.station",
+                    [],
+                ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
+
+            line_start = meta.get("line_start")
+            line_end = meta.get("line_end")
+            if isinstance(line_start, int) and isinstance(line_end, int) and line_end > line_start:
+                evidence.setdefault(
+                    f"procedures_performed.linear_ebus.node_events.{idx}.evidence_quote",
+                    [],
+                ).append(
+                    Span(
+                        text=full_text[line_start:line_end].strip(),
+                        start=line_start,
+                        end=line_end,
+                        confidence=0.9,
+                    )
+                )
+
+        record.evidence = evidence
+    except Exception:
+        pass
 
     warnings.append(f"EBUS_SPECIMEN_OVERRIDE: stations_sampled={confirmed} from specimen log TBNA entries.")
     return warnings
@@ -3195,13 +3288,18 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
     from modules.registry.schema import NodeInteraction
 
     station_events: dict[str, NodeInteraction] = {}
+    station_evidence: dict[str, dict[str, int]] = {}
     stations_sampled: list[str] = []
     in_sampled_section = False
     in_station_list = False
     station_list_default_sampling = False
     station_list_seen_station = False
 
-    for line in full_text.splitlines():
+    cursor = 0
+    for raw_line in full_text.splitlines(keepends=True):
+        line_offset = cursor
+        cursor += len(raw_line)
+        line = raw_line.rstrip("\r\n")
         if _EBUS_SAMPLED_SECTION_RE.search(line):
             in_sampled_section = True
             continue
@@ -3257,9 +3355,12 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
 
         action = "needle_aspiration" if sampling and not negated else "inspected_only"
 
-        station_tokens: list[str] = []
+        station_tokens: list[tuple[str, int, int]] = []
         for match in _EBUS_FALLBACK_STATION_RE.finditer(line):
-            station_tokens.append(match.group(1) or "")
+            token = match.group(1) or ""
+            start = line_offset + match.start(1)
+            end = line_offset + match.end(1)
+            station_tokens.append((token, start, end))
         if in_sampled_section or in_station_list or "lymph node" in line.lower():
             for match in _EBUS_STATION_TOKEN_RE.finditer(line):
                 token = match.group(1) or ""
@@ -3278,9 +3379,16 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                         or re.search(r"\b(?:node|ln|lymph|subcarinal|paratracheal)\b|\(", lookahead)
                     ):
                         continue
-                station_tokens.append(token)
+                start = line_offset + match.start(1)
+                end = line_offset + match.end(1)
+                station_tokens.append((token, start, end))
 
-        for token in station_tokens:
+        leading_ws = len(line) - len(line.lstrip())
+        trailing_len = len(line.rstrip())
+        quote_start = line_offset + leading_ws
+        quote_end = line_offset + trailing_len
+
+        for token, token_start, token_end in station_tokens:
             station = normalize_station(token)
             if not station:
                 continue
@@ -3290,6 +3398,12 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                     existing.action = action
                     existing.evidence_quote = line.strip()
                     stations_sampled.append(station)
+                    station_evidence[station] = {
+                        "token_start": int(token_start),
+                        "token_end": int(token_end),
+                        "quote_start": int(quote_start),
+                        "quote_end": int(quote_end),
+                    }
                 continue
             station_events[station] = NodeInteraction(
                 station=station,
@@ -3297,6 +3411,12 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                 outcome=None,
                 evidence_quote=line.strip(),
             )
+            station_evidence[station] = {
+                "token_start": int(token_start),
+                "token_end": int(token_end),
+                "quote_start": int(quote_start),
+                "quote_end": int(quote_end),
+            }
             if action != "inspected_only":
                 stations_sampled.append(station)
 
@@ -3312,21 +3432,108 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
             )
         if tbna_match and not _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(tbna_match.group(0) or ""):
             snippet = re.sub(r"\s+", " ", (tbna_match.group(0) or "").strip())
+            start = int(tbna_match.start())
+            end = int(tbna_match.end())
             station_events["UNSPECIFIED"] = NodeInteraction(
                 station="UNSPECIFIED",
                 action="needle_aspiration",
                 outcome=None,
                 evidence_quote=snippet[:280] if snippet else "EBUS-TBNA sampling documented (stations not specified).",
             )
+            station_evidence["UNSPECIFIED"] = {
+                "token_start": start,
+                "token_end": end,
+                "quote_start": start,
+                "quote_end": end,
+            }
             setattr(linear, "node_events", list(station_events.values()))
             if hasattr(linear, "stations_sampled"):
                 setattr(linear, "stations_sampled", ["UNSPECIFIED"])
+            try:
+                from modules.common.spans import Span
+
+                evidence = getattr(record, "evidence", None)
+                if not isinstance(evidence, dict):
+                    evidence = {}
+                text = full_text[start:end].strip()
+                evidence.setdefault("procedures_performed.linear_ebus.stations_sampled.0", []).append(
+                    Span(text=text, start=start, end=end, confidence=0.9)
+                )
+                evidence.setdefault("procedures_performed.linear_ebus.node_events.0.station", []).append(
+                    Span(text=text, start=start, end=end, confidence=0.9)
+                )
+                evidence.setdefault("procedures_performed.linear_ebus.node_events.0.evidence_quote", []).append(
+                    Span(text=text, start=start, end=end, confidence=0.9)
+                )
+                record.evidence = evidence
+            except Exception:
+                pass
             warnings.append("EBUS_FALLBACK: sampling documented but stations missing; added placeholder node_event.")
         return warnings
 
     setattr(linear, "node_events", list(station_events.values()))
     if hasattr(linear, "stations_sampled"):
         setattr(linear, "stations_sampled", sorted(set(stations_sampled)) if stations_sampled else None)
+
+    # Best-effort evidence spans for UI highlighting.
+    try:
+        from modules.common.spans import Span
+
+        evidence = getattr(record, "evidence", None)
+        if not isinstance(evidence, dict):
+            evidence = {}
+
+        node_events = getattr(linear, "node_events", None)
+        if isinstance(node_events, list):
+            for idx, event in enumerate(node_events):
+                station = getattr(event, "station", None)
+                if not isinstance(station, str) or not station.strip():
+                    continue
+                meta = station_evidence.get(station)
+                if not isinstance(meta, dict):
+                    continue
+                start = meta.get("token_start")
+                end = meta.get("token_end")
+                if isinstance(start, int) and isinstance(end, int) and end > start:
+                    evidence.setdefault(
+                        f"procedures_performed.linear_ebus.node_events.{idx}.station",
+                        [],
+                    ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
+
+                quote_start = meta.get("quote_start")
+                quote_end = meta.get("quote_end")
+                if isinstance(quote_start, int) and isinstance(quote_end, int) and quote_end > quote_start:
+                    evidence.setdefault(
+                        f"procedures_performed.linear_ebus.node_events.{idx}.evidence_quote",
+                        [],
+                    ).append(
+                        Span(
+                            text=full_text[quote_start:quote_end].strip(),
+                            start=quote_start,
+                            end=quote_end,
+                            confidence=0.9,
+                        )
+                    )
+
+        sampled = getattr(linear, "stations_sampled", None)
+        if isinstance(sampled, list):
+            for idx, station in enumerate(sampled):
+                if not isinstance(station, str) or not station.strip():
+                    continue
+                meta = station_evidence.get(station)
+                if not isinstance(meta, dict):
+                    continue
+                start = meta.get("token_start")
+                end = meta.get("token_end")
+                if isinstance(start, int) and isinstance(end, int) and end > start:
+                    evidence.setdefault(
+                        f"procedures_performed.linear_ebus.stations_sampled.{idx}",
+                        [],
+                    ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
+
+        record.evidence = evidence
+    except Exception:
+        pass
 
     warnings.append("EBUS_REGEX_FALLBACK: populated node_events from station lines.")
     return warnings

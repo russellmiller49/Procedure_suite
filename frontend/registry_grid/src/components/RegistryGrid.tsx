@@ -58,7 +58,177 @@ function hasEditedValue(row: RegistryRow): boolean {
 }
 
 function isEditableValueType(valueType: ValueType): boolean {
-  return valueType === "boolean" || valueType === "number" || valueType === "string";
+  return valueType === "null" || valueType === "boolean" || valueType === "number" || valueType === "string";
+}
+
+type NullEditKind = "text" | "number" | "boolean";
+
+function inferNullEditKind(value: unknown): NullEditKind {
+  if (typeof value === "boolean") return "boolean";
+  if (typeof value === "number") return "number";
+  return "text";
+}
+
+type NullEditCellProps = {
+  row: RegistryRow;
+  onEditValue?: (row: RegistryRow, nextValue: unknown) => void;
+  onClearEdit?: (row: RegistryRow) => void;
+};
+
+function NullEditCell({ row, onEditValue, onClearEdit }: NullEditCellProps) {
+  const edited = row.editedValueRaw;
+  const hasEdit = edited !== null && edited !== undefined;
+  const disabled = !onEditValue;
+
+  const [kind, setKind] = useState<NullEditKind>(() => inferNullEditKind(hasEdit ? edited : null));
+
+  const commit = (nextValue: unknown) => {
+    if (!onEditValue) return;
+    onEditValue(row, nextValue);
+  };
+
+  const revert = () => onClearEdit?.(row);
+
+  if (kind === "boolean") {
+    let current = "";
+    if (hasEdit) {
+      if (typeof edited === "boolean") current = edited ? "true" : "false";
+      else if (typeof edited === "string") {
+        const normalized = edited.trim().toLowerCase();
+        if (normalized === "true" || normalized === "yes") current = "true";
+        else if (normalized === "false" || normalized === "no") current = "false";
+      } else if (typeof edited === "number") {
+        if (Number.isFinite(edited)) current = edited === 0 ? "false" : "true";
+      }
+    }
+    return (
+      <div className="ps-edit-cell">
+        <select
+          className="ps-edit-select"
+          value={kind}
+          onChange={(e) => setKind(e.target.value as NullEditKind)}
+          disabled={disabled}
+          title="Type"
+        >
+          <option value="text">Text</option>
+          <option value="number">Number</option>
+          <option value="boolean">Yes/No</option>
+        </select>
+        <select
+          className={hasEdit ? "ps-edit-select ps-edited" : "ps-edit-select"}
+          value={current}
+          onChange={(e) => {
+            const v = String(e.target.value || "");
+            if (!v) {
+              revert();
+              return;
+            }
+            commit(v === "true");
+          }}
+          disabled={disabled}
+          title="Set value"
+        >
+          <option value="">—</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+        {hasEdit ? (
+          <button type="button" className="ps-edit-revert" onClick={revert} title="Revert edit">
+            ↩
+          </button>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (kind === "number") {
+    const current = hasEdit ? String(edited ?? "") : "";
+    return (
+      <div className="ps-edit-cell">
+        <select
+          className="ps-edit-select"
+          value={kind}
+          onChange={(e) => setKind(e.target.value as NullEditKind)}
+          disabled={disabled}
+          title="Type"
+        >
+          <option value="text">Text</option>
+          <option value="number">Number</option>
+          <option value="boolean">Yes/No</option>
+        </select>
+        <input
+          key={`${row.id}:null:num:${current}`}
+          className={hasEdit ? "ps-edit-input ps-edited" : "ps-edit-input"}
+          type="number"
+          inputMode="decimal"
+          defaultValue={current}
+          placeholder=""
+          onBlur={(e) => {
+            const text = String((e.target as HTMLInputElement).value || "").trim();
+            if (!text) {
+              revert();
+              return;
+            }
+            const num = Number(text);
+            if (!Number.isFinite(num)) return;
+            commit(num);
+          }}
+          onKeyDown={(e) => {
+            if (e.key !== "Enter") return;
+            (e.target as HTMLInputElement).blur();
+          }}
+          disabled={disabled}
+        />
+        {hasEdit ? (
+          <button type="button" className="ps-edit-revert" onClick={revert} title="Revert edit">
+            ↩
+          </button>
+        ) : null}
+      </div>
+    );
+  }
+
+  const current = hasEdit ? String(edited ?? "") : "";
+  return (
+    <div className="ps-edit-cell">
+      <select
+        className="ps-edit-select"
+        value={kind}
+        onChange={(e) => setKind(e.target.value as NullEditKind)}
+        disabled={disabled}
+        title="Type"
+      >
+        <option value="text">Text</option>
+        <option value="number">Number</option>
+        <option value="boolean">Yes/No</option>
+      </select>
+      <input
+        key={`${row.id}:null:text:${current}`}
+        className={hasEdit ? "ps-edit-input ps-edited" : "ps-edit-input"}
+        type="text"
+        defaultValue={current}
+        placeholder=""
+        onBlur={(e) => {
+          const text = String((e.target as HTMLInputElement).value ?? "");
+          if (!text.trim()) {
+            revert();
+            return;
+          }
+          commit(text);
+        }}
+        onKeyDown={(e) => {
+          if (e.key !== "Enter") return;
+          (e.target as HTMLInputElement).blur();
+        }}
+        disabled={disabled}
+      />
+      {hasEdit ? (
+        <button type="button" className="ps-edit-revert" onClick={revert} title="Revert edit">
+          ↩
+        </button>
+      ) : null}
+    </div>
+  );
 }
 
 function deriveVisibleRows(
@@ -278,6 +448,10 @@ export function RegistryGrid({
             onEditValue(row, nextValue);
           };
           const revert = () => onClearEdit?.(row);
+
+          if (valueType === "null") {
+            return <NullEditCell key={row.id} row={row} onEditValue={onEditValue} onClearEdit={onClearEdit} />;
+          }
 
           if (valueType === "boolean") {
             const val = hasEdit ? Boolean(edited) : Boolean(extracted);

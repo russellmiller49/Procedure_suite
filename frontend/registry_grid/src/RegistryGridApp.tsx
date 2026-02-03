@@ -16,9 +16,10 @@ type Props = {
 
 function formatValueForType(valueType: string, value: unknown): string {
   if (value === null || value === undefined) return "—";
-  if (valueType === "boolean") return value ? "Yes" : "No";
-  if (valueType === "number") return typeof value === "number" && Number.isFinite(value) ? String(value) : "—";
-  if (valueType === "string") return String(value ?? "");
+  if (valueType === "boolean" || typeof value === "boolean") return value ? "Yes" : "No";
+  if (valueType === "number" || typeof value === "number")
+    return typeof value === "number" && Number.isFinite(value) ? String(value) : "—";
+  if (valueType === "string" || typeof value === "string") return String(value ?? "");
   return String(value ?? "—");
 }
 
