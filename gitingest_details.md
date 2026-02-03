@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-02T14:25:06-08:00`
-Git: `IU_upgrade` @ `076854d`
+Generated: `2026-02-03T09:28:28-08:00`
+Git: `IU_upgrade` @ `972005d`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -337,11 +337,9 @@ Git: `IU_upgrade` @ `076854d`
      2196  modules/registry/self_correction/__init__.py
      2222  modules/api/routes/unified_process.py
      2225  tests/registry/test_sedation_blvr.py
-     2237  tests/registry/test_ebus_postprocess_fallback.py
      2250  modules/ml_coder/self_correction.py
      2253  tests/unit/test_phi_distillation.py
      2275  tests/registry/test_pathology_extraction.py
-     2307  tests/registry/test_ebus_specimen_override.py
      2320  modules/registry/slots/sedation.py
      2324  tests/registry/test_schema_refactor_smoke.py
      2346  tests/conftest.py
@@ -380,6 +378,7 @@ Git: `IU_upgrade` @ `076854d`
      3076  modules/api/adapters/response_adapter.py
      3104  modules/coder/ebus_extractor.py
      3106  tests/registry/test_note_281_granularity_regression.py
+     3122  tests/registry/test_ebus_specimen_override.py
      3131  modules/registry/adapters/schema_registry.py
      3141  tests/unit/test_validation_engine.py
      3163  modules/ml_coder/distillation_io.py
@@ -395,6 +394,7 @@ Git: `IU_upgrade` @ `076854d`
      3277  tests/registry/test_focusing_audit_guardrail.py
      3307  modules/registry/legacy/adapter.py
      3314  tests/registry/test_disease_burden_extractor.py
+     3386  tests/registry/test_ebus_postprocess_fallback.py
      3391  modules/coder/peripheral_extractor.py
      3399  modules/infra/settings.py
      3471  tests/registry/test_v3_note_281_narrative_first_and_anchors.py
@@ -636,7 +636,7 @@ Git: `IU_upgrade` @ `076854d`
     63511  modules/reporting/engine.py
    101740  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
-   134579  modules/registry/postprocess.py
+   143326  modules/registry/postprocess.py
    159182  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json

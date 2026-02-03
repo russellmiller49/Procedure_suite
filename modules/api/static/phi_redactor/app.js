@@ -661,19 +661,24 @@ function updateFeedbackButtons() {
   }
 }
 
-function resetRunState() {
-  currentRunId = null;
-  feedbackSubmitted = false;
-  setFeedbackStatus("");
-  updateFeedbackButtons();
-}
+  function resetRunState() {
+    currentRunId = null;
+    feedbackSubmitted = false;
+    setFeedbackStatus("");
+    updateFeedbackButtons();
+  }
 
-function setRunId(runId) {
-  currentRunId = runId || null;
-  feedbackSubmitted = false;
-  setFeedbackStatus("");
-  updateFeedbackButtons();
-}
+  function resetFeedbackDraft() {
+    if (feedbackRatingEl) feedbackRatingEl.value = feedbackRatingEl.defaultValue || "8";
+    if (feedbackCommentEl) feedbackCommentEl.value = feedbackCommentEl.defaultValue || "";
+  }
+
+  function setRunId(runId) {
+    currentRunId = runId || null;
+    feedbackSubmitted = false;
+    setFeedbackStatus("");
+    updateFeedbackButtons();
+  }
 
 async function confirmPhiRemoval() {
   if (!phiConfirmModalEl || typeof phiConfirmModalEl.showModal !== "function") {
@@ -6126,26 +6131,27 @@ async function main() {
     });
   }
 
-  if (newNoteBtn) {
-    newNoteBtn.addEventListener("click", () => {
-      if (running) return;
-      suppressDirtyFlag = true;
-      try {
-        if (!usingPlainEditor && editor) editor.setValue("");
-        else model.setValue("");
-      } finally {
-        suppressDirtyFlag = false;
-      }
-      originalText = "";
-      hasRunDetection = false;
-      setScrubbedConfirmed(false);
-      clearDetections();
-      clearResultsUi();
-      setStatus("Ready for new note");
-      setProgress("");
-      if (runBtn) runBtn.disabled = !workerReady;
-    });
-  }
+	  if (newNoteBtn) {
+	    newNoteBtn.addEventListener("click", () => {
+	      if (running) return;
+	      suppressDirtyFlag = true;
+	      try {
+	        if (!usingPlainEditor && editor) editor.setValue("");
+	        else model.setValue("");
+	      } finally {
+	        suppressDirtyFlag = false;
+	      }
+	      originalText = "";
+	      hasRunDetection = false;
+	      setScrubbedConfirmed(false);
+	      clearDetections();
+	      clearResultsUi();
+	      resetFeedbackDraft();
+	      setStatus("Ready for new note");
+	      setProgress("");
+	      if (runBtn) runBtn.disabled = !workerReady;
+	    });
+	  }
 
   // Optional: service worker (local assets only)
   if ("serviceWorker" in navigator && new URL(location.href).searchParams.get("sw") === "1") {
