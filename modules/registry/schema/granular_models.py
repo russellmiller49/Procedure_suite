@@ -271,6 +271,48 @@ class AirwayStentProcedure(BaseModel):
     ] | None = None
     deployment_successful: bool | None = None
 
+    @field_validator("action", mode="before")
+    @classmethod
+    def normalize_stent_action(cls, v):
+        """Map common free-text stent actions into the constrained enum.
+
+        Self-correction (and occasionally extraction) can emit compound strings like
+        "Removal and Insertion", which would otherwise fail Literal validation.
+        """
+        if v is None:
+            return None
+        raw = str(v).strip()
+        if not raw:
+            return None
+
+        allowed = {
+            "Placement",
+            "Removal",
+            "Revision/Repositioning",
+            "Assessment only",
+        }
+        if raw in allowed:
+            return raw
+
+        s = raw.lower()
+
+        # Revision covers removal + replacement/exchange semantics (CPT 31638 family).
+        if "remov" in s and any(token in s for token in ("insert", "plac", "deploy", "replac", "exchang")):
+            return "Revision/Repositioning"
+        if any(token in s for token in ("revision", "reposition", "exchange", "replace", "replac")):
+            return "Revision/Repositioning"
+
+        if any(token in s for token in ("plac", "insert", "deploy", "implant", "position")):
+            return "Placement"
+        if any(token in s for token in ("remov", "retriev", "extract", "explant", "pull", "peel", "grasp")):
+            return "Removal"
+
+        if any(token in s for token in ("assess", "inspect", "evaluat", "check", "patent", "intact")):
+            return "Assessment only"
+
+        # Conservative fallback: preserve pipeline stability by treating as unknown.
+        return None
+
     @field_validator("location", mode="before")
     @classmethod
     def normalize_stent_location(cls, v):

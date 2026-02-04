@@ -438,6 +438,70 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
                 target["rose_performed"] = True
                 target["rose_result"] = rose_text[:240]
 
+        if targets:
+            return targets
+
+        # Fallback: some templates use navigation prose ("... used to engage the <segment> of RLL (RB6)")
+        # without explicit "... TARGET" headings or inline "Target:" markers. Treat each distinct "engage"
+        # location as a navigation target.
+        engage_matches = list(_ENGAGE_LOCATION_RE.finditer(scan_text))
+        if not engage_matches:
+            return []
+
+        seen_locations: set[str] = set()
+        for engage in engage_matches:
+            segment = (engage.group("segment") or "").strip() or None
+            lobe = _normalize_lobe(engage.group("lobe")) or None
+            bronchus = (engage.group("bronchus") or "").strip()
+
+            if segment and lobe and bronchus:
+                location_text = f"{segment} of {lobe} ({bronchus})"
+            elif segment and lobe:
+                location_text = f"{segment} of {lobe}"
+            elif lobe:
+                location_text = f"{lobe} target"
+            else:
+                location_text = "Unknown target"
+
+            location_text = _truncate_location(location_text)
+            if not location_text:
+                continue
+
+            # Deduplicate identical locations (common when notes repeat the same "engage ..." sentence).
+            if location_text.lower() in seen_locations:
+                continue
+            seen_locations.add(location_text.lower())
+
+            # Local window: look for lesion size near the engage statement.
+            window = scan_text[engage.start() : min(len(scan_text), engage.start() + 800)]
+            lesion_size_mm: float | None = None
+            cm = _TARGET_LESION_SIZE_CM_RE.search(window)
+            if cm:
+                lesion_size_mm = _coerce_float(cm.group(1))
+                if lesion_size_mm is not None:
+                    lesion_size_mm *= 10.0
+            else:
+                mm = _TARGET_LESION_SIZE_MM_RE.search(window)
+                if mm:
+                    lesion_size_mm = _coerce_float(mm.group(1))
+
+            target: dict[str, Any] = {
+                "target_number": len(targets) + 1,
+                "target_location_text": location_text,
+            }
+            if lobe:
+                target["target_lobe"] = lobe
+            if segment:
+                target["target_segment"] = segment
+            if lesion_size_mm is not None:
+                target["lesion_size_mm"] = lesion_size_mm
+
+            ct_char = _detect_ct_characteristics(window)
+            if ct_char:
+                target["ct_characteristics"] = ct_char
+
+            targets.append(target)
+
         return targets
 
     def _header_label_suffix(header_text: str) -> str | None:

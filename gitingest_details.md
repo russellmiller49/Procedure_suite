@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-03T09:28:28-08:00`
-Git: `IU_upgrade` @ `972005d`
+Generated: `2026-02-04T13:25:42-08:00`
+Git: `updates_2_3_26` @ `b4429e3`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -54,13 +54,13 @@ Git: `IU_upgrade` @ `972005d`
      5339  scripts/validate_ner_alignment.py
      5450  scripts/sanitize_platinum_spans.py
      5540  scripts/build_registry_bundle.py
-     5847  scripts/validate_knowledge_release.py
      5928  scripts/ingest_phase0_data.py
      5946  scripts/normalize_phi_labels.py
      6097  scripts/bootstrap_granular_ner_bundle.py
      6388  scripts/bootstrap_phi_redactor_vendor_bundle.py
      6413  scripts/add_training_case.py
      6444  scripts/eval_registry_granular.py
+     6675  scripts/validate_knowledge_release.py
      6716  scripts/knowledge_diff_report.py
      6757  scripts/merge_registry_prodigy.py
      6875  scripts/prodigy_export_registry.py
@@ -77,6 +77,7 @@ Git: `IU_upgrade` @ `972005d`
      8397  scripts/prodigy_prepare_registry_relabel_batch.py
      9036  scripts/find_critical_failures.py
      9076  scripts/fit_thresholds_from_eval.py
+     9084  scripts/generate_procedure_suite_one_pager_pdf.py
      9264  scripts/clean_distilled_phi_labels.py
      9583  scripts/registry_label_overlap_report.py
      9603  scripts/align_synthetic_names.py
@@ -192,6 +193,7 @@ Git: `IU_upgrade` @ `972005d`
       553  tests/registry/test_registry_to_cpt_airway_stent_assessment_only.py
       554  modules/registry/schema/ip_v3.py
       561  tests/registry/test_keyword_guard_high_conf_bypass.py
+      568  tests/registry/test_note_047_regression.py
       573  modules/phi/adapters/__init__.py
       576  modules/api/__init__.py
       579  tests/scripts/test_audit_model_fp_logic.py
@@ -279,10 +281,10 @@ Git: `IU_upgrade` @ `972005d`
      1412  tests/registry/test_registry_engine_merge_llm_and_seed.py
      1423  tests/registry/test_keyword_guard_keywords.py
      1426  tests/registry/test_llm_timeout_fallback.py
-     1442  modules/domain/reasoning/models.py
      1450  tests/registry/test_airway_stent_vascular_plug_revision.py
      1451  tests/coding/test_ebus_rules.py
      1461  modules/phi/db.py
+     1470  modules/domain/reasoning/models.py
      1476  modules/registry/schema_granular.py
      1477  tests/registry/test_ner_to_registry_mapper.py
      1493  tests/coding/test_hierarchy_normalization.py
@@ -298,7 +300,6 @@ Git: `IU_upgrade` @ `972005d`
      1675  modules/infra/llm_control.py
      1676  tests/scripts/test_prodigy_export_registry.py
      1687  tests/scripts/test_export_patient_note_texts.py
-     1708  proc_schemas/reasoning.py
      1717  tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
      1731  modules/domain/text/negation.py
      1731  tests/registry/test_note_279_regression.py
@@ -307,6 +308,7 @@ Git: `IU_upgrade` @ `972005d`
      1767  tests/registry/test_navigation_fiducials.py
      1767  tests/utils/case_filter.py
      1828  tests/registry/test_registry_to_cpt_diagnostic_bronchoscopy.py
+     1833  proc_schemas/reasoning.py
      1835  modules/registry/slots/tblb.py
      1842  tests/registry/test_pleural_extraction.py
      1847  modules/coder/parallel_pathway/reconciler.py
@@ -383,7 +385,6 @@ Git: `IU_upgrade` @ `972005d`
      3141  tests/unit/test_validation_engine.py
      3163  modules/ml_coder/distillation_io.py
      3166  tests/registry/test_phase5_regression_harness.py
-     3169  proc_nlp/umls_linker.py
      3186  modules/registry/summarize.py
      3188  modules/common/rules_engine/dsl.py
      3202  tests/registry/test_navigation_targets_inline_target.py
@@ -399,11 +400,12 @@ Git: `IU_upgrade` @ `972005d`
      3399  modules/infra/settings.py
      3471  tests/registry/test_v3_note_281_narrative_first_and_anchors.py
      3513  tests/unit/test_sanitize_dataset.py
-     3532  proc_schemas/coding.py
      3622  modules/coder/posthoc.py
      3624  tests/registry/test_parallel_ner_uplift_evidence.py
      3627  tests/scripts/test_prodigy_prepare_registry.py
+     3644  proc_schemas/coding.py
      3656  proc_schemas/registry/ip_v2.py
+     3663  proc_nlp/umls_linker.py
      3682  modules/coder/sectionizer.py
      3694  modules/ml_coder/registry_label_schema.py
      3704  modules/registry/slots/blvr.py
@@ -414,9 +416,9 @@ Git: `IU_upgrade` @ `972005d`
      3831  modules/api/phi_dependencies.py
      3862  tests/integration/test_pipeline_integrity.py
      3899  modules/registry/extraction/focus.py
-     3937  config/settings.py
      3944  modules/ml_coder/registry_label_constraints.py
      3958  modules/coder/schema.py
+     3965  config/settings.py
      3970  modules/agents/contracts.py
      3996  modules/registry/tags.py
      4078  modules/registry/self_correction/prompt_improvement.py
@@ -456,7 +458,6 @@ Git: `IU_upgrade` @ `972005d`
      5653  modules/phi/models.py
      5706  modules/registry/deterministic/anatomy.py
      5773  modules/api/schemas/base.py
-     5870  modules/infra/nlp_warmup.py
      6019  modules/ner/entity_types.py
      6042  tests/api/test_fastapi.py
      6131  tests/api/test_phi_redaction.py
@@ -472,6 +473,7 @@ Git: `IU_upgrade` @ `972005d`
      6438  modules/domain/procedure_store/repository.py
      6451  tests/phi/test_service.py
      6485  proc_schemas/clinical/pleural.py
+     6571  modules/infra/nlp_warmup.py
      6596  tests/registry/test_registry_qa_regressions.py
      6632  modules/coder/cli.py
      6646  tests/unit/test_protected_veto.py
@@ -489,6 +491,7 @@ Git: `IU_upgrade` @ `972005d`
      7672  modules/coder/adapters/ml_ranker.py
      7827  tests/registry/test_registry_extraction_ebus.py
      7837  tests/unit/test_no_legacy_imports.py
+     7977  tests/registry/test_fixpack_batch2.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
      8227  tests/coder/test_rules_engine.py
@@ -514,7 +517,6 @@ Git: `IU_upgrade` @ `972005d`
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
     10466  modules/api/routes_registry.py
-    10601  modules/registry/self_correction/validation.py
     10791  tests/unit/test_inmemory_procedure_store.py
     10938  tests/registry/test_ebus_config_station_count.py
     11181  tests/test_phi_redaction_contract.py
@@ -523,12 +525,14 @@ Git: `IU_upgrade` @ `972005d`
     11392  modules/common/knowledge.py
     11467  modules/api/routes/phi.py
     11691  modules/registry/legacy/adapters/pleural.py
+    11728  modules/registry/self_correction/validation.py
     11758  modules/registry/evidence/verifier.py
     11799  modules/registry/application/pathology_extraction.py
-    11881  modules/registry/ner_mapping/procedure_extractor.py
+    11878  modules/registry/ner_mapping/procedure_extractor.py
     12339  modules/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
     12517  modules/registry/extractors/v3_extractor.py
+    12533  modules/domain/knowledge_base/validator.py
     12533  modules/registry/processing/masking.py
     12640  tests/ml_coder/test_data_prep.py
     12647  modules/registry/processing/linear_ebus_stations_detail.py
@@ -576,11 +580,11 @@ Git: `IU_upgrade` @ `972005d`
     17854  modules/coder/adapters/llm/gemini_advisor.py
     17939  tests/unit/test_template_coverage.py
     17947  modules/registry/normalization.py
-    18735  modules/registry/processing/cao_interventions_detail.py
     18769  modules/registry/inference_onnx.py
-    18774  modules/coder/adapters/persistence/csv_kb_adapter.py
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
+    19217  modules/registry/processing/cao_interventions_detail.py
+    19280  modules/coder/adapters/persistence/csv_kb_adapter.py
     19783  tests/integration/api/test_registry_endpoints.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
@@ -599,13 +603,13 @@ Git: `IU_upgrade` @ `972005d`
     22670  tests/ml_coder/test_registry_data_prep.py
     22706  modules/ml_coder/data_prep.py
     23485  docs/phi_review_system/backend/endpoints.py
-    23898  modules/registry/processing/navigation_targets.py
     24069  tests/ml_advisor/conftest.py
     24123  modules/registry/processing/disease_burden.py
     24922  tests/integration/api/test_coder_run_endpoint.py
     25665  modules/coder/application/smart_hybrid_policy.py
     25777  modules/reporting/macro_engine.py
     25946  modules/registry/schema/v2_dynamic.py
+    26498  modules/registry/processing/navigation_targets.py
     27507  modules/ml_coder/label_hydrator.py
     27574  modules/api/normalization.py
     27607  modules/registry/transform.py
@@ -614,7 +618,7 @@ Git: `IU_upgrade` @ `972005d`
     29893  modules/domain/coding_rules/coding_rules_engine.py
     30063  modules/api/ml_advisor_router.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
-    31334  modules/registry/schema/granular_models.py
+    32926  modules/registry/schema/granular_models.py
     33132  tests/registry/test_registry_service_hybrid_flow.py
     35268  tests/coding/test_rules_validation.py
     35381  modules/phi/adapters/phi_redactor_hybrid.py
@@ -625,20 +629,21 @@ Git: `IU_upgrade` @ `972005d`
     39279  tests/ml_advisor/test_schemas.py
     40683  modules/common/llm.py
     41901  modules/proc_ml_advisor/schemas.py
-    42913  modules/api/routes/procedure_codes.py
-    43918  tests/registry/test_granular_registry_models.py
+    42962  modules/api/routes/procedure_codes.py
+    44127  tests/registry/test_granular_registry_models.py
     44511  modules/api/fastapi_app.py
-    44690  modules/registry/schema/granular_logic.py
-    52780  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
-    53728  modules/extraction/postprocessing/clinical_guardrails.py
+    45391  modules/registry/schema/granular_logic.py
+    56180  modules/extraction/postprocessing/clinical_guardrails.py
     56672  modules/autocode/ip_kb/ip_kb.py
+    56683  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     62051  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-   101740  modules/registry/deterministic_extractors.py
+   109303  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
-   143326  modules/registry/postprocess.py
-   159182  modules/registry/application/registry_service.py
+   148063  modules/registry/postprocess.py
+   166831  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
+      118  tests/fixtures/regression_suite/README.md
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  modules/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  modules/reporting/templates/addons/eus_b.jinja
@@ -827,6 +832,7 @@ Git: `IU_upgrade` @ `972005d`
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  scripts/unified_pipeline_batch.py
  inline_cap_reached>75  scripts/verify_registry_human_data.py
  inline_cap_reached>75  scripts/sanitize_dataset.py
  inline_cap_reached>75  scripts/apply_platinum_redactions.py
@@ -955,8 +961,8 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/api/readiness.py
  inline_cap_reached>75  modules/registry/schema.py
  inline_cap_reached>75  modules/registry_store/phi_gate.py
- inline_cap_reached>75  modules/domain/reasoning/models.py
  inline_cap_reached>75  modules/phi/db.py
+ inline_cap_reached>75  modules/domain/reasoning/models.py
  inline_cap_reached>75  modules/registry/schema_granular.py
  inline_cap_reached>75  modules/domain/knowledge_base/repository.py
  inline_cap_reached>75  modules/registry/slots/complications.py
@@ -965,9 +971,9 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/coder/reconciliation/__init__.py
  inline_cap_reached>75  modules/registry/ml/__init__.py
  inline_cap_reached>75  modules/infra/llm_control.py
- inline_cap_reached>75  proc_schemas/reasoning.py
  inline_cap_reached>75  modules/domain/text/negation.py
  inline_cap_reached>75  modules/ml_coder/preprocessing.py
+ inline_cap_reached>75  proc_schemas/reasoning.py
  inline_cap_reached>75  modules/registry/slots/tblb.py
  inline_cap_reached>75  modules/coder/parallel_pathway/reconciler.py
  inline_cap_reached>75  modules/registry_store/dependencies.py
@@ -1011,7 +1017,6 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/coder/ebus_extractor.py
  inline_cap_reached>75  modules/registry/adapters/schema_registry.py
  inline_cap_reached>75  modules/ml_coder/distillation_io.py
- inline_cap_reached>75  proc_nlp/umls_linker.py
  inline_cap_reached>75  modules/registry/summarize.py
  inline_cap_reached>75  modules/common/rules_engine/dsl.py
  inline_cap_reached>75  proc_nlp/normalize_proc.py
@@ -1019,9 +1024,10 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/registry/legacy/adapter.py
  inline_cap_reached>75  modules/coder/peripheral_extractor.py
  inline_cap_reached>75  modules/infra/settings.py
- inline_cap_reached>75  proc_schemas/coding.py
  inline_cap_reached>75  modules/coder/posthoc.py
+ inline_cap_reached>75  proc_schemas/coding.py
  inline_cap_reached>75  proc_schemas/registry/ip_v2.py
+ inline_cap_reached>75  proc_nlp/umls_linker.py
  inline_cap_reached>75  modules/coder/sectionizer.py
  inline_cap_reached>75  modules/ml_coder/registry_label_schema.py
  inline_cap_reached>75  modules/registry/slots/blvr.py
@@ -1052,7 +1058,6 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/phi/models.py
  inline_cap_reached>75  modules/registry/deterministic/anatomy.py
  inline_cap_reached>75  modules/api/schemas/base.py
- inline_cap_reached>75  modules/infra/nlp_warmup.py
  inline_cap_reached>75  modules/ner/entity_types.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/coder/ncci.py
@@ -1061,6 +1066,7 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
  inline_cap_reached>75  modules/domain/procedure_store/repository.py
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
+ inline_cap_reached>75  modules/infra/nlp_warmup.py
  inline_cap_reached>75  modules/coder/cli.py
  inline_cap_reached>75  modules/reporting/ip_addons.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
@@ -1084,17 +1090,18 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
  inline_cap_reached>75  modules/api/routes_registry.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  modules/common/knowledge.py
  inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/registry/application/pathology_extraction.py
  inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
+ inline_cap_reached>75  modules/domain/knowledge_base/validator.py
  inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
@@ -1123,8 +1130,8 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/coder/reconciliation/reconciler.py
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
- inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/registry/inference_onnx.py
+ inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
@@ -1136,11 +1143,11 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/registry/legacy/adapters/airway.py
  inline_cap_reached>75  modules/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  modules/ml_coder/data_prep.py
- inline_cap_reached>75  modules/registry/processing/navigation_targets.py
  inline_cap_reached>75  modules/registry/processing/disease_burden.py
  inline_cap_reached>75  modules/coder/application/smart_hybrid_policy.py
  inline_cap_reached>75  modules/reporting/macro_engine.py
  inline_cap_reached>75  modules/registry/schema/v2_dynamic.py
+ inline_cap_reached>75  modules/registry/processing/navigation_targets.py
  inline_cap_reached>75  modules/ml_coder/label_hydrator.py
  inline_cap_reached>75  modules/api/normalization.py
  inline_cap_reached>75  modules/registry/transform.py
@@ -1158,9 +1165,9 @@ Git: `IU_upgrade` @ `972005d`
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
  inline_cap_reached>75  modules/api/fastapi_app.py
  inline_cap_reached>75  modules/registry/schema/granular_logic.py
- inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
+ inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/registry/prompts.py
  inline_cap_reached>75  modules/reporting/engine.py
  inline_cap_reached>75  modules/registry/deterministic_extractors.py
@@ -4891,176 +4898,6 @@ if __name__ == "__main__":
 ```
 
 ---
-### `scripts/validate_knowledge_release.py`
-- Size: `5847` bytes
-```
-#!/usr/bin/env python3
-"""Validate a knowledge+schema release locally (no external network calls).
-
-This script is intended to backstop knowledge/schema refactors:
-- Loads the KB via both the lightweight JSON loader and the main KB adapter
-- Validates the registry schema can build a RegistryRecord model
-- Runs a no-op extraction in the **parallel_ner** pathway to ensure nothing crashes at import/runtime
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import os
-import sys
-from pathlib import Path
-
-
-def _parse_args() -> argparse.Namespace:
-    ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--kb",
-        default="data/knowledge/ip_coding_billing_v3_0.json",
-        help="Path to knowledge base JSON (default: data/knowledge/ip_coding_billing_v3_0.json)",
-    )
-    ap.add_argument(
-        "--schema",
-        default="data/knowledge/IP_Registry.json",
-        help="Path to registry JSON schema (default: data/knowledge/IP_Registry.json)",
-    )
-    ap.add_argument(
-        "--no-op-note",
-        default="",
-        help="Note text for a no-op registry extraction run (default: empty string).",
-    )
-    ap.add_argument(
-        "--strict",
-        action="store_true",
-        help="Fail if KB filename semantic version mismatches internal version.",
-    )
-    return ap.parse_args()
-
-
-def _extract_semver_from_filename(path: Path) -> tuple[int, int] | None:
-    import re
-
-    m = re.search(r"_v(\d+)[._](\d+)\.json$", path.name)
-    if not m:
-        return None
-    return int(m.group(1)), int(m.group(2))
-
-
-def _extract_semver_from_kb_version(value: object) -> tuple[int, int] | None:
-    if not isinstance(value, str):
-        return None
-    parts = value.strip().lstrip("v").split(".")
-    if len(parts) < 2:
-        return None
-    try:
-        return int(parts[0]), int(parts[1])
-    except ValueError:
-        return None
-
-
-def main() -> int:
-    args = _parse_args()
-    kb_path = Path(args.kb)
-    schema_path = Path(args.schema)
-
-    if not kb_path.is_file():
-        print(f"ERROR: KB not found: {kb_path}", file=sys.stderr)
-        return 2
-    if not schema_path.is_file():
-        print(f"ERROR: Schema not found: {schema_path}", file=sys.stderr)
-        return 2
-
-    # 1) Basic JSON parse
-    try:
-        kb_json = json.loads(kb_path.read_text(encoding="utf-8"))
-    except Exception as exc:  # noqa: BLE001
-        print(f"ERROR: KB is not valid JSON: {kb_path} ({exc})", file=sys.stderr)
-        return 2
-
-    kb_version = kb_json.get("version")
-    file_semver = _extract_semver_from_filename(kb_path.resolve())
-    kb_semver = _extract_semver_from_kb_version(kb_version)
-    if args.strict and file_semver and kb_semver and file_semver != kb_semver:
-        print(
-            f"ERROR: KB filename semver {file_semver} != internal version {kb_semver} ({kb_path})",
-            file=sys.stderr,
-        )
-        return 2
-
-    # 2) Validate KB schema using the main loader (Draft-07 schema)
-    try:
-        from modules.common.knowledge import get_knowledge
-
-        _ = get_knowledge(kb_path, force_reload=True)
-    except Exception as exc:  # noqa: BLE001
-        print(f"ERROR: KB failed Procedure Suite knowledge schema validation: {exc}", file=sys.stderr)
-        return 2
-
-    # 3) Validate the KB adapter loads and can resolve a representative code
-    try:
-        from modules.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
-
-        kb_repo = JsonKnowledgeBaseAdapter(kb_path)
-        sample = kb_repo.get_procedure_info("31628") or kb_repo.get_procedure_info("+31628")
-        if sample is None:
-            print("ERROR: KB adapter could not resolve CPT 31628", file=sys.stderr)
-            return 2
-    except Exception as exc:  # noqa: BLE001
-        print(f"ERROR: KB adapter load failed: {exc}", file=sys.stderr)
-        return 2
-
-    # 4) Validate RegistryRecord model can be built from schema (dynamic model)
-    try:
-        from modules.registry.schema import RegistryRecord
-
-        _ = RegistryRecord.model_validate({})
-    except Exception as exc:  # noqa: BLE001
-        print(f"ERROR: RegistryRecord model build/validation failed: {exc}", file=sys.stderr)
-        return 2
-
-    # 5) No-op registry extraction (should not crash; no external calls required)
-    try:
-        from modules.registry.application.registry_service import RegistryService
-
-        # Ensure no-network behavior: use the parallel_ner pathway instead of the LLM RegistryEngine.
-        previous_engine = os.environ.get("REGISTRY_EXTRACTION_ENGINE")
-        os.environ["REGISTRY_EXTRACTION_ENGINE"] = "parallel_ner"
-        try:
-            record, _warnings, _meta = RegistryService(default_version="v3").extract_record(
-                args.no_op_note or "",
-                note_id="validate_knowledge_release",
-            )
-        finally:
-            if previous_engine is None:
-                os.environ.pop("REGISTRY_EXTRACTION_ENGINE", None)
-            else:
-                os.environ["REGISTRY_EXTRACTION_ENGINE"] = previous_engine
-        if record is None:
-            print("ERROR: registry extract_record returned None", file=sys.stderr)
-            return 2
-    except Exception as exc:  # noqa: BLE001
-        print(f"ERROR: registry no-op extraction failed: {exc}", file=sys.stderr)
-        return 2
-
-    # 6) Deterministic RegistryRecord→CPT should not crash
-    try:
-        from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-
-        _codes, _rationales, _warnings = derive_all_codes_with_meta(record)
-    except Exception as exc:  # noqa: BLE001
-        print(f"ERROR: deterministic Registry→CPT derivation failed: {exc}", file=sys.stderr)
-        return 2
-
-    print("OK: validate_knowledge_release passed")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
 ### `scripts/ingest_phase0_data.py`
 - Size: `5928` bytes
 ```
@@ -6259,6 +6096,197 @@ def main() -> int:
     if extraction_errors:
         print(f"Notes with extraction errors: {extraction_errors}")
     print(f"Wrote errors: {errors_out}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `scripts/validate_knowledge_release.py`
+- Size: `6675` bytes
+```
+#!/usr/bin/env python3
+"""Validate a knowledge+schema release locally (no external network calls).
+
+This script is intended to backstop knowledge/schema refactors:
+- Loads the KB via both the lightweight JSON loader and the main KB adapter
+- Validates the registry schema can build a RegistryRecord model
+- Runs a no-op extraction in the **parallel_ner** pathway to ensure nothing crashes at import/runtime
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--kb",
+        default="data/knowledge/ip_coding_billing_v3_0.json",
+        help="Path to knowledge base JSON (default: data/knowledge/ip_coding_billing_v3_0.json)",
+    )
+    ap.add_argument(
+        "--schema",
+        default="data/knowledge/IP_Registry.json",
+        help="Path to registry JSON schema (default: data/knowledge/IP_Registry.json)",
+    )
+    ap.add_argument(
+        "--no-op-note",
+        default="",
+        help="Note text for a no-op registry extraction run (default: empty string).",
+    )
+    ap.add_argument(
+        "--strict",
+        action="store_true",
+        help="Fail if KB filename semantic version mismatches internal version.",
+    )
+    return ap.parse_args()
+
+
+def _extract_semver_from_filename(path: Path) -> tuple[int, int] | None:
+    import re
+
+    m = re.search(r"_v(\d+)[._](\d+)\.json$", path.name)
+    if not m:
+        return None
+    return int(m.group(1)), int(m.group(2))
+
+
+def _extract_semver_from_kb_version(value: object) -> tuple[int, int] | None:
+    if not isinstance(value, str):
+        return None
+    parts = value.strip().lstrip("v").split(".")
+    if len(parts) < 2:
+        return None
+    try:
+        return int(parts[0]), int(parts[1])
+    except ValueError:
+        return None
+
+
+def main() -> int:
+    args = _parse_args()
+    kb_path = Path(args.kb)
+    schema_path = Path(args.schema)
+
+    if not kb_path.is_file():
+        print(f"ERROR: KB not found: {kb_path}", file=sys.stderr)
+        return 2
+    if not schema_path.is_file():
+        print(f"ERROR: Schema not found: {schema_path}", file=sys.stderr)
+        return 2
+
+    # 1) Basic JSON parse
+    try:
+        kb_json = json.loads(kb_path.read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: KB is not valid JSON: {kb_path} ({exc})", file=sys.stderr)
+        return 2
+
+    kb_version = kb_json.get("version")
+    file_semver = _extract_semver_from_filename(kb_path.resolve())
+    kb_semver = _extract_semver_from_kb_version(kb_version)
+    if args.strict and file_semver and kb_semver and file_semver != kb_semver:
+        print(
+            f"ERROR: KB filename semver {file_semver} != internal version {kb_semver} ({kb_path})",
+            file=sys.stderr,
+        )
+        return 2
+
+    # 2) Validate KB schema using the main loader (Draft-07 schema)
+    try:
+        from modules.common.knowledge import get_knowledge
+
+        _ = get_knowledge(kb_path, force_reload=True)
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: KB failed Procedure Suite knowledge schema validation: {exc}", file=sys.stderr)
+        return 2
+
+    # 2.5) Semantic Validation (Integrity & Logic)
+    print("Running semantic validation...", file=sys.stderr)
+    try:
+        from modules.domain.knowledge_base.validator import SemanticValidator
+
+        validator = SemanticValidator(kb_json)
+        issues = validator.validate()
+        if issues:
+            print(f"ERROR: Found {len(issues)} semantic issues in KB:", file=sys.stderr)
+            for issue in issues:
+                print(f"  - {issue}", file=sys.stderr)
+            return 2  # Hard fail
+        print("OK: Semantic validation passed", file=sys.stderr)
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: Semantic validation crashed: {exc}", file=sys.stderr)
+        return 2
+
+    # 3) Validate the KB adapter loads and can resolve a representative code
+    try:
+        from modules.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
+
+        kb_repo = JsonKnowledgeBaseAdapter(kb_path)
+        sample = kb_repo.get_procedure_info("31628") or kb_repo.get_procedure_info("+31628")
+        if sample is None:
+            print("ERROR: KB adapter could not resolve CPT 31628", file=sys.stderr)
+            return 2
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: KB adapter load failed: {exc}", file=sys.stderr)
+        return 2
+
+    # 4) Validate RegistryRecord model can be built from schema (dynamic model)
+    try:
+        from modules.registry.schema import RegistryRecord
+
+        _ = RegistryRecord.model_validate({})
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: RegistryRecord model build/validation failed: {exc}", file=sys.stderr)
+        return 2
+
+    # 5) No-op registry extraction (should not crash; no external calls required)
+    try:
+        from modules.registry.application.registry_service import RegistryService
+
+        # Ensure no-network behavior: use the parallel_ner pathway instead of the LLM RegistryEngine.
+        previous_engine = os.environ.get("REGISTRY_EXTRACTION_ENGINE")
+        os.environ["REGISTRY_EXTRACTION_ENGINE"] = "parallel_ner"
+        try:
+            record, _warnings, _meta = RegistryService(default_version="v3").extract_record(
+                args.no_op_note or "",
+                note_id="validate_knowledge_release",
+            )
+        finally:
+            if previous_engine is None:
+                os.environ.pop("REGISTRY_EXTRACTION_ENGINE", None)
+            else:
+                os.environ["REGISTRY_EXTRACTION_ENGINE"] = previous_engine
+        if record is None:
+            print("ERROR: registry extract_record returned None", file=sys.stderr)
+            return 2
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: registry no-op extraction failed: {exc}", file=sys.stderr)
+        return 2
+
+    # 6) Deterministic RegistryRecord→CPT should not crash
+    try:
+        from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+
+        _codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: deterministic Registry→CPT derivation failed: {exc}", file=sys.stderr)
+        return 2
+
+    print("OK: validate_knowledge_release passed")
     return 0
 
 
@@ -10068,6 +10096,270 @@ def main(
 
 if __name__ == "__main__":
     app()
+
+```
+
+---
+### `scripts/generate_procedure_suite_one_pager_pdf.py`
+- Size: `9084` bytes
+```
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import textwrap
+from dataclasses import dataclass
+from pathlib import Path
+
+from pypdf import PdfWriter
+from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+
+LETTER_WIDTH = 612
+LETTER_HEIGHT = 792
+
+
+def _pdf_escape(text: str) -> str:
+    # PDF string literals use parentheses. Escape what could break them.
+    return text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+
+
+@dataclass(frozen=True)
+class _TextLine:
+    font: str
+    size: float
+    x: float
+    y: float
+    text: str
+
+
+def _wrap(text: str, max_chars: int) -> list[str]:
+    return textwrap.wrap(text, width=max_chars, break_long_words=False, break_on_hyphens=False)
+
+
+def _build_content_stream(lines: list[_TextLine], draw_ops: list[str]) -> bytes:
+    ops: list[str] = []
+    ops.append("q\n")
+
+    # Vector ops (lines, rectangles) live outside BT/ET.
+    for op in draw_ops:
+        ops.append(op.rstrip("\n") + "\n")
+
+    ops.append("BT\n")
+    for line in lines:
+        # Set font, position, and draw text.
+        ops.append(f"/{line.font} {line.size:.2f} Tf\n")
+        ops.append(f"1 0 0 1 {line.x:.2f} {line.y:.2f} Tm\n")
+        ops.append(f"({_pdf_escape(line.text)}) Tj\n")
+    ops.append("ET\n")
+    ops.append("Q\n")
+
+    return "".join(ops).encode("ascii", errors="strict")
+
+
+def main() -> int:
+    repo_root = Path(__file__).resolve().parents[1]
+    out_dir = repo_root / "output" / "pdf"
+    tmp_dir = repo_root / "tmp" / "pdfs"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+
+    out_pdf = out_dir / "procedure_suite_one_pager.pdf"
+
+    margin = 54
+    x0 = margin
+    x1 = LETTER_WIDTH - margin
+    y = LETTER_HEIGHT - margin
+
+    title_font = "F2"
+    subtitle_font = "F3"
+    heading_font = "F2"
+    body_font = "F1"
+
+    title_size = 16
+    subtitle_size = 10
+    heading_size = 11
+    body_size = 9
+
+    leading = 11
+    section_gap = 6
+
+    lines: list[_TextLine] = []
+    draw_ops: list[str] = []
+
+    def add_text(font: str, size: float, text: str, x: float | None = None) -> None:
+        nonlocal y
+        lines.append(_TextLine(font=font, size=size, x=float(x0 if x is None else x), y=float(y), text=text))
+        y -= leading
+
+    def add_heading(text: str) -> None:
+        nonlocal y
+        y -= section_gap
+        lines.append(_TextLine(font=heading_font, size=heading_size, x=float(x0), y=float(y), text=text))
+        y -= leading + 1
+
+    def add_paragraph(text: str, max_chars: int) -> None:
+        for part in _wrap(text, max_chars=max_chars):
+            add_text(body_font, body_size, part)
+
+    def add_bullets(items: list[str], max_chars: int) -> None:
+        nonlocal y
+        bullet_x = x0
+        cont_x = x0 + 12
+        for item in items:
+            wrapped = _wrap(item, max_chars=max_chars)
+            if not wrapped:
+                continue
+            lines.append(_TextLine(font=body_font, size=body_size, x=float(bullet_x), y=float(y), text=f"- {wrapped[0]}"))
+            y -= leading
+            for cont in wrapped[1:]:
+                lines.append(_TextLine(font=body_font, size=body_size, x=float(cont_x), y=float(y), text=cont))
+                y -= leading
+
+    # Title block
+    lines.append(_TextLine(font=title_font, size=title_size, x=float(x0), y=float(y), text="Procedure Suite"))
+    y -= 20
+
+    subtitle = (
+        "Automated CPT coding, registry extraction, and synoptic reporting "
+        "for interventional pulmonology."
+    )
+    for part in _wrap(subtitle, max_chars=92):
+        lines.append(_TextLine(font=subtitle_font, size=subtitle_size, x=float(x0), y=float(y), text=part))
+        y -= 12
+
+    # Divider
+    divider_y = y - 4
+    draw_ops.append("0.75 0.75 0.75 RG 1 w")
+    draw_ops.append(f"{x0:.2f} {divider_y:.2f} m {x1:.2f} {divider_y:.2f} l S")
+    y -= 18
+
+    # What it is
+    add_heading("What it is")
+    add_paragraph(
+        "A FastAPI web UI and API that turns (scrubbed) procedure note text into "
+        "validated registry data and derived CPT billing codes, with evidence and QA flags.",
+        max_chars=96,
+    )
+    add_paragraph(
+        "Current production mode is extraction-first and stateless: text in -> registry + CPT out via POST /api/v1/process.",
+        max_chars=96,
+    )
+
+    # Who it's for
+    add_heading("Who it's for")
+    add_paragraph(
+        "Primary users: interventional pulmonology coding/billing specialists and registry coordinators; "
+        "also clinicians and QA reviewers validating documentation and extracted fields.",
+        max_chars=96,
+    )
+
+    # What it does
+    add_heading("What it does")
+    add_bullets(
+        [
+            "Web UI (/ui/) for note paste, PHI detection/redaction workflow, and results review.",
+            "Unified endpoint: POST /api/v1/process (scrubbed text in -> registry + CPT out).",
+            "Extraction-first pipeline: registry extraction (engine via REGISTRY_EXTRACTION_ENGINE; recommended parallel_ner) then deterministic Registry->CPT rules.",
+            "Returns UI-ready JSON with evidence spans and review/status flags.",
+            "Omission scan + RAW-ML auditor; optional guarded self-correction judge (REGISTRY_SELF_CORRECT_ENABLED=1).",
+            "Exports: raw JSON and flattened editable tables (Excel-readable .xls); table edits emit Edited JSON (Training).",
+            "CLI + tests for validation and batch runs (make test, make validate-registry, scripts/registry_pipeline_smoke*.py).",
+        ],
+        max_chars=94,
+    )
+
+    # How it works
+    add_heading("How it works (repo evidence)")
+    add_bullets(
+        [
+            "Client UI: static PHI redactor/dashboard at modules/api/static/phi_redactor/ served on /ui/.",
+            "Data flow: UI redacts PHI in-browser, then submits scrubbed note text (or sets already_scrubbed=true).",
+            "API: FastAPI app in modules/api/fastapi_app.py exposes POST /api/v1/process (modules/api/routes/unified_process.py).",
+            "Pipeline: run_unified_pipeline_logic -> RegistryService.extract_fields -> deterministic RegistryRecord -> CPT derivation (CodingService) -> audit/self-correct -> response adapter.",
+            "Key knowledge + schemas: data/knowledge/ip_coding_billing_v3_0.json; proc_schemas/registry/; schemas/.",
+        ],
+        max_chars=94,
+    )
+
+    # How to run
+    add_heading("How to run (minimal)")
+    add_bullets(
+        [
+            "Install deps: make install (Python 3.11+).",
+            "Set required env: PROCSUITE_PIPELINE_MODE=extraction_first (service will not start otherwise).",
+            "Configure LLM (optional for some features): GEMINI_API_KEY=... (or use offline flags like GEMINI_OFFLINE=1 / OPENAI_OFFLINE=1).",
+            "Start: ./scripts/devserver.sh",
+            "Open: http://localhost:8000/ui/ and http://localhost:8000/docs",
+        ],
+        max_chars=94,
+    )
+
+    # Footer
+    y_footer = margin - 18
+    footer_lines = [
+        "Sources: README.md; docs/USER_GUIDE.md; docs/ARCHITECTURE.md; modules/api/routes/unified_process.py",
+    ]
+    for i, ft in enumerate(footer_lines):
+        lines.append(_TextLine(font=subtitle_font, size=7.5, x=float(x0), y=float(y_footer - (i * 9)), text=ft))
+
+    if y < margin:
+        raise SystemExit(
+            f"Content overflow: y={y:.2f} < margin={margin}. Tighten copy or adjust layout."
+        )
+
+    writer = PdfWriter()
+    page = writer.add_blank_page(width=LETTER_WIDTH, height=LETTER_HEIGHT)
+
+    # Fonts: standard 14 PDF fonts (no embedding required).
+    font_regular = DictionaryObject(
+        {
+            NameObject("/Type"): NameObject("/Font"),
+            NameObject("/Subtype"): NameObject("/Type1"),
+            NameObject("/BaseFont"): NameObject("/Helvetica"),
+        }
+    )
+    font_bold = DictionaryObject(
+        {
+            NameObject("/Type"): NameObject("/Font"),
+            NameObject("/Subtype"): NameObject("/Type1"),
+            NameObject("/BaseFont"): NameObject("/Helvetica-Bold"),
+        }
+    )
+    font_oblique = DictionaryObject(
+        {
+            NameObject("/Type"): NameObject("/Font"),
+            NameObject("/Subtype"): NameObject("/Type1"),
+            NameObject("/BaseFont"): NameObject("/Helvetica-Oblique"),
+        }
+    )
+
+    font_regular_ref = writer._add_object(font_regular)
+    font_bold_ref = writer._add_object(font_bold)
+    font_oblique_ref = writer._add_object(font_oblique)
+
+    resources = DictionaryObject()
+    resources[NameObject("/Font")] = DictionaryObject(
+        {
+            NameObject("/F1"): font_regular_ref,
+            NameObject("/F2"): font_bold_ref,
+            NameObject("/F3"): font_oblique_ref,
+        }
+    )
+    page[NameObject("/Resources")] = resources
+
+    stream = DecodedStreamObject()
+    stream.set_data(_build_content_stream(lines=lines, draw_ops=draw_ops))
+    page[NameObject("/Contents")] = writer._add_object(stream)
+
+    with out_pdf.open("wb") as f:
+        writer.write(f)
+
+    print(str(out_pdf))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 ```
 
@@ -14996,439 +15288,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-```
-
----
-### `scripts/unified_pipeline_batch.py`
-- Size: `14760` bytes
-```
-#!/usr/bin/env python3
-"""Batch unified pipeline test on random notes.
-
-This script randomly selects N notes from data/granular annotations/notes_text,
-runs the full unified pipeline (same as UI at /ui/), and saves results to a text file.
-"""
-from __future__ import annotations
-
-import argparse
-import json
-import os
-import random
-import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Any
-
-from dotenv import load_dotenv
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-
-def _truthy_env(name: str) -> bool:
-    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
-
-
-if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
-
-# Import after environment setup
-from modules.api.adapters.response_adapter import build_v3_evidence_payload  # noqa: E402
-from modules.api.dependencies import get_coding_service, get_registry_service  # noqa: E402
-from modules.api.phi_dependencies import get_phi_scrubber  # noqa: E402
-from modules.api.phi_redaction import apply_phi_redaction  # noqa: E402
-from modules.api.schemas import (  # noqa: E402
-    CodeSuggestionSummary,
-    UnifiedProcessRequest,
-    UnifiedProcessResponse,
-)
-from modules.coder.application.coding_service import CodingService  # noqa: E402
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta  # noqa: E402
-from modules.coder.phi_gating import is_phi_review_required  # noqa: E402
-from modules.common.exceptions import LLMError  # noqa: E402
-from modules.registry.application.registry_service import (  # noqa: E402
-    RegistryExtractionResult,
-    RegistryService,
-)
-from config.settings import CoderSettings  # noqa: E402
-
-
-def _load_notes_from_directory(notes_dir: Path) -> dict[str, str]:
-    """Load all notes from .txt files in the directory.
-    
-    Returns a dict mapping note_id (filename without .txt) to note_text.
-    """
-    notes = {}
-    
-    for txt_file in sorted(notes_dir.glob("*.txt")):
-        try:
-            note_text = txt_file.read_text(encoding="utf-8")
-            note_id = txt_file.stem  # filename without .txt extension
-            notes[note_id] = note_text
-        except Exception as exc:
-            print(f"Warning: Failed to load {txt_file}: {exc}", file=sys.stderr)
-    
-    return notes
-
-
-def _run_unified_pipeline(
-    note_text: str,
-    registry_service: RegistryService,
-    coding_service: CodingService,
-    phi_scrubber,
-    *,
-    include_financials: bool = True,
-    explain: bool = True,
-) -> UnifiedProcessResponse:
-    """Run the unified pipeline (same as /api/v1/process endpoint).
-    
-    This replicates the exact logic from modules/api/routes/unified_process.py
-    """
-    import time
-    
-    start_time = time.time()
-    
-    # PHI redaction (if not already scrubbed)
-    # For batch testing, we'll treat notes as already scrubbed to match UI behavior
-    # when user submits via PHI redactor
-    redaction = apply_phi_redaction(note_text, phi_scrubber)
-    scrubbed_text = redaction.text
-    
-    # Step 1: Registry extraction (synchronous call)
-    try:
-        extraction_result = registry_service.extract_fields(scrubbed_text)
-    except Exception as exc:
-        if isinstance(exc, LLMError) and "429" in str(exc):
-            raise Exception("Upstream LLM rate limited") from exc
-        raise
-    
-    # Step 2: Derive CPT codes from registry
-    record = extraction_result.record
-    if record is None:
-        from modules.registry.schema import RegistryRecord
-        record = RegistryRecord.model_validate(extraction_result.mapped_fields)
-    
-    codes, rationales, derivation_warnings = derive_all_codes_with_meta(record)
-    
-    # Build suggestions with confidence and rationale
-    suggestions = []
-    base_confidence = 0.95 if extraction_result.coder_difficulty == "HIGH_CONF" else 0.80
-    
-    for code in codes:
-        proc_info = coding_service.kb_repo.get_procedure_info(code)
-        description = proc_info.description if proc_info else ""
-        rationale = rationales.get(code, "")
-        
-        # Determine review flag
-        if extraction_result.needs_manual_review:
-            review_flag = "required"
-        elif extraction_result.audit_warnings:
-            review_flag = "recommended"
-        else:
-            review_flag = "optional"
-        
-        suggestions.append(
-            CodeSuggestionSummary(
-                code=code,
-                description=description,
-                confidence=base_confidence,
-                rationale=rationale,
-                review_flag=review_flag,
-            )
-        )
-    
-    # Step 3: Calculate financials if requested
-    total_work_rvu = None
-    estimated_payment = None
-    per_code_billing = []
-    
-    if include_financials and codes:
-        settings = CoderSettings()
-        conversion_factor = settings.cms_conversion_factor
-        total_work = 0.0
-        total_payment = 0.0
-        
-        for code in codes:
-            proc_info = coding_service.kb_repo.get_procedure_info(code)
-            if proc_info:
-                work_rvu = proc_info.work_rvu
-                total_rvu = proc_info.total_facility_rvu
-                payment = total_rvu * conversion_factor
-                
-                total_work += work_rvu
-                total_payment += payment
-                
-                per_code_billing.append({
-                    "cpt_code": code,
-                    "description": proc_info.description,
-                    "work_rvu": work_rvu,
-                    "total_facility_rvu": total_rvu,
-                    "facility_payment": round(payment, 2),
-                })
-        
-        total_work_rvu = round(total_work, 2)
-        estimated_payment = round(total_payment, 2)
-    
-    # Combine audit warnings
-    all_warnings: list[str] = []
-    all_warnings.extend(extraction_result.warnings or [])
-    all_warnings.extend(extraction_result.audit_warnings or [])
-    all_warnings.extend(derivation_warnings)
-    
-    # Deduplicate warnings
-    deduped_warnings: list[str] = []
-    seen_warnings: set[str] = set()
-    for warning in all_warnings:
-        if warning in seen_warnings:
-            continue
-        seen_warnings.add(warning)
-        deduped_warnings.append(warning)
-    all_warnings = deduped_warnings
-    
-    # Build evidence payload
-    evidence_payload = build_v3_evidence_payload(record=record, codes=codes)
-    if not explain and not evidence_payload:
-        evidence_payload = {}
-    
-    # Determine review status
-    needs_manual_review = extraction_result.needs_manual_review
-    if is_phi_review_required():
-        review_status = "pending_phi_review"
-        needs_manual_review = True
-    elif needs_manual_review:
-        review_status = "unverified"
-    else:
-        review_status = "finalized"
-    
-    processing_time_ms = (time.time() - start_time) * 1000
-    
-    # Build response
-    registry_payload = record.model_dump(exclude_none=True)
-    
-    return UnifiedProcessResponse(
-        registry=registry_payload,
-        evidence=evidence_payload,
-        cpt_codes=codes,
-        suggestions=suggestions,
-        total_work_rvu=total_work_rvu,
-        estimated_payment=estimated_payment,
-        per_code_billing=per_code_billing,
-        pipeline_mode="extraction_first",
-        coder_difficulty=extraction_result.coder_difficulty or "",
-        needs_manual_review=needs_manual_review,
-        audit_warnings=all_warnings,
-        validation_errors=extraction_result.validation_errors or [],
-        kb_version=coding_service.kb_repo.version,
-        policy_version="extraction_first_v1",
-        processing_time_ms=round(processing_time_ms, 2),
-        review_status=review_status,
-    )
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Batch unified pipeline test on random notes from notes_text directory."
-    )
-    parser.add_argument(
-        "--count",
-        type=int,
-        default=10,
-        help="Number of random notes to test (default: 10)",
-    )
-    parser.add_argument(
-        "--notes-dir",
-        type=Path,
-        default=ROOT / "data" / "granular annotations" / "notes_text",
-        help="Directory containing note .txt files (default: data/granular annotations/notes_text)",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=None,
-        help="Output file path (default: unified_pipeline_batch_<timestamp>.txt)",
-    )
-    parser.add_argument(
-        "--seed",
-        type=int,
-        default=None,
-        help="Random seed for reproducibility",
-    )
-    parser.add_argument(
-        "--include-financials",
-        action="store_true",
-        default=True,
-        help="Include RVU and payment information (default: True)",
-    )
-    parser.add_argument(
-        "--no-financials",
-        dest="include_financials",
-        action="store_false",
-        help="Exclude RVU and payment information",
-    )
-    parser.add_argument(
-        "--explain",
-        action="store_true",
-        default=True,
-        help="Include evidence/explanation data (default: True)",
-    )
-    parser.add_argument(
-        "--no-explain",
-        dest="explain",
-        action="store_false",
-        help="Exclude evidence/explanation data",
-    )
-    parser.add_argument(
-        "--real-llm",
-        action="store_true",
-        help="Allow real LLM calls (disables stub/offline defaults).",
-    )
-    args = parser.parse_args()
-    
-    # Set up environment
-    if args.real_llm:
-        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
-        os.environ.setdefault("GEMINI_OFFLINE", "0")
-    else:
-        # Use stub LLM for offline testing
-        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-        if os.getenv("GEMINI_OFFLINE") is None:
-            os.environ["GEMINI_OFFLINE"] = "1"
-    
-    # Load notes
-    if not args.notes_dir.exists():
-        print(f"ERROR: Notes directory not found: {args.notes_dir}", file=sys.stderr)
-        return 1
-    
-    print(f"Loading notes from {args.notes_dir}...", file=sys.stderr)
-    all_notes = _load_notes_from_directory(args.notes_dir)
-    
-    if not all_notes:
-        print(f"ERROR: No notes found in {args.notes_dir}", file=sys.stderr)
-        return 1
-    
-    print(f"Loaded {len(all_notes)} notes", file=sys.stderr)
-    
-    # Select random notes
-    if args.seed is not None:
-        random.seed(args.seed)
-        print(f"Using random seed: {args.seed}", file=sys.stderr)
-    
-    count = min(args.count, len(all_notes))
-    selected_notes = random.sample(list(all_notes.items()), count)
-    
-    print(f"Selected {count} random notes for testing", file=sys.stderr)
-    
-    # Determine output file
-    if args.output:
-        output_path = args.output
-    else:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_path = ROOT / f"unified_pipeline_batch_{timestamp}.txt"
-    
-    # Initialize services
-    print("Initializing services...", file=sys.stderr)
-    registry_service = get_registry_service()
-    coding_service = get_coding_service()
-    phi_scrubber = get_phi_scrubber()
-    
-    # Run unified pipeline on each note
-    print(f"Running unified pipeline on {count} notes...", file=sys.stderr)
-    print(f"Output will be saved to: {output_path}", file=sys.stderr)
-    
-    all_results = []
-    for i, (note_id, note_text) in enumerate(selected_notes, 1):
-        print(f"[{i}/{count}] Processing {note_id}...", file=sys.stderr)
-        try:
-            result = _run_unified_pipeline(
-                note_text,
-                registry_service,
-                coding_service,
-                phi_scrubber,
-                include_financials=args.include_financials,
-                explain=args.explain,
-            )
-            all_results.append((note_id, note_text, result, None))
-        except Exception as exc:
-            print(f"  ERROR: {exc}", file=sys.stderr)
-            all_results.append((note_id, note_text, None, str(exc)))
-    
-    # Write output file
-    with open(output_path, "w", encoding="utf-8") as f:
-        # Write header
-        f.write("=" * 80 + "\n")
-        f.write("UNIFIED PIPELINE BATCH TEST RESULTS\n")
-        f.write("=" * 80 + "\n")
-        f.write(f"Date: {datetime.now().isoformat()}\n")
-        f.write(f"Notes tested: {count}\n")
-        f.write(f"Notes directory: {args.notes_dir}\n")
-        if args.seed is not None:
-            f.write(f"Random seed: {args.seed}\n")
-        f.write(f"Include financials: {args.include_financials}\n")
-        f.write(f"Include explain: {args.explain}\n")
-        f.write(f"Real LLM enabled: {args.real_llm}\n")
-        f.write("=" * 80 + "\n")
-        f.write("\n")
-        
-        # Write results for each note
-        success_count = 0
-        failed_count = 0
-        
-        for note_id, note_text, result, error in all_results:
-            f.write("=" * 80 + "\n")
-            f.write(f"NOTE: {note_id}\n")
-            f.write("=" * 80 + "\n")
-            f.write("\n")
-            
-            # Write note text
-            f.write("NOTE TEXT:\n")
-            f.write("-" * 80 + "\n")
-            f.write(note_text)
-            f.write("\n")
-            f.write("-" * 80 + "\n")
-            f.write("\n")
-            
-            # Write results
-            if error:
-                f.write("ERROR:\n")
-                f.write(f"{error}\n")
-                f.write("\n")
-                f.write("STATUS: FAILED\n")
-                failed_count += 1
-            else:
-                f.write("RESULTS (JSON):\n")
-                f.write("-" * 80 + "\n")
-                # Convert Pydantic model to dict and serialize
-                result_dict = result.model_dump(exclude_none=True)
-                f.write(json.dumps(result_dict, indent=2, ensure_ascii=False))
-                f.write("\n")
-                f.write("-" * 80 + "\n")
-                f.write("\n")
-                f.write("STATUS: SUCCESS\n")
-                success_count += 1
-            
-            f.write("\n")
-        
-        # Write summary
-        f.write("=" * 80 + "\n")
-        f.write("SUMMARY\n")
-        f.write("=" * 80 + "\n")
-        f.write(f"Total notes tested: {count}\n")
-        f.write(f"Successful: {success_count}\n")
-        f.write(f"Failed: {failed_count}\n")
-        if count > 0:
-            f.write(f"Success rate: {success_count/count*100:.1f}%\n")
-        f.write("=" * 80 + "\n")
-    
-    print(f"\nCompleted! Results saved to: {output_path}", file=sys.stderr)
-    print(f"Summary: {success_count} successful, {failed_count} failed", file=sys.stderr)
-    
-    return 0 if failed_count == 0 else 1
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
 
 ```

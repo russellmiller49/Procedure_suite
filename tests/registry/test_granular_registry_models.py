@@ -156,6 +156,10 @@ class TestAirwayStentModel:
         stent = AirwayStentProcedure(location="Mainstem")
         assert stent.location == "Other"
 
+    def test_action_normalization_compound_revision(self):
+        stent = AirwayStentProcedure(performed=True, action="Removal and Y-Stent Insertion")
+        assert stent.action == "Revision/Repositioning"
+
     def test_registry_record_integration(self):
         record = RegistryRecord(
             procedures_performed={

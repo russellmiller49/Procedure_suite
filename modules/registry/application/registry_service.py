@@ -2155,7 +2155,13 @@ class RegistryService:
 
             text = note_text or ""
             if not re.search(
-                r"(?i)\b(?:central\s+airway|airway\s+obstruction|rigid\s+bronchos|debulk|tumou?r\s+ablation|stent)\b",
+                r"(?i)\b(?:"
+                r"central\s+airway|airway\s+obstruct\w*|"
+                r"rigid\s+bronchos\w*|"
+                r"debulk\w*|"
+                r"tumou?r\s+(?:ablation|destruction)|"
+                r"stent"
+                r")\b",
                 text,
             ):
                 return record_in, []
@@ -2356,6 +2362,12 @@ class RegistryService:
         if ebus_station_warnings:
             extraction_warnings.extend(ebus_station_warnings)
 
+        # Use the extraction-masked text so CAO/stent heuristics don't read non-procedural
+        # plan/assessment sections (common source of "possible stent placement" false positives).
+        record, cao_detail_warnings = _apply_cao_detail_heuristics(masked_note_text, record)
+        if cao_detail_warnings:
+            extraction_warnings.extend(cao_detail_warnings)
+
         # Re-run granular→aggregate propagation after any heuristics/overrides that
         # update granular_data (e.g., navigation targets, cryobiopsy sites).
         record, granular_warnings = _apply_granular_up_propagation(record)
@@ -2371,6 +2383,7 @@ class RegistryService:
             enrich_linear_ebus_needle_gauge,
             enrich_medical_thoracoscopy_biopsies_taken,
             populate_ebus_node_events_fallback,
+            reconcile_ebus_sampling_from_narrative,
             reconcile_ebus_sampling_from_specimen_log,
             sanitize_ebus_events,
         )
@@ -2381,6 +2394,9 @@ class RegistryService:
         ebus_sanitize_warnings = sanitize_ebus_events(record, masked_note_text)
         if ebus_sanitize_warnings:
             extraction_warnings.extend(ebus_sanitize_warnings)
+        ebus_narrative_warnings = reconcile_ebus_sampling_from_narrative(record, masked_note_text)
+        if ebus_narrative_warnings:
+            extraction_warnings.extend(ebus_narrative_warnings)
         ebus_specimen_warnings = reconcile_ebus_sampling_from_specimen_log(record, masked_note_text)
         if ebus_specimen_warnings:
             extraction_warnings.extend(ebus_specimen_warnings)

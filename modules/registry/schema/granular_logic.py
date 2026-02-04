@@ -463,14 +463,19 @@ def derive_procedures_from_granular(
         procedures["navigational_bronchoscopy"] = nav_bronch
 
         # Up-propagate needle sampling / biopsy / brushings from target-level sampling evidence
-        has_needle = "Needle" in all_tools or any(
+        peripheral_tbna_performed = (procedures.get("peripheral_tbna") or {}).get("performed") is True
+        tbbx_performed = (procedures.get("transbronchial_biopsy") or {}).get("performed") is True
+        brushings_performed = (procedures.get("brushings") or {}).get("performed") is True
+        cryo_performed = (procedures.get("transbronchial_cryobiopsy") or {}).get("performed") is True
+
+        has_needle = peripheral_tbna_performed or "Needle" in all_tools or any(
             (t.get("number_of_needle_passes") or 0) > 0 for t in navigation_targets
         )
-        has_forceps = "Forceps" in all_tools or any(
+        has_forceps = tbbx_performed or "Forceps" in all_tools or any(
             (t.get("number_of_forceps_biopsies") or 0) > 0 for t in navigation_targets
         )
-        has_brush = "Brush" in all_tools
-        has_cryo = "Cryoprobe" in all_tools or any(
+        has_brush = brushings_performed or "Brush" in all_tools
+        has_cryo = cryo_performed or "Cryoprobe" in all_tools or any(
             (t.get("number_of_cryo_biopsies") or 0) > 0 for t in navigation_targets
         )
 
@@ -840,6 +845,9 @@ def derive_procedures_from_granular(
                 mechanical_method = "Microdebrider"
             elif any("rigid coring" in m for m in modalities):
                 mechanical_method = "Rigid coring"
+            elif any("snare" in m for m in modalities):
+                # Schema-constrained method enum does not include "snare"; treat as mechanical debulking.
+                mechanical_method = "Forceps debulking"
             elif any("mechanical debulking" in m for m in modalities):
                 mechanical_method = "Forceps debulking"
 

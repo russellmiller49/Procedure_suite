@@ -942,6 +942,33 @@ _CPT_LINE_PATTERN = re.compile(r"^\s*\d{5}\b")
 _PROCEDURE_DETAIL_SECTION_PATTERN = re.compile(
     r"(?im)^\s*(?:procedure\s+in\s+detail|description\s+of\s+procedure|procedure\s+description)\s*:?"
 )
+_SECTION_HEADING_INLINE_RE = re.compile(
+    r"(?im)^\s*(?P<header>[A-Za-z][A-Za-z /()_-]{0,80})\s*:\s*(?P<rest>.*)$"
+)
+_NON_PROCEDURAL_HEADINGS: tuple[str, ...] = (
+    "PLAN",
+    "IMPRESSION/PLAN",
+    "IMPRESSION / PLAN",
+    "ASSESSMENT/PLAN",
+    "ASSESSMENT / PLAN",
+    "RECOMMENDATION",
+    "RECOMMENDATIONS",
+    "ASSESSMENT",
+)
+
+
+def _normalize_heading(value: str) -> str:
+    return re.sub(r"\s+", " ", (value or "").strip()).upper()
+
+
+def _is_non_procedural_heading(header: str) -> bool:
+    if header in _NON_PROCEDURAL_HEADINGS:
+        return True
+    return any(
+        header.startswith(prefix)
+        for token in _NON_PROCEDURAL_HEADINGS
+        for prefix in (f"{token} ", f"{token}/", f"{token} -")
+    )
 
 DIAGNOSTIC_BRONCHOSCOPY_PATTERNS = [
     r"\bthe\s+airway\s+was\s+inspected\b",
@@ -1013,8 +1040,24 @@ def _preferred_procedure_detail_text(note_text: str) -> tuple[str, bool]:
     match = _PROCEDURE_DETAIL_SECTION_PATTERN.search(text)
     if not match:
         return text, False
+
     # Slice after the header token (keeps same-line content if present).
-    return text[match.end() :].lstrip("\r\n "), True
+    tail = text[match.end() :]
+
+    # Stop at non-procedural headings (e.g., IMPRESSION/PLAN), which frequently contain
+    # future/planned procedures that should not trigger performed flags.
+    stop_at: int | None = None
+    for heading_match in _SECTION_HEADING_INLINE_RE.finditer(tail):
+        header = _normalize_heading(heading_match.group("header") or "")
+        if not header:
+            continue
+        if _is_non_procedural_heading(header):
+            stop_at = heading_match.start()
+            break
+    if stop_at is not None and stop_at >= 0:
+        tail = tail[:stop_at]
+
+    return tail.lstrip("\r\n "), True
 
 
 def _extract_ln_stations_from_text(note_text: str) -> list[str]:
@@ -1440,27 +1483,18 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
         text_lower,
         verbs=["place", "deploy", "insert", "positioned", "deliver", "implant"],
     )
-    placement_pattern_hit = _has_airway_stent_action(
-        text_lower, action_patterns=AIRWAY_STENT_PLACEMENT_PATTERNS
-    )
     placement_negated = _stent_placement_negated(text_lower)
-    has_placement = (placement_window_hit or placement_pattern_hit) and not placement_negated
+    has_placement = placement_window_hit and not placement_negated
 
     removal_window_hit = _stent_action_window_hit(
         text_lower,
-        verbs=["remov", "retriev", "extract", "explant", "pull", "peel", "grasp"],
+        verbs=["remov", "retriev", "extract", "explant", "pull", "peel", "grasp", "exchang", "replac"],
     )
-    removal_pattern_hit = _has_airway_stent_action(
-        text_lower, action_patterns=AIRWAY_STENT_REMOVAL_PATTERNS
-    )
-    has_removal = removal_window_hit or removal_pattern_hit
-
-    if not has_placement and not has_removal:
-        return {}
+    has_removal = removal_window_hit
 
     revision_window_hit = _stent_action_window_hit(
         text_lower,
-        verbs=["revis", "reposition", "adjust", "manipulat"],
+        verbs=["revis", "reposition", "adjust", "manipulat", "exchang", "replac"],
     )
     proximally_hint = bool(
         re.search(
@@ -1470,6 +1504,9 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
         )
     )
     revision_hint = revision_window_hit or proximally_hint
+
+    if not has_placement and not has_removal and not revision_hint:
+        return {}
 
     # Exclude explicit history-only removal (e.g., "stent removed 2 years ago").
     removal_history = bool(
@@ -1484,7 +1521,7 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
         return {}
 
     # Negation guard: placement-only mentions.
-    if placement_negated and not has_removal:
+    if placement_negated and not has_removal and not revision_hint:
         return {}
 
     proc: dict[str, Any] = {"performed": True}
@@ -1492,7 +1529,7 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
     if has_removal and has_placement:
         proc["action"] = "Revision/Repositioning"
         proc["airway_stent_removal"] = True
-    elif revision_hint and (has_removal or has_placement):
+    elif revision_hint:
         proc["action"] = "Revision/Repositioning"
     elif has_removal:
         proc["action"] = "Removal"

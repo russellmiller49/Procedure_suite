@@ -6,6 +6,11 @@ import os
 import re
 from typing import Any
 
+try:
+    from rapidfuzz.fuzz import partial_ratio
+except Exception:  # pragma: no cover
+    partial_ratio = None  # type: ignore[assignment]
+
 ALLOWED_PATHS: set[str] = {
     # Performed flags
     "/procedures_performed/bal/performed",
@@ -66,6 +71,7 @@ ALLOWED_PATH_PREFIXES: set[str] = {
 }
 
 _WS_RE = re.compile(r"\s+")
+_NON_ALNUM_RE = re.compile(r"[^a-z0-9]+")
 
 _PATCH_PATH_ALIASES: dict[str, str] = {
     "/procedures_performed/bronchial_valve_insertion": "/procedures_performed/blvr",
@@ -88,6 +94,13 @@ def _normalize_whitespace(text: str) -> str:
     if not text:
         return ""
     return _WS_RE.sub(" ", text).strip()
+
+
+def _normalize_alnum(text: str) -> str:
+    """Lowercase + strip punctuation for resilient quote containment checks."""
+    lowered = (text or "").lower()
+    no_punct = _NON_ALNUM_RE.sub(" ", lowered)
+    return _WS_RE.sub(" ", no_punct).strip()
 
 
 def validate_proposal(
@@ -113,8 +126,25 @@ def validate_proposal(
     if quote not in text:
         normalized_quote = _normalize_whitespace(quote)
         normalized_text = _normalize_whitespace(text)
-        if not normalized_quote or normalized_quote not in normalized_text:
-            return False, f"Quote not found verbatim in {text_label}: '{quote[:50]}...'"
+        if normalized_quote and normalized_quote in normalized_text:
+            pass
+        else:
+            alnum_quote = _normalize_alnum(quote)
+            alnum_text = _normalize_alnum(text)
+            if alnum_quote and alnum_quote in alnum_text:
+                pass
+            else:
+                threshold = _env_int("REGISTRY_SELF_CORRECT_QUOTE_FUZZY_THRESHOLD", 90)
+                min_len = _env_int("REGISTRY_SELF_CORRECT_QUOTE_FUZZY_MIN_LEN", 24)
+                if (
+                    callable(partial_ratio)
+                    and alnum_quote
+                    and len(alnum_quote) >= min_len
+                    and partial_ratio(alnum_quote, alnum_text) >= threshold
+                ):
+                    pass
+                else:
+                    return False, f"Quote not found verbatim in {text_label}: '{quote[:50]}...'"
 
     patches = getattr(proposal, "json_patch", [])
     if not isinstance(patches, list) or not patches:

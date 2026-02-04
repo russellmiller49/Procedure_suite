@@ -2818,6 +2818,124 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
     return warnings
 
 
+def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: str) -> list[str]:
+    """Upgrade linear_ebus node_events when sampling is documented in narrative text.
+
+    Motivation: Some extraction paths populate `linear_ebus.node_events` but leave
+    `action="inspected_only"` even when the note explicitly documents TBNA sampling
+    (e.g., "Sampling ... beginning with 11L, followed by 4R"). CPT derivation relies
+    on node_events actions when node_events are present, so this reconciliation keeps
+    codes stable without requiring schema changes.
+    """
+
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    if linear is None or getattr(linear, "performed", None) is not True:
+        return warnings
+    if not full_text:
+        return warnings
+
+    strong_sampling_re = re.compile(
+        r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es|ing)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+        re.IGNORECASE,
+    )
+
+    # Collect stations with strong sampling evidence in the same line.
+    try:
+        from modules.ner.entity_types import normalize_station
+    except Exception:  # pragma: no cover
+        normalize_station = None  # type: ignore[assignment]
+
+    station_to_quote: dict[str, str] = {}
+    for raw_line in (full_text or "").splitlines():
+        line = (raw_line or "").strip()
+        if not line:
+            continue
+        if not _EBUS_STATION_TOKEN_RE.search(line):
+            continue
+        if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(line):
+            continue
+
+        has_strong_sampling = bool(strong_sampling_re.search(line))
+        has_criteria = bool(_EBUS_SAMPLING_CRITERIA_RE.search(line))
+
+        # Skip criteria-only mentions (e.g., "sampling criteria met ...") unless there is
+        # an additional strong sampling cue (needle/TBNA/aspiration/etc) in the same line.
+        if has_criteria and not has_strong_sampling:
+            continue
+        if not has_strong_sampling:
+            continue
+
+        for match in _EBUS_STATION_TOKEN_RE.finditer(line):
+            token = match.group(1) or ""
+            station = normalize_station(token) if normalize_station is not None else token.strip().upper()
+            if not station:
+                continue
+            station_to_quote.setdefault(station, line)
+
+    if not station_to_quote:
+        return warnings
+
+    # Upgrade inspected-only events for stations we believe were sampled.
+    existing = getattr(linear, "node_events", None)
+    node_events = list(existing) if isinstance(existing, list) else []
+
+    from modules.registry.schema import NodeInteraction
+
+    by_station: dict[str, NodeInteraction] = {}
+    for event in node_events:
+        station = getattr(event, "station", None)
+        if not isinstance(station, str) or not station.strip():
+            continue
+        by_station[station.strip().upper()] = event
+
+    upgraded: list[str] = []
+    added: list[str] = []
+    for station, quote in station_to_quote.items():
+        key = station.strip().upper()
+        event = by_station.get(key)
+        if event is not None:
+            if getattr(event, "action", None) == "inspected_only":
+                setattr(event, "action", "needle_aspiration")
+                setattr(event, "evidence_quote", _compact_evidence_quote(quote, limit=280))
+                upgraded.append(key)
+            continue
+
+        node_events.append(
+            NodeInteraction(
+                station=station,
+                action="needle_aspiration",
+                outcome=None,
+                evidence_quote=_compact_evidence_quote(quote, limit=280),
+            )
+        )
+        added.append(key)
+
+    if upgraded or added:
+        setattr(linear, "node_events", node_events)
+        if hasattr(linear, "stations_sampled"):
+            stations_sampled = getattr(linear, "stations_sampled", None)
+            existing_stations = (
+                [str(x).strip().upper() for x in stations_sampled if str(x).strip()]
+                if isinstance(stations_sampled, list)
+                else []
+            )
+            merged = sorted(set(existing_stations) | set(station_to_quote.keys()))
+            setattr(linear, "stations_sampled", merged if merged else None)
+
+        if upgraded:
+            warnings.append(
+                f"EBUS_NARRATIVE_RECONCILE: upgraded inspected_only→needle_aspiration for {sorted(set(upgraded))}"
+            )
+        if added:
+            warnings.append(
+                f"EBUS_NARRATIVE_RECONCILE: added node_events for sampled stations {sorted(set(added))}"
+            )
+
+    return warnings
+
+
 _PROCEDURE_DETAIL_SECTION_PATTERN = re.compile(
     r"(?im)^\s*(?:procedure\s+in\s+detail|description\s+of\s+procedure|procedure\s+description)\s*:?"
 )
