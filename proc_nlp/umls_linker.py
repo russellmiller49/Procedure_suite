@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Iterable, List, Sequence, Set
 import os
+import warnings
 
 try:
     import spacy  # type: ignore
@@ -54,7 +55,20 @@ def _require_spacy() -> "spacy.Language":  # type: ignore[name-defined]
 
 @lru_cache(maxsize=2)
 def _load_model(model_name: str):
-    nlp = spacy.load(model_name)  # type: ignore[union-attr]
+    with warnings.catch_warnings():
+        warnings.filterwarnings(
+            "ignore",
+            message=r'Field "model_.*" has conflict with protected namespace "model_"',
+            category=UserWarning,
+            module=r"pydantic\._internal\._fields",
+        )
+        warnings.filterwarnings(
+            "ignore",
+            message=r"Possible set union at position \d+",
+            category=FutureWarning,
+            module=r"spacy\.language",
+        )
+        nlp = spacy.load(model_name)  # type: ignore[union-attr]
     if "scispacy_linker" not in nlp.pipe_names:
         nlp.add_pipe(
             "scispacy_linker",

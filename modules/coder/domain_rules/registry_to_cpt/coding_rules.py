@@ -856,19 +856,22 @@ def derive_all_codes_with_meta(
     # - For non-Chartis balloon occlusion (e.g., Uniblocker/Arndt/Fogarty for air leak/bleeding),
     #   do not suppress solely due to valve overlap (different clinical intent).
     occlusion_source: str | None = None
-    cv = _get(blvr, "collateral_ventilation_assessment")
-    cv_text = str(cv).lower() if cv is not None else ""
-    blvr_evidence = _evidence_text_for_prefixes(
-        record,
-        ("procedures_performed.blvr", "granular_data.blvr_chartis_measurements"),
-    ).lower()
-    if "chartis" in cv_text or "chartis" in blvr_evidence:
+    if chartis_lobes:
         occlusion_source = "Chartis"
-    elif re.search(
-        r"(?i)\b(?:balloon\s+occlusion|serial\s+occlusion|endobronchial\s+blocker|uniblocker|arndt|ardnt|fogarty)\b",
-        cv_text + "\n" + blvr_evidence,
-    ):
-        occlusion_source = "Balloon occlusion"
+    else:
+        cv = _get(blvr, "collateral_ventilation_assessment")
+        cv_text = str(cv).lower() if cv is not None else ""
+        blvr_evidence = _evidence_text_for_prefixes(
+            record,
+            ("procedures_performed.blvr", "granular_data.blvr_chartis_measurements"),
+        ).lower()
+        if "chartis" in cv_text or "chartis" in blvr_evidence:
+            occlusion_source = "Chartis"
+        elif re.search(
+            r"(?i)\b(?:balloon\s+occlusion|serial\s+occlusion|endobronchial\s+blocker|uniblocker|arndt|ardnt|fogarty)\b",
+            cv_text + "\n" + blvr_evidence,
+        ):
+            occlusion_source = "Balloon occlusion"
 
     if occlusion_source:
         if not chartis_lobes:

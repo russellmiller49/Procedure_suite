@@ -101,6 +101,8 @@ class ManualCodeRequest(BaseModel):
 class SuggestCodesResponse(BaseModel):
     """Response from code suggestion endpoint."""
 
+    model_config = {"protected_namespaces": ()}
+
     procedure_id: str
     suggestions: list[CodeSuggestion]
     processing_time_ms: float

@@ -78,7 +78,7 @@ class CoderSettings(BaseSettings):
     # Override via CODER_CMS_CONVERSION_FACTOR environment variable
     cms_conversion_factor: float = 33.4009
 
-    model_config = {"env_prefix": "CODER_"}
+    model_config = {"env_prefix": "CODER_", "protected_namespaces": ()}
 
     @model_validator(mode="after")
     def _resolve_paths(self) -> "CoderSettings":

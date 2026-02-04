@@ -43,4 +43,4 @@ class ReasoningFields(BaseModel):
     mer_notes: str = ""
     ncci_notes: str = ""
 
-    model_config = {"frozen": False}
+    model_config = {"frozen": False, "protected_namespaces": ()}

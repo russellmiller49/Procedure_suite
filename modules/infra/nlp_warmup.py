@@ -26,6 +26,7 @@ import logging
 import os
 from functools import lru_cache
 from typing import Any
+import warnings
 
 _logger = logging.getLogger(__name__)
 
@@ -62,7 +63,22 @@ def get_spacy_model() -> Any:
     model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
     try:
         _logger.info("Loading spaCy model: %s", model_name)
-        nlp = spacy.load(model_name)
+        with warnings.catch_warnings():
+            # spaCy/scispaCy may define Pydantic models with `model_*` fields which
+            # trigger warnings under Pydantic v2 protected namespaces.
+            warnings.filterwarnings(
+                "ignore",
+                message=r'Field "model_.*" has conflict with protected namespace "model_"',
+                category=UserWarning,
+                module=r"pydantic\._internal\._fields",
+            )
+            warnings.filterwarnings(
+                "ignore",
+                message=r"Possible set union at position \d+",
+                category=FutureWarning,
+                module=r"spacy\.language",
+            )
+            nlp = spacy.load(model_name)
         _logger.info("spaCy model %s loaded successfully", model_name)
         return nlp
     except OSError:

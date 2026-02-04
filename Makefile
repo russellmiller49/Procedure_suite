@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
+.PHONY: setup lint typecheck test validate-schemas validate-kb validate-knowledge-release test-kb-strict autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -42,6 +42,12 @@ validate-kb:
 # Validate KB + schema integration (no-op extraction)
 validate-knowledge-release:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/validate_knowledge_release.py --kb $(KB_PATH) --schema $(SCHEMA_PATH)
+
+# Run regression tests with KB Strict Mode to catch orphan codes
+test-kb-strict:
+	@echo "Running smoke tests in KB STRICT mode..."
+	$(CONDA_ACTIVATE) && PROCSUITE_PIPELINE_MODE=extraction_first PSUITE_KB_STRICT=1 pytest tests/coder/test_coding_rules_phase7.py -v
+	$(CONDA_ACTIVATE) && PROCSUITE_PIPELINE_MODE=extraction_first PSUITE_KB_STRICT=1 $(PYTHON) scripts/registry_pipeline_smoke_batch.py --count 10 --notes-dir "tests/fixtures/notes"
 
 # Knowledge diff report (set OLD_KB=...; NEW_KB defaults to KB_PATH)
 OLD_KB ?=

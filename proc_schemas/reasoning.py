@@ -27,6 +27,9 @@ class EvidenceSpan(BaseModel):
 class ReasoningFields(BaseModel):
     """Full reasoning and provenance for a coding/extraction decision."""
 
+    # Allow fields like model_version without protected namespace warnings.
+    model_config = {"protected_namespaces": ()}
+
     # Evidence
     trigger_phrases: List[str] = Field(default_factory=list)
     evidence_spans: List[EvidenceSpan] = Field(default_factory=list)

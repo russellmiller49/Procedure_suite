@@ -5433,8 +5433,8 @@
       "reason": "TBLB and TBNA of the same lesion are typically bundled; use -59/-XS only when clearly distinct lesions/locations are sampled."
     },
     {
-      "primary": "32551",
-      "secondary": "32650",
+      "primary": "32650",
+      "secondary": "32551",
       "modifier_allowed": false,
       "reason": "Tube thoracostomy (separate procedure) is not separately reportable when performed via the same approach as therapeutic thoracoscopy on the same side."
     },
@@ -6942,6 +6942,14 @@
       "fee_schedule_sources": [
         "physician_2025_airway"
       ]
+    },
+    "32100": {
+      "descriptor": "Thoracotomy, major (reference-only)",
+      "family": "other",
+      "type": "reference",
+      "attributes": {
+        "is_add_on": false
+      }
     },
     "32408": {
       "descriptor": "Core ndl bx lng/med perq",

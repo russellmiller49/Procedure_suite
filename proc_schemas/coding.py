@@ -37,7 +37,7 @@ class CodeSuggestion(BaseModel):
     procedure_id: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
-    model_config = {"frozen": False}
+    model_config = {"frozen": False, "protected_namespaces": ()}
 
 
 class ReviewAction(BaseModel):
@@ -52,7 +52,7 @@ class ReviewAction(BaseModel):
     modified_description: Optional[str] = None
     final_code: Optional["FinalCode"] = None  # The resulting FinalCode if accepted/modified
 
-    model_config = {"frozen": False}
+    model_config = {"frozen": False, "protected_namespaces": ()}
 
 
 class FinalCode(BaseModel):
@@ -77,7 +77,7 @@ class FinalCode(BaseModel):
 
     finalized_at: datetime = Field(default_factory=datetime.utcnow)
 
-    model_config = {"frozen": False}
+    model_config = {"frozen": False, "protected_namespaces": ()}
 
 
 class CodingResult(BaseModel):
@@ -111,4 +111,4 @@ class CodingResult(BaseModel):
     )
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
-    model_config = {"frozen": False}
+    model_config = {"frozen": False, "protected_namespaces": ()}

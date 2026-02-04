@@ -349,11 +349,30 @@ class RegistryService:
                         thresholds_path = p
                         break
 
-                label_fields_path = (
-                    runtime_dir / "registry_label_fields.json"
-                    if (runtime_dir / "registry_label_fields.json").exists()
-                    else None
-                )
+                label_fields_path: Path | None = None
+                candidate_label_fields = runtime_dir / "registry_label_fields.json"
+                if candidate_label_fields.exists():
+                    label_fields_path = candidate_label_fields
+                    # Prefer threshold-aligned labels; if the bundle label list is stale (common),
+                    # fall back to the canonical default shipped with the repo.
+                    try:
+                        thresholds_payload = (
+                            json.loads(thresholds_path.read_text())
+                            if thresholds_path and thresholds_path.exists()
+                            else None
+                        )
+                        labels_payload = json.loads(candidate_label_fields.read_text())
+                        if isinstance(thresholds_payload, dict) and thresholds_payload:
+                            threshold_keys = {k for k in thresholds_payload.keys() if isinstance(k, str)}
+                            label_keys = (
+                                {x for x in labels_payload if isinstance(x, str)}
+                                if isinstance(labels_payload, list)
+                                else set()
+                            )
+                            if threshold_keys and label_keys != threshold_keys:
+                                label_fields_path = None
+                    except Exception:
+                        label_fields_path = None
 
                 predictor = ONNXRegistryPredictor(
                     model_path=model_path,

@@ -85,7 +85,7 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
 
     @staticmethod
     def _normalize_code(code: str) -> str:
-        return str(code).strip().lstrip("+")
+        return str(code).strip().upper().lstrip("+")
 
     def _load_data(self) -> None:
         """Load and parse the knowledge base JSON file."""
@@ -210,10 +210,10 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
             if not normalized or normalized in self._procedures:
                 continue
 
-            self._all_codes.add(normalized)
-
             attributes = entry.get("attributes")
             attrs = attributes if isinstance(attributes, dict) else {}
+            if str(entry.get("type") or "") != "reference" and attrs.get("status") != "deleted":
+                self._all_codes.add(normalized)
             is_addon = bool(attrs.get("is_add_on")) or normalized in self._addon_codes
 
             short_descriptor = str(entry.get("descriptor") or entry.get("description") or "")
@@ -426,7 +426,17 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
     def get_procedure_info(self, code: str) -> Optional[ProcedureInfo]:
         """Get procedure information for a CPT code."""
         normalized = self._normalize_code(code)
-        return self._procedures.get(normalized)
+        if not normalized:
+            return None
+
+        proc = self._procedures.get(normalized)
+        if proc is None and os.getenv("PSUITE_KB_STRICT", "0").strip() == "1":
+            raise ValueError(
+                "KB_STRICT violation: Code "
+                f"'{normalized}' was requested by application logic but does not exist in the "
+                f"Knowledge Base source ({self._data_path})."
+            )
+        return proc
 
     def get_mer_group(self, code: str) -> Optional[str]:
         """Get the MER group ID for a code, if any."""

@@ -15,6 +15,10 @@ import os
 import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 
 def _parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser()
@@ -98,6 +102,23 @@ def main() -> int:
         _ = get_knowledge(kb_path, force_reload=True)
     except Exception as exc:  # noqa: BLE001
         print(f"ERROR: KB failed Procedure Suite knowledge schema validation: {exc}", file=sys.stderr)
+        return 2
+
+    # 2.5) Semantic Validation (Integrity & Logic)
+    print("Running semantic validation...", file=sys.stderr)
+    try:
+        from modules.domain.knowledge_base.validator import SemanticValidator
+
+        validator = SemanticValidator(kb_json)
+        issues = validator.validate()
+        if issues:
+            print(f"ERROR: Found {len(issues)} semantic issues in KB:", file=sys.stderr)
+            for issue in issues:
+                print(f"  - {issue}", file=sys.stderr)
+            return 2  # Hard fail
+        print("OK: Semantic validation passed", file=sys.stderr)
+    except Exception as exc:  # noqa: BLE001
+        print(f"ERROR: Semantic validation crashed: {exc}", file=sys.stderr)
         return 2
 
     # 3) Validate the KB adapter loads and can resolve a representative code
