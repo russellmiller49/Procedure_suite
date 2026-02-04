@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../proc_suite_notes"
+		}
+	],
+	"settings": {
+		"chatgpt.openOnStartup": true,
+		"claudeCode.allowDangerouslySkipPermissions": true,
+		"claudeCode.environmentVariables": []
+	}
+}

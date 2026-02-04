@@ -246,14 +246,14 @@ class ProcedureExtractor:
                 for keyword in keywords:
                     if self._keyword_hit(text_lower, keyword):
                         if proc_name == "tbna_conventional" and entity_context:
-                            # EBUS-TBNA is captured under linear_ebus; do not also set conventional TBNA.
-                            if ebus_context_re.search(entity_context):
-                                continue
                             # Peripheral/lung TBNA (e.g., navigation/ION targets) should not be
                             # treated as nodal conventional TBNA.
                             if peripheral_context_re.search(entity_context):
                                 procedure_flags["peripheral_tbna"] = True
                                 evidence.setdefault("peripheral_tbna", []).append(entity.text)
+                                break
+                            # EBUS-TBNA is captured under linear_ebus; do not also set conventional TBNA.
+                            if ebus_context_re.search(entity_context):
                                 break
                         # Found a match
                         procedure_flags[proc_name] = True

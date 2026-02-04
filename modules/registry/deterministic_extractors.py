@@ -684,6 +684,17 @@ ENDOBRONCHIAL_BIOPSY_PATTERNS = [
     r"\bebbx\b",
 ]
 
+# Transbronchial biopsy detection patterns (parenchyma / peripheral lung).
+#
+# Guardrail: some EBUS templates misuse "transbronchial biopsies" language for
+# nodal sampling; the extractor filters those contexts.
+TRANSBRONCHIAL_BIOPSY_PATTERNS = [
+    r"\btransbronchial\s+(?:lung\s+)?biops(?:y|ies)\b",
+    r"\btransbronchial\s+forceps\s+biops(?:y|ies)\b",
+    r"\btbbx\b",
+    r"\btblb\b",
+]
+
 # Radial EBUS detection patterns (rEBUS for peripheral lesion localization)
 RADIAL_EBUS_PATTERNS = [
     r"\bradial\s+ebus\b",
@@ -893,6 +904,28 @@ FOREIGN_BODY_REMOVAL_PATTERNS = [
     r"\bretriev(?:e|ed|al)\b[^.\n]{0,60}\bforeign\s+body\b",
     r"\b(?:fracture[dm]|broken|migrated)\s+(?:piece|fragment|segment|portion)\s+of\s+(?:the\s+)?stent\b",
     r"\bstent\s+(?:fragment|piece)\s+was\s+(?:removed|retrieved|extracted)\b",
+    # Endobronchial valve sizing/exchange can involve removal/retrieval of the valve device.
+    r"\b(?:valve|endobronchial\s+valve|bronchial\s+valve)\b[^.\n]{0,80}\b(?:remov|retriev|extract|explant|withdraw|pull)\w*\b",
+    r"\b(?:remov|retriev|extract|explant|withdraw|pull)\w*\b[^.\n]{0,80}\b(?:valve|endobronchial\s+valve|bronchial\s+valve)\b",
+    r"\b(?:valve|endobronchial\s+valve|bronchial\s+valve)\b[^.\n]{0,80}\b(?:remov(?:ed)?\s+again|exchang(?:ed)?|replac(?:ed)?)\b",
+]
+
+# Percutaneous tracheal puncture / transtracheal access patterns (31612 family).
+TRACHEAL_PUNCTURE_PATTERNS = [
+    r"\btranstracheal\s+(?:injection|aspiration)\b",
+    r"\b(?:trachea|tracheal\s+wall|anterior\s+tracheal\s+wall)\b[^.\n]{0,80}\bpunctur\w*\b",
+    r"\bpunctur\w*\b[^.\n]{0,80}\b(?:trachea|tracheal\s+wall)\b",
+    r"\b\d{1,2}\s*(?:g|ga|gauge)\b[^.\n]{0,60}\bangiocat(?:h|heter)\b[^.\n]{0,80}\bpunctur\w*\b",
+    r"\bangiocat(?:h|heter)\b[^.\n]{0,80}\bpunctur\w*\b[^.\n]{0,80}\b(?:trachea|tracheal\s+wall)\b",
+]
+
+# Balloon occlusion / endobronchial blocker patterns (31634 family).
+BALLOON_OCCLUSION_PATTERNS = [
+    r"\bballoon\s+occlusion\b",
+    r"\bserial\s+occlusion\b",
+    r"\bocclusion\b[^.\n]{0,80}\b(?:endobronchial\s+blocker|blocker|uniblocker|arndt|ardnt|fogarty)\b",
+    r"\b(?:endobronchial\s+blocker|uniblocker|arndt|ardnt|fogarty)\b[^.\n]{0,80}\bocclu\w*\b",
+    r"\b(?:endobronchial\s+blocker|uniblocker)\b[^.\n]{0,80}\bballoon\b[^.\n]{0,80}\b(?:inflated|deflated|inflate|deflate|occlu)\w*\b",
 ]
 
 # BLVR (endobronchial valve) patterns (31647 family)
@@ -1491,12 +1524,9 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
     if not text_lower.strip():
         return {}
 
-    match = None
-    for pattern in BLVR_PATTERNS:
-        match = re.search(pattern, text_lower, re.IGNORECASE)
-        if match:
-            break
-    if not match:
+    blvr_hit = any(re.search(pattern, text_lower, re.IGNORECASE) for pattern in BLVR_PATTERNS)
+    balloon_hit = any(re.search(pattern, text_lower, re.IGNORECASE) for pattern in BALLOON_OCCLUSION_PATTERNS)
+    if not (blvr_hit or balloon_hit):
         return {}
 
     proc: dict[str, Any] = {"performed": True}
@@ -1529,8 +1559,26 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
         proc["procedure_type"] = "Valve placement"
     elif removal_present:
         proc["procedure_type"] = "Valve removal"
-    elif "chartis" in text_lower:
+    elif "chartis" in text_lower or balloon_hit:
         proc["procedure_type"] = "Valve assessment"
+
+    if not proc.get("target_lobe"):
+        lobes = _extract_lung_locations_from_text(preferred_text)
+        if len(lobes) == 1:
+            proc["target_lobe"] = lobes[0]
+
+    # Collateral ventilation assessment is schema-constrained (Chartis-focused).
+    # Only populate when Chartis is explicitly mentioned; rely on evidence text to
+    # support 31634 in non-Chartis balloon occlusion workflows.
+    if proc.get("collateral_ventilation_assessment") is None and "chartis" in text_lower:
+        if re.search(r"(?i)\bno/minimal\s+collateral\s+ventilation\b", text_lower) or re.search(
+            r"(?i)\bno\s+collateral\s+ventilation\b", text_lower
+        ):
+            proc["collateral_ventilation_assessment"] = "Chartis negative"
+        elif re.search(r"(?i)\bcollateral\s+ventilation\b[^.\n]{0,40}\bpresent\b", text_lower):
+            proc["collateral_ventilation_assessment"] = "Chartis positive"
+        else:
+            proc["collateral_ventilation_assessment"] = "Chartis indeterminate"
 
     return {"blvr": proc}
 
@@ -1726,6 +1774,12 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
         r"\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b",
         re.IGNORECASE,
     )
+    # Radial EBUS is commonly used for peripheral lesion localization; TBNA in a
+    # radial-EBUS paragraph is often peripheral/lung TBNA (not nodal EBUS-TBNA).
+    radial_context_re = re.compile(
+        r"\b(?:radial\s+ebus|radial\s+probe|r-?ebus|rp-?ebus|miniprobe)\b",
+        re.IGNORECASE,
+    )
     nodal_ebus_context_re = re.compile(
         r"\b(?:endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna|linear\s+ebus)\b",
         re.IGNORECASE,
@@ -1766,7 +1820,10 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
             ebus_lookback = raw_text[lookback_start:match.start()]
             ebus_lookahead = raw_text[match.end() : min(len(raw_text), match.end() + 40)]
             if ebus_context_re.search(ebus_lookback) or ebus_context_re.search(ebus_lookahead):
-                continue
+                # Allow peripheral TBNA described in a radial-EBUS navigation paragraph.
+                local = _local_context(raw_text, match.start(), match.end(), before_lines=4, after_lines=4)
+                if not radial_context_re.search(local):
+                    continue
 
             before = raw_text[max(0, match.start() - 120) : match.start()]
             if re.search(r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}$", before, re.IGNORECASE):
@@ -1941,6 +1998,48 @@ def extract_transbronchial_cryobiopsy(note_text: str) -> Dict[str, Any]:
     return {}
 
 
+def extract_transbronchial_biopsy(note_text: str) -> Dict[str, Any]:
+    """Extract transbronchial (parenchymal/peripheral) biopsy indicator.
+
+    Guardrails:
+    - Exclude EBUS-nodal sampling blocks that misuse "transbronchial biopsies"
+      language (common in templates).
+    - Exclude cryobiopsy mentions (handled by extract_transbronchial_cryobiopsy).
+    """
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    raw_text = preferred_text or ""
+    if not raw_text.strip():
+        return {}
+
+    ebus_context_re = re.compile(
+        r"\b(?:ebus|endobronchial\s+ultrasound|lymph\s+node|stations?|subcarinal|paratracheal|hilar)\b",
+        re.IGNORECASE,
+    )
+    cryo_context_re = re.compile(r"\b(?:cryo(?:biops(?:y|ies)|probe)|tbbc|tblc)\b", re.IGNORECASE)
+
+    for pattern in TRANSBRONCHIAL_BIOPSY_PATTERNS:
+        for match in re.finditer(pattern, raw_text, re.IGNORECASE):
+            before = raw_text[max(0, match.start() - 120) : match.start()]
+            if re.search(r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}$", before, re.IGNORECASE):
+                continue
+
+            local = raw_text[max(0, match.start() - 220) : min(len(raw_text), match.end() + 220)]
+            if cryo_context_re.search(local):
+                continue
+            if ebus_context_re.search(local):
+                # If the local context has explicit nodal station tokens, treat it as nodal sampling.
+                if _extract_ln_stations_from_text(local):
+                    continue
+                # "Endobronchial ultrasound guided ..." is almost always nodal EBUS-TBNA in templates.
+                if re.search(r"(?i)\bendobronchial\s+ultrasound\b[^.\n]{0,120}\bbiops", local):
+                    continue
+
+            return {"transbronchial_biopsy": {"performed": True}}
+
+    return {}
+
+
 def extract_peripheral_ablation(note_text: str) -> Dict[str, Any]:
     """Extract peripheral ablation indicator with modality when possible."""
     preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
@@ -2028,6 +2127,11 @@ def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
     if change_cue:
         return {}
 
+    # Percutaneous tracheal puncture (31612 family) can appear without explicit
+    # "tracheostomy placed" language (e.g., angiocath puncture of the tracheal wall).
+    if any(re.search(pat, text_lower, re.IGNORECASE) for pat in TRACHEAL_PUNCTURE_PATTERNS):
+        return {"percutaneous_tracheostomy": {"performed": True, "method": "percutaneous"}}
+
     patterns = [
         r"\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b",
         r"\bperc\s+trach\b",
@@ -2061,6 +2165,7 @@ def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
 ESTABLISHED_TRACH_ROUTE_PATTERNS = [
     r"\bvia\s+(?:an?\s+)?(?:existing\s+)?trach(?:eostomy)?\b",
     r"\bthrough\s+(?:an?\s+)?(?:existing\s+)?trach(?:eostomy)?\b",
+    r"\bbronchoscopy\b[^.\n]{0,80}\bthrough\b[^.\n]{0,40}\btrach(?:eostomy)?\s+tube\b",
     r"\btrach(?:eostomy)?\s+(?:stoma|tube)\b[^.\n]{0,40}\b(?:used|accessed|entered|through)\b",
     r"\bbronchoscope\b[^.\n]{0,60}\btrach(?:eostomy)?\b",
     r"\bestablished\s+trach(?:eostomy)?\b",
@@ -2094,7 +2199,12 @@ def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
         if re.search(pattern, text_lower, re.IGNORECASE):
             return {}
 
-    if re.search(r"\b(?:no|not|without)\b[^.\n]{0,60}\btrach(?:eostomy)?\b", text_lower):
+    # Negation guardrail: avoid false positives from explicit "no trach" language, but
+    # do not treat phrases like "Not assessed due to ... tracheostomy tube" as negation.
+    if re.search(r"\b(?:no|without)\b[^.\n]{0,60}\btrach(?:eostomy)?\b", text_lower) or re.search(
+        r"\bnot\s+(?:an?\s+)?(?:existing\s+)?trach(?:eostomy)?\b",
+        text_lower,
+    ):
         return {}
 
     for pattern in ESTABLISHED_TRACH_ROUTE_PATTERNS:
@@ -2629,6 +2739,11 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if ebx_data:
         seed_data.setdefault("procedures_performed", {}).update(ebx_data)
 
+    # Transbronchial biopsy
+    tbbx_data = extract_transbronchial_biopsy(note_text)
+    if tbbx_data:
+        seed_data.setdefault("procedures_performed", {}).update(tbbx_data)
+
     radial_ebus_data = extract_radial_ebus(note_text)
     if radial_ebus_data:
         seed_data.setdefault("procedures_performed", {}).update(radial_ebus_data)
@@ -2735,6 +2850,7 @@ __all__ = [
     "extract_blvr",
     "extract_foreign_body_removal",
     "extract_endobronchial_biopsy",
+    "extract_transbronchial_biopsy",
     "extract_radial_ebus",
     "extract_eus_b",
     "extract_cryotherapy",
@@ -2754,6 +2870,7 @@ __all__ = [
     "extract_pleurodesis",
     "BAL_PATTERNS",
     "ENDOBRONCHIAL_BIOPSY_PATTERNS",
+    "TRANSBRONCHIAL_BIOPSY_PATTERNS",
     "RADIAL_EBUS_PATTERNS",
     "EUS_B_PATTERNS",
     "CRYOTHERAPY_PATTERNS",
@@ -2769,6 +2886,8 @@ __all__ = [
     "AIRWAY_DILATION_PATTERNS",
     "FOREIGN_BODY_REMOVAL_PATTERNS",
     "BLVR_PATTERNS",
+    "BALLOON_OCCLUSION_PATTERNS",
+    "TRACHEAL_PUNCTURE_PATTERNS",
     "ESTABLISHED_TRACH_ROUTE_PATTERNS",
     "ESTABLISHED_TRACH_NEW_PATTERNS",
     "CHEST_ULTRASOUND_PATTERNS",

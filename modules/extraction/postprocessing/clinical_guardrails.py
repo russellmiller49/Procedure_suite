@@ -137,6 +137,16 @@ _CHECKBOX_TOKEN_RE = re.compile(
     r"(?im)(?<!\d)(?P<val>[01])\s*[^\w\n]{0,6}\s*(?P<label>[A-Za-z][A-Za-z /()_-]{0,80})"
 )
 
+# Split on newlines (notes are line-oriented; avoid breaking on abbreviations like "Dr.").
+_SENTENCE_SPLIT_RE = re.compile(r"\n+")
+
+_PLEURODESIS_CUE_RE = re.compile(
+    r"(?i)\b(?:pleurodesis|chemical\s+pleurodesis|32560|32650|talc|doxycycline|poudrage|slurry|sclerosing\s+agent)\b"
+)
+_ATTRIBUTED_NOTE_PREFIX_RE = re.compile(
+    r"(?i)\b(?:see|refer(?:\s+to)?|referred\s+to|per|as\s+per)\b[^.\n]{0,120}\b(?:dr\.?|doctor|note|op\s*note|operative\s+note|surgery\s+note|report)\b"
+)
+
 
 @dataclass
 class GuardrailOutcome:
@@ -544,6 +554,43 @@ class ClinicalGuardrails:
                         "Chest tube not supported by note text; clearing pleural_procedures.chest_tube.performed."
                     )
                     changed = True
+
+        # Pleurodesis attribution guardrail: suppress pleurodesis when it's only mentioned
+        # in referral context (e.g., "See Dr. X's note for VATS and pleurodesis").
+        pleural = record_data.get("pleural_procedures")
+        if isinstance(pleural, dict):
+            pleuro_proc = pleural.get("pleurodesis")
+            if isinstance(pleuro_proc, dict) and pleuro_proc.get("performed") is True:
+                cue_sentences: list[str] = []
+                for raw_sentence in _SENTENCE_SPLIT_RE.split(note_text or ""):
+                    sentence = (raw_sentence or "").strip()
+                    if not sentence:
+                        continue
+                    if _PLEURODESIS_CUE_RE.search(sentence):
+                        cue_sentences.append(sentence)
+
+                if not cue_sentences:
+                    if self._set_pleural_performed(record_data, "pleurodesis", False):
+                        warnings.append(
+                            "Pleurodesis not supported by note text; clearing pleural_procedures.pleurodesis.performed."
+                        )
+                        changed = True
+                else:
+                    only_attributed = True
+                    for sentence in cue_sentences:
+                        m = _PLEURODESIS_CUE_RE.search(sentence)
+                        if not m:
+                            continue
+                        prefix = sentence[: m.start()]
+                        if not _ATTRIBUTED_NOTE_PREFIX_RE.search(prefix):
+                            only_attributed = False
+                            break
+                    if only_attributed:
+                        if self._set_pleural_performed(record_data, "pleurodesis", False):
+                            warnings.append(
+                                "Pleurodesis mentioned only in attributed/referral context; treating as not performed."
+                            )
+                            changed = True
 
         updated = RegistryRecord(**record_data) if changed else record
         return GuardrailOutcome(

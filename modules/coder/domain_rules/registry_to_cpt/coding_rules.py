@@ -204,7 +204,14 @@ def _blvr_chartis_lobes(record: RegistryRecord, *, blvr_proc: Any | None) -> set
     if blvr_proc is None:
         return lobes
     cv = _get(blvr_proc, "collateral_ventilation_assessment")
-    if not cv or "chartis" not in str(cv).lower():
+    cv_text = str(cv).lower() if cv is not None else ""
+    if not cv_text.strip():
+        return lobes
+    # 31634 covers Chartis assessment and other balloon occlusion/endobronchial blocker workflows.
+    if not re.search(
+        r"(?i)\b(?:chartis|balloon\s+occlusion|serial\s+occlusion|endobronchial\s+blocker|uniblocker|arndt|ardnt|fogarty)\b",
+        cv_text,
+    ):
         return lobes
     lobe = _normalize_lobe(_get(blvr_proc, "target_lobe"))
     if lobe:
@@ -648,8 +655,25 @@ def derive_all_codes_with_meta(
                 "Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed)."
             )
         else:
-            codes.append("31645")
-            rationales["31645"] = "therapeutic_aspiration.performed=true"
+            evidence = _evidence_text_for_prefixes(record, ("code_evidence",)) + "\n" + _evidence_text_for_prefixes(
+                record,
+                (
+                    "procedures_performed.therapeutic_aspiration.is_subsequent",
+                    "procedures_performed.therapeutic_aspiration",
+                ),
+            )
+            is_subsequent = bool(
+                re.search(
+                    r"(?i)\b31646\b|\bsubsequent\s+aspirat|\brepeat\s+aspirat|\bsubsequent\s+episode\b",
+                    evidence or "",
+                )
+            )
+            if is_subsequent:
+                codes.append("31646")
+                rationales["31646"] = "therapeutic_aspiration.performed=true and subsequent episode indicated"
+            else:
+                codes.append("31645")
+                rationales["31645"] = "therapeutic_aspiration.performed=true"
 
     # Foreign body removal
     if _performed(_proc(record, "foreign_body_removal")):
@@ -827,9 +851,33 @@ def derive_all_codes_with_meta(
                     "BLVR valve placement inferred but target lobe(s) missing; verify lobes to support 31651 add-on lobe billing."
                 )
 
-    # Chartis (balloon occlusion) code with same-lobe bundling vs valves
-    if chartis_lobes:
-        if valve_lobes:
+    # Balloon occlusion / Chartis assessment (31634).
+    # - For Chartis, apply same-lobe bundling vs BLVR valve placement.
+    # - For non-Chartis balloon occlusion (e.g., Uniblocker/Arndt/Fogarty for air leak/bleeding),
+    #   do not suppress solely due to valve overlap (different clinical intent).
+    occlusion_source: str | None = None
+    cv = _get(blvr, "collateral_ventilation_assessment")
+    cv_text = str(cv).lower() if cv is not None else ""
+    blvr_evidence = _evidence_text_for_prefixes(
+        record,
+        ("procedures_performed.blvr", "granular_data.blvr_chartis_measurements"),
+    ).lower()
+    if "chartis" in cv_text or "chartis" in blvr_evidence:
+        occlusion_source = "Chartis"
+    elif re.search(
+        r"(?i)\b(?:balloon\s+occlusion|serial\s+occlusion|endobronchial\s+blocker|uniblocker|arndt|ardnt|fogarty)\b",
+        cv_text + "\n" + blvr_evidence,
+    ):
+        occlusion_source = "Balloon occlusion"
+
+    if occlusion_source:
+        if not chartis_lobes:
+            codes.append("31634")
+            rationales["31634"] = f"{occlusion_source} documented (target lobe missing)"
+            warnings.append(
+                f"{occlusion_source} documented but target lobe missing; verify documentation supports 31634 and consider modifiers/bundling when applicable."
+            )
+        elif valve_lobes and occlusion_source == "Chartis":
             overlap = chartis_lobes & valve_lobes
             distinct = chartis_lobes - valve_lobes
             if not distinct:
@@ -848,7 +896,11 @@ def derive_all_codes_with_meta(
                     )
         else:
             codes.append("31634")
-            rationales["31634"] = f"Chartis documented (lobes={sorted(chartis_lobes)})"
+            rationales["31634"] = f"{occlusion_source} documented (lobes={sorted(chartis_lobes)})"
+            if valve_lobes and occlusion_source != "Chartis":
+                warnings.append(
+                    "31634 (balloon occlusion) performed alongside valve work; ensure documentation supports separate billing and consider modifier -59/-XS when appropriate."
+                )
 
     # Bronchial thermoplasty: 31660 initial + 31661 additional lobes.
     bt = _proc(record, "bronchial_thermoplasty")
@@ -873,8 +925,31 @@ def derive_all_codes_with_meta(
                 "percutaneous_tracheostomy.performed=true but established_tracheostomy_route=true; suppressing 31600"
             )
         else:
-            codes.append("31600")
-            rationales["31600"] = "percutaneous_tracheostomy.performed=true and established_tracheostomy_route=false"
+            pt_evidence = _evidence_text_for_prefixes(
+                record,
+                ("procedures_performed.percutaneous_tracheostomy",),
+            )
+            code_evidence = _evidence_text_for_prefixes(record, ("code_evidence",))
+            puncture_only = bool(
+                re.search(
+                    r"(?i)\b31612\b|\btranstracheal\b|\bangiocat|\bpunctur\w*\b",
+                    (code_evidence or "") + "\n" + (pt_evidence or ""),
+                )
+            )
+            explicit_trach_creation = bool(
+                re.search(
+                    r"(?i)\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b|\bperc\s+trach\b|\btracheostomy\b[^.\n]{0,60}\b(?:performed|placed|inserted|created)\b",
+                    pt_evidence or "",
+                )
+            )
+            if puncture_only and not explicit_trach_creation:
+                codes.append("31612")
+                rationales["31612"] = (
+                    "percutaneous_tracheostomy.performed=true but evidence indicates percutaneous tracheal puncture (31612)"
+                )
+            else:
+                codes.append("31600")
+                rationales["31600"] = "percutaneous_tracheostomy.performed=true and established_tracheostomy_route=false"
 
     # Neck ultrasound (often pre-tracheostomy vascular mapping)
     if _performed(_proc(record, "neck_ultrasound")):

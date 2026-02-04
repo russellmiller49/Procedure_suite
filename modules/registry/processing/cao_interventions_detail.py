@@ -41,6 +41,10 @@ _PRE_CUE_RE = re.compile(
 
 _SENTENCE_SPLIT_RE = re.compile(r"(?:\n+|(?<=[.!?])\s+)")
 
+_REFERENCE_MEASUREMENT_PREFIX_RE = re.compile(
+    r"(?i)\b(?:distance|dist\.?)\b[^.\n]{0,140}\b(?:to|from|relative\s+to)\s*$"
+)
+
 _LOCATION_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("Tracheostomy tube lumen", re.compile(r"(?i)\btracheostomy\s+tube\b.{0,80}?\blumen\b")),
     ("Trachea", re.compile(r"(?i)\btrachea\b")),
@@ -242,7 +246,13 @@ def _extract_cao_interventions_detail(
         # Determine location context for sentences with no explicit location on the match.
         locations_in_sentence: list[str] = []
         for canonical, pattern in _LOCATION_PATTERNS:
-            if pattern.search(sentence):
+            match = pattern.search(sentence)
+            if match:
+                # Measurement lines frequently use an anatomy term as a reference point
+                # (e.g., "Distance ... to carina 90 mm") and should not set the CAO site.
+                prefix = sentence[: match.start()]
+                if _REFERENCE_MEASUREMENT_PREFIX_RE.search(prefix):
+                    continue
                 locations_in_sentence.append(canonical)
         if locations_in_sentence:
             current_location = locations_in_sentence[0]
