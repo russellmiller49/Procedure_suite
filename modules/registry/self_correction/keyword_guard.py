@@ -442,6 +442,51 @@ _TBNA_TERM_RE = re.compile(
     r"(?i)\b(?:tbna|transbronchial\s+needle\s+aspiration|transbronchial\s+needle)\b"
 )
 
+_MUCUS_CUE_RE = re.compile(r"(?i)\b(?:mucous|mucus|secretions?|clot|plug|mucostasis)\b")
+_TISSUE_DEBULKING_CUE_RE = re.compile(
+    r"(?i)\b(?:tumou?r|mass|lesion|mycetoma|granulation|neoplasm|endobronchial\s+(?:tumou?r|mass|lesion))\b"
+)
+
+
+def _sentence_window(note_text: str, *, start: int, end: int) -> str:
+    if not note_text:
+        return ""
+    start = max(0, min(len(note_text), start))
+    end = max(0, min(len(note_text), end))
+
+    left = max(
+        note_text.rfind(".", 0, start),
+        note_text.rfind("!", 0, start),
+        note_text.rfind("?", 0, start),
+        note_text.rfind("\n", 0, start),
+    )
+    left = 0 if left == -1 else left + 1
+
+    right_candidates = [
+        note_text.find(".", end),
+        note_text.find("!", end),
+        note_text.find("?", end),
+        note_text.find("\n", end),
+    ]
+    right_candidates = [pos for pos in right_candidates if pos != -1]
+    right = min(right_candidates) if right_candidates else len(note_text)
+
+    return note_text[left:right]
+
+
+def _looks_like_mucus_debulking_only(note_text: str, match: re.Match[str]) -> bool:
+    """Return True when 'mechanical debulking' refers to mucus/secretions (not tissue excision)."""
+    if not note_text:
+        return False
+    sentence = _sentence_window(note_text, start=match.start(), end=match.end())
+    if not sentence:
+        return False
+    if not _MUCUS_CUE_RE.search(sentence):
+        return False
+    if _TISSUE_DEBULKING_CUE_RE.search(sentence):
+        return False
+    return True
+
 
 def _looks_like_ebus_nodal_tbna_only(note_text: str, match: re.Match[str]) -> bool:
     """Return True when the match sits in an EBUS nodal TBNA paragraph (not peripheral TBNA)."""
@@ -464,11 +509,12 @@ def _looks_like_ebus_nodal_tbna_only(note_text: str, match: re.Match[str]) -> bo
     tbna_abs_end = local_start + tbna_hit.end()
     tbna_window = note_text[max(0, tbna_abs_start - 180) : min(len(note_text), tbna_abs_end + 180)]
 
-    if not _TBNA_EBUS_CONTEXT_RE.search(tbna_window):
-        return False
-    if not (_EBUS_STATION_TOKEN_RE.search(tbna_window) or re.search(r"(?i)\bstation\(s\)?\b", tbna_window)):
-        return False
-    return True
+    # Specimen sections often omit the literal token "EBUS" but still reference
+    # nodal stations (e.g., "TBNA station 11R and 4R"). Treat station tokens as
+    # sufficient evidence of nodal (non-peripheral) TBNA in local context.
+    if _EBUS_STATION_TOKEN_RE.search(tbna_window) or re.search(r"(?i)\bstation\(s\)?\b", tbna_window):
+        return True
+    return bool(_TBNA_EBUS_CONTEXT_RE.search(tbna_window))
 
 
 def _looks_like_ebus_nodal_context(note_text: str, match: re.Match[str]) -> bool:
@@ -566,6 +612,9 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
                 if field_path == "procedures_performed.transbronchial_biopsy.performed":
                     if _looks_like_ebus_nodal_context(note_text or "", match):
                         continue
+                if field_path == "procedures_performed.mechanical_debulking.performed":
+                    if _looks_like_mucus_debulking_only(note_text or "", match):
+                        continue
                 warning = f"SILENT_FAILURE: {msg} (Pattern: '{pattern}')"
                 warnings.append(warning)
                 logger.warning(warning, extra={"field": field_path, "pattern": pattern})
@@ -610,6 +659,9 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
                     continue
             if field_path == "procedures_performed.transbronchial_biopsy.performed":
                 if _looks_like_ebus_nodal_context(note_text or "", match):
+                    continue
+            if field_path == "procedures_performed.mechanical_debulking.performed":
+                if _looks_like_mucus_debulking_only(note_text or "", match):
                     continue
 
             if field_path == "pleural_procedures.fibrinolytic_therapy.performed":

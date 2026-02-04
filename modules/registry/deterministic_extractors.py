@@ -682,6 +682,10 @@ ENDOBRONCHIAL_BIOPSY_PATTERNS = [
     r"\bbiops(?:y|ied|ies)\b[^.\n]{0,60}\bendobronchial\b",
     r"\blesions?\s+were\s+biopsied\b",
     r"\bebbx\b",
+    # Notes sometimes document endobronchial forceps biopsies without the keyword
+    # "endobronchial" (e.g., cavity/mycetoma within an airway segment).
+    r"\bforceps\s+biops(?:y|ies)\b[^.\n]{0,140}\b(?:cavity|endobronch|airway|bronch(?:us|ial)|trachea|carina|mainstem)\b",
+    r"\b(?:cavity|endobronch|airway|bronch(?:us|ial)|trachea|carina|mainstem)\b[^.\n]{0,140}\bforceps\s+biops(?:y|ies)\b",
 ]
 
 # Transbronchial biopsy detection patterns (parenchyma / peripheral lung).
@@ -1481,7 +1485,8 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
     # Prefer proximity-based evidence of actual action (avoids history-only mentions).
     placement_window_hit = _stent_action_window_hit(
         text_lower,
-        verbs=["place", "deploy", "insert", "positioned", "deliver", "implant"],
+        # Avoid weak cues like "well positioned" (often refers to an existing stent).
+        verbs=["place", "deploy", "insert", "advance", "seat", "deliver", "implant"],
     )
     placement_negated = _stent_placement_negated(text_lower)
     has_placement = placement_window_hit and not placement_negated

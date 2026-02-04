@@ -56,18 +56,18 @@ _STENT_NEGATION_PATTERNS = [
 ]
 
 _STENT_PLACEMENT_CONTEXT_RE = re.compile(
-    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|seat|seated|expand|expanded|expanding)\b"
-    r"|(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
+    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b"
+    r"|(place|placed|deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
     re.IGNORECASE,
 )
 _STENT_PLACEMENT_ACTION_CONTEXT_RE = re.compile(
-    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|expand|expanded|expanding)\b"
-    r"|(place|placed|deploy|deployed|insert|inserted|positioned|advance|advanced|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
+    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|advance|advanced|expand|expanded|expanding)\b"
+    r"|(place|placed|deploy|deployed|insert|inserted|advance|advanced|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
     re.IGNORECASE,
 )
 _STENT_STRONG_PLACEMENT_RE = re.compile(
-    r"\b(?:stent\b[^.\n]{0,30}\b(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated|expand|expanded|expanding)\b"
-    r"|(deploy|deployed|insert|inserted|advance|advanced|positioned|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
+    r"\b(?:stent\b[^.\n]{0,30}\b(deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b"
+    r"|(deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
     re.IGNORECASE,
 )
 _STENT_REMOVAL_CONTEXT_RE = re.compile(
@@ -80,9 +80,9 @@ _STENT_REMOVAL_CONTEXT_RE = re.compile(
 )
 _STENT_INSPECTION_RE = re.compile(
     r"\b(?:"
-    r"(?:stent|bms)\b[^.\n]{0,80}\b(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+(?:good|adequate)\s+position|adequately\s+positioned|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b"
+    r"(?:stent|bms)\b[^.\n]{0,80}\b(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+(?:good|adequate)\s+position|adequately\s+positioned|in\s+place|well[- ]seated|well\s+positioned|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b"
     r"|"
-    r"(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+(?:good|adequate)\s+position|adequately\s+positioned|in\s+place|well[- ]seated|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b[^.\n]{0,80}\b(?:stent|bms)\b"
+    r"(evaluat|inspect|inspection|patent|intact|visible|stent\s+check|in\s+(?:good|adequate)\s+position|adequately\s+positioned|in\s+place|well[- ]seated|well\s+positioned|reassess(?:ment)?|position\s+(?:confirmed|stable)|defect\s+(?:seen|noted))\b[^.\n]{0,80}\b(?:stent|bms)\b"
     r")\b",
     re.IGNORECASE,
 )

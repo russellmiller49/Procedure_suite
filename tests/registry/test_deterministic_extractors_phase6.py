@@ -2,6 +2,7 @@ import pytest
 
 from modules.registry.deterministic_extractors import (
     extract_chest_tube,
+    extract_endobronchial_biopsy,
     extract_ipc,
     extract_navigational_bronchoscopy,
     run_deterministic_extractors,
@@ -56,3 +57,13 @@ def test_chest_tube_existing_left_in_place_maps_to_repositioning() -> None:
     out = extract_chest_tube(text)
     assert out.get("chest_tube", {}).get("performed") is True
     assert out.get("chest_tube", {}).get("action") == "Repositioning"
+
+
+def test_forceps_biopsy_in_cavity_triggers_endobronchial_biopsy() -> None:
+    note_text = (
+        "During lavage, a cavity was visualized in the superior segment of the right lower lobe "
+        "containing a well-demarcated soft tissue mass consistent with a mycetoma. "
+        "Multiple forceps biopsies were obtained from the mass within the cavity."
+    )
+    out = extract_endobronchial_biopsy(note_text)
+    assert out == {"endobronchial_biopsy": {"performed": True}}

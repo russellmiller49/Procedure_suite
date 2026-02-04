@@ -90,3 +90,17 @@ def test_apply_required_overrides_adds_mechanical_debulking_for_snare_en_bloc_la
     assert pp.mechanical_debulking is not None
     assert pp.mechanical_debulking.performed is True
     assert any("mechanical_debulking" in w for w in warnings)
+
+
+def test_apply_required_overrides_does_not_force_mechanical_debulking_for_mucus_cleanout() -> None:
+    record = RegistryRecord()
+    note_text = (
+        "The patient's known Silicone Y-stent was well positioned. "
+        "Through a combination of mechanical debulking with the bronchoscope tip and forceps debulking, "
+        "the adhesive mucous was slowly removed, with near complete recanalization of the stents."
+    )
+
+    updated, warnings = apply_required_overrides(note_text, record)
+    pp = updated.procedures_performed
+    assert pp is None or pp.mechanical_debulking is None or pp.mechanical_debulking.performed is not True
+    assert not any("mechanical_debulking" in w for w in warnings)

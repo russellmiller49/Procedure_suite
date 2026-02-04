@@ -70,7 +70,7 @@ _MODALITY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("Laser", re.compile(r"(?i)\blaser\b|nd:yag|yag\b")),
     ("Microdebrider", re.compile(r"(?i)\bmicrodebrider\b")),
     ("Mechanical debulking", re.compile(r"(?i)\bmechanical\b.{0,30}\bdebulk|\bdebulk\w*\b|\bcore\s*out\b|\brig(?:id)?\s+coring\b")),
-    ("Balloon dilation", re.compile(r"(?i)\bballoon\b.{0,40}\b(dilat|dilatation|dilation)\b|\bcre\s+balloon\b")),
+    ("Balloon dilation", re.compile(r"(?i)\bcre\s+balloon\b|\bballoon\b[^.\n]{0,80}\bdilat\w*\b|\bdilat\w*\b[^.\n]{0,80}\bballoon\b")),
     ("Suctioning", re.compile(r"(?i)\bsuction(?:ed|ing)?\b|\baspirat(?:e|ion)\b")),
     ("Iced saline lavage", re.compile(r"(?i)\b(?:cold|iced)\s+saline\b|\bsaline\s+flush")),
     ("Epinephrine instillation", re.compile(r"(?i)\bepinephrine\b")),

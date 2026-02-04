@@ -150,6 +150,31 @@ def _lobe_tokens(values: list[str]) -> set[str]:
     return lobes
 
 
+def _airway_site_tokens(value: Any) -> set[str]:
+    """Extract coarse airway anatomic tokens from a free-text location string."""
+    if value is None:
+        return set()
+    raw = str(value).strip()
+    if not raw:
+        return set()
+    upper = raw.upper()
+
+    tokens = _lobe_tokens([upper])
+
+    if "TRACHEA" in upper or "TRACHEAL" in upper:
+        tokens.add("Trachea")
+    if "CARINA" in upper:
+        tokens.add("Carina")
+    if "BRONCHUS INTERMEDIUS" in upper or re.search(r"\bBI\b", upper):
+        tokens.add("BI")
+    if "RIGHT MAIN" in upper or re.search(r"\bRMS\b", upper):
+        tokens.add("RMS")
+    if "LEFT MAIN" in upper or re.search(r"\bLMS\b", upper):
+        tokens.add("LMS")
+
+    return tokens
+
+
 def _normalize_lobe(value: Any) -> str | None:
     if value is None:
         return None
@@ -465,18 +490,39 @@ def derive_all_codes_with_meta(
             rationales["31628"] = "transbronchial_cryobiopsy.performed=true"
 
         # Additional lobe add-on (31632) requires multi-lobe locations.
-        locations = None
-        for proc in (tbbx, cryo_tbbx):
-            if proc is None:
-                continue
-            locations = _get(proc, "locations") or _get(proc, "locations_biopsied") or _get(proc, "sites")
-            if locations:
-                break
-        if locations:
-            lobes = _lobe_tokens([str(x) for x in locations if x])
-            if len(lobes) >= 2:
-                codes.append("31632")
-                rationales["31632"] = f"transbronchial_biopsy.locations spans lobes={sorted(lobes)}"
+        location_values: list[str] = []
+
+        def _extend_locations(proc_obj: Any) -> None:
+            if proc_obj is None:
+                return
+            raw_locations = (
+                _get(proc_obj, "locations")
+                or _get(proc_obj, "locations_biopsied")
+                or _get(proc_obj, "sites")
+            )
+            if isinstance(raw_locations, (list, tuple)):
+                for item in raw_locations:
+                    if item:
+                        location_values.append(str(item))
+            elif raw_locations:
+                location_values.append(str(raw_locations))
+
+        _extend_locations(tbbx)
+        _extend_locations(cryo_tbbx)
+
+        # Prefer structured cryobiopsy site detail when available.
+        granular = _get(record, "granular_data")
+        cryo_sites = _get(granular, "cryobiopsy_sites") if granular is not None else None
+        if isinstance(cryo_sites, (list, tuple)):
+            for site in cryo_sites:
+                lobe = _get(site, "lobe")
+                if lobe:
+                    location_values.append(str(lobe))
+
+        lobes = _lobe_tokens([v for v in location_values if v])
+        if len(lobes) >= 2:
+            codes.append("31632")
+            rationales["31632"] = f"transbronchial biopsy spans lobes={sorted(lobes)}"
 
     # Conventional (non-EBUS) TBNA (31629) with add-on 31633 for additional lobes.
     tbna_nodal = _proc(record, "tbna_conventional")
@@ -1214,6 +1260,27 @@ def derive_all_codes_with_meta(
                 "CPT_CONFLICT_STENT_CYCLE: dropped 31635/31636 because 31638 covers stent revision/exchange"
             )
 
+    # Bundling: Dilation (31630) is typically integral to stent placement/revision
+    # when performed to expand the stent at the same anatomic site.
+    # Default (safe): assume same site unless the record provides distinct anatomy.
+    if "31630" in derived and any(c in derived for c in ("31636", "31638")):
+        stent_loc = _get(_proc(record, "airway_stent"), "location")
+        dilation_loc = _get(_proc(record, "airway_dilation"), "location")
+
+        stent_tokens = _airway_site_tokens(stent_loc)
+        dilation_tokens = _airway_site_tokens(dilation_loc)
+        distinct_locations = bool(
+            stent_tokens and dilation_tokens and stent_tokens.isdisjoint(dilation_tokens)
+        )
+
+        if not distinct_locations:
+            derived = [c for c in derived if c != "31630"]
+            rationales.pop("31630", None)
+            stent_code = "31638" if "31638" in derived else "31636"
+            warnings.append(
+                f"31630 (dilation) bundled into {stent_code} (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS."
+            )
+
     # Bundling: Destruction (31641) is integral to Excision (31640) on the same lesion.
     # Default (safe): assume same lesion unless granular/anatomic location proves otherwise.
     if "31640" in derived and "31641" in derived:
@@ -1375,6 +1442,43 @@ def _ebus_elastography_target_count(record: RegistryRecord) -> int:
     return count if count > 0 else 1
 
 
+def _tbbx_lobe_count(record: RegistryRecord) -> int:
+    lobes: set[str] = set()
+
+    for proc_name in ("transbronchial_biopsy", "transbronchial_cryobiopsy"):
+        proc = _proc(record, proc_name)
+        if proc is None:
+            continue
+        raw_locations = _get(proc, "locations") or _get(proc, "locations_biopsied") or _get(proc, "sites") or []
+        values: list[str] = []
+        if isinstance(raw_locations, (list, tuple)):
+            values = [str(x) for x in raw_locations if x]
+        elif raw_locations:
+            values = [str(raw_locations)]
+        lobes |= _lobe_tokens(values)
+
+    granular = _get(record, "granular_data")
+    cryo_sites = _get(granular, "cryobiopsy_sites") if granular is not None else None
+    if isinstance(cryo_sites, (list, tuple)):
+        lobes |= _lobe_tokens([str(_get(site, "lobe")) for site in cryo_sites if _get(site, "lobe")])
+
+    return len(lobes)
+
+
+def _peripheral_tbna_lobe_count(record: RegistryRecord) -> int:
+    proc = _proc(record, "peripheral_tbna")
+    if proc is None:
+        return 0
+    targets = _get(proc, "targets_sampled") or []
+    if isinstance(targets, (list, tuple)):
+        values = [str(x) for x in targets if x]
+    elif targets:
+        values = [str(targets)]
+    else:
+        values = []
+    return len(_lobe_tokens(values))
+
+
 def derive_units_for_codes(record: RegistryRecord, codes: list[str]) -> dict[str, int]:
     """Return derived code units for add-on/multi-unit codes.
 
@@ -1386,6 +1490,29 @@ def derive_units_for_codes(record: RegistryRecord, codes: list[str]) -> dict[str
     if "76983" in codes:
         target_count = _ebus_elastography_target_count(record)
         units["76983"] = max(1, min(target_count - 1, 2))
+
+    # 31632 is "each additional lobe" for transbronchial biopsy (31628).
+    if "31632" in codes:
+        lobe_count = _tbbx_lobe_count(record)
+        if lobe_count >= 2:
+            units["31632"] = max(1, min(lobe_count - 1, 4))
+
+    # 31633 is "each additional lobe" for peripheral (non-nodal) TBNA (31629).
+    if "31633" in codes:
+        lobe_count = _peripheral_tbna_lobe_count(record)
+        if lobe_count >= 2:
+            units["31633"] = max(1, min(lobe_count - 1, 4))
+
+    # BLVR add-ons are per additional lobe.
+    if "31651" in codes:
+        lobes = _blvr_valve_lobes(record, blvr_proc=_proc(record, "blvr"))
+        if len(lobes) >= 2:
+            units["31651"] = max(1, min(len(lobes) - 1, 4))
+
+    if "31649" in codes:
+        lobes = _blvr_valve_lobes(record, blvr_proc=_proc(record, "blvr"))
+        if len(lobes) >= 2:
+            units["31649"] = max(1, min(len(lobes) - 1, 4))
 
     return units
 

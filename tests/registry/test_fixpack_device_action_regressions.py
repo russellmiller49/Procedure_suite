@@ -108,6 +108,59 @@ def test_elastography_targets_drive_76982_76983_units_and_suppress_76981() -> No
     assert units.get("76983") == 2
 
 
+def test_tbbx_and_tbna_multilobe_units_derive_for_addon_codes() -> None:
+    record = RegistryRecord(
+        procedures_performed={
+            "transbronchial_cryobiopsy": {
+                "performed": True,
+                "locations_biopsied": ["RUL", "RLL", "LUL"],
+            },
+            "peripheral_tbna": {
+                "performed": True,
+                "targets_sampled": ["RUL", "RLL", "LUL"],
+            },
+        }
+    )
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "31628" in codes
+    assert "31629" in codes
+    assert "31632" in codes
+    assert "31633" in codes
+
+    units = derive_units_for_codes(record, codes)
+    assert units.get("31632") == 2
+    assert units.get("31633") == 2
+
+
+def test_stent_site_dilation_bundles_31630_into_31636_by_default() -> None:
+    record = RegistryRecord(
+        procedures_performed={
+            "airway_stent": {"performed": True, "action": "Placement"},
+            "airway_dilation": {"performed": True, "method": "Balloon"},
+        }
+    )
+
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert "31636" in codes
+    assert "31630" not in codes
+    assert any("31630 (dilation) bundled into 31636" in w for w in warnings)
+
+
+def test_stent_dilation_distinct_location_keeps_31630() -> None:
+    record = RegistryRecord(
+        procedures_performed={
+            "airway_stent": {"performed": True, "action": "Placement", "location": "Trachea"},
+            "airway_dilation": {"performed": True, "method": "Balloon", "location": "RML"},
+        }
+    )
+
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert "31636" in codes
+    assert "31630" in codes
+    assert not any("31630 (dilation) bundled into 31636" in w for w in warnings)
+
+
 def test_ncci_suppresses_31645_when_ebus_tbna_present() -> None:
     record = RegistryRecord(
         procedures_performed={
@@ -119,4 +172,3 @@ def test_ncci_suppresses_31645_when_ebus_tbna_present() -> None:
     assert "31653" in codes
     assert "31645" not in codes
     assert any("Suppressed 31645" in w for w in warnings)
-

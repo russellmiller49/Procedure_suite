@@ -42,3 +42,14 @@ def test_scan_for_omissions_does_not_misfire_peripheral_tbna_on_ebus_station_mas
     )
     warnings = scan_for_omissions(note_text, record)
     assert not any("peripheral/lung tbna" in w.lower() for w in warnings)
+
+
+def test_scan_for_omissions_does_not_misfire_peripheral_tbna_on_specimen_station_line() -> None:
+    record = RegistryRecord()
+    note_text = (
+        "SPECIMEN(S):\n"
+        "TBNA and TBNB station 11R and 4R\n\n"
+        "IMPRESSION/PLAN: Patient presents for bronchoscopy for lung mass.\n"
+    )
+    warnings = scan_for_omissions(note_text, record)
+    assert not any("peripheral/lung tbna" in w.lower() for w in warnings)
