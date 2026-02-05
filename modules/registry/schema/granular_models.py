@@ -639,6 +639,10 @@ class CAOInterventionDetail(BaseModel):
     
     # Obstruction characterization
     obstruction_type: Literal["Intraluminal", "Extrinsic", "Mixed"] | None = None
+    classification: str | None = Field(
+        default=None,
+        description="Optional obstruction severity classification (e.g., 'Myer-Cotton Grade').",
+    )
     etiology: Literal[
         "Malignant - primary lung", "Malignant - metastatic", "Malignant - other",
         "Benign - post-intubation", "Benign - post-tracheostomy", "Benign - anastomotic",

@@ -27,8 +27,7 @@ class DestructionExtractor:
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
         site_patterns = get_site_pattern_map()
-        events: list[DestructionEvent] = []
-        evidence: list[Span] = []
+        extracted: list[tuple[int, DestructionEvent, Span]] = []
         
         if not any(x.search(text) for x in (APC_RE, CRYO_RE, LASER_RE)):
             return SlotResult([], [], 0.0)
@@ -37,7 +36,8 @@ class DestructionExtractor:
         for site, patterns in site_patterns.items():
             for pattern in patterns:
                 for match in pattern.finditer(text):
-                    segment = _expand_sentence(text, match.start())
+                    seg_start, seg_end = _sentence_bounds(text, match.start())
+                    segment = text[seg_start:seg_end]
                     
                     modality = None
                     if APC_RE.search(segment):
@@ -52,13 +52,15 @@ class DestructionExtractor:
                     if modality:
                         span = Span(
                             text=segment.strip(),
-                            start=text.find(segment),
-                            end=text.find(segment) + len(segment),
+                            start=seg_start,
+                            end=seg_end,
                             section=section_for_offset(sections, match.start()),
                         )
-                        evidence.append(span)
-                        events.append(DestructionEvent(modality=modality, site=site))
+                        extracted.append((seg_start, DestructionEvent(modality=modality, site=site), span))
 
+        extracted.sort(key=lambda item: item[0])
+        events = [item[1] for item in extracted]
+        evidence = [item[2] for item in extracted]
         return SlotResult(events, evidence, 0.85 if events else 0.0)
 
 
@@ -67,8 +69,7 @@ class EnhancedDilationExtractor:
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
         site_patterns = get_site_pattern_map()
-        events: list[EnhancedDilationEvent] = []
-        evidence: list[Span] = []
+        extracted: list[tuple[int, EnhancedDilationEvent, Span]] = []
 
         if "dilation" not in text.lower() and "dilatation" not in text.lower():
             return SlotResult([], [], 0.0)
@@ -76,7 +77,8 @@ class EnhancedDilationExtractor:
         for site, patterns in site_patterns.items():
             for pattern in patterns:
                 for match in pattern.finditer(text):
-                    segment = _expand_sentence(text, match.start())
+                    seg_start, seg_end = _sentence_bounds(text, match.start())
+                    segment = text[seg_start:seg_end]
                     lower_seg = segment.lower()
                     if "dilation" not in lower_seg and "balloon" not in lower_seg:
                         continue
@@ -90,13 +92,21 @@ class EnhancedDilationExtractor:
                     
                     span = Span(
                         text=segment.strip(),
-                        start=text.find(segment),
-                        end=text.find(segment) + len(segment),
+                        start=seg_start,
+                        end=seg_end,
                         section=section_for_offset(sections, match.start()),
                     )
-                    evidence.append(span)
-                    events.append(EnhancedDilationEvent(site=site, balloon_size=size, inflation_pressure=pressure))
+                    extracted.append(
+                        (
+                            seg_start,
+                            EnhancedDilationEvent(site=site, balloon_size=size, inflation_pressure=pressure),
+                            span,
+                        )
+                    )
 
+        extracted.sort(key=lambda item: item[0])
+        events = [item[1] for item in extracted]
+        evidence = [item[2] for item in extracted]
         return SlotResult(events, evidence, 0.8 if events else 0.0)
 
 
@@ -130,6 +140,11 @@ class AspirationExtractor:
         return SlotResult(events, evidence, 0.7 if events else 0.0)
 
 def _expand_sentence(text: str, index: int) -> str:
+    start, end = _sentence_bounds(text, index)
+    return text[start:end]
+
+
+def _sentence_bounds(text: str, index: int) -> tuple[int, int]:
     # Expand to nearest sentence boundary (newline or period)
     # Search backwards
     start = max(
@@ -154,4 +169,4 @@ def _expand_sentence(text: str, index: int) -> str:
     if end < len(text) and text[end] == ".":
         end += 1
         
-    return text[start:end]
+    return start, end

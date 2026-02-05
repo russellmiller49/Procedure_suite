@@ -18,6 +18,15 @@ def test_extract_target_lesion_axes_mm_parses_multi_dim_cm() -> None:
     assert "2.5" in axes.size_text
 
 
+def test_extract_target_lesion_axes_mm_parses_multi_dim_cm_by() -> None:
+    note = "CT shows a 2.5 by 1.7 cm mass in the right upper lobe."
+    axes, warnings = extract_unambiguous_target_lesion_axes_mm(note)
+    assert warnings == []
+    assert axes is not None
+    assert axes.long_axis_mm == 25.0
+    assert axes.short_axis_mm == 17.0
+
+
 def test_extract_lesion_size_mm_does_not_pick_single_value_when_multi_lesions_present() -> None:
     note = "CT shows a 2.5 x 1.7 cm mass and a 12 mm nodule."
     extracted, warnings = extract_unambiguous_lesion_size_mm(note)
@@ -72,3 +81,23 @@ def test_apply_disease_burden_overrides_does_not_override_therapeutic_outcomes_w
         for w in warnings
     )
 
+
+def test_apply_disease_burden_overrides_populates_target_lesion_morphology_with_evidence() -> None:
+    record = RegistryRecord()
+    note = (
+        "INDICATION:\n"
+        "Spiculated ground glass nodule in the right upper lobe.\n"
+        "FINDINGS:\n"
+        "A spiculated lesion is again seen.\n"
+    )
+
+    updated, _warnings = apply_disease_burden_overrides(record, note_text=note)
+
+    assert updated.clinical_context is not None
+    assert updated.clinical_context.target_lesion is not None
+    assert updated.clinical_context.target_lesion.morphology == "Spiculated; Ground Glass"
+
+    evidence = updated.evidence
+    assert evidence.get("clinical_context.target_lesion.morphology")
+    spans = evidence["clinical_context.target_lesion.morphology"]
+    assert any("spicul" in note[span.start : span.end].lower() for span in spans)

@@ -42,6 +42,12 @@ BAL_VOLUME_RE = re.compile(r"(?i)\binstill(?:ed)?\s*(\d{1,4})\s*(?:ml|cc)\b")
 # Device size patterns (e.g., "14 x 40 mm", "14x40mm", "1.7 x 2.4 cm")
 DEVICE_SIZE_RE = re.compile(r"(?i)\b(\d+(?:\.\d+)?\s*x\s*\d+(?:\.\d+)?\s*(?:mm|cm)?)\b")
 
+# Lesion size patterns (e.g., "4.8 x 3.2 cm", "4.8 by 3.2 cm")
+LESION_SIZE_RE = re.compile(r"(?i)\b(\d+(?:\.\d+)?)\s*(?:x|by)\s*(\d+(?:\.\d+)?)\s*(cm|mm)\b")
+
+# Obstruction percent patterns (e.g., "stenosis 80%", "obstruction is 90%")
+OBSTRUCTION_PCT_RE = re.compile(r"(?i)\b(?:occlu|obstruct|stenosis)\w*\s*(?:of|is)?\s*(\d{1,3})\s*%")
+
 
 def extract_demographics(note_text: str) -> Dict[str, Any]:
     """Extract patient age and gender from note header.

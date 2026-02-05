@@ -196,6 +196,75 @@ class BalloonOcclusion(BaseModel):
     air_leak_result: Optional[str] = None
 
 
+class LesionMorphology(str, Enum):
+    SPICULATED = "Spiculated"
+    GROUND_GLASS = "Ground Glass"
+    SOLID = "Solid"
+    PART_SOLID = "Part-solid"
+    CAVITARY = "Cavitary"
+    CALCIFIED = "Calcified"
+
+
+class LesionCharacteristics(BaseModel):
+    """Structured target lesion characteristics (axes, morphology, location)."""
+
+    size_long_axis_mm: float | None = Field(
+        default=None,
+        ge=0,
+        description="Largest (long-axis) lesion dimension in mm when documented.",
+    )
+    size_short_axis_mm: float | None = Field(
+        default=None,
+        ge=0,
+        description="Smaller (short-axis) lesion dimension in mm when documented.",
+    )
+    morphology: List[LesionMorphology] = Field(
+        default_factory=list,
+        description="Lesion morphology descriptors (e.g., spiculated, ground glass, solid).",
+    )
+    location_text: str | None = Field(
+        default=None,
+        description="Free-text anatomic lesion location (e.g., 'RLL posterior segment').",
+    )
+
+
+class CentralAirwayObstruction(BaseModel):
+    """Central airway obstruction structured summary (pre/post)."""
+
+    class ObstructionType(str, Enum):
+        INTRINSIC = "Intrinsic"
+        EXTRINSIC = "Extrinsic"
+        MIXED = "Mixed"
+
+    obstruction_type: ObstructionType | None = Field(
+        default=None,
+        description="Intrinsic (endoluminal) vs extrinsic (compressive) vs mixed obstruction type.",
+    )
+    obstruction_percent_pre: int | None = Field(
+        default=None,
+        ge=0,
+        le=100,
+        description="Pre-intervention obstruction percent (0-100) when documented.",
+    )
+    obstruction_percent_post: int | None = Field(
+        default=None,
+        ge=0,
+        le=100,
+        description="Post-intervention obstruction percent (0-100) when documented.",
+    )
+    classification: str | None = Field(
+        default=None,
+        description="Optional severity classification (e.g., 'Myer-Cotton Grade').",
+    )
+
+
+class ClinicalContextV3(BaseModel):
+    """Structured clinical context fields for V3."""
+
+    lesion_characteristics: LesionCharacteristics | None = None
+    central_airway_obstruction: CentralAirwayObstruction | None = None
+
+
 class IPRegistryV3(BaseModel):
     """IP Registry Schema v3 - next-generation schema.
 
@@ -219,6 +288,8 @@ class IPRegistryV3(BaseModel):
 
     # Sedation
     sedation: Sedation = Field(default_factory=Sedation)
+
+    clinical_context: ClinicalContextV3 = Field(default_factory=ClinicalContextV3)
 
     established_tracheostomy_route: bool = Field(
         False,

@@ -18,7 +18,7 @@ from typing import Any
 
 _CAO_HINT_RE = re.compile(
     r"(?i)\b(?:"
-    r"central\s+airway|airway\s+obstruction|trache(?:a|al)|mainstem\s+obstruction|"
+    r"central\s+airway|airway\s+obstruction|trache(?:a|al)|main(?:\s*|-)?stem(?:\s+obstruction)?|"
     r"debulk(?:ing)?|tumou?r\s+ablation|endoluminal\s+tumou?r|recanaliz|"
     r"airway\s+stent|y-?stent|tracheomalacia|bronchomalacia|rigid\s+bronchos"
     r")\b"
@@ -28,6 +28,7 @@ _POST_CUE_RE = re.compile(
     r"(?i)\b(?:"
     r"at\s+the\s+end|end\s+of\s+the\s+procedure|at\s+conclusion|finally|"
     r"post[-\s]?(?:procedure|intervention|treatment|op)|"
+    r"post[-\s]?dilat\w*|post[-\s]?debulk\w*|"
     r"after\s+(?:debulk\w*|dilat\w*|ablat\w*|treat\w*|interven\w*)|"
     r"improv(?:ed|ement)\s+to|reduc(?:ed)?\s+to|decreas(?:ed)?\s+to"
     r")\b"
@@ -35,7 +36,8 @@ _POST_CUE_RE = re.compile(
 
 _PRE_CUE_RE = re.compile(
     r"(?i)\b(?:"
-    r"prior\s+to|before|pre[-\s]?(?:procedure|intervention|treatment|op)|baseline"
+    r"prior\s+to|before|pre[-\s]?(?:procedure|intervention|treatment|op)|baseline|"
+    r"initial\s+inspection|initial\s+evaluation|pre[-\s]?dilat\w*"
     r")\b"
 )
 
@@ -47,7 +49,7 @@ _REFERENCE_MEASUREMENT_PREFIX_RE = re.compile(
 
 _LOCATION_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("Tracheostomy tube lumen", re.compile(r"(?i)\btracheostomy\s+tube\b.{0,80}?\blumen\b")),
-    ("Trachea", re.compile(r"(?i)\btrachea\b")),
+    ("Trachea", re.compile(r"(?i)\btrachea(?:l)?\b")),
     ("Carina", re.compile(r"(?i)\b(?:main\s+carina|carina)\b")),
     ("RMS", re.compile(r"(?i)\bright\s+main(?:\s*|-)?stem\b|\bRMS\b")),
     ("LMS", re.compile(r"(?i)\bleft\s+main(?:\s*|-)?stem\b|\bLMS\b")),
@@ -94,6 +96,17 @@ _LESION_COUNT_RE = re.compile(
     r"(?i)(?:\(|\b)?(?P<count>>\s*\d{1,3}|\d{1,3})\)?[^.\n]{0,40}\blesions?\b"
 )
 
+_INTRINSIC_OBSTRUCTION_RE = re.compile(
+    r"(?i)\b(?:endobronchial|endoluminal|intraluminal|exophytic|tumou?r\s+ingrowth|granulation)\b"
+)
+_EXTRINSIC_OBSTRUCTION_RE = re.compile(
+    r"(?i)\b(?:extrinsic|external)\s+compression\b|\bexternally\s+compress\w*\b|\bcompress(?:ed|ion)\b|\bmass\s+effect\b|\bbulging\b"
+)
+_MIXED_OBSTRUCTION_RE = re.compile(r"(?i)\bmixed\b")
+_CLASSIFICATION_RE = re.compile(
+    r"(?i)\b(?:myer[-\s]?cotton|cotton[-\s]?myer)\b[^.\n]{0,60}"
+)
+
 _OBSTRUCTION_PCT_AFTER_LOC_RE = re.compile(
     r"(?i)\b(?P<loc>[^.]{0,80}?)\b(?:was|were|is|are|remained|remains)?\s*"
     r"(?:only\s+)?(?:about|around|approximately|approx\.?)?\s*"
@@ -116,6 +129,18 @@ _OCCLUDING_PCT_RE = re.compile(
 )
 _PCT_OPEN_RE = re.compile(
     r"(?i)\b(?P<pct>\d{1,3})\s*%\s*(?:open|patent|recanaliz(?:ed|ation))\b"
+)
+_PATENCY_PCT_AFTER_WORD_RE = re.compile(
+    r"(?i)\b(?:open|patent|recanaliz(?:ed|ation))\w*\b[^%]{0,40}?(?P<pct>\d{1,3})\s*%"
+)
+_RESIDUAL_OBSTRUCTION_PCT_RE = re.compile(
+    r"(?i)\bresidual(?:\s+(?:obstruction|stenosis|narrowing))?\b[^%]{0,24}?(?P<pct>\d{1,3})\s*%"
+)
+_OBSTRUCTION_WORD_BEFORE_PCT_RE = re.compile(
+    r"(?i)\b(?:"
+    r"obstruct(?:ed|ion)?|occlud(?:ed|ing|e)?|stenos(?:is|ed)|narrow(?:ed|ing)?|block(?:ed|ing)?"
+    r"|compress(?:ed|ion)"
+    r")\b[^%]{0,24}?(?P<pct>\d{1,3})\s*%"
 )
 _COMPLETE_OBSTRUCTION_OF_RE = re.compile(
     r"(?i)\b(?:complete(?:ly)?|total)\s+(?:obstruction|occlusion)\b\s+of\s+(?:the\s+)?"
@@ -200,7 +225,7 @@ def _extract_cao_interventions_detail(
     current_location: str | None = None
     post_context_remaining = 0
     pre_context_remaining = 0
-    fallback_location = "Trachea" if re.search(r"(?i)\btrachea\b", text) else None
+    fallback_location = "Trachea" if re.search(r"(?i)\btrachea(?:l)?\b", text) else None
 
     def _get_site(loc: str) -> dict[str, Any]:
         if loc not in sites:
@@ -295,6 +320,20 @@ def _extract_cao_interventions_detail(
                 continue
             _assign_pct(loc, pct, is_post=is_post)
 
+        # 2b) Obstruction described before percent (e.g., "stenosis is 80%") without explicit location groups.
+        for match in _OBSTRUCTION_WORD_BEFORE_PCT_RE.finditer(sentence):
+            prefix = sentence[max(0, match.start() - 160) : match.start()]
+            loc = _infer_location_last(prefix) or current_location or fallback_location
+            if not loc and len(locations_in_sentence) == 1:
+                loc = locations_in_sentence[0]
+            if not loc:
+                continue
+            try:
+                pct = int(match.group("pct"))
+            except Exception:
+                continue
+            _assign_pct(loc, pct, is_post=is_post)
+
         # 3) "Blocking 90% of the airway" (no explicit obstruction token after percent).
         for match in _BLOCKING_PCT_RE.finditer(sentence):
             loc = current_location or fallback_location
@@ -348,6 +387,35 @@ def _extract_cao_interventions_detail(
             # Default to post-procedure patency, but respect explicit "prior/before" cues.
             _assign_pct(loc, obstruction, is_post=not is_pre)
 
+        # 4b) "patent/open to 80%" phrasing -> obstruction = 100 - patency (usually post).
+        for match in _PATENCY_PCT_AFTER_WORD_RE.finditer(sentence):
+            loc = current_location or fallback_location
+            if not loc and len(locations_in_sentence) == 1:
+                loc = locations_in_sentence[0]
+            if not loc:
+                continue
+            try:
+                patency = int(match.group("pct"))
+            except Exception:
+                continue
+            if not (0 <= patency <= 100):
+                continue
+            obstruction = 100 - patency
+            _assign_pct(loc, obstruction, is_post=not is_pre)
+
+        # 4c) "residual 20% stenosis/obstruction" phrasing -> treat as obstruction percent.
+        for match in _RESIDUAL_OBSTRUCTION_PCT_RE.finditer(sentence):
+            loc = current_location or fallback_location
+            if not loc and len(locations_in_sentence) == 1:
+                loc = locations_in_sentence[0]
+            if not loc:
+                continue
+            try:
+                pct = int(match.group("pct"))
+            except Exception:
+                continue
+            _assign_pct(loc, pct, is_post=not is_pre)
+
         # 5) Complete obstruction/occlusion with explicit "of <location>" (multi-hit).
         for match in _COMPLETE_OBSTRUCTION_OF_RE.finditer(sentence):
             loc = _infer_location(match.group("loc") or "") or current_location
@@ -370,6 +438,35 @@ def _extract_cao_interventions_detail(
         lesion_locations = [loc for loc in lesion_locations if loc]
 
         if lesion_locations:
+            intrinsic = bool(_INTRINSIC_OBSTRUCTION_RE.search(sentence))
+            extrinsic = bool(_EXTRINSIC_OBSTRUCTION_RE.search(sentence))
+            mixed = bool(_MIXED_OBSTRUCTION_RE.search(sentence))
+            inferred_type: str | None = None
+            if mixed or (intrinsic and extrinsic):
+                inferred_type = "Mixed"
+            elif intrinsic:
+                inferred_type = "Intraluminal"
+            elif extrinsic:
+                inferred_type = "Extrinsic"
+
+            if inferred_type:
+                for loc in lesion_locations:
+                    site = _get_site(loc)
+                    existing = str(site.get("obstruction_type") or "").strip()
+                    if not existing:
+                        site["obstruction_type"] = inferred_type
+                    elif existing != inferred_type and existing in {"Intraluminal", "Extrinsic"}:
+                        site["obstruction_type"] = "Mixed"
+
+            classification_match = _CLASSIFICATION_RE.search(sentence)
+            if classification_match:
+                classification = classification_match.group(0).strip()
+                if classification:
+                    for loc in lesion_locations:
+                        site = _get_site(loc)
+                        if not str(site.get("classification") or "").strip():
+                            site["classification"] = classification
+
             # Lesion morphology/count backstop (helps capture disease burden in templated notes).
             if _LESION_MORPHOLOGY_RE.search(sentence) and re.search(r"(?i)\b(?:lesion|lesions|tumou?r|mass)\b", sentence):
                 m = _LESION_MORPHOLOGY_RE.search(sentence)

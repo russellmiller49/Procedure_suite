@@ -6967,9 +6967,9 @@
       "secondary": "31640"
     },
     {
-      "modifier_allowed": false,
+      "modifier_allowed": true,
       "primary": "31647",
-      "reason": "Do not report 31634 in conjunction with 31647 or 31651 at the same session; 31634 is for Chartis/balloon occlusion assessment without valve implantation.",
+      "reason": "31634 (Chartis/balloon occlusion) is bundled when performed in the same lobe as BLVR valve placement (31647/31651); modifier -59/-XS may allow separate reporting when distinct lobes are documented.",
       "secondary": "31634"
     },
     {

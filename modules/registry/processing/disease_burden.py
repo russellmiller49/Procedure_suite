@@ -17,6 +17,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
+from modules.common.sectionizer import SectionizerService
 from modules.common.spans import Span
 from modules.registry.processing.cao_interventions_detail import (
     extract_cao_interventions_detail_with_candidates,
@@ -40,7 +41,8 @@ class ExtractedLesionAxes:
 
 
 _MULTI_DIM_RE = re.compile(
-    r"(?i)\b\d+(?:\.\d+)?\s*[x×]\s*\d+(?:\.\d+)?(?:\s*[x×]\s*\d+(?:\.\d+)?)?\s*(?:cm|mm)\b"
+    r"(?i)\b\d+(?:\.\d+)?\s*(?:[x×]|by)\s*\d+(?:\.\d+)?"
+    r"(?:\s*(?:[x×]|by)\s*\d+(?:\.\d+)?)?\s*(?:cm|mm)\b"
 )
 
 _LESION_SIZE_TERM_BEFORE_RE = re.compile(
@@ -61,12 +63,12 @@ _LESION_AXES_TERM_BEFORE_RE = re.compile(
     r"(?:\s+(?:is|was))?"
     r"(?:\s+(?:measuring|measures|measure|measured|sized|size|dimensions?(?:\s+of)?))?"
     r"[^0-9]{0,20}"
-    r"(?P<a>\d+(?:\.\d+)?)\s*[x×]\s*(?P<b>\d+(?:\.\d+)?)"
-    r"(?:\s*[x×]\s*(?P<c>\d+(?:\.\d+)?))?\s*(?P<unit>cm|mm)\b"
+    r"(?P<a>\d+(?:\.\d+)?)\s*(?:[x×]|by)\s*(?P<b>\d+(?:\.\d+)?)"
+    r"(?:\s*(?:[x×]|by)\s*(?P<c>\d+(?:\.\d+)?))?\s*(?P<unit>cm|mm)\b"
 )
 _LESION_AXES_TERM_AFTER_RE = re.compile(
-    r"(?i)\b(?P<a>\d+(?:\.\d+)?)\s*[x×]\s*(?P<b>\d+(?:\.\d+)?)"
-    r"(?:\s*[x×]\s*(?P<c>\d+(?:\.\d+)?))?\s*(?P<unit>cm|mm)\b"
+    r"(?i)\b(?P<a>\d+(?:\.\d+)?)\s*(?:[x×]|by)\s*(?P<b>\d+(?:\.\d+)?)"
+    r"(?:\s*(?:[x×]|by)\s*(?P<c>\d+(?:\.\d+)?))?\s*(?P<unit>cm|mm)\b"
     r"(?:\s+(?:spiculated|solid|part-?solid|ground-?glass|cavitary|calcified|fdg-?avid|pet-?avid))?"
     r"\s+(?:target\s+lesion|lesion|nodule|mass|tumou?r)\b"
 )
@@ -74,6 +76,70 @@ _LESION_AXES_TERM_AFTER_RE = re.compile(
 _SUV_RE = re.compile(
     r"(?i)\bSUV(?:\s*max(?:imum)?|\s*max)?\b[^0-9]{0,12}(?P<num>\d+(?:\.\d+)?)"
 )
+
+_LESION_CONTEXT_RE = re.compile(r"(?i)\b(?:target\s+lesion|lesion|nodule|mass|tumou?r)\b")
+
+_MORPHOLOGY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("Spiculated", re.compile(r"(?i)\bspiculat(?:ed|ion)\b")),
+    ("Ground Glass", re.compile(r"(?i)\b(?:ground[-\s]?glass|ggo)\b")),
+    ("Part-solid", re.compile(r"(?i)\bpart[-\s]?solid\b")),
+    ("Solid", re.compile(r"(?i)\bsolid\b")),
+    ("Cavitary", re.compile(r"(?i)\bcavit(?:ary|at(?:e|ed)|ation)\b")),
+    ("Calcified", re.compile(r"(?i)\bcalcif(?:ied|ication)\b")),
+)
+
+_MORPHOLOGY_SECTIONIZER: SectionizerService | None = None
+
+
+def _get_morphology_sectionizer() -> SectionizerService:
+    global _MORPHOLOGY_SECTIONIZER
+    if _MORPHOLOGY_SECTIONIZER is None:
+        # Keep this lightweight: only scan the most reliable radiology/context sections.
+        _MORPHOLOGY_SECTIONIZER = SectionizerService(headings=("INDICATION", "FINDINGS"))
+    return _MORPHOLOGY_SECTIONIZER
+
+
+def _extract_target_lesion_morphology(note_text: str) -> tuple[list[str], list[Span]]:
+    """Extract morphology terms for the target lesion from INDICATION/FINDINGS sections."""
+    text = _maybe_unescape_newlines(note_text or "")
+    if not text.strip():
+        return [], []
+
+    sectionizer = _get_morphology_sectionizer()
+    sections = sectionizer.sectionize(text)
+
+    terms: list[str] = []
+    seen: set[str] = set()
+    spans: list[Span] = []
+
+    for section in sections:
+        if section.title.upper() not in {"INDICATION", "FINDINGS"}:
+            continue
+
+        # Important: `Section.text` is stripped, so indices can drift. Use the original slice.
+        slice_text = text[section.start : section.end]
+        if not slice_text.strip():
+            continue
+
+        for canonical, pattern in _MORPHOLOGY_PATTERNS:
+            for match in pattern.finditer(slice_text):
+                window = slice_text[max(0, match.start() - 80) : min(len(slice_text), match.end() + 80)]
+                if not _LESION_CONTEXT_RE.search(window):
+                    continue
+
+                if canonical not in seen:
+                    terms.append(canonical)
+                    seen.add(canonical)
+
+                spans.append(
+                    Span(
+                        text=match.group(0).strip(),
+                        start=section.start + match.start(),
+                        end=section.start + match.end(),
+                    )
+                )
+
+    return terms, spans
 
 
 def _maybe_unescape_newlines(raw: str) -> str:
@@ -399,6 +465,19 @@ def apply_disease_burden_overrides(
             evidence.setdefault("clinical_context.target_lesion.suv_max", []).append(suv.span)
         clinical["target_lesion"] = target
 
+    morph_terms, morph_spans = _extract_target_lesion_morphology(note_text)
+    if morph_terms:
+        target = clinical.get("target_lesion")
+        if target is None or not isinstance(target, dict):
+            target = {}
+
+        existing = target.get("morphology")
+        if not isinstance(existing, str) or not existing.strip():
+            target["morphology"] = "; ".join(morph_terms) if len(morph_terms) > 1 else morph_terms[0]
+            for span in morph_spans:
+                evidence.setdefault("clinical_context.target_lesion.morphology", []).append(span)
+            clinical["target_lesion"] = target
+
     if clinical:
         record_data["clinical_context"] = clinical
     if evidence:
@@ -445,6 +524,14 @@ def apply_disease_burden_overrides(
                 m2 = open_re.search(note_text)
                 if m2:
                     return Span(text=m2.group(0).strip(), start=m2.start(), end=m2.end())
+
+                # Support "patent/open to 80%" phrasing (percent after the patency keyword).
+                open_after_re = re.compile(
+                    rf"(?i)\b(?:open|patent|recanaliz(?:ed|ation))\w*(?:\s+(?:to|of))?\s*{open_pct}\s*%"
+                )
+                m3 = open_after_re.search(note_text)
+                if m3:
+                    return Span(text=m3.group(0).strip(), start=m3.start(), end=m3.end())
             return None
 
         if len(pre_union) == 1:

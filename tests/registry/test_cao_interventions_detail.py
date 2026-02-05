@@ -77,3 +77,55 @@ def test_extract_cao_interventions_detail_patency_is_converted_to_obstruction_pc
     by_loc = _by_location(details)
     assert by_loc["Trachea"]["pre_obstruction_pct"] == 80
     assert by_loc["Trachea"]["post_obstruction_pct"] == 60
+
+
+def test_extract_cao_interventions_detail_patency_to_phrase_is_converted_to_obstruction_pct() -> None:
+    note = (
+        "TRACHEAL STENOSIS\n"
+        "Prior to treatment, affected airway was patent to 20%.\n"
+        "After treatment, the airway was open to 60%.\n"
+    )
+
+    details = extract_cao_interventions_detail(note)
+    by_loc = _by_location(details)
+    assert by_loc["Trachea"]["pre_obstruction_pct"] == 80
+    assert by_loc["Trachea"]["post_obstruction_pct"] == 40
+
+
+def test_extract_cao_interventions_detail_initial_inspection_vs_post_dilation_context() -> None:
+    note = (
+        "Initial Inspection:\n"
+        "Trachea stenosis is 80%.\n"
+        "Post-Dilation:\n"
+        "Trachea patent to 70%.\n"
+    )
+
+    details = extract_cao_interventions_detail(note)
+    by_loc = _by_location(details)
+    assert by_loc["Trachea"]["pre_obstruction_pct"] == 80
+    assert by_loc["Trachea"]["post_obstruction_pct"] == 30
+
+
+def test_extract_cao_interventions_detail_extrinsic_compression_sets_obstruction_type() -> None:
+    note = (
+        "The right mainstem at the orifice was significantly externally compressed (85%).\n"
+        "At the end of the procedure the right mainstem was only 10% obstructed.\n"
+    )
+
+    details = extract_cao_interventions_detail(note)
+    by_loc = _by_location(details)
+    assert by_loc["RMS"]["pre_obstruction_pct"] == 85
+    assert by_loc["RMS"]["post_obstruction_pct"] == 10
+    assert by_loc["RMS"]["obstruction_type"] == "Extrinsic"
+
+
+def test_extract_cao_interventions_detail_myer_cotton_classification_is_attached() -> None:
+    note = (
+        "Myer-Cotton Grade III\n"
+        "Trachea stenosis is 80%.\n"
+    )
+
+    details = extract_cao_interventions_detail(note)
+    by_loc = _by_location(details)
+    assert by_loc["Trachea"]["pre_obstruction_pct"] == 80
+    assert "myer" in str(by_loc["Trachea"].get("classification") or "").lower()
