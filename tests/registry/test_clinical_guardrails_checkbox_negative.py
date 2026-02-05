@@ -8,6 +8,9 @@ def test_checkbox_negative_guardrail_forces_false_for_unchecked_items() -> None:
     guardrails = ClinicalGuardrails()
     record = RegistryRecord.model_validate(
         {
+            "procedures_performed": {
+                "airway_dilation": {"performed": True},
+            },
             "pleural_procedures": {
                 "ipc": {"performed": True},
                 "chest_tube": {"performed": True},
@@ -20,6 +23,7 @@ def test_checkbox_negative_guardrail_forces_false_for_unchecked_items() -> None:
         "0- Tunneled Pleural Catheter\n"
         "[ ] Chest tube\n"
         "0- Pneumothorax\n"
+        "☐ Airway dilation\n"
     )
 
     outcome = guardrails.apply_record_guardrails(note_text, record)
@@ -34,4 +38,7 @@ def test_checkbox_negative_guardrail_forces_false_for_unchecked_items() -> None:
     assert updated.complications is not None
     assert updated.complications.pneumothorax is not None
     assert updated.complications.pneumothorax.occurred is False
-    assert any("checkbox negative" in str(w).lower() for w in outcome.warnings)
+    assert updated.procedures_performed is not None
+    assert updated.procedures_performed.airway_dilation is not None
+    assert updated.procedures_performed.airway_dilation.performed is False
+    assert any(str(w).startswith("CHECKBOX_NEGATIVE:") for w in outcome.warnings)

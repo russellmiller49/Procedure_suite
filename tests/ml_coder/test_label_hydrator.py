@@ -90,6 +90,20 @@ class TestHydrateLabelsFromText:
 
         assert "airway_stent" in labels
 
+    def test_stent_present_well_positioned_does_not_hydrate(self):
+        """Avoid stent 'present/well positioned' false positives."""
+        text = "Known airway stent well positioned and patent."
+        labels = hydrate_labels_from_text(text)
+
+        assert "airway_stent" not in labels or labels.get("airway_stent", 0) < 0.6
+
+    def test_chest_tube_discontinued_does_not_hydrate(self):
+        """Avoid chest tube removal/discontinue false positives."""
+        text = "D/c chest tube."
+        labels = hydrate_labels_from_text(text)
+
+        assert "chest_tube" not in labels or labels.get("chest_tube", 0) < 0.6
+
     def test_negation_filtering(self):
         """Test that negated keywords are filtered out."""
         text = "No EBUS was performed during this procedure."
@@ -222,6 +236,20 @@ class TestExtractLabelsWithHydration:
         assert result.confidence <= 0.60
         assert result.labels["linear_ebus"] == 1
         assert result.labels["diagnostic_bronchoscopy"] == 1
+
+    def test_tier3_masks_history_and_plan_sections_for_keyword_hydration(self):
+        entry = {
+            "note_text": (
+                "HISTORY: airway stent placed in 2024.\n"
+                "PLAN: possible stent placement next week.\n"
+                "PROCEDURE: bronchoscopy performed.\n"
+            ),
+            "registry_entry": {},
+            "cpt_codes": [],
+        }
+
+        result = extract_labels_with_hydration(entry)
+        assert result.labels["airway_stent"] == 0
 
     def test_empty_extraction(self):
         """Test empty result when no labels can be extracted."""

@@ -104,3 +104,28 @@ def test_mask_offset_preserving_masks_cpt_definition_continuation_lines() -> Non
     assert len(masked) == len(raw)
     assert "laser" not in masked.lower()
     assert "cryotherapy" not in masked.lower()
+
+
+def test_mask_offset_preserving_masks_checkbox_template_negatives() -> None:
+    raw = (
+        "0- Chest tube\n"
+        "[ ] Tunneled Pleural Catheter\n"
+        "☐ Airway dilation\n"
+        "\n"
+        "PROCEDURE:\n"
+        "Bronchoscopy performed.\n"
+    )
+    masked = mask_offset_preserving(raw)
+
+    assert len(masked) == len(raw)
+    assert _newline_positions(masked) == _newline_positions(raw)
+
+    for line in ("0- Chest tube", "[ ] Tunneled Pleural Catheter", "☐ Airway dilation"):
+        start = raw.index(line)
+        end = start + len(line)
+        assert re.search(r"[^\n ]", masked[start:end]) is None
+
+    phrase = "Bronchoscopy performed."
+    start = raw.index(phrase)
+    end = start + len(phrase)
+    assert masked[start:end] == phrase

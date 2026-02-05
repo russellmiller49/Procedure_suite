@@ -23,6 +23,10 @@ _NODULE_TARGET_HEADER_RE = re.compile(
     r")\s*:\s*$"
 )
 
+_NUMBERED_TARGET_HEADER_RE = re.compile(
+    r"(?im)^\s*Target\s*(?P<num>\d{1,2})\s*[:\-]\s*(?P<header>.+?)\s*$"
+)
+
 _TARGET_LOBE_FROM_HEADER: dict[str, str] = {
     "RIGHT UPPER LOBE TARGET": "RUL",
     "RIGHT MIDDLE LOBE TARGET": "RML",
@@ -273,6 +277,9 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
     if not matches:
         matches = list(_NODULE_TARGET_HEADER_RE.finditer(scan_text))
         match_mode = "nodule_header"
+    if not matches:
+        matches = list(_NUMBERED_TARGET_HEADER_RE.finditer(scan_text))
+        match_mode = "numbered_target"
     if not matches:
         # Fallback: support inline patterns like "Target: 20mm nodule in LLL" without
         # relying on explicit "... LOBE TARGET" section headings.
@@ -531,11 +538,11 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
         section = scan_text[section_start:section_end] if section_end > section_start else ""
 
         lobe = _TARGET_LOBE_FROM_HEADER.get(header)
-        if match_mode == "nodule_header":
+        if match_mode in {"nodule_header", "numbered_target"}:
             lobe = _infer_lobe_from_text(header_raw) or lobe
 
         segment: str | None = None
-        location_text: str | None = None
+        location_text: str | None = header_raw.strip() if match_mode == "numbered_target" else None
 
         engage = _ENGAGE_LOCATION_RE.search(section)
         if engage:
@@ -570,6 +577,17 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             if mm:
                 lesion_size_mm = _coerce_float(mm.group(1))
 
+        if lesion_size_mm is None and match_mode == "numbered_target":
+            size_match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*cm\b", header_raw)
+            if size_match:
+                lesion_size_mm = _coerce_float(size_match.group(1))
+                if lesion_size_mm is not None:
+                    lesion_size_mm *= 10.0
+            else:
+                size_match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*mm\b", header_raw)
+                if size_match:
+                    lesion_size_mm = _coerce_float(size_match.group(1))
+
         rebus_view: str | None = None
         rebus_match = _REBUS_VIEW_RE.search(section)
         if rebus_match:
@@ -592,6 +610,8 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             target["rebus_used"] = True
             target["rebus_view"] = rebus_view
         ct_char = _detect_ct_characteristics(section)
+        if ct_char is None and match_mode == "numbered_target":
+            ct_char = _detect_ct_characteristics(header_raw)
         if ct_char is not None:
             target["ct_characteristics"] = ct_char
         if fiducial_placed:
@@ -625,6 +645,20 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
         brush_match = re.search(r"(?i)\b(?:transbronchial\s+)?brush(?:ing|ings)?\b|\bcytology\s+brush\b", section)
         if brush_match:
             target.setdefault("sampling_tools_used", []).append("Brush")
+
+        forceps_match = re.search(
+            r"(?i)\bforceps\s+biops(?:y|ies)\b|\btransbronchial\s+forceps\s+biops(?:y|ies)\b",
+            section,
+        )
+        if forceps_match:
+            target.setdefault("sampling_tools_used", []).append("Forceps")
+            window = section[forceps_match.start() : forceps_match.start() + 500]
+            spec_match = _SPECIMEN_COUNT_RE.search(window)
+            if spec_match:
+                try:
+                    target["number_of_forceps_biopsies"] = int(spec_match.group(1))
+                except Exception:
+                    pass
 
         targets.append(target)
 

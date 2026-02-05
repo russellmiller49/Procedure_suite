@@ -597,6 +597,54 @@ POST_NEGATION_PATTERNS = [
     r"\bwas\s+avoided\b",
 ]
 
+_STENT_PRESENCE_RE = re.compile(
+    r"\b(?:"
+    r"well[- ]positioned"
+    r"|in\s+(?:good|adequate)\s+position"
+    r"|adequately\s+positioned"
+    r"|in\s+place"
+    r"|patent"
+    r"|intact"
+    r"|present"
+    r"|stent\s+check"
+    r")\b",
+    re.IGNORECASE,
+)
+_STENT_HISTORY_RE = re.compile(r"\b(?:known|existing|prior|previous|history\s+of)\b", re.IGNORECASE)
+_STENT_ACTION_RE = re.compile(
+    r"\b(?:"
+    r"plac(?:e|ed|ement)"
+    r"|insert(?:ed|ion)"
+    r"|deploy(?:ed|ment)"
+    r"|remove(?:d|al)"
+    r"|retriev(?:e|ed|al)"
+    r"|extract(?:ed|ion)"
+    r"|explant(?:ed|ation)"
+    r"|revision"
+    r"|reposition"
+    r"|exchange"
+    r"|replace(?:d|ment)?"
+    r")\b",
+    re.IGNORECASE,
+)
+
+_CHEST_TUBE_REMOVE_RE = re.compile(
+    r"\b(?:"
+    r"remove(?:d|al)?"
+    r"|discontinue(?:d|ation)?"
+    r"|d/c"
+    r"|\bdc\b"
+    r"|pull(?:ed)?"
+    r"|withdrawn"
+    r"|taken\s+out"
+    r")\b",
+    re.IGNORECASE,
+)
+_CHEST_TUBE_INSERT_RE = re.compile(
+    r"\b(?:place(?:d|ment)?|insert(?:ed|ion)?|introduc(?:e|ed|tion)|position(?:ed)?)\b",
+    re.IGNORECASE,
+)
+
 
 @dataclass
 class HydratedLabels:
@@ -669,6 +717,27 @@ def hydrate_labels_from_text(
     text_lower = note_text.lower()
     field_scores: Dict[str, float] = {}
 
+    def _context_false_positive(field_name: str, match_start: int, match_end: int) -> bool:
+        if not note_text:
+            return False
+        window_start = max(0, match_start - 120)
+        window_end = min(len(note_text), match_end + 180)
+        window = note_text[window_start:window_end].lower()
+
+        if field_name == "airway_stent":
+            presence_only = bool(_STENT_PRESENCE_RE.search(window) or _STENT_HISTORY_RE.search(window))
+            has_action = bool(_STENT_ACTION_RE.search(window))
+            if presence_only and not has_action:
+                return True
+
+        if field_name == "chest_tube":
+            has_remove = bool(_CHEST_TUBE_REMOVE_RE.search(window))
+            has_insert = bool(_CHEST_TUBE_INSERT_RE.search(window))
+            if has_remove and not has_insert:
+                return True
+
+        return False
+
     for pattern, mappings in KEYWORD_TO_PROCEDURE_MAP.items():
         # Find all matches of this pattern
         for match in re.finditer(pattern, text_lower, re.IGNORECASE):
@@ -679,6 +748,8 @@ def hydrate_labels_from_text(
             # Apply confidence scores for each mapped field
             for field_name, confidence in mappings:
                 if field_name not in PROCEDURE_BOOLEAN_FIELDS:
+                    continue
+                if _context_false_positive(field_name, match.start(), match.end()):
                     continue
 
                 # Keep the highest confidence seen for each field
@@ -763,7 +834,10 @@ def extract_labels_with_hydration(
     # TIER 3: Keyword Hydration (confidence 0.60)
     # =========================================================================
     if note_text:
-        keyword_scores = hydrate_labels_from_text(note_text, keyword_threshold)
+        from modules.registry.processing.masking import mask_extraction_noise
+
+        masked_note_text, _mask_meta = mask_extraction_noise(note_text)
+        keyword_scores = hydrate_labels_from_text(masked_note_text, keyword_threshold)
 
         for field, score in keyword_scores.items():
             if score >= keyword_threshold and labels.get(field, 0) == 0:

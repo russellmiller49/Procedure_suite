@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-04T13:25:42-08:00`
-Git: `updates_2_3_26` @ `b4429e3`
+Generated: `2026-02-04T16:22:02-08:00`
+Git: `updates_2_4_26` @ `dfcc6ce`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -34,12 +34,12 @@ Git: `updates_2_3_26` @ `b4429e3`
      2224  scripts/self_correct_registry.py
      2273  scripts/verify_phi_redactor_vendor_assets.py
      2368  scripts/prodigy_prepare_registry_batch.py
+     2497  scripts/apply_immediate_logic_fixes.py
      2998  scripts/phi_audit.py
      3095  scripts/create_blank_update_scripts_from_patient_note_texts.py
      3216  scripts/find_phi_failures.py
      3233  scripts/train_registry_sklearn.py
      3330  scripts/build_hard_negative_patch.py
-     3766  scripts/apply_immediate_logic_fixes.py
      3869  scripts/prodigy_cloud_sync.py
      4064  scripts/run_python_update_scripts.py
      4248  scripts/generate_addon_templates.py
@@ -234,6 +234,7 @@ Git: `updates_2_3_26` @ `b4429e3`
       904  tests/unit/test_inference_engine.py
       907  modules/infra/perf.py
       907  modules/registry/__init__.py
+      922  tests/registry/test_navigation_targets_numbered_targets.py
       926  modules/ml_coder/utils.py
       944  tests/scripts/test_audit_model_fp_cli.py
       968  modules/reporter/schema.py
@@ -242,7 +243,6 @@ Git: `updates_2_3_26` @ `b4429e3`
       975  modules/coder/domain_rules/registry_to_cpt/engine.py
       996  modules/api/guards.py
       999  tests/phi/test_fernet_encryption_adapter.py
-     1027  tests/registry/test_clinical_guardrails_stent_inspection.py
      1072  modules/coder/__init__.py
      1076  tests/registry/test_clinical_guardrails_radial_linear.py
      1107  tests/registry/test_clinical_guardrails_tbna_peripheral_context.py
@@ -263,6 +263,7 @@ Git: `updates_2_3_26` @ `b4429e3`
      1229  modules/api/schemas/__init__.py
      1270  tests/coding/test_peripheral_rules.py
      1279  modules/phi/adapters/scrubber_stub.py
+     1288  tests/registry/test_template_checkbox_negation.py
      1299  tests/ml_coder/test_distillation_io.py
      1300  modules/phi/adapters/audit_logger_db.py
      1309  modules/registry/slots/indication.py
@@ -277,13 +278,14 @@ Git: `updates_2_3_26` @ `b4429e3`
      1382  tests/phi/test_presidio_nlp_backend_smoke.py
      1391  modules/registry/schema.py
      1397  modules/registry_store/phi_gate.py
-     1402  tests/registry/test_clinical_guardrails_checkbox_negative.py
      1412  tests/registry/test_registry_engine_merge_llm_and_seed.py
      1423  tests/registry/test_keyword_guard_keywords.py
      1426  tests/registry/test_llm_timeout_fallback.py
+     1443  tests/registry/test_keyword_guard_coverage.py
      1450  tests/registry/test_airway_stent_vascular_plug_revision.py
      1451  tests/coding/test_ebus_rules.py
      1461  modules/phi/db.py
+     1468  tests/registry/test_ebus_site_block_reconcile.py
      1470  modules/domain/reasoning/models.py
      1476  modules/registry/schema_granular.py
      1477  tests/registry/test_ner_to_registry_mapper.py
@@ -300,9 +302,11 @@ Git: `updates_2_3_26` @ `b4429e3`
      1675  modules/infra/llm_control.py
      1676  tests/scripts/test_prodigy_export_registry.py
      1687  tests/scripts/test_export_patient_note_texts.py
+     1690  tests/registry/test_clinical_guardrails_stent_inspection.py
      1717  tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
      1731  modules/domain/text/negation.py
      1731  tests/registry/test_note_279_regression.py
+     1740  tests/registry/test_clinical_guardrails_checkbox_negative.py
      1761  modules/ml_coder/preprocessing.py
      1763  tests/registry/test_kitchen_sink_extraction_first.py
      1767  tests/registry/test_navigation_fiducials.py
@@ -320,7 +324,6 @@ Git: `updates_2_3_26` @ `b4429e3`
      1923  tests/coder/test_ncci_ptp_indicator.py
      1929  modules/coder/constants.py
      1961  tests/api/test_phi_demo_cases.py
-     1984  tests/registry/test_keyword_guard_omissions.py
      1985  modules/coder/phi_gating.py
      1999  modules/phi/ports.py
      2003  modules/registry/legacy/supabase_sink.py
@@ -332,7 +335,6 @@ Git: `updates_2_3_26` @ `b4429e3`
      2136  modules/coder/peripheral_rules.py
      2140  modules/registry/label_fields.py
      2143  modules/reporting/metadata.py
-     2148  tests/registry/test_deterministic_extractors_phase6.py
      2167  modules/registry/legacy/adapters/base.py
      2167  tests/registry/test_ebus_postprocess_enrichment.py
      2174  tests/test_ip_registry_schema_guardrails.py
@@ -346,6 +348,7 @@ Git: `updates_2_3_26` @ `b4429e3`
      2324  tests/registry/test_schema_refactor_smoke.py
      2346  tests/conftest.py
      2372  tests/scripts/test_prodigy_export_registry_file_mode.py
+     2414  tests/registry/test_keyword_guard_omissions.py
      2416  modules/common/text_cleaning.py
      2421  modules/registry/schema/ip_v3_extraction.py
      2421  tests/registry/test_registry_to_cpt_fibrinolytic_therapy.py
@@ -357,6 +360,7 @@ Git: `updates_2_3_26` @ `b4429e3`
      2601  tests/registry/test_note_281_elastography_regression.py
      2607  tests/registry/test_extraction_first_flow.py
      2612  modules/phi/safety/protected_terms.py
+     2663  tests/registry/test_deterministic_extractors_phase6.py
      2664  modules/registry/slots/ebus.py
      2713  modules/common/text_io.py
      2755  tests/registry/test_header_scan.py
@@ -371,7 +375,6 @@ Git: `updates_2_3_26` @ `b4429e3`
      2914  modules/reporter/cli.py
      2921  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2927  modules/common/rvu_calc.py
-     2936  tests/registry/test_masking.py
      2954  tests/registry/test_linear_ebus_stations_detail.py
      2990  tests/coding/test_sectionizer_integration.py
      2993  tests/unit/test_openai_timeouts.py
@@ -409,6 +412,7 @@ Git: `updates_2_3_26` @ `b4429e3`
      3682  modules/coder/sectionizer.py
      3694  modules/ml_coder/registry_label_schema.py
      3704  modules/registry/slots/blvr.py
+     3705  tests/registry/test_masking.py
      3706  modules/api/phi_redaction.py
      3759  tests/registry/test_cao_interventions_detail.py
      3774  modules/common/knowledge_schema.py
@@ -426,7 +430,6 @@ Git: `updates_2_3_26` @ `b4429e3`
      4218  tests/registry/test_disease_burden_overrides.py
      4251  modules/registry/slots/stent.py
      4339  tests/phi/test_models.py
-     4373  tests/registry/test_keyword_guard_overrides.py
      4390  modules/registry_cleaning/logging_utils.py
      4403  tests/phi/test_presidio_scrubber_adapter.py
      4404  modules/registry/audit/compare.py
@@ -436,16 +439,18 @@ Git: `updates_2_3_26` @ `b4429e3`
      4494  modules/registry/ebus_config.py
      4509  tests/phi/test_manual_scrub.py
      4522  tests/registry/test_registry_engine_sanitization.py
+     4522  tests/registry/test_regression_pack.py
      4534  tests/registry/test_derive_procedures_from_granular_consistency.py
      4568  modules/registry/self_correction/judge.py
      4587  tests/registry/test_note_002_regression.py
      4598  tests/api/test_coding_phi_gating.py
-     4751  tests/registry/test_fixpack_device_action_regressions.py
      4782  modules/common/sectionizer.py
+     4812  tests/registry/test_evidence_required_policy.py
      4978  tests/registry/test_auditor_raw_ml_only.py
      5027  tests/api/test_unified_process.py
      5045  modules/coder/adapters/nlp/simple_negation_detector.py
      5048  docs/phi_review_system/backend/main.py
+     5082  tests/registry/test_keyword_guard_overrides.py
      5103  modules/registry/cli.py
      5166  modules/api/schemas/qa.py
      5176  tests/unit/test_openai_payload_compat.py
@@ -473,6 +478,7 @@ Git: `updates_2_3_26` @ `b4429e3`
      6438  modules/domain/procedure_store/repository.py
      6451  tests/phi/test_service.py
      6485  proc_schemas/clinical/pleural.py
+     6546  tests/registry/test_fixpack_device_action_regressions.py
      6571  modules/infra/nlp_warmup.py
      6596  tests/registry/test_registry_qa_regressions.py
      6632  modules/coder/cli.py
@@ -481,6 +487,7 @@ Git: `updates_2_3_26` @ `b4429e3`
      7025  modules/reporting/ip_addons.py
      7110  modules/coder/application/candidate_expansion.py
      7176  modules/agents/run_pipeline.py
+     7184  modules/registry/postprocess/template_checkbox_negation.py
      7218  tests/api/test_phi_redactor_ui.py
      7307  tests/integration/coder/test_coding_service.py
      7318  tests/api/test_registry_runs.py
@@ -526,20 +533,19 @@ Git: `updates_2_3_26` @ `b4429e3`
     11467  modules/api/routes/phi.py
     11691  modules/registry/legacy/adapters/pleural.py
     11728  modules/registry/self_correction/validation.py
-    11758  modules/registry/evidence/verifier.py
     11799  modules/registry/application/pathology_extraction.py
     11878  modules/registry/ner_mapping/procedure_extractor.py
     12339  modules/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
     12517  modules/registry/extractors/v3_extractor.py
     12533  modules/domain/knowledge_base/validator.py
-    12533  modules/registry/processing/masking.py
     12640  tests/ml_coder/test_data_prep.py
     12647  modules/registry/processing/linear_ebus_stations_detail.py
     12657  docs/phi_review_system/backend/schemas.py
     12912  tests/registry/test_self_correction_loop.py
     12997  tests/coder/test_smart_hybrid_policy.py
     13192  tests/unit/test_openai_responses_primary.py
+    13335  modules/registry/processing/masking.py
     13453  modules/coder/application/coding_service.py
     13483  modules/coder/domain_rules/__init__.py
     13696  modules/coder/rules.py
@@ -576,14 +582,15 @@ Git: `updates_2_3_26` @ `b4429e3`
     17161  proc_schemas/clinical/airway.py
     17268  modules/common/openai_responses.py
     17313  modules/coder/reconciliation/reconciler.py
-    17806  tests/ml_coder/test_label_hydrator.py
     17854  modules/coder/adapters/llm/gemini_advisor.py
     17939  tests/unit/test_template_coverage.py
     17947  modules/registry/normalization.py
+    17956  modules/registry/evidence/verifier.py
     18769  modules/registry/inference_onnx.py
+    18924  tests/ml_coder/test_label_hydrator.py
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
-    19217  modules/registry/processing/cao_interventions_detail.py
+    19239  modules/registry/processing/cao_interventions_detail.py
     19280  modules/coder/adapters/persistence/csv_kb_adapter.py
     19783  tests/integration/api/test_registry_endpoints.py
     20079  modules/registry_cleaning/cpt_utils.py
@@ -609,12 +616,12 @@ Git: `updates_2_3_26` @ `b4429e3`
     25665  modules/coder/application/smart_hybrid_policy.py
     25777  modules/reporting/macro_engine.py
     25946  modules/registry/schema/v2_dynamic.py
-    26498  modules/registry/processing/navigation_targets.py
-    27507  modules/ml_coder/label_hydrator.py
     27574  modules/api/normalization.py
     27607  modules/registry/transform.py
     27702  modules/coder/adapters/registry_coder.py
+    28086  modules/registry/processing/navigation_targets.py
     28725  modules/ml_coder/registry_data_prep.py
+    29722  modules/ml_coder/label_hydrator.py
     29893  modules/domain/coding_rules/coding_rules_engine.py
     30063  modules/api/ml_advisor_router.py
     31101  tests/integration/api/test_procedure_codes_endpoints.py
@@ -623,25 +630,25 @@ Git: `updates_2_3_26` @ `b4429e3`
     35268  tests/coding/test_rules_validation.py
     35381  modules/phi/adapters/phi_redactor_hybrid.py
     35981  modules/registry/ml/action_predictor.py
-    36446  modules/registry/self_correction/keyword_guard.py
     36538  modules/coder/dictionary.py
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
+    40175  modules/registry/self_correction/keyword_guard.py
     40683  modules/common/llm.py
     41901  modules/proc_ml_advisor/schemas.py
     42962  modules/api/routes/procedure_codes.py
     44127  tests/registry/test_granular_registry_models.py
     44511  modules/api/fastapi_app.py
     45391  modules/registry/schema/granular_logic.py
-    56180  modules/extraction/postprocessing/clinical_guardrails.py
+    53453  modules/extraction/postprocessing/clinical_guardrails.py
     56672  modules/autocode/ip_kb/ip_kb.py
-    56683  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+    61517  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     62051  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-   109303  modules/registry/deterministic_extractors.py
+   109794  modules/registry/deterministic_extractors.py
    111411  modules/registry/engine.py
-   148063  modules/registry/postprocess.py
-   166831  modules/registry/application/registry_service.py
+   150527  modules/registry/postprocess/__init__.py
+   167942  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       118  tests/fixtures/regression_suite/README.md
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
@@ -1071,6 +1078,7 @@ Git: `updates_2_3_26` @ `b4429e3`
  inline_cap_reached>75  modules/reporting/ip_addons.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
  inline_cap_reached>75  modules/agents/run_pipeline.py
+ inline_cap_reached>75  modules/registry/postprocess/template_checkbox_negation.py
  inline_cap_reached>75  modules/registry/ner_mapping/entity_to_registry.py
  inline_cap_reached>75  modules/domain/coding_rules/evidence_context.py
  inline_cap_reached>75  modules/registry/model_runtime.py
@@ -1096,14 +1104,13 @@ Git: `updates_2_3_26` @ `b4429e3`
  inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  modules/registry/self_correction/validation.py
- inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/registry/application/pathology_extraction.py
  inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
  inline_cap_reached>75  modules/domain/knowledge_base/validator.py
- inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/registry/processing/linear_ebus_stations_detail.py
+ inline_cap_reached>75  modules/registry/processing/masking.py
  inline_cap_reached>75  modules/coder/application/coding_service.py
  inline_cap_reached>75  modules/coder/domain_rules/__init__.py
  inline_cap_reached>75  modules/coder/rules.py
@@ -1130,6 +1137,7 @@ Git: `updates_2_3_26` @ `b4429e3`
  inline_cap_reached>75  modules/coder/reconciliation/reconciler.py
  inline_cap_reached>75  modules/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  modules/registry/normalization.py
+ inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/registry/inference_onnx.py
  inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
@@ -1147,19 +1155,19 @@ Git: `updates_2_3_26` @ `b4429e3`
  inline_cap_reached>75  modules/coder/application/smart_hybrid_policy.py
  inline_cap_reached>75  modules/reporting/macro_engine.py
  inline_cap_reached>75  modules/registry/schema/v2_dynamic.py
- inline_cap_reached>75  modules/registry/processing/navigation_targets.py
- inline_cap_reached>75  modules/ml_coder/label_hydrator.py
  inline_cap_reached>75  modules/api/normalization.py
  inline_cap_reached>75  modules/registry/transform.py
  inline_cap_reached>75  modules/coder/adapters/registry_coder.py
+ inline_cap_reached>75  modules/registry/processing/navigation_targets.py
  inline_cap_reached>75  modules/ml_coder/registry_data_prep.py
+ inline_cap_reached>75  modules/ml_coder/label_hydrator.py
  inline_cap_reached>75  modules/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  modules/api/ml_advisor_router.py
  inline_cap_reached>75  modules/registry/schema/granular_models.py
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
- inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/coder/dictionary.py
+ inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/common/llm.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
@@ -1172,7 +1180,7 @@ Git: `updates_2_3_26` @ `b4429e3`
  inline_cap_reached>75  modules/reporting/engine.py
  inline_cap_reached>75  modules/registry/deterministic_extractors.py
  inline_cap_reached>75  modules/registry/engine.py
- inline_cap_reached>75  modules/registry/postprocess.py
+ inline_cap_reached>75  modules/registry/postprocess/__init__.py
  inline_cap_reached>75  modules/registry/application/registry_service.py
     binary_or_non_utf8  docs/ARCHITECTURE.md
      too_large>200000B  modules/api/static/phi_redactor/app.js
@@ -2189,6 +2197,89 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/apply_immediate_logic_fixes.py`
+- Size: `2497` bytes
+```
+#!/usr/bin/env python3
+"""Immediate hotfix utilities for critical extraction issues.
+
+Primary use: apply checkbox-negative corrections where some EMR templates encode
+unchecked options as "0- Item" or "[ ] Item", which can be hallucinated as True.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+
+def _repo_root() -> Path:
+    return Path(__file__).resolve().parents[1]
+
+
+def _ensure_repo_on_path() -> None:
+    root = _repo_root()
+    if str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+
+
+def apply_checkbox_correction(text: str, record: Any) -> Any:
+    """Apply checkbox-template negation corrections (shared with production)."""
+    record_dict: dict[str, Any]
+    if isinstance(record, dict):
+        record_dict = dict(record)
+    elif hasattr(record, "model_dump"):
+        record_dict = dict(record.model_dump())  # type: ignore[no-any-return]
+    else:
+        raise TypeError("record must be a dict or a RegistryRecord-like object")
+
+    _ensure_repo_on_path()
+    from modules.registry.postprocess.template_checkbox_negation import apply_template_checkbox_negation
+    from modules.registry.schema import RegistryRecord
+
+    record_obj = RegistryRecord.model_validate(record_dict)
+    updated, warnings = apply_template_checkbox_negation(text or "", record_obj)
+    if not warnings:
+        return record
+
+    # Best-effort: return same type when possible.
+    if isinstance(record, dict):
+        return updated.model_dump()
+    return updated
+
+
+def _load_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Apply immediate extraction logic fixes to a record JSON.")
+    parser.add_argument("--note", type=Path, required=True, help="Path to raw/masked note text file")
+    parser.add_argument("--record", type=Path, required=True, help="Path to RegistryRecord JSON file")
+    args = parser.parse_args()
+
+    note_text = _load_text(args.note)
+    record_json = _load_json(args.record)
+    updated = apply_checkbox_correction(note_text, record_json)
+
+    out = updated if isinstance(updated, dict) else getattr(updated, "model_dump", lambda: updated)()
+    print(json.dumps(out, ensure_ascii=True, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `scripts/phi_audit.py`
 - Size: `2998` bytes
 ```
@@ -2721,131 +2812,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-```
-
----
-### `scripts/apply_immediate_logic_fixes.py`
-- Size: `3766` bytes
-```
-#!/usr/bin/env python3
-"""Immediate hotfix utilities for critical extraction issues.
-
-Primary use: apply checkbox-negative corrections where some EMR templates encode
-unchecked options as "0- Item" or "[ ] Item", which can be hallucinated as True.
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import re
-import sys
-from pathlib import Path
-from typing import Any
-
-
-def _repo_root() -> Path:
-    return Path(__file__).resolve().parents[1]
-
-
-def _ensure_repo_on_path() -> None:
-    root = _repo_root()
-    if str(root) not in sys.path:
-        sys.path.insert(0, str(root))
-
-
-def _set_field_path(record: dict[str, Any], field_path: str, value: Any) -> bool:
-    """Set a dotted field path on a JSON-like dict. Returns True if changed."""
-    parts = [p for p in (field_path or "").split(".") if p]
-    if not parts:
-        return False
-
-    current: Any = record
-    for part in parts[:-1]:
-        if not isinstance(current, dict):
-            return False
-        if part not in current or not isinstance(current.get(part), dict):
-            current[part] = {}
-        current = current[part]
-
-    if not isinstance(current, dict):
-        return False
-    leaf = parts[-1]
-    prior = current.get(leaf)
-    current[leaf] = value
-    return prior != value
-
-
-def apply_checkbox_correction(text: str, record: Any) -> Any:
-    """Fix hallucination of '0- Item' as True.
-
-    Supports either a raw dict (JSON) or a RegistryRecord-like object that has
-    `model_dump()` / `model_validate()`.
-    """
-    import re as _re
-
-    record_dict: dict[str, Any]
-    if isinstance(record, dict):
-        record_dict = dict(record)
-    elif hasattr(record, "model_dump"):
-        record_dict = dict(record.model_dump())  # type: ignore[no-any-return]
-    else:
-        raise TypeError("record must be a dict or a RegistryRecord-like object")
-
-    # Pattern for "0- Item" (indicating unselected in some EMRs)
-    negation_patterns: list[tuple[str, str]] = [
-        (r"(?im)^\s*0\s*[—\-]\s*Tunneled Pleural Catheter\b", "pleural_procedures.ipc.performed"),
-        (r"(?im)^\s*0\s*[—\-]\s*Chest\s+tube\b", "pleural_procedures.chest_tube.performed"),
-        (r"(?im)^\s*0\s*[—\-]\s*Pneumothorax\b", "complications.pneumothorax.occurred"),
-    ]
-
-    changed = False
-    for pattern, field_path in negation_patterns:
-        if _re.search(pattern, text or "", _re.IGNORECASE):
-            changed |= _set_field_path(record_dict, field_path, False)
-
-    if not changed:
-        return record
-
-    # Best-effort: return same type when possible.
-    if isinstance(record, dict):
-        return record_dict
-
-    _ensure_repo_on_path()
-    try:
-        from modules.registry.schema import RegistryRecord
-
-        return RegistryRecord.model_validate(record_dict)
-    except Exception:
-        return record_dict
-
-
-def _load_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8", errors="replace")
-
-
-def _load_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Apply immediate extraction logic fixes to a record JSON.")
-    parser.add_argument("--note", type=Path, required=True, help="Path to raw/masked note text file")
-    parser.add_argument("--record", type=Path, required=True, help="Path to RegistryRecord JSON file")
-    args = parser.parse_args()
-
-    note_text = _load_text(args.note)
-    record_json = _load_json(args.record)
-    updated = apply_checkbox_correction(note_text, record_json)
-
-    out = updated if isinstance(updated, dict) else getattr(updated, "model_dump", lambda: updated)()
-    print(json.dumps(out, ensure_ascii=True, indent=2))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
 
 ```
 

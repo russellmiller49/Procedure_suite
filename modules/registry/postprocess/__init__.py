@@ -1,4 +1,7 @@
-"""Field-specific normalization for registry extraction outputs."""
+"""Field-specific normalization for registry extraction outputs.
+
+Implementation note: this module is a package to allow submodules for targeted postprocess utilities.
+"""
 
 from __future__ import annotations
 
@@ -2874,6 +2877,67 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
                 continue
             station_to_quote.setdefault(station, line)
 
+    # Site-block parsing: some notes place the station token in a "Site 1: Station 11L ..."
+    # header and document sampling later ("The site was sampled ...") without repeating
+    # the station token. Attribute sampling language within a site block to the station.
+    site_header_re = re.compile(r"(?im)^\s*site\s*#?\s*(?P<num>\d{1,2})\s*:\s*(?P<rest>.*)$")
+    block_sampling_re = re.compile(
+        r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+        re.IGNORECASE,
+    )
+
+    site_headers = list(site_header_re.finditer(full_text or ""))
+    for idx, match in enumerate(site_headers):
+        start = match.start()
+        end = site_headers[idx + 1].start() if idx + 1 < len(site_headers) else len(full_text)
+        block = (full_text[start:end] or "").strip("\r\n")
+        if not block:
+            continue
+
+        lines = [ln.strip() for ln in block.splitlines() if ln.strip()]
+        if not lines:
+            continue
+
+        # Station token may be in the header line or elsewhere in the block.
+        station_token: str | None = None
+        header_line = lines[0]
+        for m_station in _EBUS_STATION_TOKEN_RE.finditer(header_line):
+            token = (m_station.group(1) or "").strip()
+            if token:
+                station_token = token
+                break
+        if station_token is None:
+            for ln in lines[1:]:
+                for m_station in _EBUS_STATION_TOKEN_RE.finditer(ln):
+                    token = (m_station.group(1) or "").strip()
+                    if token:
+                        station_token = token
+                        break
+                if station_token is not None:
+                    break
+
+        if not station_token:
+            continue
+
+        station = (
+            normalize_station(station_token)
+            if normalize_station is not None
+            else station_token.strip().upper()
+        )
+        if not station:
+            continue
+
+        sampling_quote: str | None = None
+        for ln in lines:
+            if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(ln):
+                continue
+            if block_sampling_re.search(ln):
+                sampling_quote = ln
+                break
+
+        if sampling_quote:
+            station_to_quote.setdefault(station, sampling_quote)
+
     if not station_to_quote:
         return warnings
 
@@ -3213,7 +3277,7 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
     return warnings
 
 
-_EBUS_SITE_HEADER_RE = re.compile(r"(?im)^\s*site\s+(?P<num>\d{1,2})\s*:\s*")
+_EBUS_SITE_HEADER_RE = re.compile(r"(?im)^\s*site\s*#?\s*(?P<num>\d{1,2})\s*:\s*")
 _EBUS_PASSES_RE = re.compile(
     r"\b(?P<count>\d{1,2})\b[^.\n]{0,80}\b(?:needle\s+passes?|passes?|endobronchial\s+ultrasound\s+guided\s+transbronchial\s+biops(?:y|ies))\b",
     re.IGNORECASE,

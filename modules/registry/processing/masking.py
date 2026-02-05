@@ -56,9 +56,26 @@ _CPT_EXAMPLE_TOKENS_RE = re.compile(
     r"(?i)\b(?:laser|cryotherap(?:y|ies)|cryo(?:probe|spray)?|thermal|apc|argon|radiofrequency|microwave)\b"
 )
 
+_CHECKBOX_TEMPLATE_LINE_RES: tuple[re.Pattern[str], ...] = (
+    re.compile(r"(?im)^\s*0\s*[—\-]\s+.*$"),
+    re.compile(r"(?im)^\s*\[\s*\]\s+.*$"),
+    re.compile(r"(?im)^\s*[☐□]\s+.*$"),
+)
+
+
+def _find_template_checkbox_spans(text: str) -> tuple[list[tuple[int, int]], int]:
+    spans: list[tuple[int, int]] = []
+    raw = text or ""
+    if not raw:
+        return spans, 0
+    for pat in _CHECKBOX_TEMPLATE_LINE_RES:
+        spans.extend(match.span() for match in pat.finditer(raw))
+    return spans, len(spans)
+
 
 def mask_offset_preserving(text: str, patterns: Iterable[str] = PATTERNS) -> str:
     """Mask matched spans with spaces while preserving length and newlines."""
+    raw = text or ""
     masked = text or ""
     for pat in patterns:
         for match in re.finditer(pat, masked):
@@ -72,12 +89,15 @@ def mask_offset_preserving(text: str, patterns: Iterable[str] = PATTERNS) -> str
     # Prevent deterministic extractors from "reading" blank modality template rows
     # (e.g., APC/Cryoprobe listed but empty columns).
     masked = _mask_spans(masked, find_empty_table_row_spans(masked, keywords=DEFAULT_TABLE_TOOL_KEYWORDS))
+    checkbox_spans, _count = _find_template_checkbox_spans(raw)
+    masked = _mask_spans(masked, checkbox_spans)
     return masked
 
 
 def mask_extraction_noise(text: str) -> tuple[str, dict[str, object]]:
     """Mask template noise and non-procedural sections for extraction."""
     base = mask_offset_preserving(text or "")
+    checkbox_spans, checkbox_line_count = _find_template_checkbox_spans(text or "")
     sections = _find_non_procedural_section_spans(text or "")
     section_spans = [(start, end) for start, end, _ in sections]
     table_spans = find_empty_table_row_spans(text or "", keywords=DEFAULT_TABLE_TOOL_KEYWORDS)
@@ -90,6 +110,7 @@ def mask_extraction_noise(text: str) -> tuple[str, dict[str, object]]:
         "masked_non_procedural_section_count": len(sections),
         "masked_empty_table_rows": len(table_spans),
         "masked_procedure_header_cpt_lines": procedure_header_line_count,
+        "masked_checkbox_template_lines": checkbox_line_count,
     }
     return masked, meta
 

@@ -131,8 +131,6 @@ _CHEST_TUBE_DATE_OF_INSERTION_RE = re.compile(
     re.IGNORECASE,
 )
 
-_CHECKBOX_NEGATIVE_DASH_RE = re.compile(r"(?im)^\s*0\s*[—\-]\s*(?P<label>.+?)\s*$")
-_CHECKBOX_NEGATIVE_BRACKET_RE = re.compile(r"(?im)^\s*\[\s*\]\s*(?P<label>.+?)\s*$")
 _CHECKBOX_TOKEN_RE = re.compile(
     r"(?im)(?<!\d)(?P<val>[01])\s*[^\w\n]{0,6}\s*(?P<label>[A-Za-z][A-Za-z /()_-]{0,80})"
 )
@@ -164,17 +162,18 @@ class ClinicalGuardrails:
         needs_review = False
         changed = False
 
+        from modules.registry.postprocess.template_checkbox_negation import (
+            apply_template_checkbox_negation,
+        )
+
+        record, checkbox_warnings = apply_template_checkbox_negation(note_text or "", record)
+        if checkbox_warnings:
+            warnings.extend(checkbox_warnings)
+            changed = True
+
         record_data = record.model_dump()
         text_lower = (note_text or "").lower()
         chest_tube_insertion_date_line = bool(_CHEST_TUBE_DATE_OF_INSERTION_RE.search(text_lower))
-
-        # Checkbox guardrail: EMR templates often use "0- Item" or "[ ] Item" to indicate NOT selected.
-        checkbox_warnings, checkbox_changed = self._apply_checkbox_negative_guardrail(
-            note_text or "", record_data
-        )
-        if checkbox_changed:
-            warnings.extend(checkbox_warnings)
-            changed = True
 
         # Non-IP GI endoscopy / PEG notes occasionally leak into the pipeline and can trip
         # bronchoscopy template cues ("Initial Airway Inspection Findings"). If PEG/EGD
@@ -640,67 +639,6 @@ class ClinicalGuardrails:
         if deselected:
             return False
         return None
-
-    def _apply_checkbox_negative_guardrail(
-        self, note_text: str, record_data: dict[str, Any]
-    ) -> tuple[list[str], bool]:
-        """Force explicit checkbox negatives to False.
-
-        Some templates encode unchecked options as:
-          - "0- Chest tube"
-          - "[ ] Tunneled Pleural Catheter"
-        These should never be interpreted as performed/true.
-        """
-        warnings: list[str] = []
-        changed = False
-
-        def _match_label(label: str, candidates: tuple[str, ...]) -> bool:
-            label_lower = label.lower()
-            return any(candidate in label_lower for candidate in candidates)
-
-        negative_labels: list[str] = []
-        for match in _CHECKBOX_NEGATIVE_DASH_RE.finditer(note_text):
-            negative_labels.append(match.group("label") or "")
-        for match in _CHECKBOX_NEGATIVE_BRACKET_RE.finditer(note_text):
-            negative_labels.append(match.group("label") or "")
-        for match in _CHECKBOX_TOKEN_RE.finditer(note_text):
-            if (match.group("val") or "").strip() != "0":
-                continue
-            negative_labels.append(match.group("label") or "")
-
-        for raw_label in negative_labels:
-            label = (raw_label or "").strip()
-            if not label:
-                continue
-
-            if _match_label(
-                label,
-                (
-                    "tunneled pleural catheter",
-                    "tunnelled pleural catheter",
-                    "indwelling pleural catheter",
-                    "pleurx",
-                    "ipc",
-                ),
-            ):
-                if self._clear_pleural_proc(record_data, "ipc"):
-                    warnings.append("Checkbox negative: forcing pleural_procedures.ipc.performed=false")
-                    changed = True
-                continue
-
-            if _match_label(label, ("chest tube", "tube thoracostomy", "pigtail")):
-                if self._clear_pleural_proc(record_data, "chest_tube"):
-                    warnings.append("Checkbox negative: forcing pleural_procedures.chest_tube.performed=false")
-                    changed = True
-                continue
-
-            if _match_label(label, ("pneumothorax", "ptx")):
-                if self._set_complication_pneumothorax_occurred(record_data, False):
-                    warnings.append("Checkbox negative: forcing complications.pneumothorax.occurred=false")
-                    changed = True
-                continue
-
-        return warnings, changed
 
     def _apply_thoracoscopy_guardrails(
         self, note_text: str, record_data: dict[str, Any]

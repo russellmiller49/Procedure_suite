@@ -6,6 +6,10 @@ from rapidfuzz.fuzz import partial_ratio
 
 from modules.common.spans import Span
 from modules.registry.deterministic_extractors import (
+    AIRWAY_DILATION_PATTERNS,
+    CHEST_TUBE_PATTERNS,
+    IPC_PATTERNS,
+    RIGID_BRONCHOSCOPY_PATTERNS,
     THERAPEUTIC_ASPIRATION_PATTERNS,
     extract_airway_stent,
 )
@@ -31,6 +35,17 @@ _STENT_NEGATION_WINDOW_RE = re.compile(
     r")\b",
     re.IGNORECASE,
 )
+
+EVIDENCE_REQUIRED: dict[str, str] = {
+    # HARD: flip performed=false when unsupported
+    "procedures_performed.airway_dilation.performed": "HARD",
+    "pleural_procedures.chest_tube.performed": "HARD",
+    "pleural_procedures.ipc.performed": "HARD",
+    # airway_stent is HARD only when not "Assessment only"
+    "procedures_performed.airway_stent.performed": "HARD",
+    # REVIEW: keep but require manual review
+    "procedures_performed.rigid_bronchoscopy.performed": "REVIEW",
+}
 
 
 def normalize_text(text: str) -> str:
@@ -123,6 +138,36 @@ def _drop_evidence_prefix(record: RegistryRecord, prefix: str) -> None:
     to_drop = [k for k in evidence.keys() if isinstance(k, str) and (k == prefix or k.startswith(prefix + "."))]
     for key in to_drop:
         evidence.pop(key, None)
+
+
+def _add_first_anchor_span(record: RegistryRecord, field_path: str, full_text: str, patterns: list[str]) -> bool:
+    if not full_text or not patterns:
+        return False
+    for pat in patterns:
+        match = re.search(pat, full_text, re.IGNORECASE)
+        if not match:
+            continue
+        anchor_text = (match.group(0) or "").strip()
+        if not anchor_text:
+            continue
+        record.evidence.setdefault(field_path, []).append(
+            Span(
+                text=anchor_text,
+                start=int(match.start()),
+                end=int(match.end()),
+                confidence=0.9,
+            )
+        )
+        return True
+    return False
+
+
+def _wipe_model_fields(obj: object, wipe_fields: dict[str, object]) -> None:
+    if obj is None:
+        return
+    for name, value in wipe_fields.items():
+        if hasattr(obj, name):
+            setattr(obj, name, value)
 
 
 def _find_therapeutic_aspiration_anchor(full_text: str) -> tuple[str, int, int] | None:
@@ -284,6 +329,135 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
             for prefix in prefixes:
                 _drop_evidence_prefix(record, prefix)
             warnings.append("NEGATION_GUARD: procedures_performed.airway_stent")
+
+    # ------------------------------------------------------------------
+    # Evidence-required enforcement (HARD vs REVIEW)
+    # ------------------------------------------------------------------
+    pleural = getattr(record, "pleural_procedures", None)
+    rigid = getattr(procedures, "rigid_bronchoscopy", None)
+    airway_dilation = getattr(procedures, "airway_dilation", None)
+    chest_tube = getattr(pleural, "chest_tube", None) if pleural is not None else None
+    ipc = getattr(pleural, "ipc", None) if pleural is not None else None
+
+    def _enforce_boolean(
+        *,
+        field_path: str,
+        obj: object,
+        policy: str,
+        anchor_patterns: list[str],
+        wipe_fields: dict[str, object] | None = None,
+        skip_if: bool = False,
+    ) -> None:
+        nonlocal warnings
+        if skip_if:
+            return
+        if obj is None or not hasattr(obj, "performed"):
+            return
+        if getattr(obj, "performed", None) is not True:
+            return
+
+        prefixes = [field_path, field_path.rsplit(".", 1)[0]]
+        candidate_quotes: list[str] = []
+        for prefix in prefixes:
+            candidate_quotes.extend(_evidence_texts_for_prefix(record, prefix))
+
+        verified = any(_verify_quote_in_text(q, full_text) for q in candidate_quotes)
+        if not verified:
+            if _add_first_anchor_span(record, field_path, full_text, anchor_patterns):
+                candidate_quotes = _evidence_texts_for_prefix(record, field_path)
+                verified = any(_verify_quote_in_text(q, full_text) for q in candidate_quotes)
+
+        if verified:
+            return
+
+        if policy == "REVIEW":
+            warnings.append(f"NEEDS_REVIEW: EVIDENCE_MISSING: {field_path}")
+            return
+
+        # HARD: flip performed=false + wipe dependent details
+        setattr(obj, "performed", False)
+        if wipe_fields:
+            _wipe_model_fields(obj, wipe_fields)
+        for prefix in prefixes:
+            _drop_evidence_prefix(record, prefix)
+        warnings.append(f"EVIDENCE_HARD_FAIL: {field_path}")
+
+    # HARD policies
+    _enforce_boolean(
+        field_path="procedures_performed.airway_dilation.performed",
+        obj=airway_dilation,
+        policy=EVIDENCE_REQUIRED["procedures_performed.airway_dilation.performed"],
+        anchor_patterns=AIRWAY_DILATION_PATTERNS,
+        wipe_fields={
+            "location": None,
+            "etiology": None,
+            "method": None,
+            "balloon_diameter_mm": None,
+            "pre_dilation_diameter_mm": None,
+            "post_dilation_diameter_mm": None,
+        },
+    )
+    _enforce_boolean(
+        field_path="pleural_procedures.chest_tube.performed",
+        obj=chest_tube,
+        policy=EVIDENCE_REQUIRED["pleural_procedures.chest_tube.performed"],
+        anchor_patterns=CHEST_TUBE_PATTERNS,
+        wipe_fields={
+            "action": None,
+            "side": None,
+            "indication": None,
+            "tube_type": None,
+            "tube_size_fr": None,
+            "guidance": None,
+        },
+    )
+    _enforce_boolean(
+        field_path="pleural_procedures.ipc.performed",
+        obj=ipc,
+        policy=EVIDENCE_REQUIRED["pleural_procedures.ipc.performed"],
+        anchor_patterns=IPC_PATTERNS,
+        wipe_fields={
+            "action": None,
+            "side": None,
+            "catheter_brand": None,
+            "indication": None,
+            "tunneled": None,
+        },
+    )
+
+    stent_action = str(getattr(stent, "action", "") or "").strip().lower() if stent is not None else ""
+    stent_assessment_only = stent_action.startswith("assessment")
+    _enforce_boolean(
+        field_path="procedures_performed.airway_stent.performed",
+        obj=stent,
+        policy=EVIDENCE_REQUIRED["procedures_performed.airway_stent.performed"],
+        anchor_patterns=[r"\bairway\s+stent\b", r"\bstent\b"],
+        wipe_fields={
+            "action": None,
+            "stent_type": None,
+            "stent_brand": None,
+            "diameter_mm": None,
+            "length_mm": None,
+            "location": None,
+            "indication": None,
+            "deployment_successful": None,
+            "airway_stent_removal": False,
+        },
+        skip_if=stent_assessment_only,
+    )
+
+    # REVIEW policies
+    _enforce_boolean(
+        field_path="procedures_performed.rigid_bronchoscopy.performed",
+        obj=rigid,
+        policy=EVIDENCE_REQUIRED["procedures_performed.rigid_bronchoscopy.performed"],
+        anchor_patterns=RIGID_BRONCHOSCOPY_PATTERNS,
+        wipe_fields={
+            "rigid_scope_size": None,
+            "indication": None,
+            "jet_ventilation_used": None,
+        },
+    )
 
     return record, warnings
 

@@ -1919,7 +1919,12 @@ class RegistryService:
             )
 
             parsed_targets = extract_navigation_targets(text)
-            target_lines = [line for line in text.splitlines() if re.search(r"(?i)target lesion", line)]
+            target_lines = [
+                line
+                for line in text.splitlines()
+                if re.search(r"(?i)target lesion", line)
+                or re.search(r"(?i)^\s*target\s*\d{1,2}\s*[:\\-]", line)
+            ]
             if not parsed_targets and not target_lines:
                 return record_in, []
 
@@ -2428,6 +2433,21 @@ class RegistryService:
         record = guardrail_outcome.record or record
         if guardrail_outcome.warnings:
             extraction_warnings.extend(guardrail_outcome.warnings)
+
+        # Production backstop: apply raw-text checkbox negation after all heuristics/guardrails
+        # so downstream omission scan + CPT derivation never build on template false-positives.
+        from modules.registry.postprocess.template_checkbox_negation import apply_template_checkbox_negation
+
+        record, checkbox_warnings = apply_template_checkbox_negation(raw_note_text or "", record)
+        if checkbox_warnings:
+            extraction_warnings.extend(checkbox_warnings)
+
+        # Evidence enforcement pass on the final record state (post-heuristics + checkbox negation).
+        from modules.registry.evidence.verifier import verify_evidence_integrity
+
+        record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
+        if verifier_warnings:
+            extraction_warnings.extend(verifier_warnings)
 
         # Reconcile granular validation warnings against the final record state.
         # Guardrails and other postprocess steps may flip performed flags after
@@ -2982,6 +3002,8 @@ class RegistryService:
             record = RegistryRecord(**record_data)
 
         warnings = list(base_warnings) + derivation_warnings + list(self_correct_warnings) + list(coverage_warnings)
+        if any(isinstance(w, str) and w.startswith("NEEDS_REVIEW:") for w in warnings):
+            needs_manual_review = True
         mapped_fields = (
             aggregate_registry_fields(derived_codes, version="v3") if derived_codes else {}
         )

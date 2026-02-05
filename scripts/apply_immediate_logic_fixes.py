@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -25,36 +24,8 @@ def _ensure_repo_on_path() -> None:
         sys.path.insert(0, str(root))
 
 
-def _set_field_path(record: dict[str, Any], field_path: str, value: Any) -> bool:
-    """Set a dotted field path on a JSON-like dict. Returns True if changed."""
-    parts = [p for p in (field_path or "").split(".") if p]
-    if not parts:
-        return False
-
-    current: Any = record
-    for part in parts[:-1]:
-        if not isinstance(current, dict):
-            return False
-        if part not in current or not isinstance(current.get(part), dict):
-            current[part] = {}
-        current = current[part]
-
-    if not isinstance(current, dict):
-        return False
-    leaf = parts[-1]
-    prior = current.get(leaf)
-    current[leaf] = value
-    return prior != value
-
-
 def apply_checkbox_correction(text: str, record: Any) -> Any:
-    """Fix hallucination of '0- Item' as True.
-
-    Supports either a raw dict (JSON) or a RegistryRecord-like object that has
-    `model_dump()` / `model_validate()`.
-    """
-    import re as _re
-
+    """Apply checkbox-template negation corrections (shared with production)."""
     record_dict: dict[str, Any]
     if isinstance(record, dict):
         record_dict = dict(record)
@@ -63,32 +34,19 @@ def apply_checkbox_correction(text: str, record: Any) -> Any:
     else:
         raise TypeError("record must be a dict or a RegistryRecord-like object")
 
-    # Pattern for "0- Item" (indicating unselected in some EMRs)
-    negation_patterns: list[tuple[str, str]] = [
-        (r"(?im)^\s*0\s*[—\-]\s*Tunneled Pleural Catheter\b", "pleural_procedures.ipc.performed"),
-        (r"(?im)^\s*0\s*[—\-]\s*Chest\s+tube\b", "pleural_procedures.chest_tube.performed"),
-        (r"(?im)^\s*0\s*[—\-]\s*Pneumothorax\b", "complications.pneumothorax.occurred"),
-    ]
+    _ensure_repo_on_path()
+    from modules.registry.postprocess.template_checkbox_negation import apply_template_checkbox_negation
+    from modules.registry.schema import RegistryRecord
 
-    changed = False
-    for pattern, field_path in negation_patterns:
-        if _re.search(pattern, text or "", _re.IGNORECASE):
-            changed |= _set_field_path(record_dict, field_path, False)
-
-    if not changed:
+    record_obj = RegistryRecord.model_validate(record_dict)
+    updated, warnings = apply_template_checkbox_negation(text or "", record_obj)
+    if not warnings:
         return record
 
     # Best-effort: return same type when possible.
     if isinstance(record, dict):
-        return record_dict
-
-    _ensure_repo_on_path()
-    try:
-        from modules.registry.schema import RegistryRecord
-
-        return RegistryRecord.model_validate(record_dict)
-    except Exception:
-        return record_dict
+        return updated.model_dump()
+    return updated
 
 
 def _load_text(path: Path) -> str:
