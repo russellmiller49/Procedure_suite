@@ -6,7 +6,7 @@ import json
 import logging
 import sys
 from datetime import datetime
-from typing import Any
+from typing import Any, MutableMapping
 
 
 class StructuredFormatter(logging.Formatter):
@@ -31,10 +31,10 @@ class StructuredFormatter(logging.Formatter):
         return json.dumps(log_dict)
 
 
-class StructuredLogger(logging.LoggerAdapter):
+class StructuredLogger(logging.LoggerAdapter[logging.Logger]):
     """Logger adapter that supports structured fields."""
 
-    def process(self, msg: str, kwargs: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+    def process(self, msg: str, kwargs: MutableMapping[str, Any]) -> tuple[str, MutableMapping[str, Any]]:
         extra = kwargs.get("extra", {})
         if self.extra:
             extra.update(self.extra)

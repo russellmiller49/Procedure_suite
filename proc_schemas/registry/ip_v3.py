@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from enum import Enum
-from typing import List, Optional, Literal
+from typing import Any, List, Optional, Literal
 
 from pydantic import BaseModel, Field
 
@@ -180,7 +180,7 @@ class ProcedureOutcome(BaseModel):
     follow_up_planned: bool = False
     follow_up_notes: Optional[str] = None
 
-    def model_post_init(self, __context):  # type: ignore[override]
+    def model_post_init(self, __context: Any) -> None:
         # Keep abort_reason and aborted_reason in sync for compatibility.
         if self.aborted_reason is None and self.abort_reason:
             self.aborted_reason = self.abort_reason

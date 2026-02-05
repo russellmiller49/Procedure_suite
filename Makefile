@@ -24,7 +24,7 @@ lint:
 	$(CONDA_ACTIVATE) && ruff check --cache-dir .ruff_cache .
 
 typecheck:
-	$(CONDA_ACTIVATE) && mypy --cache-dir .mypy_cache .
+	$(CONDA_ACTIVATE) && mypy --cache-dir .mypy_cache proc_schemas config observability
 
 test:
 	$(CONDA_ACTIVATE) && pytest
