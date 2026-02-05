@@ -145,3 +145,71 @@ def test_unified_process_surfaces_registry_warnings(mock_registry_service, mock_
     data = response.json()
     assert any("SILENT_FAILURE" in w for w in data["audit_warnings"])
     assert any("RAW_ML_AUDIT" in w for w in data["audit_warnings"])
+
+
+def test_unified_process_applies_multiple_endoscopy_rule_to_financials(
+    mock_registry_service, mock_phi_scrubber
+):
+    from config.settings import CoderSettings
+    from modules.registry.application.coding_support_builder import get_kb_repo
+
+    kb = get_kb_repo()
+    conversion_factor = CoderSettings().cms_conversion_factor
+
+    codes = ["31623", "31624", "31627", "31628", "31629", "31654"]
+
+    mock_record = IPRegistryV2(
+        patient={"patient_id": "123"},
+        procedure={"procedure_date": "2023-01-01", "indication": "Test"},
+    )
+    full_record = RegistryRecord(
+        patient=mock_record.patient,
+        procedure=mock_record.procedure,
+    )
+
+    extraction_result = RegistryExtractionResult(
+        record=full_record,
+        cpt_codes=codes,
+        coder_difficulty="HIGH_CONF",
+        coder_source="extraction_first",
+        mapped_fields={},
+        needs_manual_review=False,
+    )
+
+    mock_registry_service.extract_fields.return_value = extraction_result
+
+    payload = {
+        "note": "Already scrubbed text",
+        "already_scrubbed": True,
+        "include_financials": True,
+    }
+    response = client.post("/api/v1/process", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+
+    billing_by_code = {row["cpt_code"]: row for row in data.get("per_code_billing") or []}
+
+    def base_payment(code: str) -> float:
+        info = kb.get_procedure_info(code)
+        assert info is not None
+        return info.total_facility_rvu * conversion_factor
+
+    # Multiple endoscopy applies to the bronchoscopy endoscopy family:
+    # - primary (highest total RVU): 31629 @ 100%
+    # - other non-add-on family codes: 50%
+    # - add-ons (e.g., 31627, 31654): no reduction
+    expected_per_code = {
+        "31629": round(base_payment("31629"), 2),
+        "31628": round(base_payment("31628") * 0.5, 2),
+        "31624": round(base_payment("31624") * 0.5, 2),
+        "31623": round(base_payment("31623") * 0.5, 2),
+        "31627": round(base_payment("31627"), 2),
+        "31654": round(base_payment("31654"), 2),
+    }
+
+    for code, expected in expected_per_code.items():
+        assert billing_by_code[code]["facility_payment"] == expected
+
+    expected_total = round(sum(expected_per_code.values()), 2)
+    assert data["estimated_payment"] == expected_total
+    assert any("MULTIPLE_ENDOSCOPY_RULE" in w for w in data.get("audit_warnings") or [])

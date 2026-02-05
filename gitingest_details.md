@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-04T16:22:02-08:00`
-Git: `updates_2_4_26` @ `dfcc6ce`
+Generated: `2026-02-05T08:36:54-08:00`
+Git: `updates_2_4_26` @ `ff43cc4`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -370,10 +370,10 @@ Git: `updates_2_4_26` @ `dfcc6ce`
      2821  tests/registry/test_ner_procedure_extractor.py
      2825  tests/coding/test_phi_gating.py
      2835  modules/ml_coder/thresholds.py
+     2844  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2853  modules/api/routes/phi_demo_cases.py
      2879  tests/test_clean_ip_registry.py
      2914  modules/reporter/cli.py
-     2921  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2927  modules/common/rvu_calc.py
      2954  tests/registry/test_linear_ebus_stations_detail.py
      2990  tests/coding/test_sectionizer_integration.py
@@ -469,6 +469,7 @@ Git: `updates_2_4_26` @ `dfcc6ce`
      6150  modules/coder/parallel_pathway/confidence_combiner.py
      6184  tests/integration/test_phi_workflow_end_to_end.py
      6204  modules/coder/ncci.py
+     6208  modules/registry/postprocess/complications_reconcile.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
      6276  tests/registry/test_self_correction_validation.py
@@ -487,7 +488,6 @@ Git: `updates_2_4_26` @ `dfcc6ce`
      7025  modules/reporting/ip_addons.py
      7110  modules/coder/application/candidate_expansion.py
      7176  modules/agents/run_pipeline.py
-     7184  modules/registry/postprocess/template_checkbox_negation.py
      7218  tests/api/test_phi_redactor_ui.py
      7307  tests/integration/coder/test_coding_service.py
      7318  tests/api/test_registry_runs.py
@@ -498,11 +498,11 @@ Git: `updates_2_4_26` @ `dfcc6ce`
      7672  modules/coder/adapters/ml_ranker.py
      7827  tests/registry/test_registry_extraction_ebus.py
      7837  tests/unit/test_no_legacy_imports.py
-     7977  tests/registry/test_fixpack_batch2.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
      8227  tests/coder/test_rules_engine.py
      8228  proc_schemas/registry/ip_v3.py
+     8323  tests/registry/test_fixpack_batch2.py
      8415  modules/registry/inference_pytorch.py
      8427  modules/registry_cleaning/clinical_qc.py
      8556  modules/registry/ml/evaluate.py
@@ -524,6 +524,7 @@ Git: `updates_2_4_26` @ `dfcc6ce`
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
     10466  modules/api/routes_registry.py
+    10716  modules/registry/postprocess/template_checkbox_negation.py
     10791  tests/unit/test_inmemory_procedure_store.py
     10938  tests/registry/test_ebus_config_station_count.py
     11181  tests/test_phi_redaction_contract.py
@@ -574,7 +575,7 @@ Git: `updates_2_4_26` @ `dfcc6ce`
     15828  modules/registry/ner_mapping/station_extractor.py
     15857  tests/registry/test_normalization.py
     16032  modules/coder/rules_engine.py
-    16171  modules/registry/application/cpt_registry_mapping.py
+    16250  modules/registry/application/cpt_registry_mapping.py
     16608  tests/integration/api/test_metrics_endpoint.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
     17010  modules/phi/safety/veto.py
@@ -590,8 +591,8 @@ Git: `updates_2_4_26` @ `dfcc6ce`
     18924  tests/ml_coder/test_label_hydrator.py
     18937  tests/api/test_registry_extract_endpoint.py
     18997  tests/coder/test_registry_coder.py
-    19239  modules/registry/processing/cao_interventions_detail.py
     19280  modules/coder/adapters/persistence/csv_kb_adapter.py
+    19773  modules/registry/processing/cao_interventions_detail.py
     19783  tests/integration/api/test_registry_endpoints.py
     20079  modules/registry_cleaning/cpt_utils.py
     20194  tests/registry/test_cao_extraction.py
@@ -639,16 +640,16 @@ Git: `updates_2_4_26` @ `dfcc6ce`
     42962  modules/api/routes/procedure_codes.py
     44127  tests/registry/test_granular_registry_models.py
     44511  modules/api/fastapi_app.py
-    45391  modules/registry/schema/granular_logic.py
+    45173  modules/registry/schema/granular_logic.py
     53453  modules/extraction/postprocessing/clinical_guardrails.py
     56672  modules/autocode/ip_kb/ip_kb.py
-    61517  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
     62051  modules/registry/prompts.py
     63511  modules/reporting/engine.py
-   109794  modules/registry/deterministic_extractors.py
+    64722  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
    111411  modules/registry/engine.py
+   115898  modules/registry/deterministic_extractors.py
    150527  modules/registry/postprocess/__init__.py
-   167942  modules/registry/application/registry_service.py
+   169634  modules/registry/application/registry_service.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       118  tests/fixtures/regression_suite/README.md
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
@@ -827,6 +828,7 @@ Git: `updates_2_4_26` @ `dfcc6ce`
     19835  modules/registry/ip_registry_schema_additions.json
     21781  modules/reporting/templates/macros/template_schema.json
     27821  modules/registry/ip_registry_improvements.md
+    34586  docs/unified_extraction_plan_2_5_26.md
     41682  docs/USER_GUIDE.md
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
@@ -1068,6 +1070,7 @@ Git: `updates_2_4_26` @ `dfcc6ce`
  inline_cap_reached>75  modules/ner/entity_types.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/coder/ncci.py
+ inline_cap_reached>75  modules/registry/postprocess/complications_reconcile.py
  inline_cap_reached>75  modules/registry_cleaning/consistency_utils.py
  inline_cap_reached>75  modules/registry/slots/therapeutics.py
  inline_cap_reached>75  modules/registry/processing/navigation_fiducials.py
@@ -1078,7 +1081,6 @@ Git: `updates_2_4_26` @ `dfcc6ce`
  inline_cap_reached>75  modules/reporting/ip_addons.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
  inline_cap_reached>75  modules/agents/run_pipeline.py
- inline_cap_reached>75  modules/registry/postprocess/template_checkbox_negation.py
  inline_cap_reached>75  modules/registry/ner_mapping/entity_to_registry.py
  inline_cap_reached>75  modules/domain/coding_rules/evidence_context.py
  inline_cap_reached>75  modules/registry/model_runtime.py
@@ -1098,6 +1100,7 @@ Git: `updates_2_4_26` @ `dfcc6ce`
  inline_cap_reached>75  modules/reporting/validation.py
  inline_cap_reached>75  modules/ml_coder/predictor.py
  inline_cap_reached>75  modules/api/routes_registry.py
+ inline_cap_reached>75  modules/registry/postprocess/template_checkbox_negation.py
  inline_cap_reached>75  modules/registry/application/registry_builder.py
  inline_cap_reached>75  modules/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  modules/common/knowledge.py
@@ -1139,8 +1142,8 @@ Git: `updates_2_4_26` @ `dfcc6ce`
  inline_cap_reached>75  modules/registry/normalization.py
  inline_cap_reached>75  modules/registry/evidence/verifier.py
  inline_cap_reached>75  modules/registry/inference_onnx.py
- inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/coder/adapters/persistence/csv_kb_adapter.py
+ inline_cap_reached>75  modules/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  modules/registry_cleaning/cpt_utils.py
  inline_cap_reached>75  modules/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  modules/registry/model_bootstrap.py
@@ -1175,11 +1178,11 @@ Git: `updates_2_4_26` @ `dfcc6ce`
  inline_cap_reached>75  modules/registry/schema/granular_logic.py
  inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
- inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/registry/prompts.py
  inline_cap_reached>75  modules/reporting/engine.py
- inline_cap_reached>75  modules/registry/deterministic_extractors.py
+ inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  modules/registry/engine.py
+ inline_cap_reached>75  modules/registry/deterministic_extractors.py
  inline_cap_reached>75  modules/registry/postprocess/__init__.py
  inline_cap_reached>75  modules/registry/application/registry_service.py
     binary_or_non_utf8  docs/ARCHITECTURE.md

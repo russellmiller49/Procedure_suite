@@ -128,11 +128,10 @@ async def run_unified_pipeline_logic(
 
     if payload.include_financials and codes:
         from config.settings import CoderSettings
+        from modules.api.services.financials import calculate_financials
 
         settings = CoderSettings()
         conversion_factor = settings.cms_conversion_factor
-        total_work = 0.0
-        total_payment = 0.0
         units_by_code: dict[str, int] = {}
 
         billing = getattr(record, "billing", None)
@@ -152,38 +151,24 @@ async def run_unified_pipeline_logic(
                     units_by_code[code] = int(item.get("units") or 1)
                 except (TypeError, ValueError):
                     units_by_code[code] = 1
-
-        for code in codes:
-            proc_info = coding_service.kb_repo.get_procedure_info(code)
-            if not proc_info:
-                continue
-
-            work_rvu = proc_info.work_rvu
-            total_rvu = proc_info.total_facility_rvu
-            units = int(units_by_code.get(code, 1) or 1)
-            payment = total_rvu * conversion_factor * units
-
-            total_work += work_rvu * units
-            total_payment += payment
-
-            per_code_billing.append(
-                {
-                    "cpt_code": code,
-                    "description": proc_info.description,
-                    "units": units,
-                    "work_rvu": work_rvu * units,
-                    "total_facility_rvu": total_rvu * units,
-                    "facility_payment": round(payment, 2),
-                }
-            )
-
-        total_work_rvu = round(total_work, 2)
-        estimated_payment = round(total_payment, 2)
+        (
+            total_work_rvu,
+            estimated_payment,
+            per_code_billing,
+            financial_warnings,
+        ) = calculate_financials(
+            codes=[str(c).strip() for c in codes if str(c).strip()],
+            kb_repo=coding_service.kb_repo,
+            conversion_factor=conversion_factor,
+            units_by_code=units_by_code,
+        )
 
     all_warnings: list[str] = []
     all_warnings.extend(getattr(result, "warnings", None) or [])
     all_warnings.extend(getattr(result, "audit_warnings", None) or [])
     all_warnings.extend(derivation_warnings)
+    if payload.include_financials and codes:
+        all_warnings.extend(financial_warnings or [])
 
     deduped_warnings: list[str] = []
     seen_warnings: set[str] = set()

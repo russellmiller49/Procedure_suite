@@ -1164,23 +1164,16 @@ def run_unified_extraction(
             estimated_payment = None
 
             if request.include_financials and codes:
+                from modules.api.services.financials import calculate_financials
+
                 settings = CoderSettings()
                 conversion_factor = settings.cms_conversion_factor
-                total_work = 0.0
-                total_payment = 0.0
-
-                for code in codes:
-                    proc_info = coding_service.kb_repo.get_procedure_info(code)
-                    if proc_info:
-                        work_rvu = proc_info.work_rvu
-                        total_rvu = proc_info.total_facility_rvu
-                        payment = total_rvu * conversion_factor
-
-                        total_work += work_rvu
-                        total_payment += payment
-
-                total_work_rvu = round(total_work, 2)
-                estimated_payment = round(total_payment, 2)
+                total_work_rvu, estimated_payment, _, financial_warnings = calculate_financials(
+                    codes=[str(c).strip() for c in codes if str(c).strip()],
+                    kb_repo=coding_service.kb_repo,
+                    conversion_factor=conversion_factor,
+                    units_by_code=None,
+                )
 
         # Persist suggestions for review workflow
         store.save_suggestions(proc_id, suggestions)
@@ -1188,6 +1181,8 @@ def run_unified_extraction(
         # Combine audit warnings
         all_warnings = list(extraction_result.audit_warnings or [])
         all_warnings.extend(derivation_warnings)
+        if request.include_financials and codes:
+            all_warnings.extend(financial_warnings or [])
 
         # Serialize registry
         registry_payload = record.model_dump(exclude_none=True) if record else {}
