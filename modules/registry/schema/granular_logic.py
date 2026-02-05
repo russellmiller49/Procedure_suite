@@ -845,9 +845,6 @@ def derive_procedures_from_granular(
                 mechanical_method = "Microdebrider"
             elif any("rigid coring" in m for m in modalities):
                 mechanical_method = "Rigid coring"
-            elif any("snare" in m for m in modalities):
-                # Schema-constrained method enum does not include "snare"; treat as mechanical debulking.
-                mechanical_method = "Forceps debulking"
             elif any("mechanical debulking" in m for m in modalities):
                 mechanical_method = "Forceps debulking"
 

@@ -534,16 +534,32 @@ def derive_all_codes_with_meta(
 
     added_31629 = False
     if _performed(peripheral_tbna):
-        codes.append("31629")
-        rationales["31629"] = "peripheral_tbna.performed=true"
-        added_31629 = True
-        if has_ebus_sampling:
+        targets = _get(peripheral_tbna, "targets_sampled") or []
+        target_values = [str(x).strip() for x in targets if x and str(x).strip()]
+        station_token_re = re.compile(
+            r"^(?:2R|2L|3P|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)$",
+            re.IGNORECASE,
+        )
+        has_non_station_target = any(
+            (t and not station_token_re.match(t) and not re.search(r"(?i)\bstation\b", t))
+            for t in target_values
+        )
+
+        if has_ebus_sampling and not has_non_station_target:
             warnings.append(
-                "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling"
+                "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled are missing or nodal-like; cannot support distinct-site unbundling"
             )
-            rationales["31629"] = (
-                "peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)"
-            )
+        else:
+            codes.append("31629")
+            rationales["31629"] = "peripheral_tbna.performed=true"
+            added_31629 = True
+            if has_ebus_sampling:
+                warnings.append(
+                    "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling"
+                )
+                rationales["31629"] = (
+                    "peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)"
+                )
     elif _performed(tbna_nodal):
         # NCCI: Conventional nodal TBNA is bundled into EBUS-TBNA when EBUS sampling is performed.
         if has_ebus_sampling:
@@ -743,17 +759,50 @@ def derive_all_codes_with_meta(
         placement_action = "placement" in action_text
         removal_action = action_text.startswith("remov") or _stent_action_is_removal(action) or removal_flag
 
+        stent_evidence = _evidence_text_for_prefixes(
+            record,
+            (
+                "procedures_performed.airway_stent",
+                "code_evidence",
+            ),
+        ) or ""
+        has_history_cue = bool(
+            re.search(r"(?i)\b(?:known|existing|prior|previous|history\s+of)\b", stent_evidence)
+        )
+        has_placement_verb = bool(
+            re.search(
+                r"(?i)\b(?:place(?:d|ment)?|deploy(?:ed|ment)?|insert(?:ed|ion)?|implant(?:ed|ation)?|position(?:ed|ing)?)\b",
+                stent_evidence,
+            )
+        )
+
         if assessment_only:
             pass
-        elif revision_action or removal_action:
-            codes.append("31638")
-            if revision_action:
-                rationales["31638"] = "airway_stent.action indicates revision/repositioning"
-            else:
-                rationales["31638"] = "airway_stent indicates removal/exchange"
-        elif placement_action:
+        elif placement_action and not revision_action and not removal_action:
             codes.append("31636")
             rationales["31636"] = "airway_stent.action indicates placement"
+        elif revision_action:
+            # Revision/repositioning can reflect either:
+            # - exchange/removal of an existing stent (31638), or
+            # - immediate intraprocedural repositioning of a newly placed stent (typically bundled into 31636).
+            if removal_action:
+                codes.append("31638")
+                rationales["31638"] = "airway_stent indicates removal/exchange"
+            elif has_history_cue:
+                codes.append("31638")
+                rationales["31638"] = "airway_stent revision/repositioning of an existing stent (history cue present)"
+            elif not has_placement_verb:
+                codes.append("31638")
+                rationales["31638"] = "airway_stent revision/repositioning without placement verbs (treat as existing stent revision)"
+            else:
+                codes.append("31636")
+                rationales["31636"] = "airway_stent revision/repositioning documented without removal; bundled into placement (consider modifier 22 if significant)"
+                warnings.append(
+                    "Stent revision/repositioning documented without removal; coded as placement (31636). Consider modifier 22 when documentation supports increased work."
+                )
+        elif removal_action:
+            codes.append("31638")
+            rationales["31638"] = "airway_stent indicates removal/exchange"
         elif _performed(stent):
             warnings.append(
                 "airway_stent.performed=true but action is missing/ambiguous; suppressing stent placement CPT"
@@ -914,6 +963,11 @@ def derive_all_codes_with_meta(
         if "chartis" in cv_text or "chartis" in blvr_evidence:
             occlusion_source = "Chartis"
         elif re.search(
+            r"(?i)\b(?:tisseel|thrombin|fibrin\s+(?:glue|sealant)|(?:fibrin\s+)?glue)\b",
+            cv_text + "\n" + blvr_evidence,
+        ):
+            occlusion_source = "Substance occlusion"
+        elif re.search(
             r"(?i)\b(?:balloon\s+occlusion|serial\s+occlusion|endobronchial\s+blocker|uniblocker|arndt|ardnt|fogarty)\b",
             cv_text + "\n" + blvr_evidence,
         ):
@@ -948,7 +1002,7 @@ def derive_all_codes_with_meta(
             rationales["31634"] = f"{occlusion_source} documented (lobes={sorted(chartis_lobes)})"
             if valve_lobes and occlusion_source != "Chartis":
                 warnings.append(
-                    "31634 (balloon occlusion) performed alongside valve work; ensure documentation supports separate billing and consider modifier -59/-XS when appropriate."
+                    f"31634 ({occlusion_source}) performed alongside valve work; ensure documentation supports separate billing and consider modifier -59/-XS when appropriate."
                 )
 
     # Bronchial thermoplasty: 31660 initial + 31661 additional lobes.
@@ -968,37 +1022,52 @@ def derive_all_codes_with_meta(
         rationales["31615"] = "established_tracheostomy_route=true"
 
     # Percutaneous tracheostomy (new trach creation)
-    if _performed(_proc(record, "percutaneous_tracheostomy")):
+    pt_obj = _proc(record, "percutaneous_tracheostomy")
+    pt_performed = _performed(pt_obj)
+    puncture_evidence = _evidence_text_for_prefixes(
+        record,
+        (
+            "procedures_performed.tracheal_puncture",
+            "procedures_performed.percutaneous_tracheostomy",
+            "code_evidence",
+        ),
+    )
+    puncture_only = bool(
+        re.search(
+            r"(?i)\b31612\b|\btranstracheal\b|\bangiocat|\bpunctur\w*\b",
+            puncture_evidence or "",
+        )
+    )
+
+    # 31612: percutaneous tracheal puncture / transtracheal access (NOT a tracheostomy creation).
+    # If puncture-only evidence is present without explicit trach-creation language, derive 31612.
+    pt_evidence = _evidence_text_for_prefixes(
+        record,
+        ("procedures_performed.percutaneous_tracheostomy",),
+    )
+    explicit_trach_creation = bool(
+        re.search(
+            r"(?i)\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b|\bperc\s+trach\b|\btracheostomy\b[^.\n]{0,60}\b(?:performed|placed|inserted|created)\b",
+            pt_evidence or "",
+        )
+    )
+    if puncture_only and not explicit_trach_creation:
+        codes.append("31612")
+        rationales["31612"] = "tracheal puncture evidence present (puncture-only; not tracheostomy creation)"
+        if pt_performed and not established_trach_route:
+            warnings.append(
+                "percutaneous_tracheostomy.performed=true but evidence indicates puncture-only; deriving 31612 (not 31600)"
+            )
+
+    # 31600: percutaneous tracheostomy creation (new trach).
+    if pt_performed and "31612" not in codes:
         if established_trach_route:
             warnings.append(
                 "percutaneous_tracheostomy.performed=true but established_tracheostomy_route=true; suppressing 31600"
             )
         else:
-            pt_evidence = _evidence_text_for_prefixes(
-                record,
-                ("procedures_performed.percutaneous_tracheostomy",),
-            )
-            code_evidence = _evidence_text_for_prefixes(record, ("code_evidence",))
-            puncture_only = bool(
-                re.search(
-                    r"(?i)\b31612\b|\btranstracheal\b|\bangiocat|\bpunctur\w*\b",
-                    (code_evidence or "") + "\n" + (pt_evidence or ""),
-                )
-            )
-            explicit_trach_creation = bool(
-                re.search(
-                    r"(?i)\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b|\bperc\s+trach\b|\btracheostomy\b[^.\n]{0,60}\b(?:performed|placed|inserted|created)\b",
-                    pt_evidence or "",
-                )
-            )
-            if puncture_only and not explicit_trach_creation:
-                codes.append("31612")
-                rationales["31612"] = (
-                    "percutaneous_tracheostomy.performed=true but evidence indicates percutaneous tracheal puncture (31612)"
-                )
-            else:
-                codes.append("31600")
-                rationales["31600"] = "percutaneous_tracheostomy.performed=true and established_tracheostomy_route=false"
+            codes.append("31600")
+            rationales["31600"] = "percutaneous_tracheostomy.performed=true and established_tracheostomy_route=false"
 
     # Neck ultrasound (often pre-tracheostomy vascular mapping)
     if _performed(_proc(record, "neck_ultrasound")):

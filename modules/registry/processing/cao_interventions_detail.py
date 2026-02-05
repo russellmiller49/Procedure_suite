@@ -62,11 +62,21 @@ _LOCATION_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 
 _MODALITY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("APC", re.compile(r"(?i)\bapc\b|argon\s+plasma")),
-    ("Electrocautery - snare", re.compile(r"(?i)\belectrocautery\s+snare\b|\bhot\s+snare\b|\bsnare\b")),
+    # Do not treat tool mentions ("snare") as intent; require explicit cautery/hot-snare context.
+    ("Electrocautery - snare", re.compile(r"(?i)\b(?:electrocautery|cautery)\s+snare\b|\bhot\s+snare\b")),
     ("Electrocautery - knife", re.compile(r"(?i)\b(?:electrocautery|cautery)\s+(?:knife|needle\s*knife)\b")),
     ("Electrocautery - probe", re.compile(r"(?i)\b(?:electrocautery|cautery)\s+(?:probe|bicap|coag(?:ulation)?\s+probe)\b")),
     ("Cryoextraction", re.compile(r"(?i)\bcryo\s*extraction\b|\bcryoextraction\b")),
-    ("Cryotherapy - contact", re.compile(r"(?i)\bcryotherap\w*\b|\bcryoprobe\b")),
+    # Avoid misclassifying diagnostic cryoprobe use (cryobiopsy) as CAO cryotherapy.
+    # Require explicit cryotherapy language OR therapeutic intent verbs near the cryoprobe mention.
+    (
+        "Cryotherapy - contact",
+        re.compile(
+            r"(?i)\bcryotherap\w*\b"
+            r"|\bcryo\s*probe\b[^.\n]{0,80}\b(?:ablat|destroy|debulk|treat|reliev|recanaliz|devitaliz)\w*\b"
+            r"|\b(?:ablat|destroy|debulk|treat|reliev|recanaliz|devitaliz)\w*\b[^.\n]{0,80}\bcryo\s*probe\b"
+        ),
+    ),
     ("Laser", re.compile(r"(?i)\blaser\b|nd:yag|yag\b")),
     ("Microdebrider", re.compile(r"(?i)\bmicrodebrider\b")),
     ("Mechanical debulking", re.compile(r"(?i)\bmechanical\b.{0,30}\bdebulk|\bdebulk\w*\b|\bcore\s*out\b|\brig(?:id)?\s+coring\b")),

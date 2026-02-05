@@ -81,6 +81,60 @@ def apply_template_checkbox_negation(note_text: str, record: RegistryRecord) -> 
     warnings: list[str] = []
     changed = False
 
+    def _positive_evidence_present(field_path: str) -> bool:
+        """Return True when narrative evidence supports keeping the field True.
+
+        Critical hierarchy of truth: explicit narrative evidence supersedes unchecked
+        template checkboxes. This prevents template artifacts from forcing performed
+        flags to False when the procedure is clearly documented as performed.
+        """
+        if not text:
+            return False
+
+        patterns_by_path: dict[str, tuple[str, ...]] = {
+            "pleural_procedures.ipc.performed": (
+                r"(?i)\b(?:pleurx|aspira|indwelling\s+pleural\s+catheter|tunneled\s+pleural\s+catheter|ipc)\b"
+                r"[^.\n]{0,120}\b(?:placed|insert(?:ed|ion)|tunnel(?:ed|ing)|deploy(?:ed|ment)|secured)\b",
+                r"(?i)\b(?:placed|insert(?:ed|ion)|tunnel(?:ed|ing)|deploy(?:ed|ment)|secured)\b"
+                r"[^.\n]{0,120}\b(?:pleurx|aspira|indwelling\s+pleural\s+catheter|tunneled\s+pleural\s+catheter|ipc)\b",
+            ),
+            "pleural_procedures.chest_tube.performed": (
+                r"(?i)\b(?:chest\s+tube|tube\s+thoracostomy|pigtail)\b"
+                r"[^.\n]{0,120}\b(?:placed|insert(?:ed|ion)|introduced|advanced|connected|secured)\b",
+                r"(?i)\b(?:placed|insert(?:ed|ion)|introduced|advanced|connected|secured)\b"
+                r"[^.\n]{0,120}\b(?:chest\s+tube|tube\s+thoracostomy|pigtail)\b",
+            ),
+            "complications.pneumothorax.occurred": (
+                r"(?i)\bpneumothorax\b[^.\n]{0,120}\b(?:noted|occurred|developed|present|post|small|trace)\b",
+                r"(?i)\b(?:noted|occurred|developed|present|post|small|trace)\b[^.\n]{0,120}\bpneumothorax\b",
+            ),
+            "procedures_performed.airway_dilation.performed": (
+                r"(?i)\b(?:airway|tracheal|bronchial)\b[^.\n]{0,120}\b(?:dilat(?:e|ed|ion)|balloon)\b"
+                r"[^.\n]{0,80}\b(?:performed|completed|successfully)\b",
+                r"(?i)\b(?:balloon)\b[^.\n]{0,120}\b(?:dilat(?:e|ed|ion))\b",
+            ),
+            "procedures_performed.rigid_bronchoscopy.performed": (
+                r"(?i)\brigid\s+bronchoscop\w*\b[^.\n]{0,120}\b(?:performed|using|with)\b",
+                r"(?i)\busing\b[^.\n]{0,120}\brigid\s+(?:scope|bronchoscop\w*)\b",
+            ),
+            "procedures_performed.airway_stent.performed": (
+                r"(?i)\b(?:airway\s+)?stent\b[^.\n]{0,120}\b(?:deploy(?:ed|ment)|place(?:d|ment)|insert(?:ed|ion)|revis(?:ed|ion)|reposition(?:ed|ing)|adjust(?:ed|ment))\b",
+                r"(?i)\b(?:deploy(?:ed|ment)|place(?:d|ment)|insert(?:ed|ion)|revis(?:ed|ion)|reposition(?:ed|ing)|adjust(?:ed|ment))\b[^.\n]{0,120}\b(?:airway\s+)?stent\b",
+                r"(?i)\b(?:grasp(?:ed)?|pull(?:ed)?|move(?:d)?)\b[^.\n]{0,120}\b(?:airway\s+)?stent\b[^.\n]{0,80}\bproxim(?:al|ally)\b",
+            ),
+        }
+
+        patterns = patterns_by_path.get(field_path)
+        if not patterns:
+            return False
+
+        lowered = text.lower()
+        # Avoid treating explicit negations ("no pneumothorax") as positive evidence.
+        if field_path.endswith("pneumothorax.occurred") and re.search(r"(?i)\bno\s+pneumothorax\b", lowered):
+            return False
+
+        return any(re.search(pat, text) for pat in patterns)
+
     def _match_any(label: str, candidates: tuple[str, ...]) -> bool:
         lowered = (label or "").strip().lower()
         return bool(lowered) and any(candidate in lowered for candidate in candidates)
@@ -89,6 +143,11 @@ def apply_template_checkbox_negation(note_text: str, record: RegistryRecord) -> 
         nonlocal changed
         current = _get_field(record_data, path)
         if current is not True:
+            return
+        if _positive_evidence_present(path):
+            warnings.append(
+                f"CHECKBOX_NEGATIVE_OVERRIDE: narrative evidence supports keeping {path}=true; ignoring template negative"
+            )
             return
         if _set_field(record_data, path, False):
             changed = True

@@ -990,6 +990,10 @@ class RegistryService:
                                 seed_has_context = True
                                 break
                     fiducial_candidate = "fiducial" in (masked_note_text or "").lower()
+                    tracheal_puncture_candidate = any(
+                        re.search(pat, masked_note_text or "", re.IGNORECASE)
+                        for pat in TRACHEAL_PUNCTURE_PATTERNS
+                    )
 
                     if (
                         (isinstance(seed_procs, dict) and seed_procs)
@@ -997,6 +1001,7 @@ class RegistryService:
                         or seed_established_trach
                         or fiducial_candidate
                         or seed_has_context
+                        or tracheal_puncture_candidate
                     ):
                         record_data = record.model_dump()
                         record_procs = record_data.get("procedures_performed")
@@ -1663,6 +1668,21 @@ class RegistryService:
                                 "established_tracheostomy_route",
                                 list(ESTABLISHED_TRACH_ROUTE_PATTERNS),
                             )
+
+                        # Tracheal puncture (31612 family) is NOT a tracheostomy creation. Capture evidence
+                        # for coding without flipping percutaneous_tracheostomy.performed=true.
+                        tracheal_puncture_key = "procedures_performed.tracheal_puncture.performed"
+                        if not evidence.get(tracheal_puncture_key):
+                            if any(
+                                re.search(pat, masked_note_text or "", re.IGNORECASE)
+                                for pat in TRACHEAL_PUNCTURE_PATTERNS
+                            ):
+                                _add_first_span_skip_cpt_headers(
+                                    tracheal_puncture_key,
+                                    list(TRACHEAL_PUNCTURE_PATTERNS),
+                                )
+                                if evidence.get(tracheal_puncture_key):
+                                    other_modified = True
 
                         def _mark_subsequent_aspiration() -> None:
                             """Attach an evidence marker when header/body indicates subsequent aspiration (31646)."""
@@ -2448,6 +2468,16 @@ class RegistryService:
         record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
         if verifier_warnings:
             extraction_warnings.extend(verifier_warnings)
+
+        # Narrative supersedes templated summary: preserve explicitly documented complications
+        # even when a final "COMPLICATIONS: None" line exists.
+        from modules.registry.postprocess.complications_reconcile import (
+            reconcile_complications_from_narrative,
+        )
+
+        comp_warnings = reconcile_complications_from_narrative(record, masked_note_text)
+        if comp_warnings:
+            extraction_warnings.extend(comp_warnings)
 
         # Reconcile granular validation warnings against the final record state.
         # Guardrails and other postprocess steps may flip performed flags after

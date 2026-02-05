@@ -83,7 +83,7 @@ def test_note_008_tracheal_puncture_derives_31612_and_has_evidence(monkeypatch: 
     assert "31612" in codes
     assert "31600" not in codes
 
-    assert record.evidence.get("procedures_performed.percutaneous_tracheostomy.performed")
+    assert record.evidence.get("procedures_performed.tracheal_puncture.performed")
 
 
 def test_note_011_subsequent_aspiration_31646_overrides_31645(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -118,7 +118,7 @@ def test_note_011_balloon_occlusion_derives_31634_without_chartis(monkeypatch: p
     assert record.evidence.get("procedures_performed.blvr.performed")
 
 
-def test_note_007_valve_removal_triggers_31635(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_note_007_valve_adjustment_does_not_trigger_31635(monkeypatch: pytest.MonkeyPatch) -> None:
     note_text = (
         "PROCEDURE IN DETAIL:\n"
         "Size 7 spiration valve was placed but noted to be too large for the airway (RB10). This was subsequently removed.\n"
@@ -127,9 +127,15 @@ def test_note_007_valve_removal_triggers_31635(monkeypatch: pytest.MonkeyPatch) 
     record = _extract_record_parallel_ner(monkeypatch, note_text)
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
-    assert "31635" in codes
+    assert "31647" in codes
+    assert "31635" not in codes
 
-    assert record.evidence.get("procedures_performed.foreign_body_removal.performed")
+    assert not record.evidence.get("procedures_performed.foreign_body_removal.performed")
+    assert record.procedures_performed
+    assert record.procedures_performed.blvr
+    assert record.procedures_performed.blvr.number_of_valves == 1
+    assert record.procedures_performed.blvr.segments_treated
+    assert "RB10" in {str(s).upper() for s in record.procedures_performed.blvr.segments_treated}
 
 
 def test_note_010_established_tracheostomy_route_derives_31615(monkeypatch: pytest.MonkeyPatch) -> None:

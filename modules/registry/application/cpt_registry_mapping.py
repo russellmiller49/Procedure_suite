@@ -356,9 +356,10 @@ def aggregate_registry_fields(
 
     # --- OTHER INTERVENTIONS ---
 
-    # Percutaneous tracheostomy (planned): 31600, 31601
-    # Percutaneous tracheal puncture (often part of percutaneous trach kits): 31612
-    if code_set & {"31600", "31601", "31612"}:
+    # Percutaneous tracheostomy (new trach creation): 31600, 31601
+    # Note: 31612 is percutaneous tracheal puncture / transtracheal access and is
+    # not a tracheostomy creation; do not map it to percutaneous_tracheostomy.
+    if code_set & {"31600", "31601"}:
         procedures["percutaneous_tracheostomy"] = {"performed": True}
 
     # EUS-B (endoscopic ultrasound via bronchoscope)

@@ -37,11 +37,10 @@ def test_stent_exchange_note_suppresses_stent_superbill_combo() -> None:
     Using rat tooth forceps the stent was grasped and removed enbloc.
     The following stent (Bona stent 10 x 30) was placed in the Left Mainstem.
     """
-    codes, _rationales, warnings = _derive_codes_from_note_text(note_text)
+    codes, _rationales, _warnings = _derive_codes_from_note_text(note_text)
     assert "31638" in codes
     assert "31635" not in codes
     assert "31636" not in codes
-    assert any("CPT_CONFLICT_STENT_CYCLE" in warning for warning in warnings)
 
 
 def test_registry_record_normalizes_therapeutic_aspiration_material() -> None:

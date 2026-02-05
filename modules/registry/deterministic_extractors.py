@@ -908,10 +908,6 @@ FOREIGN_BODY_REMOVAL_PATTERNS = [
     r"\bretriev(?:e|ed|al)\b[^.\n]{0,60}\bforeign\s+body\b",
     r"\b(?:fracture[dm]|broken|migrated)\s+(?:piece|fragment|segment|portion)\s+of\s+(?:the\s+)?stent\b",
     r"\bstent\s+(?:fragment|piece)\s+was\s+(?:removed|retrieved|extracted)\b",
-    # Endobronchial valve sizing/exchange can involve removal/retrieval of the valve device.
-    r"\b(?:valve|endobronchial\s+valve|bronchial\s+valve)\b[^.\n]{0,80}\b(?:remov|retriev|extract|explant|withdraw|pull)\w*\b",
-    r"\b(?:remov|retriev|extract|explant|withdraw|pull)\w*\b[^.\n]{0,80}\b(?:valve|endobronchial\s+valve|bronchial\s+valve)\b",
-    r"\b(?:valve|endobronchial\s+valve|bronchial\s+valve)\b[^.\n]{0,80}\b(?:remov(?:ed)?\s+again|exchang(?:ed)?|replac(?:ed)?)\b",
 ]
 
 # Percutaneous tracheal puncture / transtracheal access patterns (31612 family).
@@ -1604,6 +1600,84 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
     elif "chartis" in text_lower or balloon_hit:
         proc["procedure_type"] = "Valve assessment"
 
+    # BLVR specificity (high-yield): infer target segments + final deployed valve count
+    # from explicit segment tokens (e.g., RB9/RB10, LB1+2). Avoid counting valves
+    # that were removed and not replaced during the same session.
+    segment_token_re = re.compile(r"(?i)\b([RL]B\s*\d{1,2}(?:\s*[+/]\s*\d{1,2})?)\b")
+    placement_verb_re = re.compile(r"(?i)\b(?:place(?:d|ment)?|deploy(?:ed|ment)?|insert(?:ed|ion)?|deliver(?:ed)?)\b")
+    removal_verb_re = re.compile(r"(?i)\b(?:remov(?:e|ed|al)?|retriev(?:e|ed|al)?|extract(?:ed|ion)?|explant(?:ed|ation)?|withdrawn|pull(?:ed)?)\b")
+    replace_verb_re = re.compile(r"(?i)\b(?:replac(?:e|ed|ement)?|exchang(?:e|ed|ing)?)\b")
+
+    def _normalize_segment(raw: str) -> str:
+        token = (raw or "").strip().upper()
+        token = re.sub(r"\s+", "", token)
+        token = token.replace("/", "+")
+        return token
+
+    def _segment_to_lobe(seg: str) -> str | None:
+        match = re.match(r"^(?P<side>[RL])B(?P<num>\d{1,2})", seg)
+        if not match:
+            return None
+        side = match.group("side")
+        try:
+            num = int(match.group("num"))
+        except Exception:
+            return None
+        if side == "R":
+            if 1 <= num <= 3:
+                return "RUL"
+            if 4 <= num <= 5:
+                return "RML"
+            if 6 <= num <= 10:
+                return "RLL"
+        if side == "L":
+            if 4 <= num <= 5:
+                return "Lingula"
+            if 1 <= num <= 3:
+                return "LUL"
+            if 6 <= num <= 10:
+                return "LLL"
+        return None
+
+    states: dict[str, str] = {}
+    for raw_sentence in re.split(r"(?:\n+|(?<=[.!?])\s+)", preferred_text or ""):
+        sentence = (raw_sentence or "").strip()
+        if not sentence:
+            continue
+        segments = [_normalize_segment(tok) for tok in segment_token_re.findall(sentence)]
+        if not segments:
+            continue
+        sentence_lower = sentence.lower()
+        # Require valve context (prevents unrelated RB/LB numbers from steering BLVR detail).
+        if "valve" not in sentence_lower and "zephyr" not in sentence_lower and "spiration" not in sentence_lower:
+            continue
+        has_place = bool(placement_verb_re.search(sentence))
+        has_remove = bool(removal_verb_re.search(sentence))
+        has_replace = bool(replace_verb_re.search(sentence))
+
+        # If both placement and removal appear in the same sentence, assume the end
+        # state is removal unless a replacement/exchange is explicitly stated.
+        if has_remove and not has_replace and (has_place or not has_place):
+            for seg in segments:
+                states[seg] = "removed"
+            continue
+        if has_place or has_replace:
+            for seg in segments:
+                states[seg] = "deployed"
+
+    deployed_segments = sorted([s for s, state in states.items() if state == "deployed"])
+    removed_segments = sorted([s for s, state in states.items() if state == "removed"])
+    final_segments = deployed_segments or removed_segments
+
+    if final_segments and not proc.get("segments_treated"):
+        proc["segments_treated"] = final_segments
+    if final_segments and not proc.get("number_of_valves"):
+        proc["number_of_valves"] = len(final_segments)
+    if not proc.get("target_lobe") and final_segments:
+        lobes = {l for l in (_segment_to_lobe(s) for s in final_segments) if l}
+        if len(lobes) == 1:
+            proc["target_lobe"] = next(iter(lobes))
+
     if not proc.get("target_lobe"):
         lobes = _extract_lung_locations_from_text(preferred_text)
         if len(lobes) == 1:
@@ -1669,7 +1743,9 @@ def extract_diagnostic_bronchoscopy(note_text: str) -> Dict[str, Any]:
 def extract_foreign_body_removal(note_text: str) -> Dict[str, Any]:
     """Extract foreign body removal indicator.
     """
-    text_lower = (note_text or "").lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
     if not text_lower.strip():
         return {}
 
@@ -1749,6 +1825,18 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
     if re.search(CRYOPROBE_PATTERN, text_lower, re.IGNORECASE) and not re.search(
         CRYOBIOPSY_PATTERN, text_lower, re.IGNORECASE
     ):
+        biopsy_context = bool(
+            re.search(r"(?i)\bbiops(?:y|ies|ied)\b", text_lower)
+            or re.search(r"(?i)\b(?:specimen(?:s)?|patholog(?:y|ic)|histolog(?:y|ic))\b", text_lower)
+        )
+        therapeutic_context = bool(
+            re.search(
+                r"(?i)\b(?:ablat|destroy|debulk|devitaliz|recanaliz|stenos(?:is|ed)|tumou?r)\w*\b",
+                text_lower,
+            )
+        )
+        if biopsy_context and not therapeutic_context:
+            return {}
         return {"cryotherapy": {"performed": True}}
 
     return {}
@@ -2030,12 +2118,34 @@ def extract_brushings(note_text: str) -> Dict[str, Any]:
 
 def extract_transbronchial_cryobiopsy(note_text: str) -> Dict[str, Any]:
     """Extract transbronchial cryobiopsy indicator."""
-    text_lower = (note_text or "").lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
     for pattern in TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS:
         if re.search(pattern, text_lower, re.IGNORECASE):
             negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
             if re.search(negation_check, text_lower, re.IGNORECASE):
                 continue
+            return {"transbronchial_cryobiopsy": {"performed": True}}
+
+    # Backstop: some notes describe diagnostic cryobiopsy using "cryoprobe biopsies"
+    # without the token "cryobiopsy". Treat this as transbronchial cryobiopsy when
+    # biopsy/pathology context is explicit and therapeutic/destructive intent is absent.
+    if re.search(CRYOPROBE_PATTERN, text_lower, re.IGNORECASE):
+        biopsy_context = bool(
+            re.search(r"(?i)\bbiops(?:y|ies|ied)\b", text_lower)
+            or re.search(r"(?i)\b(?:specimen(?:s)?|patholog(?:y|ic)|histolog(?:y|ic))\b", text_lower)
+        )
+        pulmonary_context = bool(
+            re.search(r"(?i)\b(?:transbronchial|lung|pulmonary|parenchymal|nodule|mass|lesion)\b", text_lower)
+        )
+        therapeutic_context = bool(
+            re.search(
+                r"(?i)\b(?:ablat|destroy|debulk|devitaliz|recanaliz|stenos(?:is|ed)|tumou?r)\w*\b",
+                text_lower,
+            )
+        )
+        if biopsy_context and pulmonary_context and not therapeutic_context:
             return {"transbronchial_cryobiopsy": {"performed": True}}
     return {}
 
@@ -2159,25 +2269,32 @@ def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
 
     Conservative: requires explicit tracheostomy procedure language.
     """
-    text = note_text or ""
-    text_lower = text.lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
 
     change_cue = re.search(
         r"(?i)\btrach(?:eostomy)?\b[^.\n]{0,60}\b(?:change|exchange|tube\s+change|changed)\b|\bafter\s+establishment\b[^.\n]{0,60}\btract\b",
         text_lower,
     )
+    if not change_cue:
+        removed_tube = re.search(
+            r"(?i)\b(?:trach(?:eostomy)?|tracheostomy)\s+tube\b[^.\n]{0,120}\b(?:removed|exchanged|changed)\b",
+            text_lower,
+        )
+        placed_new_tube = re.search(
+            r"(?i)\bnew\b[^.\n]{0,60}\b(?:trach(?:eostomy)?|tracheostomy)\s+tube\b[^.\n]{0,120}\b(?:placed|inserted)\b",
+            text_lower,
+        )
+        if removed_tube and placed_new_tube:
+            change_cue = True
     if change_cue:
         return {}
-
-    # Percutaneous tracheal puncture (31612 family) can appear without explicit
-    # "tracheostomy placed" language (e.g., angiocath puncture of the tracheal wall).
-    if any(re.search(pat, text_lower, re.IGNORECASE) for pat in TRACHEAL_PUNCTURE_PATTERNS):
-        return {"percutaneous_tracheostomy": {"performed": True, "method": "percutaneous"}}
 
     patterns = [
         r"\bpercutaneous\s+(?:dilatational\s+)?tracheostomy\b",
         r"\bperc\s+trach\b",
-        r"\btracheostomy\b[^.\n]{0,60}\b(?:performed|placed|inserted|created)\b",
+        r"\btracheostomy\b[^.\n]{0,60}\b(?:performed|created)\b",
     ]
 
     for pattern in patterns:
@@ -2200,6 +2317,12 @@ def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
             proc["device_name"] = "Shiley"
 
         return {"percutaneous_tracheostomy": proc}
+
+    # Puncture-only (e.g., angiocath puncture for suture fixation / transtracheal access)
+    # is *not* a tracheostomy creation. Downstream CPT logic may still derive 31612
+    # via evidence reconciliation, but we do not mark percutaneous_tracheostomy here.
+    if any(re.search(pat, text_lower, re.IGNORECASE) for pat in TRACHEAL_PUNCTURE_PATTERNS):
+        return {}
 
     return {}
 
@@ -2225,8 +2348,9 @@ ESTABLISHED_TRACH_NEW_PATTERNS = [
 
 def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
     """Detect bronchoscopy via an established tracheostomy route."""
-    text = note_text or ""
-    text_lower = text.lower()
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
     if not text_lower.strip():
         return {}
 
@@ -2234,6 +2358,17 @@ def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
         r"(?i)\btrach(?:eostomy)?\b[^.\n]{0,60}\b(?:change|exchange|tube\s+change|changed)\b|\bafter\s+establishment\b[^.\n]{0,60}\btract\b",
         text_lower,
     )
+    if not change_cue:
+        removed_tube = re.search(
+            r"(?i)\b(?:trach(?:eostomy)?|tracheostomy)\s+tube\b[^.\n]{0,120}\b(?:removed|exchanged|changed)\b",
+            text_lower,
+        )
+        placed_new_tube = re.search(
+            r"(?i)\bnew\b[^.\n]{0,60}\b(?:trach(?:eostomy)?|tracheostomy)\s+tube\b[^.\n]{0,120}\b(?:placed|inserted)\b",
+            text_lower,
+        )
+        if removed_tube and placed_new_tube:
+            change_cue = True
     if change_cue:
         return {"established_tracheostomy_route": True}
 
