@@ -54,3 +54,27 @@ def test_extract_linear_ebus_stations_detail_station_paragraphs_and_stop_at_mass
     assert by_station["Right Upper Lobe Mass"]["needle_gauge"] == 22
     assert by_station["Right Upper Lobe Mass"]["number_of_passes"] == 8
     assert by_station["Right Upper Lobe Mass"]["rose_result"] == "Malignant"
+
+
+def test_extract_linear_ebus_stations_detail_numbered_station_list_items() -> None:
+    note = (
+        "EBUS Lymph Nodes Sampled:\n"
+        "1. 11Rs: biopsied with a 22-gauge needle, 4 passes. ROSE: adequate lymphocytes.\n"
+        "2) 7 (subcarinal): biopsied with 22G, 3 passes. ROSE showed malignant cells.\n"
+        "3. 4R: not biopsied due to size criteria.\n"
+    )
+
+    details = extract_linear_ebus_stations_detail(note)
+    by_station = _by_station(details)
+
+    assert by_station["11Rs"]["sampled"] is True
+    assert by_station["11Rs"]["needle_gauge"] == 22
+    assert by_station["11Rs"]["number_of_passes"] == 4
+    assert by_station["11Rs"]["rose_result"] == "Adequate lymphocytes"
+
+    assert by_station["7"]["sampled"] is True
+    assert by_station["7"]["needle_gauge"] == 22
+    assert by_station["7"]["number_of_passes"] == 3
+    assert by_station["7"]["rose_result"] == "Malignant"
+
+    assert by_station["4R"]["sampled"] is False

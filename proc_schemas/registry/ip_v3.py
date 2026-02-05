@@ -13,6 +13,7 @@ extraction engine. That extraction schema lives at `modules.registry.schema.ip_v
 from __future__ import annotations
 
 from datetime import date, datetime
+from enum import Enum
 from typing import List, Optional, Literal
 
 from pydantic import BaseModel, Field
@@ -111,6 +112,10 @@ class StentPlacement(BaseModel):
     """Enhanced stent placement details."""
 
     location: AnatomicLocation
+    action_type: Optional[Literal["placement", "removal", "revision", "assessment_only"]] = Field(
+        default=None,
+        description="High-level stent action classification.",
+    )
     type: str = ""  # "silicone", "metal", "hybrid"
     subtype: str = ""  # "Y-stent", "straight", "tracheobronchial"
     size: str = ""  # "14x40mm"
@@ -155,13 +160,40 @@ class Complication(BaseModel):
 class ProcedureOutcome(BaseModel):
     """Summary of procedure outcome."""
 
+    class ProcedureSuccessStatus(str, Enum):
+        SUCCESS = "success"
+        PARTIAL_SUCCESS = "partial_success"
+        FAILED = "failed"
+        ABORTED = "aborted"
+        UNKNOWN = "unknown"
+
     completed: bool = True
     aborted: bool = False
     abort_reason: Optional[str] = None
+    # New (2026-02): richer outcome status + reasons (kept additive for backward compatibility).
+    procedure_success_status: ProcedureSuccessStatus = ProcedureSuccessStatus.UNKNOWN
+    aborted_reason: Optional[str] = None
+    complication_intervention: Optional[str] = None
+    complication_duration: Optional[str] = None
     diagnostic_yield: Optional[str] = None
     therapeutic_success: Optional[bool] = None
     follow_up_planned: bool = False
     follow_up_notes: Optional[str] = None
+
+    def model_post_init(self, __context):  # type: ignore[override]
+        # Keep abort_reason and aborted_reason in sync for compatibility.
+        if self.aborted_reason is None and self.abort_reason:
+            self.aborted_reason = self.abort_reason
+        elif self.abort_reason is None and self.aborted_reason:
+            self.abort_reason = self.aborted_reason
+
+
+class BalloonOcclusion(BaseModel):
+    """Balloon occlusion / endobronchial blocker workflow details (e.g., air leak localization)."""
+
+    performed: bool = False
+    occlusion_location: Optional[str] = None
+    air_leak_result: Optional[str] = None
 
 
 class IPRegistryV3(BaseModel):
@@ -238,6 +270,9 @@ class IPRegistryV3(BaseModel):
     blvr_target_lobe: str = ""
     blvr_chartis_performed: bool = False
     blvr_cv_result: Optional[str] = None
+
+    # Balloon occlusion / endobronchial blocker workflows (non-Chartis).
+    balloon_occlusion: BalloonOcclusion = Field(default_factory=BalloonOcclusion)
 
     # Findings
     findings: List[Finding] = Field(default_factory=list)

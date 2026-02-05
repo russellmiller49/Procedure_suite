@@ -1709,6 +1709,19 @@
                 "null"
               ]
             },
+            "target_anatomy": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Stent expansion",
+                "Stenosis",
+                "Other",
+                null
+              ],
+              "description": "What was dilated (e.g., stenosis/stricture vs stent expansion)."
+            },
             "etiology": {
               "type": [
                 "string",
@@ -2204,6 +2217,39 @@
                 "null"
               ],
               "description": "Emphysema heterogeneity index"
+            }
+          }
+        },
+        "balloon_occlusion": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Balloon occlusion / endobronchial blocker workflow (e.g., air leak localization, bleeding isolation).",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "occlusion_location": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Anatomic location/target of occlusion when documented (e.g., lobe/segment)."
+            },
+            "air_leak_result": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Result of air-leak assessment during occlusion (e.g., 'resolved', 'partial', 'persistent')."
+            },
+            "device_size": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Balloon/device size when documented."
             }
           }
         },
@@ -3435,6 +3481,42 @@
             "null"
           ],
           "description": "Reason if procedure was aborted"
+        },
+        "procedure_success_status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "Success",
+            "Partial success",
+            "Failed",
+            "Aborted",
+            "Unknown",
+            null
+          ],
+          "description": "Overall procedure success status (captures suboptimal/failed/aborted workflows)."
+        },
+        "aborted_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Free-text reason for aborted/failed/partial success status (when documented)."
+        },
+        "complication_intervention": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Intervention performed for a complication (free text) when documented."
+        },
+        "complication_duration": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Duration/timing of complication management (e.g., '15 minutes') when documented."
         },
         "preliminary_diagnosis": {
           "type": [

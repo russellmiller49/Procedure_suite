@@ -61,3 +61,36 @@ def test_populate_ebus_node_events_fallback_adds_placeholder_when_sampling_docum
 
     codes, _rationales, _warn = derive_all_codes_with_meta(record)
     assert "31652" in codes
+
+
+def test_populate_ebus_node_events_fallback_captures_passes_and_rose_with_evidence() -> None:
+    record = RegistryRecord.model_validate({"procedures_performed": {"linear_ebus": {"performed": True}}})
+    note_text = (
+        "Endobronchial Ultrasound Findings\n"
+        "Multiple EBUS-TBNA passes were obtained from the following station(s):\n"
+        "11L: biopsied with a 22G needle, 5 passes. ROSE: adequate lymphocytes.\n"
+    )
+
+    warnings = populate_ebus_node_events_fallback(record, note_text)
+    assert any("EBUS_REGEX_FALLBACK" in w for w in warnings)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    assert linear.node_events is not None
+    assert len(linear.node_events) == 1
+    assert linear.node_events[0].station == "11L"
+    assert linear.node_events[0].passes == 5
+    assert linear.node_events[0].pass_count == 5
+    assert linear.node_events[0].rose_result == "adequate lymphocytes"
+
+    evidence = record.evidence
+    assert evidence.get("procedures_performed.linear_ebus.node_events.0.passes"), "Missing evidence for node_events[0].passes"
+    assert evidence.get(
+        "procedures_performed.linear_ebus.node_events.0.rose_result"
+    ), "Missing evidence for node_events[0].rose_result"
+
+    passes_span = evidence["procedures_performed.linear_ebus.node_events.0.passes"][0]
+    assert note_text[passes_span.start:passes_span.end] == "5 passes"
+
+    rose_span = evidence["procedures_performed.linear_ebus.node_events.0.rose_result"][0]
+    assert "ROSE" in note_text[rose_span.start:rose_span.end].upper()
+    assert "adequate lymphocytes" in note_text[rose_span.start:rose_span.end].lower()

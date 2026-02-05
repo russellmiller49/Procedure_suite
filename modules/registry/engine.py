@@ -634,7 +634,15 @@ class RegistryEngine:
         # Run deterministic extractors FIRST to seed commonly missed fields
         # These provide reliable extraction for demographics, ASA, sedation, etc.
         deterministic_data = run_deterministic_extractors(note_text)
+        deterministic_evidence = None
+        if isinstance(deterministic_data, dict):
+            deterministic_evidence = deterministic_data.pop("evidence", None)
         seed_data.update(deterministic_data)
+        if include_evidence and isinstance(deterministic_evidence, dict):
+            for field, spans in deterministic_evidence.items():
+                if not isinstance(field, str) or not isinstance(spans, list):
+                    continue
+                evidence.setdefault(field, []).extend([s for s in spans if isinstance(s, Span)])
 
         # Classify procedure families FIRST - this gates downstream extraction
         procedure_families = classify_procedure_families(note_text)

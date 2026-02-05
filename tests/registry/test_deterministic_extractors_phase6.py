@@ -67,3 +67,34 @@ def test_forceps_biopsy_in_cavity_triggers_endobronchial_biopsy() -> None:
     )
     out = extract_endobronchial_biopsy(note_text)
     assert out == {"endobronchial_biopsy": {"performed": True}}
+
+
+def test_run_deterministic_extractors_airway_dilation_target_anatomy_with_evidence() -> None:
+    note_text = "Balloon dilation was performed for tracheal stenosis using a 12 mm balloon."
+    seed = run_deterministic_extractors(note_text)
+    dilation = seed.get("procedures_performed", {}).get("airway_dilation") or {}
+    assert dilation.get("performed") is True
+    assert dilation.get("target_anatomy") == "Stenosis"
+
+    evidence = seed.get("evidence") or {}
+    assert evidence.get("procedures_performed.airway_dilation.target_anatomy")
+    span = evidence["procedures_performed.airway_dilation.target_anatomy"][0]
+    assert "stenosis" in note_text[span.start:span.end].lower()
+
+
+def test_run_deterministic_extractors_balloon_occlusion_fields_with_evidence() -> None:
+    note_text = (
+        "Serial occlusion was performed using a 7 Fr Arndt endobronchial blocker positioned in the RUL bronchus. "
+        "Air leak resolved after balloon occlusion."
+    )
+    seed = run_deterministic_extractors(note_text)
+    balloon = seed.get("procedures_performed", {}).get("balloon_occlusion") or {}
+    assert balloon.get("performed") is True
+    assert "RUL bronchus" in (balloon.get("occlusion_location") or "")
+    assert "air leak" in (balloon.get("air_leak_result") or "").lower()
+    assert "7" in (balloon.get("device_size") or "")
+
+    evidence = seed.get("evidence") or {}
+    assert evidence.get("procedures_performed.balloon_occlusion.occlusion_location")
+    assert evidence.get("procedures_performed.balloon_occlusion.air_leak_result")
+    assert evidence.get("procedures_performed.balloon_occlusion.device_size")

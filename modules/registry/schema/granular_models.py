@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 # =============================================================================
@@ -233,6 +233,15 @@ class AirwayStentProcedure(BaseModel):
 
     performed: bool | None = None
     airway_stent_removal: bool = False
+    action_type: Literal[
+        "placement",
+        "removal",
+        "revision",
+        "assessment_only",
+    ] | None = Field(
+        default=None,
+        description="Normalized stent action classification (derived from action when available).",
+    )
     action: Literal[
         "Placement",
         "Removal",
@@ -251,6 +260,10 @@ class AirwayStentProcedure(BaseModel):
         "Other",
     ] | None = None
     stent_brand: str | None = None
+    device_size: str | None = Field(
+        default=None,
+        description="Verbatim stent/device size when documented (e.g., '14 x 40 mm').",
+    )
     diameter_mm: float | None = Field(None, ge=6, le=25)
     length_mm: float | None = Field(None, ge=10, le=100)
     location: Literal[
@@ -270,6 +283,20 @@ class AirwayStentProcedure(BaseModel):
         "Other",
     ] | None = None
     deployment_successful: bool | None = None
+
+    @model_validator(mode="after")
+    def derive_action_type(self) -> "AirwayStentProcedure":
+        if self.action_type is not None:
+            return self
+        if self.action == "Placement":
+            self.action_type = "placement"
+        elif self.action == "Removal":
+            self.action_type = "removal"
+        elif self.action == "Revision/Repositioning":
+            self.action_type = "revision"
+        elif self.action == "Assessment only":
+            self.action_type = "assessment_only"
+        return self
 
     @field_validator("action", mode="before")
     @classmethod

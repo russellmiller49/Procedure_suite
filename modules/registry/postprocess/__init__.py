@@ -3477,6 +3477,9 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
     station_list_default_sampling = False
     station_list_seen_station = False
 
+    passes_re = re.compile(r"(?i)\b(\d{1,2})\s*(?:pass|passes)\b")
+    rose_re = re.compile(r"(?i)\brose\s*(?:showed|revealed|:|was)?\s*([^.\\n]{1,180})")
+
     cursor = 0
     for raw_line in full_text.splitlines(keepends=True):
         line_offset = cursor
@@ -3537,6 +3540,28 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
 
         action = "needle_aspiration" if sampling and not negated else "inspected_only"
 
+        passes_val: int | None = None
+        rose_val: str | None = None
+        passes_span: tuple[int, int] | None = None
+        rose_span: tuple[int, int] | None = None
+
+        if action != "inspected_only":
+            m_passes = passes_re.search(line)
+            if m_passes:
+                try:
+                    passes_val = int(m_passes.group(1))
+                except Exception:
+                    passes_val = None
+                passes_span = (line_offset + m_passes.start(), line_offset + m_passes.end())
+
+            m_rose = rose_re.search(line)
+            if m_rose:
+                raw = (m_rose.group(1) or "").strip()
+                raw = raw.strip(" :;-\"'").strip()
+                if raw:
+                    rose_val = raw[:180]
+                    rose_span = (line_offset + m_rose.start(), line_offset + m_rose.end())
+
         station_tokens: list[tuple[str, int, int]] = []
         for match in _EBUS_FALLBACK_STATION_RE.finditer(line):
             token = match.group(1) or ""
@@ -3586,11 +3611,25 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                         "quote_start": int(quote_start),
                         "quote_end": int(quote_end),
                     }
+                if getattr(existing, "passes", None) is None and isinstance(passes_val, int):
+                    existing.passes = passes_val
+                if getattr(existing, "rose_result", None) in (None, "") and isinstance(rose_val, str) and rose_val:
+                    existing.rose_result = rose_val
+                meta = station_evidence.get(station)
+                if isinstance(meta, dict):
+                    if passes_span and "passes_start" not in meta and "passes_end" not in meta:
+                        meta["passes_start"] = int(passes_span[0])
+                        meta["passes_end"] = int(passes_span[1])
+                    if rose_span and "rose_start" not in meta and "rose_end" not in meta:
+                        meta["rose_start"] = int(rose_span[0])
+                        meta["rose_end"] = int(rose_span[1])
                 continue
             station_events[station] = NodeInteraction(
                 station=station,
                 action=action,
                 outcome=None,
+                passes=passes_val,
+                rose_result=rose_val,
                 evidence_quote=line.strip(),
             )
             station_evidence[station] = {
@@ -3599,6 +3638,12 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                 "quote_start": int(quote_start),
                 "quote_end": int(quote_end),
             }
+            if passes_span:
+                station_evidence[station]["passes_start"] = int(passes_span[0])
+                station_evidence[station]["passes_end"] = int(passes_span[1])
+            if rose_span:
+                station_evidence[station]["rose_start"] = int(rose_span[0])
+                station_evidence[station]["rose_end"] = int(rose_span[1])
             if action != "inspected_only":
                 stations_sampled.append(station)
 
@@ -3693,6 +3738,36 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                             text=full_text[quote_start:quote_end].strip(),
                             start=quote_start,
                             end=quote_end,
+                            confidence=0.9,
+                        )
+                    )
+
+                passes_start = meta.get("passes_start")
+                passes_end = meta.get("passes_end")
+                if isinstance(passes_start, int) and isinstance(passes_end, int) and passes_end > passes_start:
+                    evidence.setdefault(
+                        f"procedures_performed.linear_ebus.node_events.{idx}.passes",
+                        [],
+                    ).append(
+                        Span(
+                            text=full_text[passes_start:passes_end].strip(),
+                            start=passes_start,
+                            end=passes_end,
+                            confidence=0.9,
+                        )
+                    )
+
+                rose_start = meta.get("rose_start")
+                rose_end = meta.get("rose_end")
+                if isinstance(rose_start, int) and isinstance(rose_end, int) and rose_end > rose_start:
+                    evidence.setdefault(
+                        f"procedures_performed.linear_ebus.node_events.{idx}.rose_result",
+                        [],
+                    ).append(
+                        Span(
+                            text=full_text[rose_start:rose_end].strip(),
+                            start=rose_start,
+                            end=rose_end,
                             confidence=0.9,
                         )
                     )
@@ -3831,12 +3906,18 @@ def enrich_linear_ebus_needle_gauge(record: RegistryRecord, full_text: str) -> l
     if linear is None or getattr(linear, "performed", None) is not True:
         return warnings
 
-    existing = getattr(linear, "needle_gauge", None)
-    if existing:
-        return warnings
-
     if not full_text:
         return warnings
+
+    existing = getattr(linear, "needle_gauge", None)
+    expected_gauge: int | None = None
+    if isinstance(existing, str) and existing.strip():
+        m = re.search(r"(?i)\b(19|21|22|25)\b", existing)
+        if m:
+            try:
+                expected_gauge = int(m.group(1))
+            except Exception:
+                expected_gauge = None
 
     match = re.search(r"\b(19|21|22|25)\s*[-]?\s*(?:G|gauge)\b", full_text, re.IGNORECASE)
     if not match:
@@ -3844,9 +3925,33 @@ def enrich_linear_ebus_needle_gauge(record: RegistryRecord, full_text: str) -> l
     if not match:
         return warnings
 
-    gauge = int(match.group(1))
-    setattr(linear, "needle_gauge", f"{gauge}G")
-    warnings.append("AUTO_EBUS_NEEDLE_GAUGE: parsed from note text")
+    try:
+        gauge = int(match.group(1))
+    except Exception:
+        gauge = None
+
+    # If the field is already populated, only add evidence spans (do not overwrite).
+    if existing and expected_gauge is not None and gauge is not None and gauge != expected_gauge:
+        return warnings
+
+    if not existing and gauge is not None:
+        setattr(linear, "needle_gauge", f"{gauge}G")
+        warnings.append("AUTO_EBUS_NEEDLE_GAUGE: parsed from note text")
+
+    try:
+        from modules.common.spans import Span
+
+        evidence = getattr(record, "evidence", None)
+        if not isinstance(evidence, dict):
+            evidence = {}
+        key = "procedures_performed.linear_ebus.needle_gauge"
+        if key not in evidence:
+            evidence.setdefault(key, []).append(
+                Span(text=match.group(0).strip(), start=match.start(), end=match.end(), confidence=0.9)
+            )
+            record.evidence = evidence
+    except Exception:
+        pass
 
     return warnings
 
@@ -3881,6 +3986,7 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
         return warnings
 
     section = full_text[marker.start() :]
+    base_offset = marker.start()
     changed = False
 
     existing_sites = getattr(eus_b, "sites_sampled", None)
@@ -3926,6 +4032,23 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
             if gauge in (19, 21, 22, 25):
                 setattr(eus_b, "needle_gauge", f"{gauge}G")
                 changed = True
+                try:
+                    from modules.common.spans import Span
+
+                    evidence = getattr(record, "evidence", None)
+                    if not isinstance(evidence, dict):
+                        evidence = {}
+                    evidence.setdefault("procedures_performed.eus_b.needle_gauge", []).append(
+                        Span(
+                            text=match.group(0).strip(),
+                            start=base_offset + match.start(),
+                            end=base_offset + match.end(),
+                            confidence=0.9,
+                        )
+                    )
+                    record.evidence = evidence
+                except Exception:
+                    pass
 
     if getattr(eus_b, "passes", None) in (None, 0):
         match = _EUS_B_PASSES_RE.search(section)
@@ -3937,6 +4060,23 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
             if isinstance(count, int) and 1 <= count <= 30:
                 setattr(eus_b, "passes", count)
                 changed = True
+                try:
+                    from modules.common.spans import Span
+
+                    evidence = getattr(record, "evidence", None)
+                    if not isinstance(evidence, dict):
+                        evidence = {}
+                    evidence.setdefault("procedures_performed.eus_b.passes", []).append(
+                        Span(
+                            text=match.group(0).strip(),
+                            start=base_offset + match.start(),
+                            end=base_offset + match.end(),
+                            confidence=0.9,
+                        )
+                    )
+                    record.evidence = evidence
+                except Exception:
+                    pass
 
     if getattr(eus_b, "rose_result", None) in (None, ""):
         match = _EUS_B_ROSE_RE.search(section)
@@ -3945,6 +4085,23 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
             if val:
                 setattr(eus_b, "rose_result", val)
                 changed = True
+                try:
+                    from modules.common.spans import Span
+
+                    evidence = getattr(record, "evidence", None)
+                    if not isinstance(evidence, dict):
+                        evidence = {}
+                    evidence.setdefault("procedures_performed.eus_b.rose_result", []).append(
+                        Span(
+                            text=match.group(0).strip(),
+                            start=base_offset + match.start(),
+                            end=base_offset + match.end(),
+                            confidence=0.9,
+                        )
+                    )
+                    record.evidence = evidence
+                except Exception:
+                    pass
 
     if changed:
         warnings.append("AUTO_EUS_B_DETAIL: populated eus_b sampling details from note text")
@@ -4003,6 +4160,259 @@ def enrich_medical_thoracoscopy_biopsies_taken(record: RegistryRecord, full_text
     return warnings
 
 
+_OUTCOMES_ABORT_RE = re.compile(
+    r"(?i)\b(?:procedure\s+)?(?:aborted|terminated)\b[^.\n]{0,200}"
+)
+_OUTCOMES_FAIL_RE = re.compile(
+    r"(?i)\b(?:unable\s+to|could\s+not|cannot|failed\s+to|unsuccessful|not\s+successful)\b[^.\n]{0,220}"
+)
+_OUTCOMES_SUBOPTIMAL_RE = re.compile(r"(?i)\bsuboptimal\b")
+_OUTCOMES_CONTEXT_RE = re.compile(
+    r"(?i)\b(?:navigat|localiz|registration|radial|r-?ebus|probe|view|lesion|target|specimen|sampling|biops)\w*\b"
+)
+_OUTCOMES_COMPLICATION_KW_RE = re.compile(
+    r"(?i)\b(?:bleed|hemorrhag|hypox|desaturat|pneumothorax|air\s*leak|arrhythm|bradycard|tachycard)\w*\b"
+)
+_OUTCOMES_COMPLICATION_DURATION_RE = re.compile(
+    r"(?i)\btotal\s+time\b[^.\n]{0,20}(?:with\s+)?(?P<dur>\d{1,3}\s*min(?:ute)?s?)\b"
+)
+_OUTCOMES_COMPLICATION_INTERVENTION_RE = re.compile(
+    r"(?i)\b(?:treated|managed|controlled)\s+with\b\s*(?P<int>[^.\n]{3,120})"
+)
+
+
+def enrich_procedure_success_status(record: RegistryRecord, full_text: str) -> list[str]:
+    """Populate outcomes.procedure_success_status and outcomes.aborted_reason from explicit note language.
+
+    Goal: capture suboptimal/failed/aborted procedural success status with evidence spans for UI highlighting.
+    """
+    warnings: list[str] = []
+    text = full_text or ""
+    if not text.strip():
+        return warnings
+
+    def _sentence_span(match_start: int, match_end: int) -> tuple[int, int]:
+        # Expand match to a sentence-like span for better UI highlighting.
+        start = max(
+            text.rfind("\n", 0, match_start),
+            text.rfind(".", 0, match_start),
+            text.rfind(";", 0, match_start),
+            text.rfind(":", 0, match_start),
+        )
+        if start == -1:
+            start = 0
+        else:
+            start = min(len(text), start + 1)
+        end_candidates = [pos for pos in (text.find("\n", match_end), text.find(".", match_end)) if pos != -1]
+        end = min(end_candidates) if end_candidates else len(text)
+        end = min(len(text), end + (1 if end < len(text) and text[end] == "." else 0))
+        return start, end
+
+    status: str | None = None
+    reason: str | None = None
+    ev_start: int | None = None
+    ev_end: int | None = None
+
+    aborted_match = _OUTCOMES_ABORT_RE.search(text)
+    if aborted_match:
+        status = "Aborted"
+        s, e = _sentence_span(aborted_match.start(), aborted_match.end())
+        snippet = text[s:e].strip()
+        if snippet:
+            reason = snippet[:240]
+            ev_start, ev_end = s, e
+        reason_match = re.search(
+            r"(?i)\b(?:due\s+to|because|secondary\s+to)\b\s*(?P<reason>[^.\n]{3,200})",
+            aborted_match.group(0) or "",
+        )
+        if reason_match:
+            reason = (reason_match.group("reason") or "").strip()[:240] or reason
+    else:
+        fail_match = _OUTCOMES_FAIL_RE.search(text)
+        if fail_match:
+            status = "Failed"
+            s, e = _sentence_span(fail_match.start(), fail_match.end())
+            snippet = text[s:e].strip()
+            if snippet:
+                reason = snippet[:240]
+                ev_start, ev_end = s, e
+        else:
+            # Prefer the most specific "radial/probe view ... suboptimal" evidence when present.
+            radial_suboptimal = re.search(
+                r"(?i)\bradial\b[^.\n]{0,120}\bsuboptimal\b|\bsuboptimal\b[^.\n]{0,120}\bradial\b",
+                text,
+            )
+            candidate = radial_suboptimal
+            if candidate is None:
+                for match in _OUTCOMES_SUBOPTIMAL_RE.finditer(text):
+                    s, e = _sentence_span(match.start(), match.end())
+                    window = text[s:e]
+                    if _OUTCOMES_CONTEXT_RE.search(window):
+                        candidate = match
+                        break
+
+            if candidate is not None:
+                s, e = _sentence_span(candidate.start(), candidate.end())
+                snippet = text[s:e].strip()
+                if snippet:
+                    status = "Partial success"
+                    reason = snippet[:240]
+                    ev_start, ev_end = s, e
+
+    if status is None or ev_start is None or ev_end is None or ev_end <= ev_start:
+        return warnings
+
+    outcomes = getattr(record, "outcomes", None)
+    current_status = getattr(outcomes, "procedure_success_status", None) if outcomes is not None else None
+    current_reason = getattr(outcomes, "aborted_reason", None) if outcomes is not None else None
+    current_old_reason = getattr(outcomes, "procedure_aborted_reason", None) if outcomes is not None else None
+
+    changed = False
+
+    # Ensure outcomes is a validated object when missing.
+    if outcomes is None:
+        record_data = record.model_dump()
+        record_data["outcomes"] = {}
+        record.outcomes = RegistryRecord.model_validate(record_data).outcomes
+        outcomes = getattr(record, "outcomes", None)
+
+    if outcomes is None:
+        return warnings
+
+    if current_status in (None, "", "Unknown"):
+        setattr(outcomes, "procedure_success_status", status)
+        changed = True
+
+    if reason and current_reason in (None, ""):
+        setattr(outcomes, "aborted_reason", reason)
+        changed = True
+
+    # Compatibility: keep legacy field aligned when we have an explicit abort.
+    if status == "Aborted" and reason and current_old_reason in (None, ""):
+        setattr(outcomes, "procedure_aborted_reason", reason)
+        changed = True
+
+    if current_reason in (None, "") and current_old_reason not in (None, ""):
+        setattr(outcomes, "aborted_reason", current_old_reason)
+        changed = True
+
+    # Evidence spans (best-effort; do not fail postprocess).
+    try:
+        from modules.common.spans import Span
+
+        evidence = getattr(record, "evidence", None)
+        if not isinstance(evidence, dict):
+            evidence = {}
+        snippet = text[ev_start:ev_end].strip()
+        if snippet:
+            evidence.setdefault("outcomes.procedure_success_status", []).append(
+                Span(text=snippet, start=int(ev_start), end=int(ev_end), confidence=0.9)
+            )
+            evidence.setdefault("outcomes.aborted_reason", []).append(
+                Span(text=snippet, start=int(ev_start), end=int(ev_end), confidence=0.9)
+            )
+            if status == "Aborted":
+                evidence.setdefault("outcomes.procedure_aborted_reason", []).append(
+                    Span(text=snippet, start=int(ev_start), end=int(ev_end), confidence=0.9)
+                )
+        record.evidence = evidence
+    except Exception:
+        pass
+
+    if changed:
+        warnings.append(f"AUTO_OUTCOMES_STATUS: set outcomes.procedure_success_status={status!r}")
+    return warnings
+
+
+def enrich_outcomes_complication_details(record: RegistryRecord, full_text: str) -> list[str]:
+    """Populate outcomes.complication_duration and outcomes.complication_intervention from explicit text."""
+    warnings: list[str] = []
+    text = full_text or ""
+    if not text.strip():
+        return warnings
+
+    outcomes = getattr(record, "outcomes", None)
+    if outcomes is None:
+        record_data = record.model_dump()
+        record_data["outcomes"] = {}
+        record.outcomes = RegistryRecord.model_validate(record_data).outcomes
+        outcomes = getattr(record, "outcomes", None)
+    if outcomes is None:
+        return warnings
+
+    duration_existing = getattr(outcomes, "complication_duration", None)
+    intervention_existing = getattr(outcomes, "complication_intervention", None)
+    changed = False
+
+    ev_start: int | None = None
+    ev_end: int | None = None
+
+    if duration_existing in (None, ""):
+        for match in _OUTCOMES_COMPLICATION_DURATION_RE.finditer(text):
+            # Require a nearby complication keyword within the same sentence window.
+            start = max(
+                text.rfind("\n", 0, match.start()),
+                text.rfind(".", 0, match.start()),
+                text.rfind(";", 0, match.start()),
+            )
+            start = 0 if start == -1 else start + 1
+            end_candidates = [pos for pos in (text.find("\n", match.end()), text.find(".", match.end())) if pos != -1]
+            end = min(end_candidates) if end_candidates else len(text)
+            sentence = text[start:end]
+            if not _OUTCOMES_COMPLICATION_KW_RE.search(sentence):
+                continue
+            dur = (match.group("dur") or "").strip()
+            if dur:
+                setattr(outcomes, "complication_duration", dur)
+                changed = True
+                ev_start, ev_end = start, end
+                break
+
+    if intervention_existing in (None, ""):
+        for match in _OUTCOMES_COMPLICATION_INTERVENTION_RE.finditer(text):
+            start = max(
+                text.rfind("\n", 0, match.start()),
+                text.rfind(".", 0, match.start()),
+                text.rfind(";", 0, match.start()),
+            )
+            start = 0 if start == -1 else start + 1
+            end_candidates = [pos for pos in (text.find("\n", match.end()), text.find(".", match.end())) if pos != -1]
+            end = min(end_candidates) if end_candidates else len(text)
+            sentence = text[start:end]
+            if not _OUTCOMES_COMPLICATION_KW_RE.search(sentence):
+                continue
+            val = (match.group("int") or "").strip().strip(" :;-\"'")[:180]
+            if val:
+                setattr(outcomes, "complication_intervention", val)
+                changed = True
+                if ev_start is None or ev_end is None:
+                    ev_start, ev_end = start, end
+                break
+
+    if ev_start is not None and ev_end is not None and ev_end > ev_start:
+        try:
+            from modules.common.spans import Span
+
+            evidence = getattr(record, "evidence", None)
+            if not isinstance(evidence, dict):
+                evidence = {}
+            snippet = text[ev_start:ev_end].strip()
+            if snippet:
+                evidence.setdefault("outcomes.complication_duration", []).append(
+                    Span(text=snippet, start=int(ev_start), end=int(ev_end), confidence=0.9)
+                )
+                evidence.setdefault("outcomes.complication_intervention", []).append(
+                    Span(text=snippet, start=int(ev_start), end=int(ev_end), confidence=0.9)
+                )
+            record.evidence = evidence
+        except Exception:
+            pass
+
+    if changed:
+        warnings.append("AUTO_COMPLICATION_DETAILS: populated outcomes complication duration/intervention from note text")
+    return warnings
+
+
 _BAL_STANDARD_LINE_RE = re.compile(
     r"(?i)\b(?:bronch(?:ial)?\s+alveolar\s+lavage|broncho[-\s]?alveolar\s+lavage|BAL)\b"
     r"[^.\n]{0,80}\b(?:was\s+)?performed\b[^.\n]{0,80}\b(?:at|in)\b\s+(?P<loc>[^.\n]{3,220})"
@@ -4041,29 +4451,94 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
         window = full_text[start : min(len(full_text), start + 420)]
         instilled = None
         recovered = None
+        instilled_span: tuple[int, int] | None = None
+        recovered_span: tuple[int, int] | None = None
         m_inst = _BAL_INSTILLED_RE.search(window)
         if m_inst:
             try:
                 instilled = float(int(m_inst.group("num")))
             except Exception:
                 instilled = None
+            instilled_span = (start + m_inst.start(), start + m_inst.end())
         m_ret = _BAL_RETURN_RE.search(window)
         if m_ret:
             try:
                 recovered = float(int(m_ret.group("num")))
             except Exception:
                 recovered = None
+            recovered_span = (start + m_ret.start(), start + m_ret.end())
 
         candidates.append(
             {
                 "loc": loc_raw,
                 "instilled": instilled,
                 "recovered": recovered,
+                "instilled_span": instilled_span,
+                "recovered_span": recovered_span,
                 "span": (start, end),
             }
         )
 
     if not candidates:
+        # Even when the note lacks an explicit "BAL ... performed at <location>" line,
+        # attach evidence spans for already-populated volume fields so the UI can
+        # highlight the supporting text (e.g., "instilled 40 cc").
+        try:
+            from modules.common.spans import Span
+
+            evidence = getattr(record, "evidence", None)
+            if not isinstance(evidence, dict):
+                evidence = {}
+
+            instilled_existing = getattr(bal, "volume_instilled_ml", None)
+            if (
+                instilled_existing not in (None, "", 0)
+                and "procedures_performed.bal.volume_instilled_ml" not in evidence
+            ):
+                try:
+                    vol_int = int(float(instilled_existing))
+                except Exception:
+                    vol_int = None
+                if vol_int is not None:
+                    m = re.search(
+                        rf"(?i)\b(?:instilled|infused)\s+{vol_int}\s*(?:cc|ml)\b",
+                        full_text,
+                    ) or re.search(
+                        rf"(?i)\b{vol_int}\s*(?:cc|ml)\b[^.\n]{{0,40}}\b(?:ns\s+)?(?:instilled|infused)\b",
+                        full_text,
+                    )
+                    if m:
+                        evidence.setdefault("procedures_performed.bal.volume_instilled_ml", []).append(
+                            Span(text=m.group(0).strip(), start=m.start(), end=m.end(), confidence=0.9)
+                        )
+
+            recovered_existing = getattr(bal, "volume_recovered_ml", None)
+            if (
+                recovered_existing not in (None, "", 0)
+                and "procedures_performed.bal.volume_recovered_ml" not in evidence
+            ):
+                try:
+                    vol_int = int(float(recovered_existing))
+                except Exception:
+                    vol_int = None
+                if vol_int is not None:
+                    m = re.search(
+                        rf"(?i)\b(?:returned\s+with|suction\s*returned(?:\s+with)?|recovered)\s+{vol_int}\s*(?:cc|ml)\b",
+                        full_text,
+                    ) or re.search(
+                        rf"(?i)\b{vol_int}\s*(?:cc|ml)\b\s*(?:return(?:ed)?|recovered)\b",
+                        full_text,
+                    )
+                    if m:
+                        evidence.setdefault("procedures_performed.bal.volume_recovered_ml", []).append(
+                            Span(text=m.group(0).strip(), start=m.start(), end=m.end(), confidence=0.9)
+                        )
+
+            if evidence:
+                record.evidence = evidence
+        except Exception:
+            pass
+
         return warnings
 
     # Allow multi-site BAL when volumes are consistent (common templated notes):
@@ -4114,24 +4589,92 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
             setattr(bal, "volume_recovered_ml", recovered_val)
             changed = True
 
-    if not changed:
-        return warnings
-
     try:
         from modules.common.spans import Span
 
         evidence = getattr(record, "evidence", None)
         if not isinstance(evidence, dict):
             evidence = {}
+
         for cand in candidates:
             start, end = cand.get("span") or (None, None)
             if isinstance(start, int) and isinstance(end, int) and end > start:
                 evidence.setdefault("procedures_performed.bal.location", []).append(
                     Span(text=full_text[start:end].strip(), start=start, end=end, confidence=0.9)
                 )
+
+        instilled_key = "procedures_performed.bal.volume_instilled_ml"
+        if instilled_key not in evidence:
+            for cand in candidates:
+                span = cand.get("instilled_span")
+                if not (isinstance(span, tuple) and len(span) == 2):
+                    continue
+                start, end = span
+                if isinstance(start, int) and isinstance(end, int) and end > start:
+                    evidence.setdefault(instilled_key, []).append(
+                        Span(text=full_text[start:end].strip(), start=start, end=end, confidence=0.9)
+                    )
+                    break
+
+        recovered_key = "procedures_performed.bal.volume_recovered_ml"
+        if recovered_key not in evidence:
+            for cand in candidates:
+                span = cand.get("recovered_span")
+                if not (isinstance(span, tuple) and len(span) == 2):
+                    continue
+                start, end = span
+                if isinstance(start, int) and isinstance(end, int) and end > start:
+                    evidence.setdefault(recovered_key, []).append(
+                        Span(text=full_text[start:end].strip(), start=start, end=end, confidence=0.9)
+                    )
+                    break
+
+        # Fallback: when we have numeric values but no per-candidate volume span,
+        # search the full text for a matching "instilled/returned" phrase.
+        instilled_existing = getattr(bal, "volume_instilled_ml", None)
+        if instilled_existing not in (None, "", 0) and instilled_key not in evidence:
+            try:
+                vol_int = int(float(instilled_existing))
+            except Exception:
+                vol_int = None
+            if vol_int is not None:
+                m = re.search(
+                    rf"(?i)\b(?:instilled|infused)\s+{vol_int}\s*(?:cc|ml)\b",
+                    full_text,
+                ) or re.search(
+                    rf"(?i)\b{vol_int}\s*(?:cc|ml)\b[^.\n]{{0,40}}\b(?:ns\s+)?(?:instilled|infused)\b",
+                    full_text,
+                )
+                if m:
+                    evidence.setdefault(instilled_key, []).append(
+                        Span(text=m.group(0).strip(), start=m.start(), end=m.end(), confidence=0.9)
+                    )
+
+        recovered_existing = getattr(bal, "volume_recovered_ml", None)
+        if recovered_existing not in (None, "", 0) and recovered_key not in evidence:
+            try:
+                vol_int = int(float(recovered_existing))
+            except Exception:
+                vol_int = None
+            if vol_int is not None:
+                m = re.search(
+                    rf"(?i)\b(?:returned\s+with|suction\s*returned(?:\s+with)?|recovered)\s+{vol_int}\s*(?:cc|ml)\b",
+                    full_text,
+                ) or re.search(
+                    rf"(?i)\b{vol_int}\s*(?:cc|ml)\b\s*(?:return(?:ed)?|recovered)\b",
+                    full_text,
+                )
+                if m:
+                    evidence.setdefault(recovered_key, []).append(
+                        Span(text=m.group(0).strip(), start=m.start(), end=m.end(), confidence=0.9)
+                    )
+
         record.evidence = evidence
     except Exception:
         pass
+
+    if not changed:
+        return warnings
 
     warnings.append("AUTO_BAL_DETAIL: set BAL location/volumes from explicit 'performed at' statement")
     return warnings

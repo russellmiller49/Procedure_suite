@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 NodeActionType = Literal[
     "inspected_only",  # Visual/Ultrasound only (NO needle)
@@ -39,8 +39,24 @@ class NodeInteraction(BaseModel):
     action: NodeActionType
     outcome: NodeOutcomeType | None = None
     passes: int | None = None
+    pass_count: int | None = Field(
+        default=None,
+        description="Alias for passes (kept for backward compatibility with older field naming).",
+    )
     elastography_pattern: str | None = None
+    rose_result: str | None = Field(
+        default=None,
+        description="ROSE / onsite pathology result (free text or normalized category).",
+    )
     evidence_quote: str
+
+    @model_validator(mode="after")
+    def _sync_pass_fields(self) -> "NodeInteraction":
+        if self.passes is None and self.pass_count is not None:
+            object.__setattr__(self, "passes", self.pass_count)
+        elif self.pass_count is None and self.passes is not None:
+            object.__setattr__(self, "pass_count", self.passes)
+        return self
 
 
 __all__ = ["NodeActionType", "NodeOutcomeType", "NodeInteraction"]

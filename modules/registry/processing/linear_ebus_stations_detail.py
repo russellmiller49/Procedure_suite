@@ -23,6 +23,9 @@ _EBUS_HINT_RE = re.compile(r"(?i)\b(?:ebus|endobronchial\s+ultrasound|ebus-tbna)
 _STATION_HEADER_RE = re.compile(
     r"(?is)\bStation\s+(?P<station>[0-9]{1,2}[LR]?(?:Rs|Ri|Ls|Li)?)\b"
 )
+_NUMBERED_STATION_HEADER_RE = re.compile(
+    r"(?im)^\s*\d{1,2}\s*[.)]\s*(?:station\s*)?(?P<station>[0-9]{1,2}[LR]?(?:Rs|Ri|Ls|Li)?)\b"
+)
 
 _GLOBAL_NEEDLE_GAUGE_RE = re.compile(r"(?i)\b(19|21|22|25)\s*[- ]?(?:g|gauge)\b")
 
@@ -149,8 +152,9 @@ def _apply_section_to_entry(
     section: str,
     *,
     global_gauge: int | None,
+    default_sampled: bool | None = None,
 ) -> None:
-    sampled: bool | None = None
+    sampled: bool | None = default_sampled
     if _SAMPLED_FALSE_RE.search(section):
         sampled = False
     elif _SAMPLED_TRUE_RE.search(section):
@@ -316,6 +320,34 @@ def extract_linear_ebus_stations_detail(note_text: str) -> list[dict[str, Any]]:
             order.append(station)
 
         _apply_section_to_entry(entry, section, global_gauge=global_gauge)
+
+    # Numbered-list station formats (common in templated "Sites Sampled" sections), e.g.:
+    #   1. 11Rs ... 4 passes ... ROSE: ...
+    #   2) 7 (subcarinal) ... 3 passes ...
+    numbered_matches = list(_NUMBERED_STATION_HEADER_RE.finditer(text))
+    for idx, match in enumerate(numbered_matches):
+        start = match.start()
+        end = numbered_matches[idx + 1].start() if idx + 1 < len(numbered_matches) else len(text)
+        section = text[start:end].strip()
+        if section:
+            stop_match = _NON_STATION_STOP_RE.search(section)
+            if stop_match:
+                section = section[: stop_match.start()].strip()
+        if not section:
+            continue
+
+        station = _normalize_station_token(match.group("station") or "")
+        if not station:
+            continue
+
+        entry = by_station.get(station)
+        if entry is None:
+            entry = {"station": station}
+            by_station[station] = entry
+            order.append(station)
+
+        # In numbered station lists, assume sampling unless an explicit negation exists.
+        _apply_section_to_entry(entry, section, global_gauge=global_gauge, default_sampled=True)
 
     # Non-station targets (masses/lesions/nodules) are often documented in the same
     # templated section as stations. Capture them as additional entries so CPT

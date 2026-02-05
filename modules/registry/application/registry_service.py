@@ -1019,6 +1019,18 @@ class RegistryService:
                             evidence = {}
                             record_data["evidence"] = evidence
 
+                        # Merge deterministic extractor evidence spans (attribute-level highlights).
+                        seed_evidence = seed.get("evidence") if isinstance(seed, dict) else None
+                        if isinstance(seed_evidence, dict):
+                            for key, spans in seed_evidence.items():
+                                if not isinstance(key, str) or not key:
+                                    continue
+                                if not isinstance(spans, list) or not spans:
+                                    continue
+                                for span in spans:
+                                    if isinstance(span, Span):
+                                        evidence.setdefault(key, []).append(span)
+
                         uplifted: list[str] = []
                         proc_modified = False
                         pleural_modified = False
@@ -2407,6 +2419,8 @@ class RegistryService:
             enrich_eus_b_sampling_details,
             enrich_linear_ebus_needle_gauge,
             enrich_medical_thoracoscopy_biopsies_taken,
+            enrich_outcomes_complication_details,
+            enrich_procedure_success_status,
             populate_ebus_node_events_fallback,
             reconcile_ebus_sampling_from_narrative,
             reconcile_ebus_sampling_from_specimen_log,
@@ -2446,6 +2460,12 @@ class RegistryService:
         bal_detail_warnings = enrich_bal_from_procedure_detail(record, masked_note_text)
         if bal_detail_warnings:
             extraction_warnings.extend(bal_detail_warnings)
+        outcomes_status_warnings = enrich_procedure_success_status(record, masked_note_text)
+        if outcomes_status_warnings:
+            extraction_warnings.extend(outcomes_status_warnings)
+        complication_detail_warnings = enrich_outcomes_complication_details(record, masked_note_text)
+        if complication_detail_warnings:
+            extraction_warnings.extend(complication_detail_warnings)
 
         guardrail_outcome = self.clinical_guardrails.apply_record_guardrails(
             masked_note_text, record

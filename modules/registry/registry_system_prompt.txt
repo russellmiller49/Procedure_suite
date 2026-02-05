@@ -18,6 +18,12 @@ You must distinguish between **Sampling** (Needle Aspiration) and **Inspection**
 - **INSPECTED ONLY:** If a node is described as "sized", "viewed", "sonographically normal", or "benign characteristics" AND no needle pass is recorded, you must classify it as **INSPECTED**, not sampled.
 - **Negative Logic:** If the text says "Station 4R was viewed but not biopsied," you must explicitly EXCLUDE 4R from the `stations_sampled` list.
 
+### ✅ PROCEDURE SUCCESS & OUTCOMES (Navigation / Targeting)
+Analyze the **FINDINGS** and **IMPRESSION** sections for language describing whether the intended procedure/targeting was successful.
+- If the note contains phrases like **"suboptimal"**, **"unsuccessful"**, **"unable to reach"**, **"failed to localize"**, or **"could not confirm"**, set `outcomes.procedure_success_status` accordingly (Partial success / Failed).
+- If the note states the procedure was **aborted/terminated**, set `outcomes.procedure_success_status="Aborted"`.
+- When you set a non-success status, copy a **verbatim quote** supporting that status into `outcomes.aborted_reason` (do not paraphrase).
+
 ### ⚠️ COMMON TRAPS & CORRECTIONS
 - **Tracheostomy:** Do not stop reading after the Bronchoscopy section. Scan the entire note for "Percutaneous Tracheostomy", "PEG tube", or "Line Placement".
 - **BAL vs. Wash:** "Bronchial washing" is NOT "Bronchoalveolar Lavage (BAL)". Use the exact terminology found in the note.

@@ -19,6 +19,7 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
+from modules.common.spans import Span
 from modules.registry.normalization import (
     normalize_gender,
     normalize_sedation_type,
@@ -26,6 +27,20 @@ from modules.registry.normalization import (
     normalize_asa_class,
     normalize_bleeding_severity,
 )
+
+
+# =============================================================================
+# Attribute Regex (for evidence spans)
+# =============================================================================
+
+# Needle gauge patterns (e.g., "19G", "19-gauge", "19 gauge")
+NEEDLE_GAUGE_RE = re.compile(r"(?i)\b(19|21|22|25)\s*-?\s*g(?:auge)?\b")
+
+# BAL volume patterns (e.g., "instilled 40 cc", "instilled 100ml")
+BAL_VOLUME_RE = re.compile(r"(?i)\binstill(?:ed)?\s*(\d{1,4})\s*(?:ml|cc)\b")
+
+# Device size patterns (e.g., "14 x 40 mm", "14x40mm", "1.7 x 2.4 cm")
+DEVICE_SIZE_RE = re.compile(r"(?i)\b(\d+(?:\.\d+)?\s*x\s*\d+(?:\.\d+)?\s*(?:mm|cm)?)\b")
 
 
 def extract_demographics(note_text: str) -> Dict[str, Any]:
@@ -1446,7 +1461,8 @@ def extract_airway_dilation(note_text: str) -> Dict[str, Any]:
         return {}
 
     for pattern in AIRWAY_DILATION_PATTERNS:
-        if not re.search(pattern, text_lower, re.IGNORECASE):
+        match = re.search(pattern, text_lower, re.IGNORECASE)
+        if not match:
             continue
         negation_check = r"\b(?:no|not|without|declined|deferred)\b[^.\n]{0,60}" + pattern
         if re.search(negation_check, text_lower, re.IGNORECASE):
@@ -1458,6 +1474,17 @@ def extract_airway_dilation(note_text: str) -> Dict[str, Any]:
                 proc["balloon_diameter_mm"] = float(size_match.group(1))
             except ValueError:
                 pass
+        # Target anatomy heuristic: stent expansion vs stenosis/stricture dilation.
+        try:
+            window_start = max(0, match.start() - 160)
+            window_end = min(len(text_lower), match.end() + 160)
+            window = text_lower[window_start:window_end]
+            if "stent" in window:
+                proc["target_anatomy"] = "Stent expansion"
+            elif re.search(r"(?i)\b(?:stenosis|stricture|lesion)\b", window):
+                proc["target_anatomy"] = "Stenosis"
+        except Exception:
+            pass
         return {"airway_dilation": proc}
 
     return {}
@@ -1538,6 +1565,16 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
     elif has_placement:
         proc["action"] = "Placement"
 
+    action = str(proc.get("action") or "").strip()
+    if action == "Placement":
+        proc["action_type"] = "placement"
+    elif action == "Removal":
+        proc["action_type"] = "removal"
+    elif action == "Revision/Repositioning":
+        proc["action_type"] = "revision"
+    elif action == "Assessment only":
+        proc["action_type"] = "assessment_only"
+
     # Best-effort stent type/brand
     if re.search(r"\by-?\s*stent\b", text_lower):
         proc["stent_type"] = "Y-Stent"
@@ -1548,7 +1585,91 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
         if stent_type and not proc.get("stent_type"):
             proc["stent_type"] = stent_type
 
+    size_match = re.search(
+        r"(?i)\b(?P<diam>\d+(?:\.\d+)?)\s*(?:x|by)\s*(?P<len>\d+(?:\.\d+)?)\s*(?P<unit>mm|cm)\b",
+        preferred_text or "",
+    )
+    if size_match:
+        raw = size_match.group(0).strip()
+        proc["device_size"] = raw
+        try:
+            diameter = float(size_match.group("diam"))
+            length = float(size_match.group("len"))
+        except (TypeError, ValueError):
+            diameter = None
+            length = None
+        unit = (size_match.group("unit") or "").lower().strip()
+        if diameter is not None and length is not None:
+            if unit == "cm":
+                diameter *= 10.0
+                length *= 10.0
+            if 6 <= diameter <= 25:
+                proc["diameter_mm"] = diameter
+            if 10 <= length <= 100:
+                proc["length_mm"] = length
+
     return {"airway_stent": proc}
+
+
+def extract_balloon_occlusion(note_text: str) -> Dict[str, Any]:
+    """Extract balloon occlusion / endobronchial blocker workflow details."""
+    preferred_text, _used_detail = _preferred_procedure_detail_text(note_text)
+    preferred_text = _strip_cpt_definition_lines(preferred_text)
+    text_lower = (preferred_text or "").lower()
+    if not text_lower.strip():
+        return {}
+
+    if not any(re.search(pattern, text_lower, re.IGNORECASE) for pattern in BALLOON_OCCLUSION_PATTERNS):
+        return {}
+
+    # Negation guard.
+    if re.search(
+        r"(?i)\b(?:no|not|without|declined|deferred)\b[^.\n]{0,80}"
+        r"\b(?:balloon\s+occlusion|serial\s+occlusion|endobronchial\s+blocker|blocker|uniblocker|arndt|ardnt|fogarty)\b",
+        text_lower,
+    ):
+        return {}
+
+    proc: dict[str, Any] = {"performed": True}
+
+    # Device size (Fr) near blocker terms.
+    size_match = re.search(
+        r"(?i)\b(?P<size>\d+(?:\.\d+)?)\s*(?:fr|french)\b[^.\n]{0,80}"
+        r"\b(?:endobronchial\s+blocker|blocker|uniblocker|arndt|ardnt|fogarty)\b"
+        r"|\b(?:endobronchial\s+blocker|blocker|uniblocker|arndt|ardnt|fogarty)\b[^.\n]{0,80}"
+        r"\b(?P<size2>\d+(?:\.\d+)?)\s*(?:fr|french)\b",
+        preferred_text or "",
+    )
+    if size_match:
+        raw = (size_match.group(0) or "").strip()
+        if raw:
+            proc["device_size"] = raw[:120]
+
+    # Occlusion location (best-effort, verbatim).
+    loc_match = re.search(
+        r"(?i)\b(?:balloon\s+)?occlu(?:sion|ded|ding)\b[^.\n]{0,80}\b(?:of|in|at)\b\s+(?P<loc>[^.;\n]{3,120})",
+        preferred_text or "",
+    ) or re.search(
+        r"(?i)\b(?:endobronchial\s+blocker|blocker|uniblocker|arndt|ardnt|fogarty)\b[^.\n]{0,120}"
+        r"\b(?:positioned|placed|advanced)\b[^.\n]{0,120}\b(?:in|at)\b\s+(?P<loc>[^.;\n]{3,120})",
+        preferred_text or "",
+    )
+    if loc_match:
+        loc_raw = (loc_match.group("loc") or "").strip().strip(" ,;:-")
+        if loc_raw:
+            proc["occlusion_location"] = loc_raw[:180]
+
+    # Air leak result near occlusion workflows (best-effort, verbatim).
+    leak_match = re.search(
+        r"(?i)\b(?:air\s*)?leak\b[^.\n]{0,80}\b(?:resolved|cessation|ceased|stopped|persist(?:ed|ent)|continued|ongoing|present)\b[^.\n]{0,80}",
+        preferred_text or "",
+    )
+    if leak_match:
+        val = (leak_match.group(0) or "").strip()
+        if val:
+            proc["air_leak_result"] = val[:220]
+
+    return {"balloon_occlusion": proc}
 
 
 def extract_blvr(note_text: str) -> Dict[str, Any]:
@@ -2899,6 +3020,10 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if stent_data:
         seed_data.setdefault("procedures_performed", {}).update(stent_data)
 
+    balloon_occ_data = extract_balloon_occlusion(note_text)
+    if balloon_occ_data:
+        seed_data.setdefault("procedures_performed", {}).update(balloon_occ_data)
+
     blvr_data = extract_blvr(note_text)
     if blvr_data:
         seed_data.setdefault("procedures_performed", {}).update(blvr_data)
@@ -3003,6 +3128,135 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
     if pleurodesis_data:
         seed_data.setdefault("pleural_procedures", {}).update(pleurodesis_data)
 
+    # ---------------------------------------------------------------------
+    # Evidence spans for extracted attribute values (UI highlighting)
+    # ---------------------------------------------------------------------
+    evidence: dict[str, list[Span]] = {}
+
+    def _add_first_match(field_path: str, pattern: re.Pattern[str], text: str) -> None:
+        if not field_path:
+            return
+        if field_path in evidence:
+            return
+        match = pattern.search(text or "")
+        if not match:
+            return
+        evidence.setdefault(field_path, []).append(
+            Span(
+                text=match.group(0).strip(),
+                start=int(match.start()),
+                end=int(match.end()),
+                confidence=0.9,
+            )
+        )
+
+    def _add_bal_volume_span(volume: object) -> None:
+        try:
+            vol_int = int(float(volume))  # handles int/float/str numerics
+        except Exception:
+            return
+        instilled_re = re.compile(rf"(?i)\binstill(?:ed)?\s*{vol_int}\s*(?:ml|cc)\b")
+        _add_first_match(
+            "procedures_performed.bal.volume_instilled_ml",
+            instilled_re,
+            note_text,
+        )
+
+    def _add_stent_device_size_span(device_size: str) -> None:
+        normalized_target = re.sub(r"\s+", "", (device_size or "")).lower()
+        if not normalized_target:
+            return
+
+        best: re.Match[str] | None = None
+        for match in DEVICE_SIZE_RE.finditer(note_text or ""):
+            normalized = re.sub(r"\s+", "", (match.group(1) or "")).lower()
+            if normalized == normalized_target:
+                best = match
+                break
+            if best is None:
+                best = match
+        if best is None:
+            return
+
+        evidence.setdefault("procedures_performed.airway_stent.device_size", []).append(
+            Span(
+                text=best.group(0).strip(),
+                start=int(best.start()),
+                end=int(best.end()),
+                confidence=0.9,
+            )
+        )
+
+    def _add_airway_dilation_target_span(target: str) -> None:
+        if target == "Stent expansion":
+            pat = re.compile(r"(?i)\b(?:dilat\w*|balloon)\b[^.\n]{0,140}\bstent\b|\bstent\b[^.\n]{0,140}\b(?:dilat\w*|balloon)\b")
+        elif target == "Stenosis":
+            pat = re.compile(
+                r"(?i)\b(?:dilat\w*|balloon)\b[^.\n]{0,140}\b(?:stenosis|stricture|lesion)\b"
+                r"|\b(?:stenosis|stricture|lesion)\b[^.\n]{0,140}\b(?:dilat\w*|balloon)\b"
+            )
+        else:
+            return
+        _add_first_match("procedures_performed.airway_dilation.target_anatomy", pat, note_text)
+
+    def _add_balloon_occlusion_literal(field_path: str, literal: object) -> None:
+        if not field_path or field_path in evidence:
+            return
+        if not isinstance(literal, str) or not literal.strip():
+            return
+        match = re.search(re.escape(literal.strip()), note_text or "", re.IGNORECASE)
+        if not match:
+            return
+        evidence.setdefault(field_path, []).append(
+            Span(
+                text=match.group(0).strip(),
+                start=int(match.start()),
+                end=int(match.end()),
+                confidence=0.9,
+            )
+        )
+
+    try:
+        procs = seed_data.get("procedures_performed")
+        if isinstance(procs, dict):
+            bal = procs.get("bal")
+            if isinstance(bal, dict) and bal.get("performed") is True:
+                if bal.get("volume_instilled_ml") is not None:
+                    _add_bal_volume_span(bal.get("volume_instilled_ml"))
+
+            stent = procs.get("airway_stent")
+            if isinstance(stent, dict) and stent.get("performed") is True:
+                ds = stent.get("device_size")
+                if isinstance(ds, str) and ds.strip():
+                    _add_stent_device_size_span(ds)
+
+            dilation = procs.get("airway_dilation")
+            if isinstance(dilation, dict) and dilation.get("performed") is True:
+                target = dilation.get("target_anatomy")
+                if isinstance(target, str) and target.strip():
+                    _add_airway_dilation_target_span(target)
+
+            balloon_occ = procs.get("balloon_occlusion")
+            if isinstance(balloon_occ, dict) and balloon_occ.get("performed") is True:
+                _add_balloon_occlusion_literal(
+                    "procedures_performed.balloon_occlusion.occlusion_location",
+                    balloon_occ.get("occlusion_location"),
+                )
+                _add_balloon_occlusion_literal(
+                    "procedures_performed.balloon_occlusion.air_leak_result",
+                    balloon_occ.get("air_leak_result"),
+                )
+                _add_balloon_occlusion_literal(
+                    "procedures_performed.balloon_occlusion.device_size",
+                    balloon_occ.get("device_size"),
+                )
+    except Exception:
+        # Evidence is best-effort; do not fail deterministic extraction.
+        pass
+
+    if evidence:
+        seed_data["evidence"] = evidence
+
     return seed_data
 
 
@@ -3024,6 +3278,7 @@ __all__ = [
     "extract_therapeutic_aspiration",
     "extract_airway_dilation",
     "extract_airway_stent",
+    "extract_balloon_occlusion",
     "extract_blvr",
     "extract_foreign_body_removal",
     "extract_endobronchial_biopsy",
