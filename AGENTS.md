@@ -67,6 +67,19 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 - **KB version gating:** loaders now enforce KB filename semantic version ↔ internal `"version"` (override: `PSUITE_KNOWLEDGE_ALLOW_VERSION_MISMATCH=1`).
 - **Single source of truth:** runtime code metadata/RVUs come from `master_code_index`, and synonym phrase lists are centralized in KB `synonyms`.
 
+## Recent Updates (2026-02-05)
+
+- **Hierarchy of truth (conflict resolution):**
+  - **Narrative supersedes header codes**: do not treat `PROCEDURE:` CPT lists as “performed” when `PROCEDURE IN DETAIL:` contradicts (e.g., header says “trach change” but narrative describes ETT intubation → do not extract tracheostomy creation).
+  - **Narrative supersedes summary**: complications mentioned in narrative override templated “COMPLICATIONS: None” (see `modules/registry/postprocess/complications_reconcile.py`).
+  - **Evidence supersedes checkbox heuristics**: unchecked template items must *not* force a procedure to `performed=false` when explicit active-voice narrative evidence supports `true` (see `modules/registry/postprocess/template_checkbox_negation.py`).
+- **Anti-hallucination: tools ≠ intent**: mentions of tools (snare/forceps/basket/cryoprobe) do not imply debulking/ablation; require action-on-tissue language (tightened CAO modality parsing in `modules/registry/processing/cao_interventions_detail.py`).
+- **Puncture ≠ stoma**: tracheal puncture (CPT `31612`) is *not* percutaneous tracheostomy creation; extraction and CPT derivation distinguish puncture-only from trach creation.
+- **Intraprocedural adjustment bundling**:
+  - BLVR valve remove/replace in the same session is an adjustment, not foreign body removal; do not derive `31635` for valve exchanges.
+  - BLVR now tracks segment tokens (e.g., `RB10`) and counts **final deployed valves** only (removed/replaced devices are not counted).
+- **Distinct targets for unbundling**: suppress `31629` when EBUS-TBNA is present unless `peripheral_tbna.targets_sampled` clearly indicates a non-station, anatomically distinct target.
+
 ## Extraction‑First Pipeline Notes
 
 Key path: `modules/registry/application/registry_service.py:_extract_fields_extraction_first()`
@@ -80,6 +93,9 @@ Key path: `modules/registry/application/registry_service.py:_extract_fields_extr
   - **Stents**: inspection-only phrases (e.g., “stent … in good position”) should *not* trigger stent placement (`31636`).
   - **Chest tubes**: discontinue/removal phrases (e.g., “D/c chest tube”) should *not* trigger insertion (`32551`).
   - **TBNA**: EBUS-TBNA should *not* populate `tbna_conventional`. Use `peripheral_tbna` for lung/lesion TBNA; when peripheral TBNA co-occurs with EBUS (`31652/31653`), keep `31629` with Modifier `59` (distinct site).
+  - **Tools ≠ intent**: do not infer `31641`/`31640` from tools alone (snare/cryoprobe/forceps); require therapeutic intent + tissue action language.
+  - **Puncture ≠ stoma**: tracheal puncture language should not set percutaneous trach performed.
+  - **Header vs narrative**: procedure header CPT/menu content is not source-of-truth when contradicted by the narrative.
   - **Radial EBUS**: explicit “radial probe …” language should set `radial_ebus.performed` even without concentric/eccentric markers.
   - **Menu masking**: `mask_extraction_noise()` strips CPT/menu blocks (e.g., `IP ... CODE MOD DETAILS`) before extraction to prevent “menu reading” hallucinations.
 - **Omission scan:** `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` emits
