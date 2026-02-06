@@ -24,6 +24,33 @@ class TransbronchialNeedleAspirationPartial(BaseModel):
     tests: List[str] = Field(default_factory=list)
 
 
+class BALPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    lung_segment: str | None = None
+    instilled_volume_cc: int | None = None
+    returned_volume_cc: int | None = None
+    tests: List[str] = Field(default_factory=list)
+
+
+class BronchialBrushingPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    lung_segment: str | None = None
+    samples_collected: int | None = None
+    brush_tool: str | None = None
+    tests: List[str] = Field(default_factory=list)
+
+
+class BronchialWashingPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    airway_segment: str | None = None
+    instilled_volume_ml: int | None = None
+    returned_volume_ml: int | None = None
+    tests: List[str] = Field(default_factory=list)
+
+
 class TransbronchialCryobiopsyPartial(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
@@ -38,4 +65,3 @@ class TransbronchialCryobiopsyPartial(BaseModel):
     tests: List[str] = Field(default_factory=list)
     radial_vessel_check: bool | None = None
     notes: str | None = None
-

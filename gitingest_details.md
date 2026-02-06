@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-05T18:30:06-08:00`
-Git: `updates_2_5_26` @ `ae47e46`
+Generated: `2026-02-06T13:43:52-08:00`
+Git: `updates_2_5_26` @ `628741b`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -68,6 +68,7 @@ Git: `updates_2_5_26` @ `ae47e46`
      7110  scripts/merge_registry_human_labels.py
      7169  scripts/create_slim_branch.py
      7302  scripts/generate_teacher_logits.py
+     7497  scripts/bootstrap_granular_attributes.py
      7609  scripts/regenerate_granular_ner_stats.py
      7735  scripts/code_validation.py
      7803  scripts/dedupe_granular_ner.py
@@ -83,6 +84,8 @@ Git: `updates_2_5_26` @ `ae47e46`
      9603  scripts/align_synthetic_names.py
      9739  scripts/registry_pipeline_smoke.py
     10358  scripts/diamond_loop_cloud_sync.py
+    10661  scripts/merge_granular_attribute_spans.py
+    11135  scripts/generate_cpt_keywords.py
     11238  scripts/evaluate_coder.py
     11262  scripts/scrub_golden_jsons.py
     11519  scripts/prodigy_export_corrections.py
@@ -246,6 +249,7 @@ Git: `updates_2_5_26` @ `ae47e46`
       999  tests/phi/test_fernet_encryption_adapter.py
      1072  modules/coder/__init__.py
      1076  tests/registry/test_clinical_guardrails_radial_linear.py
+     1076  tests/scripts/test_train_registry_ner_allowlist.py
      1107  tests/registry/test_clinical_guardrails_tbna_peripheral_context.py
      1123  modules/coder/types.py
      1126  tests/registry/test_clinical_guardrails_endobronchial_biopsy.py
@@ -261,7 +265,6 @@ Git: `updates_2_5_26` @ `ae47e46`
      1212  modules/common/exceptions.py
      1218  modules/registry/slots/pleura.py
      1224  tests/coding/test_sectionizer.py
-     1229  modules/api/schemas/__init__.py
      1270  tests/coding/test_peripheral_rules.py
      1279  modules/phi/adapters/scrubber_stub.py
      1288  tests/registry/test_template_checkbox_negation.py
@@ -274,6 +277,7 @@ Git: `updates_2_5_26` @ `ae47e46`
      1335  tests/coder/test_llm_provider_openai_compat.py
      1339  modules/common/knowledge_cli.py
      1355  modules/phi/adapters/fernet_encryption.py
+     1365  modules/reporting/partial_schemas.py
      1376  tests/api/conftest.py
      1380  modules/api/readiness.py
      1382  tests/phi/test_presidio_nlp_backend_smoke.py
@@ -286,10 +290,9 @@ Git: `updates_2_5_26` @ `ae47e46`
      1450  tests/registry/test_airway_stent_vascular_plug_revision.py
      1451  tests/coding/test_ebus_rules.py
      1461  modules/phi/db.py
-     1468  tests/registry/test_ebus_site_block_reconcile.py
      1470  modules/domain/reasoning/models.py
      1476  modules/registry/schema_granular.py
-     1477  tests/registry/test_ner_to_registry_mapper.py
+     1479  modules/api/schemas/__init__.py
      1493  tests/coding/test_hierarchy_normalization.py
      1511  tests/registry/test_table_row_masking_regressions.py
      1542  modules/domain/knowledge_base/repository.py
@@ -304,6 +307,7 @@ Git: `updates_2_5_26` @ `ae47e46`
      1676  tests/scripts/test_prodigy_export_registry.py
      1687  tests/scripts/test_export_patient_note_texts.py
      1690  tests/registry/test_clinical_guardrails_stent_inspection.py
+     1716  tests/scripts/test_bootstrap_granular_attributes.py
      1717  tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
      1731  modules/domain/text/negation.py
      1731  tests/registry/test_note_279_regression.py
@@ -319,7 +323,6 @@ Git: `updates_2_5_26` @ `ae47e46`
      1847  modules/coder/parallel_pathway/reconciler.py
      1873  modules/registry_store/dependencies.py
      1875  tests/coder/test_parallel_pathway_orchestrator_path_b.py
-     1876  modules/reporting/__init__.py
      1877  tests/integration/api/test_health_endpoint.py
      1878  proc_schemas/shared/ebus_events.py
      1880  tests/registry/test_new_extractors.py
@@ -334,6 +337,7 @@ Git: `updates_2_5_26` @ `ae47e46`
      2083  modules/registry_store/models.py
      2093  modules/registry/slots/dilation.py
      2107  modules/ml_coder/training_losses.py
+     2120  tests/scripts/test_merge_granular_attribute_spans.py
      2136  modules/coder/peripheral_rules.py
      2140  modules/registry/label_fields.py
      2143  modules/reporting/metadata.py
@@ -341,11 +345,13 @@ Git: `updates_2_5_26` @ `ae47e46`
      2167  tests/registry/test_ebus_postprocess_enrichment.py
      2174  tests/test_ip_registry_schema_guardrails.py
      2196  modules/registry/self_correction/__init__.py
+     2213  modules/reporting/__init__.py
      2222  modules/api/routes/unified_process.py
      2225  tests/registry/test_sedation_blvr.py
      2250  modules/ml_coder/self_correction.py
      2253  tests/unit/test_phi_distillation.py
      2275  tests/registry/test_pathology_extraction.py
+     2304  tests/reporter/test_questions_builder.py
      2320  modules/registry/slots/sedation.py
      2324  tests/registry/test_schema_refactor_smoke.py
      2346  tests/conftest.py
@@ -359,21 +365,20 @@ Git: `updates_2_5_26` @ `ae47e46`
      2487  modules/proc_ml_advisor/__init__.py
      2488  modules/llm/client.py
      2582  modules/reporting/inference.py
-     2601  tests/registry/test_note_281_elastography_regression.py
      2607  tests/registry/test_extraction_first_flow.py
      2612  modules/phi/safety/protected_terms.py
+     2656  tests/registry/test_ebus_site_block_reconcile.py
      2664  modules/registry/slots/ebus.py
-     2682  tests/registry/test_outcomes_success_status.py
      2713  modules/common/text_io.py
      2755  tests/registry/test_header_scan.py
      2768  modules/domain/coding_rules/mer.py
      2788  modules/domain/coding_rules/ncci.py
      2808  modules/domain/rvu/calculator.py
-     2821  tests/registry/test_ner_procedure_extractor.py
      2825  tests/coding/test_phi_gating.py
      2835  modules/ml_coder/thresholds.py
      2844  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2853  modules/api/routes/phi_demo_cases.py
+     2861  tests/registry/test_keyword_guard_generated_keywords.py
      2879  tests/test_clean_ip_registry.py
      2914  modules/reporter/cli.py
      2927  modules/common/rvu_calc.py
@@ -398,12 +403,12 @@ Git: `updates_2_5_26` @ `ae47e46`
      3267  tests/registry/test_note_300_multilobe_navigation_regression.py
      3277  tests/registry/test_focusing_audit_guardrail.py
      3307  modules/registry/legacy/adapter.py
+     3354  tests/registry/test_outcomes_success_status.py
      3391  modules/coder/peripheral_extractor.py
      3399  modules/infra/settings.py
      3471  tests/registry/test_v3_note_281_narrative_first_and_anchors.py
      3513  tests/unit/test_sanitize_dataset.py
      3622  modules/coder/posthoc.py
-     3624  tests/registry/test_parallel_ner_uplift_evidence.py
      3627  tests/scripts/test_prodigy_prepare_registry.py
      3644  proc_schemas/coding.py
      3656  proc_schemas/registry/ip_v2.py
@@ -425,9 +430,11 @@ Git: `updates_2_5_26` @ `ae47e46`
      3970  modules/agents/contracts.py
      3996  modules/registry/tags.py
      4078  modules/registry/self_correction/prompt_improvement.py
+     4091  tests/registry/test_note_281_elastography_regression.py
      4202  tests/unit/test_phi_platinum_filters.py
      4218  tests/registry/test_disease_burden_overrides.py
      4251  modules/registry/slots/stent.py
+     4260  tests/registry/test_ner_to_registry_mapper.py
      4293  tests/registry/test_deterministic_extractors_phase6.py
      4339  tests/phi/test_models.py
      4390  modules/registry_cleaning/logging_utils.py
@@ -460,14 +467,13 @@ Git: `updates_2_5_26` @ `ae47e46`
      5334  modules/api/phi_demo_store.py
      5384  tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py
      5394  modules/api/gemini_client.py
-     5481  modules/registry/self_correction/apply.py
      5641  modules/coder/ebus_rules.py
      5653  modules/phi/models.py
      5662  tests/registry/test_cao_interventions_detail.py
      5706  modules/registry/deterministic/anatomy.py
-     5773  modules/api/schemas/base.py
-     6019  modules/ner/entity_types.py
-     6042  tests/api/test_fastapi.py
+     5802  modules/reporting/json_patch.py
+     5975  tests/registry/test_ner_procedure_extractor.py
+     6000  modules/ner/entity_types.py
      6131  tests/api/test_phi_redaction.py
      6150  modules/coder/parallel_pathway/confidence_combiner.py
      6184  tests/integration/test_phi_workflow_end_to_end.py
@@ -475,7 +481,6 @@ Git: `updates_2_5_26` @ `ae47e46`
      6208  modules/registry/postprocess/complications_reconcile.py
      6251  tests/unit/test_phi_distillation_refinery.py
      6252  modules/registry_cleaning/consistency_utils.py
-     6276  tests/registry/test_self_correction_validation.py
      6333  tests/registry/test_audit_compare_report.py
      6398  modules/registry/processing/navigation_fiducials.py
      6438  modules/domain/procedure_store/repository.py
@@ -489,24 +494,25 @@ Git: `updates_2_5_26` @ `ae47e46`
      6932  modules/registry/slots/therapeutics.py
      6955  tests/integration/api/test_startup_warmup.py
      7025  modules/reporting/ip_addons.py
+     7040  modules/registry/self_correction/apply.py
      7110  modules/coder/application/candidate_expansion.py
      7176  modules/agents/run_pipeline.py
-     7218  tests/api/test_phi_redactor_ui.py
      7307  tests/integration/coder/test_coding_service.py
      7318  tests/api/test_registry_runs.py
      7383  tests/api/test_phi_endpoints.py
-     7450  tests/api/test_unified_process.py
-     7505  modules/registry/ner_mapping/entity_to_registry.py
+     7458  tests/registry/test_self_correction_validation.py
      7526  modules/domain/coding_rules/evidence_context.py
      7599  modules/registry/model_runtime.py
+     7630  modules/api/schemas/base.py
      7672  modules/coder/adapters/ml_ranker.py
+     7680  tests/api/test_phi_redactor_ui.py
      7827  tests/registry/test_registry_extraction_ebus.py
      7837  tests/unit/test_no_legacy_imports.py
+     7870  modules/registry/ner_mapping/entity_to_registry.py
      8149  modules/coder/adapters/persistence/inmemory_procedure_store.py
      8182  tests/ml_coder/test_registry_predictor.py
      8227  tests/coder/test_rules_engine.py
      8323  tests/registry/test_fixpack_batch2.py
-     8356  modules/api/services/unified_pipeline.py
      8415  modules/registry/inference_pytorch.py
      8427  modules/registry_cleaning/clinical_qc.py
      8556  modules/registry/ml/evaluate.py
@@ -514,7 +520,10 @@ Git: `updates_2_5_26` @ `ae47e46`
      8652  modules/coder/application/procedure_type_detector.py
      8695  tests/coding/test_json_rules_parity.py
      8702  modules/api/coder_adapter.py
+     8995  tests/registry/test_parallel_ner_uplift_evidence.py
      9005  modules/api/routes/metrics.py
+     9173  modules/api/services/unified_pipeline.py
+     9192  tests/api/test_unified_process.py
      9292  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9393  modules/registry/processing/focus.py
      9466  tests/ml_coder/test_training_pipeline.py
@@ -522,8 +531,8 @@ Git: `updates_2_5_26` @ `ae47e46`
      9490  modules/ml_coder/training.py
      9738  modules/phi/service.py
      9850  tests/unit/test_extraction_adapters.py
-     9870  modules/reporting/validation.py
     10023  tests/registry/test_registry_guardrails.py
+    10025  modules/reporting/validation.py
     10067  tests/unit/test_procedure_type_detector.py
     10070  modules/ml_coder/predictor.py
     10466  modules/api/routes_registry.py
@@ -536,23 +545,22 @@ Git: `updates_2_5_26` @ `ae47e46`
     11392  modules/common/knowledge.py
     11467  modules/api/routes/phi.py
     11691  modules/registry/legacy/adapters/pleural.py
-    11728  modules/registry/self_correction/validation.py
     11799  modules/registry/application/pathology_extraction.py
-    11878  modules/registry/ner_mapping/procedure_extractor.py
     12019  proc_schemas/registry/ip_v3.py
     12339  modules/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
+    12446  modules/registry/self_correction/validation.py
     12517  modules/registry/extractors/v3_extractor.py
     12533  modules/domain/knowledge_base/validator.py
     12640  tests/ml_coder/test_data_prep.py
     12657  docs/phi_review_system/backend/schemas.py
-    12912  tests/registry/test_self_correction_loop.py
     12997  tests/coder/test_smart_hybrid_policy.py
     13192  tests/unit/test_openai_responses_primary.py
     13335  modules/registry/processing/masking.py
     13453  modules/coder/application/coding_service.py
     13483  modules/coder/domain_rules/__init__.py
     13696  modules/coder/rules.py
+    13818  tests/registry/test_self_correction_loop.py
     13980  tests/ml_advisor/test_router.py
     14014  modules/registry/processing/linear_ebus_stations_detail.py
     14135  tests/integration/persistence/test_supabase_procedure_store.py
@@ -566,21 +574,23 @@ Git: `updates_2_5_26` @ `ae47e46`
     15130  modules/registry/v2_booleans.py
     15243  tests/unit/test_dsl.py
     15267  modules/domain/coding_rules/json_rules_evaluator.py
-    15334  modules/api/routes/registry_runs.py
     15346  tests/registry/test_action_predictor.py
     15436  modules/autocode/ip_kb/canonical_rules.py
     15467  modules/api/services/qa_pipeline.py
     15495  modules/ml_coder/registry_training.py
     15601  tests/reporter/test_ip_addons.py
+    15620  modules/api/routes/registry_runs.py
     15653  tests/registry/test_extraction_quality.py
     15655  modules/coder/reconciliation/pipeline.py
     15727  modules/api/dependencies.py
     15800  modules/ner/inference.py
     15828  modules/registry/ner_mapping/station_extractor.py
     15857  tests/registry/test_normalization.py
+    16003  tests/api/test_fastapi.py
     16032  modules/coder/rules_engine.py
     16250  modules/registry/application/cpt_registry_mapping.py
     16608  tests/integration/api/test_metrics_endpoint.py
+    16609  modules/registry/ner_mapping/procedure_extractor.py
     16911  tests/ml_coder/test_registry_first_data_prep.py
     17010  modules/phi/safety/veto.py
     17103  modules/registry/application/coding_support_builder.py
@@ -608,6 +618,7 @@ Git: `updates_2_5_26` @ `ae47e46`
     21460  modules/coder/adapters/persistence/supabase_procedure_store.py
     21479  tests/coder/test_reconciliation.py
     21518  tests/test_registry_normalization.py
+    21987  modules/reporting/questions.py
     22317  tests/reporter/test_macro_engine_features.py
     22456  modules/registry/legacy/adapters/airway.py
     22569  modules/phi/adapters/presidio_scrubber.py
@@ -638,22 +649,22 @@ Git: `updates_2_5_26` @ `ae47e46`
     36538  modules/coder/dictionary.py
     36877  tests/unit/test_structured_reporter.py
     39279  tests/ml_advisor/test_schemas.py
-    40175  modules/registry/self_correction/keyword_guard.py
     40683  modules/common/llm.py
     41901  modules/proc_ml_advisor/schemas.py
     42878  modules/api/routes/procedure_codes.py
     44127  tests/registry/test_granular_registry_models.py
-    44511  modules/api/fastapi_app.py
+    44174  modules/registry/self_correction/keyword_guard.py
     45173  modules/registry/schema/granular_logic.py
+    51213  modules/api/fastapi_app.py
     53453  modules/extraction/postprocessing/clinical_guardrails.py
     56672  modules/autocode/ip_kb/ip_kb.py
     62051  modules/registry/prompts.py
-    63511  modules/reporting/engine.py
     64722  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
-   111918  modules/registry/engine.py
+    72043  modules/reporting/engine.py
+   112701  modules/registry/engine.py
    126518  modules/registry/deterministic_extractors.py
-   170899  modules/registry/application/registry_service.py
-   174315  modules/registry/postprocess/__init__.py
+   174057  modules/registry/application/registry_service.py
+   179526  modules/registry/postprocess/__init__.py
        94  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       118  tests/fixtures/regression_suite/README.md
       181  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
@@ -696,7 +707,6 @@ Git: `updates_2_5_26` @ `ae47e46`
       512  modules/reporting/templates/addons/transbronchial_cryobiopsy.jinja
       543  modules/reporting/templates/addons/chest_tube_removal.jinja
       565  modules/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
-      580  modules/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
       582  modules/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
       584  modules/reporting/templates/addons/ion_registration_complete.jinja
       586  modules/reporting/templates/addons/tool_in_lesion_confirmation.jinja
@@ -756,10 +766,10 @@ Git: `updates_2_5_26` @ `ae47e46`
      1193  tests/fixtures/ppl_nav_radial_tblb.txt
      1227  modules/api/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
      1227  modules/api/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
-     1232  docs/REPORTER_STYLE_GUIDE.md
      1306  docs/KNOWLEDGE_RELEASE_CHECKLIST.md
      1359  modules/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1432  modules/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
+     1632  docs/REPORTER_STYLE_GUIDE.md
      1764  docs/PHI_IDENTIFIERS.md
      1797  modules/api/static/phi_redactor/allowlist_trie.json
      1817  modules/reporting/templates/addons/post_blvr_management_protocol.jinja
@@ -782,7 +792,6 @@ Git: `updates_2_5_26` @ `ae47e46`
      3088  modules/reporting/templates/stent.jinja
      3089  modules/reporting/templates/thoracentesis.jinja
      3103  modules/reporting/templates/ipc.jinja
-     3227  docs/STRUCTURED_REPORTER.md
      3445  docs/Multi_agent_collaboration/Session Startup Template.md
      3579  docs/REFERENCES.md
      3717  modules/reporting/templates/macros/main.j2
@@ -802,6 +811,7 @@ Git: `updates_2_5_26` @ `ae47e46`
      4745  docs/Multi_agent_collaboration/Architect Priming Script.md
      5429  docs/ml_first_hybrid_policy.md
      5787  docs/REPO_INDEX.md
+     6013  docs/STRUCTURED_REPORTER.md
      6446  docs/Registry_API.md
      6862  modules/reporting/templates/macros/04_blvr_cryo.j2
      7031  docs/Registry_ML_summary.md
@@ -810,11 +820,11 @@ Git: `updates_2_5_26` @ `ae47e46`
      7368  docs/Multi_agent_collaboration/Multi‑Agent Architecture.md
      7469  modules/reporting/templates/macros/06_other_interventions.j2
      8655  modules/reporting/EXTRACTION_RULES.md
-     8821  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
      9413  docs/"Diamond" Improvement Plan 1_18_26.txt
      9688  modules/reporting/templates/macros/01_minor_trach_laryngoscopy.j2
      9941  docs/optimization_12_16_25.md
     10242  docs/DEPLOYMENT.md
+    10762  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
     11041  docs/DEVELOPMENT.md
     11785  modules/reporting/templates/macros/07_clinical_assessment.j2
     12969  modules/reporting/templates/macros/03_navigation_robotic_ebus.j2
@@ -825,6 +835,7 @@ Git: `updates_2_5_26` @ `ae47e46`
     15238  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
     16028  modules/reporting/templates/macros/05_pleural.j2
     16113  docs/AGENTS.md
+    17406  modules/api/static/phi_redactor/reporter_builder.js
     17732  docs/phi_review_system/README.md
     17850  modules/api/static/phi_demo.js
     18104  modules/phi/adapters/redaction-service.js
@@ -838,14 +849,17 @@ Git: `updates_2_5_26` @ `ae47e46`
     50398  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     61485  modules/api/static/phi_redactor/protectedVeto.legacy.js
     63253  modules/api/static/phi_redactor/protectedVeto.js
-    90791  modules/api/static/app.js
     99138  modules/api/static/phi_redactor/redactor.worker.js
     99358  modules/api/static/phi_redactor/redactor.worker.legacy.js
+   102522  modules/api/static/app.js
 ```
 
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  scripts/index_repo.py
+ inline_cap_reached>75  scripts/review_llm_fallback_errors.py
+ inline_cap_reached>75  scripts/quantize_to_onnx.py
  inline_cap_reached>75  scripts/unified_pipeline_batch.py
  inline_cap_reached>75  scripts/verify_registry_human_data.py
  inline_cap_reached>75  scripts/sanitize_dataset.py
@@ -964,19 +978,20 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/registry/slots/disposition.py
  inline_cap_reached>75  modules/common/exceptions.py
  inline_cap_reached>75  modules/registry/slots/pleura.py
- inline_cap_reached>75  modules/api/schemas/__init__.py
  inline_cap_reached>75  modules/phi/adapters/scrubber_stub.py
  inline_cap_reached>75  modules/phi/adapters/audit_logger_db.py
  inline_cap_reached>75  modules/registry/slots/indication.py
  inline_cap_reached>75  modules/common/spans.py
  inline_cap_reached>75  modules/common/knowledge_cli.py
  inline_cap_reached>75  modules/phi/adapters/fernet_encryption.py
+ inline_cap_reached>75  modules/reporting/partial_schemas.py
  inline_cap_reached>75  modules/api/readiness.py
  inline_cap_reached>75  modules/registry/schema.py
  inline_cap_reached>75  modules/registry_store/phi_gate.py
  inline_cap_reached>75  modules/phi/db.py
  inline_cap_reached>75  modules/domain/reasoning/models.py
  inline_cap_reached>75  modules/registry/schema_granular.py
+ inline_cap_reached>75  modules/api/schemas/__init__.py
  inline_cap_reached>75  modules/domain/knowledge_base/repository.py
  inline_cap_reached>75  modules/registry/slots/complications.py
  inline_cap_reached>75  modules/common/rules_engine/ncci.py
@@ -990,7 +1005,6 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/registry/slots/tblb.py
  inline_cap_reached>75  modules/coder/parallel_pathway/reconciler.py
  inline_cap_reached>75  modules/registry_store/dependencies.py
- inline_cap_reached>75  modules/reporting/__init__.py
  inline_cap_reached>75  proc_schemas/shared/ebus_events.py
  inline_cap_reached>75  modules/coder/constants.py
  inline_cap_reached>75  modules/coder/phi_gating.py
@@ -1006,6 +1020,7 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/reporting/metadata.py
  inline_cap_reached>75  modules/registry/legacy/adapters/base.py
  inline_cap_reached>75  modules/registry/self_correction/__init__.py
+ inline_cap_reached>75  modules/reporting/__init__.py
  inline_cap_reached>75  modules/api/routes/unified_process.py
  inline_cap_reached>75  modules/ml_coder/self_correction.py
  inline_cap_reached>75  modules/registry/slots/sedation.py
@@ -1068,11 +1083,10 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/api/schemas/qa.py
  inline_cap_reached>75  modules/api/phi_demo_store.py
  inline_cap_reached>75  modules/api/gemini_client.py
- inline_cap_reached>75  modules/registry/self_correction/apply.py
  inline_cap_reached>75  modules/coder/ebus_rules.py
  inline_cap_reached>75  modules/phi/models.py
  inline_cap_reached>75  modules/registry/deterministic/anatomy.py
- inline_cap_reached>75  modules/api/schemas/base.py
+ inline_cap_reached>75  modules/reporting/json_patch.py
  inline_cap_reached>75  modules/ner/entity_types.py
  inline_cap_reached>75  modules/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  modules/coder/ncci.py
@@ -1085,20 +1099,22 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/coder/cli.py
  inline_cap_reached>75  modules/registry/slots/therapeutics.py
  inline_cap_reached>75  modules/reporting/ip_addons.py
+ inline_cap_reached>75  modules/registry/self_correction/apply.py
  inline_cap_reached>75  modules/coder/application/candidate_expansion.py
  inline_cap_reached>75  modules/agents/run_pipeline.py
- inline_cap_reached>75  modules/registry/ner_mapping/entity_to_registry.py
  inline_cap_reached>75  modules/domain/coding_rules/evidence_context.py
  inline_cap_reached>75  modules/registry/model_runtime.py
+ inline_cap_reached>75  modules/api/schemas/base.py
  inline_cap_reached>75  modules/coder/adapters/ml_ranker.py
+ inline_cap_reached>75  modules/registry/ner_mapping/entity_to_registry.py
  inline_cap_reached>75  modules/coder/adapters/persistence/inmemory_procedure_store.py
- inline_cap_reached>75  modules/api/services/unified_pipeline.py
  inline_cap_reached>75  modules/registry/inference_pytorch.py
  inline_cap_reached>75  modules/registry_cleaning/clinical_qc.py
  inline_cap_reached>75  modules/registry/ml/evaluate.py
  inline_cap_reached>75  modules/coder/application/procedure_type_detector.py
  inline_cap_reached>75  modules/api/coder_adapter.py
  inline_cap_reached>75  modules/api/routes/metrics.py
+ inline_cap_reached>75  modules/api/services/unified_pipeline.py
  inline_cap_reached>75  modules/registry/processing/focus.py
  inline_cap_reached>75  modules/ml_coder/training.py
  inline_cap_reached>75  modules/phi/service.py
@@ -1111,11 +1127,10 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/common/knowledge.py
  inline_cap_reached>75  modules/api/routes/phi.py
  inline_cap_reached>75  modules/registry/legacy/adapters/pleural.py
- inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/registry/application/pathology_extraction.py
- inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  proc_schemas/registry/ip_v3.py
  inline_cap_reached>75  modules/registry_cleaning/schema_utils.py
+ inline_cap_reached>75  modules/registry/self_correction/validation.py
  inline_cap_reached>75  modules/registry/extractors/v3_extractor.py
  inline_cap_reached>75  modules/domain/knowledge_base/validator.py
  inline_cap_reached>75  modules/registry/processing/masking.py
@@ -1129,16 +1144,17 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  modules/registry/v2_booleans.py
  inline_cap_reached>75  modules/domain/coding_rules/json_rules_evaluator.py
- inline_cap_reached>75  modules/api/routes/registry_runs.py
  inline_cap_reached>75  modules/autocode/ip_kb/canonical_rules.py
  inline_cap_reached>75  modules/api/services/qa_pipeline.py
  inline_cap_reached>75  modules/ml_coder/registry_training.py
+ inline_cap_reached>75  modules/api/routes/registry_runs.py
  inline_cap_reached>75  modules/coder/reconciliation/pipeline.py
  inline_cap_reached>75  modules/api/dependencies.py
  inline_cap_reached>75  modules/ner/inference.py
  inline_cap_reached>75  modules/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  modules/coder/rules_engine.py
  inline_cap_reached>75  modules/registry/application/cpt_registry_mapping.py
+ inline_cap_reached>75  modules/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  modules/phi/safety/veto.py
  inline_cap_reached>75  modules/registry/application/coding_support_builder.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
@@ -1156,6 +1172,7 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/coder/adapters/llm/openai_compat_advisor.py
  inline_cap_reached>75  modules/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  modules/coder/adapters/persistence/supabase_procedure_store.py
+ inline_cap_reached>75  modules/reporting/questions.py
  inline_cap_reached>75  modules/registry/legacy/adapters/airway.py
  inline_cap_reached>75  modules/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  modules/ml_coder/data_prep.py
@@ -1176,17 +1193,17 @@ Git: `updates_2_5_26` @ `ae47e46`
  inline_cap_reached>75  modules/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  modules/registry/ml/action_predictor.py
  inline_cap_reached>75  modules/coder/dictionary.py
- inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/common/llm.py
  inline_cap_reached>75  modules/proc_ml_advisor/schemas.py
  inline_cap_reached>75  modules/api/routes/procedure_codes.py
- inline_cap_reached>75  modules/api/fastapi_app.py
+ inline_cap_reached>75  modules/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  modules/registry/schema/granular_logic.py
+ inline_cap_reached>75  modules/api/fastapi_app.py
  inline_cap_reached>75  modules/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  modules/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  modules/registry/prompts.py
- inline_cap_reached>75  modules/reporting/engine.py
  inline_cap_reached>75  modules/coder/domain_rules/registry_to_cpt/coding_rules.py
+ inline_cap_reached>75  modules/reporting/engine.py
  inline_cap_reached>75  modules/registry/engine.py
  inline_cap_reached>75  modules/registry/deterministic_extractors.py
  inline_cap_reached>75  modules/registry/application/registry_service.py
@@ -7771,6 +7788,227 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/bootstrap_granular_attributes.py`
+- Size: `7497` bytes
+```
+#!/usr/bin/env python3
+"""Bootstrap high-precision granular attribute spans for Prodigy review.
+
+Input JSONL accepts records with either:
+- {"text": "..."}
+- {"note_text": "..."}
+
+Output JSONL records contain:
+- text
+- spans: [{start, end, label, text}, ...]
+- meta: {note_id, source} when available
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+from pathlib import Path
+from typing import Any, Iterable
+
+DEFAULT_INPUT = Path("data/ml_training/granular_ner/ner_dataset_all.jsonl")
+DEFAULT_OUTPUT = Path("data/ml_training/granular_ner/silver_attributes.jsonl")
+
+# Labels for attribute annotation candidates.
+LBL_STENT_TYPE = "DEV_STENT_TYPE"
+LBL_STENT_DIM = "DEV_STENT_DIM"
+LBL_NODULE_SIZE = "NODULE_SIZE"
+LBL_OBS_PRE = "OBS_VAL_PRE"
+LBL_OBS_POST = "OBS_VAL_POST"
+
+_STENT_TERM_RE = re.compile(r"\bstent\b", re.IGNORECASE)
+_STENT_TYPE_RE = re.compile(r"\b(?:silicone|metallic|covered|uncovered|y[- ]?stent)\b", re.IGNORECASE)
+_STENT_DIM_COMPLEX_RE = re.compile(r"\b\d{1,2}\s?(?:x|×)\s?\d{1,2}(?:\s?(?:x|×)\s?\d{1,2})?\s?mm\b", re.IGNORECASE)
+_STENT_DIM_SIMPLE_RE = re.compile(r"\b\d{1,2}\s?mm\b", re.IGNORECASE)
+
+_SIZE_RE = re.compile(r"\b\d+(?:\.\d+)?\s?(?:mm|cm)\b", re.IGNORECASE)
+_LESION_CONTEXT_RE = re.compile(r"\b(?:nodule|lesion|mass)\b", re.IGNORECASE)
+
+_OBS_PCT_RE = re.compile(r"\b\d{1,3}\s?%\s?(?:obstruction|occlusion)\b", re.IGNORECASE)
+_OBS_NEAR_COMPLETE_RE = re.compile(r"\bnear\s+complete\s+obstruction\b", re.IGNORECASE)
+_OBS_WIDELY_PATENT_RE = re.compile(r"\bwidely\s+patent\b", re.IGNORECASE)
+
+_PRE_CUES_RE = re.compile(r"\b(?:pre|before|prior|initial|baseline)\b", re.IGNORECASE)
+_POST_CUES_RE = re.compile(r"\b(?:post|after|following|final)\b", re.IGNORECASE)
+
+
+def _iter_jsonl(path: Path) -> Iterable[dict[str, Any]]:
+    with path.open("r", encoding="utf-8") as f:
+        for line_num, line in enumerate(f, 1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"Invalid JSON at {path}:{line_num}: {exc}") from exc
+            if isinstance(obj, dict):
+                yield obj
+
+
+def _in_bounds(text: str, start: int, end: int) -> bool:
+    return 0 <= start < end <= len(text)
+
+
+def _has_nearby(pattern: re.Pattern[str], text: str, start: int, end: int, window: int = 50) -> bool:
+    left = max(0, start - window)
+    right = min(len(text), end + window)
+    return pattern.search(text[left:right]) is not None
+
+
+def _span_dict(text: str, start: int, end: int, label: str) -> dict[str, Any] | None:
+    if not _in_bounds(text, start, end):
+        return None
+    return {
+        "start": start,
+        "end": end,
+        "label": label,
+        "text": text[start:end],
+    }
+
+
+def extract_attribute_spans(text: str) -> list[dict[str, Any]]:
+    spans: list[dict[str, Any]] = []
+
+    # Stent material/type terms.
+    for match in _STENT_TYPE_RE.finditer(text):
+        token = match.group(0).lower()
+        if "stent" in token or _has_nearby(_STENT_TERM_RE, text, match.start(), match.end(), window=40):
+            span = _span_dict(text, match.start(), match.end(), LBL_STENT_TYPE)
+            if span:
+                spans.append(span)
+
+    # Stent dimensions (NxM[xK] mm, and short mm values near "stent").
+    for pattern in (_STENT_DIM_COMPLEX_RE, _STENT_DIM_SIMPLE_RE):
+        for match in pattern.finditer(text):
+            if _has_nearby(_STENT_TERM_RE, text, match.start(), match.end(), window=45):
+                span = _span_dict(text, match.start(), match.end(), LBL_STENT_DIM)
+                if span:
+                    spans.append(span)
+
+    # Lesion/nodule/mass size values.
+    for match in _SIZE_RE.finditer(text):
+        if _has_nearby(_LESION_CONTEXT_RE, text, match.start(), match.end(), window=60):
+            span = _span_dict(text, match.start(), match.end(), LBL_NODULE_SIZE)
+            if span:
+                spans.append(span)
+
+    # Obstruction values/phrases.
+    for match in _OBS_PCT_RE.finditer(text):
+        left = max(0, match.start() - 80)
+        right = min(len(text), match.end() + 80)
+        window = text[left:right]
+        label = LBL_OBS_POST if _POST_CUES_RE.search(window) and not _PRE_CUES_RE.search(window) else LBL_OBS_PRE
+        span = _span_dict(text, match.start(), match.end(), label)
+        if span:
+            spans.append(span)
+
+    for match in _OBS_NEAR_COMPLETE_RE.finditer(text):
+        span = _span_dict(text, match.start(), match.end(), LBL_OBS_PRE)
+        if span:
+            spans.append(span)
+
+    for match in _OBS_WIDELY_PATENT_RE.finditer(text):
+        span = _span_dict(text, match.start(), match.end(), LBL_OBS_POST)
+        if span:
+            spans.append(span)
+
+    # Deterministic de-dup + sort.
+    seen: set[tuple[int, int, str]] = set()
+    deduped: list[dict[str, Any]] = []
+    for span in sorted(spans, key=lambda s: (s["start"], s["end"], s["label"], s["text"])):
+        key = (span["start"], span["end"], span["label"])
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(span)
+
+    return deduped
+
+
+def _record_text(record: dict[str, Any]) -> str:
+    text = record.get("text")
+    if isinstance(text, str) and text.strip():
+        return text
+    note_text = record.get("note_text")
+    if isinstance(note_text, str) and note_text.strip():
+        return note_text
+    return ""
+
+
+def _record_meta(record: dict[str, Any]) -> dict[str, str]:
+    meta: dict[str, str] = {}
+
+    note_id = record.get("note_id") or record.get("id")
+    if note_id is not None and str(note_id).strip():
+        meta["note_id"] = str(note_id)
+
+    source = record.get("source") or record.get("source_file")
+    if source is not None and str(source).strip():
+        meta["source"] = str(source)
+
+    return meta
+
+
+def bootstrap_records(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for record in records:
+        text = _record_text(record)
+        if not text:
+            continue
+
+        row: dict[str, Any] = {
+            "text": text,
+            "spans": extract_attribute_spans(text),
+            "meta": _record_meta(record),
+        }
+
+        # Keep a stable id when available; useful for downstream merging.
+        rid = record.get("id") or record.get("note_id")
+        if rid is not None and str(rid).strip():
+            row["id"] = str(rid)
+
+        out.append(row)
+    return out
+
+
+def write_bootstrap_file(input_path: Path, output_path: Path) -> int:
+    rows = bootstrap_records(_iter_jsonl(input_path))
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with output_path.open("w", encoding="utf-8") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+    return len(rows)
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--in", "--input", dest="input_path", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--out", "--output", dest="output_path", type=Path, default=DEFAULT_OUTPUT)
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    n_rows = write_bootstrap_file(args.input_path, args.output_path)
+    print(f"Wrote {n_rows} records to {args.output_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `scripts/regenerate_granular_ner_stats.py`
 - Size: `7609` bytes
 ```
@@ -11694,6 +11932,691 @@ if __name__ == "__main__":
 ```
 
 ---
+### `scripts/merge_granular_attribute_spans.py`
+- Size: `10661` bytes
+```
+#!/usr/bin/env python3
+"""Merge Prodigy granular-attribute spans into NER training JSONL.
+
+Converts Prodigy span records to the training schema used by
+`scripts/convert_spans_to_bio.py`:
+- id
+- text
+- entities: [{start, end, label, text}, ...]
+
+Merging strategy:
+- Start from base dataset records
+- Merge Prodigy spans into existing notes when id or note_id matches
+- Deduplicate final records by id, then note_id
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+from typing import Any, Iterable
+
+DEFAULT_PRODIGY_INPUT = Path("data/ml_training/granular_ner/gold_attributes.jsonl")
+DEFAULT_BASE_DATASET = Path("data/ml_training/granular_ner/ner_dataset_all.jsonl")
+DEFAULT_OUTPUT = Path("data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl")
+
+
+def _iter_jsonl(path: Path) -> Iterable[dict[str, Any]]:
+    with path.open("r", encoding="utf-8") as f:
+        for line_num, line in enumerate(f, 1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"Invalid JSON at {path}:{line_num}: {exc}") from exc
+            if isinstance(obj, dict):
+                yield obj
+
+
+def _extract_text(record: dict[str, Any]) -> str:
+    text = record.get("text")
+    if isinstance(text, str) and text.strip():
+        return text
+    note_text = record.get("note_text")
+    if isinstance(note_text, str) and note_text.strip():
+        return note_text
+    return ""
+
+
+def _extract_ids(record: dict[str, Any]) -> tuple[str | None, str | None]:
+    rid = record.get("id")
+    note_id = record.get("note_id")
+
+    meta = record.get("meta")
+    if isinstance(meta, dict):
+        if note_id is None:
+            note_id = meta.get("note_id")
+        if rid is None:
+            rid = meta.get("id")
+
+    rid_str = str(rid).strip() if rid is not None and str(rid).strip() else None
+    note_id_str = str(note_id).strip() if note_id is not None and str(note_id).strip() else None
+    return rid_str, note_id_str
+
+
+def _normalize_span(span: Any, text: str) -> dict[str, Any] | None:
+    start: int | None = None
+    end: int | None = None
+    label: str | None = None
+
+    if isinstance(span, dict):
+        raw_start = span.get("start")
+        raw_end = span.get("end")
+        if raw_start is None:
+            raw_start = span.get("start_char", span.get("start_offset"))
+        if raw_end is None:
+            raw_end = span.get("end_char", span.get("end_offset"))
+        label = span.get("label")
+    elif isinstance(span, (list, tuple)) and len(span) >= 3:
+        raw_start = span[0]
+        raw_end = span[1]
+        label = span[2]
+    else:
+        return None
+
+    try:
+        start = int(raw_start)
+        end = int(raw_end)
+    except (TypeError, ValueError):
+        return None
+
+    if start < 0 or end <= start or end > len(text):
+        return None
+
+    label_text = str(label).strip() if label is not None else ""
+    if not label_text:
+        return None
+
+    return {
+        "start": start,
+        "end": end,
+        "label": label_text,
+        "text": text[start:end],
+    }
+
+
+def _dedupe_entities(entities: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[tuple[int, int, str]] = set()
+    out: list[dict[str, Any]] = []
+    for ent in sorted(entities, key=lambda e: (e["start"], e["end"], e["label"], e["text"])):
+        key = (int(ent["start"]), int(ent["end"]), str(ent["label"]))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(ent)
+    return out
+
+
+def _extract_entities(record: dict[str, Any], text: str) -> list[dict[str, Any]]:
+    raw_entities = record.get("entities")
+    if not isinstance(raw_entities, list):
+        raw_entities = record.get("spans") if isinstance(record.get("spans"), list) else []
+
+    out: list[dict[str, Any]] = []
+    for span in raw_entities:
+        normalized = _normalize_span(span, text)
+        if normalized:
+            out.append(normalized)
+    return _dedupe_entities(out)
+
+
+def _stable_hash(text: str) -> str:
+    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:12]
+
+
+def _record_key(record: dict[str, Any]) -> str:
+    rid = record.get("id")
+    if isinstance(rid, str) and rid.strip():
+        return f"id:{rid.strip()}"
+    note_id = record.get("note_id")
+    if isinstance(note_id, str) and note_id.strip():
+        return f"note_id:{note_id.strip()}"
+    text = record.get("text")
+    if isinstance(text, str) and text:
+        return f"text:{_stable_hash(text)}"
+    return f"anon:{id(record)}"
+
+
+def _normalize_training_record(record: dict[str, Any]) -> dict[str, Any] | None:
+    text = _extract_text(record)
+    if not text:
+        return None
+
+    rid, note_id = _extract_ids(record)
+    if note_id is None and rid is not None:
+        note_id = rid
+    entities = _extract_entities(record, text)
+
+    normalized: dict[str, Any] = {
+        "id": rid or note_id or f"text_{_stable_hash(text)}",
+        "text": text,
+        "entities": entities,
+    }
+    if note_id:
+        normalized["note_id"] = note_id
+    return normalized
+
+
+def _merge_records(base: dict[str, Any], incoming: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    if not merged.get("text") and incoming.get("text"):
+        merged["text"] = incoming["text"]
+
+    # Keep stable id from base unless missing.
+    if (not merged.get("id")) and incoming.get("id"):
+        merged["id"] = incoming["id"]
+
+    if (not merged.get("note_id")) and incoming.get("note_id"):
+        merged["note_id"] = incoming["note_id"]
+
+    text = str(merged.get("text") or "")
+    existing_entities = _extract_entities(merged, text)
+    incoming_entities = _extract_entities(incoming, text)
+    merged["entities"] = _dedupe_entities([*existing_entities, *incoming_entities])
+
+    return merged
+
+
+def _better_record(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
+    a_score = (len(a.get("entities") or []), len(str(a.get("text") or "")))
+    b_score = (len(b.get("entities") or []), len(str(b.get("text") or "")))
+    return b if b_score > a_score else a
+
+
+def _dedupe_by_field(records: list[dict[str, Any]], field: str) -> list[dict[str, Any]]:
+    by_value: dict[str, dict[str, Any]] = {}
+    order: list[str] = []
+    passthrough: list[dict[str, Any]] = []
+
+    for record in records:
+        value = record.get(field)
+        value_str = str(value).strip() if value is not None and str(value).strip() else ""
+        if not value_str:
+            passthrough.append(record)
+            continue
+
+        if value_str not in by_value:
+            by_value[value_str] = record
+            order.append(value_str)
+            continue
+
+        merged = _merge_records(by_value[value_str], record)
+        by_value[value_str] = _better_record(by_value[value_str], merged)
+
+    deduped = [by_value[value] for value in order]
+    deduped.extend(passthrough)
+    return deduped
+
+
+def _merge_prodigy_into_base(
+    base_records: list[dict[str, Any]],
+    prodigy_records: list[dict[str, Any]],
+    *,
+    include_non_accept: bool,
+) -> list[dict[str, Any]]:
+    merged_records = [dict(record) for record in base_records]
+
+    by_id: dict[str, int] = {}
+    by_note_id: dict[str, int] = {}
+    for idx, record in enumerate(merged_records):
+        rid = str(record.get("id") or "").strip()
+        if rid:
+            by_id[rid] = idx
+        note_id = str(record.get("note_id") or "").strip()
+        if note_id:
+            by_note_id[note_id] = idx
+
+    for source in prodigy_records:
+        answer = str(source.get("answer") or "").strip().lower()
+        if (not include_non_accept) and answer and answer != "accept":
+            continue
+
+        normalized = _normalize_training_record(source)
+        if normalized is None:
+            continue
+
+        rid = str(normalized.get("id") or "").strip()
+        note_id = str(normalized.get("note_id") or "").strip()
+
+        target_idx: int | None = None
+        if rid and rid in by_id:
+            target_idx = by_id[rid]
+        elif note_id and note_id in by_note_id:
+            target_idx = by_note_id[note_id]
+
+        if target_idx is None:
+            merged_records.append(normalized)
+            target_idx = len(merged_records) - 1
+        else:
+            merged_records[target_idx] = _merge_records(merged_records[target_idx], normalized)
+
+        canonical = merged_records[target_idx]
+        canonical_id = str(canonical.get("id") or "").strip()
+        canonical_note_id = str(canonical.get("note_id") or "").strip()
+        if canonical_id:
+            by_id[canonical_id] = target_idx
+        if canonical_note_id:
+            by_note_id[canonical_note_id] = target_idx
+
+    merged_records = _dedupe_by_field(merged_records, "id")
+    merged_records = _dedupe_by_field(merged_records, "note_id")
+
+    # Deterministic output order.
+    return sorted(merged_records, key=_record_key)
+
+
+def merge_attribute_spans(
+    *,
+    prodigy_input: Path,
+    base_input: Path,
+    output_path: Path,
+    include_non_accept: bool = False,
+) -> int:
+    base_records = [r for r in (_normalize_training_record(rec) for rec in _iter_jsonl(base_input)) if r is not None]
+    prodigy_records = list(_iter_jsonl(prodigy_input))
+
+    merged_records = _merge_prodigy_into_base(base_records, prodigy_records, include_non_accept=include_non_accept)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as f:
+        for record in merged_records:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+    return len(merged_records)
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--prodigy-input", type=Path, default=DEFAULT_PRODIGY_INPUT)
+    parser.add_argument("--base-input", type=Path, default=DEFAULT_BASE_DATASET)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--include-non-accept",
+        action="store_true",
+        help="Include examples with non-accept answers (default: false)",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    count = merge_attribute_spans(
+        prodigy_input=args.prodigy_input,
+        base_input=args.base_input,
+        output_path=args.output,
+        include_non_accept=args.include_non_accept,
+    )
+    print(f"Wrote {count} merged records to {args.output}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `scripts/generate_cpt_keywords.py`
+- Size: `11135` bytes
+```
+#!/usr/bin/env python3
+"""Generate a CPT->keyword mapping for keyword-guard gating.
+
+The generator is deterministic and offline-only. Inputs:
+- KB JSON: data/knowledge/ip_coding_billing_v3_0.json
+- Optional YAML keyword seed files under data/keyword_mappings/
+
+Output:
+- data/keyword_mappings/cpt_keywords.generated.json
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+from collections import defaultdict
+from pathlib import Path
+from typing import Any
+
+try:
+    import yaml  # type: ignore
+except Exception:  # pragma: no cover - optional dependency
+    yaml = None
+
+DEFAULT_MAX_KEYWORDS_PER_CPT = 50
+
+# Conservative synonym routing from KB synonym groups to CPT codes.
+SYNONYM_GROUP_TO_CPTS: dict[str, set[str]] = {
+    # Bronchoscopy diagnostics/interventions
+    "bal_terms": {"31624"},
+    "tblb_terms": {"31628", "31632"},
+    "tbna_terms": {"31629", "31633", "31652", "31653"},
+    "linear_ebus_terms": {"31652", "31653"},
+    "ebus_station_terms": {"31652", "31653"},
+    "radial_ebus_terms": {"31654"},
+    "navigation_terms": {"31627"},
+    "navigation_concept_terms": {"31627"},
+    "navigation_status_terms": {"31627"},
+    "aspiration_terms": {"31645", "31646"},
+    "foreign_body_terms": {"31635"},
+    "dilation_terms": {"31630", "31631"},
+    "stent_terms": {"31636", "31637", "31638"},
+    "ablation_terms": {"31641"},
+    "blvr_terms": {"31647", "31648", "31649", "31651"},
+    "valve_terms": {"31647", "31648", "31649", "31651"},
+    "chartis_terms": {"31647", "31651"},
+    "tracheostomy_terms": {"31600", "31603", "31605", "31610"},
+    "pdt_terms": {"31600", "31603", "31605", "31610"},
+    # Pleural/thoracic
+    "thoracentesis_terms": {"32554", "32555"},
+    "thoracentesis_imaging_terms": {"32555"},
+    "chest_tube_terms": {"32551"},
+    "tunneled_pleural_catheter_terms": {"32550"},
+    "pleural_drainage_terms": {"32556", "32557"},
+    "pleurodesis_terms": {"32560", "32650"},
+    "thoracoscopy_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32650", "32653"},
+    "thoracoscopy_bundled_drain_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32650", "32653"},
+    "thoracoscopy_separate_drain_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32650", "32653"},
+    "thoracoscopy_pleural_site_terms": {"32609", "32653"},
+    "thoracoscopy_lung_site_terms": {"32609", "32653"},
+    "thoracoscopy_mediastinal_site_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32653"},
+    "thoracoscopy_pericardial_site_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32653"},
+    # Documentation/support terms that can still aid keyword recall for supported CPTs
+    "peripheral_lesion_terms": {"31628", "31629", "31632", "31633", "31654"},
+}
+
+ABBREV_EXPANSIONS: dict[str, str] = {
+    "dx": "diagnostic",
+    "bx": "biopsy",
+    "bronch": "bronchoscopy",
+    "bronchoscope": "bronchoscopy",
+    "samplng": "sampling",
+    "subseq": "subsequent",
+    "initl": "initial",
+}
+
+TOKEN_STOPWORDS = {
+    "and",
+    "with",
+    "without",
+    "for",
+    "the",
+    "a",
+    "an",
+    "of",
+    "to",
+    "via",
+    "or",
+    "in",
+    "on",
+    "by",
+    "from",
+    "each",
+    "other",
+    "planned",
+    "plan",
+    "only",
+    "none",
+    "deferred",
+    "not",
+}
+
+NEGATIVE_SYNONYM_BUCKET_HINTS = (
+    "negative",
+    "neg",
+    "planned_only",
+    "deferred",
+    "absent",
+    "not_performed",
+)
+
+
+def _repo_root() -> Path:
+    return Path(__file__).resolve().parents[1]
+
+
+def _is_five_digit_cpt(code: str) -> bool:
+    return bool(re.fullmatch(r"\d{5}", str(code or "").strip()))
+
+
+def _normalize_phrase(value: str) -> str:
+    text = str(value or "").strip().lower()
+    if not text:
+        return ""
+    text = text.replace("×", "x")
+    text = re.sub(r"[\u2010\u2011\u2012\u2013\u2014]", "-", text)
+    text = text.replace("/", " ")
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def _descriptor_phrases(descriptor: str) -> list[str]:
+    out: list[str] = []
+    base = _normalize_phrase(descriptor)
+    if not base:
+        return out
+    out.append(base)
+
+    # Add an expanded variant for common CPT abbreviation fragments.
+    tokens = base.split()
+    expanded = " ".join(ABBREV_EXPANSIONS.get(tok, tok) for tok in tokens)
+    if expanded and expanded != base:
+        out.append(expanded)
+
+    # Add selective single-token terms for robust matching.
+    for tok in expanded.split():
+        tok_clean = tok.strip(".,;:()[]{}")
+        if len(tok_clean) < 4:
+            continue
+        if tok_clean.isdigit() or tok_clean in TOKEN_STOPWORDS:
+            continue
+        out.append(tok_clean)
+    return out
+
+
+def _extract_string_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(v) for v in value if isinstance(v, str)]
+    if isinstance(value, dict):
+        out: list[str] = []
+        for key, nested in value.items():
+            key_norm = str(key).strip().lower()
+            if any(hint in key_norm for hint in NEGATIVE_SYNONYM_BUCKET_HINTS):
+                continue
+            out.extend(_extract_string_list(nested))
+        return out
+    return []
+
+
+def _load_kb(path: Path) -> dict[str, Any]:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        raise ValueError(f"KB must be an object: {path}")
+    return raw
+
+
+def _load_yaml_seeds(directory: Path) -> dict[str, list[str]]:
+    if yaml is None or not directory.exists() or not directory.is_dir():
+        return {}
+
+    seed_keywords: dict[str, list[str]] = defaultdict(list)
+    for yaml_path in sorted(list(directory.glob("*.yaml")) + list(directory.glob("*.yml"))):
+        # Skip generated json and unrelated files by using schema checks below.
+        try:
+            loaded = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+
+        if not isinstance(loaded, dict):
+            continue
+        code = str(loaded.get("code", "")).strip()
+        if not _is_five_digit_cpt(code):
+            continue
+
+        for phrase in _extract_string_list(loaded.get("positive_phrases")):
+            seed_keywords[code].append(phrase)
+
+        description = loaded.get("description")
+        if isinstance(description, str) and description.strip():
+            seed_keywords[code].append(description)
+
+    return dict(seed_keywords)
+
+
+def generate_cpt_keywords(
+    *,
+    repo_root: Path | None = None,
+    kb_path: Path | None = None,
+    seed_dir: Path | None = None,
+    max_keywords_per_cpt: int = DEFAULT_MAX_KEYWORDS_PER_CPT,
+) -> dict[str, list[str]]:
+    root = repo_root or _repo_root()
+    kb_file = kb_path or (root / "data" / "knowledge" / "ip_coding_billing_v3_0.json")
+    seeds_dir = seed_dir or (root / "data" / "keyword_mappings")
+
+    kb = _load_kb(kb_file)
+    master = kb.get("master_code_index") or {}
+    if not isinstance(master, dict):
+        raise ValueError("KB missing master_code_index")
+
+    raw_map: dict[str, list[str]] = defaultdict(list)
+
+    # 1) Base descriptors from master_code_index.
+    for code in sorted(master.keys()):
+        if not _is_five_digit_cpt(code):
+            continue
+        entry = master.get(code)
+        if not isinstance(entry, dict):
+            continue
+        if str(entry.get("type", "")).strip().lower() != "cpt":
+            continue
+
+        descriptor = entry.get("descriptor")
+        if isinstance(descriptor, str):
+            raw_map[code].extend(_descriptor_phrases(descriptor))
+
+        family = entry.get("family")
+        if isinstance(family, str) and family.strip():
+            raw_map[code].append(family)
+
+    # 2) Routed KB synonyms.
+    synonyms = kb.get("synonyms") or {}
+    if isinstance(synonyms, dict):
+        for group_name, phrases_blob in sorted(synonyms.items()):
+            targets = SYNONYM_GROUP_TO_CPTS.get(group_name, set())
+            if not targets:
+                continue
+            phrases = _extract_string_list(phrases_blob)
+            if not phrases:
+                continue
+            for code in sorted(targets):
+                if code in raw_map:
+                    raw_map[code].extend(phrases)
+
+    # 3) Optional YAML positive-phrase seeds.
+    for code, phrases in _load_yaml_seeds(seeds_dir).items():
+        raw_map[code].extend(phrases)
+
+    # 4) Normalize + dedupe + cap + sort.
+    finalized: dict[str, list[str]] = {}
+    for code in sorted(raw_map.keys()):
+        seen: set[str] = set()
+        ordered: list[str] = []
+        for phrase in raw_map[code]:
+            norm = _normalize_phrase(phrase)
+            if len(norm) < 3:
+                continue
+            if norm in seen:
+                continue
+            seen.add(norm)
+            ordered.append(norm)
+
+        if max_keywords_per_cpt > 0:
+            ordered = ordered[:max_keywords_per_cpt]
+        finalized[code] = sorted(ordered)
+
+    return finalized
+
+
+def serialize_mapping(mapping: dict[str, list[str]]) -> str:
+    return json.dumps(mapping, indent=2, sort_keys=True) + "\n"
+
+
+def write_mapping(mapping: dict[str, list[str]], output_path: Path) -> bytes:
+    content = serialize_mapping(mapping).encode("utf-8")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_bytes(content)
+    return content
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate CPT keyword mapping JSON for keyword guard")
+    parser.add_argument(
+        "--kb",
+        type=Path,
+        default=Path("data/knowledge/ip_coding_billing_v3_0.json"),
+        help="Path to KB JSON file",
+    )
+    parser.add_argument(
+        "--seed-dir",
+        type=Path,
+        default=Path("data/keyword_mappings"),
+        help="Directory with optional YAML keyword maps",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("data/keyword_mappings/cpt_keywords.generated.json"),
+        help="Output JSON path",
+    )
+    parser.add_argument(
+        "--max-keywords-per-cpt",
+        type=int,
+        default=DEFAULT_MAX_KEYWORDS_PER_CPT,
+        help="Max number of keywords retained per CPT",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    root = _repo_root()
+
+    kb_path = args.kb if args.kb.is_absolute() else root / args.kb
+    seed_dir = args.seed_dir if args.seed_dir.is_absolute() else root / args.seed_dir
+    output_path = args.output if args.output.is_absolute() else root / args.output
+
+    mapping = generate_cpt_keywords(
+        repo_root=root,
+        kb_path=kb_path,
+        seed_dir=seed_dir,
+        max_keywords_per_cpt=max(0, int(args.max_keywords_per_cpt)),
+    )
+    write_mapping(mapping, output_path)
+
+    counts = sorted(((code, len(phrases)) for code, phrases in mapping.items()), key=lambda kv: (-kv[1], kv[0]))
+    top = ", ".join(f"{code}:{count}" for code, count in counts[:8])
+    print(f"Generated keywords for {len(mapping)} CPTs -> {output_path}")
+    print(f"Top keyword counts: {top}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `scripts/evaluate_coder.py`
 - Size: `11238` bytes
 ```
@@ -13904,1364 +14827,5 @@ def main():
 
 if __name__ == "__main__":
     exit(main())
-
-```
-
----
-### `scripts/index_repo.py`
-- Size: `14193` bytes
-```
-#!/usr/bin/env python3
-"""
-Index the Procedure Suite repository into a JSONL file.
-
-Why this exists:
-- `docs/REPO_INDEX.md` is a curated "high-signal map" of key entrypoints.
-- This script produces a *mechanical, full-repo* index (file inventory + metadata)
-  for tooling / search / diff / inspection.
-
-Default behavior:
-- Indexes **tracked files** + **unignored untracked files** (via git), which is
-  typically what you want when you say "full repo" (and avoids `.gitignore` noise).
-- Skips hashing/reading for large files by default (configurable).
-
-Usage:
-  python scripts/index_repo.py
-  python scripts/index_repo.py --out repo_index_all.jsonl
-  python scripts/index_repo.py --include-content --max-content-bytes 262144
-  python scripts/index_repo.py --mode walk   # ignore git, walk filesystem
-"""
-
-from __future__ import annotations
-
-import argparse
-import datetime as dt
-import hashlib
-import json
-import mimetypes
-import os
-import subprocess
-import sys
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Iterable, Iterator, Optional
-
-
-DEFAULT_SKIP_DIR_NAMES = {
-    ".git",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".tox",
-    ".venv",
-    "__pycache__",
-    "node_modules",
-    "dist",
-    "build",
-    ".next",
-    ".turbo",
-    ".idea",
-    ".vscode",
-}
-
-# These are *repo-relative* path prefixes to exclude from indexing by default.
-# Rationale: these folders tend to contain large corpora / training artifacts and
-# can overwhelm indexes (and are often not useful for code navigation).
-DEFAULT_SKIP_PREFIXES = [
-    "data/knowledge/golden_extractions",
-    "data/knowledge/golden_extractions_final",
-    "data/knowledge/golden_extractions_scrubbed",
-    "data/knowledge/golden_registry_v3",
-    "data/knowledge/patient_note_texts",
-    "data/knowledge/patient_note_texts_complete",
-    "data/granular annotations/Additional_notes",
-    "data/granular annotations/Empty_python_scripts_updated",
-    "data/granular annotations/notes_text",
-    "data/granular annotations/phase0_excels",
-    "data/granular annotations/python scripts",
-    "data/granular annotations/Python_update_scripts",
-    "data/granular annotations/python_update_scripts_complete",
-    "example",
-    "format example",
-]
-
-
-@dataclass(frozen=True)
-class GitInfo:
-    branch: Optional[str]
-    commit: Optional[str]
-
-
-def _run_git(repo_root: Path, args: list[str]) -> tuple[int, str, str]:
-    proc = subprocess.run(
-        ["git", "-C", str(repo_root), *args],
-        capture_output=True,
-        text=True,
-    )
-    return proc.returncode, proc.stdout, proc.stderr
-
-
-def _get_git_root(cwd: Path) -> Optional[Path]:
-    try:
-        proc = subprocess.run(
-            ["git", "-C", str(cwd), "rev-parse", "--show-toplevel"],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-    except Exception:
-        return None
-    root = proc.stdout.strip()
-    if not root:
-        return None
-    return Path(root)
-
-
-def _get_git_info(repo_root: Path) -> GitInfo:
-    branch = None
-    commit = None
-    rc, out, _ = _run_git(repo_root, ["rev-parse", "--abbrev-ref", "HEAD"])
-    if rc == 0:
-        branch = out.strip() or None
-    rc, out, _ = _run_git(repo_root, ["rev-parse", "--short", "HEAD"])
-    if rc == 0:
-        commit = out.strip() or None
-    return GitInfo(branch=branch, commit=commit)
-
-
-def _iter_files_git(repo_root: Path) -> Iterator[Path]:
-    """
-    Yield repo-relative paths for:
-    - tracked files
-    - unignored untracked files
-    """
-    def _git_ls(args: list[str]) -> list[str]:
-        proc = subprocess.run(
-            ["git", "-C", str(repo_root), "ls-files", "-z", *args],
-            capture_output=True,
-            check=False,
-        )
-        if proc.returncode != 0:
-            raise RuntimeError(proc.stderr.decode("utf-8", errors="replace"))
-        raw = proc.stdout
-        if not raw:
-            return []
-        return [p for p in raw.decode("utf-8", errors="replace").split("\x00") if p]
-
-    paths = set(_git_ls([]))
-    paths.update(_git_ls(["--others", "--exclude-standard"]))
-
-    for rel in sorted(paths):
-        # Normalize as Path (posix separator from git)
-        yield Path(rel)
-
-
-def _iter_files_walk(repo_root: Path, skip_dir_names: set[str]) -> Iterator[Path]:
-    for root, dirs, files in os.walk(repo_root):
-        dirs[:] = [d for d in dirs if d not in skip_dir_names]
-        for name in files:
-            full = Path(root) / name
-            try:
-                rel = full.relative_to(repo_root)
-            except Exception:
-                continue
-            yield rel
-
-
-def _normalize_skip_prefixes(prefixes: Iterable[str]) -> list[str]:
-    """
-    Normalize skip prefixes to posix paths without leading './' and without
-    trailing slashes (comparison is done with exact match or prefix + '/').
-    """
-    out: list[str] = []
-    for p in prefixes:
-        s = p.strip().replace("\\", "/")
-        if not s:
-            continue
-        if s.startswith("./"):
-            s = s[2:]
-        s = s.rstrip("/")
-        if s:
-            out.append(s)
-    # Ensure deterministic behavior if caller passes duplicates
-    return sorted(set(out))
-
-
-def _should_skip_relpath(rel_posix: str, skip_prefixes: list[str]) -> bool:
-    rel_posix = rel_posix.lstrip("./")
-    for prefix in skip_prefixes:
-        if rel_posix == prefix or rel_posix.startswith(prefix + "/"):
-            return True
-    return False
-
-
-def _sha256_file(path: Path) -> str:
-    h = hashlib.sha256()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1024 * 1024), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
-def _read_head_bytes(path: Path, n: int) -> bytes:
-    with path.open("rb") as f:
-        return f.read(n)
-
-
-def _looks_text(sample: bytes) -> bool:
-    # Fast heuristic: NUL bytes usually indicate binary.
-    if b"\x00" in sample:
-        return False
-    # If it decodes as UTF-8 (or mostly), treat as text.
-    try:
-        sample.decode("utf-8")
-        return True
-    except UnicodeDecodeError:
-        return False
-
-
-def _count_lines_utf8(path: Path, max_bytes: int) -> Optional[int]:
-    """
-    Count lines for reasonably sized text files only.
-    Returns None when file is too large or non-utf8-ish.
-    """
-    try:
-        size = path.stat().st_size
-    except FileNotFoundError:
-        return None
-    if size > max_bytes:
-        return None
-    try:
-        # Stream decode to avoid reading huge files (still bounded by max_bytes).
-        count = 0
-        with path.open("rb") as f:
-            for chunk in iter(lambda: f.read(1024 * 1024), b""):
-                if not chunk:
-                    break
-                count += chunk.count(b"\n")
-        return count + 1 if size > 0 else 0
-    except Exception:
-        return None
-
-
-def _safe_rel(path: Path) -> str:
-    return path.as_posix()
-
-
-def build_index(
-    repo_root: Path,
-    out_path: Path,
-    *,
-    mode: str,
-    max_hash_bytes: int,
-    include_content: bool,
-    max_content_bytes: int,
-    max_line_count_bytes: int,
-    skip_dir_names: set[str],
-    skip_prefixes: list[str],
-    max_files: Optional[int],
-) -> None:
-    git_info = _get_git_info(repo_root) if mode == "git" else GitInfo(None, None)
-    started_at = dt.datetime.now(dt.timezone.utc).isoformat()
-
-    if mode == "git":
-        files_iter: Iterable[Path] = _iter_files_git(repo_root)
-    elif mode == "walk":
-        files_iter = _iter_files_walk(repo_root, skip_dir_names=skip_dir_names)
-    else:
-        raise ValueError(f"Unknown mode: {mode}")
-
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-
-    total = 0
-    hashed = 0
-    with out_path.open("w", encoding="utf-8") as out:
-        out.write(
-            json.dumps(
-                {
-                    "type": "repo_meta",
-                    "repo_root": str(repo_root),
-                    "mode": mode,
-                    "git_branch": git_info.branch,
-                    "git_commit": git_info.commit,
-                    "started_at": started_at,
-                    "max_hash_bytes": max_hash_bytes,
-                    "include_content": include_content,
-                    "max_content_bytes": max_content_bytes,
-                    "max_line_count_bytes": max_line_count_bytes,
-                    "skip_prefixes": skip_prefixes,
-                },
-                ensure_ascii=False,
-            )
-            + "\n"
-        )
-
-        for rel in files_iter:
-            if max_files is not None and total >= max_files:
-                break
-
-            full = repo_root / rel
-            rel_str = _safe_rel(rel)
-
-            if _should_skip_relpath(rel_str, skip_prefixes):
-                continue
-
-            try:
-                st = full.lstat()
-            except FileNotFoundError:
-                continue
-
-            mime, _ = mimetypes.guess_type(str(full))
-            rec: dict[str, object] = {
-                "type": "file",
-                "path": rel_str,
-                "size": st.st_size,
-                "mtime": int(st.st_mtime),
-                "is_symlink": full.is_symlink(),
-                "mime": mime or "application/octet-stream",
-            }
-
-            # Text/binary heuristic (cheap sample)
-            is_text = False
-            try:
-                sample = _read_head_bytes(full, 8192) if st.st_size > 0 else b""
-                is_text = _looks_text(sample)
-            except Exception:
-                is_text = False
-            rec["is_text"] = is_text
-
-            if is_text:
-                rec["line_count"] = _count_lines_utf8(full, max_bytes=max_line_count_bytes)
-
-            if st.st_size <= max_hash_bytes and not full.is_symlink():
-                try:
-                    rec["sha256"] = _sha256_file(full)
-                    hashed += 1
-                except Exception:
-                    rec["sha256"] = None
-
-            if include_content and is_text and st.st_size <= max_content_bytes:
-                try:
-                    content = full.read_text(encoding="utf-8", errors="replace")
-                    rec["content"] = content
-                except Exception:
-                    rec["content"] = None
-
-            out.write(json.dumps(rec, ensure_ascii=False) + "\n")
-            total += 1
-
-        out.write(
-            json.dumps(
-                {
-                    "type": "repo_summary",
-                    "total_files_written": total,
-                    "hashed_files": hashed,
-                    "ended_at": dt.datetime.now(dt.timezone.utc).isoformat(),
-                },
-                ensure_ascii=False,
-            )
-            + "\n"
-        )
-
-    print(f"Wrote {total:,} file records to {out_path}")
-
-
-def main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(description="Index the proc_suite repo into JSONL.")
-    parser.add_argument(
-        "--root",
-        default=None,
-        help="Repo root (default: detected git root from current working directory).",
-    )
-    parser.add_argument(
-        "--out",
-        default="repo_index_all.jsonl",
-        help="Output JSONL path (default: repo_root/repo_index_all.jsonl).",
-    )
-    parser.add_argument(
-        "--mode",
-        choices=["git", "walk"],
-        default="git",
-        help="File discovery mode: 'git' (tracked+unignored) or 'walk' (filesystem).",
-    )
-    parser.add_argument(
-        "--max-hash-bytes",
-        type=int,
-        default=10_000_000,
-        help="Only hash files <= this size in bytes (default: 10,000,000).",
-    )
-    parser.add_argument(
-        "--include-content",
-        action="store_true",
-        help="Include full UTF-8 content for small text files (off by default).",
-    )
-    parser.add_argument(
-        "--max-content-bytes",
-        type=int,
-        default=128_000,
-        help="Only include content for text files <= this size (default: 128,000).",
-    )
-    parser.add_argument(
-        "--max-line-count-bytes",
-        type=int,
-        default=2_000_000,
-        help="Only compute line counts for text files <= this size (default: 2,000,000).",
-    )
-    parser.add_argument(
-        "--skip-dir",
-        action="append",
-        default=[],
-        help="Directory name to skip (can be repeated). Only applies to --mode walk.",
-    )
-    parser.add_argument(
-        "--skip-prefix",
-        action="append",
-        default=[],
-        help="Repo-relative path prefix to skip (can be repeated). Applies to all modes.",
-    )
-    parser.add_argument(
-        "--no-default-skip-prefixes",
-        action="store_true",
-        help="Disable the built-in skip prefixes list.",
-    )
-    parser.add_argument(
-        "--max-files",
-        type=int,
-        default=None,
-        help="Optional cap for quick runs/debugging.",
-    )
-
-    args = parser.parse_args(argv)
-
-    repo_root: Optional[Path]
-    if args.root:
-        repo_root = Path(args.root).resolve()
-    else:
-        repo_root = _get_git_root(Path.cwd())
-
-    if not repo_root or not repo_root.exists():
-        print("ERROR: Could not determine repo root. Pass --root explicitly.", file=sys.stderr)
-        return 2
-
-    out_path = Path(args.out)
-    if not out_path.is_absolute():
-        out_path = repo_root / out_path
-
-    skip_dir_names = set(DEFAULT_SKIP_DIR_NAMES)
-    skip_dir_names.update(args.skip_dir)
-
-    skip_prefixes: list[str] = []
-    if not args.no_default_skip_prefixes:
-        skip_prefixes.extend(DEFAULT_SKIP_PREFIXES)
-    skip_prefixes.extend(args.skip_prefix)
-    skip_prefixes = _normalize_skip_prefixes(skip_prefixes)
-
-    try:
-        build_index(
-            repo_root=repo_root,
-            out_path=out_path,
-            mode=args.mode,
-            max_hash_bytes=args.max_hash_bytes,
-            include_content=args.include_content,
-            max_content_bytes=args.max_content_bytes,
-            max_line_count_bytes=args.max_line_count_bytes,
-            skip_dir_names=skip_dir_names,
-            skip_prefixes=skip_prefixes,
-            max_files=args.max_files,
-        )
-    except KeyboardInterrupt:
-        print("Interrupted.", file=sys.stderr)
-        return 130
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main(sys.argv[1:]))
-
-```
-
----
-### `scripts/review_llm_fallback_errors.py`
-- Size: `14532` bytes
-```
-#!/usr/bin/env python3
-"""
-Error review pipeline for LLM fallback cases.
-
-Identifies cases where:
-- source="hybrid_llm_fallback" (LLM was used as final judge)
-- prediction ≠ golden codes (the output was incorrect)
-
-Outputs a review file with detailed context for manual inspection
-and potential addition to training data.
-
-Usage:
-    python scripts/review_llm_fallback_errors.py
-    python scripts/review_llm_fallback_errors.py --input data/eval_results/eval_errors_*.jsonl
-    python scripts/review_llm_fallback_errors.py --run-fresh  # Re-run evaluation first
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-from collections import defaultdict
-from dataclasses import dataclass
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Set
-
-import pandas as pd
-
-import sys
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-
-@dataclass
-class ReviewCase:
-    """A case requiring review."""
-    idx: int
-    dataset: str
-    note_preview: str
-    gold_codes: List[str]
-    predicted_codes: List[str]
-    ml_only_codes: List[str]
-    source: str
-    difficulty: str
-    false_positives: List[str]
-    false_negatives: List[str]
-    fallback_reason: str = ""
-    rules_error: str = ""
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "idx": self.idx,
-            "dataset": self.dataset,
-            "note_preview": self.note_preview,
-            "gold_codes": self.gold_codes,
-            "predicted_codes": self.predicted_codes,
-            "ml_only_codes": self.ml_only_codes,
-            "source": self.source,
-            "difficulty": self.difficulty,
-            "false_positives": self.false_positives,
-            "false_negatives": self.false_negatives,
-            "fallback_reason": self.fallback_reason,
-            "rules_error": self.rules_error,
-        }
-
-
-def load_errors_from_jsonl(path: Path) -> List[Dict[str, Any]]:
-    """Load error cases from JSONL file."""
-    errors = []
-    with open(path) as f:
-        for line in f:
-            if line.strip():
-                errors.append(json.loads(line))
-    return errors
-
-
-def filter_llm_fallback_errors(errors: List[Dict[str, Any]]) -> List[ReviewCase]:
-    """Filter to only LLM fallback cases with prediction errors."""
-    return filter_errors_by_source(errors, source_filter="hybrid_llm_fallback")
-
-
-def filter_fastpath_errors(errors: List[Dict[str, Any]]) -> List[ReviewCase]:
-    """Filter to only fast path (ML+Rules) cases with prediction errors."""
-    return filter_errors_by_source(errors, source_filter="ml_rules_fastpath")
-
-
-def filter_errors_by_source(
-    errors: List[Dict[str, Any]],
-    source_filter: str | None = None,
-) -> List[ReviewCase]:
-    """Filter errors by source type."""
-    review_cases = []
-
-    for error in errors:
-        source = error.get("source", "")
-
-        # Apply source filter if specified
-        if source_filter and source != source_filter:
-            continue
-
-        # Skip if it was an exception, not a prediction error
-        if "error" in error and "gold" not in error:
-            continue
-
-        review_cases.append(ReviewCase(
-            idx=error.get("idx", -1),
-            dataset=error.get("dataset", "unknown"),
-            note_preview=error.get("note_preview", ""),
-            gold_codes=error.get("gold", []),
-            predicted_codes=error.get("predicted", []),
-            ml_only_codes=error.get("ml_only", []),
-            source=source,
-            difficulty=error.get("difficulty", "unknown"),
-            false_positives=error.get("false_positives", []),
-            false_negatives=error.get("false_negatives", []),
-            fallback_reason=error.get("reason_for_fallback", ""),
-            rules_error=error.get("rules_error", ""),
-        ))
-
-    return review_cases
-
-
-def analyze_error_patterns(cases: List[ReviewCase]) -> Dict[str, Any]:
-    """Analyze patterns in error cases."""
-    analysis = {
-        "total_llm_fallback_errors": len(cases),
-        "by_difficulty": defaultdict(int),
-        "by_fallback_reason": defaultdict(int),
-        "common_false_positives": defaultdict(int),
-        "common_false_negatives": defaultdict(int),
-        "ml_would_have_been_correct": 0,
-        "ml_partial_overlap": 0,
-    }
-
-    for case in cases:
-        analysis["by_difficulty"][case.difficulty] += 1
-
-        # Parse fallback reason
-        if "gray_zone" in case.fallback_reason:
-            analysis["by_fallback_reason"]["gray_zone"] += 1
-        elif "low_confidence" in case.fallback_reason:
-            analysis["by_fallback_reason"]["low_confidence"] += 1
-        elif "rule_conflict" in case.fallback_reason:
-            analysis["by_fallback_reason"]["rule_conflict"] += 1
-        else:
-            analysis["by_fallback_reason"]["other"] += 1
-
-        # Track common error codes
-        for code in case.false_positives:
-            analysis["common_false_positives"][code] += 1
-        for code in case.false_negatives:
-            analysis["common_false_negatives"][code] += 1
-
-        # Check if ML alone would have been correct
-        gold_set = set(case.gold_codes)
-        ml_set = set(case.ml_only_codes)
-        if ml_set == gold_set:
-            analysis["ml_would_have_been_correct"] += 1
-        elif ml_set & gold_set:
-            analysis["ml_partial_overlap"] += 1
-
-    # Convert defaultdicts to regular dicts for JSON serialization
-    analysis["by_difficulty"] = dict(analysis["by_difficulty"])
-    analysis["by_fallback_reason"] = dict(analysis["by_fallback_reason"])
-    analysis["common_false_positives"] = dict(
-        sorted(analysis["common_false_positives"].items(), key=lambda x: -x[1])[:10]
-    )
-    analysis["common_false_negatives"] = dict(
-        sorted(analysis["common_false_negatives"].items(), key=lambda x: -x[1])[:10]
-    )
-
-    return analysis
-
-
-def generate_review_report(
-    cases: List[ReviewCase],
-    analysis: Dict[str, Any],
-    output_dir: Path,
-    report_prefix: str = "llm_fallback",
-) -> Path:
-    """Generate a human-readable review report."""
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_path = output_dir / f"{report_prefix}_review_{timestamp}.md"
-
-    with open(report_path, "w") as f:
-        title = report_prefix.replace("_", " ").title()
-        f.write(f"# {title} Error Review Report\n\n")
-        f.write(f"Generated: {datetime.now().isoformat()}\n\n")
-
-        f.write("## Summary\n\n")
-        f.write(f"- Total errors reviewed: **{analysis['total_llm_fallback_errors']}**\n")
-        f.write(f"- Cases where ML alone was correct: {analysis['ml_would_have_been_correct']}\n")
-        f.write(f"- Cases where ML had partial overlap: {analysis['ml_partial_overlap']}\n\n")
-
-        f.write("### Errors by Difficulty\n\n")
-        for diff, count in sorted(analysis["by_difficulty"].items()):
-            f.write(f"- {diff}: {count}\n")
-
-        f.write("\n### Errors by Fallback Reason\n\n")
-        for reason, count in sorted(analysis["by_fallback_reason"].items()):
-            f.write(f"- {reason}: {count}\n")
-
-        f.write("\n### Common False Positives (LLM suggested but shouldn't have)\n\n")
-        for code, count in analysis["common_false_positives"].items():
-            f.write(f"- {code}: {count} occurrences\n")
-
-        f.write("\n### Common False Negatives (LLM missed)\n\n")
-        for code, count in analysis["common_false_negatives"].items():
-            f.write(f"- {code}: {count} occurrences\n")
-
-        f.write("\n---\n\n")
-        f.write("## Cases for Review\n\n")
-
-        for i, case in enumerate(cases, 1):
-            f.write(f"### Case {i} (idx={case.idx}, {case.dataset})\n\n")
-            f.write(f"**Difficulty:** {case.difficulty}\n\n")
-            f.write(f"**Fallback Reason:** {case.fallback_reason or 'N/A'}\n\n")
-
-            if case.rules_error:
-                f.write(f"**Rules Error:** {case.rules_error}\n\n")
-
-            f.write("**Codes:**\n")
-            f.write(f"- Gold: `{', '.join(case.gold_codes)}`\n")
-            f.write(f"- Predicted: `{', '.join(case.predicted_codes)}`\n")
-            f.write(f"- ML-only: `{', '.join(case.ml_only_codes)}`\n\n")
-
-            if case.false_positives:
-                f.write(f"- ❌ False Positives: `{', '.join(case.false_positives)}`\n")
-            if case.false_negatives:
-                f.write(f"- ⚠️ False Negatives: `{', '.join(case.false_negatives)}`\n")
-
-            f.write("\n**Note Preview:**\n")
-            f.write("```\n")
-            f.write(case.note_preview[:500])
-            if len(case.note_preview) > 500:
-                f.write("...[truncated]")
-            f.write("\n```\n\n")
-
-            # Actionable recommendation
-            f.write("**Recommendation:** ")
-            if set(case.ml_only_codes) == set(case.gold_codes):
-                f.write("ML was correct but LLM overrode it. Review LLM prompt constraints.\n")
-            elif case.false_negatives and not case.false_positives:
-                f.write("LLM missed codes. Consider adding to training data or improving prompt.\n")
-            elif case.false_positives and not case.false_negatives:
-                f.write("LLM hallucinated codes. Review prompt constraints for these codes.\n")
-            else:
-                f.write("Mixed errors. Manual review needed.\n")
-
-            f.write("\n---\n\n")
-
-    return report_path
-
-
-def run_fresh_evaluation() -> Path:
-    """Run the evaluation script and return the errors file path."""
-    import subprocess
-
-    print("Running fresh evaluation...")
-    result = subprocess.run(
-        ["python3", "scripts/eval_hybrid_pipeline.py"],
-        capture_output=True,
-        text=True,
-    )
-
-    if result.returncode != 0:
-        print(f"Evaluation failed: {result.stderr}")
-        raise RuntimeError("Evaluation failed")
-
-    # Find the most recent errors file
-    errors_dir = Path("data/eval_results")
-    errors_files = sorted(errors_dir.glob("eval_errors_*.jsonl"), reverse=True)
-    if not errors_files:
-        raise FileNotFoundError("No errors file found after evaluation")
-
-    return errors_files[0]
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Review pipeline prediction errors")
-    parser.add_argument(
-        "--input",
-        type=Path,
-        help="Path to errors JSONL file (default: most recent in data/eval_results/)",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path("data/eval_results"),
-        help="Output directory for review report",
-    )
-    parser.add_argument(
-        "--run-fresh",
-        action="store_true",
-        help="Run fresh evaluation before analyzing errors",
-    )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        help="Also output cases as JSON for programmatic use",
-    )
-    parser.add_argument(
-        "--mode",
-        choices=["llm_fallback", "fastpath", "all"],
-        default="all",
-        help="Which errors to review: llm_fallback, fastpath, or all (default: all)",
-    )
-    args = parser.parse_args()
-
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-
-    # Find or generate errors file
-    if args.run_fresh:
-        errors_path = run_fresh_evaluation()
-    elif args.input:
-        errors_path = args.input
-    else:
-        # Find most recent errors file
-        errors_dir = Path("data/eval_results")
-        errors_files = sorted(errors_dir.glob("eval_errors_*.jsonl"), reverse=True)
-        if not errors_files:
-            print("No errors file found. Run with --run-fresh to generate one.")
-            return
-        errors_path = errors_files[0]
-
-    print(f"Loading errors from: {errors_path}")
-    errors = load_errors_from_jsonl(errors_path)
-    print(f"  Total error entries: {len(errors)}")
-
-    # Filter errors based on mode
-    if args.mode == "llm_fallback":
-        review_cases = filter_llm_fallback_errors(errors)
-        report_prefix = "llm_fallback"
-        mode_desc = "LLM fallback"
-    elif args.mode == "fastpath":
-        review_cases = filter_fastpath_errors(errors)
-        report_prefix = "fastpath"
-        mode_desc = "fast path (ML+Rules)"
-    else:
-        review_cases = filter_errors_by_source(errors, source_filter=None)
-        report_prefix = "all_errors"
-        mode_desc = "all"
-
-    print(f"  {mode_desc.capitalize()} errors: {len(review_cases)}")
-
-    if not review_cases:
-        print(f"No {mode_desc} errors found. The pipeline is performing well!")
-        return
-
-    # Analyze patterns
-    analysis = analyze_error_patterns(review_cases)
-
-    # Generate report
-    report_path = generate_review_report(
-        review_cases, analysis, args.output_dir, report_prefix=report_prefix
-    )
-    print(f"\nReview report saved to: {report_path}")
-
-    # Optionally output JSON
-    if args.json:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        json_path = args.output_dir / f"{report_prefix}_cases_{timestamp}.json"
-        with open(json_path, "w") as f:
-            json.dump({
-                "analysis": analysis,
-                "cases": [c.to_dict() for c in review_cases],
-            }, f, indent=2)
-        print(f"JSON output saved to: {json_path}")
-
-    # Print summary
-    print("\n" + "=" * 60)
-    print(f"SUMMARY ({mode_desc.upper()} ERRORS)")
-    print("=" * 60)
-    print(f"Total errors: {len(review_cases)}")
-
-    # Break down by source if showing all
-    if args.mode == "all":
-        by_source = defaultdict(int)
-        for case in review_cases:
-            by_source[case.source] += 1
-        print("\nBy source:")
-        for source, count in sorted(by_source.items(), key=lambda x: -x[1]):
-            print(f"  {source}: {count}")
-
-    print(f"\nCases where ML alone was correct: {analysis['ml_would_have_been_correct']}")
-    print(f"\nBy difficulty:")
-    for diff, count in sorted(analysis["by_difficulty"].items(), key=lambda x: -x[1]):
-        print(f"  {diff}: {count}")
-
-    if analysis["by_fallback_reason"]:
-        print(f"\nBy fallback reason:")
-        for reason, count in sorted(analysis["by_fallback_reason"].items(), key=lambda x: -x[1]):
-            print(f"  {reason}: {count}")
-
-    print(f"\nTop false positive codes (predicted but shouldn't have):")
-    for code, count in list(analysis["common_false_positives"].items())[:5]:
-        print(f"  {code}: {count}")
-    print(f"\nTop false negative codes (missed):")
-    for code, count in list(analysis["common_false_negatives"].items())[:5]:
-        print(f"  {code}: {count}")
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-### `scripts/quantize_to_onnx.py`
-- Size: `14742` bytes
-```
-#!/usr/bin/env python3
-"""Export trained BiomedBERT model to ONNX and apply INT8 quantization.
-
-This script converts the trained PyTorch model to ONNX format and applies
-dynamic INT8 quantization for efficient CPU inference on Railway.
-
-Results:
-- Model size: ~440MB -> ~110MB
-- Inference speed: ~3x faster
-- Accuracy loss: < 1%
-
-Usage:
-    python scripts/quantize_to_onnx.py --model-dir data/models/roberta_registry
-    python scripts/quantize_to_onnx.py --model-dir data/models/roberta_registry --validate
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-from pathlib import Path
-from typing import TYPE_CHECKING
-
-import numpy as np
-import torch
-import torch.nn as nn
-from transformers import AutoConfig, AutoModel, AutoTokenizer
-
-if TYPE_CHECKING:
-    import onnxruntime as ort
-
-
-# ============================================================================
-# Model Definition (must match training script)
-# ============================================================================
-
-class BiomedBERTMultiLabel(nn.Module):
-    """BiomedBERT with multi-label classification head."""
-
-    def __init__(
-        self,
-        model_name: str,
-        num_labels: int,
-        pos_weight: torch.Tensor | None = None,
-        dropout: float = 0.1,
-    ):
-        super().__init__()
-
-        self.config = AutoConfig.from_pretrained(model_name)
-        self.bert = AutoModel.from_pretrained(model_name)
-        self.dropout = nn.Dropout(dropout)
-        self.classifier = nn.Linear(self.config.hidden_size, num_labels)
-
-        if pos_weight is not None:
-            self.register_buffer("pos_weight", pos_weight)
-        else:
-            self.pos_weight = None
-
-    def forward(
-        self,
-        input_ids: torch.Tensor,
-        attention_mask: torch.Tensor,
-    ) -> torch.Tensor:
-        """Forward pass returning logits only (no loss for inference)."""
-        outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
-        pooled = outputs.last_hidden_state[:, 0, :]
-        pooled = self.dropout(pooled)
-        logits = self.classifier(pooled)
-        return logits
-
-    @classmethod
-    def from_pretrained(cls, path: Path, num_labels: int) -> "BiomedBERTMultiLabel":
-        """Load model from directory."""
-        path = Path(path)
-
-        # Load pos_weight if present
-        pos_weight_path = path / "pos_weight.pt"
-        pos_weight = torch.load(pos_weight_path, map_location="cpu") if pos_weight_path.exists() else None
-
-        # Create model
-        model = cls(
-            model_name=str(path),
-            num_labels=num_labels,
-            pos_weight=pos_weight,
-        )
-
-        # Load classifier weights
-        classifier_path = path / "classifier.pt"
-        if classifier_path.exists():
-            model.classifier.load_state_dict(torch.load(classifier_path, map_location="cpu"))
-
-        return model
-
-
-# ============================================================================
-# ONNX Export
-# ============================================================================
-
-def export_to_onnx(
-    model: BiomedBERTMultiLabel,
-    output_path: Path,
-    max_length: int = 512,
-    opset_version: int = 14,
-) -> None:
-    """Export PyTorch model to ONNX format.
-
-    Args:
-        model: Trained BiomedBERT model
-        output_path: Path for output ONNX file
-        max_length: Maximum sequence length
-        opset_version: ONNX opset version (14 for good RoBERTa/BERT compatibility)
-    """
-    model.eval()
-
-    # Create dummy inputs
-    batch_size = 1
-    dummy_input_ids = torch.randint(0, 30522, (batch_size, max_length))
-    dummy_attention_mask = torch.ones(batch_size, max_length, dtype=torch.long)
-
-    # Export
-    print(f"Exporting model to ONNX: {output_path}")
-
-    torch.onnx.export(
-        model,
-        (dummy_input_ids, dummy_attention_mask),
-        str(output_path),
-        input_names=["input_ids", "attention_mask"],
-        output_names=["logits"],
-        dynamic_axes={
-            "input_ids": {0: "batch_size", 1: "sequence_length"},
-            "attention_mask": {0: "batch_size", 1: "sequence_length"},
-            "logits": {0: "batch_size"},
-        },
-        opset_version=opset_version,
-        do_constant_folding=True,
-        export_params=True,
-    )
-
-    # Verify export
-    import onnx
-    onnx_model = onnx.load(str(output_path))
-    onnx.checker.check_model(onnx_model)
-    print(f"  ONNX model verified successfully")
-
-    # Print model size
-    size_mb = output_path.stat().st_size / (1024 * 1024)
-    print(f"  Model size: {size_mb:.1f} MB")
-
-
-# ============================================================================
-# INT8 Quantization
-# ============================================================================
-
-def quantize_model(
-    onnx_path: Path,
-    output_path: Path,
-) -> None:
-    """Apply dynamic INT8 quantization to ONNX model.
-
-    Uses dynamic quantization which quantizes weights to INT8 but keeps
-    activations in FP32. This provides good speedup with minimal accuracy loss.
-
-    Args:
-        onnx_path: Path to unquantized ONNX model
-        output_path: Path for quantized output
-    """
-    from onnxruntime.quantization import quantize_dynamic, QuantType
-
-    print(f"Quantizing model: {onnx_path} -> {output_path}")
-
-    quantize_dynamic(
-        model_input=str(onnx_path),
-        model_output=str(output_path),
-        weight_type=QuantType.QUInt8,
-        optimize_model=True,
-    )
-
-    # Print size comparison
-    original_size = onnx_path.stat().st_size / (1024 * 1024)
-    quantized_size = output_path.stat().st_size / (1024 * 1024)
-    reduction = (1 - quantized_size / original_size) * 100
-
-    print(f"  Original size: {original_size:.1f} MB")
-    print(f"  Quantized size: {quantized_size:.1f} MB")
-    print(f"  Size reduction: {reduction:.1f}%")
-
-
-# ============================================================================
-# Validation
-# ============================================================================
-
-def validate_quantized_model(
-    original_model: BiomedBERTMultiLabel,
-    quantized_onnx_path: Path,
-    tokenizer_path: Path,
-    test_texts: list[str],
-    test_labels: np.ndarray,
-    label_names: list[str],
-    thresholds: dict[str, float],
-    max_length: int = 512,
-) -> dict:
-    """Compare quantized ONNX model against original PyTorch model.
-
-    Args:
-        original_model: Original PyTorch model
-        quantized_onnx_path: Path to quantized ONNX model
-        tokenizer_path: Path to tokenizer
-        test_texts: List of test note texts
-        test_labels: Test labels array
-        label_names: List of label names
-        thresholds: Per-label thresholds
-        max_length: Maximum sequence length
-
-    Returns:
-        Dict with accuracy comparison metrics
-    """
-    import onnxruntime as ort
-    from sklearn.metrics import f1_score
-
-    print("\nValidating quantized model against original...")
-
-    # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))
-
-    # Load ONNX model
-    sess_options = ort.SessionOptions()
-    sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-    onnx_session = ort.InferenceSession(
-        str(quantized_onnx_path),
-        sess_options=sess_options,
-        providers=["CPUExecutionProvider"],
-    )
-
-    original_model.eval()
-
-    # Run predictions
-    pytorch_probs = []
-    onnx_probs = []
-
-    for text in test_texts[:100]:  # Sample for speed
-        # Tokenize
-        encoding = tokenizer(
-            text,
-            max_length=max_length,
-            padding="max_length",
-            truncation=True,
-            return_tensors="pt",
-        )
-
-        # PyTorch prediction
-        with torch.no_grad():
-            logits = original_model(
-                encoding["input_ids"],
-                encoding["attention_mask"],
-            )
-            probs = torch.sigmoid(logits).numpy()[0]
-            pytorch_probs.append(probs)
-
-        # ONNX prediction
-        onnx_inputs = {
-            "input_ids": encoding["input_ids"].numpy().astype(np.int64),
-            "attention_mask": encoding["attention_mask"].numpy().astype(np.int64),
-        }
-        onnx_logits = onnx_session.run(None, onnx_inputs)[0]
-        onnx_prob = 1 / (1 + np.exp(-onnx_logits[0]))  # Sigmoid
-        onnx_probs.append(onnx_prob)
-
-    pytorch_probs = np.array(pytorch_probs)
-    onnx_probs = np.array(onnx_probs)
-
-    # Compare predictions
-    diff = np.abs(pytorch_probs - onnx_probs)
-    max_diff = diff.max()
-    mean_diff = diff.mean()
-
-    print(f"  Max probability difference: {max_diff:.6f}")
-    print(f"  Mean probability difference: {mean_diff:.6f}")
-
-    # Apply thresholds and compare F1
-    pytorch_preds = np.zeros_like(pytorch_probs)
-    onnx_preds = np.zeros_like(onnx_probs)
-
-    for i, label in enumerate(label_names):
-        thresh = thresholds.get(label, 0.5)
-        pytorch_preds[:, i] = (pytorch_probs[:, i] >= thresh).astype(int)
-        onnx_preds[:, i] = (onnx_probs[:, i] >= thresh).astype(int)
-
-    # Calculate F1 for both
-    test_labels_subset = test_labels[:100]
-
-    pytorch_f1 = f1_score(test_labels_subset.ravel(), pytorch_preds.ravel(), zero_division=0)
-    onnx_f1 = f1_score(test_labels_subset.ravel(), onnx_preds.ravel(), zero_division=0)
-
-    print(f"  PyTorch F1: {pytorch_f1:.4f}")
-    print(f"  ONNX F1: {onnx_f1:.4f}")
-    print(f"  F1 difference: {abs(pytorch_f1 - onnx_f1):.4f}")
-
-    # Check if predictions match
-    pred_match = (pytorch_preds == onnx_preds).all(axis=1).mean()
-    print(f"  Prediction match rate: {pred_match * 100:.1f}%")
-
-    return {
-        "max_prob_diff": float(max_diff),
-        "mean_prob_diff": float(mean_diff),
-        "pytorch_f1": float(pytorch_f1),
-        "onnx_f1": float(onnx_f1),
-        "f1_diff": float(abs(pytorch_f1 - onnx_f1)),
-        "prediction_match_rate": float(pred_match),
-    }
-
-
-# ============================================================================
-# Main
-# ============================================================================
-
-def main():
-    """Parse arguments and run export/quantization."""
-    parser = argparse.ArgumentParser(
-        description="Export and quantize BiomedBERT model to ONNX INT8"
-    )
-
-    parser.add_argument(
-        "--model-dir",
-        type=Path,
-        required=True,
-        help="Path to trained model directory",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path("models"),
-        help="Output directory for ONNX files (default: models/)",
-    )
-    parser.add_argument(
-        "--validate",
-        action="store_true",
-        help="Validate quantized model against original",
-    )
-    parser.add_argument(
-        "--test-csv",
-        type=Path,
-        default=Path("data/ml_training/registry_test.csv"),
-        help="Test CSV for validation",
-    )
-    parser.add_argument(
-        "--skip-full-export",
-        action="store_true",
-        help="Skip full ONNX export, only do quantization",
-    )
-
-    args = parser.parse_args()
-
-    # Paths
-    model_dir = args.model_dir
-    output_dir = args.output_dir
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    onnx_path = output_dir / "registry_model.onnx"
-    quantized_path = output_dir / "registry_model_int8.onnx"
-    tokenizer_path = model_dir / "tokenizer"
-
-    # Load label fields
-    label_fields_path = Path("data/ml_training/registry_label_fields.json")
-    with open(label_fields_path) as f:
-        label_names = json.load(f)
-    num_labels = len(label_names)
-
-    print(f"\n{'=' * 60}")
-    print("ONNX Export and Quantization")
-    print(f"{'=' * 60}")
-    print(f"Model directory: {model_dir}")
-    print(f"Output directory: {output_dir}")
-    print(f"Number of labels: {num_labels}")
-
-    # Load model
-    print("\nLoading PyTorch model...")
-    model = BiomedBERTMultiLabel.from_pretrained(model_dir, num_labels)
-    model.eval()
-
-    # Export to ONNX
-    if not args.skip_full_export:
-        print("\n" + "=" * 40)
-        print("Step 1: Export to ONNX")
-        print("=" * 40)
-        export_to_onnx(model, onnx_path)
-
-    # Quantize
-    print("\n" + "=" * 40)
-    print("Step 2: INT8 Quantization")
-    print("=" * 40)
-
-    if onnx_path.exists():
-        quantize_model(onnx_path, quantized_path)
-    else:
-        print(f"ERROR: ONNX model not found at {onnx_path}")
-        return
-
-    # Validate
-    if args.validate:
-        print("\n" + "=" * 40)
-        print("Step 3: Validation")
-        print("=" * 40)
-
-        # Load test data
-        import pandas as pd
-        test_df = pd.read_csv(args.test_csv)
-        test_texts = test_df["note_text"].fillna("").tolist()
-
-        exclude_cols = {"note_text", "verified_cpt_codes"}
-        label_cols = [c for c in test_df.columns if c not in exclude_cols]
-        test_labels = test_df[label_cols].fillna(0).astype(int).to_numpy()
-
-        # Load thresholds
-        thresholds_path = model_dir.parent / "roberta_registry_thresholds.json"
-        if thresholds_path.exists():
-            with open(thresholds_path) as f:
-                thresholds = json.load(f)
-        else:
-            thresholds = {name: 0.5 for name in label_names}
-
-        validation_results = validate_quantized_model(
-            original_model=model,
-            quantized_onnx_path=quantized_path,
-            tokenizer_path=tokenizer_path,
-            test_texts=test_texts,
-            test_labels=test_labels,
-            label_names=label_names,
-            thresholds=thresholds,
-        )
-
-        # Save validation results
-        results_path = output_dir / "quantization_validation.json"
-        with open(results_path, "w") as f:
-            json.dump(validation_results, f, indent=2)
-        print(f"\nValidation results saved to: {results_path}")
-
-    # Copy tokenizer to output dir
-    print("\n" + "=" * 40)
-    print("Step 4: Copy Tokenizer")
-    print("=" * 40)
-
-    tokenizer_out = output_dir / "roberta_registry_tokenizer"
-    if tokenizer_path.exists():
-        import shutil
-        if tokenizer_out.exists():
-            shutil.rmtree(tokenizer_out)
-        shutil.copytree(tokenizer_path, tokenizer_out)
-        print(f"Tokenizer copied to: {tokenizer_out}")
-    else:
-        print(f"WARNING: Tokenizer not found at {tokenizer_path}")
-
-    # Summary
-    print(f"\n{'=' * 60}")
-    print("Export Complete!")
-    print(f"{'=' * 60}")
-    print(f"ONNX model: {onnx_path}")
-    print(f"Quantized model: {quantized_path}")
-    print(f"Tokenizer: {tokenizer_out}")
-
-    if quantized_path.exists():
-        size_mb = quantized_path.stat().st_size / (1024 * 1024)
-        print(f"\nFinal model size: {size_mb:.1f} MB")
-        print("Ready for Railway deployment!")
-
-
-if __name__ == "__main__":
-    main()
 
 ```

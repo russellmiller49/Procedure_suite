@@ -135,7 +135,13 @@ class RoboticNavigationAdapter(ExtractionAdapter):
     @classmethod
     def matches(cls, source: dict[str, Any]) -> bool:
         platform = _nav_platform(source)
-        platform_match = platform in ("ion", "monarch", "auris", "robotic") or "ion" in platform or "monarch" in platform or "robot" in platform
+        platform_match = (
+            platform in ("ion", "monarch", "auris", "robotic", "galaxy")
+            or "ion" in platform
+            or "monarch" in platform
+            or "robot" in platform
+            or "galaxy" in platform
+        )
         has_nav_details = bool(
             source.get("nav_registration_method")
             or source.get("nav_registration_error_mm") is not None

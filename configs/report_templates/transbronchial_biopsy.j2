@@ -1,6 +1,6 @@
-Bronchoscopy{% if patient and patient.sex %} via {% if patient.sex|lower == "male" or patient.sex|lower == "female" %}endotracheal tube{% else %}airway{% endif %}{% endif %}{% if proc.notes %} for {{ proc.notes | lower }}{% elif indication_text %} for {{ indication_text | lower }}{% endif %}.
+{% if proc.notes %}Indication: {{ proc.notes }}.{% elif indication_text %}Indication: {{ indication_text }}.{% endif %}
 
-{% if proc.guidance %}Under {{ proc.guidance | lower }} guidance,{% else %}Under fluoroscopic guidance,{% endif %}{% if proc.number_of_biopsies is not none %} {{ proc.number_of_biopsies }} transbronchial biopsies{% else %} transbronchial biopsies{% endif %} were obtained from the {{ proc.lobe }}{% if proc.segment %} {{ proc.segment }} segment{% endif %} using {{ proc.tool | lower if proc.tool else "forceps" }}.
+{% if proc.guidance %}Under {{ proc.guidance | lower | replace('fluoroscopy', 'fluoroscopic') }} guidance,{% else %}Under fluoroscopic guidance,{% endif %}{% if proc.number_of_biopsies is not none %} {{ proc.number_of_biopsies }} transbronchial biops{% if proc.number_of_biopsies == 1 %}y{% else %}ies{% endif %}{% else %} transbronchial biopsies{% endif %} were obtained from the {{ proc.lobe }}{% if proc.segment %} {{ proc.segment }} segment{% endif %}{% if proc.tool %} using {{ proc.tool | lower }}{% endif %}.
 
 {% if proc.complications %}There were no immediate complications: {{ proc.complications }}.{% else %}There were no immediate complications, with no significant bleeding or pneumothorax observed.{% endif %}
 

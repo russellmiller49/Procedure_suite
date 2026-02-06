@@ -1,1 +1,2 @@
-Radial endobronchial ultrasound was performed at the {{ proc.location }}{% if proc.rebus_features %}, demonstrating an {{ proc.rebus_features | lower }} pattern{% endif %}.{% if proc.notes %} Notes: {{ proc.notes }}.{% endif %}
+{% set _pattern = (proc.rebus_features or "") | lower %}
+Radial endobronchial ultrasound was performed at the {{ proc.location }}{% if _pattern %}, demonstrating {% if _pattern.startswith('e') %}an{% else %}a{% endif %} {{ _pattern }} pattern{% endif %}.{% if proc.notes %} Notes: {{ proc.notes }}.{% endif %}

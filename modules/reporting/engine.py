@@ -56,6 +56,9 @@ from modules.reporting.macro_engine import (
     CATEGORY_MACROS,
 )
 from modules.reporting.partial_schemas import (
+    BALPartial,
+    BronchialBrushingPartial,
+    BronchialWashingPartial,
     TransbronchialCryobiopsyPartial,
     TransbronchialNeedleAspirationPartial,
 )
@@ -1119,10 +1122,10 @@ def default_schema_registry() -> SchemaRegistry:
         "stent_surveillance_v1": airway_schemas.AirwayStentSurveillance,
         "whole_lung_lavage_v1": airway_schemas.WholeLungLavage,
         "eusb_v1": airway_schemas.EUSB,
-        "bal_v1": airway_schemas.BAL,
+        "bal_v1": BALPartial,
         "bal_alt_v1": airway_schemas.BronchoalveolarLavageAlt,
-        "bronchial_washing_v1": airway_schemas.BronchialWashing,
-        "bronchial_brushings_v1": airway_schemas.BronchialBrushing,
+        "bronchial_washing_v1": BronchialWashingPartial,
+        "bronchial_brushings_v1": BronchialBrushingPartial,
         "endobronchial_biopsy_v1": airway_schemas.EndobronchialBiopsy,
         "transbronchial_lung_biopsy_v1": airway_schemas.TransbronchialLungBiopsy,
         "transbronchial_needle_aspiration_v1": TransbronchialNeedleAspirationPartial,
@@ -1334,6 +1337,69 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             return "LLL"
         return None
 
+    def _extract_bronch_segment_hint(text: str) -> str | None:
+        """Best-effort bronchopulmonary segment token (e.g., RB10, LB6, B6)."""
+        if not text:
+            return None
+        upper = text.upper()
+        match = re.search(r"\b([RL]B\d{1,2})\b", upper)
+        if match:
+            return match.group(1)
+        match = re.search(r"\bB\d{1,2}\b", upper)
+        if match:
+            return match.group(0)
+        return None
+
+    def _infer_rebus_pattern(text: str) -> str | None:
+        if not text:
+            return None
+        lowered = text.lower()
+        if "concentric" in lowered:
+            return "Concentric"
+        if "eccentric" in lowered:
+            return "Eccentric"
+        return None
+
+    def _parse_count(text: str, pattern: str) -> int | None:
+        """Parse shorthand counts like 'TBNA x4' or 'Bx x 6'."""
+        if not text:
+            return None
+        match = re.search(pattern, text, flags=re.IGNORECASE)
+        if not match:
+            return None
+        try:
+            value = int(match.group(1))
+        except Exception:
+            return None
+        return value if value >= 0 else None
+
+    def _parse_operator(text: str) -> str | None:
+        if not text:
+            return None
+        match = re.search(r"(?im)^\s*(?:operator|attending)\s*:\s*(.+?)\s*$", text)
+        if not match:
+            return None
+        value = match.group(1).strip()
+        return value or None
+
+    def _parse_referred_physician(text: str) -> str | None:
+        if not text:
+            return None
+        match = re.search(r"(?im)^\s*(?:cc\s*)?referred\s+physician\s*:\s*(.+?)\s*$", text)
+        if not match:
+            return None
+        value = match.group(1).strip()
+        return value or None
+
+    def _parse_service_date(text: str) -> str | None:
+        if not text:
+            return None
+        match = re.search(r"(?im)^\s*(?:service\s*date|date\s+of\s+procedure)\s*:\s*(.+?)\s*$", text)
+        if not match:
+            return None
+        value = match.group(1).strip()
+        return value or None
+
     def _text_contains_tool_in_lesion(text: str) -> bool:
         if not text:
             return False
@@ -1439,9 +1505,47 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(clinical_context, dict):
         clinical_context = {}
 
+    # Bubble up key clinical-context fields used by bundle builder / shell.
+    if raw.get("primary_indication") in (None, "", [], {}):
+        primary = _first_nonempty_str(clinical_context.get("primary_indication"))
+        if primary:
+            raw["primary_indication"] = primary
+    if raw.get("radiographic_findings") in (None, "", [], {}):
+        findings = _first_nonempty_str(clinical_context.get("radiographic_findings"))
+        if findings:
+            raw["radiographic_findings"] = findings
+
     # Make the original (scrubbed) text available to compat mappers when callers provide it.
     source_text = _first_nonempty_str(raw.get("source_text"), raw.get("note_text"), raw.get("raw_note"), raw.get("text"))
     location_hint = _extract_lung_location_hint(source_text or "")
+    segment_hint = _extract_bronch_segment_hint(source_text or "")
+
+    # Bubble up operator/referrer/date hints when missing.
+    if raw.get("attending_name") in (None, "", [], {}) and source_text:
+        operator = _parse_operator(source_text)
+        if operator:
+            raw["attending_name"] = operator
+    if raw.get("referred_physician") in (None, "", [], {}) and source_text:
+        ref = _parse_referred_physician(source_text)
+        if ref:
+            raw["referred_physician"] = ref
+    if raw.get("procedure_date") in (None, "", [], {}) and source_text:
+        date_val = _parse_service_date(source_text)
+        if date_val:
+            raw["procedure_date"] = date_val
+
+    # Prefer nested lesion location when available.
+    if raw.get("lesion_location") in (None, "", [], {}):
+        nested_loc = _first_nonempty_str(clinical_context.get("lesion_location"))
+        if nested_loc:
+            raw["lesion_location"] = nested_loc
+    if raw.get("nav_target_segment") in (None, "", [], {}):
+        nested_loc = _first_nonempty_str(raw.get("lesion_location"), clinical_context.get("lesion_location"))
+        if nested_loc:
+            raw["nav_target_segment"] = nested_loc
+
+    tbna_count = _parse_count(source_text or "", r"\bTBNA\b\s*(?:x|×)\s*(\d+)\b")
+    bx_count = _parse_count(source_text or "", r"\b(?:TBBX|TB?BX|BX|BIOPS(?:Y|IES))\b\s*(?:x|×)\s*(\d+)\b")
 
     if raw.get("nav_platform") in (None, "", [], {}):
         nav_platform = _first_nonempty_str(equipment.get("navigation_platform"))
@@ -1470,6 +1574,30 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         if lesion_size_mm not in (None, "", [], {}):
             raw["nav_lesion_size_mm"] = lesion_size_mm
 
+    # --- Radial EBUS compat (V3 nested -> legacy flat keys) ---
+    radial = procs.get("radial_ebus") or {}
+    if isinstance(radial, dict) and radial.get("performed") is True:
+        if raw.get("nav_rebus_used") in (None, "", [], {}):
+            raw["nav_rebus_used"] = True
+        if raw.get("nav_rebus_view") in (None, "", [], {}):
+            view = _first_nonempty_str(radial.get("probe_position"), _infer_rebus_pattern(source_text or ""))
+            if view:
+                raw["nav_rebus_view"] = view
+
+    # nav_sampling_tools drives the RadialEBUSSamplingAdapter (reporter wants an explicit list).
+    if raw.get("nav_sampling_tools") in (None, "", [], {}):
+        tools: list[str] = []
+        if tbna_count is not None or (isinstance(procs.get("peripheral_tbna"), dict) and procs["peripheral_tbna"].get("performed") is True):
+            tools.append("TBNA")
+        if bx_count is not None or (isinstance(procs.get("transbronchial_biopsy"), dict) and procs["transbronchial_biopsy"].get("performed") is True):
+            tools.append("Transbronchial biopsy")
+        if isinstance(procs.get("brushings"), dict) and procs["brushings"].get("performed") is True:
+            tools.append("Brushings")
+        if isinstance(procs.get("bal"), dict) and procs["bal"].get("performed") is True:
+            tools.append("BAL")
+        if tools:
+            raw["nav_sampling_tools"] = _dedupe_preserve_order(tools)
+
     # DictPayloadAdapter compat: map nested `procedures_performed.*` into top-level payload keys.
     # This allows the reporter adapters to build partially-populated procedure models.
     peripheral_tbna = procs.get("peripheral_tbna")
@@ -1479,11 +1607,68 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         and raw.get("transbronchial_needle_aspiration") in (None, "", [], {})
     ):
         raw["transbronchial_needle_aspiration"] = {
-            "lung_segment": location_hint,
+            "lung_segment": segment_hint or location_hint,
             "needle_tools": "TBNA",
-            "samples_collected": None,
+            "samples_collected": tbna_count,
             "tests": [],
         }
+
+    brushings = procs.get("brushings")
+    if (
+        isinstance(brushings, dict)
+        and brushings.get("performed") is True
+        and raw.get("bronchial_brushings") in (None, "", [], {})
+    ):
+        raw["bronchial_brushings"] = {
+            "lung_segment": segment_hint or location_hint,
+            "samples_collected": None,
+            "brush_tool": brushings.get("brush_type"),
+            "tests": [],
+        }
+
+    bal = procs.get("bal")
+    if isinstance(bal, dict) and bal.get("performed") is True and raw.get("bal") in (None, "", [], {}):
+        raw["bal"] = {
+            "lung_segment": _first_nonempty_str(bal.get("location"), segment_hint, location_hint),
+            "instilled_volume_cc": bal.get("volume_instilled_ml"),
+            "returned_volume_cc": bal.get("volume_recovered_ml"),
+            "tests": [],
+        }
+
+    # PDT debridement often appears in short-form dictation without structured extraction flags.
+    if raw.get("pdt_debridement") in (None, "", [], {}) and source_text:
+        if re.search(r"(?i)\bpdt\b", source_text) and re.search(r"(?i)\bdebrid", source_text):
+            site = _first_nonempty_str(location_hint, segment_hint)
+            tools_text = None
+            match = re.search(r"(?im)^\s*tools?\s*:\s*(.+?)\s*$", source_text)
+            if match:
+                tools_text = match.group(1).strip().rstrip(".")
+
+            pre_patency = None
+            post_patency = None
+            match = re.search(
+                r"(?i)\b(\d{1,3})\s*%\s*obstruct(?:ed|ion)?\s*(?:->|to)\s*(\d{1,3})\s*%\s*(?:post[-\s]?debridement|post)\b",
+                source_text,
+            )
+            if match:
+                try:
+                    pre_obs = int(match.group(1))
+                    post_obs = int(match.group(2))
+                    pre_patency = max(0, min(100, 100 - pre_obs))
+                    post_patency = max(0, min(100, 100 - post_obs))
+                except Exception:
+                    pre_patency = None
+                    post_patency = None
+
+            if site:
+                raw["pdt_debridement"] = {
+                    "site": site,
+                    "debridement_tool": tools_text,
+                    "pre_patency_pct": pre_patency,
+                    "post_patency_pct": post_patency,
+                    "bleeding": None,
+                    "notes": None,
+                }
 
     cryo = procs.get("transbronchial_cryobiopsy")
     if (
@@ -1502,12 +1687,79 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         tbbx = procs.get("transbronchial_biopsy", {}) or {}
         if tbbx.get("number_of_samples"):
             raw["bronch_num_tbbx"] = tbbx["number_of_samples"]
+        elif bx_count is not None:
+            raw["bronch_num_tbbx"] = bx_count
+
+    if raw.get("bronch_location_lobe") in (None, "", [], {}):
+        raw["bronch_location_lobe"] = _first_nonempty_str(location_hint, clinical_context.get("lesion_location"))
+    if raw.get("bronch_location_segment") in (None, "", [], {}):
+        if segment_hint:
+            raw["bronch_location_segment"] = segment_hint
 
     # bronch_tbbx_tool from transbronchial_biopsy.forceps_type
     if "bronch_tbbx_tool" not in raw:
         tbbx = procs.get("transbronchial_biopsy", {}) or {}
         if tbbx.get("forceps_type"):
             raw["bronch_tbbx_tool"] = tbbx["forceps_type"]
+
+    # --- Pleural compat: map V3 pleural_procedures.* into legacy flat keys for adapters ---
+    pleural = raw.get("pleural_procedures") or {}
+    if isinstance(pleural, dict):
+        thor = pleural.get("thoracentesis") or {}
+        if isinstance(thor, dict) and thor.get("performed") is True:
+            if raw.get("pleural_procedure_type") in (None, "", [], {}):
+                raw["pleural_procedure_type"] = "thoracentesis"
+
+            if raw.get("pleural_side") in (None, "", [], {}):
+                side = _first_nonempty_str(thor.get("side"))
+                if not side and source_text:
+                    upper = source_text.upper()
+                    if re.search(r"\bLEFT\b|\bL\s*EFFUSION\b", upper):
+                        side = "left"
+                    elif re.search(r"\bRIGHT\b|\bR\s*EFFUSION\b", upper):
+                        side = "right"
+                if side:
+                    raw["pleural_side"] = side
+
+            if raw.get("pleural_guidance") in (None, "", [], {}):
+                guidance = _first_nonempty_str(thor.get("guidance"))
+                if guidance:
+                    raw["pleural_guidance"] = guidance
+                elif source_text and re.search(r"\bno\s+imaging\b", source_text, flags=re.IGNORECASE):
+                    raw["pleural_guidance"] = None
+                elif source_text and re.search(r"\bultrasound\b|\bU/S\b|\bUS\b", source_text, flags=re.IGNORECASE):
+                    raw["pleural_guidance"] = "Ultrasound"
+
+            if raw.get("pleural_volume_drained_ml") in (None, "", [], {}):
+                volume = thor.get("volume_removed_ml")
+                if volume is None and source_text:
+                    match = re.search(r"(?i)\b(?:drained|removed)\s+(\d{2,5})\s*(?:mL|ml|cc)\b", source_text)
+                    if match:
+                        try:
+                            volume = int(match.group(1))
+                        except Exception:
+                            volume = None
+                if volume is not None:
+                    raw["pleural_volume_drained_ml"] = volume
+
+            if raw.get("pleural_fluid_appearance") in (None, "", [], {}):
+                appearance = _first_nonempty_str(thor.get("fluid_appearance"))
+                if not appearance and source_text:
+                    match = re.search(
+                        r"(?i)\b(?:drained|removed)\s+\d{2,5}\s*(?:mL|ml|cc)\s+([a-z][a-z\\s-]{0,40})",
+                        source_text,
+                    )
+                    if match:
+                        appearance = match.group(1).strip().rstrip(".")
+                if appearance:
+                    raw["pleural_fluid_appearance"] = appearance
+
+            raw.setdefault("pleural_intercostal_space", "unspecified")
+            raw.setdefault("entry_location", "mid-axillary")
+
+            if raw.get("drainage_device") in (None, "", [], {}) and source_text and re.search(r"(?i)\bpigtail\b", source_text):
+                size = _parse_count(source_text, r"\b(\d{1,2})\s*(?:fr|french)\b")
+                raw["drainage_device"] = f"{size} Fr pigtail catheter" if size else "pigtail catheter"
 
     # ventilation_mode from procedure_setting or sedation
     if "ventilation_mode" not in raw:

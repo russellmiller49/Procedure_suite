@@ -27,9 +27,13 @@ class ThoracentesisAdapter(ExtractionAdapter):
 
     @classmethod
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
+        ultrasound_feasible = source.get("pleural_ultrasound_feasible")
+        if ultrasound_feasible is None:
+            ultrasound_feasible = source.get("ultrasound_feasible")
         return {
             "side": _pleural_side(source) or "unspecified",
-            "ultrasound_feasible": source.get("pleural_guidance") is not None,
+            # Do not infer feasibility from guidance presence; only set when explicitly provided.
+            "ultrasound_feasible": ultrasound_feasible,
             "intercostal_space": source.get("intercostal_space")
             or source.get("pleural_intercostal_space")
             or "unspecified",
