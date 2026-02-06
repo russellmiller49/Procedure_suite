@@ -1,8 +1,4 @@
-"""Entity type definitions and categorization for granular NER.
-
-This module defines the 40 entity types extracted by the NER model,
-organized into categories, and identifies which are relevant for CPT derivation.
-"""
+"""Entity type definitions and categorization for granular NER."""
 
 from enum import Enum
 from typing import Dict, Set
@@ -72,6 +68,8 @@ ENTITY_CATEGORIES: Dict[str, EntityCategory] = {
     "CTX_TIME": EntityCategory.CONTEXT,
     "CTX_HISTORICAL": EntityCategory.CONTEXT,
     "CTX_INDICATION": EntityCategory.CONTEXT,
+    "CTX_STENT_PRESENT": EntityCategory.CONTEXT,
+    "NEG_STENT": EntityCategory.CONTEXT,
 
     # Other
     "MEDICATION": EntityCategory.OTHER,
@@ -101,6 +99,8 @@ CPT_RELEVANT_ENTITIES: Set[str] = {
 
     # For stent codes
     "DEV_STENT",
+    "CTX_STENT_PRESENT",
+    "NEG_STENT",
 
     # For complications
     "OUTCOME_COMPLICATION",

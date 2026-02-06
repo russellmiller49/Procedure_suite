@@ -8,6 +8,7 @@ from modules.api.fastapi_app import app
 from modules.api.phi_dependencies import get_phi_scrubber
 from modules.api.phi_redaction import RedactionResult
 from modules.registry.application.registry_service import RegistryExtractionResult, RegistryRecord
+from modules.registry.schema.ip_v3_extraction import IPRegistryV3
 from proc_schemas.registry.ip_v2 import IPRegistryV2
 
 client = TestClient(app)
@@ -213,3 +214,53 @@ def test_unified_process_applies_multiple_endoscopy_rule_to_financials(
     expected_total = round(sum(expected_per_code.values()), 2)
     assert data["estimated_payment"] == expected_total
     assert any("MULTIPLE_ENDOSCOPY_RULE" in w for w in data.get("audit_warnings") or [])
+
+
+def test_unified_process_include_v3_event_log(mock_registry_service, mock_phi_scrubber):
+    mock_record = IPRegistryV2(
+        patient={"patient_id": "123"},
+        procedure={"procedure_date": "2023-01-01", "indication": "Test"},
+    )
+    full_record = RegistryRecord(
+        patient=mock_record.patient,
+        procedure=mock_record.procedure,
+    )
+    extraction_result = RegistryExtractionResult(
+        record=full_record,
+        cpt_codes=["31622"],
+        coder_difficulty="HIGH_CONF",
+        coder_source="extraction_first",
+        mapped_fields={},
+    )
+    mock_registry_service.extract_fields.return_value = extraction_result
+
+    v3_payload = IPRegistryV3(
+        note_id="test-note",
+        source_filename="inline",
+        procedures=[
+            {
+                "event_id": "evt_1",
+                "type": "airway stent removal",
+                "evidence": {"quote": "removed en bloc"},
+            }
+        ],
+    )
+
+    with patch(
+        "modules.registry.pipelines.v3_pipeline.run_v3_extraction",
+        return_value=v3_payload,
+    ):
+        payload = {
+            "note": "Already scrubbed text",
+            "already_scrubbed": True,
+            "include_v3_event_log": True,
+        }
+        response = client.post("/api/v1/process", json=payload)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["cpt_codes"] == ["31622"]
+    assert "registry_v3_event_log" in data
+    assert data["registry_v3_event_log"]["schema_version"] == "v3"
+    assert len(data["registry_v3_event_log"]["procedures"]) == 1
+    assert data["registry_v3_event_log"]["procedures"][0]["type"] == "airway stent removal"

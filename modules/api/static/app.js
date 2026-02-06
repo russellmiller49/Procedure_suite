@@ -10,6 +10,12 @@ const phiState = {
     previewDone: false,      // Whether preview step completed
 };
 
+const reporterBuilderState = {
+    bundle: null,
+    questions: [],
+    strict: false,
+};
+
 /**
  * Convert snake_case to Title Case for display
  */
@@ -1346,6 +1352,10 @@ function setMode(mode) {
 
     // Reset PHI state when switching modes
     resetPHIState();
+    if (mode !== 'reporter') {
+        reporterBuilderState.bundle = null;
+        reporterBuilderState.questions = [];
+    }
 
     // Update Tab UI
     document.querySelectorAll('#mode-tabs .nav-link').forEach(el => {
@@ -1577,29 +1587,311 @@ async function postJSON(url, payload) {
     return response.json();
 }
 
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function decodePointerToken(token) {
+    return token.replace(/~1/g, '/').replace(/~0/g, '~');
+}
+
+function pointerExists(documentValue, pointer) {
+    if (!pointer || pointer === '/') return true;
+    const tokens = pointer.split('/').slice(1).map(decodePointerToken);
+    let current = documentValue;
+
+    for (const token of tokens) {
+        if (Array.isArray(current)) {
+            if (!/^\d+$/.test(token)) return false;
+            const index = Number(token);
+            if (!Number.isInteger(index) || index < 0 || index >= current.length) return false;
+            current = current[index];
+            continue;
+        }
+        if (current && typeof current === 'object') {
+            if (!(token in current)) return false;
+            current = current[token];
+            continue;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+function parseReporterQuestionValue(question, index) {
+    const input = document.getElementById(`reporter-question-input-${index}`);
+    if (!input) return { hasValue: false, value: null };
+
+    const inputType = question.input_type || 'string';
+    if (inputType === 'multiselect') {
+        const selected = Array.from(input.selectedOptions || []).map(opt => opt.value).filter(v => v !== '');
+        if (!selected.length) return { hasValue: false, value: null };
+        return { hasValue: true, value: selected };
+    }
+
+    if (inputType === 'boolean') {
+        const raw = (input.value || '').trim().toLowerCase();
+        if (raw === '') return { hasValue: false, value: null };
+        if (raw === 'true') return { hasValue: true, value: true };
+        if (raw === 'false') return { hasValue: true, value: false };
+        throw new Error(`Invalid boolean value for "${question.label}".`);
+    }
+
+    const raw = typeof input.value === 'string' ? input.value.trim() : input.value;
+    if (raw === '' || raw === null || raw === undefined) return { hasValue: false, value: null };
+
+    if (inputType === 'integer') {
+        const parsed = Number.parseInt(raw, 10);
+        if (!Number.isFinite(parsed)) {
+            throw new Error(`"${question.label}" must be an integer.`);
+        }
+        return { hasValue: true, value: parsed };
+    }
+
+    if (inputType === 'number') {
+        const parsed = Number.parseFloat(raw);
+        if (!Number.isFinite(parsed)) {
+            throw new Error(`"${question.label}" must be a number.`);
+        }
+        return { hasValue: true, value: parsed };
+    }
+
+    return { hasValue: true, value: raw };
+}
+
+function renderReporterQuestionsForm(questions) {
+    if (!questions || !questions.length) {
+        return '<div class="alert alert-success mb-3">No required follow-up questions. The report appears complete.</div>';
+    }
+
+    const groups = new Map();
+    questions.forEach((question, index) => {
+        const group = question.group || 'Additional Details';
+        if (!groups.has(group)) groups.set(group, []);
+        groups.get(group).push({ question, index });
+    });
+
+    let html = '<div class="card border-info mb-3">';
+    html += '<div class="card-header bg-info-subtle"><strong>Interactive Reporter Builder</strong></div>';
+    html += '<div class="card-body">';
+    html += '<p class="text-muted small mb-3">Answer one or more questions, then apply patch and re-render.</p>';
+
+    groups.forEach((items, group) => {
+        html += `<div class="mb-3"><h6 class="mb-2">${escapeHtml(group)}</h6>`;
+        items.forEach(({ question, index }) => {
+            const requiredBadge = question.required ? '<span class="text-danger">*</span>' : '';
+            const helpText = question.help ? `<div class="form-text">${escapeHtml(question.help)}</div>` : '';
+            const inputId = `reporter-question-input-${index}`;
+            const inputType = question.input_type || 'string';
+            const options = Array.isArray(question.options) ? question.options : [];
+            let control = '';
+
+            if (inputType === 'boolean') {
+                control = `
+                    <select class="form-select form-select-sm" id="${inputId}">
+                        <option value="">-- Select --</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                `;
+            } else if ((inputType === 'enum' || inputType === 'multiselect') && options.length) {
+                if (inputType === 'multiselect') {
+                    const size = Math.min(Math.max(options.length, 3), 6);
+                    control = `
+                        <select class="form-select form-select-sm" id="${inputId}" multiple size="${size}">
+                            ${options.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join('')}
+                        </select>
+                    `;
+                } else {
+                    control = `
+                        <select class="form-select form-select-sm" id="${inputId}">
+                            <option value="">-- Select --</option>
+                            ${options.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join('')}
+                        </select>
+                    `;
+                }
+            } else if (inputType === 'textarea') {
+                control = `<textarea class="form-control form-control-sm" id="${inputId}" rows="2" placeholder="Enter details"></textarea>`;
+            } else {
+                const htmlInputType = inputType === 'integer' || inputType === 'number' ? 'number' : 'text';
+                const step = inputType === 'integer' ? ' step="1"' : '';
+                control = `<input type="${htmlInputType}" class="form-control form-control-sm" id="${inputId}" placeholder="Enter value"${step}>`;
+            }
+
+            html += `
+                <div class="mb-2">
+                    <label class="form-label form-label-sm mb-1" for="${inputId}">
+                        ${escapeHtml(question.label)} ${requiredBadge}
+                        <span class="text-muted small">(${escapeHtml(question.pointer)})</span>
+                    </label>
+                    ${control}
+                    ${helpText}
+                </div>
+            `;
+        });
+        html += '</div>';
+    });
+
+    html += `
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-primary btn-sm" onclick="applyReporterQuestionPatch()">Apply Answers & Re-render</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="refreshReporterQuestions()">Refresh Questions</button>
+        </div>
+    `;
+    html += '</div></div>';
+    return html;
+}
+
 async function runReporterFlow(noteText) {
     // Step 0: PHI scrubbing
     const { scrubbedText } = await submitAndApprovePHI(noteText);
 
-    // Step 1: registry extraction with scrubbed text
+    // Step 1: registry extraction with scrubbed text (for UI transparency)
     const extraction = await postJSON('/v1/registry/run', {
         note: scrubbedText,
         explain: document.getElementById('registry-explain')?.checked || false,
         mode: document.getElementById('registry-disable-llm')?.checked ? 'engine_only' : null,
     });
 
-    // Step 2: validation/inference
-    const verify = await postJSON('/report/verify', { extraction });
-
-    // Step 3: render (empty patch by default)
-    const render = await postJSON('/report/render', {
-        bundle: verify.bundle,
-        patch: { procedures: [] },
-        embed_metadata: false,
+    // Step 2: seed bundle + questions + draft markdown
+    const strict = false;
+    const seed = await postJSON('/report/seed_from_text', {
+        text: scrubbedText,
         strict: false,
     });
 
-    return { extraction, verify, render };
+    reporterBuilderState.bundle = seed.bundle || null;
+    reporterBuilderState.questions = seed.questions || [];
+    reporterBuilderState.strict = strict;
+
+    return {
+        extraction,
+        seed,
+        verify: {
+            bundle: seed.bundle,
+            issues: seed.issues || [],
+            warnings: seed.warnings || [],
+            inference_notes: seed.inference_notes || [],
+            suggestions: seed.suggestions || [],
+        },
+        render: {
+            bundle: seed.bundle,
+            markdown: seed.markdown || '',
+            issues: seed.issues || [],
+            warnings: seed.warnings || [],
+            inference_notes: seed.inference_notes || [],
+            suggestions: seed.suggestions || [],
+        },
+        questions: seed.questions || [],
+    };
+}
+
+async function refreshReporterQuestions() {
+    if (!reporterBuilderState.bundle) {
+        alert('Run Reporter mode first to initialize the bundle.');
+        return;
+    }
+
+    showLoading(true);
+    try {
+        const questionsResp = await postJSON('/report/questions', {
+            bundle: reporterBuilderState.bundle,
+            strict: reporterBuilderState.strict,
+        });
+
+        reporterBuilderState.bundle = questionsResp.bundle;
+        reporterBuilderState.questions = questionsResp.questions || [];
+
+        if (!lastResult) lastResult = {};
+        lastResult.verify = {
+            bundle: questionsResp.bundle,
+            issues: questionsResp.issues || [],
+            warnings: questionsResp.warnings || [],
+            inference_notes: questionsResp.inference_notes || [],
+            suggestions: questionsResp.suggestions || [],
+        };
+        lastResult.questions = questionsResp.questions || [];
+        renderResult();
+    } catch (error) {
+        alert(`Failed to refresh questions: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
+}
+
+async function applyReporterQuestionPatch() {
+    if (!reporterBuilderState.bundle) {
+        alert('Run Reporter mode first to initialize the bundle.');
+        return;
+    }
+
+    const questions = reporterBuilderState.questions || [];
+    if (!questions.length) {
+        alert('No outstanding questions to patch.');
+        return;
+    }
+
+    const patchOps = [];
+    try {
+        questions.forEach((question, index) => {
+            const parsed = parseReporterQuestionValue(question, index);
+            if (!parsed.hasValue) return;
+            patchOps.push({
+                op: pointerExists(reporterBuilderState.bundle, question.pointer) ? 'replace' : 'add',
+                path: question.pointer,
+                value: parsed.value,
+            });
+        });
+    } catch (error) {
+        alert(error.message);
+        return;
+    }
+
+    if (!patchOps.length) {
+        alert('Enter at least one answer before applying.');
+        return;
+    }
+
+    showLoading(true);
+    try {
+        const render = await postJSON('/report/render', {
+            bundle: reporterBuilderState.bundle,
+            patch: patchOps,
+            embed_metadata: false,
+            strict: reporterBuilderState.strict,
+        });
+
+        const questionsResp = await postJSON('/report/questions', {
+            bundle: render.bundle,
+            strict: reporterBuilderState.strict,
+        });
+
+        reporterBuilderState.bundle = questionsResp.bundle;
+        reporterBuilderState.questions = questionsResp.questions || [];
+
+        if (!lastResult) lastResult = {};
+        lastResult.render = render;
+        lastResult.verify = {
+            bundle: questionsResp.bundle,
+            issues: questionsResp.issues || [],
+            warnings: questionsResp.warnings || [],
+            inference_notes: questionsResp.inference_notes || [],
+            suggestions: questionsResp.suggestions || [],
+        };
+        lastResult.questions = questionsResp.questions || [];
+
+        renderResult();
+    } catch (error) {
+        alert(`Reporter patch failed: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
 }
 
 /**
@@ -2373,19 +2665,27 @@ function showResultTab(tab) {
         }
 
     } else if (currentMode === 'reporter') {
-        const { extraction, verify, render } = lastResult || {};
-        const issues = render?.issues || verify?.issues || [];
-        const warnings = render?.warnings || verify?.warnings || [];
-        const inferenceNotes = render?.inference_notes || verify?.inference_notes || [];
-        const suggestions = render?.suggestions || verify?.suggestions || [];
+        const { extraction, verify, render, seed } = lastResult || {};
+        const issues = render?.issues || verify?.issues || seed?.issues || [];
+        const warnings = render?.warnings || verify?.warnings || seed?.warnings || [];
+        const inferenceNotes = render?.inference_notes || verify?.inference_notes || seed?.inference_notes || [];
+        const suggestions = render?.suggestions || verify?.suggestions || seed?.suggestions || [];
+        const questions = (lastResult?.questions || seed?.questions || reporterBuilderState.questions || []);
+        const activeBundle = render?.bundle || verify?.bundle || seed?.bundle || null;
+
+        if (activeBundle) reporterBuilderState.bundle = activeBundle;
+        reporterBuilderState.questions = Array.isArray(questions) ? questions : [];
 
         let html = "";
 
         html += `<h4>Reporter Flow</h4>`;
-        html += `<p class="text-muted small">Registry extraction → verify → render</p>`;
+        html += `<p class="text-muted small">Registry extraction → seed/verify → questions → JSON Patch render loop</p>`;
+        html += renderReporterQuestionsForm(reporterBuilderState.questions);
 
         if (render?.markdown) {
             html += `<div class="mb-3"><h5>Rendered Markdown</h5><div class="border p-3 bg-white">${marked.parse(render.markdown)}</div></div>`;
+        } else if (seed?.markdown) {
+            html += `<div class="mb-3"><h5>Rendered Markdown</h5><div class="border p-3 bg-white">${marked.parse(seed.markdown)}</div></div>`;
         } else {
             html += `<div class="alert alert-warning">Report not rendered yet (critical issues or validation warnings must be resolved).</div>`;
         }
@@ -2416,8 +2716,8 @@ function showResultTab(tab) {
             html += `<h6>Inference Notes</h6><div class="alert alert-info">${inferenceNotes.map(n => `<div>${n}</div>`).join("")}</div>`;
         }
 
-        if (verify?.bundle) {
-            html += `<h6>Bundle</h6><pre class="bg-light p-2 border rounded">${JSON.stringify(verify.bundle, null, 2)}</pre>`;
+        if (activeBundle) {
+            html += `<h6>Bundle</h6><pre class="bg-light p-2 border rounded">${JSON.stringify(activeBundle, null, 2)}</pre>`;
         }
 
         if (extraction) {

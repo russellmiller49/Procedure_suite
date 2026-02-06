@@ -120,6 +120,12 @@ class NERToRegistryMapper:
 
             self._set_nested_field(record_dict, field_path, performed)
 
+            attrs = proc_result.procedure_attributes.get(proc_name, {})
+            if attrs:
+                base_path = field_path[: -len(".performed")] if field_path.endswith(".performed") else field_path
+                for attr_name, attr_value in attrs.items():
+                    self._set_nested_field(record_dict, f"{base_path}.{attr_name}", attr_value)
+
             # Track evidence
             if proc_name in proc_result.evidence:
                 for entity_text in proc_result.evidence[proc_name]:

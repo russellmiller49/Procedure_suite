@@ -97,6 +97,13 @@ def _thoracentesis_extraction() -> dict:
     }
 
 
+def _find_proc_index(bundle: dict, proc_type: str) -> int:
+    for idx, proc in enumerate(bundle.get("procedures", [])):
+        if proc.get("proc_type") == proc_type:
+            return idx
+    raise AssertionError(f"{proc_type} procedure not found in bundle")
+
+
 async def test_report_verify_and_render_flow(api_client: AsyncClient) -> None:
     extraction = _thoracentesis_extraction()
     verify_resp = await api_client.post("/report/verify", json={"extraction": extraction})
@@ -115,6 +122,120 @@ async def test_report_verify_and_render_flow(api_client: AsyncClient) -> None:
     assert render_payload["markdown"], "Rendered markdown should be present when issues resolved"
     assert not render_payload.get("issues"), "No critical issues expected after patch"
     assert not render_payload.get("warnings"), "Warnings should clear after patch"
+
+
+async def test_report_questions__ebus_station7(api_client: AsyncClient) -> None:
+    seed_resp = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    assert seed_resp.status_code == 200
+    seed_payload = seed_resp.json()
+    bundle = seed_payload["bundle"]
+
+    questions_resp = await api_client.post("/report/questions", json={"bundle": bundle})
+    assert questions_resp.status_code == 200
+    payload = questions_resp.json()
+
+    ebus_index = _find_proc_index(payload["bundle"], "ebus_tbna")
+    pointers = {question["pointer"] for question in payload.get("questions") or []}
+    assert f"/procedures/{ebus_index}/data/needle_gauge" in pointers
+    assert f"/procedures/{ebus_index}/data/stations/0/passes" in pointers
+    assert f"/procedures/{ebus_index}/data/stations/0/size_mm" in pointers
+
+
+async def test_seed_from_text__ebus_station7(api_client: AsyncClient) -> None:
+    response = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["bundle"]
+    assert payload["markdown"], "Seed call should return a rendered draft markdown"
+    assert payload.get("questions"), "Seed call should return follow-up questions"
+
+    ebus_index = _find_proc_index(payload["bundle"], "ebus_tbna")
+    pointers = {question["pointer"] for question in payload.get("questions") or []}
+    assert f"/procedures/{ebus_index}/data/needle_gauge" in pointers
+
+
+async def test_seed_from_text__ebus_staging_typos_generates_questions(api_client: AsyncClient) -> None:
+    note = (
+        "Staging EBUS via LMA staion 11L, 4L 7 and 4R evalauated. "
+        "Biospy performed of 4R ROSE positive for malignancy"
+    )
+    response = await api_client.post("/report/seed_from_text", json={"text": note})
+    assert response.status_code == 200
+    payload = response.json()
+
+    ebus_index = _find_proc_index(payload["bundle"], "ebus_tbna")
+
+    markdown = payload.get("markdown") or ""
+    assert "EBUS survey" in markdown
+    assert "Station: 4R" in markdown
+
+    questions = payload.get("questions") or []
+    assert questions, "Seed call should return follow-up questions"
+    pointers = {question["pointer"] for question in questions}
+    assert f"/procedures/{ebus_index}/data/needle_gauge" in pointers
+    assert any(
+        pointer.startswith(f"/procedures/{ebus_index}/data/stations/") for pointer in pointers
+    )
+
+
+async def test_patch_and_rerender__ebus_station7(api_client: AsyncClient) -> None:
+    seed_resp = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    assert seed_resp.status_code == 200
+    seed_payload = seed_resp.json()
+
+    bundle = seed_payload["bundle"]
+    initial_issue_paths = {issue["field_path"] for issue in seed_payload.get("issues") or []}
+    ebus_index = _find_proc_index(bundle, "ebus_tbna")
+
+    patch_ops = [
+        {"op": "replace", "path": f"/procedures/{ebus_index}/data/needle_gauge", "value": "22"},
+        {"op": "replace", "path": f"/procedures/{ebus_index}/data/stations/0/passes", "value": 4},
+        {"op": "replace", "path": f"/procedures/{ebus_index}/data/stations/0/size_mm", "value": 12},
+        {"op": "replace", "path": f"/procedures/{ebus_index}/data/rose_available", "value": True},
+    ]
+
+    render_resp = await api_client.post(
+        "/report/render",
+        json={"bundle": bundle, "patch": patch_ops},
+    )
+    assert render_resp.status_code == 200
+    render_payload = render_resp.json()
+
+    markdown = render_payload.get("markdown") or ""
+    assert "22 needle" in markdown
+    assert "Number of Passes: 4" in markdown
+    assert "Size: 12" in markdown
+
+    updated_issue_paths = {issue["field_path"] for issue in render_payload.get("issues") or []}
+    assert "needle_gauge" not in updated_issue_paths
+    assert "stations[0].passes" not in updated_issue_paths
+    assert "stations[0].size_mm" not in updated_issue_paths
+    assert len(updated_issue_paths) < len(initial_issue_paths)
+
+
+async def test_report_render_returns_422_for_invalid_json_patch(api_client: AsyncClient) -> None:
+    seed_resp = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    assert seed_resp.status_code == 200
+    seed_payload = seed_resp.json()
+    bundle = seed_payload["bundle"]
+    ebus_index = _find_proc_index(bundle, "ebus_tbna")
+
+    invalid_patch_ops = [
+        {
+            "op": "replace",
+            "path": f"/procedures/{ebus_index}/data/does_not_exist",
+            "value": "x",
+        }
+    ]
+
+    render_resp = await api_client.post(
+        "/report/render",
+        json={"bundle": bundle, "patch": invalid_patch_ops},
+    )
+    assert render_resp.status_code == 422
+    payload = render_resp.json()
+    assert "patch" in str(payload.get("detail", "")).lower()
 
 
 async def test_shape_registry_payload_prunes_none_and_enriches():

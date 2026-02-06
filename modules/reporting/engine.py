@@ -1263,11 +1263,15 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
 
     This function adds the flat aliases so adapters can find the data.
     """
-    # Import here to avoid circular dependency
+    # Import here to avoid circular dependency.
+    #
+    # NOTE: `_COMPAT_ATTRIBUTE_PATHS` is not guaranteed to exist after schema refactors.
+    # Keep this function resilient by falling back to a small set of derived aliases
+    # from the nested V3/V2-dynamic shapes (used by `parallel_ner`).
     try:
-        from modules.registry.schema import _COMPAT_ATTRIBUTE_PATHS
+        from modules.registry.schema import _COMPAT_ATTRIBUTE_PATHS  # type: ignore[attr-defined]
     except ImportError:
-        return raw
+        _COMPAT_ATTRIBUTE_PATHS = {}  # type: ignore[assignment]
 
     def _get_nested(d: dict, path: tuple[str, ...]) -> Any:
         """Traverse nested dict by path tuple."""
@@ -1289,6 +1293,98 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
 
     # Add additional fields that adapters need but aren't in _COMPAT_ATTRIBUTE_PATHS
     procs = raw.get("procedures_performed", {}) or {}
+    if not isinstance(procs, dict):
+        procs = {}
+
+    def _dedupe_preserve_order(values: list[str]) -> list[str]:
+        seen: set[str] = set()
+        deduped: list[str] = []
+        for value in values:
+            key = str(value or "").strip()
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            deduped.append(key)
+        return deduped
+
+    def _coerce_str_list(value: Any) -> list[str]:
+        if not isinstance(value, list):
+            return []
+        return [str(v).strip() for v in value if str(v).strip()]
+
+    def _derive_sampled_stations_from_linear_ebus(linear_ebus: dict[str, Any]) -> list[str]:
+        # Prefer explicit sampled stations if present.
+        sampled = _coerce_str_list(linear_ebus.get("stations_sampled"))
+        if sampled:
+            return _dedupe_preserve_order(sampled)
+
+        # Fall back to node_events.
+        node_events = linear_ebus.get("node_events")
+        if not isinstance(node_events, list):
+            return []
+
+        stations: list[str] = []
+        for event in node_events:
+            if not isinstance(event, dict):
+                continue
+            station = str(event.get("station") or "").strip()
+            if not station:
+                continue
+            action = str(event.get("action") or "").strip()
+            outcome = event.get("outcome")
+
+            # Treat explicit non-inspection actions as sampled.
+            if action and action != "inspected_only":
+                stations.append(station)
+                continue
+
+            # If an event has a ROSE outcome, sampling occurred even if the action
+            # was conservatively classified as inspection-only upstream.
+            if outcome is not None:
+                stations.append(station)
+                continue
+
+        return _dedupe_preserve_order(stations)
+
+    # --- EBUS compat (parallel_ner produces nested procedures_performed.linear_ebus) ---
+    linear_ebus = procs.get("linear_ebus") or {}
+    if isinstance(linear_ebus, dict):
+        # Legacy adapters expect these top-level flat station lists.
+        if raw.get("linear_ebus_stations") in (None, "", [], {}):
+            derived = _derive_sampled_stations_from_linear_ebus(linear_ebus)
+            if derived:
+                raw["linear_ebus_stations"] = derived
+
+        if raw.get("ebus_stations_sampled") in (None, "", [], {}):
+            derived = _coerce_str_list(raw.get("linear_ebus_stations"))
+            if derived:
+                raw["ebus_stations_sampled"] = _dedupe_preserve_order(derived)
+
+        # Per-station detail (size/passes/rose) is expected under `ebus_stations_detail`.
+        if raw.get("ebus_stations_detail") in (None, "", [], {}):
+            stations_detail = linear_ebus.get("stations_detail")
+            if isinstance(stations_detail, list) and stations_detail:
+                raw["ebus_stations_detail"] = stations_detail
+
+        if raw.get("ebus_needle_gauge") in (None, "", [], {}):
+            gauge = linear_ebus.get("needle_gauge")
+            if gauge not in (None, "", [], {}):
+                raw["ebus_needle_gauge"] = gauge
+
+        if raw.get("ebus_passes") in (None, "", [], {}):
+            passes = linear_ebus.get("passes_per_station")
+            if passes not in (None, "", [], {}):
+                raw["ebus_passes"] = passes
+
+        if raw.get("ebus_elastography_used") in (None, "", [], {}):
+            elastography_used = linear_ebus.get("elastography_used")
+            if elastography_used is not None:
+                raw["ebus_elastography_used"] = elastography_used
+
+        if raw.get("ebus_elastography_pattern") in (None, "", [], {}):
+            elastography_pattern = linear_ebus.get("elastography_pattern")
+            if elastography_pattern not in (None, "", [], {}):
+                raw["ebus_elastography_pattern"] = elastography_pattern
 
     # bronch_num_tbbx from transbronchial_biopsy.number_of_samples
     if "bronch_num_tbbx" not in raw:

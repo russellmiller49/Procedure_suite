@@ -135,6 +135,36 @@ def test_validate_proposal_canonicalizes_linear_ebus_elastography_performed_alia
     assert proposal.json_patch[0]["path"] == "/procedures_performed/linear_ebus/elastography_used"
 
 
+def test_validate_proposal_canonicalizes_foreign_body_tool_alias_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[
+            {"op": "add", "path": "/procedures_performed/foreign_body_removal/tool_used", "value": "forceps"}
+        ],
+        evidence_quote="foreign body removed with forceps",
+    )
+    is_valid, reason = validate_proposal(proposal, "foreign body removed with forceps")
+    assert is_valid, reason
+    assert proposal.json_patch[0]["path"] == "/procedures_performed/foreign_body_removal/retrieval_tool"
+
+
+def test_validate_proposal_canonicalizes_bronchial_washing_alias_path() -> None:
+    proposal = PatchProposal(
+        rationale="test",
+        json_patch=[
+            {
+                "op": "add",
+                "path": "/procedures_performed/diagnostic_bronchoscopy/bronchial_washing",
+                "value": True,
+            }
+        ],
+        evidence_quote="bronchial washing performed",
+    )
+    is_valid, reason = validate_proposal(proposal, "bronchial washing performed")
+    assert is_valid, reason
+    assert proposal.json_patch[0]["path"] == "/procedures_performed/bronchial_wash/performed"
+
+
 def test_validate_proposal_expands_ebus_elastography_root_object_patch() -> None:
     proposal = PatchProposal(
         rationale="test",

@@ -7,7 +7,10 @@ Includes:
 
 from __future__ import annotations
 
+import json
+import os
 import re
+from pathlib import Path
 
 from modules.common.logger import get_logger
 from modules.common.spans import Span
@@ -248,6 +251,109 @@ CPT_KEYWORDS: dict[str, list[str]] = {
 # but evidence text is partially masked (e.g., CPT/menu blocks removed).
 HIGH_CONF_BYPASS_CPTS: frozenset[str] = frozenset({"31647", "31651", "32609", "32653"})
 HIGH_CONF_BYPASS_THRESHOLD = 0.90
+
+# Optional generated CPT-keyword mapping support.
+DEFAULT_GENERATED_CPT_KEYWORDS_PATH = (
+    Path(__file__).resolve().parents[3] / "data" / "keyword_mappings" / "cpt_keywords.generated.json"
+)
+
+_EFFECTIVE_CPT_KEYWORDS_CACHE: dict[str, list[str]] | None = None
+_EFFECTIVE_CPT_KEYWORDS_CACHE_KEY: tuple[bool, str, int] | None = None
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in {"1", "true", "yes", "y"}
+
+
+def _normalize_keyword_value(value: object) -> str:
+    text = str(value or "").strip().lower()
+    text = re.sub(r"\s+", " ", text)
+    return text
+
+
+def _dedupe_keywords(values: list[object], *, min_length: int = 1) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for value in values:
+        norm = _normalize_keyword_value(value)
+        if len(norm) < min_length:
+            continue
+        if norm in seen:
+            continue
+        seen.add(norm)
+        out.append(norm)
+    return out
+
+
+def _load_generated_cpt_keywords(path: Path) -> dict[str, list[str]] | None:
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        logger.warning(
+            "REGISTRY_KEYWORD_GUARD_USE_GENERATED enabled but generated keyword file not found",
+            extra={"path": str(path)},
+        )
+        return None
+    except json.JSONDecodeError as exc:
+        logger.warning(
+            "Generated keyword file is invalid JSON; falling back to baseline keywords",
+            extra={"path": str(path), "error": str(exc)},
+        )
+        return None
+    except Exception as exc:  # pragma: no cover - defensive fallback
+        logger.warning(
+            "Failed reading generated keyword file; falling back to baseline keywords",
+            extra={"path": str(path), "error": str(exc)},
+        )
+        return None
+
+    if not isinstance(raw, dict):
+        logger.warning(
+            "Generated keyword file must contain an object; falling back to baseline keywords",
+            extra={"path": str(path)},
+        )
+        return None
+
+    generated: dict[str, list[str]] = {}
+    for cpt, phrases in raw.items():
+        if not isinstance(phrases, list):
+            continue
+        cleaned = _dedupe_keywords(phrases, min_length=3)
+        if cleaned:
+            generated[str(cpt)] = cleaned
+    return generated
+
+
+def get_effective_cpt_keywords(*, force_refresh: bool = False) -> dict[str, list[str]]:
+    """Return effective CPT keywords (baseline or baseline+generated)."""
+    global _EFFECTIVE_CPT_KEYWORDS_CACHE
+    global _EFFECTIVE_CPT_KEYWORDS_CACHE_KEY
+
+    use_generated = _truthy_env("REGISTRY_KEYWORD_GUARD_USE_GENERATED")
+    generated_path_raw = os.getenv("REGISTRY_KEYWORD_GUARD_GENERATED_PATH", "").strip()
+    generated_path = Path(generated_path_raw) if generated_path_raw else DEFAULT_GENERATED_CPT_KEYWORDS_PATH
+    generated_mtime_ns = -1
+    if use_generated:
+        try:
+            generated_mtime_ns = generated_path.stat().st_mtime_ns
+        except OSError:
+            generated_mtime_ns = -1
+
+    cache_key = (use_generated, str(generated_path), generated_mtime_ns)
+    if not force_refresh and _EFFECTIVE_CPT_KEYWORDS_CACHE_KEY == cache_key and _EFFECTIVE_CPT_KEYWORDS_CACHE is not None:
+        return _EFFECTIVE_CPT_KEYWORDS_CACHE
+
+    effective = {cpt: _dedupe_keywords(keywords, min_length=1) for cpt, keywords in CPT_KEYWORDS.items()}
+    if use_generated:
+        generated = _load_generated_cpt_keywords(generated_path)
+        if generated:
+            for cpt, keywords in generated.items():
+                baseline = effective.get(cpt, [])
+                effective[cpt] = _dedupe_keywords([*baseline, *keywords], min_length=1)
+
+    _EFFECTIVE_CPT_KEYWORDS_CACHE = effective
+    _EFFECTIVE_CPT_KEYWORDS_CACHE_KEY = cache_key
+    return effective
 
 # -----------------------------------------------------------------------------
 # Omission Detection ("Safety Net")
@@ -886,7 +992,7 @@ def keyword_guard_check(*, cpt: str, evidence_text: str, ml_prob: float | None =
         if prob is not None and prob >= HIGH_CONF_BYPASS_THRESHOLD and str(cpt) in HIGH_CONF_BYPASS_CPTS:
             return True, f"high_conf_prob>={HIGH_CONF_BYPASS_THRESHOLD:.2f} bypass"
 
-    keywords = CPT_KEYWORDS.get(str(cpt), [])
+    keywords = get_effective_cpt_keywords().get(str(cpt), [])
     if not keywords:
         return False, "no keywords configured"
 
@@ -912,8 +1018,11 @@ def _keyword_hit(text_lower: str, needle_lower: str) -> bool:
 
 __all__ = [
     "CPT_KEYWORDS",
+    "DEFAULT_GENERATED_CPT_KEYWORDS_PATH",
+    "HIGH_CONF_BYPASS_CPTS",
     "REQUIRED_PATTERNS",
     "apply_required_overrides",
+    "get_effective_cpt_keywords",
     "keyword_guard_check",
     "keyword_guard_passes",
     "scan_for_omissions",

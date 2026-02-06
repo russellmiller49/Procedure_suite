@@ -4,6 +4,7 @@ from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
     derive_all_codes_with_meta,
     derive_units_for_codes,
 )
+from modules.registry.postprocess import enrich_ebus_node_event_sampling_details
 from modules.registry.deterministic_extractors import run_deterministic_extractors
 from modules.registry.schema import RegistryRecord
 from modules.registry.self_correction.keyword_guard import apply_required_overrides
@@ -53,3 +54,40 @@ def test_note_281_elastography_does_not_force_tblb_and_derives_elastography_code
 
     units = derive_units_for_codes(record, codes)
     assert units.get("76983") == 2
+
+
+def test_enrich_ebus_sampling_details_backfills_node_events_for_site_blocks() -> None:
+    note_text = """
+    PROCEDURE IN DETAIL:
+    Endobronchial ultrasound (EBUS) elastography was performed.
+    Site 1: The 11Rs lymph node was sampled.
+    4 endobronchial ultrasound guided transbronchial biopsies were performed.
+    The target lymph node demonstrated a Type 2 elastographic pattern.
+    """
+
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "linear_ebus": {
+                    "performed": True,
+                    "node_events": [],
+                    "stations_sampled": [],
+                }
+            }
+        }
+    )
+
+    warnings = enrich_ebus_node_event_sampling_details(record, note_text)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    assert linear.node_events is not None
+    assert len(linear.node_events) == 1
+    assert linear.node_events[0].station == "11R"
+    assert linear.node_events[0].action == "needle_aspiration"
+    assert linear.elastography_used is True
+    assert linear.stations_sampled == ["11R"]
+    assert any("AUTO_EBUS_GRANULARITY: added node_events" in w for w in warnings)
+
+    codes, _rationales, derivation_warnings = derive_all_codes_with_meta(record)
+    assert "76982" in codes
+    assert not any("Suppressed 76982/76983" in w for w in derivation_warnings)

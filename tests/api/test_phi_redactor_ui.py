@@ -39,6 +39,8 @@ def test_phi_redactor_assets_have_coop_coep_headers(client: TestClient) -> None:
     """Test that all PHI redactor static assets have COOP/COEP headers."""
     for path in (
         "/ui/phi_redactor/index.html",
+        "/ui/reporter_builder.html",
+        "/ui/reporter_builder.js",
         "/ui/phi_redactor/app.js",
         "/ui/phi_redactor/redactor.worker.js",
         "/ui/phi_redactor/styles.css",
@@ -56,6 +58,16 @@ def test_phi_redactor_assets_have_coop_coep_headers(client: TestClient) -> None:
         assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp", (
             f"Missing COEP header for {path}"
         )
+
+
+def test_reporter_builder_subpage_is_linked_from_topbar(client: TestClient) -> None:
+    index_resp = client.get("/ui/")
+    assert index_resp.status_code == 200
+    assert 'href="./reporter_builder.html"' in index_resp.text
+
+    workflow_resp = client.get("/ui/workflow.html")
+    assert workflow_resp.status_code == 200
+    assert 'href="./reporter_builder.html"' in workflow_resp.text
 
 def test_phi_redactor_index_has_formatted_report_sections(client: TestClient) -> None:
     resp = client.get("/ui/phi_redactor/index.html")

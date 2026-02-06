@@ -128,6 +128,37 @@ def _set_child(parent: object, token: str, value: object, *, verb: str) -> None:
     raise SelfCorrectionApplyError(f"Cannot set child on non-container type {type(parent).__name__}")
 
 
+def _normalize_foreign_body_retrieval_tool(value: object) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+
+    canonical = {
+        "forceps": "Forceps",
+        "basket": "Basket",
+        "cryoprobe": "Cryoprobe",
+        "snare": "Snare",
+        "other": "Other",
+    }
+    lowered = text.lower()
+    for key, out in canonical.items():
+        if lowered == key:
+            return out
+    if "forceps" in lowered:
+        return "Forceps"
+    if "basket" in lowered:
+        return "Basket"
+    if "cryo" in lowered:
+        return "Cryoprobe"
+    if "snare" in lowered:
+        return "Snare"
+    if lowered in {"unknown", "n/a", "na"}:
+        return "Other"
+    return "Other"
+
+
 def _apply_semantic_shims(doc: dict, patch: list[dict]) -> None:
     """Small, safe post-patch shims to keep downstream derivation consistent.
 
@@ -153,6 +184,26 @@ def _apply_semantic_shims(doc: dict, patch: list[dict]) -> None:
             pleural["ipc"] = ipc
         if ipc.get("performed") is True and ipc.get("action") in (None, "", "Unknown"):
             ipc["action"] = "Insertion"
+
+    procs = doc.get("procedures_performed")
+    if not isinstance(procs, dict):
+        return
+
+    foreign_body = procs.get("foreign_body_removal")
+    if not isinstance(foreign_body, dict):
+        return
+
+    # Legacy judge outputs may use tool/tool_used; canonical schema field is retrieval_tool.
+    if "retrieval_tool" not in foreign_body:
+        legacy_value = foreign_body.pop("tool_used", None)
+        if legacy_value in (None, ""):
+            legacy_value = foreign_body.pop("tool", None)
+        if legacy_value not in (None, ""):
+            foreign_body["retrieval_tool"] = legacy_value
+
+    normalized_tool = _normalize_foreign_body_retrieval_tool(foreign_body.get("retrieval_tool"))
+    if normalized_tool is not None:
+        foreign_body["retrieval_tool"] = normalized_tool
 
 
 __all__ = ["apply_patch_to_record", "SelfCorrectionApplyError"]

@@ -144,6 +144,70 @@ python scripts/train_registry_ner.py \
   --eval-batch 16
 ```
 
+## Diamond Loop: Span-Level Attribute Workflow
+
+Use this when you want a focused annotation pass for granular attribute spans
+(stent type/size, lesion size, obstruction pre/post values).
+
+### 1) Bootstrap high-precision silver spans
+
+```bash
+python scripts/bootstrap_granular_attributes.py \
+  --in data/ml_training/granular_ner/ner_dataset_all.jsonl \
+  --out data/ml_training/granular_ner/silver_attributes.jsonl
+```
+
+Output records are Prodigy-friendly:
+- `text`
+- `spans` (`start`, `end`, `label`, `text`)
+- `meta` (`note_id`, `source` when present)
+
+### 2) Annotate in Prodigy
+
+```bash
+prodigy ner.manual granular_attrs_v1 blank:en \
+  data/ml_training/granular_ner/silver_attributes.jsonl \
+  --label DEV_STENT_TYPE,DEV_STENT_DIM,NODULE_SIZE,OBS_VAL_PRE,OBS_VAL_POST
+```
+
+### 3) Export reviewed annotations
+
+```bash
+python -m prodigy db-out granular_attrs_v1 > data/ml_training/granular_ner/gold_attributes.jsonl
+```
+
+### 4) Merge reviewed spans into training dataset
+
+```bash
+python scripts/merge_granular_attribute_spans.py \
+  --prodigy-input data/ml_training/granular_ner/gold_attributes.jsonl \
+  --base-input data/ml_training/granular_ner/ner_dataset_all.jsonl \
+  --output data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl
+```
+
+This converts Prodigy span format to training `entities` and deduplicates
+merged output by `id` then `note_id`.
+
+### 5) Validate alignment on merged dataset
+
+```bash
+python scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl
+```
+
+### 6) Convert to BIO and train
+
+```bash
+python scripts/convert_spans_to_bio.py \
+  --input data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl \
+  --output data/ml_training/granular_ner/ner_bio_format.plus_attrs.jsonl
+```
+
+```bash
+python scripts/train_registry_ner.py \
+  --data data/ml_training/granular_ner/ner_bio_format.plus_attrs.jsonl \
+  --output-dir artifacts/registry_biomedbert_ner_vX
+```
+
 ## “Clean rebuild” workflow (you want to regenerate from scratch)
 
 Use this when you suspect the dataset drifted due to many re-runs.

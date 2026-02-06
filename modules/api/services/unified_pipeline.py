@@ -47,6 +47,8 @@ async def run_unified_pipeline_logic(
     redaction_was_scrubbed = False
     redaction_entity_count = 0
     redaction_warning = None
+    registry_v3_event_log: dict[str, Any] | None = None
+    v3_event_log_warning: str | None = None
 
     if payload.already_scrubbed:
         note_text = payload.note
@@ -179,6 +181,21 @@ async def run_unified_pipeline_logic(
         deduped_warnings.append(warning)
     all_warnings = deduped_warnings
 
+    # Optional event-log V3 payload (raw procedures[] list).
+    if payload.include_v3_event_log:
+        try:
+            from modules.registry.pipelines.v3_pipeline import run_v3_extraction
+
+            event_log_v3 = await run_cpu(request.app, run_v3_extraction, note_text)
+            if event_log_v3 is not None:
+                registry_v3_event_log = event_log_v3.model_dump(exclude_none=True)
+        except Exception as exc:
+            logger.warning("V3 event log extraction failed: %s", exc)
+            v3_event_log_warning = f"V3_EVENT_LOG_ERROR: {type(exc).__name__}"
+
+    if v3_event_log_warning:
+        all_warnings.append(v3_event_log_warning)
+
     evidence_payload = build_v3_evidence_payload(record=record, codes=codes)
     if payload.explain is False and not evidence_payload:
         evidence_payload = {}
@@ -196,6 +213,7 @@ async def run_unified_pipeline_logic(
 
     response_model = UnifiedProcessResponse(
         registry=record.model_dump(exclude_none=True),
+        registry_v3_event_log=registry_v3_event_log,
         evidence=evidence_payload,
         cpt_codes=codes,
         suggestions=suggestions,

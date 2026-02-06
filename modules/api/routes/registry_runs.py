@@ -63,6 +63,7 @@ def _pipeline_config(payload: UnifiedProcessRequest) -> dict[str, Any]:
         "already_scrubbed": bool(payload.already_scrubbed),
         "include_financials": bool(payload.include_financials),
         "explain": bool(payload.explain),
+        "include_v3_event_log": bool(payload.include_v3_event_log),
         "locality": payload.locality,
         "registry_schema_version": _schema_version(),
         "registry_extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", "").strip(),
@@ -118,6 +119,10 @@ class RegistryRunCreateRequest(BaseModel):
     locality: str = Field("00", description="Geographic locality for RVU calculations")
     include_financials: bool = Field(True, description="Whether to include RVU/payment info")
     explain: bool = Field(False, description="Include extraction evidence/rationales")
+    include_v3_event_log: bool = Field(
+        False,
+        description="If true, include raw event-log V3 output in the persisted response payload.",
+    )
     submitter_name: str | None = Field(
         None, description="Free-text submitter name (no auth yet)", max_length=255
     )
@@ -189,6 +194,7 @@ async def create_registry_run(
         locality=payload.locality,
         include_financials=payload.include_financials,
         explain=payload.explain,
+        include_v3_event_log=payload.include_v3_event_log,
     )
 
     result, scrubbed_note_text_used, meta = await run_unified_pipeline_logic(
@@ -447,4 +453,3 @@ def export_registry_runs(
 
 
 __all__ = ["router"]
-

@@ -246,16 +246,22 @@ def classify_procedure_families(note_text: str) -> Set[str]:
     # --- EBUS Detection ---
     # Linear EBUS (not radial) with actual sampling
     # Must be careful to exclude mentions of stations in non-EBUS context (e.g., CT findings)
+    # NOTE: This classifier gates downstream EBUS-specific extraction (e.g. station parsing).
+    # Keep patterns conservative, but tolerate common dictation typos like "staion" and "biospy".
     ebus_indicators = [
-        r"\bebus\b.*(?:tbna|sampl|aspirat|needle|biops)",
-        r"(?:tbna|sampl|aspirat).*\bebus\b",
+        # EBUS + sampling context (including common "biopsy"/"bx" shorthand and typos).
+        r"\bebus\b.*(?:tbna|sampl|aspirat|needle|biops|biopsy|biospy|\bbx\b)",
+        r"(?:tbna|sampl|aspirat|needle|biops|biopsy|biospy|\bbx\b).*\bebus\b",
         r"linear\s+(?:ebus|endobronchial ultrasound)",
         r"ebus[-\s]*findings",
         r"overall\s+rose\s+diagnosis",
-        # Station sampling - require close proximity and exclude negatives
-        r"station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l).{0,30}(?:sampl|pass|needle|aspirat)",
-        r"(?:sampl|pass|needle|aspirat).{0,30}station\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l)",
-        r"endobronchial ultrasound.{0,50}(?:guided|needle|aspirat|biops)",
+        # ROSE results commonly appear only when sampling was performed.
+        r"\bebus\b.{0,80}\brose\b.{0,60}(?:positive|negative|adequate|inadequate|malignan|benign|nondiagnostic|insufficient)",
+        r"\brose\b.{0,80}(?:positive|negative|adequate|inadequate|malignan|benign|nondiagnostic|insufficient).{0,80}\bebus\b",
+        # Station sampling - require close proximity and exclude negatives. Accept "staion" typo.
+        r"sta(?:t)?ion\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l).{0,30}(?:sampl|pass|needle|aspirat|biops|biopsy|biospy|rose)",
+        r"(?:sampl|pass|needle|aspirat|biops|biopsy|biospy|rose).{0,30}sta(?:t)?ion\s*(?:2r|2l|4r|4l|7|10r|10l|11r|11l)",
+        r"endobronchial ultrasound.{0,50}(?:guided|needle|aspirat|biops|biopsy|biospy)",
     ]
     # Exclude EBUS if there's explicit negative context about procedure not being done
     ebus_exclusion_indicators = [
@@ -270,7 +276,7 @@ def classify_procedure_families(note_text: str) -> Set[str]:
     # Additional check: if "station X" is mentioned, verify it's not in negative context
     if ebus_match and not ebus_excluded:
         # Check if station mentions are actually sampled (not just described)
-        station_pattern = r"station\s*(2r|2l|4r|4l|7|10r|10l|11r|11l)"
+        station_pattern = r"sta(?:t)?ion\s*(2r|2l|4r|4l|7|10r|10l|11r|11l)"
         station_matches = list(re.finditer(station_pattern, proc_lowered))
         if station_matches:
             # For each station mention, check surrounding context for negative phrases
@@ -281,7 +287,7 @@ def classify_procedure_families(note_text: str) -> Set[str]:
                 end = min(len(proc_lowered), match.end() + 80)
                 context = proc_lowered[start:end]
                 # Check for actual sampling in this context
-                if re.search(r"(?:sampl|pass|needle|aspirat|biops)", context):
+                if re.search(r"(?:sampl|pass|needle|aspirat|biops|biopsy|biospy|rose)", context):
                     # Also check it's not negative
                     if not re.search(r"(?:not|no|wasn't|were\s+not|was\s+not)\s+sampl", context):
                         all_stations_negative = False

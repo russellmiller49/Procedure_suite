@@ -852,6 +852,35 @@ class RegistryService:
                 warnings.append(f"DISEASE_BURDEN_OVERRIDE_FAILED: {type(exc).__name__}")
                 return record_in
 
+        def _filter_stale_parallel_review_reasons(
+            record_in: RegistryRecord,
+            reasons: list[str] | None,
+        ) -> list[str]:
+            """Drop ML-only review reasons when the current record now derives that CPT.
+
+            Parallel review reasons are generated before deterministic uplift/backfills.
+            Re-check against the post-uplift record to avoid noisy stale warnings.
+            """
+            reason_list = [str(r) for r in (reasons or []) if str(r).strip()]
+            if not reason_list:
+                return []
+
+            try:
+                from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+
+                derived_codes, _rationales, _warn = derive_all_codes_with_meta(record_in)
+                derived_set = {str(code).strip() for code in (derived_codes or []) if str(code).strip()}
+            except Exception:
+                return reason_list
+
+            filtered: list[str] = []
+            for reason in reason_list:
+                match = re.match(r"^\s*(\d{5})\s*:", reason)
+                if match and match.group(1) in derived_set:
+                    continue
+                filtered.append(reason)
+            return filtered
+
         text_for_extraction = masked_note_text
         if extraction_engine == "engine":
             pass
@@ -1529,9 +1558,32 @@ class RegistryService:
                                             proc_changed = True
                                             continue
                                         if key == "action" and isinstance(value, str) and value.strip():
-                                            existing_action = existing.get("action")
-                                            if existing_action in (None, "", "Placement") and existing_action != value:
-                                                existing[key] = value
+                                            incoming_action = value.strip()
+                                            existing_action_raw = existing.get("action")
+                                            existing_action = (
+                                                str(existing_action_raw).strip()
+                                                if existing_action_raw is not None
+                                                else ""
+                                            )
+                                            can_override_action = existing_action in ("", "Placement")
+                                            # If deterministic extraction sees an exchange/repositioning,
+                                            # prefer revision semantics over a removal-only NER action.
+                                            if (
+                                                incoming_action == "Revision/Repositioning"
+                                                and existing_action == "Removal"
+                                            ):
+                                                can_override_action = True
+                                            if can_override_action and existing_action != incoming_action:
+                                                existing[key] = incoming_action
+                                                action_type_by_action = {
+                                                    "Placement": "placement",
+                                                    "Removal": "removal",
+                                                    "Revision/Repositioning": "revision",
+                                                    "Assessment only": "assessment_only",
+                                                }
+                                                normalized_action_type = action_type_by_action.get(incoming_action)
+                                                if normalized_action_type:
+                                                    existing["action_type"] = normalized_action_type
                                                 proc_changed = True
                                                 continue
 
@@ -1834,7 +1886,9 @@ class RegistryService:
 
                 # Add review warnings if parallel pathway flagged discrepancies
                 if parallel_result.needs_review:
-                    warnings.extend(parallel_result.review_reasons)
+                    warnings.extend(
+                        _filter_stale_parallel_review_reasons(record, parallel_result.review_reasons)
+                    )
 
                 record = _apply_disease_burden_overrides(record)
                 return record, warnings, meta

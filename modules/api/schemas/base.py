@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
 from modules.coder.schema import CoderOutput
 from modules.common.spans import Span
 from modules.registry.schema import RegistryRecord
-from modules.reporting import BundlePatch, MissingFieldIssue, ProcedureBundle
+from modules.reporting import BundlePatch, MissingFieldIssue, ProcedureBundle, QuestionSpec
 
 
 class CoderRequest(BaseModel):
@@ -77,9 +77,15 @@ class VerifyResponse(BaseModel):
     suggestions: list[str] = Field(default_factory=list)
 
 
+class JsonPatchOperation(BaseModel):
+    op: Literal["add", "replace", "remove"]
+    path: str
+    value: Any | None = None
+
+
 class RenderRequest(BaseModel):
     bundle: ProcedureBundle
-    patch: BundlePatch
+    patch: BundlePatch | list[JsonPatchOperation] | None = None
     embed_metadata: bool = False
     strict: bool = False
 
@@ -91,6 +97,37 @@ class RenderResponse(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     inference_notes: list[str] = Field(default_factory=list)
     suggestions: list[str] = Field(default_factory=list)
+
+
+class QuestionsRequest(BaseModel):
+    bundle: ProcedureBundle
+    strict: bool = False
+
+
+class QuestionsResponse(BaseModel):
+    bundle: ProcedureBundle
+    issues: list[MissingFieldIssue] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    inference_notes: list[str] = Field(default_factory=list)
+    suggestions: list[str] = Field(default_factory=list)
+    questions: list[QuestionSpec] = Field(default_factory=list)
+    markdown: str | None = None
+
+
+class SeedFromTextRequest(BaseModel):
+    text: str
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    strict: bool = False
+
+
+class SeedFromTextResponse(BaseModel):
+    bundle: ProcedureBundle
+    markdown: str | None
+    issues: list[MissingFieldIssue] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    inference_notes: list[str] = Field(default_factory=list)
+    suggestions: list[str] = Field(default_factory=list)
+    questions: list[QuestionSpec] = Field(default_factory=list)
 
 
 class KnowledgeMeta(BaseModel):
@@ -120,6 +157,13 @@ class UnifiedProcessRequest(BaseModel):
     locality: str = Field("00", description="Geographic locality for RVU calculations")
     include_financials: bool = Field(True, description="Whether to include RVU/payment info")
     explain: bool = Field(False, description="Include extraction evidence/rationales")
+    include_v3_event_log: bool = Field(
+        False,
+        description=(
+            "If true, also run the event-log V3 extractor and include the raw "
+            "event payload under `registry_v3_event_log`."
+        ),
+    )
 
 
 class CodeSuggestionSummary(BaseModel):
@@ -143,6 +187,13 @@ class UnifiedProcessResponse(BaseModel):
 
     # Registry output
     registry: dict[str, Any] = Field(default_factory=dict, description="Extracted registry fields")
+    registry_v3_event_log: dict[str, Any] | None = Field(
+        default=None,
+        description=(
+            "Optional raw V3 event-log extraction payload (note_id/source_filename/procedures[]). "
+            "Present only when `include_v3_event_log=true`."
+        ),
+    )
     evidence: dict[str, Any] = Field(default_factory=dict, description="Extraction evidence spans")
 
     # Coder output
@@ -184,6 +235,11 @@ __all__ = [
     "RegistryResponse",
     "RenderRequest",
     "RenderResponse",
+    "JsonPatchOperation",
+    "QuestionsRequest",
+    "QuestionsResponse",
+    "SeedFromTextRequest",
+    "SeedFromTextResponse",
     "UnifiedProcessRequest",
     "UnifiedProcessResponse",
     "ReviewStatus",

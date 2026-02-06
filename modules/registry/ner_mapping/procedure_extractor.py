@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Dict, List, Set, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
 from modules.ner.inference import NEREntity, NERExtractionResult
 
@@ -25,6 +25,9 @@ class ProcedureExtractionResult:
 
     evidence: Dict[str, List[str]]
     """Map of procedure name to evidence texts."""
+
+    procedure_attributes: Dict[str, Dict[str, Any]] = field(default_factory=dict)
+    """Optional per-procedure attributes derived from entity context."""
 
     warnings: List[str] = field(default_factory=list)
 
@@ -165,6 +168,29 @@ class ProcedureExtractor:
     def __init__(self) -> None:
         # Pre-compile patterns
         self._patterns = self._compile_patterns()
+        self._stent_placement_re = re.compile(
+            r"\b(?:place(?:d|ment)?|deploy(?:ed|ment)?|insert(?:ed|ion)?|implant(?:ed|ation)?)\b",
+            re.IGNORECASE,
+        )
+        self._stent_removal_re = re.compile(
+            r"\b(?:remove(?:d|al)?|retriev(?:e|ed|al)|extract(?:ed|ion)|exchange(?:d|s)?|replac(?:e|ed|ement))\b",
+            re.IGNORECASE,
+        )
+        self._stent_revision_re = re.compile(
+            r"\b(?:reposition(?:ed|ing)?|revision|revis(?:ed|ion)|adjust(?:ed|ment))\b",
+            re.IGNORECASE,
+        )
+        self._stent_negated_placement_re = re.compile(
+            r"\b(?:no|not|without|declined|refused)\b[^.\n]{0,40}\b(?:stent|stents)\b[^.\n]{0,40}"
+            r"\b(?:place(?:d|ment)?|deploy(?:ed|ment)?|insert(?:ed|ion)?)\b",
+            re.IGNORECASE,
+        )
+        self._stent_assessment_only_re = re.compile(
+            r"\b(?:stent\s+in\s+place|stent\s+in\s+good\s+position|stent\s+well\s+positioned|"
+            r"well\s+positioned\s+stent|known\s+stent|existing\s+stent|stent\s+surveillance|"
+            r"inspection\s+of\s+stent|stent\s+patent|patent\s+stent)\b",
+            re.IGNORECASE,
+        )
 
     def field_path_for(self, proc_name: str) -> str | None:
         """Return the RegistryRecord field path for a procedure key."""
@@ -193,6 +219,35 @@ class ProcedureExtractor:
             patterns[proc_name] = (sorted_keywords, field_path)
         return patterns
 
+    @staticmethod
+    def _stent_action_priority(action: str | None) -> int:
+        if action == "Removal":
+            return 3
+        if action == "Revision":
+            return 2
+        if action == "Placement":
+            return 1
+        return 0
+
+    def _detect_stent_action(self, *contexts: str) -> str | None:
+        for context in contexts:
+            text = (context or "").lower()
+            if "stent" not in text:
+                continue
+            if self._stent_removal_re.search(text):
+                return "Removal"
+            if self._stent_revision_re.search(text):
+                return "Revision"
+            if self._stent_placement_re.search(text) and not self._stent_negated_placement_re.search(text):
+                return "Placement"
+        return None
+
+    def _is_stent_assessment_only(self, context: str) -> bool:
+        text = (context or "").lower()
+        if "stent" not in text:
+            return False
+        return self._stent_assessment_only_re.search(text) is not None
+
     def extract(self, ner_result: NERExtractionResult) -> ProcedureExtractionResult:
         """
         Extract procedure flags from NER entities.
@@ -205,6 +260,8 @@ class ProcedureExtractor:
         """
         proc_methods = ner_result.entities_by_type.get("PROC_METHOD", [])
         proc_actions = ner_result.entities_by_type.get("PROC_ACTION", [])
+        neg_stent_entities = ner_result.entities_by_type.get("NEG_STENT", [])
+        ctx_stent_entities = ner_result.entities_by_type.get("CTX_STENT_PRESENT", [])
         device_hints = (
             ner_result.entities_by_type.get("DEV_STENT", [])
             + ner_result.entities_by_type.get("DEV_INSTRUMENT", [])
@@ -216,7 +273,11 @@ class ProcedureExtractor:
 
         procedure_flags: Dict[str, bool] = {}
         evidence: Dict[str, List[str]] = {}
+        procedure_attributes: Dict[str, Dict[str, Any]] = {}
         warnings: List[str] = []
+        stent_suppression_signals = bool(neg_stent_entities or ctx_stent_entities)
+        stent_suppression_warned = False
+        stent_assessment_warned = False
 
         raw_text = ner_result.raw_text or ""
         raw_lower = raw_text.lower()
@@ -255,6 +316,23 @@ class ProcedureExtractor:
                             # EBUS-TBNA is captured under linear_ebus; do not also set conventional TBNA.
                             if ebus_context_re.search(entity_context):
                                 break
+                        if proc_name == "airway_stent":
+                            stent_action = self._detect_stent_action(entity_context, text_lower, raw_lower)
+                            assessment_only = self._is_stent_assessment_only(entity_context or text_lower)
+                            if stent_suppression_signals and not stent_action:
+                                if not stent_suppression_warned:
+                                    warnings.append(
+                                        "Suppressed airway_stent from CTX_STENT_PRESENT/NEG_STENT without action cues."
+                                    )
+                                    stent_suppression_warned = True
+                                break
+                            if assessment_only and not stent_action:
+                                if not stent_assessment_warned:
+                                    warnings.append(
+                                        "Suppressed airway_stent from assessment-only stent context."
+                                    )
+                                    stent_assessment_warned = True
+                                break
                         # Found a match
                         procedure_flags[proc_name] = True
 
@@ -262,11 +340,23 @@ class ProcedureExtractor:
                             evidence[proc_name] = []
                         evidence[proc_name].append(entity.text)
 
+                        if proc_name == "airway_stent":
+                            stent_action = self._detect_stent_action(entity_context, text_lower, raw_lower)
+                            if stent_action:
+                                attrs = procedure_attributes.setdefault("airway_stent", {})
+                                current_action = attrs.get("action")
+                                if self._stent_action_priority(stent_action) >= self._stent_action_priority(
+                                    str(current_action) if current_action else None
+                                ):
+                                    attrs["action"] = stent_action
+                                attrs["airway_stent_removal"] = attrs.get("action") == "Removal"
+
                         break  # Only match first keyword per entity
 
         return ProcedureExtractionResult(
             procedure_flags=procedure_flags,
             evidence=evidence,
+            procedure_attributes=procedure_attributes,
             warnings=warnings,
         )
 

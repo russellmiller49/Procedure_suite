@@ -35,6 +35,8 @@ from .engine import (
     default_schema_registry,
     default_template_registry,
 )
+from .json_patch import BundleJsonPatchError, apply_bundle_json_patch
+from .questions import QuestionInputType, QuestionSpec, build_questions, questions_from_missing_issues
 
 __all__ = [
     "compose_report_from_text",
@@ -69,4 +71,10 @@ __all__ = [
     "apply_bundle_patch",
     "apply_patch_result",
     "get_coder_view",
+    "apply_bundle_json_patch",
+    "BundleJsonPatchError",
+    "QuestionInputType",
+    "QuestionSpec",
+    "build_questions",
+    "questions_from_missing_issues",
 ]
