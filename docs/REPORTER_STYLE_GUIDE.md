@@ -1,5 +1,16 @@
 # Reporter Style Guide
 
+## Read First (Repo Constraints)
+
+These documents capture repo-wide invariants and operational constraints that affect reporter changes:
+
+- [`AGENTS.md`](../AGENTS.md)
+- [`CLAUDE.md`](../CLAUDE.md)
+- [`README.md`](../README.md) and [`docs/README.md`](README.md)
+- [`docs/DEVELOPMENT.md`](DEVELOPMENT.md)
+
+Reporter implementation details live in [`docs/STRUCTURED_REPORTER.md`](STRUCTURED_REPORTER.md).
+
 This reporter keeps provider-authored language intact while enforcing a few consistency rules:
 
 - **Tense:** All procedures are written in past tense.
@@ -15,4 +26,4 @@ Available Jinja filters/helpers:
 - `fmt_unit(value, unit)` → `"20 cm H₂O"` etc.
 - `join_nonempty(values, sep=", ")` → join while skipping falsy values
 
-When adding templates, keep sentences declarative and past tense, prefer short paragraphs over bullets unless the source language requires bullets.***
+When adding templates, keep sentences declarative and past tense. Prefer short paragraphs over bullets unless the source language requires bullets.
