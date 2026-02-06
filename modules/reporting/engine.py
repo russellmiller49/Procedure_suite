@@ -55,6 +55,10 @@ from modules.reporting.macro_engine import (
     get_base_utilities,
     CATEGORY_MACROS,
 )
+from modules.reporting.partial_schemas import (
+    TransbronchialCryobiopsyPartial,
+    TransbronchialNeedleAspirationPartial,
+)
 
 _TEMPLATE_ROOT = Path(__file__).parent / "templates"
 _TEMPLATE_MAP = {
@@ -404,6 +408,7 @@ class ReporterEngine:
         self.schemas = schema_registry
         self.procedure_order = procedure_order or {}
         self.shell_template_id = shell_template_id
+        self._strict_render = False
 
     def compose_report(self, bundle: ProcedureBundle, *, strict: bool = False) -> str:
         structured = self.compose_report_with_metadata(bundle, strict=strict, embed_metadata=False)
@@ -437,6 +442,7 @@ class ReporterEngine:
         strict: bool = False,
         autocode_result: ProcedureAutocodeResult | None = None,
     ) -> tuple[str, ReportMetadata]:
+        self._strict_render = strict
         sections: dict[str, list[str]] = {
             "HEADER": [],
             "PRE_ANESTHESIA": [],
@@ -655,7 +661,8 @@ class ReporterEngine:
     ) -> str:
         model_cls = self.schemas.get(meta.schema_id)
         model = proc.data if isinstance(proc.data, BaseModel) else model_cls.model_validate(proc.data or {})
-        self._check_required(meta, model)
+        if self._strict_render:
+            self._check_required(meta, model)
         return self._render(meta, bundle, model, extra_context=extra_context)
 
     def _render_payload(
@@ -668,7 +675,8 @@ class ReporterEngine:
     ) -> str:
         model_cls = self.schemas.get(meta.schema_id)
         model = payload if isinstance(payload, BaseModel) else model_cls.model_validate(payload or {})
-        self._check_required(meta, model)
+        if self._strict_render:
+            self._check_required(meta, model)
         return self._render(meta, bundle, model, extra_context=extra_context)
 
     def _render(
@@ -1095,7 +1103,7 @@ def default_schema_registry() -> SchemaRegistry:
         "blvr_valve_removal_exchange_v1": airway_schemas.BLVRValveRemovalExchange,
         "blvr_post_procedure_protocol_v1": airway_schemas.BLVRPostProcedureProtocol,
         "blvr_discharge_instructions_v1": airway_schemas.BLVRDischargeInstructions,
-        "transbronchial_cryobiopsy_v1": airway_schemas.TransbronchialCryobiopsy,
+        "transbronchial_cryobiopsy_v1": TransbronchialCryobiopsyPartial,
         "endobronchial_cryoablation_v1": airway_schemas.EndobronchialCryoablation,
         "cryo_extraction_mucus_v1": airway_schemas.CryoExtractionMucus,
         "bpf_localization_occlusion_v1": airway_schemas.BPFLocalizationOcclusion,
@@ -1117,7 +1125,7 @@ def default_schema_registry() -> SchemaRegistry:
         "bronchial_brushings_v1": airway_schemas.BronchialBrushing,
         "endobronchial_biopsy_v1": airway_schemas.EndobronchialBiopsy,
         "transbronchial_lung_biopsy_v1": airway_schemas.TransbronchialLungBiopsy,
-        "transbronchial_needle_aspiration_v1": airway_schemas.TransbronchialNeedleAspiration,
+        "transbronchial_needle_aspiration_v1": TransbronchialNeedleAspirationPartial,
         "transbronchial_biopsy_v1": airway_schemas.TransbronchialBiopsyBasic,
         "therapeutic_aspiration_v1": airway_schemas.TherapeuticAspiration,
         "rigid_bronchoscopy_v1": airway_schemas.RigidBronchoscopy,
@@ -1296,6 +1304,42 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(procs, dict):
         procs = {}
 
+    def _first_nonempty_str(*values: Any) -> str | None:
+        for value in values:
+            if value in (None, ""):
+                continue
+            text = str(value).strip()
+            if text:
+                return text
+        return None
+
+    def _extract_lung_location_hint(text: str) -> str | None:
+        """Best-effort location from free text (lobe/segment shorthand)."""
+        if not text:
+            return None
+        upper = text.upper()
+        for token in ("RUL", "RML", "RLL", "LUL", "LLL"):
+            if re.search(rf"\b{token}\b", upper):
+                return token
+        # Common long-form phrases.
+        if "RIGHT UPPER LOBE" in upper:
+            return "RUL"
+        if "RIGHT MIDDLE LOBE" in upper:
+            return "RML"
+        if "RIGHT LOWER LOBE" in upper:
+            return "RLL"
+        if "LEFT UPPER LOBE" in upper:
+            return "LUL"
+        if "LEFT LOWER LOBE" in upper:
+            return "LLL"
+        return None
+
+    def _text_contains_tool_in_lesion(text: str) -> bool:
+        if not text:
+            return False
+        lowered = text.lower()
+        return bool(re.search(r"\btool[-\s]?in[-\s]?lesion\b", lowered))
+
     def _dedupe_preserve_order(values: list[str]) -> list[str]:
         seen: set[str] = set()
         deduped: list[str] = []
@@ -1386,6 +1430,73 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             if elastography_pattern not in (None, "", [], {}):
                 raw["ebus_elastography_pattern"] = elastography_pattern
 
+    # --- Navigational/robotic bronchoscopy compat (parallel_ner nested keys -> legacy flat keys) ---
+    equipment = raw.get("equipment") or {}
+    if not isinstance(equipment, dict):
+        equipment = {}
+
+    clinical_context = raw.get("clinical_context") or {}
+    if not isinstance(clinical_context, dict):
+        clinical_context = {}
+
+    # Make the original (scrubbed) text available to compat mappers when callers provide it.
+    source_text = _first_nonempty_str(raw.get("source_text"), raw.get("note_text"), raw.get("raw_note"), raw.get("text"))
+    location_hint = _extract_lung_location_hint(source_text or "")
+
+    if raw.get("nav_platform") in (None, "", [], {}):
+        nav_platform = _first_nonempty_str(equipment.get("navigation_platform"))
+        if nav_platform:
+            raw["nav_platform"] = nav_platform
+
+    if raw.get("nav_imaging_verification") in (None, "", [], {}):
+        cbct_used = equipment.get("cbct_used")
+        if cbct_used is True:
+            raw["nav_imaging_verification"] = "Cone Beam CT"
+
+    if raw.get("nav_target_segment") in (None, "", [], {}):
+        if location_hint:
+            raw["nav_target_segment"] = location_hint
+
+    if raw.get("lesion_location") in (None, "", [], {}):
+        if location_hint:
+            raw["lesion_location"] = location_hint
+
+    if raw.get("nav_tool_in_lesion") is not True:
+        if _text_contains_tool_in_lesion(source_text or ""):
+            raw["nav_tool_in_lesion"] = True
+
+    if raw.get("nav_lesion_size_mm") in (None, "", [], {}):
+        lesion_size_mm = clinical_context.get("lesion_size_mm")
+        if lesion_size_mm not in (None, "", [], {}):
+            raw["nav_lesion_size_mm"] = lesion_size_mm
+
+    # DictPayloadAdapter compat: map nested `procedures_performed.*` into top-level payload keys.
+    # This allows the reporter adapters to build partially-populated procedure models.
+    peripheral_tbna = procs.get("peripheral_tbna")
+    if (
+        isinstance(peripheral_tbna, dict)
+        and peripheral_tbna.get("performed") is True
+        and raw.get("transbronchial_needle_aspiration") in (None, "", [], {})
+    ):
+        raw["transbronchial_needle_aspiration"] = {
+            "lung_segment": location_hint,
+            "needle_tools": "TBNA",
+            "samples_collected": None,
+            "tests": [],
+        }
+
+    cryo = procs.get("transbronchial_cryobiopsy")
+    if (
+        isinstance(cryo, dict)
+        and cryo.get("performed") is True
+        and raw.get("transbronchial_cryobiopsy") in (None, "", [], {})
+    ):
+        raw["transbronchial_cryobiopsy"] = {
+            "lung_segment": location_hint,
+            "num_samples": None,
+            "tests": [],
+        }
+
     # bronch_num_tbbx from transbronchial_biopsy.number_of_samples
     if "bronch_num_tbbx" not in raw:
         tbbx = procs.get("transbronchial_biopsy", {}) or {}
@@ -1407,7 +1518,11 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     return raw
 
 
-def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
+def build_procedure_bundle_from_extraction(
+    extraction: Any,
+    *,
+    source_text: str | None = None,
+) -> ProcedureBundle:
     """
     Convert a registry extraction payload (dict or RegistryRecord) into a ProcedureBundle.
 
@@ -1416,6 +1531,8 @@ def build_procedure_bundle_from_extraction(extraction: Any) -> ProcedureBundle:
     dicts from tests or upstream extractors.
     """
     raw = extraction.model_dump() if hasattr(extraction, "model_dump") else deepcopy(extraction or {})
+    if source_text and raw.get("source_text") in (None, ""):
+        raw["source_text"] = source_text
 
     # Add flat compatibility fields that adapters expect
     raw = _add_compat_flat_fields(raw)

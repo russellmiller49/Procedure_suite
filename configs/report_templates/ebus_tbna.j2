@@ -8,12 +8,18 @@ The following lymph node stations were sampled:
 
 {% for station in proc.stations %}
 Station: {{ station.station_name }}
-{% if station.size_mm is not none %}Size: {{ station.size_mm }} mm{% endif %}
-{% if station.biopsy_tools %}Biopsy Tools: {{ station.biopsy_tools | join(', ') }}{% endif %}
-{% if station.passes is not none %}Number of Passes: {{ station.passes }}{% endif %}
-{% if station.echo_features %}Echo Features: {{ station.echo_features }}{% endif %}
-{% if station.rose_result %}ROSE Results: {{ station.rose_result }}{% endif %}
-{% if station.comments %}Notes: {{ station.comments }}{% endif %}
+{% if station.size_mm is not none %}Size: {{ station.size_mm }} mm
+{% endif %}
+{% if station.biopsy_tools %}Biopsy Tools: {{ station.biopsy_tools | join(', ') }}
+{% endif %}
+{% if station.passes is not none %}Number of Passes: {{ station.passes }}
+{% endif %}
+{% if station.echo_features %}Echo Features: {{ station.echo_features }}
+{% endif %}
+{% if station.rose_result %}ROSE Results: {{ station.rose_result }}
+{% endif %}
+{% if station.comments %}Notes: {{ station.comments }}
+{% endif %}
 
 {% endfor %}
 {% if proc.overall_rose_diagnosis %}Overall ROSE Diagnosis: {{ proc.overall_rose_diagnosis }}.{% endif %}

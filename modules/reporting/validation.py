@@ -126,8 +126,10 @@ class ValidationEngine:
         if getattr(meta, "field_configs", None):
             return meta.field_configs  # type: ignore[return-value]
         configs: dict[str, FieldConfig] = {}
-        for path in getattr(meta, "critical_fields", []):
+        for path in getattr(meta, "required_fields", []) or []:
             configs[path] = FieldConfig(path=path, required=True, critical=True)
+        for path in getattr(meta, "critical_fields", []):
+            configs.setdefault(path, FieldConfig(path=path, required=True, critical=True))
         for path in getattr(meta, "recommended_fields", []):
             configs.setdefault(path, FieldConfig(path=path, required=True, critical=False))
         return configs

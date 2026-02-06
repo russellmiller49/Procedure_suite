@@ -382,10 +382,34 @@ function buildPatchOpsFromAnswers() {
     if (!parsed.hasValue) return;
     const pointer = String(question.pointer || "").trim();
     if (!pointer) return;
+    let value = parsed.value;
+    if (question?.input_type === "multiselect" && Array.isArray(value)) {
+      // Some bundle fields are stored as strings even if the UI offers a multiselect.
+      // Normalize those to avoid schema-validation failures during render.
+      if (pointer.toLowerCase().endsWith("/echo_features")) {
+        value = value.join(", ");
+      }
+    }
+    if (pointer.toLowerCase().endsWith("/tests")) {
+      if (typeof value === "string") {
+        const parts = value
+          .split(/[,;\n]+/)
+          .map((item) => String(item || "").trim())
+          .filter((item) => item !== "");
+        if (!parts.length) return;
+        value = parts;
+      } else if (Array.isArray(value)) {
+        const parts = value
+          .map((item) => String(item || "").trim())
+          .filter((item) => item !== "");
+        if (!parts.length) return;
+        value = parts;
+      }
+    }
     ops.push({
       op: pointerExists(bundle, pointer) ? "replace" : "add",
       path: pointer,
-      value: parsed.value,
+      value,
     });
   });
   return ops;

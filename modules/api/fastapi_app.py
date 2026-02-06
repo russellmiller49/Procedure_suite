@@ -967,14 +967,68 @@ def _render_bundle_markdown(
         schemas,
         procedure_order=_load_procedure_order(),
     )
-    structured = engine.compose_report_with_metadata(
-        bundle,
-        strict=strict,
-        embed_metadata=embed_metadata,
-        validation_issues=issues,
-        warnings=warnings,
-    )
+    try:
+        structured = engine.compose_report_with_metadata(
+            bundle,
+            strict=strict,
+            embed_metadata=embed_metadata,
+            validation_issues=issues,
+            warnings=warnings,
+        )
+    except ValueError as exc:
+        # In strict mode, the reporter runs style validation on the final rendered
+        # text. We still want to return a preview for the interactive UI even if
+        # strict style checks fail (e.g., templates render "None" or placeholders).
+        message = str(exc)
+        if not strict:
+            raise
+        if not (
+            message.startswith("Style validation failed:")
+            or message.startswith("Missing required fields for")
+        ):
+            raise
+        _logger.warning(
+            "Strict report render failed; falling back to non-strict preview",
+            extra={"error": message},
+        )
+        structured = engine.compose_report_with_metadata(
+            bundle,
+            strict=False,
+            embed_metadata=embed_metadata,
+            validation_issues=issues,
+            warnings=warnings,
+        )
     return structured.text
+
+
+def _normalize_report_json_patch_ops(ops: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Coerce interactive UI patch values into schema-friendly shapes.
+
+    The interactive Reporter Builder UI can emit multiselect answers as arrays, but
+    some underlying bundle schema fields are stored as strings (for template compatibility).
+    Normalize those here to avoid 500s on render.
+    """
+    for op in ops:
+        path = op.get("path")
+        if not isinstance(path, str):
+            continue
+        value = op.get("value")
+        if path.endswith("/echo_features"):
+            if not isinstance(value, list):
+                continue
+            parts = [str(item).strip() for item in value if str(item).strip()]
+            op["value"] = ", ".join(parts)
+            continue
+
+        if path.endswith("/tests"):
+            if isinstance(value, str):
+                normalized = value.replace(";", ",").replace("\n", ",")
+                op["value"] = [part.strip() for part in normalized.split(",") if part.strip()]
+                continue
+            if isinstance(value, list):
+                op["value"] = [str(item).strip() for item in value if str(item).strip()]
+                continue
+    return ops
 
 
 def _apply_render_patch(
@@ -991,6 +1045,7 @@ def _apply_render_patch(
                 ops.append(op.model_dump(exclude_none=False))
             else:
                 ops.append(dict(op))
+        ops = _normalize_report_json_patch_ops(ops)
         return apply_bundle_json_patch(bundle, ops)
     return apply_bundle_patch(bundle, patch_payload)
 
@@ -1079,7 +1134,7 @@ async def report_seed_from_text(
     note_text = redaction.text
 
     extraction_result = await run_cpu(request.app, registry_service.extract_fields, note_text)
-    bundle = build_procedure_bundle_from_extraction(extraction_result.record)
+    bundle = build_procedure_bundle_from_extraction(extraction_result.record, source_text=note_text)
     bundle = _apply_seed_metadata(bundle, req.metadata)
     if not bundle.free_text_hint:
         bundle_payload = bundle.model_dump(exclude_none=False)
