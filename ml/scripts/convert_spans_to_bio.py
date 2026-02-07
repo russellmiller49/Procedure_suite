@@ -20,7 +20,7 @@ Output format (for train_registry_ner.py):
 }
 
 Usage:
-    python scripts/convert_spans_to_bio.py \
+    python ml/scripts/convert_spans_to_bio.py \
         --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
         --output data/ml_training/granular_ner/ner_bio_format.jsonl \
         --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext

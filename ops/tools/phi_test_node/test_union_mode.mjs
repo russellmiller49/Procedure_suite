@@ -8,7 +8,7 @@
  * without requiring the full ML model to be loaded.
  *
  * Usage:
- *   cd scripts/phi_test_node
+ *   cd ops/tools/phi_test_node
  *   node test_union_mode.mjs
  */
 

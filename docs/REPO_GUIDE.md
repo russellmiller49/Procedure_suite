@@ -25,7 +25,7 @@ Server-side PHI scrubbing still exists for back-compat and for workflows that ar
 ## Start here (minimal “run it” recipe)
 
 1. Setup environment and dependencies: see [`docs/INSTALLATION.md`](INSTALLATION.md)
-2. Start dev server: `./scripts/devserver.sh`
+2. Start dev server: `./ops/devserver.sh`
 3. Open:
    - UI: `http://localhost:8000/ui/`
    - API docs (Swagger): `http://localhost:8000/docs`
@@ -39,7 +39,8 @@ At a glance:
 - `app/` — runtime backend (FastAPI app, pipelines, adapters, guardrails)
 - `proc_schemas/` — Pydantic schema definitions (registry v2/v3, coding, shared types)
 - `data/` — knowledge base JSON, models, training data, corpora (many files are large)
-- `scripts/` — smoke tests, evaluators, training helpers, maintenance scripts
+- `ml/scripts/` — ML training/eval/data-prep scripts
+- `ops/` — runtime/devops entrypoints and tooling (`ops/tools/`)
 - `tests/` — test suites (prefer adding tests adjacent to the module you change)
 - `docs/` — documentation
 
@@ -73,7 +74,7 @@ When `CODER_REQUIRE_PHI_REVIEW=true` **or** `PROCSUITE_ENV=production`, startup 
 
 ### `.env` loading rule
 
-- `./scripts/devserver.sh` sources `.env` if present.
+- `./ops/devserver.sh` sources `.env` if present.
 - `app/api/fastapi_app.py` also loads `.env` via `python-dotenv` unless `PROCSUITE_SKIP_DOTENV=true`.
 - OS env vars win over `.env` values (dotenv loads with `override=False`).
 
@@ -367,7 +368,7 @@ Key points:
   - RAW-ML auditor (`REGISTRY_AUDITOR_SOURCE=raw_ml`) producing high-confidence omissions
   - Keyword guard allowlist (prevents “random patching”)
 - Smoke visibility:
-  - `python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct`
+  - `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
 
 ## UI: PHI redactor / clinical dashboard
 
@@ -420,7 +421,7 @@ Schema refactor notes:
 
 ### Local dev server
 
-- `./scripts/devserver.sh`
+- `./ops/devserver.sh`
 
 ### Tests and quality
 
@@ -430,11 +431,11 @@ Schema refactor notes:
 
 ### Smoke test a single note (diagnostic)
 
-- `python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct`
+- `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
 
 ### Smoke test a batch (diagnostic)
 
-- `python scripts/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
+- `python ops/tools/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
 
 ## Deployment & operations
 

@@ -6,7 +6,7 @@ Samples golden notes, runs DistilBERT inference to pre-annotate PHI spans,
 and outputs Prodigy-compatible JSONL format.
 
 Usage:
-    python scripts/prodigy_prepare_phi_batch.py --count 100 --output data/ml_training/prodigy_batch.jsonl
+    python ml/scripts/prodigy_prepare_phi_batch.py --count 100 --output data/ml_training/prodigy_batch.jsonl
 """
 
 from __future__ import annotations

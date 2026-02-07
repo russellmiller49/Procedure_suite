@@ -9,8 +9,8 @@ This script:
 5. Optionally archives subset files to _archive/registry_human/
 
 Usage:
-    python scripts/verify_registry_human_data.py           # Dry-run (report only)
-    python scripts/verify_registry_human_data.py --execute # Add missing + archive
+    python ml/scripts/verify_registry_human_data.py           # Dry-run (report only)
+    python ml/scripts/verify_registry_human_data.py --execute # Add missing + archive
 """
 
 from __future__ import annotations

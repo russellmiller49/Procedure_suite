@@ -45,7 +45,7 @@ Goal: prevent knowledge/schema refactors from silently breaking extraction or co
   - `make validate-schemas`
   - `make test`
   - KB version + checksum check
-- [x] Add a no‑network **release validation script** → `scripts/validate_knowledge_release.py`
+- [x] Add a no‑network **release validation script** → `ops/tools/validate_knowledge_release.py`
   - Make target: `make validate-knowledge-release`
 
 Notes:
@@ -120,7 +120,7 @@ Goal: link each billed CPT line back to structured objects and evidence spans, a
 
 - Schema integrity: `make validate-schemas`
 - Unit tests: `make test`
-- Single note smoke: `python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct`
+- Single note smoke: `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
 
 ---
 

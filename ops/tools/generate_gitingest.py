@@ -60,7 +60,10 @@ EXCLUDED_FILE_EXTENSIONS = {
 }
 
 IMPORTANT_DIRS = [
-    "modules/",
+    "app/",
+    "ml/",
+    "ops/",
+    "ui/",
     "proc_report/",
     "proc_autocode/",
     "proc_nlp/",
@@ -68,7 +71,6 @@ IMPORTANT_DIRS = [
     "proc_schemas/",
     "schemas/",
     "configs/",
-    "scripts/",
     "tests/",
 ]
 
@@ -80,11 +82,11 @@ IMPORTANT_FILES = [
     "requirements.txt",
     "Makefile",
     "runtime.txt",
-    "modules/api/fastapi_app.py",
-    "modules/coder/application/coding_service.py",
-    "modules/registry/application/registry_service.py",
-    "modules/agents/contracts.py",
-    "modules/agents/run_pipeline.py",
+    "app/api/fastapi_app.py",
+    "app/coder/application/coding_service.py",
+    "app/registry/application/registry_service.py",
+    "app/agents/contracts.py",
+    "app/agents/run_pipeline.py",
     "docs/AGENTS.md",
     "docs/DEVELOPMENT.md",
     "docs/ARCHITECTURE.md",
@@ -95,11 +97,12 @@ IMPORTANT_FILES = [
 ]
 
 DETAIL_DEFAULT_INCLUDE_DIRS = [
-    "modules/",
-    "proc_nlp/",
+    "app/",
+    "ml/",
+    "ops/",
+    "ui/",
     "proc_schemas/",
     "config/",
-    "scripts/",
     "tests/",
     "docs/",
 ]
@@ -269,10 +272,10 @@ def iter_detail_candidate_files(
                     continue
                 candidates.append(p)
 
-    # Stable ordering: prioritize scripts and python, then smaller files.
+    # Stable ordering: prioritize active script trees and python, then smaller files.
     def sort_key(p: Path) -> tuple[int, int, int, str]:
         rel = str(p.relative_to(repo_root)).replace("\\", "/")
-        in_scripts = 0 if rel.startswith("scripts/") else 1
+        in_scripts = 0 if (rel.startswith("ml/scripts/") or rel.startswith("ops/tools/")) else 1
         is_py = 0 if p.suffix.lower() == ".py" else 1
         try:
             size = p.stat().st_size
@@ -312,9 +315,11 @@ def generate_gitingest_details(
         if inline_mode == "all":
             return True
         # curated
-        if rel_path.startswith("scripts/") and suffix in {".py", ".md"}:
+        if rel_path.startswith("ml/scripts/") and suffix in {".py", ".md"}:
             return True
-        if rel_path.startswith("modules/") and suffix == ".py":
+        if rel_path.startswith("ops/tools/") and suffix in {".py", ".md"}:
+            return True
+        if rel_path.startswith("app/") and suffix == ".py":
             return True
         if rel_path.startswith("proc_nlp/") and suffix == ".py":
             return True

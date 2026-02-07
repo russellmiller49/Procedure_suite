@@ -23,8 +23,8 @@ except ImportError:
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 ADDONS_JSON_PATH = PROJECT_ROOT / "data" / "knowledge" / "ip_addon_templates_parsed.json"
-ADDONS_TEMPLATES_DIR = PROJECT_ROOT / "modules" / "reporting" / "templates" / "addons"
-MAIN_TEMPLATES_DIR = PROJECT_ROOT / "modules" / "reporting" / "templates"
+ADDONS_TEMPLATES_DIR = PROJECT_ROOT / "app" / "reporting" / "templates" / "addons"
+MAIN_TEMPLATES_DIR = PROJECT_ROOT / "app" / "reporting" / "templates"
 
 
 class TestAddonJSONIntegrity:

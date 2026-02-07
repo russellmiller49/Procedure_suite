@@ -89,4 +89,4 @@ The interactive flow is stateless: the client holds the latest `bundle` and re-s
 
 ## CLI Helper
 
-`scripts/render_report.py --input extraction.json --output report.txt` loads an extraction payload, builds a bundle, and renders a full report for quick debugging.
+`ops/tools/render_report.py --input extraction.json --output report.txt` loads an extraction payload, builds a bundle, and renders a full report for quick debugging.

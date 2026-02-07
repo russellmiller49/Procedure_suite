@@ -36,7 +36,7 @@ This toolkit enables:
 3.  **Run**:
     ```bash
     # Start the API/Dev Server
-    ./scripts/devserver.sh
+    ./ops/devserver.sh
     ```
 
     Then open:

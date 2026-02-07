@@ -9,13 +9,14 @@ This is a **high-signal map** of the repository: where the main entrypoints live
 - **`configs/`**: Config files used by the structured reporter (template configs + Jinja).
 - **`proc_schemas/`**: Pydantic schemas (registry v2/v3, coding schemas, shared types).
 - **`config/`**: Runtime settings (`pydantic-settings`) and configuration helpers.
-- **`scripts/`**: Dev scripts, evaluation utilities, CLI helpers.
+- **`ml/scripts/`**: ML training/evaluation/data-prep scripts.
+- **`ops/`**: Operational entrypoints + tooling (`ops/tools/`).
 - **`tests/`**: Test suites (coder, registry, reporter, etc.).
 - **`docs/`**: Documentation (guides, architecture notes, workflows).
 
 ## Run / entrypoints
 
-- **Dev server**: `./scripts/devserver.sh`
+- **Dev server**: `./ops/devserver.sh`
   - Starts `uvicorn app.api.fastapi_app:app` with reload.
   - Sets `PSUITE_KNOWLEDGE_FILE` (defaults to `data/knowledge/ip_coding_billing_v3_0.json`).
 
@@ -125,4 +126,3 @@ This is a **high-signal map** of the repository: where the main entrypoints live
 - **Development rules**: `docs/DEVELOPMENT.md`
 - **Knowledge source-of-truth policy**: `docs/KNOWLEDGE_INVENTORY.md`
 - **User guide**: `docs/USER_GUIDE.md`
-

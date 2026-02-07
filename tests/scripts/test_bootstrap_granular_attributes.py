@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from scripts import bootstrap_granular_attributes as bootstrap
+from ml.scripts import bootstrap_granular_attributes as bootstrap
 
 
 def _write_jsonl(path: Path, rows: list[dict]) -> None:

@@ -237,7 +237,7 @@ def get_coding_service() -> CodingService:
     else:
         logger.info("LLM advisor disabled (CODER_USE_LLM_ADVISOR not set)")
 
-    # 6. PHI scrubbing is now handled at route level (modules/api/phi_redaction.py).
+    # 6. PHI scrubbing is now handled at route level (app/api/phi_redaction.py).
     # The phi_scrubber parameter on CodingService is deprecated.
 
     # 7. Build CodingService

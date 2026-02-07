@@ -8,11 +8,11 @@ The scrubbing uses the same Presidio-based scrubber as the PHI Demo workflow,
 with clinical allowlists to preserve anatomical terms and procedure vocabulary.
 
 Usage:
-    python scripts/scrub_golden_jsons.py                    # Scrub in-place (creates backups)
-    python scripts/scrub_golden_jsons.py --dry-run          # Preview without modifying
-    python scripts/scrub_golden_jsons.py --no-backup        # Scrub in-place without backups
-    python scripts/scrub_golden_jsons.py --output-dir out/  # Write to separate directory
-    python scripts/scrub_golden_jsons.py --report-path artifacts/redactions.jsonl  # Write redaction report (JSONL)
+    python ml/scripts/scrub_golden_jsons.py                    # Scrub in-place (creates backups)
+    python ml/scripts/scrub_golden_jsons.py --dry-run          # Preview without modifying
+    python ml/scripts/scrub_golden_jsons.py --no-backup        # Scrub in-place without backups
+    python ml/scripts/scrub_golden_jsons.py --output-dir out/  # Write to separate directory
+    python ml/scripts/scrub_golden_jsons.py --report-path artifacts/redactions.jsonl  # Write redaction report (JSONL)
 """
 
 from __future__ import annotations

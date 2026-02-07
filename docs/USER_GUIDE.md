@@ -103,7 +103,7 @@ This approach is **faster** (43% of cases skip LLM entirely) and **more accurate
 The easiest way to interact with the system is the development server, which provides a web UI and API documentation.
 
 ```bash
-./scripts/devserver.sh
+./ops/devserver.sh
 ```
 *Starts the server on port 8000.*
 
@@ -135,7 +135,7 @@ make validate-registry
 Test the CPT coding engine against the training dataset.
 
 ```bash
-python scripts/evaluate_cpt.py
+python ml/scripts/evaluate_cpt.py
 ```
 *Output*: Accuracy metrics and error logs in `data/cpt_errors.jsonl`.
 
@@ -158,16 +158,16 @@ Test a single note file:
 
 ```bash
 # Basic usage
-python scripts/registry_pipeline_smoke.py --note <note.txt>
+python ops/tools/registry_pipeline_smoke.py --note <note.txt>
 
 # With self-correction enabled
-python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct
+python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct
 
 # With real LLM calls enabled (OpenAI)
-python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct --real-llm
+python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct --real-llm
 
 # With inline text (no file needed)
-python scripts/registry_pipeline_smoke.py --text "Procedure: EBUS bronchoscopy..."
+python ops/tools/registry_pipeline_smoke.py --text "Procedure: EBUS bronchoscopy..."
 ```
 
 **Output shows:**
@@ -183,27 +183,27 @@ Test multiple random notes from a directory:
 
 ```bash
 # Basic usage (30 random notes, default output file)
-python scripts/registry_pipeline_smoke_batch.py
+python ops/tools/registry_pipeline_smoke_batch.py
 
 # Custom number of notes
-python scripts/registry_pipeline_smoke_batch.py --count 50
+python ops/tools/registry_pipeline_smoke_batch.py --count 50
 
 # Specify output file
-python scripts/registry_pipeline_smoke_batch.py --output my_results.txt
+python ops/tools/registry_pipeline_smoke_batch.py --output my_results.txt
 
 # Use a random seed for reproducibility
-python scripts/registry_pipeline_smoke_batch.py --seed 42
+python ops/tools/registry_pipeline_smoke_batch.py --seed 42
 
 # Enable self-correction testing
-python scripts/registry_pipeline_smoke_batch.py --self-correct
+python ops/tools/registry_pipeline_smoke_batch.py --self-correct
 
 # Custom notes directory (default: data/knowledge/patient_note_texts)
-python scripts/registry_pipeline_smoke_batch.py --notes-dir path/to/notes
+python ops/tools/registry_pipeline_smoke_batch.py --notes-dir path/to/notes
 
-python scripts/registry_pipeline_smoke_batch.py --output my_results.txt --self-correct --real-llm
-python scripts/registry_pipeline_smoke_batch.py --output my_results_V2.txt --self-correct --real-llm
+python ops/tools/registry_pipeline_smoke_batch.py --output my_results.txt --self-correct --real-llm
+python ops/tools/registry_pipeline_smoke_batch.py --output my_results_V2.txt --self-correct --real-llm
 
-python scripts/registry_pipeline_smoke_batch.py \
+python ops/tools/registry_pipeline_smoke_batch.py \
   --notes-dir "data/granular annotations/Additional_notes" \
   --count 96 \
   --output my_results.txt \
@@ -243,11 +243,11 @@ Example (bash):
 ```bash
 export OPENAI_PRICING_JSON='{"gpt-5-mini":{"input_per_1k":0.00025,"output_per_1k":0.00200},"gpt-5.2":{"input_per_1k":0.00175,"output_per_1k":0.01400}}'
 OPENAI_LOG_USAGE_PER_CALL=1 OPENAI_LOG_USAGE_SUMMARY=1 \
-python scripts/registry_pipeline_smoke_batch.py --output my_results.txt --self-correct --real-llm
+python ops/tools/registry_pipeline_smoke_batch.py --output my_results.txt --self-correct --real-llm
 or
 export OPENAI_PRICING_JSON='{"gpt-5-mini":{"input_per_1k":0.00025,"output_per_1k":0.00200},"gpt-5.2":{"input_per_1k":0.00175,"output_per_1k":0.01400}}'
 OPENAI_LOG_USAGE_PER_CALL=1 OPENAI_LOG_USAGE_SUMMARY=1 \
-python scripts/unified_pipeline_batch.py --output my_results.txt --real-llm
+python ops/tools/unified_pipeline_batch.py --output my_results.txt --real-llm
 ```
 
 Notes:
@@ -260,25 +260,25 @@ Test the full unified pipeline (same as the UI at `/ui/`) on multiple random not
 
 ```bash
 # Basic usage (10 random notes from notes_text directory, default output file)
-python scripts/unified_pipeline_batch.py
+python ops/tools/unified_pipeline_batch.py
 
 # Custom number of notes
-python scripts/unified_pipeline_batch.py --count 20
+python ops/tools/unified_pipeline_batch.py --count 20
 
 # Specify output file
-python scripts/unified_pipeline_batch.py --output my_results.txt
+python ops/tools/unified_pipeline_batch.py --output my_results.txt
 
 # Use a random seed for reproducibility
-python scripts/unified_pipeline_batch.py --seed 42
+python ops/tools/unified_pipeline_batch.py --seed 42
 
 # Exclude financials or evidence
-python scripts/unified_pipeline_batch.py --no-financials --no-explain
+python ops/tools/unified_pipeline_batch.py --no-financials --no-explain
 
 # Custom notes directory (default: data/granular annotations/notes_text)
-python scripts/unified_pipeline_batch.py --notes-dir path/to/notes
+python ops/tools/unified_pipeline_batch.py --notes-dir path/to/notes
 
 # With real LLM calls enabled
-python scripts/unified_pipeline_batch.py --output my_results.txt --real-llm
+python ops/tools/unified_pipeline_batch.py --output my_results.txt --real-llm
 
 # Check which provider is configured
 python -c "import os; print('LLM_PROVIDER:', os.getenv('LLM_PROVIDER', 'gemini (default)'))"
@@ -286,7 +286,7 @@ python -c "import os; print('LLM_PROVIDER:', os.getenv('LLM_PROVIDER', 'gemini (
 # Check if API keys are set (without showing values)
 python -c "import os; print('GEMINI_API_KEY:', 'SET' if os.getenv('GEMINI_API_KEY') else 'NOT SET'); print('OPENAI_API_KEY:', 'SET' if os.getenv('OPENAI_API_KEY') else 'NOT SET')"
 
-python scripts/unified_pipeline_batch.py \
+python ops/tools/unified_pipeline_batch.py \
   --notes-dir "data/granular annotations/Additional_notes" \
   --count 20 \
   --output my_results.txt \
@@ -327,12 +327,8 @@ python scripts/unified_pipeline_batch.py \
 ### 4. Clean & Normalize Registry
 Run the full cleaning pipeline (Schema Norm -> CPT Logic -> Consistency -> Clinical QC) on a raw dataset.
 
-```bash
-python scripts/clean_ip_registry.py \
-  --registry-data data/samples/my_registry_dump.jsonl \
-  --output-json reports/cleaned_registry_data.json \
-  --issues-log reports/issues_log.csv
-```
+The legacy clean-registry CLI was removed during migration.
+Use the canonical cleaning modules under `app/registry_cleaning/` from your own batch job.
 
 ### 5. Generate LLM “repo context” docs (gitingest)
 When you want to share repo context with an LLM, use the gitingest generator to produce:
@@ -342,13 +338,13 @@ When you want to share repo context with an LLM, use the gitingest generator to 
 
 ```bash
 # Base (light) doc only
-python scripts/generate_gitingest.py
+python ops/tools/generate_gitingest.py
 
 # Generate both base + details
-python scripts/generate_gitingest.py --details
+python ops/tools/generate_gitingest.py --details
 
 # Details only (no base)
-python scripts/generate_gitingest.py --no-base --details
+python ops/tools/generate_gitingest.py --no-base --details
 ```
 
 #### Details document controls
@@ -359,8 +355,9 @@ The details doc is designed to stay readable and safe for LLM ingestion:
 
 ```bash
 # Include only specific folders (repeatable), cap size and inline count
-python scripts/generate_gitingest.py --details \
-  --details-include scripts/ \
+python ops/tools/generate_gitingest.py --details \
+  --details-include ml/scripts/ \
+  --details-include ops/tools/ \
   --details-include app/registry/ \
   --details-max-bytes 200000 \
   --details-max-files 75 \
@@ -482,7 +479,7 @@ PROCSUITE_PIPELINE_MODE=extraction_first \
 REGISTRY_EXTRACTION_ENGINE=parallel_ner \
 REGISTRY_SCHEMA_VERSION=v3 \
 MODEL_BACKEND=auto \
-./scripts/devserver.sh
+./ops/devserver.sh
 ```
 
 Note: `MODEL_BACKEND=onnx` (the devserver default) may skip the registry ML classifier if ONNX artifacts are missing.
@@ -503,7 +500,7 @@ The Web UI provides a simple interface for coding procedure notes.
 
 ### Basic Usage
 
-1. **Start the server**: `./scripts/devserver.sh`
+1. **Start the server**: `./ops/devserver.sh`
 2. **Open the UI**: Navigate to [http://localhost:8000/ui/](http://localhost:8000/ui/)
 3. **Select "Unified" tab** (recommended; production-style flow)
 4. **Paste your procedure note** into the text area
@@ -568,7 +565,7 @@ You should now have:
 This confirms your training pipeline + artifacts are good.
 
 ```bash
-python scripts/train_roberta.py \
+python ml/scripts/train_roberta.py \
   --train-csv data/ml_training/registry_train.csv \
   --val-csv data/ml_training/registry_val.csv \
   --test-csv data/ml_training/registry_test.csv \
@@ -643,19 +640,19 @@ Pick a single “source of truth” folder in Google Drive, e.g. `proc_suite_syn
 
 ###### Recommended: one-command Diamond Loop sync
 
-Use `scripts/diamond_loop_cloud_sync.py` to sync the dataset snapshot + key Diamond Loop files.
+Use `ml/scripts/diamond_loop_cloud_sync.py` to sync the dataset snapshot + key Diamond Loop files.
 
 **WSL + Google Drive on Windows `G:` (your setup):**
 
 ```bash
 # Pull latest from Drive before annotating on this machine
-python scripts/diamond_loop_cloud_sync.py pull \
+python ml/scripts/diamond_loop_cloud_sync.py pull \
   --dataset registry_v1 \
   --gdrive-win-root "G:\\My Drive\\proc_suite_sync" \
   --reset
 
 # Push back to Drive after finishing a session
-python scripts/diamond_loop_cloud_sync.py push \
+python ml/scripts/diamond_loop_cloud_sync.py push \
   --dataset registry_v1 \
   --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
 ```
@@ -663,12 +660,12 @@ python scripts/diamond_loop_cloud_sync.py push \
 **macOS (Drive path varies by install):**
 
 ```bash
-python scripts/diamond_loop_cloud_sync.py pull \
+python ml/scripts/diamond_loop_cloud_sync.py pull \
   --dataset registry_v1 \
   --sync-root "/path/to/GoogleDrive/proc_suite_sync" \
   --reset
 
-python scripts/diamond_loop_cloud_sync.py push \
+python ml/scripts/diamond_loop_cloud_sync.py push \
   --dataset registry_v1 \
   --sync-root "/path/to/GoogleDrive/proc_suite_sync"
 ```
@@ -679,12 +676,12 @@ Optional flags:
 
 ###### Manual fallback: dataset-only export/import
 
-If you prefer to sync just the Prodigy dataset snapshot file, you can use `scripts/prodigy_cloud_sync.py` directly.
+If you prefer to sync just the Prodigy dataset snapshot file, you can use `ml/scripts/prodigy_cloud_sync.py` directly.
 
 **Before you start annotating on a machine** (pull latest from Drive):
 
 ```bash
-python scripts/prodigy_cloud_sync.py import \
+python ml/scripts/prodigy_cloud_sync.py import \
   --dataset registry_v1 \
   --in "/path/to/GoogleDrive/proc_suite_sync/prodigy/registry_v1.prodigy.jsonl" \
   --reset
@@ -693,7 +690,7 @@ python scripts/prodigy_cloud_sync.py import \
 **After you finish a session** (push to Drive):
 
 ```bash
-python scripts/prodigy_cloud_sync.py export \
+python ml/scripts/prodigy_cloud_sync.py export \
   --dataset registry_v1 \
   --out "/path/to/GoogleDrive/proc_suite_sync/prodigy/registry_v1.prodigy.jsonl"
 ```
@@ -755,7 +752,7 @@ make registry-prep-with-human HUMAN_REGISTRY_CSV=data/ml_training/registry_human
 #### 9) Retrain for real (3–5 epochs)
 
 ```bash
-python scripts/train_roberta.py \
+python ml/scripts/train_roberta.py \
   --train-csv data/ml_training/registry_train.csv \
   --val-csv data/ml_training/registry_val.csv \
   --test-csv data/ml_training/registry_test.csv \
@@ -809,17 +806,26 @@ cp my_new_cases.jsonl data/training/
 Before training, validate that your cases are properly formatted:
 
 ```bash
-python scripts/validate_training_data.py data/training/my_new_cases.jsonl
+python - <<'PY'
+import json
+from pathlib import Path
+
+path = Path("data/training/my_new_cases.jsonl")
+for index, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+    if not line.strip():
+        continue
+    row = json.loads(line)
+    missing = [field for field in ("note", "cpt_codes") if field not in row]
+    if missing:
+        raise ValueError(f"Line {index}: missing required fields {missing}")
+print(f"Validated {path}")
+PY
 ```
 
 #### Step 4: Retrain the Model (Optional)
 
-If you have enough new cases (50+), you can retrain the ML model:
-
-```bash
-# Run the training pipeline
-python scripts/train_ml_coder.py --include data/training/my_new_cases.jsonl
-```
+If you have enough new cases (50+), use the current registry-first training flow
+documented above (`ml/scripts/train_roberta.py` and related commands).
 
 #### Tips for Good Training Data
 
@@ -839,13 +845,13 @@ When the system makes mistakes, you can review them to improve future performanc
 
 ```bash
 # Review all errors
-python scripts/review_llm_fallback_errors.py --mode all
+python ml/scripts/review_llm_fallback_errors.py --mode all
 
 # Review only fast path errors (ML+Rules mistakes)
-python scripts/review_llm_fallback_errors.py --mode fastpath
+python ml/scripts/review_llm_fallback_errors.py --mode fastpath
 
 # Review only LLM fallback errors
-python scripts/review_llm_fallback_errors.py --mode llm_fallback
+python ml/scripts/review_llm_fallback_errors.py --mode llm_fallback
 ```
 
 This generates a markdown report in `data/eval_results/` with:
@@ -923,7 +929,7 @@ The Procedure Suite includes tools for training and improving PHI (Protected Hea
 Audit a note for PHI detection:
 
 ```bash
-python scripts/phi_audit.py --note-path test_redact.txt
+python ml/scripts/phi_audit.py --note-path test_redact.txt
 ```
 
 ### Scrubbing Golden JSON Files
@@ -931,7 +937,7 @@ python scripts/phi_audit.py --note-path test_redact.txt
 Scrub PHI from golden extraction files:
 
 ```bash
-python scripts/scrub_golden_jsons.py \
+python ml/scripts/scrub_golden_jsons.py \
   --input-dir data/knowledge/golden_extractions \
   --pattern 'golden_*.json' \
   --report-path artifacts/redactions.jsonl
@@ -959,14 +965,14 @@ This produces:
 make platinum-build      # data/ml_training/phi_platinum_spans.jsonl
 make platinum-sanitize   # data/ml_training/phi_platinum_spans_CLEANED.jsonl
 make platinum-apply      # data/knowledge/golden_extractions_scrubbed/
-python scripts/fix_registry_hallucinations.py \
+python ml/scripts/fix_registry_hallucinations.py \
   --input-dir data/knowledge/golden_extractions_scrubbed \
   --output-dir data/knowledge/golden_extractions_final
 ```
 
 **Optional: align synthetic names before building spans**
 ```bash
-python scripts/align_synthetic_names.py \
+python ml/scripts/align_synthetic_names.py \
   --input-dir data/knowledge/golden_extractions \
   --output-dir data/knowledge/golden_extractions_aligned
 ```
@@ -1003,7 +1009,7 @@ make prodigy-finetune     # Fine-tune model (recommended)
 
 **Manual fine-tuning (same as `make prodigy-finetune`):**
 ```bash
-python scripts/train_distilbert_ner.py \
+python ml/scripts/train_distilbert_ner.py \
     --resume-from artifacts/phi_distilbert_ner \
     --patched-data data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl \
     --output-dir artifacts/phi_distilbert_ner \
@@ -1107,7 +1113,7 @@ make gold-cycle
 Test the client-side PHI redactor:
 
 ```bash
-cd scripts/phi_test_node
+cd ops/tools/phi_test_node
 node test_phi_redaction.mjs --count 30
 ```
 
@@ -1117,12 +1123,77 @@ Start the dev server with different model backends:
 
 ```bash
 # Use PyTorch backend (for PHI without registry ONNX)
-MODEL_BACKEND=pytorch ./scripts/devserver.sh
+MODEL_BACKEND=pytorch ./ops/devserver.sh
 
 # Auto-detect best backend
-MODEL_BACKEND=auto ./scripts/devserver.sh
+MODEL_BACKEND=auto ./ops/devserver.sh
 ```
 http://localhost:8000/ui/phi_redactor/
+---
+
+## Deploy Mirror (Slim Railway Repo)
+
+The monorepo is large (training data, ML scripts, docs, etc.), so Railway deployments use a lightweight **deploy mirror** that contains only runtime files. The mirror lives at:
+
+- **Deploy repo:** [github.com/russellmiller49/proc_suite_deploy](https://github.com/russellmiller49/proc_suite_deploy) (`main` branch)
+
+### What is included
+
+Runtime code and dependencies only: `app/`, `observability/`, `ml/`, `config/`, `configs/`, `ops/`, `proc_schemas/`, `proc_nlp/`, `proc_kb/`, `schemas/`, `ui/static` (minus PHI vendor), Alembic migrations, minimal runtime data, `pyproject.toml`, `requirements.txt`, `runtime.txt`.
+
+### What is excluded
+
+Training data (outside the allowlisted runtime subset), docs, tests, large vendor model artifacts (`ui/static/phi_redactor/vendor`), and local caches.
+
+### Automatic sync (GitHub Actions)
+
+A workflow (`.github/workflows/deploy-mirror-sync.yml`) automatically syncs the mirror on every push to `main` in `Procedure_suite`. It can also be triggered manually from the Actions tab (`workflow_dispatch`).
+
+**Required GitHub configuration** (set on the `Procedure_suite` repo under Settings > Secrets and variables > Actions):
+
+| Type | Name | Value |
+|------|------|-------|
+| Variable | `DEPLOY_MIRROR_REPO` | `russellmiller49/proc_suite_deploy` |
+| Variable | `DEPLOY_MIRROR_BRANCH` | `main` (optional, defaults to `main`) |
+| Secret | `DEPLOY_MIRROR_PUSH_TOKEN` | A fine-grained PAT with `Contents: Read and write` on the deploy repo |
+
+The workflow skips gracefully when `DEPLOY_MIRROR_REPO` or `DEPLOY_MIRROR_PUSH_TOKEN` is not set.
+
+### Manual sync (local)
+
+Build and push the mirror from your local machine:
+
+```bash
+# Build the payload
+bash ops/tools/build_deploy_mirror.sh /tmp/proc-suite-deploy
+
+# Push to the deploy repo
+cd /tmp/proc-suite-deploy
+git init && git checkout -b main
+git add -A && git commit -m "chore(deploy-mirror): manual sync"
+git remote add origin https://github.com/russellmiller49/proc_suite_deploy.git
+git push -u origin main --force
+```
+
+### Including PHI vendor assets (one-off)
+
+By default, `ui/static/phi_redactor/vendor/` is excluded. To include it:
+
+```bash
+DEPLOY_MIRROR_INCLUDE_VENDOR=1 bash ops/tools/build_deploy_mirror.sh /tmp/proc-suite-deploy
+```
+
+Or trigger the workflow manually from the Actions tab and check "Include ui/static/phi_redactor/vendor in mirror payload".
+
+### Key files
+
+| File | Purpose |
+|------|---------|
+| `ops/deploy/mirror_paths.txt` | Allowlist of paths copied to the mirror |
+| `ops/tools/build_deploy_mirror.sh` | Build script that assembles the payload |
+| `.github/workflows/deploy-mirror-sync.yml` | GitHub Actions workflow for automatic sync |
+| `docs/DEPLOY_MIRROR.md` | Detailed reference documentation |
+
 ---
 
 ## 📞 Getting Help
@@ -1141,7 +1212,7 @@ Use this workflow to retrain the **granular registry NER** model with the **Biom
 This rebuilds `ner_bio_format.jsonl` using the target tokenizer. Do this any time you change the base model/tokenizer.
 
 ```bash
-python scripts/convert_spans_to_bio.py \
+python ml/scripts/convert_spans_to_bio.py \
   --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
   --output data/ml_training/granular_ner/ner_bio_format.jsonl \
   --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
@@ -1152,7 +1223,7 @@ python scripts/convert_spans_to_bio.py \
 Note: the training script uses **hyphenated** flags like `--output-dir`, `--train-batch`, and the learning rate flag is `--lr`.
 
 ```bash
-python scripts/train_registry_ner.py \
+python ml/scripts/train_registry_ner.py \
   --data data/ml_training/granular_ner/ner_bio_format.jsonl \
   --output-dir artifacts/registry_biomedbert_ner \
   --epochs 20 \
@@ -1165,4 +1236,4 @@ python scripts/train_registry_ner.py \
 
 *Last updated: January 2026*
 run all granular python updates:
-python scripts/run_python_update_scripts.py
+python ops/tools/run_python_update_scripts.py

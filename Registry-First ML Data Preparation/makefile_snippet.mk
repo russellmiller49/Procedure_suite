@@ -24,7 +24,7 @@ REGISTRY_SEED ?= 42
 
 # Full pipeline
 registry-prep:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/golden_to_csv.py \
 		--input-dir $(REGISTRY_INPUT_DIR) \
 		--output-dir $(REGISTRY_OUTPUT_DIR) \
 		--prefix $(REGISTRY_PREFIX) \
@@ -33,7 +33,7 @@ registry-prep:
 
 # Dry run (validate only)
 registry-prep-dry:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/golden_to_csv.py \
 		--input-dir $(REGISTRY_INPUT_DIR) \
 		--output-dir $(REGISTRY_OUTPUT_DIR) \
 		--prefix $(REGISTRY_PREFIX) \
@@ -50,7 +50,7 @@ registry-prep-raw:
 # Alternative: Use the module integration
 registry-prep-module:
 	$(CONDA_ACTIVATE) && $(PYTHON) -c " \
-from modules.ml_coder.registry_data_prep import prepare_registry_training_splits; \
+from ml.lib.ml_coder.registry_data_prep import prepare_registry_training_splits; \
 train, val, test = prepare_registry_training_splits(); \
 train.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_train.csv', index=False); \
 val.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_val.csv', index=False); \

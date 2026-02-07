@@ -5,7 +5,7 @@
 # Uses the same optimization settings for consistent behavior.
 #
 # Usage:
-#   ./scripts/devserver.sh
+#   ./ops/devserver.sh
 #
 # Environment variables (all optional, sensible defaults provided):
 #   PORT - Port to listen on (default: 8000)

@@ -33,7 +33,7 @@ class RVUCalc:
         # But facility vs non-facility PE is not distinguished in get_rvu currently
         # because get_rvu flattens it.
         
-        # Wait, modules/common/knowledge.py get_rvu implementation:
+        # Wait, app/common/knowledge.py get_rvu implementation:
         # def get_rvu(cpt: str) -> dict[str, float] | None:
         #     data = get_knowledge()
         #     rvus = data.get("rvus", {})

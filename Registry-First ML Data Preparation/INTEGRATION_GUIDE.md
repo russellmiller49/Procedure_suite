@@ -12,7 +12,7 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 
 | File | Purpose | Destination |
 |------|---------|-------------|
-| `golden_to_csv.py` | Standalone CLI tool | `scripts/golden_to_csv.py` |
+| `golden_to_csv.py` | Standalone CLI tool | `ml/scripts/golden_to_csv.py` |
 | `registry_data_prep.py` | Module integration | `ml/lib/ml_coder/registry_data_prep.py` |
 | `test_registry_data_prep.py` | Test suite | `tests/ml_coder/test_registry_data_prep.py` |
 | `makefile_snippet.mk` | Makefile targets | Append to `Makefile` |
@@ -22,7 +22,7 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 ### Option 1: Standalone Script
 
 ```bash
-python scripts/golden_to_csv.py \
+python ml/scripts/golden_to_csv.py \
     --input-dir data/knowledge/golden_extractions_final \
     --output-dir data/ml_training \
     --prefix registry
@@ -52,7 +52,7 @@ make registry-prep-final
 
 1. **Copy files to your repo:**
    ```bash
-   cp golden_to_csv.py /path/to/proc_suite/scripts/
+   cp golden_to_csv.py /path/to/proc_suite/ml/scripts/
    cp registry_data_prep.py /path/to/proc_suite/ml/lib/ml_coder/
    cp test_registry_data_prep.py /path/to/proc_suite/tests/ml_coder/
    ```
@@ -150,7 +150,7 @@ make platinum-final
 make registry-prep-final
 
 # 3. Train the model
-python scripts/train_roberta.py \
+python ml/scripts/train_roberta.py \
     --train-csv data/ml_training/registry_train.csv \
     --val-csv data/ml_training/registry_val.csv \
     --test-csv data/ml_training/registry_test.csv
@@ -187,7 +187,7 @@ make export-registry-model
 pytest tests/ml_coder/test_registry_data_prep.py -v
 
 # Dry run to check extraction
-python scripts/golden_to_csv.py --dry-run
+python ml/scripts/golden_to_csv.py --dry-run
 
 # Verify CSV structure
 head data/ml_training/registry_train.csv

@@ -7,13 +7,13 @@ Randomly selects notes from golden JSON files and runs PHI redaction,
 producing side-by-side comparison of original and redacted content.
 
 Usage:
-    python scripts/test_phi_redaction_sample.py [--count N] [--output FILE] [--no-ner]
+    python ops/tools/test_phi_redaction_sample.py [--count N] [--output FILE] [--no-ner]
 
 Examples:
-    python scripts/test_phi_redaction_sample.py                    # 10 random notes to stdout
-    python scripts/test_phi_redaction_sample.py --count 5          # 5 random notes
-    python scripts/test_phi_redaction_sample.py --output test.txt  # Save to file
-    python scripts/test_phi_redaction_sample.py --no-ner             # Regex-only mode (faster)
+    python ops/tools/test_phi_redaction_sample.py                    # 10 random notes to stdout
+    python ops/tools/test_phi_redaction_sample.py --count 5          # 5 random notes
+    python ops/tools/test_phi_redaction_sample.py --output test.txt  # Save to file
+    python ops/tools/test_phi_redaction_sample.py --no-ner             # Regex-only mode (faster)
 
 Author: Claude Code
 """

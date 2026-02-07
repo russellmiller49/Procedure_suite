@@ -10,7 +10,7 @@ Canonical rule sources remain:
 - ip_golden_knowledge_v2_2.json
 
 Usage:
-    python scripts/evaluate_coder.py [--verbose] [--output results.csv]
+    python ml/scripts/evaluate_coder.py [--verbose] [--output results.csv]
 """
 from __future__ import annotations
 

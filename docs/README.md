@@ -7,7 +7,7 @@ If you’re new here, start with:
 1. **Repo Guide (end-to-end):** [`docs/REPO_GUIDE.md`](REPO_GUIDE.md)
 2. **Quick repo map:** [`docs/REPO_INDEX.md`](REPO_INDEX.md)
 3. **How to run + contribute:** [`docs/DEVELOPMENT.md`](DEVELOPMENT.md)
-4. **How to use it (scripts/UI/API):** [`docs/USER_GUIDE.md`](USER_GUIDE.md)
+4. **How to use it (tooling/UI/API):** [`docs/USER_GUIDE.md`](USER_GUIDE.md)
 5. **Architecture overview:** [`docs/ARCHITECTURE.md`](ARCHITECTURE.md)
 
 ## What this system is (one sentence)
@@ -17,7 +17,7 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 ## Quick start (local)
 
 - Install: follow [`docs/INSTALLATION.md`](INSTALLATION.md)
-- Run: `./scripts/devserver.sh`
+- Run: `./ops/devserver.sh`
 - Open:
   - UI: `http://localhost:8000/ui/`
   - API docs: `http://localhost:8000/docs`
@@ -42,6 +42,8 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 
 - [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) — module breakdown + data flows.
 - [`docs/DEPLOY_ARCH.md`](DEPLOY_ARCH.md) — production deploy architecture notes.
+- [`docs/DEPLOY_RAILWAY.md`](DEPLOY_RAILWAY.md) — Railway service/runtime config.
+- [`docs/DEPLOY_MIRROR.md`](DEPLOY_MIRROR.md) — slim deploy-repo mirroring workflow.
 - [`docs/DEPLOYMENT.md`](DEPLOYMENT.md) — operations guide (metrics, Supabase, CI).
 - [`docs/ml_first_hybrid_policy.md`](ml_first_hybrid_policy.md) — background on the older ML-first hybrid policy (kept for context).
 
@@ -86,4 +88,3 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 ---
 
 Last updated: 2026-01-30
-

@@ -1,5 +1,13 @@
 # Railway Deployment (Procedure Suite IU)
 
+## Optional: deploy via slim mirror repo
+
+If you want faster/lighter Railway deploys, use the deploy mirror workflow documented in `docs/DEPLOY_MIRROR.md`.
+
+The mirror excludes `ui/static/phi_redactor/vendor` by default, so production Railway deployments should set:
+
+- `PHI_REDACTOR_VENDOR_BUNDLE_S3_URI`
+
 ## Service roles
 
 This project is typically deployed as **two Railway services**:
@@ -11,11 +19,11 @@ This project is typically deployed as **two Railway services**:
 
 ### Start command
 
-- `bash scripts/railway_start_gunicorn.sh`
+- `bash ops/railway_start_gunicorn.sh`
 
 ### Build command
 
-- `python scripts/bootstrap_phi_redactor_vendor_bundle.py && python scripts/verify_phi_redactor_vendor_assets.py`
+- `python ops/tools/bootstrap_phi_redactor_vendor_bundle.py && python ops/tools/verify_phi_redactor_vendor_assets.py`
 
 ### Required env vars (production)
 

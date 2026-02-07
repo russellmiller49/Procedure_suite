@@ -104,7 +104,8 @@ exclude = [
     "docs/",
     "_archive/",
     "data/",
-    "scripts/",
+    "ml/scripts/",
+    "ops/tools/",
     "tests/",
     "procedure_suite_ml_implimentation/",
 ]

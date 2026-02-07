@@ -8,7 +8,7 @@
 ## How To Run Locally
 
 ```bash
-./scripts/devserver.sh
+./ops/devserver.sh
 ```
 
 - UI: `http://localhost:8000/ui/`
@@ -117,8 +117,8 @@ The deterministic layer includes guardrails to reduce “keyword-only” halluci
 - `DEV_STENT`: stent mentioned as a device with an interaction (placed/deployed/removed/exchanged/migrated).
 - `NEG_STENT`: explicit absence (e.g., “no stent was placed”, “stent not indicated”).
 - `CTX_STENT_PRESENT`: stent present/in good position with no intervention evidence.
-- Labeling helper: `scripts/label_neg_stent.py` (dry-run by default; use `--write` to persist changes).
-- Training allowlist: update `scripts/train_registry_ner.py:ALLOWED_LABEL_TYPES` when adding new label types.
+- Labeling helper: `ml/scripts/label_neg_stent.py` (dry-run by default; use `--write` to persist changes).
+- Training allowlist: update `ml/scripts/train_registry_ner.py:ALLOWED_LABEL_TYPES` when adding new label types.
 
 ## LLM Self-Correction (Recommended)
 
@@ -131,7 +131,7 @@ The deterministic layer includes guardrails to reduce “keyword-only” halluci
 - Self-correction only runs when `REGISTRY_AUDITOR_SOURCE=raw_ml` produces `high_conf_omissions` and the CPT keyword guard passes.
 - Keyword gating lives in `app/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
 - Use the smoke script for visibility into triggers/skips:
-  - `python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct`
+  - `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
   - Look for `Audit high-conf omissions:` and `SELF_CORRECT_SKIPPED:` reasons.
 
 ## Files You’ll Touch Most Often

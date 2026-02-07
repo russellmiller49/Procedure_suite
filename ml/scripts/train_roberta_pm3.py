@@ -16,9 +16,9 @@ Key Features:
     - Mixed precision training (fp16)
 
 Usage:
-    python scripts/train_roberta_pm3.py
-    python scripts/train_roberta_pm3.py --batch-size 16 --epochs 8
-    python scripts/train_roberta_pm3.py --evaluate-only --model-dir data/models/roberta_pm3_registry
+    python ml/scripts/train_roberta_pm3.py
+    python ml/scripts/train_roberta_pm3.py --batch-size 16 --epochs 8
+    python ml/scripts/train_roberta_pm3.py --evaluate-only --model-dir data/models/roberta_pm3_registry
 """
 
 from __future__ import annotations
@@ -59,7 +59,7 @@ class TrainingConfig:
     # Model
     model_name: str = "data/models/RoBERTa-base-PM-M3-Voc-distill/RoBERTa-base-PM-M3-Voc-distill-hf"
 
-    # Data paths (aligned with modules/ml_coder/data_prep.py)
+    # Data paths (aligned with ml/lib/ml_coder/data_prep.py)
     train_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_train.csv"))
     val_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_val.csv"))
     test_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_test.csv"))

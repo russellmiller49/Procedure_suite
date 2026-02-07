@@ -84,12 +84,12 @@ Key Files:
 •	Hard negative builder: build_hard_negative_patch.py
 •	Training data: data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl
 •	Model artifacts: artifacts/phi_distilbert_ner/
-•	ONNX output: modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/
+•	ONNX output: ui/static/phi_redactor/vendor/phi_distilbert_ner/onnx/
  
 B.1 Audit Current Model for Violations
 make audit-phi-client
 What it does:
-•	Runs scripts/audit_model_fp.py against current model
+•	Runs ml/scripts/audit_model_fp.py against current model
 •	Checks for must-not-redact violations: CPT codes, LN stations (4R, 7, 11L, etc.), device terms, anatomy
 •	Outputs: artifacts/phi_distilbert_ner/audit_report.json
 Expected output:
@@ -104,7 +104,7 @@ Categories audited:
 B.2 Build Hard Negative Patch
 make patch-phi-client-hardneg
 What it does:
-•	Runs scripts/build_hard_negative_patch.py
+•	Runs ml/scripts/build_hard_negative_patch.py
 •	Reads violations from audit_report.json
 •	Creates synthetic training examples where violation tokens are tagged as "O" (not PHI)
 •	Output: data/ml_training/hard_negatives_patch.jsonl
@@ -116,7 +116,7 @@ Technical details:
 B.3 Fine-tune Model with Hard Negatives
 make finetune-phi-client-hardneg
 What it does:
-•	Runs scripts/train_distilbert_ner.py with:
+•	Runs ml/scripts/train_distilbert_ner.py with:
 o	--resume-from artifacts/phi_distilbert_ner/ (start from current model)
 o	--epochs 1 (single epoch to avoid overfitting)
 o	--learning-rate 1e-5 (lower LR for fine-tuning)
@@ -133,9 +133,9 @@ Output: Updated model in artifacts/phi_distilbert_ner/
 B.4 Re-export ONNX Model
 make export-phi-client-model
 What it does:
-•	Runs scripts/export_onnx.py
+•	Runs ops/tools/export_phi_model_for_transformersjs.py
 •	Converts fine-tuned PyTorch model to ONNX format
-•	Copies to modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
+•	Copies to ui/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
 Bundle structure:
 vendor/phi_distilbert_ner/
 ├── config.json
@@ -146,7 +146,7 @@ vendor/phi_distilbert_ner/
 └── onnx/
     └── model.onnx
 CRITICAL: Verify ONNX has attention_mask input:
-python scripts/check_onnx_inputs.py modules/api/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
+python ops/tools/check_onnx_inputs.py ui/static/phi_redactor/vendor/phi_distilbert_ner/onnx/model.onnx
  
 B.5 Verify Fix
 make audit-phi-client  # Re-run audit
@@ -223,4 +223,3 @@ After Track B:
 •	Case-insensitive name detection improvement
 •	Raw model violations should decrease significantly
 Safety invariant: Post-veto violations MUST remain 0. The veto layer is the final safety net.
-

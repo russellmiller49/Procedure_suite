@@ -21,7 +21,7 @@ Goal:
       }
 
 Usage:
-  python scripts/export_patient_note_texts.py \
+  python ml/scripts/export_patient_note_texts.py \
     --input-dir data/knowledge/golden_extractions_final \
     --output-dir data/knowledge/patient_note_texts
 """

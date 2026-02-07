@@ -12,7 +12,7 @@ from __future__ import annotations
 from pathlib import Path
 
 # Allow `app.registry.schema.<submodule>` imports even though this file is a module.
-# This lets us keep backwards compatibility while adding a `modules/registry/schema/` folder.
+# This lets us keep backwards compatibility while adding an `app/registry/schema/` folder.
 __path__ = [str(Path(__file__).with_name("schema"))]
 
 from app.registry.schema.ebus_events import NodeActionType, NodeInteraction, NodeOutcomeType
@@ -46,4 +46,3 @@ __all__ = [
     "validate_ebus_consistency",
     "derive_aggregate_fields",
 ]
-

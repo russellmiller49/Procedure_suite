@@ -1,4 +1,4 @@
-from scripts.sanitize_dataset import get_entity_text, repair_bio, sanitize_record
+from ml.scripts.sanitize_dataset import get_entity_text, repair_bio, sanitize_record
 
 
 def test_reconstruct_entity_text_subwords() -> None:

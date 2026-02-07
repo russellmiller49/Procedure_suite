@@ -69,6 +69,22 @@ def test_reporter_builder_subpage_is_linked_from_topbar(client: TestClient) -> N
     assert workflow_resp.status_code == 200
     assert 'href="./reporter_builder.html"' in workflow_resp.text
 
+
+def test_reporter_builder_can_transfer_note_to_dashboard(client: TestClient) -> None:
+    reporter_html = client.get("/ui/reporter_builder.html")
+    assert reporter_html.status_code == 200
+    assert 'id="transferToDashboardBtn"' in reporter_html.text
+
+    reporter_js = client.get("/ui/reporter_builder.js")
+    assert reporter_js.status_code == 200
+    assert "ps.reporter_to_dashboard_note_v1" in reporter_js.text
+
+    dashboard_js = client.get("/ui/phi_redactor/app.js")
+    assert dashboard_js.status_code == 200
+    assert "consumeReporterTransferPayload" in dashboard_js.text
+    assert "ps.reporter_to_dashboard_note_v1" in dashboard_js.text
+
+
 def test_phi_redactor_index_has_formatted_report_sections(client: TestClient) -> None:
     resp = client.get("/ui/phi_redactor/index.html")
     assert resp.status_code == 200

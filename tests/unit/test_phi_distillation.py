@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from scripts.distill_phi_labels import (
+from ml.scripts.distill_phi_labels import (
     align_spans_to_bio_labels,
     load_records_from_json,
     suppress_provider_spans,

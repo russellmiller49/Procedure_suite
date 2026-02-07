@@ -24,7 +24,7 @@ EXCLUDED_DIRS = {
     "data",
     "data/models",
     "data/ml_training",
-    "scripts/phi_test_node",
+    "ops/tools/phi_test_node",
     "artifacts",
     "archive",
     "dist",

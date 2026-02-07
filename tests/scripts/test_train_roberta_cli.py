@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 def test_train_roberta_cli_parses_new_flags():
-    from scripts.train_roberta import build_arg_parser
+    from ml.scripts.train_roberta import build_arg_parser
 
     parser = build_arg_parser()
     args = parser.parse_args(

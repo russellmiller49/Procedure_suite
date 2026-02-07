@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from scripts.build_model_agnostic_phi_spans import filter_detections
-from scripts.sanitize_platinum_spans import init_counters, should_drop_span
+from ml.scripts.build_model_agnostic_phi_spans import filter_detections
+from ml.scripts.sanitize_platinum_spans import init_counters, should_drop_span
 
 
 def _run_filter(note_text: str, detections: list[dict[str, object]], provider_policy: str = "drop"):

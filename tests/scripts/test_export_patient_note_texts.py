@@ -8,7 +8,7 @@ def _write_golden(path: Path, entries: list[dict]) -> None:
 
 
 def test_exports_per_patient_note_id_to_text_sorted_by_syn_num(tmp_path: Path):
-    from scripts import export_patient_note_texts as exporter
+    from ml.scripts import export_patient_note_texts as exporter
 
     input_dir = tmp_path / "golden"
     input_dir.mkdir()

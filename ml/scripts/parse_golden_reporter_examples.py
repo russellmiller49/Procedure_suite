@@ -3,7 +3,7 @@
 Parse reporter examples into a structured JSON dataset for testing.
 
 Usage:
-    python scripts/parse_golden_reporter_examples.py \
+    python ml/scripts/parse_golden_reporter_examples.py \
         --input "ml/data/reporter_examples.txt" \
         --output "tests/fixtures/reporter_golden_dataset.json"
 """

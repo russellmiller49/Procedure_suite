@@ -258,7 +258,7 @@ class RegistryFlagAuditor:
             if model_file.exists() or safetensors_file.exists():
                 # Import the model class if available
                 try:
-                    from scripts.train_roberta_pm3 import RoBERTaPM3MultiLabel
+                    from ml.scripts.train_roberta_pm3 import RoBERTaPM3MultiLabel
 
                     num_labels = len(self._label_fields) if self._label_fields else 30
                     self._model = RoBERTaPM3MultiLabel.from_pretrained(

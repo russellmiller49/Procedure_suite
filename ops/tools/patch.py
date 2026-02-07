@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Patch validator / status script.
 
-The repository previously had a large, non-executable draft `scripts/patch.py` that mixed
+The repository previously had a large, non-executable draft `ops/tools/patch.py` that mixed
 code snippets and patch instructions. That draft could not run (SyntaxError).
 
 This script is now a *validator* you can run to confirm the intended updates exist

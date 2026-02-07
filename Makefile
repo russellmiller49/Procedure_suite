@@ -31,8 +31,8 @@ test:
 
 # Validate JSON schemas and Pydantic models
 validate-schemas:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/validate_jsonschema.py --schema $(SCHEMA_PATH) || true
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/check_pydantic_models.py
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/validate_jsonschema.py --schema $(SCHEMA_PATH) || true
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/check_pydantic_models.py
 
 # Validate knowledge base
 validate-kb:
@@ -41,13 +41,13 @@ validate-kb:
 
 # Validate KB + schema integration (no-op extraction)
 validate-knowledge-release:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/validate_knowledge_release.py --kb $(KB_PATH) --schema $(SCHEMA_PATH)
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/validate_knowledge_release.py --kb $(KB_PATH) --schema $(SCHEMA_PATH)
 
 # Run regression tests with KB Strict Mode to catch orphan codes
 test-kb-strict:
 	@echo "Running smoke tests in KB STRICT mode..."
 	$(CONDA_ACTIVATE) && PROCSUITE_PIPELINE_MODE=extraction_first PSUITE_KB_STRICT=1 pytest tests/coder/test_coding_rules_phase7.py -v
-	$(CONDA_ACTIVATE) && PROCSUITE_PIPELINE_MODE=extraction_first PSUITE_KB_STRICT=1 $(PYTHON) scripts/registry_pipeline_smoke_batch.py --count 10 --notes-dir "tests/fixtures/notes"
+	$(CONDA_ACTIVATE) && PROCSUITE_PIPELINE_MODE=extraction_first PSUITE_KB_STRICT=1 $(PYTHON) ops/tools/registry_pipeline_smoke_batch.py --count 10 --notes-dir "tests/fixtures/notes"
 
 # Knowledge diff report (set OLD_KB=...; NEW_KB defaults to KB_PATH)
 OLD_KB ?=
@@ -55,25 +55,25 @@ NEW_KB ?= $(KB_PATH)
 
 knowledge-diff:
 	@if [ -z "$(OLD_KB)" ]; then echo "ERROR: Set OLD_KB=path/to/old_kb.json"; exit 2; fi
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/knowledge_diff_report.py --old $(OLD_KB) --new $(NEW_KB)
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/knowledge_diff_report.py --old $(OLD_KB) --new $(NEW_KB)
 
 # Run the smart-hybrid coder over notes
 run-coder:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/run_coder_hybrid.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/run_coder_hybrid.py \
 		--notes $(NOTES_PATH) \
 		--kb $(KB_PATH) \
 		--keyword-dir data/keyword_mappings \
 		--out-json outputs/coder_suggestions.jsonl
 
 distill-phi:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/distill_phi_labels.py \
 		--in-dir data/knowledge/golden_extractions \
 		--out data/ml_training/distilled_phi_labels.jsonl \
 		--teacher-model artifacts/phi_distilbert_ner \
 		--device cpu
 
 distill-phi-silver:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/distill_phi_labels.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/distill_phi_labels.py \
 		--in-dir data/knowledge/golden_extractions \
 		--out data/ml_training/distilled_phi_labels.jsonl \
 		--teacher-model artifacts/phi_distilbert_ner \
@@ -81,30 +81,30 @@ distill-phi-silver:
 		--device $(DEVICE)
 
 sanitize-phi-silver:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/sanitize_dataset.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/sanitize_dataset.py \
 		--in data/ml_training/distilled_phi_labels.jsonl \
 		--out data/ml_training/distilled_phi_CLEANED.jsonl
 
 normalize-phi-silver:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/normalize_phi_labels.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/normalize_phi_labels.py \
 		--in data/ml_training/distilled_phi_CLEANED.jsonl \
 		--out data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--password-policy id
 
 eval-phi-client:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--data data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--output-dir artifacts/phi_distilbert_ner \
 		--eval-only
 
 audit-phi-client:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/audit_model_fp.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/audit_model_fp.py \
 		--model-dir artifacts/phi_distilbert_ner \
 		--data data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--limit 5000
 
 patch-phi-client-hardneg:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_hard_negative_patch.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/build_hard_negative_patch.py \
 		--audit-report artifacts/phi_distilbert_ner/audit_report.json \
 		--data-in data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--data-out data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl
@@ -113,7 +113,7 @@ patch-phi-client-hardneg:
 # Removes MPS memory limits to use available system RAM
 # If OOM on Apple Silicon, use: make finetune-phi-client-hardneg-cpu
 finetune-phi-client-hardneg:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--resume-from artifacts/phi_distilbert_ner \
 		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
 		--epochs 1 \
@@ -128,7 +128,7 @@ finetune-phi-client-hardneg:
 
 # CPU fallback: reliable but slower (~5-6 hours for 1 epoch)
 finetune-phi-client-hardneg-cpu:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--resume-from artifacts/phi_distilbert_ner \
 		--patched-data data/ml_training/distilled_phi_CLEANED_STANDARD.hardneg.jsonl \
 		--epochs 1 \
@@ -141,24 +141,24 @@ finetune-phi-client-hardneg-cpu:
 		--cpu
 
 export-phi-client-model:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/export_phi_model_for_transformersjs.py \
 		--model-dir artifacts/phi_distilbert_ner \
 		--out-dir ui/static/phi_redactor/vendor/phi_distilbert_ner
 
 export-phi-client-model-quant:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/export_phi_model_for_transformersjs.py \
 		--model-dir artifacts/phi_distilbert_ner \
 		--out-dir ui/static/phi_redactor/vendor/phi_distilbert_ner \
 		--quantize
 
 export-phi-client-model-quant-static:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/export_phi_model_for_transformersjs.py \
 		--model-dir artifacts/phi_distilbert_ner \
 		--out-dir ui/static/phi_redactor/vendor/phi_distilbert_ner \
 		--quantize --static-quantize
 
 build-phi-platinum:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/build_model_agnostic_phi_spans.py \
 		--in-dir data/knowledge/golden_extractions \
 		--out data/ml_training/phi_platinum_spans.jsonl
 
@@ -170,7 +170,7 @@ PRODIGY_DATASET ?= phi_corrections
 PRODIGY_PYTHON ?= $(PYTHON)
 
 prodigy-prepare:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_phi_batch.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/prodigy_prepare_phi_batch.py \
 		--count $(PRODIGY_COUNT) \
 		--model-dir artifacts/phi_distilbert_ner \
 		--output data/ml_training/prodigy_batch.jsonl
@@ -178,7 +178,7 @@ prodigy-prepare:
 # Prepare from a specific input file (e.g., synthetic_phi.jsonl)
 PRODIGY_INPUT_FILE ?= synthetic_phi.jsonl
 prodigy-prepare-file:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_phi_batch.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/prodigy_prepare_phi_batch.py \
 		--count $(PRODIGY_COUNT) \
 		--input-file $(PRODIGY_INPUT_FILE) \
 		--model-dir artifacts/phi_distilbert_ner \
@@ -190,7 +190,7 @@ prodigy-annotate:
 		--label PATIENT,DATE,ID,GEO,CONTACT
 
 prodigy-export:
-	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_corrections.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) ml/scripts/prodigy_export_corrections.py \
 		--dataset $(PRODIGY_DATASET) \
 		--merge-with data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
 		--output data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
@@ -200,7 +200,7 @@ prodigy-retrain:
 	@echo "Training from scratch on corrected data..."
 	@echo "Checking for GPU acceleration (Metal/CUDA)..."
 	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--data data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl \
 		--output-dir artifacts/phi_distilbert_ner \
 		--epochs 3 \
@@ -229,7 +229,7 @@ prodigy-finetune: check-corrections-fresh
 	@echo "Epochs: $(PRODIGY_EPOCHS)"
 	@echo "Checking for GPU acceleration (Metal/CUDA)..."
 	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--resume-from artifacts/phi_distilbert_ner \
 		--patched-data data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl \
 		--output-dir artifacts/phi_distilbert_ner \
@@ -249,7 +249,7 @@ prodigy-cycle: prodigy-prepare
 
 # Clear unannotated examples from Prodigy batch file
 prodigy-clear-unannotated:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/clear_unannotated_prodigy_batch.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/clear_unannotated_prodigy_batch.py \
 		--batch-file data/ml_training/prodigy_batch.jsonl \
 		--dataset $(PRODIGY_DATASET) \
 		--backup
@@ -275,7 +275,7 @@ PRODIGY_REGISTRY_EXPORT_CSV ?= data/ml_training/registry_prodigy_labels.csv
 PRODIGY_REGISTRY_TRAIN_AUGMENTED ?= data/ml_training/registry_train_augmented.csv
 
 prodigy-prepare-registry:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/prodigy_prepare_registry.py \
 		--input-file $(PRODIGY_REGISTRY_INPUT_FILE) \
 		--output-file $(PRODIGY_REGISTRY_BATCH_FILE) \
 		--count $(PRODIGY_REGISTRY_COUNT) \
@@ -291,12 +291,12 @@ prodigy-annotate-registry:
 		--label $$LABELS
 
 prodigy-export-registry:
-	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_registry.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) ml/scripts/prodigy_export_registry.py \
 		--dataset $(PRODIGY_REGISTRY_DATASET) \
 		--output-csv $(PRODIGY_REGISTRY_EXPORT_CSV)
 
 prodigy-merge-registry:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/merge_registry_prodigy.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/merge_registry_prodigy.py \
 		--base-train-csv data/ml_training/registry_train.csv \
 		--val-csv data/ml_training/registry_val.csv \
 		--test-csv data/ml_training/registry_test.csv \
@@ -304,7 +304,7 @@ prodigy-merge-registry:
 		--out-csv $(PRODIGY_REGISTRY_TRAIN_AUGMENTED)
 
 prodigy-retrain-registry:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_roberta.py \
 		--train-csv $(PRODIGY_REGISTRY_TRAIN_AUGMENTED) \
 		--val-csv data/ml_training/registry_val.csv \
 		--test-csv data/ml_training/registry_test.csv \
@@ -334,7 +334,7 @@ DISTILL_LOSS ?= mse
 STUDENT_DISTILL_OUTPUT_DIR ?= data/models/roberta_registry_distilled
 
 teacher-train:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta_pm3.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_roberta_pm3.py \
 		--model-name $(TEACHER_MODEL_NAME) \
 		--output-dir $(TEACHER_OUTPUT_DIR) \
 		--train-csv data/ml_training/registry_train.csv \
@@ -343,19 +343,19 @@ teacher-train:
 		--epochs $(TEACHER_EPOCHS)
 
 teacher-eval:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta_pm3.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_roberta_pm3.py \
 		--evaluate-only \
 		--model-dir $(TEACHER_OUTPUT_DIR) \
 		--test-csv data/ml_training/registry_test.csv
 
 teacher-logits:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/generate_teacher_logits.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/generate_teacher_logits.py \
 		--model-dir $(TEACHER_OUTPUT_DIR) \
 		--input-jsonl $(TEACHER_LOGITS_IN) \
 		--out $(TEACHER_LOGITS_OUT)
 
 student-distill:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_roberta.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_roberta.py \
 		--train-csv data/ml_training/registry_train.csv \
 		--val-csv data/ml_training/registry_val.csv \
 		--test-csv data/ml_training/registry_test.csv \
@@ -366,7 +366,7 @@ student-distill:
 		--output-dir $(STUDENT_DISTILL_OUTPUT_DIR)
 
 registry-overlap-report:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/registry_label_overlap_report.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/registry_label_overlap_report.py \
 		--csv data/ml_training/registry_train.csv \
 		--csv data/ml_training/registry_val.csv \
 		--csv data/ml_training/registry_test.csv \
@@ -411,7 +411,7 @@ registry-prodigy-reset:
 	@$(CONDA_ACTIVATE) && REG_PRODIGY_DATASET="$(REG_PRODIGY_DATASET)" $(PRODIGY_PYTHON) - <<'PY'\nfrom prodigy.components.db import connect\nimport os\n\nds = os.environ.get(\"REG_PRODIGY_DATASET\", \"\").strip()\nif not ds:\n    raise SystemExit(\"REG_PRODIGY_DATASET is empty\")\n\ndb = connect()\nif ds in db.datasets:\n    db.drop_dataset(ds)\n    print(f\"Dropped Prodigy dataset: {ds}\")\nelse:\n    print(f\"Prodigy dataset not found (nothing to drop): {ds}\")\nPY
 
 registry-prodigy-prepare:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry_batch.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/prodigy_prepare_registry_batch.py \
 		--input-file $(REG_PRODIGY_INPUT_FILE) \
 		--output-file $(REG_PRODIGY_BATCH_FILE) \
 		--limit $(REG_PRODIGY_COUNT) \
@@ -421,7 +421,7 @@ registry-prodigy-prepare:
 		--model-dir $(REG_PRODIGY_MODEL_DIR)
 
 registry-prodigy-prepare-relabel:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/prodigy_prepare_registry_relabel_batch.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/prodigy_prepare_registry_relabel_batch.py \
 		--input-csv $(REG_RELABEL_INPUT_CSV) \
 		--output-file $(REG_RELABEL_OUTPUT_FILE) \
 		--filter-label $(REG_RELABEL_FILTER_LABEL) \
@@ -429,7 +429,7 @@ registry-prodigy-prepare-relabel:
 		$(if $(filter 1,$(REG_RELABEL_PREFILL_NON_THERMAL)),--prefill-non-thermal-from-rigid,)
 
 registry-human-merge-updates:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/merge_registry_human_labels.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/merge_registry_human_labels.py \
 		--base-csv $(REG_HUMAN_BASE_CSV) \
 		--updates-csv $(REG_HUMAN_UPDATES_CSV) \
 		--out-csv $(REG_HUMAN_OUT_CSV) \
@@ -442,7 +442,7 @@ registry-prodigy-annotate:
 		--label $$LABELS
 
 registry-prodigy-export:
-	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/prodigy_export_registry.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) ml/scripts/prodigy_export_registry.py \
 		--dataset $(REG_PRODIGY_DATASET) \
 		--output-csv $(REG_PRODIGY_EXPORT_CSV)
 
@@ -460,14 +460,14 @@ GOLD_MODEL_DIR ?= artifacts/phi_distilbert_ner
 # Export pure gold from Prodigy (no merging with old data)
 # Run in the same conda env as the rest of the pipeline (WSL/Linux friendly).
 gold-export:
-	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) scripts/export_phi_gold_standard.py \
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) ml/scripts/export_phi_gold_standard.py \
 		--dataset $(GOLD_DATASET) \
 		--output $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
 		--model-dir $(GOLD_MODEL_DIR)
 
 # Split into train/test (80/20) with grouping by note ID
 gold-split:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/split_phi_gold.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/split_phi_gold.py \
 		--input $(GOLD_OUTPUT_DIR)/phi_gold_standard_v1.jsonl \
 		--train-out $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
 		--test-out $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
@@ -479,7 +479,7 @@ gold-train:
 	@echo "Epochs: $(GOLD_EPOCHS)"
 	@echo "Checking for GPU acceleration (Metal/CUDA)..."
 	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--patched-data $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
 		--resume-from $(GOLD_MODEL_DIR) \
 		--output-dir $(GOLD_MODEL_DIR) \
@@ -495,14 +495,14 @@ gold-train:
 
 # Audit on gold test set (Critical for safety verification)
 gold-audit:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/audit_model_fp.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/audit_model_fp.py \
 		--model-dir $(GOLD_MODEL_DIR) \
 		--data $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
 		--report-out $(GOLD_MODEL_DIR)/audit_gold_report.json
 
 # Evaluate metrics on gold test set
 gold-eval:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--patched-data $(GOLD_OUTPUT_DIR)/phi_test_gold.jsonl \
 		--output-dir $(GOLD_MODEL_DIR) \
 		--eval-only
@@ -519,7 +519,7 @@ gold-finetune:
 	@echo "Epochs: $(GOLD_FINETUNE_EPOCHS) (use GOLD_FINETUNE_EPOCHS=N to override)"
 	@echo "Checking for GPU acceleration (Metal/CUDA)..."
 	$(CONDA_ACTIVATE) && $(PYTHON) -c "import torch; mps=torch.backends.mps.is_available() if hasattr(torch.backends, 'mps') else False; cuda=torch.cuda.is_available(); print(f'MPS: {mps}, CUDA: {cuda}')" && \
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/train_distilbert_ner.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/train_distilbert_ner.py \
 		--patched-data $(GOLD_OUTPUT_DIR)/phi_train_gold.jsonl \
 		--resume-from $(GOLD_MODEL_DIR) \
 		--output-dir $(GOLD_MODEL_DIR) \
@@ -551,7 +551,7 @@ PLATINUM_FINAL_DIR ?= data/knowledge/golden_extractions_final
 
 # Test run (small batch to validate pipeline)
 platinum-test:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/build_model_agnostic_phi_spans.py \
 		--in-dir $(PLATINUM_INPUT_DIR) \
 		--out $(PLATINUM_SPANS_FILE) \
 		--limit-notes 100
@@ -559,7 +559,7 @@ platinum-test:
 
 # Build full platinum spans (all notes)
 platinum-build:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/build_model_agnostic_phi_spans.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/build_model_agnostic_phi_spans.py \
 		--in-dir $(PLATINUM_INPUT_DIR) \
 		--out $(PLATINUM_SPANS_FILE) \
 		--limit-notes 0
@@ -567,14 +567,14 @@ platinum-build:
 
 # Sanitize platinum spans (post-hoc cleanup)
 platinum-sanitize:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/sanitize_platinum_spans.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/sanitize_platinum_spans.py \
 		--in $(PLATINUM_SPANS_FILE) \
 		--out $(PLATINUM_SPANS_CLEANED)
 	@echo "Sanitized spans: $(PLATINUM_SPANS_CLEANED)"
 
 # Apply redactions to create scrubbed golden JSONs
 platinum-apply:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/apply_platinum_redactions.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/apply_platinum_redactions.py \
 		--spans $(PLATINUM_SPANS_CLEANED) \
 		--input-dir $(PLATINUM_INPUT_DIR) \
 		--output-dir $(PLATINUM_OUTPUT_DIR)
@@ -582,7 +582,7 @@ platinum-apply:
 
 # Dry run (show what would be done without writing files)
 platinum-apply-dry:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/apply_platinum_redactions.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/apply_platinum_redactions.py \
 		--spans $(PLATINUM_SPANS_CLEANED) \
 		--input-dir $(PLATINUM_INPUT_DIR) \
 		--output-dir $(PLATINUM_OUTPUT_DIR) \
@@ -598,13 +598,13 @@ platinum-cycle: platinum-build platinum-sanitize platinum-apply
 
 # Post-processing: clean hallucinated institution fields and write final output set
 platinum-final: platinum-cycle
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/fix_registry_hallucinations.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/fix_registry_hallucinations.py \
 		--input-dir $(PLATINUM_OUTPUT_DIR) \
 		--output-dir $(PLATINUM_FINAL_DIR)
 	@echo "Final cleaned Golden JSONs: $(PLATINUM_FINAL_DIR)"
 
 pull-model-pytorch:
-	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./scripts/dev_pull_model.sh
+	MODEL_BUNDLE_S3_URI_PYTORCH="$(MODEL_BUNDLE_S3_URI_PYTORCH)" REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" ./ops/tools/dev_pull_model.sh
 
 dev-iu:
 	$(CONDA_ACTIVATE) && \
@@ -614,16 +614,10 @@ dev-iu:
 		RAILWAY_ENVIRONMENT="local" \
 		$(PYTHON) -m uvicorn app.api.fastapi_app:app --reload --host 0.0.0.0 --port "$(PORT)"
 
-# Run cleaning pipeline with patches
+# Run patch validation (legacy cleaning pipeline CLI was retired)
 autopatch:
 	@mkdir -p autopatches reports
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/run_cleaning_pipeline.py \
-		--notes $(NOTES_PATH) \
-		--kb $(KB_PATH) \
-		--schema $(SCHEMA_PATH) \
-		--out-json autopatches/patches.json \
-		--out-csv reports/errors.csv \
-		--apply-minimal-fixes || true
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/patch.py || true
 
 # Autocommit generated patches/reports
 autocommit:
@@ -638,7 +632,7 @@ codex-train: setup lint typecheck test validate-schemas validate-kb autopatch
 codex-metrics: setup
 	@mkdir -p outputs
 	@echo "Running metrics pipeline..."
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/run_coder_hybrid.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/run_coder_hybrid.py \
 		--notes $(NOTES_PATH) \
 		--kb $(KB_PATH) \
 		--keyword-dir data/keyword_mappings \
@@ -749,7 +743,7 @@ REGISTRY_SEED ?= 42
 
 # Full pipeline
 registry-prep:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/golden_to_csv.py \
 		--input-dir $(REGISTRY_INPUT_DIR) \
 		--output-dir $(REGISTRY_OUTPUT_DIR) \
 		--prefix $(REGISTRY_PREFIX) \
@@ -763,7 +757,7 @@ registry-prep-with-human:
 		echo "ERROR: HUMAN_REGISTRY_CSV is required (e.g. make registry-prep-with-human HUMAN_REGISTRY_CSV=/tmp/registry_human.csv)"; \
 		exit 1; \
 	fi
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/golden_to_csv.py \
 		--input-dir $(REGISTRY_INPUT_DIR) \
 		--output-dir $(REGISTRY_OUTPUT_DIR) \
 		--prefix $(REGISTRY_PREFIX) \
@@ -773,7 +767,7 @@ registry-prep-with-human:
 
 # Dry run (validate only)
 registry-prep-dry:
-	$(CONDA_ACTIVATE) && $(PYTHON) scripts/golden_to_csv.py \
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/golden_to_csv.py \
 		--input-dir $(REGISTRY_INPUT_DIR) \
 		--output-dir $(REGISTRY_OUTPUT_DIR) \
 		--prefix $(REGISTRY_PREFIX) \

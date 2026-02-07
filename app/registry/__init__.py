@@ -5,7 +5,7 @@ Keep this package import-light.
 Many scripts import `app.registry.*` utilities (e.g., boolean mappers) without
 needing the full LLM extractor stack. Importing `RegistryEngine` eagerly pulls in
 LLM/config dependencies, which breaks running leaf scripts directly (e.g.
-`python modules/ml_coder/data_prep.py`) in environments where `config` isn't on
+`python -m ml.lib.ml_coder.data_prep`) in environments where `config` isn't on
 `PYTHONPATH`.
 """
 
@@ -29,4 +29,3 @@ def __getattr__(name: str):
 
 
 __all__ = ["RegistryRecord", "RegistryEngine"]
-

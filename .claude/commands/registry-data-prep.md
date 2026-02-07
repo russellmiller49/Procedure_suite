@@ -51,7 +51,7 @@ Golden JSON Entry
 | `ml/lib/ml_coder/registry_data_prep.py` | Main data prep logic (3-tier extraction, dedup, splits) |
 | `ml/lib/ml_coder/label_hydrator.py` | 3-tier extraction + keyword hydration |
 | `app/registry/v2_booleans.py` | Canonical 30 procedure boolean fields |
-| `scripts/golden_to_csv.py` | CLI interface for data prep |
+| `ml/scripts/golden_to_csv.py` | CLI interface for data prep |
 
 ### Test Files
 | File | Purpose |
@@ -123,7 +123,7 @@ make registry-prep-dry    # Dry run (preview stats only)
 
 **Using CLI:**
 ```bash
-python scripts/golden_to_csv.py \
+python ml/scripts/golden_to_csv.py \
   --input-dir data/knowledge/golden_extractions_final \
   --output-dir data/ml_training \
   --prefix registry

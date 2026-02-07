@@ -55,16 +55,16 @@ Submit to Server → Formatted Results Display
 ### Training Pipeline
 | File | Purpose |
 |------|---------|
-| `scripts/distill_phi_labels.py` | Silver: Piiranha → BIO token distillation |
-| `scripts/sanitize_dataset.py` | Clean false positives from training data |
-| `scripts/normalize_phi_labels.py` | Map labels to standard schema |
-| `scripts/train_distilbert_ner.py` | Train DistilBERT NER model |
-| `scripts/export_phi_model_for_transformersjs.py` | Export ONNX for browser |
-| `scripts/audit_model_fp.py` | Audit for false positive violations |
-| `scripts/prodigy_prepare_phi_batch.py` | Prodigy: Pre-annotate notes with DistilBERT |
-| `scripts/prodigy_export_corrections.py` | Prodigy: Export corrections to BIO format |
-| `scripts/export_phi_gold_standard.py` | Gold: Export pure Prodigy annotations |
-| `scripts/split_phi_gold.py` | Gold: Train/test split with note grouping |
+| `ml/scripts/distill_phi_labels.py` | Silver: Piiranha → BIO token distillation |
+| `ml/scripts/sanitize_dataset.py` | Clean false positives from training data |
+| `ml/scripts/normalize_phi_labels.py` | Map labels to standard schema |
+| `ml/scripts/train_distilbert_ner.py` | Train DistilBERT NER model |
+| `ops/tools/export_phi_model_for_transformersjs.py` | Export ONNX for browser |
+| `ml/scripts/audit_model_fp.py` | Audit for false positive violations |
+| `ml/scripts/prodigy_prepare_phi_batch.py` | Prodigy: Pre-annotate notes with DistilBERT |
+| `ml/scripts/prodigy_export_corrections.py` | Prodigy: Export corrections to BIO format |
+| `ml/scripts/export_phi_gold_standard.py` | Gold: Export pure Prodigy annotations |
+| `ml/scripts/split_phi_gold.py` | Gold: Train/test split with note grouping |
 
 ### Training Data
 | Location | Purpose |
@@ -189,7 +189,7 @@ make sanitize-phi-silver
 make normalize-phi-silver
 
 # 4. Train
-python scripts/train_distilbert_ner.py --epochs 3
+python ml/scripts/train_distilbert_ner.py --epochs 3
 
 # 5. Evaluate & audit
 make eval-phi-client

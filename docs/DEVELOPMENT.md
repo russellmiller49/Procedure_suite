@@ -265,7 +265,7 @@ pytest tests/unit/test_openai_timeouts.py
 
 1. Run tests: `make test` or specific test suite
 2. Run linting: `make lint`
-3. Test the dev server: `./scripts/devserver.sh`
+3. Test the dev server: `./ops/devserver.sh`
 4. Verify no PHI was committed
 
 ---
@@ -278,7 +278,7 @@ Before committing changes:
 - [ ] I am using `CodingService` (not legacy `CoderEngine`)
 - [ ] I am using `RegistryService` (not direct engine calls)
 - [ ] I have run `make test` (or relevant unit tests)
-- [ ] I have checked `scripts/devserver.sh` to ensure the app starts
+- [ ] I have checked `ops/devserver.sh` to ensure the app starts
 - [ ] I have not committed any PHI (real patient data)
 - [ ] I have updated documentation if changing APIs or schemas
 

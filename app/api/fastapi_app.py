@@ -1,8 +1,8 @@
 """FastAPI application wiring for the Procedure Suite services.
 
 ⚠️ SOURCE OF TRUTH: This is the MAIN FastAPI application.
-- Running on port 8000 via scripts/devserver.sh
-- Uses CodingService from modules/coder/application/coding_service.py (new hexagonal architecture)
+- Running on port 8000 via ops/devserver.sh
+- Uses CodingService from app/coder/application/coding_service.py (new hexagonal architecture)
 - DO NOT edit api/app.py - it's deprecated
 
 See AI_ASSISTANT_GUIDE.md for details.

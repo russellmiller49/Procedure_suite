@@ -10,9 +10,9 @@ Outputs a review file with detailed context for manual inspection
 and potential addition to training data.
 
 Usage:
-    python scripts/review_llm_fallback_errors.py
-    python scripts/review_llm_fallback_errors.py --input data/eval_results/eval_errors_*.jsonl
-    python scripts/review_llm_fallback_errors.py --run-fresh  # Re-run evaluation first
+    python ml/scripts/review_llm_fallback_errors.py
+    python ml/scripts/review_llm_fallback_errors.py --input data/eval_results/eval_errors_*.jsonl
+    python ml/scripts/review_llm_fallback_errors.py --run-fresh  # Re-run evaluation first
 """
 
 from __future__ import annotations
@@ -258,7 +258,7 @@ def run_fresh_evaluation() -> Path:
 
     print("Running fresh evaluation...")
     result = subprocess.run(
-        ["python3", "scripts/eval_hybrid_pipeline.py"],
+        ["python3", "ml/scripts/eval_hybrid_pipeline.py"],
         capture_output=True,
         text=True,
     )

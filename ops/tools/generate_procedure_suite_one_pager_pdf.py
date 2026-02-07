@@ -158,7 +158,7 @@ def main() -> int:
             "Returns UI-ready JSON with evidence spans and review/status flags.",
             "Omission scan + RAW-ML auditor; optional guarded self-correction judge (REGISTRY_SELF_CORRECT_ENABLED=1).",
             "Exports: raw JSON and flattened editable tables (Excel-readable .xls); table edits emit Edited JSON (Training).",
-            "CLI + tests for validation and batch runs (make test, make validate-registry, scripts/registry_pipeline_smoke*.py).",
+            "CLI + tests for validation and batch runs (make test, make validate-registry, ops/tools/registry_pipeline_smoke*.py).",
         ],
         max_chars=94,
     )
@@ -169,7 +169,7 @@ def main() -> int:
         [
             "Client UI: static PHI redactor/dashboard at ui/static/phi_redactor/ served on /ui/.",
             "Data flow: UI redacts PHI in-browser, then submits scrubbed note text (or sets already_scrubbed=true).",
-            "API: FastAPI app in modules/api/fastapi_app.py exposes POST /api/v1/process (modules/api/routes/unified_process.py).",
+            "API: FastAPI app in app/api/fastapi_app.py exposes POST /api/v1/process (app/api/routes/unified_process.py).",
             "Pipeline: run_unified_pipeline_logic -> RegistryService.extract_fields -> deterministic RegistryRecord -> CPT derivation (CodingService) -> audit/self-correct -> response adapter.",
             "Key knowledge + schemas: data/knowledge/ip_coding_billing_v3_0.json; proc_schemas/registry/; schemas/.",
         ],
@@ -183,7 +183,7 @@ def main() -> int:
             "Install deps: make install (Python 3.11+).",
             "Set required env: PROCSUITE_PIPELINE_MODE=extraction_first (service will not start otherwise).",
             "Configure LLM (optional for some features): GEMINI_API_KEY=... (or use offline flags like GEMINI_OFFLINE=1 / OPENAI_OFFLINE=1).",
-            "Start: ./scripts/devserver.sh",
+            "Start: ./ops/devserver.sh",
             "Open: http://localhost:8000/ui/ and http://localhost:8000/docs",
         ],
         max_chars=94,
@@ -192,7 +192,7 @@ def main() -> int:
     # Footer
     y_footer = margin - 18
     footer_lines = [
-        "Sources: README.md; docs/USER_GUIDE.md; docs/ARCHITECTURE.md; modules/api/routes/unified_process.py",
+        "Sources: README.md; docs/USER_GUIDE.md; docs/ARCHITECTURE.md; app/api/routes/unified_process.py",
     ]
     for i, ft in enumerate(footer_lines):
         lines.append(_TextLine(font=subtitle_font, size=7.5, x=float(x0), y=float(y_footer - (i * 9)), text=ft))

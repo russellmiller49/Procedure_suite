@@ -94,7 +94,7 @@ def _golden_examples() -> list[dict[str, Any]]:
     if not GOLDEN_DATASET_PATH.exists():
         raise AssertionError(
             f"Golden dataset not found at {GOLDEN_DATASET_PATH}. "
-            "Run `python scripts/parse_golden_reporter_examples.py` to generate it."
+            "Run `python ml/scripts/parse_golden_reporter_examples.py` to generate it."
         )
     return json.loads(GOLDEN_DATASET_PATH.read_text(encoding="utf-8"))
 

@@ -15,7 +15,7 @@ o	Centralize env flags (examples):
 2.	Add app/infra/perf.py
 o	timed(name) context manager logging durations
 o	optional structured log helper
-3.	Add scripts/smoke_run.sh
+3.	Add ops/tools/smoke_run.sh
 o	start server
 o	hit /health, /ready
 o	hit a minimal “predict/coder” request

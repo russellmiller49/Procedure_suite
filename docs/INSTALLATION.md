@@ -149,7 +149,7 @@ To run the FastAPI backend locally:
 
 ```bash
 make api
-# Or: ./scripts/devserver.sh
+# Or: ./ops/devserver.sh
 ```
 
 The API will be available at `http://localhost:8000`.

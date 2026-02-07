@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from scripts.distill_phi_labels import (
+from ml.scripts.distill_phi_labels import (
     extract_procedure_codes,
     is_protected_for_person,
     is_protected_for_geo,

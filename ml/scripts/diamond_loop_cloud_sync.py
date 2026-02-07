@@ -18,12 +18,12 @@ Two modes:
 - pull: copy cloud files → local; import Prodigy dataset (with --reset)
 
 WSL + Google Drive on Windows G: example:
-  python scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
-  python scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
+  python ml/scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
+  python ml/scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
 
 macOS example (Drive path varies by install):
-  python scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
-  python scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
+  python ml/scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
+  python ml/scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
 """
 
 from __future__ import annotations
@@ -136,13 +136,13 @@ def _copy_cloud_to_local(cloud_src: Path, local_dst: Path, *, sync_root: Path | 
 
 
 def _prodigy_export(dataset: str, out_file: Path) -> None:
-    from scripts.prodigy_cloud_sync import export_dataset  # local helper
+    from ml.scripts.prodigy_cloud_sync import export_dataset  # local helper
 
     export_dataset(dataset=dataset, out_file=out_file, answer=None)
 
 
 def _prodigy_import(dataset: str, in_file: Path, *, reset: bool) -> None:
-    from scripts.prodigy_cloud_sync import import_dataset  # local helper
+    from ml.scripts.prodigy_cloud_sync import import_dataset  # local helper
 
     import_dataset(dataset=dataset, in_file=in_file, reset_first=reset, overwrite=False, rehash=False)
 
@@ -261,5 +261,4 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
 

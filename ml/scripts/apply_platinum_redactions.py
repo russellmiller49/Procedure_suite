@@ -6,7 +6,7 @@ This script takes platinum PHI spans (character-level) and applies [REDACTED]
 replacements to the note_text fields in golden JSON files, producing
 PHI-scrubbed training data for the registry ML model.
 
-Usage: python scripts/apply_platinum_redactions.py
+Usage: python ml/scripts/apply_platinum_redactions.py
 
 Critical Safety Feature:
 - Text snippet verification ensures span offsets match actual text before redacting
@@ -41,13 +41,13 @@ SIGNATURE_RE = None
 
 
 def _load_phi_redactor_hybrid() -> None:
-    """Load `modules/phi/adapters/phi_redactor_hybrid.py` without importing `app.phi` (avoids optional deps)."""
+    """Load `app/phi/adapters/phi_redactor_hybrid.py` without importing `app.phi` (avoids optional deps)."""
     global PHIRedactor, RedactionConfig
     global INLINE_PHYSICIAN_RE, PHYSICIAN_CREDENTIAL_RE, PHYSICIAN_HEADER_RE, SIGNATURE_RE
     if PHIRedactor is not None and RedactionConfig is not None:
         return
 
-    module_path = ROOT / "modules" / "phi" / "adapters" / "phi_redactor_hybrid.py"
+    module_path = ROOT / "app" / "phi" / "adapters" / "phi_redactor_hybrid.py"
     if not module_path.exists():
         return
 

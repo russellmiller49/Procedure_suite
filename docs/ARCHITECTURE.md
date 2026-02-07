@@ -26,19 +26,24 @@ Procedure_suite/
 ├── app/                    # Core application modules
 │   ├── api/                    # FastAPI endpoints and routes
 │   ├── coder/                  # CPT coding engine
-│   ├── ml_coder/               # ML-based prediction
 │   ├── registry/               # Registry extraction
 │   ├── agents/                 # 3-agent pipeline
 │   ├── reporter/               # Report generation
 │   ├── common/                 # Shared utilities
 │   ├── domain/                 # Domain models and rules
 │   └── phi/                    # PHI handling
+├── ml/
+│   ├── lib/ml_coder/           # ML library code
+│   └── scripts/                # Training/eval/data-prep CLIs
+├── ops/
+│   ├── tools/                  # Operational/maintenance tooling
+│   ├── devserver.sh            # Local API + UI startup
+│   └── warm_models.py          # Model warmup helpers
 ├── data/
 │   └── knowledge/              # Knowledge bases and training data
 ├── schemas/                    # JSON Schema definitions
 ├── proc_schemas/               # Pydantic schema definitions
 ├── config/                     # Configuration settings
-├── scripts/                    # CLI tools and utilities
 ├── tests/                      # Test suites
 └── docs/                       # Documentation
 ```

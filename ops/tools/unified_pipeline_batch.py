@@ -79,7 +79,7 @@ def _run_unified_pipeline(
 ) -> UnifiedProcessResponse:
     """Run the unified pipeline (same as /api/v1/process endpoint).
     
-    This replicates the exact logic from modules/api/routes/unified_process.py
+    This replicates the exact logic from app/api/routes/unified_process.py
     """
     import time
     

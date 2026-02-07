@@ -67,7 +67,7 @@ class CodingService:
         self.ml_ranker = ml_ranker
         self.registry_service = registry_service
 
-        # Note: PHI scrubbing is now handled at route level (modules/api/phi_redaction.py).
+        # Note: PHI scrubbing is now handled at route level (app/api/phi_redaction.py).
         # The phi_scrubber parameter is deprecated and ignored.
         if phi_scrubber:
             logger.debug(

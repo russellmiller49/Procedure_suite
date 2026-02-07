@@ -7,7 +7,7 @@ any existing data. It exports only human-verified Prodigy annotations,
 creating a pure "Gold Standard" dataset.
 
 Usage:
-    python scripts/export_phi_gold_standard.py \
+    python ml/scripts/export_phi_gold_standard.py \
         --dataset phi_corrections \
         --output data/ml_training/phi_gold_standard_v1.jsonl
 """

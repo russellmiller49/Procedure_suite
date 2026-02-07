@@ -204,7 +204,7 @@ def _serialize_concept(concept: Any) -> Dict[str, Any]:
 
 # --- Structured reporter (template-driven) ---
 
-# Path is: modules/reporting/engine.py -> reporting -> modules -> repo_root
+# Path is: app/reporting/engine.py -> reporting -> app -> repo_root
 _CONFIG_TEMPLATE_ROOT = Path(__file__).resolve().parents[2] / "configs" / "report_templates"
 _DEFAULT_ORDER_PATH = _CONFIG_TEMPLATE_ROOT / "procedure_order.json"
 

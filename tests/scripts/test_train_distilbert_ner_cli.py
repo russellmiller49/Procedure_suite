@@ -3,7 +3,7 @@ import pytest
 pytest.importorskip("torch")
 pytest.importorskip("transformers")
 
-from scripts import train_distilbert_ner
+from ml.scripts import train_distilbert_ner
 
 
 def test_parse_defaults():

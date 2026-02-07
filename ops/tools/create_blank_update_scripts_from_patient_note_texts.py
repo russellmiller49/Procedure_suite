@@ -9,7 +9,7 @@ create a matching blank Python script in:
 This is useful for a manual workflow where you later fill in one script per patient.
 
 Usage:
-  python scripts/create_blank_update_scripts_from_patient_note_texts.py \
+  python ops/tools/create_blank_update_scripts_from_patient_note_texts.py \
     --input-dir data/knowledge/patient_note_texts \
     --output-dir "data/granular annotations/Python_update_scripts"
 """

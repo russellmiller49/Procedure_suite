@@ -320,7 +320,7 @@ class TestFilterRareRegistryLabels:
 
 
 class TestSharedV2BooleansModule:
-    """Tests for the shared V2 booleans module (modules/registry/v2_booleans.py).
+    """Tests for the shared V2 booleans module (`app/registry/v2_booleans.py`).
 
     Ensures the canonical source of truth for V2 -> V3 boolean mapping
     matches the data_prep wrapper.

@@ -6,6 +6,7 @@ const seedBtn = document.getElementById("seedBtn");
 const refreshBtn = document.getElementById("refreshBtn");
 const clearBtn = document.getElementById("clearBtn");
 const applyPatchBtn = document.getElementById("applyPatchBtn");
+const transferToDashboardBtn = document.getElementById("transferToDashboardBtn");
 
 const summaryQuestionsEl = document.getElementById("summaryQuestions");
 const summaryIssuesEl = document.getElementById("summaryIssues");
@@ -17,6 +18,8 @@ const questionsHostEl = document.getElementById("questionsHost");
 const validationHostEl = document.getElementById("validationHost");
 const bundleJsonEl = document.getElementById("bundleJson");
 const patchJsonEl = document.getElementById("patchJson");
+
+const DASHBOARD_TRANSFER_STORAGE_KEY = "ps.reporter_to_dashboard_note_v1";
 
 const state = {
   bundle: null,
@@ -95,13 +98,56 @@ function currentMarkdown() {
   return "";
 }
 
+function buildTransferNoteText() {
+  const renderedMarkdown = String(currentMarkdown() || "").trim();
+  if (renderedMarkdown) return renderedMarkdown;
+  return String(seedTextEl.value || "").trim();
+}
+
+function safeSetStorageItem(storage, key, value) {
+  if (!storage || typeof storage.setItem !== "function") return false;
+  try {
+    storage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function transferToDashboard() {
+  const note = buildTransferNoteText();
+  if (!note) {
+    showBanner("warning", "No note text available to transfer.");
+    return;
+  }
+
+  const payload = JSON.stringify({
+    note,
+    source: "reporter_builder",
+    note_type: String(currentMarkdown() || "").trim() ? "rendered_markdown" : "seed_text",
+    transferred_at: new Date().toISOString(),
+  });
+
+  const wroteSession = safeSetStorageItem(globalThis.sessionStorage, DASHBOARD_TRANSFER_STORAGE_KEY, payload);
+  const wroteLocal = safeSetStorageItem(globalThis.localStorage, DASHBOARD_TRANSFER_STORAGE_KEY, payload);
+
+  if (!wroteSession && !wroteLocal) {
+    showBanner("error", "Browser storage unavailable. Transfer to dashboard failed.");
+    return;
+  }
+
+  window.location.href = "./";
+}
+
 function updateControls() {
   const hasBundle = Boolean(state.bundle);
   const hasQuestions = Array.isArray(state.questions) && state.questions.length > 0;
+  const hasTransferNote = buildTransferNoteText().length > 0;
   seedBtn.disabled = state.busy;
   refreshBtn.disabled = state.busy || !hasBundle;
   clearBtn.disabled = state.busy;
   applyPatchBtn.disabled = state.busy || !hasBundle || !hasQuestions;
+  if (transferToDashboardBtn) transferToDashboardBtn.disabled = state.busy || !hasTransferNote;
   strictToggleEl.disabled = state.busy;
 }
 
@@ -577,5 +623,7 @@ applyPatchBtn.addEventListener("click", () => {
 });
 
 clearBtn.addEventListener("click", clearState);
+if (transferToDashboardBtn) transferToDashboardBtn.addEventListener("click", transferToDashboard);
+seedTextEl.addEventListener("input", updateControls);
 
 renderAll();

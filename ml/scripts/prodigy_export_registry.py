@@ -5,7 +5,7 @@ Supports two modes:
   - DB mode:   --dataset <name> (requires Prodigy installed and configured)
   - File mode: --input-jsonl <path> (reads a Prodigy-exported JSONL file; CI friendly)
 
-Outputs a training CSV compatible with `scripts/train_roberta.py`:
+Outputs a training CSV compatible with `ml/scripts/train_roberta.py`:
   - note_text
   - label columns (0/1) for each item in `REGISTRY_LABELS`
   - label_source="prodigy"

@@ -5,7 +5,7 @@ Validate a JSON Schema file.
 Supports draft-07 and 2020-12 (auto-detected via the schema's "$schema" field).
 
 Usage:
-    python scripts/validate_jsonschema.py --schema data/knowledge/IP_Registry.json
+    python ops/tools/validate_jsonschema.py --schema data/knowledge/IP_Registry.json
 """
 
 import argparse

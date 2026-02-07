@@ -7,8 +7,8 @@ extractions file and compares outputs against verified ground truth.
 Generates detailed error analysis and improvement recommendations.
 
 Usage:
-    python scripts/validate_golden_extractions.py [--limit N] [--verbose] [--output DIR]
-    python scripts/validate_golden_extractions.py --iterate  # Run iterative improvement loop
+    python ml/scripts/validate_golden_extractions.py [--limit N] [--verbose] [--output DIR]
+    python ml/scripts/validate_golden_extractions.py --iterate  # Run iterative improvement loop
 
 Environment:
     GOOGLE_API_KEY: Required for Gemini API calls

@@ -1,0 +1,70 @@
+name: Sync Deploy Mirror
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      include_phi_vendor:
+        description: "Include ui/static/phi_redactor/vendor in mirror payload"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-mirror-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    if: ${{ vars.DEPLOY_MIRROR_REPO != '' && secrets.DEPLOY_MIRROR_PUSH_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_MIRROR_REPO: ${{ vars.DEPLOY_MIRROR_REPO }}
+      DEPLOY_MIRROR_BRANCH: ${{ vars.DEPLOY_MIRROR_BRANCH }}
+      DEPLOY_MIRROR_PUSH_TOKEN: ${{ secrets.DEPLOY_MIRROR_PUSH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build deploy mirror payload
+        run: |
+          set -euo pipefail
+          include_vendor="0"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.include_phi_vendor }}" == "true" ]]; then
+            include_vendor="1"
+          fi
+
+          DEPLOY_MIRROR_INCLUDE_VENDOR="${include_vendor}" \
+            bash ops/tools/build_deploy_mirror.sh "${RUNNER_TEMP}/deploy_mirror"
+
+      - name: Push payload to deploy mirror repository
+        run: |
+          set -euo pipefail
+
+          target_dir="${RUNNER_TEMP}/deploy_repo"
+          target_branch="${DEPLOY_MIRROR_BRANCH:-main}"
+
+          git clone "https://x-access-token:${DEPLOY_MIRROR_PUSH_TOKEN}@github.com/${DEPLOY_MIRROR_REPO}.git" "${target_dir}"
+          cd "${target_dir}"
+
+          if git ls-remote --exit-code --heads origin "${target_branch}" >/dev/null 2>&1; then
+            git checkout "${target_branch}"
+          else
+            git checkout --orphan "${target_branch}"
+          fi
+
+          rsync -a --delete --exclude ".git/" "${RUNNER_TEMP}/deploy_mirror/" "${target_dir}/"
+
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No deploy mirror changes to push."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(deploy-mirror): sync from ${GITHUB_REPOSITORY}@${GITHUB_SHA}"
+          git push origin "HEAD:${target_branch}"

@@ -10,8 +10,8 @@ For each code:
 - Uses a global lower threshold (e.g. 0.4) for gray zone boundary
 
 Usage:
-    python scripts/fit_thresholds_from_eval.py [--metrics PATH] [--output PATH]
-    python scripts/fit_thresholds_from_eval.py --target-precision 0.85
+    python ml/scripts/fit_thresholds_from_eval.py [--metrics PATH] [--output PATH]
+    python ml/scripts/fit_thresholds_from_eval.py --target-precision 0.85
 """
 
 from __future__ import annotations

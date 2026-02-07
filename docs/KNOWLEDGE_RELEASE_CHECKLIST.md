@@ -32,4 +32,4 @@ Goal: ship knowledge/schema changes safely without breaking extraction, coding l
 ## Acceptance Smoke (Optional but Recommended)
 
 - Run a single-note smoke:
-  - `python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct`
+  - `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`

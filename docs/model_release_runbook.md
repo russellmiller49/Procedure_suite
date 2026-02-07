@@ -36,8 +36,8 @@ From the `proc_suite/` repo:
 
 ```bash
 VERSION="distilled-$(date +%Y%m%d)-$(git rev-parse --short HEAD)"
-python scripts/build_registry_bundle.py --src distilled --out-dir dist/registry_bundle --backend pytorch --version "$VERSION"
-./scripts/upload_registry_bundle.sh "$VERSION" pytorch dist/registry_bundle
+python ops/tools/build_registry_bundle.py --src distilled --out-dir dist/registry_bundle --backend pytorch --version "$VERSION"
+./ops/tools/upload_registry_bundle.sh "$VERSION" pytorch dist/registry_bundle
 ```
 
 ## Runtime configuration (IU / FastAPI)

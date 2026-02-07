@@ -137,6 +137,7 @@ function isReactRegistryGridEnabled() {
 const UI_REVIEW_FOCUS_LS_KEY = "ui.reviewFocus";
 const UI_REVIEW_SPLIT_LS_KEY = "ui.reviewSplit";
 const UI_DETECTIONS_COLLAPSED_LS_KEY = "ui.detectionsCollapsed";
+const REPORTER_DASHBOARD_TRANSFER_KEY = "ps.reporter_to_dashboard_note_v1";
 
 function safeGetLocalStorageItem(key) {
   try {
@@ -152,6 +153,44 @@ function safeSetLocalStorageItem(key, value) {
   } catch {
     // ignore storage failures (private mode)
   }
+}
+
+function safeGetSessionStorageItem(key) {
+  try {
+    return sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeRemoveStorageItem(storage, key) {
+  if (!storage || typeof storage.removeItem !== "function") return;
+  try {
+    storage.removeItem(key);
+  } catch {
+    // ignore storage failures (private mode)
+  }
+}
+
+function parseReporterTransferPayload(raw) {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    const note = typeof parsed?.note === "string" ? parsed.note : "";
+    if (!note.trim()) return null;
+    return { note };
+  } catch {
+    return null;
+  }
+}
+
+function consumeReporterTransferPayload() {
+  const parsed =
+    parseReporterTransferPayload(safeGetSessionStorageItem(REPORTER_DASHBOARD_TRANSFER_KEY)) ||
+    parseReporterTransferPayload(safeGetLocalStorageItem(REPORTER_DASHBOARD_TRANSFER_KEY));
+  safeRemoveStorageItem(globalThis.sessionStorage, REPORTER_DASHBOARD_TRANSFER_KEY);
+  safeRemoveStorageItem(globalThis.localStorage, REPORTER_DASHBOARD_TRANSFER_KEY);
+  return parsed;
 }
 
 function readBoolSetting(queryKey, storageKey, defaultValue) {
@@ -5209,6 +5248,13 @@ async function main() {
 
 	  // RegistryGrid embed expects a getter for the live Monaco editor (or null in textarea mode).
 	  setRegistryGridMonacoGetter(() => window.editor);
+
+  const reporterTransfer = consumeReporterTransferPayload();
+  if (reporterTransfer?.note) {
+    model.setValue(reporterTransfer.note);
+    setStatus("Reporter note loaded. Run detection, apply redactions, then submit.");
+    setProgress("");
+  }
 
 	  let originalText = model.getValue();
 	  let hasRunDetection = false;

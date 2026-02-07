@@ -867,7 +867,7 @@ def _is_negated(field: str, text: str, match_start: int, match_end: int) -> bool
 
 #### Codex Instructions
 
-**Create script:** `scripts/generate_cpt_keywords.py`
+**Create script:** `ops/tools/generate_cpt_keywords.py`
 
 ```python
 #!/usr/bin/env python3
@@ -930,7 +930,7 @@ if __name__ == "__main__":
 
 #### Russell's Manual Tasks
 
-1. **Create bootstrap script:** `scripts/bootstrap_granular_attributes.py`
+1. **Create bootstrap script:** `ml/scripts/bootstrap_granular_attributes.py`
    - Use regex to pre-highlight entities like:
      - `DEV_STENT_TYPE`: silicone, hybrid, metallic, covered, uncovered
      - `DEV_STENT_DIM`: 14x10x10mm, 14x40mm
@@ -954,8 +954,8 @@ if __name__ == "__main__":
 
 5. **Retrain NER:**
    ```bash
-   python scripts/convert_spans_to_bio.py --input merged_ner_data.jsonl
-   python scripts/train_registry_ner.py
+   python ml/scripts/convert_spans_to_bio.py --input merged_ner_data.jsonl
+   python ml/scripts/train_registry_ner.py
    ```
 
 ---
@@ -966,16 +966,16 @@ if __name__ == "__main__":
 
 ```bash
 # Test section filtering
-python scripts/registry_pipeline_smoke.py --text "History: Patient had stent placed in 2024. Procedure: Bronchoscopy with inspection."
+python ops/tools/registry_pipeline_smoke.py --text "History: Patient had stent placed in 2024. Procedure: Bronchoscopy with inspection."
 # Expected: airway_stent.performed=False OR action="Assessment only"
 
 # Test checkbox negation  
-python scripts/registry_pipeline_smoke.py --text "0- Chest tube
+python ops/tools/registry_pipeline_smoke.py --text "0- Chest tube
 1- Thoracentesis performed"
 # Expected: chest_tube.performed=False, thoracentesis.performed=True
 
 # Test stent assessment
-python scripts/registry_pipeline_smoke.py --note tests/fixtures/notes/note_068.txt
+python ops/tools/registry_pipeline_smoke.py --note tests/fixtures/notes/note_068.txt
 # Expected: airway_stent.action="Assessment only", NO 31636 derived
 ```
 
@@ -986,7 +986,7 @@ make test
 # Ensure all existing tests pass
 
 # Run batch evaluation
-python scripts/registry_pipeline_smoke_batch.py --fixtures tests/fixtures/notes/
+python ops/tools/registry_pipeline_smoke_batch.py --fixtures tests/fixtures/notes/
 ```
 
 ---
@@ -1010,8 +1010,8 @@ python scripts/registry_pipeline_smoke_batch.py --fixtures tests/fixtures/notes/
 ### New Files to Create
 - `app/registry/postprocess/template_checkbox_negation.py`
 - `ml/lib/ml_coder/section_filter.py`
-- `scripts/generate_cpt_keywords.py`
-- `scripts/bootstrap_granular_attributes.py`
+- `ops/tools/generate_cpt_keywords.py`
+- `ml/scripts/bootstrap_granular_attributes.py`
 - `tests/registry/test_template_checkbox_negation.py`
 - `tests/registry/test_section_filter.py`
 

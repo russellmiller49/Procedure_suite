@@ -13,10 +13,10 @@ Default behavior:
 - Skips hashing/reading for large files by default (configurable).
 
 Usage:
-  python scripts/index_repo.py
-  python scripts/index_repo.py --out repo_index_all.jsonl
-  python scripts/index_repo.py --include-content --max-content-bytes 262144
-  python scripts/index_repo.py --mode walk   # ignore git, walk filesystem
+  python ops/tools/index_repo.py
+  python ops/tools/index_repo.py --out repo_index_all.jsonl
+  python ops/tools/index_repo.py --include-content --max-content-bytes 262144
+  python ops/tools/index_repo.py --mode walk   # ignore git, walk filesystem
 """
 
 from __future__ import annotations

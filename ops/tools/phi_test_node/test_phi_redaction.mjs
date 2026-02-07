@@ -10,7 +10,7 @@
  * 5. Output comparison of original vs redacted
  *
  * Usage:
- *   cd scripts/phi_test_node
+ *   cd ops/tools/phi_test_node
  *   npm install
  *   node test_phi_redaction.mjs [--count N] [--seed N] [--output FILE]
  */

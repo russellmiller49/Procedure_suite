@@ -30,7 +30,7 @@ except Exception:  # pragma: no cover - fallback for isolated execution
     PROTECTED_DEVICE_NAMES = set()
     PHIRedactor = None  # type: ignore[assignment]
     RedactionConfig = None  # type: ignore[assignment]
-from scripts.distill_phi_labels import (
+from ml.scripts.distill_phi_labels import (
     derive_id_base,
     extract_note_text,
     line_bounds,

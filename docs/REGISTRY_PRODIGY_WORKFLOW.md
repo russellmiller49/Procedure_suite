@@ -107,7 +107,7 @@ This writes new:
 ## 6) Retrain (BiomedBERT / RoBERTa script)
 
 ```bash
-python scripts/train_roberta.py \
+python ml/scripts/train_roberta.py \
   --train-csv data/ml_training/registry_train.csv \
   --val-csv data/ml_training/registry_val.csv \
   --test-csv data/ml_training/registry_test.csv \

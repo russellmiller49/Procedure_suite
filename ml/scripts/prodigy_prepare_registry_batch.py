@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Compatibility wrapper for the Registry Prodigy batch prep ("Diamond Loop").
 
-The repo historically used `scripts/prodigy_prepare_registry.py`. The Diamond Loop
-brief references `scripts/prodigy_prepare_registry_batch.py`, so this wrapper
+The repo historically used `ml/scripts/prodigy_prepare_registry.py`. The Diamond Loop
+brief references `ml/scripts/prodigy_prepare_registry_batch.py`, so this wrapper
 provides the documented CLI while delegating to the existing implementation.
 """
 
@@ -12,15 +12,12 @@ import argparse
 from pathlib import Path
 import sys
 
-# Ensure repo root + scripts/ are importable when running as a file.
+# Ensure repo root is importable when running as a file.
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-SCRIPTS_DIR = ROOT / "scripts"
-if str(SCRIPTS_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS_DIR))
 
-import prodigy_prepare_registry  # noqa: E402
+from ml.scripts import prodigy_prepare_registry  # noqa: E402
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:

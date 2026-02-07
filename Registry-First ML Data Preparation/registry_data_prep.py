@@ -6,7 +6,7 @@ using the registry-first approach. The key function is `prepare_registry_trainin
 which is referenced in CLAUDE.md as the entry point for generating training data.
 
 Integration with existing codebase:
-    - Place this file at: modules/ml_coder/registry_data_prep.py
+    - Place this file at: ml/lib/ml_coder/registry_data_prep.py
     - Import in data_prep.py: from .registry_data_prep import prepare_registry_training_splits
     - Or use standalone: python -m ml.lib.ml_coder.registry_data_prep
 
@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 # Canonical Procedure Flags (V2 Schema)
 # =============================================================================
 # These 30 boolean flags are the ML targets for registry-first prediction.
-# See: modules/registry/v2_booleans.py for the authoritative source.
+# See: app/registry/v2_booleans.py for the authoritative source.
 
 BRONCHOSCOPY_LABELS = [
     "diagnostic_bronchoscopy",

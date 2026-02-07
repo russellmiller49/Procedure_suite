@@ -12,7 +12,7 @@ FEATURES:
 - Achieves <5% all-zero label rows vs 80% with old approach
 
 Integration with existing codebase:
-    - Place this file at: modules/ml_coder/registry_data_prep.py
+    - Place this file at: ml/lib/ml_coder/registry_data_prep.py
     - Import in data_prep.py: from .registry_data_prep import prepare_registry_training_splits
     - Or use standalone: python -m ml.lib.ml_coder.registry_data_prep
 

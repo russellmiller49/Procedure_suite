@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from scripts import merge_granular_attribute_spans as merge_spans
+from ml.scripts import merge_granular_attribute_spans as merge_spans
 
 
 def _write_jsonl(path: Path, rows: list[dict]) -> None:

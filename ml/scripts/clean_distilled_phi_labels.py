@@ -9,7 +9,7 @@ import logging
 import re
 from pathlib import Path
 
-from scripts.distill_phi_labels import (
+from ml.scripts.distill_phi_labels import (
     DEGREE_SYMBOL,
     LABEL_MAPPING_STANDARD,
     line_bounds,

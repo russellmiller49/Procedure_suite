@@ -15,7 +15,7 @@ After completing this plan, the repo will support:
 
 1. **Prepare**: generate a Prodigy JSONL for multi‑label classification (“choice” UI) with **pre‑checked boxes** from pipeline/model predictions.
 2. **Annotate**: run Prodigy with checkbox UI over those tasks.
-3. **Export**: convert Prodigy annotations back to a training CSV compatible with `scripts/train_roberta.py`.
+3. **Export**: convert Prodigy annotations back to a training CSV compatible with `ml/scripts/train_roberta.py`.
 4. **Merge (Tier 0)**: incorporate **human** labels into the registry training data pipeline as a highest‑priority source (above structured/CPT/keyword tiers).
 5. **Retrain**: train the model with:
    - head+tail truncation
@@ -39,11 +39,11 @@ After completing this plan, the repo will support:
 ## 0) Inventory / Where Things Already Exist
 
 Before coding, Codex should locate and read:
-- `scripts/train_roberta.py` (existing registry multi‑label training)
+- `ml/scripts/train_roberta.py` (existing registry multi‑label training)
 - `ml/lib/ml_coder/registry_data_prep.py`, `ml/lib/ml_coder/label_hydrator.py` (3‑tier hydration + dedup)
 - `app/registry/application/registry_service.py` (hybrid + extraction‑first flows)
 - `app/registry/audit/*` (audit / discrepancy logic)
-- `scripts/prodigy_prepare_phi_batch.py` and `scripts/prodigy_export_corrections.py` (existing Prodigy workflow patterns)
+- `ml/scripts/prodigy_prepare_phi_batch.py` and `ml/scripts/prodigy_export_corrections.py` (existing Prodigy workflow patterns)
 - `Makefile` (existing Prodigy targets and variable conventions)
 
 ---
@@ -69,7 +69,7 @@ Create:
 Update any module/script that hardcodes labels to import from `ml.lib.ml_coder.registry_label_schema`.
 
 Common likely files:
-- `scripts/train_roberta.py`
+- `ml/scripts/train_roberta.py`
 - `ml/lib/ml_coder/registry_training.py`
 - `ml/lib/ml_coder/thresholds.py` (if it contains label lists)
 - Any batch prep/export scripts created below
@@ -86,7 +86,7 @@ Add:
 
 ### 2.1 Add file
 Create:
-- `scripts/prodigy_prepare_registry_batch.py`
+- `ml/scripts/prodigy_prepare_registry_batch.py`
 
 ### 2.2 CLI interface
 Use Typer (repo standard for CLIs), with args:
@@ -191,7 +191,7 @@ prodigy mark ${REG_PRODIGY_DATASET} ${REG_PRODIGY_BATCH_FILE} --view-id choice
 
 ### 3.1 Add file
 Create:
-- `scripts/prodigy_export_registry.py`
+- `ml/scripts/prodigy_export_registry.py`
 
 ### 3.2 CLI interface
 Args:
@@ -249,7 +249,7 @@ Add:
 
 ---
 
-## 5) Upgrade Training Script (`scripts/train_roberta.py`) to Support Loop
+## 5) Upgrade Training Script (`ml/scripts/train_roberta.py`) to Support Loop
 
 The repo already intends:
 - `Golden JSONs → registry_data_prep.py → train_roberta.py → ONNX`  
@@ -318,19 +318,19 @@ pytest tests/scripts/test_prodigy_export_registry.py -v
 Smoke:
 ```bash
 # 1) Prepare a tiny batch
-python scripts/prodigy_prepare_registry_batch.py --input-file <RAW_NOTES.jsonl> --output-file /tmp/reg_batch.jsonl --limit 5
+python ml/scripts/prodigy_prepare_registry_batch.py --input-file <RAW_NOTES.jsonl> --output-file /tmp/reg_batch.jsonl --limit 5
 
 # 2) Run Prodigy UI
 prodigy mark registry_v1 /tmp/reg_batch.jsonl --view-id choice
 
 # 3) Export
-python scripts/prodigy_export_registry.py --dataset registry_v1 --output-csv /tmp/registry_human.csv
+python ml/scripts/prodigy_export_registry.py --dataset registry_v1 --output-csv /tmp/registry_human.csv
 
 # 4) Merge and create new splits
 make registry-prep-with-human HUMAN_REGISTRY_CSV=/tmp/registry_human.csv
 
 # 5) Train baseline
-python scripts/train_roberta.py --train-csv data/ml_training/registry_train.csv --val-csv data/ml_training/registry_val.csv --output-dir artifacts/registry_bert --epochs 1
+python ml/scripts/train_roberta.py --train-csv data/ml_training/registry_train.csv --val-csv data/ml_training/registry_val.csv --output-dir artifacts/registry_bert --epochs 1
 ```
 
 ---
@@ -357,14 +357,14 @@ python scripts/train_roberta.py --train-csv data/ml_training/registry_train.csv 
 
 **Add**
 - `ml/lib/ml_coder/registry_label_schema.py`
-- `scripts/prodigy_prepare_registry_batch.py`
-- `scripts/prodigy_export_registry.py`
+- `ml/scripts/prodigy_prepare_registry_batch.py`
+- `ml/scripts/prodigy_export_registry.py`
 - `tests/ml_coder/test_registry_label_schema.py`
 - `tests/scripts/test_prodigy_export_registry.py`
 - `docs/REGISTRY_PRODIGY_WORKFLOW.md`
 
 **Change**
-- `scripts/train_roberta.py`
+- `ml/scripts/train_roberta.py`
 - `ml/lib/ml_coder/registry_data_prep.py` (Tier‑0 human merge)
 - `Makefile` (registry prodigy targets)
 - any docs mentioning an outdated label count

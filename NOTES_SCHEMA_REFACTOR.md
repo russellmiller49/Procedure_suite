@@ -8,8 +8,8 @@
 
 ## Inventory (repo-wide searches, pre-change)
 - `app.registry.schema.ip_v3` / `schema.ip_v3` imports found in:
-  - `scripts/ingest_phase0_data.py`
-  - `scripts/eval_registry_granular.py`
+  - `ml/scripts/ingest_phase0_data.py`
+  - `ml/scripts/eval_registry_granular.py`
   - `app/registry/extractors/v3_extractor.py`
   - `app/registry/evidence/verifier.py`
   - `app/registry/adapters/v3_to_v2.py`

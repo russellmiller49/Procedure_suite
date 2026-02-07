@@ -10,9 +10,9 @@ flags from clinical procedure notes. Key features:
 - Mixed precision training (fp16) for RTX 4070 Ti
 
 Usage:
-    python scripts/train_roberta.py
-    python scripts/train_roberta.py --batch-size 32 --epochs 10
-    python scripts/train_roberta.py --evaluate-only --model-dir data/models/roberta_registry
+    python ml/scripts/train_roberta.py
+    python ml/scripts/train_roberta.py --batch-size 32 --epochs 10
+    python ml/scripts/train_roberta.py --evaluate-only --model-dir data/models/roberta_registry
 """
 
 from __future__ import annotations
@@ -57,7 +57,7 @@ class TrainingConfig:
     # Model
     model_name: str = "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
 
-    # Data paths (from modules/ml_coder/data_prep.py)
+    # Data paths (from ml/lib/ml_coder/data_prep.py)
     train_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_train.csv"))
     val_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_val.csv"))
     test_csv: Path = field(default_factory=lambda: Path("data/ml_training/registry_test.csv"))
@@ -1257,7 +1257,7 @@ def evaluate_only(model_dir: Path, config: TrainingConfig) -> dict[str, Any]:
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Train BiomedBERT for registry procedure classification")
 
-    # Data paths (from modules/ml_coder/data_prep.py)
+    # Data paths (from ml/lib/ml_coder/data_prep.py)
     parser.add_argument(
         "--train-csv",
         type=Path,

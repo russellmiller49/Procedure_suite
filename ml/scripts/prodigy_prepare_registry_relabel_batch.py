@@ -10,13 +10,13 @@ Use case:
 This script:
 - Loads a human CSV (with note_text + label columns)
 - Filters rows where one or more filter labels are positive (default: rigid_bronchoscopy)
-- Expands cats to the *current* canonical label list from `modules/ml_coder/registry_label_schema.py`
+- Expands cats to the *current* canonical label list from `ml/lib/ml_coder/registry_label_schema.py`
 - Emits Prodigy `textcat.manual` tasks:
     {"text": "...", "cats": {...}, "_view_id": "textcat", "meta": {...}}
 
 Typical usage:
 
-  python scripts/prodigy_prepare_registry_relabel_batch.py \
+  python ml/scripts/prodigy_prepare_registry_relabel_batch.py \
     --input-csv data/ml_training/registry_human_v1_backup.csv \
     --output-file data/ml_training/registry_rigid_review.jsonl \
     --filter-label rigid_bronchoscopy \

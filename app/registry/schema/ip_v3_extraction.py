@@ -1,7 +1,7 @@
 """Event-log Registry V3 extraction schema (LLM-facing).
 
-Used by the V3 extraction engine (`modules/registry/extractors/v3_extractor.py`) and
-evidence verification (`modules/registry/evidence/verifier.py`).
+Used by the V3 extraction engine (`app/registry/extractors/v3_extractor.py`) and
+evidence verification (`app/registry/evidence/verifier.py`).
 
 Do not confuse this with the richer registry entry schema at `proc_schemas.registry.ip_v3`.
 """

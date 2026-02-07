@@ -10,7 +10,7 @@ Reads phase0_extraction_note_*.xlsx files and outputs:
 - alignment_warnings.log: Whitespace drift issues
 
 Usage:
-    python scripts/extract_ner_from_excel.py \
+    python ml/scripts/extract_ner_from_excel.py \
         --input-dir "data/granular annotations/phase0_excels" \
         --output-dir data/ml_training/granular_ner
 """

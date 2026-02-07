@@ -6,7 +6,7 @@ they are ready before the first HTTP request. This is critical for Railway
 deployments where cold-start latency can cause timeouts.
 
 Usage:
-    python scripts/warm_models.py
+    python ops/warm_models.py
 
 Environment Variables:
     PROCSUITE_SPACY_MODEL - spaCy model to use (default: en_core_sci_sm)

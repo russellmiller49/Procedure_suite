@@ -1,6 +1,6 @@
 from typing import Literal
 
-from scripts.normalize_phi_labels import normalize_tags
+from ml.scripts.normalize_phi_labels import normalize_tags
 
 PasswordPolicy = Literal["id", "drop"]
 

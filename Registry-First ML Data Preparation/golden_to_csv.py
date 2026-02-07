@@ -49,7 +49,7 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 # V2 Boolean Fields (Canonical 30 Procedure Flags)
 # =============================================================================
-# These are the target labels for ML training, derived from modules/registry/v2_booleans.py
+# These are the target labels for ML training, derived from app/registry/v2_booleans.py
 
 BRONCHOSCOPY_PROCEDURES = [
     "diagnostic_bronchoscopy",

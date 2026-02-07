@@ -4,7 +4,7 @@ Repo review notes (as of 2026-01-18)
 - RegistryEngine already runs run_deterministic_extractors and several heuristics; parallel_ner deterministic uplift includes common misses (BAL/EBBx/radial EBUS/cryotherapy/chest ultrasound/chest tube, plus navigation backstops and IPC/tunneled pleural catheter) and attaches evidence spans.
 - scan_for_omissions and keyword guard operate on masked note text (offset-preserving) to avoid CPT/billing header false positives.
 - self-correction is allowlist-based and keyword-gated; skipped attempts surface as `SELF_CORRECT_SKIPPED: ...` warnings with reasons.
-- Masking module exists: modules/registry/processing/masking.py
+- Masking module exists: app/registry/processing/masking.py
 
 Guiding rules (non-negotiable)
 
@@ -31,12 +31,12 @@ Acceptance: RegistryService logs "ML=available" for the chosen backend; no silen
 
 0.2 Add a fail-fast preflight
 
-Create: scripts/verify_registry_runtime_bundle.py
+Create: ops/tools/verify_registry_runtime_bundle.py
 Checks per backend:
 - pytorch: config.json, tokenizer/, thresholds.json, label_order.json or registry_label_fields.json,
   model.safetensors or pytorch_model.bin, classifier.pt
 - onnx: registry_model_int8.onnx (+ .data if present), tokenizer/, thresholds.json, label files
-Wire into startup (modules/api/fastapi_app.py or modules/registry/model_bootstrap.py).
+Wire into startup (app/api/fastapi_app.py or app/registry/model_bootstrap.py).
 Acceptance: service exits with a clear error if any required artifact is missing.
 
 Phase 1 - Offset-safe masking (signal hygiene)
@@ -46,7 +46,7 @@ Eliminate CPT/billing header false positives without breaking offsets.
 
 1.1 Add a masking module (single source of truth)
 
-Create: modules/registry/processing/masking.py
+Create: app/registry/processing/masking.py
 Implement mask_offset_preserving(text, patterns=PATTERNS) to replace matched regions with spaces.
 Start with patterns similar to CPT/billing headers plus standalone CPT lines.
 
@@ -64,9 +64,9 @@ random spans still map cleanly onto raw text
 1.3 Wire masking into extraction entrypoints
 
 Files:
-- modules/registry/application/registry_service.py
-- modules/registry/engine.py
-- modules/coder/parallel_pathway/orchestrator.py (via caller)
+- app/registry/application/registry_service.py
+- app/registry/engine.py
+- app/coder/parallel_pathway/orchestrator.py (via caller)
 
 Actions:
 - In extract_record(), compute raw_note_text and masked_note_text once.
@@ -97,7 +97,7 @@ procedures_performed/pleural_procedures dicts.
 
 2.2 Expand deterministic extractors
 
-Update: modules/registry/deterministic_extractors.py
+Update: app/registry/deterministic_extractors.py
 Add extractors + patterns for:
 
 Navigational bronchoscopy: Ion/Monarch/ENB/robotic/navigation
@@ -116,7 +116,7 @@ All regex runs on masked text and includes negation checks.
 
 2.3 Expand deterministic uplift in parallel_ner path
 
-Update: modules/registry/application/registry_service.py
+Update: app/registry/application/registry_service.py
 When run_deterministic_extractors returns new procedures, set performed flags
 and attach evidence spans (extend _add_first_span mapping for new procedures).
 
@@ -133,7 +133,7 @@ No cryotherapy from CPT header or cryobiopsy-only notes
 Phase 3 - Self-correction (nested adds + masked gating)
 3.1 Allow nested procedure objects
 
-Update: modules/registry/self_correction/validation.py
+Update: app/registry/self_correction/validation.py
 Support allowlisted prefixes, not just exact paths.
 Allow add/replace on nested paths under procedures_performed/* and pleural_procedures/*
 for selected procedures.
@@ -156,7 +156,7 @@ Add allowlist prefixes for:
 
 (plus any high-value pleural procedures)
 
-Update CPT_KEYWORDS in modules/registry/self_correction/keyword_guard.py to include 31626 (fiducial markers)
+Update CPT_KEYWORDS in app/registry/self_correction/keyword_guard.py to include 31626 (fiducial markers)
 and add missing TBNA terms where needed.
 
 3.3 Use masked text for gating + evidence checks
@@ -174,7 +174,7 @@ Fewer "path not allowed" and fewer keyword guard failures on obvious cases
 Phase 4 - NER mapping + backstops
 4.1 Fill NER mapping gaps
 
-Update: modules/registry/ner_mapping/procedure_extractor.py
+Update: app/registry/ner_mapping/procedure_extractor.py
 
 Add tbna_conventional and brushings keywords.
 
@@ -226,7 +226,7 @@ no false positives from CPT headers
 
 5.3 CLI smoke test
 
-Add a script (eg scripts/registry_pipeline_smoke.py) that runs:
+Add a script (eg ops/tools/registry_pipeline_smoke.py) that runs:
 raw -> masked -> extract_record -> deterministic uplift -> omission scan -> optional self-correct
 and prints a compact diff of performed flags, warnings, and self-correction diagnostics (audit high-conf omissions + skip reasons).
 

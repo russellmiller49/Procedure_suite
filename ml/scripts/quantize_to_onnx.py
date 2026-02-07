@@ -10,8 +10,8 @@ Results:
 - Accuracy loss: < 1%
 
 Usage:
-    python scripts/quantize_to_onnx.py --model-dir data/models/roberta_registry
-    python scripts/quantize_to_onnx.py --model-dir data/models/roberta_registry --validate
+    python ml/scripts/quantize_to_onnx.py --model-dir data/models/roberta_registry
+    python ml/scripts/quantize_to_onnx.py --model-dir data/models/roberta_registry --validate
 """
 
 from __future__ import annotations

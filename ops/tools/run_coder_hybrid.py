@@ -4,7 +4,7 @@ Run the full coding pipeline (rules + LLM advisor + smart_hybrid merge)
 over a JSONL notes file and emit CodeSuggestion[] per note.
 
 Usage:
-    python scripts/run_coder_hybrid.py \
+    python ops/tools/run_coder_hybrid.py \
         --notes data/synthetic/synthetic_notes_with_registry.jsonl \
         --kb data/knowledge/ip_coding_billing_v3_0.json \
         --keyword-dir data/keyword_mappings \

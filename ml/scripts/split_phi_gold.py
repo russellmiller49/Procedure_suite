@@ -6,7 +6,7 @@ CRITICAL: Groups by id_base (note-level) before splitting to prevent data leakag
 If Note A has Window 1 and Window 2, both go to the same split.
 
 Usage:
-    python scripts/split_phi_gold.py \
+    python ml/scripts/split_phi_gold.py \
         --input data/ml_training/phi_gold_standard_v1.jsonl \
         --train-out data/ml_training/phi_train_gold.jsonl \
         --test-out data/ml_training/phi_test_gold.jsonl \

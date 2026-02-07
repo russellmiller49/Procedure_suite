@@ -1,12 +1,12 @@
 """Guardrail tests to prevent reintroduction of legacy imports.
 
-These tests scan the active codebase (modules/api, modules/coder/application,
-modules/coder/adapters) to ensure no legacy imports are accidentally added.
+These tests scan the active codebase (app/api, app/coder/application,
+app/coder/adapters) to ensure no legacy imports are accidentally added.
 
 The legacy code has been migrated:
-- proc_autocode/ -> modules/autocode/
-- proc_report/ -> modules/reporting/
-- proc_registry/ -> modules/registry/legacy/
+- proc_autocode/ -> app/autocode/
+- proc_report/ -> app/reporting/
+- proc_registry/ -> app/registry/legacy/
 
 Active code should use the new module paths.
 """
@@ -17,11 +17,11 @@ from pathlib import Path
 
 # Directories to scan for legacy imports
 ACTIVE_DIRECTORIES = [
-    "modules/api",
-    "modules/coder/application",
-    "modules/coder/adapters",
-    "modules/domain",
-    "modules/infra",
+    "app/api",
+    "app/coder/application",
+    "app/coder/adapters",
+    "app/domain",
+    "app/infra",
 ]
 
 # Legacy strings that should NOT appear in active code
@@ -45,8 +45,8 @@ LEGACY_STRINGS = [
 
 # Files that are explicitly allowed to have legacy references (for deprecation notices)
 ALLOWED_FILES = [
-    "modules/coder/llm_coder.py",  # Has deprecation warning
-    "modules/coder/engine.py",  # Has deprecation warning
+    "app/coder/llm_coder.py",  # Has deprecation warning
+    "app/coder/engine.py",  # Has deprecation warning
 ]
 
 
@@ -58,9 +58,9 @@ def get_project_root() -> Path:
 
 
 def test_no_legacy_imports_in_api():
-    """Ensure modules/api does not import legacy proc_autocode code."""
+    """Ensure app/api does not import legacy proc_autocode code."""
     project_root = get_project_root()
-    api_dir = project_root / "modules" / "api"
+    api_dir = project_root / "app" / "api"
 
     if not api_dir.exists():
         return  # Skip if directory doesn't exist
@@ -83,7 +83,7 @@ def test_no_legacy_imports_in_api():
                 violations.append(f"{rel_path}: contains '{legacy_string}'")
 
     assert not violations, (
-        "Legacy imports found in modules/api/:\n" + "\n".join(violations) +
+        "Legacy imports found in app/api/:\n" + "\n".join(violations) +
         "\n\nPlease use the new hexagonal architecture instead:\n"
         "- CodingService from app.coder.application.coding_service\n"
         "- LLMAdvisorPort from app.coder.adapters.llm.gemini_advisor\n"
@@ -92,9 +92,9 @@ def test_no_legacy_imports_in_api():
 
 
 def test_no_legacy_imports_in_application():
-    """Ensure modules/coder/application does not import legacy code."""
+    """Ensure app/coder/application does not import legacy code."""
     project_root = get_project_root()
-    app_dir = project_root / "modules" / "coder" / "application"
+    app_dir = project_root / "app" / "coder" / "application"
 
     if not app_dir.exists():
         return  # Skip if directory doesn't exist
@@ -114,15 +114,15 @@ def test_no_legacy_imports_in_application():
                 violations.append(f"{rel_path}: contains '{legacy_string}'")
 
     assert not violations, (
-        "Legacy imports found in modules/coder/application/:\n" + "\n".join(violations) +
+        "Legacy imports found in app/coder/application/:\n" + "\n".join(violations) +
         "\n\nThe application layer should only use domain interfaces and ports."
     )
 
 
 def test_no_legacy_imports_in_adapters():
-    """Ensure modules/coder/adapters does not import legacy code."""
+    """Ensure app/coder/adapters does not import legacy code."""
     project_root = get_project_root()
-    adapters_dir = project_root / "modules" / "coder" / "adapters"
+    adapters_dir = project_root / "app" / "coder" / "adapters"
 
     if not adapters_dir.exists():
         return  # Skip if directory doesn't exist
@@ -142,15 +142,15 @@ def test_no_legacy_imports_in_adapters():
                 violations.append(f"{rel_path}: contains '{legacy_string}'")
 
     assert not violations, (
-        "Legacy imports found in modules/coder/adapters/:\n" + "\n".join(violations) +
+        "Legacy imports found in app/coder/adapters/:\n" + "\n".join(violations) +
         "\n\nAdapters should implement domain ports, not import legacy code."
     )
 
 
 def test_no_legacy_imports_in_domain():
-    """Ensure modules/domain does not import legacy code."""
+    """Ensure app/domain does not import legacy code."""
     project_root = get_project_root()
-    domain_dir = project_root / "modules" / "domain"
+    domain_dir = project_root / "app" / "domain"
 
     if not domain_dir.exists():
         return  # Skip if directory doesn't exist
@@ -170,7 +170,7 @@ def test_no_legacy_imports_in_domain():
                 violations.append(f"{rel_path}: contains '{legacy_string}'")
 
     assert not violations, (
-        "Legacy imports found in modules/domain/:\n" + "\n".join(violations) +
+        "Legacy imports found in app/domain/:\n" + "\n".join(violations) +
         "\n\nDomain layer should be pure and not depend on any infrastructure."
     )
 
@@ -178,7 +178,7 @@ def test_no_legacy_imports_in_domain():
 def test_coding_service_uses_ports_not_concrete():
     """Verify CodingService uses LLMAdvisorPort, not concrete LLM implementations."""
     project_root = get_project_root()
-    coding_service_file = project_root / "modules" / "coder" / "application" / "coding_service.py"
+    coding_service_file = project_root / "app" / "coder" / "application" / "coding_service.py"
 
     if not coding_service_file.exists():
         return  # Skip if file doesn't exist
@@ -212,7 +212,7 @@ def test_coding_service_uses_ports_not_concrete():
 def test_kb_uses_domain_interfaces():
     """Verify KB usage goes through domain interfaces, not legacy ip_kb."""
     project_root = get_project_root()
-    coding_service_file = project_root / "modules" / "coder" / "application" / "coding_service.py"
+    coding_service_file = project_root / "app" / "coder" / "application" / "coding_service.py"
 
     if not coding_service_file.exists():
         return  # Skip if file doesn't exist

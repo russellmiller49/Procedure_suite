@@ -576,7 +576,7 @@ if __name__ == '__main__':
 # V2 Booleans Integration
 # =============================================================================
 # Import the canonical boolean field list and extraction function from
-# modules/registry/v2_booleans.py for backward compatibility.
+# app/registry/v2_booleans.py for backward compatibility.
 
 from app.registry.v2_booleans import (  # noqa: E402, I001
     PROCEDURE_BOOLEAN_FIELDS,

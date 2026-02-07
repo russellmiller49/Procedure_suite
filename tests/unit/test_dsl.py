@@ -1,6 +1,6 @@
 """Unit tests for the JSONLogic-style DSL evaluator.
 
-Tests the modules/common/rules_engine/dsl.py module which provides
+Tests the app/common/rules_engine/dsl.py module which provides
 a minimal JSONLogic-like DSL for declarative rules evaluation.
 """
 

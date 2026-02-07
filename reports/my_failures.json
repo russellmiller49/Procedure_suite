@@ -480,14 +480,14 @@
       "script": "data/granular annotations/Python_update_scripts/456890.py",
       "returncode": 1,
       "elapsed_seconds": 0.015792,
-      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/ml/scripts/add_training_case.py\n",
       "stderr": ""
     },
     {
       "script": "data/granular annotations/Python_update_scripts/493827.py",
       "returncode": 1,
       "elapsed_seconds": 0.016969,
-      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/ml/scripts/add_training_case.py\n",
       "stderr": ""
     },
     {
@@ -529,7 +529,7 @@
       "script": "data/granular annotations/Python_update_scripts/651294.py",
       "returncode": 1,
       "elapsed_seconds": 0.016222,
-      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/ml/scripts/add_training_case.py\n",
       "stderr": ""
     },
     {
@@ -543,7 +543,7 @@
       "script": "data/granular annotations/Python_update_scripts/659521.py",
       "returncode": 1,
       "elapsed_seconds": 0.015748,
-      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/scripts/add_training_case.py\n",
+      "stdout": "Error: Could not import 'add_case' from /home/rjm/projects/proc_suite/data/granular annotations/ml/scripts/add_training_case.py\n",
       "stderr": ""
     },
     {

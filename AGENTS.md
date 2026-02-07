@@ -5,11 +5,11 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
 
 ## Quick Commands
 
-- Dev server: `./scripts/devserver.sh` (serves UI at `/ui/` and API docs at `/docs`)
+- Dev server: `./ops/devserver.sh` (serves UI at `/ui/` and API docs at `/docs`)
 - Tests: `make test`
 - Lint/typecheck (optional): `make lint`, `make typecheck`
-- Smoke test (single note): `python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct`
-- Smoke test (batch): `python scripts/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
+- Smoke test (single note): `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
+- Smoke test (batch): `python ops/tools/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
 
 ## Required Runtime Configuration
 
@@ -36,7 +36,7 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 
 ## UI (PHI Redactor / Clinical Dashboard)
 
-- Served by `./scripts/devserver.sh` at `/ui/` (static files live in `ui/static/phi_redactor/`).
+- Served by `./ops/devserver.sh` at `/ui/` (static files live in `ui/static/phi_redactor/`).
 - Workflow explainer page: `/ui/workflow.html` (links from the top bar).
 - **New Note**: clears the editor + all prior tables/JSON output to avoid confusion during long-running submits.
 - **Flattened Tables (Editable)** (collapsed by default): provides an edit-friendly view of key tables; some fields use dropdowns.
@@ -116,10 +116,10 @@ See `app/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
 
 - Train: see `docs/GRANULAR_NER_UPDATE_WORKFLOW.md`
 - Stent labels: `DEV_STENT` (device interaction) vs `NEG_STENT` (explicit absence) vs `CTX_STENT_PRESENT` (present/in good position, no intervention).
-- Auto-label helper: `python scripts/label_neg_stent.py` (dry-run by default; use `--write` to persist).
-- Training allowlist lives in `scripts/train_registry_ner.py:ALLOWED_LABEL_TYPES`.
+- Auto-label helper: `python ml/scripts/label_neg_stent.py` (dry-run by default; use `--write` to persist).
+- Training allowlist lives in `ml/scripts/train_registry_ner.py:ALLOWED_LABEL_TYPES`.
 - Typical command:
-  - `python scripts/train_registry_ner.py --data data/ml_training/granular_ner/ner_bio_format_refined.jsonl --output-dir artifacts/registry_biomedbert_ner_v2 ...`
+  - `python ml/scripts/train_registry_ner.py --data data/ml_training/granular_ner/ner_bio_format_refined.jsonl --output-dir artifacts/registry_biomedbert_ner_v2 ...`
 - Run server with the model:
   - set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner` (in `.env` or shell)
 

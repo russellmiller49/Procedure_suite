@@ -3,7 +3,7 @@ import pytest
 pytest.importorskip("torch")
 pytest.importorskip("transformers")
 
-from scripts import audit_model_fp
+from ml.scripts import audit_model_fp
 
 
 def test_cpt_split_accepts_two_token_pattern():

@@ -8,7 +8,7 @@ This document maps the deployed QA sandbox stack used by `https://interventional
 
 - **Repo:** `proc_suite/`
 - **Active FastAPI app (IU):** `proc_suite/app/api/fastapi_app.py` (`app = FastAPI(...)`)
-- **Railway start wrapper:** `proc_suite/scripts/railway_start.sh`
+- **Railway start wrapper:** `proc_suite/ops/railway_start.sh`
 - **Key endpoint:** `POST /qa/run` (defined in `proc_suite/app/api/fastapi_app.py`)
 
 ### Frontend + Supabase logging (Next.js)
@@ -88,6 +88,6 @@ Runtime-extracted bundle directory (recommended):
 
 Railway should run one of:
 
-- **Preferred (wrapper):** `scripts/railway_start.sh`
+- **Preferred (wrapper):** `ops/railway_start.sh`
 - **Equivalent direct:** `python -m uvicorn app.api.fastapi_app:app --host 0.0.0.0 --port $PORT --workers ${WORKERS:-1} --log-level info`
 

@@ -18,11 +18,11 @@ You already implemented Phase 0 data + metrics foundation:
   - `data/knowledge/golden_registry_v3/` (per-note_id JSON gold in V3-ish format)
 
 - **Phase 0 ingestion**
-  - `scripts/ingest_phase0_data.py` converts CSV → per-note JSON in `data/knowledge/golden_registry_v3/`
+  - `ml/scripts/ingest_phase0_data.py` converts CSV → per-note JSON in `data/knowledge/golden_registry_v3/`
   - Verified: wrote 10 gold JSONs
 
 - **Granular eval harness**
-  - `scripts/eval_registry_granular.py` runs evaluation + JSONL error output
+  - `ml/scripts/eval_registry_granular.py` runs evaluation + JSONL error output
   - Contains placeholder `extract_registry_v3()` (currently empty predictions)
   - Verified: runs, micro precision/recall are 0.000 as expected
 
@@ -216,7 +216,7 @@ Raw note text
 - Convert hydrated spans into NER training format.
 
 **Training:**
-- New training script: `scripts/train_registry_ner.py`
+- New training script: `ml/scripts/train_registry_ner.py`
 - Labels match your granular label set (stations, sizes, gauges, devices, counts).
 
 **Integration:**
@@ -286,7 +286,7 @@ Create `app/registry/evidence/verifier.py` with `verify_registry()` that drops e
 Create `app/registry/pipelines/v3_pipeline.py` with `run_v3_extraction(full_note_text)`.
 
 ### B5) Wire into eval
-Update `scripts/eval_registry_granular.py` to call `run_v3_extraction(note_text)`.
+Update `ml/scripts/eval_registry_granular.py` to call `run_v3_extraction(note_text)`.
 
 **Expected:** metrics become non-zero and JSONL error output becomes actionable.
 
@@ -295,10 +295,10 @@ Update `scripts/eval_registry_granular.py` to call `run_v3_extraction(note_text)
 ## 4. NER build guide (practical)
 
 1) Build dataset:
-- `scripts/build_registry_ner_dataset.py` reads hydrated spans + notes to create train/val/test JSONL.
+- `ml/scripts/build_registry_ner_dataset.py` (or equivalent dataset builder under `ml/scripts/`) reads hydrated spans + notes to create train/val/test JSONL.
 
 2) Train:
-- `scripts/train_registry_ner.py` outputs `artifacts/registry_ner/` (HF format), optional ONNX.
+- `ml/scripts/train_registry_ner.py` outputs `artifacts/registry_ner/` (HF format), optional ONNX.
 
 3) Integrate:
 - `app/registry/ml/registry_ner_predictor.py` returns anchors for pipeline + self-correction.
@@ -425,7 +425,7 @@ final = verify_registry(draft, note_text) (Verify against full text to be safe).
 Return final.
 
 Step 5: Activate Eval
-File: scripts/eval_registry_granular.py
+File: ml/scripts/eval_registry_granular.py
 
 Import run_v3_extraction.
 
@@ -434,4 +434,4 @@ Replace the mock function call with run_v3_extraction(note_content).
 Run the script and print the Precision/Recall stats.
 
 Step 6: Add tests (focusing + evidence verifier).
-Step 7:  Run `python scripts/eval_registry_granular.py` and confirm non-zero metrics and JSONL error output.
+Step 7:  Run `python ml/scripts/eval_registry_granular.py` and confirm non-zero metrics and JSONL error output.

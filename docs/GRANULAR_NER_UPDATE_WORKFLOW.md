@@ -3,7 +3,7 @@
 This repo uses generated Python scripts in `data/granular annotations/Python_update_scripts/` to append new annotated notes into the granular NER training artifacts under `data/ml_training/granular_ner/`.
 
 Key facts:
-- Update scripts typically call `from scripts.add_training_case import add_case` and then `add_case(id, text, entities, REPO_ROOT)`.
+- Update scripts typically call `from ml.scripts.add_training_case import add_case` and then `add_case(id, text, entities, REPO_ROOT)`.
 - `add_case()` **appends** to JSONL files; re-running scripts can create duplicates.
 - The repo includes utilities to validate alignment, fix common span schema issues, regenerate stats, convert spans to BIO, and dedupe duplicate note IDs.
 
@@ -25,7 +25,7 @@ Then you typically generate:
 Run everything (recommended when you’re not sure what’s new), and capture failures:
 
 ```bash
-python scripts/run_python_update_scripts.py --pattern '*.py' --failure-report reports/python_update_scripts_failures.json
+python ops/tools/run_python_update_scripts.py --pattern '*.py' --failure-report reports/python_update_scripts_failures.json
 ```
 
 If it reports failures, open `reports/python_update_scripts_failures.json` and fix the corresponding update scripts (most failures are `get_span()` text mismatches or import path issues).
@@ -39,7 +39,7 @@ Tips for fixing update scripts:
 Because update scripts append, re-running scripts can create duplicate IDs. Deduping is the safest “cleanup” step:
 
 ```bash
-python scripts/dedupe_granular_ner.py --base-dir data/ml_training/granular_ner --write
+python ml/scripts/dedupe_granular_ner.py --base-dir data/ml_training/granular_ner --write
 ```
 
 Notes:
@@ -49,7 +49,7 @@ Notes:
 ### 3) Validate span alignment
 
 ```bash
-python scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.jsonl
+python ml/scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.jsonl
 ```
 
 This checks that each span’s offsets are in-bounds and (when a span text field exists) that it matches the text slice.
@@ -57,7 +57,7 @@ This checks that each span’s offsets are in-bounds and (when a span text field
 ### 4) Regenerate `stats.json`
 
 ```bash
-python scripts/regenerate_granular_ner_stats.py --base-dir data/ml_training/granular_ner --write
+python ml/scripts/regenerate_granular_ner_stats.py --base-dir data/ml_training/granular_ner --write
 ```
 
 This recomputes alignment counts + label counts from `ner_dataset_all.jsonl` (the real training file).
@@ -69,7 +69,7 @@ phrases like “stent in place”, “stent removed”, or “no stent placed”
 as a post-processing step:
 
 ```bash
-python scripts/label_neg_stent.py --write
+python ml/scripts/label_neg_stent.py --write
 ```
 
 This writes:
@@ -80,16 +80,16 @@ Notes:
 - `NEG_STENT` is reserved for explicit absence (e.g., “no stent placed/needed/indicated”).
 - “Stent in place / good position” mentions may be relabeled to `CTX_STENT_PRESENT` (disable with `--no-label-present`).
 - Stent removal/exchange/migration is intentionally kept as `DEV_STENT`.
-- `scripts/label_neg_stent.py` is **dry-run by default**; add `--write` to write `--output`.
+- `ml/scripts/label_neg_stent.py` is **dry-run by default**; add `--write` to write `--output`.
 
 ⚠️ Important: update scripts must call `add_case(note_id, raw_text, entities, repo_root)` (in that order).
 If a script swaps `note_id` and `raw_text`, it can corrupt the dataset (e.g., `"text": "<script>.py"` with zero-length spans).
-`scripts/add_training_case.py` now raises a `ValueError` when it detects this common swap.
+`ml/scripts/add_training_case.py` now raises a `ValueError` when it detects this common swap.
 
 Optional: validate alignment on the new file:
 
 ```bash
-python scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl
+python ml/scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.neg_stent.jsonl
 ```
 
 ### 4.6) Clean the dataset labels (recommended after `label_neg_stent.py --write`)
@@ -112,7 +112,7 @@ Notes:
 ### 5) Rebuild BIO format
 
 ```bash
-python scripts/convert_spans_to_bio.py \
+python ml/scripts/convert_spans_to_bio.py \
   --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
   --output data/ml_training/granular_ner/ner_bio_format.jsonl \
   --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
@@ -122,7 +122,7 @@ python scripts/convert_spans_to_bio.py \
 If you ran the `NEG_STENT` + clean steps above, use the cleaned file as input instead:
 
 ```bash
-python scripts/convert_spans_to_bio.py \
+python ml/scripts/convert_spans_to_bio.py \
   --input data/ml_training/granular_ner/ner_dataset_all.cleaned.jsonl \
   --output data/ml_training/granular_ner/ner_bio_format.jsonl \
   --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
@@ -135,7 +135,7 @@ If you ran `NEG_STENT` but skipped cleaning, use:
 ### 6) Retrain
 
 ```bash
-python scripts/train_registry_ner.py \
+python ml/scripts/train_registry_ner.py \
   --data data/ml_training/granular_ner/ner_bio_format.jsonl \
   --output-dir artifacts/registry_biomedbert_ner \
   --epochs 20 \
@@ -152,7 +152,7 @@ Use this when you want a focused annotation pass for granular attribute spans
 ### 1) Bootstrap high-precision silver spans
 
 ```bash
-python scripts/bootstrap_granular_attributes.py \
+python ml/scripts/bootstrap_granular_attributes.py \
   --in data/ml_training/granular_ner/ner_dataset_all.jsonl \
   --out data/ml_training/granular_ner/silver_attributes.jsonl
 ```
@@ -179,7 +179,7 @@ python -m prodigy db-out granular_attrs_v1 > data/ml_training/granular_ner/gold_
 ### 4) Merge reviewed spans into training dataset
 
 ```bash
-python scripts/merge_granular_attribute_spans.py \
+python ml/scripts/merge_granular_attribute_spans.py \
   --prodigy-input data/ml_training/granular_ner/gold_attributes.jsonl \
   --base-input data/ml_training/granular_ner/ner_dataset_all.jsonl \
   --output data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl
@@ -191,19 +191,19 @@ merged output by `id` then `note_id`.
 ### 5) Validate alignment on merged dataset
 
 ```bash
-python scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl
+python ml/scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl
 ```
 
 ### 6) Convert to BIO and train
 
 ```bash
-python scripts/convert_spans_to_bio.py \
+python ml/scripts/convert_spans_to_bio.py \
   --input data/ml_training/granular_ner/ner_dataset_all.plus_attrs.jsonl \
   --output data/ml_training/granular_ner/ner_bio_format.plus_attrs.jsonl
 ```
 
 ```bash
-python scripts/train_registry_ner.py \
+python ml/scripts/train_registry_ner.py \
   --data data/ml_training/granular_ner/ner_bio_format.plus_attrs.jsonl \
   --output-dir artifacts/registry_biomedbert_ner_vX
 ```
@@ -215,20 +215,20 @@ Use this when you suspect the dataset drifted due to many re-runs.
 1) Move the current artifacts out of the way (or rely on the dedupe backup mechanism).
 2) Re-run all update scripts:
    ```bash
-   python scripts/run_python_update_scripts.py --pattern '*.py'
+   python ops/tools/run_python_update_scripts.py --pattern '*.py'
    ```
 3) Run the same post-steps as incremental:
-   - `python scripts/dedupe_granular_ner.py --write`
-   - `python scripts/validate_ner_alignment.py ...`
-   - `python scripts/regenerate_granular_ner_stats.py --write`
-   - `python scripts/convert_spans_to_bio.py ...`
+   - `python ml/scripts/dedupe_granular_ner.py --write`
+   - `python ml/scripts/validate_ner_alignment.py ...`
+   - `python ml/scripts/regenerate_granular_ner_stats.py --write`
+   - `python ml/scripts/convert_spans_to_bio.py ...`
 
 ## Fixing alignment / schema issues (when validation fails)
 
 If `validate_ner_alignment.py` reports issues, use the alignment fixer to produce a corrected JSONL:
 
 ```bash
-python scripts/fix_alignment.py \
+python ml/scripts/fix_alignment.py \
   --input-jsonl data/ml_training/granular_ner/ner_dataset_all.jsonl \
   --use-update-scripts-text \
   --update-scripts-dir 'data/granular annotations/Python_update_scripts' \
@@ -242,26 +242,26 @@ This writes `data/ml_training/granular_ner/ner_dataset_all.fixed.jsonl` by defau
 If the fixed file looks good, replace the primary file and regenerate:
 - Move `ner_dataset_all.fixed.jsonl` into place as `ner_dataset_all.jsonl`
 - Re-run:
-  - `python scripts/validate_ner_alignment.py ...`
-  - `python scripts/regenerate_granular_ner_stats.py --write`
-  - `python scripts/convert_spans_to_bio.py ...`
+  - `python ml/scripts/validate_ner_alignment.py ...`
+  - `python ml/scripts/regenerate_granular_ner_stats.py --write`
+  - `python ml/scripts/convert_spans_to_bio.py ...`
 
 ## Common problems and what to do
 
 ### Update script fails: `ModuleNotFoundError: No module named 'scripts'`
-- Your new update script should still use `from scripts.add_training_case import add_case`.
+- Your new update script should use `from ml.scripts.add_training_case import add_case`.
 - If it still fails, run it via the runner from repo root (the runner uses `cwd=repo_root`):
-  - `python scripts/run_python_update_scripts.py --pattern '<your_script>.py'`
+  - `python ops/tools/run_python_update_scripts.py --pattern '<your_script>.py'`
 
 ### Update script fails: `ValueError: Term '...' not found in text`
 - Fix the term/occurrence in that script so `get_span()` finds the text.
 - If the note text changed, update the note text in the script to match what you intend to train on.
 
 ### Stats show `alignment_errors > 0`
-- First run: `python scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.jsonl`
+- First run: `python ml/scripts/validate_ner_alignment.py data/ml_training/granular_ner/ner_dataset_all.jsonl`
 - Then fix:
   - adjust the update script(s), or
-  - run `scripts/fix_alignment.py` (see above) and regenerate stats.
+  - run `ml/scripts/fix_alignment.py` (see above) and regenerate stats.
 
 ### Stats show `duplicate_note_ids > 0`
-- Run: `python scripts/dedupe_granular_ner.py --write`
+- Run: `python ml/scripts/dedupe_granular_ner.py --write`

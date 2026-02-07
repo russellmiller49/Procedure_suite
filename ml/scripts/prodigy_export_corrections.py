@@ -6,10 +6,10 @@ Converts Prodigy NER annotations back to BIO-tagged JSONL format
 compatible with the DistilBERT training pipeline.
 
 Usage:
-    python scripts/prodigy_export_corrections.py --dataset phi_corrections --output data/ml_training/prodigy_corrected.jsonl
+    python ml/scripts/prodigy_export_corrections.py --dataset phi_corrections --output data/ml_training/prodigy_corrected.jsonl
 
     # With merge into existing training data:
-    python scripts/prodigy_export_corrections.py --dataset phi_corrections \
+    python ml/scripts/prodigy_export_corrections.py --dataset phi_corrections \
         --merge-with data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
         --output data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
 """

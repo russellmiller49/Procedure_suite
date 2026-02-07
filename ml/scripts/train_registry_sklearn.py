@@ -64,7 +64,7 @@ def main():
 
     if not args.train_csv.exists():
         print(f"Error: Training file not found: {args.train_csv}")
-        print("Run `python modules/ml_coder/data_prep.py` first.")
+        print("Run `python -m ml.lib.ml_coder.data_prep` first.")
         sys.exit(1)
 
     try:

@@ -2,7 +2,7 @@
 """Merge Prodigy granular-attribute spans into NER training JSONL.
 
 Converts Prodigy span records to the training schema used by
-`scripts/convert_spans_to_bio.py`:
+`ml/scripts/convert_spans_to_bio.py`:
 - id
 - text
 - entities: [{start, end, label, text}, ...]

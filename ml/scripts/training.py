@@ -19,7 +19,7 @@ Next step (model-assisted / pre-annotated Prodigy tasks):
 
 Typical usage:
 
-  python scripts/training.py \
+  python ml/scripts/training.py \
     --csv data/ml_training/registry_train.csv \
     --out data/ml_training/registry_unlabeled_notes.jsonl \
     --weak-classes bronchial_wash therapeutic_aspiration rigid_bronchoscopy peripheral_ablation \

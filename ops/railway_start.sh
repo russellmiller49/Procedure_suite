@@ -6,7 +6,7 @@
 # 2. Lets the app perform background warmup (readiness via /ready)
 #
 # Usage:
-#   scripts/railway_start.sh
+#   ops/railway_start.sh
 #
 # Environment variables:
 #   PORT - Port to listen on (default: 8000)
@@ -15,7 +15,7 @@
 #   LIMIT_CONCURRENCY - uvicorn concurrency cap (default: 50)
 #
 # Railway Configuration:
-#   Set "Start Command" to: scripts/railway_start.sh
+#   Set "Start Command" to: ops/railway_start.sh
 
 set -euo pipefail
 
@@ -56,7 +56,7 @@ fi
 # Optional: bootstrap PHI redactor vendor bundle from S3 before app starts.
 if [[ -n "${PHI_REDACTOR_VENDOR_BUNDLE_S3_URI:-${PHI_REDACTOR_VENDOR_BUNDLE_S3_URI_ONNX:-}}" ]]; then
   echo "[railway_start] Bootstrapping PHI redactor vendor bundle from S3..."
-  python scripts/bootstrap_phi_redactor_vendor_bundle.py
+  python ops/tools/bootstrap_phi_redactor_vendor_bundle.py
 fi
 
 # Optional: bootstrap registry model bundle from S3 before app starts.

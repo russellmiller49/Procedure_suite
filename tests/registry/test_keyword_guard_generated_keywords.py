@@ -7,7 +7,7 @@ from app.registry.audit.raw_ml_auditor import FLAG_TO_CPT_MAP
 from app.registry.schema import RegistryRecord
 from app.registry.self_correction import keyword_guard
 from app.registry.self_correction.keyword_guard import HIGH_CONF_BYPASS_CPTS
-from scripts import generate_cpt_keywords
+from ops.tools import generate_cpt_keywords
 
 # Not in the current KB master_code_index; explicit allowlist for coverage checks.
 KEYWORD_COVERAGE_EXEMPT_CPTS = {"32400", "32405"}

@@ -1,7 +1,7 @@
 # Procedure Suite Migration Guide
 
 ## Purpose
-This guide maps the repository reorganization from legacy paths to the new structure and documents compatibility shims that keep existing workflows running.
+This guide maps the repository reorganization from legacy paths to the new structure and records the finalized canonical paths after legacy wrappers were removed.
 
 ## Target Top-Level Layout
 
@@ -70,8 +70,8 @@ archive/  # Deprecated, one-off, and historical artifacts
 - Replace `modules.ml_coder` -> `ml.lib.ml_coder`.
 - Example: `from modules.ml_coder.registry_predictor import RegistryMLPredictor` -> `from ml.lib.ml_coder.registry_predictor import RegistryMLPredictor`.
 
-### Compatibility shim (important)
-- `modules/ml_coder/__init__.py` is retained as a compatibility wrapper to support legacy imports and serialized model artifact unpickling paths.
+### Artifact compatibility note
+- Legacy model artifacts were regenerated so serialized references now resolve to canonical modules (`ml.lib.ml_coder.*`).
 
 ## 4) Ops and Tooling Split
 
@@ -84,8 +84,8 @@ archive/  # Deprecated, one-off, and historical artifacts
 | `scripts/warm_models.py` | `ops/warm_models.py` |
 | infra/tooling scripts in `scripts/` | `ops/tools/` |
 
-### Backward-compatible entrypoints
-- Existing commands such as `./scripts/devserver.sh` still work via wrapper scripts that forward to `ops/*`.
+### Entrypoint policy
+- Use canonical entrypoints directly (`ops/*`, `ops/tools/*`, `ml/scripts/*`).
 
 ## 5) Scripts Reclassification
 
@@ -104,7 +104,7 @@ Archived under `archive/scripts` (examples):
 - `add_case_*.py`
 
 ### Compatibility behavior
-- Many files under `scripts/*.py` are wrappers that forward to `ml/scripts/*` or `ops/tools/*` so existing commands/imports continue to resolve.
+- Legacy `scripts/*` forwarding wrappers are removed in the finalized migration.
 
 ## 6) Archive / Attic Mapping
 
@@ -124,7 +124,7 @@ Archived under `archive/scripts` (examples):
    - `modules/api/static/...` -> `ui/static/...`
 3. Script references in docs/CI:
    - Prefer canonical locations under `ops/` and `ml/scripts/`
-   - Keep `scripts/*` wrappers for backward compatibility during migration window.
+   - Do not rely on legacy `scripts/*` wrappers.
 
 ## 8) Recommended Migration Checklist
 
@@ -133,11 +133,11 @@ Archived under `archive/scripts` (examples):
 3. Validate command references:
    - runtime ops from `ops/*`
    - ML/training from `ml/scripts/*`
-4. Keep wrappers + compatibility shims until downstream consumers are fully migrated.
+4. Verify downstream consumers no longer depend on legacy wrapper paths.
 5. Run regression suite: `make test`.
 
 ## 9) Current Status
 
 - Reorg is active with canonical roots: `app/`, `ui/`, `ml/`, `ops/`, `archive/`.
-- Legacy `modules/` package is retained only for compatibility (`modules/ml_coder` shim).
-- Existing `scripts/*` entrypoints are largely preserved as forwarding wrappers.
+- Legacy `modules/` compatibility shim is removed.
+- Legacy `scripts/*` forwarding wrappers are removed.

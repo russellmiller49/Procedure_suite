@@ -11,7 +11,7 @@ def _write_jsonl(path: Path, rows: list[dict]) -> None:
 
 def test_export_registry_file_mode_outputs_multi_hot_csv(tmp_path: Path):
     from ml.lib.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
-    from scripts import prodigy_export_registry as exporter
+    from ml.scripts import prodigy_export_registry as exporter
 
     input_jsonl = tmp_path / "prodigy_export.jsonl"
     _write_jsonl(

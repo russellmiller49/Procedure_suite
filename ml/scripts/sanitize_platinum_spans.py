@@ -13,7 +13,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from scripts.build_model_agnostic_phi_spans import (  # noqa: E402
+from ml.scripts.build_model_agnostic_phi_spans import (  # noqa: E402
     _contains_device_keyword,
     _is_ln_station,
     _line_text,
