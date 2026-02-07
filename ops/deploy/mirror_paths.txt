@@ -4,8 +4,12 @@
 # Runtime app code
 app
 observability
-ml
 config
+
+# ML runtime library (excludes training scripts)
+ml/__init__.py
+ml/lib
+ml/data
 configs
 proc_kb
 proc_nlp
