@@ -7,14 +7,36 @@ into a testable, reusable service with proper error handling.
 from __future__ import annotations
 
 import logging
+import os
 import uuid
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field, is_dataclass
 from typing import Any
 
 from modules.common.spans import Span
 
 logger = logging.getLogger(__name__)
+
+
+def _env_enabled(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes", "on")
+
+
+class ReporterStrategyError(RuntimeError):
+    """Raised when the structured reporter pipeline fails."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        error_code: str = "REPORTER_STRUCTURED_RENDER_ERROR",
+        fallback_reason: str | None = None,
+        reporter_errors: list[str] | None = None,
+    ) -> None:
+        super().__init__(message)
+        self.error_code = error_code
+        self.fallback_reason = fallback_reason
+        self.reporter_errors = reporter_errors or []
 
 
 @dataclass
@@ -58,7 +80,12 @@ class SimpleReporterStrategy:
     """
 
     def render(
-        self, text: str, procedure_type: str | None = None
+        self,
+        text: str,
+        procedure_type: str | None = None,
+        *,
+        fallback_reason: str | None = None,
+        reporter_errors: list[str] | None = None,
     ) -> dict[str, Any]:
         """Generate a simple text-based report.
 
@@ -86,6 +113,9 @@ class SimpleReporterStrategy:
             "indication": report.indication,
             "postop": report.postop,
             "fallback_used": True,
+            "render_mode": "simple_fallback",
+            "fallback_reason": fallback_reason,
+            "reporter_errors": reporter_errors or [],
         }
 
 
@@ -118,6 +148,9 @@ class ReportingStrategy:
         self.validation_engine = validation_engine
         self.registry_engine = registry_engine
         self.simple_strategy = simple_strategy
+        self.allow_simple_fallback = _env_enabled(
+            "QA_REPORTER_ALLOW_SIMPLE_FALLBACK"
+        )
 
     def render(
         self,
@@ -148,13 +181,25 @@ class ReportingStrategy:
         if registry_data and registry_data.get("record"):
             try:
                 return self._render_structured(registry_data["record"])
-            except Exception as e:
-                logger.warning(
-                    f"Structured reporter failed, falling back to simple: {e}"
+            except ReporterStrategyError as exc:
+                return self._handle_structured_failure(
+                    text=text,
+                    procedure_type=procedure_type,
+                    error_code=exc.error_code,
+                    fallback_reason=exc.fallback_reason or "structured_render_failed",
+                    reporter_errors=exc.reporter_errors or [str(exc)],
                 )
-                return self.simple_strategy.render(text, procedure_type)
+            except Exception as exc:  # pragma: no cover - defensive guard
+                return self._handle_structured_failure(
+                    text=text,
+                    procedure_type=procedure_type,
+                    error_code="REPORTER_STRUCTURED_RENDER_ERROR",
+                    fallback_reason="structured_render_failed",
+                    reporter_errors=[str(exc)],
+                )
 
         # Case 2: No registry data - try lightweight extraction
+        registry_errors: list[str] = []
         try:
             logger.debug("Running lightweight registry extraction for reporter")
             reg_result = self.registry_engine.run(text, explain=False)
@@ -163,21 +208,111 @@ class ReportingStrategy:
             else:
                 reg_record = reg_result
 
-            reg_dict = (
-                reg_record.model_dump()
-                if hasattr(reg_record, "model_dump")
-                else {}
-            )
+            if hasattr(reg_record, "model_dump"):
+                reg_dict = reg_record.model_dump()
+            elif isinstance(reg_record, dict):
+                reg_dict = reg_record
+            else:
+                reg_dict = {}
 
             if reg_dict:
-                return self._render_structured(reg_dict)
-        except Exception as e:
+                try:
+                    return self._render_structured(reg_dict)
+                except ReporterStrategyError as exc:
+                    return self._handle_structured_failure(
+                        text=text,
+                        procedure_type=procedure_type,
+                        error_code=exc.error_code,
+                        fallback_reason=exc.fallback_reason
+                        or "structured_render_failed",
+                        reporter_errors=exc.reporter_errors or [str(exc)],
+                    )
+                except Exception as exc:  # pragma: no cover - defensive guard
+                    return self._handle_structured_failure(
+                        text=text,
+                        procedure_type=procedure_type,
+                        error_code="REPORTER_STRUCTURED_RENDER_ERROR",
+                        fallback_reason="structured_render_failed",
+                        reporter_errors=[str(exc)],
+                    )
+            registry_errors.append(
+                "Lightweight registry extraction returned an empty record."
+            )
+        except Exception as exc:
+            registry_errors.append(str(exc))
             logger.warning(
-                f"Lightweight registry extraction failed for reporter: {e}"
+                "Lightweight registry extraction failed for reporter: %s", exc
             )
 
-        # Case 3: All structured approaches failed - use simple reporter
-        return self.simple_strategy.render(text, procedure_type)
+        # Case 3: All structured approaches failed.
+        return self._handle_structured_failure(
+            text=text,
+            procedure_type=procedure_type,
+            error_code="REPORTER_STRUCTURED_RENDER_ERROR",
+            fallback_reason="structured_unavailable",
+            reporter_errors=registry_errors
+            or ["Structured reporter could not produce output."],
+        )
+
+    def _handle_structured_failure(
+        self,
+        *,
+        text: str,
+        procedure_type: str | None,
+        error_code: str,
+        fallback_reason: str,
+        reporter_errors: list[str],
+    ) -> dict[str, Any]:
+        message = "; ".join([msg for msg in reporter_errors if msg]) or fallback_reason
+        if self.allow_simple_fallback:
+            logger.warning(
+                "Structured reporter failed; using simple fallback (%s): %s",
+                fallback_reason,
+                message,
+            )
+            return self.simple_strategy.render(
+                text,
+                procedure_type,
+                fallback_reason=fallback_reason,
+                reporter_errors=reporter_errors,
+            )
+        raise ReporterStrategyError(
+            message or "Structured reporter failed",
+            error_code=error_code,
+            fallback_reason=fallback_reason,
+            reporter_errors=reporter_errors,
+        )
+
+    def _serialize_issue(self, issue: Any) -> dict[str, Any]:
+        if hasattr(issue, "model_dump"):
+            dumped = issue.model_dump()
+            if isinstance(dumped, dict):
+                return dumped
+            raise TypeError("model_dump() did not return a dict")
+        if is_dataclass(issue):
+            dumped = asdict(issue)
+            if isinstance(dumped, dict):
+                return dumped
+            raise TypeError("dataclass serialization did not return a dict")
+        if isinstance(issue, dict):
+            return issue
+        raise TypeError(
+            f"Unsupported reporter issue type for serialization: {type(issue)!r}"
+        )
+
+    def _serialize_issues(self, issues: list[Any]) -> list[dict[str, Any]]:
+        serialized: list[dict[str, Any]] = []
+        for issue in issues:
+            try:
+                serialized.append(self._serialize_issue(issue))
+            except Exception as exc:
+                raise ReporterStrategyError(
+                    f"Failed to serialize reporter validation issue: {exc}",
+                    error_code="REPORTER_ISSUE_SERIALIZATION_ERROR",
+                    fallback_reason="issue_serialization_failed",
+                    reporter_errors=[str(exc)],
+                ) from exc
+        return serialized
 
     def _render_structured(self, record: dict[str, Any]) -> dict[str, Any]:
         """Render structured report from registry record.
@@ -205,20 +340,31 @@ class ReportingStrategy:
         warnings = self.validation_engine.apply_warn_if_rules(bundle)
 
         # Generate structured report
-        structured = self.reporter_engine.compose_report_with_metadata(
-            bundle,
-            strict=False,
-            embed_metadata=False,
-            validation_issues=issues,
-            warnings=warnings,
-        )
+        try:
+            structured = self.reporter_engine.compose_report_with_metadata(
+                bundle,
+                strict=False,
+                embed_metadata=False,
+                validation_issues=issues,
+                warnings=warnings,
+            )
+        except Exception as exc:
+            raise ReporterStrategyError(
+                f"Structured report rendering failed: {exc}",
+                error_code="REPORTER_STRUCTURED_RENDER_ERROR",
+                fallback_reason="structured_render_failed",
+                reporter_errors=[str(exc)],
+            ) from exc
 
         return {
             "markdown": structured.text,
             "bundle": bundle.model_dump() if hasattr(bundle, "model_dump") else {},
-            "issues": [i.model_dump() for i in issues] if issues else [],
+            "issues": self._serialize_issues(issues) if issues else [],
             "warnings": warnings,
             "fallback_used": False,
+            "render_mode": "structured",
+            "fallback_reason": None,
+            "reporter_errors": [],
         }
 
 
@@ -368,6 +514,13 @@ class QAPipelineService:
                 text, registry_data, procedure_type
             )
             return ModuleOutcome(ok=True, data=data)
+        except ReporterStrategyError as exc:
+            logger.error("Reporter structured error: %s", exc)
+            return ModuleOutcome(
+                ok=False,
+                error_code=exc.error_code,
+                error_message=f"Report generation failed: {str(exc)}",
+            )
         except Exception as e:
             logger.error(f"Reporter error: {e}")
             return ModuleOutcome(
@@ -460,6 +613,7 @@ __all__ = [
     "ModuleOutcome",
     "QAPipelineResult",
     "QAPipelineService",
+    "ReporterStrategyError",
     "ReportingStrategy",
     "SimpleReporterStrategy",
 ]

@@ -8,7 +8,7 @@ and the composite QARunResponse.
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, Literal, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -70,6 +70,9 @@ class ReporterData(BaseModel):
     bundle: dict[str, Any] | None = None
     issues: list[dict[str, Any]] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
+    render_mode: Literal["structured", "simple_fallback"] | None = None
+    fallback_reason: str | None = None
+    reporter_errors: list[str] = Field(default_factory=list)
     # Simple reporter fallback fields
     procedure_core: dict[str, Any] | None = None
     indication: dict[str, Any] | None = None

@@ -1161,6 +1161,174 @@ def _normalize_cpt_candidates(codes: Any) -> list[str | int]:
     return list(codes) if isinstance(codes, list) else []
 
 
+def _coerce_dict(value: Any) -> dict[str, Any]:
+    if isinstance(value, BaseModel):
+        return value.model_dump(exclude_none=False)
+    if isinstance(value, dict):
+        return value
+    return {}
+
+
+def _coerce_float(value: Any) -> float | None:
+    if value in (None, ""):
+        return None
+    try:
+        return float(value)
+    except Exception:
+        return None
+
+
+def _coerce_int(value: Any) -> int | None:
+    if value in (None, ""):
+        return None
+    try:
+        return int(float(value))
+    except Exception:
+        return None
+
+
+def _coerce_text(value: Any) -> str | None:
+    if value in (None, "", [], {}):
+        return None
+    if isinstance(value, str):
+        text = value.strip()
+        return text or None
+    if isinstance(value, (int, float, bool)):
+        return str(value)
+    if isinstance(value, list):
+        parts = [_coerce_text(item) for item in value]
+        normalized = [part for part in parts if part]
+        return "; ".join(normalized) if normalized else None
+    if isinstance(value, dict):
+        for key in ("text", "description", "summary", "plan", "message", "finding", "finding_text"):
+            nested = _coerce_text(value.get(key))
+            if nested:
+                return nested
+        pairs: list[str] = []
+        for key, item in value.items():
+            nested = _coerce_text(item)
+            if not nested:
+                continue
+            pairs.append(f"{key}: {nested}")
+        return "; ".join(pairs) if pairs else None
+    return str(value)
+
+
+def _first_nonempty_text(*values: Any) -> str | None:
+    for value in values:
+        text = _coerce_text(value)
+        if text:
+            return text
+    return None
+
+
+def _extract_clinical_context(raw: dict[str, Any]) -> dict[str, Any]:
+    clinical_context = raw.get("clinical_context")
+    if isinstance(clinical_context, BaseModel):
+        return clinical_context.model_dump(exclude_none=False)
+    if isinstance(clinical_context, dict):
+        return clinical_context
+    return {}
+
+
+def _synthesize_indication_text(raw: dict[str, Any]) -> str | None:
+    clinical_context = _extract_clinical_context(raw)
+    direct = _first_nonempty_text(
+        raw.get("primary_indication"),
+        raw.get("indication"),
+        clinical_context.get("primary_indication"),
+        raw.get("radiographic_findings"),
+        clinical_context.get("radiographic_findings"),
+        clinical_context.get("target_lesion"),
+    )
+    if direct:
+        return direct
+
+    lesion_location = _first_nonempty_text(
+        clinical_context.get("lesion_location"),
+        raw.get("lesion_location"),
+        raw.get("nav_target_segment"),
+    )
+    lesion_size = _first_nonempty_text(
+        clinical_context.get("lesion_size_text"),
+        clinical_context.get("lesion_size_mm"),
+        raw.get("lesion_size_mm"),
+    )
+    if lesion_location and lesion_size:
+        return f"Pulmonary lesion at {lesion_location} ({lesion_size})"
+    if lesion_location:
+        return f"Pulmonary lesion at {lesion_location}"
+    return None
+
+
+def _extract_preop_diagnosis_text(raw: dict[str, Any], indication_text: str | None) -> str | None:
+    return _first_nonempty_text(
+        raw.get("preop_diagnosis_text"),
+        raw.get("preop_diagnosis"),
+        raw.get("pre_op_diagnosis"),
+        raw.get("pre_procedure_diagnosis"),
+        raw.get("diagnosis"),
+        indication_text,
+    )
+
+
+def _extract_postop_diagnosis_text(raw: dict[str, Any], preop_diagnosis_text: str | None) -> str | None:
+    return _first_nonempty_text(
+        raw.get("postop_diagnosis_text"),
+        raw.get("postop_diagnosis"),
+        raw.get("post_op_diagnosis"),
+        raw.get("post_procedure_diagnosis"),
+        raw.get("final_diagnosis"),
+        preop_diagnosis_text,
+    )
+
+
+def _extract_impression_plan(raw: dict[str, Any]) -> str | None:
+    follow_up = raw.get("follow_up_plan")
+    if isinstance(follow_up, list):
+        return _first_nonempty_text(*follow_up)
+    return _first_nonempty_text(
+        follow_up,
+        raw.get("impression_plan"),
+        raw.get("recommendations"),
+        raw.get("plan"),
+    )
+
+
+def _extract_specimens_text(raw: dict[str, Any]) -> str | None:
+    return _first_nonempty_text(
+        raw.get("specimens_text"),
+        raw.get("specimen_text"),
+        raw.get("specimens"),
+        raw.get("pathology_specimens"),
+        raw.get("sampled_specimens"),
+    )
+
+
+def _extract_complications_text(raw: dict[str, Any]) -> str | None:
+    value = _first_nonempty_text(
+        raw.get("complications_text"),
+        raw.get("complications"),
+        raw.get("complication"),
+        raw.get("intraprocedural_complications"),
+    )
+    if not value:
+        return None
+    lowered = value.strip().lower()
+    if lowered in {"none", "no", "none reported", "no immediate complications"}:
+        return "None"
+    return value
+
+
+def _extract_estimated_blood_loss(raw: dict[str, Any]) -> str | None:
+    ebl_ml = _coerce_float(raw.get("ebl_ml"))
+    if ebl_ml is not None:
+        if float(ebl_ml).is_integer():
+            return str(int(ebl_ml))
+        return str(ebl_ml)
+    return _first_nonempty_text(raw.get("estimated_blood_loss"), raw.get("blood_loss"))
+
+
 def _extract_patient(raw: dict[str, Any]) -> PatientInfo:
     return PatientInfo(
         name=raw.get("patient_name"),
@@ -1172,12 +1340,24 @@ def _extract_patient(raw: dict[str, Any]) -> PatientInfo:
 
 
 def _extract_encounter(raw: dict[str, Any]) -> EncounterInfo:
+    clinical_context = _extract_clinical_context(raw)
+    date_of_procedure = _first_nonempty_text(
+        raw.get("procedure_date"),
+        raw.get("date_of_procedure"),
+        raw.get("date"),
+    )
     return EncounterInfo(
-        date=raw.get("procedure_date"),
+        date=date_of_procedure,
         encounter_id=raw.get("encounter_id") or raw.get("visit_id"),
         location=raw.get("location") or raw.get("procedure_location"),
-        referred_physician=raw.get("referred_physician"),
-        attending=raw.get("attending_name"),
+        referred_physician=_first_nonempty_text(
+            raw.get("referred_physician"),
+            clinical_context.get("referred_physician"),
+        ),
+        attending=_first_nonempty_text(
+            raw.get("attending_name"),
+            _coerce_dict(raw.get("providers")).get("attending_name"),
+        ),
         assistant=raw.get("fellow_name") or raw.get("assistant_name"),
     )
 
@@ -1259,6 +1439,497 @@ def _procedures_from_adapters(
                 cpt_candidates=list(cpt_candidates),
             )
         )
+    return procedures
+
+
+def _append_bridge_procedure(
+    procedures: list[ProcedureInput],
+    existing_proc_types: set[str],
+    *,
+    proc_type: str,
+    schema_id: str,
+    data: dict[str, Any],
+    cpt_candidates: list[str | int],
+    start_index: int = 0,
+) -> None:
+    if proc_type in existing_proc_types:
+        return
+    proc_id = f"{proc_type}_{start_index + len(procedures) + 1}"
+    procedures.append(
+        ProcedureInput(
+            proc_type=proc_type,
+            schema_id=schema_id,
+            proc_id=proc_id,
+            data=data,
+            cpt_candidates=list(cpt_candidates),
+        )
+    )
+    existing_proc_types.add(proc_type)
+
+
+def _coerce_str_list(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for item in value:
+        text = _coerce_text(item)
+        if not text or text in seen:
+            continue
+        seen.add(text)
+        normalized.append(text)
+    return normalized
+
+
+def _procedures_from_bridge(
+    raw: dict[str, Any],
+    cpt_candidates: list[str | int],
+    *,
+    existing_proc_types: set[str],
+    start_index: int = 0,
+) -> list[ProcedureInput]:
+    procedures: list[ProcedureInput] = []
+    procs = _coerce_dict(raw.get("procedures_performed"))
+    granular = _coerce_dict(raw.get("granular_data"))
+    clinical_context = _extract_clinical_context(raw)
+    indication_hint = _synthesize_indication_text(raw) or "See procedural narrative"
+    location_hint = _first_nonempty_text(
+        clinical_context.get("lesion_location"),
+        raw.get("lesion_location"),
+        raw.get("nav_target_segment"),
+    ) or "target airway"
+
+    linear_ebus = _coerce_dict(procs.get("linear_ebus"))
+    linear_stations = _coerce_str_list(
+        raw.get("linear_ebus_stations")
+        or raw.get("ebus_stations_sampled")
+        or linear_ebus.get("stations_sampled")
+    )
+    first_station = linear_stations[0] if linear_stations else "7"
+    needle_gauge = _first_nonempty_text(
+        raw.get("ebus_needle_gauge"),
+        linear_ebus.get("needle_gauge"),
+    )
+
+    # fiducial_marker_placement
+    fiducial_data = _coerce_dict(raw.get("fiducial_marker_placement"))
+    if not fiducial_data:
+        nav_targets = granular.get("navigation_targets")
+        if isinstance(nav_targets, list):
+            for target in nav_targets:
+                target_dict = _coerce_dict(target)
+                if target_dict.get("fiducial_marker_placed") is True:
+                    fiducial_data = target_dict
+                    break
+    if fiducial_data:
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="fiducial_marker_placement",
+            schema_id="fiducial_marker_placement_v1",
+            data={
+                "airway_location": _first_nonempty_text(
+                    fiducial_data.get("target_segment"),
+                    fiducial_data.get("target_lobe"),
+                    fiducial_data.get("target_location_text"),
+                    location_hint,
+                ),
+                "marker_details": _first_nonempty_text(
+                    fiducial_data.get("fiducial_marker_details"),
+                    fiducial_data.get("marker_details"),
+                ),
+                "confirmation_method": _first_nonempty_text(
+                    fiducial_data.get("confirmation_method"),
+                    "fluoroscopy",
+                ),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    # ebus_ifb (forceps through EBUS tract)
+    ebus_ifb_data = _coerce_dict(raw.get("ebus_ifb")) or _coerce_dict(procs.get("ebus_ifb"))
+    needle_type = _first_nonempty_text(
+        ebus_ifb_data.get("needle_type"),
+        linear_ebus.get("needle_type"),
+    )
+    if ebus_ifb_data or (needle_type and "forceps" in needle_type.lower()):
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="ebus_ifb",
+            schema_id="ebus_ifb_v1",
+            data={
+                "station_name": _first_nonempty_text(
+                    ebus_ifb_data.get("station_name"),
+                    first_station,
+                ),
+                "size_mm": _coerce_int(ebus_ifb_data.get("size_mm")),
+                "ultrasound_features": _first_nonempty_text(
+                    ebus_ifb_data.get("ultrasound_features"),
+                    ebus_ifb_data.get("findings"),
+                ),
+                "needle_gauge": _first_nonempty_text(
+                    ebus_ifb_data.get("needle_gauge"),
+                    needle_gauge,
+                    "19G",
+                ),
+                "core_samples": _coerce_int(
+                    ebus_ifb_data.get("core_samples")
+                    or ebus_ifb_data.get("samples")
+                    or 1
+                )
+                or 1,
+                "rose_result": _first_nonempty_text(
+                    ebus_ifb_data.get("rose_result"),
+                    ebus_ifb_data.get("rose"),
+                ),
+                "specimen_medium": _first_nonempty_text(
+                    ebus_ifb_data.get("specimen_medium"),
+                ),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    # ebus_19g_fnb
+    ebus_19g_data = _coerce_dict(raw.get("ebus_19g_fnb")) or _coerce_dict(
+        procs.get("ebus_19g_fnb")
+    )
+    needle_gauge_19g = _first_nonempty_text(
+        ebus_19g_data.get("needle_gauge"),
+        needle_gauge,
+    )
+    if ebus_19g_data or (needle_gauge_19g and "19" in needle_gauge_19g):
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="ebus_19g_fnb",
+            schema_id="ebus_19g_fnb_v1",
+            data={
+                "station_name": _first_nonempty_text(
+                    ebus_19g_data.get("station_name"),
+                    first_station,
+                ),
+                "passes": _coerce_int(
+                    ebus_19g_data.get("passes")
+                    or ebus_19g_data.get("pass_count")
+                    or linear_ebus.get("passes_per_station")
+                    or 1
+                )
+                or 1,
+                "rose_result": _first_nonempty_text(
+                    ebus_19g_data.get("rose_result"),
+                ),
+                "elastography_pattern": _first_nonempty_text(
+                    ebus_19g_data.get("elastography_pattern"),
+                    linear_ebus.get("elastography_pattern"),
+                ),
+                "findings": _first_nonempty_text(ebus_19g_data.get("findings")),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    # ion registration variants
+    ion_partial_data = _coerce_dict(raw.get("ion_registration_partial")) or _coerce_dict(
+        procs.get("ion_registration_partial")
+    )
+    if ion_partial_data:
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="ion_registration_partial",
+            schema_id="ion_registration_partial_v1",
+            data={
+                "indication": _first_nonempty_text(
+                    ion_partial_data.get("indication"),
+                    indication_hint,
+                ),
+                "scope_of_registration": _first_nonempty_text(
+                    ion_partial_data.get("scope_of_registration"),
+                ),
+                "registered_landmarks": _coerce_str_list(
+                    ion_partial_data.get("registered_landmarks")
+                )
+                or None,
+                "time_to_primary_nodule_min": _coerce_float(
+                    ion_partial_data.get("time_to_primary_nodule_min")
+                ),
+                "navigation_time_min": _coerce_float(
+                    ion_partial_data.get("navigation_time_min")
+                ),
+                "divergence_pct": _coerce_float(ion_partial_data.get("divergence_pct")),
+                "rebus_pattern": _first_nonempty_text(ion_partial_data.get("rebus_pattern")),
+                "tool_in_lesion_confirmation": _first_nonempty_text(
+                    ion_partial_data.get("tool_in_lesion_confirmation")
+                ),
+                "rose_adequacy": _first_nonempty_text(ion_partial_data.get("rose_adequacy")),
+                "diagnostic_yield_pct": _coerce_float(
+                    ion_partial_data.get("diagnostic_yield_pct")
+                ),
+                "followup_plan": _first_nonempty_text(
+                    ion_partial_data.get("followup_plan"),
+                    _extract_impression_plan(raw),
+                ),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    nav_data = _coerce_dict(procs.get("navigational_bronchoscopy"))
+    ion_drift_data = _coerce_dict(raw.get("ion_registration_drift")) or _coerce_dict(
+        procs.get("ion_registration_drift")
+    )
+    divergence_mm = _coerce_float(nav_data.get("divergence_mm"))
+    if ion_drift_data or divergence_mm is not None:
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="ion_registration_drift",
+            schema_id="ion_registration_drift_v1",
+            data={
+                "cause": _first_nonempty_text(ion_drift_data.get("cause")),
+                "findings": _first_nonempty_text(
+                    ion_drift_data.get("findings"),
+                    f"Divergence observed ({divergence_mm} mm)." if divergence_mm is not None else None,
+                ),
+                "mitigation": _first_nonempty_text(
+                    ion_drift_data.get("mitigation"),
+                    nav_data.get("mitigation"),
+                ),
+                "post_correction_alignment": _first_nonempty_text(
+                    ion_drift_data.get("post_correction_alignment"),
+                ),
+                "proceeded_strategy": _first_nonempty_text(
+                    ion_drift_data.get("proceeded_strategy"),
+                ),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    # CBCT augmented bronchoscopy
+    cbct_data = _coerce_dict(raw.get("cbct_augmented_bronchoscopy")) or _coerce_dict(
+        procs.get("cbct_augmented_bronchoscopy")
+    )
+    cbct_trigger = bool(cbct_data)
+    equipment = _coerce_dict(raw.get("equipment"))
+    if not cbct_trigger:
+        cbct_trigger = equipment.get("cbct_used") is True or raw.get("cbct_performed") is True
+    if cbct_trigger:
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="cbct_augmented_bronchoscopy",
+            schema_id="cbct_augmented_bronchoscopy_v1",
+            data={
+                "ventilation_settings": _first_nonempty_text(
+                    cbct_data.get("ventilation_settings"),
+                    raw.get("ventilation_mode"),
+                ),
+                "adjustment_description": _first_nonempty_text(
+                    cbct_data.get("adjustment_description"),
+                    nav_data.get("adjustment_description"),
+                ),
+                "final_position": _first_nonempty_text(
+                    cbct_data.get("final_position"),
+                    "aligned to target",
+                ),
+                "radiation_parameters": _first_nonempty_text(
+                    cbct_data.get("radiation_parameters")
+                ),
+                "notes": _first_nonempty_text(cbct_data.get("notes")),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    # dye marker placement
+    dye_data = _coerce_dict(raw.get("dye_marker_placement")) or _coerce_dict(
+        procs.get("dye_marker_placement")
+    )
+    if dye_data:
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="dye_marker_placement",
+            schema_id="dye_marker_placement_v1",
+            data={
+                "guidance_method": _first_nonempty_text(
+                    dye_data.get("guidance_method"),
+                    "fluoroscopy",
+                ),
+                "needle_gauge": _first_nonempty_text(
+                    dye_data.get("needle_gauge"),
+                    "21G",
+                ),
+                "distance_from_pleura_cm": _coerce_float(
+                    dye_data.get("distance_from_pleura_cm")
+                ),
+                "dye_type": _first_nonempty_text(
+                    dye_data.get("dye_type"),
+                    "methylene blue",
+                ),
+                "dye_concentration": _first_nonempty_text(
+                    dye_data.get("dye_concentration")
+                ),
+                "volume_ml": _coerce_float(dye_data.get("volume_ml")) or 0.5,
+                "diffusion_observed": _first_nonempty_text(
+                    dye_data.get("diffusion_observed")
+                ),
+                "notes": _first_nonempty_text(dye_data.get("notes")),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    # EUS-B
+    eusb_data = _coerce_dict(raw.get("eusb")) or _coerce_dict(raw.get("eusb_data")) or _coerce_dict(
+        procs.get("eus_b")
+    )
+    stations_sampled = _coerce_str_list(
+        eusb_data.get("stations_sampled")
+        or eusb_data.get("stations")
+        or linear_stations
+    )
+    if stations_sampled and (eusb_data.get("performed") is True or eusb_data or procs.get("eus_b")):
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="eusb",
+            schema_id="eusb_v1",
+            data={
+                "stations_sampled": stations_sampled,
+                "needle_gauge": _first_nonempty_text(
+                    eusb_data.get("needle_gauge"),
+                    needle_gauge,
+                ),
+                "passes": _coerce_int(eusb_data.get("passes")),
+                "rose_result": _first_nonempty_text(eusb_data.get("rose_result")),
+                "complications": _extract_complications_text(raw),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    # BLVR valve removal / exchange
+    blvr_exchange = _coerce_dict(raw.get("blvr_valve_removal_exchange")) or _coerce_dict(
+        procs.get("blvr_valve_removal_exchange")
+    )
+    blvr_data = _coerce_dict(procs.get("blvr"))
+    valves_removed = _coerce_int(
+        blvr_exchange.get("valves_removed")
+        or blvr_data.get("valves_removed")
+        or blvr_data.get("removed_valves")
+    )
+    valves_exchanged = _coerce_int(
+        blvr_exchange.get("valves_exchanged")
+        or blvr_data.get("valves_exchanged")
+        or blvr_data.get("replaced_valves")
+    )
+    if blvr_exchange or valves_removed is not None or valves_exchanged is not None:
+        _append_bridge_procedure(
+            procedures,
+            existing_proc_types,
+            proc_type="blvr_valve_removal_exchange",
+            schema_id="blvr_valve_removal_exchange_v1",
+            data={
+                "indication": _first_nonempty_text(
+                    blvr_exchange.get("indication"),
+                    "Intraprocedural valve adjustment/removal",
+                ),
+                "device_brand": _first_nonempty_text(
+                    blvr_exchange.get("device_brand"),
+                    blvr_data.get("valve_type"),
+                ),
+                "locations": _coerce_str_list(
+                    blvr_exchange.get("locations")
+                    or blvr_data.get("lobes_treated")
+                ),
+                "valves_removed": valves_removed or 1,
+                "valves_exchanged": valves_exchanged,
+                "replacement_sizes": _first_nonempty_text(
+                    blvr_exchange.get("replacement_sizes")
+                ),
+                "mucosa_status": _first_nonempty_text(
+                    blvr_exchange.get("mucosa_status")
+                ),
+                "tolerance_notes": _first_nonempty_text(
+                    blvr_exchange.get("tolerance_notes")
+                ),
+            },
+            cpt_candidates=cpt_candidates,
+            start_index=start_index,
+        )
+
+    return procedures
+
+
+def _ensure_thoracentesis_alias(
+    procedures: list[ProcedureInput],
+    cpt_candidates: list[str | int],
+) -> list[ProcedureInput]:
+    has_thoracentesis = any(proc.proc_type == "thoracentesis" for proc in procedures)
+    if has_thoracentesis:
+        return procedures
+
+    source_proc = next(
+        (
+            proc
+            for proc in procedures
+            if proc.proc_type in ("thoracentesis_detailed", "thoracentesis_manometry")
+        ),
+        None,
+    )
+    if not source_proc:
+        return procedures
+
+    src = _normalize_payload(source_proc.data)
+    side = _first_nonempty_text(src.get("side"))
+    volume_removed_ml = _coerce_int(
+        src.get("volume_removed_ml") or src.get("total_removed_ml")
+    )
+    if not side or volume_removed_ml is None:
+        return procedures
+
+    alias_data = {
+        "side": side,
+        "effusion_size": _first_nonempty_text(
+            src.get("effusion_size"),
+            src.get("effusion_volume"),
+            "unspecified",
+        ),
+        "effusion_echogenicity": _first_nonempty_text(
+            src.get("effusion_echogenicity"),
+            "unspecified",
+        ),
+        "loculations": _first_nonempty_text(src.get("loculations")),
+        "intercostal_space": _first_nonempty_text(
+            src.get("intercostal_space"),
+            "unspecified",
+        ),
+        "entry_location": _first_nonempty_text(
+            src.get("entry_location"),
+            "unspecified",
+        ),
+        "volume_removed_ml": volume_removed_ml,
+        "fluid_appearance": _first_nonempty_text(
+            src.get("fluid_appearance"),
+            "unspecified",
+        ),
+        "specimen_tests": _coerce_str_list(src.get("specimen_tests")),
+        "cxr_ordered": src.get("cxr_ordered"),
+    }
+    procedures.append(
+        ProcedureInput(
+            proc_type="thoracentesis",
+            schema_id="thoracentesis_v1",
+            proc_id=f"thoracentesis_{len(procedures) + 1}",
+            data=alias_data,
+            cpt_candidates=list(cpt_candidates),
+        )
+    )
     return procedures
 
 
@@ -1545,8 +2216,22 @@ def build_procedure_bundle_from_extraction(
 
     procedures = _coerce_prebuilt_procedures(raw.get("procedures"), cpt_candidates)
     procedures.extend(_procedures_from_adapters(raw, cpt_candidates, start_index=len(procedures)))
+    existing_proc_types = {proc.proc_type for proc in procedures}
+    procedures.extend(
+        _procedures_from_bridge(
+            raw,
+            cpt_candidates,
+            existing_proc_types=existing_proc_types,
+            start_index=len(procedures),
+        )
+    )
+    procedures = _ensure_thoracentesis_alias(procedures, cpt_candidates)
 
-    indication_text = raw.get("primary_indication") or raw.get("indication") or raw.get("radiographic_findings")
+    indication_text = _synthesize_indication_text(raw)
+    preop_diagnosis_text = _extract_preop_diagnosis_text(raw, indication_text)
+    postop_diagnosis_text = _extract_postop_diagnosis_text(raw, preop_diagnosis_text)
+    complications_text = _extract_complications_text(raw)
+    specimens_text = _extract_specimens_text(raw)
 
     bundle = ProcedureBundle(
         patient=patient,
@@ -1555,11 +2240,12 @@ def build_procedure_bundle_from_extraction(
         sedation=sedation,
         anesthesia=anesthesia,
         indication_text=indication_text,
-        preop_diagnosis_text=raw.get("preop_diagnosis_text"),
-        postop_diagnosis_text=raw.get("postop_diagnosis_text"),
-        impression_plan=raw.get("follow_up_plan", [""])[0] if isinstance(raw.get("follow_up_plan"), list) else raw.get("follow_up_plan"),
-        estimated_blood_loss=str(raw.get("ebl_ml")) if raw.get("ebl_ml") is not None else None,
-        specimens_text=raw.get("specimens_text"),
+        preop_diagnosis_text=preop_diagnosis_text,
+        postop_diagnosis_text=postop_diagnosis_text,
+        impression_plan=_extract_impression_plan(raw),
+        estimated_blood_loss=_extract_estimated_blood_loss(raw),
+        complications_text=complications_text,
+        specimens_text=specimens_text,
         pre_anesthesia=pre_anesthesia,
         free_text_hint=raw.get("source_text") or raw.get("note_text") or raw.get("raw_note"),
     )

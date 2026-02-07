@@ -118,7 +118,7 @@ Day 4:
    ============================================================================ #}
 
 {# --- Transbronchial Cryobiopsy - CPT 31632 --- #}
-{% macro transbronchial_cryobiopsy(forceps_tool, lung_segment, num_samples, testing_types, blocker_used=true, blocker_volume_cc=6, rebus_performed=true) %}
+{% macro transbronchial_cryobiopsy(forceps_tool=None, lung_segment=None, num_samples=None, testing_types=None, blocker_used=true, blocker_volume_cc=6, rebus_performed=true) %}
 {% if rebus_performed %}
 Radial EBUS was performed to confirm there are no large vessels at the site of biopsy and noted airway that allowed to go to the periphery of the subsegment of interest. Also notable to see area of disease/possible atelectasis.
 {% endif %}
@@ -131,11 +131,11 @@ After each sample was obtained, Arndt's Endobronchial blocker was inflated with 
 An endobronchial blocker was positioned for tamponade after each sample.
 {% endif %}
 
-Performed with {{ forceps_tool }} at {{ lung_segment }}.
+Performed with {{ forceps_tool or "[cryoprobe type]" }} at {{ lung_segment or "[target segment]" }}.
 
-Total {{ num_samples }} samples were collected.
+Total {{ num_samples or "[count]" }} samples were collected.
 
-Samples sent for: {% for test in testing_types %}{{ test }}{% if not loop.last %}, {% endif %}{% endfor %}.
+{% if testing_types %}Samples sent for: {% for test in testing_types %}{{ test }}{% if not loop.last %}, {% endif %}{% endfor %}.{% else %}Samples sent for: [testing types].{% endif %}
 
 No immediate complications.
 {% endmacro %}

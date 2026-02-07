@@ -53,12 +53,12 @@ Samples sent for: {% for test in testing_types %}{{ test }}{% if not loop.last %
 
 
 {# --- Transbronchial Needle Aspiration (TBNA) - CPT 31629/31633 --- #}
-{% macro transbronchial_needle_aspiration(num_samples, needle_tool, lung_segment, testing_types) %}
+{% macro transbronchial_needle_aspiration(num_samples=None, needle_tool=None, lung_segment=None, testing_types=None) %}
 Transbronchial needle aspiration was performed targeting designated lymph nodes. Samples collected.
 
-Performed with {{ needle_tool }} at {{ lung_segment }}. Total {{ num_samples }} samples were collected.
+Performed with {{ needle_tool or "[needle tool]" }} at {{ lung_segment or "[target segment]" }}. Total {{ num_samples or "[count]" }} samples were collected.
 
-Samples sent for: {% for test in testing_types %}{{ test }}{% if not loop.last %}, {% endif %}{% endfor %}.
+{% if testing_types %}Samples sent for: {% for test in testing_types %}{{ test }}{% if not loop.last %}, {% endif %}{% endfor %}.{% else %}Samples sent for: [testing types].{% endif %}
 {% endmacro %}
 
 
@@ -118,7 +118,7 @@ Endobronchial tumor was noted and excised with {{ method }} (coring or microdebr
 
 
 {# --- Rigid Bronchoscopy (Diagnostic / Therapeutic) --- #}
-{% macro rigid_bronchoscopy(scope_size, scope_model, hfjv=false, interventions, flexible_used=true, ebl_ml=0, specimens=None, post_plan=None) %}
+{% macro rigid_bronchoscopy(scope_size, scope_model, interventions, hfjv=false, flexible_used=true, ebl_ml=0, specimens=None, post_plan=None) %}
 After induction of general anesthesia, a rigid bronchoscope {{ scope_size }}/{{ scope_model }} was introduced via the mouth under direct visualization. High-frequency jet ventilation (HFJV): {{ 'Yes' if hfjv else 'No' }}.
 
 A complete airway survey was performed.

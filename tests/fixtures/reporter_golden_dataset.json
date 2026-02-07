@@ -1,0 +1,202 @@
+[
+  {
+    "example_id": "example_1",
+    "note_text": "EBUS staging sample",
+    "extraction": {
+      "procedure_date": "2026-01-15",
+      "attending_name": "Alex Clinician, MD",
+      "referred_physician": "Referring MD",
+      "primary_indication": "Mediastinal staging for pulmonary nodule",
+      "preop_diagnosis_text": "Pulmonary nodule with mediastinal adenopathy",
+      "postop_diagnosis_text": "Same",
+      "procedures": [
+        {
+          "proc_type": "ebus_tbna",
+          "schema_id": "ebus_tbna_v1",
+          "proc_id": "ebus_1",
+          "data": {
+            "needle_gauge": "22G",
+            "stations": [
+              {
+                "station_name": "4R",
+                "size_mm": 10,
+                "passes": 3,
+                "biopsy_tools": [
+                  "TBNA"
+                ]
+              },
+              {
+                "station_name": "7",
+                "size_mm": 12,
+                "passes": 4,
+                "biopsy_tools": [
+                  "TBNA"
+                ]
+              }
+            ],
+            "rose_available": true,
+            "overall_rose_diagnosis": "Adequate lymphoid tissue"
+          },
+          "cpt_candidates": [
+            "31652",
+            "31653"
+          ]
+        }
+      ],
+      "complications_text": "None",
+      "specimens_text": "EBUS needle aspirates from stations 4R and 7",
+      "follow_up_plan": "Await final cytology and stage-directed oncology follow-up."
+    },
+    "golden_markdown": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: 2026-01-15\nCC Referred Physician: Referring MD\n\nINDICATION FOR OPERATION:\nThe patient who presents with Mediastinal staging for pulmonary nodule.\nCONSENT: Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The consent was witnessed by an assisting medical professional.\n\nPREOPERATIVE DIAGNOSIS: Pulmonary nodule with mediastinal adenopathy\nPOSTOPERATIVE DIAGNOSIS: Same\n\nPROCEDURE(S): See procedure details below\n\nCPT CODES (candidates - verify locally): Not available; verify locally\n\nATTENDING: Alex Clinician, MD\nASSISTANT: None\n\nANESTHESIA: See chart\nMONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer.\n\nPROCEDURE IN DETAIL:\nA systematic linear EBUS mediastinal and hilar survey was completed. Sampling was performed using a 22G needle. ROSE was available.\n\nThe following lymph node stations were sampled for diagnostic and staging evaluation:\nStations targeted: 4R, 7.\n\nStation: 4R\nSize: 10.0 mm\nBiopsy Tools: TBNA\nNumber of Passes: 3\n\nStation: 7\nSize: 12.0 mm\nBiopsy Tools: TBNA\nNumber of Passes: 4\n\nOverall ROSE Diagnosis: Adequate lymphoid tissue. No immediate complications were observed, and post-procedure airway patency was preserved.\n\nESTIMATED BLOOD LOSS: Minimal\nCOMPLICATIONS: None\n\nSPECIMEN(S): Not collected\n\nIMPRESSION/PLAN:\nAwait final cytology and stage-directed oncology follow-up."
+  },
+  {
+    "example_id": "example_2",
+    "note_text": "Bronchoscopy with BAL and thoracentesis",
+    "extraction": {
+      "procedure_date": "2026-01-20",
+      "attending_name": "Taylor Operator, MD",
+      "primary_indication": "Pleural effusion with chronic cough",
+      "preop_diagnosis_text": "Left pleural effusion",
+      "postop_diagnosis_text": "Left pleural effusion, status post thoracentesis",
+      "procedures": [
+        {
+          "proc_type": "bronchoscopy_core",
+          "schema_id": "bronchoscopy_shell_v1",
+          "proc_id": "bronch_1",
+          "data": {
+            "airway_overview": "Comprehensive airway survey without obstructing lesion.",
+            "right_lung_overview": "Patent bronchi to segmental level.",
+            "left_lung_overview": "Patent bronchi with mild secretions suctioned.",
+            "mucosa_overview": "Mild chronic inflammation, no active bleeding.",
+            "secretions_overview": "Scant clear secretions."
+          },
+          "cpt_candidates": [
+            "31622"
+          ]
+        },
+        {
+          "proc_type": "bal",
+          "schema_id": "bal_v1",
+          "proc_id": "bal_1",
+          "data": {
+            "lung_segment": "RML medial segment",
+            "instilled_volume_cc": 100,
+            "returned_volume_cc": 55,
+            "tests": [
+              "cell count",
+              "culture",
+              "cytology"
+            ]
+          },
+          "cpt_candidates": [
+            "31624"
+          ]
+        },
+        {
+          "proc_type": "thoracentesis",
+          "schema_id": "thoracentesis_v1",
+          "proc_id": "thora_1",
+          "data": {
+            "side": "left",
+            "effusion_size": "moderate",
+            "effusion_echogenicity": "anechoic",
+            "loculations": "minimal",
+            "intercostal_space": "7th",
+            "entry_location": "posterior axillary",
+            "volume_removed_ml": 1200,
+            "fluid_appearance": "serous",
+            "specimen_tests": [
+              "protein",
+              "LDH",
+              "cytology"
+            ],
+            "cxr_ordered": true
+          },
+          "cpt_candidates": [
+            "32555"
+          ]
+        }
+      ],
+      "complications_text": "None",
+      "specimens_text": "BAL and pleural fluid sent as above",
+      "follow_up_plan": "Monitor respiratory status and review pleural studies."
+    },
+    "golden_markdown": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: 2026-01-20\nCC Referred Physician: See chart\n\nINDICATION FOR OPERATION:\nThe patient who presents with Pleural effusion with chronic cough.\nCONSENT: Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The consent was witnessed by an assisting medical professional.\n\nPREOPERATIVE DIAGNOSIS: Left pleural effusion\nPOSTOPERATIVE DIAGNOSIS: Left pleural effusion, status post thoracentesis\n\nPROCEDURE(S): See procedure details below\n\nCPT CODES (candidates - verify locally): Not available; verify locally\n\nATTENDING: Taylor Operator, MD\nASSISTANT: None\n\nANESTHESIA: See chart\nMONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer.\n\nPROCEDURE IN DETAIL:\nThoracentesis was performed on the left hemithorax under ultrasound guidance.\nUltrasound identified a moderate pleural effusion with\nanechoic echogenicity and minimal loculations.\nFollowing sterile prep and local anesthesia,\na thoracentesis kit was used to access the pleural space at the\n7th intercostal space along the posterior axillary line.\nA total of 1200 mL of serous fluid was removed.\nSamples were sent for protein, LDH, cytology. A post-procedure chest x-ray was ordered. The patient tolerated the procedure well without immediate complications.\n\nUltrasound identified a pleural effusion on the left side. Following sterile prep and local anesthesia, thoracentesis was performed at the 7th intercostal space along the posterior axillary line.\nA total of 1200 mL of serous fluid was removed. Specimens were sent for protein, LDH, cytology. A post-procedure chest x-ray was ordered. CHEST ULTRASOUND FINDINGS:\nHemithorax: Left\nEchogenicity: anechoicLoculations: minimalThe patient tolerated the procedure well without immediate complications.\n\nBRONCHOSCOPY NOTE\n\nPROCEDURE: Flexible bronchoscopy with Bronchoalveolar Lavage, Ultrasound-guided Thoracentesis, Thoracentesis (Detailed)OPERATORS: Taylor Operator, MDINDICATIONS: Pleural effusion with chronic cough\nInformed consent obtained. A time out was performed prior to procedure.\nSedation with anesthesia per procedural record. Vitals were continuously monitored throughout the procedure.\n\nFINDINGS:\nComprehensive airway survey without obstructing lesion. Right Lung: Patent bronchi to segmental level. Left Lung: Patent bronchi with mild secretions suctioned. Mucosa: Mild chronic inflammation, no active bleeding. Secretions: Scant clear secretions. Additional procedure details:\nBronchoalveolar lavage was performed in the RML medial segment.\nA total of 100 mL of normal saline was instilled with\n55 mL returned.\nSamples were sent for cell count, culture, cytology.\n\nSummary:\nPharynx: Not assessed due to Bronch introduction via ETT/Trach Tube\nLarynx: Not assessed due to Bronch introduction via ETT/Trach Tube\nVocal Cords: Not assessed due to Bronch introduction via ETT/Trach Tube\nTrachea: Distal 1/3 Normal\nRight Lung: Patent bronchi to segmental level.\nLeft Lung: Patent bronchi with mild secretions suctioned.\nNo evidence of mass, lesions, bleeding, or other endobronchial pathology.\nMucosa: Mild chronic inflammation, no active bleeding.\nSecretions: Scant clear secretions. Suctioned to clear.\n\nThe flexible bronchoscope was retracted and removed.\nThe patient tolerated the procedure well with no immediate complications.\n\nESTIMATED BLOOD LOSS: Minimal\nCOMPLICATIONS: None\n\nSPECIMEN(S): Not collected\n\nIMPRESSION/PLAN:\nMonitor respiratory status and review pleural studies."
+  },
+  {
+    "example_id": "example_3",
+    "note_text": "Robotic bronchoscopy with radial EBUS",
+    "extraction": {
+      "procedure_date": "2026-01-22",
+      "attending_name": "Jordan Navigator, MD",
+      "primary_indication": "Peripheral right upper lobe nodule",
+      "preop_diagnosis_text": "RUL pulmonary nodule",
+      "postop_diagnosis_text": "RUL pulmonary nodule, sampled",
+      "procedures": [
+        {
+          "proc_type": "bronchoscopy_core",
+          "schema_id": "bronchoscopy_shell_v1",
+          "proc_id": "bronch_1",
+          "data": {
+            "airway_overview": "Initial airway survey normal.",
+            "right_lung_overview": "No endobronchial lesion.",
+            "left_lung_overview": "No endobronchial lesion."
+          },
+          "cpt_candidates": [
+            "31622"
+          ]
+        },
+        {
+          "proc_type": "robotic_ion_bronchoscopy",
+          "schema_id": "robotic_ion_bronchoscopy_v1",
+          "proc_id": "ion_1",
+          "data": {
+            "navigation_plan_source": "pre-procedure CT",
+            "vent_mode": "VC",
+            "vent_rr": 14,
+            "vent_tv_ml": 450,
+            "vent_peep_cm_h2o": 8,
+            "vent_fio2_pct": 40,
+            "vent_flow_rate": "30 L/min",
+            "vent_pmean_cm_h2o": 12,
+            "cbct_performed": true,
+            "radial_pattern": "concentric"
+          },
+          "cpt_candidates": [
+            "31627"
+          ]
+        },
+        {
+          "proc_type": "radial_ebus_sampling",
+          "schema_id": "radial_ebus_sampling_v1",
+          "proc_id": "rebus_1",
+          "data": {
+            "guide_sheath_diameter": "1.9 mm",
+            "ultrasound_pattern": "concentric",
+            "lesion_size_mm": 18,
+            "sampling_tools": [
+              "forceps",
+              "needle",
+              "brush"
+            ],
+            "passes_per_tool": "3 forceps, 2 needle, 1 brush",
+            "fluoro_used": true,
+            "rose_result": "adequate sample",
+            "specimens": [
+              "pathology",
+              "cytology",
+              "microbiology"
+            ],
+            "cxr_ordered": false
+          },
+          "cpt_candidates": [
+            "31654"
+          ]
+        }
+      ],
+      "complications_text": "None",
+      "follow_up_plan": "Follow pathology and arrange thoracic oncology clinic follow-up."
+    },
+    "golden_markdown": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: 2026-01-22\nCC Referred Physician: See chart\n\nINDICATION FOR OPERATION:\nThe patient who presents with Peripheral right upper lobe nodule.\nCONSENT: Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The consent was witnessed by an assisting medical professional.\n\nPREOPERATIVE DIAGNOSIS: RUL pulmonary nodule\nPOSTOPERATIVE DIAGNOSIS: RUL pulmonary nodule, sampled\n\nPROCEDURE(S): See procedure details below\n\nCPT CODES (candidates - verify locally): Not available; verify locally\n\nATTENDING: Jordan Navigator, MD\nASSISTANT: None\n\nANESTHESIA: See chart\nMONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer.\n\nPROCEDURE IN DETAIL:\nRobotic navigation bronchoscopy was performed using the Intuitive Ion platform. A navigation plan from the pre-procedure CT was loaded and registration completed. The catheter was advanced under navigational guidance to the planned target. Radial EBUS demonstrated a concentric pattern at the target. Cone-beam CT was obtained for trajectory confirmation and correction as needed. Sampling was then performed through the extended working channel. Hemostasis was confirmed, and the patient tolerated the procedure without immediate complications.\n\nVentilation Parameters:\n- Mode: VC\n- RR: 14\n- TV: 450 mL\n- PEEP: 8.0 cm H\u2082O\n- FiO2: 40%\n- Flow Rate: 30 L/min- Pmean: 12.0 cm H\u2082O\n\nRadial endobronchial ultrasound demonstrated an concentric view with lesion size 18.0 mm.\nThe probe was withdrawn leaving the guide sheath in situ. Sampling was performed via the guide sheath (1.9 mm) using forceps, needle, brush with 3 forceps, 2 needle, 1 brush.\nFluoroscopy used: Yes. ROSE: adequate sample. Specimens: pathology, cytology, microbiology. Post-procedure chest x-ray: per clinical indication. The patient tolerated the procedure well.\n\nESTIMATED BLOOD LOSS: Minimal\nCOMPLICATIONS: None\n\nSPECIMEN(S): Not collected\n\nIMPRESSION/PLAN:\nFollow pathology and arrange thoracic oncology clinic follow-up."
+  }
+]

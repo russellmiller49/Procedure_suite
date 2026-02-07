@@ -19,36 +19,50 @@ Marker: {{ marker_type }}.
 
 
 {# --- Radial EBUS Survey - CPT 31654 --- #}
-{% macro radial_ebus_survey(location, rebus_features) %}
+{% macro radial_ebus_survey(location=None, rebus_features=None) %}
 Radial endobronchial ultrasound was used to confirm lesion location and characterize internal echogenicity and margins prior to sampling. ROSE cytology was performed when available.
 
-Performed to confirm that the location of the nodule is {{ location }}.
+Performed to confirm that the location of the nodule is {{ location or "[target location]" }}.
 
 The following features were noted:
+{% if rebus_features %}
 {% for feature in rebus_features %}
 - {{ feature }}
 {% endfor %}
+{% else %}
+- [radial EBUS pattern - concentric/eccentric]
+{% endif %}
 {% endmacro %}
 
 
 {# --- Robotic Navigational Bronchoscopy (Ion/Intuitive) --- #}
-{% macro robotic_bronchoscopy_ion(vent_params, sampling_details=None, cbct_performed=true) %}
-Robotic navigation bronchoscopy was performed using the Intuitive Ion system. A navigation plan from the pre-procedure CT was loaded and registration completed. The Ion catheter was advanced under navigational guidance. Radial EBUS confirmed appropriate position. {% if cbct_performed %}Cone-beam CT was performed for trajectory verification. {% endif %}Sampling was obtained through the extended working channel as detailed. Hemostasis was confirmed. The patient tolerated the procedure well without immediate complications.
+{% macro robotic_bronchoscopy_ion(vent_params=None, sampling_details=None, cbct_performed=true, lesion_location=None, lesion_size_cm=None, radial_pattern=None, notes=None) %}
+Robotic navigation bronchoscopy was performed using the Intuitive Ion system. A navigation plan from the pre-procedure CT was loaded and registration completed. The Ion catheter was advanced under navigational guidance to {{ lesion_location or "[lesion segment e.g., RB1/RB3]" }}{% if lesion_size_cm %} targeting a {{ lesion_size_cm }} cm nodule{% endif %}. Radial EBUS confirmed {{ radial_pattern or "[radial pattern]" }} position. {% if cbct_performed %}Cone-beam CT was performed for trajectory verification. {% endif %}Sampling was obtained through the extended working channel as detailed. Hemostasis was confirmed. The patient tolerated the procedure well without immediate complications.
 
 CT Chest scan was placed on separate planning station to generate 3D rendering of the pathway to target. The navigational plan was reviewed and verified. This was then loaded into robotic bronchoscopy platform.
+{% if notes %}
+
+{{ notes }}
+{% endif %}
+{% if vent_params %}
 
 Ventilation Parameters:
-- Mode: {{ vent_params.mode }}
-- RR: {{ vent_params.respiratory_rate }}
-- TV: {{ vent_params.tidal_volume }}
-- PEEP: {{ vent_params.peep }}
-- FiO2: {{ vent_params.fio2 }}
-- Flow Rate: {{ vent_params.flow_rate }}
-- Pmean: {{ vent_params.mean_pressure }}
+- Mode: {{ vent_params.mode or "[mode]" }}
+- RR: {{ vent_params.respiratory_rate or "[RR]" }}
+- TV: {{ vent_params.tidal_volume or "[TV]" }}
+- PEEP: {{ vent_params.peep or "[PEEP]" }}
+- FiO2: {{ vent_params.fio2 or "[FiO₂]" }}
+- Flow Rate: {{ vent_params.flow_rate or "[flow rate]" }}
+- Pmean: {{ vent_params.mean_pressure or "[Pmean]" }}
+{% endif %}
 {% if sampling_details %}
 
 SAMPLING:
 {{ sampling_details }}
+{% else %}
+
+SAMPLING:
+[sampling method and count to be documented]
 {% endif %}
 {% endmacro %}
 
@@ -115,16 +129,20 @@ Proceeded using {{ proceeding_with }} as described.
 
 
 {# --- Linear EBUS with TBNA - CPT 31652/31653 --- #}
-{% macro linear_ebus_tbna(lymph_nodes) %}
+{% macro linear_ebus_tbna(lymph_nodes=None) %}
 Linear endobronchial ultrasound with transbronchial needle aspiration was performed. The following lymph node stations were systematically evaluated and sampled:
 
+{% if lymph_nodes %}
 {% for node in lymph_nodes %}
-LYMPH NODE {{ loop.index }}: The Station {{ node.station }} node was {{ node.size_mm }} mm by EBUS, {{ node.ct_findings }}, and {{ node.pet_findings }}. The lymph node was photographed. {{ node.num_tbna }} TBNAs were performed with samples obtained.
+LYMPH NODE {{ loop.index }}: The Station {{ node.station or "[station]" }} node was {{ node.size_mm or "[size]" }} mm by EBUS, {{ node.ct_findings or "[CT findings]" }}, and {{ node.pet_findings or "[PET findings]" }}. The lymph node was photographed. {{ node.num_tbna or "[count]" }} TBNAs were performed with samples obtained.
 {% if node.rose %}
 Preliminary ROSE cytology was reported as {{ node.rose.adequacy }} and suggestive of {{ node.rose.findings }} (final results are pending).
 {% endif %}
 
 {% endfor %}
+{% else %}
+[Lymph node stations sampled with TBNA counts to be documented]
+{% endif %}
 {% endmacro %}
 
 

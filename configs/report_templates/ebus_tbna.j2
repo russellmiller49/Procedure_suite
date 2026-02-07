@@ -1,10 +1,13 @@
-A systematic EBUS survey was completed.{% if proc.needle_gauge %} Sampling was performed using a {{ proc.needle_gauge }} needle.{% endif %}{% if proc.rose_available is not none %} ROSE {% if proc.rose_available %}was{% else %}was not{% endif %} available.{% endif %}
+A systematic EBUS survey of mediastinal and hilar stations was completed using linear EBUS.{% if proc.needle_gauge %} Sampling was performed using a {{ proc.needle_gauge }} needle.{% endif %}{% if proc.rose_available is not none %} ROSE {% if proc.rose_available %}was{% else %}was not{% endif %} available.{% endif %}
 
 {% if proc.elastography_used %}
 Elastography was performed; patterns were {{ proc.elastography_pattern or "noted" }}.
 {% endif %}
 
-The following lymph node stations were sampled:
+The following lymph node stations were sampled for diagnostic and staging evaluation:
+{% if proc.stations %}
+Stations targeted: {{ proc.stations | map(attribute='station_name') | join(', ') }}.
+{% endif %}
 
 {% for station in proc.stations %}
 Station: {{ station.station_name }}
@@ -23,4 +26,4 @@ Station: {{ station.station_name }}
 
 {% endfor %}
 {% if proc.overall_rose_diagnosis %}Overall ROSE Diagnosis: {{ proc.overall_rose_diagnosis }}.{% endif %}
-No immediate complications were observed.
+No immediate complications were observed, and post-procedure airway patency was preserved.
