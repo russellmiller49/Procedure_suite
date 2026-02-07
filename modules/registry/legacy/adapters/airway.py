@@ -419,6 +419,13 @@ class BALAdapter(DictPayloadAdapter):
     source_key = "bal"
 
 
+class FiducialMarkerPlacementAdapter(DictPayloadAdapter):
+    proc_type = "fiducial_marker_placement"
+    schema_model = airway_schemas.FiducialMarkerPlacement
+    schema_id = "fiducial_marker_placement_v1"
+    source_key = "fiducial_marker_placement"
+
+
 class BALVariantAdapter(DictPayloadAdapter):
     proc_type = "bal_variant"
     schema_model = airway_schemas.BronchoalveolarLavageAlt

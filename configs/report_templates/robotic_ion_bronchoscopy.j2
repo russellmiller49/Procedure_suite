@@ -6,11 +6,11 @@ Notes: {{ proc.notes }}.
 {% if has_vent %}
 
 Ventilation Parameters:
-- Mode: {{ proc.vent_mode or "[mode]" }}
-- RR: {{ proc.vent_rr or "[RR]" }}
-- TV: {{ (proc.vent_tv_ml ~ " mL") if proc.vent_tv_ml else "[TV]" }}
-- PEEP: {{ (proc.vent_peep_cm_h2o ~ " cm H₂O") if proc.vent_peep_cm_h2o else "[PEEP]" }}
-- FiO2: {{ (proc.vent_fio2_pct ~ "%") if proc.vent_fio2_pct else "[FiO₂]" }}
+{% if proc.vent_mode %}- Mode: {{ proc.vent_mode }}{% endif %}
+{% if proc.vent_rr is not none %}- RR: {{ proc.vent_rr }}{% endif %}
+{% if proc.vent_tv_ml is not none %}- TV: {{ proc.vent_tv_ml }} mL{% endif %}
+{% if proc.vent_peep_cm_h2o is not none %}- PEEP: {{ proc.vent_peep_cm_h2o }} cm H₂O{% endif %}
+{% if proc.vent_fio2_pct is not none %}- FiO2: {{ proc.vent_fio2_pct }}%{% endif %}
 {% if proc.vent_flow_rate %}- Flow Rate: {{ proc.vent_flow_rate }}{% endif %}
-{% if proc.vent_pmean_cm_h2o %}- Pmean: {{ proc.vent_pmean_cm_h2o }} cm H₂O{% endif %}
+{% if proc.vent_pmean_cm_h2o is not none %}- Pmean: {{ proc.vent_pmean_cm_h2o }} cm H₂O{% endif %}
 {% endif %}

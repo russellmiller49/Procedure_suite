@@ -966,6 +966,7 @@ def _render_bundle_markdown(
         templates,
         schemas,
         procedure_order=_load_procedure_order(),
+        render_style="builder",
     )
     try:
         structured = engine.compose_report_with_metadata(

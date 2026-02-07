@@ -56,6 +56,7 @@ class TransbronchialCryobiopsyPartial(BaseModel):
 
     lung_segment: str | None = None
     num_samples: int | None = None
+    sample_size_mm: float | None = None
     cryoprobe_size_mm: float | None = None
     freeze_seconds: int | None = None
     thaw_seconds: int | None = None
@@ -76,3 +77,69 @@ class PeripheralAblationPartial(BaseModel):
     duration_min: float | None = None
     max_temp_c: int | None = None
     notes: str | None = None
+
+
+class EndobronchialCatheterPlacementPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    catheter_size_fr: int | None = None
+    target_airway: str | None = None
+    obstruction_pct: int | None = None
+    fluoro_used: bool | None = None
+    dummy_check: bool | None = None
+    notes: str | None = None
+
+
+class MicrodebriderDebridementPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    airway_segment: str | None = None
+    notes: str | None = None
+
+
+class EndobronchialTumorDestructionPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    modality: str | None = None
+    airway_segment: str | None = None
+    notes: str | None = None
+
+
+class AirwayStentPlacementPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    stent_type: str | None = None
+    diameter_mm: int | None = None
+    length_mm: int | None = None
+    airway_segment: str | None = None
+    notes: str | None = None
+
+
+class MedicalThoracoscopyPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    side: str | None = None
+    findings: str | None = None
+    interventions: List[str] = Field(default_factory=list)
+    specimens: List[str] = Field(default_factory=list)
+    notes: str | None = None
+
+
+class RigidBronchoscopyPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    size_or_model: str | None = None
+    hf_jv: bool | None = None
+    interventions: List[str] = Field(default_factory=list)
+    flexible_scope_used: bool | None = None
+    estimated_blood_loss_ml: int | None = None
+    specimens: List[str] | None = None
+    post_procedure_plan: str | None = None
+    dilation_sizes_mm: List[int] = Field(default_factory=list)
+    post_dilation_diameter_mm: int | None = None
+
+    # Reporter-only enrichments
+    target_airway: str | None = None
+    pre_obstruction_pct: int | None = None
+    post_obstruction_pct: int | None = None
+    findings: str | None = None

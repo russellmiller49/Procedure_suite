@@ -721,7 +721,8 @@ def test_cryo_bpf_case():
     assert "{{" not in note and "[" not in note and "None mL" not in note
 
 
-def test_wll_peg_instructions():
+def test_wll_peg_instructions(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("REPORTER_INCLUDE_DISCHARGE_INSTRUCTIONS", "1")
     bundle = ProcedureBundle(
         patient=PatientInfo(name="Taylor Ray", age=50, sex="female"),
         encounter=EncounterInfo(date="2024-10-02", attending="Dr. Other"),

@@ -1,4 +1,5 @@
-{% set _modality = proc.modality or "Microwave" %}
-{{ _modality }} Ablation{% if proc.target %} of {{ proc.target }} target{% endif %}.
-{% if proc.power_w is not none and proc.duration_min is not none %}Ablated {{ proc.power_w }}W x {{ proc.duration_min }} min{% if proc.max_temp_c is not none %} (Max temp {{ proc.max_temp_c }}C){% endif %}.{% endif %}
-{% if proc.notes %}Result: {{ proc.notes }}.{% endif %}
+{% set _modality = (proc.modality or "Microwave") | trim %}
+{{ _modality }} Ablation{% if proc.target %} The probe was advanced to the {{ proc.target }} target.{% endif %}
+{% if proc.power_w is not none and proc.duration_min is not none %}Settings: Ablation was performed at {{ proc.power_w }} Watts for {{ proc.duration_min }} minutes.{% endif %}
+{% if proc.max_temp_c is not none %}Parameters: Maximum temperature recorded was {{ proc.max_temp_c }}°C.{% endif %}
+{% if proc.notes %}Post-Ablation Assessment: {{ proc.notes }}.{% endif %}

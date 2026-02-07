@@ -48,34 +48,8 @@ def _reset_llm_usage_totals() -> None:
 
 @pytest.fixture(scope="session", autouse=True)
 def _golden_env() -> None:
-    """Golden harness must be deterministic (no network LLM calls, no fallback)."""
-    env_overrides = {
-        # Explicitly disable any network-backed LLM usage.
-        "OPENAI_OFFLINE": "1",
-        "GEMINI_OFFLINE": "1",
-        "REGISTRY_USE_STUB_LLM": "1",
-        "PROCSUITE_SKIP_DOTENV": "1",
-        # Reporter harness invariants.
-        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
-        "REPORTER_DISABLE_LLM": "1",
-        # Ensure extraction-first uses deterministic pathway (no self-correction).
-        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
-        "REGISTRY_SELF_CORRECT_ENABLED": "0",
-        # Reduce noisy stderr output in CI.
-        "OPENAI_LOG_USAGE_PER_CALL": "0",
-        "OPENAI_LOG_USAGE_SUMMARY": "0",
-    }
-
-    old = {k: os.environ.get(k) for k in env_overrides}
-    try:
-        os.environ.update(env_overrides)
-        yield
-    finally:
-        for k, prev in old.items():
-            if prev is None:
-                os.environ.pop(k, None)
-            else:
-                os.environ[k] = prev
+    """Deprecated: session-scoped env is overridden by baseline_env per-test."""
+    return
 
 def normalize_text(text: str) -> str:
     """Normalize whitespace and newlines for fairer comparison."""
@@ -86,6 +60,34 @@ def normalize_text(text: str) -> str:
 def calculate_similarity(text1: str, text2: str) -> float:
     """Calculate simple similarity ratio."""
     return difflib.SequenceMatcher(None, text1, text2).ratio()
+
+@pytest.fixture(autouse=True)
+def _golden_env_override(baseline_env: None, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Golden harness must be deterministic (no network LLM calls, no fallback).
+
+    Note: tests/conftest.py enforces a per-test baseline environment; we override
+    it here (after baseline_env) to ensure this suite uses the intended settings.
+    """
+    env_overrides = {
+        # Explicitly disable any network-backed LLM usage.
+        "OPENAI_OFFLINE": "1",
+        "GEMINI_OFFLINE": "1",
+        "REGISTRY_USE_STUB_LLM": "1",
+        # Avoid local `.env` influencing outputs.
+        "PROCSUITE_SKIP_DOTENV": "1",
+        "PROCSUITE_SKIP_WARMUP": "1",
+        # Reporter harness invariants.
+        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
+        "REPORTER_DISABLE_LLM": "1",
+        # Ensure extraction-first uses deterministic pathway (no self-correction).
+        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+        "REGISTRY_SELF_CORRECT_ENABLED": "0",
+        # Reduce noisy stderr output in CI.
+        "OPENAI_LOG_USAGE_PER_CALL": "0",
+        "OPENAI_LOG_USAGE_SUMMARY": "0",
+    }
+    for key, value in env_overrides.items():
+        monkeypatch.setenv(key, value)
 
 @pytest.fixture(scope="session")
 def _golden_examples() -> list[dict[str, Any]]:
@@ -188,9 +190,49 @@ def test_golden_reporter_similarity(
 
 def main() -> None:
     """Script mode: print per-example scores and a quick summary for debugging."""
+    env_overrides = {
+        # Explicitly disable any network-backed LLM usage.
+        "OPENAI_OFFLINE": "1",
+        "GEMINI_OFFLINE": "1",
+        "REGISTRY_USE_STUB_LLM": "1",
+        "PROCSUITE_SKIP_DOTENV": "1",
+        "PROCSUITE_SKIP_WARMUP": "1",
+        # Reporter harness invariants.
+        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
+        "REPORTER_DISABLE_LLM": "1",
+        # Ensure extraction-first uses deterministic pathway (no self-correction).
+        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+        "REGISTRY_SELF_CORRECT_ENABLED": "0",
+        # Reduce noisy stderr output in CI.
+        "OPENAI_LOG_USAGE_PER_CALL": "0",
+        "OPENAI_LOG_USAGE_SUMMARY": "0",
+    }
+    os.environ.update(env_overrides)
+
     examples = json.loads(GOLDEN_DATASET_PATH.read_text(encoding="utf-8"))
-    strategy = _reporting_strategy()  # type: ignore[misc]
-    registry_service = _registry_service()  # type: ignore[misc]
+
+    templates = default_template_registry()
+    schemas = default_schema_registry()
+    reporter_engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=_load_procedure_order(),
+    )
+    inference_engine = InferenceEngine()
+    validation_engine = ValidationEngine(templates, schemas)
+
+    class _NeverRegistryEngine:
+        def run(self, *_args, **_kwargs):  # noqa: ANN001
+            raise AssertionError("Golden tests should provide registry_data explicitly")
+
+    strategy = ReportingStrategy(
+        reporter_engine=reporter_engine,
+        inference_engine=inference_engine,
+        validation_engine=validation_engine,
+        registry_engine=_NeverRegistryEngine(),
+        simple_strategy=SimpleReporterStrategy(),
+    )
+    registry_service = RegistryService()
 
     _reset_llm_usage_totals()
 
