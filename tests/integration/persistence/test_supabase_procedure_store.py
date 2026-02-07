@@ -60,7 +60,7 @@ def supabase_store():
 
     This fixture is module-scoped to avoid repeatedly connecting to Supabase.
     """
-    from modules.coder.adapters.persistence.supabase_procedure_store import (
+    from app.coder.adapters.persistence.supabase_procedure_store import (
         SupabaseProcedureStore,
     )
 
@@ -98,7 +98,7 @@ class TestSupabaseConnection:
 
     def test_is_supabase_available(self):
         """Test that is_supabase_available returns True when configured."""
-        from modules.coder.adapters.persistence.supabase_procedure_store import (
+        from app.coder.adapters.persistence.supabase_procedure_store import (
             is_supabase_available,
         )
 

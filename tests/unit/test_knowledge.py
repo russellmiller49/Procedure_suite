@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.common import knowledge
+from app.common import knowledge
 
 
 def test_knowledge_snapshot_has_expected_fields() -> None:

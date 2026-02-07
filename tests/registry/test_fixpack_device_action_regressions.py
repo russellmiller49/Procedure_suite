@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
+from app.coder.domain_rules.registry_to_cpt.coding_rules import (
     derive_all_codes_with_meta,
     derive_units_for_codes,
 )
-from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
-from modules.registry.deterministic_extractors import run_deterministic_extractors
-from modules.registry.schema import RegistryRecord
+from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
+from app.registry.deterministic_extractors import run_deterministic_extractors
+from app.registry.schema import RegistryRecord
 
 
 def test_doxycycline_instillation_sets_pleurodesis_and_does_not_code_chest_tube_insertion() -> None:

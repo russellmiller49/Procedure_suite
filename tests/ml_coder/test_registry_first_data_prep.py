@@ -17,7 +17,7 @@ from pathlib import Path
 import pytest
 import pandas as pd
 
-from modules.ml_coder.registry_data_prep import (
+from ml.lib.ml_coder.registry_data_prep import (
     RegistryLabelExtractor,
     ALL_PROCEDURE_LABELS,
     LABEL_ALIASES,

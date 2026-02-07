@@ -4,7 +4,7 @@
 **Goal:** Fix the "Split Brain" issues identified in the audit before applying new logic.
 
 1.  **Eliminate Duplicate Endpoint:**
-    *   **Delete** the inline definition of `@app.post("/api/v1/process")` in `modules/api/fastapi_app.py` (approx line 880).
+    *   **Delete** the inline definition of `@app.post("/api/v1/process")` in `app/api/fastapi_app.py` (approx line 880).
     *   **Verify** that `fastapi_app.py` mounts the `unified_process` router correctly. This is now the single source of truth.
 2.  **Unify Reconciliation Logic:**
     *   Codex found two engines: `CodeReconciler` (legacy) vs `ConfidenceCombiner` (production).
@@ -19,7 +19,7 @@
 
 ## 1. Configuration Contract (Fail-Fast)
 
-Codex must enforce these values in `modules/api/fastapi_app.py` startup events.
+Codex must enforce these values in `app/api/fastapi_app.py` startup events.
 
 ### 1.1 Required Production Env
 ```bash
@@ -62,7 +62,7 @@ Update RegistryService._shape_registry_payload to accept and merge this evidence
 Schema: {"source": "ner_span", "text": "...", "span": [x, y], "confidence": 1.0}.
 
 3. Clinical Guardrails (Post-Process)
-Implement the following logic in a new class modules/extraction/postprocessing/clinical_guardrails.py.
+Implement the following logic in a new class app/extraction/postprocessing/clinical_guardrails.py.
 
 3.1 Navigation Failure (Modifier -53)
 Trigger: CPT 31627 extracted + keywords (mis-registering, unable to navigate, aborted, failure).

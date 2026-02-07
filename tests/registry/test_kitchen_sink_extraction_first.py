@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
+from app.registry.application.registry_service import RegistryService
 
 
 def test_kitchen_sink_extraction_first_flags(monkeypatch: pytest.MonkeyPatch) -> None:

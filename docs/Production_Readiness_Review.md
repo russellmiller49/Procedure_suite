@@ -8,7 +8,7 @@ These issues pose immediate risks to stability, security, or operability in a pr
 1. Security & Authentication (High Risk)
 Problem: There is no visible authentication mechanism (e.g., OAuth2, API Keys, JWT) protecting the API endpoints. The 
 
-modules/api/dependencies.py
+app/api/dependencies.py
  file does not define auth dependencies, and 
 
 fastapi_app.py

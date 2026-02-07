@@ -5,12 +5,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from config.settings import CoderSettings
-from modules.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
-from modules.coder.application.coding_service import CodingService
-from modules.coder.rules_engine import CodingRulesEngine
-from modules.coder.types import CodeCandidate
-from modules.registry.application.registry_service import RegistryExtractionResult
-from modules.registry.schema import RegistryRecord
+from app.coder.adapters.nlp.simple_negation_detector import SimpleNegationDetector
+from app.coder.application.coding_service import CodingService
+from app.coder.rules_engine import CodingRulesEngine
+from app.coder.types import CodeCandidate
+from app.registry.application.registry_service import RegistryExtractionResult
+from app.registry.schema import RegistryRecord
 
 
 def test_rules_engine_noop_does_not_change_candidates():

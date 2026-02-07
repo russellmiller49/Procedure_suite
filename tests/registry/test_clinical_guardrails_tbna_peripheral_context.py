@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
-from modules.registry.schema import RegistryRecord
+from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
+from app.registry.schema import RegistryRecord
 
 
 def test_tbna_conventional_without_stations_in_peripheral_context_flips_to_peripheral_tbna() -> None:

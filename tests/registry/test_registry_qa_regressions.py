@@ -3,8 +3,8 @@ from textwrap import dedent
 
 import pytest
 
-from modules.registry.engine import RegistryEngine
-from modules.registry.postprocess import VALID_EBUS_STATIONS
+from app.registry.engine import RegistryEngine
+from app.registry.postprocess import VALID_EBUS_STATIONS
 
 
 def _get_linear_ebus_field(record, field_name):

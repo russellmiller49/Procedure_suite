@@ -17,17 +17,17 @@ import pytest
 from unittest.mock import MagicMock, patch
 from typing import Any
 
-from modules.coder.application.smart_hybrid_policy import HybridCoderResult
-from modules.ml_coder.thresholds import CaseDifficulty
-from modules.ml_coder.registry_predictor import (
+from app.coder.application.smart_hybrid_policy import HybridCoderResult
+from ml.lib.ml_coder.thresholds import CaseDifficulty
+from ml.lib.ml_coder.registry_predictor import (
     RegistryMLPredictor,
     RegistryFieldPrediction,
     RegistryCaseClassification,
 )
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.application.cpt_registry_mapping import aggregate_registry_fields
-from modules.registry.engine import RegistryEngine
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.application.cpt_registry_mapping import aggregate_registry_fields
+from app.registry.engine import RegistryEngine
+from app.registry.schema import RegistryRecord
 
 
 @pytest.fixture(autouse=True)

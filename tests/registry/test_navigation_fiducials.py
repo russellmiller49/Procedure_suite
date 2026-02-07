@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.processing.navigation_fiducials import apply_navigation_fiducials
+from app.registry.processing.navigation_fiducials import apply_navigation_fiducials
 
 
 def test_apply_navigation_fiducials_populates_target() -> None:

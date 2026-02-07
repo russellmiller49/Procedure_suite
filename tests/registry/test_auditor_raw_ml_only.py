@@ -2,8 +2,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
 
 
 class _StubRegistryEngine:
@@ -20,7 +20,7 @@ def test_registry_audit_calls_raw_ml_predictor_directly(monkeypatch: pytest.Monk
     monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
 
     # If the extraction-first path consults the orchestrator, this should explode.
-    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
+    from app.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
 
     monkeypatch.setattr(
         SmartHybridOrchestrator,
@@ -32,7 +32,7 @@ def test_registry_audit_calls_raw_ml_predictor_directly(monkeypatch: pytest.Monk
     orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
 
     # If anything tries to invoke coder rules validation during audit, explode.
-    from modules.coder.rules_engine import CodingRulesEngine
+    from app.coder.rules_engine import CodingRulesEngine
 
     monkeypatch.setattr(
         CodingRulesEngine,
@@ -42,8 +42,8 @@ def test_registry_audit_calls_raw_ml_predictor_directly(monkeypatch: pytest.Monk
 
     raw_note_text = "RAW NOTE: EBUS bronchoscopy performed. Station 7 sampled."
 
-    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
-    from modules.ml_coder.thresholds import CaseDifficulty
+    from ml.lib.ml_coder.predictor import CaseClassification, MLCoderPredictor
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
 
     classify_calls: list[str] = []
 
@@ -77,7 +77,7 @@ def test_auditor_uses_raw_note_text_even_when_focusing_enabled(
     monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "raw_ml")
     monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "agents_focus_then_engine")
 
-    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
+    from app.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
 
     monkeypatch.setattr(
         SmartHybridOrchestrator,
@@ -85,7 +85,7 @@ def test_auditor_uses_raw_note_text_even_when_focusing_enabled(
         lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("SmartHybridOrchestrator.get_codes() called")),
     )
 
-    from modules.coder.rules_engine import CodingRulesEngine
+    from app.coder.rules_engine import CodingRulesEngine
 
     monkeypatch.setattr(
         CodingRulesEngine,
@@ -96,7 +96,7 @@ def test_auditor_uses_raw_note_text_even_when_focusing_enabled(
     raw_note_text = "RAW NOTE: Procedure section says BAL and navigation."
     focused_text = "FOCUSED NOTE: only procedure summary"
 
-    import modules.registry.application.registry_service as registry_service_module
+    import app.registry.application.registry_service as registry_service_module
 
     def _fake_focus(note_text: str):  # type: ignore[no-untyped-def]
         assert note_text == raw_note_text
@@ -116,8 +116,8 @@ def test_auditor_uses_raw_note_text_even_when_focusing_enabled(
     orchestrator = MagicMock()
     orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
 
-    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
-    from modules.ml_coder.thresholds import CaseDifficulty
+    from ml.lib.ml_coder.predictor import CaseClassification, MLCoderPredictor
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
 
     classify_calls: list[str] = []
     monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)

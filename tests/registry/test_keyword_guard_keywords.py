@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.self_correction.keyword_guard import keyword_guard_passes
+from app.registry.self_correction.keyword_guard import keyword_guard_passes
 
 
 def test_keyword_guard_passes_for_fiducials_31626() -> None:

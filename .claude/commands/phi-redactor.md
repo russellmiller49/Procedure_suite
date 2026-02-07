@@ -40,17 +40,17 @@ Submit to Server → Formatted Results Display
 ### Client-Side UI (Browser)
 | File | Purpose |
 |------|---------|
-| `modules/api/static/phi_redactor/redactor.worker.js` | Web Worker: ML inference + regex detection (union mode) |
-| `modules/api/static/phi_redactor/protectedVeto.js` | Veto/allow-list layer (prevents false positives) |
-| `modules/api/static/phi_redactor/app.js` | Main UI application (Monaco editor integration) |
-| `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/` | ONNX model bundle |
-| `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json` | Protected clinical terms config |
+| `ui/static/phi_redactor/redactor.worker.js` | Web Worker: ML inference + regex detection (union mode) |
+| `ui/static/phi_redactor/protectedVeto.js` | Veto/allow-list layer (prevents false positives) |
+| `ui/static/phi_redactor/app.js` | Main UI application (Monaco editor integration) |
+| `ui/static/phi_redactor/vendor/phi_distilbert_ner/` | ONNX model bundle |
+| `ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json` | Protected clinical terms config |
 
 ### Server-Side (Python)
 | File | Purpose |
 |------|---------|
-| `modules/phi/adapters/phi_redactor_hybrid.py` | Server-side hybrid redactor |
-| `modules/phi/adapters/presidio_scrubber.py` | Presidio-based scrubber |
+| `app/phi/adapters/phi_redactor_hybrid.py` | Server-side hybrid redactor |
+| `app/phi/adapters/presidio_scrubber.py` | Presidio-based scrubber |
 
 ### Training Pipeline
 | File | Purpose |
@@ -224,7 +224,7 @@ make gold-finetune  # or gold-train for full training
 - Check stats: `prodigy stats phi_corrections`
 
 ### 7. Update Protected Terms Config
-Edit `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json`:
+Edit `ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json`:
 - `anatomy_terms`: Anatomical terms to protect
 - `device_manufacturers`: Company names that look like person names
 - `protected_device_names`: Device names to protect

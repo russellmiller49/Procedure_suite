@@ -1,12 +1,12 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from modules.api.dependencies import get_coding_service, get_registry_service
-from modules.api.fastapi_app import app
-from modules.api.readiness import require_ready
-from modules.common.spans import Span
-from modules.registry.application.registry_service import RegistryExtractionResult
-from modules.registry.schema import RegistryRecord
+from app.api.dependencies import get_coding_service, get_registry_service
+from app.api.fastapi_app import app
+from app.api.readiness import require_ready
+from app.common.spans import Span
+from app.registry.application.registry_service import RegistryExtractionResult
+from app.registry.schema import RegistryRecord
 
 
 @pytest.fixture(autouse=True)

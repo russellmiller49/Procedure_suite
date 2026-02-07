@@ -13,7 +13,7 @@ os.environ.setdefault("GEMINI_OFFLINE", "1")
 os.environ.setdefault("DISABLE_STATIC_FILES", "0")
 os.environ.setdefault("PHI_SCRUBBER_MODE", "stub")
 
-from modules.api.fastapi_app import app
+from app.api.fastapi_app import app
 
 
 @pytest.fixture(autouse=True)

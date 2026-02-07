@@ -6,12 +6,12 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.deterministic_extractors import run_deterministic_extractors
-from modules.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
-from modules.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
+from app.registry.application.registry_service import RegistryService
+from app.registry.deterministic_extractors import run_deterministic_extractors
+from app.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
+from app.registry.schema import RegistryRecord
 
 
 @dataclass

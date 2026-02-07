@@ -26,21 +26,21 @@ ACTIVE_DIRECTORIES = [
 
 # Legacy strings that should NOT appear in active code
 LEGACY_STRINGS = [
-    # Old proc_autocode imports - now at modules.autocode
+    # Old proc_autocode imports - now at app.autocode
     "from proc_autocode.coder import",
     "from proc_autocode import",
     "import proc_autocode.coder",
     "proc_autocode.ip_kb",
-    # Old proc_report imports - now at modules.reporting
+    # Old proc_report imports - now at app.reporting
     "from proc_report import",
     "from proc_report.engine import",
     "import proc_report",
-    # Old proc_registry imports - now at modules.registry.legacy
+    # Old proc_registry imports - now at app.registry.legacy
     "from proc_registry import",
     "import proc_registry",
     # Deprecated internal modules
-    "from modules.coder.llm_coder import",  # Should use adapters/llm/gemini_advisor
-    "from modules.coder.engine import",  # Should use application/coding_service
+    "from app.coder.llm_coder import",  # Should use adapters/llm/gemini_advisor
+    "from app.coder.engine import",  # Should use application/coding_service
 ]
 
 # Files that are explicitly allowed to have legacy references (for deprecation notices)
@@ -85,9 +85,9 @@ def test_no_legacy_imports_in_api():
     assert not violations, (
         "Legacy imports found in modules/api/:\n" + "\n".join(violations) +
         "\n\nPlease use the new hexagonal architecture instead:\n"
-        "- CodingService from modules.coder.application.coding_service\n"
-        "- LLMAdvisorPort from modules.coder.adapters.llm.gemini_advisor\n"
-        "- JsonKnowledgeBaseAdapter from modules.coder.adapters.persistence"
+        "- CodingService from app.coder.application.coding_service\n"
+        "- LLMAdvisorPort from app.coder.adapters.llm.gemini_advisor\n"
+        "- JsonKnowledgeBaseAdapter from app.coder.adapters.persistence"
     )
 
 
@@ -192,9 +192,9 @@ def test_coding_service_uses_ports_not_concrete():
 
     # Should NOT directly import concrete LLM implementations
     concrete_imports = [
-        "from modules.coder.llm_coder import",
-        "import modules.coder.llm_coder",
-        "from modules.common.llm import GeminiLLM",
+        "from app.coder.llm_coder import",
+        "import app.coder.llm_coder",
+        "from app.common.llm import GeminiLLM",
     ]
 
     violations = []
@@ -222,8 +222,8 @@ def test_kb_uses_domain_interfaces():
     legacy_kb_imports = [
         "from proc_autocode.ip_kb",
         "import proc_autocode.ip_kb",
-        "from modules.autocode.ip_kb",
-        "import modules.autocode.ip_kb",
+        "from app.autocode.ip_kb",
+        "import app.autocode.ip_kb",
     ]
 
     violations = []
@@ -233,5 +233,5 @@ def test_kb_uses_domain_interfaces():
 
     assert not violations, (
         f"CodingService should not import legacy KB:\n{violations}\n\n"
-        "Use KnowledgeBaseRepository interface from modules.domain.knowledge_base instead."
+        "Use KnowledgeBaseRepository interface from app.domain.knowledge_base instead."
     )

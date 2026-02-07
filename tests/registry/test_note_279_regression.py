@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
+from app.registry.application.registry_service import RegistryService
 
 
 def test_note_279_regression_no_cryo_or_laser_hallucination(monkeypatch: pytest.MonkeyPatch) -> None:

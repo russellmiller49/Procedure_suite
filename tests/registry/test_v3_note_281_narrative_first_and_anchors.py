@@ -8,8 +8,8 @@ import pytest
 def test_v3_note_281_prompt_is_narrative_first_and_includes_anchors(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    import modules.registry.extractors.v3_extractor as v3_extractor
-    from modules.registry.pipelines.v3_pipeline import run_v3_extraction
+    import app.registry.extractors.v3_extractor as v3_extractor
+    from app.registry.pipelines.v3_pipeline import run_v3_extraction
 
     note_text = Path("tests/fixtures/notes/note_281.txt").read_text(encoding="utf-8")
 

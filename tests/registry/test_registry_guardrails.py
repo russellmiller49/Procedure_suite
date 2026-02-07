@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from modules.common.spans import Span
-from modules.registry.evidence.verifier import verify_evidence_integrity
-from modules.registry.postprocess import sanitize_ebus_events
-from modules.registry.schema import RegistryRecord
+from app.common.spans import Span
+from app.registry.evidence.verifier import verify_evidence_integrity
+from app.registry.postprocess import sanitize_ebus_events
+from app.registry.schema import RegistryRecord
 
 
 def test_verify_evidence_integrity_hallucinated_therapeutic_aspiration_flips_false() -> None:

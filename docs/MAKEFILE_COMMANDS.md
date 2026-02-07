@@ -293,7 +293,7 @@ make finetune-phi-client-hardneg-cpu
 
 **What it does**:
 - Converts model from `artifacts/phi_distilbert_ner` (PyTorch)
-- Exports to `modules/api/static/phi_redactor/vendor/phi_distilbert_ner` (ONNX)
+- Exports to `ui/static/phi_redactor/vendor/phi_distilbert_ner` (ONNX)
 - Includes tokenizer, config, and label mappings
 - Creates unquantized ONNX model
 

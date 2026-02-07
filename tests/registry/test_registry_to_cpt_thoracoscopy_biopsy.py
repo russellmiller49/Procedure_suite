@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.registry.postprocess import enrich_medical_thoracoscopy_biopsies_taken
-from modules.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.registry.postprocess import enrich_medical_thoracoscopy_biopsies_taken
+from app.registry.schema import RegistryRecord
 
 
 def test_registry_to_cpt_thoracoscopy_with_pleural_biopsy_derives_32609() -> None:

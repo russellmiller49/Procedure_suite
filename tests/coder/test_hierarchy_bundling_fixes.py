@@ -9,14 +9,14 @@ These tests verify the fixes for:
 
 import pytest
 
-from modules.coder.domain_rules import (
+from app.coder.domain_rules import (
     apply_addon_family_rules,
     apply_ebus_aspiration_bundles,
     count_sampled_ebus_stations,
     determine_ebus_code,
 )
-from modules.coder.posthoc import enforce_addon_family_consistency
-from modules.coder.schema import CodeDecision
+from app.coder.posthoc import enforce_addon_family_consistency
+from app.coder.schema import CodeDecision
 
 
 class TestAddonFamilyRules:
@@ -168,7 +168,7 @@ class TestSmartTextTruncation:
 
     def test_short_text_unchanged(self):
         """Text under limit is not modified."""
-        from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
+        from app.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
 
         adapter = GeminiAdvisorAdapter()
         short_text = "This is a short procedure note."
@@ -178,7 +178,7 @@ class TestSmartTextTruncation:
 
     def test_long_text_preserves_ends(self):
         """Long text preserves beginning and end."""
-        from modules.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
+        from app.coder.adapters.llm.gemini_advisor import GeminiAdvisorAdapter
 
         adapter = GeminiAdvisorAdapter()
 

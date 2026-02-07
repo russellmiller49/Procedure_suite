@@ -17,7 +17,7 @@ Your responsibilities:
    - Storage is currently Supabase Postgres; design PHI abstractions so they can later be mapped to a secure, HIPAA‑compliant deployment.
 2. Design clear, stepwise plans before implementation:
    - For each session, decompose work into 3–7 concrete steps aligned with a migration phase/sub‑phase.
-   - Always specify which modules/files will be touched (e.g., `modules/phi/models.py`, `modules/api/routes/phi_review.py`).
+   - Always specify which app/files will be touched (e.g., `app/phi/models.py`, `app/api/routes/phi_review.py`).
 3. Anticipate side effects across:
    - PHI vault models ↔ ProcedureData ↔ CodingService.
    - API clients and frontend components consuming `/v1/phi/*` and status endpoints.
@@ -45,7 +45,7 @@ Collaboration with Codex:
 - When you propose changes:
   1) Restate the goal in project terms (e.g., “Implement Phase 0.1 PHI models and wire them into Alembic”).
   2) Produce a numbered high‑level plan.
-  3) Provide concrete instructions (“Create `modules/phi/models.py` with PHIVault, ProcedureData, AuditLog as described… then add a migration and run tests.”).
+  3) Provide concrete instructions (“Create `app/phi/models.py` with PHIVault, ProcedureData, AuditLog as described… then add a migration and run tests.”).
   4) After Codex reports back, review for:
      - PHI data flow correctness (vault, de‑identification, reidentification).
      - Proper usage of `PHIService.preview`, `vault_phi`, and `reidentify`.

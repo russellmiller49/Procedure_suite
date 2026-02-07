@@ -12,10 +12,10 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from modules.phi.db import metadata as target_metadata
+from app.phi.db import metadata as target_metadata
 # Import models so metadata is populated
-import modules.phi.models  # noqa: F401
-import modules.registry_store.models  # noqa: F401
+import app.phi.models  # noqa: F401
+import app.registry_store.models  # noqa: F401
 
 
 config = context.config

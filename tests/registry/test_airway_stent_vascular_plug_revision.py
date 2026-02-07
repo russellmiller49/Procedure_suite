@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.registry.deterministic_extractors import run_deterministic_extractors
-from modules.registry.processing.masking import mask_offset_preserving
-from modules.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.registry.deterministic_extractors import run_deterministic_extractors
+from app.registry.processing.masking import mask_offset_preserving
+from app.registry.schema import RegistryRecord
 
 
 def _derive_codes_for_note(path: str) -> tuple[RegistryRecord, list[str]]:

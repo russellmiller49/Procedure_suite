@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.ner.inference import NEREntity, NERExtractionResult
-from modules.registry.ner_mapping.procedure_extractor import ProcedureExtractor
+from app.ner.inference import NEREntity, NERExtractionResult
+from app.registry.ner_mapping.procedure_extractor import ProcedureExtractor
 
 
 def _entity(text: str, label: str, *, start: int, end: int) -> NEREntity:

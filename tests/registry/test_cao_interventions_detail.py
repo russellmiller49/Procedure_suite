@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
+from app.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
 
 
 def _by_location(items: list[dict]) -> dict[str, dict]:

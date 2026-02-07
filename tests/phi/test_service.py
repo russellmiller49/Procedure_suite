@@ -9,13 +9,13 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
 
-from modules.phi import models
-from modules.phi.adapters.audit_logger_db import DatabaseAuditLogger
-from modules.phi.adapters.encryption_insecure_demo import InsecureDemoEncryptionAdapter
-from modules.phi.adapters.scrubber_stub import StubScrubber
-from modules.phi.db import Base
-from modules.phi.ports import ScrubResult
-from modules.phi.service import PHIService
+from app.phi import models
+from app.phi.adapters.audit_logger_db import DatabaseAuditLogger
+from app.phi.adapters.encryption_insecure_demo import InsecureDemoEncryptionAdapter
+from app.phi.adapters.scrubber_stub import StubScrubber
+from app.phi.db import Base
+from app.phi.ports import ScrubResult
+from app.phi.service import PHIService
 
 
 @pytest.fixture()

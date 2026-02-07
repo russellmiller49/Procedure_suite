@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.registry.deterministic_extractors import extract_providers
-from modules.registry.postprocess import normalize_attending_name
+from app.registry.deterministic_extractors import extract_providers
+from app.registry.postprocess import normalize_attending_name
 
 
 def test_normalize_attending_name_bans_common_header_words() -> None:

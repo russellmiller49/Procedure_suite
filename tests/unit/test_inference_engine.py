@@ -1,5 +1,5 @@
-from modules.reporting.engine import apply_patch_result
-from modules.reporting.inference import InferenceEngine
+from app.reporting.engine import apply_patch_result
+from app.reporting.inference import InferenceEngine
 from proc_schemas.clinical.common import EncounterInfo, PatientInfo, ProcedureBundle, ProcedureInput, SedationInfo
 
 

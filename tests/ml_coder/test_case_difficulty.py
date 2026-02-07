@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, patch
 import numpy as np
 import pytest
 
-from modules.ml_coder.thresholds import CaseDifficulty, Thresholds
+from ml.lib.ml_coder.thresholds import CaseDifficulty, Thresholds
 
 
 class TestThresholds:
@@ -103,7 +103,7 @@ class TestMLCoderPredictor:
     @pytest.fixture
     def mock_predictor(self):
         """Create a predictor with mocked model."""
-        from modules.ml_coder.predictor import MLCoderPredictor
+        from ml.lib.ml_coder.predictor import MLCoderPredictor
 
         # Mock the pipeline and mlb
         mock_pipeline = MagicMock()
@@ -223,7 +223,7 @@ class TestCodePrediction:
 
     def test_to_dict(self):
         """Verify CodePrediction.to_dict works correctly."""
-        from modules.ml_coder.predictor import CodePrediction
+        from ml.lib.ml_coder.predictor import CodePrediction
 
         pred = CodePrediction(cpt="31653", prob=0.85)
         d = pred.to_dict()
@@ -236,7 +236,7 @@ class TestCaseClassification:
 
     def test_to_dict_complete(self):
         """Verify full CaseClassification serialization."""
-        from modules.ml_coder.predictor import CaseClassification, CodePrediction
+        from ml.lib.ml_coder.predictor import CaseClassification, CodePrediction
 
         classification = CaseClassification(
             predictions=[

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.schema_filter import filter_schema_properties
+from app.registry.schema_filter import filter_schema_properties
 
 
 def test_schema_filtering_keeps_universal_fields():

@@ -11,7 +11,7 @@ Verifies:
 
 import pytest
 
-from modules.coder.rules_engine import (
+from app.coder.rules_engine import (
     CodingRulesEngine,
     RuleViolationError,
     ValidationResult,

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.reporting.engine import list_missing_critical_fields
-from modules.reporting.questions import build_questions
+from app.reporting.engine import list_missing_critical_fields
+from app.reporting.questions import build_questions
 from proc_schemas.clinical.airway import EBUSStationSample, EBUSTBNA
 from proc_schemas.clinical.common import EncounterInfo, PatientInfo, ProcedureBundle, ProcedureInput
 

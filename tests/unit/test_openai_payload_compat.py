@@ -5,9 +5,9 @@ import copy
 import httpx
 import pytest
 
-from modules.common.exceptions import LLMError
-from modules.common.llm import OpenAILLM
-from modules.common.model_capabilities import filter_payload_for_model
+from app.common.exceptions import LLMError
+from app.common.llm import OpenAILLM
+from app.common.model_capabilities import filter_payload_for_model
 
 
 def test_filter_payload_for_model_removes_response_format_for_gpt5() -> None:

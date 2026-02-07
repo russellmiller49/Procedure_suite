@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
+from app.registry.application.registry_service import RegistryService
 
 
 def _get_linear_ebus(record):

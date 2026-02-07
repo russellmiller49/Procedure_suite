@@ -1,8 +1,8 @@
 """Tests for EBUS and TBLB slot extractors."""
 
-from modules.common.sectionizer import SectionizerService
-from modules.registry.slots.ebus import EbusExtractor
-from modules.registry.slots.tblb import TBLBExtractor
+from app.common.sectionizer import SectionizerService
+from app.registry.slots.ebus import EbusExtractor
+from app.registry.slots.tblb import TBLBExtractor
 
 
 def _sections(text: str):

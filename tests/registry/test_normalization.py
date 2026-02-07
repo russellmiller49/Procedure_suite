@@ -6,7 +6,7 @@ variant enum values into canonical forms expected by Pydantic models.
 
 import pytest
 
-from modules.registry.normalization import (
+from app.registry.normalization import (
     normalize_gender,
     normalize_bronchus_sign,
     normalize_nav_imaging_verification,

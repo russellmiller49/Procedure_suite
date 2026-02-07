@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.registry.application.pathology_extraction import apply_pathology_extraction
-from modules.registry.schema import RegistryRecord
+from app.registry.application.pathology_extraction import apply_pathology_extraction
+from app.registry.schema import RegistryRecord
 
 
 def test_pathology_extracts_histology_biomarkers_and_pdl1_percent() -> None:

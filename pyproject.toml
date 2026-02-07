@@ -55,9 +55,9 @@ dev = [
 where = ["."]
 
 [tool.setuptools.package-data]
-"modules.reporting" = ["templates/*.jinja", "templates/**/*.jinja", "templates/**/*.j2", "templates/.keep"]
+"app.reporting" = ["templates/*.jinja", "templates/**/*.jinja", "templates/**/*.j2", "templates/.keep"]
 "configs" = ["**/*.yaml", "**/*.json", "**/*.j2"]
-"modules.api" = ["static/**/*"]
+"ui" = ["static/**/*"]
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"
@@ -73,16 +73,16 @@ extend-exclude = [
   "proc_nlp",
   "proc_schemas",
   "proc_suite.egg-info",
-  "modules/autocode",
-  "modules/reporting",
-  "modules/registry/legacy",
+  "app/autocode",
+  "app/reporting",
+  "app/registry/legacy",
 ]
 include = [
-  "modules/api/**/*.py",
-  "modules/common/knowledge*.py",
-  "modules/common/knowledge_cli.py",
-  "modules/registry/cli.py",
-  "modules/reporter/cli.py",
+  "app/api/**/*.py",
+  "app/common/knowledge*.py",
+  "app/common/knowledge_cli.py",
+  "app/registry/cli.py",
+  "app/reporter/cli.py",
   "tests/api/**/*.py",
   "tests/unit/test_knowledge.py",
   "tests/conftest.py",
@@ -94,7 +94,7 @@ select = ["E", "F", "I", "UP", "B"]
 extend-ignore = ["UP006", "UP035"]
 
 [tool.ruff.lint.per-file-ignores]
-"modules/coder/dictionary.py" = ["E501"]
+"app/coder/dictionary.py" = ["E501"]
 
 [tool.mypy]
 strict = true

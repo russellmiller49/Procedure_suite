@@ -12,11 +12,11 @@ os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 os.environ.setdefault("PHI_DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("PHI_ENCRYPTION_MODE", "demo")
 
-from modules.api.dependencies import get_coding_service  # noqa: E402
-from modules.api.fastapi_app import app  # noqa: E402
-from modules.api.phi_dependencies import engine  # noqa: E402
-from modules.phi import models  # noqa: E402
-from modules.phi.db import Base  # noqa: E402
+from app.api.dependencies import get_coding_service  # noqa: E402
+from app.api.fastapi_app import app  # noqa: E402
+from app.api.phi_dependencies import engine  # noqa: E402
+from app.phi import models  # noqa: E402
+from app.phi.db import Base  # noqa: E402
 from proc_schemas.coding import CodingResult  # noqa: E402
 
 

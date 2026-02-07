@@ -4,9 +4,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from unittest.mock import MagicMock
 
-from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
-from modules.coder.rules_engine import CodingRulesEngine
-from modules.ml_coder.thresholds import CaseDifficulty
+from app.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
+from app.coder.rules_engine import CodingRulesEngine
+from ml.lib.ml_coder.thresholds import CaseDifficulty
 
 
 @dataclass

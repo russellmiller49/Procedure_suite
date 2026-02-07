@@ -43,8 +43,8 @@ distilled/
 dist/registry_bundle/
 
 # Hugging Face model snapshots (large; keep out of git)
-modules/api/static/phi_redactor/vendor/**
-!modules/api/static/phi_redactor/vendor/.gitkeep
+ui/static/phi_redactor/vendor/**
+!ui/static/phi_redactor/vendor/.gitkeep
 
 # Hugging Face model snapshots (downloaded locally; keep out of git)
 data/models/hf/**

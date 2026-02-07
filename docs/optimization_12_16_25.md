@@ -3,7 +3,7 @@ Phase 0 — Guardrails, flags, and measurements
 Objective
 Make changes safely, allow quick rollback, and measure improvements at each phase.
 Codex tasks
-1.	Add modules/infra/settings.py
+1.	Add app/infra/settings.py
 o	Centralize env flags (examples):
 	SKIP_WARMUP (bool)
 	BACKGROUND_WARMUP (bool)
@@ -12,7 +12,7 @@ o	Centralize env flags (examples):
 	LLM_CONCURRENCY (int, default 2–4)
 	LLM_TIMEOUT_S (float)
 	ENABLE_REDIS_CACHE / ENABLE_LLM_CACHE (bool)
-2.	Add modules/infra/perf.py
+2.	Add app/infra/perf.py
 o	timed(name) context manager logging durations
 o	optional structured log helper
 3.	Add scripts/smoke_run.sh
@@ -71,7 +71,7 @@ Codex tasks
 o	In lifespan: app.state.cpu_executor = ThreadPoolExecutor(max_workers=settings.CPU_WORKERS)
 o	Default CPU_WORKERS=1 for Railway (safe baseline).
 2.	Create helper:
-o	modules/infra/executors.py
+o	app/infra/executors.py
 	async def run_cpu(app, fn, *args, **kwargs) that uses:
 	loop.run_in_executor(app.state.cpu_executor, functools.partial(fn,*args,**kwargs))
 3.	Wrap CPU-bound steps:
@@ -98,7 +98,7 @@ o	a global semaphore (smooth spikes, prevent 429)
 o	retries with exponential backoff + jitter
 Codex tasks
 1.	Build an async LLM client:
-o	modules/llm/client.py
+o	app/llm/client.py
 o	Use httpx.AsyncClient stored on app.state.llm_http
 o	Set timeouts from settings
 2.	Add a global LLM semaphore:

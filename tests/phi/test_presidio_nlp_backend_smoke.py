@@ -10,7 +10,7 @@ import pytest
 pytest.importorskip("presidio_analyzer")
 spacy = pytest.importorskip("spacy")
 
-from modules.phi.adapters.presidio_scrubber import PresidioScrubber
+from app.phi.adapters.presidio_scrubber import PresidioScrubber
 
 
 def _first_loadable_model(candidates: list[str]) -> str | None:

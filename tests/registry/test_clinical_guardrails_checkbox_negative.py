@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
-from modules.registry.schema import RegistryRecord
+from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
+from app.registry.schema import RegistryRecord
 
 
 def test_checkbox_negative_guardrail_forces_false_for_unchecked_items() -> None:

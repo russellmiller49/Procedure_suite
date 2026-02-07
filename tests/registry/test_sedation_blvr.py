@@ -1,9 +1,9 @@
 """Sedation and BLVR slot tests."""
 
-from modules.common.sectionizer import SectionizerService
-from modules.registry.engine import RegistryEngine
-from modules.registry.slots.blvr import BLVRExtractor
-from modules.registry.slots.sedation import SedationExtractor
+from app.common.sectionizer import SectionizerService
+from app.registry.engine import RegistryEngine
+from app.registry.slots.blvr import BLVRExtractor
+from app.registry.slots.sedation import SedationExtractor
 
 
 def _sections(text: str):

@@ -6,9 +6,9 @@ from typing import Optional
 import pytest
 
 from config.settings import CoderSettings
-from modules.coder.application.coding_service import CodingService
-from modules.registry.application.registry_service import RegistryExtractionResult
-from modules.registry.schema import RegistryRecord
+from app.coder.application.coding_service import CodingService
+from app.registry.application.registry_service import RegistryExtractionResult
+from app.registry.schema import RegistryRecord
 
 
 @dataclass

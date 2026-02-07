@@ -302,7 +302,7 @@ The PHI redactor runs entirely in the browser. No special setup needed:
 
 ```bash
 # Start the main dev server
-uvicorn modules.api.fastapi_app:app --reload --port 8000
+uvicorn app.api.fastapi_app:app --reload --port 8000
 
 # Access the PHI Redactor at:
 # http://localhost:8000/ui/phi_redactor/
@@ -326,7 +326,7 @@ export DATABASE_URL="postgresql+asyncpg://user:pass@localhost:5432/phi_vault"
 export ENCRYPTION_KEY=$(python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
 
 # Run the server
-uvicorn modules.api.fastapi_app:app --reload --port 8000
+uvicorn app.api.fastapi_app:app --reload --port 8000
 ```
 
 ## Configuration

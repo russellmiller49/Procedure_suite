@@ -2,8 +2,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
 
 
 class _StubRegistryEngine:
@@ -31,8 +31,8 @@ def test_audit_compare_report_computes_missing_sets_and_high_conf(
     monkeypatch.setenv("REGISTRY_ML_SELF_CORRECT_MIN_PROB", "0.95")
 
     # Guardrails: orchestrator/rules must never be invoked for audit compare.
-    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
-    from modules.coder.rules_engine import CodingRulesEngine
+    from app.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
+    from app.coder.rules_engine import CodingRulesEngine
 
     monkeypatch.setattr(SmartHybridOrchestrator, "get_codes", _raise)
     monkeypatch.setattr(CodingRulesEngine, "validate", _raise)
@@ -42,8 +42,8 @@ def test_audit_compare_report_computes_missing_sets_and_high_conf(
     engine = _StubRegistryEngine(record)
 
     # RAW-ML: high-conf suggests IPC (32550), but deterministic derivation misses it.
-    from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
-    from modules.ml_coder.thresholds import CaseDifficulty
+    from ml.lib.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
 
     classify_calls: list[str] = []
 
@@ -98,14 +98,14 @@ def test_audit_compare_report_created_when_auditor_disabled(
     monkeypatch.setenv("REGISTRY_ML_SELF_CORRECT_MIN_PROB", "0.91")
 
     # Guardrails: orchestrator/rules must never be invoked for audit compare.
-    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
-    from modules.coder.rules_engine import CodingRulesEngine
+    from app.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
+    from app.coder.rules_engine import CodingRulesEngine
 
     monkeypatch.setattr(SmartHybridOrchestrator, "get_codes", _raise)
     monkeypatch.setattr(CodingRulesEngine, "validate", _raise)
 
     # RAW-ML must not run when auditor is disabled.
-    from modules.ml_coder.predictor import MLCoderPredictor
+    from ml.lib.ml_coder.predictor import MLCoderPredictor
 
     monkeypatch.setattr(MLCoderPredictor, "classify_case", _raise)
 
@@ -129,10 +129,10 @@ def test_audit_compare_report_created_when_auditor_disabled(
 
 
 def test_audit_compare_report_treats_equivalent_codes_as_not_missing() -> None:
-    from modules.ml_coder.predictor import CaseClassification, CodePrediction
-    from modules.ml_coder.thresholds import CaseDifficulty
-    from modules.registry.audit.compare import build_audit_compare_report
-    from modules.registry.audit.raw_ml_auditor import RawMLAuditConfig
+    from ml.lib.ml_coder.predictor import CaseClassification, CodePrediction
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
+    from app.registry.audit.compare import build_audit_compare_report
+    from app.registry.audit.raw_ml_auditor import RawMLAuditConfig
 
     cfg = RawMLAuditConfig(
         use_buckets=True,

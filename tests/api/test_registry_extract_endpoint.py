@@ -18,13 +18,13 @@ import httpx
 import pytest
 import pytest_asyncio
 
-from modules.api.dependencies import get_registry_service
-from modules.api.fastapi_app import app
-from modules.registry.application.registry_service import (
+from app.api.dependencies import get_registry_service
+from app.api.fastapi_app import app
+from app.registry.application.registry_service import (
     RegistryExtractionResult,
     RegistryService,
 )
-from modules.registry.schema import RegistryRecord
+from app.registry.schema import RegistryRecord
 
 # ============================================================================
 # Fixtures

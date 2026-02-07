@@ -56,9 +56,9 @@ Use two complementary AI agents plus a real terminal to:
 
 - Works directly with the `<Procedure_suite>` codebase via a terminal.
 - Applies changes requested by Architect, especially in:
-  - `modules/phi/*` (models, schemas, adapters, application service)
-  - `modules/api/routes/phi_review.py`
-  - `modules/api/dependencies.py`, `fastapi_app.py`
+  - `app/phi/*` (models, schemas, adapters, application service)
+  - `app/api/routes/phi_review.py`
+  - `app/api/dependencies.py`, `fastapi_app.py`
   - Tests under `tests/integration/api/` and `tests/integration/`
   - Frontend components (`PHIReviewEditor`, `PHIReviewDemo`, API client)
 - Implements demo‑mode wiring that *looks like* production:
@@ -89,7 +89,7 @@ Use two complementary AI agents plus a real terminal to:
    - Architect produces:
      - A high‑level plan aligned with V8 migration phases:
        - e.g., Phase 0.1 models → 0.2 service layer → 0.3 endpoints → Phase 1 cutover, etc.
-     - List of files/modules to touch (e.g., `modules/phi/models.py`, `modules/api/routes/phi_review.py`).
+     - List of files/modules to touch (e.g., `app/phi/models.py`, `app/api/routes/phi_review.py`).
      - PHI boundary notes (what code sees raw PHI vs scrubbed text).
    - Architect calls out:
      - Any changes that modify DB schemas or public APIs.
@@ -146,7 +146,7 @@ Use two complementary AI agents plus a real terminal to:
 
 - Match existing project style for Python, TypeScript, and React.
 - Prefer:
-  - Focused functions and modules.
+  - Focused functions and app.
   - Explicit docstrings or comments for PHI‑related functions.
   - Testable boundaries: PHIService, CodingService, and adapters.
 - When technical debt is incurred (e.g., demo‑only shortcuts), mark it with TODOs including “V8” and the relevant phase for later cleanup.

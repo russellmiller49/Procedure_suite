@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from modules.registry.deterministic_extractors import run_deterministic_extractors
+from app.registry.deterministic_extractors import run_deterministic_extractors
 
 
 def test_note_047_deterministic_extractors_capture_tbbx_and_peripheral_tbna() -> None:

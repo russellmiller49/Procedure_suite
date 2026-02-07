@@ -3,12 +3,12 @@ from unittest.mock import MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
-from modules.api.dependencies import get_registry_service
-from modules.api.fastapi_app import app
-from modules.api.phi_dependencies import get_phi_scrubber
-from modules.api.phi_redaction import RedactionResult
-from modules.registry.application.registry_service import RegistryExtractionResult, RegistryRecord
-from modules.registry.schema.ip_v3_extraction import IPRegistryV3
+from app.api.dependencies import get_registry_service
+from app.api.fastapi_app import app
+from app.api.phi_dependencies import get_phi_scrubber
+from app.api.phi_redaction import RedactionResult
+from app.registry.application.registry_service import RegistryExtractionResult, RegistryRecord
+from app.registry.schema.ip_v3_extraction import IPRegistryV3
 from proc_schemas.registry.ip_v2 import IPRegistryV2
 
 client = TestClient(app)
@@ -88,7 +88,7 @@ def test_unified_process_needs_scrubbing(mock_registry_service):
     mock_registry_service.extract_fields.return_value = extraction_result
 
     # Mock redaction to happen
-    with patch("modules.api.services.unified_pipeline.apply_phi_redaction") as mock_redact:
+    with patch("app.api.services.unified_pipeline.apply_phi_redaction") as mock_redact:
         mock_redact.return_value = RedactionResult(
             text="Scrubbed text",
             was_scrubbed=True,
@@ -152,7 +152,7 @@ def test_unified_process_applies_multiple_endoscopy_rule_to_financials(
     mock_registry_service, mock_phi_scrubber
 ):
     from config.settings import CoderSettings
-    from modules.registry.application.coding_support_builder import get_kb_repo
+    from app.registry.application.coding_support_builder import get_kb_repo
 
     kb = get_kb_repo()
     conversion_factor = CoderSettings().cms_conversion_factor
@@ -247,7 +247,7 @@ def test_unified_process_include_v3_event_log(mock_registry_service, mock_phi_sc
     )
 
     with patch(
-        "modules.registry.pipelines.v3_pipeline.run_v3_extraction",
+        "app.registry.pipelines.v3_pipeline.run_v3_extraction",
         return_value=v3_payload,
     ):
         payload = {

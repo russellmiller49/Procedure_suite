@@ -52,7 +52,7 @@ The plan is organized into:
 
 #### Codex Instructions
 
-**Create new module:** `modules/registry/postprocess/template_checkbox_negation.py`
+**Create new module:** `app/registry/postprocess/template_checkbox_negation.py`
 
 ```python
 """
@@ -69,7 +69,7 @@ These must NOT trigger performed=True.
 from __future__ import annotations
 import re
 from typing import List, Tuple
-from modules.registry.schema import RegistryRecord
+from app.registry.schema import RegistryRecord
 
 # Patterns that indicate UNCHECKED/NOT PERFORMED
 UNCHECKED_PATTERNS = [
@@ -190,12 +190,12 @@ def apply_template_checkbox_negation(
     return record, corrections
 ```
 
-**Integrate into pipeline:** Modify `modules/registry/application/registry_service.py`
+**Integrate into pipeline:** Modify `app/registry/application/registry_service.py`
 
 In `_extract_fields_extraction_first()`, add after extraction but before CPT derivation:
 
 ```python
-from modules.registry.postprocess.template_checkbox_negation import (
+from app.registry.postprocess.template_checkbox_negation import (
     apply_template_checkbox_negation
 )
 
@@ -207,7 +207,7 @@ if checkbox_corrections:
     warnings.extend(checkbox_corrections)
 ```
 
-**Extend masking to strip checkbox lines:** Modify `modules/registry/processing/masking.py`
+**Extend masking to strip checkbox lines:** Modify `app/registry/processing/masking.py`
 
 Add to `mask_extraction_noise()`:
 
@@ -262,7 +262,7 @@ def test_checked_item_preserved():
 
 #### Codex Instructions
 
-**Create new module:** `modules/ml_coder/section_filter.py`
+**Create new module:** `ml/lib/ml_coder/section_filter.py`
 
 ```python
 """
@@ -327,7 +327,7 @@ def extract_procedural_text(note_text: str) -> str:
         If no headers are found or parsing fails, returns the full text (fail-safe).
     """
     try:
-        from modules.common.sectionizer import SectionizerService
+        from app.common.sectionizer import SectionizerService
     except ImportError:
         return note_text
 
@@ -377,7 +377,7 @@ def is_in_excluded_section(text: str, match_start: int, match_end: int) -> bool:
     without filtering the entire text.
     """
     try:
-        from modules.common.sectionizer import SectionizerService
+        from app.common.sectionizer import SectionizerService
     except ImportError:
         return False
     
@@ -399,11 +399,11 @@ def is_in_excluded_section(text: str, match_start: int, match_end: int) -> bool:
     return False
 ```
 
-**Update label_hydrator.py:** Modify `modules/ml_coder/label_hydrator.py`
+**Update label_hydrator.py:** Modify `ml/lib/ml_coder/label_hydrator.py`
 
 ```python
 # Add import at top
-from modules.ml_coder.section_filter import extract_procedural_text
+from ml.lib.ml_coder.section_filter import extract_procedural_text
 
 # In hydrate_labels_from_text function, add section filtering:
 def hydrate_labels_from_text(note_text: str) -> Dict[str, int]:
@@ -451,7 +451,7 @@ def test_history_stent_not_extracted():
 
 #### Codex Instructions
 
-**Update `modules/registry/ner_mapping/procedure_extractor.py`:**
+**Update `app/registry/ner_mapping/procedure_extractor.py`:**
 
 Add stent decision logic:
 
@@ -492,7 +492,7 @@ def _classify_stent_context(text: str, stent_span_start: int, stent_span_end: in
     return "unknown"
 ```
 
-**Update `modules/registry/deterministic/deterministic_extractors.py`:**
+**Update `app/registry/deterministic/deterministic_extractors.py`:**
 
 Add `extract_airway_stent()` function:
 
@@ -569,7 +569,7 @@ def extract_airway_stent(text: str) -> dict:
     return result
 ```
 
-**Update verifier.py safety net:** In `modules/registry/evidence/verifier.py`:
+**Update verifier.py safety net:** In `app/registry/evidence/verifier.py`:
 
 ```python
 def _verify_stent_action(record_dict: dict, text: str) -> list[str]:
@@ -586,7 +586,7 @@ def _verify_stent_action(record_dict: dict, text: str) -> list[str]:
     
     # If action is Placement but no placement evidence, check for assessment
     if action == "Placement":
-        from modules.registry.deterministic.deterministic_extractors import extract_airway_stent
+        from app.registry.deterministic.deterministic_extractors import extract_airway_stent
         det_result = extract_airway_stent(text)
         det_action = det_result.get("airway_stent", {}).get("action")
         
@@ -628,12 +628,12 @@ def test_stent_placement():
 
 #### Codex Instructions
 
-**Update `modules/registry/application/registry_service.py`:**
+**Update `app/registry/application/registry_service.py`:**
 
 In `run_with_warnings()` and `_extract_fields_extraction_first()`:
 
 ```python
-from modules.registry.processing.masking import mask_extraction_noise, mask_offset_preserving
+from app.registry.processing.masking import mask_extraction_noise, mask_offset_preserving
 
 def _get_masked_text(raw_text: str) -> str:
     """
@@ -659,7 +659,7 @@ def _get_masked_text(raw_text: str) -> str:
 
 #### Codex Instructions
 
-**Update `modules/registry/evidence/verifier.py`:**
+**Update `app/registry/evidence/verifier.py`:**
 
 ```python
 # Add evidence-required policy
@@ -727,7 +727,7 @@ def enforce_evidence_requirements(
 
 #### Codex Instructions
 
-**Update `modules/registry/processing/linear_ebus_stations_detail.py` or create new postprocessor:**
+**Update `app/registry/processing/linear_ebus_stations_detail.py` or create new postprocessor:**
 
 ```python
 import re
@@ -821,7 +821,7 @@ def reconcile_ebus_from_site_blocks(
 
 #### Codex Instructions
 
-**Update `modules/ml_coder/label_hydrator.py`:**
+**Update `ml/lib/ml_coder/label_hydrator.py`:**
 
 ```python
 # Add negation contexts near top of file
@@ -887,7 +887,7 @@ def load_kb_synonyms(kb_path: Path) -> dict:
 
 def load_deterministic_mappings() -> dict:
     """Load codes from deterministic mapping rules."""
-    # Scan modules/domain/coding_rules/ for code mappings
+    # Scan app/domain/coding_rules/ for code mappings
     pass
 
 def generate_keywords():
@@ -1008,22 +1008,22 @@ python scripts/registry_pipeline_smoke_batch.py --fixtures tests/fixtures/notes/
 ## Files Modified Summary
 
 ### New Files to Create
-- `modules/registry/postprocess/template_checkbox_negation.py`
-- `modules/ml_coder/section_filter.py`
+- `app/registry/postprocess/template_checkbox_negation.py`
+- `ml/lib/ml_coder/section_filter.py`
 - `scripts/generate_cpt_keywords.py`
 - `scripts/bootstrap_granular_attributes.py`
 - `tests/registry/test_template_checkbox_negation.py`
 - `tests/registry/test_section_filter.py`
 
 ### Files to Modify
-- `modules/registry/application/registry_service.py`
-- `modules/registry/processing/masking.py`
-- `modules/registry/deterministic/deterministic_extractors.py`
-- `modules/registry/ner_mapping/procedure_extractor.py`
-- `modules/registry/evidence/verifier.py`
-- `modules/ml_coder/label_hydrator.py`
-- `modules/registry/processing/navigation_targets.py`
-- `modules/registry/processing/linear_ebus_stations_detail.py`
+- `app/registry/application/registry_service.py`
+- `app/registry/processing/masking.py`
+- `app/registry/deterministic/deterministic_extractors.py`
+- `app/registry/ner_mapping/procedure_extractor.py`
+- `app/registry/evidence/verifier.py`
+- `ml/lib/ml_coder/label_hydrator.py`
+- `app/registry/processing/navigation_targets.py`
+- `app/registry/processing/linear_ebus_stations_detail.py`
 
 ---
 

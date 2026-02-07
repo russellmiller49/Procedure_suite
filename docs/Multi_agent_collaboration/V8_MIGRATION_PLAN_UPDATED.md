@@ -20,7 +20,7 @@ This document updates the original migration plan to incorporate the Human-in-th
 - Phase 1 cutover: CodingService is the sole backend coder; `/v1/coder/run` is a legacy shim (blocked when `CODER_REQUIRE_PHI_REVIEW=true`, non-PHI/synthetic only otherwise).
 - Primary coding path: `/v1/phi/submit` → review/feedback (`PHI_REVIEWED`) → `/api/v1/procedures/{id}/codes/suggest` (CodingService).
 - Phase 2: Legacy coding/LLM routes are marked non-PHI/synthetic-only; FastAPI does not call `EnhancedCPTCoder` directly; CodingService is the canonical coding orchestrator.
-- Phase 3: FastAPI remains a thin adapter over services; dependencies centralized in `modules/api/dependencies.py` and `modules/api/phi_dependencies.py`; warmup/infra stays in `modules/infra/*`.
+- Phase 3: FastAPI remains a thin adapter over services; dependencies centralized in `app/api/dependencies.py` and `app/api/phi_dependencies.py`; warmup/infra stays in `app/infra/*`.
 
 ## PHI Regression Checklist (Phase 4)
 
@@ -94,15 +94,15 @@ Before the hard cutover, we need the PHI vault and review infrastructure in plac
 ### 0.1 Add Database Models for PHI Vault
 
 **New Files:**
-- `modules/phi/models.py`
-- `modules/phi/schemas.py`
+- `app/phi/models.py`
+- `app/phi/schemas.py`
 
 **Tasks:**
 
 1. Create the PHI domain models:
 
 ```python
-# modules/phi/models.py
+# app/phi/models.py
 
 from sqlalchemy import Column, String, Text, DateTime, LargeBinary, Boolean, Enum, Integer, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -111,7 +111,7 @@ import uuid
 from datetime import datetime
 from enum import Enum as PyEnum
 
-from modules.shared.database import Base
+from app.shared.database import Base
 
 
 class ProcessingStatus(PyEnum):
@@ -230,7 +230,7 @@ class ScrubbingFeedback(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 ```
 
-2. Create Pydantic schemas in `modules/phi/schemas.py` (see previous code)
+2. Create Pydantic schemas in `app/phi/schemas.py` (see previous code)
 
 3. Run migrations:
 ```bash
@@ -241,17 +241,17 @@ alembic upgrade head
 ### 0.2 Create PHI Service Layer
 
 **New Files:**
-- `modules/phi/adapters/encryption_adapter.py`
-- `modules/phi/adapters/presidio_adapter.py`
-- `modules/phi/application/phi_service.py`
-- `modules/phi/ports/phi_ports.py`
+- `app/phi/adapters/encryption_adapter.py`
+- `app/phi/adapters/presidio_adapter.py`
+- `app/phi/application/phi_service.py`
+- `app/phi/ports/phi_ports.py`
 
 **Tasks:**
 
 1. Define ports (interfaces):
 
 ```python
-# modules/phi/ports/phi_ports.py
+# app/phi/ports/phi_ports.py
 
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any
@@ -298,7 +298,7 @@ class AuditLoggerPort(ABC):
 2. Implement Presidio adapter with IP-specific allow-lists:
 
 ```python
-# modules/phi/adapters/presidio_adapter.py
+# app/phi/adapters/presidio_adapter.py
 
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry
 from presidio_analyzer.nlp_engine import NlpEngineProvider
@@ -416,7 +416,7 @@ class PresidioAdapter:
 3. Create the PHI Service that orchestrates the workflow:
 
 ```python
-# modules/phi/application/phi_service.py
+# app/phi/application/phi_service.py
 
 import hashlib
 import json
@@ -424,8 +424,8 @@ from datetime import datetime
 from typing import List, Dict, Any, Optional, Tuple
 from uuid import UUID, uuid4
 
-from modules.phi.ports.phi_ports import EncryptionPort, PHIScrubberPort, AuditLoggerPort
-from modules.phi.models import AuditAction
+from app.phi.ports.phi_ports import EncryptionPort, PHIScrubberPort, AuditLoggerPort
+from app.phi.models import AuditAction
 
 
 class PHIService:
@@ -673,30 +673,30 @@ class PHIService:
 ### 0.3 Add PHI Review Endpoints
 
 **Files:**
-- `modules/api/routes/phi_review.py` (new)
-- `modules/api/dependencies.py` (update)
+- `app/api/routes/phi_review.py` (new)
+- `app/api/dependencies.py` (update)
 
 **Tasks:**
 
 1. Create the PHI review router:
 
 ```python
-# modules/api/routes/phi_review.py
+# app/api/routes/phi_review.py
 
 from fastapi import APIRouter, Depends, HTTPException, Request, BackgroundTasks
 from uuid import UUID
 from datetime import datetime, timedelta
 
-from modules.api.dependencies import (
+from app.api.dependencies import (
     get_phi_service, get_db_session, get_current_user, get_coding_service
 )
-from modules.phi.schemas import (
+from app.phi.schemas import (
     ScrubPreviewRequest, ScrubPreviewResponse,
     SubmitRequest, SubmitResponse,
     JobStatusResponse, ReidentifyRequest, ReidentifyResponse,
 )
-from modules.phi.models import PHIVault, ProcedureData, AuditLog, ScrubbingFeedback
-from modules.phi.models import ProcessingStatus, AuditAction
+from app.phi.models import PHIVault, ProcedureData, AuditLog, ScrubbingFeedback
+from app.phi.models import ProcessingStatus, AuditAction
 
 router = APIRouter(prefix="/v1/phi", tags=["PHI Review"])
 
@@ -968,13 +968,13 @@ async def reidentify_results(
 2. Update dependencies to include PHI services:
 
 ```python
-# modules/api/dependencies.py (additions)
+# app/api/dependencies.py (additions)
 
 from functools import lru_cache
-from modules.phi.application.phi_service import PHIService
-from modules.phi.adapters.presidio_adapter import PresidioAdapter
-from modules.phi.adapters.encryption_adapter import FernetEncryptionAdapter
-from modules.phi.adapters.audit_adapter import DatabaseAuditLogger
+from app.phi.application.phi_service import PHIService
+from app.phi.adapters.presidio_adapter import PresidioAdapter
+from app.phi.adapters.encryption_adapter import FernetEncryptionAdapter
+from app.phi.adapters.audit_adapter import DatabaseAuditLogger
 
 
 @lru_cache()
@@ -1005,7 +1005,7 @@ def get_phi_service(
 3. Register the router in `fastapi_app.py`:
 
 ```python
-from modules.api.routes.phi_review import router as phi_router
+from app.api.routes.phi_review import router as phi_router
 app.include_router(phi_router)
 ```
 
@@ -1114,7 +1114,7 @@ async def run_coder(
 Update to also warm Presidio:
 
 ```python
-# modules/infra/nlp_warmup.py
+# app/infra/nlp_warmup.py
 
 async def warm_heavy_resources():
     """Warm all heavy NLP resources including Presidio."""
@@ -1124,7 +1124,7 @@ async def warm_heavy_resources():
     
     # Presidio (uses spaCy under the hood)
     try:
-        from modules.phi.adapters.presidio_adapter import PresidioAdapter
+        from app.phi.adapters.presidio_adapter import PresidioAdapter
         presidio = PresidioAdapter()
         # Run a test analysis to warm the model
         presidio.analyze("Test patient John Smith on 01/01/2024")
@@ -1138,7 +1138,7 @@ async def warm_heavy_resources():
 Add PHI dependencies to the composition root:
 
 ```python
-# modules/api/dependencies.py
+# app/api/dependencies.py
 
 # All dependencies in one place:
 # - get_coding_service()
@@ -1369,7 +1369,7 @@ CODER_REQUIRE_PHI_REVIEW=true  # Set to false for backward compat
 
 ```
 Phase 0: PHI Infrastructure
-[ ] Create modules/phi/ directory structure
+[ ] Create app/phi/ directory structure
 [ ] Add database models (PHIVault, AuditLog, ScrubbingFeedback)
 [ ] Run migrations
 [ ] Implement PresidioAdapter with IP allow-lists

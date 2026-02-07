@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.registry.postprocess import reconcile_ebus_sampling_from_narrative
-from modules.registry.schema import RegistryRecord
+from app.registry.postprocess import reconcile_ebus_sampling_from_narrative
+from app.registry.schema import RegistryRecord
 
 
 def test_reconcile_ebus_sampling_from_site_block_upgrades_node_events() -> None:

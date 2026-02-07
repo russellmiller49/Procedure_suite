@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from modules.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
-from modules.registry.processing.disease_burden import extract_unambiguous_lesion_size_mm
+from app.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
+from app.registry.processing.disease_burden import extract_unambiguous_lesion_size_mm
 
 
 def _notes_dir() -> Path:

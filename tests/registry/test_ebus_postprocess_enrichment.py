@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from modules.registry.postprocess import (
+from app.registry.postprocess import (
     enrich_ebus_node_event_outcomes,
     enrich_linear_ebus_needle_gauge,
 )
-from modules.registry.schema import RegistryRecord
+from app.registry.schema import RegistryRecord
 
 
 def test_enrich_ebus_node_event_outcomes_maps_granulomas_and_lymphocytes_to_benign() -> None:

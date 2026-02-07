@@ -74,7 +74,7 @@ Add a short note to your KB and/or docs saying:
 Next Codex task (when you’re ready): mini‑rules engine
 
 When you want to tackle this, give Codex a focused prompt like:
-	•	Extract the “special case” logic from EnhancedCPTCoder._generate_codes into a dedicated RulesEngine (e.g. modules/coder/rules_engine.py) that:
+	•	Extract the “special case” logic from EnhancedCPTCoder._generate_codes into a dedicated RulesEngine (e.g. app/coder/rules_engine.py) that:
 	•	Takes candidate codes + context.
 	•	Applies rules described in data (JSON or simple config objects).
 	•	Gradually migrate specific patterns (e.g., stent rules) from if/else code into:
@@ -84,29 +84,29 @@ Important: do this incrementally (one rule family at a time), not a big bang.
 
 ⸻
 
-3) Inconsistent directory structure (modules/* vs proc_*)
+3) Inconsistent directory structure (app/* vs proc_*)
 
 Problem:
 You have both:
-	•	modules.coder and proc_autocode
-	•	modules.registry and proc_registry
+	•	app.coder and proc_autocode
+	•	app.registry and proc_registry
 	•	proc_report as well
 
 That’s confusing and invites new code to land in the “wrong” place.
 
 Short‑term rule (no giant move yet):
-	•	Treat modules/ as the only place new application code should go.
+	•	Treat app/ as the only place new application code should go.
 	•	Treat proc_autocode/, proc_report/, and proc_registry/ as internal libraries that:
-	•	Are only used from modules/*.
+	•	Are only used from app/*.
 	•	Should not be imported directly by FastAPI routes.
 
 This is just a discipline rule you can enforce in code review and in docs.
 
 Future refactor (larger step, can be a separate phase):
 	•	Move:
-	•	proc_autocode → modules/autocode/ or modules/coder/engine/
-	•	proc_report → modules/reporting/
-	•	proc_registry → modules/registry/engine/
+	•	proc_autocode → app/autocode/ or app/coder/engine/
+	•	proc_report → app/reporting/
+	•	proc_registry → app/registry/engine/
 	•	Keep the old top‑level packages as thin “import shims” for one release if you need backward compatibility, then delete.
 
 That’s a good “Phase 6” task once V8 is totally settled.
@@ -127,7 +127,7 @@ All inside a single endpoint function.
 Instruction for Codex (incremental refactor):
 
 Create a QA orchestrator service and make the endpoint thin.
-	1.	Add a new module, e.g. modules/api/services/qa_orchestrator.py (see file content below).
+	1.	Add a new module, e.g. app/api/services/qa_orchestrator.py (see file content below).
 	2.	Move the core logic from qa_run into a function like:
 
 async def run_qa_workflow(
@@ -155,7 +155,7 @@ I’ll give you a stub file for (4) in the next section so you can drop it in an
 5) Deprecated code in _archive/api_old/app.py and api/app.py
 
 Problem:
-Old API code is still in the tree, even though FastAPI now lives in modules/api/fastapi_app.py.
+Old API code is still in the tree, even though FastAPI now lives in app/api/fastapi_app.py.
 
 Instruction:
 	•	Delete these directories from the repo:
@@ -172,7 +172,7 @@ If nothing references them, you’re safe to remove. Git is your archive.
 
 ⸻
 
-6) Compatibility layer in modules/registry/schema.py
+6) Compatibility layer in app/registry/schema.py
 
 Problem:
 _COMPAT_ATTRIBUTE_PATHS mapping old flat names → new nested names. That’s a sign you still have consumers using the old shape.
@@ -244,34 +244,34 @@ _Last updated: YYYY-MM-DD_
   - [x] Ensure all coding goes through `CodingService`.
   - [ ] Add unit tests for these rules under `tests/coding/` (stents, EBUS, thoracoscopy).
 - Medium term:
-  - [ ] Introduce a `RulesEngine` (e.g. `modules/coder/rules_engine.py`) to encapsulate special-case rules.
+  - [ ] Introduce a `RulesEngine` (e.g. `app/coder/rules_engine.py`) to encapsulate special-case rules.
   - [ ] Gradually move rules into the KB schema (e.g., `conflicts_with`, `requires_evidence` fields).
 
 ---
 
 ## 3. Directory Structure Consistency
 
-**Issue:** Split between `modules/*` and root-level `proc_*` packages (e.g., `proc_autocode`, `proc_registry`).
+**Issue:** Split between `app/*` and root-level `proc_*` packages (e.g., `proc_autocode`, `proc_registry`).
 
 **Plan:**
 
 - Short term:
-  - [x] Treat `modules/*` as the only place for new application code.
-  - [x] Treat `proc_*` packages as internal libraries used only from `modules/*`.
+  - [x] Treat `app/*` as the only place for new application code.
+  - [x] Treat `proc_*` packages as internal libraries used only from `app/*`.
 - Longer term:
-  - [ ] Move `proc_autocode` → `modules/autocode/` (or `modules/coder/engine/`).
-  - [ ] Move `proc_registry` → `modules/registry/engine/`.
-  - [ ] Move `proc_report` → `modules/reporting/`.
+  - [ ] Move `proc_autocode` → `app/autocode/` (or `app/coder/engine/`).
+  - [ ] Move `proc_registry` → `app/registry/engine/`.
+  - [ ] Move `proc_report` → `app/reporting/`.
 
 ---
 
 ## 4. Monolithic `qa_run` Endpoint
 
-**Issue:** `qa_run` in `modules/api/fastapi_app.py` contains significant business logic.
+**Issue:** `qa_run` in `app/api/fastapi_app.py` contains significant business logic.
 
 **Plan:**
 
-- [ ] Introduce `modules/api/services/qa_orchestrator.py` with a `run_qa_workflow(...)` function.
+- [ ] Introduce `app/api/services/qa_orchestrator.py` with a `run_qa_workflow(...)` function.
 - [ ] Refactor `qa_run` to:
   - Parse/validate the request.
   - Call `run_qa_workflow(...)`.
@@ -293,7 +293,7 @@ _Last updated: YYYY-MM-DD_
 
 ## 6. Registry Schema Compatibility Layer
 
-**Issue:** `modules/registry/schema.py` uses `_COMPAT_ATTRIBUTE_PATHS` to support old flat attributes.
+**Issue:** `app/registry/schema.py` uses `_COMPAT_ATTRIBUTE_PATHS` to support old flat attributes.
 
 **Plan:**
 
@@ -409,7 +409,7 @@ pytest \
 
 3.4. Run the API + PHI demo UI
 
-uvicorn modules.api.fastapi_app:app --reload
+uvicorn app.api.fastapi_app:app --reload
 
 Then hit:
 	•	PHI demo UI: http://127.0.0.1:8000/ui/phi_demo.html

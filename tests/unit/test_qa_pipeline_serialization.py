@@ -1,7 +1,7 @@
 import json
 
-from modules.api.services.qa_pipeline import _serialize_jsonable
-from modules.reporting.metadata import MissingFieldIssue
+from app.api.services.qa_pipeline import _serialize_jsonable
+from app.reporting.metadata import MissingFieldIssue
 
 
 def test_qa_pipeline_serializes_missing_field_issues_to_json() -> None:

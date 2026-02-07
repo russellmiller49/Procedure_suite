@@ -1,5 +1,5 @@
-from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, validate_schema
-from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
+from ml.lib.ml_coder.registry_label_schema import REGISTRY_LABELS, validate_schema
+from app.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
 
 
 def test_registry_label_schema_valid() -> None:

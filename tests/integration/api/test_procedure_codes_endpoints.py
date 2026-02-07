@@ -17,19 +17,19 @@ from typing import Optional, Any
 
 from fastapi.testclient import TestClient
 
-from modules.api.fastapi_app import app
-from modules.api.routes.procedure_codes import clear_procedure_stores
-from modules.api.dependencies import (
+from app.api.fastapi_app import app
+from app.api.routes.procedure_codes import clear_procedure_stores
+from app.api.dependencies import (
     get_coding_service,
     get_procedure_store,
     reset_coding_service_cache,
     reset_procedure_store,
 )
-from modules.coder.application.coding_service import CodingService
-from modules.coder.adapters.persistence.inmemory_procedure_store import InMemoryProcedureStore
+from app.coder.application.coding_service import CodingService
+from app.coder.adapters.persistence.inmemory_procedure_store import InMemoryProcedureStore
 from config.settings import CoderSettings
-from modules.registry.application.registry_service import RegistryExtractionResult
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryExtractionResult
+from app.registry.schema import RegistryRecord
 
 
 # ============================================================================

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from modules.registry.postprocess import populate_ebus_node_events_fallback
-from modules.registry.schema import RegistryRecord
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.registry.postprocess import populate_ebus_node_events_fallback
+from app.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
 
 
 def test_populate_ebus_node_events_fallback_parses_following_station_list_with_blank_lines() -> None:

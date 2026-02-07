@@ -12,7 +12,7 @@ os.environ.setdefault("REGISTRY_AUDITOR_SOURCE", "raw_ml")
 
 import pytest
 
-from modules.reporting import engine as report_engine
+from app.reporting import engine as report_engine
 
 _BASELINE_TEST_ENV: dict[str, str] = {
     # Prevent local `.env` files from influencing tests (and avoid accidental real network calls).

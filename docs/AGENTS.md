@@ -7,10 +7,10 @@ driven by `POST /api/v1/process`. Hybrid-first/ID-based workflows are legacy and
 
 ## Overview
 
-The agents module (`modules/agents/`) provides **deterministic, structured note processing** that can be used in two ways:
+The agents module (`app/agents/`) provides **deterministic, structured note processing** that can be used in two ways:
 
-- **Focused extraction helper (optional)**: `ParserAgent` is used to segment notes and optionally “focus” extraction onto high-yield sections for deterministic registry extraction (see `modules/registry/extraction/focus.py`).
-- **Full 3-agent pipeline (available, experimental)**: `Parser → Summarizer → Structurer` via `modules/agents/run_pipeline.py`. Today, `StructurerAgent` is a placeholder and the “agents structurer” extraction mode is intentionally guarded/fallbacks to the engine.
+- **Focused extraction helper (optional)**: `ParserAgent` is used to segment notes and optionally “focus” extraction onto high-yield sections for deterministic registry extraction (see `app/registry/extraction/focus.py`).
+- **Full 3-agent pipeline (available, experimental)**: `Parser → Summarizer → Structurer` via `app/agents/run_pipeline.py`. Today, `StructurerAgent` is a placeholder and the “agents structurer” extraction mode is intentionally guarded/fallbacks to the engine.
 
 The goal is to make downstream extraction more reliable and auditable without seeding registry extraction with CPT hints when running in extraction-first mode.
 
@@ -18,7 +18,7 @@ The goal is to make downstream extraction more reliable and auditable without se
 
 Registry V3 introduces a stricter, section-aware focusing helper used to limit what the V3 extractor sees:
 
-- **Entry point:** `modules/registry/processing/focus.py:get_procedure_focus()`
+- **Entry point:** `app/registry/processing/focus.py:get_procedure_focus()`
 - **Sources:** prefers `ParserAgent` segmentation, then `SectionizerService`, with a regex fallback.
 - **Target sections:** `PROCEDURE`, `FINDINGS`, `IMPRESSION`, `TECHNIQUE`, `OPERATIVE REPORT`
 - **Fail-safe:** if no target headings are found, returns the full original note text (never empty).
@@ -32,7 +32,7 @@ The system has two major registry flows:
 
 Agents are relevant primarily to **extraction-first**:
 
-- `PROCSUITE_PIPELINE_MODE=extraction_first` is enforced at startup (`modules/api/fastapi_app.py:_validate_startup_env()`).
+- `PROCSUITE_PIPELINE_MODE=extraction_first` is enforced at startup (`app/api/fastapi_app.py:_validate_startup_env()`).
 - When `REGISTRY_EXTRACTION_ENGINE=agents_focus_then_engine`, the system will use `ParserAgent` to focus the note text for the deterministic engine extraction. Guardrail: auditing always uses the full raw note text.
 
 ### Configuration
@@ -46,22 +46,22 @@ These environment variables control whether/where agents are used:
 
 Notes:
 - `agents_structurer` is currently **not implemented** (it is expected to raise `NotImplementedError` and fall back to the deterministic engine).
-- CPT coding is handled by the coder module (`modules/coder/`) and is **not** produced by agents in the current architecture.
+- CPT coding is handled by the coder module (`app/coder/`) and is **not** produced by agents in the current architecture.
 
 ## Registry V3 Guardrails (Post-Extraction)
 
 Even when agents are used for **focusing**, the extraction-first pipeline applies Python-side guardrails to the **full raw note text** before deterministic registry→CPT derivation:
 
-- **Evidence integrity**: `modules/registry/evidence/verifier.py:verify_evidence_integrity()` verifies that hallucination-prone `performed=True` fields are supported by verifiable quotes (with fuzzy fallback) and wipes unsupported details (e.g., therapeutic aspiration; hallucinated trach `device_name`).
-- **EBUS negation sanitizer**: `modules/registry/postprocess.py:sanitize_ebus_events()` forces `needle_aspiration` → `inspected_only` when the station context is explicitly negated (e.g., “not biopsied/not sampled”, “benign ultrasound characteristics”).
-- **Clinical guardrails**: `modules/extraction/postprocessing/clinical_guardrails.py` prevents known failure modes (failed navigation, airway dilation false positives, rigid bronch header/body conflict, etc).
-- **Recall/omission detector**: `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` flags “silent misses” for high-value procedures (BAL/EBBx/radial EBUS/cryotherapy/laser/rigid/etc) and emits `SILENT_FAILURE:` warnings.
-- **Short-token keyword safety**: `modules/registry/self_correction/keyword_guard.py:_keyword_hit()` requires word boundaries for short tokens (e.g., `bal`, `ipc`) to reduce false positives.
-- **Evidence schema**: the UI/API expects V3 evidence items shaped like `{"source","text","span":[start,end],"confidence"}` (see `modules/api/adapters/response_adapter.py`).
+- **Evidence integrity**: `app/registry/evidence/verifier.py:verify_evidence_integrity()` verifies that hallucination-prone `performed=True` fields are supported by verifiable quotes (with fuzzy fallback) and wipes unsupported details (e.g., therapeutic aspiration; hallucinated trach `device_name`).
+- **EBUS negation sanitizer**: `app/registry/postprocess.py:sanitize_ebus_events()` forces `needle_aspiration` → `inspected_only` when the station context is explicitly negated (e.g., “not biopsied/not sampled”, “benign ultrasound characteristics”).
+- **Clinical guardrails**: `app/extraction/postprocessing/clinical_guardrails.py` prevents known failure modes (failed navigation, airway dilation false positives, rigid bronch header/body conflict, etc).
+- **Recall/omission detector**: `app/registry/self_correction/keyword_guard.py:scan_for_omissions()` flags “silent misses” for high-value procedures (BAL/EBBx/radial EBUS/cryotherapy/laser/rigid/etc) and emits `SILENT_FAILURE:` warnings.
+- **Short-token keyword safety**: `app/registry/self_correction/keyword_guard.py:_keyword_hit()` requires word boundaries for short tokens (e.g., `bal`, `ipc`) to reduce false positives.
+- **Evidence schema**: the UI/API expects V3 evidence items shaped like `{"source","text","span":[start,end],"confidence"}` (see `app/api/adapters/response_adapter.py`).
 
 Chokepoints:
-- `modules/registry/application/registry_service.py:RegistryService.extract_record()` (runs guardrails immediately after extraction)
-- `modules/registry/application/registry_service.py:RegistryService._extract_fields_extraction_first()` (runs omission scan before deterministic coding)
+- `app/registry/application/registry_service.py:RegistryService.extract_record()` (runs guardrails immediately after extraction)
+- `app/registry/application/registry_service.py:RegistryService._extract_fields_extraction_first()` (runs omission scan before deterministic coding)
 
 Tests to run: `pytest -q` (see `tests/registry/test_registry_guardrails.py`, `tests/registry/test_keyword_guard_omissions.py`, `tests/registry/test_provider_name_sanitization.py`).
 
@@ -83,7 +83,7 @@ Each agent has:
 ## Architecture
 
 ```
-modules/agents/
+app/agents/
 ├── contracts.py                # I/O schemas for all agents
 ├── run_pipeline.py             # Pipeline orchestration
 ├── parser/
@@ -102,7 +102,7 @@ modules/agents/
 
 ## Agent Contracts
 
-All contracts are defined in `modules/agents/contracts.py`:
+All contracts are defined in `app/agents/contracts.py`:
 
 ### Common Types
 
@@ -228,7 +228,7 @@ class PipelineResult(BaseModel):
 
 **Purpose:** Split raw procedure notes into structured segments and extract entities.
 
-**Location:** `modules/agents/parser/parser_agent.py`
+**Location:** `app/agents/parser/parser_agent.py`
 
 **Algorithm:**
 1. Search for common section headings (HPI, History, Procedure, Findings, etc.)
@@ -271,7 +271,7 @@ ParserOut(
 
 **Purpose:** Generate section summaries from parsed segments and entities.
 
-**Location:** `modules/agents/summarizer/summarizer_agent.py`
+**Location:** `app/agents/summarizer/summarizer_agent.py`
 
 **Algorithm:**
 1. Iterate through segments from parser output
@@ -296,7 +296,7 @@ SummarizerOut(
 
 **Purpose:** Map summaries to structured registry fields and generate CPT codes.
 
-**Location:** `modules/agents/structurer/structurer_agent.py`
+**Location:** `app/agents/structurer/structurer_agent.py`
 
 **Algorithm:**
 1. Extract demographic info from History summary
@@ -321,10 +321,10 @@ StructurerOut(
 
 ## Pipeline Orchestration
 
-The pipeline is orchestrated by `run_pipeline()` in `modules/agents/run_pipeline.py`:
+The pipeline is orchestrated by `run_pipeline()` in `app/agents/run_pipeline.py`:
 
 ```python
-from modules.agents.run_pipeline import run_pipeline, run_pipeline_typed
+from app.agents.run_pipeline import run_pipeline, run_pipeline_typed
 
 # Dict interface
 result = run_pipeline({"note_id": "123", "raw_text": "..."})
@@ -373,7 +373,7 @@ Pipeline execution is timed using `observability.timing`:
 ### Basic Usage
 
 ```python
-from modules.agents.run_pipeline import run_pipeline
+from app.agents.run_pipeline import run_pipeline
 
 note = {
     "note_id": "test_001",
@@ -427,11 +427,11 @@ print(f"Rationale: {result.structurer.rationale}")
 
 ### Adding a New Agent
 
-1. Create a new directory: `modules/agents/myagent/`
+1. Create a new directory: `app/agents/myagent/`
 2. Define the agent class in `myagent_agent.py`:
 
 ```python
-from modules.agents.contracts import MyAgentIn, MyAgentOut
+from app.agents.contracts import MyAgentIn, MyAgentOut
 
 class MyAgent:
     def run(self, input: MyAgentIn) -> MyAgentOut:

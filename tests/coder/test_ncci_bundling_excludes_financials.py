@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from proc_schemas.coding import CodeSuggestion, CodingResult
 from proc_schemas.reasoning import ReasoningFields
 
-from modules.api.coder_adapter import convert_coding_result_to_coder_output
+from app.api.coder_adapter import convert_coding_result_to_coder_output
 
 
 @dataclass(frozen=True)

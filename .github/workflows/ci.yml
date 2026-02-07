@@ -31,7 +31,7 @@ jobs:
       - name: Ruff
         run: ruff check .
       - name: Mypy
-        run: mypy modules
+        run: mypy app
       - name: Pytest
         run: pytest -q
 

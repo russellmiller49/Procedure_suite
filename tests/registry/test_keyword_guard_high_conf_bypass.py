@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.self_correction.keyword_guard import keyword_guard_check
+from app.registry.self_correction.keyword_guard import keyword_guard_check
 
 
 def test_keyword_guard_allows_high_conf_bypass_for_blvr_codes() -> None:

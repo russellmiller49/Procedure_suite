@@ -6,7 +6,7 @@ import os
 
 import pytest
 
-from modules.phi.adapters.fernet_encryption import FernetEncryptionAdapter
+from app.phi.adapters.fernet_encryption import FernetEncryptionAdapter
 
 
 @pytest.fixture(autouse=True)

@@ -1043,6 +1043,6 @@ __all__ = [
 # RegistryRecord-only deterministic CPT rules shim
 # -----------------------------------------------------------------------------
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
+from app.coder.domain_rules.registry_to_cpt.coding_rules import (
     derive_all_codes as derive_all_codes,  # noqa: F401
 )

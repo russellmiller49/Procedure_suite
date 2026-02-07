@@ -2,8 +2,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
 
 
 class _FocusSensitiveRegistryEngine:
@@ -33,15 +33,15 @@ def test_focusing_can_change_extraction_but_auditor_uses_raw_text_and_report_fla
     monkeypatch.setenv("REGISTRY_ML_SELF_CORRECT_MIN_PROB", "0.95")
 
     # Guardrails: orchestrator/rules must never be invoked for audit compare.
-    from modules.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
-    from modules.coder.rules_engine import CodingRulesEngine
+    from app.coder.application.smart_hybrid_policy import SmartHybridOrchestrator
+    from app.coder.rules_engine import CodingRulesEngine
 
     monkeypatch.setattr(SmartHybridOrchestrator, "get_codes", _raise)
     monkeypatch.setattr(CodingRulesEngine, "validate", _raise)
 
     # RAW-ML should see the raw note text and predict IPC.
-    from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
-    from modules.ml_coder.thresholds import CaseDifficulty
+    from ml.lib.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
 
     classify_calls: list[str] = []
 

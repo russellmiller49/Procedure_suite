@@ -5,8 +5,8 @@ import logging
 import httpx
 import pytest
 
-from modules.common.exceptions import LLMError
-from modules.common.llm import OpenAILLM, _resolve_openai_timeout
+from app.common.exceptions import LLMError
+from app.common.llm import OpenAILLM, _resolve_openai_timeout
 
 
 def test_resolve_openai_timeout_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -47,7 +47,7 @@ def test_openai_llm_retries_once_on_read_timeout(
         )
 
     monkeypatch.setattr(httpx.Client, "post", _mock_post)
-    monkeypatch.setattr("modules.common.llm.time.sleep", lambda _seconds: None)
+    monkeypatch.setattr("app.common.llm.time.sleep", lambda _seconds: None)
 
     caplog.set_level(logging.WARNING, logger="common.llm")
 
@@ -71,7 +71,7 @@ def test_openai_llm_raises_after_one_timeout_retry(monkeypatch: pytest.MonkeyPat
         raise httpx.ReadTimeout("read timeout", request=request)
 
     monkeypatch.setattr(httpx.Client, "post", _mock_post)
-    monkeypatch.setattr("modules.common.llm.time.sleep", lambda _seconds: None)
+    monkeypatch.setattr("app.common.llm.time.sleep", lambda _seconds: None)
 
     with pytest.raises(LLMError):
         llm.generate("hi", task="registry_extraction")

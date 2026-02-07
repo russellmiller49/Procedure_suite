@@ -225,7 +225,7 @@ python scripts/registry_pipeline_smoke_batch.py \
 - `Audit high-conf omissions:` indicates RAW-ML thinks something high-value was missed (self-correct triggers are sourced from this list).
 - `SELF_CORRECT_SKIPPED:` indicates self-correction was eligible but blocked (commonly keyword guard failures).
 - `AUTO_CORRECTED:` indicates self-correction successfully applied a fix.
-- Keyword gating is configured in `modules/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
+- Keyword gating is configured in `app/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
 
 **Note:** The batch script automatically sets `REGISTRY_USE_STUB_LLM=1` and `GEMINI_OFFLINE=1` for offline testing. To test with real LLM/self-correction, ensure `REGISTRY_SELF_CORRECT_ENABLED=1` is set in your environment and pass the `--self-correct` flag.
 The single-note smoke test supports `--real-llm`, which disables stub/offline defaults for that run.
@@ -361,7 +361,7 @@ The details doc is designed to stay readable and safe for LLM ingestion:
 # Include only specific folders (repeatable), cap size and inline count
 python scripts/generate_gitingest.py --details \
   --details-include scripts/ \
-  --details-include modules/registry/ \
+  --details-include app/registry/ \
   --details-max-bytes 200000 \
   --details-max-files 75 \
   --details-inline curated
@@ -768,7 +768,7 @@ python scripts/train_roberta.py \
 Repeat steps **4 → 9** until disagreement rate drops and metrics plateau.
 
 Notes:
-- Canonical label schema/order is `modules/ml_coder/registry_label_schema.py`.
+- Canonical label schema/order is `ml/lib/ml_coder/registry_label_schema.py`.
 - Training uses `label_confidence` as a per-row loss weight when present.
 
 ### ➕ CPT Coding Model: Adding Training Cases
@@ -897,7 +897,7 @@ When using an OpenAI-compatible backend (`LLM_PROVIDER=openai_compat`):
 
 ### Adjusting ML Thresholds
 
-The ML model's confidence thresholds can be tuned in `modules/ml_coder/thresholds.py`:
+The ML model's confidence thresholds can be tuned in `ml/lib/ml_coder/thresholds.py`:
 
 ```python
 # High confidence threshold (codes above this are HIGH_CONF)
@@ -1023,7 +1023,7 @@ The PHI model exists in two locations:
    - Updated by `make prodigy-finetune` or `make prodigy-retrain`
    - Contains PyTorch model weights, tokenizer, and label mappings
 
-2. **Client-side location** (ONNX format): `modules/api/static/phi_redactor/vendor/phi_distilbert_ner/`
+2. **Client-side location** (ONNX format): `ui/static/phi_redactor/vendor/phi_distilbert_ner/`
    - Used by the browser UI at `http://localhost:8000/ui/phi_redactor/`
    - Contains ONNX model files, tokenizer, and configuration
 

@@ -2,7 +2,7 @@
 
 import pytest
 
-from modules.coder.adapters.persistence.inmemory_procedure_store import (
+from app.coder.adapters.persistence.inmemory_procedure_store import (
     InMemoryProcedureStore,
     get_default_procedure_store,
     reset_default_procedure_store,

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
+from app.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
 
 
 def _notes_dir() -> Path:

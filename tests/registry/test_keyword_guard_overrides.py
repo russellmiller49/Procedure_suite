@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.registry.schema import RegistryRecord
-from modules.registry.self_correction.keyword_guard import apply_required_overrides
+from app.registry.schema import RegistryRecord
+from app.registry.self_correction.keyword_guard import apply_required_overrides
 
 
 def test_apply_required_overrides_does_not_force_peripheral_tbna_from_ebus_station_list() -> None:

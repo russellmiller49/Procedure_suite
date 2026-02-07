@@ -1,29 +1,21 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
-from pathlib import Path
+from importlib import import_module
 
-
-def main() -> None:
-    repo_root = Path(__file__).resolve().parents[1]
-    target_dir = repo_root / "data" / "granular annotations" / "Python_update_scripts"
-    target_dir.mkdir(parents=True, exist_ok=True)
-
-    created = 0
-    skipped = 0
-
-    for note_num in range(129, 265):
-        path = target_dir / f"note_{note_num:03d}.py"
-        if path.exists():
-            skipped += 1
-            continue
-        path.write_text("", encoding="utf-8")
-        created += 1
-
-    print(f"Target: {target_dir}")
-    print(f"Created: {created}")
-    print(f"Skipped (already existed): {skipped}")
-
+_impl = import_module("ml.scripts.generate_blank_granular_note_scripts")
+globals().update(
+    {
+        name: value
+        for name, value in vars(_impl).items()
+        if not (name.startswith("__") and name.endswith("__"))
+    }
+)
 
 if __name__ == "__main__":
-    main()
+    if hasattr(_impl, "main"):
+        raise SystemExit(_impl.main())
 
+    import runpy
+
+    runpy.run_module("ml.scripts.generate_blank_granular_note_scripts", run_name="__main__")

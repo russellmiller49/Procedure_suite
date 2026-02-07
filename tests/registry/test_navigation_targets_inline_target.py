@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.processing.navigation_targets import extract_navigation_targets
+from app.registry.processing.navigation_targets import extract_navigation_targets
 
 
 def test_extract_navigation_targets_inline_target_stops_at_header_and_truncates() -> None:

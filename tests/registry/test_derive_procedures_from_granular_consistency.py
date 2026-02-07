@@ -1,4 +1,4 @@
-from modules.registry.schema_granular import derive_procedures_from_granular
+from app.registry.schema_granular import derive_procedures_from_granular
 
 
 def test_derive_procedures_from_granular_up_propagates_navigation_performed() -> None:

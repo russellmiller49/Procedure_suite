@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.deterministic_extractors import extract_established_tracheostomy_route
+from app.registry.deterministic_extractors import extract_established_tracheostomy_route
 
 
 def test_established_tracheostomy_route_detected() -> None:

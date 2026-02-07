@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.ner.inference import NEREntity, NERExtractionResult
-from modules.registry.ner_mapping.entity_to_registry import NERToRegistryMapper
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.ner.inference import NEREntity, NERExtractionResult
+from app.registry.ner_mapping.entity_to_registry import NERToRegistryMapper
 
 
 def _result_for_entities(text: str, entities: list[NEREntity]) -> NERExtractionResult:

@@ -11,10 +11,10 @@ This plan targets the **extraction‑first** pipeline:
 
 ## 0) Non‑Negotiables / Constraints
 
-- **Authoritative API endpoint:** `POST /api/v1/process` (`modules/api/routes/unified_process.py`)
-- **Pipeline mode:** `PROCSUITE_PIPELINE_MODE=extraction_first` is required and enforced on startup (`modules/api/fastapi_app.py`).
-- **Deterministic CPT derivation must not parse the raw note.** All rules in `modules/coder/domain_rules/registry_to_cpt/coding_rules.py` must consume `RegistryRecord` only.
-- **Schema drives code.** `RegistryRecord` is generated dynamically from `data/knowledge/IP_Registry.json` (`modules/registry/schema.py`).
+- **Authoritative API endpoint:** `POST /api/v1/process` (`app/api/routes/unified_process.py`)
+- **Pipeline mode:** `PROCSUITE_PIPELINE_MODE=extraction_first` is required and enforced on startup (`app/api/fastapi_app.py`).
+- **Deterministic CPT derivation must not parse the raw note.** All rules in `app/coder/domain_rules/registry_to_cpt/coding_rules.py` must consume `RegistryRecord` only.
+- **Schema drives code.** `RegistryRecord` is generated dynamically from `data/knowledge/IP_Registry.json` (`app/registry/schema.py`).
 
 ---
 
@@ -22,11 +22,11 @@ This plan targets the **extraction‑first** pipeline:
 
 These items are already present and should be treated as “done”, unless regression bugs appear:
 
-- **Menu/CPT block masking:** `modules/registry/processing/masking.py:mask_extraction_noise()`.
-- **Granular → aggregate propagation (single place):** `modules/registry/application/registry_service.py:_apply_granular_up_propagation()` via `modules/registry/schema_granular.py:derive_procedures_from_granular()`.
-- **TBNA normalization guardrails:** `modules/registry/schema_granular.py` migrates non‑station “TBNA” to `peripheral_tbna` and suppresses phantom `tbna_conventional` when EBUS is present.
-- **Stent evidence guardrails (avoid “stent in good position” → placement):** `modules/domain/coding_rules/coding_rules_engine.py` (R004 stent 4‑gate).
-- **Master index preference for RVUs:** `modules/common/knowledge.py:get_rvu()` prefers `master_code_index` when present.
+- **Menu/CPT block masking:** `app/registry/processing/masking.py:mask_extraction_noise()`.
+- **Granular → aggregate propagation (single place):** `app/registry/application/registry_service.py:_apply_granular_up_propagation()` via `app/registry/schema_granular.py:derive_procedures_from_granular()`.
+- **TBNA normalization guardrails:** `app/registry/schema_granular.py` migrates non‑station “TBNA” to `peripheral_tbna` and suppresses phantom `tbna_conventional` when EBUS is present.
+- **Stent evidence guardrails (avoid “stent in good position” → placement):** `app/domain/coding_rules/coding_rules_engine.py` (R004 stent 4‑gate).
+- **Master index preference for RVUs:** `app/common/knowledge.py:get_rvu()` prefers `master_code_index` when present.
 
 ---
 
@@ -86,9 +86,9 @@ Goal: eliminate drift by ensuring runtime lookups use the canonical KB sections.
   - Canonical KB path: `data/knowledge/ip_coding_billing_v3_0.json`
   - Deprecation entry: `metadata.deprecations[]` documents the old `v2_9` path.
 - [x] **Authoritative code metadata/RVUs**
-  - `modules/coder/adapters/persistence/csv_kb_adapter.py` now loads `ProcedureInfo` from `master_code_index` (not `fee_schedules`).
+  - `app/coder/adapters/persistence/csv_kb_adapter.py` now loads `ProcedureInfo` from `master_code_index` (not `fee_schedules`).
 - [x] **Authoritative synonym layer**
-  - `modules/autocode/ip_kb/ip_kb.py` now reads phrase lists from KB `synonyms` (with safe fallback to legacy canonical rules).
+  - `app/autocode/ip_kb/ip_kb.py` now reads phrase lists from KB `synonyms` (with safe fallback to legacy canonical rules).
   - Adding a new navigation platform synonym is now a **one‑file edit**: `data/knowledge/ip_coding_billing_v3_0.json`.
 
 ### 2.5 Phase 3 — Standardize Rule Outputs (coding_support)
@@ -101,8 +101,8 @@ Goal: make deterministic coding behavior explainable and reviewable without pars
 - [x] Keep deterministic derivation warning text stable (tests assert substrings like `Suppressed 31629` and `Modifier 59`).
 
 Implementation:
-- Builder: `modules/registry/application/coding_support_builder.py`
-- Wiring: `modules/registry/application/registry_service.py:_extract_fields_extraction_first()`
+- Builder: `app/registry/application/coding_support_builder.py`
+- Wiring: `app/registry/application/registry_service.py:_extract_fields_extraction_first()`
 
 ### 2.6 Phase 4 — “Golden Thread” Traceability + Provider Normalization
 

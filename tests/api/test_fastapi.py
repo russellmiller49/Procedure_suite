@@ -7,9 +7,9 @@ from pathlib import Path
 import pytest
 from httpx import AsyncClient
 
-from modules.api.fastapi_app import _shape_registry_payload
-from modules.common.spans import Span
-from modules.registry.schema import RegistryRecord
+from app.api.fastapi_app import _shape_registry_payload
+from app.common.spans import Span
+from app.registry.schema import RegistryRecord
 
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"
 

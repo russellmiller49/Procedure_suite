@@ -12,13 +12,13 @@ os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 os.environ.setdefault("PHI_DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("PHI_ENCRYPTION_MODE", "demo")
 
-from modules.api.fastapi_app import app  # noqa: E402
+from app.api.fastapi_app import app  # noqa: E402
 
 
 @pytest.fixture(autouse=True)
 def reset_store(monkeypatch):
     # Replace the store with a fresh in-memory instance for tests
-    from modules.api import phi_demo_store
+    from app.api import phi_demo_store
 
     phi_demo_store._store = phi_demo_store.InMemoryPhiDemoStore()  # type: ignore
     yield

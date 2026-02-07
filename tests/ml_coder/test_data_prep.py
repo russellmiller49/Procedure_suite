@@ -20,7 +20,7 @@ class TestBuildLabelMatrix:
 
     def test_multi_hot_encoding(self):
         """Verify multi-hot encoding produces correct matrix."""
-        from modules.ml_coder.data_prep import _build_label_matrix
+        from ml.lib.ml_coder.data_prep import _build_label_matrix
 
         df = pd.DataFrame(
             {
@@ -53,7 +53,7 @@ class TestEncounterGrouping:
 
     def test_no_encounter_leakage(self):
         """Verify same encounter (MRN+date) doesn't appear in both splits."""
-        from modules.ml_coder.data_prep import _enforce_encounter_grouping
+        from ml.lib.ml_coder.data_prep import _enforce_encounter_grouping
 
         df = pd.DataFrame(
             {
@@ -86,7 +86,7 @@ class TestEncounterGrouping:
 
     def test_majority_rule(self):
         """Verify encounter moves to split with majority of its rows."""
-        from modules.ml_coder.data_prep import _enforce_encounter_grouping
+        from ml.lib.ml_coder.data_prep import _enforce_encounter_grouping
 
         df = pd.DataFrame(
             {
@@ -117,7 +117,7 @@ class TestStratifiedSplit:
 
     def test_code_appears_in_both_splits_when_sufficient_samples(self):
         """Verify common codes appear in both train and test when available."""
-        from modules.ml_coder.data_prep import stratified_split
+        from ml.lib.ml_coder.data_prep import stratified_split
 
         # Create dataset with code 31641 appearing multiple times
         df = pd.DataFrame(
@@ -151,7 +151,7 @@ class TestStratifiedSplit:
 
     def test_no_index_overlap(self):
         """Verify train and test indices don't overlap."""
-        from modules.ml_coder.data_prep import stratified_split
+        from ml.lib.ml_coder.data_prep import stratified_split
 
         df = pd.DataFrame(
             {
@@ -172,7 +172,7 @@ class TestEdgeCases:
 
     def test_edge_case_flag(self):
         """Verify edge cases get is_edge_case=True."""
-        from modules.ml_coder.data_prep import EDGE_SOURCE_NAME
+        from ml.lib.ml_coder.data_prep import EDGE_SOURCE_NAME
 
         # The flag is set based on source_file matching EDGE_SOURCE_NAME
         assert EDGE_SOURCE_NAME == "synthetic_edge_case_notes_with_registry.jsonl"
@@ -183,7 +183,7 @@ class TestExtractCodes:
 
     def test_prefers_final_cpt_codes(self):
         """Verify coding_review.final_cpt_codes is preferred."""
-        from modules.ml_coder.data_prep import _extract_codes
+        from ml.lib.ml_coder.data_prep import _extract_codes
 
         entry = {
             "cpt_codes": ["31622", "31628"],
@@ -200,7 +200,7 @@ class TestExtractCodes:
 
     def test_cpt_summary_final_codes(self):
         """Verify coding_review.cpt_summary.final_codes is used."""
-        from modules.ml_coder.data_prep import _extract_codes
+        from ml.lib.ml_coder.data_prep import _extract_codes
 
         entry = {
             "cpt_codes": ["31622", "31628"],
@@ -216,7 +216,7 @@ class TestExtractCodes:
 
     def test_cpt_summary_dict_keys(self):
         """Verify codes extracted from dict keys when cpt_summary is keyed by code."""
-        from modules.ml_coder.data_prep import _extract_codes
+        from ml.lib.ml_coder.data_prep import _extract_codes
 
         entry = {
             "cpt_codes": ["31622"],
@@ -233,7 +233,7 @@ class TestExtractCodes:
 
     def test_cpt_summary_list_of_objects(self):
         """Verify codes extracted from list of objects with 'code' field."""
-        from modules.ml_coder.data_prep import _extract_codes
+        from ml.lib.ml_coder.data_prep import _extract_codes
 
         entry = {
             "cpt_codes": ["31622"],
@@ -250,7 +250,7 @@ class TestExtractCodes:
 
     def test_fallback_to_cpt_codes(self):
         """Verify fallback to cpt_codes when coding_review not present."""
-        from modules.ml_coder.data_prep import _extract_codes
+        from ml.lib.ml_coder.data_prep import _extract_codes
 
         entry = {
             "cpt_codes": ["31622", "31628"],
@@ -261,7 +261,7 @@ class TestExtractCodes:
 
     def test_empty_final_codes_fallback(self):
         """Verify fallback when final_codes is empty list."""
-        from modules.ml_coder.data_prep import _extract_codes
+        from ml.lib.ml_coder.data_prep import _extract_codes
 
         entry = {
             "cpt_codes": ["31622"],
@@ -277,7 +277,7 @@ class TestExtractCodes:
 
     def test_non_dict_coding_review(self):
         """Verify handling of non-dict coding_review gracefully."""
-        from modules.ml_coder.data_prep import _extract_codes
+        from ml.lib.ml_coder.data_prep import _extract_codes
 
         entry = {
             "cpt_codes": ["31622"],
@@ -293,7 +293,7 @@ class TestPrepareTrainingAndEvalSplits:
 
     def test_output_files_created(self, tmp_path, monkeypatch):
         """Verify output CSV files are created."""
-        from modules.ml_coder import data_prep
+        from ml.lib.ml_coder import data_prep
 
         # Mock _build_dataframe to return test data
         def mock_build_dataframe():
@@ -330,7 +330,7 @@ class TestPrepareTrainingAndEvalSplits:
 
     def test_no_encounter_leakage_in_output(self, tmp_path, monkeypatch):
         """Verify no encounter leakage in generated splits."""
-        from modules.ml_coder import data_prep
+        from ml.lib.ml_coder import data_prep
 
         # Create data with repeated encounters
         def mock_build_dataframe():

@@ -8,10 +8,10 @@ which is referenced in CLAUDE.md as the entry point for generating training data
 Integration with existing codebase:
     - Place this file at: modules/ml_coder/registry_data_prep.py
     - Import in data_prep.py: from .registry_data_prep import prepare_registry_training_splits
-    - Or use standalone: python -m modules.ml_coder.registry_data_prep
+    - Or use standalone: python -m ml.lib.ml_coder.registry_data_prep
 
 Example:
-    from modules.ml_coder.registry_data_prep import prepare_registry_training_splits
+    from ml.lib.ml_coder.registry_data_prep import prepare_registry_training_splits
     
     train_df, val_df, test_df = prepare_registry_training_splits()
     train_df.to_csv("data/ml_training/registry_train.csv", index=False)

@@ -49,7 +49,7 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 
 - [`docs/Registry_API.md`](Registry_API.md) — legacy registry endpoints + mode descriptions.
 - [`docs/phi_review_system/README.md`](phi_review_system/README.md) — PHI review workflow and storage.
-- UI static app lives in `modules/api/static/phi_redactor/` and is served at `/ui/`.
+- UI static app lives in `ui/static/phi_redactor/` and is served at `/ui/`.
 
 ### Registry schema & extraction
 
@@ -69,7 +69,7 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 
 - [`docs/STRUCTURED_REPORTER.md`](STRUCTURED_REPORTER.md) — structured reporter overview.
 - [`docs/REPORTER_STYLE_GUIDE.md`](REPORTER_STYLE_GUIDE.md) — style guide for generated reports.
-- [`modules/reporting/EXTRACTION_RULES.md`](../modules/reporting/EXTRACTION_RULES.md) — reporter extraction/derivation rules (implementation-adjacent).
+- [`app/reporting/EXTRACTION_RULES.md`](../app/reporting/EXTRACTION_RULES.md) — reporter extraction/derivation rules (implementation-adjacent).
 
 ### Observability
 
@@ -77,11 +77,11 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 
 ## Where to look in code (entrypoints)
 
-- FastAPI app wiring + startup env validation: `modules/api/fastapi_app.py`
-- Unified production endpoint: `modules/api/routes/unified_process.py`
-- Extraction-first orchestration: `modules/registry/application/registry_service.py`
-- Deterministic registry → CPT derivation (no note parsing): `modules/coder/domain_rules/registry_to_cpt/coding_rules.py`
-- UI static assets: `modules/api/static/phi_redactor/`
+- FastAPI app wiring + startup env validation: `app/api/fastapi_app.py`
+- Unified production endpoint: `app/api/routes/unified_process.py`
+- Extraction-first orchestration: `app/registry/application/registry_service.py`
+- Deterministic registry → CPT derivation (no note parsing): `app/coder/domain_rules/registry_to_cpt/coding_rules.py`
+- UI static assets: `ui/static/phi_redactor/`
 
 ---
 

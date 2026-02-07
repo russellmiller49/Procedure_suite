@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.registry.postprocess.template_checkbox_negation import apply_template_checkbox_negation
-from modules.registry.schema import RegistryRecord
+from app.registry.postprocess.template_checkbox_negation import apply_template_checkbox_negation
+from app.registry.schema import RegistryRecord
 
 
 def test_apply_template_checkbox_negation_forces_false_and_emits_warnings() -> None:

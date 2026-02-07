@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from modules.coder.ebus_rules import ebus_nodes_to_candidates, _count_sampled_nodes
-from modules.coder.types import EBUSNodeEvidence
+from app.coder.ebus_rules import ebus_nodes_to_candidates, _count_sampled_nodes
+from app.coder.types import EBUSNodeEvidence
 
 
 def test_count_sampled_nodes_ignores_inspection_only():

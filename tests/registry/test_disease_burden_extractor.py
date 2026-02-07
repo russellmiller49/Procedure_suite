@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from modules.registry.processing.disease_burden import (
+from app.registry.processing.disease_burden import (
     apply_disease_burden_overrides,
     extract_unambiguous_lesion_size_mm,
     extract_unambiguous_target_lesion_axes_mm,
 )
-from modules.registry.schema import RegistryRecord
+from app.registry.schema import RegistryRecord
 
 
 def test_extract_target_lesion_axes_mm_parses_multi_dim_cm() -> None:

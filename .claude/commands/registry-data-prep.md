@@ -13,7 +13,7 @@ Golden JSON Entry
 ┌─────────────────────────────────────────────────────────────┐
 │ TIER 1: Structured Extraction (confidence: 0.95)            │
 │ extract_v2_booleans(registry_entry)                         │
-│ Source: modules/registry/v2_booleans.py                     │
+│ Source: app/registry/v2_booleans.py                     │
 └─────────────────────────────────────────────────────────────┘
        │ (if all-zero)
        ▼
@@ -48,9 +48,9 @@ Golden JSON Entry
 ### Core Modules
 | File | Purpose |
 |------|---------|
-| `modules/ml_coder/registry_data_prep.py` | Main data prep logic (3-tier extraction, dedup, splits) |
-| `modules/ml_coder/label_hydrator.py` | 3-tier extraction + keyword hydration |
-| `modules/registry/v2_booleans.py` | Canonical 30 procedure boolean fields |
+| `ml/lib/ml_coder/registry_data_prep.py` | Main data prep logic (3-tier extraction, dedup, splits) |
+| `ml/lib/ml_coder/label_hydrator.py` | 3-tier extraction + keyword hydration |
+| `app/registry/v2_booleans.py` | Canonical 30 procedure boolean fields |
 | `scripts/golden_to_csv.py` | CLI interface for data prep |
 
 ### Test Files
@@ -131,7 +131,7 @@ python scripts/golden_to_csv.py \
 
 **Using Python API:**
 ```python
-from modules.ml_coder.registry_data_prep import prepare_registry_training_splits
+from ml.lib.ml_coder.registry_data_prep import prepare_registry_training_splits
 
 train_df, val_df, test_df = prepare_registry_training_splits()
 train_df.to_csv("data/ml_training/registry_train.csv", index=False)
@@ -140,7 +140,7 @@ train_df.to_csv("data/ml_training/registry_train.csv", index=False)
 ### 2. Debug Label Extraction for Single Entry
 
 ```python
-from modules.ml_coder.label_hydrator import extract_labels_with_hydration
+from ml.lib.ml_coder.label_hydrator import extract_labels_with_hydration
 
 entry = {
     "note_text": "EBUS bronchoscopy with TBNA of stations 4R and 7.",
@@ -157,7 +157,7 @@ print(f"Labels: {result.labels}")
 ### 3. Check for Duplicates in Dataset
 
 ```python
-from modules.ml_coder.registry_data_prep import deduplicate_records
+from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
 records = [...]  # Your records list
 deduped, stats = deduplicate_records(records)
@@ -168,7 +168,7 @@ print(f"Conflicts: {stats['conflicts_by_source']}")
 
 ### 4. Add New Keyword Pattern (Tier 3)
 
-Edit `modules/ml_coder/label_hydrator.py`:
+Edit `ml/lib/ml_coder/label_hydrator.py`:
 
 ```python
 KEYWORD_TO_PROCEDURE_MAP = {
@@ -182,7 +182,7 @@ KEYWORD_TO_PROCEDURE_MAP = {
 
 ### 5. Add New Alias Mapping
 
-Edit `modules/ml_coder/registry_data_prep.py`:
+Edit `ml/lib/ml_coder/registry_data_prep.py`:
 
 ```python
 LABEL_ALIASES = {

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.coder.application.candidate_expansion import expand_candidates
+from app.coder.application.candidate_expansion import expand_candidates
 
 
 def test_candidate_expansion_does_not_add_negated_fiducial() -> None:

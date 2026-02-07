@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-from modules.registry.schema.adapters.v3_to_v2 import convert_v3_to_v2
-from modules.registry.schema.ebus_events import NodeInteraction
-from modules.registry.schema.ip_v3_extraction import EvidenceSpan, IPRegistryV3, ProcedureEvent, ProcedureTarget
+from app.registry.schema.adapters.v3_to_v2 import convert_v3_to_v2
+from app.registry.schema.ebus_events import NodeInteraction
+from app.registry.schema.ip_v3_extraction import EvidenceSpan, IPRegistryV3, ProcedureEvent, ProcedureTarget
 
 
 def test_schema_refactor_imports_smoke() -> None:
-    import modules.registry.schema  # noqa: F401
-    import modules.registry.schema.ebus_events  # noqa: F401
-    import modules.registry.schema.granular_logic  # noqa: F401
-    import modules.registry.schema.granular_models  # noqa: F401
-    import modules.registry.schema.ip_v3_extraction  # noqa: F401
-    import modules.registry.schema.v2_dynamic  # noqa: F401
+    import app.registry.schema  # noqa: F401
+    import app.registry.schema.ebus_events  # noqa: F401
+    import app.registry.schema.granular_logic  # noqa: F401
+    import app.registry.schema.granular_models  # noqa: F401
+    import app.registry.schema.ip_v3_extraction  # noqa: F401
+    import app.registry.schema.v2_dynamic  # noqa: F401
     import proc_schemas.registry.ip_v3  # noqa: F401
 
     node = NodeInteraction(

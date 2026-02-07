@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from modules.registry.postprocess import enrich_procedure_success_status
-from modules.registry.postprocess import enrich_outcomes_complication_details
-from modules.registry.schema import RegistryRecord
+from app.registry.postprocess import enrich_procedure_success_status
+from app.registry.postprocess import enrich_outcomes_complication_details
+from app.registry.schema import RegistryRecord
 
 
 def test_enrich_procedure_success_status_marks_partial_success_from_suboptimal_radial_probe() -> None:

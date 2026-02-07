@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from modules.registry.engine import RegistryEngine
+from app.registry.engine import RegistryEngine
 
 
 def _get_linear_ebus_field(record, field_name):

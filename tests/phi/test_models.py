@@ -11,8 +11,8 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
 
-from modules.phi.db import Base
-from modules.phi import models
+from app.phi.db import Base
+from app.phi import models
 
 
 @pytest.fixture()

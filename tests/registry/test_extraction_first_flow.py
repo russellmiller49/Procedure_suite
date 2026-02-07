@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
 
 
 class _AssertingRegistryEngine:
@@ -41,8 +41,8 @@ def test_extraction_first_does_not_consult_cpt_or_orchestrator(monkeypatch: pyte
     )
 
     # Stub RAW-ML predictor so the extraction-first path can complete once implemented.
-    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
-    from modules.ml_coder.thresholds import CaseDifficulty
+    from ml.lib.ml_coder.predictor import CaseClassification, MLCoderPredictor
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
 
     monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
     monkeypatch.setattr(

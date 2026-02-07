@@ -7,7 +7,7 @@ This is the next-generation schema with enhanced features:
 - Procedure outcome flags
 
 Note: this is **not** the LLM-facing V3 extraction event-log schema used by the
-extraction engine. That extraction schema lives at `modules.registry.schema.ip_v3_extraction`.
+extraction engine. That extraction schema lives at `app.registry.schema.ip_v3_extraction`.
 """
 
 from __future__ import annotations

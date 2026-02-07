@@ -1,4 +1,4 @@
-from modules.ml_coder.registry_label_constraints import apply_label_constraints
+from ml.lib.ml_coder.registry_label_constraints import apply_label_constraints
 
 
 def test_bal_forces_bronchial_wash_off() -> None:

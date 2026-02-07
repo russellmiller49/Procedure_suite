@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from modules.api.normalization import (
+from app.api.normalization import (
     ASSISTANT_ROLE_MAP,
     PROBE_POSITION_MAP,
     normalize_registry_payload,

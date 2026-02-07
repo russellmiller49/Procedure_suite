@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from modules.registry.self_correction.judge import PatchProposal
-from modules.registry.self_correction.validation import validate_proposal
+from app.registry.self_correction.judge import PatchProposal
+from app.registry.self_correction.validation import validate_proposal
 
 
 def _proposal(path: str) -> PatchProposal:

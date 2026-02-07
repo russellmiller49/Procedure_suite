@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from modules.coder.peripheral_rules import peripheral_lesions_to_candidates
-from modules.coder.types import PeripheralLesionEvidence
+from app.coder.peripheral_rules import peripheral_lesions_to_candidates
+from app.coder.types import PeripheralLesionEvidence
 
 
 def _codes_for(lesions: list[PeripheralLesionEvidence]) -> set[str]:

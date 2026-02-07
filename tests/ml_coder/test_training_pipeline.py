@@ -18,7 +18,7 @@ class TestNoteTextCleaner:
 
     def test_removes_electronically_signed(self):
         """Verify electronic signature boilerplate is removed."""
-        from modules.ml_coder.preprocessing import NoteTextCleaner
+        from ml.lib.ml_coder.preprocessing import NoteTextCleaner
 
         cleaner = NoteTextCleaner()
         texts = ["Patient presented with cough. Electronically signed by Dr. Smith"]
@@ -29,7 +29,7 @@ class TestNoteTextCleaner:
 
     def test_removes_dictated_but_not_read(self):
         """Verify dictation disclaimer is removed."""
-        from modules.ml_coder.preprocessing import NoteTextCleaner
+        from ml.lib.ml_coder.preprocessing import NoteTextCleaner
 
         cleaner = NoteTextCleaner()
         texts = ["Procedure went well. Dictated but not read by physician."]
@@ -39,7 +39,7 @@ class TestNoteTextCleaner:
 
     def test_handles_none_and_empty(self):
         """Verify graceful handling of None and empty strings."""
-        from modules.ml_coder.preprocessing import NoteTextCleaner
+        from ml.lib.ml_coder.preprocessing import NoteTextCleaner
 
         cleaner = NoteTextCleaner()
         texts = [None, "", "Normal text"]
@@ -51,7 +51,7 @@ class TestNoteTextCleaner:
 
     def test_normalizes_whitespace(self):
         """Verify excessive whitespace is normalized."""
-        from modules.ml_coder.preprocessing import NoteTextCleaner
+        from ml.lib.ml_coder.preprocessing import NoteTextCleaner
 
         cleaner = NoteTextCleaner()
         texts = ["Patient   has\n\nmultiple    spaces"]
@@ -62,7 +62,7 @@ class TestNoteTextCleaner:
 
     def test_fit_returns_self(self):
         """Verify fit() returns self for pipeline compatibility."""
-        from modules.ml_coder.preprocessing import NoteTextCleaner
+        from ml.lib.ml_coder.preprocessing import NoteTextCleaner
 
         cleaner = NoteTextCleaner()
         result = cleaner.fit(["some text"])
@@ -75,8 +75,8 @@ class TestBuildPipeline:
 
     def test_pipeline_has_cleaner(self):
         """Verify NoteTextCleaner is in the pipeline."""
-        from modules.ml_coder.preprocessing import NoteTextCleaner
-        from modules.ml_coder.training import _build_pipeline
+        from ml.lib.ml_coder.preprocessing import NoteTextCleaner
+        from ml.lib.ml_coder.training import _build_pipeline
 
         pipeline = _build_pipeline()
         step_names = [name for name, _ in pipeline.steps]
@@ -91,7 +91,7 @@ class TestBuildPipeline:
         """Verify TfidfVectorizer is in the pipeline."""
         from sklearn.feature_extraction.text import TfidfVectorizer
 
-        from modules.ml_coder.training import _build_pipeline
+        from ml.lib.ml_coder.training import _build_pipeline
 
         pipeline = _build_pipeline()
         tfidf = pipeline.named_steps["tfidf"]
@@ -104,7 +104,7 @@ class TestBuildPipeline:
         """Verify OneVsRestClassifier is in the pipeline."""
         from sklearn.multiclass import OneVsRestClassifier
 
-        from modules.ml_coder.training import _build_pipeline
+        from ml.lib.ml_coder.training import _build_pipeline
 
         pipeline = _build_pipeline()
         clf = pipeline.named_steps["clf"]
@@ -155,7 +155,7 @@ class TestPipelineFit:
 
     def test_pipeline_fits_without_error(self, synthetic_data):
         """Verify pipeline can fit on synthetic data."""
-        from modules.ml_coder.training import _build_pipeline
+        from ml.lib.ml_coder.training import _build_pipeline
 
         texts, labels = synthetic_data
         pipeline = _build_pipeline()
@@ -165,7 +165,7 @@ class TestPipelineFit:
 
     def test_pipeline_has_predict_proba(self, synthetic_data):
         """Verify fitted pipeline has predict_proba method."""
-        from modules.ml_coder.training import _build_pipeline
+        from ml.lib.ml_coder.training import _build_pipeline
 
         texts, labels = synthetic_data
         pipeline = _build_pipeline()
@@ -181,7 +181,7 @@ class TestPipelineFit:
 
     def test_pipeline_predict_returns_binary(self, synthetic_data):
         """Verify predict returns binary predictions."""
-        from modules.ml_coder.training import _build_pipeline
+        from ml.lib.ml_coder.training import _build_pipeline
 
         texts, labels = synthetic_data
         pipeline = _build_pipeline()
@@ -197,7 +197,7 @@ class TestReliabilityCurve:
 
     def test_compute_reliability_curve(self):
         """Verify reliability curve is computed correctly."""
-        from modules.ml_coder.training import _compute_reliability_curve
+        from ml.lib.ml_coder.training import _compute_reliability_curve
 
         # Perfect calibration: 0.5 prob -> 50% positive
         y_true = np.array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
@@ -212,7 +212,7 @@ class TestReliabilityCurve:
 
     def test_empty_bins_handled(self):
         """Verify empty probability bins don't cause errors."""
-        from modules.ml_coder.training import _compute_reliability_curve
+        from ml.lib.ml_coder.training import _compute_reliability_curve
 
         # All predictions in high confidence range
         y_true = np.array([1, 1, 1, 1])
@@ -229,7 +229,7 @@ class TestTrainModelIntegration:
 
     def test_train_model_creates_artifacts(self, tmp_path, monkeypatch):
         """Verify train_model creates model and mlb files."""
-        from modules.ml_coder import training
+        from ml.lib.ml_coder import training
 
         # Create synthetic CSV
         train_csv = tmp_path / "train.csv"

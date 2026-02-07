@@ -4,7 +4,7 @@ This repo supports a human-in-the-loop loop for improving the **registry multi-l
 
 ## Label Schema (Single Source of Truth)
 
-- Canonical label IDs + order: `modules/ml_coder/registry_label_schema.py`
+- Canonical label IDs + order: `ml/lib/ml_coder/registry_label_schema.py`
 - Model training CSVs should contain:
   - `note_text`
   - `encounter_id`

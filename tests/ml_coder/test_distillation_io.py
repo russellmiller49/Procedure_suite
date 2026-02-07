@@ -2,7 +2,7 @@ import numpy as np
 
 import pytest
 
-from modules.ml_coder.distillation_io import (
+from ml.lib.ml_coder.distillation_io import (
     TeacherLogits,
     align_teacher_logits,
     load_teacher_logits_npz,

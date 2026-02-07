@@ -1,4 +1,4 @@
-from modules.registry.engine import RegistryEngine
+from app.registry.engine import RegistryEngine
 
 
 def test_merge_llm_and_seed_preserves_existing_ml_findings():

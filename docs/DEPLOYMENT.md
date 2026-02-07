@@ -182,7 +182,7 @@ Histogram buckets for timing metrics (in ms):
 pip install -e ".[api,dev]"
 
 # Run with InMemory store (no persistence)
-PROCEDURE_STORE_BACKEND=memory uvicorn modules.api.fastapi_app:app --reload
+PROCEDURE_STORE_BACKEND=memory uvicorn app.api.fastapi_app:app --reload
 ```
 
 ### Production
@@ -195,7 +195,7 @@ export METRICS_BACKEND=prometheus
 export PSUITE_KNOWLEDGE_FILE="data/knowledge/ip_coding_billing_v3_0.json"
 
 # Run with gunicorn
-gunicorn modules.api.fastapi_app:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000
+gunicorn app.api.fastapi_app:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000
 ```
 
 ### Docker (Example)
@@ -209,7 +209,7 @@ RUN pip install ".[api]"
 ENV PROCEDURE_STORE_BACKEND=supabase
 ENV METRICS_BACKEND=prometheus
 
-CMD ["gunicorn", "modules.api.fastapi_app:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000"]
+CMD ["gunicorn", "app.api.fastapi_app:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000"]
 ```
 
 ---

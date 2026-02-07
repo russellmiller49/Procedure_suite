@@ -114,7 +114,7 @@ class TestAddonPythonModule:
 
     def test_module_imports(self):
         """Test that the module can be imported."""
-        from modules.reporting.ip_addons import (
+        from app.reporting.ip_addons import (
             get_addon_body,
             get_addon_metadata,
             list_addon_slugs,
@@ -130,7 +130,7 @@ class TestAddonPythonModule:
 
     def test_get_addon_body_returns_string(self):
         """Test that get_addon_body returns a string for valid slugs."""
-        from modules.reporting.ip_addons import get_addon_body, list_addon_slugs
+        from app.reporting.ip_addons import get_addon_body, list_addon_slugs
 
         slugs = list_addon_slugs()
         if not slugs:
@@ -142,21 +142,21 @@ class TestAddonPythonModule:
 
     def test_get_addon_body_returns_none_for_invalid_slug(self):
         """Test that get_addon_body returns None for invalid slugs."""
-        from modules.reporting.ip_addons import get_addon_body
+        from app.reporting.ip_addons import get_addon_body
 
         result = get_addon_body("this_slug_definitely_does_not_exist_12345")
         assert result is None
 
     def test_list_addon_slugs_returns_list(self):
         """Test that list_addon_slugs returns a list."""
-        from modules.reporting.ip_addons import list_addon_slugs
+        from app.reporting.ip_addons import list_addon_slugs
 
         slugs = list_addon_slugs()
         assert isinstance(slugs, list)
 
     def test_addon_count_matches_slugs(self):
         """Test that get_addon_count matches the list length."""
-        from modules.reporting.ip_addons import get_addon_count, list_addon_slugs
+        from app.reporting.ip_addons import get_addon_count, list_addon_slugs
 
         count = get_addon_count()
         slugs = list_addon_slugs()
@@ -165,7 +165,7 @@ class TestAddonPythonModule:
 
     def test_get_addon_metadata_structure(self):
         """Test that get_addon_metadata returns proper structure."""
-        from modules.reporting.ip_addons import get_addon_metadata, list_addon_slugs
+        from app.reporting.ip_addons import get_addon_metadata, list_addon_slugs
 
         slugs = list_addon_slugs()
         if not slugs:
@@ -180,7 +180,7 @@ class TestAddonPythonModule:
 
     def test_validate_addons_returns_dict(self):
         """Test that validate_addons returns proper structure."""
-        from modules.reporting.ip_addons import validate_addons
+        from app.reporting.ip_addons import validate_addons
 
         result = validate_addons()
         assert isinstance(result, dict)
@@ -191,7 +191,7 @@ class TestAddonPythonModule:
 
     def test_find_addons_by_cpt(self):
         """Test CPT code lookup functionality."""
-        from modules.reporting.ip_addons import find_addons_by_cpt
+        from app.reporting.ip_addons import find_addons_by_cpt
 
         # Test with a known CPT code (thoracentesis = 32555)
         results = find_addons_by_cpt("32555")
@@ -290,7 +290,7 @@ class TestMainTemplatesAddonIntegration:
         # Import addon functions locally to avoid package import issues
         import sys
         sys.path.insert(0, str(PROJECT_ROOT))
-        from modules.reporting.ip_addons import get_addon_body, get_addon_metadata, list_addon_slugs
+        from app.reporting.ip_addons import get_addon_body, get_addon_metadata, list_addon_slugs
 
         env = Environment(
             loader=FileSystemLoader(str(MAIN_TEMPLATES_DIR)),
@@ -321,7 +321,7 @@ class TestMainTemplatesAddonIntegration:
 
     def test_addon_section_renders_when_addons_present(self, main_jinja_env):
         """Test that the addons section renders when report.addons is provided."""
-        from modules.reporting.ip_addons import list_addon_slugs
+        from app.reporting.ip_addons import list_addon_slugs
 
         slugs = list_addon_slugs()
         if not slugs:
@@ -390,7 +390,7 @@ class TestSpecificAddons:
 
     def test_thoracentesis_addon(self):
         """Test the thoracentesis addon template."""
-        from modules.reporting.ip_addons import get_addon_body, get_addon_metadata
+        from app.reporting.ip_addons import get_addon_body, get_addon_metadata
 
         body = get_addon_body("thoracentesis")
         assert body is not None
@@ -402,7 +402,7 @@ class TestSpecificAddons:
 
     def test_ebus_tbna_addon(self):
         """Test the EBUS-TBNA addon template."""
-        from modules.reporting.ip_addons import get_addon_body, get_addon_metadata
+        from app.reporting.ip_addons import get_addon_body, get_addon_metadata
 
         body = get_addon_body("ebus_tbna")
         assert body is not None
@@ -413,7 +413,7 @@ class TestSpecificAddons:
 
     def test_bronchial_washing_addon(self):
         """Test the bronchial washing addon template."""
-        from modules.reporting.ip_addons import get_addon_body
+        from app.reporting.ip_addons import get_addon_body
 
         body = get_addon_body("bronchial_washing")
         assert body is not None
@@ -421,7 +421,7 @@ class TestSpecificAddons:
 
     def test_endobronchial_valve_placement_addon(self):
         """Test the BLVR valve placement addon template."""
-        from modules.reporting.ip_addons import get_addon_body, get_addon_metadata
+        from app.reporting.ip_addons import get_addon_body, get_addon_metadata
 
         body = get_addon_body("endobronchial_valve_placement")
         assert body is not None

@@ -19,9 +19,9 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from modules.api.fastapi_app import app
-from modules.api.routes.procedure_codes import clear_procedure_stores
-from modules.api.dependencies import (
+from app.api.fastapi_app import app
+from app.api.routes.procedure_codes import clear_procedure_stores
+from app.api.dependencies import (
     get_coding_service,
     get_registry_service,
     get_procedure_store,
@@ -29,9 +29,9 @@ from modules.api.dependencies import (
     reset_registry_service_cache,
     reset_procedure_store,
 )
-from modules.coder.adapters.persistence.inmemory_procedure_store import InMemoryProcedureStore
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.adapters.schema_registry import get_schema_registry
+from app.coder.adapters.persistence.inmemory_procedure_store import InMemoryProcedureStore
+from app.registry.application.registry_service import RegistryService
+from app.registry.adapters.schema_registry import get_schema_registry
 from proc_schemas.coding import FinalCode
 from proc_schemas.reasoning import ReasoningFields
 
@@ -373,8 +373,8 @@ class TestRegistryExportFullWorkflow:
         mock_service = create_mock_coding_service(mock_llm)
         app.dependency_overrides[get_coding_service] = lambda: mock_service
 
-        with patch("modules.coder.application.coding_service.apply_ncci_edits", mock_apply_ncci_edits), \
-             patch("modules.coder.application.coding_service.apply_mer_rules", mock_apply_mer_rules):
+        with patch("app.coder.application.coding_service.apply_ncci_edits", mock_apply_ncci_edits), \
+             patch("app.coder.application.coding_service.apply_mer_rules", mock_apply_mer_rules):
 
             # Step 1: Suggest codes
             suggest_response = http_client.post(

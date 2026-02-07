@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from modules.ml_coder.registry_predictor import (
+from ml.lib.ml_coder.registry_predictor import (
     RegistryMLPredictor,
     RegistryFieldPrediction,
     RegistryCaseClassification,

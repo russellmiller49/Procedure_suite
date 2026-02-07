@@ -11,9 +11,9 @@ import logging
 import httpx
 import pytest
 
-from modules.common.exceptions import LLMError
-from modules.common.llm import OpenAILLM
-from modules.common.openai_responses import (
+from app.common.exceptions import LLMError
+from app.common.llm import OpenAILLM
+from app.common.openai_responses import (
     parse_responses_text,
     parse_responses_json_object,
     ResponsesEndpointNotFound,
@@ -108,7 +108,7 @@ def test_responses_api_retries_once_on_timeout(
         )
 
     monkeypatch.setattr(httpx.Client, "post", _mock_post)
-    monkeypatch.setattr("modules.common.openai_responses.time.sleep", lambda _s: None)
+    monkeypatch.setattr("app.common.openai_responses.time.sleep", lambda _s: None)
 
     caplog.set_level(logging.WARNING, logger="common.openai_responses")
 
@@ -134,7 +134,7 @@ def test_responses_api_raises_after_one_timeout_retry(monkeypatch: pytest.Monkey
         raise httpx.ReadTimeout("read timeout", request=request)
 
     monkeypatch.setattr(httpx.Client, "post", _mock_post)
-    monkeypatch.setattr("modules.common.openai_responses.time.sleep", lambda _s: None)
+    monkeypatch.setattr("app.common.openai_responses.time.sleep", lambda _s: None)
 
     with pytest.raises(LLMError, match="transport error after retry"):
         llm.generate("hi", task="registry_extraction")

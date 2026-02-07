@@ -9,15 +9,15 @@ These tests ensure:
 """
 
 import pytest
-from modules.registry.engine import (
+from app.registry.engine import (
     RegistryEngine,
     classify_procedure_families,
     filter_inapplicable_fields,
     validate_evidence_spans,
 )
-from modules.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
-from modules.registry.postprocess import normalize_assistant_names
-from modules.common.spans import Span
+from app.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
+from app.registry.postprocess import normalize_assistant_names
+from app.common.spans import Span
 
 
 class TestProcedureFamilyClassification:

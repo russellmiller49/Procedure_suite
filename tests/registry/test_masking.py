@@ -1,6 +1,6 @@
 import re
 
-from modules.registry.processing.masking import PATTERNS, mask_offset_preserving
+from app.registry.processing.masking import PATTERNS, mask_offset_preserving
 
 
 def _newline_positions(text: str) -> list[int]:

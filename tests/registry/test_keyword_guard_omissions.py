@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.registry.schema import RegistryRecord
-from modules.registry.self_correction.keyword_guard import scan_for_omissions
+from app.registry.schema import RegistryRecord
+from app.registry.self_correction.keyword_guard import scan_for_omissions
 
 
 def test_scan_for_omissions_warns_for_missing_brushings() -> None:

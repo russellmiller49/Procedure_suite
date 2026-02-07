@@ -7,7 +7,7 @@ blocks are ignored.
 
 from __future__ import annotations
 
-from modules.common.openai_responses import (
+from app.common.openai_responses import (
     parse_responses_json_object,
     parse_responses_text,
 )

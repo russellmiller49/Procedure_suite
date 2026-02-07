@@ -10,7 +10,7 @@ This conftest.py provides:
 Usage:
     pytest tests/ml_advisor/ -v
     pytest tests/ml_advisor/ -v -m "not integration"
-    pytest tests/ml_advisor/ -v --cov=modules.proc_ml_advisor
+    pytest tests/ml_advisor/ -v --cov=app.proc_ml_advisor
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
-from modules.proc_ml_advisor.schemas import (
+from app.proc_ml_advisor.schemas import (
     # Enums
     AdvisorBackend,
     CodingPolicy,
@@ -504,7 +504,7 @@ def code_request_structured(report_ebus) -> CodeRequest:
 @pytest.fixture
 def test_client() -> Generator[TestClient, None, None]:
     """FastAPI test client for API testing."""
-    from modules.api.fastapi_app import app
+    from app.api.fastapi_app import app
 
     with TestClient(app) as client:
         yield client

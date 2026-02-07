@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
+from app.coder.domain_rules.registry_to_cpt.coding_rules import (
     derive_all_codes_with_meta,
     derive_units_for_codes,
 )
-from modules.registry.postprocess import enrich_ebus_node_event_sampling_details
-from modules.registry.deterministic_extractors import run_deterministic_extractors
-from modules.registry.schema import RegistryRecord
-from modules.registry.self_correction.keyword_guard import apply_required_overrides
+from app.registry.postprocess import enrich_ebus_node_event_sampling_details
+from app.registry.deterministic_extractors import run_deterministic_extractors
+from app.registry.schema import RegistryRecord
+from app.registry.self_correction.keyword_guard import apply_required_overrides
 
 
 def test_note_281_elastography_does_not_force_tblb_and_derives_elastography_codes() -> None:

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.coder.ncci import NCCIEngine
-from modules.coder.ncci import merge_ncci_sources
+from app.coder.ncci import NCCIEngine
+from app.coder.ncci import merge_ncci_sources
 
 
 def test_ncci_ptp_modifier_indicator_zero_bundles_secondary() -> None:

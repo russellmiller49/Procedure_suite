@@ -18,7 +18,7 @@ def _write_exclude_csv(path: Path, note_texts: list[str]) -> None:
 
 
 def test_prepare_registry_builds_tasks_and_respects_exclusions_and_manifest(tmp_path: Path, monkeypatch):
-    from modules.ml_coder.registry_label_schema import compute_encounter_id
+    from ml.lib.ml_coder.registry_label_schema import compute_encounter_id
     from scripts import prodigy_prepare_registry as prep
 
     input_path = tmp_path / "unlabeled.jsonl"

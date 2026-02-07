@@ -2,8 +2,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
 
 
 class _StubRegistryEngine:

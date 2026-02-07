@@ -7,7 +7,7 @@ Each test creates an EvidenceContext and compares outputs from both engines.
 import pytest
 from typing import Set
 
-from modules.domain.coding_rules import (
+from app.domain.coding_rules import (
     CodingRulesEngine,
     EvidenceContext,
     JSONRulesEvaluator,

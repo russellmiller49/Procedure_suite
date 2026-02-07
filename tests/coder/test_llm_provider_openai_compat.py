@@ -6,14 +6,14 @@ def test_llm_provider_selects_openai_compat_advisor(monkeypatch: pytest.MonkeyPa
     monkeypatch.setenv("LLM_PROVIDER", "openai_compat")
     monkeypatch.setenv("OPENAI_OFFLINE", "1")
 
-    from modules.coder.application.smart_hybrid_policy import build_hybrid_orchestrator
+    from app.coder.application.smart_hybrid_policy import build_hybrid_orchestrator
 
     orchestrator = build_hybrid_orchestrator(
         ml_predictor=object(),
         rules_engine=object(),
     )
 
-    from modules.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
+    from app.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
 
     assert isinstance(orchestrator._llm, OpenAICompatAdvisorAdapter)
 
@@ -26,7 +26,7 @@ def test_openai_offline_guard_avoids_network(monkeypatch: pytest.MonkeyPatch) ->
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
     monkeypatch.setenv("OPENAI_OFFLINE", "1")
 
-    from modules.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
+    from app.coder.adapters.llm.openai_compat_advisor import OpenAICompatAdvisorAdapter
 
     advisor = OpenAICompatAdvisorAdapter(allowed_codes=["31652", "31653"])
     suggestions = advisor.suggest_codes("Synthetic bronchoscopy note text.")

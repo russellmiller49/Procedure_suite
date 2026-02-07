@@ -6,7 +6,7 @@ a minimal JSONLogic-like DSL for declarative rules evaluation.
 
 import pytest
 
-from modules.common.rules_engine.dsl import (
+from app.common.rules_engine.dsl import (
     Rule,
     evaluate_predicate,
     run_rules,

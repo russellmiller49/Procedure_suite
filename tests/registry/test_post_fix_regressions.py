@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
-from modules.registry.deterministic_extractors import extract_ipc
-from modules.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
+from app.registry.deterministic_extractors import extract_ipc
+from app.registry.schema import RegistryRecord
 
 
 def test_blvr_checkbox_selection_corrects_valve_type_procedure_type_and_valve_count() -> None:

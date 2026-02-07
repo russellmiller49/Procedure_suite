@@ -16,7 +16,7 @@ class TestChronologicalOrdering:
 
     def test_procedures_sorted_by_sequence(self):
         """Test that procedures with sequence numbers are sorted correctly."""
-        from modules.reporting.macro_engine import render_procedure_bundle
+        from app.reporting.macro_engine import render_procedure_bundle
 
         bundle = {
             "procedures": [
@@ -39,7 +39,7 @@ class TestChronologicalOrdering:
 
     def test_procedures_without_sequence_preserve_order(self):
         """Test that procedures without sequence numbers preserve their original order."""
-        from modules.reporting.macro_engine import render_procedure_bundle
+        from app.reporting.macro_engine import render_procedure_bundle
 
         bundle = {
             "procedures": [
@@ -60,7 +60,7 @@ class TestChronologicalOrdering:
 
     def test_mixed_sequence_and_no_sequence(self):
         """Test procedures with mixed sequence and no sequence."""
-        from modules.reporting.macro_engine import render_procedure_bundle
+        from app.reporting.macro_engine import render_procedure_bundle
 
         bundle = {
             "procedures": [
@@ -86,7 +86,7 @@ class TestEssentialFieldValidation:
 
     def test_missing_essential_fields_added_to_omissions(self):
         """Test that missing essential fields are added to acknowledged_omissions."""
-        from modules.reporting.macro_engine import validate_essential_fields
+        from app.reporting.macro_engine import validate_essential_fields
 
         bundle = {
             "procedures": [
@@ -115,7 +115,7 @@ class TestEssentialFieldValidation:
 
     def test_no_omissions_when_all_essential_present(self):
         """Test that no omissions are added when all essential fields are present."""
-        from modules.reporting.macro_engine import validate_essential_fields
+        from app.reporting.macro_engine import validate_essential_fields
 
         bundle = {
             "procedures": [
@@ -139,7 +139,7 @@ class TestEssentialFieldValidation:
 
     def test_acknowledged_omissions_initialized_if_missing(self):
         """Test that acknowledged_omissions is initialized if not in bundle."""
-        from modules.reporting.macro_engine import validate_essential_fields
+        from app.reporting.macro_engine import validate_essential_fields
 
         bundle = {"procedures": []}
 
@@ -150,7 +150,7 @@ class TestEssentialFieldValidation:
 
     def test_get_essential_fields_returns_fields_and_labels(self):
         """Test get_essential_fields returns field list and labels."""
-        from modules.reporting.macro_engine import get_essential_fields
+        from app.reporting.macro_engine import get_essential_fields
 
         fields, labels = get_essential_fields("thoracentesis")
 
@@ -159,7 +159,7 @@ class TestEssentialFieldValidation:
 
     def test_omissions_render_in_report(self):
         """Test that acknowledged_omissions appear in rendered report."""
-        from modules.reporting.macro_engine import render_procedure_bundle
+        from app.reporting.macro_engine import render_procedure_bundle
 
         bundle = {
             "procedures": [
@@ -186,7 +186,7 @@ class TestUpdateBundle:
 
     def test_update_fills_null_values(self):
         """Test that update_bundle fills in null values."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -220,7 +220,7 @@ class TestUpdateBundle:
 
     def test_update_does_not_override_existing(self):
         """Test that update_bundle does not override existing values by default."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -255,7 +255,7 @@ class TestUpdateBundle:
 
     def test_update_can_override_when_flag_set(self):
         """Test that update_bundle can override when allow_override=True."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -283,7 +283,7 @@ class TestUpdateBundle:
 
     def test_update_does_not_add_new_procedures_by_default(self):
         """Test that new procedures are not added by default."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -304,7 +304,7 @@ class TestUpdateBundle:
 
     def test_update_can_add_new_procedures_when_flag_set(self):
         """Test that new procedures can be added when allow_new_procedures=True."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -327,7 +327,7 @@ class TestUpdateBundle:
 
     def test_update_clears_acknowledged_omissions(self):
         """Test that update can clear acknowledged_omissions."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -351,7 +351,7 @@ class TestUpdateBundle:
 
     def test_update_preserves_sequence(self):
         """Test that update_bundle preserves procedure sequence."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -374,7 +374,7 @@ class TestUpdateBundle:
 
     def test_update_merges_nested_dicts(self):
         """Test that nested dicts like vent_params are merged correctly."""
-        from modules.reporting.macro_engine import update_bundle
+        from app.reporting.macro_engine import update_bundle
 
         existing = {
             "procedures": [
@@ -418,7 +418,7 @@ class TestRenderBundleWithSummary:
 
     def test_returns_report_and_summary(self):
         """Test that render_bundle_with_summary returns tuple."""
-        from modules.reporting.macro_engine import render_bundle_with_summary
+        from app.reporting.macro_engine import render_bundle_with_summary
 
         bundle = {
             "procedures": [
@@ -437,7 +437,7 @@ class TestRenderBundleWithSummary:
 
     def test_summary_shows_missing_fields(self):
         """Test that summary includes missing essential fields."""
-        from modules.reporting.macro_engine import render_bundle_with_summary
+        from app.reporting.macro_engine import render_bundle_with_summary
 
         bundle = {
             "procedures": [
@@ -464,7 +464,7 @@ class TestIonRoboticExample:
 
     def test_ion_extraction_with_separate_biopsies(self):
         """Test Ion extraction with separate needle and cryo biopsies per Rule 3."""
-        from modules.reporting.macro_engine import render_procedure_bundle
+        from app.reporting.macro_engine import render_procedure_bundle
 
         # Example from EXTRACTION_RULES.md - separate entries for needle and cryo
         # Note: transbronchial_needle_aspiration uses num_samples (not num_passes)
@@ -533,7 +533,7 @@ class TestIonRoboticExample:
 
     def test_ion_with_missing_vent_params(self):
         """Test Ion case with missing vent parameters goes to acknowledged_omissions."""
-        from modules.reporting.macro_engine import validate_essential_fields, render_procedure_bundle
+        from app.reporting.macro_engine import validate_essential_fields, render_procedure_bundle
 
         bundle = {
             "procedures": [
@@ -570,7 +570,7 @@ class TestMergeProcedureParams:
 
     def test_fills_null_values(self):
         """Test that null values are filled."""
-        from modules.reporting.macro_engine import merge_procedure_params
+        from app.reporting.macro_engine import merge_procedure_params
 
         existing = {"a": None, "b": "existing"}
         updates = {"a": "new", "b": "updated"}
@@ -582,7 +582,7 @@ class TestMergeProcedureParams:
 
     def test_fills_empty_string(self):
         """Test that empty strings are treated as missing."""
-        from modules.reporting.macro_engine import merge_procedure_params
+        from app.reporting.macro_engine import merge_procedure_params
 
         existing = {"a": "", "b": "existing"}
         updates = {"a": "new", "b": "updated"}
@@ -594,7 +594,7 @@ class TestMergeProcedureParams:
 
     def test_fills_empty_list(self):
         """Test that empty lists are treated as missing."""
-        from modules.reporting.macro_engine import merge_procedure_params
+        from app.reporting.macro_engine import merge_procedure_params
 
         existing = {"a": [], "b": ["existing"]}
         updates = {"a": ["new"], "b": ["updated"]}
@@ -606,7 +606,7 @@ class TestMergeProcedureParams:
 
     def test_override_mode(self):
         """Test that override mode replaces existing values."""
-        from modules.reporting.macro_engine import merge_procedure_params
+        from app.reporting.macro_engine import merge_procedure_params
 
         existing = {"a": "old", "b": "existing"}
         updates = {"a": "new", "b": "updated"}
@@ -618,7 +618,7 @@ class TestMergeProcedureParams:
 
     def test_ignores_none_updates(self):
         """Test that None in updates does not clear existing values."""
-        from modules.reporting.macro_engine import merge_procedure_params
+        from app.reporting.macro_engine import merge_procedure_params
 
         existing = {"a": "existing"}
         updates = {"a": None}

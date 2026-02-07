@@ -40,9 +40,9 @@ After completing this plan, the repo will support:
 
 Before coding, Codex should locate and read:
 - `scripts/train_roberta.py` (existing registry multi‑label training)
-- `modules/ml_coder/registry_data_prep.py`, `modules/ml_coder/label_hydrator.py` (3‑tier hydration + dedup)
-- `modules/registry/application/registry_service.py` (hybrid + extraction‑first flows)
-- `modules/registry/audit/*` (audit / discrepancy logic)
+- `ml/lib/ml_coder/registry_data_prep.py`, `ml/lib/ml_coder/label_hydrator.py` (3‑tier hydration + dedup)
+- `app/registry/application/registry_service.py` (hybrid + extraction‑first flows)
+- `app/registry/audit/*` (audit / discrepancy logic)
 - `scripts/prodigy_prepare_phi_batch.py` and `scripts/prodigy_export_corrections.py` (existing Prodigy workflow patterns)
 - `Makefile` (existing Prodigy targets and variable conventions)
 
@@ -52,7 +52,7 @@ Before coding, Codex should locate and read:
 
 ### 1.1 Add file
 Create:
-- `modules/ml_coder/registry_label_schema.py`
+- `ml/lib/ml_coder/registry_label_schema.py`
 
 ### 1.2 Implement exports
 - `REGISTRY_LABELS: list[str]` — canonical flags, in the canonical training order.
@@ -66,12 +66,12 @@ Create:
   - titles are non‑empty
 
 ### 1.3 Refactor usage sites (no hard‑coded label lists)
-Update any module/script that hardcodes labels to import from `modules.ml_coder.registry_label_schema`.
+Update any module/script that hardcodes labels to import from `ml.lib.ml_coder.registry_label_schema`.
 
 Common likely files:
 - `scripts/train_roberta.py`
-- `modules/ml_coder/registry_training.py`
-- `modules/ml_coder/thresholds.py` (if it contains label lists)
+- `ml/lib/ml_coder/registry_training.py`
+- `ml/lib/ml_coder/thresholds.py` (if it contains label lists)
 - Any batch prep/export scripts created below
 
 ### 1.4 Tests
@@ -226,7 +226,7 @@ Your registry training prep already does 3‑tier hydration + priority‑based d
 
 ### 4.1 Preferred implementation (Tier 0 inside data prep)
 Modify:
-- `modules/ml_coder/registry_data_prep.py` (or wherever `prepare_registry_training_splits()` loads records)
+- `ml/lib/ml_coder/registry_data_prep.py` (or wherever `prepare_registry_training_splits()` loads records)
 
 Add:
 - Optional input `human_labels_csv: Path | None`
@@ -356,7 +356,7 @@ python scripts/train_roberta.py --train-csv data/ml_training/registry_train.csv 
 ## Quick Reference: Files to Add / Change
 
 **Add**
-- `modules/ml_coder/registry_label_schema.py`
+- `ml/lib/ml_coder/registry_label_schema.py`
 - `scripts/prodigy_prepare_registry_batch.py`
 - `scripts/prodigy_export_registry.py`
 - `tests/ml_coder/test_registry_label_schema.py`
@@ -365,6 +365,6 @@ python scripts/train_roberta.py --train-csv data/ml_training/registry_train.csv 
 
 **Change**
 - `scripts/train_roberta.py`
-- `modules/ml_coder/registry_data_prep.py` (Tier‑0 human merge)
+- `ml/lib/ml_coder/registry_data_prep.py` (Tier‑0 human merge)
 - `Makefile` (registry prodigy targets)
 - any docs mentioning an outdated label count

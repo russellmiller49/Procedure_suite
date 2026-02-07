@@ -10,7 +10,7 @@ def _write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 def test_prodigy_export_registry_writes_canonical_columns(tmp_path: Path) -> None:
-    from modules.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
+    from ml.lib.ml_coder.registry_label_schema import REGISTRY_LABELS, compute_encounter_id
     from scripts import prodigy_export_registry as exporter
 
     input_jsonl = tmp_path / "prodigy_export.jsonl"

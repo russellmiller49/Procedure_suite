@@ -7,14 +7,14 @@ Tests the 3-tier extraction with hydration:
 """
 
 import pytest
-from modules.ml_coder.label_hydrator import (
+from ml.lib.ml_coder.label_hydrator import (
     HydratedLabels,
     hydrate_labels_from_text,
     extract_labels_with_hydration,
     KEYWORD_TO_PROCEDURE_MAP,
     NEGATION_PATTERNS,
 )
-from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
+from app.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
 
 
 class TestHydrateLabelsFromText:
@@ -407,7 +407,7 @@ class TestDeduplication:
 
     def test_keeps_structured_over_cpt(self):
         """When same text has structured and cpt labels, keep structured."""
-        from modules.ml_coder.registry_data_prep import deduplicate_records
+        from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
         records = [
             {"note_text": "Test note", "label_source": "cpt", "label_confidence": 0.80, "bal": 1},
@@ -422,7 +422,7 @@ class TestDeduplication:
 
     def test_keeps_cpt_over_keyword(self):
         """When same text has cpt and keyword labels, keep cpt."""
-        from modules.ml_coder.registry_data_prep import deduplicate_records
+        from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
         records = [
             {"note_text": "Test note", "label_source": "keyword", "label_confidence": 0.60, "bal": 1},
@@ -437,7 +437,7 @@ class TestDeduplication:
 
     def test_keeps_higher_confidence_same_source(self):
         """When same source, keep higher confidence."""
-        from modules.ml_coder.registry_data_prep import deduplicate_records
+        from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
         records = [
             {"note_text": "Test note", "label_source": "keyword", "label_confidence": 0.55, "bal": 1},
@@ -452,7 +452,7 @@ class TestDeduplication:
 
     def test_no_duplicates_unchanged(self):
         """Records without duplicates pass through unchanged."""
-        from modules.ml_coder.registry_data_prep import deduplicate_records
+        from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
         records = [
             {"note_text": "Note A", "label_source": "structured", "label_confidence": 0.95},
@@ -466,7 +466,7 @@ class TestDeduplication:
 
     def test_multiple_duplicates_same_text(self):
         """Multiple duplicates of same text keep best one."""
-        from modules.ml_coder.registry_data_prep import deduplicate_records
+        from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
         records = [
             {"note_text": "Same note", "label_source": "keyword", "label_confidence": 0.55},
@@ -481,7 +481,7 @@ class TestDeduplication:
 
     def test_tracks_conflict_sources(self):
         """Conflicts by source are tracked correctly."""
-        from modules.ml_coder.registry_data_prep import deduplicate_records
+        from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
         records = [
             {"note_text": "Note 1", "label_source": "cpt", "label_confidence": 0.80},
@@ -498,7 +498,7 @@ class TestDeduplication:
 
     def test_empty_records_list(self):
         """Empty records list returns empty result."""
-        from modules.ml_coder.registry_data_prep import deduplicate_records
+        from ml.lib.ml_coder.registry_data_prep import deduplicate_records
 
         records = []
         deduped, stats = deduplicate_records(records)

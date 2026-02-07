@@ -9,7 +9,7 @@ The reconciler identifies discrepancies and provides recommendations.
 
 import pytest
 
-from modules.coder.reconciliation import (
+from app.coder.reconciliation import (
     CodeReconciler,
     ReconciliationResult,
     DiscrepancyType,
@@ -18,7 +18,7 @@ from modules.coder.reconciliation import (
     PipelineResult,
     run_extraction_first_pipeline,
 )
-from modules.coder.reconciliation.reconciler import (
+from app.coder.reconciliation.reconciler import (
     CodeDiscrepancy,
     HIGH_VALUE_CODES,
     ADD_ON_CODES,
@@ -364,7 +364,7 @@ class TestPipelineResult:
 
     def test_needs_review_property(self):
         """Test: needs_review based on recommendation."""
-        from modules.registry.ml import ClinicalActions
+        from app.registry.ml import ClinicalActions
 
         result_approve = PipelineResult(
             note_text="test",
@@ -384,8 +384,8 @@ class TestPipelineResult:
 
     def test_audit_trail_structure(self):
         """Test: audit_trail contains expected fields."""
-        from modules.registry.ml import ClinicalActions
-        from modules.coder.adapters.registry_coder import DerivedCode
+        from app.registry.ml import ClinicalActions
+        from app.coder.adapters.registry_coder import DerivedCode
 
         result = PipelineResult(
             note_text="test note",

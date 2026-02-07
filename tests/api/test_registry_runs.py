@@ -8,11 +8,11 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
 
-from modules.api.dependencies import get_coding_service, get_registry_service
-from modules.api.fastapi_app import app
-from modules.phi.db import Base
-from modules.registry_store.dependencies import get_registry_store_engine
-from modules.registry_store.models import RegistryRun
+from app.api.dependencies import get_coding_service, get_registry_service
+from app.api.fastapi_app import app
+from app.phi.db import Base
+from app.registry_store.dependencies import get_registry_store_engine
+from app.registry_store.models import RegistryRun
 
 
 @pytest.fixture

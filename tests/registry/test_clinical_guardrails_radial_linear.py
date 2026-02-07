@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
-from modules.registry.schema import RegistryRecord
+from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
+from app.registry.schema import RegistryRecord
 
 
 def test_clinical_guardrails_does_not_require_review_for_combined_linear_and_radial_with_peripheral_context() -> None:

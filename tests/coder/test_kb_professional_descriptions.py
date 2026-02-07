@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
+from app.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
 
 
 def test_kb_prefers_fee_schedule_professional_descriptions() -> None:

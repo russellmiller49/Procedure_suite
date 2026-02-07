@@ -1,6 +1,6 @@
 import pytest
 
-from modules.registry.deterministic_extractors import (
+from app.registry.deterministic_extractors import (
     extract_chest_tube,
     extract_endobronchial_biopsy,
     extract_ipc,

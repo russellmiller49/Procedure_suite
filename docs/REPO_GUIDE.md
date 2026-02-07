@@ -36,7 +36,7 @@ High-signal map: [`docs/REPO_INDEX.md`](REPO_INDEX.md)
 
 At a glance:
 
-- `modules/` — runtime backend (FastAPI app, pipelines, adapters, guardrails)
+- `app/` — runtime backend (FastAPI app, pipelines, adapters, guardrails)
 - `proc_schemas/` — Pydantic schema definitions (registry v2/v3, coding, shared types)
 - `data/` — knowledge base JSON, models, training data, corpora (many files are large)
 - `scripts/` — smoke tests, evaluators, training helpers, maintenance scripts
@@ -47,11 +47,11 @@ At a glance:
 
 If you only memorize 5 files, make them these:
 
-- FastAPI wiring + startup validation: `modules/api/fastapi_app.py`
-- Authoritative API endpoint: `modules/api/routes/unified_process.py` (`POST /api/v1/process`)
-- Extraction-first orchestration: `modules/registry/application/registry_service.py`
-- Deterministic registry → CPT derivation (no note parsing): `modules/coder/domain_rules/registry_to_cpt/coding_rules.py`
-- UI static app: `modules/api/static/phi_redactor/` (served at `/ui/`)
+- FastAPI wiring + startup validation: `app/api/fastapi_app.py`
+- Authoritative API endpoint: `app/api/routes/unified_process.py` (`POST /api/v1/process`)
+- Extraction-first orchestration: `app/registry/application/registry_service.py`
+- Deterministic registry → CPT derivation (no note parsing): `app/coder/domain_rules/registry_to_cpt/coding_rules.py`
+- UI static app: `ui/static/phi_redactor/` (served at `/ui/`)
 
 ## Runtime configuration (what must be set)
 
@@ -61,7 +61,7 @@ The app refuses to start unless:
 
 - `PROCSUITE_PIPELINE_MODE=extraction_first`
 
-Enforcement lives in `modules/api/fastapi_app.py:_validate_startup_env()`.
+Enforcement lives in `app/api/fastapi_app.py:_validate_startup_env()`.
 
 ### Production invariants (startup-enforced)
 
@@ -74,7 +74,7 @@ When `CODER_REQUIRE_PHI_REVIEW=true` **or** `PROCSUITE_ENV=production`, startup 
 ### `.env` loading rule
 
 - `./scripts/devserver.sh` sources `.env` if present.
-- `modules/api/fastapi_app.py` also loads `.env` via `python-dotenv` unless `PROCSUITE_SKIP_DOTENV=true`.
+- `app/api/fastapi_app.py` also loads `.env` via `python-dotenv` unless `PROCSUITE_SKIP_DOTENV=true`.
 - OS env vars win over `.env` values (dotenv loads with `override=False`).
 
 Keep secrets out of git. Prefer shell env vars or an untracked local `.env`.
@@ -83,19 +83,19 @@ Keep secrets out of git. Prefer shell env vars or an untracked local `.env`.
 
 ### Request/response contracts
 
-The API is defined by Pydantic schemas in `modules/api/schemas/base.py`:
+The API is defined by Pydantic schemas in `app/api/schemas/base.py`:
 
 - `UnifiedProcessRequest`
 - `UnifiedProcessResponse`
 
-The implementation is `modules/api/routes/unified_process.py:unified_process()`.
+The implementation is `app/api/routes/unified_process.py:unified_process()`.
 
 ### High-level flow (what happens on each request)
 
 1. **PHI step (optional)**
    - If `payload.already_scrubbed=true`, the server uses the note as-is.
    - Otherwise server-side PHI redaction runs via:
-     - `modules/api/phi_redaction.py:apply_phi_redaction()`
+     - `app/api/phi_redaction.py:apply_phi_redaction()`
 
 2. **Registry extraction (the “real work”)**
    - The server calls `RegistryService.extract_fields(note_text)` via `run_cpu(...)`.
@@ -105,12 +105,12 @@ The implementation is `modules/api/routes/unified_process.py:unified_process()`.
    - The unified endpoint ensures CPT codes are present:
      - Uses `result.cpt_codes` if present, otherwise derives codes from the extracted `RegistryRecord`.
    - Deterministic derivation entrypoint:
-     - `modules/coder/domain_rules/registry_to_cpt/coding_rules.py:derive_all_codes_with_meta()`
+     - `app/coder/domain_rules/registry_to_cpt/coding_rules.py:derive_all_codes_with_meta()`
    - Constraint: deterministic derivation must accept only `RegistryRecord` (no raw note parsing).
 
 4. **Evidence payload for UI highlighting**
    - Evidence items are normalized to the UI contract by:
-     - `modules/api/adapters/response_adapter.py:build_v3_evidence_payload()`
+     - `app/api/adapters/response_adapter.py:build_v3_evidence_payload()`
    - Evidence contract (per evidence item):
      - `{"source": "...", "text": "...", "span": [start, end], "confidence": 0.0-1.0}`
 
@@ -118,7 +118,7 @@ The implementation is `modules/api/routes/unified_process.py:unified_process()`.
    - When `CODER_REQUIRE_PHI_REVIEW=true`, the endpoint stays enabled but forces:
      - `review_status="pending_phi_review"`
      - `needs_manual_review=true`
-   - Gating helper: `modules/coder/phi_gating.py:is_phi_review_required()`
+   - Gating helper: `app/coder/phi_gating.py:is_phi_review_required()`
 
 ### Output shape (what the UI expects)
 
@@ -206,7 +206,7 @@ If the client cannot scrub, you can send:
 { "note": "…raw note…", "already_scrubbed": false }
 ```
 
-The server will run server-side PHI redaction before extraction (see `modules/api/phi_redaction.py`), but the long-term direction is still **client-side scrubbing** so the server never receives PHI.
+The server will run server-side PHI redaction before extraction (see `app/api/phi_redaction.py`), but the long-term direction is still **client-side scrubbing** so the server never receives PHI.
 
 ### Error responses (common)
 
@@ -239,8 +239,8 @@ Key properties:
 
 Uses the `RegistryEngine` LLM extractor:
 
-- Engine: `modules/registry/engine.py`
-- Prompts: `modules/registry/prompts.py`
+- Engine: `app/registry/engine.py`
+- Prompts: `app/registry/prompts.py`
 
 This is primarily a dev / legacy mode; production is moving toward deterministic extraction-first.
 
@@ -248,7 +248,7 @@ This is primarily a dev / legacy mode; production is moving toward deterministic
 
 Uses agent-assisted focusing (section slicing) before running the deterministic engine:
 
-- Focusing helper: `modules/registry/extraction/focus.py`
+- Focusing helper: `app/registry/extraction/focus.py`
 - Agent docs: [`docs/AGENTS.md`](AGENTS.md)
 
 Guardrail: auditing must run on the **full raw note**, never the focused text.
@@ -261,99 +261,99 @@ Present as a mode, but intentionally guarded: the “Structurer” agent is not 
 
 These are the “don’t hallucinate / don’t overcode” protections that run in Python:
 
-- Clinical guardrails: `modules/extraction/postprocessing/clinical_guardrails.py`
-- Evidence integrity verification: `modules/registry/evidence/verifier.py`
-- Omission scanning + keyword gating: `modules/registry/self_correction/keyword_guard.py`
+- Clinical guardrails: `app/extraction/postprocessing/clinical_guardrails.py`
+- Evidence integrity verification: `app/registry/evidence/verifier.py`
+- Omission scanning + keyword gating: `app/registry/self_correction/keyword_guard.py`
 
 If you change extraction, make sure these guardrails still fire, and update tests accordingly.
 
-## Modules walkthrough (what each `modules/*` package owns)
+## Modules walkthrough (what each `app/*` package owns)
 
 This is a “where do I look” guide for the backend packages. For deeper design discussion, see [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) and [`docs/DEVELOPMENT.md`](DEVELOPMENT.md).
 
-### `modules/api/` — FastAPI surface + UI serving
+### `app/api/` — FastAPI surface + UI serving
 
 - Owns: HTTP endpoints, request/response schemas, dependency wiring, readiness, and static UI serving.
 - Key files:
-  - `modules/api/fastapi_app.py` — app wiring + startup env validation + readiness/warmup.
-  - `modules/api/routes/unified_process.py` — `POST /api/v1/process` implementation.
-  - `modules/api/schemas/base.py` — `UnifiedProcessRequest/Response` and other API schemas.
-  - `modules/api/static/phi_redactor/` — client UI (served at `/ui/`).
+  - `app/api/fastapi_app.py` — app wiring + startup env validation + readiness/warmup.
+  - `app/api/routes/unified_process.py` — `POST /api/v1/process` implementation.
+  - `app/api/schemas/base.py` — `UnifiedProcessRequest/Response` and other API schemas.
+  - `ui/static/phi_redactor/` — client UI (served at `/ui/`).
 
-### `modules/registry/` — extraction-first registry orchestration
+### `app/registry/` — extraction-first registry orchestration
 
 - Owns: extracting a `RegistryRecord` from note text, applying guardrails, auditing, and packaging warnings/evidence.
 - Key files:
-  - `modules/registry/application/registry_service.py` — main orchestrator (`RegistryService.extract_fields`).
-  - `modules/registry/engine.py` — LLM-based extraction engine (when `REGISTRY_EXTRACTION_ENGINE=engine`).
-  - `modules/registry/processing/masking.py` — `mask_extraction_noise()` (menu/CPT block stripping).
-  - `modules/registry/evidence/` — evidence verification / integrity checks.
-  - `modules/registry/self_correction/` — omission scan + (optional) self-correction loop.
-  - `modules/registry/schema/` — extraction schema tooling and compat shims (distinct from `proc_schemas/`).
+  - `app/registry/application/registry_service.py` — main orchestrator (`RegistryService.extract_fields`).
+  - `app/registry/engine.py` — LLM-based extraction engine (when `REGISTRY_EXTRACTION_ENGINE=engine`).
+  - `app/registry/processing/masking.py` — `mask_extraction_noise()` (menu/CPT block stripping).
+  - `app/registry/evidence/` — evidence verification / integrity checks.
+  - `app/registry/self_correction/` — omission scan + (optional) self-correction loop.
+  - `app/registry/schema/` — extraction schema tooling and compat shims (distinct from `proc_schemas/`).
 
-### `modules/coder/` — CPT derivation + KB-driven coding utilities
+### `app/coder/` — CPT derivation + KB-driven coding utilities
 
 - Owns: deterministic CPT derivation and coding-related policy (including PHI gating and “parallel pathway” logic).
 - Key files:
-  - `modules/coder/application/coding_service.py` — `CodingService` (KB access + coding helpers).
-  - `modules/coder/domain_rules/registry_to_cpt/coding_rules.py` — deterministic registry → CPT (must not parse raw note text).
-  - `modules/coder/phi_gating.py` — production review gating (`CODER_REQUIRE_PHI_REVIEW`).
-  - `modules/coder/parallel_pathway/` — `ParallelPathwayOrchestrator` (NER/rules path + ML path).
+  - `app/coder/application/coding_service.py` — `CodingService` (KB access + coding helpers).
+  - `app/coder/domain_rules/registry_to_cpt/coding_rules.py` — deterministic registry → CPT (must not parse raw note text).
+  - `app/coder/phi_gating.py` — production review gating (`CODER_REQUIRE_PHI_REVIEW`).
+  - `app/coder/parallel_pathway/` — `ParallelPathwayOrchestrator` (NER/rules path + ML path).
 
-### `modules/ml_coder/` — ML prediction + training/eval helpers
+### `ml/lib/ml_coder/` — ML prediction + training/eval helpers
 
 - Owns: ML models/predictors for CPT and registry auditing, plus training pipelines.
 - Key files:
-  - `modules/ml_coder/predictor.py` — CPT predictor.
-  - `modules/ml_coder/registry_predictor.py` — registry ML predictor/auditor.
+  - `ml/lib/ml_coder/predictor.py` — CPT predictor.
+  - `ml/lib/ml_coder/registry_predictor.py` — registry ML predictor/auditor.
 
-### `modules/ner/` — granular NER runtime
+### `app/ner/` — granular NER runtime
 
 - Owns: loading/running the granular NER model that emits entity spans used by `parallel_ner`.
 - Key files:
-  - `modules/ner/inference.py` — inference entrypoint(s) for granular NER.
+  - `app/ner/inference.py` — inference entrypoint(s) for granular NER.
 
-### `modules/extraction/` — shared postprocessing guardrails
+### `app/extraction/` — shared postprocessing guardrails
 
 - Owns: reusable “clinical guardrails” that sanitize/normalize extraction outputs.
 - Key files:
-  - `modules/extraction/postprocessing/clinical_guardrails.py` — anti-hallucination and context/negation protections.
+  - `app/extraction/postprocessing/clinical_guardrails.py` — anti-hallucination and context/negation protections.
 
-### `modules/reporting/` — structured report generation (Jinja)
+### `app/reporting/` — structured report generation (Jinja)
 
 - Owns: turning structured extraction (and patches) into human-readable reports.
 - Key files:
-  - `modules/reporting/engine.py` — `ReporterEngine` + composition helpers.
-  - `modules/reporting/inference.py` — `InferenceEngine` (derived fields).
-  - `modules/reporting/validation.py` — `ValidationEngine` (required fields).
-  - `modules/reporting/templates/` — Jinja templates.
+  - `app/reporting/engine.py` — `ReporterEngine` + composition helpers.
+  - `app/reporting/inference.py` — `InferenceEngine` (derived fields).
+  - `app/reporting/validation.py` — `ValidationEngine` (required fields).
+  - `app/reporting/templates/` — Jinja templates.
 
-### `modules/reporter/` — legacy/alternate reporter components
+### `app/reporter/` — legacy/alternate reporter components
 
-- Contains older reporting code and CLI helpers. Prefer `modules/reporting/` for new work unless a workflow explicitly uses `modules/reporter/`.
+- Contains older reporting code and CLI helpers. Prefer `app/reporting/` for new work unless a workflow explicitly uses `app/reporter/`.
 
-### `modules/phi/` — PHI detection, scrubbing, and storage helpers
+### `app/phi/` — PHI detection, scrubbing, and storage helpers
 
 - Owns: PHI-related models and utilities used by server-side redaction and PHI review workflows.
 - Related docs: [`docs/phi_review_system/README.md`](phi_review_system/README.md)
 
-### `modules/agents/` — parser/summarizer/structurer pipeline (mostly focusing)
+### `app/agents/` — parser/summarizer/structurer pipeline (mostly focusing)
 
 - Owns: the agent contracts and the optional focusing workflow used by some extraction modes.
 - Key docs: [`docs/AGENTS.md`](AGENTS.md)
 
-### `modules/common/`, `modules/domain/`, `modules/infra/`, `modules/llm/` — shared foundations
+### `app/common/`, `app/domain/`, `app/infra/`, `app/llm/` — shared foundations
 
-- `modules/common/`: logging, exceptions, KB helpers, span utilities.
-- `modules/domain/`: domain-layer abstractions (rules, stores, text, RVU, reasoning).
-- `modules/infra/`: settings, warmup, executors/concurrency utilities.
-- `modules/llm/`: LLM provider integration and adapter code.
+- `app/common/`: logging, exceptions, KB helpers, span utilities.
+- `app/domain/`: domain-layer abstractions (rules, stores, text, RVU, reasoning).
+- `app/infra/`: settings, warmup, executors/concurrency utilities.
+- `app/llm/`: LLM provider integration and adapter code.
 
-### `modules/registry_cleaning/`, `modules/autocode/`, `modules/proc_ml_advisor/` — specialized/legacy
+### `app/registry_cleaning/`, `app/autocode/`, `app/proc_ml_advisor/` — specialized/legacy
 
-- `modules/registry_cleaning/`: legacy registry cleaning pipeline (not the main extraction-first path).
-- `modules/autocode/`: KB/synonym-driven autocode utilities (`modules/autocode/ip_kb/`).
-- `modules/proc_ml_advisor/`: ML advisor utilities/routers (used for some dev tooling).
+- `app/registry_cleaning/`: legacy registry cleaning pipeline (not the main extraction-first path).
+- `app/autocode/`: KB/synonym-driven autocode utilities (`app/autocode/ip_kb/`).
+- `app/proc_ml_advisor/`: ML advisor utilities/routers (used for some dev tooling).
 
 ## Self-correction (optional; quality vs latency tradeoff)
 
@@ -371,7 +371,7 @@ Key points:
 
 ## UI: PHI redactor / clinical dashboard
 
-The UI is a static app served by FastAPI at `/ui/` from `modules/api/static/phi_redactor/`.
+The UI is a static app served by FastAPI at `/ui/` from `ui/static/phi_redactor/`.
 
 Notable UX behaviors (important for correctness and training workflows):
 
@@ -409,7 +409,7 @@ Release hygiene:
 There are two “layers”:
 
 - **Rich Pydantic schemas** in `proc_schemas/registry/` (V2/V3)
-- **Extraction schema tooling** under `modules/registry/schema/` (used to build/validate extraction payloads and compat shims)
+- **Extraction schema tooling** under `app/registry/schema/` (used to build/validate extraction payloads and compat shims)
 
 Schema refactor notes:
 
@@ -449,14 +449,14 @@ Start with:
 - Add/adjust CPT metadata / RVUs / synonyms / bundling rules:
   - `data/knowledge/ip_coding_billing_v3_0.json`
 - Adjust deterministic registry → CPT rules:
-  - `modules/coder/domain_rules/registry_to_cpt/`
+  - `app/coder/domain_rules/registry_to_cpt/`
 - Adjust extraction behavior / guardrails:
-  - `modules/registry/application/registry_service.py`
-  - `modules/extraction/postprocessing/clinical_guardrails.py`
-  - `modules/registry/postprocess.py`
+  - `app/registry/application/registry_service.py`
+  - `app/extraction/postprocessing/clinical_guardrails.py`
+  - `app/registry/postprocess.py`
 - Adjust UI behaviors:
-  - `modules/api/static/phi_redactor/app.js`
-  - `modules/api/static/phi_redactor/protectedVeto.js`
+  - `ui/static/phi_redactor/app.js`
+  - `ui/static/phi_redactor/protectedVeto.js`
 
 ## Troubleshooting (common “it won’t start” issues)
 
@@ -465,7 +465,7 @@ Start with:
 - Production startup failure: `REGISTRY_EXTRACTION_ENGINE must be 'parallel_ner' in production`
   - Fix env var: `REGISTRY_EXTRACTION_ENGINE=parallel_ner` (or explicitly opt out with `PROCSUITE_ALLOW_REGISTRY_ENGINE_OVERRIDE=true`)
 - Model/runtime bundle validation errors
-  - Happens during app lifespan init in `modules/api/fastapi_app.py` via `modules/registry/model_runtime.py:verify_registry_runtime_bundle()`
+  - Happens during app lifespan init in `app/api/fastapi_app.py` via `app/registry/model_runtime.py:verify_registry_runtime_bundle()`
   - Usually indicates missing/invalid model artifacts or misconfigured model backend.
 
 ---

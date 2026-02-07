@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from modules.registry.processing.disease_burden import (
+from app.registry.processing.disease_burden import (
     apply_disease_burden_overrides,
     extract_unambiguous_lesion_size_mm,
     extract_unambiguous_suv_max,
 )
-from modules.registry.schema import RegistryRecord
+from app.registry.schema import RegistryRecord
 
 
 def test_extract_unambiguous_lesion_size_mm_single_value() -> None:

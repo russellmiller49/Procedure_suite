@@ -12,7 +12,7 @@ These tests ensure:
 import os
 import pytest
 
-from modules.registry.engine import (
+from app.registry.engine import (
     RegistryEngine,
     classify_procedure_families,
     filter_inapplicable_fields,

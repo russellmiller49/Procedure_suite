@@ -7,7 +7,7 @@ rules are properly applied.
 
 import pytest
 
-from modules.registry.ml.models import (
+from app.registry.ml.models import (
     ClinicalActions,
     EBUSActions,
     BiopsyActions,
@@ -19,7 +19,7 @@ from modules.registry.ml.models import (
     StentActions,
     BLVRActions,
 )
-from modules.coder.adapters.registry_coder import (
+from app.coder.adapters.registry_coder import (
     RegistryBasedCoder,
     DerivedCode,
     DerivationResult,

@@ -1,4 +1,4 @@
-from modules.ml_coder.utils import clean_cpt_codes
+from ml.lib.ml_coder.utils import clean_cpt_codes
 
 
 def test_clean_cpt_codes_basic():

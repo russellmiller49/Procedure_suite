@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.registry.postprocess import reconcile_ebus_sampling_from_specimen_log
-from modules.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.registry.postprocess import reconcile_ebus_sampling_from_specimen_log
+from app.registry.schema import RegistryRecord
 
 
 def test_reconcile_ebus_sampling_from_specimen_log_restricts_station_count() -> None:

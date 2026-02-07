@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from modules.reporting import (
+from app.reporting import (
     AnesthesiaInfo,
     EncounterInfo,
     PatientInfo,

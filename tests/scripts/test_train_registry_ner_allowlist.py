@@ -5,7 +5,10 @@ from pathlib import Path
 
 
 def _allowed_label_types() -> set[str]:
-    script_path = Path(__file__).resolve().parents[2] / "scripts" / "train_registry_ner.py"
+    repo_root = Path(__file__).resolve().parents[2]
+    script_path = repo_root / "ml" / "scripts" / "train_registry_ner.py"
+    if not script_path.exists():
+        script_path = repo_root / "scripts" / "train_registry_ner.py"
     module = ast.parse(script_path.read_text(encoding="utf-8"))
 
     for node in module.body:
@@ -18,7 +21,7 @@ def _allowed_label_types() -> set[str]:
                     value = ast.literal_eval(node.value)
                     return {str(v) for v in value}
 
-    raise AssertionError("ALLOWED_LABEL_TYPES not found in scripts/train_registry_ner.py")
+    raise AssertionError(f"ALLOWED_LABEL_TYPES not found in {script_path}")
 
 
 def test_train_registry_ner_allowlist_contains_stent_context_labels() -> None:

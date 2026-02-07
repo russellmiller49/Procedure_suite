@@ -5,10 +5,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.coder.application.smart_hybrid_policy import HybridCoderResult
-from modules.ml_coder.thresholds import CaseDifficulty
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.engine import RegistryEngine
+from app.coder.application.smart_hybrid_policy import HybridCoderResult
+from ml.lib.ml_coder.thresholds import CaseDifficulty
+from app.registry.application.registry_service import RegistryService
+from app.registry.engine import RegistryEngine
 
 
 def test_registry_llm_timeout_falls_back_to_engine(monkeypatch: pytest.MonkeyPatch) -> None:

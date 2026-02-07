@@ -8,7 +8,7 @@ import pytest
 from dataclasses import dataclass, field
 from typing import Optional
 
-from modules.coder.application.smart_hybrid_policy import (
+from app.coder.application.smart_hybrid_policy import (
     HybridPolicy,
     HybridDecision,
     RuleResult,

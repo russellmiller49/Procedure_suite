@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
+from app.registry.application.registry_service import RegistryService
 
 
 def _extract(monkeypatch: pytest.MonkeyPatch, note_text: str):

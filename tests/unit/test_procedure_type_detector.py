@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from modules.coder.application.procedure_type_detector import (
+from app.coder.application.procedure_type_detector import (
     detect_procedure_type,
     detect_procedure_type_from_codes,
 )

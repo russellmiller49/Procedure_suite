@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from modules.coder.parallel_pathway.orchestrator import ParallelPathwayOrchestrator
+from app.coder.parallel_pathway.orchestrator import ParallelPathwayOrchestrator
 
 
 class _LegacyPredictor:

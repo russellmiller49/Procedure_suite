@@ -12,7 +12,7 @@ from __future__ import annotations
 import pytest
 from typing import Any
 
-from modules.registry.schema_granular import (
+from app.registry.schema_granular import (
     EnhancedRegistryGranularData,
     IPCProcedure,
     ClinicalContext,
@@ -30,10 +30,10 @@ from modules.registry.schema_granular import (
     validate_ebus_consistency,
     derive_aggregate_fields,
 )
-from modules.registry.schema import (
+from app.registry.schema import (
     RegistryRecord,
 )
-from modules.registry.postprocess import process_granular_data
+from app.registry.postprocess import process_granular_data
 
 
 class TestEBUSStationDetailModel:
@@ -808,7 +808,7 @@ class TestDeriveProceduresFromGranular:
 
     def test_cryobiopsy_derivation(self):
         """Test that cryobiopsy_sites populates transbronchial_cryobiopsy."""
-        from modules.registry.schema_granular import derive_procedures_from_granular
+        from app.registry.schema_granular import derive_procedures_from_granular
 
         granular_data = {
             "cryobiopsy_sites": [
@@ -834,7 +834,7 @@ class TestDeriveProceduresFromGranular:
 
     def test_radial_ebus_derivation(self):
         """Test that navigation_targets with rebus_used populates radial_ebus.performed."""
-        from modules.registry.schema_granular import derive_procedures_from_granular
+        from app.registry.schema_granular import derive_procedures_from_granular
 
         granular_data = {
             "navigation_targets": [
@@ -856,7 +856,7 @@ class TestDeriveProceduresFromGranular:
 
     def test_linear_ebus_stations_sampled_derivation(self):
         """Test that linear_ebus_stations_detail populates stations_sampled."""
-        from modules.registry.schema_granular import derive_procedures_from_granular
+        from app.registry.schema_granular import derive_procedures_from_granular
 
         granular_data = {
             "linear_ebus_stations_detail": [
@@ -873,7 +873,7 @@ class TestDeriveProceduresFromGranular:
 
     def test_bal_derivation_from_specimens(self):
         """Test that BAL specimens populate procedures_performed.bal."""
-        from modules.registry.schema_granular import derive_procedures_from_granular
+        from app.registry.schema_granular import derive_procedures_from_granular
 
         granular_data = {
             "specimens_collected": [
@@ -890,7 +890,7 @@ class TestDeriveProceduresFromGranular:
 
     def test_brushings_derivation_from_specimens(self):
         """Test that Brushing specimens populate procedures_performed.brushings."""
-        from modules.registry.schema_granular import derive_procedures_from_granular
+        from app.registry.schema_granular import derive_procedures_from_granular
 
         granular_data = {
             "specimens_collected": [
@@ -907,7 +907,7 @@ class TestDeriveProceduresFromGranular:
 
     def test_sampling_tools_union(self):
         """Test that sampling_tools_used is derived from navigation_targets."""
-        from modules.registry.schema_granular import derive_procedures_from_granular
+        from app.registry.schema_granular import derive_procedures_from_granular
 
         granular_data = {
             "navigation_targets": [
@@ -929,7 +929,7 @@ class TestDeriveProceduresFromGranular:
 
     def test_clears_cryoprobe_forceps_type(self):
         """Test that forceps_type='Cryoprobe' is cleared when cryobiopsy_sites exists."""
-        from modules.registry.schema_granular import derive_procedures_from_granular
+        from app.registry.schema_granular import derive_procedures_from_granular
 
         granular_data = {
             "cryobiopsy_sites": [
@@ -956,7 +956,7 @@ class TestTherapeuticAspirationNormalization:
 
     def test_airway_locations_become_therapeutic_aspiration(self):
         """Test that airway locations are moved from TBBx to therapeutic_aspiration."""
-        from modules.api.normalization import normalize_registry_payload
+        from app.api.normalization import normalize_registry_payload
 
         payload = {
             "procedures_performed": {
@@ -978,7 +978,7 @@ class TestTherapeuticAspirationNormalization:
 
     def test_parenchymal_locations_stay_as_tbbx(self):
         """Test that parenchymal locations remain as transbronchial_biopsy."""
-        from modules.api.normalization import normalize_registry_payload
+        from app.api.normalization import normalize_registry_payload
 
         payload = {
             "procedures_performed": {
@@ -1005,7 +1005,7 @@ class TestRobotNavigationEBUSRegression:
 
     def test_full_registry_derivation(self):
         """Test complete registry derivation for navigation + EBUS case."""
-        from modules.api.normalization import normalize_registry_payload
+        from app.api.normalization import normalize_registry_payload
 
         # Simulate the granular data that the LLM correctly extracts
         payload = {

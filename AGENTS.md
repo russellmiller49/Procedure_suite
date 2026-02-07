@@ -13,7 +13,7 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
 
 ## Required Runtime Configuration
 
-Startup validation enforces these invariants (see `modules/api/fastapi_app.py`):
+Startup validation enforces these invariants (see `app/api/fastapi_app.py`):
 
 - `PROCSUITE_PIPELINE_MODE=extraction_first` (required; service fails to start otherwise)
 - In production (`CODER_REQUIRE_PHI_REVIEW=true` or `PROCSUITE_ENV=production`), also require:
@@ -26,7 +26,7 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 
 ## Primary API Surface
 
-- **Authoritative endpoint:** `POST /api/v1/process` (`modules/api/routes/unified_process.py`)
+- **Authoritative endpoint:** `POST /api/v1/process` (`app/api/routes/unified_process.py`)
   - If `CODER_REQUIRE_PHI_REVIEW=true`, keep the endpoint enabled but return:
     - `review_status=pending_phi_review`
     - `needs_manual_review=true`
@@ -36,7 +36,7 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 
 ## UI (PHI Redactor / Clinical Dashboard)
 
-- Served by `./scripts/devserver.sh` at `/ui/` (static files live in `modules/api/static/phi_redactor/`).
+- Served by `./scripts/devserver.sh` at `/ui/` (static files live in `ui/static/phi_redactor/`).
 - Workflow explainer page: `/ui/workflow.html` (links from the top bar).
 - **New Note**: clears the editor + all prior tables/JSON output to avoid confusion during long-running submits.
 - **Flattened Tables (Editable)** (collapsed by default): provides an edit-friendly view of key tables; some fields use dropdowns.
@@ -48,11 +48,11 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 
 ## Recent Updates (2026-01-25)
 
-- **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `modules/registry/schema/ebus_events.py`.
-- **Granular split:** models moved to `modules/registry/schema/granular_models.py` and logic to `modules/registry/schema/granular_logic.py`; `modules/registry/schema_granular.py` is a compat shim.
-- **V2 dynamic builder:** moved to `modules/registry/schema/v2_dynamic.py`; `modules/registry/schema.py` is now a thin entrypoint preserving the `__path__` hack.
-- **V3 extraction schema:** renamed to `modules/registry/schema/ip_v3_extraction.py` with a compatibility re-export at `modules/registry/schema/ip_v3.py`; the rich registry entry schema remains at `proc_schemas/registry/ip_v3.py`.
-- **V3→V2 adapter:** now in `modules/registry/schema/adapters/v3_to_v2.py` with a compat shim at `modules/registry/adapters/v3_to_v2.py`.
+- **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `app/registry/schema/ebus_events.py`.
+- **Granular split:** models moved to `app/registry/schema/granular_models.py` and logic to `app/registry/schema/granular_logic.py`; `app/registry/schema_granular.py` is a compat shim.
+- **V2 dynamic builder:** moved to `app/registry/schema/v2_dynamic.py`; `app/registry/schema.py` is now a thin entrypoint preserving the `__path__` hack.
+- **V3 extraction schema:** renamed to `app/registry/schema/ip_v3_extraction.py` with a compatibility re-export at `app/registry/schema/ip_v3.py`; the rich registry entry schema remains at `proc_schemas/registry/ip_v3.py`.
+- **V3→V2 adapter:** now in `app/registry/schema/adapters/v3_to_v2.py` with a compat shim at `app/registry/adapters/v3_to_v2.py`.
 - **Refactor notes/tests:** see `NOTES_SCHEMA_REFACTOR.md` and `tests/registry/test_schema_refactor_smoke.py`.
 
 ## Recent Updates (2026-01-24)
@@ -71,9 +71,9 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 
 - **Hierarchy of truth (conflict resolution):**
   - **Narrative supersedes header codes**: do not treat `PROCEDURE:` CPT lists as “performed” when `PROCEDURE IN DETAIL:` contradicts (e.g., header says “trach change” but narrative describes ETT intubation → do not extract tracheostomy creation).
-  - **Narrative supersedes summary**: complications mentioned in narrative override templated “COMPLICATIONS: None” (see `modules/registry/postprocess/complications_reconcile.py`).
-  - **Evidence supersedes checkbox heuristics**: unchecked template items must *not* force a procedure to `performed=false` when explicit active-voice narrative evidence supports `true` (see `modules/registry/postprocess/template_checkbox_negation.py`).
-- **Anti-hallucination: tools ≠ intent**: mentions of tools (snare/forceps/basket/cryoprobe) do not imply debulking/ablation; require action-on-tissue language (tightened CAO modality parsing in `modules/registry/processing/cao_interventions_detail.py`).
+  - **Narrative supersedes summary**: complications mentioned in narrative override templated “COMPLICATIONS: None” (see `app/registry/postprocess/complications_reconcile.py`).
+  - **Evidence supersedes checkbox heuristics**: unchecked template items must *not* force a procedure to `performed=false` when explicit active-voice narrative evidence supports `true` (see `app/registry/postprocess/template_checkbox_negation.py`).
+- **Anti-hallucination: tools ≠ intent**: mentions of tools (snare/forceps/basket/cryoprobe) do not imply debulking/ablation; require action-on-tissue language (tightened CAO modality parsing in `app/registry/processing/cao_interventions_detail.py`).
 - **Puncture ≠ stoma**: tracheal puncture (CPT `31612`) is *not* percutaneous tracheostomy creation; extraction and CPT derivation distinguish puncture-only from trach creation.
 - **Intraprocedural adjustment bundling**:
   - BLVR valve remove/replace in the same session is an adjustment, not foreign body removal; do not derive `31635` for valve exchanges.
@@ -82,7 +82,7 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 
 ## Extraction‑First Pipeline Notes
 
-Key path: `modules/registry/application/registry_service.py:_extract_fields_extraction_first()`
+Key path: `app/registry/application/registry_service.py:_extract_fields_extraction_first()`
 
 - `REGISTRY_EXTRACTION_ENGINE=parallel_ner` runs:
   - Path A: Granular NER → registry mapping → deterministic registry→CPT rules
@@ -98,19 +98,19 @@ Key path: `modules/registry/application/registry_service.py:_extract_fields_extr
   - **Header vs narrative**: procedure header CPT/menu content is not source-of-truth when contradicted by the narrative.
   - **Radial EBUS**: explicit “radial probe …” language should set `radial_ebus.performed` even without concentric/eccentric markers.
   - **Menu masking**: `mask_extraction_noise()` strips CPT/menu blocks (e.g., `IP ... CODE MOD DETAILS`) before extraction to prevent “menu reading” hallucinations.
-- **Omission scan:** `modules/registry/self_correction/keyword_guard.py:scan_for_omissions()` emits
+- **Omission scan:** `app/registry/self_correction/keyword_guard.py:scan_for_omissions()` emits
   `SILENT_FAILURE:` warnings for high-value missed procedures; these should surface to the UI via `/api/v1/process`.
 - **LLM self-correction:** enable with `REGISTRY_SELF_CORRECT_ENABLED=1` (recommended). For faster responses, set
   `PROCSUITE_FAST_MODE=1` or `REGISTRY_SELF_CORRECT_ENABLED=0`.
   - Self-correction only triggers when the RAW-ML auditor emits `high_conf_omissions`, and it is gated by a CPT keyword guard.
-  - If you see `SELF_CORRECT_SKIPPED: <CPT>: keyword guard failed (...)`, update `modules/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
+  - If you see `SELF_CORRECT_SKIPPED: <CPT>: keyword guard failed (...)`, update `app/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
 
 ## Evidence Contract (UI Highlighting)
 
 The UI expects V3 evidence items shaped like:
 `{"source": "...", "text": "...", "span": [start, end], "confidence": 0.0-1.0}`
 
-See `modules/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
+See `app/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
 
 ## Granular NER Model Workflow
 

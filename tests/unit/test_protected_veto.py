@@ -1,6 +1,6 @@
 """Tests for PHI protected veto module."""
 
-from modules.phi.safety.veto import apply_protected_veto
+from app.phi.safety.veto import apply_protected_veto
 
 
 def test_veto_cpt_context():

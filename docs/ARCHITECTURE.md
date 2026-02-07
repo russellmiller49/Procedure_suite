@@ -23,7 +23,7 @@ The Procedure Suite is a modular system for automated medical coding, registry e
 
 ```
 Procedure_suite/
-├── modules/                    # Core application modules
+├── app/                    # Core application modules
 │   ├── api/                    # FastAPI endpoints and routes
 │   ├── coder/                  # CPT coding engine
 │   ├── ml_coder/               # ML-based prediction
@@ -45,7 +45,7 @@ Procedure_suite/
 
 ## Core Modules
 
-### 1. API Layer (`modules/api/`)
+### 1. API Layer (`app/api/`)
 
 The FastAPI application serving REST endpoints.
 
@@ -64,13 +64,13 @@ The FastAPI application serving REST endpoints.
 | `/v1/report/render` | POST | Generate synoptic report |
 | `/health` | GET | Health check |
 
-### 2. Coder Module (`modules/coder/`)
+### 2. Coder Module (`app/coder/`)
 
 CPT code prediction using rules, ML, and LLM.
 
 **Architecture:**
 ```
-modules/coder/
+app/coder/
 ├── application/
 │   ├── coding_service.py       # Main orchestrator (8-step pipeline)
 │   └── smart_hybrid_policy.py  # ML-first hybrid decision logic
@@ -93,7 +93,7 @@ modules/coder/
 7. Confidence aggregation → final_confidence, review_flag
 8. Build CodeSuggestion[] → return for review
 
-### 3. ML Coder Module (`modules/ml_coder/`)
+### 3. ML Coder Module (`ml/lib/ml_coder/`)
 
 Machine learning models for CPT and registry prediction.
 
@@ -114,13 +114,13 @@ Note → ML Predict → Classify Difficulty → Decision Gate → Final Codes
          LOW_CONF:  LLM primary
 ```
 
-### 4. Registry Module (`modules/registry/`)
+### 4. Registry Module (`app/registry/`)
 
 Registry data extraction from procedure notes.
 
 **Architecture:**
 ```
-modules/registry/
+app/registry/
 ├── application/
 │   ├── registry_service.py     # Main service (extraction-first; hybrid-first legacy still present)
 │   ├── registry_builder.py     # Build registry entries
@@ -153,17 +153,17 @@ modules/registry/
 5. Compare deterministic CPT vs RAW-ML audit set and report discrepancies
 6. Optional guarded self-correction loop (default off)
 
-### 5. Agents Module (`modules/agents/`)
+### 5. Agents Module (`app/agents/`)
 
 3-agent pipeline for structured note processing.
 
 **Current usage:**
-- `ParserAgent` is used as a deterministic sectionizer and can be used to *focus* the note text for registry extraction (see `modules/registry/extraction/focus.py`).
+- `ParserAgent` is used as a deterministic sectionizer and can be used to *focus* the note text for registry extraction (see `app/registry/extraction/focus.py`).
 - The full `Parser → Summarizer → Structurer` pipeline exists, but `StructurerAgent` is currently a placeholder and is **not** used for production registry extraction.
 
 **Architecture:**
 ```
-modules/agents/
+app/agents/
 ├── contracts.py                # I/O schemas (Pydantic)
 ├── run_pipeline.py             # Pipeline orchestration
 ├── parser/
@@ -185,7 +185,7 @@ Raw Text → Parser → Segments/Entities
 
 See [AGENTS.md](AGENTS.md) for detailed agent documentation.
 
-### 6. Reporter Module (`modules/reporter/`)
+### 6. Reporter Module (`app/reporter/`)
 
 Synoptic report generation from structured data.
 
@@ -275,7 +275,7 @@ Synoptic report generation from structured data.
 - `proc_schemas/coding.py` - CodeSuggestion, CodingResult
 - `proc_schemas/registry/ip_v2.py` - IPRegistryV2
 - `proc_schemas/registry/ip_v3.py` - IPRegistryV3
-- `modules/registry/schema.py` - RegistryRecord (extraction record model)
+- `app/registry/schema.py` - RegistryRecord (extraction record model)
 
 ### Registry Procedure Flags
 
@@ -293,7 +293,7 @@ The registry uses 30 boolean procedure presence flags for ML training:
 - thoracentesis, chest_tube, ipc, medical_thoracoscopy
 - pleurodesis, pleural_biopsy, fibrinolytic_therapy
 
-See `modules/registry/v2_booleans.py` for the canonical V2→V3 mapping.
+See `app/registry/v2_booleans.py` for the canonical V2→V3 mapping.
 
 ## Configuration
 

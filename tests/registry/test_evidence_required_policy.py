@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.evidence.verifier import verify_evidence_integrity
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.evidence.verifier import verify_evidence_integrity
+from app.registry.schema import RegistryRecord
 
 
 def test_evidence_required_hard_flips_airway_dilation_when_unsupported() -> None:

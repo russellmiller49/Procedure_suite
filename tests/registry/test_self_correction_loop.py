@@ -2,8 +2,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
 
 
 class _StubRegistryEngine:
@@ -12,8 +12,8 @@ class _StubRegistryEngine:
 
 
 def _stub_raw_ml_high_conf(monkeypatch: pytest.MonkeyPatch, *, cpt: str, prob: float = 0.99) -> None:
-    from modules.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
-    from modules.ml_coder.thresholds import CaseDifficulty
+    from ml.lib.ml_coder.predictor import CaseClassification, CodePrediction, MLCoderPredictor
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
 
     pred = CodePrediction(cpt=cpt, prob=prob)
 
@@ -38,8 +38,8 @@ def test_self_correction_disabled_by_default(monkeypatch: pytest.MonkeyPatch) ->
     orchestrator.get_codes.side_effect = RuntimeError("SmartHybridOrchestrator.get_codes() called")
 
     # Stub RAW-ML predictor so the extraction-first path can complete once implemented.
-    from modules.ml_coder.predictor import CaseClassification, MLCoderPredictor
-    from modules.ml_coder.thresholds import CaseDifficulty
+    from ml.lib.ml_coder.predictor import CaseClassification, MLCoderPredictor
+    from ml.lib.ml_coder.thresholds import CaseDifficulty
 
     monkeypatch.setattr(MLCoderPredictor, "__init__", lambda self, *a, **k: None)
     monkeypatch.setattr(
@@ -64,7 +64,7 @@ def test_self_correction_successful_patch(monkeypatch: pytest.MonkeyPatch) -> No
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
-    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
+    from app.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 
     mocked = MagicMock(
         return_value=PatchProposal(
@@ -103,7 +103,7 @@ def test_self_correction_successful_patch_mechanical_debulking_31640(monkeypatch
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="31640", prob=0.99)
 
-    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
+    from app.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 
     mocked = MagicMock(
         return_value=PatchProposal(
@@ -136,7 +136,7 @@ def test_self_correction_successful_patch_mechanical_debulking_31640(monkeypatch
 
 
 def test_apply_patch_to_record_normalizes_blvr_procedure_type_shorthand() -> None:
-    from modules.registry.self_correction.apply import apply_patch_to_record
+    from app.registry.self_correction.apply import apply_patch_to_record
 
     record = RegistryRecord()
     patched = apply_patch_to_record(
@@ -154,7 +154,7 @@ def test_apply_patch_to_record_normalizes_blvr_procedure_type_shorthand() -> Non
 
 
 def test_apply_patch_to_record_normalizes_foreign_body_retrieval_tool_free_text() -> None:
-    from modules.registry.self_correction.apply import apply_patch_to_record
+    from app.registry.self_correction.apply import apply_patch_to_record
 
     record = RegistryRecord()
     patched = apply_patch_to_record(
@@ -182,7 +182,7 @@ def test_self_correction_rejects_hallucinated_quote(monkeypatch: pytest.MonkeyPa
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
-    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
+    from app.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 
     def _hallucinating_judge(  # type: ignore[no-untyped-def]
         self,
@@ -217,7 +217,7 @@ def test_self_correction_rejects_forbidden_path(monkeypatch: pytest.MonkeyPatch)
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
-    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
+    from app.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 
     def _forbidden_path_judge(  # type: ignore[no-untyped-def]
         self,
@@ -250,7 +250,7 @@ def test_self_correction_not_run_when_auditor_disabled(monkeypatch: pytest.Monke
     monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "1")
     monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
 
-    from modules.registry.self_correction.judge import RegistryCorrectionJudge
+    from app.registry.self_correction.judge import RegistryCorrectionJudge
 
     mocked = MagicMock()
     mocked.side_effect = RuntimeError("RegistryCorrectionJudge.propose_correction should not be called")
@@ -268,7 +268,7 @@ def test_self_correction_keyword_guard_skips_without_calling_judge(monkeypatch: 
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
-    from modules.registry.self_correction.judge import RegistryCorrectionJudge
+    from app.registry.self_correction.judge import RegistryCorrectionJudge
 
     mocked = MagicMock()
     mocked.side_effect = RuntimeError("RegistryCorrectionJudge.propose_correction should not be called")
@@ -292,7 +292,7 @@ def test_self_correction_evidence_must_be_in_focused_text_when_available(
 
     _stub_raw_ml_high_conf(monkeypatch, cpt="32550", prob=0.99)
 
-    from modules.registry.application import registry_service as registry_service_module
+    from app.registry.application import registry_service as registry_service_module
 
     def _focus(note_text: str) -> tuple[str, dict[str, object]]:
         return (
@@ -302,7 +302,7 @@ def test_self_correction_evidence_must_be_in_focused_text_when_available(
 
     monkeypatch.setattr(registry_service_module, "focus_note_for_extraction", _focus)
 
-    from modules.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
+    from app.registry.self_correction.judge import PatchProposal, RegistryCorrectionJudge
 
     mocked = MagicMock(
         return_value=PatchProposal(

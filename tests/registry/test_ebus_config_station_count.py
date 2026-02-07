@@ -12,12 +12,12 @@ from unittest.mock import patch
 
 import pytest
 
-from modules.coder.ebus_rules import (
+from app.coder.ebus_rules import (
     _count_sampled_nodes,
     ebus_nodes_to_candidates,
     get_sampled_station_list,
 )
-from modules.registry.ebus_config import (
+from app.registry.ebus_config import (
     load_ebus_config,
     resolve_station_alias,
     is_valid_station,

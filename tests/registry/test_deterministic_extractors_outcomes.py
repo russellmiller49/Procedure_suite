@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.deterministic_extractors import run_deterministic_extractors
+from app.registry.deterministic_extractors import run_deterministic_extractors
 
 
 def test_run_deterministic_extractors_populates_outcomes_follow_up_and_completion() -> None:

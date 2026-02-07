@@ -71,7 +71,7 @@ Raw note text
 **Goal:** Prevent history/plan text from being misinterpreted as performed procedures by restricting what the extractor sees.
 
 **Where:**
-- Implement in `modules/registry/extraction/focus.py` (already exists).
+- Implement in `app/registry/extraction/focus.py` (already exists).
 - Expose a helper used by the V3 pipeline:
   - `get_procedure_focus(note_text: str) -> str`
   - optionally `get_indication_focus(note_text: str) -> str`
@@ -79,7 +79,7 @@ Raw note text
 
 **Implementation requirements:**
 - Use existing deterministic sectionization:
-  - `modules/common/sectionizer.py` or `modules/coder/sectionizer.py`, or `ParserAgent` segmentation.
+  - `app/common/sectionizer.py` or `app/coder/sectionizer.py`, or `ParserAgent` segmentation.
 - Extract and join sections (case-insensitive header match):
   - PROCEDURE, FINDINGS, IMPRESSION, TECHNIQUE, OPERATIVE REPORT
 - Fail-safe: if nothing found, return full `note_text`
@@ -99,7 +99,7 @@ Raw note text
 **Goal:** Make the LLM output always conform to the V3 schema (no schema hallucinations).
 
 **Where:**
-- Create `modules/registry/extractors/v3_extractor.py`
+- Create `app/registry/extractors/v3_extractor.py`
 - Use your existing LLM wrapper infrastructure (openai_compat / gemini) used elsewhere in the repo.
 - Continue to support `REGISTRY_USE_STUB_LLM=1` for tests.
 
@@ -128,7 +128,7 @@ Raw note text
 **Goal:** Reject hallucinations by requiring evidence quotes exist verbatim in the note text.
 
 **Where:**
-- New module: `modules/registry/evidence/verifier.py`
+- New module: `app/registry/evidence/verifier.py`
 
 **Functionality:**
 - `normalize_text(text: str) -> str` (lowercase + collapse whitespace)
@@ -154,9 +154,9 @@ Raw note text
 **Where:**
 - V3 models:
   - `proc_schemas/registry/ip_v3.py`
-  - `modules/registry/schema/ip_v3.py` (your new path)
+  - `app/registry/schema/ip_v3.py` (your new path)
 - Add projection layer for compatibility:
-  - `modules/registry/transform_v3.py` (new) or extend `modules/registry/transform.py`
+  - `app/registry/transform_v3.py` (new) or extend `app/registry/transform.py`
 
 **Minimum event model must cover:**
 - Bronchoscopy actions (BAL, brushing, TBNA, cryobiopsy, aspiration, navigation)
@@ -183,9 +183,9 @@ Raw note text
 **Goal:** Improve recall/precision for entities LLMs hallucinate or mangle.
 
 **Where:**
-- `modules/registry/deterministic_extractors.py`
-- `modules/registry/normalization.py`
-- `modules/registry/postprocess.py`
+- `app/registry/deterministic_extractors.py`
+- `app/registry/normalization.py`
+- `app/registry/postprocess.py`
 - Lexicons under `configs/lex/`
 
 **Priority deterministic extractors:**
@@ -220,7 +220,7 @@ Raw note text
 - Labels match your granular label set (stations, sizes, gauges, devices, counts).
 
 **Integration:**
-- Predictor wrapper: `modules/registry/ml/registry_ner_predictor.py`
+- Predictor wrapper: `app/registry/ml/registry_ner_predictor.py`
 - In V3 pipeline:
   - run NER on focused text
   - add entities into `anchors`
@@ -236,7 +236,7 @@ Raw note text
 
 **Goal:** Prevent judge-driven self-correction from inventing facts.
 
-You already have a guarded loop in extraction-first in `modules/registry/application/registry_service.py` (feature-flagged). Upgrade it:
+You already have a guarded loop in extraction-first in `app/registry/application/registry_service.py` (feature-flagged). Upgrade it:
 
 1) Evidence required for every patch op (or proposal).
 2) Evidence quote must exist in raw note text.
@@ -244,9 +244,9 @@ You already have a guarded loop in extraction-first in `modules/registry/applica
    - if patch sets station/gauge/size, it must exist in anchors or be quoted verbatim.
 
 **Where:**
-- `modules/registry/self_correction/judge.py`
-- `modules/registry/self_correction/validation.py`
-- optional helper `modules/registry/self_correction/evidence_gate.py`
+- `app/registry/self_correction/judge.py`
+- `app/registry/self_correction/validation.py`
+- optional helper `app/registry/self_correction/evidence_gate.py`
 
 **Acceptance criteria:**
 - No patch introduces unseen station/gauge/size.
@@ -274,16 +274,16 @@ You already have a guarded loop in extraction-first in `modules/registry/applica
 ## 3. Phase B (Engine Implementation): replace the mock extractor in eval harness
 
 ### B1) Section focusing
-Implement `get_procedure_focus()` in `modules/registry/extraction/focus.py`.
+Implement `get_procedure_focus()` in `app/registry/extraction/focus.py`.
 
 ### B2) Strict V3 extractor
-Create `modules/registry/extractors/v3_extractor.py` with `extract_v3_draft()` using strict schema decoding where possible; require evidence_quote per event.
+Create `app/registry/extractors/v3_extractor.py` with `extract_v3_draft()` using strict schema decoding where possible; require evidence_quote per event.
 
 ### B3) Evidence verifier
-Create `modules/registry/evidence/verifier.py` with `verify_registry()` that drops events whose quote is not found.
+Create `app/registry/evidence/verifier.py` with `verify_registry()` that drops events whose quote is not found.
 
 ### B4) V3 pipeline entrypoint
-Create `modules/registry/pipelines/v3_pipeline.py` with `run_v3_extraction(full_note_text)`.
+Create `app/registry/pipelines/v3_pipeline.py` with `run_v3_extraction(full_note_text)`.
 
 ### B5) Wire into eval
 Update `scripts/eval_registry_granular.py` to call `run_v3_extraction(note_text)`.
@@ -301,7 +301,7 @@ Update `scripts/eval_registry_granular.py` to call `run_v3_extraction(note_text)
 - `scripts/train_registry_ner.py` outputs `artifacts/registry_ner/` (HF format), optional ONNX.
 
 3) Integrate:
-- `modules/registry/ml/registry_ner_predictor.py` returns anchors for pipeline + self-correction.
+- `app/registry/ml/registry_ner_predictor.py` returns anchors for pipeline + self-correction.
 
 ---
 
@@ -339,7 +339,7 @@ Codex Instructions: Phase B (The Engine)
 We are implementing the V3 Extraction Engine. This replaces the mock logic with a real, evidence-gated pipeline.
 
 Step 1: Section Focusing
-File: modules/registry/processing/focus.py
+File: app/registry/processing/focus.py
 
 Create the logic to "slice" the note.
 
@@ -356,11 +356,11 @@ Crucial Fallback: If the resulting string is empty (no headers found), return no
 Join segments with \n\n.
 
 Step 2: Strict V3 Extractor
-File: modules/registry/extractors/v3_extractor.py
+File: app/registry/extractors/v3_extractor.py
 
 Implement the LLM extraction using Pydantic schemas.
 
-Imports: IPRegistryV3 (from modules.registry.schema.ip_v3_extraction), and your LLM client.
+Imports: IPRegistryV3 (from app.registry.schema.ip_v3_extraction), and your LLM client.
 
 Function: def extract_v3_draft(focused_text: str) -> IPRegistryV3
 
@@ -377,7 +377,7 @@ Prompt:
 Output: Parse the LLM response back into an IPRegistryV3 object.
 
 Step 3: Evidence Verifier (The Judge)
-File: modules/registry/evidence/verifier.py
+File: app/registry/evidence/verifier.py
 
 Helper: def normalize_text(text: str) -> str
 
@@ -410,7 +410,7 @@ If No Match: Drop Event (Hallucination detected).
 Return the pruned registry.
 
 Step 4: Wire the Pipeline
-File: modules/registry/pipelines/v3_pipeline.py
+File: app/registry/pipelines/v3_pipeline.py
 
 Function: def run_v3_extraction(note_text: str) -> IPRegistryV3
 

@@ -4,9 +4,9 @@ This document is the **Single Source of Truth** for developers and AI assistants
 
 ## Core Mandates
 
-1.  **Main Application**: Always edit `modules/api/fastapi_app.py`. Never edit `api/app.py` (deprecated).
-2.  **Coding Service**: Use `CodingService` from `modules/coder/application/coding_service.py`. The old `modules.coder.engine.CoderEngine` is deprecated.
-3.  **Registry Service**: Use `RegistryService` from `modules/registry/application/registry_service.py`.
+1.  **Main Application**: Always edit `app/api/fastapi_app.py`. Never edit `api/app.py` (deprecated).
+2.  **Coding Service**: Use `CodingService` from `app/coder/application/coding_service.py`. The old `app.coder.engine.CoderEngine` is deprecated.
+3.  **Registry Service**: Use `RegistryService` from `app/registry/application/registry_service.py`.
 4.  **Knowledge Base**: The source of truth for coding rules is `data/knowledge/ip_coding_billing_v3_0.json`.
 5.  **Tests**: Preserve existing tests. Run `make test` before committing.
 
@@ -18,30 +18,30 @@ This document is the **Single Source of Truth** for developers and AI assistants
 
 | Directory | Status | Purpose |
 |-----------|--------|---------|
-| `modules/api/` | **ACTIVE** | Main FastAPI app (`fastapi_app.py`) |
-| `modules/coder/` | **ACTIVE** | CPT Coding Engine with CodingService (8-step pipeline) |
-| `modules/coder/parallel_pathway/` | **EXPERIMENTAL** | Parallel NER+ML pathway for extraction-first coding |
-| `modules/ner/` | **EXPERIMENTAL** | Granular NER model (DistilBERT for entity extraction) |
-| `modules/ml_coder/` | **ACTIVE** | ML-based code prediction and training |
-| `modules/registry/` | **ACTIVE** | Registry extraction with RegistryService and RegistryEngine |
-| `modules/registry/ner_mapping/` | **EXPERIMENTAL** | NER-to-Registry entity mapping |
-| `modules/agents/` | **ACTIVE** | 3-agent pipeline (Parser, Summarizer, Structurer) |
-| `modules/reporter/` | **ACTIVE** | Report generation with Jinja templates |
-| `modules/common/` | **ACTIVE** | Shared utilities, logging, exceptions |
-| `modules/domain/` | **ACTIVE** | Domain models and business rules |
+| `app/api/` | **ACTIVE** | Main FastAPI app (`fastapi_app.py`) |
+| `app/coder/` | **ACTIVE** | CPT Coding Engine with CodingService (8-step pipeline) |
+| `app/coder/parallel_pathway/` | **EXPERIMENTAL** | Parallel NER+ML pathway for extraction-first coding |
+| `app/ner/` | **EXPERIMENTAL** | Granular NER model (DistilBERT for entity extraction) |
+| `ml/lib/ml_coder/` | **ACTIVE** | ML-based code prediction and training |
+| `app/registry/` | **ACTIVE** | Registry extraction with RegistryService and RegistryEngine |
+| `app/registry/ner_mapping/` | **EXPERIMENTAL** | NER-to-Registry entity mapping |
+| `app/agents/` | **ACTIVE** | 3-agent pipeline (Parser, Summarizer, Structurer) |
+| `app/reporter/` | **ACTIVE** | Report generation with Jinja templates |
+| `app/common/` | **ACTIVE** | Shared utilities, logging, exceptions |
+| `app/domain/` | **ACTIVE** | Domain models and business rules |
 | `api/` | **DEPRECATED** | Old API entry point. Do not use. |
 
 ### Key Services
 
 | Service | Location | Purpose |
 |---------|----------|---------|
-| `CodingService` | `modules/coder/application/coding_service.py` | 8-step CPT coding pipeline |
-| `RegistryService` | `modules/registry/application/registry_service.py` | Hybrid-first registry extraction |
-| `SmartHybridOrchestrator` | `modules/coder/application/smart_hybrid_policy.py` | ML-first hybrid coding |
-| `RegistryEngine` | `modules/registry/engine.py` | LLM-based field extraction |
-| `ParallelPathwayOrchestrator` | `modules/coder/parallel_pathway/orchestrator.py` | NER+ML parallel pathway (experimental) |
-| `GranularNERPredictor` | `modules/ner/inference.py` | DistilBERT NER inference |
-| `NERToRegistryMapper` | `modules/registry/ner_mapping/entity_to_registry.py` | Map NER entities to registry fields |
+| `CodingService` | `app/coder/application/coding_service.py` | 8-step CPT coding pipeline |
+| `RegistryService` | `app/registry/application/registry_service.py` | Hybrid-first registry extraction |
+| `SmartHybridOrchestrator` | `app/coder/application/smart_hybrid_policy.py` | ML-first hybrid coding |
+| `RegistryEngine` | `app/registry/engine.py` | LLM-based field extraction |
+| `ParallelPathwayOrchestrator` | `app/coder/parallel_pathway/orchestrator.py` | NER+ML parallel pathway (experimental) |
+| `GranularNERPredictor` | `app/ner/inference.py` | DistilBERT NER inference |
+| `NERToRegistryMapper` | `app/registry/ner_mapping/entity_to_registry.py` | Map NER entities to registry fields |
 
 ### Data Flow
 
@@ -49,7 +49,7 @@ This document is the **Single Source of Truth** for developers and AI assistants
 [Procedure Note]
        │
        ▼
-[API Layer] (modules/api/fastapi_app.py)
+[API Layer] (app/api/fastapi_app.py)
        │
        ├─> [CodingService] ──> [SmartHybridOrchestrator] ──> [Codes + RVUs]
        │        │                    │
@@ -70,34 +70,34 @@ This document is the **Single Source of Truth** for developers and AI assistants
 
 ### 1. Coder Agent
 
-**Focus**: `modules/coder/`
+**Focus**: `app/coder/`
 
 **Key Files:**
-- `modules/coder/application/coding_service.py` - Main orchestrator
-- `modules/coder/application/smart_hybrid_policy.py` - Hybrid decision logic
-- `modules/coder/domain_rules/` - NCCI bundling, domain rules
-- `modules/coder/rules_engine.py` - Rule-based inference
+- `app/coder/application/coding_service.py` - Main orchestrator
+- `app/coder/application/smart_hybrid_policy.py` - Hybrid decision logic
+- `app/coder/domain_rules/` - NCCI bundling, domain rules
+- `app/coder/rules_engine.py` - Rule-based inference
 
 **Responsibilities:**
 - Maintain the 8-step coding pipeline in `CodingService`
-- Update domain rules in `modules/coder/domain_rules/`
+- Update domain rules in `app/coder/domain_rules/`
 - Ensure NCCI/MER compliance logic is correct
-- Keep confidence thresholds tuned in `modules/ml_coder/thresholds.py`
+- Keep confidence thresholds tuned in `ml/lib/ml_coder/thresholds.py`
 
-**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or `modules/coder/domain_rules/`.
+**Rule**: Do not scatter logic. Keep business rules central in the Knowledge Base or `app/coder/domain_rules/`.
 
 ### 2. Registry Agent
 
-**Focus**: `modules/registry/`
+**Focus**: `app/registry/`
 
 **Key Files:**
-- `modules/registry/application/registry_service.py` - Main service
-- `modules/registry/application/cpt_registry_mapping.py` - CPT → registry mapping
-- `modules/registry/engine.py` - LLM extraction engine
-- `modules/registry/prompts.py` - LLM prompts
-- `modules/registry/schema.py` - RegistryRecord model
-- `modules/registry/v2_booleans.py` - V2→V3 boolean mapping for ML
-- `modules/registry/postprocess.py` - Output normalization
+- `app/registry/application/registry_service.py` - Main service
+- `app/registry/application/cpt_registry_mapping.py` - CPT → registry mapping
+- `app/registry/engine.py` - LLM extraction engine
+- `app/registry/prompts.py` - LLM prompts
+- `app/registry/schema.py` - RegistryRecord model
+- `app/registry/v2_booleans.py` - V2→V3 boolean mapping for ML
+- `app/registry/postprocess.py` - Output normalization
 
 **Responsibilities:**
 - Maintain schema definitions in `schema.py` and `schema_granular.py`
@@ -108,22 +108,22 @@ This document is the **Single Source of Truth** for developers and AI assistants
 
 **Critical (v3 / extraction-first)**: When changing the registry schema, update:
 1. `data/knowledge/IP_Registry.json` - Canonical v3 nested schema (drives dynamic `RegistryRecord`)
-2. `modules/registry/schema.py` / `modules/registry/schema_granular.py` - Custom type overrides + granular helpers
-3. `modules/registry/v2_booleans.py` - Boolean field list (ML label order)
-4. `modules/registry/application/cpt_registry_mapping.py` - CPT mappings
+2. `app/registry/schema.py` / `app/registry/schema_granular.py` - Custom type overrides + granular helpers
+3. `app/registry/v2_booleans.py` - Boolean field list (ML label order)
+4. `app/registry/application/cpt_registry_mapping.py` - CPT mappings
 
-Note: `schemas/IP_Registry.json` is a legacy flat schema used by `modules/registry_cleaning/`. Do not try to keep it identical to the v3 schema unless you also migrate the cleaning pipeline.
+Note: `schemas/IP_Registry.json` is a legacy flat schema used by `app/registry_cleaning/`. Do not try to keep it identical to the v3 schema unless you also migrate the cleaning pipeline.
 
 ### 3. ML Agent
 
-**Focus**: `modules/ml_coder/`
+**Focus**: `ml/lib/ml_coder/`
 
 **Key Files:**
-- `modules/ml_coder/predictor.py` - CPT code predictor
-- `modules/ml_coder/registry_predictor.py` - Registry field predictor
-- `modules/ml_coder/training.py` - Model training
-- `modules/ml_coder/data_prep.py` - Data preparation
-- `modules/ml_coder/thresholds.py` - Confidence thresholds
+- `ml/lib/ml_coder/predictor.py` - CPT code predictor
+- `ml/lib/ml_coder/registry_predictor.py` - Registry field predictor
+- `ml/lib/ml_coder/training.py` - Model training
+- `ml/lib/ml_coder/data_prep.py` - Data preparation
+- `ml/lib/ml_coder/thresholds.py` - Confidence thresholds
 
 **Responsibilities:**
 - Maintain ML model training pipelines
@@ -133,7 +133,7 @@ Note: `schemas/IP_Registry.json` is a legacy flat schema used by `modules/regist
 
 ### 4. Reporter Agent
 
-**Focus**: `modules/reporter/`
+**Focus**: `app/reporter/`
 
 **Responsibilities:**
 - Edit Jinja templates for report formatting
@@ -143,7 +143,7 @@ Note: `schemas/IP_Registry.json` is a legacy flat schema used by `modules/regist
 
 ### 5. DevOps/API Agent
 
-**Focus**: `modules/api/`
+**Focus**: `app/api/`
 
 **Responsibilities:**
 - Maintain `fastapi_app.py`
@@ -155,21 +155,21 @@ Note: `schemas/IP_Registry.json` is a legacy flat schema used by `modules/regist
 ## Module Dependencies
 
 ```
-modules/api/
-    └── depends on: modules/coder/, modules/registry/, modules/reporter/
+app/api/
+    └── depends on: app/coder/, app/registry/, app/reporter/
 
-modules/coder/
-    ├── depends on: modules/ml_coder/, modules/domain/, modules/phi/
+app/coder/
+    ├── depends on: ml/lib/ml_coder/, app/domain/, app/phi/
     └── provides: CodingService, SmartHybridOrchestrator
 
-modules/registry/
-    ├── depends on: modules/coder/, modules/ml_coder/
+app/registry/
+    ├── depends on: app/coder/, ml/lib/ml_coder/
     └── provides: RegistryService, RegistryEngine
 
-modules/ml_coder/
+ml/lib/ml_coder/
     └── provides: MLPredictor, RegistryMLPredictor
 
-modules/agents/
+app/agents/
     └── provides: run_pipeline(), ParserAgent, SummarizerAgent, StructurerAgent
 ```
 
@@ -247,9 +247,9 @@ pytest tests/unit/test_openai_timeouts.py
 ### Making Changes
 
 1. **Edit the correct files**:
-   - API: `modules/api/fastapi_app.py` (not `api/app.py`)
-   - Coder: `modules/coder/` (not legacy engine)
-   - Registry: `modules/registry/`
+   - API: `app/api/fastapi_app.py` (not `api/app.py`)
+   - Coder: `app/coder/` (not legacy engine)
+   - Registry: `app/registry/`
 
 2. **Follow the architecture**:
    - Services orchestrate, engines execute
@@ -274,7 +274,7 @@ pytest tests/unit/test_openai_timeouts.py
 
 Before committing changes:
 
-- [ ] I am editing `modules/api/fastapi_app.py` (not `api/app.py`)
+- [ ] I am editing `app/api/fastapi_app.py` (not `api/app.py`)
 - [ ] I am using `CodingService` (not legacy `CoderEngine`)
 - [ ] I am using `RegistryService` (not direct engine calls)
 - [ ] I have run `make test` (or relevant unit tests)

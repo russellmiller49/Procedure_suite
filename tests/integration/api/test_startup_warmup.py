@@ -31,7 +31,7 @@ class TestSkipWarmupEnvVar:
         """Test that PROCSUITE_SKIP_WARMUP=1 skips the heavy warmup."""
         with patch.dict(os.environ, {"PROCSUITE_SKIP_WARMUP": "1"}, clear=False):
             # Import fresh to get the startup behavior
-            from modules.api import fastapi_app
+            from app.api import fastapi_app
 
             # Mock the _do_heavy_warmup function to track if it's called
             with patch.object(fastapi_app, "_do_heavy_warmup") as mock_warmup:
@@ -48,7 +48,7 @@ class TestSkipWarmupEnvVar:
     def test_skip_warmup_with_true_value(self):
         """Test that PROCSUITE_SKIP_WARMUP=true works."""
         with patch.dict(os.environ, {"PROCSUITE_SKIP_WARMUP": "true"}, clear=False):
-            from modules.api import fastapi_app
+            from app.api import fastapi_app
 
             with patch.object(fastapi_app, "_do_heavy_warmup") as mock_warmup:
                 import asyncio
@@ -62,7 +62,7 @@ class TestSkipWarmupEnvVar:
     def test_skip_warmup_with_yes_value(self):
         """Test that PROCSUITE_SKIP_WARMUP=yes works."""
         with patch.dict(os.environ, {"PROCSUITE_SKIP_WARMUP": "yes"}, clear=False):
-            from modules.api import fastapi_app
+            from app.api import fastapi_app
 
             with patch.object(fastapi_app, "_do_heavy_warmup") as mock_warmup:
                 import asyncio
@@ -81,7 +81,7 @@ class TestSkipWarmupEnvVar:
             "RAILWAY_ENVIRONMENT": "",
         }
         with patch.dict(os.environ, env_override, clear=False):
-            from modules.api import fastapi_app
+            from app.api import fastapi_app
 
             with patch.object(fastapi_app, "_do_heavy_warmup") as mock_warmup:
                 import asyncio
@@ -104,7 +104,7 @@ class TestWarmupFailureHandling:
             "RAILWAY_ENVIRONMENT": "",
         }
         with patch.dict(os.environ, env_override, clear=False):
-            from modules.api import fastapi_app
+            from app.api import fastapi_app
 
             # Make _do_heavy_warmup raise an exception
             with patch.object(
@@ -121,7 +121,7 @@ class TestWarmupFailureHandling:
 
     def test_health_works_after_warmup_failure(self):
         """Test that /health still works even if warmup failed."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         # Create client - this will trigger startup
         client = TestClient(app)
@@ -142,7 +142,7 @@ class TestRailwayEnvironmentSkip:
             "RAILWAY_ENVIRONMENT": "production",
         }
         with patch.dict(os.environ, env_override, clear=False):
-            from modules.api import fastapi_app
+            from app.api import fastapi_app
 
             with patch.object(fastapi_app, "_do_heavy_warmup") as mock_warmup:
                 import asyncio
@@ -160,7 +160,7 @@ class TestNlpWarmedFlag:
 
     def test_is_nlp_warmed_false_when_skipped(self):
         """Test that is_nlp_warmed() returns False when warmup is skipped."""
-        from modules.api import fastapi_app
+        from app.api import fastapi_app
 
         # Reset the flag
         fastapi_app._nlp_warmup_successful = False
@@ -176,7 +176,7 @@ class TestNlpWarmedFlag:
 
     def test_is_nlp_warmed_false_when_warmup_fails(self):
         """Test that is_nlp_warmed() returns False when warmup fails."""
-        from modules.api import fastapi_app
+        from app.api import fastapi_app
 
         # Reset the flag
         fastapi_app._nlp_warmup_successful = False

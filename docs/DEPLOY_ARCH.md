@@ -7,9 +7,9 @@ This document maps the deployed QA sandbox stack used by `https://interventional
 ### IU / FastAPI backend (Python)
 
 - **Repo:** `proc_suite/`
-- **Active FastAPI app (IU):** `proc_suite/modules/api/fastapi_app.py` (`app = FastAPI(...)`)
+- **Active FastAPI app (IU):** `proc_suite/app/api/fastapi_app.py` (`app = FastAPI(...)`)
 - **Railway start wrapper:** `proc_suite/scripts/railway_start.sh`
-- **Key endpoint:** `POST /qa/run` (defined in `proc_suite/modules/api/fastapi_app.py`)
+- **Key endpoint:** `POST /qa/run` (defined in `proc_suite/app/api/fastapi_app.py`)
 
 ### Frontend + Supabase logging (Next.js)
 
@@ -40,13 +40,13 @@ This document maps the deployed QA sandbox stack used by `https://interventional
 
 This workspace has multiple “predictor” implementations for registry ML:
 
-- **ONNX predictor (production-optimized):** `proc_suite/modules/registry/inference_onnx.py`
+- **ONNX predictor (production-optimized):** `proc_suite/app/registry/inference_onnx.py`
   - Default ONNX path: `models/registry_model_int8.onnx`
-- **Sklearn TF-IDF fallback predictor:** `proc_suite/modules/ml_coder/registry_predictor.py`
+- **Sklearn TF-IDF fallback predictor:** `proc_suite/ml/lib/ml_coder/registry_predictor.py`
   - Default artifacts: `data/models/registry_classifier.pkl`, `data/models/registry_mlb.pkl`, `data/models/registry_thresholds.json`
 
 The application-layer wiring that chooses which predictor to use currently lives in:
-- `proc_suite/modules/registry/application/registry_service.py` (`RegistryService._get_registry_ml_predictor`)
+- `proc_suite/app/registry/application/registry_service.py` (`RegistryService._get_registry_ml_predictor`)
 
 ## Key env vars
 
@@ -89,5 +89,5 @@ Runtime-extracted bundle directory (recommended):
 Railway should run one of:
 
 - **Preferred (wrapper):** `scripts/railway_start.sh`
-- **Equivalent direct:** `python -m uvicorn modules.api.fastapi_app:app --host 0.0.0.0 --port $PORT --workers ${WORKERS:-1} --log-level info`
+- **Equivalent direct:** `python -m uvicorn app.api.fastapi_app:app --host 0.0.0.0 --port $PORT --workers ${WORKERS:-1} --log-level info`
 

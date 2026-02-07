@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.registry.processing.linear_ebus_stations_detail import extract_linear_ebus_stations_detail
+from app.registry.processing.linear_ebus_stations_detail import extract_linear_ebus_stations_detail
 
 
 def _by_station(items: list[dict]) -> dict[str, dict]:

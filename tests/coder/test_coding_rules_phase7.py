@@ -13,11 +13,11 @@ from __future__ import annotations
 import pytest
 from unittest.mock import MagicMock
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import (
+from app.coder.domain_rules.registry_to_cpt.coding_rules import (
     derive_all_codes,
     derive_all_codes_with_meta,
 )
-from modules.registry.deterministic_extractors import (
+from app.registry.deterministic_extractors import (
     extract_bal,
     extract_cryotherapy,
     extract_linear_ebus,

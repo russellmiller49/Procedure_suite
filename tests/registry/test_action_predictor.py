@@ -7,7 +7,7 @@ can be used for deterministic CPT derivation.
 
 import pytest
 
-from modules.registry.ml import (
+from app.registry.ml import (
     ActionPredictor,
     ClinicalActions,
     PredictionResult,

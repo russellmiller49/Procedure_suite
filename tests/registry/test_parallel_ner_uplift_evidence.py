@@ -4,8 +4,8 @@ from dataclasses import dataclass
 
 import pytest
 
-from modules.registry.application.registry_service import RegistryService
-from modules.registry.schema import RegistryRecord
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
 
 
 @dataclass
@@ -228,7 +228,7 @@ def test_parallel_ner_deterministic_uplift_upgrades_stent_action_to_revision(
         }
 
     monkeypatch.setattr(
-        "modules.registry.deterministic_extractors.run_deterministic_extractors",
+        "app.registry.deterministic_extractors.run_deterministic_extractors",
         _seed_revision,
     )
 
@@ -263,7 +263,7 @@ def test_parallel_ner_filters_stale_ml_only_review_reasons_after_uplift(
         return {"procedures_performed": {"therapeutic_aspiration": {"performed": True}}}
 
     monkeypatch.setattr(
-        "modules.registry.deterministic_extractors.run_deterministic_extractors",
+        "app.registry.deterministic_extractors.run_deterministic_extractors",
         _seed_aspiration,
     )
 

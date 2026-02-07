@@ -13,7 +13,7 @@ Text → Registry Extraction (ML/LLM) → Deterministic Rules → CPT Codes
 | File | Purpose | Destination |
 |------|---------|-------------|
 | `golden_to_csv.py` | Standalone CLI tool | `scripts/golden_to_csv.py` |
-| `registry_data_prep.py` | Module integration | `modules/ml_coder/registry_data_prep.py` |
+| `registry_data_prep.py` | Module integration | `ml/lib/ml_coder/registry_data_prep.py` |
 | `test_registry_data_prep.py` | Test suite | `tests/ml_coder/test_registry_data_prep.py` |
 | `makefile_snippet.mk` | Makefile targets | Append to `Makefile` |
 
@@ -31,7 +31,7 @@ python scripts/golden_to_csv.py \
 ### Option 2: Module Integration
 
 ```python
-from modules.ml_coder.registry_data_prep import prepare_registry_training_splits
+from ml.lib.ml_coder.registry_data_prep import prepare_registry_training_splits
 
 # Generate train/val/test splits
 train_df, val_df, test_df = prepare_registry_training_splits()
@@ -53,7 +53,7 @@ make registry-prep-final
 1. **Copy files to your repo:**
    ```bash
    cp golden_to_csv.py /path/to/proc_suite/scripts/
-   cp registry_data_prep.py /path/to/proc_suite/modules/ml_coder/
+   cp registry_data_prep.py /path/to/proc_suite/ml/lib/ml_coder/
    cp test_registry_data_prep.py /path/to/proc_suite/tests/ml_coder/
    ```
 
@@ -64,7 +64,7 @@ make registry-prep-final
 
 3. **Update data_prep.py (optional):**
    ```python
-   # In modules/ml_coder/data_prep.py, add:
+   # In ml/lib/ml_coder/data_prep.py, add:
    from .registry_data_prep import prepare_registry_training_splits
    ```
 
@@ -199,5 +199,5 @@ When updating the registry schema:
 
 1. Update `ALL_PROCEDURE_LABELS` in `registry_data_prep.py`
 2. Add any new aliases to `LABEL_ALIASES`
-3. Update `modules/registry/v2_booleans.py` for consistency
+3. Update `app/registry/v2_booleans.py` for consistency
 4. Run tests: `pytest tests/ml_coder/test_registry_data_prep.py`

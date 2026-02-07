@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
-from modules.registry.schema import RegistryRecord
+from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
+from app.registry.schema import RegistryRecord
 
 
 def test_clinical_guardrails_sets_stent_to_assessment_only_for_inspection_language() -> None:

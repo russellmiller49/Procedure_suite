@@ -48,11 +48,11 @@ This toolkit enables:
 
 ## Recent Updates (2026-01-25)
 
-- **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `modules/registry/schema/ebus_events.py`.
-- **Granular split:** models moved to `modules/registry/schema/granular_models.py` and logic to `modules/registry/schema/granular_logic.py`; `modules/registry/schema_granular.py` is a compat shim.
-- **V2 dynamic builder:** moved to `modules/registry/schema/v2_dynamic.py`; `modules/registry/schema.py` is now a thin entrypoint preserving the `__path__` hack.
-- **V3 extraction schema:** renamed to `modules/registry/schema/ip_v3_extraction.py` with a compatibility re-export at `modules/registry/schema/ip_v3.py`; the rich registry entry schema remains at `proc_schemas/registry/ip_v3.py`.
-- **V3→V2 adapter:** now in `modules/registry/schema/adapters/v3_to_v2.py` with a compat shim at `modules/registry/adapters/v3_to_v2.py`.
+- **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `app/registry/schema/ebus_events.py`.
+- **Granular split:** models moved to `app/registry/schema/granular_models.py` and logic to `app/registry/schema/granular_logic.py`; `app/registry/schema_granular.py` is a compat shim.
+- **V2 dynamic builder:** moved to `app/registry/schema/v2_dynamic.py`; `app/registry/schema.py` is now a thin entrypoint preserving the `__path__` hack.
+- **V3 extraction schema:** renamed to `app/registry/schema/ip_v3_extraction.py` with a compatibility re-export at `app/registry/schema/ip_v3.py`; the rich registry entry schema remains at `proc_schemas/registry/ip_v3.py`.
+- **V3→V2 adapter:** now in `app/registry/schema/adapters/v3_to_v2.py` with a compat shim at `app/registry/adapters/v3_to_v2.py`.
 - **Refactor notes/tests:** see `NOTES_SCHEMA_REFACTOR.md` and `tests/registry/test_schema_refactor_smoke.py`.
 
 ## Recent Updates (2026-01-24)
@@ -71,13 +71,13 @@ This toolkit enables:
 
 | Module | Description |
 |--------|-------------|
-| **`modules/api/fastapi_app.py`** | Main FastAPI backend |
-| **`modules/coder/`** | CPT coding engine with CodingService (8-step pipeline) |
-| **`modules/ml_coder/`** | ML-based code predictor and training pipeline |
-| **`modules/registry/`** | Registry extraction with RegistryService and RegistryEngine |
-| **`modules/agents/`** | 3-agent pipeline: Parser → Summarizer → Structurer |
-| **`modules/reporter/`** | Template-based synoptic report generator |
-| **`modules/api/static/phi_redactor/`** | Main UI (served at `/ui/`): client-side PHI scrubbing + clinical dashboard |
+| **`app/api/fastapi_app.py`** | Main FastAPI backend |
+| **`app/coder/`** | CPT coding engine with CodingService (8-step pipeline) |
+| **`ml/lib/ml_coder/`** | ML-based code predictor and training pipeline |
+| **`app/registry/`** | Registry extraction with RegistryService and RegistryEngine |
+| **`app/agents/`** | 3-agent pipeline: Parser → Summarizer → Structurer |
+| **`app/reporter/`** | Template-based synoptic report generator |
+| **`ui/static/phi_redactor/`** | Main UI (served at `/ui/`): client-side PHI scrubbing + clinical dashboard |
 
 ## System Architecture
 
@@ -94,7 +94,7 @@ This toolkit enables:
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│                    FastAPI Layer (modules/api/)                      │
+│                    FastAPI Layer (app/api/)                      │
 │  • /api/v1/process - Unified extraction-first endpoint (prod)       │
 │  • /v1/coder/run - Legacy CPT coding endpoint (gated)               │
 │  • /v1/registry/run - Legacy registry extraction endpoint (gated)   │
@@ -171,9 +171,9 @@ make preflight
 
 **Please read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) before making changes.**
 
-- Always edit `modules/api/fastapi_app.py` (not `api/app.py` - deprecated)
-- Use `CodingService` from `modules/coder/application/coding_service.py`
-- Use `RegistryService` from `modules/registry/application/registry_service.py`
+- Always edit `app/api/fastapi_app.py` (not `api/app.py` - deprecated)
+- Use `CodingService` from `app/coder/application/coding_service.py`
+- Use `RegistryService` from `app/registry/application/registry_service.py`
 - Knowledge base is at `data/knowledge/ip_coding_billing_v3_0.json`
 - Run `make test` before committing
 
@@ -205,7 +205,7 @@ make preflight
 | `REGISTRY_ML_AUDIT_MIN_PROB` | Audit minimum probability when buckets disabled | `0.50` |
 | `REGISTRY_ML_SELF_CORRECT_MIN_PROB` | Min prob for self-correction trigger candidates | `0.95` |
 | `REGISTRY_SELF_CORRECT_ENABLED` | Enable guarded self-correction loop | `0` |
-| `REGISTRY_SELF_CORRECT_ALLOWLIST` | Comma-separated JSON Pointer allowlist for self-correction patch paths (default: `modules/registry/self_correction/validation.py` `ALLOWED_PATHS`) | `builtin` |
+| `REGISTRY_SELF_CORRECT_ALLOWLIST` | Comma-separated JSON Pointer allowlist for self-correction patch paths (default: `app/registry/self_correction/validation.py` `ALLOWED_PATHS`) | `builtin` |
 | `REGISTRY_SELF_CORRECT_MAX_ATTEMPTS` | Max successful auto-corrections per case | `1` |
 | `REGISTRY_SELF_CORRECT_MAX_PATCH_OPS` | Max JSON Patch ops per proposal | `5` |
 

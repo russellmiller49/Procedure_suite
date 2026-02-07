@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.registry.processing.navigation_targets import extract_cryobiopsy_sites, extract_navigation_targets
-from modules.registry.schema import RegistryRecord
-from modules.registry.schema_granular import derive_procedures_from_granular
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.registry.processing.navigation_targets import extract_cryobiopsy_sites, extract_navigation_targets
+from app.registry.schema import RegistryRecord
+from app.registry.schema_granular import derive_procedures_from_granular
 
 
 def test_note300_multilobe_navigation_targets_drive_addon_codes_and_imaging() -> None:

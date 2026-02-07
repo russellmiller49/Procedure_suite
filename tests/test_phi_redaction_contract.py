@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from modules.phi.adapters.presidio_scrubber import (
+from app.phi.adapters.presidio_scrubber import (
     DEFAULT_ENTITY_SCORE_THRESHOLDS,
     DEFAULT_RELATIVE_DATE_TIME_PHRASES,
     Detection,

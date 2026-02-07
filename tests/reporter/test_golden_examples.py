@@ -21,11 +21,11 @@ import pytest
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from modules.registry.application.registry_service import RegistryService
-from modules.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
-from modules.reporting.engine import ReporterEngine, _load_procedure_order, default_schema_registry, default_template_registry
-from modules.reporting.inference import InferenceEngine
-from modules.reporting.validation import ValidationEngine
+from app.registry.application.registry_service import RegistryService
+from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
+from app.reporting.engine import ReporterEngine, _load_procedure_order, default_schema_registry, default_template_registry
+from app.reporting.inference import InferenceEngine
+from app.reporting.validation import ValidationEngine
 
 # Configuration
 GOLDEN_DATASET_PATH = PROJECT_ROOT / "tests/fixtures/reporter_golden_dataset.json"
@@ -33,7 +33,7 @@ GOLDEN_DATASET_PATH = PROJECT_ROOT / "tests/fixtures/reporter_golden_dataset.jso
 def _reset_llm_usage_totals() -> None:
     """Reset internal LLM usage counters so this test can assert determinism."""
     try:
-        from modules.common import llm as llm_mod
+        from app.common import llm as llm_mod
 
         llm_mod._USAGE_TOTALS_BY_MODEL.clear()
         llm_mod._USAGE_TOTALS_ALL.calls = 0
@@ -180,7 +180,7 @@ def test_golden_reporter_similarity(
 
     # Determinism: assert no OpenAI usage was recorded.
     try:
-        from modules.common import llm as llm_mod
+        from app.common import llm as llm_mod
 
         assert llm_mod._USAGE_TOTALS_ALL.calls == 0, f"LLM calls recorded: {llm_mod._USAGE_TOTALS_ALL.calls}"
     except Exception:

@@ -7,10 +7,10 @@ from types import SimpleNamespace
 import pytest
 from fastapi.testclient import TestClient
 
-from modules.api.dependencies import get_coding_service, get_registry_service
-from modules.api.fastapi_app import app
-from modules.api.phi_dependencies import get_phi_scrubber
-from modules.api.readiness import require_ready
+from app.api.dependencies import get_coding_service, get_registry_service
+from app.api.fastapi_app import app
+from app.api.phi_dependencies import get_phi_scrubber
+from app.api.readiness import require_ready
 
 os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
 
@@ -164,7 +164,7 @@ def test_unified_process_already_scrubbed_bypasses_server_scrubber(
     stub_registry = StubRegistryService()
 
     # Hard-fail if the server-side scrubbing helper is invoked.
-    from modules.api.services import unified_pipeline as unified_pipeline_module
+    from app.api.services import unified_pipeline as unified_pipeline_module
 
     def _fail_apply(*_args, **_kwargs):
         raise AssertionError("apply_phi_redaction should not be called when already_scrubbed=true")

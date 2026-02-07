@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from modules.registry_cleaning import (
+from app.registry_cleaning import (
     CPTProcessor,
     ClinicalQCChecker,
     ConsistencyChecker,

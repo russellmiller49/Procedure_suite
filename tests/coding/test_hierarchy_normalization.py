@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from modules.coder.code_families import load_code_families
-from modules.coder.rules_engine import CodingRulesEngine
-from modules.coder.types import CodeCandidate
+from app.coder.code_families import load_code_families
+from app.coder.rules_engine import CodingRulesEngine
+from app.coder.types import CodeCandidate
 
 
 def _engine() -> CodingRulesEngine:

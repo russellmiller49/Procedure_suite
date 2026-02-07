@@ -1,6 +1,6 @@
 
-from modules.common.sectionizer import Section, SectionizerService
-from modules.registry.slots.therapeutics import (
+from app.common.sectionizer import Section, SectionizerService
+from app.registry.slots.therapeutics import (
     DestructionExtractor, 
     EnhancedDilationExtractor, 
     AspirationExtractor

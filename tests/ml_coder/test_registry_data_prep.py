@@ -9,7 +9,7 @@ Verifies:
 
 import pytest
 
-from modules.ml_coder.data_prep import (
+from ml.lib.ml_coder.data_prep import (
     REGISTRY_TARGET_FIELDS,
     _extract_registry_booleans,
     _filter_rare_registry_labels,
@@ -328,7 +328,7 @@ class TestSharedV2BooleansModule:
 
     def test_shared_module_import(self):
         """Verify shared module can be imported."""
-        from modules.registry.v2_booleans import (
+        from app.registry.v2_booleans import (
             PROCEDURE_BOOLEAN_FIELDS,
             extract_v2_booleans,
         )
@@ -337,7 +337,7 @@ class TestSharedV2BooleansModule:
 
     def test_shared_module_matches_wrapper(self):
         """Shared module should produce identical results to wrapper."""
-        from modules.registry.v2_booleans import extract_v2_booleans
+        from app.registry.v2_booleans import extract_v2_booleans
 
         # Test with a complex entry
         entry = {
@@ -355,7 +355,7 @@ class TestSharedV2BooleansModule:
 
     def test_shared_module_empty_entry(self):
         """Shared module should handle empty entries correctly."""
-        from modules.registry.v2_booleans import extract_v2_booleans
+        from app.registry.v2_booleans import extract_v2_booleans
 
         result = extract_v2_booleans({})
 
@@ -381,7 +381,7 @@ class TestV2BooleansCPTConsistency:
         When V2 entry has linear_ebus_stations, the resulting linear_ebus flag
         should match what CPT mapping would produce for EBUS codes.
         """
-        from modules.registry.application.cpt_registry_mapping import (
+        from app.registry.application.cpt_registry_mapping import (
             aggregate_registry_fields,
         )
 
@@ -404,7 +404,7 @@ class TestV2BooleansCPTConsistency:
         When V2 entry has pleural_procedure_type="Thoracentesis", the resulting
         flag should match CPT mapping semantics.
         """
-        from modules.registry.application.cpt_registry_mapping import (
+        from app.registry.application.cpt_registry_mapping import (
             aggregate_registry_fields,
         )
 
@@ -423,7 +423,7 @@ class TestV2BooleansCPTConsistency:
 
     def test_pleurodesis_consistency_with_cpt(self):
         """V2 pleurodesis_performed should produce flags consistent with CPT 32560/32650."""
-        from modules.registry.application.cpt_registry_mapping import (
+        from app.registry.application.cpt_registry_mapping import (
             aggregate_registry_fields,
         )
 
@@ -442,7 +442,7 @@ class TestV2BooleansCPTConsistency:
 
     def test_blvr_consistency_with_cpt(self):
         """V2 BLVR fields should produce flags consistent with CPT 31647/31648."""
-        from modules.registry.application.cpt_registry_mapping import (
+        from app.registry.application.cpt_registry_mapping import (
             aggregate_registry_fields,
         )
 
@@ -461,7 +461,7 @@ class TestV2BooleansCPTConsistency:
 
     def test_navigational_bronchoscopy_consistency_with_cpt(self):
         """V2 nav_platform should produce flags consistent with CPT 31627."""
-        from modules.registry.application.cpt_registry_mapping import (
+        from app.registry.application.cpt_registry_mapping import (
             aggregate_registry_fields,
         )
 
@@ -480,7 +480,7 @@ class TestV2BooleansCPTConsistency:
 
     def test_chest_tube_consistency_with_cpt(self):
         """V2 chest tube should produce flags consistent with CPT 32551."""
-        from modules.registry.application.cpt_registry_mapping import (
+        from app.registry.application.cpt_registry_mapping import (
             aggregate_registry_fields,
         )
 
@@ -499,7 +499,7 @@ class TestV2BooleansCPTConsistency:
 
     def test_medical_thoracoscopy_consistency_with_cpt(self):
         """V2 medical thoracoscopy should produce flags consistent with CPT 32601."""
-        from modules.registry.application.cpt_registry_mapping import (
+        from app.registry.application.cpt_registry_mapping import (
             aggregate_registry_fields,
         )
 
@@ -526,7 +526,7 @@ class TestRegistryTargetFieldsSchemaAlignment:
 
     def test_field_count_matches_canonical(self):
         """REGISTRY_TARGET_FIELDS should match the canonical procedure flag list."""
-        from modules.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
+        from app.registry.v2_booleans import PROCEDURE_BOOLEAN_FIELDS
 
         assert len(REGISTRY_TARGET_FIELDS) == len(PROCEDURE_BOOLEAN_FIELDS)
 

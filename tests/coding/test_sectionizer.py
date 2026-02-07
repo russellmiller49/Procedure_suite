@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from modules.coder.sectionizer import (
+from app.coder.sectionizer import (
     accordion_truncate,
     split_into_sections,
 )

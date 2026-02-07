@@ -1,5 +1,5 @@
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.registry.schema import RegistryRecord
 
 
 def test_registry_to_cpt_derives_31640_from_mechanical_debulking() -> None:

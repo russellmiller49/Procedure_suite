@@ -16,7 +16,7 @@ class _SpanResult:
 
 pytest.importorskip("presidio_analyzer")
 
-from modules.phi.adapters.presidio_scrubber import PresidioScrubber, filter_allowlisted_terms, filter_cpt_codes
+from app.phi.adapters.presidio_scrubber import PresidioScrubber, filter_allowlisted_terms, filter_cpt_codes
 
 
 def test_presidio_scrubber_detects_obvious_person_name():

@@ -1,6 +1,6 @@
 
 from pathlib import Path
-from modules.registry.engine import RegistryEngine
+from app.registry.engine import RegistryEngine
 
 
 def test_complex_tracheal_extraction():

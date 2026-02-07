@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from typing import List
 from unittest.mock import Mock
 
-from modules.api.phi_redaction import RedactionResult, apply_phi_redaction
+from app.api.phi_redaction import RedactionResult, apply_phi_redaction
 
 
 @dataclass

@@ -143,18 +143,18 @@ finetune-phi-client-hardneg-cpu:
 export-phi-client-model:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
 		--model-dir artifacts/phi_distilbert_ner \
-		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner
+		--out-dir ui/static/phi_redactor/vendor/phi_distilbert_ner
 
 export-phi-client-model-quant:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
 		--model-dir artifacts/phi_distilbert_ner \
-		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner \
+		--out-dir ui/static/phi_redactor/vendor/phi_distilbert_ner \
 		--quantize
 
 export-phi-client-model-quant-static:
 	$(CONDA_ACTIVATE) && $(PYTHON) scripts/export_phi_model_for_transformersjs.py \
 		--model-dir artifacts/phi_distilbert_ner \
-		--out-dir modules/api/static/phi_redactor/vendor/phi_distilbert_ner \
+		--out-dir ui/static/phi_redactor/vendor/phi_distilbert_ner \
 		--quantize --static-quantize
 
 build-phi-platinum:
@@ -285,7 +285,7 @@ prodigy-prepare-registry:
 		--exclude-csv data/ml_training/registry_train.csv
 
 prodigy-annotate-registry:
-	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
+	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from ml.lib.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
 		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(PRODIGY_REGISTRY_DATASET) \
 		$(PRODIGY_REGISTRY_BATCH_FILE) \
 		--label $$LABELS
@@ -436,7 +436,7 @@ registry-human-merge-updates:
 		--prefer-updates-meta
 
 registry-prodigy-annotate:
-	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from modules.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
+	$(CONDA_ACTIVATE) && LABELS="$$( $(PYTHON) -c 'from ml.lib.ml_coder.registry_label_schema import REGISTRY_LABELS; print(",".join(REGISTRY_LABELS))' )" && \
 		$(PRODIGY_PYTHON) -m prodigy textcat.manual $(REG_PRODIGY_DATASET) $(REG_PRODIGY_BATCH_FILE) \
 		--loader jsonl \
 		--label $$LABELS
@@ -612,7 +612,7 @@ dev-iu:
 		REGISTRY_RUNTIME_DIR="$(REGISTRY_RUNTIME_DIR)" \
 		PROCSUITE_SKIP_WARMUP="$(PROCSUITE_SKIP_WARMUP)" \
 		RAILWAY_ENVIRONMENT="local" \
-		$(PYTHON) -m uvicorn modules.api.fastapi_app:app --reload --host 0.0.0.0 --port "$(PORT)"
+		$(PYTHON) -m uvicorn app.api.fastapi_app:app --reload --host 0.0.0.0 --port "$(PORT)"
 
 # Run cleaning pipeline with patches
 autopatch:
@@ -790,7 +790,7 @@ registry-prep-raw:
 # Alternative: Use the module integration
 registry-prep-module:
 	$(CONDA_ACTIVATE) && $(PYTHON) -c " \
-from modules.ml_coder.registry_data_prep import prepare_registry_training_splits; \
+from ml.lib.ml_coder.registry_data_prep import prepare_registry_training_splits; \
 train, val, test = prepare_registry_training_splits(); \
 train.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_train.csv', index=False); \
 val.to_csv('$(REGISTRY_OUTPUT_DIR)/$(REGISTRY_PREFIX)_val.csv', index=False); \

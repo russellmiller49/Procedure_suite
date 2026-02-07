@@ -27,7 +27,7 @@ from typing import List, Dict, Any
 # We skip server-side testing if the API is incompatible.
 HAS_COMPATIBLE_VETO = False
 try:
-    from modules.phi.safety.veto import apply_protected_veto
+    from app.phi.safety.veto import apply_protected_veto
     import inspect
     sig = inspect.signature(apply_protected_veto)
     params = list(sig.parameters.keys())

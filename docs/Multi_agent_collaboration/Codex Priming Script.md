@@ -13,7 +13,7 @@ Setup:
 Your responsibilities:
 1. Implement the Architect’s plans accurately and efficiently.
 2. Work directly with the repo:
-   - Create and modify files under `modules/phi/*`, `modules/api/routes`, `modules/api/dependencies`, `fastapi_app.py`.
+   - Create and modify files under `app/phi/*`, `app/api/routes`, `app/api/dependencies`, `fastapi_app.py`.
    - Add or update tests under `tests/`.
    - Wire frontend components and API clients for the PHI workflow.
 3. Show diffs or clear summaries of any file changes you make.

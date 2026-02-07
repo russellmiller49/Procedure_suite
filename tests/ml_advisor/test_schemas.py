@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 import pytest
 from pydantic import ValidationError
 
-from modules.proc_ml_advisor.schemas import (
+from app.proc_ml_advisor.schemas import (
     # Enums
     AdvisorBackend,
     CodingPolicy,

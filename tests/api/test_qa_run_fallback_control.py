@@ -5,10 +5,10 @@ from dataclasses import dataclass
 import pytest
 from httpx import AsyncClient
 
-from modules.api.dependencies import get_qa_pipeline_service
-from modules.api.fastapi_app import app
-from modules.api.services.qa_pipeline import QAPipelineService, ReportingStrategy, SimpleReporterStrategy
-from modules.reporting.inference import InferenceEngine
+from app.api.dependencies import get_qa_pipeline_service
+from app.api.fastapi_app import app
+from app.api.services.qa_pipeline import QAPipelineService, ReportingStrategy, SimpleReporterStrategy
+from app.reporting.inference import InferenceEngine
 
 
 @dataclass

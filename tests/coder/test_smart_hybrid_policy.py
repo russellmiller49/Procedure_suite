@@ -14,12 +14,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from modules.coder.application.smart_hybrid_policy import (
+from app.coder.application.smart_hybrid_policy import (
     OrchestratorResult,
     SmartHybridOrchestrator,
 )
-from modules.coder.rules_engine import RuleViolationError
-from modules.ml_coder.thresholds import CaseDifficulty
+from app.coder.rules_engine import RuleViolationError
+from ml.lib.ml_coder.thresholds import CaseDifficulty
 
 
 @dataclass

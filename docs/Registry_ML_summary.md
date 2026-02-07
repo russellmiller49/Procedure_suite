@@ -9,7 +9,7 @@ Built V2→V3 mapper: Implemented _extract_registry_booleans() function mapping 
 Rare label filtering: Implemented _filter_rare_registry_labels() to drop labels with < 5 samples
 Data pipeline: Created prepare_registry_training_splits() to generate train/test CSVs
 Files Created/Modified
-modules/ml_coder/data_prep.py - Added ~200 lines
+ml/lib/ml_coder/data_prep.py - Added ~200 lines
 tests/ml_coder/test_registry_data_prep.py - 32 tests
 Outputs Generated
 File	Description
@@ -26,8 +26,8 @@ Prediction API: predict_proba(), predict(), classify_case(), classify_batch()
 Graceful degradation: Handles missing model artifacts without crashing
 Sanity check: Added __main__ block for testing
 Files Created/Modified
-modules/ml_coder/registry_predictor.py - New file (~350 lines)
-modules/ml_coder/init.py - Added exports
+ml/lib/ml_coder/registry_predictor.py - New file (~350 lines)
+ml/lib/ml_coder/init.py - Added exports
 tests/ml_coder/test_registry_predictor.py - 12 tests
 Status: ✅ Complete
 Phase 3: Training Pipeline ✅
@@ -38,8 +38,8 @@ Threshold optimization: Per-label F1-optimal threshold search
 Evaluation: Comprehensive metrics with per-label precision/recall/F1
 CLI: Command-line interface with --evaluate flag
 Files Created/Modified
-modules/ml_coder/registry_training.py - New file (~400 lines)
-modules/ml_coder/init.py - Added training exports
+ml/lib/ml_coder/registry_training.py - New file (~400 lines)
+ml/lib/ml_coder/init.py - Added training exports
 Model Performance
 Metric	Score
 Macro F1	0.736
@@ -69,8 +69,8 @@ A: Match	✓	✓	No warning (confirmed)
 B: CPT-only	✓	✗	No warning (CPT is primary truth)
 C: ML-only	✗	✓	Audit warning + needs_manual_review=True
 Files Modified
-modules/registry/application/registry_service.py - Added ~100 lines
-modules/api/routes_registry.py - Added audit_warnings field
+app/registry/application/registry_service.py - Added ~100 lines
+app/api/routes_registry.py - Added audit_warnings field
 Status: ✅ Complete
 Phase 5: Testing & Validation ✅
 What Was Done
@@ -114,9 +114,9 @@ bronchial_wash, endobronchial_biopsy, therapeutic_aspiration, pleural_biopsy, fi
 Recommendation: These will not be predicted by the ML model. May need manual extraction or additional training data.
 Usage Examples
 Train/Evaluate the Model
-python -m modules.ml_coder.registry_training --evaluate
+python -m ml.lib.ml_coder.registry_training --evaluate
 Use the Predictor Programmatically
-from modules.ml_coder import RegistryMLPredictor
+from ml.lib.ml_coder import RegistryMLPredictor
 
 predictor = RegistryMLPredictor()
 result = predictor.classify_case("Bronchoscopy with EBUS-TBNA...")

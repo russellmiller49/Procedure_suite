@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from modules.common.llm import OpenAILLM
-from modules.registry.extractors.llm_detailed import LLMDetailedExtractor
+from app.common.llm import OpenAILLM
+from app.registry.extractors.llm_detailed import LLMDetailedExtractor
 
 
 def test_openai_model_structurer_override_respected(monkeypatch: pytest.MonkeyPatch) -> None:

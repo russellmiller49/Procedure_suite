@@ -1,5 +1,5 @@
 import pytest
-from modules.registry.engine import RegistryEngine
+from app.registry.engine import RegistryEngine
 from tests.utils.case_filter import load_synthetic_cases, filter_cases
 
 # Load cases once

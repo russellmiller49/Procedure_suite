@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from modules.coder.parallel_pathway.confidence_combiner import ConfidenceCombiner
+from app.coder.parallel_pathway.confidence_combiner import ConfidenceCombiner
 
 
 def test_confidence_combiner_does_not_flag_low_ml_prob_for_low_risk_code() -> None:

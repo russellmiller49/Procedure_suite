@@ -85,7 +85,7 @@ All endpoints live under `/api/v1/registry/*`.
 
 ## UI (PHI Redactor) Integration
 
-UI lives at `/ui/` (static files in `modules/api/static/phi_redactor/`).
+UI lives at `/ui/` (static files in `ui/static/phi_redactor/`).
 
 Behavior:
 

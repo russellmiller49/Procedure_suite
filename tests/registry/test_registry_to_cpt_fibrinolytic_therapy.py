@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from modules.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-from modules.common.spans import Span
-from modules.registry.schema import RegistryRecord
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.common.spans import Span
+from app.registry.schema import RegistryRecord
 
 
 def test_registry_to_cpt_derives_32561_for_fibrinolysis_initial_day() -> None:

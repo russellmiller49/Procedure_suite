@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from modules.registry.audit.raw_ml_auditor import FLAG_TO_CPT_MAP
-from modules.registry.self_correction.keyword_guard import CPT_KEYWORDS, HIGH_CONF_BYPASS_CPTS
+from app.registry.audit.raw_ml_auditor import FLAG_TO_CPT_MAP
+from app.registry.self_correction.keyword_guard import CPT_KEYWORDS, HIGH_CONF_BYPASS_CPTS
 
 
 def test_keyword_guard_has_coverage_for_self_correct_allowlist_cpts() -> None:

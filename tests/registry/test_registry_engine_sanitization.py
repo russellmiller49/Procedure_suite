@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from modules.registry.engine import RegistryEngine
+from app.registry.engine import RegistryEngine
 
 
 class _StubExtractor:

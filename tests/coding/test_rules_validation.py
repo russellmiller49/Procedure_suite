@@ -7,7 +7,7 @@ the JSON rules produce identical results to the Python implementation.
 import pytest
 from typing import Set, Dict, Any, List
 
-from modules.domain.coding_rules import (
+from app.domain.coding_rules import (
     CodingRulesEngine,
     EvidenceContext,
     JSONRulesEvaluator,

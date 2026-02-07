@@ -3,7 +3,7 @@
 ## What This Service Does
 
 - The server is a **stateless coding engine**: **scrubbed note text in → registry fields + CPT codes out**.
-- The primary UI/API entrypoint is `POST /api/v1/process` (`modules/api/routes/unified_process.py`).
+- The primary UI/API entrypoint is `POST /api/v1/process` (`app/api/routes/unified_process.py`).
 
 ## How To Run Locally
 
@@ -42,7 +42,7 @@ Client-side PHI scrubbing is the long-term direction; the server can still scrub
 
 The devserver mounts the PHI redactor UI as the main UI:
 
-- UI: `http://localhost:8000/ui/` (static files: `modules/api/static/phi_redactor/`)
+- UI: `http://localhost:8000/ui/` (static files: `ui/static/phi_redactor/`)
 - Workflow tab: `http://localhost:8000/ui/workflow.html`
 
 Notable workflow features:
@@ -55,11 +55,11 @@ Notable workflow features:
 
 ## Recent Updates (2026-01-25)
 
-- **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `modules/registry/schema/ebus_events.py`.
-- **Granular split:** models moved to `modules/registry/schema/granular_models.py` and logic to `modules/registry/schema/granular_logic.py`; `modules/registry/schema_granular.py` is a compat shim.
-- **V2 dynamic builder:** moved to `modules/registry/schema/v2_dynamic.py`; `modules/registry/schema.py` is now a thin entrypoint preserving the `__path__` hack.
-- **V3 extraction schema:** renamed to `modules/registry/schema/ip_v3_extraction.py` with a compatibility re-export at `modules/registry/schema/ip_v3.py`; the rich registry entry schema remains at `proc_schemas/registry/ip_v3.py`.
-- **V3→V2 adapter:** now in `modules/registry/schema/adapters/v3_to_v2.py` with a compat shim at `modules/registry/adapters/v3_to_v2.py`.
+- **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `app/registry/schema/ebus_events.py`.
+- **Granular split:** models moved to `app/registry/schema/granular_models.py` and logic to `app/registry/schema/granular_logic.py`; `app/registry/schema_granular.py` is a compat shim.
+- **V2 dynamic builder:** moved to `app/registry/schema/v2_dynamic.py`; `app/registry/schema.py` is now a thin entrypoint preserving the `__path__` hack.
+- **V3 extraction schema:** renamed to `app/registry/schema/ip_v3_extraction.py` with a compatibility re-export at `app/registry/schema/ip_v3.py`; the rich registry entry schema remains at `proc_schemas/registry/ip_v3.py`.
+- **V3→V2 adapter:** now in `app/registry/schema/adapters/v3_to_v2.py` with a compat shim at `app/registry/adapters/v3_to_v2.py`.
 - **Refactor notes/tests:** see `NOTES_SCHEMA_REFACTOR.md` and `tests/registry/test_schema_refactor_smoke.py`.
 
 ## Recent Updates (2026-01-24)
@@ -78,9 +78,9 @@ Notable workflow features:
 
 - **Hierarchy of truth (conflict resolution):**
   - **Narrative supersedes header codes**: do not treat `PROCEDURE:` CPT lists as “performed” when `PROCEDURE IN DETAIL:` contradicts (e.g., header says “trach change” but narrative describes ETT intubation → do not extract tracheostomy creation).
-  - **Narrative supersedes summary**: complications mentioned in narrative override templated “COMPLICATIONS: None” (see `modules/registry/postprocess/complications_reconcile.py`).
-  - **Evidence supersedes checkbox heuristics**: unchecked template items must *not* force a procedure to `performed=false` when explicit active-voice narrative evidence supports `true` (see `modules/registry/postprocess/template_checkbox_negation.py`).
-- **Anti-hallucination: tools ≠ intent**: mentions of tools (snare/forceps/basket/cryoprobe) do not imply debulking/ablation; require action-on-tissue language (tightened CAO modality parsing in `modules/registry/processing/cao_interventions_detail.py`).
+  - **Narrative supersedes summary**: complications mentioned in narrative override templated “COMPLICATIONS: None” (see `app/registry/postprocess/complications_reconcile.py`).
+  - **Evidence supersedes checkbox heuristics**: unchecked template items must *not* force a procedure to `performed=false` when explicit active-voice narrative evidence supports `true` (see `app/registry/postprocess/template_checkbox_negation.py`).
+- **Anti-hallucination: tools ≠ intent**: mentions of tools (snare/forceps/basket/cryoprobe) do not imply debulking/ablation; require action-on-tissue language (tightened CAO modality parsing in `app/registry/processing/cao_interventions_detail.py`).
 - **Puncture ≠ stoma**: tracheal puncture (CPT `31612`) is *not* percutaneous tracheostomy creation; extraction and CPT derivation distinguish puncture-only from trach creation.
 - **Intraprocedural adjustment bundling**:
   - BLVR valve remove/replace in the same session is an adjustment, not foreign body removal; do not derive `31635` for valve exchanges.
@@ -129,20 +129,20 @@ The deterministic layer includes guardrails to reduce “keyword-only” halluci
 ### Debugging Self-Correction
 
 - Self-correction only runs when `REGISTRY_AUDITOR_SOURCE=raw_ml` produces `high_conf_omissions` and the CPT keyword guard passes.
-- Keyword gating lives in `modules/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
+- Keyword gating lives in `app/registry/self_correction/keyword_guard.py:CPT_KEYWORDS`.
 - Use the smoke script for visibility into triggers/skips:
   - `python scripts/registry_pipeline_smoke.py --note <note.txt> --self-correct`
   - Look for `Audit high-conf omissions:` and `SELF_CORRECT_SKIPPED:` reasons.
 
 ## Files You’ll Touch Most Often
 
-- API app wiring + startup env validation: `modules/api/fastapi_app.py`
-- Unified process endpoint: `modules/api/routes/unified_process.py`
-- Extraction-first pipeline: `modules/registry/application/registry_service.py`
-- Parallel pathway orchestrator: `modules/coder/parallel_pathway/orchestrator.py`
-- Omission guardrails: `modules/registry/self_correction/keyword_guard.py`
-- Clinical postprocessing guardrails: `modules/extraction/postprocessing/clinical_guardrails.py`
-- PHI redactor veto rules: `modules/api/static/phi_redactor/protectedVeto.js`
+- API app wiring + startup env validation: `app/api/fastapi_app.py`
+- Unified process endpoint: `app/api/routes/unified_process.py`
+- Extraction-first pipeline: `app/registry/application/registry_service.py`
+- Parallel pathway orchestrator: `app/coder/parallel_pathway/orchestrator.py`
+- Omission guardrails: `app/registry/self_correction/keyword_guard.py`
+- Clinical postprocessing guardrails: `app/extraction/postprocessing/clinical_guardrails.py`
+- PHI redactor veto rules: `ui/static/phi_redactor/protectedVeto.js`
 
 ## Tests
 

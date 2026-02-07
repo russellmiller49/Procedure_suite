@@ -21,8 +21,8 @@ from unittest.mock import patch
 import pytest
 from fastapi.testclient import TestClient
 
-from modules.proc_ml_advisor.schemas import ProcedureCategory
-from modules.api.ml_advisor_router import get_advisor_config
+from app.proc_ml_advisor.schemas import ProcedureCategory
+from app.api.ml_advisor_router import get_advisor_config
 
 
 @pytest.fixture(autouse=True)
@@ -30,7 +30,7 @@ def _skip_registry_runtime_bundle_verification() -> Generator[None, None, None]:
     # The FastAPI app lifespan validates registry runtime bundles on startup.
     # In unit tests, the heavyweight model artifacts may not be present, so we
     # patch this to bypass the startup guardrail.
-    with patch("modules.registry.model_runtime.verify_registry_runtime_bundle", return_value=[]):
+    with patch("app.registry.model_runtime.verify_registry_runtime_bundle", return_value=[]):
         yield
 
 
@@ -38,7 +38,7 @@ def _skip_registry_runtime_bundle_verification() -> Generator[None, None, None]:
 def test_client(
     _skip_registry_runtime_bundle_verification,
 ) -> Generator[TestClient, None, None]:
-    from modules.api.fastapi_app import app
+    from app.api.fastapi_app import app
 
     with TestClient(app) as client:
         yield client
@@ -179,7 +179,7 @@ class TestAdvisorSuggestEndpoint:
 
     def test_suggest_with_enabled_advisor(self):
         """Suggest endpoint should work when advisor is enabled."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         # Override the dependency to enable advisor
         def override_config():
@@ -206,7 +206,7 @@ class TestTraceEndpoints:
 
     def test_list_traces_empty(self, tmp_path):
         """Should return empty list when no traces exist."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         trace_file = tmp_path / "empty_traces.jsonl"
 
@@ -227,7 +227,7 @@ class TestTraceEndpoints:
 
     def test_list_traces_with_data(self, populated_trace_file):
         """Should return traces when file has data."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         def override_config():
             return make_override_config(trace_path=populated_trace_file)
@@ -246,7 +246,7 @@ class TestTraceEndpoints:
 
     def test_list_traces_pagination(self, populated_trace_file):
         """Should support pagination."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         def override_config():
             return make_override_config(trace_path=populated_trace_file)
@@ -266,7 +266,7 @@ class TestTraceEndpoints:
 
     def test_get_trace_not_found(self, tmp_path):
         """Should return 404 for non-existent trace."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         trace_file = tmp_path / "traces.jsonl"
         trace_file.touch()
@@ -289,7 +289,7 @@ class TestMetricsEndpoint:
 
     def test_metrics_empty(self, tmp_path):
         """Should return empty metrics when no traces exist."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         trace_file = tmp_path / "empty_traces.jsonl"
 
@@ -309,7 +309,7 @@ class TestMetricsEndpoint:
 
     def test_metrics_with_data(self, populated_trace_file):
         """Should calculate metrics from traces."""
-        from modules.api.fastapi_app import app
+        from app.api.fastapi_app import app
 
         def override_config():
             return make_override_config(trace_path=populated_trace_file)
