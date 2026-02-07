@@ -5,17 +5,11 @@ from pathlib import Path
 import pytest
 
 from app.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
+from tests.registry._notes_path import notes_dir_from_env_or_workspace
 
 
 def _notes_dir() -> Path:
-    repo_root = Path(__file__).resolve().parents[2]
-    return (
-        repo_root.parent
-        / "proc_suite_notes"
-        / "data"
-        / "granular annotations"
-        / "notes_text"
-    )
+    return notes_dir_from_env_or_workspace(anchor_file=__file__)
 
 
 def test_note_240_regression_extracts_tracheal_pre_post_obstruction_pct() -> None:
@@ -29,4 +23,3 @@ def test_note_240_regression_extracts_tracheal_pre_post_obstruction_pct() -> Non
 
     assert by_loc["Trachea"]["pre_obstruction_pct"] == 80
     assert by_loc["Trachea"]["post_obstruction_pct"] == 5
-

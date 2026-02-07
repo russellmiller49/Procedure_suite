@@ -6,17 +6,11 @@ import pytest
 
 from app.registry.processing.cao_interventions_detail import extract_cao_interventions_detail
 from app.registry.processing.disease_burden import extract_unambiguous_lesion_size_mm
+from tests.registry._notes_path import notes_dir_from_env_or_workspace
 
 
 def _notes_dir() -> Path:
-    repo_root = Path(__file__).resolve().parents[2]
-    return (
-        repo_root.parent
-        / "proc_suite_notes"
-        / "data"
-        / "granular annotations"
-        / "notes_text"
-    )
+    return notes_dir_from_env_or_workspace(anchor_file=__file__)
 
 
 def test_note_164_regression_extracts_lesion_size_and_extrinsic_cao_pct() -> None:
@@ -35,4 +29,3 @@ def test_note_164_regression_extracts_lesion_size_and_extrinsic_cao_pct() -> Non
     by_loc = {str(item.get("location")): item for item in details if isinstance(item, dict)}
     assert by_loc["RMS"]["pre_obstruction_pct"] == 85
     assert by_loc["RMS"]["obstruction_type"] == "Extrinsic"
-

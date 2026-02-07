@@ -2115,6 +2115,13 @@ def extract_tbna_conventional(note_text: str) -> Dict[str, Any]:
                         nodal_stations.add(str(station).upper().strip())
                 continue
 
+            # Guardrail: in nodal EBUS templates, "Biopsy Tools: TBNA" lines are part of
+            # station result blocks and should not imply peripheral/lung TBNA.
+            if note_has_nodal_ebus:
+                local = _local_context(raw_text, match.start(), match.end(), before_lines=3, after_lines=3)
+                if re.search(r"(?i)\bbiopsy\s+tools\s*:\s*tbna\b", local):
+                    continue
+
             peripheral_hit = True
 
     result: dict[str, Any] = {}

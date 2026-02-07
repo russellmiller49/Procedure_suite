@@ -5,6 +5,11 @@ from pathlib import Path
 import pytest
 
 from app.registry.application.registry_service import RegistryService
+from tests.registry._notes_path import notes_dir_from_env_or_workspace
+
+
+def _notes_dir() -> Path:
+    return notes_dir_from_env_or_workspace(anchor_file=__file__)
 
 
 def _get_linear_ebus(record):
@@ -35,7 +40,7 @@ def test_note_002_regression(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
     monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
 
-    note_path = Path("data/granular annotations/notes_text/note_002.txt")
+    note_path = _notes_dir() / "note_002.txt"
     if not note_path.is_file():
         pytest.skip(f"Fixture note not available: {note_path}")
     note_text = note_path.read_text(encoding="utf-8")
@@ -61,6 +66,7 @@ def test_note_002_regression(monkeypatch: pytest.MonkeyPatch) -> None:
         assert station in stations
 
     assert "31653" in result.cpt_codes
+    assert "31641" in result.cpt_codes
 
     procedures = getattr(record, "procedures_performed", None)
     if procedures is not None and hasattr(procedures, "eus_b"):

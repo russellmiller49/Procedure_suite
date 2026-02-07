@@ -415,6 +415,23 @@ class TestTBNAExtractor:
         assert result.get("peripheral_tbna", {}).get("performed") is True
         assert "tbna_conventional" not in result
 
+    def test_extract_tbna_ignores_ebus_station_template_biopsy_tools(self):
+        text = (
+            "A systematic EBUS survey was performed.\n"
+            "Needle: 21 needle\n"
+            "Station: 10R\n"
+            "Biopsy Tools: TBNA\n"
+            "ROSE Results: Adequate\n"
+            "Station: 4L\n"
+            "Biopsy Tools: TBNA\n"
+            "ROSE Results: Inadequate\n"
+            "Station: 7\n"
+            "Biopsy Tools: TBNA\n"
+            "ROSE Results: Adequate\n"
+        )
+        result = extract_tbna_conventional(text)
+        assert result == {}
+
 
 class TestBrushingsExtractor:
     def test_extract_brushings(self):
@@ -500,6 +517,35 @@ class TestTBNABundling:
         assert "31629" in codes
         assert "31633" in codes
         assert any("Modifier 59" in w for w in warnings)
+
+    def test_peripheral_tbna_suppressed_when_target_is_generic_with_ebus(self):
+        record = make_record(
+            linear_ebus=True,
+            stations_sampled=["10R", "4L", "7"],
+            peripheral_tbna=True,
+            peripheral_tbna_targets_sampled=["Lung Mass"],
+        )
+        codes, _rationales, warnings = derive_all_codes_with_meta(record)
+        assert "31653" in codes
+        assert "31629" not in codes
+        assert any("Suppressed 31629" in w for w in warnings)
+
+
+class TestHeaderExplicitFallback:
+    def test_header_explicit_31641_with_cryobiopsy_adds_31641(self):
+        record = make_record(transbronchial_cryobiopsy=True)
+        record.evidence = {"code_evidence": [{"text": "31641"}]}
+        codes, _rationales, warnings = derive_all_codes_with_meta(record)
+
+        assert "31628" in codes
+        assert "31641" in codes
+        assert any("Added 31641 from explicit procedure header code list" in w for w in warnings)
+
+    def test_header_explicit_31641_without_cryobiopsy_does_not_add(self):
+        record = make_record()
+        record.evidence = {"code_evidence": [{"text": "31641"}]}
+        codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+        assert "31641" not in codes
 
 
 class TestTracheostomyCPTLogic:

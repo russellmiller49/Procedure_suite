@@ -40,6 +40,15 @@ _CHEST_TUBE_INSERTION_DATE_RE = re.compile(
     re.IGNORECASE,
 )
 _DATE_TOKEN_RE = re.compile(r"\b(\d{4}-\d{2}-\d{2}|\d{1,2}[/-]\d{1,2}[/-]\d{2,4})\b")
+_IASLC_STATION_TOKEN_RE = re.compile(
+    r"^(?:2R|2L|3P|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)$",
+    re.IGNORECASE,
+)
+_GENERIC_PERIPHERAL_TBNA_TARGET_RE = re.compile(
+    r"(?i)^\s*(?:lung|pulmonary)\s+(?:nodule|mass|lesion)s?\s*$",
+)
+_SEGMENT_TOKEN_RE = re.compile(r"(?i)\b(?:RB|LB)\d{1,2}\b")
+_SIDED_LOBE_RE = re.compile(r"(?i)\b(?:right|left)\s+(?:upper|middle|lower)\s+lobe\b")
 
 
 def _get(obj: Any, name: str) -> Any:
@@ -148,6 +157,44 @@ def _lobe_tokens(values: list[str]) -> set[str]:
             if token in upper:
                 lobes.add("Lingula" if token == "LINGULA" else token)
     return lobes
+
+
+def _is_nodal_target_value(value: str) -> bool:
+    upper = value.upper().strip()
+    if not upper:
+        return False
+    if _IASLC_STATION_TOKEN_RE.match(upper):
+        return True
+    if "STATION" in upper:
+        return True
+    if re.search(r"\b(?:LYMPH\s+NODE|NODAL|NODE)\b", upper):
+        return True
+    return False
+
+
+def _has_distinct_peripheral_tbna_target(target_values: list[str]) -> bool:
+    """Require explicit, non-nodal anatomic detail for EBUS+31629 unbundling."""
+    for raw_target in target_values:
+        target = str(raw_target or "").strip()
+        if not target:
+            continue
+        if _is_nodal_target_value(target):
+            continue
+        if _GENERIC_PERIPHERAL_TBNA_TARGET_RE.match(target):
+            continue
+
+        upper = target.upper()
+        has_anatomic_detail = bool(
+            _lobe_tokens([target])
+            or _SEGMENT_TOKEN_RE.search(target)
+            or _SIDED_LOBE_RE.search(target)
+            or "SEGMENT" in upper
+            or "SUBSEGMENT" in upper
+        )
+        if has_anatomic_detail:
+            return True
+
+    return False
 
 
 def _airway_site_tokens(value: Any) -> set[str]:
@@ -429,6 +476,7 @@ def derive_all_codes_with_meta(
     codes: list[str] = []
     rationales: dict[str, str] = {}
     warnings: list[str] = []
+    header_code_text = _evidence_text_for_prefixes(record, ("code_evidence",))
 
     # --- Airway management ---
     if _performed(_proc(record, "intubation")):
@@ -536,18 +584,11 @@ def derive_all_codes_with_meta(
     if _performed(peripheral_tbna):
         targets = _get(peripheral_tbna, "targets_sampled") or []
         target_values = [str(x).strip() for x in targets if x and str(x).strip()]
-        station_token_re = re.compile(
-            r"^(?:2R|2L|3P|4R|4L|5|7|8|9|10R|10L|11R(?:S|I)?|11L(?:S|I)?|12R|12L)$",
-            re.IGNORECASE,
-        )
-        has_non_station_target = any(
-            (t and not station_token_re.match(t) and not re.search(r"(?i)\bstation\b", t))
-            for t in target_values
-        )
+        has_distinct_target = _has_distinct_peripheral_tbna_target(target_values)
 
-        if has_ebus_sampling and not has_non_station_target:
+        if has_ebus_sampling and not has_distinct_target:
             warnings.append(
-                "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled are missing or nodal-like; cannot support distinct-site unbundling"
+                "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled lack a clearly distinct, non-nodal anatomic target"
             )
         else:
             codes.append("31629")
@@ -607,7 +648,6 @@ def derive_all_codes_with_meta(
         elastography_used = _get(_proc(record, "linear_ebus"), "elastography_used") is True
         elastography_pattern = _get(_proc(record, "linear_ebus"), "elastography_pattern")
         if elastography_used or (isinstance(elastography_pattern, str) and elastography_pattern.strip()):
-            header_code_text = _evidence_text_for_prefixes(record, ("code_evidence",))
             target_stations: set[str] = set()
             node_events = _get(_proc(record, "linear_ebus"), "node_events")
             if isinstance(node_events, (list, tuple)):
@@ -823,6 +863,22 @@ def derive_all_codes_with_meta(
     if _performed(_proc(record, "cryotherapy")) and "31641" not in codes:
         codes.append("31641")
         rationales["31641"] = "cryotherapy.performed=true"
+
+    # Header fallback: some workflows intentionally list 31641 when cryo intervention
+    # is charted as cryobiopsy text. Require both explicit header code and cryobiopsy.
+    if (
+        "31641" not in codes
+        and re.search(r"\b31641\b", header_code_text or "")
+        and _performed(_proc(record, "transbronchial_cryobiopsy"))
+    ):
+        codes.append("31641")
+        rationales["31641"] = (
+            "code_evidence lists 31641 and transbronchial_cryobiopsy.performed=true "
+            "(header-explicit fallback)"
+        )
+        warnings.append(
+            "Added 31641 from explicit procedure header code list with cryobiopsy evidence; verify payer policy for destruction vs biopsy coding."
+        )
 
     # BLVR valve family
     blvr = _proc(record, "blvr")
