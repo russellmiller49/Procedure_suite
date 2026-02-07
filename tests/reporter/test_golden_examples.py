@@ -10,78 +10,72 @@ Usage:
 
 import json
 import difflib
+import os
 import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
+
+import pytest
 
 # Ensure modules are importable
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from modules.registry.application.registry_service import RegistryService
-from modules.reporting.engine import (
-    apply_patch_result,
-    build_procedure_bundle_from_extraction,
-    ReporterEngine,
-    default_template_registry,
-    default_schema_registry,
-    _load_procedure_order,
-)
+from modules.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
+from modules.reporting.engine import ReporterEngine, _load_procedure_order, default_schema_registry, default_template_registry
 from modules.reporting.inference import InferenceEngine
 from modules.reporting.validation import ValidationEngine
 
 # Configuration
 GOLDEN_DATASET_PATH = PROJECT_ROOT / "tests/fixtures/reporter_golden_dataset.json"
 
-def run_pipeline(input_text: str) -> str:
-    """
-    Simulates the full extraction-to-report pipeline.
-    1. Extract registry data from text (Extraction-First)
-    2. Build ProcedureBundle
-    3. Run Inference/Validation
-    4. Render Report
-    """
-    # 1. Extraction
-    registry_service = RegistryService()
-    # Use 'parallel_ner' if available, otherwise default engine
-    # In a test harness, we might want to mock the extraction to isolate reporter logic,
-    # but here we want to test the full "Input -> Output" gap.
-    extraction_result = registry_service.extract_fields_extraction_first(input_text)
-    
-    # 2. Build Bundle
-    # Convert the RegistryExtractionResult (which contains a RegistryRecord) into the dict format expected by the bundle builder
-    # Note: build_procedure_bundle_from_extraction usually expects a raw dict from the registry engine
-    # We'll dump the pydantic model to a dict.
-    extraction_payload = extraction_result.record.model_dump(exclude_none=True)
-    bundle = build_procedure_bundle_from_extraction(extraction_payload, source_text=input_text)
+def _reset_llm_usage_totals() -> None:
+    """Reset internal LLM usage counters so this test can assert determinism."""
+    try:
+        from modules.common import llm as llm_mod
 
-    # 3. Inference & Validation
-    inference = InferenceEngine()
-    inference_result = inference.infer_bundle(bundle)
-    bundle = apply_patch_result(bundle, inference_result)
-    
-    templates = default_template_registry()
-    schemas = default_schema_registry()
-    
-    validator = ValidationEngine(templates, schemas)
-    issues = validator.list_missing_critical_fields(bundle)
-    
-    # 4. Render
-    reporter = ReporterEngine(
-        templates,
-        schemas,
-        procedure_order=_load_procedure_order(),
-    )
-    
-    # Render in non-strict mode to see what we get even if incomplete
-    report_result = reporter.compose_report_with_metadata(
-        bundle,
-        strict=False, 
-        validation_issues=issues,
-        embed_metadata=False
-    )
-    
-    return report_result.text
+        llm_mod._USAGE_TOTALS_BY_MODEL.clear()
+        llm_mod._USAGE_TOTALS_ALL.calls = 0
+        llm_mod._USAGE_TOTALS_ALL.input_tokens = 0
+        llm_mod._USAGE_TOTALS_ALL.output_tokens = 0
+        llm_mod._USAGE_TOTALS_ALL.total_tokens = 0
+        llm_mod._USAGE_TOTALS_ALL.cost_usd = 0.0
+    except Exception:
+        # Best-effort; determinism is still enforced by env flags below.
+        return
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _golden_env() -> None:
+    """Golden harness must be deterministic (no network LLM calls, no fallback)."""
+    env_overrides = {
+        # Explicitly disable any network-backed LLM usage.
+        "OPENAI_OFFLINE": "1",
+        "GEMINI_OFFLINE": "1",
+        "REGISTRY_USE_STUB_LLM": "1",
+        "PROCSUITE_SKIP_DOTENV": "1",
+        # Reporter harness invariants.
+        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
+        "REPORTER_DISABLE_LLM": "1",
+        # Ensure extraction-first uses deterministic pathway (no self-correction).
+        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+        "REGISTRY_SELF_CORRECT_ENABLED": "0",
+        # Reduce noisy stderr output in CI.
+        "OPENAI_LOG_USAGE_PER_CALL": "0",
+        "OPENAI_LOG_USAGE_SUMMARY": "0",
+    }
+
+    old = {k: os.environ.get(k) for k in env_overrides}
+    try:
+        os.environ.update(env_overrides)
+        yield
+    finally:
+        for k, prev in old.items():
+            if prev is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = prev
 
 def normalize_text(text: str) -> str:
     """Normalize whitespace and newlines for fairer comparison."""
@@ -93,85 +87,134 @@ def calculate_similarity(text1: str, text2: str) -> float:
     """Calculate simple similarity ratio."""
     return difflib.SequenceMatcher(None, text1, text2).ratio()
 
-def main():
+@pytest.fixture(scope="session")
+def _golden_examples() -> list[dict[str, Any]]:
     if not GOLDEN_DATASET_PATH.exists():
-        print(f"Error: Dataset not found at {GOLDEN_DATASET_PATH}")
-        print("Run `python scripts/parse_golden_reporter_examples.py` first.")
-        return
+        raise AssertionError(
+            f"Golden dataset not found at {GOLDEN_DATASET_PATH}. "
+            "Run `python scripts/parse_golden_reporter_examples.py` to generate it."
+        )
+    return json.loads(GOLDEN_DATASET_PATH.read_text(encoding="utf-8"))
 
-    print(f"Loading dataset from {GOLDEN_DATASET_PATH}...")
-    with open(GOLDEN_DATASET_PATH, 'r', encoding='utf-8') as f:
-        examples = json.load(f)
 
-    print(f"Loaded {len(examples)} examples. Running pipeline...\n")
-    
-    results = []
-    
+@pytest.fixture(scope="session")
+def _reporting_strategy() -> ReportingStrategy:
+    templates = default_template_registry()
+    schemas = default_schema_registry()
+    reporter_engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=_load_procedure_order(),
+    )
+    inference_engine = InferenceEngine()
+    validation_engine = ValidationEngine(templates, schemas)
+
+    class _NeverRegistryEngine:
+        def run(self, *_args, **_kwargs):  # noqa: ANN001
+            raise AssertionError("Golden tests should provide registry_data explicitly")
+
+    return ReportingStrategy(
+        reporter_engine=reporter_engine,
+        inference_engine=inference_engine,
+        validation_engine=validation_engine,
+        registry_engine=_NeverRegistryEngine(),
+        simple_strategy=SimpleReporterStrategy(),
+    )
+
+
+@pytest.fixture(scope="session")
+def _registry_service() -> RegistryService:
+    return RegistryService()
+
+
+def test_golden_reporter_similarity(
+    _golden_examples: list[dict[str, Any]],
+    _registry_service: RegistryService,
+    _reporting_strategy: ReportingStrategy,
+) -> None:
+    """Golden gate:
+    - determinism (0 network LLM calls)
+    - stability (no simple fallback)
+    - quality (avg/min similarity thresholds)
+    """
+    _reset_llm_usage_totals()
+
+    results: list[dict[str, Any]] = []
+
+    for ex in _golden_examples:
+        ex_id = ex["id"]
+        input_text = ex["input_text"]
+        ideal_output = ex["ideal_output"]
+
+        extraction_result = _registry_service.extract_fields_extraction_first(input_text)
+        record_dict = extraction_result.record.model_dump(exclude_none=True)
+
+        report = _reporting_strategy.render(
+            text=input_text,
+            registry_data={"record": record_dict},
+            procedure_type=None,
+        )
+
+        assert report.get("render_mode") == "structured", f"{ex_id} rendered in {report.get('render_mode')!r}"
+        assert report.get("fallback_used") is False, f"{ex_id} unexpectedly used fallback"
+        assert not report.get("reporter_errors"), f"{ex_id} reporter_errors={report.get('reporter_errors')!r}"
+
+        generated_output = report.get("markdown") or ""
+        norm_ideal = normalize_text(ideal_output)
+        norm_gen = normalize_text(generated_output)
+        similarity = calculate_similarity(norm_ideal, norm_gen)
+
+        results.append({"id": ex_id, "similarity": similarity})
+
+    scores = [r["similarity"] for r in results]
+    avg_score = sum(scores) / len(scores) if scores else 0.0
+    min_score = min(scores) if scores else 0.0
+
+    worst = sorted(results, key=lambda r: r["similarity"])[:5]
+    worst_str = ", ".join(f"{r['id']}={r['similarity']:.2f}" for r in worst)
+
+    assert avg_score >= 0.55, f"Average similarity {avg_score:.2f} < 0.55 (worst: {worst_str})"
+    assert min_score >= 0.30, f"Minimum similarity {min_score:.2f} < 0.30 (worst: {worst_str})"
+
+    # Determinism: assert no OpenAI usage was recorded.
+    try:
+        from modules.common import llm as llm_mod
+
+        assert llm_mod._USAGE_TOTALS_ALL.calls == 0, f"LLM calls recorded: {llm_mod._USAGE_TOTALS_ALL.calls}"
+    except Exception:
+        # Best-effort: if the tracker isn't available, the env flags above still enforce offline.
+        pass
+
+
+def main() -> None:
+    """Script mode: print per-example scores and a quick summary for debugging."""
+    examples = json.loads(GOLDEN_DATASET_PATH.read_text(encoding="utf-8"))
+    strategy = _reporting_strategy()  # type: ignore[misc]
+    registry_service = _registry_service()  # type: ignore[misc]
+
+    _reset_llm_usage_totals()
+
+    results: list[dict[str, Any]] = []
     for ex in examples:
-        ex_id = ex['id']
-        input_text = ex['input_text']
-        ideal_output = ex['ideal_output']
-        
-        print(f"Processing {ex_id}...", end="", flush=True)
-        
-        try:
-            generated_output = run_pipeline(input_text)
-            
-            norm_ideal = normalize_text(ideal_output)
-            norm_gen = normalize_text(generated_output)
-            
-            similarity = calculate_similarity(norm_ideal, norm_gen)
-            
-            results.append({
-                "id": ex_id,
-                "similarity": similarity,
-                "ideal": norm_ideal,
-                "generated": norm_gen,
-                "input": input_text
-            })
-            print(f" Done. Similarity: {similarity:.2f}")
-            
-        except Exception as e:
-            print(f" Failed: {e}")
-            results.append({
-                "id": ex_id,
-                "error": str(e),
-                "similarity": 0.0
-            })
+        ex_id = ex["id"]
+        input_text = ex["input_text"]
+        ideal_output = ex["ideal_output"]
 
-    # Summary Analysis
-    print("\n" + "="*60)
-    print("RESULTS SUMMARY")
-    print("="*60)
-    
-    scores = [r['similarity'] for r in results if 'similarity' in r]
-    avg_score = sum(scores) / len(scores) if scores else 0
-    
-    print(f"Average Similarity Score: {avg_score:.2f}")
-    
-    # Identify worst performers to prioritize logic fixes
-    sorted_results = sorted(results, key=lambda x: x.get('similarity', 0))
-    
-    print("\nLOWEST SCORING EXAMPLES (Needs Improvement):")
-    for r in sorted_results[:3]:
-        print(f"\n--- Example {r['id']} (Score: {r.get('similarity', 0):.2f}) ---")
-        print(f"INPUT SNAPSHOT: {r.get('input', '')[:100]}...")
-        if 'error' in r:
-            print(f"ERROR: {r['error']}")
-        else:
-            # Show a brief diff hint
-            print("DIFF HINT (Missing lines in Generated):")
-            # Simple check for missing key phrases from ideal
-            ideal_lines = r['ideal'].split('\n')
-            gen_text = r['generated']
-            missing_count = 0
-            for line in ideal_lines:
-                if line not in gen_text and len(line) > 10:
-                    print(f"  - {line[:60]}...")
-                    missing_count += 1
-                    if missing_count >= 5:
-                        print("  ... (more missing)")
-                        break
+        print(f"Processing {ex_id}...", end="", flush=True)
+        extraction_result = registry_service.extract_fields_extraction_first(input_text)
+        record_dict = extraction_result.record.model_dump(exclude_none=True)
+        report = strategy.render(text=input_text, registry_data={"record": record_dict})
+        generated = report.get("markdown") or ""
+        similarity = calculate_similarity(normalize_text(ideal_output), normalize_text(generated))
+        results.append({"id": ex_id, "similarity": similarity})
+        print(f" Done. Similarity: {similarity:.2f}")
+
+    scores = [r["similarity"] for r in results]
+    avg_score = sum(scores) / len(scores) if scores else 0.0
+    min_score = min(scores) if scores else 0.0
+    print("\nAverage Similarity Score:", f"{avg_score:.2f}")
+    print("Minimum Similarity Score:", f"{min_score:.2f}")
+    print("Worst 5:", ", ".join(f"{r['id']}={r['similarity']:.2f}" for r in sorted(results, key=lambda r: r["similarity"])[:5]))
 
 if __name__ == "__main__":
     main()

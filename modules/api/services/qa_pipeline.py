@@ -7,14 +7,49 @@ into a testable, reusable service with proper error handling.
 from __future__ import annotations
 
 import logging
+import os
 import uuid
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field, is_dataclass
 from typing import Any
 
 from modules.common.spans import Span
 
 logger = logging.getLogger(__name__)
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+class ReporterException(RuntimeError):
+    """Explicit reporter failure used to control fallback behavior."""
+
+
+def _serialize_jsonable(value: Any) -> Any:
+    """Best-effort JSON-serializable conversion.
+
+    Supports:
+    - dataclasses (via asdict)
+    - Pydantic models (via model_dump)
+    - nested dict/list structures
+    """
+    if value is None:
+        return None
+    if is_dataclass(value):
+        # asdict() recursively converts nested dataclasses.
+        return asdict(value)
+    if hasattr(value, "model_dump"):
+        try:
+            return value.model_dump()
+        except Exception:
+            # Fall through to best-effort stringification below.
+            pass
+    if isinstance(value, dict):
+        return {k: _serialize_jsonable(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_serialize_jsonable(v) for v in value]
+    return value
 
 
 @dataclass
@@ -144,15 +179,29 @@ class ReportingStrategy:
             procedure_core/indication/postop for fallback)
         """
 
+        allow_fallback = _truthy_env("QA_REPORTER_ALLOW_SIMPLE_FALLBACK")
+        lightweight_error: str | None = None
+
         # Case 1: We have registry data with a record
         if registry_data and registry_data.get("record"):
             try:
-                return self._render_structured(registry_data["record"])
+                return self._render_structured(registry_data["record"], source_text=text)
             except Exception as e:
-                logger.warning(
-                    f"Structured reporter failed, falling back to simple: {e}"
-                )
-                return self.simple_strategy.render(text, procedure_type)
+                if allow_fallback:
+                    logger.warning(
+                        f"Structured reporter failed, falling back to simple: {e}"
+                    )
+                    fallback = self.simple_strategy.render(text, procedure_type)
+                    fallback.update(
+                        {
+                            "render_mode": "simple_fallback",
+                            "fallback_reason": "structured_reporter_failed",
+                            "reporter_errors": [str(e)],
+                            "fallback_used": True,
+                        }
+                    )
+                    return fallback
+                raise ReporterException("Structured reporter failed") from e
 
         # Case 2: No registry data - try lightweight extraction
         try:
@@ -170,16 +219,34 @@ class ReportingStrategy:
             )
 
             if reg_dict:
-                return self._render_structured(reg_dict)
+                return self._render_structured(reg_dict, source_text=text)
         except Exception as e:
-            logger.warning(
-                f"Lightweight registry extraction failed for reporter: {e}"
-            )
+            lightweight_error = str(e)
+            if allow_fallback:
+                logger.warning(
+                    f"Lightweight registry extraction failed for reporter: {e}"
+                )
+            else:
+                raise ReporterException("Lightweight registry extraction failed") from e
 
         # Case 3: All structured approaches failed - use simple reporter
-        return self.simple_strategy.render(text, procedure_type)
+        if not allow_fallback:
+            raise ReporterException(
+                "Structured reporter unavailable and QA_REPORTER_ALLOW_SIMPLE_FALLBACK is disabled"
+            )
 
-    def _render_structured(self, record: dict[str, Any]) -> dict[str, Any]:
+        fallback = self.simple_strategy.render(text, procedure_type)
+        fallback.update(
+            {
+                "render_mode": "simple_fallback",
+                "fallback_reason": "structured_reporter_unavailable",
+                "reporter_errors": [lightweight_error] if lightweight_error else [],
+                "fallback_used": True,
+            }
+        )
+        return fallback
+
+    def _render_structured(self, record: dict[str, Any], *, source_text: str | None = None) -> dict[str, Any]:
         """Render structured report from registry record.
 
         Args:
@@ -194,7 +261,7 @@ class ReportingStrategy:
         )
 
         # Build bundle from registry extraction
-        bundle = build_procedure_bundle_from_extraction(record)
+        bundle = build_procedure_bundle_from_extraction(record, source_text=source_text)
 
         # Run inference to enrich the bundle
         inference_result = self.inference_engine.infer_bundle(bundle)
@@ -216,9 +283,12 @@ class ReportingStrategy:
         return {
             "markdown": structured.text,
             "bundle": bundle.model_dump() if hasattr(bundle, "model_dump") else {},
-            "issues": [i.model_dump() for i in issues] if issues else [],
+            "issues": _serialize_jsonable(issues) if issues else [],
             "warnings": warnings,
             "fallback_used": False,
+            "render_mode": "structured",
+            "fallback_reason": None,
+            "reporter_errors": [],
         }
 
 

@@ -1,42 +1,49 @@
 INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
 
-DATE OF PROCEDURE: {{ encounter.date or "" }}
-CC Referred Physician: {{ encounter.referred_physician or "" }}
+DATE OF PROCEDURE: {{ encounter.date or "[Date]" }} CC Referred Physician: {{ encounter.referred_physician or "[Name]" }}
 
-INDICATION FOR OPERATION:
-{% if patient.name %}{{ patient.name }}{% else %}The patient{% endif %}{% if patient.age %} is a {{ patient.age }}-year-old{% endif %}{% if patient.sex %} {{ patient.sex }}{% endif %}{% if indication_text %} who presents with {{ indication_text }}{% endif %}.
+{% set _patient_name = patient.name or "[Patient Name]" %}
+{% set _patient_age = patient.age if patient.age is not none else "[Age]" %}
+{% set _patient_sex = patient.sex or "[Sex]" %}
 
-CONSENT: Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The consent was witnessed by an assisting medical professional.
+INDICATION FOR OPERATION {% if patient.name %}{{ _patient_name }}{% elif patient.age is not none or patient.sex %}{{ _patient_name }}{% else %}The patient{% endif %}{% if patient.age is not none or patient.sex %} is a {{ _patient_age }}-year-old {{ _patient_sex }} who presents with {{ proc.indication_text or indication_text or "[indication]" }}.{% else %} presents with {{ proc.indication_text or indication_text or "[indication]" }}.{% endif %} The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail.
 
-PREOPERATIVE DIAGNOSIS: {{ preop_diagnosis_text or "See chart" }}
-POSTOPERATIVE DIAGNOSIS: {{ postop_diagnosis_text or "See chart" }}
+CONSENT Obtained before the procedure. Its indications, potential complications, and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form. The consent was witnessed by an assisting medical professional.
 
-PROCEDURE(S): {{ procedures_summary or "See procedure details below" }}
+PREOPERATIVE DIAGNOSIS
 
-CPT CODES (candidates - verify locally): {{ cpt_summary or "Not available; verify locally" }}
+{{ proc.preop_diagnosis_text or preop_diagnosis_text or "See chart" }}
 
-ATTENDING: {{ encounter.attending or "" }}
-ASSISTANT: {{ encounter.assistant or "None" }}
+POSTOPERATIVE DIAGNOSIS
 
-ANESTHESIA: {{ (anesthesia.description or anesthesia.type) if anesthesia else "See chart" }}
-MONITORING: Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer.
+{{ proc.postop_diagnosis_text or postop_diagnosis_text or "See chart" }}
 
-PROCEDURE IN DETAIL:
+PROCEDURE
+
+{{ proc.procedures_summary or procedures_summary or "See procedure details below" }}
+
+ATTENDING {{ encounter.attending or "[Name]" }}  ASSISTANT {{ encounter.assistant or "[Name]" }}
+
+SUPPORT STAFF RN: [Name]  RT: [Name]
+
+ANESTHESIA {{ (anesthesia.description or anesthesia.type) if anesthesia else "[General anesthesia / airway type]" }}
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS {{ proc.estimated_blood_loss or estimated_blood_loss or "Minimal" }}
+
+COMPLICATIONS {{ proc.complications_text or complications_text or "None" }}
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
 {{ procedure_details_block }}
 
-ESTIMATED BLOOD LOSS: {{ estimated_blood_loss or "Minimal" }}
-COMPLICATIONS: {{ complications_text or "None" }}
+{% if proc.specimens_text or specimens_text %}
+SPECIMENS
 
-SPECIMEN(S): {{ specimens_text or "Not collected" }}
-
-IMPRESSION/PLAN:
-{{ impression_plan or "Pending" }}
-{% if acknowledged_omissions %}
-
-## Missing Details (not present in original dictation)
-{% for proc_id, items in acknowledged_omissions.items() %}
-{% if items %}
-- **{{ proc_id }}**: {{ items | join('; ') }}
+{{ proc.specimens_text or specimens_text }}
 {% endif %}
-{% endfor %}
-{% endif %}
+
+IMPRESSION / PLAN
+
+{{ proc.impression_plan or impression_plan or "Pending" }}

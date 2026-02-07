@@ -1,8 +1,11 @@
-{% if survey %}{% set _pattern = (survey.rebus_features or "") | lower %}Radial endobronchial ultrasound was performed at the {{ survey.location }}{% if _pattern %}, demonstrating {% if _pattern.startswith('e') %}an{% else %}a{% endif %} {{ _pattern }} pattern{% endif %}.{% elif proc.ultrasound_pattern %}{% set _view = (proc.ultrasound_pattern or "") | lower %}Radial endobronchial ultrasound demonstrated {% if _view.startswith('e') %}an{% else %}a{% endif %} {{ _view }} view{% if proc.lesion_size_mm is not none %} with lesion size {{ proc.lesion_size_mm }} mm{% endif %}.{% endif %}
+Target Confirmation and Sampling
 
-{% if proc.sampling_tools %}Sampling was performed via the guide sheath{% if proc.guide_sheath_diameter %} ({{ proc.guide_sheath_diameter }}){% endif %} using {{ proc.sampling_tools | join(', ') }}{% if proc.passes_per_tool %} with {{ proc.passes_per_tool }}{% endif %}.{% else %}Sampling was performed via the guide sheath{% if proc.guide_sheath_diameter %} ({{ proc.guide_sheath_diameter }}){% endif %}.{% endif %}
-{% if proc.fluoro_used is not none %}Fluoroscopy used: {% if proc.fluoro_used %}Yes{% else %}No{% endif %}.{% endif %}{% if proc.rose_result %} ROSE: {{ proc.rose_result }}.{% endif %}
-{% if proc.specimens %}Specimens: {{ proc.specimens | join(', ') }}.{% endif %}
-{% if proc.cxr_ordered %}Post-procedure chest x-ray: ordered.{% endif %}
-{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
-The patient tolerated the procedure well.
+{% if proc.ultrasound_pattern %}{% set _view = (proc.ultrasound_pattern or "") | lower %}Radial EBUS: Radial EBUS verified a {{ _view }} {% if _view.endswith('view') %}{% else %}view{% endif %} relative to the lesion.{% endif %}
+{% if proc.fluoro_used %}Imaging: Augmented fluoroscopy was used for trajectory confirmation.{% endif %}
+
+{% if proc.sampling_tools or proc.passes_per_tool %}
+Sampling: Sampling through the working channel was performed as follows:
+{% if proc.passes_per_tool %}{{ proc.passes_per_tool }}{% else %}{{ proc.sampling_tools | join(', ') }}{% endif %}
+{% endif %}
+
+{% if proc.rose_result %}ROSE Results (Nodule): {{ proc.rose_result }}.{% endif %}

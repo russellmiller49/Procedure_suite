@@ -1,7 +1,7 @@
-Electromagnetic navigation bronchoscopy was performed to target the lesion.
-{% if proc.registration_method %}Registration was completed using {{ proc.registration_method }} methods.{% else %}Registration was completed.{% endif %} The navigation catheter{% if proc.navigation_catheter %} ({{ proc.navigation_catheter }}){% endif %} was advanced to the {{ proc.target_lung_segment }}.
+Electromagnetic Navigation Bronchoscopy A CT-based navigation plan was loaded and registration was completed using the {{ proc.navigation_system }} system. The navigation catheter{% if proc.navigation_catheter %} ({{ proc.navigation_catheter }}){% endif %} was advanced to the planned target{% if proc.target_lung_segment %} in the {{ proc.target_lung_segment }}{% endif %} under navigational guidance.
 {% if proc.lesion_size_cm is not none %}Target lesion is approximately {{ proc.lesion_size_cm }} cm in diameter.{% endif %}{% if proc.tool_to_target_distance_cm is not none %} Under navigational guidance the catheter was advanced to {{ proc.tool_to_target_distance_cm }} cm away from the planned target.{% endif %}
-Radial EBUS confirmed intraparenchymal position. Samples were obtained.
-{% if proc.adjunct_imaging %}Adjunct imaging: {{ proc.adjunct_imaging | join(', ') }}.{% endif %}
+{% if proc.adjunct_imaging %}
+{% set _img = (proc.adjunct_imaging | join(' ') | lower) %}
+{% if 'cone' in _img or 'cbct' in _img %}Cone-beam CT imaging with trajectory adjustment and confirmation.{% else %}Adjunct imaging: {{ proc.adjunct_imaging | join(', ') }}.{% endif %}
+{% endif %}
 {% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
-The patient tolerated the procedure well without immediate complications.

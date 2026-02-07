@@ -65,3 +65,14 @@ class TransbronchialCryobiopsyPartial(BaseModel):
     tests: List[str] = Field(default_factory=list)
     radial_vessel_check: bool | None = None
     notes: str | None = None
+
+
+class PeripheralAblationPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    modality: str | None = None
+    target: str | None = None
+    power_w: int | None = None
+    duration_min: float | None = None
+    max_temp_c: int | None = None
+    notes: str | None = None

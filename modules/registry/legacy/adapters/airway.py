@@ -8,7 +8,15 @@ from .base import DictPayloadAdapter, ExtractionAdapter
 
 
 def _nav_platform(source: dict[str, Any]) -> str:
-    return (source.get("nav_platform") or "").lower()
+    raw = str(source.get("nav_platform") or "").strip().lower()
+    if not raw:
+        return ""
+    # Normalize common EMN platform names so robotic adapters don't misclassify them.
+    # Example: "superDimension" contains the substring "ion" and can be incorrectly
+    # treated as an Ion robotic case if we rely on naive substring checks.
+    if "superdimension" in raw or "super-dimension" in raw or "super dimension" in raw:
+        return "emn"
+    return raw
 
 
 def _coerce_size_mm(value: Any) -> float | None:

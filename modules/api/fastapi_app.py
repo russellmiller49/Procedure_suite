@@ -1283,6 +1283,9 @@ def _qapipeline_result_to_response(
                 indication=data.get("indication"),
                 postop=data.get("postop"),
                 fallback_used=data.get("fallback_used", False),
+                render_mode=data.get("render_mode"),
+                fallback_reason=data.get("fallback_reason"),
+                reporter_errors=data.get("reporter_errors", []),
             )
         reporter_result = ModuleResult[ReporterData](
             status=_module_status_from_outcome(result.reporter),

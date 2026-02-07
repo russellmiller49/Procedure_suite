@@ -1,3 +1,4 @@
-Robotic navigation{% if proc.platform %} using the {{ proc.platform }} platform{% endif %} was performed to reach the target{% if proc.lesion_location %} at {{ proc.lesion_location }}{% endif %}.
-{% if proc.registration_method or proc.registration_error_mm is not none %}Registration{% if proc.registration_method %} was {{ proc.registration_method | lower }}{% endif %}{% if proc.registration_error_mm is not none %} with a registration error of {{ proc.registration_error_mm }} mm{% endif %}.{% endif %}
+Robotic Navigational Bronchoscopy{% if proc.platform %} ({{ proc.platform }}){% endif %} Robotic navigation bronchoscopy was performed{% if proc.platform %} using the {{ proc.platform }} platform{% endif %}.
+{% if proc.registration_method or proc.registration_error_mm is not none %}A navigation plan from the pre-procedure CT was loaded. Registration{% if proc.registration_method %} was {{ proc.registration_method | lower }}{% endif %}{% if proc.registration_error_mm is not none %} with an error of {{ proc.registration_error_mm }}mm{% endif %}.{% endif %}
+The robotic catheter and sheath were advanced to the target{% if proc.lesion_location %} in the {{ proc.lesion_location }}{% endif %} under navigational guidance.
 {% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}

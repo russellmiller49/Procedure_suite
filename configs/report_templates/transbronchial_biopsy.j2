@@ -1,7 +1,2 @@
-{% if proc.notes %}Indication: {{ proc.notes }}.{% elif indication_text %}Indication: {{ indication_text }}.{% endif %}
-
-{% if proc.guidance %}Under {{ proc.guidance | lower | replace('fluoroscopy', 'fluoroscopic') }} guidance,{% else %}Under fluoroscopic guidance,{% endif %}{% if proc.number_of_biopsies is not none %} {{ proc.number_of_biopsies }} transbronchial biops{% if proc.number_of_biopsies == 1 %}y{% else %}ies{% endif %}{% else %} transbronchial biopsies{% endif %} were obtained from the {{ proc.lobe }}{% if proc.segment %} {{ proc.segment }} segment{% endif %}{% if proc.tool %} using {{ proc.tool | lower }}{% endif %}.
-
-{% if proc.complications %}There were no immediate complications: {{ proc.complications }}.{% else %}There were no immediate complications, with no significant bleeding or pneumothorax observed.{% endif %}
-
-{% if proc.specimen_tests %}Specimens were sent for {{ proc.specimen_tests | join(" and ") | lower }}.{% endif %}
+{% set _count = proc.number_of_biopsies if proc.number_of_biopsies is not none and proc.number_of_biopsies > 0 else "[count]" %}
+Transbronchial Forceps Biopsy: {{ _count }} biops{% if _count == 1 %}y{% else %}ies{% endif %} were obtained.
