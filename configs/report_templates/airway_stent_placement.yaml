@@ -1,0 +1,21 @@
+id: airway_stent_placement
+label: Airway Stent Placement
+category: bronchoscopy
+cpt_hints: ["31636"]
+schema_id: airway_stent_placement_v1
+output_section: PROCEDURE_DETAILS
+template_path: airway_stent_placement.j2
+required_fields: []
+optional_fields:
+  - location
+  - stent_brand
+  - stent_type
+  - covered
+  - device_size
+  - diameter_mm
+  - length_mm
+  - pre_obstruction_pct
+  - post_obstruction_pct
+  - notes
+proc_types:
+  - airway_stent_placement

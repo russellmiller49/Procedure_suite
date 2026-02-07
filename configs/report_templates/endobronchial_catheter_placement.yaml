@@ -1,0 +1,16 @@
+id: endobronchial_catheter_placement
+label: Endobronchial catheter placement (Brachytherapy)
+category: airway_therapy
+cpt_hints: []
+schema_id: endobronchial_catheter_placement_v1
+output_section: PROCEDURE_DETAILS
+template_path: endobronchial_catheter_placement.j2
+required_fields: []
+optional_fields:
+  - target_airway
+  - catheter_size_french
+  - obstruction_pct
+  - fluoroscopy_used
+  - dummy_wire_check
+proc_types:
+  - endobronchial_catheter_placement

@@ -1,2 +1,3 @@
 {% set _count = proc.number_of_biopsies if proc.number_of_biopsies is not none and proc.number_of_biopsies > 0 else "[count]" %}
-Transbronchial Forceps Biopsy: {{ _count }} biops{% if _count == 1 %}y{% else %}ies{% endif %} were obtained.
+{% set _loc = proc.segment or proc.lobe or "target" %}
+Transbronchial biopsy/Forceps of {{ _loc }} target ({{ _count }} sample{% if _count != 1 %}s{% endif %}).

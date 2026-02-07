@@ -1,40 +1,102 @@
 INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
 
-DATE OF PROCEDURE: {{ encounter.date or "[Date]" }} CC Referred Physician: {{ encounter.referred_physician or "[Name]" }}
+{% set header_attending_inline = shell_header_attending_inline|default(false) %}
+{% set omit_cc = shell_omit_cc|default(false) %}
+
+DATE OF PROCEDURE: {{ encounter.date or "[Date]" }}{% if header_attending_inline and encounter.attending %} ATTENDING: {{ encounter.attending }}{% endif %}{% if not omit_cc %} CC Referred Physician: {{ encounter.referred_physician or "Name" }}{% endif %}
+
+{% set include_consent_section = shell_include_consent_section|default(true) %}
+{% set include_anesthesia = shell_include_anesthesia|default(false) %}
+{% set include_monitoring = shell_include_monitoring|default(false) %}
+{% set include_instrumentation = shell_include_instrumentation|default(false) %}
+{% set include_ebl = shell_include_ebl|default(false) %}
+{% set include_complications = shell_include_complications|default(false) %}
+{% set include_staff = shell_include_staff|default(false) %}
+{% set include_assistant = shell_include_assistant|default(false) %}
+{% set include_support_staff = shell_include_support_staff|default(false) %}
+{% set include_images_sentence = shell_include_images_sentence|default(true) %}
+{% set postop_success_line = shell_postop_success_line|default(none) %}
+{% set instrumentation_text = shell_instrumentation_text|default(none) %}
+{% set indication_style = shell_indication_style|default("plain") %}
+{% set include_wished_sentence = shell_include_wished_sentence|default(true) %}
+{% set include_discussion_sentence = shell_include_discussion_sentence|default(true) %}
+{% set procedure_discussed = shell_procedure_discussed|default("the procedure") %}
+{% set consent_text = shell_consent_text|default(none) %}
+{% set procedure_in_detail_preamble = shell_procedure_in_detail_preamble|default("After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality.") %}
 
 {% set _patient_name = patient.name or "[Patient Name]" %}
 {% set _patient_age = patient.age if patient.age is not none else "[Age]" %}
 {% set _patient_sex = patient.sex or "[Sex]" %}
 
-INDICATION FOR OPERATION {% if patient.name %}{{ _patient_name }}{% elif patient.age is not none or patient.sex %}{{ _patient_name }}{% else %}The patient{% endif %}{% if patient.age is not none or patient.sex %} is a {{ _patient_age }}-year-old {{ _patient_sex }} who presents with {{ proc.indication_text or indication_text or "[indication]" }}.{% else %} presents with {{ proc.indication_text or indication_text or "[indication]" }}.{% endif %} The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail.
+{% set _indication = proc.indication_text or indication_text or "the clinical indication documented in the chart" %}
 
-CONSENT Obtained before the procedure. Its indications, potential complications, and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form. The consent was witnessed by an assisting medical professional.
+INDICATION FOR OPERATION {% if indication_style == "demographics" %}
+The patient is a {{ _patient_age }}-year-old {{ _patient_sex }} who presents with {{ _indication }}.
+{% elif indication_style == "patient_with" %}
+{{ _patient_name }} is a patient with {{ _indication }}.
+{% elif indication_style == "placeholder_patient" %}
+{{ _patient_name }} is a patient who presents with {{ _indication }}.
+{% elif indication_style == "placeholder_age_sex" %}
+{{ _patient_name }} is a {{ _patient_age }}-year-old {{ _patient_sex }} who presents with {{ _indication }}.
+{% else %}
+The patient presents with {{ _indication }}.
+{% endif %}{% if include_discussion_sentence %} The nature, purpose, risks, benefits, and alternatives to {{ procedure_discussed }} were discussed with the patient in detail.{% if include_wished_sentence %} The patient wished to proceed and informed consent was obtained.{% endif %}{% endif %}
+
+{% if include_consent_section %}
+{% if consent_text %}
+{{ consent_text }}
+{% else %}
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+{% endif %}
+{% endif %}
 
 PREOPERATIVE DIAGNOSIS
 
-{{ proc.preop_diagnosis_text or preop_diagnosis_text or "See chart" }}
+{{ proc.preop_diagnosis_text or preop_diagnosis_text or proc.indication_text or indication_text or "See chart" }}
 
 POSTOPERATIVE DIAGNOSIS
 
-{{ proc.postop_diagnosis_text or postop_diagnosis_text or "See chart" }}
+{{ proc.postop_diagnosis_text or postop_diagnosis_text or proc.preop_diagnosis_text or preop_diagnosis_text or proc.indication_text or indication_text or "See chart" }}
+
+{% if postop_success_line %}
+{{ postop_success_line }}
+{% endif %}
 
 PROCEDURE
 
 {{ proc.procedures_summary or procedures_summary or "See procedure details below" }}
 
-ATTENDING {{ encounter.attending or "[Name]" }}  ASSISTANT {{ encounter.assistant or "[Name]" }}
-
+{% if include_staff %}
+ATTENDING {{ encounter.attending or "Name" }}
+{% if include_assistant and encounter.assistant %}
+ASSISTANT {{ encounter.assistant }}
+{% endif %}
+{% endif %}
+{% if include_support_staff %}
 SUPPORT STAFF RN: [Name]  RT: [Name]
+{% endif %}
 
-ANESTHESIA {{ (anesthesia.description or anesthesia.type) if anesthesia else "[General anesthesia / airway type]" }}
+{% if include_anesthesia %}
+ANESTHESIA {{ (anesthesia.description or anesthesia.type) if anesthesia else ((sedation.description or sedation.type) if sedation else "General anesthesia / airway type") }}
+{% endif %}
 
+{% if include_monitoring %}
 MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+{% endif %}
 
+{% if include_instrumentation %}
+INSTRUMENTATION {{ instrumentation_text or "[Instrumentation]" }}
+{% endif %}
+
+{% if include_ebl %}
 ESTIMATED BLOOD LOSS {{ proc.estimated_blood_loss or estimated_blood_loss or "Minimal" }}
+{% endif %}
 
+{% if include_complications %}
 COMPLICATIONS {{ proc.complications_text or complications_text or "None" }}
+{% endif %}
 
-PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+PROCEDURE IN DETAIL {{ procedure_in_detail_preamble }}{% if include_images_sentence %} Relevant procedural images were saved to the medical record.{% endif %}
 
 {{ procedure_details_block }}
 

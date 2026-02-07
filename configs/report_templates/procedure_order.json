@@ -36,12 +36,14 @@
   "endobronchial_cryoablation": 325,
   "cryo_extraction_mucus": 326,
   "endobronchial_hemostasis": 330,
-  "endobronchial_blocker": 332,
+  "endobronchial_blocker": 315,
+  "chartis_assessment": 312,
   "pdt_light": 334,
   "pdt_debridement": 335,
   "foreign_body_removal": 338,
   "awake_foi": 339,
   "dlt_placement": 340,
+  "airway_stent_placement": 346,
   "stent_surveillance": 345,
   "whole_lung_lavage": 350,
   "eusb": 355,
@@ -60,5 +62,6 @@
   "ipc_remove": 421,
   "tunneled_pleural_catheter_insert": 422,
   "tunneled_pleural_catheter_remove": 423,
-  "transthoracic_needle_biopsy": 430
+  "transthoracic_needle_biopsy": 430,
+  "medical_thoracoscopy": 440
 }

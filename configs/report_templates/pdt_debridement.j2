@@ -1,5 +1,28 @@
-A follow-up bronchoscopy was performed. Necrotic tissue at {{ proc.site }} was debrided{% if proc.debridement_tool %} with {{ proc.debridement_tool }}{% endif %}.
-Airway patency improved{% if proc.pre_patency_pct is not none and proc.post_patency_pct is not none %} from {{ proc.pre_patency_pct }}% to {{ proc.post_patency_pct }}%{% endif %}.
-{% if proc.bleeding is not none %}Bleeding after debridement: {% if proc.bleeding %}present{% else %}none{% endif %}.{% endif %}
-{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
-The patient tolerated the procedure well.
+{% set _site = (proc.site or 'target airway') | string %}
+{% set _site_upper = _site.upper() %}
+{% set _site_long = _site %}
+{% if _site_upper == 'LUL' %}
+{% set _site_long = 'Left Upper Lobe (LUL)' %}
+{% elif _site_upper == 'LLL' %}
+{% set _site_long = 'Left Lower Lobe (LLL)' %}
+{% elif _site_upper == 'RUL' %}
+{% set _site_long = 'Right Upper Lobe (RUL)' %}
+{% elif _site_upper == 'RML' %}
+{% set _site_long = 'Right Middle Lobe (RML)' %}
+{% elif _site_upper == 'RLL' %}
+{% set _site_long = 'Right Lower Lobe (RLL)' %}
+{% endif %}
+{% set _site_short = _site_upper if _site_upper in ['LUL','LLL','RUL','RML','RLL'] else _site %}
+
+{% set _tools_text = (proc.debridement_tool or '') | string %}
+{% set _tools_lower = _tools_text.lower() %}
+{% set _tool_items = [] %}
+{% if 'forceps' in _tools_lower %}{% set _ = _tool_items.append('mechanical forceps') %}{% endif %}
+{% if 'rigid coring' in _tools_lower %}{% set _ = _tool_items.append('rigid coring') %}{% endif %}
+{% if 'cryo' in _tools_lower %}{% set _ = _tool_items.append('a cryoprobe') %}{% endif %}
+
+Airway Inspection and Debridement A rigid bronchoscope was introduced under direct visualization. A complete airway survey was performed. Attention was directed to the {{ _site_long }}, which showed significant necrosis consistent with the recent Photodynamic Therapy.
+
+Debridement A follow‑up bronchoscopy was performed to address the {{ _site_short }} necrosis. The necrotic tissue at the {{ _site_short }} was debrided{% if _tool_items %} using {% if _tool_items | length == 1 %}{{ _tool_items[0] }}{% elif _tool_items | length == 2 %}{{ _tool_items[0] }} and {{ _tool_items[1] }}{% else %}{{ _tool_items[:-1] | join(', ') }}, and {{ _tool_items[-1] }}{% endif %}{% elif _tools_text %} using {{ _tools_text }}{% endif %}. The cryoprobe was applied to adherent secretions and necrotic tissue until adherence was achieved, and the probe was withdrawn.
+
+Results{% if proc.pre_patency_pct is not none and proc.post_patency_pct is not none %} Prior to debridement, the affected airway was noted to be {{ 100 - proc.pre_patency_pct }}% obstructed. After treatment, the airway was {{ 100 - proc.post_patency_pct }}% obstructed ({{ proc.post_patency_pct }}% patent).{% endif %}{% if proc.bleeding is not none %} {% if proc.bleeding %}Active bleeding was noted after debridement.{% else %}No active bleeding was seen after debridement.{% endif %}{% endif %} The patient tolerated the procedure well.

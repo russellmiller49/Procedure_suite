@@ -1,0 +1,9 @@
+Chartis Assessment The Chartis system was used to assess for collateral ventilation.
+
+{% if proc.target_lobe %}Target: {{ proc.target_lobe }}.{% endif %}
+
+{% if proc.cv_status or proc.flow %}
+Findings: {% if proc.cv_status %}{{ proc.cv_status }}{% endif %}{% if proc.flow %} ({{ proc.flow }}){% endif %} observed.
+{% endif %}
+
+{% if proc.notes %}{{ proc.notes }}{% endif %}

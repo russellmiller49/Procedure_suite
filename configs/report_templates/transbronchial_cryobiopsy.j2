@@ -1,5 +1,38 @@
-Radial EBUS survey{% if proc.radial_vessel_check %} confirmed absence of significant vessels at the biopsy site{% endif %}. Transbronchial cryobiopsy was performed using a{% if proc.cryoprobe_size_mm %} {{ proc.cryoprobe_size_mm }} mm{% endif %} cryoprobe with{% if proc.freeze_seconds and proc.thaw_seconds %} {{ proc.freeze_seconds }} second freeze and {{ proc.thaw_seconds }} second thaw{% else %} freeze–thaw cycles{% endif %} per sample.
-{% if proc.blocker_type or proc.blocker_volume_ml or proc.blocker_location %}An endobronchial blocker{% if proc.blocker_type %} ({{ proc.blocker_type }}){% endif %}{% if proc.blocker_location %} at {{ proc.blocker_location }}{% endif %}{% if proc.blocker_volume_ml is not none %} was inflated with {{ proc.blocker_volume_ml }} mL{% endif %} for tamponade after each sample.{% endif %}
-Samples were collected in the {{ proc.lung_segment }} with a total of {{ proc.num_samples }} samples submitted.{% if proc.tests %} Samples sent for {{ proc.tests | join(', ') }}.{% endif %}
-{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
-No immediate complications.
+Airway Inspection The bronchoscope was introduced. A systematic airway inspection was performed, noting normal anatomy without endobronchial lesions.
+
+{% set _seg = (proc.lung_segment or '') | upper %}
+{% if _seg == 'RLL' %}{% set _pretty = 'Right Lower Lobe (RLL)' %}
+{% elif _seg == 'RUL' %}{% set _pretty = 'Right Upper Lobe (RUL)' %}
+{% elif _seg == 'RML' %}{% set _pretty = 'Right Middle Lobe (RML)' %}
+{% elif _seg == 'LUL' %}{% set _pretty = 'Left Upper Lobe (LUL)' %}
+{% elif _seg == 'LLL' %}{% set _pretty = 'Left Lower Lobe (LLL)' %}
+{% else %}{% set _pretty = proc.lung_segment %}
+{% endif %}
+
+Radial EBUS & Preparation Attention was turned to the {{ _pretty }}.
+
+rEBUS Survey: A radial EBUS probe was advanced to the target region{% if proc.radial_vessel_check %}. The survey confirmed the absence of significant vessels at the selected biopsy site and allowed for navigation to the periphery.{% endif %}
+
+Transbronchial Cryobiopsy A{% if proc.cryoprobe_size_mm %} {{ proc.cryoprobe_size_mm }}mm{% endif %} cryoprobe was utilized for sampling.
+
+{% if proc.notes %}
+{% for line in proc.notes.splitlines() %}
+{% set _l = (line or '').strip() %}
+{% if _l.lower().startswith('site') and ':' in _l %}
+{% set _parts = _l.split(':', 1) %}
+{% set _site_label = _parts[0].strip() %}
+{% set _site_loc = _parts[1].strip() %}
+{{ _site_label | replace('Site', 'Site') }} ({{ _site_loc }}): The probe was advanced to the target. {% if proc.freeze_seconds %}A {{ proc.freeze_seconds }}-second freeze cycle was applied.{% endif %} The probe and scope were withdrawn en bloc.
+{% endif %}
+{% endfor %}
+{% endif %}
+
+Findings & Hemostasis
+
+Yield: A total of {{ proc.num_samples }} sample{% if proc.num_samples != 1 %}s{% endif %} were collected.{% if proc.notes and 'Sample size' in proc.notes %} {{ proc.notes.split('Sample size:', 1)[-1].strip() }}{% endif %}
+
+{% if proc.blocker_type %}Prophylactic Balloon/Blocker: {{ proc.blocker_type }}{% if proc.blocker_location %} at {{ proc.blocker_location }}{% endif %}{% if proc.blocker_volume_ml is not none %} ({{ proc.blocker_volume_ml }} mL){% endif %}.{% endif %}
+
+Hemostasis: The prophylactic balloon was utilized/monitored. Final airway inspection demonstrated no clinically significant bleeding.
+
+Pneumothorax Check: Post-procedure assessment demonstrated no pneumothorax.

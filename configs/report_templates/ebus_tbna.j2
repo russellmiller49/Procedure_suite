@@ -1,11 +1,16 @@
-Linear EBUS-TBNA Staging A systematic mediastinal survey was completed.{% if proc.needle_gauge %} Sampling was performed using a {{ proc.needle_gauge }} needle.{% endif %}
+EBUS-TBNA Staging
 
-{% if proc.stations %}
-{% set _names = [] %}
+A systematic EBUS survey was performed of the mediastinum and hila.
+
+{% if proc.needle_gauge %}Needle: {{ proc.needle_gauge | replace('G', '-gauge') }} needle.{% endif %}
+
 {% for st in proc.stations %}
-{% if st.station_name %}{% set _ = _names.append(st.station_name) %}{% endif %}
-{% endfor %}
-Stations Sampled: {{ _names | join(', ') }} (Total {{ _names | length }} stations).
-{% endif %}
+Station: {{ st.station_name }}
+{% if st.size_mm is not none %}Size: {{ st.size_mm | round(0) | int }} mm{% endif %}
+{% if st.echo_features %}Echo Features: {{ st.echo_features }}{% endif %}
+{% if st.passes is not none %}Number of Passes: {{ st.passes }}{% endif %}
+{% if st.rose_result and not proc.overall_rose_diagnosis %}Result: {{ st.rose_result }}.{% endif %}
 
-{% if proc.overall_rose_diagnosis %}ROSE Results (Nodes): {{ proc.overall_rose_diagnosis }}.{% endif %}
+{% endfor %}
+
+{% if proc.overall_rose_diagnosis %}ROSE Results: {{ proc.overall_rose_diagnosis }}.{% endif %}

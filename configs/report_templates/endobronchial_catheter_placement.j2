@@ -1,0 +1,13 @@
+Airway Inspection The bronchoscope was passed via the ETT into the trachea. A systematic inspection was performed.
+
+{% if proc.target_airway %}Findings: The {{ proc.target_airway }}{% if proc.obstruction_pct is not none %} was identified and noted to be {{ proc.obstruction_pct }}% obstructed by malignant tumor burden{% else %} was inspected{% endif %}.{% endif %}
+
+Catheter Placement Under bronchoscopic{% if proc.fluoroscopy_used %} and fluoroscopic{% endif %} guidance, a{% if proc.catheter_size_french is not none %} {{ proc.catheter_size_french }} French{% else %}n endobronchial{% endif %} catheter was introduced.
+
+{% if proc.target_airway %}The catheter was successfully navigated and placed past the tumor obstruction in the {{ proc.target_airway }}.{% else %}The catheter was successfully navigated and placed past the tumor obstruction.{% endif %}
+
+{% if proc.fluoroscopy_used %}Confirmation: Fluoroscopy was utilized to confirm the final position of the catheter.{% endif %}
+
+{% if proc.dummy_wire_check %}Dummy Check: A dummy check wire was inserted into the catheter to ensure patency and lack of kinking. The wire passed without difficulty.{% endif %}
+
+Final Assessment The bronchoscope was withdrawn. The patient tolerated the procedure well without immediate complications.

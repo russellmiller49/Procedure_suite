@@ -1,0 +1,14 @@
+{% set _side = (proc.side or "unspecified") | lower %}
+{% set _side_title = "Right" if _side.startswith("r") else ("Left" if _side.startswith("l") else "Unspecified") %}
+
+{{ _side_title }} Diagnostic Thoracoscopy The chest was prepped and draped in the usual sterile fashion.
+
+Survey: Thoracoscopic survey performed.
+
+Findings: Initial thoracoscopic survey demonstrates{% if proc.findings %} {{ proc.findings | lower }}{% else %} pleural findings{% endif %}.
+
+{% if proc.fluid_evacuated %}Intervention: Pleural fluid was evacuated.{% endif %}
+
+{% if proc.chest_tube_left %}Closure: Chest tube left in situ.{% endif %}
+
+The patient tolerated the procedure well. There were no immediate complications.

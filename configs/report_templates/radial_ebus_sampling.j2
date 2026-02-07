@@ -1,7 +1,10 @@
 Target Confirmation and Sampling
 
 {% if proc.ultrasound_pattern %}{% set _view = (proc.ultrasound_pattern or "") | lower %}Radial EBUS: Radial EBUS verified a {{ _view }} {% if _view.endswith('view') %}{% else %}view{% endif %} relative to the lesion.{% endif %}
-{% if proc.fluoro_used %}Imaging: Augmented fluoroscopy was used for trajectory confirmation.{% endif %}
+{% if proc.fluoro_used %}
+{% set _imaging = (proc.notes or '') | lower %}
+{% if 'augmented' in _imaging %}Imaging: Augmented fluoroscopy was used for trajectory confirmation.{% else %}Fluoroscopy: Fluoroscopic imaging was used to confirm catheter-to-target alignment.{% endif %}
+{% endif %}
 
 {% if proc.sampling_tools or proc.passes_per_tool %}
 Sampling: Sampling through the working channel was performed as follows:

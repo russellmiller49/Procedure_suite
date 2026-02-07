@@ -1,7 +1,55 @@
-After induction of general anesthesia, a rigid bronchoscope{% if proc.size_or_model %} ({{ proc.size_or_model }}){% endif %} was introduced via the mouth under direct visualization.{% if proc.hf_jv is not none %} High-frequency jet ventilation (HFJV): {% if proc.hf_jv %}Yes{% else %}No{% endif %}.{% endif %} A complete airway survey was performed.
-Therapeutic interventions performed: {{ proc.interventions | join(', ') }}.
+{% set _interventions = proc.interventions or [] %}
+{% set _text = (_interventions | join(' ')) | lower %}
+{% set _has_dilation = 'dilat' in _text %}
+{% set _has_microdebrider = 'microdebrider' in _text %}
+{% set _has_apc = 'argon plasma' in _text or ' apc' in _text %}
+{% set _is_lms = 'left main stem' in _text or ' lms' in _text or '(lms)' in _text %}
+{% set _heading = 'Rigid Bronchoscopy' %}
+{% if _has_microdebrider and _has_apc and _is_lms %}
+{% set _heading = 'Rigid Bronchoscopy — Left Main Stem Recanalization' %}
+{% endif %}
+
+{% if _has_dilation %}
+Airway Inspection and Flexible Bronchoscopy A flexible bronchoscope was introduced. A complete airway survey was performed.
+
+Rigid Bronchoscopy and Dilation The rigid bronchoscope{% if proc.size_or_model %} ({{ proc.size_or_model }}){% endif %} was introduced via the mouth under direct visualization.{% if proc.hf_jv is not none %} High-frequency jet ventilation (HFJV): {% if proc.hf_jv %}Yes{% else %}No{% endif %}.{% endif %}
+
+Sequential mechanical dilation was performed using rigid dilators.{% for item in _interventions %}{% if 'dilat' in (item | lower) %} {{ item.rstrip('.') }}.{% endif %}{% endfor %}
+
+Completion Hemostasis was confirmed. The bronchoscope and adjunct instruments were withdrawn. The patient tolerated the procedure well without immediate complications.
+{% else %}
+{{ _heading }} A rigid bronchoscope{% if proc.size_or_model %} ({{ proc.size_or_model }}){% endif %} was introduced via the mouth under direct visualization.{% if proc.hf_jv is not none %} High-frequency jet ventilation (HFJV): {% if proc.hf_jv %}Yes{% else %}No{% endif %}.{% endif %} A complete airway survey was performed.
+
+{% for item in _interventions %}
+{% if item.startswith('Findings:') %}
+{{ item }}
+{% endif %}
+{% endfor %}
+
+Therapeutic Intervention The following therapeutic interventions were performed to address the obstruction:
+
+{% if _has_microdebrider %}
+Microdebrider Debridement: The endobronchial tumor was excised with mechanical debridement using a microdebrider to debulk the lesion.
+{% endif %}
+{% if _has_apc %}
+Argon Plasma Coagulation (APC): Endobronchial obstruction was treated with APC for tumor destruction and hemostasis.
+{% endif %}
+{% if not _has_microdebrider and not _has_apc %}{{ _interventions | join(', ') }}.{% endif %}
+
+Results
+{% for item in _interventions %}
+{% if item.startswith('Modality:') %}
+{{ item }}
+{% endif %}
+{% endfor %}
+{% for item in _interventions %}
+{% if item.startswith('Patency:') %}
+{{ item }}
+{% endif %}
+{% endfor %}
+
+Hemostasis was confirmed. The bronchoscope and adjunct instruments were withdrawn. The patient tolerated the procedure well without immediate complications.
+{% endif %}
+
 {% if proc.flexible_scope_used is not none %}A flexible bronchoscope was{% if not proc.flexible_scope_used %} not{% endif %} used through the rigid barrel for segmental inspection and suctioning.{% endif %}
-Hemostasis was confirmed and all instruments were withdrawn. The patient tolerated the procedure well without immediate complications.
-{% if proc.estimated_blood_loss_ml is not none %}Estimated blood loss: {{ proc.estimated_blood_loss_ml }} mL.{% endif %}
-{% if proc.specimens %}Specimens: {{ proc.specimens | join(', ') }}.{% endif %}
 {% if proc.post_procedure_plan %}Post-procedure plan: {{ proc.post_procedure_plan }}.{% endif %}

@@ -76,3 +76,46 @@ class PeripheralAblationPartial(BaseModel):
     duration_min: float | None = None
     max_temp_c: int | None = None
     notes: str | None = None
+
+
+class EndobronchialCatheterPlacementPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    target_airway: str | None = None
+    catheter_size_french: int | None = None
+    obstruction_pct: int | None = None
+    fluoroscopy_used: bool | None = None
+    dummy_wire_check: bool | None = None
+
+
+class AirwayStentPlacementPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    location: str | None = None
+    stent_brand: str | None = None
+    stent_type: str | None = None
+    covered: bool | None = None
+    device_size: str | None = None
+    diameter_mm: float | None = None
+    length_mm: float | None = None
+    pre_obstruction_pct: int | None = None
+    post_obstruction_pct: int | None = None
+    notes: str | None = None
+
+
+class ChartisAssessmentPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    target_lobe: str | None = None
+    cv_status: str | None = None
+    flow: str | None = None
+    notes: str | None = None
+
+
+class MedicalThoracoscopyPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    side: str | None = None
+    findings: str | None = None
+    fluid_evacuated: bool | None = None
+    chest_tube_left: bool | None = None

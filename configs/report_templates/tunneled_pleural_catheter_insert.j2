@@ -1,21 +1,17 @@
-{% if proc.pleural_guidance %}{{ proc.pleural_guidance }} guidance was used to select the insertion site{% if proc.side %} on the {{ proc.side | lower }} chest{% endif %}.{% else %}{% if proc.side %}The {{ proc.side | lower }} chest was prepped and draped in sterile fashion.{% else %}The insertion site was prepped and draped in sterile fashion.{% endif %}{% endif %}
-Local anesthesia{% if proc.anesthesia_lidocaine_ml is not none %} with {{ proc.anesthesia_lidocaine_ml }} mL of 1% lidocaine{% endif %} was administered.
+Chest Ultrasound Findings
 
-A tunneled pleural catheter was placed using the Seldinger technique{% if proc.intercostal_space %} at the {{ proc.intercostal_space }} intercostal space{% endif %}{% if proc.entry_location %} along the {{ proc.entry_location }}{% endif %}{% if proc.side %} on the {{ proc.side | lower }} side{% endif %}.
-{% if proc.tunnel_length_cm is not none %}Tunnel length: {{ proc.tunnel_length_cm }} cm.{% endif %}{% if proc.exit_site %} Exit site: {{ proc.exit_site }}.{% endif %}
-{% if proc.fluid_removed_ml is not none %}Fluid Removed: {{ proc.fluid_removed_ml }} mL{% if proc.fluid_appearance %} - {{ proc.fluid_appearance }}{% endif %}.{% endif %}
-{% if proc.pleural_pressures %}Pleural pressures: {{ proc.pleural_pressures }}.{% endif %}
-{% if proc.drainage_device %}Drainage device: {{ proc.drainage_device }}.{% endif %}{% if proc.suction %} Suction: {{ proc.suction }}.{% endif %}
-{% if proc.specimen_tests %}Specimens: {{ proc.specimen_tests | join(', ') }}.{% endif %}
-{% if proc.cxr_ordered %}Post-procedure chest x-ray was ordered.{% endif %}
-{% if proc.effusion_volume or proc.effusion_echogenicity or proc.loculations or proc.diaphragm_motion or proc.lung_sliding_pre or proc.lung_sliding_post or proc.lung_consolidation or proc.pleura_description %}CHEST ULTRASOUND FINDINGS:
-Hemithorax: {{ proc.side|default("", true)|title }}
-{% if proc.effusion_volume %}Pleural Effusion Volume: {{ proc.effusion_volume }}{% endif %}
-{% if proc.effusion_echogenicity %}Echogenicity: {{ proc.effusion_echogenicity }}{% endif %}
-{% if proc.loculations %}Loculations: {{ proc.loculations }}{% endif %}
-{% if proc.diaphragm_motion %}Diaphragmatic Motion: {{ proc.diaphragm_motion }}{% endif %}
-{% if proc.lung_sliding_pre %}Lung sliding before procedure: {{ proc.lung_sliding_pre }}{% endif %}
-{% if proc.lung_sliding_post %}Lung sliding post procedure: {{ proc.lung_sliding_post }}{% endif %}
-{% if proc.lung_consolidation %}Lung consolidation/atelectasis: {{ proc.lung_consolidation }}{% endif %}
-{% if proc.pleura_description %}Pleura: {{ proc.pleura_description }}{% endif %}{% endif %}
-The catheter was secured and sterile dressings were applied. The patient tolerated the procedure well without immediate complications.
+Hemithorax: {{ proc.side | default("unspecified", true) | title }}
+
+Findings: Pleural effusion identified and site marked for procedure.
+
+Catheter Placement The {{ proc.side | default("unspecified", true) | lower }} chest was prepped and draped in sterile fashion. Local anesthesia{% if proc.anesthesia_lidocaine_ml is not none %} with {{ proc.anesthesia_lidocaine_ml }} mL of 1% lidocaine{% else %} (Lidocaine 1%){% endif %} was infiltrated at the insertion site. A finder needle was used to enter the pleural space; pleural fluid was aspirated to confirm location. The needle was withdrawn and a guidewire was placed into the pleural space.
+
+Two 5 mm skin incisions were made at the guidewire entry site, as well as 5-6 cm away. The tunneling device was used to tunnel the catheter in the subcutaneous tissue. Serial dilation over the guidewire was then achieved. The introducer sheath was placed and the guidewire removed.
+
+The{% if proc.drainage_device %} {{ proc.drainage_device }}{% else %} tunneled pleural catheter{% endif %} was then placed into the pleural space via the introducer sheath. The pleural entry site was closed with an absorbable suture. The catheter was secured to the skin using 2-0 nylon. Sterile dressings were applied.
+
+PROCEDURE FINDINGS
+
+{% if proc.fluid_removed_ml is not none %}Fluid Removed: {{ proc.fluid_removed_ml }} mL{% if proc.fluid_removed_ml >= 1000 %} ({{ (proc.fluid_removed_ml / 1000) | round(1) }} L){% endif %}{% endif %}
+
+{% if proc.fluid_appearance %}Appearance: {{ proc.fluid_appearance | replace('fluid','') | title | trim }}{% endif %}

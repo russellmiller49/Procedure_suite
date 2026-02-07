@@ -1,0 +1,17 @@
+Airway Stent Placement The airway was measured to determine appropriate stent sizing. A stent was deployed across the target stenosis under bronchoscopic guidance.
+
+{% if proc.stent_brand or proc.stent_type or proc.covered is not none %}
+Stent Type: {{ proc.stent_brand or "[Brand]" }}{% if proc.stent_type %} {{ proc.stent_type }}{% endif %}{% if proc.covered is not none %} - {% if proc.covered %}Covered{% else %}Uncovered{% endif %}{% endif %}
+{% endif %}
+
+{% if proc.diameter_mm is not none and proc.length_mm is not none %}
+Dimensions: {{ proc.diameter_mm | round(0) | int }}mm x {{ proc.length_mm | round(0) | int }}mm
+{% elif proc.device_size %}
+Dimensions: {{ proc.device_size }}
+{% endif %}
+
+{% if proc.location %}
+Location: {{ proc.location }}
+{% endif %}
+
+Findings and Outcome Stent position was confirmed with good expansion and patency.{% if proc.post_obstruction_pct is not none %} Post-procedure obstruction was estimated at approximately {{ proc.post_obstruction_pct }}%.{% endif %}{% if proc.notes %} {{ proc.notes.rstrip('.') }}.{% endif %} Hemostasis was confirmed. The bronchoscope and adjunct instruments were withdrawn. The patient tolerated the procedure well without immediate complications.

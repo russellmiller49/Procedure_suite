@@ -46,9 +46,14 @@ def _reset_llm_usage_totals() -> None:
         return
 
 
-@pytest.fixture(scope="session", autouse=True)
-def _golden_env() -> None:
-    """Golden harness must be deterministic (no network LLM calls, no fallback)."""
+@pytest.fixture(autouse=True)
+def _golden_env(baseline_env: None, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Golden harness must be deterministic (no network LLM calls, no fallback).
+
+    Note: `tests/conftest.py` sets baseline env vars for all tests (function-scoped).
+    This fixture must run *after* that baseline to ensure the golden harness uses
+    the intended extraction engine and reporter configuration.
+    """
     env_overrides = {
         # Explicitly disable any network-backed LLM usage.
         "OPENAI_OFFLINE": "1",
@@ -66,16 +71,8 @@ def _golden_env() -> None:
         "OPENAI_LOG_USAGE_SUMMARY": "0",
     }
 
-    old = {k: os.environ.get(k) for k in env_overrides}
-    try:
-        os.environ.update(env_overrides)
-        yield
-    finally:
-        for k, prev in old.items():
-            if prev is None:
-                os.environ.pop(k, None)
-            else:
-                os.environ[k] = prev
+    for key, value in env_overrides.items():
+        monkeypatch.setenv(key, value)
 
 def normalize_text(text: str) -> str:
     """Normalize whitespace and newlines for fairer comparison."""

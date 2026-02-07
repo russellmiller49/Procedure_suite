@@ -253,10 +253,18 @@ class RadialEBUSSamplingAdapter(ExtractionAdapter):
 
     @classmethod
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
+        verification = str(source.get("nav_imaging_verification") or "").strip().lower()
+        fluoro_used = None
+        if verification:
+            if any(token in verification for token in ("fluoro", "cbct", "cone", "c-arm", "cios")):
+                fluoro_used = True
         return {
             "ultrasound_pattern": source.get("nav_rebus_view"),
             "sampling_tools": source.get("nav_sampling_tools") or [],
             "lesion_size_mm": source.get("nav_lesion_size_mm"),
+            "fluoro_used": fluoro_used,
+            "rose_result": source.get("nav_rose_result"),
+            "notes": source.get("nav_imaging_verification"),
         }
 
 
@@ -312,14 +320,22 @@ class EBUSTBNAAdapter(ExtractionAdapter):
                 tools.append("Forceps")
             detail = detail_map.get(station, {})
             has_detail = isinstance(detail, dict) and bool(detail)
+            detail_tools = detail.get("biopsy_tools") if has_detail else None
+            if isinstance(detail_tools, str) and detail_tools.strip():
+                detail_tools = [detail_tools.strip()]
+            if not isinstance(detail_tools, list):
+                detail_tools = None
+            detail_echo = detail.get("echo_features") if has_detail else None
+            detail_passes = detail.get("passes") if has_detail else None
             station_entries.append(
                 {
                     "station_name": station,
                     "size_mm": detail.get("size_mm") if has_detail else station_size,
-                    "passes": detail.get("passes") if has_detail else passes_global,
-                    "echo_features": source.get("ebus_echo_features") or source.get("ebus_elastography_pattern"),
-                    "biopsy_tools": tools,
+                    "passes": detail_passes if detail_passes is not None else passes_global,
+                    "echo_features": detail_echo or source.get("ebus_echo_features") or source.get("ebus_elastography_pattern"),
+                    "biopsy_tools": detail_tools or tools,
                     "rose_result": detail.get("rose_result") if has_detail else source.get("ebus_rose_result"),
+                    "comments": detail.get("comments") if has_detail else None,
                 }
             )
         return {

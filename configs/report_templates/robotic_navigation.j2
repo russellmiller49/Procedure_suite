@@ -1,4 +1,7 @@
-Robotic Navigational Bronchoscopy{% if proc.platform %} ({{ proc.platform }}){% endif %} Robotic navigation bronchoscopy was performed{% if proc.platform %} using the {{ proc.platform }} platform{% endif %}.
-{% if proc.registration_method or proc.registration_error_mm is not none %}A navigation plan from the pre-procedure CT was loaded. Registration{% if proc.registration_method %} was {{ proc.registration_method | lower }}{% endif %}{% if proc.registration_error_mm is not none %} with an error of {{ proc.registration_error_mm }}mm{% endif %}.{% endif %}
-The robotic catheter and sheath were advanced to the target{% if proc.lesion_location %} in the {{ proc.lesion_location }}{% endif %} under navigational guidance.
-{% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
+{% set _platform = proc.platform or "Robotic" %}
+{% set _loc = proc.lesion_location or "target" %}
+
+Robotic Navigational Bronchoscopy ({{ _platform }}) — {{ _loc }} Nodule
+
+Robotic navigation using the {{ _platform }} {% if _platform | lower == 'galaxy' %}system{% else %}platform{% endif %} was performed.{% if proc.registration_method or proc.registration_error_mm is not none %} A navigation plan from the pre-procedure CT was loaded.{% endif %}{% if proc.registration_method %} Registration to the body was completed with {{ proc.registration_method }}{% if proc.registration_error_mm is not none %} with an error of {{ proc.registration_error_mm }}mm{% endif %}.{% endif %}
+The robotic catheter and sheath were advanced to the planned {{ _loc }} target{% if proc.notes %} in the {{ proc.notes }} segment{% endif %} under navigational guidance.
