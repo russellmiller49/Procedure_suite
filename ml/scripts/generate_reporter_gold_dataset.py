@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import logging
 import os
@@ -25,6 +26,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
@@ -161,6 +163,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Fraction of accepted examples to add to manual review queue (default: 0.10).",
     )
     return parser.parse_args(argv)
+
+
+def load_local_dotenv() -> None:
+    """Load repo-local .env unless explicitly disabled."""
+    if os.getenv("PROCSUITE_SKIP_DOTENV", "").strip().lower() in ("1", "true", "yes"):
+        return
+    dotenv_path = ROOT / ".env"
+    if dotenv_path.exists():
+        load_dotenv(dotenv_path=dotenv_path, override=False)
 
 
 def ensure_openai_compat_provider() -> None:
@@ -309,18 +320,45 @@ def annotate_procedure_families(
     records: list[SourceRecord],
     registry_service: Any,
 ) -> list[SourceRecord]:
-    annotated: list[SourceRecord] = []
-
+    # Compute family once per patient anchor (or unique anchor text), then fan out to
+    # all synthetic variants. This is much faster than per-note extraction.
+    patient_anchor_text: dict[str, str] = {}
     for rec in records:
-        family = "other"
-        try:
-            record, _warnings, _meta = registry_service.extract_record(rec.input_text)
-            record_data = record.model_dump(exclude_none=True)
-            family = infer_family_from_flags(collect_performed_flags(record_data))
-        except Exception as exc:
-            logger.warning("Family inference failed for %s: %s", rec.input_note_id, exc)
-            family = "other"
+        patient_anchor_text.setdefault(rec.patient_base_id, rec.anchor_text)
 
+    text_family_cache: dict[str, str] = {}
+    family_by_patient: dict[str, str] = {}
+
+    total_patients = len(patient_anchor_text)
+    for idx, (patient_id, anchor_text) in enumerate(sorted(patient_anchor_text.items()), start=1):
+        family = "other"
+        text_hash = hashlib.sha1(anchor_text.encode("utf-8")).hexdigest()
+
+        if text_hash in text_family_cache:
+            family = text_family_cache[text_hash]
+        else:
+            try:
+                record, _warnings, _meta = registry_service.extract_record(anchor_text)
+                record_data = record.model_dump(exclude_none=True)
+                family = infer_family_from_flags(collect_performed_flags(record_data))
+            except Exception as exc:
+                logger.warning("Family inference failed for patient %s: %s", patient_id, exc)
+                family = "other"
+            text_family_cache[text_hash] = family
+
+        family_by_patient[patient_id] = family
+
+        if idx % 25 == 0 or idx == total_patients:
+            logger.info(
+                "Family annotation progress: %d/%d patients (%d unique anchors cached)",
+                idx,
+                total_patients,
+                len(text_family_cache),
+            )
+
+    annotated: list[SourceRecord] = []
+    for rec in records:
+        family = family_by_patient.get(rec.patient_base_id, "other")
         annotated.append(
             SourceRecord(
                 source_file=rec.source_file,
@@ -332,6 +370,7 @@ def annotate_procedure_families(
                 procedure_family=family,
             )
         )
+
     return annotated
 
 
@@ -803,6 +842,10 @@ def main(argv: list[str] | None = None) -> int:
         datefmt="%H:%M:%S",
     )
 
+    # Pull LLM config from local .env by default (keys/models/provider).
+    load_local_dotenv()
+    # Keep startup lean for this batch workflow unless caller explicitly overrides.
+    os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
     ensure_openai_compat_provider()
 
     generator_prompt_template = read_text(args.generator_prompt)

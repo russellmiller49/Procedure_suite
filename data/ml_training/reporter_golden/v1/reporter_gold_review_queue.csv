@@ -1,0 +1,5 @@
+id,input_note_id,patient_base_id,accepted,judge_verdict,factuality,completeness,style,reject_reasons,review_reason
+reporter_gold_v1_7642762_syn_1,7642762_syn_1,7642762,False,revise,0.98,0.7,0.9,judge_completeness_below_threshold;judge_requested_revision,auto_rejected
+reporter_gold_v1_84729315_syn_7,84729315_syn_7,84729315,False,accept,0.97,0.86,0.9,critical_performed_flag_hallucination,auto_rejected
+reporter_gold_v1_89012356_syn_7,89012356_syn_7,89012356,False,accept,0.98,0.85,0.9,critical_performed_flag_hallucination,auto_rejected
+reporter_gold_v1_SYNIP0009_syn_6,SYNIP0009_syn_6,SYNIP0009,False,accept,0.98,0.97,0.93,critical_performed_flag_hallucination;disallowed_placeholders,auto_rejected
