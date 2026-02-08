@@ -1244,6 +1244,58 @@ python ml/scripts/train_registry_ner.py \
 
 ---
 
+## 🧪 Reporter Gold Pilot Dataset
+
+Build a versioned pilot dataset of golden reporter notes from `_syn_*` short synthetic notes.
+
+### Generate pilot candidates (200 notes)
+
+```bash
+make reporter-gold-generate-pilot \
+  REPORTER_GOLD_INPUT_DIR=/Users/russellmiller/Projects/proc_suite_notes/data/knowledge/patient_note_texts \
+  REPORTER_GOLD_OUTPUT_DIR=data/ml_training/reporter_golden/v1 \
+  REPORTER_GOLD_SAMPLE_SIZE=200 \
+  REPORTER_GOLD_SEED=42
+```
+
+Outputs:
+- `reporter_gold_candidates.jsonl`
+- `reporter_gold_accepted.jsonl`
+- `reporter_gold_rejected.jsonl`
+- `reporter_gold_metrics.json`
+- `reporter_gold_review_queue.jsonl`
+- `reporter_gold_review_queue.csv`
+- `reporter_gold_skipped_manifest.jsonl`
+
+### Split accepted set (patient-level, no leakage)
+
+```bash
+make reporter-gold-split \
+  REPORTER_GOLD_OUTPUT_DIR=data/ml_training/reporter_golden/v1 \
+  REPORTER_GOLD_SEED=42
+```
+
+Outputs:
+- `reporter_gold_train.jsonl`
+- `reporter_gold_val.jsonl`
+- `reporter_gold_test.jsonl`
+- `reporter_gold_split_manifest.json`
+
+### Evaluate current reporter against reporter-gold
+
+```bash
+make reporter-gold-eval \
+  REPORTER_GOLD_EVAL_INPUT=data/ml_training/reporter_golden/v1/reporter_gold_test.jsonl \
+  REPORTER_GOLD_OUTPUT_DIR=data/ml_training/reporter_golden/v1
+```
+
+Output:
+- `reporter_gold_eval_report.json`
+
+See `docs/REPORTER_GOLD_WORKFLOW.md` for full details.
+
+---
+
 *Last updated: January 2026*
 run all granular python updates:
 python ops/tools/run_python_update_scripts.py

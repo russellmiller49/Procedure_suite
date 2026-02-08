@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test validate-schemas validate-kb validate-knowledge-release test-kb-strict autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
+.PHONY: setup lint typecheck test validate-schemas validate-kb validate-knowledge-release test-kb-strict autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental reporter-gold-generate-pilot reporter-gold-split reporter-gold-eval reporter-gold-pilot platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -538,6 +538,37 @@ gold-incremental: gold-export gold-split gold-finetune gold-audit
 	@echo "Incremental gold update complete."
 
 # ==============================================================================
+# Reporter Gold Workflow (Pilot Dataset Generation + Regression Evaluation)
+# ==============================================================================
+REPORTER_GOLD_INPUT_DIR ?= data/knowledge/patient_note_texts
+REPORTER_GOLD_OUTPUT_DIR ?= data/ml_training/reporter_golden/v1
+REPORTER_GOLD_SAMPLE_SIZE ?= 200
+REPORTER_GOLD_SEED ?= 42
+REPORTER_GOLD_EVAL_INPUT ?= $(REPORTER_GOLD_OUTPUT_DIR)/reporter_gold_accepted.jsonl
+
+reporter-gold-generate-pilot:
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/generate_reporter_gold_dataset.py \
+		--input-dir $(REPORTER_GOLD_INPUT_DIR) \
+		--output-dir $(REPORTER_GOLD_OUTPUT_DIR) \
+		--sample-size $(REPORTER_GOLD_SAMPLE_SIZE) \
+		--seed $(REPORTER_GOLD_SEED)
+
+reporter-gold-split:
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/split_reporter_gold_dataset.py \
+		--input $(REPORTER_GOLD_OUTPUT_DIR)/reporter_gold_accepted.jsonl \
+		--output-dir $(REPORTER_GOLD_OUTPUT_DIR) \
+		--seed $(REPORTER_GOLD_SEED)
+
+reporter-gold-eval:
+	$(CONDA_ACTIVATE) && $(PYTHON) ops/tools/eval_reporter_gold_dataset.py \
+		--input $(REPORTER_GOLD_EVAL_INPUT) \
+		--output $(REPORTER_GOLD_OUTPUT_DIR)/reporter_gold_eval_report.json \
+		--seed $(REPORTER_GOLD_SEED)
+
+reporter-gold-pilot: reporter-gold-generate-pilot reporter-gold-split reporter-gold-eval
+	@echo "Reporter gold pilot workflow complete."
+
+# ==============================================================================
 # Platinum PHI Workflow (Registry ML Preprocessing)
 # ==============================================================================
 # Generates high-quality PHI-scrubbed training data for Registry Model.
@@ -695,6 +726,12 @@ help:
 	@echo "  gold-eval      - Evaluate metrics on gold test set"
 	@echo "  gold-cycle     - Full workflow: export → split → train → audit → eval"
 	@echo "  gold-incremental - Incremental: export → split → finetune → audit"
+	@echo ""
+	@echo "Reporter Gold Workflow (synthetic short notes -> golden reporter dataset):"
+	@echo "  reporter-gold-generate-pilot - Generate/judge/gate 200 _syn_* notes"
+	@echo "  reporter-gold-split          - Patient-level train/val/test split"
+	@echo "  reporter-gold-eval           - Evaluate current reporter against reporter-gold set"
+	@echo "  reporter-gold-pilot          - Full workflow: generate -> split -> eval"
 	@echo ""
 	@echo "Platinum PHI Workflow (Registry ML Preprocessing):"
 	@echo "  platinum-test  - Test run on 100 notes to validate pipeline"

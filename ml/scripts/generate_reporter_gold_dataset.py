@@ -19,7 +19,7 @@ import os
 import random
 import re
 import sys
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
@@ -161,10 +161,6 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Fraction of accepted examples to add to manual review queue (default: 0.10).",
     )
     return parser.parse_args(argv)
-
-
-def _truthy_env(name: str) -> bool:
-    return os.getenv(name, "").strip().lower() in ("1", "true", "yes", "y")
 
 
 def ensure_openai_compat_provider() -> None:
@@ -917,4 +913,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
