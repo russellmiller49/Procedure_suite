@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   sync:
-    if: ${{ vars.DEPLOY_MIRROR_REPO != '' && secrets.DEPLOY_MIRROR_PUSH_TOKEN != '' }}
+    if: vars.DEPLOY_MIRROR_REPO != ''
     runs-on: ubuntu-latest
     env:
       DEPLOY_MIRROR_REPO: ${{ vars.DEPLOY_MIRROR_REPO }}
