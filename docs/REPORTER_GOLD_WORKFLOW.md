@@ -11,12 +11,18 @@ This workflow builds a pilot reporter-gold dataset from synthetic short notes (`
 
 ## Prerequisites
 
-Set OpenAI-compatible provider env before running generation:
+The generator auto-loads repo `.env` (unless `PROCSUITE_SKIP_DOTENV=1`) and expects:
+
+- `LLM_PROVIDER=openai_compat`
+- `OPENAI_API_KEY=<your key>`
+- `OPENAI_MODEL=gpt-5.2` (or your preferred model)
+
+If you prefer shell exports instead of `.env`, set:
 
 ```bash
 export LLM_PROVIDER=openai_compat
 export OPENAI_API_KEY=...
-export OPENAI_MODEL=...
+export OPENAI_MODEL=gpt-5.2
 # Optional:
 export OPENAI_MODEL_STRUCTURER=...
 export OPENAI_MODEL_JUDGE=...
