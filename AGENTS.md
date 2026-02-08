@@ -8,12 +8,14 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
 - Dev server: `./ops/devserver.sh` (serves UI at `/ui/` and API docs at `/docs`)
 - Tests: `make test`
 - Lint/typecheck (optional): `make lint`, `make typecheck`
+- Dependency lock refresh/check: `make deps-compile`, `make deps-check`
+  - Lock generation targets CPython 3.11 + `manylinux2014_x86_64`.
 - Smoke test (single note): `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
 - Smoke test (batch): `python ops/tools/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
 
 ## Required Runtime Configuration
 
-Startup validation enforces these invariants (see `app/api/fastapi_app.py`):
+Startup validation enforces these invariants (see `config/startup_settings.py`, invoked by `app/api/bootstrap.py`):
 
 - `PROCSUITE_PIPELINE_MODE=extraction_first` (required; service fails to start otherwise)
 - In production (`CODER_REQUIRE_PHI_REVIEW=true` or `PROCSUITE_ENV=production`), also require:
@@ -129,3 +131,7 @@ See `app/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
   - pipeline mode is `extraction_first`
   - extraction engine is `parallel_ner`
 - Avoid reintroducing duplicate routes: `/api/v1/process` lives in the router module and is the single source of truth.
+- `app/api/fastapi_app.py` is now a composition root; add new endpoint business logic in `app/api/routes/`.
+- `RegistryService` orchestrates; extracted heuristics and model loading live in:
+  - `app/registry/heuristics/`
+  - `app/registry/infra/model_provider.py`

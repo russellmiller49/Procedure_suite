@@ -16,6 +16,16 @@ This guide explains how to use the Procedure Suite tools for generating reports,
   when high-confidence omissions are detected (slower but higher quality).
   - Self-correction is gated by a CPT keyword guard; skips will include `SELF_CORRECT_SKIPPED:` warnings when enabled.
 
+## Dependency Reproducibility (2026-02)
+
+- Runtime dependency inputs are tracked in `requirements.in`.
+- The pinned lockfile is `requirements.txt` (generated with pip-tools).
+- Use:
+  - `make deps-compile` to regenerate `requirements.txt`
+  - `make deps-check` to verify sync (CI enforces this check)
+- The lock is compiled against CPython 3.11 + `manylinux2014_x86_64` for reproducible CI/prod resolution.
+- `scikit-learn` is intentionally constrained for model compatibility (`1.5.x` line).
+
 ## Recent Updates (2026-01-24)
 
 - **BLVR CPT derivation:** valve placement uses `31647` (initial lobe) + `31651` (each additional lobe); valve removal uses `31648` (initial lobe) + `31649` (each additional lobe).
@@ -1247,6 +1257,7 @@ python ml/scripts/train_registry_ner.py \
 ## 🧪 Reporter Gold Pilot Dataset
 
 Build a versioned pilot dataset of golden reporter notes from `_syn_*` short synthetic notes.
+The generator reads `LLM_PROVIDER`, `OPENAI_API_KEY`, and `OPENAI_MODEL` from local `.env` by default (unless `PROCSUITE_SKIP_DOTENV=1`).
 
 ### Generate pilot candidates (200 notes)
 

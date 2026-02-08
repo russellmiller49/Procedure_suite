@@ -4,11 +4,12 @@ This document is the **Single Source of Truth** for developers and AI assistants
 
 ## Core Mandates
 
-1.  **Main Application**: Always edit `app/api/fastapi_app.py`. Never edit `api/app.py` (deprecated).
+1.  **Main Application**: Keep `app/api/fastapi_app.py` as composition root only (app wiring/lifespan/router includes). Put endpoint business logic in `app/api/routes/*.py`. Never edit `api/app.py` (deprecated).
 2.  **Coding Service**: Use `CodingService` from `app/coder/application/coding_service.py`. The old `app.coder.engine.CoderEngine` is deprecated.
 3.  **Registry Service**: Use `RegistryService` from `app/registry/application/registry_service.py`.
 4.  **Knowledge Base**: The source of truth for coding rules is `data/knowledge/ip_coding_billing_v3_0.json`.
-5.  **Tests**: Preserve existing tests. Run `make test` before committing.
+5.  **Dependencies**: Update direct runtime deps in `requirements.in`, then regenerate `requirements.txt` with `make deps-compile` and verify with `make deps-check`.
+6.  **Tests**: Preserve existing tests. Run `make test` before committing.
 
 ---
 
@@ -36,7 +37,9 @@ This document is the **Single Source of Truth** for developers and AI assistants
 | Service | Location | Purpose |
 |---------|----------|---------|
 | `CodingService` | `app/coder/application/coding_service.py` | 8-step CPT coding pipeline |
-| `RegistryService` | `app/registry/application/registry_service.py` | Hybrid-first registry extraction |
+| `RegistryService` | `app/registry/application/registry_service.py` | Extraction-first orchestration (legacy hybrid isolated/deprecated) |
+| `RegistryModelProvider` | `app/registry/infra/model_provider.py` | Backend-aware ML predictor selection (Torch/ONNX/sklearn) |
+| `StartupBootstrap` | `app/api/bootstrap.py` | FastAPI startup/shutdown orchestration |
 | `SmartHybridOrchestrator` | `app/coder/application/smart_hybrid_policy.py` | ML-first hybrid coding |
 | `RegistryEngine` | `app/registry/engine.py` | LLM-based field extraction |
 | `ParallelPathwayOrchestrator` | `app/coder/parallel_pathway/orchestrator.py` | NER+ML parallel pathway (experimental) |
@@ -146,7 +149,8 @@ Note: `schemas/IP_Registry.json` is a legacy flat schema used by `app/registry_c
 **Focus**: `app/api/`
 
 **Responsibilities:**
-- Maintain `fastapi_app.py`
+- Maintain API composition and startup wiring in `fastapi_app.py` + `bootstrap.py`
+- Keep route handlers in `app/api/routes/` (`legacy_coder.py`, `legacy_registry.py`, `reporting.py`, `qa.py`, etc.)
 - Ensure endpoints `/v1/coder/run`, `/v1/registry/run`, `/report/render` work correctly
 - **Warning**: Do not create duplicate routes. Check existing endpoints first.
 
@@ -176,6 +180,18 @@ app/agents/
 ---
 
 ## Testing
+
+## Dependency Workflow
+
+```bash
+# Regenerate pinned lock from requirements.in
+make deps-compile
+
+# Fail if requirements.txt is out of sync
+make deps-check
+```
+
+CI enforces `deps-check` on pull requests. The lock is compiled for CPython 3.11 + `manylinux2014_x86_64`.
 
 ### Test Commands
 

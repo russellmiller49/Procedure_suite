@@ -32,7 +32,7 @@ The system has two major registry flows:
 
 Agents are relevant primarily to **extraction-first**:
 
-- `PROCSUITE_PIPELINE_MODE=extraction_first` is enforced at startup (`app/api/fastapi_app.py:_validate_startup_env()`).
+- `PROCSUITE_PIPELINE_MODE=extraction_first` is enforced at startup (`config/startup_settings.py`, invoked by `app/api/bootstrap.py`).
 - When `REGISTRY_EXTRACTION_ENGINE=agents_focus_then_engine`, the system will use `ParserAgent` to focus the note text for the deterministic engine extraction. Guardrail: auditing always uses the full raw note text.
 
 ### Configuration
