@@ -64,6 +64,14 @@ def test_unified_process_already_scrubbed(mock_registry_service, mock_phi_scrubb
     assert data["coder_difficulty"] == "HIGH_CONF"
     assert len(data["suggestions"]) == 1
     assert data["suggestions"][0]["code"] == "31622"
+
+    # Completeness prompts should be present and include global missing fields.
+    prompts = data.get("missing_field_prompts") or []
+    assert isinstance(prompts, list)
+    prompt_paths = {p.get("path") for p in prompts if isinstance(p, dict)}
+    assert "patient_demographics.age_years" in prompt_paths
+    assert "clinical_context.asa_class" in prompt_paths
+    assert "clinical_context.ecog_score" in prompt_paths
     
     # Verify proper call to service
     mock_registry_service.extract_fields.assert_called_once_with("Already scrubbed text")

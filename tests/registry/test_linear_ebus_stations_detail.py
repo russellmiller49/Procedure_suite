@@ -71,10 +71,26 @@ def test_extract_linear_ebus_stations_detail_numbered_station_list_items() -> No
     assert by_station["11Rs"]["needle_gauge"] == 22
     assert by_station["11Rs"]["number_of_passes"] == 4
     assert by_station["11Rs"]["rose_result"] == "Adequate lymphocytes"
+    assert by_station["11Rs"]["lymphocytes_present"] is True
 
     assert by_station["7"]["sampled"] is True
     assert by_station["7"]["needle_gauge"] == 22
     assert by_station["7"]["number_of_passes"] == 3
     assert by_station["7"]["rose_result"] == "Malignant"
+    assert by_station["7"].get("lymphocytes_present") is None
 
     assert by_station["4R"]["sampled"] is False
+    assert by_station["4R"].get("lymphocytes_present") is None
+
+
+def test_extract_linear_ebus_stations_detail_lymphocytes_present_negative_from_rose() -> None:
+    note = (
+        "EBUS Lymph Nodes Sampled:\n"
+        "Station 7: biopsied with 22G, 4 passes. ROSE: scant lymphocytes, blood only.\n"
+    )
+
+    details = extract_linear_ebus_stations_detail(note)
+    by_station = _by_station(details)
+
+    assert by_station["7"]["sampled"] is True
+    assert by_station["7"]["lymphocytes_present"] is False

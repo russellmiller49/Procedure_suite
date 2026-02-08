@@ -1,6 +1,6 @@
 import re
 
-from app.registry.processing.masking import PATTERNS, mask_offset_preserving
+from app.registry.processing.masking import PATTERNS, mask_extraction_noise, mask_offset_preserving
 
 
 def _newline_positions(text: str) -> list[int]:
@@ -129,3 +129,50 @@ def test_mask_offset_preserving_masks_checkbox_template_negatives() -> None:
     start = raw.index(phrase)
     end = start + len(phrase)
     assert masked[start:end] == phrase
+
+
+def test_mask_extraction_noise_masks_appended_extraction_quality_report() -> None:
+    raw = (
+        "PROCEDURE IN DETAIL:\n"
+        "Therapeutic aspiration was performed.\n"
+        "\n"
+        "Extraction Quality Report\n"
+        "Hallucination: cryotherapy was performed.\n"
+    )
+
+    masked, meta = mask_extraction_noise(raw)
+    assert meta.get("masked_external_report_count") == 1
+    marker = raw.index("Extraction Quality Report")
+    tail = masked[marker:]
+    assert re.search(r"[^\n ]", tail) is None
+
+    phrase = "Therapeutic aspiration was performed."
+    start = raw.index(phrase)
+    end = start + len(phrase)
+    assert masked[start:end] == phrase
+
+
+def test_mask_extraction_noise_does_not_overmask_procedure_detail_without_colon_headings() -> None:
+    raw = (
+        "INDICATION FOR OPERATION: airway stenosis\n"
+        "\n"
+        "CONSENT\n"
+        "Obtained before procedure.\n"
+        "\n"
+        "PROCEDURE IN DETAIL\n"
+        "Therapeutic aspiration of retained secretions was performed.\n"
+        "A custom silicone Y-stent was placed and seated appropriately.\n"
+    )
+
+    masked, meta = mask_extraction_noise(raw)
+    assert "INDICATION FOR OPERATION" in (meta.get("masked_non_procedural_sections") or [])
+
+    phrase = "Therapeutic aspiration of retained secretions was performed."
+    start = raw.index(phrase)
+    end = start + len(phrase)
+    assert masked[start:end] == phrase
+
+    stent_phrase = "A custom silicone Y-stent was placed and seated appropriately."
+    start = raw.index(stent_phrase)
+    end = start + len(stent_phrase)
+    assert masked[start:end] == stent_phrase

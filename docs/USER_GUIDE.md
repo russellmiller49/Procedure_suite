@@ -518,6 +518,16 @@ You’ll see:
 - **Audit warnings**: includes degraded-mode warnings like `SILENT_FAILURE:` and `DETERMINISTIC_UPLIFT:`
 - **Evidence**: V3 evidence objects with `source/text/span/confidence`
 
+### Suggested Missing Fields (Completeness)
+
+At the top of the extraction dashboard results, the UI also shows **Suggested Missing Fields (Completeness)**:
+
+- Prompts are **required** vs **recommended**, and are **procedure-aware** (based on what was performed + what’s missing).
+- The panel includes **inputs** so you can enter missing values quickly.
+  - These entries are staged into **Edited JSON (Training)** as JSON Patch operations (useful for QA/training review).
+- For **evidence-backed extraction**, add the missing documentation to the **note text** and re-run extraction.
+  - Tip: click **Open Reporter Builder** to insert a short addendum into the note before transferring back to the dashboard.
+
 - **Billing Codes**: The final CPT codes with descriptions
 
 - **RVU & Payment**: Work RVUs and estimated Medicare payment

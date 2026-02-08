@@ -55,6 +55,28 @@ def test_stent_removal_language_overrides_false_placement_action() -> None:
     assert "31636" not in codes
 
 
+def test_stent_exchange_language_keeps_revision_semantics() -> None:
+    note_text = (
+        "The previously placed Y-stent was removed en bloc. "
+        "A custom silicone Y-stent was inserted and seated appropriately."
+    )
+    record = RegistryRecord(
+        procedures_performed={"airway_stent": {"performed": True, "action": "Revision/Repositioning", "airway_stent_removal": True}}
+    )
+
+    guardrails = ClinicalGuardrails()
+    updated = guardrails.apply_record_guardrails(note_text, record).record
+    assert updated is not None
+    assert updated.procedures_performed is not None
+    stent = updated.procedures_performed.airway_stent
+    assert stent is not None
+    assert stent.action == "Revision/Repositioning"
+    assert stent.airway_stent_removal is True
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
+    assert "31638" in codes
+
+
 def test_stent_obstruction_cleanout_treated_as_assessment_only() -> None:
     note_text = "The stent was 60% obstructed with mucous. Once this was cleared, it was patent."
     record = RegistryRecord(procedures_performed={"airway_stent": {"performed": True, "action": "Placement"}})

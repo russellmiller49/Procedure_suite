@@ -25,6 +25,52 @@ type TreeIndex = {
 
 type FieldMode = "populated" | "all" | "edited";
 
+const DROPDOWNS_BY_POINTER: Record<string, Array<string | number>> = {
+  "/registry/clinical_context/bronchus_sign": ["Positive", "Negative", "Not assessed"],
+  "/registry/clinical_context/ecog_score": [0, 1, 2, 3, 4],
+  "/registry/complications/bleeding/bleeding_grade_nashville": [0, 1, 2, 3, 4],
+  "/registry/procedures_performed/radial_ebus/probe_position": ["Concentric", "Eccentric", "Adjacent", "Not visualized"],
+  "/registry/procedures_performed/navigational_bronchoscopy/confirmation_method": [
+    "Radial EBUS",
+    "CBCT",
+    "Fluoroscopy",
+    "Augmented Fluoroscopy",
+    "None",
+  ],
+};
+
+const DROPDOWN_PATTERNS: Array<{ pattern: RegExp; options: Array<string | number> }> = [
+  {
+    pattern: /^\/registry\/granular_data\/navigation_targets\/\d+\/ct_characteristics$/,
+    options: ["Solid", "Part-solid", "Ground-glass", "Cavitary", "Calcified"],
+  },
+  {
+    pattern: /^\/registry\/granular_data\/navigation_targets\/\d+\/bronchus_sign$/,
+    options: ["Positive", "Negative", "Not assessed"],
+  },
+  {
+    pattern: /^\/registry\/granular_data\/navigation_targets\/\d+\/rebus_view$/,
+    options: ["Concentric", "Eccentric", "Adjacent", "Not visualized"],
+  },
+  {
+    pattern: /^\/registry\/granular_data\/navigation_targets\/\d+\/confirmation_method$/,
+    options: ["CBCT", "Augmented fluoroscopy", "Fluoroscopy", "Radial EBUS", "None"],
+  },
+  {
+    pattern: /^\/registry\/granular_data\/linear_ebus_stations_detail\/\d+\/needle_gauge$/,
+    options: [19, 21, 22, 25],
+  },
+];
+
+function getDropdown(pointer: string): Array<string | number> | null {
+  const exact = DROPDOWNS_BY_POINTER[pointer];
+  if (exact) return exact;
+  for (const item of DROPDOWN_PATTERNS) {
+    if (item.pattern.test(pointer)) return item.options;
+  }
+  return null;
+}
+
 function buildTreeIndex(rows: RegistryRow[]): TreeIndex {
   const parentById = new Map<string, string | null>();
   const childrenById = new Map<string, string[]>();
@@ -448,6 +494,43 @@ export function RegistryGrid({
             onEditValue(row, nextValue);
           };
           const revert = () => onClearEdit?.(row);
+
+          const dropdown = DROPDOWNS_BY_POINTER[row.jsonPointer];
+          const dropdownOrPattern = dropdown ?? getDropdown(row.jsonPointer);
+          if (dropdownOrPattern) {
+            const currentRaw = hasEdit ? edited : extracted;
+            const current = currentRaw === null || currentRaw === undefined ? "" : String(currentRaw);
+            const wantsNumber = dropdownOrPattern.length > 0 && typeof dropdownOrPattern[0] === "number";
+            return (
+              <div className="ps-edit-cell">
+                <select
+                  className={hasEdit ? "ps-edit-select ps-edited" : "ps-edit-select"}
+                  value={current}
+                  onChange={(e) => {
+                    const v = String(e.target.value || "");
+                    if (!v) {
+                      if (hasEdit) revert();
+                      return;
+                    }
+                    commit(wantsNumber ? Number(v) : v);
+                  }}
+                  disabled={!onEditValue}
+                >
+                  <option value="">—</option>
+                  {dropdownOrPattern.map((opt) => (
+                    <option key={String(opt)} value={String(opt)}>
+                      {String(opt)}
+                    </option>
+                  ))}
+                </select>
+                {hasEdit ? (
+                  <button type="button" className="ps-edit-revert" onClick={revert} title="Revert edit">
+                    ↩
+                  </button>
+                ) : null}
+              </div>
+            );
+          }
 
           if (valueType === "null") {
             return <NullEditCell key={row.id} row={row} onEditValue={onEditValue} onClearEdit={onClearEdit} />;

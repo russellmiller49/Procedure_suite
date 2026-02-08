@@ -25,6 +25,7 @@ from app.registry.deterministic_extractors import (
     extract_tbna_conventional,
     extract_brushings,
     extract_rigid_bronchoscopy,
+    extract_transbronchial_biopsy,
     extract_transbronchial_cryobiopsy,
     extract_peripheral_ablation,
     extract_thermal_ablation,
@@ -315,6 +316,18 @@ class TestTherapeuticAspirationExtractor:
 
         assert result == {}
 
+    def test_extract_therapeutic_aspiration_prefers_detail_material_over_ebl_words(self):
+        text = (
+            "ESTIMATED BLOOD LOSS: Minimal.\n"
+            "PROCEDURE IN DETAIL:\n"
+            "Successful therapeutic aspiration was performed.\n"
+            "Purulent secretions were suctioned from the tracheobronchial tree.\n"
+        )
+        result = extract_therapeutic_aspiration(text)
+
+        assert result.get("therapeutic_aspiration", {}).get("performed") is True
+        assert result.get("therapeutic_aspiration", {}).get("material") == "Purulent secretions"
+
 
 class TestRadialEBUSExtractor:
     def test_extract_radial_ebus_phrase(self):
@@ -333,6 +346,16 @@ class TestCryotherapyExtractor:
         text = "Cryo probe was used for tumor debulking."
         result = extract_cryotherapy(text)
         assert result == {"cryotherapy": {"performed": True}}
+
+    def test_extract_cryotherapy_ignores_plan_recommendation(self):
+        text = (
+            "PROCEDURE IN DETAIL:\n"
+            "Balloon dilation was performed with improved patency.\n"
+            "IMPRESSION / PLAN\n"
+            "Consider spray cryotherapy treatment at next intervention.\n"
+        )
+        result = extract_cryotherapy(text)
+        assert result == {}
 
 
 class TestRigidBronchoscopyExtractor:
@@ -366,6 +389,17 @@ class TestLinearEBUSExtractor:
         assert result.get("linear_ebus", {}).get("performed") is True
         stations = {str(s).strip().upper() for s in (result.get("linear_ebus", {}).get("stations_sampled") or [])}
         assert stations == {"11RI", "7"}
+
+    def test_extract_linear_ebus_excludes_station_without_biopsy_target(self):
+        text = (
+            "Linear EBUS bronchoscopy performed.\n"
+            "Station 11L was sampled with TBNA.\n"
+            "Station 5 region did not have any biopsy target.\n"
+        )
+        result = extract_linear_ebus(text)
+        stations = {str(s).strip().upper() for s in (result.get("linear_ebus", {}).get("stations_sampled") or [])}
+        assert "11L" in stations
+        assert "5" not in stations
 
 class TestNavigationExtractor:
     def test_extract_navigation_platform(self):
@@ -431,6 +465,24 @@ class TestTBNAExtractor:
         )
         result = extract_tbna_conventional(text)
         assert result == {}
+
+
+class TestTransbronchialBiopsyExtractor:
+    def test_extract_transbronchial_biopsy_captures_locations_and_sample_count(self):
+        text = (
+            "Transbronchial biopsy was performed with alligator forceps at "
+            "Anterior-basal Segment of RLL (RB8), Lateral-basal Segment of RLL (RB9), "
+            "and Posterior-basal Segment of RLL (RB10). Total 10 samples were collected."
+        )
+        result = extract_transbronchial_biopsy(text)
+        proc = result.get("transbronchial_biopsy", {})
+        assert proc.get("performed") is True
+        assert proc.get("number_of_samples") == 10
+        assert proc.get("forceps_type") == "Standard"
+        locations = proc.get("locations") or []
+        assert any("RB8" in str(loc) for loc in locations)
+        assert any("RB9" in str(loc) for loc in locations)
+        assert any("RB10" in str(loc) for loc in locations)
 
 
 class TestBrushingsExtractor:
