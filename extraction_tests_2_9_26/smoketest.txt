@@ -1,0 +1,480 @@
+================================================================================
+REGISTRY PIPELINE BATCH SMOKE TEST
+================================================================================
+Date: 2026-02-09T14:06:36.094038
+Notes tested: 20
+Notes directory: /home/rjm/projects/proc_suite_notes/data/granular annotations/notes_text
+Self-correction: True
+Real LLM enabled: True
+================================================================================
+
+================================================================================NOTE: note_191================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+Extract warnings:
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31652: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_149================================================================================Performed flags (extract_record):
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.therapeutic_aspiration.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.therapeutic_aspiration.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for diagnostic_bronchoscopy, therapeutic_aspiration
+  - 31646: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_181================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for peripheral_tbna, radial_ebus
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31623: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31632: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31633: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_130================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for linear_ebus, rigid_bronchoscopy
+  - EBUS_REGEX_FALLBACK: populated node_events from station lines.
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - AMBIGUOUS_DISEASE_BURDEN: procedures_performed.therapeutic_outcomes.pre_obstruction_pct candidates=[90, 100]
+  - AMBIGUOUS_DISEASE_BURDEN: granular_data.cao_interventions_detail[RUL].pre_obstruction_pct candidates=[90, 100]
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_225================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, diagnostic_bronchoscopy
+  - 31603: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_120================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, diagnostic_bronchoscopy, transbronchial_biopsy, transbronchial_cryobiopsy
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31625: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31632: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_183================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.peripheral_tbna.performed
+  - procedures_performed.radial_ebus.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for peripheral_tbna, radial_ebus
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31623: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31632: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31633: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_206================================================================================Performed flags (extract_record):
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for endobronchial_biopsy
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31653: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction diagnostics:
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_262================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for diagnostic_bronchoscopy, rigid_bronchoscopy
+  - 31603: ML detected procedure, but specific device/anatomy was not found in text.
+  - AMBIGUOUS_DISEASE_BURDEN: procedures_performed.therapeutic_outcomes.pre_obstruction_pct candidates=[50, 90]
+  - AMBIGUOUS_DISEASE_BURDEN: procedures_performed.therapeutic_outcomes.post_obstruction_pct candidates=[10, 50]
+  - AMBIGUOUS_DISEASE_BURDEN: granular_data.cao_interventions_detail[Trachea].pre_obstruction_pct candidates=[50, 90]
+  - AMBIGUOUS_DISEASE_BURDEN: granular_data.cao_interventions_detail[Trachea].post_obstruction_pct candidates=[10, 50]
+Omission warnings:
+  - SILENT_FAILURE: Text indicates mechanical excision/debulking (e.g., snare resection / en bloc removal). (Pattern: '(?is)\b(?:snare|microdebrider|microdebrid\w*|rigid\s+coring)\b.{0,220}\b(?:en\s+bloc|resect|excise|excision|remove(?:d)?)\b')
+Audit high-conf omissions:
+  - 31641 (prob=1.00, bucket=HEADER_EXPLICIT)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31641: Quote not found verbatim in focused procedure text: 'The T190 Olympus flexible bronchoscope was then in...'
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_133================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, diagnostic_bronchoscopy, thermal_ablation
+  - 31636: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31637: ML detected procedure, but specific device/anatomy was not found in text.
+  - AMBIGUOUS_DISEASE_BURDEN: procedures_performed.therapeutic_outcomes.pre_obstruction_pct candidates=[50, 90]
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'rigid bronchoscopy'. (Pattern: '(?i)rigid\s+bronchoscop')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_240================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_dilation.performed
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_dilation.performed
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, diagnostic_bronchoscopy, rigid_bronchoscopy
+  - 31636: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31637: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions:
+  - 31630 (prob=1.00, bucket=HEADER_EXPLICIT)
+  - 31645 (prob=1.00, bucket=HEADER_EXPLICIT)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31630: Empty patch
+  - SELF_CORRECT_SKIPPED: 31645: Quote not found verbatim in focused procedure text: 'PROCEDURE:
+31645 Therapeutic aspiration initial ep...'
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_171================================================================================Performed flags (extract_record):
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.endobronchial_biopsy.performed
+  - procedures_performed.linear_ebus.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for endobronchial_biopsy
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 7
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RS
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings:
+  - SILENT_FAILURE: Text indicates non-EBUS needle biopsy of a lesion but extraction missed it. (Pattern: '(?is)\bendobronchial\s+needle\s+biops(?:y|ies)\b.{0,120}\b(?:nodule|lesion|tumou?r|mass)\b')
+Audit high-conf omissions: (none)
+Self-correction diagnostics:
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 7
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RS
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_027================================================================================Performed flags (extract_record):
+  - pleural_procedures.chest_tube.performed
+  - procedures_performed.chest_ultrasound.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - pleural_procedures.chest_tube.performed
+  - procedures_performed.chest_ultrasound.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for chest_ultrasound, pleural_procedures.chest_tube
+  - 32561: ML detected procedure, but specific device/anatomy was not found in text.
+  - 32562: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings:
+  - SILENT_FAILURE: Text indicates intrapleural fibrinolytic instillation (tPA/DNase). (Pattern: '(?is)\binstillat\w*\b[^.\n]{0,120}\b(?:tpa|alteplase|dnase|dornase|fibrinolys(?:is|tic))\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_192================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.navigational_bronchoscopy.performed
+  - procedures_performed.transbronchial_biopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for transbronchial_biopsy
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RI
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RS
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31623: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31625: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31629: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31632: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31633: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31654: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'brush' or 'brushings'. (Pattern: '(?i)\bbrush(?:ings?)?\b')
+Audit high-conf omissions: (none)
+Self-correction diagnostics:
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RI
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RS
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_011================================================================================Performed flags (extract_record):
+  - established_tracheostomy_route
+  - procedures_performed.bal.performed
+  - procedures_performed.balloon_occlusion.performed
+  - procedures_performed.blvr.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.foreign_body_removal.performed
+  - procedures_performed.therapeutic_aspiration.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - established_tracheostomy_route
+  - procedures_performed.bal.performed
+  - procedures_performed.balloon_occlusion.performed
+  - procedures_performed.blvr.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.foreign_body_removal.performed
+  - procedures_performed.therapeutic_aspiration.performed
+  - procedures_performed.transbronchial_cryobiopsy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, balloon_occlusion, blvr, diagnostic_bronchoscopy, foreign_body_removal, therapeutic_aspiration, transbronchial_cryobiopsy
+  - 31645: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings:
+  - SILENT_FAILURE: Text mentions 'cryotherapy' but extraction missed it. (Pattern: '(?i)\bcryotherap(?:y|ies)\b')
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_162================================================================================Performed flags (extract_record):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.tbna_conventional.performed
+Extract warnings:
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 10R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RS
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 2R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11L
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction diagnostics:
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 10R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RS
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 2R
+  - AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11L
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_263================================================================================Performed flags (extract_record):
+  - procedures_performed.airway_dilation.performed
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.airway_dilation.performed
+  - procedures_performed.airway_stent.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, diagnostic_bronchoscopy
+  - 31637: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_065================================================================================Performed flags (extract_record):
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.therapeutic_aspiration.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.linear_ebus.performed
+  - procedures_performed.therapeutic_aspiration.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for diagnostic_bronchoscopy, therapeutic_aspiration
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31653: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_039================================================================================Performed flags (extract_record):
+  - procedures_performed.bal.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.peripheral_ablation.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.therapeutic_aspiration.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.bal.performed
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.peripheral_ablation.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.therapeutic_aspiration.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for bal, cryotherapy, diagnostic_bronchoscopy, peripheral_ablation, rigid_bronchoscopy, therapeutic_aspiration, thermal_ablation
+  - 31622: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings:
+  - SILENT_FAILURE: Text indicates mechanical excision/debulking (e.g., snare resection / en bloc removal). (Pattern: '(?is)\b(?:snare|microdebrider|microdebrid\w*|rigid\s+coring)\b.{0,220}\b(?:en\s+bloc|resect|excise|excision|remove(?:d)?)\b')
+Audit high-conf omissions:
+  - 31641 (prob=1.00, bucket=HEADER_EXPLICIT)
+Self-correction diagnostics:
+  - SELF_CORRECT_SKIPPED: 31641: patch produced no change
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================NOTE: note_250================================================================================Performed flags (extract_record):
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.intubation.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Performed flags added by deterministic uplift: (none)
+Performed flags (after uplift):
+  - procedures_performed.cryotherapy.performed
+  - procedures_performed.diagnostic_bronchoscopy.performed
+  - procedures_performed.intubation.performed
+  - procedures_performed.rigid_bronchoscopy.performed
+  - procedures_performed.thermal_ablation.performed
+Extract warnings:
+  - DETERMINISTIC_UPLIFT: added performed=true for cryotherapy, diagnostic_bronchoscopy, intubation, thermal_ablation
+  - 31603: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31645: ML detected procedure, but specific device/anatomy was not found in text.
+  - 31646: ML detected procedure, but specific device/anatomy was not found in text.
+Omission warnings: (none)
+Audit high-conf omissions: (none)
+Self-correction applied: (none)
+STATUS: SUCCESS================================================================================
+SUMMARY
+================================================================================
+Total notes tested: 20
+Successful: 20
+Failed: 0
+Success rate: 100.0%
+================================================================================
+evaluation of smoketest
+1. Over-Reliance on "Deterministic Uplift"
+A significant number of your notes (note_149, note_120, note_039, note_250, etc.) are triggering the DETERMINISTIC_UPLIFT warning.
+
+The Issue: Your core ML extraction is failing to flag the procedure explicitly. The system is saving you by inferring the procedure was performed based on other signals (likely CPT codes or header matches), forcing performed=true.
+
+Why it matters: If the ML misses the "performed" flag, it likely also missed the attributes of that procedure (location, tool used). You are getting the "what" (CPT code) but losing the "how" and "where."
+
+2. The "Hollow" Extraction (Device/Anatomy Not Found)
+The most frequent warning is ML detected procedure, but specific device/anatomy was not found in text.
+
+Notes Affected: Almost all of them, but specifically note_191, note_181, note_120, note_263.
+
+Specific Problem Areas:
+
+Diagnostic Bronchoscopy (31622): The system knows a bronch happened but can't find the scope type or entry point text.
+
+Therapeutic/Stenting (31630, 31636): In note_263 and note_240, complex therapeutic work is flagged, but the specific stent type or balloon size is missing.
+
+3. Persistent "Silent Failures" (Regex Catching What ML Missed)
+Your "Safety Net" regex patterns are catching real procedures that the model completely ignored.
+
+
+Brushings: Multiple notes (note_181, note_183, note_192) have a SILENT_FAILURE for "brush" or "brushings". The model is consistently blind to bronchial brushings.
+
+
+Debulking/Resection: note_262 and note_039 flagged a silent failure for mechanical excision (snare, microdebrider). This is a high-value therapeutic code (31641) that is being missed.
+
+
+Cryotherapy: note_011 missed cryotherapy despite the text explicitly mentioning it.
+
+4. Self-Correction is "Skipping" Fixes
+The self-correction module is identifying errors but failing to apply the patch.
+
+
+Verbatim Match Failure: In note_262 (and note_240), the system tried to fix a missed therapeutic aspiration (31645) or debulking (31641) but returned SELF_CORRECT_SKIPPED because it couldn't find the "anchor quote" in the text.
+
+Diagnosis: The LLM suggests a fix, but the code that applies the text patch is too strict—it requires an exact string match that might be failing due to whitespace or formatting differences.
+
+Summary & Recommendation
+The pipeline is stable, but the sensitivity of the primary extraction model is low.
+
+Prioritize the "Silent Failures": The missed "Brushings" and "Debulking" are low-hanging fruit. Since your regex is already finding them, you might want to promote that regex match to a "hard" extract rather than just a warning.
+
+Loosen the Self-Correction Anchor: Review the logic for SELF_CORRECT_SKIPPED. If the LLM returns a quote to replace, try a fuzzy match rather than an exact string match to apply the patch.
+
+Investigate Note 262: This note is a perfect stress test. It failed 31641 (Debulking) extraction and the self-correction failed to patch it. Fixing this single case will likely solve the issue for the wider batch.
+
+

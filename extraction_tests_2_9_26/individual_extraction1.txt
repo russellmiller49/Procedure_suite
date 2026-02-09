@@ -1,0 +1,141 @@
+PROCEDURE NOTE
+
+
+Pre-operative diagnosis: Left Hilar Lymphadenopathy
+
+Post-operative diagnosis: SAA
+
+Procedure: Diagnostic Bronchoscopy, EBUS + TBNA, Electrocautery, Intranodal Cryobiopsy
+
+CPT Code(s):
+CPT 31625 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed; with bronchial or endobronchial biopsy(s), single or multiple sites
+CPT 31652 Bronchoscopy, rigid or flexible, including fluoroscopic guidance, when performed with endobronchial ultrasound (EBUS) guided transtracheal and/or transbronchial sampling 2 or fewer structures.
+
+Staff: [REDACTED] 
+Fellow: [REDACTED], Derek
+Anesthesia: General per Anesthesia in addition to 10cc of 1% topical lidocaine
+
+Time out: 1016
+Scope in: 1017
+Scope out: 1127
+
+Estimated blood loss: 2cc
+
+Fluids administered: per Anesthesia
+
+PROCEDURE:
+
+History and physical has been performed. The risks and benefits of the procedure were discussed with the patient. All questions were answered and informed consent was obtained.
+
+Patient identification and proposed procedure were verified by the physician, anesthesia team, nurse, and pulmonary team. The bronchoscope was introduced through the LMA where lidocaine 1% was instilled onto the vocal cords and then trachea and airways. The tracheo-bronchial tree was then examined to at least the first subsegmental level and mucinous secretions were mobilized with gentle suction. The diagnostic scope then removed and an EBUS scope was introduced into the airway. The scope was advanced in a similar fashion and mediastinal/ hilar lymph nodes were identified and measured in a systematic fashion (see measurements below). TBNA was then performed at nodes meeting sampling criteria (station 11L) with a 21G and 25G needle. In total 7 TBNA samples were obtained. 
+
+Given absence of confirmatory/ suspicious cells on ROSE the EBUS scope was removed and a therapeutic bronchoscope was reintroduced into the airway. The scope was advance to the 11L nodal station and a 1.8mm RX needle Knife XL was introduced into the working channel. A grounding pad was placed and the FiO2 was lowered. When EtO2 was confirmed to be below 40 a small tract was then created utilizing electrocautery. The therapeutic scope was then carefully removed from the airway. An EBUS scope was then reintroduced through the LMA and advanced to the 11L nodal site. Under white light a 1.7mm cryo-probe was advanced through the tract into the 11L node under direct visualization. EBUS was utilized to confirm intranodal placement of the cryo probe. Once placement was confirmed, intranodal cryobiopsies were obtained x3. The EBUS scope was then withdrawn from the airway. 
+
+Finally, inspection bronchoscopy was performed. A scant amount of coagulated blood was removed with gentle suction. Following inspection the sscope was genetly removed from the airway. 
+
+The procedure was accomplished without difficulty. The patient tolerated the procedure well without immediate complications.
+
+FINDINGS: The vocal cords are normal and move normally with breathing. The subglottic space is normal. The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree of bilateral lungs was examined to at least the first subsegmental level. Mild erythema was appreciated throughout the more distal airways and there was circumferential stenosis appreciated at LB1. There were no endobronchial lesions. Mucinous secretions were appreciated throughout the right lower lobe, LUL and LLL. These secretions were mobilized with therapeutic aspiration. Mediastinal lymph nodes were measured and sampled as below. Final inspection did not demonstrate any evidence of hemorrhage.
+
+Node stations and sizes were as follows:
+11L - 7.8mm
+4L - 2.7mm
+
+SPECIMENS SENT TO THE LABORATORY:
+--x7 TBNA of 11Lnode station
+-- x3 Intranodal Cryobiopsy
+
+Orders
+- AP Cytology Non-Gyn
+- Lymphoma Phenotyping (Lab Corp send out)
+-- From discussion with cytology this is to be ordered by the Pathology Department
+
+The patient tolerated the procedure well without complications.
+
+My attending Dr. [REDACTED] was present throughout the procedure
+
+[REDACTED], DO
+LT MC USN
+Fellow, Pulmonary and Critical Care
+[REDACTED] Line
+Electronically signed on: [REDACTED] [REDACTED]
+_____________________________________
+[REDACTED] - Fellow, Pulmonology, Critical Care Medicine
+
+_____________________________________
+[REDACTED], Pulmonology, Critical Care Medicine
+
+🩺 Extraction Quality Report
+Score: 45 / 100 Status: ❌ FAIL
+
+The extraction pipeline successfully identified the modalities used (EBUS, Cryo, Cautery) but failed critically on clinical accuracy (hallucinating stations and targets) and coding logic (misclassifying nodal cryobiopsy as lung biopsy).
+
+1. Accuracy (Precision)
+Hallucinations:
+
+Station 7: The JSON lists station "7" as sampled. The note explicitly states TBNA was performed at "station 11L" and lists specimens as "x7 TBNA of 11L". Station 7 is not mentioned in the body, only "4L" (measured) and "11L" (sampled). The evidence quote for Station 7 is generic intro text.
+
+Peripheral TBNA (Lung Mass): The JSON extracts peripheral_tbna targeting "Lung Mass". The note describes "Left Hilar Lymphadenopathy" and TBNA of station 11L. No peripheral lung mass was targeted; this was a nodal staging procedure.
+
+ROSE Result: The JSON granular_data states ROSE was "Suspicious for malignancy". The Note explicitly states: "Given absence of confirmatory/ suspicious cells on ROSE...". This is a direct contradiction of the clinical truth.
+
+Logic Errors:
+
+Electrocautery context: The JSON maps thermal_ablation -> 31641 (Tumor destruction). The note states electrocautery (Needle Knife) was used to "create a small tract" for the cryoprobe to enter the node. This is access creation, not tumor destruction/relief of stenosis. 31641 is likely incorrect/upcoding here.
+
+2. Completeness (Recall)
+Measurement Details: The note lists Station 4L (2.7mm) and 11L (7.8mm). The JSON captures 11L but ignores 4L inspection data.
+
+Secretions Location: JSON therapeutic_aspiration location is null; note specifies "RLL, LUL and LLL".
+
+3. Logic & Coding
+CPT Mismatch (Critical):
+
+31628 (Transbronchial Lung Biopsy): The pipeline generated 31628 based on transbronchial_cryobiopsy. However, the procedure was an Intranodal Cryobiopsy (Medistinal lymph node). The Note's header correctly lists 31625 (Bronchial/Endobronchial Biopsy). 31628 implies a parenchymal lung biopsy, which did not occur.
+
+31652 (EBUS): Valid, but based on the wrong station count (JSON says 2, Reality is 1). Code remains 31652 either way.
+
+4. Corrected JSON Snippet
+Corrected procedures_performed and coding_support logic:
+
+JSON
+{
+  "registry": {
+    "procedures_performed": {
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": ["11L"],
+        "node_events": [
+          {
+            "station": "11L",
+            "action": "needle_aspiration",
+            "outcome": "benign_on_rose"
+          }
+        ]
+      },
+      "peripheral_tbna": {
+        "performed": false
+      },
+      "transbronchial_cryobiopsy": {
+        "performed": true,
+        "target_type": "Lymph Node",
+        "location": "11L" 
+      }
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652", 
+          "description": "EBUS 1-2 Stations"
+        },
+        {
+          "code": "31625",
+          "description": "Bronchoscopy with bronchial/endobronchial biopsy (Intranodal Cryo)",
+          "evidence": ["Intranodal cryobiopsies were obtained"]
+        }
+        // 31641 removed (Access tract creation is usually bundled/incidental)
+        // 31628 removed (Not a lung biopsy)
+      ]
+    }
+  }
+}

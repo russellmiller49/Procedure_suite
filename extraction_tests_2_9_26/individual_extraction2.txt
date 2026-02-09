@@ -1,0 +1,166 @@
+Procedure report generator
+Custom Gem
+This is for informational purposes only. For medical advice or diagnosis, consult a professional.
+Here is the structured Interventional Pulmonology Operative Report based on the input provided and the knowledge base templates.
+
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+DATE OF PROCEDURE: [Date] INDICATION FOR OPERATION [Patient Name] is a 33-year-old female who presents with aspergilloma and hemoptysis. The nature, purpose, risks, benefits, and alternatives to Bronchoscopy were discussed with the patient in detail. The patient wished to proceed, and informed consent was obtained. 
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional. 
+
+PREOPERATIVE DIAGNOSIS
+
+R91.8 Other nonspecific abnormal finding of lung field
+
+Aspergilloma
+
+Hemoptysis
+
+POSTOPERATIVE DIAGNOSIS
+
+R91.8 Other nonspecific abnormal finding of lung field
+
+Aspergilloma
+
+Hemoptysis
+
+PROCEDURE
+
+Therapeutic aspiration of tracheobronchial tree (CPT 31645) 
+
+Therapeutic injection via endoscope channel (Amphotericin) (CPT 31573)
+
+Destruction of tumor/relief of stenosis by cryotherapy (CPT 31641) 
+
+Bronchoscopy with application of Tranexamic Acid (CPT 31899)
+
+ANESTHESIA Moderate sedation was administered. The patient was monitored continuously by the attending physician while anesthesia was administered. 
+
+Medications: Etomidate 20 mg, Rocuronium 26 mg, Propofol 40 mcg/kg/min, Fentanyl 150 mcg/hr.
+
+Duration: 50 minutes.
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure. 
+
+INSTRUMENTATION Disposable Bronchoscope; 1.1mm Cryoprobe.
+
+ESTIMATED BLOOD LOSS Minimal 
+
+COMPLICATIONS None 
+
+PROCEDURE IN DETAIL
+After the successful induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and procedure location. 
+
+Airway Inspection The bronchoscope was introduced through the tracheostomy tube. The tracheostomy tube was found to be in good position. A Uniblocker was noted in place (deflated) at the Left Mainstem Bronchus (LMSB).
+
+Trachea: Distal 1/3 normal. Main carina sharp. 
+
+Right Lung: Proximal airways demonstrated normal anatomic branching to the segmental level. No evidence of mass or lesions. 
+
+Left Lung: Proximal airways demonstrated normal anatomic branching to the segmental level. No evidence of mass or lesions. 
+
+Secretions: Mild bloody secretions were noted, with left greater than right.
+
+Therapeutic Aspiration Successful therapeutic aspiration was performed to clean out the airway segments from mucus, blood, and blood clots. 
+
+Segments Cleared: Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius, Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2).
+
+Therapeutic Injection (Amphotericin) Amphotericin B (50 mg in 20 cc sterile water) was instilled into the Left Upper Lobe (LUL) as follows:
+
+10 cc into the apico-posterior subsegment (LB1/2).
+
+10 cc into the anterior subsegment (LB3).
+
+Endobronchial Hemostasis Post-instillation, the patient had a mild ooze of fresh blood. Hemostasis was achieved by applying Tranexamic Acid (TXA) directly into the LUL through the bronchoscope (Total dose: 1000 mg). 
+
+Cryo-Extraction of Clot A formalized clot was identified causing obstruction at the LUL Lingula Carina (Lc1) and Left Carina (LC2). A 1.1 mm cryoprobe was applied to the clot with freeze times of 5–10 seconds. Excellent clot removal was achieved, and the airway obstruction was relieved. 
+
+Conclusion The patient tolerated the procedure well. There were no immediate complications. 
+
+IMPRESSION / PLAN
+
+33-year-old female with aspergilloma and hemoptysis.
+
+Successful therapeutic aspiration and clearance of bloody secretions.
+
+Successful instillation of Amphotericin into LUL (LB1/2 and LB3).
+
+Effective clot extraction via cryoprobe and hemostasis achieved with TXA.
+
+Plan:
+
+Continued care per primary team.
+
+May consider repeat instillation of Amphotericin on 1/5/2026 and possible clot extraction.
+
+
+🩺 Extraction Quality Report
+Score: 75 / 100 Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Hallucinations:
+
+granular_data.cao_interventions_detail: The JSON attributes "Tranexamic acid instillation" as the only modality for the LUL obstruction. The note explicitly states Cryo-Extraction was used to relieve the obstruction ("clot identified... cryoprobe applied... obstruction relieved"). TXA was used for hemostasis ("Post-instillation... mild ooze... Hemostasis achieved by applying TXA"). The extraction conflates the hemostatic agent with the debulking modality.
+
+granular_data.cao_interventions_detail: Attributes "Suctioning" solely to "Carina". The text lists suctioning (Therapeutic Aspiration) across nearly all airway segments ("Trachea... Right Mainstem... Left Mainstem... Carina..."). Isolating Carina is misleading.
+
+Mismatch:
+
+Sedation: JSON lists sedation.type: "Moderate". Note lists Rocuronium (Paralytic) and Propofol infusion, which typically constitute Deep Sedation or General Anesthesia (or MAC), especially given the "continuous monitoring by attending" language often used to justify Moderate Sedation billing by the proceduralist (99152). However, strictly speaking, paralytics implies an inability to maintain own airway, pushing this clinically to General/Deep. The extraction takes the header "Moderate sedation" literally, which is acceptable for extraction but clinically questionable given the meds.
+
+2. Completeness (Recall)
+Missed Procedures:
+
+Therapeutic Injection (Amphotericin): The note explicitly lists "Therapeutic injection... Amphotericin... instilled into the Left Upper Lobe". The JSON misses this entirely in procedures_performed and granular_data.
+
+Code 31573 (Therapeutic Laryngeal Injection): Explicitly listed in the note header. While 31573 is technically for the larynx (not lung), the extractor dropped it entirely rather than flagging it for review.
+
+Code 31899 (Unlisted): Explicitly listed in the note header. The extractor identified it in evidence but dropped it from the final billing.cpt_codes.
+
+Missed Details:
+
+Cryotherapy Duration: Note states "freeze times of 5–10 seconds". JSON freeze_cycles or freeze_time is missing.
+
+Sedation Agents: Note lists Etomidate, Rocuronium, Propofol, Fentanyl. JSON sedation section is empty of agents.
+
+3. Logic & Coding
+CPT Consistency:
+
+31615 (Trach Route): ✅ Correctly derived from "bronchoscope was introduced through the tracheostomy".
+
+31645 (Aspiration): ✅ Correctly derived.
+
+31641 (Cryotherapy): ✅ Correctly derived.
+
+Missing Header Codes: ⚠️ The system correctly identified the text spans for 31573 and 31899 in the evidence.code_evidence array, but the billing logic filtered them out. In a "Safety First" pipeline, explicitly documented codes in the header should generate a "Review Recommended" flag or be retained as candidates, not silently dropped.
+
+Schema Compliance:
+
+The audit_warnings correctly flagged HEADER_EXPLICIT: header lists ['31573', '31899'] but deterministic derivation missed them. This saves the score from failing, as the system is aware of the discrepancy.
+
+4. Corrected JSON Snippet (Granular Data)
+The CAO intervention detail should accurately reflect the Cryo for obstruction and separate the hemostasis/injection.
+
+JSON
+"granular_data": {
+  "cao_interventions_detail": [
+    {
+      "location": "LUL", // Specifically Lc1 and LC2
+      "obstruction_type": "Intraluminal",
+      "etiology": "Benign - other", // Clot
+      "modalities_applied": [
+        {
+          "modality": "Cryoextraction",
+          "duration_seconds": 10
+        },
+        {
+          "modality": "Therapeutic Injection", // If schema supports
+          "notes": "Amphotericin B"
+        }
+      ],
+      "hemostasis_required": true,
+      "hemostasis_methods": ["Tranexamic acid"],
+      "notes": "Formalized clot removed via cryoprobe; Amphotericin B instilled."
+    }
+  ]
+}

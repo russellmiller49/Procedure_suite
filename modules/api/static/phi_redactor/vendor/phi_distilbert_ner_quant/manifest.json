@@ -1,0 +1,6 @@
+{
+  "bundle_type": "phi_redactor_vendor",
+  "model_backend": "onnx",
+  "source_type": "s3_tarball",
+  "source_uri": "s3://procedure-suite-models/phi_redactor_vendor_bundle.tar.gz"
+}
