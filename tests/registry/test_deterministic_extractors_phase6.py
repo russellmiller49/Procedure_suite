@@ -1,10 +1,13 @@
 import pytest
 
 from app.registry.deterministic_extractors import (
+    extract_blvr,
+    extract_bpf_sealant,
     extract_chest_tube,
     extract_endobronchial_biopsy,
     extract_ipc,
     extract_navigational_bronchoscopy,
+    extract_transbronchial_cryobiopsy,
     run_deterministic_extractors,
 )
 
@@ -98,3 +101,42 @@ def test_run_deterministic_extractors_balloon_occlusion_fields_with_evidence() -
     assert evidence.get("procedures_performed.balloon_occlusion.occlusion_location")
     assert evidence.get("procedures_performed.balloon_occlusion.air_leak_result")
     assert evidence.get("procedures_performed.balloon_occlusion.device_size")
+
+
+def test_extract_transbronchial_cryobiopsy_does_not_fire_for_cryoprobe_clot_removal_with_endobronchial_pathology_word() -> None:
+    note_text = (
+        "Left Lung Proximal Airways: No evidence of mass, lesions, bleeding or other endobronchial pathology.\n"
+        "Cryoprobe 1.1mm Cryoprobe used for excellent clot removal.\n"
+    )
+    assert extract_transbronchial_cryobiopsy(note_text) == {}
+
+
+def test_extract_transbronchial_cryobiopsy_does_not_fire_when_specimen_none_is_present_and_cryoprobe_is_therapeutic() -> None:
+    note_text = (
+        "Right Lung Proximal Airways: No evidence of mass, lesions, bleeding or other endobronchial pathology.\n"
+        "Cryoprobe 1.1mm Cryoprobe used for excellent clot removal.\n"
+        "SPECIMEN(S): --None\n"
+    )
+
+    assert extract_transbronchial_cryobiopsy(note_text) == {}
+
+    seed = run_deterministic_extractors(note_text)
+    assert seed.get("procedures_performed", {}).get("transbronchial_cryobiopsy") is None
+    assert seed.get("procedures_performed", {}).get("cryotherapy", {}).get("performed") is True
+
+
+def test_extract_blvr_does_not_fire_for_previously_placed_valves_in_good_position() -> None:
+    note_text = (
+        "Within the right upper lobe the previously placed endobronchial valves were visualized. "
+        "The valves appeared well placed and in good position."
+    )
+    assert extract_blvr(note_text) == {}
+
+
+def test_extract_bpf_sealant_fires_for_alveolar_pleural_fistula_glue_instillation() -> None:
+    note_text = (
+        "Preoperative diagnosis: Alveolar pleural fistula.\n"
+        "A catheter was advanced and fibrin glue was instilled to seal the fistula.\n"
+    )
+    out = extract_bpf_sealant(note_text)
+    assert out.get("bpf_sealant", {}).get("performed") is True

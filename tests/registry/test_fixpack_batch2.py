@@ -115,7 +115,10 @@ def test_note_011_balloon_occlusion_derives_31634_without_chartis(monkeypatch: p
     assert "31634" in codes
     assert "31647" not in codes
 
-    assert record.evidence.get("procedures_performed.blvr.performed")
+    assert record.procedures_performed
+    assert record.procedures_performed.balloon_occlusion
+    assert record.procedures_performed.balloon_occlusion.performed is True
+    assert record.evidence.get("procedures_performed.balloon_occlusion.occlusion_location")
 
 
 def test_note_007_valve_adjustment_does_not_trigger_31635(monkeypatch: pytest.MonkeyPatch) -> None:

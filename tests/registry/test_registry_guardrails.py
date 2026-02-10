@@ -242,3 +242,35 @@ def test_sanitize_ebus_events_drops_sampling_for_criteria_only_stations() -> Non
     assert linear.stations_sampled == ["11L", "11RS", "2R", "4R", "7"]
     assert "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 10R" in warnings
     assert "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4L" in warnings
+
+
+def test_sanitize_ebus_events_does_not_drop_sampling_when_criteria_and_sampling_share_a_wrapped_line() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "linear_ebus": {
+                    "performed": True,
+                    "stations_sampled": ["11L"],
+                    "node_events": [
+                        {
+                            "station": "11L",
+                            "action": "needle_aspiration",
+                            "outcome": None,
+                            "evidence_quote": "11L sampled",
+                        }
+                    ],
+                }
+            }
+        }
+    )
+
+    note_text = (
+        "Sampling criteria (5mm short axis diameter) was met in station 11L lymph node. "
+        "Sampling by transbronchial needle aspiration was performed beginning with the 11L lymph node using a 21 gauge needle.\n"
+    )
+    warnings = sanitize_ebus_events(record, note_text)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    by_station = {e.station.upper(): e for e in (linear.node_events or [])}
+    assert by_station["11L"].action == "needle_aspiration"
+    assert "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11L" not in warnings

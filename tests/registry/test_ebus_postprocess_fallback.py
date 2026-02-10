@@ -94,3 +94,24 @@ def test_populate_ebus_node_events_fallback_captures_passes_and_rose_with_eviden
     rose_span = evidence["procedures_performed.linear_ebus.node_events.0.rose_result"][0]
     assert "ROSE" in note_text[rose_span.start:rose_span.end].upper()
     assert "adequate lymphocytes" in note_text[rose_span.start:rose_span.end].lower()
+
+
+def test_populate_ebus_node_events_fallback_parses_inspected_station_list_as_inspected_only() -> None:
+    record = RegistryRecord.model_validate({"procedures_performed": {"linear_ebus": {"performed": True}}})
+    note_text = (
+        "EBUS-Findings\n"
+        "Lymph node sizing was performed by EBUS and no sampling done as none met biopsy criteria.\n"
+        "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node\n"
+        "7 (subcarinal) node\n"
+        "11L lymph node\n"
+    )
+
+    warnings = populate_ebus_node_events_fallback(record, note_text)
+    assert any("EBUS" in w for w in warnings)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    by_station = {e.station.upper(): e for e in (linear.node_events or [])}
+    assert by_station["4R"].action == "inspected_only"
+    assert by_station["7"].action == "inspected_only"
+    assert by_station["11L"].action == "inspected_only"
+    assert not (linear.stations_sampled or [])

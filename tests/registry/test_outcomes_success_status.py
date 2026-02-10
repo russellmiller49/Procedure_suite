@@ -58,6 +58,21 @@ def test_enrich_procedure_success_status_marks_partial_when_failed_substep_but_c
     assert "unsuccessful" in (record.outcomes.aborted_reason or "").lower()
 
 
+def test_enrich_procedure_success_status_marks_partial_when_failed_substep_followed_by_later_success_language() -> None:
+    record = RegistryRecord()
+    note_text = (
+        "We initially attempted to utilize electrocautery snare to remove the tumor but were unsuccessful. "
+        "However we were able to bypass the tumor and visualize the distal airway."
+    )
+
+    warnings = enrich_procedure_success_status(record, note_text)
+    assert any("AUTO_OUTCOMES_STATUS" in w for w in warnings)
+
+    assert record.outcomes is not None
+    assert record.outcomes.procedure_success_status == "Partial success"
+    assert "unsuccessful" in (record.outcomes.aborted_reason or "").lower()
+
+
 def test_enrich_procedure_success_status_ignores_baseline_traversability_before_successful_dilation() -> None:
     record = RegistryRecord(outcomes={"procedure_completed": True})
     note_text = (

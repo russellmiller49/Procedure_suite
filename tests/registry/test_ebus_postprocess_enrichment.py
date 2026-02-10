@@ -53,3 +53,16 @@ def test_propagate_linear_ebus_needle_gauge_sets_needle_gauge_string() -> None:
     linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
     assert linear.needle_gauge == "22G"
     assert any("AUTO_EBUS_NEEDLE_GAUGE" in w for w in warnings)
+
+
+def test_enrich_linear_ebus_needle_gauge_prefers_ebus_context_over_other_needles() -> None:
+    record = RegistryRecord.model_validate({"procedures_performed": {"linear_ebus": {"performed": True}}})
+    note_text = (
+        "Transbronchial needle aspiration of lung lesion performed using a 21G needle.\n"
+        "EBUS-TBNA of station 7 performed using a 22G needle.\n"
+    )
+    warnings = enrich_linear_ebus_needle_gauge(record, note_text)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    assert linear.needle_gauge == "22G"
+    assert any("AUTO_EBUS_NEEDLE_GAUGE" in w for w in warnings)

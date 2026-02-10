@@ -146,3 +146,24 @@ def test_blvr_mixed_manufacturer_emits_needs_review_warning() -> None:
 
     _codes, _rationales, warnings = derive_all_codes_with_meta(record)
     assert any("mixed blvr valve manufacturers" in str(w).lower() for w in warnings)
+
+
+def test_blvr_inspection_only_well_placed_valves_does_not_trigger_31647() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {"blvr": {"performed": True, "procedure_type": "Valve assessment", "number_of_valves": 0}},
+            "evidence": {
+                "procedures_performed.blvr.evidence_quote": [
+                    Span(
+                        text="Within the RUL the previously placed endobronchial valves were visualized and appeared well placed.",
+                        start=0,
+                        end=10,
+                        confidence=0.9,
+                    )
+                ]
+            },
+        }
+    )
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "31647" not in codes

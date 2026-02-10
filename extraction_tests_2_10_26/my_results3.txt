@@ -1,0 +1,4237 @@
+================================================================================
+UNIFIED PIPELINE BATCH TEST RESULTS
+================================================================================
+Date: 2026-02-10T10:25:05.511623
+Notes tested: 5
+Notes directory: /home/rjm/projects/proc_suite_notes/data/granular annotations/notes_text
+Include financials: True
+Include explain: True
+Real LLM enabled: True
+================================================================================
+
+================================================================================
+NOTE: note_106
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_106 SOURCE_FILE: note_106.txt INDICATION FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway evaluation and stent change.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+31636 Dilate and bronchial stent initial bronchus
+31635 Foreign body removal
+ANESTHESIA: 
+General Anesthesia
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+INSTRUMENT : 
+Rigid Bronchoscope
+Flexible Therapeutic Bronchoscope
+Flexible Hybrid (Pedatric) Bronchoscope
+ESTIMATED BLOOD LOSS:   None
+COMPLICATIONS:    None
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).
+Initial Airway Inspection Findings:
+Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius , and Left Mainstem from mucus. 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8).  Instilled 40 cc of NS, suction returned with 10 cc of NS.  Samples sent for Microbiology (Cultures/Viral/Fungal).
+Boston Scientific 14x40 Bare metallic stent was removed with out issue.  
+The following stent (Boston Scientific 14x40) was placed in the Right Mainstem via direct visualization.  Dilated to 15mm x2 with elation balloon.  The stent is in good position but slightly undersized. 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+SPECIMEN(S): 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for stent exchange.
+- distal airway appears to be improving. 
+- minimize bronchscopy while maximize sputum clearance and decrease interruptions to nutrition and PT
+- check stent and airways once a week
+- plan for a stent exchange in 2 weeks (consider 16x40 boston sems)
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "clinical_context": {
+      "primary_indication": "FOR OPERATION: [REDACTED]is a 56 year old-year-old male who presents with airway evaluation and stent change. The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient <PERSON>.",
+      "bronchus_sign": "Not assessed"
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true
+      },
+      "bal": {
+        "performed": true,
+        "location": "Anteromedial Segment of LLL (Lb7/8)",
+        "volume_instilled_ml": 40.0,
+        "volume_recovered_ml": 10.0
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug",
+        "location": "Right Mainstem, Bronchus Intermedius , and Left Mainstem"
+      },
+      "airway_dilation": {
+        "performed": true,
+        "target_anatomy": "Stent expansion",
+        "method": "Balloon",
+        "balloon_diameter_mm": 15.0
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": true,
+        "action_type": "revision",
+        "action": "Revision/Repositioning"
+      },
+      "rigid_bronchoscopy": {
+        "performed": true
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "[REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for stent exchange. - distal airway appears to be improving. - minimize bronchscopy while maximize sputum clearance and decrease interruptions to nutrition and PT - check stent and airways once a week - plan for a stent exchange in 2 weeks (consider 16x40 boston sems)"
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Instilled 40 cc",
+              "span": [
+                1409,
+                1424
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8)",
+              "span": [
+                1328,
+                1406
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "suction returned with 10 cc",
+              "span": [
+                1432,
+                1459
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31638",
+          "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+          "derived_from": [
+            "procedures_performed.airway_stent"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "stent",
+              "span": [
+                153,
+                158
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31646",
+          "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+          "derived_from": [
+            "procedures_performed.therapeutic_aspiration"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "31646",
+              "span": [
+                465,
+                470
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "therapeutic aspiration",
+              "span": [
+                1204,
+                1226
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-10T18:24:56.026041+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1409,
+                "end": 1424,
+                "snippet": "Instilled 40 cc"
+              },
+              {
+                "start": 1328,
+                "end": 1406,
+                "snippet": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8)"
+              },
+              {
+                "start": 1432,
+                "end": 1459,
+                "snippet": "suction returned with 10 cc"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31638",
+            "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "airway_stent indicates removal/exchange",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 153,
+                "end": 158,
+                "snippet": "stent"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31646",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 465,
+                "end": 470,
+                "snippet": "31646"
+              },
+              {
+                "start": 1204,
+                "end": 1226,
+                "snippet": "therapeutic aspiration"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1157,
+                "end": 1191,
+                "snippet": "Initial Airway Inspection Findings"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1703,
+                "end": 1742,
+                "snippet": "Dilated to 15mm x2 with elation balloon"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Instilled 40 cc",
+                "span": {
+                  "start": 1409,
+                  "end": 1424
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8)",
+                "span": {
+                  "start": 1328,
+                  "end": 1406
+                }
+              },
+              {
+                "snippet": "suction returned with 10 cc",
+                "span": {
+                  "start": 1432,
+                  "end": 1459
+                }
+              }
+            ]
+          },
+          {
+            "code": "31638",
+            "summary": "airway_stent indicates removal/exchange",
+            "documentation_evidence": [
+              {
+                "snippet": "stent",
+                "span": {
+                  "start": 153,
+                  "end": 158
+                }
+              }
+            ]
+          },
+          {
+            "code": "31646",
+            "summary": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "documentation_evidence": [
+              {
+                "snippet": "31646",
+                "span": {
+                  "start": 465,
+                  "end": 470
+                }
+              },
+              {
+                "snippet": "therapeutic aspiration",
+                "span": {
+                  "start": 1204,
+                  "end": 1226
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 1157,
+                  "end": 1191
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          },
+          {
+            "code": "31630",
+            "summary": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+            "documentation_evidence": [
+              {
+                "snippet": "Dilated to 15mm x2 with elation balloon",
+                "span": {
+                  "start": 1703,
+                  "end": 1742
+                }
+              }
+            ],
+            "rule_refs": [
+              "dilation_with_destruction"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          },
+          {
+            "rule_id": "dilation_with_destruction",
+            "rule_type": "local",
+            "codes_affected": [
+              "31630"
+            ],
+            "outcome": "dropped",
+            "details": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS."
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+          "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS."
+        ]
+      }
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "RMS",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            },
+            {
+              "modality": "Balloon dilation"
+            }
+          ],
+          "stent_placed_at_site": true
+        },
+        {
+          "location": "LMS",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "BI",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "LLL",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "stent",
+          "start": 153,
+          "end": 158,
+          "confidence": 0.3106052577495575
+        },
+        {
+          "text": "B",
+          "start": 225,
+          "end": 226,
+          "confidence": 0.6487630009651184
+        },
+        {
+          "text": "oscopy",
+          "start": 231,
+          "end": 237,
+          "confidence": 0.5465975999832153
+        },
+        {
+          "text": "therapeutic aspiration",
+          "start": 1204,
+          "end": 1226,
+          "confidence": 0.8502998650074005
+        },
+        {
+          "text": "clean out",
+          "start": 1244,
+          "end": 1253,
+          "confidence": 0.6570703685283661
+        },
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 1328,
+          "end": 1353,
+          "confidence": 0.9820290952920914
+        },
+        {
+          "text": "Boston Scientific 14x40",
+          "start": 1523,
+          "end": 1546,
+          "confidence": 0.858417014280955
+        },
+        {
+          "text": "Bare metallic stent",
+          "start": 1547,
+          "end": 1566,
+          "confidence": 0.773731030523777
+        },
+        {
+          "text": "removed",
+          "start": 1571,
+          "end": 1578,
+          "confidence": 0.7914420962333679
+        },
+        {
+          "text": "stent",
+          "start": 1611,
+          "end": 1616,
+          "confidence": 0.6694557666778564
+        },
+        {
+          "text": "Boston Scientific 14x40",
+          "start": 1618,
+          "end": 1641,
+          "confidence": 0.7986427843570709
+        },
+        {
+          "text": "Dilated",
+          "start": 1703,
+          "end": 1710,
+          "confidence": 0.9233660697937012
+        },
+        {
+          "text": "stent",
+          "start": 1749,
+          "end": 1754,
+          "confidence": 0.6054376363754272
+        }
+      ],
+      "procedures_performed.bal.volume_instilled_ml": [
+        {
+          "text": "Instilled 40 cc",
+          "start": 1409,
+          "end": 1424,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "Dilated to 15mm x2 with elation balloon",
+          "start": 1703,
+          "end": 1742
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 1157,
+          "end": 1191
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway evaluation and stent change.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient <PERSON>.",
+          "start": 56,
+          "end": 279
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "ANESTHESIA",
+          "start": 630,
+          "end": 640
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.is_subsequent": [
+        {
+          "text": "31646",
+          "start": 465,
+          "end": 470
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31624",
+          "start": 514,
+          "end": 519
+        },
+        {
+          "text": "31635",
+          "start": 603,
+          "end": 608
+        },
+        {
+          "text": "31636",
+          "start": 553,
+          "end": 558
+        },
+        {
+          "text": "31646",
+          "start": 465,
+          "end": 470
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 1204,
+          "end": 1226
+        }
+      ],
+      "procedures_performed.airway_stent.performed": [
+        {
+          "text": "stent",
+          "start": 153,
+          "end": 158,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.rigid_bronchoscopy.performed": [
+        {
+          "text": "Rigid Bronchoscop",
+          "start": 848,
+          "end": 865
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8)",
+          "start": 1328,
+          "end": 1406,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_recovered_ml": [
+        {
+          "text": "suction returned with 10 cc",
+          "start": 1432,
+          "end": 1459,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          153,
+          158
+        ],
+        "confidence": 0.3106052577495575
+      },
+      {
+        "source": "ner_span",
+        "text": "B",
+        "span": [
+          225,
+          226
+        ],
+        "confidence": 0.6487630009651184
+      },
+      {
+        "source": "ner_span",
+        "text": "oscopy",
+        "span": [
+          231,
+          237
+        ],
+        "confidence": 0.5465975999832153
+      },
+      {
+        "source": "ner_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          1204,
+          1226
+        ],
+        "confidence": 0.8502998650074005
+      },
+      {
+        "source": "ner_span",
+        "text": "clean out",
+        "span": [
+          1244,
+          1253
+        ],
+        "confidence": 0.6570703685283661
+      },
+      {
+        "source": "ner_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          1328,
+          1353
+        ],
+        "confidence": 0.9820290952920914
+      },
+      {
+        "source": "ner_span",
+        "text": "Boston Scientific 14x40",
+        "span": [
+          1523,
+          1546
+        ],
+        "confidence": 0.858417014280955
+      },
+      {
+        "source": "ner_span",
+        "text": "Bare metallic stent",
+        "span": [
+          1547,
+          1566
+        ],
+        "confidence": 0.773731030523777
+      },
+      {
+        "source": "ner_span",
+        "text": "removed",
+        "span": [
+          1571,
+          1578
+        ],
+        "confidence": 0.7914420962333679
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          1611,
+          1616
+        ],
+        "confidence": 0.6694557666778564
+      },
+      {
+        "source": "ner_span",
+        "text": "Boston Scientific 14x40",
+        "span": [
+          1618,
+          1641
+        ],
+        "confidence": 0.7986427843570709
+      },
+      {
+        "source": "ner_span",
+        "text": "Dilated",
+        "span": [
+          1703,
+          1710
+        ],
+        "confidence": 0.9233660697937012
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          1749,
+          1754
+        ],
+        "confidence": 0.6054376363754272
+      }
+    ],
+    "procedures_performed.bal.volume_instilled_ml": [
+      {
+        "source": "registry_span",
+        "text": "Instilled 40 cc",
+        "span": [
+          1409,
+          1424
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "Dilated to 15mm x2 with elation balloon",
+        "span": [
+          1703,
+          1742
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          1157,
+          1191
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "FOR OPERATION:  [REDACTED]is a 56 year old-year-old male who presents with airway evaluation and stent change.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient <PERSON>.",
+        "span": [
+          56,
+          279
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "ANESTHESIA",
+        "span": [
+          630,
+          640
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.is_subsequent": [
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          465,
+          470
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31624",
+        "span": [
+          514,
+          519
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31635",
+        "span": [
+          603,
+          608
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31636",
+        "span": [
+          553,
+          558
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          465,
+          470
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          1204,
+          1226
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_stent.performed": [
+      {
+        "source": "registry_span",
+        "text": "stent",
+        "span": [
+          153,
+          158
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.rigid_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Rigid Bronchoscop",
+        "span": [
+          848,
+          865
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8)",
+        "span": [
+          1328,
+          1406
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_recovered_ml": [
+      {
+        "source": "registry_span",
+        "text": "suction returned with 10 cc",
+        "span": [
+          1432,
+          1459
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31624",
+    "31638",
+    "31646"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31638",
+      "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+      "confidence": 0.8,
+      "rationale": "airway_stent indicates removal/exchange",
+      "review_flag": "required"
+    },
+    {
+      "code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 10.03,
+  "estimated_payment": 468.95,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 120.91
+    },
+    {
+      "cpt_code": "31638",
+      "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+      "work_rvu": 4.76,
+      "total_facility_rvu": 6.56,
+      "facility_payment": 219.11
+    },
+    {
+      "cpt_code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "work_rvu": 2.71,
+      "total_facility_rvu": 3.86,
+      "facility_payment": 128.93
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, diagnostic_bronchoscopy",
+    "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+    "HARD_OVERRIDE: Text mentions 'rigid bronchoscopy'. -> procedures_performed.rigid_bronchoscopy.performed=true",
+    "CAO_DETAIL_HEURISTIC: parsed 4 CAO site entries from text",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+    "SELF_CORRECT_SKIPPED: 31635: judge returned null",
+    "SELF_CORRECT_SKIPPED: 31636: Empty patch",
+    "HEADER_EXPLICIT: header lists ['31635', '31636'] but deterministic derivation missed them",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31636 (prob=0.58), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 8747.85
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_254
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_254 SOURCE_FILE: note_254.txt PREOPERATIVE DIAGNOSIS: Lung mass with left main-stem obstruction
+POSTOPERATIVE DIAGNOSIS: Malignant mixed intrinsic and extrinsic airway obstruction
+PROCEDURE PERFORMED: Rigid bronchoscopy
+INDICATIONS: left mainstem obstruction 
+Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. The patient acknowledged and gave consent. 
+Sedation: General Anesthesia
+DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. A 7.0 ETT was placed by ansesthesia followed by OG tube to decompress the stomach. The ETT was then removed and a 12 mm ventilating rigid bronchoscope was subsequently inserted into the mid trachea and attached to the jet ventilator. The rigid optic was then removed and the flexible bronchoscope was inserted through the rigid bronchoscope. On initial bronchoscopic inspection there was mild bleeding and airway trauma noted in the distal trachea likely secondary to trauma from ETT placement. The posterior and left wall of the distal trachea had obvious submucosal tumor infiltration. The left mainstem bronchus was completely obstructed by endoluminal tumor and the tumor involved the main carina with a mild degree of tumor ingrowth into the right mainstem but without obstruction. At this point the EBUS bronchoscope was inserted through the rigid bronchoscope and the subcarinal mass was identified with ultrasound and 6 biopsies were performed with the 22G EBUS TBNA needle. We then directed our attention to the left maintem. Through the use of a combination of APC, rigid electrocautery, cryotherapy and forcpts we were able to slowly debulk the tumor within the left mainstem and visualize an opening into the distal left mainstem. A ultrathin bronchospe was advanced through the opening and purulent material was expressed from the distal airways from her post-obstructive pneumonia. We were able to visualize the secondary carina’s within the left upper lobe and there was no obvious tumor seen. The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency. Subseuqently the left mainstem bronchus was dilated with an 8-9-10 CRE balloon with approximaly 50% improvement in luminal patency in the left mainstem which allowed introduction of the therapeutic bronchoscope. At this point the infiltrating friable areas of tumor within the left mainstem, distal trachea and main carina were painted with argon plasma coagulation for hemostasis. Once we were satisfied that there was no active bleeding the rigid bronchoscope was removed and the procedure was completed. 
+Recommendations:
+Await tissue diagnosis
+ASAP radiation oncology consultation for treatment of the left mainstem to attempt to prevent recurrent obstruction.
+If patient develops significant hemoptysis post procedure would perform bronchoscopic intubation of the right mainstem to protect functional lung. 
+If obstruction recurs despite radiation therapy will likely require repeat rigid bronchoscopy with placement of silicone Y stent.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "clinical_context": {
+      "primary_indication": "left mainstem obstruction",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": null,
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": 12.0
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true
+      },
+      "intubation": {
+        "performed": true,
+        "tube_size": "7.0"
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "7"
+        ],
+        "needle_gauge": "22G",
+        "node_events": [
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "evidence_quote": "DESCRIPTION OF PROCEDURE: The procedure was performed in the main operating room. A 7.0 ETT was placed by ansesthesia followed by OG tube to decompress the stomach. The ETT was then removed and a 12 mm ventilating rigid bronchoscope was subsequently inserted into the mid trachea"
+          }
+        ]
+      },
+      "airway_dilation": {
+        "performed": true,
+        "method": "Balloon"
+      },
+      "thermal_ablation": {
+        "performed": true,
+        "modality": "APC"
+      },
+      "mechanical_debulking": {
+        "performed": true,
+        "method": "Forceps debulking",
+        "location": "Carina, LLL, LMS, Trachea"
+      },
+      "therapeutic_outcomes": {
+        "pre_obstruction_pct": 100
+      },
+      "cryotherapy": {
+        "performed": true
+      },
+      "rigid_bronchoscopy": {
+        "performed": true,
+        "rigid_scope_size": 12.0
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "complication_list": [],
+      "bleeding": {
+        "occurred": false,
+        "bleeding_grade_nashville": 0
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "procedure_success_status": "Partial success",
+      "aborted_reason": "The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency.",
+      "follow_up_plan_text": "Await tissue diagnosis ASAP radiation oncology consultation for treatment of the left mainstem to attempt to prevent recurrent obstruction. If patient <PERSON> post procedure would perform bronchoscopic intubation of the right mainstem to protect functional lung. If obstruction recurs despite radiation therapy will likely require repeat rigid bronchoscopy with placement of silicone Y stent."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31500"
+        },
+        {
+          "code": "31640",
+          "description": "Bronchoscopy; with excision of tumor",
+          "derived_from": [
+            "procedures_performed.mechanical_debulking"
+          ]
+        },
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUS TBNA",
+              "span": [
+                1537,
+                1546
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "EBUS TBNA",
+              "span": [
+                1537,
+                1546
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "EBUS TBNA",
+              "span": [
+                1537,
+                1546
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "22G",
+              "span": [
+                1533,
+                1536
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-10T18:24:56.568193+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31500",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "intubation.performed=true",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 2,
+            "code": "31640",
+            "description": "Bronchoscopy; with excision of tumor",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "mechanical_debulking.performed=true",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 3,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1537,
+                "end": 1546,
+                "snippet": "EBUS TBNA"
+              },
+              {
+                "start": 1537,
+                "end": 1546,
+                "snippet": "EBUS TBNA"
+              },
+              {
+                "start": 1537,
+                "end": 1546,
+                "snippet": "EBUS TBNA"
+              },
+              {
+                "start": 1533,
+                "end": 1536,
+                "snippet": "22G"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 710,
+                "end": 748,
+                "snippet": "bronchoscope was subsequently inserted"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2260,
+                "end": 2294,
+                "snippet": "dilated with an 8-9-10 CRE balloon"
+              }
+            ]
+          },
+          {
+            "sequence": 6,
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "31641 (destruction) bundled into 31640 (excision). If performed on separate lesion, add 31641 with modifier 59/XS.",
+            "is_add_on": false,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31500",
+            "summary": "intubation.performed=true"
+          },
+          {
+            "code": "31640",
+            "summary": "mechanical_debulking.performed=true",
+            "qa_flags": [
+              {
+                "severity": "warning",
+                "rule_id": "excision_with_destruction",
+                "message": "31641 (destruction) bundled into 31640 (excision). If performed on separate lesion, add 31641 with modifier 59/XS."
+              }
+            ]
+          },
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUS TBNA",
+                "span": {
+                  "start": 1537,
+                  "end": 1546
+                }
+              },
+              {
+                "snippet": "EBUS TBNA",
+                "span": {
+                  "start": 1537,
+                  "end": 1546
+                }
+              },
+              {
+                "snippet": "EBUS TBNA",
+                "span": {
+                  "start": 1537,
+                  "end": 1546
+                }
+              },
+              {
+                "snippet": "22G",
+                "span": {
+                  "start": 1533,
+                  "end": 1536
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "bronchoscope was subsequently inserted",
+                "span": {
+                  "start": 710,
+                  "end": 748
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          },
+          {
+            "code": "31630",
+            "summary": "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location",
+            "documentation_evidence": [
+              {
+                "snippet": "dilated with an 8-9-10 CRE balloon",
+                "span": {
+                  "start": 2260,
+                  "end": 2294
+                }
+              }
+            ],
+            "rule_refs": [
+              "dilation_with_destruction"
+            ]
+          },
+          {
+            "code": "31641",
+            "summary": "31641 (destruction) bundled into 31640 (excision). If performed on separate lesion, add 31641 with modifier 59/XS.",
+            "rule_refs": [
+              "excision_with_destruction"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          },
+          {
+            "rule_id": "excision_with_destruction",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31641"
+            ],
+            "outcome": "dropped",
+            "details": "31641 (destruction) bundled into 31640 (excision). If performed on separate lesion, add 31641 with modifier 59/XS."
+          },
+          {
+            "rule_id": "dilation_with_destruction",
+            "rule_type": "local",
+            "codes_affected": [
+              "31630"
+            ],
+            "outcome": "dropped",
+            "details": "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+          "31641 (destruction) bundled into 31640 (excision). If performed on separate lesion, add 31641 with modifier 59/XS.",
+          "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location"
+        ]
+      }
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "LMS",
+          "obstruction_type": "Mixed",
+          "pre_obstruction_pct": 100,
+          "modalities_applied": [
+            {
+              "modality": "APC"
+            },
+            {
+              "modality": "Cryotherapy - contact"
+            },
+            {
+              "modality": "Mechanical debulking"
+            },
+            {
+              "modality": "Balloon dilation"
+            }
+          ]
+        },
+        {
+          "location": "Trachea",
+          "modalities_applied": [
+            {
+              "modality": "APC"
+            }
+          ]
+        },
+        {
+          "location": "Carina",
+          "obstruction_type": "Intraluminal",
+          "modalities_applied": [
+            {
+              "modality": "APC"
+            }
+          ]
+        },
+        {
+          "location": "LLL",
+          "modalities_applied": [
+            {
+              "modality": "Mechanical debulking"
+            }
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Rigid bronchoscopy",
+          "start": 216,
+          "end": 234,
+          "confidence": 0.7821529507637024
+        },
+        {
+          "text": "ultrasound",
+          "start": 1483,
+          "end": 1493,
+          "confidence": 0.8824701905250549
+        },
+        {
+          "text": "biopsies",
+          "start": 1500,
+          "end": 1508,
+          "confidence": 0.9522581696510315
+        },
+        {
+          "text": "APC",
+          "start": 1643,
+          "end": 1646,
+          "confidence": 0.949220597743988
+        },
+        {
+          "text": "rigid",
+          "start": 1648,
+          "end": 1653,
+          "confidence": 0.8571767807006836
+        },
+        {
+          "text": "electrocautery",
+          "start": 1654,
+          "end": 1668,
+          "confidence": 0.8127681215604147
+        },
+        {
+          "text": "cryotherapy",
+          "start": 1670,
+          "end": 1681,
+          "confidence": 0.7660342454910278
+        },
+        {
+          "text": "debulk",
+          "start": 1717,
+          "end": 1723,
+          "confidence": 0.8606026768684387
+        },
+        {
+          "text": "debulk",
+          "start": 2149,
+          "end": 2155,
+          "confidence": 0.7224948704242706
+        },
+        {
+          "text": "dilated",
+          "start": 2260,
+          "end": 2267,
+          "confidence": 0.9548907279968262
+        },
+        {
+          "text": "argon plasma coagulation",
+          "start": 2557,
+          "end": 2581,
+          "confidence": 0.9544087251027426
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "dilated with an 8-9-10 CRE balloon",
+          "start": 2260,
+          "end": 2294
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "bronchoscope was subsequently inserted",
+          "start": 710,
+          "end": 748
+        }
+      ],
+      "procedure_setting.rigid_barrel_size_mm": [
+        {
+          "text": "12 mm ventilating rigid bronchoscope",
+          "start": 686,
+          "end": 722
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "left mainstem obstruction",
+          "start": 248,
+          "end": 273
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 471,
+          "end": 489
+        }
+      ],
+      "procedures_performed.rigid_bronchoscopy.performed": [
+        {
+          "text": "Rigid bronchoscop",
+          "start": 216,
+          "end": 233,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.0": [
+        {
+          "text": "EBUS TBNA",
+          "start": 1537,
+          "end": 1546,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.station": [
+        {
+          "text": "EBUS TBNA",
+          "start": 1537,
+          "end": 1546,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+        {
+          "text": "EBUS TBNA",
+          "start": 1537,
+          "end": 1546,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22G",
+          "start": 1533,
+          "end": 1536,
+          "confidence": 0.9
+        }
+      ],
+      "outcomes.procedure_success_status": [
+        {
+          "text": "The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency.",
+          "start": 2080,
+          "end": 2215,
+          "confidence": 0.9
+        }
+      ],
+      "outcomes.aborted_reason": [
+        {
+          "text": "The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency.",
+          "start": 2080,
+          "end": 2215,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "no active bleeding",
+          "start": 2636,
+          "end": 2654,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Rigid bronchoscopy",
+        "span": [
+          216,
+          234
+        ],
+        "confidence": 0.7821529507637024
+      },
+      {
+        "source": "ner_span",
+        "text": "ultrasound",
+        "span": [
+          1483,
+          1493
+        ],
+        "confidence": 0.8824701905250549
+      },
+      {
+        "source": "ner_span",
+        "text": "biopsies",
+        "span": [
+          1500,
+          1508
+        ],
+        "confidence": 0.9522581696510315
+      },
+      {
+        "source": "ner_span",
+        "text": "APC",
+        "span": [
+          1643,
+          1646
+        ],
+        "confidence": 0.949220597743988
+      },
+      {
+        "source": "ner_span",
+        "text": "rigid",
+        "span": [
+          1648,
+          1653
+        ],
+        "confidence": 0.8571767807006836
+      },
+      {
+        "source": "ner_span",
+        "text": "electrocautery",
+        "span": [
+          1654,
+          1668
+        ],
+        "confidence": 0.8127681215604147
+      },
+      {
+        "source": "ner_span",
+        "text": "cryotherapy",
+        "span": [
+          1670,
+          1681
+        ],
+        "confidence": 0.7660342454910278
+      },
+      {
+        "source": "ner_span",
+        "text": "debulk",
+        "span": [
+          1717,
+          1723
+        ],
+        "confidence": 0.8606026768684387
+      },
+      {
+        "source": "ner_span",
+        "text": "debulk",
+        "span": [
+          2149,
+          2155
+        ],
+        "confidence": 0.7224948704242706
+      },
+      {
+        "source": "ner_span",
+        "text": "dilated",
+        "span": [
+          2260,
+          2267
+        ],
+        "confidence": 0.9548907279968262
+      },
+      {
+        "source": "ner_span",
+        "text": "argon plasma coagulation",
+        "span": [
+          2557,
+          2581
+        ],
+        "confidence": 0.9544087251027426
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "dilated with an 8-9-10 CRE balloon",
+        "span": [
+          2260,
+          2294
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "bronchoscope was subsequently inserted",
+        "span": [
+          710,
+          748
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.rigid_barrel_size_mm": [
+      {
+        "source": "registry_span",
+        "text": "12 mm ventilating rigid bronchoscope",
+        "span": [
+          686,
+          722
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "left mainstem obstruction",
+        "span": [
+          248,
+          273
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          471,
+          489
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.rigid_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Rigid bronchoscop",
+        "span": [
+          216,
+          233
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "EBUS TBNA",
+        "span": [
+          1537,
+          1546
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.station": [
+      {
+        "source": "registry_span",
+        "text": "EBUS TBNA",
+        "span": [
+          1537,
+          1546
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "EBUS TBNA",
+        "span": [
+          1537,
+          1546
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22G",
+        "span": [
+          1533,
+          1536
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "outcomes.procedure_success_status": [
+      {
+        "source": "registry_span",
+        "text": "The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency.",
+        "span": [
+          2080,
+          2215
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "outcomes.aborted_reason": [
+      {
+        "source": "registry_span",
+        "text": "The left lower lobe was visualized but we were unable to adequately debulk the tumor to overlying this area to confirm distal patency.",
+        "span": [
+          2080,
+          2215
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "no active bleeding",
+        "span": [
+          2636,
+          2654
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31500",
+    "31640",
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31500",
+      "description": "",
+      "confidence": 0.8,
+      "rationale": "intubation.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31640",
+      "description": "Bronchoscopy; with excision of tumor",
+      "confidence": 0.8,
+      "rationale": "mechanical_debulking.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+      "review_flag": "recommended"
+    }
+  ],
+  "total_work_rvu": 9.16,
+  "estimated_payment": 416.18,
+  "per_code_billing": [
+    {
+      "cpt_code": "31640",
+      "description": "Bronchoscopy; with excision of tumor",
+      "work_rvu": 4.81,
+      "total_facility_rvu": 6.53,
+      "facility_payment": 218.11
+    },
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, diagnostic_bronchoscopy, intubation, linear_ebus, mechanical_debulking",
+    "EBUS_FALLBACK: sampling documented but stations missing; added placeholder node_event.",
+    "31603: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31645: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31646: ML detected procedure, but specific device/anatomy was not found in text.",
+    "CAO_DETAIL_HEURISTIC: parsed 4 CAO site entries from text",
+    "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT: UNSPECIFIED",
+    "EBUS_NARRATIVE_RECONCILE: added node_events for sampled stations ['7']",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "AUTO_OUTCOMES_STATUS: set outcomes.procedure_success_status='Partial success'",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=0",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "31641 (destruction) bundled into 31640 (excision). If performed on separate lesion, add 31641 with modifier 59/XS.",
+    "31630 (dilation) bundled into destruction/excision code - add granular lobe data if performed in distinct anatomic location",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31631 (prob=0.47), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 542.03
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_219
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_219 SOURCE_FILE: note_219.txt PREOPERATIVE DIAGNOSIS:
+
+Small Cell Lung Cancer with Central Airway Obstruction
+Retained/Embedded Metallic Airway Stent
+POSTOPERATIVE DIAGNOSIS:
+
+Small Cell Lung Cancer with Central Airway Obstruction s/p Airway Stent Removal and Y-Stent Insertion
+PROCEDURE PERFORMED:
+
+INDICATIONS:
+Malignant Central Airway Obstruction
+Retained/Embedded Metallic Airway Stent
+Informed consent was obtained from the patient after explaining the procedure's indications, details, potential risks, and alternatives in lay terms. All questions were answered, and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedural assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed before the intervention.
+
+Sedation: General Anesthesia
+
+DESCRIPTION OF PROCEDURE: The procedure was carried out in the main operating room. Following intravenous medications as per the record, a laryngeal mask airway was inserted to ensure adequate ventilation. Topical anesthesia was applied to the upper airway, and the Boston Scientific Model B diagnostic disposable video bronchoscope was introduced through the mouth, via laryngeal mask airway, and advanced to the tracheobronchial tree. The laryngeal mask airway was in a good position. The vocal cords appeared normal. The subglottic space was normal. The proximal trachea was normal. The mid-trachea was free of tumor, but moderate to severe dynamic collapse was visualized (TBM). The right mainstem was extrinsically compressed from the posterior aspect, with additional tumor studding and submucosal disease seen throughout the airway, causing approximately 70% obstruction. A few small tumor nodules were present in the distal trachea, mostly on the posterior membrane. The proximal left mainstem was mildly compressed externally, with submucosal tumor within the airway wall. In the mid left mainstem, there was extensive granulation tissue causing about 75% airway obstruction just proximal to the proximal end of the known airway stent. After gently passing the bronchoscope through the area of granulation tissue, the stent was visualized with thick purulent mucus throughout. 10cc of bicarbonate solution was instilled to thin secretions, and then the secretions were suctioned and cleared. Significant post-obstructive pus was noted distal to the stent, primarily originating from the lower lobe bronchus, and a mini lavage was performed for culture. After suctioning clear, tumor infiltration could be seen extending into the proximal aspect of the lower lobe and growing through the stent wall. The left upper lobe, however, appeared free of disease.
+
+At this point, the flexible bronchoscope and LMA were removed, and a 12mm ventilating rigid bronchoscope was subsequently inserted into the trachea and advanced into the left mainstem bronchus, then connected to the JET ventilator. The rigid optic was removed, and the Olympus T190 Therapeutic bronchoscope was inserted through the rigid lumen and advanced to the proximal edge of the stent. APC was used, followed by gentle shaving of coagulated tissue with the tip of the bronchoscope to remove granulation tissue. We then utilized APC to burn the inner silicone coating from the stent and gently placed flexible forceps through the wall of the stent to peel it from the mucosa. After this, a size 4-5-6 Merit dilatational balloon was guided similarly outside of the stent and used to further break adhesions with the underlying airway wall. We repeated this multiple times, attempting to slowly recannulate the airway. We then removed the flexible bronchoscope and utilized rigid forceps to grasp and remove the stent. APC was then used to cauterize the underlying inflamed mucosa, and a 2.1 mm cryotherapy probe was used to remove debris. Significant obstruction, both from endobronchial disease and extrinsic compression, was still present. At this point, we focused on the right-sided airway and utilized APC with the burn and shave technique, attempting to recannulate the airway with partial success; however, obstruction remained > 50% in the right mainstem, with tumor extending through the bronchus intermedius.
+
+Measurements of the airway were then taken in anticipation of airway stent placement. We customized a 14x10x10 silicone Y-stent to a length of 30mm in the tracheal limb, 35mm in the right limb, and 35mm in the left mainstem limb. We also created a 10mm hole in the right-sided limb to allow for the right upper lobe to remain ventilated while maintaining patency of the bronchus intermedius. The rigid bronchoscope was then advanced into the right mainstem, and the stent was deployed. After deployment, the rigid forceps were used to manipulate the stent to adequately position the limbs within the proper airways, resulting in successful stabilization of the airway. Persistent tumor beyond the stent remained bilaterally, with small isolates of tumor in the distal bronchus intermedius and significant residual tumor in the left lower lobe bronchus. The rigid bronchoscope was removed, and an LMA was inserted, and the procedure was turned over to anesthesia for post-procedural care.
+
+Recommendations:
+
+•	Transfer to PACU
+•	Obtain post-procedure chest x-ray.
+•	Patient to be admitted to inpatient service for expedited radiation oncology consultation, given residual disease.
+•	Patient will need TID hypertonic nebulization (4cc 3% saline) to avoid mucus impaction and obstruction of stent.
+•	Management of stent-related complications was discussed with the in-patient team, and a notice for airway management precautions was placed above the patient's bed.
+•	Plan to schedule the procedure in approximately 2 weeks (after the effects of radiation should be seen).
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "clinical_context": {
+      "primary_indication": "Malignant Central Airway Obstruction",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": null,
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": 12.0
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords appeared normal secretions, and then the secretions were suctioned and cleared",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "therapeutic_aspiration": {
+        "performed": true
+      },
+      "airway_dilation": {
+        "performed": true,
+        "target_anatomy": "Stent expansion",
+        "method": "Balloon"
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": true,
+        "action_type": "revision",
+        "action": "Revision/Repositioning",
+        "stent_type": "Y-Stent"
+      },
+      "thermal_ablation": {
+        "performed": true,
+        "modality": "APC"
+      },
+      "therapeutic_outcomes": {
+        "post_obstruction_pct": 70
+      },
+      "cryotherapy": {
+        "performed": true
+      },
+      "rigid_bronchoscopy": {
+        "performed": true,
+        "rigid_scope_size": 12.0
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {},
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31638",
+          "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+          "derived_from": [
+            "procedures_performed.airway_stent"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Airway Stent",
+              "span": [
+                152,
+                164
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31641",
+          "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+          "derived_from": [
+            "procedures_performed.thermal_ablation"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "APC",
+              "span": [
+                3117,
+                3120
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31645",
+          "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+          "derived_from": [
+            "procedures_performed.therapeutic_aspiration"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "secretions, and then the secretions were suctioned and cleared",
+              "span": [
+                2297,
+                2359
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-10T18:25:04.534442+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31638",
+            "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "airway_stent indicates removal/exchange",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 152,
+                "end": 164,
+                "snippet": "Airway Stent"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "thermal_ablation.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 3117,
+                "end": 3120,
+                "snippet": "APC"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "therapeutic_aspiration.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2297,
+                "end": 2359,
+                "snippet": "secretions, and then the secretions were suctioned and cleared"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1180,
+                "end": 1266,
+                "snippet": "bronchoscope was introduced through the mouth, via laryngeal mask airway, and advanced"
+              },
+              {
+                "start": 2297,
+                "end": 2359,
+                "snippet": "secretions, and then the secretions were suctioned and cleared"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 3437,
+                "end": 3499,
+                "snippet": "dilatational balloon was guided similarly outside of the stent"
+              },
+              {
+                "start": 3437,
+                "end": 3457,
+                "snippet": "dilatational balloon"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31638",
+            "summary": "airway_stent indicates removal/exchange",
+            "documentation_evidence": [
+              {
+                "snippet": "Airway Stent",
+                "span": {
+                  "start": 152,
+                  "end": 164
+                }
+              }
+            ]
+          },
+          {
+            "code": "31641",
+            "summary": "thermal_ablation.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "APC",
+                "span": {
+                  "start": 3117,
+                  "end": 3120
+                }
+              }
+            ]
+          },
+          {
+            "code": "31645",
+            "summary": "therapeutic_aspiration.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "secretions, and then the secretions were suctioned and cleared",
+                "span": {
+                  "start": 2297,
+                  "end": 2359
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "bronchoscope was introduced through the mouth, via laryngeal mask airway, and advanced",
+                "span": {
+                  "start": 1180,
+                  "end": 1266
+                }
+              },
+              {
+                "snippet": "secretions, and then the secretions were suctioned and cleared",
+                "span": {
+                  "start": 2297,
+                  "end": 2359
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          },
+          {
+            "code": "31630",
+            "summary": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+            "documentation_evidence": [
+              {
+                "snippet": "dilatational balloon was guided similarly outside of the stent",
+                "span": {
+                  "start": 3437,
+                  "end": 3499
+                }
+              },
+              {
+                "snippet": "dilatational balloon",
+                "span": {
+                  "start": 3437,
+                  "end": 3457
+                }
+              }
+            ],
+            "rule_refs": [
+              "dilation_with_destruction"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          },
+          {
+            "rule_id": "dilation_with_destruction",
+            "rule_type": "local",
+            "codes_affected": [
+              "31630"
+            ],
+            "outcome": "dropped",
+            "details": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS."
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+          "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS."
+        ]
+      }
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "RMS",
+          "obstruction_type": "Extrinsic",
+          "pre_obstruction_pct": 70,
+          "post_obstruction_pct": 70,
+          "modalities_applied": [
+            {
+              "modality": "APC"
+            }
+          ],
+          "stent_placed_at_site": true
+        },
+        {
+          "location": "Trachea",
+          "obstruction_type": "Mixed",
+          "modalities_applied": [
+            {
+              "modality": "APC"
+            },
+            {
+              "modality": "Balloon dilation"
+            },
+            {
+              "modality": "Cryotherapy - contact"
+            }
+          ],
+          "stent_placed_at_site": true
+        },
+        {
+          "location": "LMS",
+          "obstruction_type": "Mixed",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "BI",
+          "modalities_applied": [
+            {
+              "modality": "APC"
+            }
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Stent",
+          "start": 159,
+          "end": 164,
+          "confidence": 0.5614981353282928
+        },
+        {
+          "text": "Stent",
+          "start": 257,
+          "end": 262,
+          "confidence": 0.4565386474132538
+        },
+        {
+          "text": "Removal",
+          "start": 263,
+          "end": 270,
+          "confidence": 0.7504909634590149
+        },
+        {
+          "text": "Y-Stent",
+          "start": 275,
+          "end": 282,
+          "confidence": 0.726118266582489
+        },
+        {
+          "text": "sertion",
+          "start": 285,
+          "end": 292,
+          "confidence": 0.5399665832519531
+        },
+        {
+          "text": "ent",
+          "start": 401,
+          "end": 404,
+          "confidence": 0.5739021897315979
+        },
+        {
+          "text": "stent",
+          "start": 2098,
+          "end": 2103,
+          "confidence": 0.4650644361972809
+        },
+        {
+          "text": "stent",
+          "start": 2187,
+          "end": 2192,
+          "confidence": 0.546755313873291
+        },
+        {
+          "text": "suctioned",
+          "start": 2338,
+          "end": 2347,
+          "confidence": 0.6881662309169769
+        },
+        {
+          "text": "stent",
+          "start": 2418,
+          "end": 2423,
+          "confidence": 0.4810883700847626
+        }
+      ],
+      "procedures_performed.airway_dilation.target_anatomy": [
+        {
+          "text": "dilatational balloon was guided similarly outside of the stent",
+          "start": 3437,
+          "end": 3499,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "dilatational balloon",
+          "start": 3437,
+          "end": 3457
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "bronchoscope was introduced through the mouth, via laryngeal mask airway, and advanced",
+          "start": 1180,
+          "end": 1266
+        }
+      ],
+      "procedures_performed.cryotherapy.performed": [
+        {
+          "text": "cryotherapy",
+          "start": 3823,
+          "end": 3834
+        }
+      ],
+      "procedures_performed.rigid_bronchoscopy.performed": [
+        {
+          "text": "rigid bronchoscop",
+          "start": 2811,
+          "end": 2828
+        }
+      ],
+      "procedures_performed.thermal_ablation.performed": [
+        {
+          "text": "APC",
+          "start": 3117,
+          "end": 3120
+        }
+      ],
+      "procedure_setting.rigid_barrel_size_mm": [
+        {
+          "text": "12mm ventilating rigid bronchoscope",
+          "start": 2794,
+          "end": 2829
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Malignant Central Airway Obstruction",
+          "start": 328,
+          "end": 364
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 840,
+          "end": 858
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions, and then the secretions were suctioned and cleared",
+          "start": 2297,
+          "end": 2359
+        }
+      ],
+      "procedures_performed.airway_stent.performed": [
+        {
+          "text": "Airway Stent",
+          "start": 152,
+          "end": 164,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.therapeutic_outcomes.post_obstruction_pct": [
+        {
+          "text": "70% obstruction",
+          "start": 1722,
+          "end": 1737
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "secretions, and then the secretions were suctioned and cleared",
+          "start": 2297,
+          "end": 2359
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Stent",
+        "span": [
+          159,
+          164
+        ],
+        "confidence": 0.5614981353282928
+      },
+      {
+        "source": "ner_span",
+        "text": "Stent",
+        "span": [
+          257,
+          262
+        ],
+        "confidence": 0.4565386474132538
+      },
+      {
+        "source": "ner_span",
+        "text": "Removal",
+        "span": [
+          263,
+          270
+        ],
+        "confidence": 0.7504909634590149
+      },
+      {
+        "source": "ner_span",
+        "text": "Y-Stent",
+        "span": [
+          275,
+          282
+        ],
+        "confidence": 0.726118266582489
+      },
+      {
+        "source": "ner_span",
+        "text": "sertion",
+        "span": [
+          285,
+          292
+        ],
+        "confidence": 0.5399665832519531
+      },
+      {
+        "source": "ner_span",
+        "text": "ent",
+        "span": [
+          401,
+          404
+        ],
+        "confidence": 0.5739021897315979
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          2098,
+          2103
+        ],
+        "confidence": 0.4650644361972809
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          2187,
+          2192
+        ],
+        "confidence": 0.546755313873291
+      },
+      {
+        "source": "ner_span",
+        "text": "suctioned",
+        "span": [
+          2338,
+          2347
+        ],
+        "confidence": 0.6881662309169769
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          2418,
+          2423
+        ],
+        "confidence": 0.4810883700847626
+      }
+    ],
+    "procedures_performed.airway_dilation.target_anatomy": [
+      {
+        "source": "registry_span",
+        "text": "dilatational balloon was guided similarly outside of the stent",
+        "span": [
+          3437,
+          3499
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "dilatational balloon",
+        "span": [
+          3437,
+          3457
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "bronchoscope was introduced through the mouth, via laryngeal mask airway, and advanced",
+        "span": [
+          1180,
+          1266
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.cryotherapy.performed": [
+      {
+        "source": "registry_span",
+        "text": "cryotherapy",
+        "span": [
+          3823,
+          3834
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.rigid_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "rigid bronchoscop",
+        "span": [
+          2811,
+          2828
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.thermal_ablation.performed": [
+      {
+        "source": "registry_span",
+        "text": "APC",
+        "span": [
+          3117,
+          3120
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.rigid_barrel_size_mm": [
+      {
+        "source": "registry_span",
+        "text": "12mm ventilating rigid bronchoscope",
+        "span": [
+          2794,
+          2829
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Malignant Central Airway Obstruction",
+        "span": [
+          328,
+          364
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          840,
+          858
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions, and then the secretions were suctioned and cleared",
+        "span": [
+          2297,
+          2359
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_stent.performed": [
+      {
+        "source": "registry_span",
+        "text": "Airway Stent",
+        "span": [
+          152,
+          164
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.therapeutic_outcomes.post_obstruction_pct": [
+      {
+        "source": "registry_span",
+        "text": "70% obstruction",
+        "span": [
+          1722,
+          1737
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "secretions, and then the secretions were suctioned and cleared",
+        "span": [
+          2297,
+          2359
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31638",
+    "31641",
+    "31645"
+  ],
+  "suggestions": [
+    {
+      "code": "31638",
+      "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+      "confidence": 0.8,
+      "rationale": "airway_stent indicates removal/exchange",
+      "review_flag": "required"
+    },
+    {
+      "code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "confidence": 0.8,
+      "rationale": "thermal_ablation.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 12.46,
+  "estimated_payment": 576.83,
+  "per_code_billing": [
+    {
+      "cpt_code": "31638",
+      "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+      "work_rvu": 4.76,
+      "total_facility_rvu": 6.56,
+      "facility_payment": 219.11
+    },
+    {
+      "cpt_code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "work_rvu": 4.89,
+      "total_facility_rvu": 6.72,
+      "facility_payment": 224.45
+    },
+    {
+      "cpt_code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "work_rvu": 2.81,
+      "total_facility_rvu": 3.99,
+      "facility_payment": 133.27
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, cryotherapy, diagnostic_bronchoscopy, rigid_bronchoscopy, thermal_ablation",
+    "31603: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+    "AMBIGUOUS_DISEASE_BURDEN: procedures_performed.therapeutic_outcomes.pre_obstruction_pct candidates=[50, 70]",
+    "AMBIGUOUS_DISEASE_BURDEN: granular_data.cao_interventions_detail[RMS].pre_obstruction_pct candidates=[50, 70]",
+    "CAO_DETAIL_HEURISTIC: parsed 4 CAO site entries from text",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+    "SELF_CORRECT_SKIPPED: 31636: Quote not found verbatim in focused procedure text: 'We customized a 14x10x10 silicone Y-stent... The r...'",
+    "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31636 (prob=0.81), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 7966.04
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_178
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_178 SOURCE_FILE: note_178.txt Indications: Mediastinal adenopathy
+Medications: General Anesthesia,
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention.
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first subsegmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. Just distal to the cricoid cartilage the suspicious 2L lymph node was identified Sampling by transbronchial needle aspiration was performed with both the Olympus 19G and Olympus 22G needles with a total of 8 passes performed. Abundant lymphocytes were seen in rapid onsite pathological evaluation. Samples were sent for both flow and routine cytology. Following completion of EBUS bronchoscopy, the Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.
+
+Complications: No immediate complications
+Estimated Blood Loss: min
+
+Post Procedure Diagnosis:
+- Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsies.
+- The patient has remained stable and has been transferred in good condition to the post-surgical monitoring unit.
+- Will await final pathology results
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "clinical_context": {
+      "primary_indication": "Mediastinal adenopathy",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "LMA",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "tbna_conventional": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "2L"
+        ],
+        "needle_gauge": "19G, 22G",
+        "node_events": [
+          {
+            "station": "2L",
+            "action": "needle_aspiration",
+            "outcome": "suspicious",
+            "evidence_quote": "st distal to the cricoid cartilage the suspicious 2L lymph node was identified Sampling by transbronch"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "any_complication": true,
+      "complication_list": [
+        "Bleeding - Mild"
+      ],
+      "bleeding": {
+        "occurred": true,
+        "bleeding_grade_nashville": 1
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "19G",
+              "span": [
+                1430,
+                1433
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "22G",
+              "span": [
+                1446,
+                1449
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-10T18:25:05.006044+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1430,
+                "end": 1433,
+                "snippet": "19G"
+              },
+              {
+                "start": 1446,
+                "end": 1449,
+                "snippet": "22G"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Suppressed 31629: tbna_conventional bundled into EBUS-TBNA (31652/31653)",
+            "is_add_on": false,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "19G",
+                "span": {
+                  "start": 1430,
+                  "end": 1433
+                }
+              },
+              {
+                "snippet": "22G",
+                "span": {
+                  "start": 1446,
+                  "end": 1449
+                }
+              }
+            ]
+          },
+          {
+            "code": "31629",
+            "summary": "Suppressed 31629: tbna_conventional bundled into EBUS-TBNA (31652/31653)",
+            "rule_refs": [
+              "tbna_with_ebus_tbna"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "tbna_with_ebus_tbna",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31629"
+            ],
+            "outcome": "dropped",
+            "details": "Suppressed 31629: tbna_conventional bundled into EBUS-TBNA (31652/31653)"
+          }
+        ],
+        "global_comments": [
+          "Suppressed 31629: tbna_conventional bundled into EBUS-TBNA (31652/31653)"
+        ]
+      }
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "US",
+          "start": 1149,
+          "end": 1151,
+          "confidence": 0.5478426814079285
+        },
+        {
+          "text": "2L",
+          "start": 1320,
+          "end": 1322,
+          "confidence": 0.9292863607406616
+        },
+        {
+          "text": "transbronchial needle aspiration",
+          "start": 1361,
+          "end": 1393,
+          "confidence": 0.9790170669555665
+        },
+        {
+          "text": "lymphocytes",
+          "start": 1503,
+          "end": 1514,
+          "confidence": 0.8100379705429077
+        },
+        {
+          "text": "EBUS",
+          "start": 1644,
+          "end": 1648,
+          "confidence": 0.8251535296440125
+        },
+        {
+          "text": "flexible bronchoscopy",
+          "start": 1963,
+          "end": 1984,
+          "confidence": 0.7990771234035492
+        },
+        {
+          "text": "endobronchial ultrasound",
+          "start": 1990,
+          "end": 2014,
+          "confidence": 0.8736295104026794
+        },
+        {
+          "text": "biopsies",
+          "start": 2022,
+          "end": 2030,
+          "confidence": 0.8114011287689209
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Mediastinal adenopathy",
+          "start": 58,
+          "end": 80
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 94,
+          "end": 112
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "laryngeal mask",
+          "start": 665,
+          "end": 679
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "19G",
+          "start": 1430,
+          "end": 1433,
+          "confidence": 0.9
+        },
+        {
+          "text": "22G",
+          "start": 1446,
+          "end": 1449,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "suctioning",
+          "start": 1722,
+          "end": 1732,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "US",
+        "span": [
+          1149,
+          1151
+        ],
+        "confidence": 0.5478426814079285
+      },
+      {
+        "source": "ner_span",
+        "text": "2L",
+        "span": [
+          1320,
+          1322
+        ],
+        "confidence": 0.9292863607406616
+      },
+      {
+        "source": "ner_span",
+        "text": "transbronchial needle aspiration",
+        "span": [
+          1361,
+          1393
+        ],
+        "confidence": 0.9790170669555665
+      },
+      {
+        "source": "ner_span",
+        "text": "lymphocytes",
+        "span": [
+          1503,
+          1514
+        ],
+        "confidence": 0.8100379705429077
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          1644,
+          1648
+        ],
+        "confidence": 0.8251535296440125
+      },
+      {
+        "source": "ner_span",
+        "text": "flexible bronchoscopy",
+        "span": [
+          1963,
+          1984
+        ],
+        "confidence": 0.7990771234035492
+      },
+      {
+        "source": "ner_span",
+        "text": "endobronchial ultrasound",
+        "span": [
+          1990,
+          2014
+        ],
+        "confidence": 0.8736295104026794
+      },
+      {
+        "source": "ner_span",
+        "text": "biopsies",
+        "span": [
+          2022,
+          2030
+        ],
+        "confidence": 0.8114011287689209
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Mediastinal adenopathy",
+        "span": [
+          58,
+          80
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          94,
+          112
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "laryngeal mask",
+        "span": [
+          665,
+          679
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "19G",
+        "span": [
+          1430,
+          1433
+        ],
+        "confidence": 0.9
+      },
+      {
+        "source": "registry_span",
+        "text": "22G",
+        "span": [
+          1446,
+          1449
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "suctioning",
+        "span": [
+          1722,
+          1732
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.35,
+  "estimated_payment": 198.07,
+  "per_code_billing": [
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+    "AUTO_EBUS_OUTCOME: 2L -> suspicious",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=1",
+    "Suppressed 31629: tbna_conventional bundled into EBUS-TBNA (31652/31653)"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 471.37
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_049
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+NOTE_ID:  note_049 SOURCE_FILE: note_049.txt INDICATION FOR OPERATION:  [REDACTED]is a 22 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+PREOPERATIVE DIAGNOSIS: J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+POSTOPERATIVE DIAGNOSIS:  J98.09 Other diseases of bronchus, not elsewhere classified
+ 
+PROCEDURE:  
+31646 Therapeutic aspiration subsequent episodes
+31624 Dx bronchoscope/lavage (BAL)    
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:    None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).   
+ 
+PATIENT POSITION: . 
+ 
+Initial Airway Inspection Findings:
+ 
+The laryngeal mask airway is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through LMA.
+Larynx: Normal.
+Vocal Cords: Normal without mass/lesions
+Trachea: Mildly tortuous
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: The distal left mainstem bronchus was noted to be slightly stenotic (~8mm). Otherwise, there was normal anatomic branching to segmental level in the LLL, noting historic obliteration of LUL.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Minimal, thin, and clear.  
+ 
+DISTAL LEFT MAINSTEM BRONCHUS
+ ]
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+On PEEP 0, the patient's airways were noted to have slight malacia <50% at the proximal and distal left mainstem bronchus.
+ 
+MALACIA AT PROXIMAL LMSB
+
+MALACIA AT DISTAL LMSB
+
+DISTAL LMSB WITH AND WITHOUT PEEP (left and right, respectively)
+ 
+Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+--LLL BAL (cell count, micro)
+ 
+IMPRESSION/PLAN: [REDACTED]is a 22 year old-year-old female who presents for bronchoscopy for evaluation of airway stenosis. The patient tolerated the procedure well and there were no immediate complications.
+ 
+--Follow up BAL results
+--Repeat bronchoscopy in 4 weeks for possible dilation, stenting
+ 
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "clinical_context": {
+      "primary_indication": "FOR OPERATION: [REDACTED]is a 22 year old-year-old female who presents with airway stenosis. The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient <PERSON>. Patient indicated a wish to proceed with surgery and informed consent was signed.",
+      "indication_category": "Stricture/Stenosis",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "LMA",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "Vocal Cords: Normal without mass/lesions malacia <50% at the proximal and distal left mainstem bronchus Secretions: Minimal, thin, and clear",
+        "airway_abnormalities": [
+          "Secretions",
+          "Tracheomalacia",
+          "Stenosis"
+        ]
+      },
+      "bal": {
+        "performed": true,
+        "location": "Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10)",
+        "volume_instilled_ml": 60.0,
+        "volume_recovered_ml": 20.0
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug",
+        "location": "Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2)"
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "complication_list": [],
+      "bleeding": {
+        "occurred": false,
+        "bleeding_grade_nashville": 0
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "[REDACTED]is a 22 year old-year-old female who presents for bronchoscopy for evaluation of airway stenosis. The patient <PERSON> well and there were no immediate complications."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Instilled 60 cc",
+              "span": [
+                2554,
+                2569
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage",
+              "span": [
+                2394,
+                2419
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10)",
+              "span": [
+                2394,
+                2551
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "suction returned with 20 cc",
+              "span": [
+                2577,
+                2604
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31646",
+          "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+          "derived_from": [
+            "procedures_performed.therapeutic_aspiration"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "31646",
+              "span": [
+                533,
+                538
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "therapeutic aspiration",
+              "span": [
+                1915,
+                1937
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-10T18:25:05.509244+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2554,
+                "end": 2569,
+                "snippet": "Instilled 60 cc"
+              },
+              {
+                "start": 2394,
+                "end": 2419,
+                "snippet": "Bronchial alveolar lavage"
+              },
+              {
+                "start": 2394,
+                "end": 2551,
+                "snippet": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10)"
+              },
+              {
+                "start": 2577,
+                "end": 2604,
+                "snippet": "suction returned with 20 cc"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31646",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 533,
+                "end": 538,
+                "snippet": "31646"
+              },
+              {
+                "start": 1915,
+                "end": 1937,
+                "snippet": "therapeutic aspiration"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1117,
+                "end": 1151,
+                "snippet": "Initial Airway Inspection Findings"
+              },
+              {
+                "start": 1829,
+                "end": 1865,
+                "snippet": "Secretions: Minimal, thin, and clear"
+              },
+              {
+                "start": 2211,
+                "end": 2218,
+                "snippet": "malacia"
+              },
+              {
+                "start": 140,
+                "end": 148,
+                "snippet": "stenosis"
+              },
+              {
+                "start": 1117,
+                "end": 1151,
+                "snippet": "Initial Airway Inspection Findings"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Instilled 60 cc",
+                "span": {
+                  "start": 2554,
+                  "end": 2569
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage",
+                "span": {
+                  "start": 2394,
+                  "end": 2419
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10)",
+                "span": {
+                  "start": 2394,
+                  "end": 2551
+                }
+              },
+              {
+                "snippet": "suction returned with 20 cc",
+                "span": {
+                  "start": 2577,
+                  "end": 2604
+                }
+              }
+            ]
+          },
+          {
+            "code": "31646",
+            "summary": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "documentation_evidence": [
+              {
+                "snippet": "31646",
+                "span": {
+                  "start": 533,
+                  "end": 538
+                }
+              },
+              {
+                "snippet": "therapeutic aspiration",
+                "span": {
+                  "start": 1915,
+                  "end": 1937
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 1117,
+                  "end": 1151
+                }
+              },
+              {
+                "snippet": "Secretions: Minimal, thin, and clear",
+                "span": {
+                  "start": 1829,
+                  "end": 1865
+                }
+              },
+              {
+                "snippet": "malacia",
+                "span": {
+                  "start": 2211,
+                  "end": 2218
+                }
+              },
+              {
+                "snippet": "stenosis",
+                "span": {
+                  "start": 140,
+                  "end": 148
+                }
+              },
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 1117,
+                  "end": 1151
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 1915,
+          "end": 1937,
+          "confidence": 0.5011984407901764
+        }
+      ],
+      "procedures_performed.bal.volume_instilled_ml": [
+        {
+          "text": "Instilled 60 cc",
+          "start": 2554,
+          "end": 2569,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.performed": [
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 2394,
+          "end": 2419
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 1117,
+          "end": 1151
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "FOR OPERATION:  [REDACTED]is a 22 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient <PERSON>.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+          "start": 56,
+          "end": 345
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "ANESTHESIA",
+          "start": 621,
+          "end": 631
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "laryngeal mask",
+          "start": 1159,
+          "end": 1173
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "Secretions: Minimal, thin, and clear",
+          "start": 1829,
+          "end": 1865
+        },
+        {
+          "text": "malacia",
+          "start": 2211,
+          "end": 2218
+        },
+        {
+          "text": "stenosis",
+          "start": 140,
+          "end": 148
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 1117,
+          "end": 1151
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.is_subsequent": [
+        {
+          "text": "31646",
+          "start": 533,
+          "end": 538
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31624",
+          "start": 582,
+          "end": 587
+        },
+        {
+          "text": "31646",
+          "start": 533,
+          "end": 538
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 1915,
+          "end": 1937
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10)",
+          "start": 2394,
+          "end": 2551,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_recovered_ml": [
+        {
+          "text": "suction returned with 20 cc",
+          "start": 2577,
+          "end": 2604,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "No evidence of mass, lesions, bleeding",
+          "start": 1447,
+          "end": 1485,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          1915,
+          1937
+        ],
+        "confidence": 0.5011984407901764
+      }
+    ],
+    "procedures_performed.bal.volume_instilled_ml": [
+      {
+        "source": "registry_span",
+        "text": "Instilled 60 cc",
+        "span": [
+          2554,
+          2569
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          2394,
+          2419
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          1117,
+          1151
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "FOR OPERATION:  [REDACTED]is a 22 year old-year-old female who presents with airway stenosis.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient <PERSON>.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+        "span": [
+          56,
+          345
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "ANESTHESIA",
+        "span": [
+          621,
+          631
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "laryngeal mask",
+        "span": [
+          1159,
+          1173
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "Secretions: Minimal, thin, and clear",
+        "span": [
+          1829,
+          1865
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "malacia",
+        "span": [
+          2211,
+          2218
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "stenosis",
+        "span": [
+          140,
+          148
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          1117,
+          1151
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.is_subsequent": [
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          533,
+          538
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31624",
+        "span": [
+          582,
+          587
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          533,
+          538
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          1915,
+          1937
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage was performed at Anteromedial Segment of LLL (Lb7/8), Lateral-basal Segment of LLL (LB9), and Posterior-Basal Segment of LLL (LB10)",
+        "span": [
+          2394,
+          2551
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_recovered_ml": [
+      {
+        "source": "registry_span",
+        "text": "suction returned with 20 cc",
+        "span": [
+          2577,
+          2604
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "No evidence of mass, lesions, bleeding",
+        "span": [
+          1447,
+          1485
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31624",
+    "31646"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 5.27,
+  "estimated_payment": 249.84,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 120.91
+    },
+    {
+      "cpt_code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "work_rvu": 2.71,
+      "total_facility_rvu": 3.86,
+      "facility_payment": 128.93
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for bal, diagnostic_bronchoscopy",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=0",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 503.05
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+SUMMARY
+================================================================================
+Total notes tested: 5
+Successful: 5
+Failed: 0
+Success rate: 100.0%
+================================================================================
+🩺 Extraction Quality Report
+Batch Score: 97 / 100 Overall Status: ✅ PASS
+
+The pipeline demonstrates excellent precision and recall, with a strong "Extraction-First" architecture that correctly separates clinical events from billing logic. The extraction accurately handled complex scenarios like stent revisions, EBUS staging, and multi-modal debulking.
+
+1. Note: note_106 (Stent Exchange)
+Score: 100 / 100 Status: ✅ PASS
+
+Clinical Reality: Patient underwent removal of a metallic stent and placement of a new metallic stent (14x40) in the Right Mainstem (RMS) with balloon dilation and BAL.
+
+JSON Accuracy:
+
+Procedures: Correctly identified airway_stent (removal=True, action=revision), bal, therapeutic_aspiration, and airway_dilation.
+
+Details: Correctly captured BAL location (LLL Lb7/8), Stent sizes (14x40 in/out), and Balloon size (15mm).
+
+Rigid Bronchoscopy: Correctly inferred from the header instrument list, despite lack of explicit "insertion" narrative.
+
+Coding Logic: Correctly derived 31638 (Revision) which covers both removal and replacement. Correctly dropped 31630 (Dilation) as bundled.
+
+2. Note: note_254 (Complex Debulking)
+Score: 100 / 100 Status: ✅ PASS
+
+Clinical Reality: Rigid bronchoscopy with EBUS (Station 7), followed by multi-modal debulking (APC, electrocautery, cryo, forceps) of the Left Mainstem (LMS) and dilation.
+
+JSON Accuracy:
+
+Granularity: Excellent capture of multiple modalities (mechanical_debulking, thermal_ablation, cryotherapy, airway_dilation).
+
+EBUS: Correctly identified Station 7, 22G needle, and "needle_aspiration".
+
+Coding Logic: Correctly prioritized 31640 (Excision) due to forceps/mechanical debulking evidence, suppressing 31641 (Destruction). Correctly captured 31652 for EBUS.
+
+3. Note: note_219 (Y-Stent Revision)
+Score: 95 / 100 Status: ✅ PASS
+
+Clinical Reality: Removal of LMS stent, extensive debridement, and placement of a customized 14x10x10 Silicone Y-Stent.
+
+JSON Accuracy:
+
+Events: Accurately captured the sequence: airway_stent (removal), therapeutic_aspiration, thermal_ablation, cryotherapy, airway_stent (placement).
+
+Missed Detail: The JSON airway_stent object correctly identified "Y-Stent" but missed the specific customized dimensions ("14x10x10", limbs 30/35/35mm) in the structured output, although they were in the text.
+
+Coding Logic: The output correctly listed 31638 (Revision) and 31641 (Destruction).
+
+Note: While 31641 is often bundled into 31638 if performed at the same site, the extensive work described ("burning inner silicone", "shaving granulation", "burning/shaving right-sided airway") likely justifies the unbundling or at least the attempt. The pipeline's decision to retain both is defensible given the extensive nature.
+
+4. Note: note_178 (EBUS-TBNA)
+Score: 90 / 100 Status: ⚠️ WARNING
+
+Clinical Reality: EBUS-TBNA of Station 2L. No immediate complications, but suctioning of blood was noted.
+
+JSON Accuracy:
+
+Events: linear_ebus correctly captured Station 2L, 19G/22G needles.
+
+Data Model Ambiguity: tbna_conventional was set to true. In a strict registry model, "Conventional TBNA" (blind/fluoro) is distinct from "EBUS-TBNA". Since the note describes only EBUS-guided sampling, tbna_conventional should logically be false to avoid data double-counting, even though coding correctly dropped the 31629 CPT.
+
+Complications: The note explicitly states "Complications: No immediate complications". The JSON reported any_complication: true and bleeding_grade_nashville: 1 based on "suctioning blood". While technically a Nashville Grade 1 event, overriding the physician's explicit "None" assertion in the registry output (vs billing) is aggressive and may generate false positives for quality committees.
+
+5. Note: note_049 (Airway Inspection & Toilet)
+Score: 100 / 100 Status: ✅ PASS
+
+Clinical Reality: Airway stenosis evaluation. Extensive therapeutic aspiration (mucus) and BAL. No dilation/stenting performed (planned for future).
+
+JSON Accuracy:
+
+Precision: Correctly identified diagnostic_bronchoscopy, bal, and therapeutic_aspiration.
+
+Negative Check: Correctly did not extract dilation or stenting, despite them being mentioned in the "Plan" section. This validates the get_procedure_focus logic (Section Awareness).
+
+Coding Logic: Correctly output 31624 and 31646.
+
+📉 Corrected JSON Snippet (for Note 178)
+To improve note_178, the logic should distinguish EBUS-TBNA from Conventional TBNA at the extraction level, not just the billing level.
+
+JSON
+"procedures_performed": {
+  "tbna_conventional": {
+    "performed": false  // CHANGED: Was true. Note describes EBUS guidance only.
+  },
+  "linear_ebus": {
+    "performed": true,
+    "stations_sampled": ["2L"],
+    "needle_gauge": "19G, 22G"
+  }
+}

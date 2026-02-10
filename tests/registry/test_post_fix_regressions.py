@@ -68,6 +68,47 @@ def test_blvr_checkbox_selection_corrects_valve_type_procedure_type_and_valve_co
     assert "31635" in codes
 
 
+def test_blvr_guardrails_do_not_promote_valve_placement_for_previously_placed_valves_in_inventory_list() -> None:
+    note_text = (
+        "Procedures performed:\n"
+        "1. Flexible bronchoscopy with therapeutic aspiration\n"
+        "2. Endobronchial glue installation\n"
+        "\n"
+        "Within the right upper lobe the previously placed endobronchial valves were visualized. "
+        "The apical and anterior segment size 7 endobronchial valves appeared well placed. "
+        "The posterior size 6 valve appeared to have migrated somewhat distally.\n"
+    )
+
+    guardrails = ClinicalGuardrails()
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "blvr": {
+                    "performed": True,
+                    "procedure_type": "Valve placement",
+                    "valve_type": "Spiration (Olympus)",
+                    "number_of_valves": 6,
+                    "valve_sizes": ["6", "7"],
+                }
+            }
+        }
+    )
+
+    outcome = guardrails.apply_record_guardrails(note_text, record)
+    updated = outcome.record
+    assert updated is not None
+    assert updated.procedures_performed is not None
+    blvr = updated.procedures_performed.blvr
+    assert blvr is not None
+
+    assert blvr.procedure_type == "Valve assessment"
+    assert blvr.number_of_valves in (None, 0)
+    assert blvr.valve_type in (None, "")
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
+    assert "31647" not in codes
+
+
 def test_thoracoscopy_note_does_not_hallucinate_ipc_from_unchecked_checkbox() -> None:
     note_text = (
         "INDICATION: Complicated Effusion.\n"
