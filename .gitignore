@@ -65,3 +65,6 @@ artifacts/
 *.tar.gz
 *.zip
 node_modules/
+
+# Unsloth runtime cache (local)
+unsloth_compiled_cache/

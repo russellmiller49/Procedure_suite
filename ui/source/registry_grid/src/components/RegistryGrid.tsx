@@ -26,6 +26,7 @@ type TreeIndex = {
 type FieldMode = "populated" | "all" | "edited";
 
 const DROPDOWNS_BY_POINTER: Record<string, Array<string | number>> = {
+  "/registry/risk_assessment/asa_class": [1, 2, 3, 4, 5, 6],
   "/registry/clinical_context/bronchus_sign": ["Positive", "Negative", "Not assessed"],
   "/registry/clinical_context/ecog_score": [0, 1, 2, 3, 4],
   "/registry/complications/bleeding/bleeding_grade_nashville": [0, 1, 2, 3, 4],
