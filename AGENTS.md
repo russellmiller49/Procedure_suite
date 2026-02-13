@@ -12,6 +12,8 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
   - Lock generation targets CPython 3.11 + `manylinux2014_x86_64`.
 - Smoke test (single note): `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
 - Smoke test (batch): `python ops/tools/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
+- Reporter random seeds (prompt->output): `python ops/tools/run_reporter_random_seeds.py --count 20 --output reporter_tests.txt --include-metadata-json`
+- Reporter findings eval: `python ops/tools/eval_reporter_prompt_llm_findings.py --max-cases 50 --output data/ml_training/reporter_prompt/v1/reporter_prompt_llm_findings_eval_report.json`
 
 ## Required Runtime Configuration
 
@@ -47,6 +49,20 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 - **Export JSON** downloads the raw server response; **Export Tables** downloads the flattened tables as an Excel-readable `.xls` (HTML).
 - Clinical tables are **registry-driven** (e.g., `registry.*.performed`) and should not hide true clinical events due to billing bundling/suppression
   (non-performed rows/cards may render dimmed when details exist).
+- **Reporter Builder**: `/ui/reporter_builder.html` now enforces client-side PHI steps before seed (`Run Detection` -> `Apply Redactions` -> `Seed Bundle`) and sends `already_scrubbed=true`.
+
+## Reporter Seed Strategy (Reporter Builder Only)
+
+- Endpoint: `POST /report/seed_from_text` (`app/api/routes/reporting.py`)
+- Env switch:
+  - `REPORTER_SEED_STRATEGY=registry_extract_fields` (default)
+  - `REPORTER_SEED_STRATEGY=llm_findings` (reporter-only structured-first path)
+- Strict mode for eval:
+  - `REPORTER_SEED_LLM_STRICT=1` returns error instead of fallback
+- LLM config for findings mode:
+  - `LLM_PROVIDER=openai_compat`
+  - `OPENAI_MODEL_STRUCTURER=gpt-5-mini`
+  - Respect `OPENAI_OFFLINE=1` / missing key behavior (fallback by default, error in strict mode)
 
 ## Recent Updates (2026-01-25)
 

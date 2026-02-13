@@ -1,0 +1,1078 @@
+Reporter random seed run
+Cases: 20
+
+====================================================================================================
+CASE 1
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_013_train.jsonl:27
+id: note_013_train:27
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Patient: 45 F
+Indication: Aspergilloma
+Airway: Tracheostomy
+Procedure: Injection of Voriconazole (50mg)
+Target: Left Lower Lobe (LLL)
+Findings: thick tan secretions
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with Aspergilloma. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+Aspergilloma
+
+POSTOPERATIVE DIAGNOSIS
+
+Aspergilloma
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 2
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_056_train.jsonl:58
+id: note_056_train:58
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Prepare an operative report for a 96 year old female undergoing bronchoscopy for airway obstruction. Note a complication: EBUS caused a tear in the distal tracheal posterior membrane. GI consult ruled out esophageal injury. Initial studded silicone stent failed because migration occurred immediately upon deployment requiring removal. Successful placement of straight silicone stent measuring 18mm x 50mm and dilation to 18 mm.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 3
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_037_train.jsonl:7
+id: note_037_train:7
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Please document IP bronchoscopy. Codes 31645, 31640, 31641 with modifier 22. Patient required switch from LMA to 7.5mm ETT due to bleeding. Bronchus Intermedius opened from 10% to 40%.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General endotracheal anesthesia.
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 4
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_079_train.jsonl:38
+id: note_079_train:38
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Patient: 80 M
+Indication: large thyroid mass / ~10 days intubation
+Procedure: Rigid Bronch, EBUS, BAL (Right Middle Lobe (RML))
+Findings: Stenosis length 4.0 cm, Left VC erythema
+Outcome: Tracheostomy by ENT
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with large thyroid mass / ~10 days intubation. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 40 mm
+
+POSTOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 40 mm
+
+PROCEDURE
+
+Bronchoalveolar Lavage (Right Middle Lobe (RML)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed in the Right Middle Lobe (RML with saline instilled and returned. Specimens were submitted.
+
+After induction of general anesthesia, a rigid bronchoscope was introduced via the mouth under direct visualization. A complete airway survey was performed.
+Therapeutic interventions performed: Therapeutic intervention.
+Hemostasis was confirmed and all instruments were withdrawn. The patient tolerated the procedure well without immediate complications.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 5
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_062_train.jsonl:42
+id: note_062_train:42
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+PATIENT: 58/F
+INDICATION: post-transplant anastomotic stricture
+PROCEDURE: Rigid Bronchoscopy, Stent Exchange (Left), Balloon Dilation (Right), BAL.
+FINDINGS: Web-like stenosis at the right bronchial anastomosis; Stent in place at LMSB with thick mucus throughout.
+DETAILS: Stent Ultraflex 12 x 40mm; Balloon Elation.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with post-transplant anastomotic stricture. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+post-transplant anastomotic stricture
+
+POSTOPERATIVE DIAGNOSIS
+
+post-transplant anastomotic stricture
+
+PROCEDURE
+
+Bronchoalveolar Lavage (BAL)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed with saline instilled and returned. Specimens were submitted.
+
+After induction of general anesthesia, a rigid bronchoscope was introduced via the mouth under direct visualization. A complete airway survey was performed.
+Therapeutic interventions performed: Mechanical Dilation (Rigid), Airway Stent Placement.
+Hemostasis was confirmed and all instruments were withdrawn. The patient tolerated the procedure well without immediate complications.
+
+Airway Stent Placement The airway was measured to determine appropriate stent sizing. A stent was deployed across the target stenosis under bronchoscopic guidance.
+
+Stent Type: Ultraflex SEMSDimensions: 12mm x 40mm
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 6
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_074_train.jsonl:64
+id: note_074_train:64
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Please generate a rigid bronchoscopy report. Patient is a 58 year old female with recurrent granulation tissue. We found a 80% obstruction in the Left Lower Lobe. Used APC and mechanical debulking to open it. Placed a Bonastent 10x20 stent in the LLL basal subsegment. Also did a BAL of the Left Upper Lobe.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with airway obstruction requiring intervention. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+airway obstruction requiring intervention
+
+POSTOPERATIVE DIAGNOSIS
+
+airway obstruction requiring intervention
+
+PROCEDURE
+
+Bronchoalveolar Lavage (BAL)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed with saline instilled and returned. Specimens were submitted.
+
+After induction of general anesthesia, a rigid bronchoscope was introduced via the mouth under direct visualization. A complete airway survey was performed.
+Therapeutic interventions performed: Argon Plasma Coagulation (APC), Airway Stent Placement.
+Hemostasis was confirmed and all instruments were withdrawn. The patient tolerated the procedure well without immediate complications.
+
+Argon Plasma Coagulation (APC): Endobronchial obstruction was treated with Argon Plasma Coagulation (APC) for tumor ablation and hemostasis.
+
+Airway Stent Placement The airway was measured to determine appropriate stent sizing. A stent was deployed across the target stenosis under bronchoscopic guidance.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 7
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_060_train.jsonl:17
+id: note_060_train:17
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Please generate an IP op note for a 59 year old female with mediastinal adenopathy and pulmonary nodules. We did a BAL at the Lateral Segment of RML and EBBX at multiple carinas. Used radial EBUS for a LLL lesion, taking biopsies. Staged mediastinum, sampled Station 7 which was Type 3, skipped the smaller nodes.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+rEBUS localization
+Radial EBUS
+Bronchoalveolar Lavage (BAL)
+Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA) (Stations 7)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed with saline instilled and returned. Specimens were submitted.
+
+Localization: Radial EBUS was performed.
+
+RML Target Sampling
+
+EBUS-TBNA Staging The endobronchial ultrasound-capable bronchoscope was introduced and a systematic mediastinal and hilar survey was performed. The following lymph node stations were identified and sampled based on ultrasound criteria:
+
+Station 7 (Subcarinal):Biopsy Tools: TBNA.
+
+Prior to withdrawal of the bronchoscope, inspection demonstrated no evidence of bleeding. The patient tolerated the procedure well. There were no immediate complications.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 8
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_001_train.jsonl:66
+id: note_001_train:66
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Pt: 65 M. S/p Ivor Lewis with BPF (2.0 cm, distal left mainstem). Proc: Bronch, Biopsy, Stenting. Complication: 14x30 mm pushed distal by 14x40 mm. Action: Removed 14x40 mm via stoma (trach exchange), retracted 14x30 mm. Plan: ICU, nebs Q6H.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+ICU, nebs Q6H
+
+====================================================================================================
+CASE 9
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_075_train.jsonl:4
+id: note_075_train:4
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Bronchoscopy report. 59yo M. Indication: Lung nodule. Procedure: Ion nav bronch to LUL Apicoposterior Segment (LB1+2) + EBUS. Findings: 0.8 cm Concentric nodule. Sampling: TBNA x5, TBBX x4, BAL. EBUS sampled Station 4R. Fiducial placed. No comps.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a 59-year-old male who presents with Lung nodule. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+LUL pulmonary nodule, 8 mm
+
+POSTOPERATIVE DIAGNOSIS
+
+LUL pulmonary nodule, 8 mm
+
+PROCEDURE
+
+rEBUS localization (Concentric)
+Radial EBUS (Concentric view)
+TBNA of LUL (5 passes)
+Transbronchial biopsy of LUL (4 samples)
+Bronchoalveolar Lavage (BAL)
+Fiducial marker placement
+Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA) (Stations 4R)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+A fiducial marker was loaded and placed under fluoroscopic guidance at the targeted airway location LUL.
+Placement was confirmed and the bronchoscope withdrawn without complication.
+
+Localization: Radial EBUS was performed.
+Target Confirmation: rEBUS demonstrated an concentric view of the lesion.
+LUL Target Sampling
+
+BAL: Bronchoalveolar lavage was performed with saline instilled and returned. Specimens were submitted.
+
+Biopsy: Transbronchial forceps biopsies were performed with a total of 4 samples collected.
+
+TBNA: Transbronchial needle aspiration was performed. A total of 5 passes were obtained from the LUL target.
+
+EBUS-TBNA Staging The endobronchial ultrasound-capable bronchoscope was introduced and a systematic mediastinal and hilar survey was performed. The following lymph node stations were identified and sampled based on ultrasound criteria:
+
+Station 4R (Right Lower Paratracheal): The node measured 8 mm by EBUS. Biopsy Tools: TBNA.
+
+Prior to withdrawal of the bronchoscope, inspection demonstrated no evidence of bleeding. The patient tolerated the procedure well. There were no immediate complications.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 10
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_043_train.jsonl:35
+id: note_043_train:35
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Please write a procedure note for a 72 year old female with a Parapneumonic Effusion. We performed a bedside ultrasound and subsequent fibrinolytic instillation on the left. Ultrasound showed Small volume with Thick loculations. We gave dose number 6 of tPA / DNase.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 11
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_070_train.jsonl:70
+id: note_070_train:70
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+41yo F D14.31. Ion bronch RUL 1.5 cm lesion. tortuous airway anatomy so used balloon. EBUS 7 Sampled. rose conclusive for adenocarcinoma. no comps.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a 41-year-old female who presents with a 15 mm RUL pulmonary nodule. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+RUL pulmonary nodule, 15 mm
+
+POSTOPERATIVE DIAGNOSIS
+
+RUL pulmonary nodule, 15 mm
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 12
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_055_train.jsonl:27
+id: note_055_train:27
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+PROCEDURE: Robotic Bronchoscopy (Ion) & EBUS.
+PATIENT: 81 M.
+TARGETS: RLL (RB6) & RLL (RB9).
+NODE: Station 4L.
+RESULT: Adenocarcinoma.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA) (Stations 4L)
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+EBUS-TBNA Staging The endobronchial ultrasound-capable bronchoscope was introduced and a systematic mediastinal and hilar survey was performed. The following lymph node stations were identified and sampled based on ultrasound criteria:
+
+Station 4L (Left Lower Paratracheal):Biopsy Tools: TBNA.
+
+Prior to withdrawal of the bronchoscope, inspection demonstrated no evidence of bleeding. The patient tolerated the procedure well. There were no immediate complications.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 13
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_049_train.jsonl:61
+id: note_049_train:61
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Bronchoscopy note for 62yo F. Dx: Airway stenosis (Right). Findings: ~5mm stenosis RMSB, malacia moderate. BAL performed RLL BAL.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a 62-year-old female who presents with a 5 mm RLL pulmonary nodule. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+Airway stenosis (Right)
+
+POSTOPERATIVE DIAGNOSIS
+
+Airway stenosis (Right)
+
+PROCEDURE
+
+Bronchoalveolar Lavage (RLL)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA Moderate
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed in the RLL with saline instilled and returned. Specimens were submitted.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 14
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_017_train.jsonl:25
+id: note_017_train:25
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Patient: 71 M
+Surgeon: Dr. Chen
+Procedure: Bronchoscopy with Stent Removal & Cryo
+Key Findings:
+- LMSB stent completely occluded by inspissated secretions
+- blood-tinged mucus plugs
+- LUL BAL performed
+Plan: Admit, polymicrobial infection, Unasyn and Dexamethasone 4 mg.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+Bronchoalveolar Lavage (BAL)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed with saline instilled and returned. Specimens were submitted.
+
+IMPRESSION / PLAN
+
+Admit, polymicrobial infection, Unasyn and Dexamethasone 4 mg
+
+====================================================================================================
+CASE 15
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_099_train.jsonl:64
+id: note_099_train:64
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Patient: 52 M
+Indication: transplant complications/stenosis
+RML Procedure: Dilation, BAL, 6mm x 22mm stent.
+Lingula Procedure: Attempted 7mm x 16mm stent (failed/removed), balloon dilation.
+Debridement: RMS using Cryotherapy.
+Complications: no active bleeding, minimal oozing
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with transplant complications/stenosis. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 6 mm
+
+POSTOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 6 mm
+
+PROCEDURE
+
+Bronchoalveolar Lavage (BAL)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS no active bleeding, minimal oozing
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed with saline instilled and returned. Specimens were submitted.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 16
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_033_valid.jsonl:10
+id: note_033_valid:10
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+47yo M w/ complicated effusion. right-sided tube. gave tpa/dnase initial dose. code 32561. no issues.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a 47-year-old male who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 17
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_043_train.jsonl:61
+id: note_043_train:61
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Procedure codes 76604 and 32562. 64 year old female. Dx: Empyema. left hemithorax US findings: Large volume. Meds: 5 mg tPA / 5 mg DNase. Comps: None.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+Empyema. left hemithorax US
+
+POSTOPERATIVE DIAGNOSIS
+
+Empyema. left hemithorax US
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 18
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_001_train.jsonl:30
+id: note_001_train:30
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Procedures: Bronchoscopy, Stent Placement (Aero 14x20 mm, 12x40 mm), Trach Exchange. Diagnosis: BPF post-esophagectomy. Indication: 1.5 cm fistula in proximal left mainstem. Complication: Stent migration requiring revision. Disposition: ICU.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with 1.5 cm fistula in proximal left mainstem. Complication: Stent migration requiring revision. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+BPF post-esophagectomy
+
+POSTOPERATIVE DIAGNOSIS
+
+BPF post-esophagectomy
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 19
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_099_train.jsonl:60
+id: note_099_train:60
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Please generate an operative report for a 56 year old male referred by Dr. Banerji. Patient has bilateral transplant complications. We did a BAL, RML stenting with a 7mm x 19mm iCast fully covered, and attempted Lingula stenting which failed and required removal. We used the Erbe for RMS debridement. Note the complex dual scope work.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with a 7 mm RML pulmonary nodule. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 7 mm
+
+POSTOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 7 mm
+
+PROCEDURE
+
+Bronchoalveolar Lavage (RML)
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed in the RML with saline instilled and returned. Specimens were submitted.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+====================================================================================================
+CASE 20
+source: /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training/note_001_train.jsonl:65
+id: note_001_train:65
+
+PROMPT
+----------------------------------------------------------------------------------------------------
+Procedures: Bronchoscopy, Stent Placement (Aero 14x20 mm, 12x40 mm), Trach Exchange. Diagnosis: BPF post-esophagectomy. Indication: 1.0 cm fistula in proximal left mainstem. Complication: Stent migration requiring revision. Disposition: ICU.
+
+OUTPUT
+----------------------------------------------------------------------------------------------------
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with 1.0 cm fistula in proximal left mainstem. Complication: Stent migration requiring revision. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+BPF post-esophagectomy
+
+POSTOPERATIVE DIAGNOSIS
+
+BPF post-esophagectomy
+
+PROCEDURE
+
+See procedure details below
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+

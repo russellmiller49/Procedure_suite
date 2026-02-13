@@ -53,6 +53,22 @@ Notable workflow features:
 - **Export JSON** downloads the raw server response; **Export Tables** downloads the flattened tables as an Excel-readable `.xls` (HTML).
 - Clinical tables should reflect **clinical reality** from `registry` (performed/details) even when a related CPT code is bundled/suppressed.
 
+## Reporter Module (Builder + Seeding)
+
+- Reporter Builder UI: `http://localhost:8000/ui/reporter_builder.html`
+- Reporter Builder enforces client-side PHI sequence before seeding:
+  - `Run Detection` -> `Apply Redactions` -> `Seed Bundle`
+- Seed endpoint: `POST /report/seed_from_text`
+- Strategy env:
+  - `REPORTER_SEED_STRATEGY=registry_extract_fields` (default)
+  - `REPORTER_SEED_STRATEGY=llm_findings` (masked prompt -> evidence-cited findings -> mapper/guardrails -> templates)
+- Strict mode:
+  - `REPORTER_SEED_LLM_STRICT=1` (error on findings failure; no fallback)
+- LLM findings mode uses existing OpenAI wiring:
+  - `LLM_PROVIDER=openai_compat`
+  - `OPENAI_MODEL_STRUCTURER=gpt-5-mini`
+  - `OPENAI_API_KEY=...`
+
 ## Recent Updates (2026-01-25)
 
 - **Schema refactor:** shared EBUS node-event types now live in `proc_schemas/shared/ebus_events.py` and are re-exported via `app/registry/schema/ebus_events.py`.
@@ -148,3 +164,10 @@ The deterministic layer includes guardrails to reduce “keyword-only” halluci
 
 - Run full suite: `make test`
 - Run targeted: `pytest -q <path>::<test_name>`
+
+## Reporter Tooling
+
+- Random reporter prompt sampling:
+  - `python ops/tools/run_reporter_random_seeds.py --count 20 --output reporter_tests.txt --include-metadata-json`
+- Findings strategy evaluation:
+  - `PROCSUITE_ALLOW_ONLINE=1 LLM_PROVIDER=openai_compat OPENAI_MODEL_STRUCTURER=gpt-5-mini python ops/tools/eval_reporter_prompt_llm_findings.py`

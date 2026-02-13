@@ -33,12 +33,7 @@ def test_unified_process_already_scrubbed(mock_registry_service, mock_phi_scrubb
         patient={"patient_id": "123"},
         procedure={"procedure_date": "2023-01-01", "indication": "Test"}
     )
-    # We need a full RegistryRecord wrapping the V2 entry
-    full_record = RegistryRecord(
-        patient=mock_record.patient,
-        procedure=mock_record.procedure,
-        # minimal fields to satisfy validation
-    )
+    full_record = RegistryRecord()
     
     extraction_result = RegistryExtractionResult(
         record=full_record,
@@ -82,10 +77,7 @@ def test_unified_process_needs_scrubbing(mock_registry_service):
         patient={"patient_id": "123"},
         procedure={"procedure_date": "2023-01-01", "indication": "Test"}
     )
-    full_record = RegistryRecord(
-        patient=mock_record.patient,
-        procedure=mock_record.procedure,
-    )
+    full_record = RegistryRecord()
     extraction_result = RegistryExtractionResult(
         record=full_record,
         cpt_codes=[],
@@ -123,10 +115,7 @@ def test_unified_process_surfaces_registry_warnings(mock_registry_service, mock_
         patient={"patient_id": "123"},
         procedure={"procedure_date": "2023-01-01", "indication": "Test"},
     )
-    full_record = RegistryRecord(
-        patient=mock_record.patient,
-        procedure=mock_record.procedure,
-    )
+    full_record = RegistryRecord()
 
     extraction_result = RegistryExtractionResult(
         record=full_record,
@@ -171,10 +160,7 @@ def test_unified_process_applies_multiple_endoscopy_rule_to_financials(
         patient={"patient_id": "123"},
         procedure={"procedure_date": "2023-01-01", "indication": "Test"},
     )
-    full_record = RegistryRecord(
-        patient=mock_record.patient,
-        procedure=mock_record.procedure,
-    )
+    full_record = RegistryRecord()
 
     extraction_result = RegistryExtractionResult(
         record=full_record,
@@ -229,10 +215,7 @@ def test_unified_process_include_v3_event_log(mock_registry_service, mock_phi_sc
         patient={"patient_id": "123"},
         procedure={"procedure_date": "2023-01-01", "indication": "Test"},
     )
-    full_record = RegistryRecord(
-        patient=mock_record.patient,
-        procedure=mock_record.procedure,
-    )
+    full_record = RegistryRecord()
     extraction_result = RegistryExtractionResult(
         record=full_record,
         cpt_codes=["31622"],

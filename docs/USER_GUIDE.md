@@ -544,6 +544,90 @@ At the top of the extraction dashboard results, the UI also shows **Suggested Mi
 
 ---
 
+## 📝 Reporter Module (Builder + Seed Strategies)
+
+Reporter Builder is available at:
+
+- `http://localhost:8000/ui/reporter_builder.html`
+
+### Reporter Builder PHI Workflow (Required Before Seed)
+
+Reporter Builder now enforces client-side PHI workflow before `Seed Bundle`:
+
+1. Click `Run Detection`
+2. Click `Apply Redactions`
+3. Then click `Seed Bundle`
+
+When seeded from Reporter Builder, the request sends `already_scrubbed=true` and the backend treats text as pre-scrubbed input for the reporter seed path.
+
+### Seed Strategy Modes (`/report/seed_from_text`)
+
+Reporter seeding is environment-controlled:
+
+- `REPORTER_SEED_STRATEGY=registry_extract_fields` (default)
+  - Uses deterministic extraction-first record seeding.
+- `REPORTER_SEED_STRATEGY=llm_findings`
+  - Reporter-only path: masked prompt -> GPT findings with evidence -> synthetic NER -> `NERToRegistryMapper` -> `ClinicalGuardrails` -> deterministic CPT derivation -> bundle/templates.
+
+Optional strict mode for eval/QA:
+
+- `REPORTER_SEED_LLM_STRICT=1`
+  - Return error if LLM findings seeding fails (no fallback).
+- Default (`0`/unset): fallback to deterministic seed and attach warning `REPORTER_SEED_FALLBACK: llm_findings_failed`.
+
+### LLM Config for Reporter Findings
+
+Use existing OpenAI-compatible wiring:
+
+- `LLM_PROVIDER=openai_compat`
+- `OPENAI_MODEL_STRUCTURER=gpt-5-mini`
+- `OPENAI_API_KEY=...`
+- `OPENAI_OFFLINE=0` (or fallback/strict behavior applies when offline)
+
+### Reporter Prompt Random Sampling Tool
+
+Generate random prompt->report samples from reporter training JSONL files:
+
+```bash
+python ops/tools/run_reporter_random_seeds.py \
+  --input-dir /home/rjm/projects/proc_suite_notes/reporter_training/reporter_training \
+  --count 20 \
+  --seed 42 \
+  --output reporter_tests.txt \
+  --include-metadata-json
+```
+
+Outputs:
+
+- `reporter_tests.txt` (human-readable prompt + output pairs)
+- `reporter_tests.json` (machine-readable metadata/case outputs; default path)
+
+To customize metadata path:
+
+```bash
+python ops/tools/run_reporter_random_seeds.py \
+  --output reporter_tests.txt \
+  --include-metadata-json \
+  --metadata-output reporter_tests_metadata.json
+```
+
+### LLM Findings Evaluation Tool
+
+Evaluate reporter LLM findings strategy on reporter prompt datasets:
+
+```bash
+PROCSUITE_ALLOW_ONLINE=1 \
+LLM_PROVIDER=openai_compat \
+OPENAI_MODEL_STRUCTURER=gpt-5-mini \
+python ops/tools/eval_reporter_prompt_llm_findings.py \
+  --input data/ml_training/reporter_prompt/v1/reporter_prompt_test.jsonl \
+  --output data/ml_training/reporter_prompt/v1/reporter_prompt_llm_findings_eval_report.json
+```
+
+This evaluator is offline-safe by default and only performs real GPT calls when `PROCSUITE_ALLOW_ONLINE=1`.
+
+---
+
 ## 🧠 Model Improvement
 
 This section covers supported workflows for improving the repo’s ML models.
@@ -1307,6 +1391,6 @@ See `docs/REPORTER_GOLD_WORKFLOW.md` for full details.
 
 ---
 
-*Last updated: January 2026*
+*Last updated: February 2026*
 run all granular python updates:
 python ops/tools/run_python_update_scripts.py
