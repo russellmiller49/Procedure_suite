@@ -1,0 +1,683 @@
+Example 1:
+
+
+Seed From Text
+29M subglottic + tracheal stenosis. flex bronch, therapeutic aspiration, balloon dilation 12/13.5/15, bona stent 14x60 deployed slightly distal, revised 0.5cm prox w forceps, sutured stent to anterior trachea w 2 angiocaths and 2-0 polyene snare technique. granulation tissue subglottis ~15% obstruction bilat. skin graft trachea 9-3 o'clock w hair follicles. sharp carina. mild webbing RUL. no complications. gen anesthesia.
+
+
+Rendered Draft
+
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with a 5 mm RUL pulmonary nodule. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+RUL pulmonary nodule, 5 mm
+
+POSTOPERATIVE DIAGNOSIS
+
+RUL pulmonary nodule, 5 mm
+
+PROCEDURE
+
+Therapeutic Aspiration
+Airway Dilation
+Airway Stent Placement
+
+ATTENDING [Name]
+ASSISTANT [Name]
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+Successful therapeutic aspiration was performed to clear the RUL of Other.
+
+Airway dilation was performed at the RUL using Balloon dilation.
+
+Airway Stent Placement The airway was measured to determine appropriate stent sizing. A stent was deployed across the target stenosis under bronchoscopic guidance.
+
+Location: RUL
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+Bundle JSON
+{
+  "patient": {
+    "name": null,
+    "age": null,
+    "sex": null,
+    "patient_id": null,
+    "mrn": null
+  },
+  "encounter": {
+    "date": null,
+    "encounter_id": null,
+    "location": null,
+    "referred_physician": null,
+    "attending": null,
+    "assistant": null
+  },
+  "procedures": [
+    {
+      "proc_type": "therapeutic_aspiration",
+      "schema_id": "therapeutic_aspiration_v1",
+      "proc_id": "therapeutic_aspiration_1",
+      "data": {
+        "airway_segment": "RUL",
+        "aspirate_type": "Other"
+      },
+      "cpt_candidates": [
+        "31636",
+        "31645"
+      ],
+      "sequence": null
+    },
+    {
+      "proc_type": "airway_dilation",
+      "schema_id": "airway_dilation_v1",
+      "proc_id": "airway_dilation_2",
+      "data": {
+        "airway_segment": "RUL",
+        "technique": "Balloon dilation",
+        "dilation_sizes_mm": [],
+        "post_dilation_diameter_mm": null,
+        "notes": null
+      },
+      "cpt_candidates": [
+        "31636",
+        "31645"
+      ],
+      "sequence": null
+    },
+    {
+      "proc_type": "airway_stent_placement",
+      "schema_id": "airway_stent_placement_v1",
+      "proc_id": "airway_stent_placement_3",
+      "data": {
+        "stent_type": null,
+        "diameter_mm": null,
+        "length_mm": null,
+        "airway_segment": "RUL",
+        "notes": null
+      },
+      "cpt_candidates": [
+        "31636",
+        "31645"
+      ],
+      "sequence": null
+    }
+  ],
+  "sedation": null,
+  "anesthesia": null,
+  "pre_anesthesia": null,
+  "indication_text": "a 5 mm RUL pulmonary nodule",
+  "preop_diagnosis_text": "RUL pulmonary nodule, 5 mm",
+  "postop_diagnosis_text": "RUL pulmonary nodule, 5 mm",
+  "impression_plan": null,
+  "estimated_blood_loss": null,
+  "complications_text": null,
+  "specimens_text": null,
+  "free_text_hint": "29M subglottic + tracheal stenosis. flex bronch, therapeutic aspiration, balloon dilation 12/13.5/15, bona stent 14x60 deployed slightly distal, revised 0.5cm prox w forceps, sutured stent to anterior trachea w 2 angiocaths and 2-0 polyene snare technique. granulation tissue subglottis ~15% obstruction bilat. skin graft trachea 9-3 o'clock w hair follicles. sharp carina. mild webbing RUL. no complications. gen anesthesia.",
+  "acknowledged_omissions": {},
+  "addons": []
+}
+
+
+Golden version:
+NTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Referred Physician Name]
+
+INDICATION FOR OPERATION The patient is a 29-year-old male who presents with subglottic stenosis and tracheal stenosis. Modifier 22 Declaration: Patient with tracheal reconstruction and subglottic stenosis required an emergent procedure for stent revision due to narrowing of the upper airway. This involved increased technical skill for placing a suture through the stent and trachea due to the tracheal flap. This required increased effort and skill (100% increased effort) due to intensity and mental effort.
+
+CONSENT Obtained before the procedure. The nature, indications, purpose, benefits, risks, potential complications, and alternatives to the procedure were discussed with the patient or surrogate decision-maker in detail. The patient or surrogate decision-maker agreed to proceed with the procedure. The patient or surrogate decision-maker read and signed the provided consent form or provided consent over the phone.
+
+PREOPERATIVE DIAGNOSIS
+
+J98.09 Other diseases of bronchus, not elsewhere classified
+
+POSTOPERATIVE DIAGNOSIS
+
+J98.09 Other diseases of bronchus, not elsewhere classified
+
+PROCEDURE
+
+Therapeutic aspiration initial episode
+
+Balloon dilation
+
+Dilate and tracheal stent placement
+
+Revision of tracheal/bronchial stent
+
+Tracheal puncture
+
+ANESTHESIA General Anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
+
+INSTRUMENTATION Flexible Therapeutic Bronchoscope.
+
+ESTIMATED BLOOD LOSS None
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After the successful induction of anesthesia, a timeout was performed confirming the patient's name, procedure type, and procedure location.
+
+Airway Inspection The Flexible Therapeutic Bronchoscope was advanced for airway examination. Endobronchial topical lidocaine was applied to the vocal cords, main carina, right carina 1, and left carina 2. A total of 4 mL of 2% lidocaine was instilled onto the vocal cords.
+
+Larynx: Raised nodules noted on the medial aspects of the arytenoids, likely consistent with irritation.
+
+Vocal Cords: Widely abducted and moving bilaterally.
+
+Subglottis: Granulation tissue noted along the left and right portions; soft but causing approximately 15% obstruction and extending approximately 1-2 cm.
+
+Trachea: The proximal and mid-trachea are abnormal. Evidence of skin graft from the 9 o'clock to 3 o'clock position; hair follicles and longer hair stubbles seen within the airway. Numerous sutures visualized with areas of pedunculated tissue around suture sites. No evidence of dehiscence or necrosis seen.
+
+Main Carina: Sharp.
+
+Right Lung Proximal Airways: Mild webbing of tissue at the RUL take-off.
+
+Left Lung Proximal Airways: Normal anatomic branching to first subsegmental level.
+
+Mucosa: Trachea as described above; more distal airways are normal.
+
+Secretions: Moderate, thin, and clear.
+
+Therapeutic Aspiration Successful therapeutic aspiration was performed to clean out the trachea, right mainstem bronchus, right upper lobe, bronchus intermedius, right middle lobe, right lower lobe, left mainstem bronchus, left upper lobe, and left lower lobe from mucus. All secretions were suctioned to clear.
+
+Airway Stent Placement A jag wire was introduced into the iGel and advanced to the LLL. The bronchoscope was removed and the jag wire left in place. A Bona stent (14 x 60 mm) was deployed under direct visualization into the trachea.
+
+Stent Revision Following deployment, the stent was noted to be approximately 0.5 cm more distal than desired. Stent revision was performed using forceps to retract the stent 0.5 cm proximally. Following revision, the stent was confirmed to be in the appropriate position.
+
+Balloon Dilation Balloon dilation was performed to expand the stent distally, mid-portion, and proximally. Balloons sized 12 mm, 13.5 mm, and 15 mm were used sequentially.
+
+Tracheal Fixation (Tracheal Puncture) A 14-gauge angiocath was used to puncture the anterior tracheal wall more superiorly. With the stent in appropriate position, the bronchoscope was used to guide a 2.0 polyene suture through the anterior trachea via the angiocath. Using forceps, the suture was grasped and pulled through the trachea and into the stent.
+
+A second 14-gauge angiocath was used to puncture the anterior tracheal wall laterally. A snare was introduced through this angiocatheter into the trachea. The snare was used to retrieve the first suture through the angiocatheter. Both sutures were pulled through the skin and then tied together at the skin. The stent was secured across 3 struts in the trachea.
+
+Conclusion The patient tolerated the procedure well. There were no immediate complications. At the conclusion of the operation, the airway device was removed.
+
+SPECIMENS
+
+None
+
+IMPRESSION / PLAN The patient is a 29-year-old male who presents for bronchoscopy for airway evaluation of tracheal stenosis.
+
+Follow-up CXR.
+
+Restart stent hygiene with Albuterol 2.5 mg nebs and 3% hypertonic saline.
+
+Add 1% lidocaine neb to assist with irritation of stent in subglottis.
+
+If able to tolerate the above, consider ambulation.
+
+Note: The proximal end of the stent is <0.5 cm below the true vocal cords.
+
+Intubation Precautions: Should the patient need to be intubated, use a 6.0 ETT and keep the cuff just below the cords to avoid dragging the stent distally with the ETT. The stent is covered and could occlude the airway.
+
+If there is concern for additional migration, will consider the addition of a second suture.
+
+
+
+example 2:
+Seed From Text
+68M persistent airleak. bronch under GA. flex therapeutic and peds scope. aspiration R mainstem, BI, L mainstem - mucus plugs. BAL lingula LB4/LB5 and RB9 60cc NS each 15cc return sent cell count micro cytology. serial occlusion arndt 7fr and fogarty balloon isolated leak to RLL lateral and posterior subsegments. inspiratory hold 30 pleurovac -20. tisseel 2cc RLL posterior subsegment. tried size 7 spiration valve RB10 too big removed. placed size 6 RB9 good position. size 6 RB10 poor position removed replaced with another size 6 better angle. final RB9 size 6 RB10 size 6. airleak significantly decreased. see thistlethwaite for VATS pleurodesis. no complications extubated in OR to recovery stable. specimens BAL x2. fu BAL results and 6 wks valve removal. modifier 22 BAL multiple lobes.
+
+Rendered Draft
+
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+PREOPERATIVE DIAGNOSIS
+
+[indication]
+
+POSTOPERATIVE DIAGNOSIS
+
+[indication]
+
+PROCEDURE
+
+Bronchoalveolar Lavage (LB4)
+
+ANESTHESIA General anesthesia.
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed in the LB4 with saline instilled and returned. Specimens were submitted.
+A total of an unspecified volume of normal saline was instilled with 15 mL returned.
+
+With an existing chest tube or IPC connected to a drainage device, sequential balloon occlusion of LB4 was performed using Arndt balloon while monitoring for cessation of bubbling/flow.
+Leak reduction with occlusion was assessed. Based on localization, valve placement or sealant application was planned as indicated. The patient tolerated the procedure well.
+
+IMPRESSION / PLAN
+
+Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+
+
+Bundle JSON
+{
+  "patient": {
+    "name": null,
+    "age": null,
+    "sex": null,
+    "patient_id": null,
+    "mrn": null
+  },
+  "encounter": {
+    "date": null,
+    "encounter_id": null,
+    "location": null,
+    "referred_physician": null,
+    "attending": null,
+    "assistant": null
+  },
+  "procedures": [
+    {
+      "proc_type": "bpf_localization_occlusion",
+      "schema_id": "bpf_localization_occlusion_v1",
+      "proc_id": "bpf_localization_occlusion_1",
+      "data": {
+        "culprit_segment": "LB4",
+        "balloon_type": "Arndt",
+        "balloon_size_mm": null,
+        "leak_reduction": null,
+        "methylene_blue_used": null,
+        "contrast_used": null,
+        "instillation_findings": null,
+        "notes": null
+      },
+      "cpt_candidates": [
+        "31624",
+        "31634",
+        "31648",
+        "32560"
+      ],
+      "sequence": null
+    },
+    {
+      "proc_type": "bal",
+      "schema_id": "bal_v1",
+      "proc_id": "bal_2",
+      "data": {
+        "lung_segment": "LB4",
+        "instilled_volume_cc": null,
+        "returned_volume_cc": 15,
+        "tests": []
+      },
+      "cpt_candidates": [
+        "31624",
+        "31634",
+        "31648",
+        "32560"
+      ],
+      "sequence": null
+    }
+  ],
+  "sedation": {
+    "type": "General",
+    "description": null
+  },
+  "anesthesia": {
+    "type": "General",
+    "description": "General anesthesia."
+  },
+  "pre_anesthesia": null,
+  "indication_text": null,
+  "preop_diagnosis_text": null,
+  "postop_diagnosis_text": null,
+  "impression_plan": null,
+  "estimated_blood_loss": null,
+  "complications_text": null,
+  "specimens_text": null,
+  "free_text_hint": "68M persistent airleak. bronch under GA. flex therapeutic and peds scope. aspiration R mainstem, BI, L mainstem - mucus plugs. BAL lingula LB4/LB5 and RB9 60cc NS each 15cc return sent cell count micro cytology. serial occlusion arndt 7fr and fogarty balloon isolated leak to RLL lateral and posterior subsegments. inspiratory hold 30 pleurovac -20. tisseel 2cc RLL posterior subsegment. tried size 7 spiration valve RB10 too big removed. placed size 6 RB9 good position. size 6 RB10 poor position removed replaced with another size 6 better angle. final RB9 size 6 RB10 size 6. airleak significantly decreased. see thistlethwaite for VATS pleurodesis. no complications extubated in OR to recovery stable. specimens BAL x2. fu BAL results and 6 wks valve removal. modifier 22 BAL multiple lobes.",
+  "acknowledged_omissions": {},
+  "addons": []
+}
+
+
+Golden version:
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [REDACTED] is a 68-year-old male who presents with persistent airleak. The nature, purpose, risks, benefits, and alternatives to Bronchoscopy were discussed with the patient in detail. The patient indicated a wish to proceed with surgery and informed consent was signed.
+
+CONSENT Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+
+PREOPERATIVE DIAGNOSIS
+
+J93.82 Other airleaks
+
+POSTOPERATIVE DIAGNOSIS
+
+J93.82 Other airleaks
+
+PROCEDURE
+
+31645 Therapeutic aspiration initial episode
+
+31624 Dx bronchoscope/lavage (BAL)
+
+31634 Balloon occlusion or placement of occlusive substance
+
+31635 Foreign body removal
+
+31647 Bronchial valve insert initial lobe
+
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+
+Note: BAL done in multiple lobes
+
+ATTENDING [Name]
+
+ASSISTANT [Fellow name]
+
+SUPPORT STAFF RN: [Name] RT: [Name]
+
+ANESTHESIA General Anesthesia
+
+MONITORING Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+
+INSTRUMENTATION Flexible Therapeutic Bronchoscope; Flexible Hybrid (Pediatric) Bronchoscope.
+
+ESTIMATED BLOOD LOSS None
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location). Patient Position: [Position]
+
+Initial Airway Inspection and Therapeutic Aspiration Successful therapeutic aspiration was performed to clean out the Right Mainstem, Bronchus Intermedius, and Left Mainstem from mucus and mucus plug.
+
+Bronchoalveolar Lavage (Lingula) Bronchoalveolar lavage was performed at the Superior Segment of Lingula (LB4) and Inferior Segment of Lingula (LB5). Instilled 60 cc of NS, suction returned with 15 cc of NS. Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+
+Bronchoalveolar Lavage (RLL) Bronchoalveolar lavage was performed at the Lateral-basal Segment of RLL (RB9). Instilled 60 cc of NS, suction returned with 15 cc of NS. Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+
+Bronchopleural Fistula Localization Serial occlusion with endobronchial blocker (Arndt 7Fr) and Fogarty balloon was done to isolate the airleak to be at the RLL (Lateral and Posterior subsegment). Airleak was reproduced with inspiratory hold at 30 and suction on pleurovac on -20cmH20.
+
+Endobronchial Sealant Application Tisseel 2cc was used to block off a subsegment of the RLL posterior branch.
+
+Endobronchial Valve Placement
+
+RB10: A Size 7 Spiration valve was placed but noted to be too large for the airway (RB10). This was subsequently removed.
+
+RB9: A Size 6 Spiration valve was placed in RB9, in good position.
+
+RB10 (Exchange): Then a size 6 Spiration valve was placed in RB10, noted to be in poor position; this was removed again and replaced with another size 6 Spiration valve in a better angle.
+
+Final Valve Configuration
+
+RB9 - size 6 Spiration valve
+
+RB10 - size 6 Spiration valve
+
+The airleak was significantly decreased. See Dr. Thistlethwaite's note for VATS and pleurodesis.
+
+The patient tolerated the procedure well. There were no immediate complications. At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition.
+
+SPECIMENS
+
+BAL (x2)
+
+IMPRESSION / PLAN
+
+[REDACTED] is a 68-year-old male who presents for bronchoscopy for BAL and valve placement.
+
+Follow-up on BAL results.
+
+Follow-up in 6 weeks for valve removal.
+
+
+
+example 3:
+ Seed From Text
+
+29M airway stenosis. gen anes. flex therapeutic scope. aspiration trachea prox/mid/distal, R mainstem, BI, L mainstem - mucus. BAL RB4/RB5 20cc NS in 10cc back, sent cell count and micro. stent migrated distally - removed BonaStent 14x60 w forceps. significant hair causing obstruction at graft level w mucus trapping - mechanically removed w forceps. gran tissue subglottic - APC 1.5mm pulse 20 effect 2 flow 0.3, 2-3 sec, ablated. airway 60% pre -> 90% post. no complications no EBL. extubated in OR to recovery stable. specimens: bonastent 14x60, BAL RML. plan: critical airway watch overnight, consider CPAP if resp failure, f/u AM w CXR. mod 22 on 31625 and 31640 for hair removal >40% increased work.
+
+
+Rendered Draft
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
+
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with a 1.5 mm RML pulmonary nodule. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+
+PREOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 1.5 mm
+
+POSTOPERATIVE DIAGNOSIS
+
+RML pulmonary nodule, 1.5 mm
+
+PROCEDURE
+
+Bronchoalveolar Lavage (RB4)
+
+ANESTHESIA General anesthesia
+
+ESTIMATED BLOOD LOSS Minimal
+
+COMPLICATIONS None
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+
+BAL: Bronchoalveolar lavage was performed in the RB4 with saline instilled and returned. Specimens were submitted.
+
+Successful therapeutic aspiration was performed to clear the RB4 of mucus.
+
+Argon Plasma Coagulation (APC): Endobronchial obstruction was treated with Argon Plasma Coagulation (APC) for tumor ablation and hemostasis. Performed at the RB4.
+
+Airway Stent Placement The airway was measured to determine appropriate stent sizing. A stent was deployed across the target stenosis under bronchoscopic guidance.
+
+Location: RB4
+
+SPECIMENS
+
+bonastent 14x60, BAL RML
+
+IMPRESSION / PLAN
+
+critical airway watch overnight, consider CPAP if resp failure, f/u AM w CXR. mod 22 on 31625 and 31640 for hair removal >40% increased work
+
+
+Bundle JSON
+
+{
+  "patient": {
+    "name": null,
+    "age": null,
+    "sex": null,
+    "patient_id": null,
+    "mrn": null
+  },
+  "encounter": {
+    "date": null,
+    "encounter_id": null,
+    "location": null,
+    "referred_physician": null,
+    "attending": null,
+    "assistant": null
+  },
+  "procedures": [
+    {
+      "proc_type": "bal",
+      "schema_id": "bal_v1",
+      "proc_id": "bal_1",
+      "data": {
+        "lung_segment": "RB4",
+        "instilled_volume_cc": null,
+        "returned_volume_cc": null,
+        "tests": []
+      },
+      "cpt_candidates": [
+        "31624",
+        "31638",
+        "31641",
+        "31645"
+      ],
+      "sequence": null
+    },
+    {
+      "proc_type": "therapeutic_aspiration",
+      "schema_id": "therapeutic_aspiration_v1",
+      "proc_id": "therapeutic_aspiration_2",
+      "data": {
+        "airway_segment": "RB4",
+        "aspirate_type": "mucus"
+      },
+      "cpt_candidates": [
+        "31624",
+        "31638",
+        "31641",
+        "31645"
+      ],
+      "sequence": null
+    },
+    {
+      "proc_type": "endobronchial_tumor_destruction",
+      "schema_id": "endobronchial_tumor_destruction_v1",
+      "proc_id": "endobronchial_tumor_destruction_3",
+      "data": {
+        "modality": "APC",
+        "airway_segment": "RB4",
+        "notes": null
+      },
+      "cpt_candidates": [
+        "31624",
+        "31638",
+        "31641",
+        "31645"
+      ],
+      "sequence": null
+    },
+    {
+      "proc_type": "airway_stent_placement",
+      "schema_id": "airway_stent_placement_v1",
+      "proc_id": "airway_stent_placement_4",
+      "data": {
+        "stent_type": null,
+        "diameter_mm": null,
+        "length_mm": null,
+        "airway_segment": "RB4",
+        "notes": null
+      },
+      "cpt_candidates": [
+        "31624",
+        "31638",
+        "31641",
+        "31645"
+      ],
+      "sequence": null
+    }
+  ],
+  "sedation": null,
+  "anesthesia": null,
+  "pre_anesthesia": null,
+  "indication_text": "a 1.5 mm RML pulmonary nodule",
+  "preop_diagnosis_text": "RML pulmonary nodule, 1.5 mm",
+  "postop_diagnosis_text": "RML pulmonary nodule, 1.5 mm",
+  "impression_plan": "critical airway watch overnight, consider CPAP if resp failure, f/u AM w CXR. mod 22 on 31625 and 31640 for hair removal >40% increased work",
+  "estimated_blood_loss": null,
+  "complications_text": null,
+  "specimens_text": "bonastent 14x60, BAL RML",
+  "free_text_hint": "29M airway stenosis. gen anes. flex therapeutic scope. aspiration trachea prox/mid/distal, R mainstem, BI, L mainstem - mucus. BAL RB4/RB5 20cc NS in 10cc back, sent cell count and micro. stent migrated distally - removed BonaStent 14x60 w forceps. significant hair causing obstruction at graft level w mucus trapping - mechanically removed w forceps. gran tissue subglottic - APC 1.5mm pulse 20 effect 2 flow 0.3, 2-3 sec, ablated. airway 60% pre -> 90% post. no complications no EBL. extubated in OR to recovery stable. specimens: bonastent 14x60, BAL RML. plan: critical airway watch overnight, consider CPAP if resp failure, f/u AM w CXR. mod 22 on 31625 and 31640 for hair removal >40% increased work.",
+  "acknowledged_omissions": {},
+  "addons": []
+}
+
+INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
+
+
+DATE OF PROCEDURE: [Date]  INDICATION FOR OPERATION [REDACTED] is a 29-year-old male who presents with airway stenosis. The nature, purpose, risks, benefits, and alternatives to Bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained. 
+
+CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional. 
+
+PREOPERATIVE DIAGNOSIS
+
+J98.09 Other diseases of bronchus, not elsewhere classified 
+
+POSTOPERATIVE DIAGNOSIS
+
+J98.09 Other diseases of bronchus, not elsewhere classified 
+
+PROCEDURE
+
+Therapeutic aspiration (31645)
+
+Bronchoalveolar lavage (BAL) (31624)
+
+Endobronchial Biopsy(s) (31625)
+
+Bronchoscopy with excision (31640)
+
+Destruction of tumor/stenosis by method other than excision (APC) (31641)
+
+Foreign body removal (31635)
+
+Modifier 22: Substantially greater work than normal. This patient required significant airway management and endobronchial hair removal. This resulted in >40% increased work due to increased intensity, technical difficulty of procedure, and physical/mental effort required. 
+
+ANESTHESIA General Anesthesia 
+
+MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure. 
+
+INSTRUMENTATION Flexible Therapeutic Bronchoscope 
+
+ESTIMATED BLOOD LOSS None 
+
+COMPLICATIONS None 
+
+PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. 
+
+Initial Airway Inspection The airway was noted to be stable but with significant airway pressure. A stent was noted to be migrated distally. 
+
+Therapeutic Aspiration Successful therapeutic aspiration was performed to clean out the Trachea (Proximal 1/3), Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius, and Left Mainstem from mucus.
+
+Bronchoalveolar Lavage BAL was performed in the Lateral Segment of RML (RB4) and Medial Segment of RML (RB5) with saline instilled and returned. Instilled 20 cc of NS, suction returned with 10 cc of NS. Samples were sent for Cell Count and Microbiology (Cultures/Viral/Fungal).
+
+Foreign Body Removal A foreign body (stent) was visualized in the distal trachea. The BonaStent (14x60) was removed with forceps.
+
+Excision of Lesion / Obstruction Endobronchial obstruction was noted and excised with mechanical debridement. A significant amount of hair was noted causing endobronchial obstruction at the level of the graft, leading to mucus trapping; these were mechanically removed with forceps.
+
+Endobronchial Tumor Destruction (APC) Endobronchial obstruction at the Subglottic level was treated with APC. Significant granulation tissue was noted and ablated to reduce obstruction using the following settings: 1.5mm probe, Pulse 20 effect 2, flow 0.3, for a duration of 2-3 seconds. Prior to treatment, affected airway was noted to be 60% patent. After treatment, the airway was 90% patent.
+
+The patient tolerated the procedure well. There were no immediate complications. At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition.
+
+SPECIMENS
+
+Bonastent 14x60 
+
+BAL RML 
+
+IMPRESSION / PLAN
+
+[REDACTED] is a 29-year-old male who presents for bronchoscopy for airway stenosis. 
+
+Critical airway watch for overnight. 
+
+Consider CPAP overnight if patient goes into respiratory failure. 
+
+Follow-up in AM with CXR.

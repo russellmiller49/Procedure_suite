@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-07T10:27:56-08:00`
-Git: `main` @ `223eeb7`
+Generated: `2026-02-13T16:37:36-08:00`
+Git: `main` @ `f377ae6`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -52,10 +52,12 @@ Git: `main` @ `223eeb7`
      5339  ml/scripts/validate_ner_alignment.py
      5453  ml/scripts/sanitize_platinum_spans.py
      5540  ops/tools/build_registry_bundle.py
+     5764  ml/scripts/split_reporter_prompt_dataset.py
      5924  ml/scripts/ingest_phase0_data.py
      5946  ml/scripts/normalize_phi_labels.py
      6097  ops/tools/bootstrap_granular_ner_bundle.py
      6370  ops/tools/bootstrap_phi_redactor_vendor_bundle.py
+     6402  ml/scripts/split_reporter_gold_dataset.py
      6413  ml/scripts/add_training_case.py
      6432  ml/scripts/eval_registry_granular.py
      6651  ops/tools/validate_knowledge_release.py
@@ -74,6 +76,8 @@ Git: `main` @ `223eeb7`
      8169  ml/scripts/export_patient_note_texts.py
      8204  ops/tools/test_phi_redaction_sample.py
      8398  ml/scripts/prodigy_prepare_registry_relabel_batch.py
+     8430  ml/scripts/build_reporter_prompt_dataset.py
+     8856  ops/tools/eval_reporter_gold_dataset.py
      9036  ml/scripts/find_critical_failures.py
      9061  ops/tools/generate_procedure_suite_one_pager_pdf.py
      9075  ml/scripts/fit_thresholds_from_eval.py
@@ -81,15 +85,19 @@ Git: `main` @ `223eeb7`
      9581  ml/scripts/registry_label_overlap_report.py
      9603  ml/scripts/align_synthetic_names.py
      9715  ops/tools/registry_pipeline_smoke.py
+    10264  ops/tools/run_reporter_random_seeds.py
     10375  ml/scripts/diamond_loop_cloud_sync.py
     10664  ml/scripts/merge_granular_attribute_spans.py
     11135  ops/tools/generate_cpt_keywords.py
     11237  ml/scripts/evaluate_coder.py
     11270  ml/scripts/scrub_golden_jsons.py
     11525  ml/scripts/prodigy_export_corrections.py
+    12022  ml/scripts/train_reporter_prompt_to_bundle_unsloth.py
     12109  ops/tools/export_phi_model_for_transformersjs.py
     12156  ml/scripts/convert_spans_to_bio.py
+    13386  ops/tools/eval_reporter_prompt_baseline.py
     13510  ml/scripts/extract_ner_from_excel.py
+    14196  ops/tools/eval_reporter_prompt_llm_findings.py
     14201  ops/tools/index_repo.py
     14551  ml/scripts/review_llm_fallback_errors.py
     14712  ops/tools/unified_pipeline_batch.py
@@ -104,13 +112,17 @@ Git: `main` @ `223eeb7`
     17037  ml/scripts/prodigy_prepare_phi_batch.py
     18192  ml/scripts/build_model_agnostic_phi_spans.py
     18203  ml/scripts/generate_synthetic_phi_data.py
+    18478  ops/tools/eval_reporter_prompt_model.py
     20516  ml/scripts/audit_model_fp.py
     20937  ml/scripts/train_roberta_pm3.py
+    23393  ml/scripts/train_reporter_prompt_to_bundle.py
     23467  ml/scripts/fix_alignment.py
     24804  ml/scripts/train_distilbert_ner.py
     25247  ml/scripts/prodigy_prepare_registry.py
+    25880  ml/scripts/distill_reporter_bundle_targets.py
     26361  ml/scripts/train_registry_ner.py
     27152  ml/scripts/golden_to_csv.py
+    33772  ml/scripts/generate_reporter_gold_dataset.py
     34563  ml/scripts/validate_golden_extractions.py
     37436  ml/scripts/distill_phi_labels.py
     48970  ml/scripts/train_roberta.py
@@ -139,7 +151,7 @@ Git: `main` @ `223eeb7`
        39  app/registry/processing/__init__.py
        46  tests/integration/test_placeholder.py
        50  app/registry/audit/__init__.py
-       51  app/api/routes/__init__.py
+       55  app/reporting/util/__init__.py
        56  app/registry/evidence/__init__.py
        57  app/extraction/postprocessing/__init__.py
        58  app/registry/pipelines/__init__.py
@@ -150,10 +162,12 @@ Git: `main` @ `223eeb7`
        72  app/domain/procedure_store/__init__.py
        75  app/coder/domain_rules/registry_to_cpt/__init__.py
        90  app/registry/extraction/__init__.py
+      105  app/registry/infra/__init__.py
       113  app/domain/text/__init__.py
       116  app/coder/adapters/persistence/__init__.py
       123  app/domain/reasoning/__init__.py
       123  app/domain/rvu/__init__.py
+      126  app/reporting/normalization/__init__.py
       129  app/common/rules_engine/__init__.py
       132  app/registry/legacy/__init__.py
       132  app/registry_store/__init__.py
@@ -167,6 +181,7 @@ Git: `main` @ `223eeb7`
       194  app/infra/__init__.py
       200  app/reporter/__init__.py
       201  app/registry/extractors/__init__.py
+      213  app/api/routes/__init__.py
       215  app/llm/__init__.py
       215  app/registry/adapters/v3_to_v2.py
       218  app/phi/__init__.py
@@ -180,14 +195,17 @@ Git: `main` @ `223eeb7`
       332  app/api/services/__init__.py
       332  tests/ml_coder/test_registry_label_schema.py
       340  tests/helpers/phi_asserts.py
+      345  app/reporting/normalization/types.py
       358  tests/unit/test_cpt_cleaning.py
       369  app/coder/domain_rules/registry_to_cpt/types.py
       369  tests/unit/test_templates.py
       393  app/reporting/second_pass/station_consistency.py
       398  app/coder/adapters/llm/noop_advisor.py
       405  app/ner/__init__.py
+      446  app/registry/completeness/__init__.py
       458  tests/coder/test_registry_to_cpt_rules_pure_registry.py
       478  app/phi/safety/__init__.py
+      480  app/reporting/normalization/compat_types.py
       486  app/agents/structurer/structurer_agent.py
       500  app/registry/extractors/noop.py
       521  app/registry/ner_mapping/__init__.py
@@ -207,6 +225,7 @@ Git: `main` @ `223eeb7`
       615  app/reporting/second_pass/counts_backfill.py
       628  tests/registry/test_tracheostomy_route.py
       630  proc_schemas/billing.py
+      634  tests/registry/_notes_path.py
       639  proc_schemas/clinical/__init__.py
       651  tests/unit/test_schemas.py
       666  proc_schemas/__init__.py
@@ -217,12 +236,15 @@ Git: `main` @ `223eeb7`
       715  ml/lib/ml_coder/__init__.py
       716  app/coder/parallel_pathway/__init__.py
       731  app/reporting/second_pass/laterality_guard.py
-      752  tests/registry/test_openai_model_structurer_override.py
       753  tests/unit/test_qa_pipeline_serialization.py
+      756  app/registry/constants/__init__.py
       781  proc_schemas/envelope_models.py
+      784  tests/api/test_registry_service_dependency_resilience.py
       785  app/domain/coding_rules/__init__.py
       789  tests/registry/test_deterministic_extractors_outcomes.py
       798  tests/coder/test_candidate_expansion.py
+      804  app/registry/constants/field_paths.py
+      807  tests/registry/test_openai_model_structurer_override.py
       812  app/phi/adapters/encryption_insecure_demo.py
       823  app/registry/slots/imaging.py
       829  tests/coder/test_parallel_confidence_combiner.py
@@ -232,15 +254,17 @@ Git: `main` @ `223eeb7`
       859  app/reporting/coder_view.py
       874  app/domain/knowledge_base/models.py
       874  app/registry/pipelines/v3_pipeline.py
+      874  tests/registry/test_note_240_cao_regression.py
       886  app/registry/application/__init__.py
       887  tests/api/test_ui.py
       896  tests/unit/test_inference_engine.py
       901  app/registry/__init__.py
       901  tests/scripts/test_train_roberta_cli.py
+      906  app/reporting/normalization/normalize.py
       907  app/infra/perf.py
+      912  tests/registry/test_complications_reconcile_precision.py
       918  tests/registry/test_navigation_targets_numbered_targets.py
       926  ml/lib/ml_coder/utils.py
-      937  tests/registry/test_note_240_cao_regression.py
       947  tests/scripts/test_audit_model_fp_cli.py
       963  app/coder/domain_rules/registry_to_cpt/engine.py
       964  app/registry/extractors/disease_burden.py
@@ -248,23 +272,28 @@ Git: `main` @ `223eeb7`
       972  app/registry/self_correction/types.py
       995  tests/phi/test_fernet_encryption_adapter.py
       996  app/api/guards.py
+     1004  app/registry/constants/warnings.py
+     1021  app/api/registry_payload.py
      1064  app/coder/__init__.py
      1068  tests/registry/test_clinical_guardrails_radial_linear.py
+     1090  app/registry/heuristics/__init__.py
      1099  tests/registry/test_clinical_guardrails_tbna_peripheral_context.py
      1118  tests/registry/test_clinical_guardrails_endobronchial_biopsy.py
      1123  app/coder/types.py
      1131  tests/registry/test_slots_ebus_tblb.py
+     1135  tests/registry/test_note_164_disease_burden_and_cao_regression.py
      1136  app/registry/schema_filter.py
      1137  tests/unit/test_normalize_phi_labels.py
      1141  ml/lib/ml_coder/valid_ip_codes.py
      1155  app/registry/slots/disposition.py
+     1177  tests/reporting/test_normalization_idempotent.py
      1180  tests/registry/test_schema_filter.py
      1192  tests/registry/test_structurer_fallback.py
      1197  tests/scripts/test_train_registry_ner_allowlist.py
      1197  tests/unit/test_knowledge.py
-     1198  tests/registry/test_note_164_disease_burden_and_cao_regression.py
      1210  app/registry/slots/pleura.py
      1212  app/common/exceptions.py
+     1218  app/registry/heuristics/pipeline.py
      1220  tests/coding/test_sectionizer.py
      1262  tests/coding/test_peripheral_rules.py
      1275  app/phi/adapters/scrubber_stub.py
@@ -282,6 +311,7 @@ Git: `main` @ `223eeb7`
      1372  app/api/readiness.py
      1372  tests/api/conftest.py
      1378  tests/phi/test_presidio_nlp_backend_smoke.py
+     1395  tests/unit/test_reporter_bundle_codec.py
      1397  app/registry_store/phi_gate.py
      1408  tests/registry/test_registry_engine_merge_llm_and_seed.py
      1413  tests/registry/test_llm_timeout_fallback.py
@@ -292,18 +322,23 @@ Git: `main` @ `223eeb7`
      1456  app/registry/schema_granular.py
      1461  app/phi/db.py
      1470  app/domain/reasoning/models.py
-     1471  app/api/schemas/__init__.py
      1481  tests/coding/test_hierarchy_normalization.py
      1503  tests/registry/test_table_row_masking_regressions.py
+     1506  tests/reporting/test_validation_path_access.py
+     1521  app/api/schemas/__init__.py
+     1525  tests/scripts/test_build_reporter_prompt_dataset.py
      1539  app/registry/slots/complications.py
      1542  app/domain/knowledge_base/repository.py
      1548  app/common/rules_engine/ncci.py
      1551  proc_schemas/procedure_report.py
      1552  app/coder/reconciliation/__init__.py
      1557  tests/test_openai_responses_parse.py
+     1564  tests/registry/test_raw_ml_unavailable_fallback.py
      1570  app/registry/ml/__init__.py
      1601  ops/preflight.py
      1601  tests/registry/test_registry_to_cpt_mechanical_debulking.py
+     1621  tests/registry/test_eus_b_sampling_regressions.py
+     1625  tests/registry/test_tbna_conventional_cull.py
      1671  app/infra/llm_control.py
      1678  tests/scripts/test_prodigy_export_registry.py
      1682  tests/registry/test_clinical_guardrails_stent_inspection.py
@@ -313,7 +348,9 @@ Git: `main` @ `223eeb7`
      1727  tests/registry/test_note_279_regression.py
      1731  app/domain/text/negation.py
      1732  tests/registry/test_clinical_guardrails_checkbox_negative.py
+     1754  tests/scripts/test_split_reporter_prompt_dataset.py
      1757  ml/lib/ml_coder/preprocessing.py
+     1759  app/reporting/util/path_access.py
      1759  tests/registry/test_kitchen_sink_extraction_first.py
      1763  tests/registry/test_navigation_fiducials.py
      1767  tests/utils/case_filter.py
@@ -322,27 +359,33 @@ Git: `main` @ `223eeb7`
      1833  proc_schemas/reasoning.py
      1838  tests/registry/test_pleural_extraction.py
      1847  app/coder/parallel_pathway/reconciler.py
+     1869  ml/lib/reporter_prompt_masking.py
      1871  tests/coder/test_parallel_pathway_orchestrator_path_b.py
      1872  tests/registry/test_new_extractors.py
      1873  app/registry_store/dependencies.py
      1873  tests/integration/api/test_health_endpoint.py
      1878  proc_schemas/shared/ebus_events.py
      1915  tests/coder/test_ncci_ptp_indicator.py
+     1924  tests/unit/test_reporter_json_parse.py
      1929  app/coder/constants.py
+     1941  tests/api/test_report_seed_llm_findings.py
      1953  tests/api/test_phi_demo_cases.py
+     1971  tests/scripts/test_split_reporter_gold_dataset.py
      1981  app/coder/phi_gating.py
      1995  app/phi/ports.py
+     1999  tests/registry/test_ip_v3_schema_refactor.py
      2003  app/registry/legacy/supabase_sink.py
      2027  app/registry/audit/audit_types.py
      2028  app/agents/parser/parser_agent.py
      2077  app/registry/slots/dilation.py
      2079  app/registry_store/models.py
+     2086  tests/api/test_startup_settings.py
      2107  ml/lib/ml_coder/training_losses.py
      2123  tests/scripts/test_merge_granular_attribute_spans.py
      2132  app/coder/peripheral_rules.py
      2132  app/registry/label_fields.py
      2143  app/reporting/metadata.py
-     2159  tests/registry/test_ebus_postprocess_enrichment.py
+     2144  tests/registry/test_heuristics_modules.py
      2164  app/registry/self_correction/__init__.py
      2167  app/registry/legacy/adapters/base.py
      2174  tests/test_ip_registry_schema_guardrails.py
@@ -351,11 +394,15 @@ Git: `main` @ `223eeb7`
      2213  app/reporting/__init__.py
      2246  ml/lib/ml_coder/self_correction.py
      2256  tests/unit/test_phi_distillation.py
+     2258  app/reporting/macro_engine_template_adapter.py
      2267  tests/registry/test_pathology_extraction.py
      2288  tests/registry/test_schema_refactor_smoke.py
      2296  tests/reporter/test_questions_builder.py
+     2311  tests/scripts/test_eval_reporter_gold_dataset.py
      2312  app/registry/slots/sedation.py
      2342  tests/conftest.py
+     2352  tests/api/test_render_request_normalization.py
+     2362  tests/scripts/test_distill_reporter_bundle_targets.py
      2374  tests/scripts/test_prodigy_export_registry_file_mode.py
      2406  tests/registry/test_keyword_guard_omissions.py
      2409  tests/registry/test_registry_to_cpt_fibrinolytic_therapy.py
@@ -365,6 +412,7 @@ Git: `main` @ `223eeb7`
      2472  app/reporter/prompts.py
      2475  app/proc_ml_advisor/__init__.py
      2480  app/llm/client.py
+     2582  app/api/routes/legacy_registry.py
      2582  app/reporting/inference.py
      2597  tests/registry/test_extraction_first_flow.py
      2608  app/phi/safety/protected_terms.py
@@ -373,7 +421,9 @@ Git: `main` @ `223eeb7`
      2713  app/common/text_io.py
      2745  tests/registry/test_header_scan.py
      2764  app/domain/coding_rules/mer.py
+     2764  app/registry/heuristics/granular_warning_reconcile.py
      2784  app/domain/coding_rules/ncci.py
+     2791  tests/registry/test_ebus_postprocess_enrichment.py
      2797  tests/coding/test_phi_gating.py
      2804  app/domain/rvu/calculator.py
      2832  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
@@ -382,6 +432,7 @@ Git: `main` @ `223eeb7`
      2849  app/api/routes/phi_demo_cases.py
      2875  tests/test_clean_ip_registry.py
      2906  app/reporter/cli.py
+     2914  tests/reporting/test_macro_engine_template_adapter_parity.py
      2923  app/common/rvu_calc.py
      2974  tests/coding/test_sectionizer_integration.py
      2977  tests/unit/test_openai_timeouts.py
@@ -397,17 +448,20 @@ Git: `main` @ `223eeb7`
      3163  ml/lib/ml_coder/distillation_io.py
      3186  app/registry/summarize.py
      3188  app/common/rules_engine/dsl.py
+     3190  tests/reporting/test_macro_registry_isolation.py
+     3197  config/startup_settings.py
      3198  tests/registry/test_navigation_targets_inline_target.py
      3251  tests/registry/test_note_300_multilobe_navigation_regression.py
      3252  app/infra/cache.py
      3259  tests/registry/test_focusing_audit_guardrail.py
      3260  tests/coder/test_ncci_bundling_excludes_financials.py
      3307  app/registry/legacy/adapter.py
-     3342  tests/registry/test_outcomes_success_status.py
+     3328  tests/registry/test_model_provider.py
      3379  app/coder/peripheral_extractor.py
      3399  app/infra/settings.py
      3463  tests/registry/test_v3_note_281_narrative_first_and_anchors.py
      3516  tests/unit/test_sanitize_dataset.py
+     3571  tests/api/test_qa_reporter_prompt_seed.py
      3622  app/coder/posthoc.py
      3629  tests/scripts/test_prodigy_prepare_registry.py
      3644  proc_schemas/coding.py
@@ -416,35 +470,34 @@ Git: `main` @ `223eeb7`
      3686  ml/lib/ml_coder/registry_label_schema.py
      3692  app/registry/slots/blvr.py
      3694  app/api/phi_redaction.py
-     3701  tests/registry/test_masking.py
      3774  app/common/knowledge_schema.py
      3795  app/common/model_capabilities.py
      3819  app/api/phi_dependencies.py
      3833  tests/api/test_qa_run_fallback_control.py
+     3835  tests/reporting/test_category_macros_externalized.py
      3838  tests/integration/test_pipeline_integrity.py
+     3882  app/registry/heuristics/coverage_checks.py
      3887  app/registry/extraction/focus.py
-     3905  tests/registry/test_linear_ebus_stations_detail.py
+     3931  app/registry/heuristics/cao_detail.py
      3944  ml/lib/ml_coder/registry_label_constraints.py
      3954  app/coder/schema.py
      3965  config/settings.py
      3970  app/agents/contracts.py
      3996  app/registry/tags.py
+     4035  tests/scripts/test_generate_reporter_gold_dataset.py
      4070  app/registry/self_correction/prompt_improvement.py
      4071  tests/registry/test_note_281_elastography_regression.py
      4208  tests/unit/test_phi_platinum_filters.py
      4210  tests/registry/test_disease_burden_overrides.py
      4239  app/registry/slots/stent.py
      4248  tests/registry/test_ner_to_registry_mapper.py
-     4289  tests/registry/test_deterministic_extractors_phase6.py
      4331  tests/phi/test_models.py
      4359  ops/warm_models.py
      4390  app/registry_cleaning/logging_utils.py
      4395  app/registry/audit/compare.py
      4399  tests/phi/test_presidio_scrubber_adapter.py
-     4404  app/reporting/partial_schemas.py
      4413  tests/registry/test_registry_to_cpt_thoracoscopy_biopsy.py
      4461  proc_schemas/clinical/common.py
-     4470  tests/registry/test_post_fix_regressions.py
      4489  tests/phi/test_manual_scrub.py
      4491  tests/registry/test_disease_burden_extractor.py
      4494  app/registry/ebus_config.py
@@ -452,43 +505,56 @@ Git: `main` @ `223eeb7`
      4518  tests/registry/test_registry_engine_sanitization.py
      4528  app/api/services/financials.py
      4530  tests/registry/test_derive_procedures_from_granular_consistency.py
+     4535  tests/registry/test_linear_ebus_stations_detail.py
      4560  app/registry/self_correction/judge.py
      4578  tests/api/test_coding_phi_gating.py
-     4583  tests/registry/test_note_002_regression.py
+     4619  tests/reporting/test_debug_notes_gating.py
+     4705  app/reporting/partial_schemas.py
+     4747  app/api/bootstrap.py
+     4748  tests/registry/test_outcomes_success_status.py
+     4758  tests/registry/test_note_002_regression.py
      4782  app/common/sectionizer.py
      4800  tests/registry/test_evidence_required_policy.py
+     4829  tests/reporting/test_render_parity_normalization.py
      4946  tests/registry/test_auditor_raw_ml_only.py
-     5038  tests/registry/test_ebus_postprocess_fallback.py
      5041  app/coder/adapters/nlp/simple_negation_detector.py
      5048  docs/phi_review_system/backend/main.py
-     5074  tests/registry/test_keyword_guard_overrides.py
      5095  app/registry/cli.py
+     5105  ml/lib/reporter_json_parse.py
+     5115  tests/reporting/test_pipeline_parity.py
      5162  tests/coding/test_rules_engine_phase1.py
      5164  tests/unit/test_openai_payload_compat.py
+     5219  ml/lib/reporter_bundle_codec.py
      5334  app/api/phi_demo_store.py
      5347  app/api/schemas/qa.py
-     5372  tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py
+     5353  tests/registry/test_masking.py
      5386  app/api/gemini_client.py
      5633  app/coder/ebus_rules.py
      5649  app/phi/models.py
+     5652  tests/registry/test_keyword_guard_overrides.py
      5658  tests/registry/test_cao_interventions_detail.py
      5702  app/registry/deterministic/anatomy.py
      5802  app/reporting/json_patch.py
+     5924  app/api/routes/legacy_coder.py
      5967  tests/registry/test_ner_procedure_extractor.py
+     5993  tests/registry/test_post_fix_regressions.py
      6000  app/ner/entity_types.py
+     6017  tests/registry/test_ebus_postprocess_fallback.py
+     6022  app/registry/heuristics/linear_ebus_station_detail.py
      6127  tests/api/test_phi_redaction.py
+     6137  tests/registry/test_deterministic_extractors_phase6.py
      6150  app/coder/parallel_pathway/confidence_combiner.py
      6160  tests/integration/test_phi_workflow_end_to_end.py
+     6165  tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py
      6200  app/coder/ncci.py
-     6200  app/registry/postprocess/complications_reconcile.py
      6252  app/registry_cleaning/consistency_utils.py
      6254  tests/unit/test_phi_distillation_refinery.py
      6296  tests/registry/test_audit_compare_report.py
      6398  app/registry/processing/navigation_fiducials.py
+     6408  app/reporting/macro_registry.py
      6423  tests/phi/test_service.py
      6438  app/domain/procedure_store/repository.py
      6485  proc_schemas/clinical/pleural.py
-     6530  tests/registry/test_fixpack_device_action_regressions.py
      6559  app/infra/nlp_warmup.py
      6588  tests/registry/test_registry_qa_regressions.py
      6623  app/coder/cli.py
@@ -496,17 +562,18 @@ Git: `main` @ `223eeb7`
      6912  app/registry/slots/therapeutics.py
      6919  tests/integration/api/test_startup_warmup.py
      7025  app/reporting/ip_addons.py
+     7029  app/api/routes/qa.py
      7036  app/registry/self_correction/apply.py
      7106  app/coder/application/candidate_expansion.py
      7160  app/agents/run_pipeline.py
+     7160  app/registry/infra/model_provider.py
      7295  tests/integration/coder/test_coding_service.py
      7298  tests/api/test_registry_runs.py
      7367  tests/api/test_phi_endpoints.py
+     7409  tests/registry/test_fixpack_device_action_regressions.py
      7450  tests/registry/test_self_correction_validation.py
      7526  app/domain/coding_rules/evidence_context.py
      7599  app/registry/model_runtime.py
-     7614  app/api/schemas/base.py
-     7660  tests/api/test_phi_redactor_ui.py
      7671  app/coder/adapters/ml_ranker.py
      7673  tests/unit/test_no_legacy_imports.py
      7823  tests/registry/test_registry_extraction_ebus.py
@@ -514,96 +581,103 @@ Git: `main` @ `223eeb7`
      8145  app/coder/adapters/persistence/inmemory_procedure_store.py
      8181  tests/ml_coder/test_registry_predictor.py
      8223  tests/coder/test_rules_engine.py
-     8299  tests/registry/test_fixpack_batch2.py
+     8314  tests/api/test_phi_redactor_ui.py
      8411  app/registry/inference_pytorch.py
      8427  app/registry_cleaning/clinical_qc.py
+     8492  tests/registry/test_fixpack_batch2.py
      8540  app/registry/ml/evaluate.py
      8598  tests/coder/test_hierarchy_bundling_fixes.py
      8648  app/coder/application/procedure_type_detector.py
      8691  tests/coding/test_json_rules_parity.py
      8694  app/api/coder_adapter.py
-     8979  tests/registry/test_parallel_ner_uplift_evidence.py
      9005  app/api/routes/metrics.py
-     9121  app/api/services/unified_pipeline.py
-     9156  tests/api/test_unified_process.py
+     9056  tests/api/test_unified_process.py
      9276  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9381  app/registry/processing/focus.py
      9451  tests/ml_coder/test_training_pipeline.py
      9467  tests/ml_coder/test_case_difficulty.py
+     9470  app/reporting/validation.py
      9484  ml/lib/ml_coder/training.py
      9730  app/phi/service.py
      9842  tests/unit/test_extraction_adapters.py
      9940  tests/reporter/test_golden_examples.py
-    10007  tests/registry/test_registry_guardrails.py
-    10017  app/reporting/validation.py
     10056  ml/lib/ml_coder/predictor.py
     10063  tests/unit/test_procedure_type_detector.py
     10402  app/api/routes_registry.py
     10712  app/registry/postprocess/template_checkbox_negation.py
     10787  tests/unit/test_inmemory_procedure_store.py
     10930  tests/registry/test_ebus_config_station_count.py
+    10934  app/api/services/unified_pipeline.py
     11177  tests/test_phi_redaction_contract.py
-    11253  app/registry/application/registry_builder.py
+    11197  app/api/schemas/base.py
     11289  app/coder/adapters/nlp/keyword_mapping_loader.py
+    11290  tests/registry/test_registry_guardrails.py
     11392  app/common/knowledge.py
     11451  app/api/routes/phi.py
     11787  app/registry/application/pathology_extraction.py
     11946  app/registry/legacy/adapters/pleural.py
-    12015  proc_schemas/registry/ip_v3.py
+    11975  app/reporting/normalization/text_enricher.py
     12339  app/registry_cleaning/schema_utils.py
-    12446  app/registry/self_correction/validation.py
     12446  docs/phi_review_system/backend/dependencies.py
     12485  app/registry/extractors/v3_extractor.py
+    12488  app/registry/heuristics/navigation_targets.py
     12533  app/domain/knowledge_base/validator.py
     12625  tests/ml_coder/test_data_prep.py
     12657  docs/phi_review_system/backend/schemas.py
     12988  tests/coder/test_smart_hybrid_policy.py
     13172  tests/unit/test_openai_responses_primary.py
-    13331  app/registry/processing/masking.py
     13405  app/coder/application/coding_service.py
     13483  app/coder/domain_rules/__init__.py
     13688  app/coder/rules.py
+    13689  app/registry/application/registry_builder.py
     13766  tests/registry/test_self_correction_loop.py
+    13862  app/registry/self_correction/validation.py
     13936  tests/ml_advisor/test_router.py
-    14010  app/registry/processing/linear_ebus_stations_detail.py
     14127  tests/integration/persistence/test_supabase_procedure_store.py
     14244  ml/lib/ml_coder/registry_predictor.py
     14393  app/registry/ml/models.py
     14462  tests/integration/coder/test_hybrid_policy.py
     14585  docs/phi_review_system/backend/models.py
-    14657  app/registry/audit/raw_ml_auditor.py
+    14649  app/registry/postprocess/complications_reconcile.py
     14872  tests/phi/test_veto_regression.py
     14928  app/registry/schema/adapters/v3_to_v2.py
+    15056  proc_schemas/registry/ip_v3.py
     15130  app/registry/v2_booleans.py
+    15188  app/api/routes/reporting.py
+    15201  app/registry/processing/masking.py
     15235  tests/unit/test_dsl.py
     15259  app/domain/coding_rules/json_rules_evaluator.py
     15342  tests/registry/test_action_predictor.py
+    15385  app/registry/audit/raw_ml_auditor.py
     15404  app/autocode/ip_kb/canonical_rules.py
     15490  ml/lib/ml_coder/registry_training.py
     15537  tests/reporter/test_ip_addons.py
     15580  app/api/routes/registry_runs.py
     15622  app/coder/reconciliation/pipeline.py
-    15627  app/api/dependencies.py
     15637  tests/registry/test_extraction_quality.py
     15796  app/ner/inference.py
     15812  app/registry/ner_mapping/station_extractor.py
     15853  tests/registry/test_normalization.py
     15991  tests/api/test_fastapi.py
     16020  app/coder/rules_engine.py
-    16250  app/registry/application/cpt_registry_mapping.py
+    16387  app/registry/application/cpt_registry_mapping.py
+    16524  app/api/dependencies.py
+    16552  tests/reporting/test_llm_findings.py
     16604  tests/integration/api/test_metrics_endpoint.py
-    16605  app/registry/ner_mapping/procedure_extractor.py
     16910  tests/ml_coder/test_registry_first_data_prep.py
     17006  app/phi/safety/veto.py
-    17091  app/registry/application/coding_support_builder.py
     17161  proc_schemas/clinical/airway.py
     17248  app/common/openai_responses.py
+    17279  app/registry/application/coding_support_builder.py
     17309  app/coder/reconciliation/reconciler.py
+    17455  app/registry/ner_mapping/procedure_extractor.py
     17842  app/coder/adapters/llm/gemini_advisor.py
+    17936  app/api/fastapi_app.py
     17939  tests/unit/test_template_coverage.py
     17940  app/registry/evidence/verifier.py
     17947  app/registry/normalization.py
     18048  app/api/services/qa_pipeline.py
+    18299  tests/registry/test_parallel_ner_uplift_evidence.py
     18760  app/registry/inference_onnx.py
     18912  tests/ml_coder/test_label_hydrator.py
     18921  tests/api/test_registry_extract_endpoint.py
@@ -612,42 +686,45 @@ Git: `main` @ `223eeb7`
     19751  tests/integration/api/test_registry_endpoints.py
     20079  app/registry_cleaning/cpt_utils.py
     20190  tests/registry/test_cao_extraction.py
+    20233  app/registry/completeness/missing_field_prompts.py
     20268  app/coder/parallel_pathway/orchestrator.py
     20422  app/registry/model_bootstrap.py
     20519  app/registry/extractors/llm_detailed.py
+    20815  app/reporting/macro_engine.py
     21200  app/coder/adapters/llm/openai_compat_advisor.py
-    21224  tests/coder/test_coding_rules_phase7.py
     21434  app/domain/coding_rules/rule_engine.py
     21452  app/coder/adapters/persistence/supabase_procedure_store.py
     21459  tests/coder/test_reconciliation.py
     21514  tests/test_registry_normalization.py
+    21728  app/registry/processing/linear_ebus_stations_detail.py
     21983  app/reporting/questions.py
     22217  tests/reporter/test_macro_engine_features.py
     22565  app/phi/adapters/presidio_scrubber.py
     22623  tests/ml_coder/test_registry_data_prep.py
     22694  ml/lib/ml_coder/data_prep.py
-    23229  app/registry/legacy/adapters/airway.py
     23485  docs/phi_review_system/backend/endpoints.py
     24057  tests/ml_advisor/conftest.py
-    24180  app/registry/processing/cao_interventions_detail.py
     24902  tests/integration/api/test_coder_run_endpoint.py
+    24968  app/registry/legacy/adapters/airway.py
     25630  app/coder/application/smart_hybrid_policy.py
-    25769  app/reporting/macro_engine.py
     25930  app/registry/schema/v2_dynamic.py
+    26086  tests/coder/test_coding_rules_phase7.py
     27570  app/api/normalization.py
-    27603  app/registry/transform.py
     27682  app/coder/adapters/registry_coder.py
     27714  app/registry/processing/disease_burden.py
-    28086  app/registry/processing/navigation_targets.py
     28720  ml/lib/ml_coder/registry_data_prep.py
+    28782  app/registry/processing/cao_interventions_detail.py
+    29088  app/registry/transform.py
     29714  ml/lib/ml_coder/label_hydrator.py
+    29804  app/reporting/pipeline.py
     29893  app/domain/coding_rules/coding_rules_engine.py
     30039  app/api/ml_advisor_router.py
     31073  tests/integration/api/test_procedure_codes_endpoints.py
     33110  tests/registry/test_registry_service_hybrid_flow.py
-    34059  app/registry/schema/granular_models.py
     35264  tests/coding/test_rules_validation.py
     35381  app/phi/adapters/phi_redactor_hybrid.py
+    35481  app/reporting/llm_findings.py
+    35924  app/registry/schema/granular_models.py
     35945  app/registry/ml/action_predictor.py
     36526  app/coder/dictionary.py
     36975  tests/unit/test_structured_reporter.py
@@ -656,25 +733,26 @@ Git: `main` @ `223eeb7`
     41897  app/proc_ml_advisor/schemas.py
     42830  app/api/routes/procedure_codes.py
     44075  tests/registry/test_granular_registry_models.py
-    44162  app/registry/self_correction/keyword_guard.py
-    45161  app/registry/schema/granular_logic.py
-    51164  app/api/fastapi_app.py
-    53445  app/extraction/postprocessing/clinical_guardrails.py
+    45186  app/registry/processing/navigation_targets.py
+    45884  app/registry/self_correction/keyword_guard.py
+    46085  app/registry/schema/granular_logic.py
+    55668  app/extraction/postprocessing/clinical_guardrails.py
     56668  app/autocode/ip_kb/ip_kb.py
-    62043  app/registry/prompts.py
-    64714  app/coder/domain_rules/registry_to_cpt/coding_rules.py
+    63856  app/registry/prompts.py
+    70263  app/coder/domain_rules/registry_to_cpt/coding_rules.py
+    79604  app/reporting/engine.py
+   102153  app/reporting/normalization/compat_enricher.py
    112649  app/registry/engine.py
-   126506  app/registry/deterministic_extractors.py
-   173815  app/registry/application/registry_service.py
-   179438  app/registry/postprocess/__init__.py
-   189759  app/reporting/engine.py
+   153395  app/registry/deterministic_extractors.py
+   165552  app/registry/application/registry_service.py
+   195819  app/registry/postprocess/__init__.py
        39  ui/source/registry_grid/src/vite-env.d.ts
-       94  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       118  tests/fixtures/regression_suite/README.md
-      181  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
+      125  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
       240  app/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  app/reporting/templates/addons/eus_b.jinja
       247  app/reporting/templates/addons/peg_removal_exchange.jinja
+      248  tests/fixtures/reporting/template_adapter_ebus_tbna.md
       259  app/reporting/templates/addons/thoravent_placement.jinja
       264  app/reporting/templates/addons/paracentesis.jinja
       281  app/reporting/templates/addons/peg_placement.jinja
@@ -713,9 +791,8 @@ Git: `main` @ `223eeb7`
       509  app/reporting/templates/addons/radial_ebus_survey.jinja
       512  app/reporting/templates/addons/transbronchial_cryobiopsy.jinja
       543  app/reporting/templates/addons/chest_tube_removal.jinja
-      563  ops/deploy/mirror_paths.txt
+      548  tests/fixtures/reporting/template_adapter_thoracentesis.md
       565  app/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
-      580  app/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
       582  app/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
       584  app/reporting/templates/addons/ion_registration_complete.jinja
       586  app/reporting/templates/addons/tool_in_lesion_confirmation.jinja
@@ -739,8 +816,6 @@ Git: `main` @ `223eeb7`
       689  app/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
       690  app/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
       692  app/reporting/templates/addons/tracheostomy_tube_change.jinja
-      695  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
-      695  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
       707  app/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
       708  app/reporting/templates/addons/tracheostomy_downsizing_fenestrated_tube_placement.jinja
       714  app/reporting/templates/addons/endobronchial_sealant_application_for_bronchopleural_fistula_bpf.jinja
@@ -755,12 +830,12 @@ Git: `main` @ `223eeb7`
       746  app/reporting/templates/addons/thoracentesis_with_pleural_manometry.jinja
       750  app/reporting/templates/addons/endobronchial_valve_placement_for_persistent_air_leak_bpf.jinja
       762  tests/fixtures/thora_bilateral.txt
-      764  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/ort_config.json
       765  app/reporting/templates/addons/electromagnetic_navigation_bronchoscopy.jinja
       768  app/reporting/templates/addons/intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d.jinja
       778  app/reporting/templates/addons/ion_registration_registration_drift_mismatch.jinja
       786  app/reporting/templates/addons/airway_stent_removal_revision.jinja
       791  app/reporting/templates/addons/cone_beam_ct_cbct_augmented_fluoroscopy_assisted_bronchoscopy.jinja
+      794  ops/deploy/mirror_paths.txt
       800  tests/fixtures/therapeutic_aspiration_repeat_stay.txt
       808  app/reporting/templates/addons/robotic_navigational_bronchoscopy_monarch_auris.jinja
       812  app/reporting/templates/addons/flexible_fiberoptic_laryngoscopy.jinja
@@ -772,18 +847,18 @@ Git: `main` @ `223eeb7`
       920  app/reporting/templates/addons/radial_ebus_guided_sampling_with_guide_sheath.jinja
       942  tests/fixtures/stent_rmb_and_dilation_lul.txt
       951  ui/static/phi_redactor/vendor/phi_distilbert_ner/config.json
-      951  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
       965  ui/source/registry_grid/vite.config.ts
       982  app/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
      1095  app/reporting/templates/addons/percutaneous_tracheostomy_revision.jinja
      1111  ui/source/registry_grid/src/__tests__/buildEvidenceIndex.test.ts
      1193  tests/fixtures/ppl_nav_radial_tblb.txt
+     1196  tests/fixtures/reporting/seed_from_text_ebus_station7.md
      1224  ui/source/registry_grid/src/__tests__/patchStoreCore.test.ts
      1227  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
-     1227  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
      1308  docs/KNOWLEDGE_RELEASE_CHECKLIST.md
      1359  app/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1432  app/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
+     1434  tests/fixtures/reporting/render_thoracentesis_cxr_ordered.md
      1632  docs/REPORTER_STYLE_GUIDE.md
      1764  docs/PHI_IDENTIFIERS.md
      1776  ui/source/registry_grid/src/__tests__/flattenRegistryToRows.test.ts
@@ -796,12 +871,13 @@ Git: `main` @ `223eeb7`
      2049  docs/model_release_runbook.md
      2285  docs/KNOWLEDGE_INVENTORY.md
      2342  app/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
-     2422  docs/DEPLOY_MIRROR.md
+     2447  docs/DEPLOY_MIRROR.md
      2593  docs/DEPLOY_RAILWAY.md
+     2612  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
+     2781  tests/fixtures/reporting/seed_from_text_ion_nav_tbna_cryo.md
      2800  docs/REGISTRY_RUNS.md
-     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
-     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/protected_terms.json
      2954  tests/fixtures/notes/note_315.txt
+     3045  docs/REPORTER_GOLD_WORKFLOW.md
      3054  tests/fixtures/notes/note_289.txt
      3085  app/reporting/templates/ebus_tbna.jinja
      3086  app/reporting/templates/cryobiopsy.jinja
@@ -814,6 +890,7 @@ Git: `main` @ `223eeb7`
      3496  ui/source/registry_grid/src/monaco/monacoBridge.ts
      3579  docs/REFERENCES.md
      3717  app/reporting/templates/macros/main.j2
+     3792  docs/TIER1_RESEARCH_FIELDS_SPEC.md
      3825  docs/Multi_agent_collaboration/Codex Priming Script.md
      3830  docs/Multi_agent_collaboration/Codex “Repo Surgeon” Persona.md
      3883  app/reporting/templates/macros/base.j2
@@ -836,6 +913,7 @@ Git: `main` @ `223eeb7`
      5934  docs/STRUCTURED_REPORTER.md
      5961  ui/source/registry_grid/src/flatten/flattenRegistryToRows.ts
      6442  docs/Registry_API.md
+     6565  docs/TIER2_RESEARCH_FIELDS_SPEC.md
      6862  app/reporting/templates/macros/04_blvr_cryo.j2
      7016  docs/Registry_ML_summary.md
      7166  docs/IPregistry_update_plan.md
@@ -847,8 +925,8 @@ Git: `main` @ `223eeb7`
      9688  app/reporting/templates/macros/01_minor_trach_laryngoscopy.j2
      9927  docs/optimization_12_16_25.md
     10230  docs/DEPLOYMENT.md
-    10790  docs/DEVELOPMENT.md
     10846  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
+    11757  docs/DEVELOPMENT.md
     11785  app/reporting/templates/macros/07_clinical_assessment.j2
     12969  app/reporting/templates/macros/03_navigation_robotic_ebus.j2
     13436  docs/CODEX_REGISTRY_DIAMOND_LOOP.md
@@ -856,33 +934,40 @@ Git: `main` @ `223eeb7`
     14126  app/reporting/templates/macros/02_core_bronchoscopy.j2
     15081  docs/GRAFANA_DASHBOARDS.md
     15210  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
-    16017  docs/AGENTS.md
     16028  app/reporting/templates/macros/05_pleural.j2
-    16882  docs/ARCHITECTURE.md
-    17406  ui/static/phi_redactor/reporter_builder.js
+    16032  docs/AGENTS.md
     17724  docs/phi_review_system/README.md
     17850  ui/static/phi_demo.js
     18104  app/phi/adapters/redaction-service.js
     19198  docs/REPO_GUIDE.md
     19817  docs/MAKEFILE_COMMANDS.md
     19835  app/registry/ip_registry_schema_additions.json
-    21781  app/reporting/templates/macros/template_schema.json
+    24586  app/reporting/templates/macros/template_schema.json
     27821  app/registry/ip_registry_improvements.md
     34508  docs/unified_extraction_plan_2_5_26.md
-    44814  docs/USER_GUIDE.md
     50262  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
+    50292  docs/USER_GUIDE.md
     51895  ui/source/registry_grid/package-lock.json
+    53936  ui/static/phi_redactor/reporter_builder.js
     61485  ui/static/phi_redactor/protectedVeto.legacy.js
     63253  ui/static/phi_redactor/protectedVeto.js
     75852  tests/fixtures/reporter_golden_dataset.json
-    99138  ui/static/phi_redactor/redactor.worker.js
-    99358  ui/static/phi_redactor/redactor.worker.legacy.js
+   101329  ui/static/phi_redactor/redactor.worker.js
+   101547  ui/static/phi_redactor/redactor.worker.legacy.js
    102522  ui/static/app.js
 ```
 
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  ml/scripts/train_reporter_prompt_to_bundle_unsloth.py
+ inline_cap_reached>75  ops/tools/export_phi_model_for_transformersjs.py
+ inline_cap_reached>75  ml/scripts/convert_spans_to_bio.py
+ inline_cap_reached>75  ops/tools/eval_reporter_prompt_baseline.py
+ inline_cap_reached>75  ml/scripts/extract_ner_from_excel.py
+ inline_cap_reached>75  ops/tools/eval_reporter_prompt_llm_findings.py
+ inline_cap_reached>75  ops/tools/index_repo.py
+ inline_cap_reached>75  ml/scripts/review_llm_fallback_errors.py
  inline_cap_reached>75  ops/tools/unified_pipeline_batch.py
  inline_cap_reached>75  ml/scripts/quantize_to_onnx.py
  inline_cap_reached>75  ml/scripts/verify_registry_human_data.py
@@ -895,13 +980,17 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  ml/scripts/prodigy_prepare_phi_batch.py
  inline_cap_reached>75  ml/scripts/build_model_agnostic_phi_spans.py
  inline_cap_reached>75  ml/scripts/generate_synthetic_phi_data.py
+ inline_cap_reached>75  ops/tools/eval_reporter_prompt_model.py
  inline_cap_reached>75  ml/scripts/audit_model_fp.py
  inline_cap_reached>75  ml/scripts/train_roberta_pm3.py
+ inline_cap_reached>75  ml/scripts/train_reporter_prompt_to_bundle.py
  inline_cap_reached>75  ml/scripts/fix_alignment.py
  inline_cap_reached>75  ml/scripts/train_distilbert_ner.py
  inline_cap_reached>75  ml/scripts/prodigy_prepare_registry.py
+ inline_cap_reached>75  ml/scripts/distill_reporter_bundle_targets.py
  inline_cap_reached>75  ml/scripts/train_registry_ner.py
  inline_cap_reached>75  ml/scripts/golden_to_csv.py
+ inline_cap_reached>75  ml/scripts/generate_reporter_gold_dataset.py
  inline_cap_reached>75  ml/scripts/validate_golden_extractions.py
  inline_cap_reached>75  ml/scripts/distill_phi_labels.py
  inline_cap_reached>75  ml/scripts/train_roberta.py
@@ -913,7 +1002,7 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/domain/__init__.py
  inline_cap_reached>75  app/registry/processing/__init__.py
  inline_cap_reached>75  app/registry/audit/__init__.py
- inline_cap_reached>75  app/api/routes/__init__.py
+ inline_cap_reached>75  app/reporting/util/__init__.py
  inline_cap_reached>75  app/registry/evidence/__init__.py
  inline_cap_reached>75  app/extraction/postprocessing/__init__.py
  inline_cap_reached>75  app/registry/pipelines/__init__.py
@@ -924,10 +1013,12 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/domain/procedure_store/__init__.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/__init__.py
  inline_cap_reached>75  app/registry/extraction/__init__.py
+ inline_cap_reached>75  app/registry/infra/__init__.py
  inline_cap_reached>75  app/domain/text/__init__.py
  inline_cap_reached>75  app/coder/adapters/persistence/__init__.py
  inline_cap_reached>75  app/domain/reasoning/__init__.py
  inline_cap_reached>75  app/domain/rvu/__init__.py
+ inline_cap_reached>75  app/reporting/normalization/__init__.py
  inline_cap_reached>75  app/common/rules_engine/__init__.py
  inline_cap_reached>75  app/registry/legacy/__init__.py
  inline_cap_reached>75  app/registry_store/__init__.py
@@ -940,6 +1031,7 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/infra/__init__.py
  inline_cap_reached>75  app/reporter/__init__.py
  inline_cap_reached>75  app/registry/extractors/__init__.py
+ inline_cap_reached>75  app/api/routes/__init__.py
  inline_cap_reached>75  app/llm/__init__.py
  inline_cap_reached>75  app/registry/adapters/v3_to_v2.py
  inline_cap_reached>75  app/phi/__init__.py
@@ -951,11 +1043,14 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/reporter/engine.py
  inline_cap_reached>75  app/coder/adapters/nlp/__init__.py
  inline_cap_reached>75  app/api/services/__init__.py
+ inline_cap_reached>75  app/reporting/normalization/types.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/types.py
  inline_cap_reached>75  app/reporting/second_pass/station_consistency.py
  inline_cap_reached>75  app/coder/adapters/llm/noop_advisor.py
  inline_cap_reached>75  app/ner/__init__.py
+ inline_cap_reached>75  app/registry/completeness/__init__.py
  inline_cap_reached>75  app/phi/safety/__init__.py
+ inline_cap_reached>75  app/reporting/normalization/compat_types.py
  inline_cap_reached>75  app/agents/structurer/structurer_agent.py
  inline_cap_reached>75  app/registry/extractors/noop.py
  inline_cap_reached>75  app/registry/ner_mapping/__init__.py
@@ -975,8 +1070,10 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/registry/slots/base.py
  inline_cap_reached>75  app/coder/parallel_pathway/__init__.py
  inline_cap_reached>75  app/reporting/second_pass/laterality_guard.py
+ inline_cap_reached>75  app/registry/constants/__init__.py
  inline_cap_reached>75  proc_schemas/envelope_models.py
  inline_cap_reached>75  app/domain/coding_rules/__init__.py
+ inline_cap_reached>75  app/registry/constants/field_paths.py
  inline_cap_reached>75  app/phi/adapters/encryption_insecure_demo.py
  inline_cap_reached>75  app/registry/slots/imaging.py
  inline_cap_reached>75  app/agents/summarizer/summarizer_agent.py
@@ -986,18 +1083,23 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/registry/pipelines/v3_pipeline.py
  inline_cap_reached>75  app/registry/application/__init__.py
  inline_cap_reached>75  app/registry/__init__.py
+ inline_cap_reached>75  app/reporting/normalization/normalize.py
  inline_cap_reached>75  app/infra/perf.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/engine.py
  inline_cap_reached>75  app/registry/extractors/disease_burden.py
  inline_cap_reached>75  app/reporter/schema.py
  inline_cap_reached>75  app/registry/self_correction/types.py
  inline_cap_reached>75  app/api/guards.py
+ inline_cap_reached>75  app/registry/constants/warnings.py
+ inline_cap_reached>75  app/api/registry_payload.py
  inline_cap_reached>75  app/coder/__init__.py
+ inline_cap_reached>75  app/registry/heuristics/__init__.py
  inline_cap_reached>75  app/coder/types.py
  inline_cap_reached>75  app/registry/schema_filter.py
  inline_cap_reached>75  app/registry/slots/disposition.py
  inline_cap_reached>75  app/registry/slots/pleura.py
  inline_cap_reached>75  app/common/exceptions.py
+ inline_cap_reached>75  app/registry/heuristics/pipeline.py
  inline_cap_reached>75  app/phi/adapters/scrubber_stub.py
  inline_cap_reached>75  app/phi/adapters/audit_logger_db.py
  inline_cap_reached>75  app/registry/slots/indication.py
@@ -1019,6 +1121,7 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/registry/ml/__init__.py
  inline_cap_reached>75  app/infra/llm_control.py
  inline_cap_reached>75  app/domain/text/negation.py
+ inline_cap_reached>75  app/reporting/util/path_access.py
  inline_cap_reached>75  app/registry/slots/tblb.py
  inline_cap_reached>75  proc_schemas/reasoning.py
  inline_cap_reached>75  app/coder/parallel_pathway/reconciler.py
@@ -1039,6 +1142,7 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/registry/legacy/adapters/base.py
  inline_cap_reached>75  app/api/routes/unified_process.py
  inline_cap_reached>75  app/reporting/__init__.py
+ inline_cap_reached>75  app/reporting/macro_engine_template_adapter.py
  inline_cap_reached>75  app/registry/slots/sedation.py
  inline_cap_reached>75  app/registry/schema/ip_v3_extraction.py
  inline_cap_reached>75  app/common/text_cleaning.py
@@ -1046,11 +1150,13 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/reporter/prompts.py
  inline_cap_reached>75  app/proc_ml_advisor/__init__.py
  inline_cap_reached>75  app/llm/client.py
+ inline_cap_reached>75  app/api/routes/legacy_registry.py
  inline_cap_reached>75  app/reporting/inference.py
  inline_cap_reached>75  app/phi/safety/protected_terms.py
  inline_cap_reached>75  app/registry/slots/ebus.py
  inline_cap_reached>75  app/common/text_io.py
  inline_cap_reached>75  app/domain/coding_rules/mer.py
+ inline_cap_reached>75  app/registry/heuristics/granular_warning_reconcile.py
  inline_cap_reached>75  app/domain/coding_rules/ncci.py
  inline_cap_reached>75  app/domain/rvu/calculator.py
  inline_cap_reached>75  app/api/routes/phi_demo_cases.py
@@ -1075,7 +1181,9 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/common/knowledge_schema.py
  inline_cap_reached>75  app/common/model_capabilities.py
  inline_cap_reached>75  app/api/phi_dependencies.py
+ inline_cap_reached>75  app/registry/heuristics/coverage_checks.py
  inline_cap_reached>75  app/registry/extraction/focus.py
+ inline_cap_reached>75  app/registry/heuristics/cao_detail.py
  inline_cap_reached>75  app/coder/schema.py
  inline_cap_reached>75  app/agents/contracts.py
  inline_cap_reached>75  app/registry/tags.py
@@ -1083,11 +1191,12 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/registry/slots/stent.py
  inline_cap_reached>75  app/registry_cleaning/logging_utils.py
  inline_cap_reached>75  app/registry/audit/compare.py
- inline_cap_reached>75  app/reporting/partial_schemas.py
  inline_cap_reached>75  proc_schemas/clinical/common.py
  inline_cap_reached>75  app/registry/ebus_config.py
  inline_cap_reached>75  app/api/services/financials.py
  inline_cap_reached>75  app/registry/self_correction/judge.py
+ inline_cap_reached>75  app/reporting/partial_schemas.py
+ inline_cap_reached>75  app/api/bootstrap.py
  inline_cap_reached>75  app/common/sectionizer.py
  inline_cap_reached>75  app/coder/adapters/nlp/simple_negation_detector.py
  inline_cap_reached>75  app/registry/cli.py
@@ -1098,24 +1207,27 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/phi/models.py
  inline_cap_reached>75  app/registry/deterministic/anatomy.py
  inline_cap_reached>75  app/reporting/json_patch.py
+ inline_cap_reached>75  app/api/routes/legacy_coder.py
  inline_cap_reached>75  app/ner/entity_types.py
+ inline_cap_reached>75  app/registry/heuristics/linear_ebus_station_detail.py
  inline_cap_reached>75  app/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  app/coder/ncci.py
- inline_cap_reached>75  app/registry/postprocess/complications_reconcile.py
  inline_cap_reached>75  app/registry_cleaning/consistency_utils.py
  inline_cap_reached>75  app/registry/processing/navigation_fiducials.py
+ inline_cap_reached>75  app/reporting/macro_registry.py
  inline_cap_reached>75  app/domain/procedure_store/repository.py
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
  inline_cap_reached>75  app/infra/nlp_warmup.py
  inline_cap_reached>75  app/coder/cli.py
  inline_cap_reached>75  app/registry/slots/therapeutics.py
  inline_cap_reached>75  app/reporting/ip_addons.py
+ inline_cap_reached>75  app/api/routes/qa.py
  inline_cap_reached>75  app/registry/self_correction/apply.py
  inline_cap_reached>75  app/coder/application/candidate_expansion.py
  inline_cap_reached>75  app/agents/run_pipeline.py
+ inline_cap_reached>75  app/registry/infra/model_provider.py
  inline_cap_reached>75  app/domain/coding_rules/evidence_context.py
  inline_cap_reached>75  app/registry/model_runtime.py
- inline_cap_reached>75  app/api/schemas/base.py
  inline_cap_reached>75  app/coder/adapters/ml_ranker.py
  inline_cap_reached>75  app/registry/ner_mapping/entity_to_registry.py
  inline_cap_reached>75  app/coder/adapters/persistence/inmemory_procedure_store.py
@@ -1125,98 +1237,106 @@ Git: `main` @ `223eeb7`
  inline_cap_reached>75  app/coder/application/procedure_type_detector.py
  inline_cap_reached>75  app/api/coder_adapter.py
  inline_cap_reached>75  app/api/routes/metrics.py
- inline_cap_reached>75  app/api/services/unified_pipeline.py
  inline_cap_reached>75  app/registry/processing/focus.py
- inline_cap_reached>75  app/phi/service.py
  inline_cap_reached>75  app/reporting/validation.py
+ inline_cap_reached>75  app/phi/service.py
  inline_cap_reached>75  app/api/routes_registry.py
  inline_cap_reached>75  app/registry/postprocess/template_checkbox_negation.py
- inline_cap_reached>75  app/registry/application/registry_builder.py
+ inline_cap_reached>75  app/api/services/unified_pipeline.py
+ inline_cap_reached>75  app/api/schemas/base.py
  inline_cap_reached>75  app/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  app/common/knowledge.py
  inline_cap_reached>75  app/api/routes/phi.py
  inline_cap_reached>75  app/registry/application/pathology_extraction.py
  inline_cap_reached>75  app/registry/legacy/adapters/pleural.py
- inline_cap_reached>75  proc_schemas/registry/ip_v3.py
+ inline_cap_reached>75  app/reporting/normalization/text_enricher.py
  inline_cap_reached>75  app/registry_cleaning/schema_utils.py
- inline_cap_reached>75  app/registry/self_correction/validation.py
  inline_cap_reached>75  app/registry/extractors/v3_extractor.py
+ inline_cap_reached>75  app/registry/heuristics/navigation_targets.py
  inline_cap_reached>75  app/domain/knowledge_base/validator.py
- inline_cap_reached>75  app/registry/processing/masking.py
  inline_cap_reached>75  app/coder/application/coding_service.py
  inline_cap_reached>75  app/coder/domain_rules/__init__.py
  inline_cap_reached>75  app/coder/rules.py
- inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
+ inline_cap_reached>75  app/registry/application/registry_builder.py
+ inline_cap_reached>75  app/registry/self_correction/validation.py
  inline_cap_reached>75  app/registry/ml/models.py
- inline_cap_reached>75  app/registry/audit/raw_ml_auditor.py
+ inline_cap_reached>75  app/registry/postprocess/complications_reconcile.py
  inline_cap_reached>75  app/registry/schema/adapters/v3_to_v2.py
+ inline_cap_reached>75  proc_schemas/registry/ip_v3.py
  inline_cap_reached>75  app/registry/v2_booleans.py
+ inline_cap_reached>75  app/api/routes/reporting.py
+ inline_cap_reached>75  app/registry/processing/masking.py
  inline_cap_reached>75  app/domain/coding_rules/json_rules_evaluator.py
+ inline_cap_reached>75  app/registry/audit/raw_ml_auditor.py
  inline_cap_reached>75  app/autocode/ip_kb/canonical_rules.py
  inline_cap_reached>75  app/api/routes/registry_runs.py
  inline_cap_reached>75  app/coder/reconciliation/pipeline.py
- inline_cap_reached>75  app/api/dependencies.py
  inline_cap_reached>75  app/ner/inference.py
  inline_cap_reached>75  app/registry/ner_mapping/station_extractor.py
  inline_cap_reached>75  app/coder/rules_engine.py
  inline_cap_reached>75  app/registry/application/cpt_registry_mapping.py
- inline_cap_reached>75  app/registry/ner_mapping/procedure_extractor.py
+ inline_cap_reached>75  app/api/dependencies.py
  inline_cap_reached>75  app/phi/safety/veto.py
- inline_cap_reached>75  app/registry/application/coding_support_builder.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  app/common/openai_responses.py
+ inline_cap_reached>75  app/registry/application/coding_support_builder.py
  inline_cap_reached>75  app/coder/reconciliation/reconciler.py
+ inline_cap_reached>75  app/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  app/coder/adapters/llm/gemini_advisor.py
+ inline_cap_reached>75  app/api/fastapi_app.py
  inline_cap_reached>75  app/registry/evidence/verifier.py
  inline_cap_reached>75  app/registry/normalization.py
  inline_cap_reached>75  app/api/services/qa_pipeline.py
  inline_cap_reached>75  app/registry/inference_onnx.py
  inline_cap_reached>75  app/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  app/registry_cleaning/cpt_utils.py
+ inline_cap_reached>75  app/registry/completeness/missing_field_prompts.py
  inline_cap_reached>75  app/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  app/registry/model_bootstrap.py
  inline_cap_reached>75  app/registry/extractors/llm_detailed.py
+ inline_cap_reached>75  app/reporting/macro_engine.py
  inline_cap_reached>75  app/coder/adapters/llm/openai_compat_advisor.py
  inline_cap_reached>75  app/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  app/coder/adapters/persistence/supabase_procedure_store.py
+ inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  app/reporting/questions.py
  inline_cap_reached>75  app/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  app/registry/legacy/adapters/airway.py
- inline_cap_reached>75  app/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  app/coder/application/smart_hybrid_policy.py
- inline_cap_reached>75  app/reporting/macro_engine.py
  inline_cap_reached>75  app/registry/schema/v2_dynamic.py
  inline_cap_reached>75  app/api/normalization.py
- inline_cap_reached>75  app/registry/transform.py
  inline_cap_reached>75  app/coder/adapters/registry_coder.py
  inline_cap_reached>75  app/registry/processing/disease_burden.py
- inline_cap_reached>75  app/registry/processing/navigation_targets.py
+ inline_cap_reached>75  app/registry/processing/cao_interventions_detail.py
+ inline_cap_reached>75  app/registry/transform.py
+ inline_cap_reached>75  app/reporting/pipeline.py
  inline_cap_reached>75  app/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  app/api/ml_advisor_router.py
- inline_cap_reached>75  app/registry/schema/granular_models.py
  inline_cap_reached>75  app/phi/adapters/phi_redactor_hybrid.py
+ inline_cap_reached>75  app/reporting/llm_findings.py
+ inline_cap_reached>75  app/registry/schema/granular_models.py
  inline_cap_reached>75  app/registry/ml/action_predictor.py
  inline_cap_reached>75  app/coder/dictionary.py
  inline_cap_reached>75  app/common/llm.py
  inline_cap_reached>75  app/proc_ml_advisor/schemas.py
  inline_cap_reached>75  app/api/routes/procedure_codes.py
+ inline_cap_reached>75  app/registry/processing/navigation_targets.py
  inline_cap_reached>75  app/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  app/registry/schema/granular_logic.py
- inline_cap_reached>75  app/api/fastapi_app.py
  inline_cap_reached>75  app/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  app/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  app/registry/prompts.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/coding_rules.py
+ inline_cap_reached>75  app/reporting/engine.py
+ inline_cap_reached>75  app/reporting/normalization/compat_enricher.py
  inline_cap_reached>75  app/registry/engine.py
  inline_cap_reached>75  app/registry/deterministic_extractors.py
  inline_cap_reached>75  app/registry/application/registry_service.py
  inline_cap_reached>75  app/registry/postprocess/__init__.py
- inline_cap_reached>75  app/reporting/engine.py
-     too_large>200000B  ui/static/phi_redactor/app.js
+    binary_or_non_utf8  docs/ARCHITECTURE.md
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
-     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
+     too_large>200000B  ui/static/phi_redactor/app.js
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
-     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
      too_large>200000B  ui/static/phi_redactor/transformers.legacy.js
      too_large>200000B  ui/static/phi_redactor/transformers.min.js
      too_large>200000B  ui/static/phi_redactor/registry_grid/registry_grid.iife.js
@@ -4797,6 +4917,195 @@ if __name__ == "__main__":
 ```
 
 ---
+### `ml/scripts/split_reporter_prompt_dataset.py`
+- Size: `5764` bytes
+```
+#!/usr/bin/env python3
+"""Split reporter prompt dataset by note family (no leakage)."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import random
+from pathlib import Path
+from typing import Any
+
+DEFAULT_INPUT = Path("data/ml_training/reporter_prompt/v1/reporter_prompt_pairs.jsonl")
+DEFAULT_OUTPUT_DIR = Path("data/ml_training/reporter_prompt/v1")
+DEFAULT_SEED = 42
+DEFAULT_TRAIN_RATIO = 0.80
+DEFAULT_VAL_RATIO = 0.10
+DEFAULT_TEST_RATIO = 0.10
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
+    parser.add_argument("--train-ratio", type=float, default=DEFAULT_TRAIN_RATIO)
+    parser.add_argument("--val-ratio", type=float, default=DEFAULT_VAL_RATIO)
+    parser.add_argument("--test-ratio", type=float, default=DEFAULT_TEST_RATIO)
+    return parser.parse_args(argv)
+
+
+def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            line = line.strip()
+            if not line:
+                continue
+            rows.append(json.loads(line))
+    return rows
+
+
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def _validate_ratios(train_ratio: float, val_ratio: float, test_ratio: float) -> None:
+    total = train_ratio + val_ratio + test_ratio
+    if abs(total - 1.0) > 1e-9:
+        raise ValueError(f"Ratios must sum to 1.0; got {total}")
+
+
+def _split_families(
+    families: list[str],
+    *,
+    seed: int,
+    train_ratio: float,
+    val_ratio: float,
+    test_ratio: float,
+) -> tuple[set[str], set[str], set[str]]:
+    _validate_ratios(train_ratio, val_ratio, test_ratio)
+    unique = sorted(set(families))
+    rng = random.Random(seed)
+    rng.shuffle(unique)
+
+    total = len(unique)
+    n_train = int(total * train_ratio)
+    n_val = int(total * val_ratio)
+    n_test = total - n_train - n_val
+
+    train = set(unique[:n_train])
+    val = set(unique[n_train : n_train + n_val])
+    test = set(unique[n_train + n_val : n_train + n_val + n_test])
+    return train, val, test
+
+
+def split_rows_by_note_family(
+    rows: list[dict[str, Any]],
+    *,
+    seed: int,
+    train_ratio: float,
+    val_ratio: float,
+    test_ratio: float,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    families = [str(row.get("note_family") or "unknown") for row in rows]
+    train_fam, val_fam, test_fam = _split_families(
+        families,
+        seed=seed,
+        train_ratio=train_ratio,
+        val_ratio=val_ratio,
+        test_ratio=test_ratio,
+    )
+
+    train_rows: list[dict[str, Any]] = []
+    val_rows: list[dict[str, Any]] = []
+    test_rows: list[dict[str, Any]] = []
+
+    for row in rows:
+        fam = str(row.get("note_family") or "unknown")
+        if fam in train_fam:
+            train_rows.append(row)
+        elif fam in val_fam:
+            val_rows.append(row)
+        elif fam in test_fam:
+            test_rows.append(row)
+        else:
+            test_rows.append(row)
+
+    manifest = {
+        "seed": seed,
+        "ratios": {
+            "train": train_ratio,
+            "val": val_ratio,
+            "test": test_ratio,
+        },
+        "families": {
+            "train": sorted(train_fam),
+            "val": sorted(val_fam),
+            "test": sorted(test_fam),
+            "counts": {
+                "train": len(train_fam),
+                "val": len(val_fam),
+                "test": len(test_fam),
+            },
+        },
+        "rows": {
+            "total": len(rows),
+            "train": len(train_rows),
+            "val": len(val_rows),
+            "test": len(test_rows),
+        },
+        "contract": "reporter_prompt_pairs.v1",
+    }
+
+    # Hard leakage assertion.
+    if train_fam & val_fam or train_fam & test_fam or val_fam & test_fam:
+        raise AssertionError("Note-family leakage detected between splits")
+
+    return train_rows, val_rows, test_rows, manifest
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    if not args.input.exists():
+        raise FileNotFoundError(f"Input JSONL not found: {args.input}")
+
+    rows = load_jsonl(args.input)
+    if not rows:
+        raise RuntimeError(f"No rows in input JSONL: {args.input}")
+
+    train_rows, val_rows, test_rows, manifest = split_rows_by_note_family(
+        rows,
+        seed=args.seed,
+        train_ratio=float(args.train_ratio),
+        val_ratio=float(args.val_ratio),
+        test_ratio=float(args.test_ratio),
+    )
+
+    output_dir: Path = args.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    train_path = output_dir / "reporter_prompt_train.jsonl"
+    val_path = output_dir / "reporter_prompt_val.jsonl"
+    test_path = output_dir / "reporter_prompt_test.jsonl"
+    manifest_path = output_dir / "reporter_prompt_split_manifest.json"
+
+    write_jsonl(train_path, train_rows)
+    write_jsonl(val_path, val_rows)
+    write_jsonl(test_path, test_rows)
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    print(f"Wrote train: {train_path}")
+    print(f"Wrote val:   {val_path}")
+    print(f"Wrote test:  {test_path}")
+    print(f"Wrote split manifest: {manifest_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `ml/scripts/ingest_phase0_data.py`
 - Size: `5924` bytes
 ```
@@ -5614,6 +5923,218 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+```
+
+---
+### `ml/scripts/split_reporter_gold_dataset.py`
+- Size: `6402` bytes
+```
+#!/usr/bin/env python3
+"""Split accepted reporter gold dataset at patient level (80/10/10 by default)."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import random
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+DEFAULT_INPUT = Path("data/ml_training/reporter_golden/v1/reporter_gold_accepted.jsonl")
+DEFAULT_OUTPUT_DIR = Path("data/ml_training/reporter_golden/v1")
+DEFAULT_SEED = 42
+DEFAULT_TRAIN_RATIO = 0.80
+DEFAULT_VAL_RATIO = 0.10
+DEFAULT_TEST_RATIO = 0.10
+
+
+@dataclass(frozen=True)
+class SplitCounts:
+    train_patients: int
+    val_patients: int
+    test_patients: int
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT, help="Accepted reporter gold JSONL.")
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=DEFAULT_OUTPUT_DIR,
+        help="Output directory for split JSONLs and manifest.",
+    )
+    parser.add_argument("--seed", type=int, default=DEFAULT_SEED, help="Random seed.")
+    parser.add_argument("--train-ratio", type=float, default=DEFAULT_TRAIN_RATIO, help="Train ratio.")
+    parser.add_argument("--val-ratio", type=float, default=DEFAULT_VAL_RATIO, help="Validation ratio.")
+    parser.add_argument("--test-ratio", type=float, default=DEFAULT_TEST_RATIO, help="Test ratio.")
+    return parser.parse_args(argv)
+
+
+def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            rows.append(json.loads(line))
+    return rows
+
+
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def _ensure_valid_ratios(train_ratio: float, val_ratio: float, test_ratio: float) -> None:
+    total = train_ratio + val_ratio + test_ratio
+    if abs(total - 1.0) > 1e-9:
+        raise ValueError(
+            f"train+val+test ratios must sum to 1.0; got {train_ratio}+{val_ratio}+{test_ratio}={total}"
+        )
+
+
+def split_patient_ids(
+    patient_ids: list[str],
+    *,
+    seed: int,
+    train_ratio: float,
+    val_ratio: float,
+    test_ratio: float,
+) -> tuple[set[str], set[str], set[str], SplitCounts]:
+    _ensure_valid_ratios(train_ratio, val_ratio, test_ratio)
+
+    ids = sorted(set(patient_ids))
+    if not ids:
+        return set(), set(), set(), SplitCounts(0, 0, 0)
+
+    rng = random.Random(seed)
+    rng.shuffle(ids)
+
+    total = len(ids)
+    n_train = int(total * train_ratio)
+    n_val = int(total * val_ratio)
+    # assign remainder to test to preserve exact total
+    n_test = total - n_train - n_val
+
+    train_ids = set(ids[:n_train])
+    val_ids = set(ids[n_train : n_train + n_val])
+    test_ids = set(ids[n_train + n_val : n_train + n_val + n_test])
+
+    counts = SplitCounts(
+        train_patients=len(train_ids),
+        val_patients=len(val_ids),
+        test_patients=len(test_ids),
+    )
+    return train_ids, val_ids, test_ids, counts
+
+
+def split_records_by_patient(
+    rows: list[dict[str, Any]],
+    *,
+    seed: int,
+    train_ratio: float,
+    val_ratio: float,
+    test_ratio: float,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    patient_ids = [str(row.get("patient_base_id") or "") for row in rows]
+    train_ids, val_ids, test_ids, counts = split_patient_ids(
+        patient_ids,
+        seed=seed,
+        train_ratio=train_ratio,
+        val_ratio=val_ratio,
+        test_ratio=test_ratio,
+    )
+
+    train_rows: list[dict[str, Any]] = []
+    val_rows: list[dict[str, Any]] = []
+    test_rows: list[dict[str, Any]] = []
+
+    for row in rows:
+        pid = str(row.get("patient_base_id") or "")
+        if pid in train_ids:
+            train_rows.append(row)
+        elif pid in val_ids:
+            val_rows.append(row)
+        elif pid in test_ids:
+            test_rows.append(row)
+        else:
+            # If patient id is empty/missing, deterministic fallback to test split.
+            test_rows.append(row)
+
+    manifest = {
+        "seed": seed,
+        "ratios": {
+            "train": train_ratio,
+            "val": val_ratio,
+            "test": test_ratio,
+        },
+        "patients": {
+            "train": sorted(train_ids),
+            "val": sorted(val_ids),
+            "test": sorted(test_ids),
+            "counts": {
+                "train": counts.train_patients,
+                "val": counts.val_patients,
+                "test": counts.test_patients,
+            },
+        },
+        "rows": {
+            "total": len(rows),
+            "train": len(train_rows),
+            "val": len(val_rows),
+            "test": len(test_rows),
+        },
+    }
+    return train_rows, val_rows, test_rows, manifest
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+
+    if not args.input.exists():
+        raise FileNotFoundError(f"Input JSONL not found: {args.input}")
+
+    rows = load_jsonl(args.input)
+    if not rows:
+        raise RuntimeError(f"No rows found in input: {args.input}")
+
+    train_rows, val_rows, test_rows, manifest = split_records_by_patient(
+        rows,
+        seed=args.seed,
+        train_ratio=float(args.train_ratio),
+        val_ratio=float(args.val_ratio),
+        test_ratio=float(args.test_ratio),
+    )
+
+    output_dir: Path = args.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    train_path = output_dir / "reporter_gold_train.jsonl"
+    val_path = output_dir / "reporter_gold_val.jsonl"
+    test_path = output_dir / "reporter_gold_test.jsonl"
+    manifest_path = output_dir / "reporter_gold_split_manifest.json"
+
+    write_jsonl(train_path, train_rows)
+    write_jsonl(val_path, val_rows)
+    write_jsonl(test_path, test_rows)
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    print(f"Wrote train: {train_path}")
+    print(f"Wrote val:   {val_path}")
+    print(f"Wrote test:  {test_path}")
+    print(f"Wrote split manifest: {manifest_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
 
 ```
 
@@ -9682,6 +10203,518 @@ if __name__ == "__main__":
 ```
 
 ---
+### `ml/scripts/build_reporter_prompt_dataset.py`
+- Size: `8430` bytes
+```
+#!/usr/bin/env python3
+"""Build canonical reporter prompt/completion training dataset."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+from collections import Counter
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+DEFAULT_INPUT_DIR = Path(
+    "/home/rjm/projects/proc_suite_notes/reporter_training/reporter_training"
+)
+DEFAULT_OUTPUT_DIR = Path("data/ml_training/reporter_prompt/v1")
+DEFAULT_OUTPUT_JSONL = "reporter_prompt_pairs.jsonl"
+DEFAULT_MANIFEST_JSON = "reporter_prompt_manifest.json"
+
+REQUIRED_SECTION_HEADERS = [
+    "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT",
+    "INDICATION FOR OPERATION",
+    "CONSENT",
+    "PREOPERATIVE DIAGNOSIS",
+    "POSTOPERATIVE DIAGNOSIS",
+    "PROCEDURE",
+    "ANESTHESIA",
+    "MONITORING",
+    "COMPLICATIONS",
+    "PROCEDURE IN DETAIL",
+    "IMPRESSION / PLAN",
+]
+
+ALLOWED_PLACEHOLDERS = {
+    "Date",
+    "Name",
+    "Patient Name",
+    "Age",
+    "Sex",
+    "Name / Self, Referred",
+    "Referred Physician Name",
+    "General anesthesia / airway type",
+    "General anesthesia / Deep sedation",
+    "General anesthesia / Moderate Sedation",
+    "Fellow name",
+    "Supine",
+    "analysis type",
+    "Additional ICD-10 if applicable",
+    "Additional ICD-10 if applicable, e.g., COPD/Emphysema",
+    "pleural effusion/nodules",
+}
+
+SOURCE_FILE_RE = re.compile(r"^(?P<family>note_\d{3})_(?P<split>train|valid)\.jsonl$", re.IGNORECASE)
+PLACEHOLDER_RE = re.compile(r"\[([^\]\n]{1,80})\]")
+DATE_LINE_RE = re.compile(r"(?im)^(\s*DATE OF PROCEDURE\s*:\s*)(.+)$")
+NOTE_ID_LINE_RE = re.compile(r"(?i)^\s*NOTE_ID\s*:")
+SOURCE_LINE_RE = re.compile(r"(?i)^\s*SOURCE_FILE\s*:")
+LITERAL_NONE_RE = re.compile(r"\bNone\b")
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--output-jsonl", default=DEFAULT_OUTPUT_JSONL)
+    parser.add_argument("--manifest-json", default=DEFAULT_MANIFEST_JSON)
+    return parser.parse_args(argv)
+
+
+def infer_source_metadata(source_file: str) -> tuple[str, str]:
+    m = SOURCE_FILE_RE.match(source_file)
+    if not m:
+        return "unknown", "unknown"
+    return m.group("family"), m.group("split").lower()
+
+
+def find_missing_sections(text: str) -> list[str]:
+    upper = (text or "").upper()
+    return [header for header in REQUIRED_SECTION_HEADERS if header.upper() not in upper]
+
+
+def find_disallowed_placeholders(text: str) -> list[str]:
+    found = [m.group(1).strip() for m in PLACEHOLDER_RE.finditer(text or "")]
+    disallowed = sorted({item for item in found if item not in ALLOWED_PLACEHOLDERS})
+    return disallowed
+
+
+def canonicalize_completion(completion_raw: str) -> tuple[str, bool]:
+    """Return canonical completion text and preamble flag.
+
+    - removes NOTE_ID/SOURCE_FILE preamble lines
+    - normalizes DATE OF PROCEDURE value
+    - preserves section bodies and overall order
+    """
+    lines = str(completion_raw or "").replace("\r\n", "\n").replace("\r", "\n").split("\n")
+    out_lines: list[str] = []
+    had_preamble = False
+
+    for line in lines:
+        normalized = line.rstrip()
+        upper = normalized.upper()
+        # Some rows have NOTE_ID and SOURCE_FILE on a single line.
+        if "NOTE_ID:" in upper or "SOURCE_FILE:" in upper:
+            had_preamble = True
+            continue
+        if NOTE_ID_LINE_RE.match(normalized) or SOURCE_LINE_RE.match(normalized):
+            had_preamble = True
+            continue
+        out_lines.append(normalized)
+
+    canonical = "\n".join(out_lines).strip()
+    canonical = DATE_LINE_RE.sub(r"\1[Date]", canonical)
+    return canonical, had_preamble
+
+
+def build_quality_flags(completion_canonical: str, contains_note_id_preamble: bool) -> dict[str, Any]:
+    return {
+        "missing_required_sections": find_missing_sections(completion_canonical),
+        "disallowed_placeholders": find_disallowed_placeholders(completion_canonical),
+        "literal_none_present": bool(LITERAL_NONE_RE.search(completion_canonical)),
+        "contains_note_id_preamble": contains_note_id_preamble,
+    }
+
+
+def iter_input_rows(input_dir: Path):
+    for path in sorted(input_dir.glob("*.jsonl")):
+        with path.open("r", encoding="utf-8") as handle:
+            for line_num, line in enumerate(handle, start=1):
+                line = line.strip()
+                if not line:
+                    continue
+                yield path, line_num, line
+
+
+def build_dataset_rows(input_dir: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    rejected_rows = 0
+    flag_counter: Counter[str] = Counter()
+    note_families: Counter[str] = Counter()
+
+    index_per_file: Counter[str] = Counter()
+
+    for path, line_num, raw in iter_input_rows(input_dir):
+        try:
+            payload = json.loads(raw)
+        except Exception:
+            rejected_rows += 1
+            continue
+
+        prompt = str(payload.get("prompt") or "").strip()
+        completion_raw = str(payload.get("completion") or "").strip()
+        if not prompt or not completion_raw:
+            rejected_rows += 1
+            continue
+
+        source_file = path.name
+        note_family, split_hint = infer_source_metadata(source_file)
+        note_families[note_family] += 1
+
+        index_per_file[source_file] += 1
+        row_idx = index_per_file[source_file]
+        row_id = f"reporter_prompt_v1_{note_family}_{split_hint}_{row_idx:04d}"
+
+        completion_canonical, had_preamble = canonicalize_completion(completion_raw)
+        quality_flags = build_quality_flags(completion_canonical, had_preamble)
+
+        if quality_flags["missing_required_sections"]:
+            flag_counter["rows_missing_required_sections"] += 1
+        if quality_flags["disallowed_placeholders"]:
+            flag_counter["rows_with_disallowed_placeholders"] += 1
+        if quality_flags["literal_none_present"]:
+            flag_counter["rows_with_literal_none"] += 1
+        if quality_flags["contains_note_id_preamble"]:
+            flag_counter["rows_with_note_id_preamble"] += 1
+
+        rows.append(
+            {
+                "id": row_id,
+                "note_family": note_family,
+                "source_file": source_file,
+                "source_split_hint": split_hint,
+                "prompt_text": prompt,
+                "completion_raw": completion_raw,
+                "completion_canonical": completion_canonical,
+                "quality_flags": quality_flags,
+            }
+        )
+
+    manifest = {
+        "dataset_contract": "reporter_prompt_pairs.v1",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "input_dir": str(input_dir),
+        "summary": {
+            "rows_written": len(rows),
+            "rows_rejected": rejected_rows,
+            "note_family_count": len(note_families),
+        },
+        "quality": dict(flag_counter),
+        "note_family_counts": dict(sorted(note_families.items())),
+        "required_headers": REQUIRED_SECTION_HEADERS,
+    }
+    return rows, manifest
+
+
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+
+    if not args.input_dir.exists():
+        raise FileNotFoundError(f"Input directory does not exist: {args.input_dir}")
+
+    rows, manifest = build_dataset_rows(args.input_dir)
+    if not rows:
+        raise RuntimeError("No valid rows were produced from input directory")
+
+    output_dir: Path = args.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_jsonl_path = output_dir / args.output_jsonl
+    manifest_path = output_dir / args.manifest_json
+
+    write_jsonl(output_jsonl_path, rows)
+    manifest_path.write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+    print(f"Wrote dataset: {output_jsonl_path}")
+    print(f"Wrote manifest: {manifest_path}")
+    print(f"Rows: {manifest['summary']['rows_written']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `ops/tools/eval_reporter_gold_dataset.py`
+- Size: `8856` bytes
+```
+#!/usr/bin/env python3
+"""Evaluate reporter quality against a reporter-gold JSONL dataset."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import random
+import sys
+from dataclasses import dataclass
+from difflib import SequenceMatcher
+from pathlib import Path
+from typing import Any, Callable
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+REQUIRED_SECTION_HEADERS = [
+    "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT",
+    "INDICATION FOR OPERATION",
+    "CONSENT",
+    "PREOPERATIVE DIAGNOSIS",
+    "POSTOPERATIVE DIAGNOSIS",
+    "PROCEDURE",
+    "ANESTHESIA",
+    "MONITORING",
+    "COMPLICATIONS",
+    "PROCEDURE IN DETAIL",
+    "IMPRESSION / PLAN",
+]
+
+DEFAULT_INPUT = Path("data/ml_training/reporter_golden/v1/reporter_gold_accepted.jsonl")
+DEFAULT_OUTPUT = Path("data/ml_training/reporter_golden/v1/reporter_gold_eval_report.json")
+
+
+@dataclass(frozen=True)
+class EvaluationRow:
+    id: str
+    input_text: str
+    ideal_output: str
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT, help="Gold dataset JSONL.")
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Evaluation report JSON path.")
+    parser.add_argument("--max-cases", type=int, default=0, help="Optional max case count (0 means all).")
+    parser.add_argument("--seed", type=int, default=42, help="Seed for deterministic subsampling.")
+    return parser.parse_args(argv)
+
+
+def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            rows.append(json.loads(line))
+    return rows
+
+
+def normalize_text(text: str) -> str:
+    lines = [line.strip() for line in (text or "").splitlines() if line.strip()]
+    return "\n".join(lines)
+
+
+def similarity_ratio(reference: str, candidate: str) -> float:
+    return SequenceMatcher(None, normalize_text(reference), normalize_text(candidate)).ratio()
+
+
+def missing_sections(report_text: str) -> list[str]:
+    upper = (report_text or "").upper()
+    return [header for header in REQUIRED_SECTION_HEADERS if header.upper() not in upper]
+
+
+def to_eval_rows(rows: list[dict[str, Any]]) -> list[EvaluationRow]:
+    out: list[EvaluationRow] = []
+    for idx, row in enumerate(rows, start=1):
+        input_text = str(row.get("input_text") or "").strip()
+        ideal_output = str(row.get("ideal_output") or row.get("ideal_output_candidate") or "").strip()
+        row_id = str(row.get("id") or f"row_{idx}")
+        if not input_text or not ideal_output:
+            continue
+        out.append(EvaluationRow(id=row_id, input_text=input_text, ideal_output=ideal_output))
+    return out
+
+
+def maybe_subsample(rows: list[EvaluationRow], max_cases: int, seed: int) -> list[EvaluationRow]:
+    if max_cases <= 0 or len(rows) <= max_cases:
+        return rows
+    rng = random.Random(seed)
+    picked = rng.sample(rows, max_cases)
+    picked.sort(key=lambda r: r.id)
+    return picked
+
+
+def evaluate_rows(
+    rows: list[EvaluationRow],
+    *,
+    render_report: Callable[[str], str],
+) -> dict[str, Any]:
+    per_case: list[dict[str, Any]] = []
+    similarities: list[float] = []
+    generated_full_shell_count = 0
+    failures = 0
+
+    for row in rows:
+        try:
+            generated = render_report(row.input_text)
+            missing = missing_sections(generated)
+            score = similarity_ratio(row.ideal_output, generated)
+            similarities.append(score)
+            if not missing:
+                generated_full_shell_count += 1
+
+            per_case.append(
+                {
+                    "id": row.id,
+                    "similarity": round(score, 4),
+                    "missing_sections_generated": missing,
+                    "missing_sections_ideal": missing_sections(row.ideal_output),
+                    "generated_length": len(generated),
+                    "ideal_length": len(row.ideal_output),
+                    "error": None,
+                }
+            )
+        except Exception as exc:
+            failures += 1
+            per_case.append(
+                {
+                    "id": row.id,
+                    "similarity": 0.0,
+                    "missing_sections_generated": REQUIRED_SECTION_HEADERS,
+                    "missing_sections_ideal": [],
+                    "generated_length": 0,
+                    "ideal_length": len(row.ideal_output),
+                    "error": str(exc),
+                }
+            )
+
+    avg_similarity = float(sum(similarities) / len(similarities)) if similarities else 0.0
+    min_similarity = float(min(similarities)) if similarities else 0.0
+    full_shell_rate = float(generated_full_shell_count / len(rows)) if rows else 0.0
+
+    summary = {
+        "total_cases": len(rows),
+        "successful_cases": len(rows) - failures,
+        "failed_cases": failures,
+        "avg_similarity": round(avg_similarity, 4),
+        "min_similarity": round(min_similarity, 4),
+        "generated_full_shell_rate": round(full_shell_rate, 4),
+    }
+    return {
+        "summary": summary,
+        "per_case": per_case,
+    }
+
+
+def _build_renderer() -> Callable[[str], str]:
+    # Keep evaluation deterministic and offline-friendly by default.
+    os.environ.setdefault("PROCSUITE_SKIP_DOTENV", "1")
+    os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
+    os.environ.setdefault("REPORTER_DISABLE_LLM", "1")
+    os.environ.setdefault("QA_REPORTER_ALLOW_SIMPLE_FALLBACK", "0")
+    os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "0")
+    os.environ.setdefault("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
+
+    from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
+    from app.registry.application.registry_service import RegistryService
+    from app.reporting.engine import (
+        ReporterEngine,
+        _load_procedure_order,
+        default_schema_registry,
+        default_template_registry,
+    )
+    from app.reporting.inference import InferenceEngine
+    from app.reporting.validation import ValidationEngine
+
+    templates = default_template_registry()
+    schemas = default_schema_registry()
+    reporter_engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=_load_procedure_order(),
+    )
+    inference_engine = InferenceEngine()
+    validation_engine = ValidationEngine(templates, schemas)
+    registry_service = RegistryService()
+
+    class _RegistryAdapter:
+        def __init__(self, svc: RegistryService):
+            self._svc = svc
+
+        def run(self, text: str, explain: bool = False):  # noqa: ARG002
+            result = self._svc.extract_fields_extraction_first(text)
+            return result.record
+
+    strategy = ReportingStrategy(
+        reporter_engine=reporter_engine,
+        inference_engine=inference_engine,
+        validation_engine=validation_engine,
+        registry_engine=_RegistryAdapter(registry_service),
+        simple_strategy=SimpleReporterStrategy(),
+    )
+
+    def _render(note_text: str) -> str:
+        extraction = registry_service.extract_fields_extraction_first(note_text)
+        record_dict = extraction.record.model_dump(exclude_none=True)
+        payload = strategy.render(text=note_text, registry_data={"record": record_dict})
+        return str(payload.get("markdown") or "")
+
+    return _render
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    if not args.input.exists():
+        raise FileNotFoundError(f"Input dataset not found: {args.input}")
+
+    raw_rows = load_jsonl(args.input)
+    eval_rows = to_eval_rows(raw_rows)
+    eval_rows = maybe_subsample(eval_rows, int(args.max_cases), int(args.seed))
+
+    renderer = _build_renderer()
+    report = evaluate_rows(eval_rows, render_report=renderer)
+    report["input_path"] = str(args.input)
+    report["output_path"] = str(args.output)
+    report["created_at"] = datetime_now_iso()
+
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    summary = report["summary"]
+    print(
+        "Reporter gold eval: "
+        f"cases={summary['total_cases']} "
+        f"avg_similarity={summary['avg_similarity']} "
+        f"min_similarity={summary['min_similarity']} "
+        f"full_shell_rate={summary['generated_full_shell_rate']}"
+    )
+    print(f"Wrote report: {args.output}")
+    return 0
+
+
+def datetime_now_iso() -> str:
+    from datetime import datetime, timezone
+
+    return datetime.now(timezone.utc).isoformat()
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+```
+
+---
 ### `ml/scripts/find_critical_failures.py`
 - Size: `9036` bytes
 ```
@@ -11559,6 +12592,310 @@ def main() -> int:
                 print("Self-correction applied: (none)")
 
     return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `ops/tools/run_reporter_random_seeds.py`
+- Size: `10264` bytes
+```
+#!/usr/bin/env python3
+"""Sample prompts from reporter-training JSONL files and run reporter pipeline."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import random
+import sys
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
+from app.registry.application.registry_service import RegistryService
+from app.reporting.engine import ReporterEngine, _load_procedure_order, default_schema_registry, default_template_registry
+from app.reporting.inference import InferenceEngine
+from app.reporting.validation import ValidationEngine
+
+
+DEFAULT_INPUT_DIR = Path("/home/rjm/projects/proc_suite_notes/reporter_training/reporter_training")
+DEFAULT_OUTPUT = Path("reporter_tests.txt")
+
+
+@dataclass(frozen=True)
+class SeedPrompt:
+    source_file: Path
+    line_number: int
+    record_id: str
+    prompt: str
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
+    parser.add_argument("--count", type=int, default=20, help="How many prompts to sample.")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for deterministic sampling.")
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Output text file path.")
+    parser.add_argument(
+        "--prompt-field",
+        default="prompt",
+        help="Primary field name for prompt text (default: prompt).",
+    )
+    parser.add_argument(
+        "--include-metadata-json",
+        action="store_true",
+        help="Also emit machine-readable JSON results.",
+    )
+    parser.add_argument(
+        "--metadata-output",
+        type=Path,
+        default=None,
+        help="Optional metadata JSON output path (default: --output with .json suffix).",
+    )
+    return parser.parse_args(argv)
+
+
+def _extract_prompt(row: dict[str, Any], prompt_field: str) -> str:
+    for field in (prompt_field, "prompt", "prompt_text", "text"):
+        value = row.get(field)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""
+
+
+def sample_prompts(input_dir: Path, *, count: int, seed: int, prompt_field: str) -> tuple[list[SeedPrompt], int]:
+    if not input_dir.exists() or not input_dir.is_dir():
+        raise FileNotFoundError(f"Input directory not found: {input_dir}")
+
+    files = sorted(input_dir.glob("*.jsonl"))
+    if not files:
+        raise FileNotFoundError(f"No JSONL files found in: {input_dir}")
+
+    rng = random.Random(seed)
+    reservoir: list[SeedPrompt] = []
+    seen = 0
+
+    for file_path in files:
+        with file_path.open("r", encoding="utf-8") as handle:
+            for line_num, line in enumerate(handle, start=1):
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if not isinstance(row, dict):
+                    continue
+                prompt = _extract_prompt(row, prompt_field)
+                if not prompt:
+                    continue
+
+                record_id = str(row.get("id") or f"{file_path.stem}:{line_num}")
+                item = SeedPrompt(
+                    source_file=file_path,
+                    line_number=line_num,
+                    record_id=record_id,
+                    prompt=prompt,
+                )
+
+                seen += 1
+                if len(reservoir) < count:
+                    reservoir.append(item)
+                else:
+                    replacement_idx = rng.randrange(seen)
+                    if replacement_idx < count:
+                        reservoir[replacement_idx] = item
+
+    if not reservoir:
+        raise RuntimeError("No usable prompt rows found.")
+
+    rng.shuffle(reservoir)
+    return reservoir, seen
+
+
+def build_reporter_strategy() -> tuple[ReportingStrategy, RegistryService]:
+    templates = default_template_registry()
+    schemas = default_schema_registry()
+    reporter_engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=_load_procedure_order(),
+    )
+    registry_engine = RegistryService()
+    strategy = ReportingStrategy(
+        reporter_engine=reporter_engine,
+        inference_engine=InferenceEngine(),
+        validation_engine=ValidationEngine(templates, schemas),
+        registry_engine=registry_engine,
+        simple_strategy=SimpleReporterStrategy(),
+    )
+    return strategy, registry_engine
+
+
+def run_reporter_markdown(
+    prompt_text: str,
+    *,
+    strategy: ReportingStrategy,
+    registry_engine: RegistryService,
+) -> tuple[str, list[str]]:
+    extraction = registry_engine.extract_fields_extraction_first(prompt_text)
+    record_data = extraction.record.model_dump(exclude_none=True)
+    rendered = strategy.render(text=prompt_text, registry_data={"record": record_data})
+    markdown = str(rendered.get("markdown") or "").strip()
+    warnings = [str(w) for w in (rendered.get("warnings") or [])]
+    return markdown, warnings
+
+
+def write_results(
+    output_path: Path,
+    rows: list[SeedPrompt],
+    *,
+    strategy: ReportingStrategy,
+    registry_engine: RegistryService,
+) -> tuple[int, int, list[dict[str, Any]]]:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    success_count = 0
+    failure_count = 0
+    case_results: list[dict[str, Any]] = []
+
+    with output_path.open("w", encoding="utf-8") as handle:
+        handle.write(f"Reporter random seed run\n")
+        handle.write(f"Cases: {len(rows)}\n\n")
+
+        for idx, row in enumerate(rows, start=1):
+            handle.write("=" * 100 + "\n")
+            handle.write(f"CASE {idx}\n")
+            handle.write(f"source: {row.source_file}:{row.line_number}\n")
+            handle.write(f"id: {row.record_id}\n\n")
+            handle.write("PROMPT\n")
+            handle.write("-" * 100 + "\n")
+            handle.write(row.prompt.rstrip() + "\n\n")
+            handle.write("OUTPUT\n")
+            handle.write("-" * 100 + "\n")
+
+            case_payload: dict[str, Any] = {
+                "case_index": idx,
+                "source_file": str(row.source_file),
+                "line_number": row.line_number,
+                "id": row.record_id,
+                "prompt": row.prompt,
+                "markdown": None,
+                "warnings": [],
+                "error": None,
+            }
+
+            try:
+                markdown, warnings = run_reporter_markdown(
+                    row.prompt,
+                    strategy=strategy,
+                    registry_engine=registry_engine,
+                )
+                handle.write((markdown or "<empty markdown>").rstrip() + "\n")
+                if warnings:
+                    handle.write("\nWARNINGS\n")
+                    handle.write("-" * 100 + "\n")
+                    for warning in warnings:
+                        handle.write(f"- {warning}\n")
+                case_payload["markdown"] = markdown
+                case_payload["warnings"] = warnings
+                success_count += 1
+            except Exception as exc:  # noqa: BLE001
+                handle.write(f"<ERROR: {type(exc).__name__}: {exc}>\n")
+                case_payload["error"] = {
+                    "type": type(exc).__name__,
+                    "message": str(exc),
+                }
+                failure_count += 1
+            handle.write("\n")
+            case_results.append(case_payload)
+
+    return success_count, failure_count, case_results
+
+
+def write_metadata_json(
+    metadata_path: Path,
+    *,
+    input_dir: Path,
+    output_txt_path: Path,
+    prompt_field: str,
+    sample_count: int,
+    seed: int,
+    total_candidates: int,
+    success_count: int,
+    failure_count: int,
+    cases: list[dict[str, Any]],
+) -> None:
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "input_dir": str(input_dir),
+        "output_txt_path": str(output_txt_path),
+        "prompt_field": prompt_field,
+        "sample_count": sample_count,
+        "seed": seed,
+        "total_candidates": total_candidates,
+        "success_count": success_count,
+        "failure_count": failure_count,
+        "cases": cases,
+    }
+    metadata_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+
+    if args.count <= 0:
+        raise ValueError("--count must be > 0")
+
+    sampled_rows, total_candidates = sample_prompts(
+        args.input_dir,
+        count=int(args.count),
+        seed=int(args.seed),
+        prompt_field=str(args.prompt_field),
+    )
+
+    strategy, registry_engine = build_reporter_strategy()
+    success_count, failure_count, case_results = write_results(
+        args.output,
+        sampled_rows,
+        strategy=strategy,
+        registry_engine=registry_engine,
+    )
+
+    metadata_written = None
+    if bool(args.include_metadata_json):
+        metadata_path = args.metadata_output or args.output.with_suffix(".json")
+        write_metadata_json(
+            metadata_path,
+            input_dir=args.input_dir,
+            output_txt_path=args.output,
+            prompt_field=str(args.prompt_field),
+            sample_count=len(sampled_rows),
+            seed=int(args.seed),
+            total_candidates=total_candidates,
+            success_count=success_count,
+            failure_count=failure_count,
+            cases=case_results,
+        )
+        metadata_written = metadata_path
+
+    print(f"Sampled {len(sampled_rows)} prompts from {total_candidates} candidates.")
+    print(f"Wrote: {args.output}")
+    if metadata_written is not None:
+        print(f"Wrote metadata: {metadata_written}")
+    print(f"Succeeded: {success_count} | Failed: {failure_count}")
+    return 0 if failure_count == 0 else 1
 
 
 if __name__ == "__main__":
@@ -13564,2059 +14901,5 @@ def main(argv: List[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
-```
-
----
-### `ops/tools/export_phi_model_for_transformersjs.py`
-- Size: `12109` bytes
-```
-#!/usr/bin/env python3
-"""Export PHI DistilBERT model to a transformers.js-compatible ONNX bundle.
-
-Target layout (Xenova/transformers.js friendly):
-  <out_dir>/
-    config.json
-    tokenizer.json
-    ...
-    protected_terms.json
-    onnx/model.onnx
-    onnx/model_quantized.onnx (optional, opt-in)
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import shutil
-import subprocess
-import sys
-import tempfile
-from pathlib import Path
-from typing import Iterable
-
-# Ensure repo root is on sys.path (so `import app.*` works when running as a script).
-_REPO_ROOT = Path(__file__).resolve().parents[2]
-if str(_REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(_REPO_ROOT))
-
-from app.phi.adapters.phi_redactor_hybrid import (
-    ANATOMICAL_TERMS,
-    DEVICE_MANUFACTURERS,
-    PROTECTED_DEVICE_NAMES,
-)
-
-MODEL_FILES = [
-    "config.json",
-    "tokenizer.json",
-    "tokenizer_config.json",
-    "special_tokens_map.json",
-    "vocab.txt",
-    "label_map.json",
-]
-
-REQUIRED_ONNX_INPUTS = ("input_ids", "attention_mask")
-
-
-def parse_bool(value: str | bool | None) -> bool:
-    """Parse bool-ish CLI args while supporting `--flag false` and `--flag`."""
-    if isinstance(value, bool):
-        return value
-    if value is None:
-        return True
-    normalized = value.strip().lower()
-    if normalized in {"1", "true", "t", "yes", "y", "on"}:
-        return True
-    if normalized in {"0", "false", "f", "no", "n", "off"}:
-        return False
-    raise argparse.ArgumentTypeError(f"Invalid boolean value: {value!r}")
-
-
-def build_arg_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--model-dir", default="artifacts/phi_distilbert_ner")
-    ap.add_argument(
-        "--out-dir",
-        default="ui/static/phi_redactor/vendor/phi_distilbert_ner",
-    )
-    ap.add_argument(
-        "--quantize",
-        nargs="?",
-        const=True,
-        default=False,
-        type=parse_bool,
-        help="Also export `onnx/model_quantized.onnx` (opt-in; WASM INT8 may misbehave).",
-    )
-    ap.add_argument(
-        "--static-quantize",
-        nargs="?",
-        const=True,
-        default=False,
-        type=parse_bool,
-        help="Use static quantization instead of dynamic (smaller model, ~40-50%% size reduction).",
-    )
-    ap.add_argument(
-        "--clean",
-        nargs="?",
-        const=True,
-        default=True,
-        type=parse_bool,
-        help="Remove prior export artifacts from --out-dir before exporting.",
-    )
-    return ap
-
-
-def run(cmd: list[str]) -> None:
-    try:
-        subprocess.run(cmd, check=True)
-    except FileNotFoundError as exc:
-        tool = cmd[0]
-        raise RuntimeError(f"{tool} not found. Install with: pip install 'optimum[onnxruntime]'") from exc
-
-
-def locate_exported_onnx(export_dir: Path) -> Path:
-    """Locate the exported ONNX model within an Optimum output directory."""
-    direct = [
-        export_dir / "model.onnx",
-        export_dir / "onnx" / "model.onnx",
-    ]
-    for candidate in direct:
-        if candidate.exists():
-            return candidate
-
-    candidates: list[Path] = []
-    candidates.extend(export_dir.glob("*.onnx"))
-    onnx_subdir = export_dir / "onnx"
-    if onnx_subdir.exists():
-        candidates.extend(onnx_subdir.glob("*.onnx"))
-
-    candidates = [p for p in candidates if p.is_file()]
-    if not candidates:
-        raise FileNotFoundError(f"No ONNX files found in Optimum export dir: {export_dir}")
-
-    # Prefer the largest ONNX file if multiple exist.
-    candidates.sort(key=lambda p: p.stat().st_size, reverse=True)
-    return candidates[0]
-
-
-def write_protected_terms(out_dir: Path) -> None:
-    terms = {
-        "anatomy_terms": sorted({t.lower() for t in ANATOMICAL_TERMS}),
-        "device_manufacturers": sorted({t.lower() for t in DEVICE_MANUFACTURERS}),
-        "protected_device_names": sorted({t.lower() for t in PROTECTED_DEVICE_NAMES}),
-        "ln_station_regex": r"^\\d{1,2}[LRlr](?:[is])?$",
-        "segment_regex": r"^[LRlr][Bb]\\d{1,2}(?:\\+\\d{1,2})?$",
-        "address_markers": [
-            "street",
-            "st",
-            "rd",
-            "road",
-            "ave",
-            "avenue",
-            "dr",
-            "drive",
-            "blvd",
-            "boulevard",
-            "lane",
-            "ln",
-            "zip",
-            "zipcode",
-            "address",
-            "city",
-            "state",
-            "ste",
-            "suite",
-            "apt",
-            "unit",
-        ],
-        "code_markers": [
-            "cpt",
-            "code",
-            "codes",
-            "billing",
-            "submitted",
-            "justification",
-            "rvu",
-            "coding",
-            "radiology",
-            "guidance",
-            "ct",
-            "modifier",
-            "billed",
-            "cbct",
-        ],
-        "station_markers": ["station", "stations", "nodes", "sampled", "ebus", "tbna", "ln"],
-    }
-    with open(out_dir / "protected_terms.json", "w") as f:
-        json.dump(terms, f, indent=2)
-
-
-def format_size(size_bytes: int) -> str:
-    return f"{size_bytes / (1024 * 1024):.1f} MB"
-
-
-def find_optimum_cli() -> str:
-    """Find optimum-cli in the current Python environment."""
-    # First try to find it in the same Python environment's bin directory
-    python_bin = Path(sys.executable).parent
-    optimum_cli = python_bin / "optimum-cli"
-    if optimum_cli.exists():
-        return str(optimum_cli)
-    
-    # Fall back to which (may find system version, but better than nothing)
-    which_cli = shutil.which("optimum-cli")
-    if which_cli:
-        return which_cli
-
-    raise RuntimeError("optimum-cli not found. Install with: pip install 'optimum[onnxruntime]'")
-
-
-def validate_onnx_inputs(model_onnx: Path, required: Iterable[str] = REQUIRED_ONNX_INPUTS) -> None:
-    try:
-        import onnx  # type: ignore[import-untyped]
-    except ImportError as exc:
-        raise RuntimeError(
-            "onnx is required to validate exported model signatures. Install with: pip install onnx"
-        ) from exc
-
-    m = onnx.load(str(model_onnx))
-    input_names = [i.name for i in m.graph.input]
-    missing = [name for name in required if name not in input_names]
-    if missing:
-        raise RuntimeError(
-            "Re-export failed: token-classification ONNX must have attention_mask.\n"
-            f"ONNX missing required inputs: {missing}. Found: {input_names}"
-        )
-
-
-def quantize_onnx_model(model_onnx: Path, quantized_onnx: Path, use_static: bool = False) -> None:
-    """Quantize ONNX model using dynamic or static quantization.
-    
-    Args:
-        model_onnx: Path to input ONNX model
-        quantized_onnx: Path for quantized output
-        use_static: If True, use static quantization (smaller but requires calibration data)
-    """
-    try:
-        from onnxruntime.quantization import (
-            QuantType,
-            quantize_dynamic,
-            quantize_static,
-            CalibrationDataReader,
-        )
-        import onnxruntime as ort
-        import numpy as np
-    except ImportError as exc:
-        raise RuntimeError(
-            "onnxruntime is required for quantization. Install with: pip install onnxruntime"
-        ) from exc
-
-    quantized_onnx.parent.mkdir(parents=True, exist_ok=True)
-    
-    if use_static:
-        # Static quantization is more aggressive but requires calibration data
-        # Create a simple calibration data reader with representative tokenized inputs
-        class TokenCalibrationDataReader(CalibrationDataReader):
-            def __init__(self, model_path: Path):
-                self.model_path = model_path
-                self.data_iter = None
-                # Generate representative calibration samples
-                # These are dummy tokenized sequences that represent typical input
-                self.calibration_samples = []
-                for _ in range(10):  # Use 10 calibration samples
-                    # Create varied length sequences (typical for token classification)
-                    seq_len = np.random.randint(128, 512)
-                    self.calibration_samples.append({
-                        "input_ids": np.random.randint(0, 30000, (1, seq_len), dtype=np.int64),
-                        "attention_mask": np.ones((1, seq_len), dtype=np.int64),
-                    })
-            
-            def get_next(self):
-                if self.data_iter is None:
-                    self.data_iter = iter(self.calibration_samples)
-                return next(self.data_iter, None)
-        
-        try:
-            print("Performing static quantization (this may take a few minutes)...")
-            quantize_static(
-                str(model_onnx),
-                str(quantized_onnx),
-                calibration_data_reader=TokenCalibrationDataReader(model_onnx),
-                weight_type=QuantType.QInt8,
-                activation_type=QuantType.QUInt8,
-                optimize_model=True,
-            )
-            print("Static quantization completed successfully.")
-        except Exception as e:
-            # Fallback to dynamic if static fails
-            print(f"Static quantization failed ({e}), falling back to dynamic...")
-            quantize_dynamic(str(model_onnx), str(quantized_onnx), weight_type=QuantType.QInt8)
-    else:
-        # Dynamic quantization (default - faster, no calibration needed)
-        print("Performing dynamic quantization...")
-        quantize_dynamic(str(model_onnx), str(quantized_onnx), weight_type=QuantType.QInt8)
-
-
-def clean_export_dir(out_dir: Path) -> None:
-    """Remove generated artifacts so output layout is deterministic."""
-    onnx_dir = out_dir / "onnx"
-    if onnx_dir.exists():
-        shutil.rmtree(onnx_dir)
-    for filename in [*MODEL_FILES, "protected_terms.json", "model.onnx", "model_quantized.onnx"]:
-        path = out_dir / filename
-        if path.exists():
-            path.unlink()
-
-
-def main() -> None:
-    args = build_arg_parser().parse_args()
-    model_dir = Path(args.model_dir)
-    out_dir = Path(args.out_dir)
-    if not model_dir.exists():
-        raise FileNotFoundError(f"--model-dir not found: {model_dir}")
-
-    out_dir.mkdir(parents=True, exist_ok=True)
-    if args.clean:
-        clean_export_dir(out_dir)
-
-    optimum_cli = find_optimum_cli()
-
-    onnx_dir = out_dir / "onnx"
-    onnx_dir.mkdir(parents=True, exist_ok=True)
-    model_path = onnx_dir / "model.onnx"
-
-    with tempfile.TemporaryDirectory(prefix="phi_onnx_export_") as tmp:
-        tmp_dir = Path(tmp)
-        run(
-            [
-                optimum_cli,
-                "export",
-                "onnx",
-                "--model",
-                str(model_dir),
-                "--task",
-                "token-classification",
-                str(tmp_dir),
-            ]
-        )
-        exported_onnx = locate_exported_onnx(tmp_dir)
-        shutil.copy2(exported_onnx, model_path)
-
-    if not model_path.exists():
-        raise RuntimeError("Export failed: model.onnx not found.")
-    model_size = model_path.stat().st_size
-    if model_size < 5_000_000:
-        raise RuntimeError("Export failed: model.onnx is unexpectedly small.")
-    validate_onnx_inputs(model_path)
-    print(f"Exported model.onnx size: {format_size(model_size)}")
-
-    if args.quantize:
-        quantized_path = onnx_dir / "model_quantized.onnx"
-        quantize_onnx_model(model_path, quantized_path, use_static=args.static_quantize)
-        if not quantized_path.exists() or quantized_path.stat().st_size < 5_000_000:
-            raise RuntimeError("Quantization failed: model_quantized.onnx missing or too small.")
-        validate_onnx_inputs(quantized_path)
-        quantized_size = quantized_path.stat().st_size
-        reduction_pct = (1 - quantized_size / model_size) * 100
-        print(f"Quantized model_quantized.onnx size: {format_size(quantized_size)} ({reduction_pct:.1f}% reduction)")
-
-    for name in MODEL_FILES:
-        src = model_dir / name
-        if src.exists():
-            shutil.copy2(src, out_dir / name)
-
-    write_protected_terms(out_dir)
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-### `ml/scripts/convert_spans_to_bio.py`
-- Size: `12156` bytes
-```
-#!/usr/bin/env python3
-"""
-Convert character-span NER annotations to BIO-tagged format for training.
-
-Input format (ner_dataset_all.jsonl):
-{
-  "id": "note_001",
-  "text": "Full procedure note text...",
-  "entities": [
-    {"start": 100, "end": 102, "label": "ANAT_LN_STATION", "text": "4R"},
-    ...
-  ]
-}
-
-Output format (for train_registry_ner.py):
-{
-  "id": "note_001",
-  "tokens": ["station", "4", "##r", "was", "sampled", ...],
-  "ner_tags": ["O", "B-ANAT_LN_STATION", "I-ANAT_LN_STATION", "O", "O", ...]
-}
-
-Usage:
-    python ml/scripts/convert_spans_to_bio.py \
-        --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
-        --output data/ml_training/granular_ner/ner_bio_format.jsonl \
-        --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import logging
-import sys
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
-
-from transformers import AutoTokenizer
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
-
-
-def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--input", "-i",
-        type=Path,
-        required=True,
-        help="Input JSONL file with character-span annotations"
-    )
-    parser.add_argument(
-        "--output", "-o",
-        type=Path,
-        required=True,
-        help="Output JSONL file with BIO-tagged tokens"
-    )
-    parser.add_argument(
-        "--model",
-        type=str,
-        default="microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
-        help="Tokenizer model name (default: microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext)"
-    )
-    parser.add_argument(
-        "--max-length",
-        type=int,
-        default=512,
-        help="Maximum sequence length (default: 512)"
-    )
-    parser.add_argument(
-        "--window-size",
-        type=int,
-        default=None,
-        help="If set, split long texts into overlapping windows of this many chars"
-    )
-    parser.add_argument(
-        "--window-overlap",
-        type=int,
-        default=200,
-        help="Overlap between windows in characters (default: 200)"
-    )
-    return parser.parse_args(argv)
-
-
-def normalize_entity(entity: Any) -> Dict[str, Any]:
-    """
-    Normalize entity to dict format.
-
-    Handles both formats:
-    - Dict: {"start": 100, "end": 102, "label": "ANAT_LN_STATION", "text": "4R"}
-    - List: [100, 102, "ANAT_LN_STATION"] or [100, 102, "ANAT_LN_STATION", "4R"]
-    """
-    if isinstance(entity, dict):
-        start = entity.get("start")
-        end = entity.get("end")
-        if start is None:
-            start = entity.get("start_char", entity.get("start_offset", 0))
-        if end is None:
-            end = entity.get("end_char", entity.get("end_offset", 0))
-        text = entity.get("text")
-        if text is None:
-            text = entity.get("span_text", "")
-        return {
-            "start": start,
-            "end": end,
-            "label": entity.get("label", "UNKNOWN"),
-            "text": text or "",
-        }
-    elif isinstance(entity, (list, tuple)):
-        if len(entity) >= 3:
-            return {
-                "start": entity[0],
-                "end": entity[1],
-                "label": entity[2],
-                "text": entity[3] if len(entity) > 3 else "",
-            }
-    return {"start": 0, "end": 0, "label": "UNKNOWN", "text": ""}
-
-
-def spans_to_bio(
-    text: str,
-    entities: List[Any],
-    tokenizer: Any,
-    max_length: int = 512,
-) -> Tuple[List[str], List[str]]:
-    """
-    Convert character spans to BIO tags aligned to tokenizer output.
-
-    Args:
-        text: The original text
-        entities: List of entities (dict or list format)
-        tokenizer: The tokenizer to use for alignment
-        max_length: Maximum sequence length
-
-    Returns:
-        (tokens, ner_tags) tuple with special tokens filtered out
-    """
-    # Normalize all entities to dict format
-    normalized_entities = [normalize_entity(e) for e in entities]
-
-    # Tokenize with offset mapping
-    encoding = tokenizer(
-        text,
-        truncation=True,
-        max_length=max_length,
-        return_offsets_mapping=True,
-        add_special_tokens=True,
-    )
-
-    offset_mapping = encoding.get("offset_mapping", [])
-    input_ids = encoding.get("input_ids", [])
-
-    # Convert input_ids back to tokens
-    tokens = tokenizer.convert_ids_to_tokens(input_ids)
-
-    # Initialize all tags as O
-    ner_tags = ["O"] * len(tokens)
-
-    # Find valid token indices (non-special tokens)
-    # Special tokens like [CLS], [SEP] have offset (0, 0)
-    valid_indices = []
-    for idx, offset in enumerate(offset_mapping):
-        if offset[0] != offset[1]:  # Has non-zero span
-            valid_indices.append(idx)
-
-    # Sort entities by start position
-    sorted_entities = sorted(normalized_entities, key=lambda e: e.get("start", 0))
-
-    # Assign BIO tags based on entity spans
-    for entity in sorted_entities:
-        span_start = entity.get("start", 0)
-        span_end = entity.get("end", 0)
-        label = entity.get("label", "UNKNOWN")
-
-        # Find tokens that overlap with this entity span
-        is_first = True
-        for idx in valid_indices:
-            tok_start, tok_end = offset_mapping[idx]
-
-            # Check if token overlaps with entity span
-            if tok_start < span_end and tok_end > span_start:
-                if is_first:
-                    ner_tags[idx] = f"B-{label}"
-                    is_first = False
-                else:
-                    ner_tags[idx] = f"I-{label}"
-
-    # Filter out special tokens for output
-    filtered_tokens = []
-    filtered_tags = []
-    for idx, (token, tag) in enumerate(zip(tokens, ner_tags)):
-        offset = offset_mapping[idx] if idx < len(offset_mapping) else (0, 0)
-        # Include tokens with actual character spans
-        if offset[0] != offset[1]:
-            filtered_tokens.append(token)
-            filtered_tags.append(tag)
-
-    return filtered_tokens, filtered_tags
-
-
-def split_into_windows(
-    text: str,
-    entities: List[Any],
-    window_size: int,
-    window_overlap: int,
-) -> List[Tuple[str, List[Dict[str, Any]], int]]:
-    """
-    Split long text into overlapping windows with adjusted entity spans.
-
-    Returns list of (window_text, adjusted_entities, window_start) tuples.
-    """
-    # Normalize all entities to dict format
-    normalized_entities = [normalize_entity(e) for e in entities]
-
-    windows = []
-    start = 0
-    text_len = len(text)
-
-    while start < text_len:
-        end = min(start + window_size, text_len)
-
-        # Try to break at a sentence boundary if possible
-        if end < text_len:
-            # Look for sentence end markers in last 100 chars
-            search_region = text[max(end - 100, start):end]
-            for marker in [". ", ".\n", "! ", "? "]:
-                last_marker = search_region.rfind(marker)
-                if last_marker != -1:
-                    end = max(end - 100, start) + last_marker + len(marker)
-                    break
-
-        window_text = text[start:end]
-
-        # Adjust entity spans to window coordinates
-        window_entities = []
-        for entity in normalized_entities:
-            ent_start = entity.get("start", 0)
-            ent_end = entity.get("end", 0)
-
-            # Check if entity overlaps with window
-            if ent_start < end and ent_end > start:
-                # Clip entity to window boundaries
-                adj_start = max(0, ent_start - start)
-                adj_end = min(end - start, ent_end - start)
-
-                # Only include if entity has meaningful overlap
-                if adj_end > adj_start:
-                    window_entities.append({
-                        "start": adj_start,
-                        "end": adj_end,
-                        "label": entity["label"],
-                        "text": window_text[adj_start:adj_end],
-                    })
-
-        windows.append((window_text, window_entities, start))
-
-        # Move to next window
-        if end >= text_len:
-            break
-        start = end - window_overlap
-
-    return windows
-
-
-def convert_record(
-    record: Dict[str, Any],
-    tokenizer: Any,
-    max_length: int,
-    window_size: int | None,
-    window_overlap: int,
-) -> List[Dict[str, Any]]:
-    """
-    Convert a single record from span format to BIO format.
-
-    May return multiple records if windowing is enabled.
-    """
-    record_id = record.get("id", "unknown")
-    text = record.get("text", "")
-    entities = record.get("entities", [])
-
-    if not text:
-        return []
-
-    results = []
-
-    if window_size and len(text) > window_size:
-        # Split into windows
-        windows = split_into_windows(text, entities, window_size, window_overlap)
-        for idx, (window_text, window_entities, window_start) in enumerate(windows):
-            tokens, ner_tags = spans_to_bio(
-                window_text, window_entities, tokenizer, max_length
-            )
-            if tokens:
-                results.append({
-                    "id": f"{record_id}:w{idx}",
-                    "id_base": record_id,
-                    "window_index": idx,
-                    "window_start": window_start,
-                    "window_end": window_start + len(window_text),
-                    "tokens": tokens,
-                    "ner_tags": ner_tags,
-                })
-    else:
-        # Process entire text
-        tokens, ner_tags = spans_to_bio(text, entities, tokenizer, max_length)
-        if tokens:
-            results.append({
-                "id": record_id,
-                "tokens": tokens,
-                "ner_tags": ner_tags,
-            })
-
-    return results
-
-
-def main(argv: List[str] | None = None) -> int:
-    args = parse_args(argv)
-
-    # Load tokenizer
-    logger.info(f"Loading tokenizer: {args.model}")
-    tokenizer = AutoTokenizer.from_pretrained(args.model)
-
-    # Read input
-    logger.info(f"Reading input: {args.input}")
-    records = []
-    with open(args.input, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                records.append(json.loads(line))
-
-    logger.info(f"Loaded {len(records)} records")
-
-    # Convert records
-    output_records = []
-    label_counts = {}
-    total_tokens = 0
-
-    for record in records:
-        converted = convert_record(
-            record,
-            tokenizer,
-            args.max_length,
-            args.window_size,
-            args.window_overlap,
-        )
-        for rec in converted:
-            output_records.append(rec)
-            total_tokens += len(rec["tokens"])
-
-            # Count labels
-            for tag in rec["ner_tags"]:
-                if tag != "O":
-                    # Extract base label (remove B-/I- prefix)
-                    base_label = tag.split("-", 1)[-1] if "-" in tag else tag
-                    label_counts[base_label] = label_counts.get(base_label, 0) + 1
-
-    logger.info(f"Generated {len(output_records)} output records")
-    logger.info(f"Total tokens: {total_tokens}")
-    logger.info(f"Label distribution: {json.dumps(label_counts, indent=2)}")
-
-    # Write output
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with open(args.output, "w") as f:
-        for rec in output_records:
-            f.write(json.dumps(rec) + "\n")
-
-    logger.info(f"Wrote output to: {args.output}")
-
-    # Write stats
-    stats_path = args.output.with_suffix(".stats.json")
-    stats = {
-        "input_records": len(records),
-        "output_records": len(output_records),
-        "total_tokens": total_tokens,
-        "label_counts": label_counts,
-        "model": args.model,
-        "max_length": args.max_length,
-        "window_size": args.window_size,
-        "window_overlap": args.window_overlap,
-    }
-    with open(stats_path, "w") as f:
-        json.dump(stats, f, indent=2)
-
-    logger.info(f"Wrote stats to: {stats_path}")
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
-
-```
-
----
-### `ml/scripts/extract_ner_from_excel.py`
-- Size: `13510` bytes
-```
-#!/usr/bin/env python3
-"""
-Extract NER training data from granular annotation Excel files.
-
-Reads phase0_extraction_note_*.xlsx files and outputs:
-- ner_dataset_all.jsonl: Primary training format (one line per note with entities)
-- notes.jsonl: Debug file with note texts
-- spans.jsonl: Debug file with all spans
-- stats.json: Label distribution and statistics
-- alignment_warnings.log: Whitespace drift issues
-
-Usage:
-    python ml/scripts/extract_ner_from_excel.py \
-        --input-dir "data/granular annotations/phase0_excels" \
-        --output-dir data/ml_training/granular_ner
-"""
-
-import argparse
-import json
-import logging
-import re
-from collections import Counter, defaultdict
-from dataclasses import dataclass, asdict
-from pathlib import Path
-from typing import Optional
-
-import openpyxl
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-logger = logging.getLogger(__name__)
-
-
-@dataclass
-class Span:
-    note_id: str
-    label: str
-    span_text: str
-    start_char: int
-    end_char: int
-    hydration_status: str
-    # Validation results
-    is_valid: bool = True
-    validation_note: str = ""
-
-
-@dataclass
-class Note:
-    note_id: str
-    note_text: str
-    source_file: str
-
-
-def normalize_whitespace(text: str) -> str:
-    """Collapse all whitespace to single spaces."""
-    return " ".join(text.split())
-
-
-def validate_span(span: Span, note_text: str) -> tuple[bool, str]:
-    """
-    Validate that span text matches note text at given offsets.
-
-    Returns:
-        (is_valid, validation_note)
-        - is_valid: True if exact match
-        - validation_note: 'exact_match', 'alignment_warning', or 'alignment_error'
-    """
-    if span.start_char is None or span.end_char is None:
-        return False, "alignment_error: missing offsets"
-
-    try:
-        extracted = note_text[span.start_char:span.end_char]
-    except (IndexError, TypeError):
-        return False, f"alignment_error: invalid offsets [{span.start_char}:{span.end_char}]"
-
-    # Check exact match
-    if extracted == span.span_text:
-        return True, "exact_match"
-
-    # Check normalized match (whitespace only)
-    if normalize_whitespace(extracted) == normalize_whitespace(span.span_text):
-        return True, "alignment_warning: whitespace mismatch"
-
-    # Complete mismatch
-    return False, f"alignment_error: extracted='{extracted[:50]}...' vs span='{span.span_text[:50]}...'"
-
-
-def read_excel_file(excel_path: Path) -> tuple[Optional[Note], list[Span]]:
-    """
-    Read an annotation Excel file and extract note + spans.
-
-    Returns:
-        (Note or None, list of Spans)
-    """
-    try:
-        wb = openpyxl.load_workbook(excel_path, read_only=True, data_only=True)
-    except Exception as e:
-        logger.error(f"Failed to open {excel_path}: {e}")
-        return None, []
-
-    note = None
-    spans = []
-
-    # Read Note_Text sheet
-    if "Note_Text" in wb.sheetnames:
-        ws = wb["Note_Text"]
-        rows = list(ws.iter_rows(values_only=True))
-        if len(rows) >= 2:
-            headers = [str(h).lower() if h else "" for h in rows[0]]
-            try:
-                note_id_idx = headers.index("note_id")
-                note_text_idx = headers.index("note_text")
-
-                # Find first actual data row (skip duplicate headers and empty rows)
-                for data_row in rows[1:]:
-                    if not data_row or not data_row[note_id_idx]:
-                        continue
-                    # Skip rows that look like headers (note_id column contains "note_id")
-                    if str(data_row[note_id_idx]).lower() == "note_id":
-                        continue
-                    note = Note(
-                        note_id=str(data_row[note_id_idx] or ""),
-                        note_text=str(data_row[note_text_idx] or ""),
-                        source_file=excel_path.name
-                    )
-                    break
-            except (ValueError, IndexError) as e:
-                logger.warning(f"Note_Text sheet missing required columns in {excel_path}: {e}")
-
-    # Read Span_Hydrated sheet
-    if "Span_Hydrated" in wb.sheetnames:
-        ws = wb["Span_Hydrated"]
-        rows = list(ws.iter_rows(values_only=True))
-        if len(rows) >= 2:
-            headers = [str(h).lower() if h else "" for h in rows[0]]
-
-            # Find required column indices
-            try:
-                note_id_idx = headers.index("note_id")
-                label_idx = headers.index("label")
-                span_text_idx = headers.index("span_text")
-                start_idx = headers.index("start_char")
-                end_idx = headers.index("end_char")
-                status_idx = headers.index("hydration_status")
-            except ValueError as e:
-                logger.warning(f"Span_Hydrated sheet missing columns in {excel_path}: {e}")
-                return note, spans
-
-            # Extract spans
-            for row in rows[1:]:
-                if not row or len(row) <= max(note_id_idx, label_idx, span_text_idx, start_idx, end_idx, status_idx):
-                    continue
-
-                # Skip empty rows (all None) and header-like rows
-                if row[note_id_idx] is None or str(row[note_id_idx]).lower() == "note_id":
-                    continue
-
-                hydration_status = str(row[status_idx] or "")
-
-                # Filter: only keep hydrated spans
-                if not hydration_status.startswith("hydrated_"):
-                    continue
-
-                # Parse start/end as integers
-                try:
-                    start_char = int(row[start_idx]) if row[start_idx] else None
-                    end_char = int(row[end_idx]) if row[end_idx] else None
-                except (ValueError, TypeError):
-                    start_char = None
-                    end_char = None
-
-                if start_char is None or end_char is None:
-                    continue
-
-                span = Span(
-                    note_id=str(row[note_id_idx] or ""),
-                    label=str(row[label_idx] or ""),
-                    span_text=str(row[span_text_idx] or ""),
-                    start_char=start_char,
-                    end_char=end_char,
-                    hydration_status=hydration_status
-                )
-                spans.append(span)
-
-    wb.close()
-    return note, spans
-
-
-def process_excel_files(input_dir: Path) -> tuple[list[Note], list[Span], dict]:
-    """
-    Process all Excel files in the input directory.
-
-    Returns:
-        (list of Notes, list of Spans, stats dict)
-    """
-    all_notes = []
-    all_spans = []
-    stats = {
-        "total_files": 0,
-        "successful_files": 0,
-        "total_notes": 0,
-        "total_spans_raw": 0,
-        "total_spans_valid": 0,
-        "alignment_warnings": 0,
-        "alignment_errors": 0,
-        "label_counts": Counter(),
-        "hydration_status_counts": Counter()
-    }
-
-    excel_files = sorted(input_dir.glob("phase0_extraction_*.xlsx"))
-    stats["total_files"] = len(excel_files)
-
-    logger.info(f"Found {len(excel_files)} Excel files in {input_dir}")
-
-    alignment_warnings = []
-
-    for excel_path in excel_files:
-        note, spans = read_excel_file(excel_path)
-
-        if note is None:
-            logger.warning(f"No note found in {excel_path.name}")
-            continue
-
-        stats["successful_files"] += 1
-        stats["total_notes"] += 1
-        all_notes.append(note)
-
-        # Validate each span
-        for span in spans:
-            stats["total_spans_raw"] += 1
-            stats["hydration_status_counts"][span.hydration_status] += 1
-
-            is_valid, validation_note = validate_span(span, note.note_text)
-            span.is_valid = is_valid
-            span.validation_note = validation_note
-
-            if "alignment_warning" in validation_note:
-                stats["alignment_warnings"] += 1
-                alignment_warnings.append({
-                    "note_id": span.note_id,
-                    "label": span.label,
-                    "span_text": span.span_text[:50],
-                    "start": span.start_char,
-                    "end": span.end_char,
-                    "issue": validation_note
-                })
-            elif "alignment_error" in validation_note:
-                stats["alignment_errors"] += 1
-                alignment_warnings.append({
-                    "note_id": span.note_id,
-                    "label": span.label,
-                    "span_text": span.span_text[:50],
-                    "start": span.start_char,
-                    "end": span.end_char,
-                    "issue": validation_note
-                })
-                continue  # Skip invalid spans
-
-            if is_valid:
-                stats["total_spans_valid"] += 1
-                stats["label_counts"][span.label] += 1
-                all_spans.append(span)
-
-    stats["label_counts"] = dict(stats["label_counts"].most_common())
-    stats["hydration_status_counts"] = dict(stats["hydration_status_counts"])
-    stats["alignment_issues"] = alignment_warnings
-
-    return all_notes, all_spans, stats
-
-
-def write_outputs(notes: list[Note], spans: list[Span], stats: dict, output_dir: Path):
-    """Write all output files."""
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    # Group spans by note_id
-    spans_by_note = defaultdict(list)
-    for span in spans:
-        spans_by_note[span.note_id].append(span)
-
-    # 1. Primary output: ner_dataset_all.jsonl
-    ner_path = output_dir / "ner_dataset_all.jsonl"
-    with open(ner_path, "w") as f:
-        for note in notes:
-            note_spans = spans_by_note.get(note.note_id, [])
-            # Sort entities by start position
-            entities = sorted([
-                {
-                    "start": s.start_char,
-                    "end": s.end_char,
-                    "label": s.label,
-                    "text": s.span_text
-                }
-                for s in note_spans
-            ], key=lambda x: x["start"])
-
-            record = {
-                "id": note.note_id,
-                "text": note.note_text,
-                "entities": entities
-            }
-            f.write(json.dumps(record) + "\n")
-    logger.info(f"Wrote {len(notes)} records to {ner_path}")
-
-    # 2. Debug: notes.jsonl
-    notes_path = output_dir / "notes.jsonl"
-    with open(notes_path, "w") as f:
-        for note in notes:
-            f.write(json.dumps({"note_id": note.note_id, "note_text": note.note_text}) + "\n")
-    logger.info(f"Wrote {len(notes)} notes to {notes_path}")
-
-    # 3. Debug: spans.jsonl
-    spans_path = output_dir / "spans.jsonl"
-    with open(spans_path, "w") as f:
-        for span in spans:
-            f.write(json.dumps({
-                "note_id": span.note_id,
-                "label": span.label,
-                "span_text": span.span_text,
-                "start_char": span.start_char,
-                "end_char": span.end_char,
-                "hydration_status": span.hydration_status
-            }) + "\n")
-    logger.info(f"Wrote {len(spans)} spans to {spans_path}")
-
-    # 4. Stats
-    stats_path = output_dir / "stats.json"
-    # Remove alignment_issues from stats for cleaner output
-    alignment_issues = stats.pop("alignment_issues", [])
-    with open(stats_path, "w") as f:
-        json.dump(stats, f, indent=2)
-    logger.info(f"Wrote stats to {stats_path}")
-
-    # 5. Alignment warnings log
-    if alignment_issues:
-        warnings_path = output_dir / "alignment_warnings.log"
-        with open(warnings_path, "w") as f:
-            for issue in alignment_issues:
-                f.write(json.dumps(issue) + "\n")
-        logger.warning(f"Wrote {len(alignment_issues)} alignment issues to {warnings_path}")
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Extract NER training data from Excel files")
-    parser.add_argument(
-        "--input-dir",
-        type=Path,
-        default=Path("data/granular annotations/phase0_excels"),
-        help="Directory containing phase0_extraction_*.xlsx files"
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path("data/ml_training/granular_ner"),
-        help="Directory for output files"
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Print stats without writing files"
-    )
-    args = parser.parse_args()
-
-    logger.info(f"Input directory: {args.input_dir}")
-    logger.info(f"Output directory: {args.output_dir}")
-
-    if not args.input_dir.exists():
-        logger.error(f"Input directory does not exist: {args.input_dir}")
-        return 1
-
-    notes, spans, stats = process_excel_files(args.input_dir)
-
-    # Print summary
-    print("\n=== Extraction Summary ===")
-    print(f"Files processed: {stats['successful_files']}/{stats['total_files']}")
-    print(f"Notes extracted: {stats['total_notes']}")
-    print(f"Spans (raw): {stats['total_spans_raw']}")
-    print(f"Spans (valid): {stats['total_spans_valid']}")
-    print(f"Alignment warnings: {stats['alignment_warnings']}")
-    print(f"Alignment errors: {stats['alignment_errors']}")
-    print(f"\nLabel distribution (top 10):")
-    for label, count in list(stats['label_counts'].items())[:10]:
-        print(f"  {label}: {count}")
-
-    if args.dry_run:
-        print("\n[Dry run - no files written]")
-        return 0
-
-    write_outputs(notes, spans, stats, args.output_dir)
-
-    print(f"\nOutput written to: {args.output_dir}")
-    return 0
-
-
-if __name__ == "__main__":
-    exit(main())
-
-```
-
----
-### `ops/tools/index_repo.py`
-- Size: `14201` bytes
-```
-#!/usr/bin/env python3
-"""
-Index the Procedure Suite repository into a JSONL file.
-
-Why this exists:
-- `docs/REPO_INDEX.md` is a curated "high-signal map" of key entrypoints.
-- This script produces a *mechanical, full-repo* index (file inventory + metadata)
-  for tooling / search / diff / inspection.
-
-Default behavior:
-- Indexes **tracked files** + **unignored untracked files** (via git), which is
-  typically what you want when you say "full repo" (and avoids `.gitignore` noise).
-- Skips hashing/reading for large files by default (configurable).
-
-Usage:
-  python ops/tools/index_repo.py
-  python ops/tools/index_repo.py --out repo_index_all.jsonl
-  python ops/tools/index_repo.py --include-content --max-content-bytes 262144
-  python ops/tools/index_repo.py --mode walk   # ignore git, walk filesystem
-"""
-
-from __future__ import annotations
-
-import argparse
-import datetime as dt
-import hashlib
-import json
-import mimetypes
-import os
-import subprocess
-import sys
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Iterable, Iterator, Optional
-
-
-DEFAULT_SKIP_DIR_NAMES = {
-    ".git",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".tox",
-    ".venv",
-    "__pycache__",
-    "node_modules",
-    "dist",
-    "build",
-    ".next",
-    ".turbo",
-    ".idea",
-    ".vscode",
-}
-
-# These are *repo-relative* path prefixes to exclude from indexing by default.
-# Rationale: these folders tend to contain large corpora / training artifacts and
-# can overwhelm indexes (and are often not useful for code navigation).
-DEFAULT_SKIP_PREFIXES = [
-    "data/knowledge/golden_extractions",
-    "data/knowledge/golden_extractions_final",
-    "data/knowledge/golden_extractions_scrubbed",
-    "data/knowledge/golden_registry_v3",
-    "data/knowledge/patient_note_texts",
-    "data/knowledge/patient_note_texts_complete",
-    "data/granular annotations/Additional_notes",
-    "data/granular annotations/Empty_python_scripts_updated",
-    "data/granular annotations/notes_text",
-    "data/granular annotations/phase0_excels",
-    "data/granular annotations/python scripts",
-    "data/granular annotations/Python_update_scripts",
-    "data/granular annotations/python_update_scripts_complete",
-    "example",
-    "format example",
-]
-
-
-@dataclass(frozen=True)
-class GitInfo:
-    branch: Optional[str]
-    commit: Optional[str]
-
-
-def _run_git(repo_root: Path, args: list[str]) -> tuple[int, str, str]:
-    proc = subprocess.run(
-        ["git", "-C", str(repo_root), *args],
-        capture_output=True,
-        text=True,
-    )
-    return proc.returncode, proc.stdout, proc.stderr
-
-
-def _get_git_root(cwd: Path) -> Optional[Path]:
-    try:
-        proc = subprocess.run(
-            ["git", "-C", str(cwd), "rev-parse", "--show-toplevel"],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-    except Exception:
-        return None
-    root = proc.stdout.strip()
-    if not root:
-        return None
-    return Path(root)
-
-
-def _get_git_info(repo_root: Path) -> GitInfo:
-    branch = None
-    commit = None
-    rc, out, _ = _run_git(repo_root, ["rev-parse", "--abbrev-ref", "HEAD"])
-    if rc == 0:
-        branch = out.strip() or None
-    rc, out, _ = _run_git(repo_root, ["rev-parse", "--short", "HEAD"])
-    if rc == 0:
-        commit = out.strip() or None
-    return GitInfo(branch=branch, commit=commit)
-
-
-def _iter_files_git(repo_root: Path) -> Iterator[Path]:
-    """
-    Yield repo-relative paths for:
-    - tracked files
-    - unignored untracked files
-    """
-    def _git_ls(args: list[str]) -> list[str]:
-        proc = subprocess.run(
-            ["git", "-C", str(repo_root), "ls-files", "-z", *args],
-            capture_output=True,
-            check=False,
-        )
-        if proc.returncode != 0:
-            raise RuntimeError(proc.stderr.decode("utf-8", errors="replace"))
-        raw = proc.stdout
-        if not raw:
-            return []
-        return [p for p in raw.decode("utf-8", errors="replace").split("\x00") if p]
-
-    paths = set(_git_ls([]))
-    paths.update(_git_ls(["--others", "--exclude-standard"]))
-
-    for rel in sorted(paths):
-        # Normalize as Path (posix separator from git)
-        yield Path(rel)
-
-
-def _iter_files_walk(repo_root: Path, skip_dir_names: set[str]) -> Iterator[Path]:
-    for root, dirs, files in os.walk(repo_root):
-        dirs[:] = [d for d in dirs if d not in skip_dir_names]
-        for name in files:
-            full = Path(root) / name
-            try:
-                rel = full.relative_to(repo_root)
-            except Exception:
-                continue
-            yield rel
-
-
-def _normalize_skip_prefixes(prefixes: Iterable[str]) -> list[str]:
-    """
-    Normalize skip prefixes to posix paths without leading './' and without
-    trailing slashes (comparison is done with exact match or prefix + '/').
-    """
-    out: list[str] = []
-    for p in prefixes:
-        s = p.strip().replace("\\", "/")
-        if not s:
-            continue
-        if s.startswith("./"):
-            s = s[2:]
-        s = s.rstrip("/")
-        if s:
-            out.append(s)
-    # Ensure deterministic behavior if caller passes duplicates
-    return sorted(set(out))
-
-
-def _should_skip_relpath(rel_posix: str, skip_prefixes: list[str]) -> bool:
-    rel_posix = rel_posix.lstrip("./")
-    for prefix in skip_prefixes:
-        if rel_posix == prefix or rel_posix.startswith(prefix + "/"):
-            return True
-    return False
-
-
-def _sha256_file(path: Path) -> str:
-    h = hashlib.sha256()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1024 * 1024), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
-def _read_head_bytes(path: Path, n: int) -> bytes:
-    with path.open("rb") as f:
-        return f.read(n)
-
-
-def _looks_text(sample: bytes) -> bool:
-    # Fast heuristic: NUL bytes usually indicate binary.
-    if b"\x00" in sample:
-        return False
-    # If it decodes as UTF-8 (or mostly), treat as text.
-    try:
-        sample.decode("utf-8")
-        return True
-    except UnicodeDecodeError:
-        return False
-
-
-def _count_lines_utf8(path: Path, max_bytes: int) -> Optional[int]:
-    """
-    Count lines for reasonably sized text files only.
-    Returns None when file is too large or non-utf8-ish.
-    """
-    try:
-        size = path.stat().st_size
-    except FileNotFoundError:
-        return None
-    if size > max_bytes:
-        return None
-    try:
-        # Stream decode to avoid reading huge files (still bounded by max_bytes).
-        count = 0
-        with path.open("rb") as f:
-            for chunk in iter(lambda: f.read(1024 * 1024), b""):
-                if not chunk:
-                    break
-                count += chunk.count(b"\n")
-        return count + 1 if size > 0 else 0
-    except Exception:
-        return None
-
-
-def _safe_rel(path: Path) -> str:
-    return path.as_posix()
-
-
-def build_index(
-    repo_root: Path,
-    out_path: Path,
-    *,
-    mode: str,
-    max_hash_bytes: int,
-    include_content: bool,
-    max_content_bytes: int,
-    max_line_count_bytes: int,
-    skip_dir_names: set[str],
-    skip_prefixes: list[str],
-    max_files: Optional[int],
-) -> None:
-    git_info = _get_git_info(repo_root) if mode == "git" else GitInfo(None, None)
-    started_at = dt.datetime.now(dt.timezone.utc).isoformat()
-
-    if mode == "git":
-        files_iter: Iterable[Path] = _iter_files_git(repo_root)
-    elif mode == "walk":
-        files_iter = _iter_files_walk(repo_root, skip_dir_names=skip_dir_names)
-    else:
-        raise ValueError(f"Unknown mode: {mode}")
-
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-
-    total = 0
-    hashed = 0
-    with out_path.open("w", encoding="utf-8") as out:
-        out.write(
-            json.dumps(
-                {
-                    "type": "repo_meta",
-                    "repo_root": str(repo_root),
-                    "mode": mode,
-                    "git_branch": git_info.branch,
-                    "git_commit": git_info.commit,
-                    "started_at": started_at,
-                    "max_hash_bytes": max_hash_bytes,
-                    "include_content": include_content,
-                    "max_content_bytes": max_content_bytes,
-                    "max_line_count_bytes": max_line_count_bytes,
-                    "skip_prefixes": skip_prefixes,
-                },
-                ensure_ascii=False,
-            )
-            + "\n"
-        )
-
-        for rel in files_iter:
-            if max_files is not None and total >= max_files:
-                break
-
-            full = repo_root / rel
-            rel_str = _safe_rel(rel)
-
-            if _should_skip_relpath(rel_str, skip_prefixes):
-                continue
-
-            try:
-                st = full.lstat()
-            except FileNotFoundError:
-                continue
-
-            mime, _ = mimetypes.guess_type(str(full))
-            rec: dict[str, object] = {
-                "type": "file",
-                "path": rel_str,
-                "size": st.st_size,
-                "mtime": int(st.st_mtime),
-                "is_symlink": full.is_symlink(),
-                "mime": mime or "application/octet-stream",
-            }
-
-            # Text/binary heuristic (cheap sample)
-            is_text = False
-            try:
-                sample = _read_head_bytes(full, 8192) if st.st_size > 0 else b""
-                is_text = _looks_text(sample)
-            except Exception:
-                is_text = False
-            rec["is_text"] = is_text
-
-            if is_text:
-                rec["line_count"] = _count_lines_utf8(full, max_bytes=max_line_count_bytes)
-
-            if st.st_size <= max_hash_bytes and not full.is_symlink():
-                try:
-                    rec["sha256"] = _sha256_file(full)
-                    hashed += 1
-                except Exception:
-                    rec["sha256"] = None
-
-            if include_content and is_text and st.st_size <= max_content_bytes:
-                try:
-                    content = full.read_text(encoding="utf-8", errors="replace")
-                    rec["content"] = content
-                except Exception:
-                    rec["content"] = None
-
-            out.write(json.dumps(rec, ensure_ascii=False) + "\n")
-            total += 1
-
-        out.write(
-            json.dumps(
-                {
-                    "type": "repo_summary",
-                    "total_files_written": total,
-                    "hashed_files": hashed,
-                    "ended_at": dt.datetime.now(dt.timezone.utc).isoformat(),
-                },
-                ensure_ascii=False,
-            )
-            + "\n"
-        )
-
-    print(f"Wrote {total:,} file records to {out_path}")
-
-
-def main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(description="Index the proc_suite repo into JSONL.")
-    parser.add_argument(
-        "--root",
-        default=None,
-        help="Repo root (default: detected git root from current working directory).",
-    )
-    parser.add_argument(
-        "--out",
-        default="repo_index_all.jsonl",
-        help="Output JSONL path (default: repo_root/repo_index_all.jsonl).",
-    )
-    parser.add_argument(
-        "--mode",
-        choices=["git", "walk"],
-        default="git",
-        help="File discovery mode: 'git' (tracked+unignored) or 'walk' (filesystem).",
-    )
-    parser.add_argument(
-        "--max-hash-bytes",
-        type=int,
-        default=10_000_000,
-        help="Only hash files <= this size in bytes (default: 10,000,000).",
-    )
-    parser.add_argument(
-        "--include-content",
-        action="store_true",
-        help="Include full UTF-8 content for small text files (off by default).",
-    )
-    parser.add_argument(
-        "--max-content-bytes",
-        type=int,
-        default=128_000,
-        help="Only include content for text files <= this size (default: 128,000).",
-    )
-    parser.add_argument(
-        "--max-line-count-bytes",
-        type=int,
-        default=2_000_000,
-        help="Only compute line counts for text files <= this size (default: 2,000,000).",
-    )
-    parser.add_argument(
-        "--skip-dir",
-        action="append",
-        default=[],
-        help="Directory name to skip (can be repeated). Only applies to --mode walk.",
-    )
-    parser.add_argument(
-        "--skip-prefix",
-        action="append",
-        default=[],
-        help="Repo-relative path prefix to skip (can be repeated). Applies to all modes.",
-    )
-    parser.add_argument(
-        "--no-default-skip-prefixes",
-        action="store_true",
-        help="Disable the built-in skip prefixes list.",
-    )
-    parser.add_argument(
-        "--max-files",
-        type=int,
-        default=None,
-        help="Optional cap for quick runs/debugging.",
-    )
-
-    args = parser.parse_args(argv)
-
-    repo_root: Optional[Path]
-    if args.root:
-        repo_root = Path(args.root).resolve()
-    else:
-        repo_root = _get_git_root(Path.cwd())
-
-    if not repo_root or not repo_root.exists():
-        print("ERROR: Could not determine repo root. Pass --root explicitly.", file=sys.stderr)
-        return 2
-
-    out_path = Path(args.out)
-    if not out_path.is_absolute():
-        out_path = repo_root / out_path
-
-    skip_dir_names = set(DEFAULT_SKIP_DIR_NAMES)
-    skip_dir_names.update(args.skip_dir)
-
-    skip_prefixes: list[str] = []
-    if not args.no_default_skip_prefixes:
-        skip_prefixes.extend(DEFAULT_SKIP_PREFIXES)
-    skip_prefixes.extend(args.skip_prefix)
-    skip_prefixes = _normalize_skip_prefixes(skip_prefixes)
-
-    try:
-        build_index(
-            repo_root=repo_root,
-            out_path=out_path,
-            mode=args.mode,
-            max_hash_bytes=args.max_hash_bytes,
-            include_content=args.include_content,
-            max_content_bytes=args.max_content_bytes,
-            max_line_count_bytes=args.max_line_count_bytes,
-            skip_dir_names=skip_dir_names,
-            skip_prefixes=skip_prefixes,
-            max_files=args.max_files,
-        )
-    except KeyboardInterrupt:
-        print("Interrupted.", file=sys.stderr)
-        return 130
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main(sys.argv[1:]))
-
-```
-
----
-### `ml/scripts/review_llm_fallback_errors.py`
-- Size: `14551` bytes
-```
-#!/usr/bin/env python3
-"""
-Error review pipeline for LLM fallback cases.
-
-Identifies cases where:
-- source="hybrid_llm_fallback" (LLM was used as final judge)
-- prediction ≠ golden codes (the output was incorrect)
-
-Outputs a review file with detailed context for manual inspection
-and potential addition to training data.
-
-Usage:
-    python ml/scripts/review_llm_fallback_errors.py
-    python ml/scripts/review_llm_fallback_errors.py --input data/eval_results/eval_errors_*.jsonl
-    python ml/scripts/review_llm_fallback_errors.py --run-fresh  # Re-run evaluation first
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-from collections import defaultdict
-from dataclasses import dataclass
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Set
-
-import pandas as pd
-
-import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-
-
-@dataclass
-class ReviewCase:
-    """A case requiring review."""
-    idx: int
-    dataset: str
-    note_preview: str
-    gold_codes: List[str]
-    predicted_codes: List[str]
-    ml_only_codes: List[str]
-    source: str
-    difficulty: str
-    false_positives: List[str]
-    false_negatives: List[str]
-    fallback_reason: str = ""
-    rules_error: str = ""
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "idx": self.idx,
-            "dataset": self.dataset,
-            "note_preview": self.note_preview,
-            "gold_codes": self.gold_codes,
-            "predicted_codes": self.predicted_codes,
-            "ml_only_codes": self.ml_only_codes,
-            "source": self.source,
-            "difficulty": self.difficulty,
-            "false_positives": self.false_positives,
-            "false_negatives": self.false_negatives,
-            "fallback_reason": self.fallback_reason,
-            "rules_error": self.rules_error,
-        }
-
-
-def load_errors_from_jsonl(path: Path) -> List[Dict[str, Any]]:
-    """Load error cases from JSONL file."""
-    errors = []
-    with open(path) as f:
-        for line in f:
-            if line.strip():
-                errors.append(json.loads(line))
-    return errors
-
-
-def filter_llm_fallback_errors(errors: List[Dict[str, Any]]) -> List[ReviewCase]:
-    """Filter to only LLM fallback cases with prediction errors."""
-    return filter_errors_by_source(errors, source_filter="hybrid_llm_fallback")
-
-
-def filter_fastpath_errors(errors: List[Dict[str, Any]]) -> List[ReviewCase]:
-    """Filter to only fast path (ML+Rules) cases with prediction errors."""
-    return filter_errors_by_source(errors, source_filter="ml_rules_fastpath")
-
-
-def filter_errors_by_source(
-    errors: List[Dict[str, Any]],
-    source_filter: str | None = None,
-) -> List[ReviewCase]:
-    """Filter errors by source type."""
-    review_cases = []
-
-    for error in errors:
-        source = error.get("source", "")
-
-        # Apply source filter if specified
-        if source_filter and source != source_filter:
-            continue
-
-        # Skip if it was an exception, not a prediction error
-        if "error" in error and "gold" not in error:
-            continue
-
-        review_cases.append(ReviewCase(
-            idx=error.get("idx", -1),
-            dataset=error.get("dataset", "unknown"),
-            note_preview=error.get("note_preview", ""),
-            gold_codes=error.get("gold", []),
-            predicted_codes=error.get("predicted", []),
-            ml_only_codes=error.get("ml_only", []),
-            source=source,
-            difficulty=error.get("difficulty", "unknown"),
-            false_positives=error.get("false_positives", []),
-            false_negatives=error.get("false_negatives", []),
-            fallback_reason=error.get("reason_for_fallback", ""),
-            rules_error=error.get("rules_error", ""),
-        ))
-
-    return review_cases
-
-
-def analyze_error_patterns(cases: List[ReviewCase]) -> Dict[str, Any]:
-    """Analyze patterns in error cases."""
-    analysis = {
-        "total_llm_fallback_errors": len(cases),
-        "by_difficulty": defaultdict(int),
-        "by_fallback_reason": defaultdict(int),
-        "common_false_positives": defaultdict(int),
-        "common_false_negatives": defaultdict(int),
-        "ml_would_have_been_correct": 0,
-        "ml_partial_overlap": 0,
-    }
-
-    for case in cases:
-        analysis["by_difficulty"][case.difficulty] += 1
-
-        # Parse fallback reason
-        if "gray_zone" in case.fallback_reason:
-            analysis["by_fallback_reason"]["gray_zone"] += 1
-        elif "low_confidence" in case.fallback_reason:
-            analysis["by_fallback_reason"]["low_confidence"] += 1
-        elif "rule_conflict" in case.fallback_reason:
-            analysis["by_fallback_reason"]["rule_conflict"] += 1
-        else:
-            analysis["by_fallback_reason"]["other"] += 1
-
-        # Track common error codes
-        for code in case.false_positives:
-            analysis["common_false_positives"][code] += 1
-        for code in case.false_negatives:
-            analysis["common_false_negatives"][code] += 1
-
-        # Check if ML alone would have been correct
-        gold_set = set(case.gold_codes)
-        ml_set = set(case.ml_only_codes)
-        if ml_set == gold_set:
-            analysis["ml_would_have_been_correct"] += 1
-        elif ml_set & gold_set:
-            analysis["ml_partial_overlap"] += 1
-
-    # Convert defaultdicts to regular dicts for JSON serialization
-    analysis["by_difficulty"] = dict(analysis["by_difficulty"])
-    analysis["by_fallback_reason"] = dict(analysis["by_fallback_reason"])
-    analysis["common_false_positives"] = dict(
-        sorted(analysis["common_false_positives"].items(), key=lambda x: -x[1])[:10]
-    )
-    analysis["common_false_negatives"] = dict(
-        sorted(analysis["common_false_negatives"].items(), key=lambda x: -x[1])[:10]
-    )
-
-    return analysis
-
-
-def generate_review_report(
-    cases: List[ReviewCase],
-    analysis: Dict[str, Any],
-    output_dir: Path,
-    report_prefix: str = "llm_fallback",
-) -> Path:
-    """Generate a human-readable review report."""
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_path = output_dir / f"{report_prefix}_review_{timestamp}.md"
-
-    with open(report_path, "w") as f:
-        title = report_prefix.replace("_", " ").title()
-        f.write(f"# {title} Error Review Report\n\n")
-        f.write(f"Generated: {datetime.now().isoformat()}\n\n")
-
-        f.write("## Summary\n\n")
-        f.write(f"- Total errors reviewed: **{analysis['total_llm_fallback_errors']}**\n")
-        f.write(f"- Cases where ML alone was correct: {analysis['ml_would_have_been_correct']}\n")
-        f.write(f"- Cases where ML had partial overlap: {analysis['ml_partial_overlap']}\n\n")
-
-        f.write("### Errors by Difficulty\n\n")
-        for diff, count in sorted(analysis["by_difficulty"].items()):
-            f.write(f"- {diff}: {count}\n")
-
-        f.write("\n### Errors by Fallback Reason\n\n")
-        for reason, count in sorted(analysis["by_fallback_reason"].items()):
-            f.write(f"- {reason}: {count}\n")
-
-        f.write("\n### Common False Positives (LLM suggested but shouldn't have)\n\n")
-        for code, count in analysis["common_false_positives"].items():
-            f.write(f"- {code}: {count} occurrences\n")
-
-        f.write("\n### Common False Negatives (LLM missed)\n\n")
-        for code, count in analysis["common_false_negatives"].items():
-            f.write(f"- {code}: {count} occurrences\n")
-
-        f.write("\n---\n\n")
-        f.write("## Cases for Review\n\n")
-
-        for i, case in enumerate(cases, 1):
-            f.write(f"### Case {i} (idx={case.idx}, {case.dataset})\n\n")
-            f.write(f"**Difficulty:** {case.difficulty}\n\n")
-            f.write(f"**Fallback Reason:** {case.fallback_reason or 'N/A'}\n\n")
-
-            if case.rules_error:
-                f.write(f"**Rules Error:** {case.rules_error}\n\n")
-
-            f.write("**Codes:**\n")
-            f.write(f"- Gold: `{', '.join(case.gold_codes)}`\n")
-            f.write(f"- Predicted: `{', '.join(case.predicted_codes)}`\n")
-            f.write(f"- ML-only: `{', '.join(case.ml_only_codes)}`\n\n")
-
-            if case.false_positives:
-                f.write(f"- ❌ False Positives: `{', '.join(case.false_positives)}`\n")
-            if case.false_negatives:
-                f.write(f"- ⚠️ False Negatives: `{', '.join(case.false_negatives)}`\n")
-
-            f.write("\n**Note Preview:**\n")
-            f.write("```\n")
-            f.write(case.note_preview[:500])
-            if len(case.note_preview) > 500:
-                f.write("...[truncated]")
-            f.write("\n```\n\n")
-
-            # Actionable recommendation
-            f.write("**Recommendation:** ")
-            if set(case.ml_only_codes) == set(case.gold_codes):
-                f.write("ML was correct but LLM overrode it. Review LLM prompt constraints.\n")
-            elif case.false_negatives and not case.false_positives:
-                f.write("LLM missed codes. Consider adding to training data or improving prompt.\n")
-            elif case.false_positives and not case.false_negatives:
-                f.write("LLM hallucinated codes. Review prompt constraints for these codes.\n")
-            else:
-                f.write("Mixed errors. Manual review needed.\n")
-
-            f.write("\n---\n\n")
-
-    return report_path
-
-
-def run_fresh_evaluation() -> Path:
-    """Run the evaluation script and return the errors file path."""
-    import subprocess
-
-    print("Running fresh evaluation...")
-    result = subprocess.run(
-        ["python3", "ml/scripts/eval_hybrid_pipeline.py"],
-        capture_output=True,
-        text=True,
-    )
-
-    if result.returncode != 0:
-        print(f"Evaluation failed: {result.stderr}")
-        raise RuntimeError("Evaluation failed")
-
-    # Find the most recent errors file
-    errors_dir = Path("data/eval_results")
-    errors_files = sorted(errors_dir.glob("eval_errors_*.jsonl"), reverse=True)
-    if not errors_files:
-        raise FileNotFoundError("No errors file found after evaluation")
-
-    return errors_files[0]
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Review pipeline prediction errors")
-    parser.add_argument(
-        "--input",
-        type=Path,
-        help="Path to errors JSONL file (default: most recent in data/eval_results/)",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path("data/eval_results"),
-        help="Output directory for review report",
-    )
-    parser.add_argument(
-        "--run-fresh",
-        action="store_true",
-        help="Run fresh evaluation before analyzing errors",
-    )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        help="Also output cases as JSON for programmatic use",
-    )
-    parser.add_argument(
-        "--mode",
-        choices=["llm_fallback", "fastpath", "all"],
-        default="all",
-        help="Which errors to review: llm_fallback, fastpath, or all (default: all)",
-    )
-    args = parser.parse_args()
-
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-
-    # Find or generate errors file
-    if args.run_fresh:
-        errors_path = run_fresh_evaluation()
-    elif args.input:
-        errors_path = args.input
-    else:
-        # Find most recent errors file
-        errors_dir = Path("data/eval_results")
-        errors_files = sorted(errors_dir.glob("eval_errors_*.jsonl"), reverse=True)
-        if not errors_files:
-            print("No errors file found. Run with --run-fresh to generate one.")
-            return
-        errors_path = errors_files[0]
-
-    print(f"Loading errors from: {errors_path}")
-    errors = load_errors_from_jsonl(errors_path)
-    print(f"  Total error entries: {len(errors)}")
-
-    # Filter errors based on mode
-    if args.mode == "llm_fallback":
-        review_cases = filter_llm_fallback_errors(errors)
-        report_prefix = "llm_fallback"
-        mode_desc = "LLM fallback"
-    elif args.mode == "fastpath":
-        review_cases = filter_fastpath_errors(errors)
-        report_prefix = "fastpath"
-        mode_desc = "fast path (ML+Rules)"
-    else:
-        review_cases = filter_errors_by_source(errors, source_filter=None)
-        report_prefix = "all_errors"
-        mode_desc = "all"
-
-    print(f"  {mode_desc.capitalize()} errors: {len(review_cases)}")
-
-    if not review_cases:
-        print(f"No {mode_desc} errors found. The pipeline is performing well!")
-        return
-
-    # Analyze patterns
-    analysis = analyze_error_patterns(review_cases)
-
-    # Generate report
-    report_path = generate_review_report(
-        review_cases, analysis, args.output_dir, report_prefix=report_prefix
-    )
-    print(f"\nReview report saved to: {report_path}")
-
-    # Optionally output JSON
-    if args.json:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        json_path = args.output_dir / f"{report_prefix}_cases_{timestamp}.json"
-        with open(json_path, "w") as f:
-            json.dump({
-                "analysis": analysis,
-                "cases": [c.to_dict() for c in review_cases],
-            }, f, indent=2)
-        print(f"JSON output saved to: {json_path}")
-
-    # Print summary
-    print("\n" + "=" * 60)
-    print(f"SUMMARY ({mode_desc.upper()} ERRORS)")
-    print("=" * 60)
-    print(f"Total errors: {len(review_cases)}")
-
-    # Break down by source if showing all
-    if args.mode == "all":
-        by_source = defaultdict(int)
-        for case in review_cases:
-            by_source[case.source] += 1
-        print("\nBy source:")
-        for source, count in sorted(by_source.items(), key=lambda x: -x[1]):
-            print(f"  {source}: {count}")
-
-    print(f"\nCases where ML alone was correct: {analysis['ml_would_have_been_correct']}")
-    print(f"\nBy difficulty:")
-    for diff, count in sorted(analysis["by_difficulty"].items(), key=lambda x: -x[1]):
-        print(f"  {diff}: {count}")
-
-    if analysis["by_fallback_reason"]:
-        print(f"\nBy fallback reason:")
-        for reason, count in sorted(analysis["by_fallback_reason"].items(), key=lambda x: -x[1]):
-            print(f"  {reason}: {count}")
-
-    print(f"\nTop false positive codes (predicted but shouldn't have):")
-    for code, count in list(analysis["common_false_positives"].items())[:5]:
-        print(f"  {code}: {count}")
-    print(f"\nTop false negative codes (missed):")
-    for code, count in list(analysis["common_false_negatives"].items())[:5]:
-        print(f"  {code}: {count}")
-
-
-if __name__ == "__main__":
-    main()
 
 ```

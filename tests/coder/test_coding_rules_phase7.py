@@ -512,6 +512,17 @@ class TestPeripheralAblationExtractor:
         assert result.get("peripheral_ablation", {}).get("performed") is True
         assert result.get("peripheral_ablation", {}).get("modality") == "Microwave"
 
+    def test_extract_peripheral_ablation_cryo_for_peripheral_nodule(self):
+        text = "Navigation bronchoscopy performed with cryoablation of a peripheral lung nodule."
+        result = extract_peripheral_ablation(text)
+        assert result.get("peripheral_ablation", {}).get("performed") is True
+        assert result.get("peripheral_ablation", {}).get("modality") == "Cryoablation"
+
+    def test_extract_peripheral_ablation_ignores_endobronchial_cryoablation(self):
+        text = "Endobronchial Cryoablation was performed for left mainstem stenosis."
+        result = extract_peripheral_ablation(text)
+        assert result == {}
+
 
 class TestThermalAblationExtractor:
     def test_extract_thermal_ablation_apc(self):

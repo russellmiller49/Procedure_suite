@@ -104,3 +104,16 @@ def test_apply_required_overrides_does_not_force_mechanical_debulking_for_mucus_
     pp = updated.procedures_performed
     assert pp is None or pp.mechanical_debulking is None or pp.mechanical_debulking.performed is not True
     assert not any("mechanical_debulking" in w for w in warnings)
+
+
+def test_apply_required_overrides_does_not_force_peripheral_ablation_from_endobronchial_cryoablation() -> None:
+    record = RegistryRecord()
+    note_text = (
+        "Endobronchial cryoablation was performed for left mainstem stenosis. "
+        "There was no peripheral lung nodule target."
+    )
+
+    updated, warnings = apply_required_overrides(note_text, record)
+    pp = updated.procedures_performed
+    assert pp is None or pp.peripheral_ablation is None or pp.peripheral_ablation.performed is not True
+    assert not any("peripheral_ablation" in w for w in warnings)
