@@ -45,7 +45,7 @@ These environment variables control whether/where agents are used:
 - **`REGISTRY_AUDITOR_SOURCE`**: `raw_ml` enables the RAW-ML audit safety net (required in production).
 
 Notes:
-- `agents_structurer` is currently **not implemented** (it is expected to raise `NotImplementedError` and fall back to the deterministic engine).
+- `agents_structurer` is **experimental**: when an LLM provider is configured, it runs the V3 event-log extractor and projects it into a `RegistryRecord` (`app/registry/extraction/structurer.py`). When unconfigured/offline, it raises `NotImplementedError` and falls back to the deterministic engine.
 - CPT coding is handled by the coder module (`app/coder/`) and is **not** produced by agents in the current architecture.
 
 ## Registry V3 Guardrails (Post-Extraction)

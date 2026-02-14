@@ -29,5 +29,4 @@ def test_agents_structurer_not_implemented_falls_back_to_engine(
     assert engine.note_texts == ["PROCEDURE: Something happened."]
     assert meta["extraction_engine"] == "agents_structurer"
     assert meta.get("structurer_meta", {}).get("status") == "not_implemented"
-    assert any("agents_structurer is not implemented yet" in w for w in warnings)
-
+    assert any("agents_structurer unavailable" in w.lower() for w in warnings)

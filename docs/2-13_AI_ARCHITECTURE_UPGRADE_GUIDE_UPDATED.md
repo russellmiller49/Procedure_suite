@@ -10,6 +10,18 @@ Non‑negotiables:
 
 ---
 
+✅ Repo Status (as of 2026-02-14)
+
+- Phase 0 baseline harness: `ml/scripts/eval_golden.py` (CI runs it; it skips when fixtures are absent).
+- Quote anchoring: `app/evidence/quote_anchor.py` + V3 verifier anchoring in `app/registry/evidence/verifier.py:verify_registry()`.
+- Quote repair retry (best-effort): `app/registry/extractors/v3_extractor.py:repair_v3_evidence_quotes()` (enabled by default via `REGISTRY_V3_QUOTE_REPAIR_ENABLED=1`).
+- Experimental structurer engine: `REGISTRY_EXTRACTION_ENGINE=agents_structurer` is now wired via `app/registry/extraction/structurer.py` and projects V3 event-log → `RegistryRecord` (falls back to deterministic engine when LLM is unconfigured/offline).
+- Bundle endpoint (experimental): `POST /api/v1/process_bundle` in `app/api/routes/process_bundle.py` enforces “no absolute dates” and processes multi-doc bundles (expects client-side `T±N` tokens).
+- Phase 5/6 UI (experimental): `/ui/` dashboard now includes a “Bundle (Zero‑Knowledge Timeline)” panel with Index Date + Document Date, a Chronology Preview modal, date tokenization (`[DATE: T±N DAYS]` or `[DATE: REDACTED]`), and a bundle composer that submits to `POST /api/v1/process_bundle`.
+- PHI guardrails hardened: month-name dates are detected client-side (`redactor.worker*.js`), bundle leak-check now scans inside bracket tokens, doc offsets prefer `[SYSTEM: ...]` headers, and the server strips a leading `[SYSTEM: ...]` line before extraction.
+
+---
+
 🏛️ The 3 Core Architectural Pillars (with guardrails)
 
 Pillar 1: Schema-First Structured Outputs & Robust Quote Anchoring
@@ -17,7 +29,7 @@ Goal: Eliminate the heuristic “God Method” (`app/registry/application/regist
 
 Primary risk (Gotcha): “Exact quote” paraphrasing paradox
 - LLMs occasionally normalize text (typo fixes, abbreviation expansion like “RUL” → “Right Upper Lobe”, punctuation cleanup).
-- When the quote is paraphrased, your anchoring (substring / rapidfuzz) can fail, breaking UI highlight trust or dropping data.
+- When the quote is paraphrased, anchoring can fail, breaking UI highlight trust or dropping data.
 
 Mitigation (required contract):
 1) Draft Evidence must include context, not only the quote:
@@ -76,7 +88,7 @@ Mitigation (required):
    - Require user confirm before dispatching bundle.
 4) Token types (v1 + extensions):
    - Exact: `[DATE: T+N DAYS]`
-   - Range (optional): `[DATE_RANGE: T+N1..N2 DAYS]` (Aggregator chooses midpoint or min deterministically)
+   - Range (optional): `[DATE_RANGE: T+N1..N2 DAYS]`
    - Unparsed: `[DATE: REDACTED]`
 
 Impact:
@@ -98,7 +110,7 @@ Mitigation:
   2) Cross-doc linking step (ledger updates), then outcome computation
 
 Gotcha: Golden fixture migration poisoning
-- Auto-converting 238 goldens into spans is error-prone and can permanently poison baselines.
+- Auto-converting hundreds of goldens into spans is error-prone and can permanently poison baselines.
 
 Mitigation:
 - Never overwrite legacy goldens.
@@ -108,11 +120,12 @@ Mitigation:
 ---
 
 📦 Golden Fixtures Strategy (Safe Baselines)
+
 Legacy:
-- `proc_suite_notes/data/knowledge/golden_extractions_final/golden_*.json` (do NOT modify)
+- `data/knowledge/golden_extractions_final/` (do NOT modify)
 
 vNext (new):
-- `proc_suite_notes/data/knowledge/golden_extractions_vNext/` (new fixtures only)
+- `data/knowledge/golden_extractions_vNext/` (new fixtures only)
 
 Principle:
 - Goldens store value + quote context (prefix/quote/suffix).
@@ -128,19 +141,19 @@ Phase 0: Freeze Baseline & Protect Against Poisoning
 Goal: Ensure you can detect regressions and avoid corrupting the truth set.
 Actions:
 - Build/verify legacy evaluator:
-  - `ml/scripts/eval_golden.py` (new or updated) runs current endpoints against legacy goldens.
+  - `ml/scripts/eval_golden.py` runs current extraction-first logic against legacy goldens.
 - Add CI step that runs legacy eval (read-only fixtures).
 Success:
 - Legacy pass rate is measurable and stable.
 Guardrail:
-- No modifications to `golden_extractions_final/`.
+- No modifications to `data/knowledge/golden_extractions_final/`.
 
 Phase 1: vNext Schemas (Draft vs Final) + Evidence Contract (Anti-Paraphrase)
 Goal: Define schemas that enable robust quote anchoring and UI trust.
 Actions:
 - Create:
-  - `proc_schemas/registry/ip_vNext_draft.py` (LLM output schema)
-  - `proc_schemas/registry/ip_vNext.py` (final API schema)
+  - `proc_schemas/registry/ip_vnext_draft.py` (LLM output schema)
+  - `proc_schemas/registry/ip_vnext.py` (final API schema)
 - EvidenceQuoteDraft fields (minimum):
   - `rationale` (short string; internal/debug)
   - `prefix_3_words`, `exact_quote`, `suffix_3_words`
@@ -155,7 +168,7 @@ Phase 2: StructurerAgent Constrained Decoding + Quote Fidelity Retry
 Goal: Guarantee schema compliance and minimize paraphrased quotes.
 Actions:
 - Implement constrained decoding in:
-  - `app/agents/structurer/structurer_agent.py` and/or `app/llm/client.py`
+  - `app/agents/structurer/structurer_agent.py` and/or `app/common/llm.py`
 - Add Quote Fidelity Guard:
   - After LLM returns draft JSON, verify each `exact_quote` is substring of scrubbed text.
   - If not, run one targeted retry prompt for “verbatim quotes”.
@@ -182,7 +195,7 @@ Goal: Build a trustworthy vNext fixture set without poisoning.
 Actions:
 - Create:
   - `ml/scripts/migrate_goldens_vNext.py` (LLM-assisted quote rewrite; spans not generated)
-  - Output to `proc_suite_notes/data/knowledge/golden_extractions_vNext/pending/`
+  - Output to `data/knowledge/golden_extractions_vNext/pending/`
 - Generate HTML diff report:
   - old legacy rationale vs new (prefix/quote/suffix) side-by-side
   - developer quickly approves/rejects each fixture
@@ -197,7 +210,7 @@ Actions (UI):
 - Add “Chronology Preview” modal showing parsed interpretation + token result.
 Actions (Worker):
 - Bundle Chrono Node in:
-  - `ui/static/phi_redactor/redactor.worker.js` (or wherever your worker lives)
+  - `ui/static/phi_redactor/redactor.worker.js`
 - Force UTC-noon math for deltas.
 - Replace inline dates with `[DATE: T±N DAYS]` (and optionally DATE_RANGE tokens).
 Server guardrail:

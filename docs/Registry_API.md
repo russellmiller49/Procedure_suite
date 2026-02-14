@@ -4,6 +4,8 @@ This document describes **legacy** registry endpoints.
 
 **Authoritative production endpoint:** `POST /api/v1/process` (see `app/api/routes/unified_process.py`).
 
+**Experimental (multi-doc, ZK timelines):** `POST /api/v1/process_bundle` (see `app/api/routes/process_bundle.py`). This endpoint expects client-side temporal translation (`T±N` tokens) and rejects raw absolute date-like strings.
+
 The current production direction is **extraction-first** (registry extraction → deterministic Registry→CPT derivation) when `PROCSUITE_PIPELINE_MODE=extraction_first`.
 
 ## Endpoints

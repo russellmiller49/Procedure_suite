@@ -50,6 +50,9 @@ jobs:
         run: mypy app
       - name: Pytest
         run: pytest -q
+      - name: Legacy golden eval (optional)
+        run: |
+          python ml/scripts/eval_golden.py --limit 25
 
   supabase-integration:
     runs-on: ubuntu-latest
