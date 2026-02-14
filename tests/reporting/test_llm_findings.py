@@ -27,36 +27,42 @@ def test_validate_findings_against_text_drops_missing_or_weak_evidence() -> None
         findings=[
             FindingV1(
                 procedure_key="bal",
+                action="diagnostic",
                 finding_text="BAL performed in RUL",
                 evidence_quote="BAL performed in RUL",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="bal",
+                action="diagnostic",
                 finding_text="31624 BAL performed in RUL",
                 evidence_quote="BAL performed in RUL",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="bal",
+                action="diagnostic",
                 finding_text="BAL performed",
                 evidence_quote="BAL",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="not_a_proc",
+                action="diagnostic",
                 finding_text="BAL performed in RUL",
                 evidence_quote="BAL performed in RUL",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="bal",
+                action="diagnostic",
                 finding_text="BAL performed",
                 evidence_quote="NOT PRESENT IN TEXT",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="bal",
+                action="diagnostic",
                 finding_text="Procedure performed",
                 evidence_quote="performed today",
                 confidence=0.9,
@@ -88,12 +94,14 @@ def test_validate_findings_against_text_requires_aspiration_action_intent() -> N
         findings=[
             FindingV1(
                 procedure_key="therapeutic_aspiration",
+                action="aspiration",
                 finding_text="Therapeutic aspiration performed to clear mucus plugs",
                 evidence_quote="Mucus plugs cleared RB4, RB5, LB4, LB5.",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="therapeutic_aspiration",
+                action="aspiration",
                 finding_text="Therapeutic aspiration performed",
                 evidence_quote="Airways inspected and stent in good position.",
                 confidence=0.9,
@@ -121,18 +129,21 @@ def test_findings_to_synthetic_ner_to_registry_flags() -> None:
         findings=[
             FindingV1(
                 procedure_key="linear_ebus",
+                action="diagnostic",
                 finding_text="EBUS TBNA biopsied station 7",
                 evidence_quote="EBUS TBNA biopsied station 7",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="bal",
+                action="diagnostic",
                 finding_text="BAL performed",
                 evidence_quote="BAL performed with return sent for cytology",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="transbronchial_biopsy",
+                action="diagnostic",
                 finding_text="Transbronchial biopsy performed in LLL",
                 evidence_quote="Transbronchial biopsy performed in LLL",
                 confidence=0.9,
@@ -175,12 +186,14 @@ def test_synthetic_ner_extracts_station_and_lobe_helpers_for_tbna_and_bal() -> N
         findings=[
             FindingV1(
                 procedure_key="tbna_conventional",
+                action="diagnostic",
                 finding_text="TBNA performed at station 4R",
                 evidence_quote="TBNA performed at station 4R.",
                 confidence=0.9,
             ),
             FindingV1(
                 procedure_key="bal",
+                action="diagnostic",
                 finding_text="BAL performed in RML",
                 evidence_quote="BAL performed in RML.",
                 confidence=0.9,
@@ -207,6 +220,7 @@ def test_synthetic_ner_uses_keyword_bearing_text_for_mapping() -> None:
             # finding_text intentionally omits the keyword; evidence contains it.
             FindingV1(
                 procedure_key="cryotherapy",
+                action="other",
                 finding_text="Clot removal performed",
                 evidence_quote="Complex clot removal via cryotherapy.",
                 confidence=0.9,
@@ -233,6 +247,7 @@ def test_tumor_debulking_maps_to_mechanical_debulking_field() -> None:
         findings=[
             FindingV1(
                 procedure_key="tumor_debulking",
+                action="other",
                 finding_text="Tumor debulking performed",
                 evidence_quote="Mechanical debulking performed for obstructing tumor.",
                 confidence=0.9,
@@ -352,18 +367,24 @@ def test_seed_llm_findings_backfills_lobes_and_stations_without_creating_linear_
             "findings": [
                 {
                     "procedure_key": "tbna_conventional",
+                    "action": "diagnostic",
+                    "anatomy": ["station 4R"],
                     "finding_text": "TBNA performed at station 4R",
                     "evidence_quote": "TBNA performed at station 4R.",
                     "confidence": 0.9,
                 },
                 {
                     "procedure_key": "bal",
+                    "action": "diagnostic",
+                    "anatomy": ["RUL"],
                     "finding_text": "BAL performed in RUL",
                     "evidence_quote": "BAL performed in RUL.",
                     "confidence": 0.9,
                 },
                 {
                     "procedure_key": "brushings",
+                    "action": "diagnostic",
+                    "anatomy": ["LLL"],
                     "finding_text": "Brushings performed in LLL",
                     "evidence_quote": "Brushings performed in LLL.",
                     "confidence": 0.9,
@@ -400,12 +421,16 @@ def test_seed_llm_findings_backfills_blvr_valve_count_and_segments() -> None:
             "findings": [
                 {
                     "procedure_key": "blvr",
+                    "action": "placement",
+                    "anatomy": ["RB9"],
                     "finding_text": "BLVR valve placed in RB9 size 6",
                     "evidence_quote": "Placed size 6 Spiration valve RB9.",
                     "confidence": 0.9,
                 },
                 {
                     "procedure_key": "blvr",
+                    "action": "placement",
+                    "anatomy": ["RB10"],
                     "finding_text": "BLVR valve placed in RB10 size 6",
                     "evidence_quote": "Placed size 6 valve RB10.",
                     "confidence": 0.9,

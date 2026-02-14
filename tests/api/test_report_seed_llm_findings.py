@@ -31,6 +31,8 @@ async def test_seed_from_text_llm_findings_respects_already_scrubbed(api_client:
             cpt_codes=["31624"],
             warnings=["LLM_FINDINGS_DROPPED: missing_evidence_quote index=0 key='bal'"],
             needs_review=False,
+            context=None,
+            accepted_items=[],
             accepted_findings=1,
             dropped_findings=1,
         )

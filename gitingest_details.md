@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-13T16:37:36-08:00`
-Git: `main` @ `f377ae6`
+Generated: `2026-02-13T19:39:07-08:00`
+Git: `main` @ `b4d085a`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -368,11 +368,11 @@ Git: `main` @ `f377ae6`
      1915  tests/coder/test_ncci_ptp_indicator.py
      1924  tests/unit/test_reporter_json_parse.py
      1929  app/coder/constants.py
-     1941  tests/api/test_report_seed_llm_findings.py
      1953  tests/api/test_phi_demo_cases.py
      1971  tests/scripts/test_split_reporter_gold_dataset.py
      1981  app/coder/phi_gating.py
      1995  app/phi/ports.py
+     1998  tests/api/test_report_seed_llm_findings.py
      1999  tests/registry/test_ip_v3_schema_refactor.py
      2003  app/registry/legacy/supabase_sink.py
      2027  app/registry/audit/audit_types.py
@@ -662,15 +662,15 @@ Git: `main` @ `f377ae6`
     16020  app/coder/rules_engine.py
     16387  app/registry/application/cpt_registry_mapping.py
     16524  app/api/dependencies.py
-    16552  tests/reporting/test_llm_findings.py
     16604  tests/integration/api/test_metrics_endpoint.py
     16910  tests/ml_coder/test_registry_first_data_prep.py
     17006  app/phi/safety/veto.py
-    17161  proc_schemas/clinical/airway.py
+    17190  proc_schemas/clinical/airway.py
     17248  app/common/openai_responses.py
     17279  app/registry/application/coding_support_builder.py
     17309  app/coder/reconciliation/reconciler.py
     17455  app/registry/ner_mapping/procedure_extractor.py
+    17523  tests/reporting/test_llm_findings.py
     17842  app/coder/adapters/llm/gemini_advisor.py
     17936  app/api/fastapi_app.py
     17939  tests/unit/test_template_coverage.py
@@ -723,7 +723,6 @@ Git: `main` @ `f377ae6`
     33110  tests/registry/test_registry_service_hybrid_flow.py
     35264  tests/coding/test_rules_validation.py
     35381  app/phi/adapters/phi_redactor_hybrid.py
-    35481  app/reporting/llm_findings.py
     35924  app/registry/schema/granular_models.py
     35945  app/registry/ml/action_predictor.py
     36526  app/coder/dictionary.py
@@ -738,17 +737,19 @@ Git: `main` @ `f377ae6`
     46085  app/registry/schema/granular_logic.py
     55668  app/extraction/postprocessing/clinical_guardrails.py
     56668  app/autocode/ip_kb/ip_kb.py
+    58543  app/reporting/llm_findings.py
     63856  app/registry/prompts.py
     70263  app/coder/domain_rules/registry_to_cpt/coding_rules.py
     79604  app/reporting/engine.py
-   102153  app/reporting/normalization/compat_enricher.py
+   106117  app/reporting/normalization/compat_enricher.py
    112649  app/registry/engine.py
    153395  app/registry/deterministic_extractors.py
    165552  app/registry/application/registry_service.py
    195819  app/registry/postprocess/__init__.py
        39  ui/source/registry_grid/src/vite-env.d.ts
+       94  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       118  tests/fixtures/regression_suite/README.md
-      125  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
+      181  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  app/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  app/reporting/templates/addons/eus_b.jinja
       247  app/reporting/templates/addons/peg_removal_exchange.jinja
@@ -793,6 +794,7 @@ Git: `main` @ `f377ae6`
       543  app/reporting/templates/addons/chest_tube_removal.jinja
       548  tests/fixtures/reporting/template_adapter_thoracentesis.md
       565  app/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
+      580  app/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
       582  app/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
       584  app/reporting/templates/addons/ion_registration_complete.jinja
       586  app/reporting/templates/addons/tool_in_lesion_confirmation.jinja
@@ -816,6 +818,8 @@ Git: `main` @ `f377ae6`
       689  app/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
       690  app/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
       692  app/reporting/templates/addons/tracheostomy_tube_change.jinja
+      695  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
+      695  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
       707  app/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
       708  app/reporting/templates/addons/tracheostomy_downsizing_fenestrated_tube_placement.jinja
       714  app/reporting/templates/addons/endobronchial_sealant_application_for_bronchopleural_fistula_bpf.jinja
@@ -830,6 +834,7 @@ Git: `main` @ `f377ae6`
       746  app/reporting/templates/addons/thoracentesis_with_pleural_manometry.jinja
       750  app/reporting/templates/addons/endobronchial_valve_placement_for_persistent_air_leak_bpf.jinja
       762  tests/fixtures/thora_bilateral.txt
+      764  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/ort_config.json
       765  app/reporting/templates/addons/electromagnetic_navigation_bronchoscopy.jinja
       768  app/reporting/templates/addons/intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d.jinja
       778  app/reporting/templates/addons/ion_registration_registration_drift_mismatch.jinja
@@ -847,6 +852,7 @@ Git: `main` @ `f377ae6`
       920  app/reporting/templates/addons/radial_ebus_guided_sampling_with_guide_sheath.jinja
       942  tests/fixtures/stent_rmb_and_dilation_lul.txt
       951  ui/static/phi_redactor/vendor/phi_distilbert_ner/config.json
+      951  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
       965  ui/source/registry_grid/vite.config.ts
       982  app/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
      1095  app/reporting/templates/addons/percutaneous_tracheostomy_revision.jinja
@@ -855,6 +861,7 @@ Git: `main` @ `f377ae6`
      1196  tests/fixtures/reporting/seed_from_text_ebus_station7.md
      1224  ui/source/registry_grid/src/__tests__/patchStoreCore.test.ts
      1227  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
+     1227  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
      1308  docs/KNOWLEDGE_RELEASE_CHECKLIST.md
      1359  app/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1432  app/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
@@ -873,9 +880,10 @@ Git: `main` @ `f377ae6`
      2342  app/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
      2447  docs/DEPLOY_MIRROR.md
      2593  docs/DEPLOY_RAILWAY.md
-     2612  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
      2781  tests/fixtures/reporting/seed_from_text_ion_nav_tbna_cryo.md
      2800  docs/REGISTRY_RUNS.md
+     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
+     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/protected_terms.json
      2954  tests/fixtures/notes/note_315.txt
      3045  docs/REPORTER_GOLD_WORKFLOW.md
      3054  tests/fixtures/notes/note_289.txt
@@ -932,6 +940,7 @@ Git: `main` @ `f377ae6`
     13436  docs/CODEX_REGISTRY_DIAMOND_LOOP.md
     13972  docs/Multi_agent_collaboration/External_Review_Action_Plan.md
     14126  app/reporting/templates/macros/02_core_bronchoscopy.j2
+    14550  docs/2-13_AI_ARCHITECTURE_UPGRADE_GUIDE.md
     15081  docs/GRAFANA_DASHBOARDS.md
     15210  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
     16028  app/reporting/templates/macros/05_pleural.j2
@@ -1313,7 +1322,6 @@ Git: `main` @ `f377ae6`
  inline_cap_reached>75  app/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  app/api/ml_advisor_router.py
  inline_cap_reached>75  app/phi/adapters/phi_redactor_hybrid.py
- inline_cap_reached>75  app/reporting/llm_findings.py
  inline_cap_reached>75  app/registry/schema/granular_models.py
  inline_cap_reached>75  app/registry/ml/action_predictor.py
  inline_cap_reached>75  app/coder/dictionary.py
@@ -1325,6 +1333,7 @@ Git: `main` @ `f377ae6`
  inline_cap_reached>75  app/registry/schema/granular_logic.py
  inline_cap_reached>75  app/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  app/autocode/ip_kb/ip_kb.py
+ inline_cap_reached>75  app/reporting/llm_findings.py
  inline_cap_reached>75  app/registry/prompts.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  app/reporting/engine.py
@@ -1335,8 +1344,10 @@ Git: `main` @ `f377ae6`
  inline_cap_reached>75  app/registry/postprocess/__init__.py
     binary_or_non_utf8  docs/ARCHITECTURE.md
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
+     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  ui/static/phi_redactor/app.js
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
+     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
      too_large>200000B  ui/static/phi_redactor/transformers.legacy.js
      too_large>200000B  ui/static/phi_redactor/transformers.min.js
      too_large>200000B  ui/static/phi_redactor/registry_grid/registry_grid.iife.js
