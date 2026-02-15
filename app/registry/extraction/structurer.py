@@ -36,7 +36,8 @@ def _llm_configured() -> bool:
             return False
         if not os.getenv("OPENAI_API_KEY"):
             return False
-        if not (os.getenv("OPENAI_MODEL") or "").strip():
+        model = (os.getenv("OPENAI_MODEL_STRUCTURER") or os.getenv("OPENAI_MODEL") or "").strip()
+        if not model:
             return False
         return True
 

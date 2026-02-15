@@ -17,6 +17,8 @@ Non‑negotiables:
 - Quote repair retry (best-effort): `app/registry/extractors/v3_extractor.py:repair_v3_evidence_quotes()` (enabled by default via `REGISTRY_V3_QUOTE_REPAIR_ENABLED=1`).
 - Experimental structurer engine: `REGISTRY_EXTRACTION_ENGINE=agents_structurer` is now wired via `app/registry/extraction/structurer.py` and projects V3 event-log → `RegistryRecord` (falls back to deterministic engine when LLM is unconfigured/offline).
 - Bundle endpoint (experimental): `POST /api/v1/process_bundle` in `app/api/routes/process_bundle.py` enforces “no absolute dates” and processes multi-doc bundles (expects client-side `T±N` tokens).
+- Phase 7 (experimental): `app/agents/aggregator/timeline_aggregator.py` builds an **entity ledger** with explicit cross-doc link proposals (`linked_to_id`, `confidence`, `reasoning_short`) and `process_bundle` returns it under `entity_ledger`.
+- Phase 8 (experimental): `process_bundle` also returns `relations_heuristic`, `relations_ml`, and merged `relations`; `ml/scripts/bootstrap_relations_silver.py` can bootstrap a reviewable silver edge set from saved bundle outputs.
 - Phase 5/6 UI (experimental): `/ui/` dashboard now includes a “Bundle (Zero‑Knowledge Timeline)” panel with Index Date + Document Date, a Chronology Preview modal, date tokenization (`[DATE: T±N DAYS]` or `[DATE: REDACTED]`), and a bundle composer that submits to `POST /api/v1/process_bundle`.
 - PHI guardrails hardened: month-name dates are detected client-side (`redactor.worker*.js`), bundle leak-check now scans inside bracket tokens, doc offsets prefer `[SYSTEM: ...]` headers, and the server strips a leading `[SYSTEM: ...]` line before extraction.
 
@@ -200,6 +202,21 @@ Actions:
   - old legacy rationale vs new (prefix/quote/suffix) side-by-side
   - developer quickly approves/rejects each fixture
 - Start with a smoke subset (e.g., 20–30 fixtures), then expand.
+Suggested workflow:
+```bash
+# 1) Generate a small pending subset + HTML report (no LLM by default)
+python ml/scripts/migrate_goldens_vNext.py --limit 30
+
+# 2) Review the report
+open data/knowledge/golden_extractions_vNext/migration_report.html
+
+# 3) Approve by moving selected JSONs from pending → approved
+ls data/knowledge/golden_extractions_vNext/pending/
+mv data/knowledge/golden_extractions_vNext/pending/<case>.json data/knowledge/golden_extractions_vNext/approved/
+
+# 4) Validate anchoring on the approved subset (CI runs this step optionally too)
+python ml/scripts/eval_golden_vNext_quotes.py
+```
 Success:
 - vNext CI runs on the approved subset with stable results.
 
@@ -247,10 +264,20 @@ Actions:
 - Create silver edge generator:
   - `ml/scripts/bootstrap_relations_silver.py` (uses heuristics + optional LLM proposals)
 - Prodigy workflow:
-  - rel.correct / approve-reject loop (fast)
+  - approve-reject loop (fast); see `docs/RELATIONS_PRODIGY_WORKFLOW.md`
 - Shadow mode integration:
   - pipeline emits `relations_ml` + `relations_heuristic`
   - merge strategy: ML if high confidence else heuristic
+- Runtime ML proposer (optional):
+  - `RELATIONS_ML_ENABLED=1` enables an LLM-based proposer that consumes ONLY the entity ledger
+    (labels/attributes; no raw note text).
+  - `RELATIONS_ML_ONLY_MISSING=1` proposes only when heuristics have no edge for the key.
+  - `RELATIONS_ML_PROPOSE_NAV_TARGETS=1` also proposes `linked_to_lesion` (default: specimens only).
+  - Safety/perf guards:
+    - `RELATIONS_ML_MAX_CANDIDATES` (default `40`)
+    - `RELATIONS_ML_MAX_CANONICAL_LESIONS` (default `20`)
+- Track merge stats:
+  - `process_bundle` now returns `relations_warnings` and `relations_metrics` for evaluation.
 - Track metrics and only then delete heuristic reconcilers.
 Success:
 - RE accuracy beats heuristics on multi-station set before removal.
@@ -260,6 +287,14 @@ Goal: Shrink complexity only after correctness is protected.
 Actions:
 - Introduce feature flag `STRUCTURED_EXTRACTION_ENABLED`.
 - Route extraction to StructurerAgent by default, keep legacy behind flag.
+- Add a PHI-safe “shadow diff” runner to compare `engine` vs `agents_structurer` on vNext fixtures:
+  - `ml/scripts/shadow_diff_structured_extraction.py` (writes a JSON report; never writes note text)
+  - Example:
+  ```bash
+  python ml/scripts/shadow_diff_structured_extraction.py \
+    --input data/knowledge/golden_extractions_vNext/approved \
+    --output-json output/shadow_diff_structured_extraction_report.json
+  ```
 - Delete regex dictionaries and span retrofitting only after vNext fixtures are strong.
 Success:
 - Codebase shrinks with no loss of correctness.

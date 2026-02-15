@@ -685,7 +685,29 @@ class RegistryService:
         warnings: list[str] = []
         meta: dict[str, Any] = {"note_id": note_id}
 
-        extraction_engine = os.getenv("REGISTRY_EXTRACTION_ENGINE", "engine").strip().lower()
+        def _env_flag(name: str, default: str = "0") -> bool:
+            return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y", "on"}
+
+        def _structurer_llm_configured() -> bool:
+            if _env_flag("REGISTRY_USE_STUB_LLM", "0") or _env_flag("GEMINI_OFFLINE", "0"):
+                return False
+
+            provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower()
+            if provider == "openai_compat":
+                if _env_flag("OPENAI_OFFLINE", "0") or not os.getenv("OPENAI_API_KEY"):
+                    return False
+                model = (os.getenv("OPENAI_MODEL_STRUCTURER") or os.getenv("OPENAI_MODEL") or "").strip()
+                return bool(model)
+
+            return bool((os.getenv("GEMINI_API_KEY") or "").strip())
+
+        extraction_engine = os.getenv("REGISTRY_EXTRACTION_ENGINE", "").strip().lower()
+        if not extraction_engine:
+            structured_enabled = _env_flag("STRUCTURED_EXTRACTION_ENABLED", "1")
+            if structured_enabled and _structurer_llm_configured():
+                extraction_engine = "agents_structurer"
+            else:
+                extraction_engine = "engine"
         meta["extraction_engine"] = extraction_engine
 
         raw_note_text = note_text

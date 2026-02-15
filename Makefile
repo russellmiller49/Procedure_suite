@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: setup lint typecheck test deps-compile deps-check validate-schemas validate-kb validate-knowledge-release test-kb-strict autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental reporter-gold-generate-pilot reporter-gold-split reporter-gold-eval reporter-gold-pilot platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
+.PHONY: setup lint typecheck test deps-compile deps-check validate-schemas validate-kb validate-knowledge-release test-kb-strict autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export relations-prodigy-reset relations-prodigy-prepare relations-prodigy-annotate relations-prodigy-export relations-prodigy-eval check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental reporter-gold-generate-pilot reporter-gold-split reporter-gold-eval reporter-gold-pilot platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
 
 # Use conda environment medparse-py311 (Python 3.11)
 CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
@@ -404,6 +404,19 @@ REG_PRODIGY_SEED ?= 42
 REG_PRODIGY_EXPORT_CSV ?= data/ml_training/registry_human.csv
 REG_PRODIGY_RESET_ARCHIVE_DIR ?= data/ml_training/_archive/registry_prodigy
 
+# Relations Prodigy workflow (Phase 8)
+REL_PRODIGY_INPUT ?= data/ml_training/bundle_outputs
+REL_PRODIGY_PATTERN ?= *.json
+REL_PRODIGY_BATCH_FILE ?= data/ml_training/relations_prodigy_batch.jsonl
+REL_PRODIGY_ML_THRESHOLD ?= 0.85
+REL_PRODIGY_EDGE_SOURCES ?= merged
+REL_PRODIGY_DATASET ?= relations_v1
+REL_PRODIGY_EXPORT_JSONL ?= data/ml_training/relations_human_edges.jsonl
+REL_PRODIGY_EXPORT_CSV ?= data/ml_training/relations_human_edges.csv
+REL_PRODIGY_RESET_ARCHIVE_DIR ?= data/ml_training/_archive/relations_prodigy
+REL_PRODIGY_EVAL_INPUT ?= $(REL_PRODIGY_EXPORT_JSONL)
+REL_PRODIGY_EVAL_REPORT ?= data/ml_training/relations_eval_report.json
+
 # Relabel workflow (build a review batch from an existing human CSV)
 REG_RELABEL_INPUT_CSV ?= data/ml_training/registry_human_v1_backup.csv
 REG_RELABEL_OUTPUT_FILE ?= data/ml_training/registry_rigid_review.jsonl
@@ -463,6 +476,39 @@ registry-prodigy-export:
 	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) ml/scripts/prodigy_export_registry.py \
 		--dataset $(REG_PRODIGY_DATASET) \
 		--output-csv $(REG_PRODIGY_EXPORT_CSV)
+
+# Reset relations Prodigy state (batch + Prodigy dataset).
+# This is safe to run even if some files/datasets don't exist.
+relations-prodigy-reset:
+	@mkdir -p $(REL_PRODIGY_RESET_ARCHIVE_DIR)
+	@ts="$$(date +%Y%m%d_%H%M%S)"; \
+	if [ -f "$(REL_PRODIGY_BATCH_FILE)" ]; then \
+		mv "$(REL_PRODIGY_BATCH_FILE)" "$(REL_PRODIGY_RESET_ARCHIVE_DIR)/$$(basename "$(REL_PRODIGY_BATCH_FILE)").$$ts"; \
+		echo "Archived $(REL_PRODIGY_BATCH_FILE) → $(REL_PRODIGY_RESET_ARCHIVE_DIR)/$$(basename "$(REL_PRODIGY_BATCH_FILE)").$$ts"; \
+	fi
+	@$(CONDA_ACTIVATE) && REL_PRODIGY_DATASET="$(REL_PRODIGY_DATASET)" $(PRODIGY_PYTHON) - <<'PY'\nfrom prodigy.components.db import connect\nimport os\n\nds = os.environ.get(\"REL_PRODIGY_DATASET\", \"\").strip()\nif not ds:\n    raise SystemExit(\"REL_PRODIGY_DATASET is empty\")\n\ndb = connect()\nif ds in db.datasets:\n    db.drop_dataset(ds)\n    print(f\"Dropped Prodigy dataset: {ds}\")\nelse:\n    print(f\"Prodigy dataset not found (nothing to drop): {ds}\")\nPY
+
+relations-prodigy-prepare:
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/bootstrap_relations_silver.py \
+		--input $(REL_PRODIGY_INPUT) \
+		--pattern "$(REL_PRODIGY_PATTERN)" \
+		--output $(REL_PRODIGY_BATCH_FILE) \
+		--ml-threshold $(REL_PRODIGY_ML_THRESHOLD) \
+		--edge-sources "$(REL_PRODIGY_EDGE_SOURCES)"
+
+relations-prodigy-annotate:
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) -m prodigy mark $(REL_PRODIGY_DATASET) $(REL_PRODIGY_BATCH_FILE) --view-id choice
+
+relations-prodigy-export:
+	$(CONDA_ACTIVATE) && $(PRODIGY_PYTHON) ml/scripts/prodigy_export_relations.py \
+		--dataset $(REL_PRODIGY_DATASET) \
+		--output-jsonl $(REL_PRODIGY_EXPORT_JSONL) \
+		--output-csv $(REL_PRODIGY_EXPORT_CSV)
+
+relations-prodigy-eval:
+	$(CONDA_ACTIVATE) && $(PYTHON) ml/scripts/eval_relations_labels.py \
+		--input-jsonl $(REL_PRODIGY_EVAL_INPUT) \
+		--output-json $(REL_PRODIGY_EVAL_REPORT)
 
 # ==============================================================================
 # Gold Standard PHI Workflow (Pure Human-Verified Data)

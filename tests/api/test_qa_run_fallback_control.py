@@ -7,7 +7,11 @@ from httpx import AsyncClient
 
 from app.api.dependencies import get_qa_pipeline_service
 from app.api.fastapi_app import app
-from app.api.services.qa_pipeline import QAPipelineService, ReportingStrategy, SimpleReporterStrategy
+from app.api.services.qa_pipeline import (
+    QAPipelineService,
+    ReportingStrategy,
+    SimpleReporterStrategy,
+)
 from app.reporting.inference import InferenceEngine
 
 
@@ -38,7 +42,10 @@ class _FailingReporterEngine:
 pytestmark = pytest.mark.asyncio
 
 
-async def test_qa_run_returns_error_when_fallback_disabled(monkeypatch: pytest.MonkeyPatch, api_client: AsyncClient) -> None:
+async def test_qa_run_returns_error_when_fallback_disabled(
+    monkeypatch: pytest.MonkeyPatch,
+    api_client: AsyncClient,
+) -> None:
     monkeypatch.delenv("QA_REPORTER_ALLOW_SIMPLE_FALLBACK", raising=False)
 
     def _override_service() -> QAPipelineService:
@@ -58,7 +65,10 @@ async def test_qa_run_returns_error_when_fallback_disabled(monkeypatch: pytest.M
 
     app.dependency_overrides[get_qa_pipeline_service] = _override_service
     try:
-        response = await api_client.post("/qa/run", json={"note_text": "test note", "modules_run": "reporter"})
+        response = await api_client.post(
+            "/qa/run",
+            json={"note_text": "test note", "modules_run": "reporter"},
+        )
         assert response.status_code == 200
         payload = response.json()
         assert payload["overall_status"] == "failed"
@@ -68,7 +78,10 @@ async def test_qa_run_returns_error_when_fallback_disabled(monkeypatch: pytest.M
         app.dependency_overrides.clear()
 
 
-async def test_qa_run_allows_simple_fallback_when_enabled(monkeypatch: pytest.MonkeyPatch, api_client: AsyncClient) -> None:
+async def test_qa_run_allows_simple_fallback_when_enabled(
+    monkeypatch: pytest.MonkeyPatch,
+    api_client: AsyncClient,
+) -> None:
     monkeypatch.setenv("QA_REPORTER_ALLOW_SIMPLE_FALLBACK", "1")
 
     def _override_service() -> QAPipelineService:
@@ -88,7 +101,10 @@ async def test_qa_run_allows_simple_fallback_when_enabled(monkeypatch: pytest.Mo
 
     app.dependency_overrides[get_qa_pipeline_service] = _override_service
     try:
-        response = await api_client.post("/qa/run", json={"note_text": "test note", "modules_run": "reporter"})
+        response = await api_client.post(
+            "/qa/run",
+            json={"note_text": "test note", "modules_run": "reporter"},
+        )
         assert response.status_code == 200
         payload = response.json()
         assert payload["overall_status"] == "completed"
@@ -97,7 +113,8 @@ async def test_qa_run_allows_simple_fallback_when_enabled(monkeypatch: pytest.Mo
         assert data["fallback_used"] is True
         assert data["render_mode"] == "simple_fallback"
         assert data["fallback_reason"]
-        assert any("simulated reporter failure" in msg for msg in (data.get("reporter_errors") or []))
+        reporter_errors = data.get("reporter_errors") or []
+        assert any("simulated reporter failure" in str(msg) for msg in reporter_errors)
         assert data["markdown"]
     finally:
         app.dependency_overrides.clear()

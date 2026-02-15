@@ -272,11 +272,16 @@ async def report_seed_from_text(
     debug_enabled = bool(req.debug or req.include_debug)
     debug_notes: list[dict[str, Any]] | None = [] if debug_enabled else None
 
-    redaction = apply_phi_redaction(req.text, phi_scrubber, already_scrubbed=bool(req.already_scrubbed))
+    redaction = apply_phi_redaction(
+        req.text,
+        phi_scrubber,
+        already_scrubbed=bool(req.already_scrubbed),
+    )
     note_text = redaction.text
 
     seed_strategy = os.getenv("REPORTER_SEED_STRATEGY", "registry_extract_fields").strip().lower()
-    llm_strict = os.getenv("REPORTER_SEED_LLM_STRICT", "0").strip().lower() in {"1", "true", "yes", "y"}
+    llm_strict_raw = os.getenv("REPORTER_SEED_LLM_STRICT", "0").strip().lower()
+    llm_strict = llm_strict_raw in {"1", "true", "yes", "y"}
 
     seed_warnings: list[str] = []
     seed_record_for_completeness = None
@@ -321,12 +326,16 @@ async def report_seed_from_text(
                     }
                 )
         except ReporterFindingsError as exc:
-            seed_warnings.append(f"REPORTER_SEED_FALLBACK: llm_findings_failed ({type(exc).__name__})")
+            seed_warnings.append(
+                f"REPORTER_SEED_FALLBACK: llm_findings_failed ({type(exc).__name__})"
+            )
             if llm_strict:
                 raise HTTPException(status_code=502, detail="LLM findings seeding failed") from exc
             seed_strategy = "registry_extract_fields"
         except Exception as exc:  # noqa: BLE001
-            seed_warnings.append(f"REPORTER_SEED_FALLBACK: llm_findings_failed ({type(exc).__name__})")
+            seed_warnings.append(
+                f"REPORTER_SEED_FALLBACK: llm_findings_failed ({type(exc).__name__})"
+            )
             if llm_strict:
                 raise HTTPException(status_code=502, detail="LLM findings seeding failed") from exc
             seed_strategy = "registry_extract_fields"
@@ -338,7 +347,10 @@ async def report_seed_from_text(
         seed_record_for_completeness = extraction_result.record
         seed_text_for_bundle = note_text
 
-    bundle = build_procedure_bundle_from_extraction(extraction_source, source_text=seed_text_for_bundle)
+    bundle = build_procedure_bundle_from_extraction(
+        extraction_source,
+        source_text=seed_text_for_bundle,
+    )
     bundle = _apply_seed_metadata(bundle, req.metadata)
     if not bundle.free_text_hint:
         bundle_payload = bundle.model_dump(exclude_none=False)

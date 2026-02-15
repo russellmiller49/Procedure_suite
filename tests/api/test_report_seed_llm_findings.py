@@ -3,11 +3,13 @@ from __future__ import annotations
 import pytest
 from httpx import AsyncClient
 
-
 pytestmark = pytest.mark.asyncio
 
 
-async def test_seed_from_text_llm_findings_respects_already_scrubbed(api_client: AsyncClient, monkeypatch) -> None:
+async def test_seed_from_text_llm_findings_respects_already_scrubbed(
+    api_client: AsyncClient,
+    monkeypatch,
+) -> None:
     monkeypatch.setenv("REPORTER_SEED_STRATEGY", "llm_findings")
 
     # If server-side scrubbing runs despite already_scrubbed=true, fail loudly.
@@ -22,7 +24,9 @@ async def test_seed_from_text_llm_findings_respects_already_scrubbed(api_client:
     from app.registry.schema import RegistryRecord
     from app.reporting.llm_findings import LLMFindingsSeedResult
 
-    fake_record = RegistryRecord.model_validate({"procedures_performed": {"bal": {"performed": True}}})
+    fake_record = RegistryRecord.model_validate(
+        {"procedures_performed": {"bal": {"performed": True}}}
+    )
 
     def _fake_seed(note_text: str) -> LLMFindingsSeedResult:
         return LLMFindingsSeedResult(
@@ -37,7 +41,10 @@ async def test_seed_from_text_llm_findings_respects_already_scrubbed(api_client:
             dropped_findings=1,
         )
 
-    monkeypatch.setattr("app.reporting.llm_findings.seed_registry_record_from_llm_findings", _fake_seed)
+    monkeypatch.setattr(
+        "app.reporting.llm_findings.seed_registry_record_from_llm_findings",
+        _fake_seed,
+    )
 
     response = await api_client.post(
         "/report/seed_from_text",

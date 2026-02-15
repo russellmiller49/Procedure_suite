@@ -7,11 +7,15 @@ This endpoint is additive and intended for a client-side temporal translation fl
 
 from __future__ import annotations
 
+import os
 import time
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
+from app.agents.aggregator.timeline_aggregator import BundleDocInput, aggregate_entity_ledger
+from app.agents.relation_extraction.llm_proposer import propose_relations_ml
+from app.agents.relation_extraction.shadow_mode import merge_relations_shadow_mode
 from app.api.dependencies import get_coding_service, get_registry_service
 from app.api.phi_dependencies import get_phi_scrubber
 from app.api.readiness import require_ready
@@ -140,11 +144,43 @@ async def process_bundle(
         )
 
     processing_time_ms = (time.time() - start_time) * 1000.0
+    ledger = aggregate_entity_ledger(
+        [
+            BundleDocInput(
+                timepoint_role=doc.timepoint_role.value,
+                seq=doc.seq,
+                doc_t_offset_days=doc.doc_t_offset_days,
+                registry=doc.result.registry,
+            )
+            for doc in docs_out
+        ]
+    )
+    confidence_threshold = float(os.getenv("RELATIONS_ML_CONFIDENCE_THRESHOLD", "0.85"))
+    ml_result = propose_relations_ml(
+        ledger=ledger,
+        relations_heuristic=ledger.link_proposals,
+    )
+    shadow = merge_relations_shadow_mode(
+        relations_heuristic=ledger.link_proposals,
+        relations_ml=ml_result.relations_ml,
+        confidence_threshold=confidence_threshold,
+    )
+    relations_warnings = list(ml_result.warnings) + list(shadow.warnings)
+    relations_metrics = {
+        "ml": ml_result.metrics,
+        "merge": shadow.metrics,
+    }
     return ProcessBundleResponse(
         zk_patient_id=payload.zk_patient_id,
         episode_id=payload.episode_id,
         documents=docs_out,
         timeline=_timeline_summary(docs_out),
+        entity_ledger=ledger,
+        relations_heuristic=shadow.relations_heuristic,
+        relations_ml=shadow.relations_ml,
+        relations=shadow.relations,
+        relations_warnings=relations_warnings,
+        relations_metrics=relations_metrics,
         processing_time_ms=processing_time_ms,
     )
 

@@ -6,6 +6,11 @@ This document describes **legacy** registry endpoints.
 
 **Experimental (multi-doc, ZK timelines):** `POST /api/v1/process_bundle` (see `app/api/routes/process_bundle.py`). This endpoint expects client-side temporal translation (`T±N` tokens) and rejects raw absolute date-like strings.
 
+It also returns:
+- `entity_ledger` (Phase 7)
+- `relations_heuristic`, `relations_ml`, merged `relations` (Phase 8 shadow mode)
+- `relations_warnings` + `relations_metrics` for evaluation (Phase 8)
+
 The current production direction is **extraction-first** (registry extraction → deterministic Registry→CPT derivation) when `PROCSUITE_PIPELINE_MODE=extraction_first`.
 
 ## Endpoints
@@ -161,10 +166,14 @@ The registry extraction engine supports multiple modes via the `REGISTRY_EXTRACT
 
 | Mode | Description |
 |------|-------------|
-| `engine` | Default LLM-based extraction via RegistryEngine |
+| `engine` | Legacy LLM-based extraction via RegistryEngine |
 | `agents_focus_then_engine` | Focus/summarize note, then extract |
-| `agents_structurer` | Use StructurerAgent for extraction |
-| `parallel_ner` | **Experimental**: NER→Registry→Rules + ML safety net |
+| `agents_structurer` | Structurer-first extraction (V3 event-log → `RegistryRecord`) |
+| `parallel_ner` | **Recommended** (required in production): NER→Registry→Rules + ML safety net |
+
+Default behavior when `REGISTRY_EXTRACTION_ENGINE` is **unset**:
+- If `STRUCTURED_EXTRACTION_ENABLED=1` (default), the service will use `agents_structurer` when an LLM provider is configured, otherwise it uses `engine`.
+- If `STRUCTURED_EXTRACTION_ENABLED=0`, the service uses `engine`.
 
 ### Parallel NER Mode
 

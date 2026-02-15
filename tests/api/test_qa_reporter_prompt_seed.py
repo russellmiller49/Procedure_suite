@@ -9,7 +9,6 @@ from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrate
 from app.reporting.inference import PatchResult
 from proc_schemas.clinical.common import ProcedureBundle
 
-
 if os.getenv("RUN_REPORTER_PROMPT_SEED_TESTS", "").strip().lower() not in {"1", "true", "yes"}:
     pytest.skip(
         "Reporter prompt seed tests are opt-in (set RUN_REPORTER_PROMPT_SEED_TESTS=1).",

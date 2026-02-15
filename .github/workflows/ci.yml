@@ -53,6 +53,9 @@ jobs:
       - name: Legacy golden eval (optional)
         run: |
           python ml/scripts/eval_golden.py --limit 25
+      - name: vNext golden quote eval (optional)
+        run: |
+          python ml/scripts/eval_golden_vNext_quotes.py --fail-under 95
 
   supabase-integration:
     runs-on: ubuntu-latest

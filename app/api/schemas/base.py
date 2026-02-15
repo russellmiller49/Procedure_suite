@@ -7,6 +7,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field, model_serializer, model_validator
 
+from app.agents.aggregator.timeline_aggregator import EntityLedger, LinkProposal
 from app.coder.schema import CoderOutput
 from app.common.spans import Span
 from app.registry.schema import RegistryRecord
@@ -247,7 +248,10 @@ class ParsedDocRequest(BaseModel):
 
     timepoint_role: BundleTimepointRole
     seq: int = Field(..., description="Ordering key within the episode (stable, client-provided).")
-    text: str = Field(..., description="Scrubbed note text containing only relative timeline tokens.")
+    text: str = Field(
+        ...,
+        description="Scrubbed note text containing only relative timeline tokens.",
+    )
 
 
 class ProcessBundleRequest(BaseModel):
@@ -259,10 +263,15 @@ class ProcessBundleRequest(BaseModel):
 
     already_scrubbed: bool = Field(
         True,
-        description="If true, the server will skip PHI scrubbing and treat all bundle docs as scrubbed.",
+        description=(
+            "If true, the server will skip PHI scrubbing and treat all bundle docs as scrubbed."
+        ),
     )
     locality: str = Field("00", description="Geographic locality for RVU calculations")
-    include_financials: bool = Field(False, description="Whether to include RVU/payment info per doc")
+    include_financials: bool = Field(
+        False,
+        description="Whether to include RVU/payment info per doc",
+    )
     explain: bool = Field(False, description="Include extraction evidence/rationales per doc")
     include_v3_event_log: bool = Field(
         False,
@@ -371,6 +380,30 @@ class ProcessBundleResponse(BaseModel):
     timeline: dict[str, Any] = Field(
         default_factory=dict,
         description="Best-effort deterministic timeline metrics derived from doc offsets.",
+    )
+    entity_ledger: EntityLedger | None = Field(
+        default=None,
+        description="Entity ledger + explicit cross-doc link proposals (Phase 7).",
+    )
+    relations_heuristic: list[LinkProposal] = Field(
+        default_factory=list,
+        description="Heuristic relations (Phase 8 baseline).",
+    )
+    relations_ml: list[LinkProposal] = Field(
+        default_factory=list,
+        description="ML relation proposals (Phase 8 shadow mode).",
+    )
+    relations: list[LinkProposal] = Field(
+        default_factory=list,
+        description="Merged relations (ML if high confidence else heuristic).",
+    )
+    relations_warnings: list[str] = Field(
+        default_factory=list,
+        description="Warnings from relation extraction + shadow-mode merge (Phase 8).",
+    )
+    relations_metrics: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Relation extraction metrics (Phase 8).",
     )
     processing_time_ms: float = 0.0
 

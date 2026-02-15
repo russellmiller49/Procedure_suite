@@ -9,7 +9,6 @@ from app.api.phi_dependencies import get_phi_scrubber
 from app.api.phi_redaction import RedactionResult
 from app.registry.application.registry_service import RegistryExtractionResult, RegistryRecord
 from app.registry.schema.ip_v3_extraction import IPRegistryV3
-from proc_schemas.registry.ip_v2 import IPRegistryV2
 
 client = TestClient(app)
 
@@ -29,30 +28,26 @@ def mock_phi_scrubber():
 
 def test_unified_process_already_scrubbed(mock_registry_service, mock_phi_scrubber):
     # Setup mock return
-    mock_record = IPRegistryV2(
-        patient={"patient_id": "123"},
-        procedure={"procedure_date": "2023-01-01", "indication": "Test"}
-    )
     full_record = RegistryRecord()
-    
+
     extraction_result = RegistryExtractionResult(
         record=full_record,
         cpt_codes=["31622"],
         coder_difficulty="HIGH_CONF",
         coder_source="ml_rules_fastpath",
         mapped_fields={},
-        needs_manual_review=False
+        needs_manual_review=False,
     )
-    
+
     mock_registry_service.extract_fields.return_value = extraction_result
 
     payload = {
         "note": "Already scrubbed text",
-        "already_scrubbed": True
+        "already_scrubbed": True,
     }
-    
+
     response = client.post("/api/v1/process", json=payload)
-    
+
     assert response.status_code == 200
     data = response.json()
     assert data["cpt_codes"] == ["31622"]
@@ -67,16 +62,13 @@ def test_unified_process_already_scrubbed(mock_registry_service, mock_phi_scrubb
     assert "patient_demographics.age_years" in prompt_paths
     assert "clinical_context.asa_class" in prompt_paths
     assert "clinical_context.ecog_score" in prompt_paths
-    
+
     # Verify proper call to service
     mock_registry_service.extract_fields.assert_called_once_with("Already scrubbed text")
 
+
 def test_unified_process_needs_scrubbing(mock_registry_service):
     # Mock extract_fields to return something valid
-    mock_record = IPRegistryV2(
-        patient={"patient_id": "123"},
-        procedure={"procedure_date": "2023-01-01", "indication": "Test"}
-    )
     full_record = RegistryRecord()
     extraction_result = RegistryExtractionResult(
         record=full_record,
@@ -95,14 +87,14 @@ def test_unified_process_needs_scrubbing(mock_registry_service):
             entity_count=1,
             warning=None,
         )
-        
+
         payload = {
             "note": "Raw PHI note",
-            "already_scrubbed": False
+            "already_scrubbed": False,
         }
-        
+
         response = client.post("/api/v1/process", json=payload)
-        
+
         assert response.status_code == 200
         # Check that we called the scrubber
         mock_redact.assert_called_once()
@@ -111,10 +103,6 @@ def test_unified_process_needs_scrubbing(mock_registry_service):
 
 
 def test_unified_process_surfaces_registry_warnings(mock_registry_service, mock_phi_scrubber):
-    mock_record = IPRegistryV2(
-        patient={"patient_id": "123"},
-        procedure={"procedure_date": "2023-01-01", "indication": "Test"},
-    )
     full_record = RegistryRecord()
 
     extraction_result = RegistryExtractionResult(
@@ -148,18 +136,14 @@ def test_unified_process_surfaces_registry_warnings(mock_registry_service, mock_
 def test_unified_process_applies_multiple_endoscopy_rule_to_financials(
     mock_registry_service, mock_phi_scrubber
 ):
-    from config.settings import CoderSettings
     from app.registry.application.coding_support_builder import get_kb_repo
+    from config.settings import CoderSettings
 
     kb = get_kb_repo()
     conversion_factor = CoderSettings().cms_conversion_factor
 
     codes = ["31623", "31624", "31627", "31628", "31629", "31654"]
 
-    mock_record = IPRegistryV2(
-        patient={"patient_id": "123"},
-        procedure={"procedure_date": "2023-01-01", "indication": "Test"},
-    )
     full_record = RegistryRecord()
 
     extraction_result = RegistryExtractionResult(
@@ -211,10 +195,6 @@ def test_unified_process_applies_multiple_endoscopy_rule_to_financials(
 
 
 def test_unified_process_include_v3_event_log(mock_registry_service, mock_phi_scrubber):
-    mock_record = IPRegistryV2(
-        patient={"patient_id": "123"},
-        procedure={"procedure_date": "2023-01-01", "indication": "Test"},
-    )
     full_record = RegistryRecord()
     extraction_result = RegistryExtractionResult(
         record=full_record,

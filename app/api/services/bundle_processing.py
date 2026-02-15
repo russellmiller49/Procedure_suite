@@ -5,8 +5,14 @@ import re
 # Absolute date patterns (PHI leak guardrails). Intentionally conservative:
 # - prefers clear YYYY-MM-DD / MM/DD/YYYY shapes
 # - does not attempt to match relative expressions like "POD #2"
-_ISO_DATE_RE = re.compile(r"\b(?:19|20)\d{2}[-/](?:0?[1-9]|1[0-2])[-/](?:0?[1-9]|[12]\d|3[01])\b")
-_US_NUMERIC_DATE_RE = re.compile(r"\b(?:0?[1-9]|1[0-2])[-/](?:0?[1-9]|[12]\d|3[01])[-/](?:\d{2}|\d{4})\b")
+_ISO_DATE_RE = re.compile(
+    r"\b(?:19|20)\d{2}[-/](?:0?[1-9]|1[0-2])[-/]"
+    r"(?:0?[1-9]|[12]\d|3[01])\b"
+)
+_US_NUMERIC_DATE_RE = re.compile(
+    r"\b(?:0?[1-9]|1[0-2])[-/](?:0?[1-9]|[12]\d|3[01])[-/]"
+    r"(?:\d{2}|\d{4})\b"
+)
 _MONTH_NAME_RE = re.compile(
     r"\b(?:"
     r"Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|"

@@ -49,12 +49,18 @@ async def test_process_bundle_succeeds_with_relative_tokens(api_client: AsyncCli
             {
                 "timepoint_role": "INDEX_PROCEDURE",
                 "seq": 2,
-                "text": "[SYSTEM: Document timeline is T+0 DAYS from Index Procedure]\\nBronchoscopy performed.",
+                "text": (
+                    "[SYSTEM: Document timeline is T+0 DAYS from Index Procedure]\\n"
+                    "Bronchoscopy performed."
+                ),
             },
             {
                 "timepoint_role": "FOLLOW_UP",
                 "seq": 1,
-                "text": "[SYSTEM: Document timeline is T+5 DAYS from Index Procedure]\\nPatient seen on [DATE: T+5 DAYS] for follow-up.",
+                "text": (
+                    "[SYSTEM: Document timeline is T+5 DAYS from Index Procedure]\\n"
+                    "Patient seen on [DATE: T+5 DAYS] for follow-up."
+                ),
             },
         ],
         "already_scrubbed": True,

@@ -41,6 +41,7 @@ These environment variables control whether/where agents are used:
 
 - **`PROCSUITE_PIPELINE_MODE`**: must be `extraction_first` (startup-enforced).
 - **`REGISTRY_EXTRACTION_ENGINE`** (extraction-first): `parallel_ner` (recommended; required in production), `engine`, `agents_focus_then_engine`, or `agents_structurer`.
+- **`STRUCTURED_EXTRACTION_ENABLED`** (default `1`): when `REGISTRY_EXTRACTION_ENGINE` is unset, use `agents_structurer` when an LLM provider is configured; otherwise use `engine`.
 - **`REGISTRY_SCHEMA_VERSION`**: `v3` is recommended (and required in production); `v2` is legacy.
 - **`REGISTRY_AUDITOR_SOURCE`**: `raw_ml` enables the RAW-ML audit safety net (required in production).
 

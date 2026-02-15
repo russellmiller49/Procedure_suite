@@ -125,7 +125,10 @@ async def test_report_verify_and_render_flow(api_client: AsyncClient) -> None:
 
 
 async def test_report_questions__ebus_station7(api_client: AsyncClient) -> None:
-    seed_resp = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    seed_resp = await api_client.post(
+        "/report/seed_from_text",
+        json={"text": "EBUS biopsied station 7"},
+    )
     assert seed_resp.status_code == 200
     seed_payload = seed_resp.json()
     bundle = seed_payload["bundle"]
@@ -142,7 +145,10 @@ async def test_report_questions__ebus_station7(api_client: AsyncClient) -> None:
 
 
 async def test_seed_from_text__ebus_station7(api_client: AsyncClient) -> None:
-    response = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    response = await api_client.post(
+        "/report/seed_from_text",
+        json={"text": "EBUS biopsied station 7"},
+    )
     assert response.status_code == 200
     payload = response.json()
 
@@ -155,7 +161,9 @@ async def test_seed_from_text__ebus_station7(api_client: AsyncClient) -> None:
     assert f"/procedures/{ebus_index}/data/needle_gauge" in pointers
 
 
-async def test_seed_from_text__ebus_staging_typos_generates_questions(api_client: AsyncClient) -> None:
+async def test_seed_from_text__ebus_staging_typos_generates_questions(
+    api_client: AsyncClient,
+) -> None:
     note = (
         "Staging EBUS via LMA staion 11L, 4L 7 and 4R evalauated. "
         "Biospy performed of 4R ROSE positive for malignancy"
@@ -180,7 +188,10 @@ async def test_seed_from_text__ebus_staging_typos_generates_questions(api_client
 
 
 async def test_patch_and_rerender__ebus_station7(api_client: AsyncClient) -> None:
-    seed_resp = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    seed_resp = await api_client.post(
+        "/report/seed_from_text",
+        json={"text": "EBUS biopsied station 7"},
+    )
     assert seed_resp.status_code == 200
     seed_payload = seed_resp.json()
 
@@ -217,7 +228,10 @@ async def test_patch_and_rerender__ebus_station7(api_client: AsyncClient) -> Non
 
 
 async def test_report_render_returns_422_for_invalid_json_patch(api_client: AsyncClient) -> None:
-    seed_resp = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+    seed_resp = await api_client.post(
+        "/report/seed_from_text",
+        json={"text": "EBUS biopsied station 7"},
+    )
     assert seed_resp.status_code == 200
     seed_payload = seed_resp.json()
     bundle = seed_payload["bundle"]
@@ -250,8 +264,13 @@ async def test_report_seed_from_text_strict_does_not_500(api_client: AsyncClient
     assert payload.get("markdown"), "Strict mode should still return a preview markdown"
 
 
-async def test_report_render_coerces_echo_features_multiselect_to_string(api_client: AsyncClient) -> None:
-    seed_resp = await api_client.post("/report/seed_from_text", json={"text": "EBUS biopsied station 7"})
+async def test_report_render_coerces_echo_features_multiselect_to_string(
+    api_client: AsyncClient,
+) -> None:
+    seed_resp = await api_client.post(
+        "/report/seed_from_text",
+        json={"text": "EBUS biopsied station 7"},
+    )
     assert seed_resp.status_code == 200
     seed_payload = seed_resp.json()
     bundle = seed_payload["bundle"]
@@ -279,7 +298,10 @@ async def test_report_render_coerces_echo_features_multiselect_to_string(api_cli
     assert "Round, Hypoechoic" in markdown
 
 
-async def test_seed_from_text_and_patch__ion_nav_tbna_cryo(api_client: AsyncClient, monkeypatch) -> None:
+async def test_seed_from_text_and_patch__ion_nav_tbna_cryo(
+    api_client: AsyncClient,
+    monkeypatch,
+) -> None:
     # The navigation + peripheral seeding relies on the extraction-first parallel_ner engine,
     # which produces the nested V3 shapes (equipment/procedures_performed) used by the compat layer.
     monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
@@ -316,7 +338,11 @@ async def test_seed_from_text_and_patch__ion_nav_tbna_cryo(api_client: AsyncClie
         {"op": "replace", "path": f"/procedures/{tna_index}/data/lung_segment", "value": "RUL"},
         {"op": "replace", "path": f"/procedures/{tna_index}/data/samples_collected", "value": 6},
         # Accept a string for tests and let the server normalize to a list.
-        {"op": "replace", "path": f"/procedures/{tna_index}/data/tests", "value": "Cytology, Microbiology"},
+        {
+            "op": "replace",
+            "path": f"/procedures/{tna_index}/data/tests",
+            "value": "Cytology, Microbiology",
+        },
         {"op": "replace", "path": f"/procedures/{cryo_index}/data/lung_segment", "value": "RUL"},
         {"op": "replace", "path": f"/procedures/{cryo_index}/data/num_samples", "value": 4},
         {"op": "add", "path": f"/procedures/{cryo_index}/data/blocker_type", "value": "Fogarty"},

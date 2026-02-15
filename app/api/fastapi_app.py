@@ -50,8 +50,8 @@ from app.api.routes.legacy_registry import router as legacy_registry_router
 from app.api.routes.metrics import router as metrics_router
 from app.api.routes.phi import router as phi_router
 from app.api.routes.phi_demo_cases import router as phi_demo_router
-from app.api.routes.process_bundle import router as process_bundle_router
 from app.api.routes.procedure_codes import router as procedure_codes_router
+from app.api.routes.process_bundle import router as process_bundle_router
 from app.api.routes.qa import router as qa_router
 from app.api.routes.registry_runs import router as registry_runs_router
 from app.api.routes.reporting import router as reporting_router

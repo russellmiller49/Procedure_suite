@@ -100,7 +100,8 @@ def test_registry_grid_bundle_exports_global_api(client: TestClient) -> None:
     assert resp.status_code == 200
     body = resp.text
     assert "window.RegistryGrid" in body
-    # Minimal contract: mount/update/unmount should exist (string check is enough for smoke coverage).
+    # Minimal contract: mount/update/unmount should exist
+    # (string check is enough for smoke coverage).
     assert "mount" in body
     assert "update" in body
     assert "unmount" in body

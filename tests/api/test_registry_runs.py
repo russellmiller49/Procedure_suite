@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
@@ -80,15 +79,17 @@ def _stub_registry_extraction_result(*, note_text: str):
     )
 
 
+def _stub_extract_fields(note_text: str):
+    return _stub_registry_extraction_result(note_text=note_text)
+
+
 def test_create_registry_run_persists_row(
     client: TestClient,
     registry_store_db,
     mock_registry_service,
     stub_coding_service,
 ):
-    mock_registry_service.extract_fields.side_effect = lambda note_text: _stub_registry_extraction_result(
-        note_text=note_text
-    )
+    mock_registry_service.extract_fields.side_effect = _stub_extract_fields
 
     resp = client.post(
         "/api/v1/registry/runs",
@@ -118,9 +119,7 @@ def test_feedback_once_enforced(
     mock_registry_service,
     stub_coding_service,
 ):
-    mock_registry_service.extract_fields.side_effect = lambda note_text: _stub_registry_extraction_result(
-        note_text=note_text
-    )
+    mock_registry_service.extract_fields.side_effect = _stub_extract_fields
 
     create = client.post(
         "/api/v1/registry/runs",
@@ -154,9 +153,7 @@ def test_correction_upsert(
     mock_registry_service,
     stub_coding_service,
 ):
-    mock_registry_service.extract_fields.side_effect = lambda note_text: _stub_registry_extraction_result(
-        note_text=note_text
-    )
+    mock_registry_service.extract_fields.side_effect = _stub_extract_fields
 
     create = client.post(
         "/api/v1/registry/runs",
@@ -198,9 +195,7 @@ def test_persistence_phi_gate_rejects_obvious_phi_like_strings(
     mock_registry_service,
     stub_coding_service,
 ):
-    mock_registry_service.extract_fields.side_effect = lambda note_text: _stub_registry_extraction_result(
-        note_text=note_text
-    )
+    mock_registry_service.extract_fields.side_effect = _stub_extract_fields
 
     resp = client.post(
         "/api/v1/registry/runs",
@@ -224,9 +219,7 @@ def test_persistence_phi_gate_can_allow_persist_with_flag(
     monkeypatch,
 ):
     monkeypatch.setenv("REGISTRY_RUNS_ALLOW_PHI_RISK_PERSIST", "true")
-    mock_registry_service.extract_fields.side_effect = lambda note_text: _stub_registry_extraction_result(
-        note_text=note_text
-    )
+    mock_registry_service.extract_fields.side_effect = _stub_extract_fields
 
     resp = client.post(
         "/api/v1/registry/runs",
@@ -243,4 +236,3 @@ def test_persistence_phi_gate_can_allow_persist_with_flag(
     assert row is not None
     assert row.review_status == "phi_risk"
     assert row.needs_manual_review is True
-

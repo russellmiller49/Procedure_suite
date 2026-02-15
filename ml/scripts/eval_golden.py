@@ -147,8 +147,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     try:
-        from app.registry.application.registry_service import RegistryService
         from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+        from app.registry.application.registry_service import RegistryService
     except Exception as exc:
         print(f"eval_golden: import error: {exc}", file=sys.stderr)
         return 2
@@ -237,11 +237,18 @@ def main(argv: list[str] | None = None) -> int:
             ],
         }
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        args.output.write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
         print(f"eval_golden: wrote report to {args.output}")
 
     if args.fail_under is not None and rate < float(args.fail_under):
-        print(f"eval_golden: FAIL (rate {rate:.1f}% < {float(args.fail_under):.1f}%)", file=sys.stderr)
+        threshold = float(args.fail_under)
+        print(
+            f"eval_golden: FAIL (rate {rate:.1f}% < {threshold:.1f}%)",
+            file=sys.stderr,
+        )
         return 1
 
     return 0
