@@ -10,17 +10,32 @@ Non‑negotiables:
 
 ---
 
-✅ Repo Status (as of 2026-02-14)
+✅ Repo Status (as of 2026-02-15)
 
 - Phase 0 baseline harness: `ml/scripts/eval_golden.py` (CI runs it; it skips when fixtures are absent).
+- Phase 4 vNext fixture tooling: `ml/scripts/migrate_goldens_vNext.py` + `ml/scripts/eval_golden_vNext_quotes.py` + `data/knowledge/golden_extractions_vNext/` scaffold (CI runs quote eval; it skips when fixtures are absent).
 - Quote anchoring: `app/evidence/quote_anchor.py` + V3 verifier anchoring in `app/registry/evidence/verifier.py:verify_registry()`.
 - Quote repair retry (best-effort): `app/registry/extractors/v3_extractor.py:repair_v3_evidence_quotes()` (enabled by default via `REGISTRY_V3_QUOTE_REPAIR_ENABLED=1`).
 - Experimental structurer engine: `REGISTRY_EXTRACTION_ENGINE=agents_structurer` is now wired via `app/registry/extraction/structurer.py` and projects V3 event-log → `RegistryRecord` (falls back to deterministic engine when LLM is unconfigured/offline).
+- Phase 9 (shadow mode): `STRUCTURED_EXTRACTION_ENABLED=1` (default) routes extraction to `agents_structurer` only when an LLM provider is configured; plus `ml/scripts/shadow_diff_structured_extraction.py` compares `engine` vs `agents_structurer` (PHI-safe JSON report).
 - Bundle endpoint (experimental): `POST /api/v1/process_bundle` in `app/api/routes/process_bundle.py` enforces “no absolute dates” and processes multi-doc bundles (expects client-side `T±N` tokens).
 - Phase 7 (experimental): `app/agents/aggregator/timeline_aggregator.py` builds an **entity ledger** with explicit cross-doc link proposals (`linked_to_id`, `confidence`, `reasoning_short`) and `process_bundle` returns it under `entity_ledger`.
 - Phase 8 (experimental): `process_bundle` also returns `relations_heuristic`, `relations_ml`, and merged `relations`; `ml/scripts/bootstrap_relations_silver.py` can bootstrap a reviewable silver edge set from saved bundle outputs.
 - Phase 5/6 UI (experimental): `/ui/` dashboard now includes a “Bundle (Zero‑Knowledge Timeline)” panel with Index Date + Document Date, a Chronology Preview modal, date tokenization (`[DATE: T±N DAYS]` or `[DATE: REDACTED]`), and a bundle composer that submits to `POST /api/v1/process_bundle`.
 - PHI guardrails hardened: month-name dates are detected client-side (`redactor.worker*.js`), bundle leak-check now scans inside bracket tokens, doc offsets prefer `[SYSTEM: ...]` headers, and the server strips a leading `[SYSTEM: ...]` line before extraction.
+
+📌 Phase Status (as of 2026-02-15)
+
+- Phase 0: ✅ Done — legacy evaluator + CI optional step (`ml/scripts/eval_golden.py`).
+- Phase 1: ✅ Done (schema defined; not yet wired) — `proc_schemas/registry/ip_vnext_draft.py`, `proc_schemas/registry/ip_vnext.py`.
+- Phase 2: 🟡 Partial — V3 extraction uses structured JSON schema + best-effort quote repair; `StructurerAgent` (agents pipeline) remains a placeholder.
+- Phase 3: ✅ Done — quote anchor engine + verifier integration (`app/evidence/quote_anchor.py`, `app/registry/evidence/verifier.py`).
+- Phase 4: 🟡 Tooling done; fixtures pending approval — migration + quote-eval scripts exist; repo does not ship approved fixtures by default.
+- Phase 5: 🟡 Partial — client-side date tokenization + Chronology Preview (deterministic parser + UTC-noon math; Chrono Node integration TBD).
+- Phase 6: ✅ Done (experimental) — `POST /api/v1/process_bundle` + leak-check + deterministic timeline summary.
+- Phase 7: ✅ Done (experimental) — entity ledger (`entity_ledger`) with explicit link proposals.
+- Phase 8: ✅ Done (experimental) — relations shadow mode (`relations_heuristic`, `relations_ml`, merged `relations`) + `relations_metrics`; silver bootstrap + Prodigy workflow.
+- Phase 9: 🟡 In progress — default extraction routing via `STRUCTURED_EXTRACTION_ENABLED` + PHI-safe shadow diff runner; regex teardown remains pending.
 
 ---
 
@@ -140,6 +155,7 @@ Principle:
 AI Assistant: Follow phases sequentially. Do not delete or “clean up” legacy paths until the relevant phase explicitly says so.
 
 Phase 0: Freeze Baseline & Protect Against Poisoning
+Status (as of 2026-02-15): ✅ Done — legacy eval harness + CI optional step are in place; fixtures remain read-only.
 Goal: Ensure you can detect regressions and avoid corrupting the truth set.
 Actions:
 - Build/verify legacy evaluator:
@@ -151,6 +167,7 @@ Guardrail:
 - No modifications to `data/knowledge/golden_extractions_final/`.
 
 Phase 1: vNext Schemas (Draft vs Final) + Evidence Contract (Anti-Paraphrase)
+Status (as of 2026-02-15): ✅ Done (schema defined) — vNext draft/final schemas exist; not yet wired into runtime extraction.
 Goal: Define schemas that enable robust quote anchoring and UI trust.
 Actions:
 - Create:
@@ -167,6 +184,7 @@ Success:
 - `model_json_schema()` is strict and ready for constrained decoding.
 
 Phase 2: StructurerAgent Constrained Decoding + Quote Fidelity Retry
+Status (as of 2026-02-15): 🟡 Partial — V3 extractor uses structured JSON schema + best-effort quote repair; agents `StructurerAgent` remains a placeholder.
 Goal: Guarantee schema compliance and minimize paraphrased quotes.
 Actions:
 - Implement constrained decoding in:
@@ -178,6 +196,7 @@ Success:
 - Draft outputs parse 100% and most quotes pass substring check without fuzz.
 
 Phase 3: Quote Anchoring Engine (Context-Aware) + Soft Fallback
+Status (as of 2026-02-15): ✅ Done — quote anchoring engine exists and is used by verifier/guardrails.
 Goal: Compute spans deterministically and never drop extracted values.
 Actions:
 - Build/upgrade:
@@ -193,6 +212,7 @@ Success:
 - UI never “loses” data because of anchoring failures.
 
 Phase 4: vNext Golden Migration Tool (Human-Approved) + Small Smoke Set First
+Status (as of 2026-02-15): 🟡 Tooling done; fixtures pending approval — migration + vNext quote eval exist; repo ships scaffolding only.
 Goal: Build a trustworthy vNext fixture set without poisoning.
 Actions:
 - Create:
@@ -221,6 +241,7 @@ Success:
 - vNext CI runs on the approved subset with stable results.
 
 Phase 5: Bulletproof Client-Side Temporal Translation (Chrono + UTC + Preview)
+Status (as of 2026-02-15): 🟡 Partial — UI supports Index/Doc dates, Chronology Preview, and `[DATE: T±N DAYS]` tokenization using deterministic parsing + UTC-noon math; Chrono Node integration is TBD.
 Goal: Achieve true ZK timelines with high parse success and user verification.
 Actions (UI):
 - Add Index Date (T=0) and per-document Document Date + timepoint_role + seq.
@@ -236,6 +257,7 @@ Success:
 - Bundle ingestion contains only relative tokens; no DST drift.
 
 Phase 6: Bundle Endpoint v1 (Per-Doc Extraction + Deterministic Timeline Math)
+Status (as of 2026-02-15): ✅ Done (experimental) — `/api/v1/process_bundle` exists, rejects absolute dates, extracts per doc, and returns timeline metrics.
 Goal: Ship multi-doc ingestion without requiring perfect cross-doc linking on day one.
 Actions:
 - Implement `POST /api/v1/process_bundle` under `app/api/routes/`.
@@ -248,6 +270,7 @@ Success:
 - Works for single-lesion and straightforward multi-doc episodes.
 
 Phase 7: Aggregator v2 (Entity Ledger + Explicit Cross-Doc Linking)
+Status (as of 2026-02-15): ✅ Done (experimental) — aggregator builds `entity_ledger` + explicit link proposals and `process_bundle` returns it.
 Goal: Reduce pathology misattribution in multi-lesion scenarios.
 Actions:
 - Implement ledger schema in:
@@ -259,6 +282,7 @@ Success:
 - Multi-lesion episodes show correct lesion↔specimen↔path linkage with confidence.
 
 Phase 8: Relation Extraction (Weak Supervision → Shadow Mode → Replacement)
+Status (as of 2026-02-15): ✅ Done (experimental) — bundle pipeline emits heuristic+ML relations, merges in shadow mode, and returns metrics; silver bootstrap script + Prodigy workflow exist.
 Goal: Improve relations without incurring an annotation death spiral.
 Actions:
 - Create silver edge generator:
@@ -283,6 +307,7 @@ Success:
 - RE accuracy beats heuristics on multi-station set before removal.
 
 Phase 9: Tear Down the Regex Monolith (Last)
+Status (as of 2026-02-15): 🟡 In progress — `STRUCTURED_EXTRACTION_ENABLED` default routing + PHI-safe shadow diff runner are in place; deletion of legacy regex/span retrofitting remains pending.
 Goal: Shrink complexity only after correctness is protected.
 Actions:
 - Introduce feature flag `STRUCTURED_EXTRACTION_ENABLED`.

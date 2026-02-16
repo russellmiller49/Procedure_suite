@@ -1420,6 +1420,35 @@ function parseYesNo(value) {
   return null;
 }
 
+function getByPath(obj, path) {
+  const root = obj && typeof obj === "object" ? obj : null;
+  const rawPath = String(path || "").trim();
+  if (!root || !rawPath) return undefined;
+
+  const parts = [];
+  rawPath.split(".").forEach((segment) => {
+    const token = String(segment || "").trim();
+    if (!token) return;
+    const matches = token.matchAll(/([^[\]]+)|\[(\d+)\]/g);
+    for (const match of matches) {
+      if (match[1]) parts.push(match[1]);
+      else if (match[2] !== undefined) parts.push(Number(match[2]));
+    }
+  });
+
+  let curr = root;
+  for (const part of parts) {
+    if (curr === null || curr === undefined) return undefined;
+    if (typeof part === "number") {
+      if (!Array.isArray(curr)) return undefined;
+      curr = curr[part];
+    } else {
+      curr = curr[part];
+    }
+  }
+  return curr;
+}
+
 function ensurePath(obj, path) {
   const parts = path.split(".");
   let curr = obj;
