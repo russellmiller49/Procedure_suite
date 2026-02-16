@@ -324,13 +324,6 @@ def generate_missing_field_prompts(record: RegistryRecord) -> list[MissingFieldP
         )
         add_prompt_if_missing(
             group="Navigation",
-            path="granular_data.navigation_targets[*].air_bronchogram_present",
-            label="Air bronchogram",
-            severity="recommended",
-            message="Air bronchogram status was not captured. Document present/absent if stated on CT.",
-        )
-        add_prompt_if_missing(
-            group="Navigation",
             path="granular_data.navigation_targets[*].pet_suv_max",
             label="PET SUV max",
             severity="recommended",

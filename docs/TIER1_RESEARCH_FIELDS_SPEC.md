@@ -14,6 +14,7 @@ This document is the single source of truth for **Tier 1 research-grade fields**
 - **Type:** `"Positive" | "Negative" | "Not assessed"`
 - **Derivation (explicit-only):**
   - Deterministic regex extracts polarity when “bronchus sign … positive/negative/present/absent” is documented.
+  - Treat explicit “air bronchogram present/absent” as bronchus sign positive/negative.
   - Do not infer from lesion location, navigation system, or rEBUS findings.
 - **Evidence key:** `clinical_context.bronchus_sign` (span should include the polarity statement)
 
@@ -62,4 +63,3 @@ This document is the single source of truth for **Tier 1 research-grade fields**
   - Do not downgrade due to templated “COMPLICATIONS: None” when narrative contradicts.
 - **Related behavior:** when grade > 0, set `registry.complications.bleeding.occurred=true` and ensure complications summary reflects bleeding.
 - **Evidence key:** `complications.bleeding.bleeding_grade_nashville`
-

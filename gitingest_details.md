@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-13T19:39:07-08:00`
-Git: `main` @ `b4d085a`
+Generated: `2026-02-16T11:14:07-08:00`
+Git: `major_update_2_14_26` @ `23bb135`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -60,11 +60,13 @@ Git: `main` @ `b4d085a`
      6402  ml/scripts/split_reporter_gold_dataset.py
      6413  ml/scripts/add_training_case.py
      6432  ml/scripts/eval_registry_granular.py
+     6534  ml/scripts/eval_golden_vNext_quotes.py
      6651  ops/tools/validate_knowledge_release.py
      6716  ops/tools/knowledge_diff_report.py
      6752  ml/scripts/merge_registry_prodigy.py
      6877  ml/scripts/prodigy_export_registry.py
      6884  ml/scripts/clear_unannotated_prodigy_batch.py
+     6967  ml/scripts/eval_relations_labels.py
      7108  ml/scripts/merge_registry_human_labels.py
      7171  ops/tools/create_slim_branch.py
      7300  ml/scripts/generate_teacher_logits.py
@@ -73,10 +75,12 @@ Git: `main` @ `b4d085a`
      7735  ops/tools/code_validation.py
      7803  ml/scripts/dedupe_granular_ner.py
      7997  ml/scripts/export_phi_gold_standard.py
+     8108  ml/scripts/prodigy_export_relations.py
      8169  ml/scripts/export_patient_note_texts.py
      8204  ops/tools/test_phi_redaction_sample.py
      8398  ml/scripts/prodigy_prepare_registry_relabel_batch.py
      8430  ml/scripts/build_reporter_prompt_dataset.py
+     8444  ml/scripts/eval_golden.py
      8856  ops/tools/eval_reporter_gold_dataset.py
      9036  ml/scripts/find_critical_failures.py
      9061  ops/tools/generate_procedure_suite_one_pager_pdf.py
@@ -95,6 +99,7 @@ Git: `main` @ `b4d085a`
     12022  ml/scripts/train_reporter_prompt_to_bundle_unsloth.py
     12109  ops/tools/export_phi_model_for_transformersjs.py
     12156  ml/scripts/convert_spans_to_bio.py
+    13341  ml/scripts/bootstrap_relations_silver.py
     13386  ops/tools/eval_reporter_prompt_baseline.py
     13510  ml/scripts/extract_ner_from_excel.py
     14196  ops/tools/eval_reporter_prompt_llm_findings.py
@@ -104,6 +109,7 @@ Git: `main` @ `b4d085a`
     14748  ml/scripts/quantize_to_onnx.py
     15516  ml/scripts/verify_registry_human_data.py
     15802  ml/scripts/sanitize_dataset.py
+    16091  ml/scripts/shadow_diff_structured_extraction.py
     16351  ml/scripts/apply_platinum_redactions.py
     16423  ops/tools/registry_pipeline_smoke_batch.py
     16572  ml/scripts/eval_hybrid_pipeline.py
@@ -122,6 +128,7 @@ Git: `main` @ `b4d085a`
     25880  ml/scripts/distill_reporter_bundle_targets.py
     26361  ml/scripts/train_registry_ner.py
     27152  ml/scripts/golden_to_csv.py
+    27460  ml/scripts/migrate_goldens_vNext.py
     33772  ml/scripts/generate_reporter_gold_dataset.py
     34563  ml/scripts/validate_golden_extractions.py
     37436  ml/scripts/distill_phi_labels.py
@@ -157,7 +164,9 @@ Git: `main` @ `b4d085a`
        58  app/registry/pipelines/__init__.py
        58  app/registry/slots/__init__.py
        61  app/agents/__init__.py
+       62  app/evidence/__init__.py
        68  proc_schemas/shared/__init__.py
+       71  app/agents/aggregator/__init__.py
        71  app/extraction/__init__.py
        72  app/domain/procedure_store/__init__.py
        75  app/coder/domain_rules/registry_to_cpt/__init__.py
@@ -171,7 +180,6 @@ Git: `main` @ `b4d085a`
       129  app/common/rules_engine/__init__.py
       132  app/registry/legacy/__init__.py
       132  app/registry_store/__init__.py
-      135  proc_schemas/registry/__init__.py
       147  app/registry/legacy/adapters/__init__.py
       166  tests/__init__.py
       169  app/api/adapters/__init__.py
@@ -186,6 +194,8 @@ Git: `main` @ `b4d085a`
       215  app/registry/adapters/v3_to_v2.py
       218  app/phi/__init__.py
       226  app/coder/adapters/llm/__init__.py
+      256  app/agents/relation_extraction/__init__.py
+      265  proc_schemas/registry/__init__.py
       280  app/registry/schema/ebus_events.py
       314  app/coder/application/__init__.py
       314  app/reporting/templates/addons/__init__.py
@@ -231,7 +241,6 @@ Git: `main` @ `b4d085a`
       666  proc_schemas/__init__.py
       684  tests/registry/test_provider_name_sanitization.py
       691  tests/coder/test_kb_professional_descriptions.py
-      702  app/registry/extraction/structurer.py
       707  app/registry/slots/base.py
       715  ml/lib/ml_coder/__init__.py
       716  app/coder/parallel_pathway/__init__.py
@@ -246,6 +255,7 @@ Git: `main` @ `b4d085a`
       804  app/registry/constants/field_paths.py
       807  tests/registry/test_openai_model_structurer_override.py
       812  app/phi/adapters/encryption_insecure_demo.py
+      812  tests/unit/test_bundle_processing.py
       823  app/registry/slots/imaging.py
       829  tests/coder/test_parallel_confidence_combiner.py
       835  app/agents/summarizer/summarizer_agent.py
@@ -253,7 +263,6 @@ Git: `main` @ `b4d085a`
       851  tests/ml_coder/test_registry_label_constraints.py
       859  app/reporting/coder_view.py
       874  app/domain/knowledge_base/models.py
-      874  app/registry/pipelines/v3_pipeline.py
       874  tests/registry/test_note_240_cao_regression.py
       886  app/registry/application/__init__.py
       887  tests/api/test_ui.py
@@ -288,7 +297,7 @@ Git: `main` @ `b4d085a`
      1155  app/registry/slots/disposition.py
      1177  tests/reporting/test_normalization_idempotent.py
      1180  tests/registry/test_schema_filter.py
-     1192  tests/registry/test_structurer_fallback.py
+     1188  tests/registry/test_structurer_fallback.py
      1197  tests/scripts/test_train_registry_ner_allowlist.py
      1197  tests/unit/test_knowledge.py
      1210  app/registry/slots/pleura.py
@@ -306,6 +315,7 @@ Git: `main` @ `b4d085a`
      1323  tests/coder/test_llm_provider_openai_compat.py
      1331  app/common/spans.py
      1339  app/common/knowledge_cli.py
+     1342  tests/registry/test_structured_extraction_default.py
      1351  app/phi/adapters/fernet_encryption.py
      1363  app/registry/schema.py
      1372  app/api/readiness.py
@@ -323,11 +333,12 @@ Git: `main` @ `b4d085a`
      1461  app/phi/db.py
      1470  app/domain/reasoning/models.py
      1481  tests/coding/test_hierarchy_normalization.py
+     1493  app/registry/pipelines/v3_pipeline.py
      1503  tests/registry/test_table_row_masking_regressions.py
      1506  tests/reporting/test_validation_path_access.py
-     1521  app/api/schemas/__init__.py
      1525  tests/scripts/test_build_reporter_prompt_dataset.py
      1539  app/registry/slots/complications.py
+     1541  tests/unit/test_quote_anchor.py
      1542  app/domain/knowledge_base/repository.py
      1548  app/common/rules_engine/ncci.py
      1551  proc_schemas/procedure_report.py
@@ -343,6 +354,7 @@ Git: `main` @ `b4d085a`
      1678  tests/scripts/test_prodigy_export_registry.py
      1682  tests/registry/test_clinical_guardrails_stent_inspection.py
      1690  tests/scripts/test_export_patient_note_texts.py
+     1695  tests/scripts/test_shadow_diff_structured_extraction.py
      1708  tests/coder/test_kitchen_sink_ml_first_fastpath_completeness.py
      1719  tests/scripts/test_bootstrap_granular_attributes.py
      1727  tests/registry/test_note_279_regression.py
@@ -354,6 +366,7 @@ Git: `main` @ `b4d085a`
      1759  tests/registry/test_kitchen_sink_extraction_first.py
      1763  tests/registry/test_navigation_fiducials.py
      1767  tests/utils/case_filter.py
+     1777  app/api/schemas/__init__.py
      1816  tests/registry/test_registry_to_cpt_diagnostic_bronchoscopy.py
      1823  app/registry/slots/tblb.py
      1833  proc_schemas/reasoning.py
@@ -372,11 +385,12 @@ Git: `main` @ `b4d085a`
      1971  tests/scripts/test_split_reporter_gold_dataset.py
      1981  app/coder/phi_gating.py
      1995  app/phi/ports.py
-     1998  tests/api/test_report_seed_llm_findings.py
      1999  tests/registry/test_ip_v3_schema_refactor.py
      2003  app/registry/legacy/supabase_sink.py
      2027  app/registry/audit/audit_types.py
      2028  app/agents/parser/parser_agent.py
+     2045  tests/api/test_report_seed_llm_findings.py
+     2076  tests/scripts/test_eval_relations_labels.py
      2077  app/registry/slots/dilation.py
      2079  app/registry_store/models.py
      2086  tests/api/test_startup_settings.py
@@ -412,6 +426,8 @@ Git: `main` @ `b4d085a`
      2472  app/reporter/prompts.py
      2475  app/proc_ml_advisor/__init__.py
      2480  app/llm/client.py
+     2522  app/api/services/bundle_processing.py
+     2533  tests/unit/test_relations_shadow_mode.py
      2582  app/api/routes/legacy_registry.py
      2582  app/reporting/inference.py
      2597  tests/registry/test_extraction_first_flow.py
@@ -430,14 +446,17 @@ Git: `main` @ `b4d085a`
      2835  ml/lib/ml_coder/thresholds.py
      2847  tests/registry/test_keyword_guard_generated_keywords.py
      2849  app/api/routes/phi_demo_cases.py
+     2850  tests/api/test_process_bundle.py
      2875  tests/test_clean_ip_registry.py
      2906  app/reporter/cli.py
      2914  tests/reporting/test_macro_engine_template_adapter_parity.py
      2923  app/common/rvu_calc.py
      2974  tests/coding/test_sectionizer_integration.py
      2977  tests/unit/test_openai_timeouts.py
+     3037  tests/unit/test_timeline_aggregator.py
      3060  app/common/umls_linking.py
      3062  tests/registry/test_ebus_deterministic.py
+     3065  tests/scripts/test_bootstrap_relations_silver.py
      3076  app/api/adapters/response_adapter.py
      3090  tests/registry/test_note_281_granularity_regression.py
      3092  app/coder/ebus_extractor.py
@@ -460,20 +479,22 @@ Git: `main` @ `b4d085a`
      3379  app/coder/peripheral_extractor.py
      3399  app/infra/settings.py
      3463  tests/registry/test_v3_note_281_narrative_first_and_anchors.py
+     3470  proc_schemas/registry/ip_vnext.py
      3516  tests/unit/test_sanitize_dataset.py
-     3571  tests/api/test_qa_reporter_prompt_seed.py
+     3570  tests/api/test_qa_reporter_prompt_seed.py
+     3578  proc_schemas/registry/ip_vnext_draft.py
      3622  app/coder/posthoc.py
      3629  tests/scripts/test_prodigy_prepare_registry.py
      3644  proc_schemas/coding.py
      3656  proc_schemas/registry/ip_v2.py
      3682  app/coder/sectionizer.py
+     3684  tests/scripts/test_prodigy_export_relations_file_mode.py
      3686  ml/lib/ml_coder/registry_label_schema.py
      3692  app/registry/slots/blvr.py
      3694  app/api/phi_redaction.py
      3774  app/common/knowledge_schema.py
      3795  app/common/model_capabilities.py
      3819  app/api/phi_dependencies.py
-     3833  tests/api/test_qa_run_fallback_control.py
      3835  tests/reporting/test_category_macros_externalized.py
      3838  tests/integration/test_pipeline_integrity.py
      3882  app/registry/heuristics/coverage_checks.py
@@ -483,6 +504,8 @@ Git: `main` @ `b4d085a`
      3954  app/coder/schema.py
      3965  config/settings.py
      3970  app/agents/contracts.py
+     3987  tests/api/test_qa_run_fallback_control.py
+     3990  tests/unit/test_relations_llm_proposer.py
      3996  app/registry/tags.py
      4035  tests/scripts/test_generate_reporter_gold_dataset.py
      4070  app/registry/self_correction/prompt_improvement.py
@@ -503,10 +526,11 @@ Git: `main` @ `b4d085a`
      4494  app/registry/ebus_config.py
      4514  tests/registry/test_regression_pack.py
      4518  tests/registry/test_registry_engine_sanitization.py
-     4528  app/api/services/financials.py
      4530  tests/registry/test_derive_procedures_from_granular_consistency.py
      4535  tests/registry/test_linear_ebus_stations_detail.py
+     4557  app/agents/relation_extraction/shadow_mode.py
      4560  app/registry/self_correction/judge.py
+     4562  app/api/services/financials.py
      4578  tests/api/test_coding_phi_gating.py
      4619  tests/reporting/test_debug_notes_gating.py
      4705  app/reporting/partial_schemas.py
@@ -535,10 +559,12 @@ Git: `main` @ `b4d085a`
      5658  tests/registry/test_cao_interventions_detail.py
      5702  app/registry/deterministic/anatomy.py
      5802  app/reporting/json_patch.py
+     5864  app/evidence/quote_anchor.py
      5924  app/api/routes/legacy_coder.py
      5967  tests/registry/test_ner_procedure_extractor.py
      5993  tests/registry/test_post_fix_regressions.py
      6000  app/ner/entity_types.py
+     6014  app/registry/extraction/structurer.py
      6017  tests/registry/test_ebus_postprocess_fallback.py
      6022  app/registry/heuristics/linear_ebus_station_detail.py
      6127  tests/api/test_phi_redaction.py
@@ -559,16 +585,17 @@ Git: `main` @ `b4d085a`
      6588  tests/registry/test_registry_qa_regressions.py
      6623  app/coder/cli.py
      6642  tests/unit/test_protected_veto.py
+     6870  app/api/routes/process_bundle.py
      6912  app/registry/slots/therapeutics.py
      6919  tests/integration/api/test_startup_warmup.py
      7025  app/reporting/ip_addons.py
      7029  app/api/routes/qa.py
      7036  app/registry/self_correction/apply.py
+     7071  tests/api/test_registry_runs.py
      7106  app/coder/application/candidate_expansion.py
      7160  app/agents/run_pipeline.py
      7160  app/registry/infra/model_provider.py
      7295  tests/integration/coder/test_coding_service.py
-     7298  tests/api/test_registry_runs.py
      7367  tests/api/test_phi_endpoints.py
      7409  tests/registry/test_fixpack_device_action_regressions.py
      7450  tests/registry/test_self_correction_validation.py
@@ -580,8 +607,9 @@ Git: `main` @ `b4d085a`
      7850  app/registry/ner_mapping/entity_to_registry.py
      8145  app/coder/adapters/persistence/inmemory_procedure_store.py
      8181  tests/ml_coder/test_registry_predictor.py
+     8210  tests/api/test_unified_process.py
      8223  tests/coder/test_rules_engine.py
-     8314  tests/api/test_phi_redactor_ui.py
+     8320  tests/api/test_phi_redactor_ui.py
      8411  app/registry/inference_pytorch.py
      8427  app/registry_cleaning/clinical_qc.py
      8492  tests/registry/test_fixpack_batch2.py
@@ -591,7 +619,6 @@ Git: `main` @ `b4d085a`
      8691  tests/coding/test_json_rules_parity.py
      8694  app/api/coder_adapter.py
      9005  app/api/routes/metrics.py
-     9056  tests/api/test_unified_process.py
      9276  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9381  app/registry/processing/focus.py
      9451  tests/ml_coder/test_training_pipeline.py
@@ -603,13 +630,13 @@ Git: `main` @ `b4d085a`
      9940  tests/reporter/test_golden_examples.py
     10056  ml/lib/ml_coder/predictor.py
     10063  tests/unit/test_procedure_type_detector.py
+    10402  app/agents/relation_extraction/llm_proposer.py
     10402  app/api/routes_registry.py
     10712  app/registry/postprocess/template_checkbox_negation.py
     10787  tests/unit/test_inmemory_procedure_store.py
     10930  tests/registry/test_ebus_config_station_count.py
-    10934  app/api/services/unified_pipeline.py
+    11009  app/api/services/unified_pipeline.py
     11177  tests/test_phi_redaction_contract.py
-    11197  app/api/schemas/base.py
     11289  app/coder/adapters/nlp/keyword_mapping_loader.py
     11290  tests/registry/test_registry_guardrails.py
     11392  app/common/knowledge.py
@@ -619,7 +646,6 @@ Git: `main` @ `b4d085a`
     11975  app/reporting/normalization/text_enricher.py
     12339  app/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
-    12485  app/registry/extractors/v3_extractor.py
     12488  app/registry/heuristics/navigation_targets.py
     12533  app/domain/knowledge_base/validator.py
     12625  tests/ml_coder/test_data_prep.py
@@ -631,81 +657,84 @@ Git: `main` @ `b4d085a`
     13688  app/coder/rules.py
     13689  app/registry/application/registry_builder.py
     13766  tests/registry/test_self_correction_loop.py
-    13862  app/registry/self_correction/validation.py
     13936  tests/ml_advisor/test_router.py
+    14076  app/registry/self_correction/validation.py
     14127  tests/integration/persistence/test_supabase_procedure_store.py
     14244  ml/lib/ml_coder/registry_predictor.py
     14393  app/registry/ml/models.py
     14462  tests/integration/coder/test_hybrid_policy.py
+    14515  app/api/schemas/base.py
     14585  docs/phi_review_system/backend/models.py
-    14649  app/registry/postprocess/complications_reconcile.py
     14872  tests/phi/test_veto_regression.py
+    14895  proc_schemas/registry/ip_v3.py
     14928  app/registry/schema/adapters/v3_to_v2.py
-    15056  proc_schemas/registry/ip_v3.py
     15130  app/registry/v2_booleans.py
-    15188  app/api/routes/reporting.py
-    15201  app/registry/processing/masking.py
     15235  tests/unit/test_dsl.py
     15259  app/domain/coding_rules/json_rules_evaluator.py
     15342  tests/registry/test_action_predictor.py
     15385  app/registry/audit/raw_ml_auditor.py
     15404  app/autocode/ip_kb/canonical_rules.py
+    15472  app/registry/processing/masking.py
     15490  ml/lib/ml_coder/registry_training.py
     15537  tests/reporter/test_ip_addons.py
-    15580  app/api/routes/registry_runs.py
+    15589  app/api/routes/registry_runs.py
     15622  app/coder/reconciliation/pipeline.py
+    15632  app/registry/extractors/v3_extractor.py
     15637  tests/registry/test_extraction_quality.py
     15796  app/ner/inference.py
     15812  app/registry/ner_mapping/station_extractor.py
     15853  tests/registry/test_normalization.py
-    15991  tests/api/test_fastapi.py
+    15974  app/agents/aggregator/timeline_aggregator.py
     16020  app/coder/rules_engine.py
+    16178  tests/api/test_fastapi.py
     16387  app/registry/application/cpt_registry_mapping.py
-    16524  app/api/dependencies.py
+    16564  app/api/dependencies.py
     16604  tests/integration/api/test_metrics_endpoint.py
     16910  tests/ml_coder/test_registry_first_data_prep.py
     17006  app/phi/safety/veto.py
     17190  proc_schemas/clinical/airway.py
     17248  app/common/openai_responses.py
-    17279  app/registry/application/coding_support_builder.py
     17309  app/coder/reconciliation/reconciler.py
-    17455  app/registry/ner_mapping/procedure_extractor.py
+    17344  app/registry/application/coding_support_builder.py
+    17454  app/registry/postprocess/complications_reconcile.py
     17523  tests/reporting/test_llm_findings.py
     17842  app/coder/adapters/llm/gemini_advisor.py
-    17936  app/api/fastapi_app.py
     17939  tests/unit/test_template_coverage.py
-    17940  app/registry/evidence/verifier.py
     17947  app/registry/normalization.py
-    18048  app/api/services/qa_pipeline.py
-    18299  tests/registry/test_parallel_ner_uplift_evidence.py
+    18086  app/api/services/qa_pipeline.py
+    18116  app/api/fastapi_app.py
+    18143  tests/registry/test_parallel_ner_uplift_evidence.py
     18760  app/registry/inference_onnx.py
     18912  tests/ml_coder/test_label_hydrator.py
     18921  tests/api/test_registry_extract_endpoint.py
     18989  tests/coder/test_registry_coder.py
     19268  app/coder/adapters/persistence/csv_kb_adapter.py
+    19382  app/registry/evidence/verifier.py
     19751  tests/integration/api/test_registry_endpoints.py
+    19902  app/registry/completeness/missing_field_prompts.py
     20079  app/registry_cleaning/cpt_utils.py
     20190  tests/registry/test_cao_extraction.py
-    20233  app/registry/completeness/missing_field_prompts.py
     20268  app/coder/parallel_pathway/orchestrator.py
     20422  app/registry/model_bootstrap.py
     20519  app/registry/extractors/llm_detailed.py
     20815  app/reporting/macro_engine.py
     21200  app/coder/adapters/llm/openai_compat_advisor.py
+    21248  app/registry/ner_mapping/procedure_extractor.py
     21434  app/domain/coding_rules/rule_engine.py
     21452  app/coder/adapters/persistence/supabase_procedure_store.py
     21459  tests/coder/test_reconciliation.py
     21514  tests/test_registry_normalization.py
-    21728  app/registry/processing/linear_ebus_stations_detail.py
     21983  app/reporting/questions.py
     22217  tests/reporter/test_macro_engine_features.py
     22565  app/phi/adapters/presidio_scrubber.py
     22623  tests/ml_coder/test_registry_data_prep.py
     22694  ml/lib/ml_coder/data_prep.py
     23485  docs/phi_review_system/backend/endpoints.py
+    23501  app/api/routes/reporting.py
     24057  tests/ml_advisor/conftest.py
     24902  tests/integration/api/test_coder_run_endpoint.py
     24968  app/registry/legacy/adapters/airway.py
+    25427  app/registry/processing/linear_ebus_stations_detail.py
     25630  app/coder/application/smart_hybrid_policy.py
     25930  app/registry/schema/v2_dynamic.py
     26086  tests/coder/test_coding_rules_phase7.py
@@ -713,8 +742,8 @@ Git: `main` @ `b4d085a`
     27682  app/coder/adapters/registry_coder.py
     27714  app/registry/processing/disease_burden.py
     28720  ml/lib/ml_coder/registry_data_prep.py
-    28782  app/registry/processing/cao_interventions_detail.py
     29088  app/registry/transform.py
+    29491  app/registry/processing/cao_interventions_detail.py
     29714  ml/lib/ml_coder/label_hydrator.py
     29804  app/reporting/pipeline.py
     29893  app/domain/coding_rules/coding_rules_engine.py
@@ -723,7 +752,7 @@ Git: `main` @ `b4d085a`
     33110  tests/registry/test_registry_service_hybrid_flow.py
     35264  tests/coding/test_rules_validation.py
     35381  app/phi/adapters/phi_redactor_hybrid.py
-    35924  app/registry/schema/granular_models.py
+    35743  app/registry/schema/granular_models.py
     35945  app/registry/ml/action_predictor.py
     36526  app/coder/dictionary.py
     36975  tests/unit/test_structured_reporter.py
@@ -731,21 +760,20 @@ Git: `main` @ `b4d085a`
     40651  app/common/llm.py
     41897  app/proc_ml_advisor/schemas.py
     42830  app/api/routes/procedure_codes.py
+    43937  app/registry/processing/navigation_targets.py
     44075  tests/registry/test_granular_registry_models.py
-    45186  app/registry/processing/navigation_targets.py
-    45884  app/registry/self_correction/keyword_guard.py
     46085  app/registry/schema/granular_logic.py
+    47267  app/registry/self_correction/keyword_guard.py
     55668  app/extraction/postprocessing/clinical_guardrails.py
     56668  app/autocode/ip_kb/ip_kb.py
-    58543  app/reporting/llm_findings.py
-    63856  app/registry/prompts.py
-    70263  app/coder/domain_rules/registry_to_cpt/coding_rules.py
+    59115  app/reporting/llm_findings.py
+    63947  app/registry/prompts.py
+    70862  app/coder/domain_rules/registry_to_cpt/coding_rules.py
     79604  app/reporting/engine.py
-   106117  app/reporting/normalization/compat_enricher.py
+   109912  app/reporting/normalization/compat_enricher.py
    112649  app/registry/engine.py
-   153395  app/registry/deterministic_extractors.py
-   165552  app/registry/application/registry_service.py
-   195819  app/registry/postprocess/__init__.py
+   167172  app/registry/deterministic_extractors.py
+   167497  app/registry/application/registry_service.py
        39  ui/source/registry_grid/src/vite-env.d.ts
        94  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       118  tests/fixtures/regression_suite/README.md
@@ -887,6 +915,7 @@ Git: `main` @ `b4d085a`
      2954  tests/fixtures/notes/note_315.txt
      3045  docs/REPORTER_GOLD_WORKFLOW.md
      3054  tests/fixtures/notes/note_289.txt
+     3074  docs/RELATIONS_PRODIGY_WORKFLOW.md
      3085  app/reporting/templates/ebus_tbna.jinja
      3086  app/reporting/templates/cryobiopsy.jinja
      3087  app/reporting/templates/pleuroscopy.jinja
@@ -898,10 +927,10 @@ Git: `main` @ `b4d085a`
      3496  ui/source/registry_grid/src/monaco/monacoBridge.ts
      3579  docs/REFERENCES.md
      3717  app/reporting/templates/macros/main.j2
-     3792  docs/TIER1_RESEARCH_FIELDS_SPEC.md
      3825  docs/Multi_agent_collaboration/Codex Priming Script.md
      3830  docs/Multi_agent_collaboration/Codex “Repo Surgeon” Persona.md
      3883  app/reporting/templates/macros/base.j2
+     3883  docs/TIER1_RESEARCH_FIELDS_SPEC.md
      4056  app/registry/registry_system_prompt.txt
      4067  docs/DEPLOY_ARCH.md
      4067  docs/INSTALLATION.md
@@ -920,11 +949,11 @@ Git: `main` @ `b4d085a`
      5706  docs/REPO_INDEX.md
      5934  docs/STRUCTURED_REPORTER.md
      5961  ui/source/registry_grid/src/flatten/flattenRegistryToRows.ts
-     6442  docs/Registry_API.md
-     6565  docs/TIER2_RESEARCH_FIELDS_SPEC.md
+     6235  docs/TIER2_RESEARCH_FIELDS_SPEC.md
      6862  app/reporting/templates/macros/04_blvr_cryo.j2
      7016  docs/Registry_ML_summary.md
      7166  docs/IPregistry_update_plan.md
+     7212  docs/Registry_API.md
      7332  tests/fixtures/notes/note_281.txt
      7344  docs/Multi_agent_collaboration/Multi‑Agent Architecture.md
      7469  app/reporting/templates/macros/06_other_interventions.j2
@@ -940,15 +969,16 @@ Git: `main` @ `b4d085a`
     13436  docs/CODEX_REGISTRY_DIAMOND_LOOP.md
     13972  docs/Multi_agent_collaboration/External_Review_Action_Plan.md
     14126  app/reporting/templates/macros/02_core_bronchoscopy.j2
-    14550  docs/2-13_AI_ARCHITECTURE_UPGRADE_GUIDE.md
+    14653  docs/2-13_AI_ARCHITECTURE_UPGRADE_GUIDE.md
     15081  docs/GRAFANA_DASHBOARDS.md
     15210  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
     16028  app/reporting/templates/macros/05_pleural.j2
-    16032  docs/AGENTS.md
+    16367  docs/AGENTS.md
     17724  docs/phi_review_system/README.md
     17850  ui/static/phi_demo.js
     18104  app/phi/adapters/redaction-service.js
     19198  docs/REPO_GUIDE.md
+    19612  docs/2-13_AI_ARCHITECTURE_UPGRADE_GUIDE_UPDATED.md
     19817  docs/MAKEFILE_COMMANDS.md
     19835  app/registry/ip_registry_schema_additions.json
     24586  app/reporting/templates/macros/template_schema.json
@@ -957,21 +987,26 @@ Git: `main` @ `b4d085a`
     50262  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     50292  docs/USER_GUIDE.md
     51895  ui/source/registry_grid/package-lock.json
-    53936  ui/static/phi_redactor/reporter_builder.js
+    53848  ui/static/phi_redactor/reporter_builder.js
     61485  ui/static/phi_redactor/protectedVeto.legacy.js
     63253  ui/static/phi_redactor/protectedVeto.js
     75852  tests/fixtures/reporter_golden_dataset.json
-   101329  ui/static/phi_redactor/redactor.worker.js
-   101547  ui/static/phi_redactor/redactor.worker.legacy.js
+   102151  ui/static/phi_redactor/redactor.worker.js
+   102369  ui/static/phi_redactor/redactor.worker.legacy.js
    102522  ui/static/app.js
 ```
 
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  ops/tools/generate_cpt_keywords.py
+ inline_cap_reached>75  ml/scripts/evaluate_coder.py
+ inline_cap_reached>75  ml/scripts/scrub_golden_jsons.py
+ inline_cap_reached>75  ml/scripts/prodigy_export_corrections.py
  inline_cap_reached>75  ml/scripts/train_reporter_prompt_to_bundle_unsloth.py
  inline_cap_reached>75  ops/tools/export_phi_model_for_transformersjs.py
  inline_cap_reached>75  ml/scripts/convert_spans_to_bio.py
+ inline_cap_reached>75  ml/scripts/bootstrap_relations_silver.py
  inline_cap_reached>75  ops/tools/eval_reporter_prompt_baseline.py
  inline_cap_reached>75  ml/scripts/extract_ner_from_excel.py
  inline_cap_reached>75  ops/tools/eval_reporter_prompt_llm_findings.py
@@ -981,6 +1016,7 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  ml/scripts/quantize_to_onnx.py
  inline_cap_reached>75  ml/scripts/verify_registry_human_data.py
  inline_cap_reached>75  ml/scripts/sanitize_dataset.py
+ inline_cap_reached>75  ml/scripts/shadow_diff_structured_extraction.py
  inline_cap_reached>75  ml/scripts/apply_platinum_redactions.py
  inline_cap_reached>75  ops/tools/registry_pipeline_smoke_batch.py
  inline_cap_reached>75  ml/scripts/eval_hybrid_pipeline.py
@@ -999,6 +1035,7 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  ml/scripts/distill_reporter_bundle_targets.py
  inline_cap_reached>75  ml/scripts/train_registry_ner.py
  inline_cap_reached>75  ml/scripts/golden_to_csv.py
+ inline_cap_reached>75  ml/scripts/migrate_goldens_vNext.py
  inline_cap_reached>75  ml/scripts/generate_reporter_gold_dataset.py
  inline_cap_reached>75  ml/scripts/validate_golden_extractions.py
  inline_cap_reached>75  ml/scripts/distill_phi_labels.py
@@ -1017,7 +1054,9 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/pipelines/__init__.py
  inline_cap_reached>75  app/registry/slots/__init__.py
  inline_cap_reached>75  app/agents/__init__.py
+ inline_cap_reached>75  app/evidence/__init__.py
  inline_cap_reached>75  proc_schemas/shared/__init__.py
+ inline_cap_reached>75  app/agents/aggregator/__init__.py
  inline_cap_reached>75  app/extraction/__init__.py
  inline_cap_reached>75  app/domain/procedure_store/__init__.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/__init__.py
@@ -1031,7 +1070,6 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/common/rules_engine/__init__.py
  inline_cap_reached>75  app/registry/legacy/__init__.py
  inline_cap_reached>75  app/registry_store/__init__.py
- inline_cap_reached>75  proc_schemas/registry/__init__.py
  inline_cap_reached>75  app/registry/legacy/adapters/__init__.py
  inline_cap_reached>75  app/api/adapters/__init__.py
  inline_cap_reached>75  app/registry/adapters/__init__.py
@@ -1045,6 +1083,8 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/adapters/v3_to_v2.py
  inline_cap_reached>75  app/phi/__init__.py
  inline_cap_reached>75  app/coder/adapters/llm/__init__.py
+ inline_cap_reached>75  app/agents/relation_extraction/__init__.py
+ inline_cap_reached>75  proc_schemas/registry/__init__.py
  inline_cap_reached>75  app/registry/schema/ebus_events.py
  inline_cap_reached>75  app/coder/application/__init__.py
  inline_cap_reached>75  app/reporting/templates/addons/__init__.py
@@ -1075,7 +1115,6 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  proc_schemas/billing.py
  inline_cap_reached>75  proc_schemas/clinical/__init__.py
  inline_cap_reached>75  proc_schemas/__init__.py
- inline_cap_reached>75  app/registry/extraction/structurer.py
  inline_cap_reached>75  app/registry/slots/base.py
  inline_cap_reached>75  app/coder/parallel_pathway/__init__.py
  inline_cap_reached>75  app/reporting/second_pass/laterality_guard.py
@@ -1089,7 +1128,6 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/common/logger.py
  inline_cap_reached>75  app/reporting/coder_view.py
  inline_cap_reached>75  app/domain/knowledge_base/models.py
- inline_cap_reached>75  app/registry/pipelines/v3_pipeline.py
  inline_cap_reached>75  app/registry/application/__init__.py
  inline_cap_reached>75  app/registry/__init__.py
  inline_cap_reached>75  app/reporting/normalization/normalize.py
@@ -1121,7 +1159,7 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/schema_granular.py
  inline_cap_reached>75  app/phi/db.py
  inline_cap_reached>75  app/domain/reasoning/models.py
- inline_cap_reached>75  app/api/schemas/__init__.py
+ inline_cap_reached>75  app/registry/pipelines/v3_pipeline.py
  inline_cap_reached>75  app/registry/slots/complications.py
  inline_cap_reached>75  app/domain/knowledge_base/repository.py
  inline_cap_reached>75  app/common/rules_engine/ncci.py
@@ -1131,6 +1169,7 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/infra/llm_control.py
  inline_cap_reached>75  app/domain/text/negation.py
  inline_cap_reached>75  app/reporting/util/path_access.py
+ inline_cap_reached>75  app/api/schemas/__init__.py
  inline_cap_reached>75  app/registry/slots/tblb.py
  inline_cap_reached>75  proc_schemas/reasoning.py
  inline_cap_reached>75  app/coder/parallel_pathway/reconciler.py
@@ -1159,6 +1198,7 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/reporter/prompts.py
  inline_cap_reached>75  app/proc_ml_advisor/__init__.py
  inline_cap_reached>75  app/llm/client.py
+ inline_cap_reached>75  app/api/services/bundle_processing.py
  inline_cap_reached>75  app/api/routes/legacy_registry.py
  inline_cap_reached>75  app/reporting/inference.py
  inline_cap_reached>75  app/phi/safety/protected_terms.py
@@ -1181,6 +1221,8 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/legacy/adapter.py
  inline_cap_reached>75  app/coder/peripheral_extractor.py
  inline_cap_reached>75  app/infra/settings.py
+ inline_cap_reached>75  proc_schemas/registry/ip_vnext.py
+ inline_cap_reached>75  proc_schemas/registry/ip_vnext_draft.py
  inline_cap_reached>75  app/coder/posthoc.py
  inline_cap_reached>75  proc_schemas/coding.py
  inline_cap_reached>75  proc_schemas/registry/ip_v2.py
@@ -1202,8 +1244,9 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/audit/compare.py
  inline_cap_reached>75  proc_schemas/clinical/common.py
  inline_cap_reached>75  app/registry/ebus_config.py
- inline_cap_reached>75  app/api/services/financials.py
+ inline_cap_reached>75  app/agents/relation_extraction/shadow_mode.py
  inline_cap_reached>75  app/registry/self_correction/judge.py
+ inline_cap_reached>75  app/api/services/financials.py
  inline_cap_reached>75  app/reporting/partial_schemas.py
  inline_cap_reached>75  app/api/bootstrap.py
  inline_cap_reached>75  app/common/sectionizer.py
@@ -1216,8 +1259,10 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/phi/models.py
  inline_cap_reached>75  app/registry/deterministic/anatomy.py
  inline_cap_reached>75  app/reporting/json_patch.py
+ inline_cap_reached>75  app/evidence/quote_anchor.py
  inline_cap_reached>75  app/api/routes/legacy_coder.py
  inline_cap_reached>75  app/ner/entity_types.py
+ inline_cap_reached>75  app/registry/extraction/structurer.py
  inline_cap_reached>75  app/registry/heuristics/linear_ebus_station_detail.py
  inline_cap_reached>75  app/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  app/coder/ncci.py
@@ -1228,6 +1273,7 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  proc_schemas/clinical/pleural.py
  inline_cap_reached>75  app/infra/nlp_warmup.py
  inline_cap_reached>75  app/coder/cli.py
+ inline_cap_reached>75  app/api/routes/process_bundle.py
  inline_cap_reached>75  app/registry/slots/therapeutics.py
  inline_cap_reached>75  app/reporting/ip_addons.py
  inline_cap_reached>75  app/api/routes/qa.py
@@ -1249,10 +1295,10 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/processing/focus.py
  inline_cap_reached>75  app/reporting/validation.py
  inline_cap_reached>75  app/phi/service.py
+ inline_cap_reached>75  app/agents/relation_extraction/llm_proposer.py
  inline_cap_reached>75  app/api/routes_registry.py
  inline_cap_reached>75  app/registry/postprocess/template_checkbox_negation.py
  inline_cap_reached>75  app/api/services/unified_pipeline.py
- inline_cap_reached>75  app/api/schemas/base.py
  inline_cap_reached>75  app/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  app/common/knowledge.py
  inline_cap_reached>75  app/api/routes/phi.py
@@ -1260,7 +1306,6 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  app/reporting/normalization/text_enricher.py
  inline_cap_reached>75  app/registry_cleaning/schema_utils.py
- inline_cap_reached>75  app/registry/extractors/v3_extractor.py
  inline_cap_reached>75  app/registry/heuristics/navigation_targets.py
  inline_cap_reached>75  app/domain/knowledge_base/validator.py
  inline_cap_reached>75  app/coder/application/coding_service.py
@@ -1269,55 +1314,58 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/application/registry_builder.py
  inline_cap_reached>75  app/registry/self_correction/validation.py
  inline_cap_reached>75  app/registry/ml/models.py
- inline_cap_reached>75  app/registry/postprocess/complications_reconcile.py
- inline_cap_reached>75  app/registry/schema/adapters/v3_to_v2.py
+ inline_cap_reached>75  app/api/schemas/base.py
  inline_cap_reached>75  proc_schemas/registry/ip_v3.py
+ inline_cap_reached>75  app/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  app/registry/v2_booleans.py
- inline_cap_reached>75  app/api/routes/reporting.py
- inline_cap_reached>75  app/registry/processing/masking.py
  inline_cap_reached>75  app/domain/coding_rules/json_rules_evaluator.py
  inline_cap_reached>75  app/registry/audit/raw_ml_auditor.py
  inline_cap_reached>75  app/autocode/ip_kb/canonical_rules.py
+ inline_cap_reached>75  app/registry/processing/masking.py
  inline_cap_reached>75  app/api/routes/registry_runs.py
  inline_cap_reached>75  app/coder/reconciliation/pipeline.py
+ inline_cap_reached>75  app/registry/extractors/v3_extractor.py
  inline_cap_reached>75  app/ner/inference.py
  inline_cap_reached>75  app/registry/ner_mapping/station_extractor.py
+ inline_cap_reached>75  app/agents/aggregator/timeline_aggregator.py
  inline_cap_reached>75  app/coder/rules_engine.py
  inline_cap_reached>75  app/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  app/api/dependencies.py
  inline_cap_reached>75  app/phi/safety/veto.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  app/common/openai_responses.py
- inline_cap_reached>75  app/registry/application/coding_support_builder.py
  inline_cap_reached>75  app/coder/reconciliation/reconciler.py
- inline_cap_reached>75  app/registry/ner_mapping/procedure_extractor.py
+ inline_cap_reached>75  app/registry/application/coding_support_builder.py
+ inline_cap_reached>75  app/registry/postprocess/complications_reconcile.py
  inline_cap_reached>75  app/coder/adapters/llm/gemini_advisor.py
- inline_cap_reached>75  app/api/fastapi_app.py
- inline_cap_reached>75  app/registry/evidence/verifier.py
  inline_cap_reached>75  app/registry/normalization.py
  inline_cap_reached>75  app/api/services/qa_pipeline.py
+ inline_cap_reached>75  app/api/fastapi_app.py
  inline_cap_reached>75  app/registry/inference_onnx.py
  inline_cap_reached>75  app/coder/adapters/persistence/csv_kb_adapter.py
- inline_cap_reached>75  app/registry_cleaning/cpt_utils.py
+ inline_cap_reached>75  app/registry/evidence/verifier.py
  inline_cap_reached>75  app/registry/completeness/missing_field_prompts.py
+ inline_cap_reached>75  app/registry_cleaning/cpt_utils.py
  inline_cap_reached>75  app/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  app/registry/model_bootstrap.py
  inline_cap_reached>75  app/registry/extractors/llm_detailed.py
  inline_cap_reached>75  app/reporting/macro_engine.py
  inline_cap_reached>75  app/coder/adapters/llm/openai_compat_advisor.py
+ inline_cap_reached>75  app/registry/ner_mapping/procedure_extractor.py
  inline_cap_reached>75  app/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  app/coder/adapters/persistence/supabase_procedure_store.py
- inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  app/reporting/questions.py
  inline_cap_reached>75  app/phi/adapters/presidio_scrubber.py
+ inline_cap_reached>75  app/api/routes/reporting.py
  inline_cap_reached>75  app/registry/legacy/adapters/airway.py
+ inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  app/coder/application/smart_hybrid_policy.py
  inline_cap_reached>75  app/registry/schema/v2_dynamic.py
  inline_cap_reached>75  app/api/normalization.py
  inline_cap_reached>75  app/coder/adapters/registry_coder.py
  inline_cap_reached>75  app/registry/processing/disease_burden.py
- inline_cap_reached>75  app/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  app/registry/transform.py
+ inline_cap_reached>75  app/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  app/reporting/pipeline.py
  inline_cap_reached>75  app/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  app/api/ml_advisor_router.py
@@ -1329,8 +1377,8 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/proc_ml_advisor/schemas.py
  inline_cap_reached>75  app/api/routes/procedure_codes.py
  inline_cap_reached>75  app/registry/processing/navigation_targets.py
- inline_cap_reached>75  app/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  app/registry/schema/granular_logic.py
+ inline_cap_reached>75  app/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  app/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  app/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  app/reporting/llm_findings.py
@@ -1341,7 +1389,7 @@ Git: `main` @ `b4d085a`
  inline_cap_reached>75  app/registry/engine.py
  inline_cap_reached>75  app/registry/deterministic_extractors.py
  inline_cap_reached>75  app/registry/application/registry_service.py
- inline_cap_reached>75  app/registry/postprocess/__init__.py
+     too_large>200000B  app/registry/postprocess/__init__.py
     binary_or_non_utf8  docs/ARCHITECTURE.md
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
@@ -6536,6 +6584,196 @@ if __name__ == "__main__":
 ```
 
 ---
+### `ml/scripts/eval_golden_vNext_quotes.py`
+- Size: `6534` bytes
+```
+#!/usr/bin/env python3
+"""Validate vNext golden fixtures: evidence quotes must be anchorable.
+
+This is a lightweight CI guardrail for Phase 4:
+- Fixtures live under `data/knowledge/golden_extractions_vNext/approved/`.
+- Each fixture stores note_text + migrated_evidence[].draft.{prefix_3_words, exact_quote,
+  suffix_3_words}.
+- At runtime, spans are computed deterministically by the quote anchor.
+
+This script:
+- skips gracefully when no fixtures are present (repo may not include them)
+- never prints note text or quotes (only ids/counts)
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Iterable
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _iter_json_files(input_dir: Path, pattern: str) -> Iterable[Path]:
+    if input_dir.is_file():
+        yield input_dir
+        return
+    if not input_dir.exists() or not input_dir.is_dir():
+        return
+    yield from sorted(input_dir.glob(pattern))
+
+
+@dataclass(frozen=True)
+class EvalCounts:
+    fixtures: int = 0
+    evidence_total: int = 0
+    evidence_anchor_ok: int = 0
+    evidence_quote_missing: int = 0
+    evidence_not_substring: int = 0
+    evidence_unanchorable: int = 0
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(description="Validate vNext fixtures (quote anchoring).")
+    p.add_argument(
+        "--input",
+        type=Path,
+        default=Path("data/knowledge/golden_extractions_vNext/approved"),
+        help="Directory containing approved vNext fixtures (JSON).",
+    )
+    p.add_argument(
+        "--pattern",
+        type=str,
+        default="*.json",
+        help="Glob pattern for fixture files when --input is a directory.",
+    )
+    p.add_argument(
+        "--fail-under",
+        type=float,
+        default=None,
+        help="Exit non-zero if anchored rate is below this percent (0-100).",
+    )
+    return p.parse_args(argv)
+
+
+def _as_str(value: Any) -> str:
+    return value if isinstance(value, str) else ""
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+
+    files = list(_iter_json_files(args.input, args.pattern))
+    if not files:
+        print(f"eval_golden_vNext_quotes: no fixtures found under {args.input}; skipping.")
+        return 0
+
+    from app.evidence.quote_anchor import anchor_quote
+
+    counts = EvalCounts(fixtures=len(files))
+
+    for path in files:
+        try:
+            obj = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            print(f"eval_golden_vNext_quotes: failed to parse {path.name}")
+            continue
+
+        if not isinstance(obj, dict):
+            continue
+
+        note_text = _as_str(obj.get("note_text"))
+        migrated = obj.get("migrated_evidence")
+        if not note_text or not isinstance(migrated, list):
+            continue
+
+        for item in migrated:
+            if not isinstance(item, dict):
+                continue
+            draft = item.get("draft")
+            if not isinstance(draft, dict):
+                continue
+
+            counts = EvalCounts(
+                fixtures=counts.fixtures,
+                evidence_total=counts.evidence_total + 1,
+                evidence_anchor_ok=counts.evidence_anchor_ok,
+                evidence_quote_missing=counts.evidence_quote_missing,
+                evidence_not_substring=counts.evidence_not_substring,
+                evidence_unanchorable=counts.evidence_unanchorable,
+            )
+
+            quote = _as_str(draft.get("exact_quote")).strip()
+            if not quote:
+                counts = EvalCounts(
+                    fixtures=counts.fixtures,
+                    evidence_total=counts.evidence_total,
+                    evidence_anchor_ok=counts.evidence_anchor_ok,
+                    evidence_quote_missing=counts.evidence_quote_missing + 1,
+                    evidence_not_substring=counts.evidence_not_substring,
+                    evidence_unanchorable=counts.evidence_unanchorable,
+                )
+                continue
+
+            if quote not in note_text:
+                counts = EvalCounts(
+                    fixtures=counts.fixtures,
+                    evidence_total=counts.evidence_total,
+                    evidence_anchor_ok=counts.evidence_anchor_ok,
+                    evidence_quote_missing=counts.evidence_quote_missing,
+                    evidence_not_substring=counts.evidence_not_substring + 1,
+                    evidence_unanchorable=counts.evidence_unanchorable,
+                )
+                continue
+
+            prefix = _as_str(draft.get("prefix_3_words")).strip() or None
+            suffix = _as_str(draft.get("suffix_3_words")).strip() or None
+            anchored = anchor_quote(note_text, quote, prefix=prefix, suffix=suffix)
+            if anchored.span is None:
+                counts = EvalCounts(
+                    fixtures=counts.fixtures,
+                    evidence_total=counts.evidence_total,
+                    evidence_anchor_ok=counts.evidence_anchor_ok,
+                    evidence_quote_missing=counts.evidence_quote_missing,
+                    evidence_not_substring=counts.evidence_not_substring,
+                    evidence_unanchorable=counts.evidence_unanchorable + 1,
+                )
+                continue
+
+            counts = EvalCounts(
+                fixtures=counts.fixtures,
+                evidence_total=counts.evidence_total,
+                evidence_anchor_ok=counts.evidence_anchor_ok + 1,
+                evidence_quote_missing=counts.evidence_quote_missing,
+                evidence_not_substring=counts.evidence_not_substring,
+                evidence_unanchorable=counts.evidence_unanchorable,
+            )
+
+    total = counts.evidence_total
+    ok = counts.evidence_anchor_ok
+    rate = (ok / total) * 100.0 if total else 0.0
+
+    print(
+        "eval_golden_vNext_quotes: "
+        f"fixtures={counts.fixtures} evidence_total={total} anchored_ok={ok} "
+        f"rate={rate:.1f}% missing_quote={counts.evidence_quote_missing} "
+        f"not_substring={counts.evidence_not_substring} unanchorable={counts.evidence_unanchorable}"
+    )
+
+    if args.fail_under is not None and total > 0 and rate < float(args.fail_under):
+        print(f"eval_golden_vNext_quotes: FAIL (rate {rate:.1f}% < {float(args.fail_under):.1f}%)")
+        return 3
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
 ### `ops/tools/validate_knowledge_release.py`
 - Size: `6651` bytes
 ```
@@ -7560,6 +7798,204 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+```
+
+---
+### `ml/scripts/eval_relations_labels.py`
+- Size: `6967` bytes
+```
+#!/usr/bin/env python3
+"""Evaluate labeled relation edges exported from Prodigy (Phase 8).
+
+This script summarizes accept/reject outcomes by:
+- edge_source (merged / heuristic / ml)
+- relation type
+- disagreement keys (where merged and heuristic propose different targets)
+
+Important:
+- This is NOT a recall calculation. It measures accuracy on the reviewed candidate edges.
+- Input should come from `ml/scripts/prodigy_export_relations.py`.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+from collections import defaultdict
+from pathlib import Path
+from typing import Any, Iterable
+
+logger = logging.getLogger(__name__)
+
+
+def iter_jsonl(path: Path) -> Iterable[dict[str, Any]]:
+    with open(path, encoding="utf-8") as f:
+        for line_num, line in enumerate(f, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError:
+                logger.warning("Skipping invalid JSON at %s:%d", path, line_num)
+                continue
+            if isinstance(obj, dict):
+                yield obj
+
+
+def _as_dict(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
+
+
+def _edge_fields(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    edge = _as_dict(row.get("edge"))
+    case_id = str(row.get("case_id") or "").strip()
+    entity_id = str(edge.get("entity_id") or "").strip()
+    relation = str(edge.get("relation") or row.get("relation") or "").strip()
+    linked_to_id = str(edge.get("linked_to_id") or "").strip()
+    return case_id, entity_id, relation, linked_to_id
+
+
+def _safe_rate(num: int, denom: int) -> float:
+    return float(num) / float(denom) if denom else 0.0
+
+
+def evaluate(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    labeled = [r for r in rows if r.get("label") in (0, 1)]
+
+    counts_by_source: dict[str, dict[str, int]] = defaultdict(lambda: {"accepted": 0, "rejected": 0})
+    counts_by_relation: dict[str, dict[str, int]] = defaultdict(lambda: {"accepted": 0, "rejected": 0})
+    counts_by_source_relation: dict[tuple[str, str], dict[str, int]] = defaultdict(
+        lambda: {"accepted": 0, "rejected": 0}
+    )
+
+    # Group by (case_id, entity_id, relation) to analyze disagreements.
+    groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+
+    for r in labeled:
+        edge_source = str(r.get("edge_source") or "").strip() or "unknown"
+        relation = str(r.get("relation") or _as_dict(r.get("edge")).get("relation") or "").strip() or "unknown"
+        label = int(r.get("label"))
+
+        if label == 1:
+            counts_by_source[edge_source]["accepted"] += 1
+            counts_by_relation[relation]["accepted"] += 1
+            counts_by_source_relation[(edge_source, relation)]["accepted"] += 1
+        else:
+            counts_by_source[edge_source]["rejected"] += 1
+            counts_by_relation[relation]["rejected"] += 1
+            counts_by_source_relation[(edge_source, relation)]["rejected"] += 1
+
+        case_id, entity_id, rel, _linked_to_id = _edge_fields(r)
+        if case_id and entity_id and rel:
+            groups[(case_id, entity_id, rel)].append(r)
+
+    disagreements_total = 0
+    merged_wins = 0
+    heuristic_wins = 0
+    both_accepted = 0
+    neither_accepted = 0
+
+    for _k, rows_k in groups.items():
+        merged = [r for r in rows_k if str(r.get("edge_source") or "").strip() == "merged"]
+        heur = [r for r in rows_k if str(r.get("edge_source") or "").strip() == "heuristic"]
+        if not merged or not heur:
+            continue
+
+        merged_targets = { _edge_fields(r)[3] for r in merged if _edge_fields(r)[3] }
+        heur_targets = { _edge_fields(r)[3] for r in heur if _edge_fields(r)[3] }
+        if not merged_targets or not heur_targets:
+            continue
+        if merged_targets == heur_targets:
+            continue
+
+        disagreements_total += 1
+        merged_accept = any(int(r.get("label")) == 1 for r in merged)
+        heur_accept = any(int(r.get("label")) == 1 for r in heur)
+        if merged_accept and not heur_accept:
+            merged_wins += 1
+        elif heur_accept and not merged_accept:
+            heuristic_wins += 1
+        elif merged_accept and heur_accept:
+            both_accepted += 1
+        else:
+            neither_accepted += 1
+
+    def _with_rates(counter: dict[str, dict[str, int]]) -> dict[str, dict[str, Any]]:
+        out: dict[str, dict[str, Any]] = {}
+        for key, v in sorted(counter.items(), key=lambda kv: kv[0]):
+            acc = int(v.get("accepted", 0))
+            rej = int(v.get("rejected", 0))
+            total = acc + rej
+            out[key] = {
+                "accepted": acc,
+                "rejected": rej,
+                "total": total,
+                "accept_rate": _safe_rate(acc, total),
+            }
+        return out
+
+    by_source = _with_rates(counts_by_source)
+    by_relation = _with_rates(counts_by_relation)
+
+    by_source_relation: dict[str, dict[str, Any]] = {}
+    for (src, rel), v in sorted(counts_by_source_relation.items(), key=lambda kv: (kv[0][0], kv[0][1])):
+        acc = int(v.get("accepted", 0))
+        rej = int(v.get("rejected", 0))
+        total = acc + rej
+        by_source_relation[f"{src}::{rel}"] = {
+            "edge_source": src,
+            "relation": rel,
+            "accepted": acc,
+            "rejected": rej,
+            "total": total,
+            "accept_rate": _safe_rate(acc, total),
+        }
+
+    return {
+        "edges_total": len(rows),
+        "edges_labeled": len(labeled),
+        "by_source": by_source,
+        "by_relation": by_relation,
+        "by_source_relation": by_source_relation,
+        "disagreements": {
+            "keys_total": disagreements_total,
+            "merged_wins": merged_wins,
+            "heuristic_wins": heuristic_wins,
+            "both_accepted": both_accepted,
+            "neither_accepted": neither_accepted,
+        },
+    }
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--input-jsonl", type=Path, required=True, help="Labeled edges JSONL from Prodigy export")
+    p.add_argument("--output-json", type=Path, default=None, help="Optional output JSON report path")
+    return p.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+    args = parse_args(argv)
+
+    rows = list(iter_jsonl(args.input_jsonl))
+    report = evaluate(rows)
+
+    print(json.dumps(report, indent=2, ensure_ascii=False))
+
+    if args.output_json:
+        args.output_json.parent.mkdir(parents=True, exist_ok=True)
+        args.output_json.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
 
 ```
 
@@ -9406,6 +9842,241 @@ if __name__ == "__main__":
 ```
 
 ---
+### `ml/scripts/prodigy_export_relations.py`
+- Size: `8108` bytes
+```
+#!/usr/bin/env python3
+"""Export Prodigy accept/reject annotations for relation edges (Phase 8).
+
+Supports two modes:
+  - DB mode:   --dataset <name> (requires Prodigy installed and configured)
+  - File mode: --input-jsonl <path> (reads a Prodigy-exported JSONL file; CI friendly)
+
+Outputs:
+  - JSONL where each row is an annotated edge with a binary label:
+    - label=1: edge accepted
+    - label=0: edge rejected
+
+Notes:
+  - This exporter is offline-safe: no LLM calls.
+  - We avoid emitting any raw note text; edges are constructed from entity labels/attributes.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import json
+import logging
+import sys
+from pathlib import Path
+from typing import Any, Iterable
+
+# Add repo root to path
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
+logger = logging.getLogger(__name__)
+
+
+def iter_jsonl(path: Path) -> Iterable[dict[str, Any]]:
+    with open(path, encoding="utf-8") as f:
+        for line_num, line in enumerate(f, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError:
+                logger.warning("Skipping invalid JSON at %s:%d", path, line_num)
+                continue
+            if isinstance(obj, dict):
+                yield obj
+
+
+def load_prodigy_dataset(dataset: str) -> list[dict[str, Any]]:
+    try:
+        from prodigy.components.db import connect
+    except ImportError as exc:  # pragma: no cover
+        raise SystemExit(
+            "Prodigy is not installed; use --input-jsonl for file mode or install prodigy."
+        ) from exc
+
+    db = connect()
+    if dataset not in db:  # pragma: no cover
+        available = getattr(db, "datasets", [])
+        raise SystemExit(f"Prodigy dataset not found: {dataset}. Available: {available}")
+
+    examples = db.get_dataset_examples(dataset)
+    return list(examples)
+
+
+def _as_dict(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
+
+
+def _accept_list(example: dict[str, Any]) -> list[str]:
+    accept = example.get("accept")
+    if accept is None:
+        return []
+    if isinstance(accept, list):
+        return [str(x) for x in accept if str(x).strip()]
+    return [str(accept).strip()] if str(accept).strip() else []
+
+
+def _edge_from_example(example: dict[str, Any]) -> dict[str, Any] | None:
+    edge = example.get("edge")
+    if isinstance(edge, dict) and edge:
+        return edge
+    meta = _as_dict(example.get("meta"))
+    edge = meta.get("edge")
+    return edge if isinstance(edge, dict) and edge else None
+
+
+def _compute_edge_id(example: dict[str, Any], edge: dict[str, Any]) -> str:
+    meta = _as_dict(example.get("meta"))
+    edge_id = str(meta.get("edge_id") or "").strip()
+    if edge_id:
+        return edge_id
+    case_id = str(meta.get("case_id") or "").strip()
+    entity_id = str(edge.get("entity_id") or "").strip()
+    relation = str(edge.get("relation") or "").strip()
+    linked_to_id = str(edge.get("linked_to_id") or "").strip()
+    key = f"{case_id}|{entity_id}|{relation}|{linked_to_id}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
+
+
+def _label_from_example(example: dict[str, Any]) -> int | None:
+    accept_ids = set(_accept_list(example))
+    if "reject" in accept_ids or "no" in accept_ids:
+        return 0
+    if "accept" in accept_ids or "yes" in accept_ids:
+        return 1
+
+    # Fallback for annotators using built-in accept/reject keys without selecting options.
+    answer = str(example.get("answer") or "").strip().lower()
+    if answer == "reject":
+        return 0
+    return None
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--dataset", type=str, help="Prodigy dataset name (DB mode)")
+    group.add_argument("--input-jsonl", type=Path, help="Prodigy-exported JSONL file (file mode)")
+
+    parser.add_argument("--output-jsonl", type=Path, required=True, help="Output labeled edges JSONL")
+    parser.add_argument(
+        "--output-csv",
+        type=Path,
+        default=None,
+        help="Optional output CSV summary (one row per edge)",
+    )
+    parser.add_argument(
+        "--include-unlabeled",
+        action="store_true",
+        help="Include examples without a clear accept/reject selection as label=null",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+    args = parse_args(argv)
+
+    dataset_name = None
+    source_file = None
+    if args.dataset:
+        dataset_name = args.dataset
+        examples = load_prodigy_dataset(args.dataset)
+    else:
+        source_file = args.input_jsonl.name if args.input_jsonl else None
+        examples = list(iter_jsonl(args.input_jsonl))
+
+    rows_by_id: dict[str, dict[str, Any]] = {}
+    for ex in examples:
+        edge = _edge_from_example(ex)
+        if edge is None:
+            continue
+
+        label = _label_from_example(ex)
+        if label is None and not args.include_unlabeled:
+            continue
+
+        meta = _as_dict(ex.get("meta"))
+        edge_id = _compute_edge_id(ex, edge)
+
+        out = {
+            "edge_id": edge_id,
+            "case_id": meta.get("case_id") or None,
+            "edge_source": meta.get("edge_source") or None,
+            "relation": meta.get("relation") or edge.get("relation") or None,
+            "label": label,
+            "confidence": meta.get("confidence") or edge.get("confidence") or None,
+            "reasoning_short": edge.get("reasoning_short") or None,
+            "edge": edge,
+            "source_entity": ex.get("source_entity") if isinstance(ex.get("source_entity"), dict) else None,
+            "target_entity": ex.get("target_entity") if isinstance(ex.get("target_entity"), dict) else None,
+            "source_path": meta.get("source_path") or meta.get("source") or source_file,
+            "prodigy_dataset": dataset_name or meta.get("prodigy_dataset") or None,
+            "answer": ex.get("answer") or None,
+            "accept": _accept_list(ex),
+        }
+        rows_by_id[edge_id] = out  # last write wins
+
+    args.output_jsonl.parent.mkdir(parents=True, exist_ok=True)
+    rows = list(rows_by_id.values())
+    with open(args.output_jsonl, "w", encoding="utf-8") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+    if args.output_csv:
+        args.output_csv.parent.mkdir(parents=True, exist_ok=True)
+        fieldnames = [
+            "edge_id",
+            "case_id",
+            "edge_source",
+            "relation",
+            "label",
+            "confidence",
+            "entity_id",
+            "linked_to_id",
+            "source_label",
+            "target_label",
+            "source_path",
+            "prodigy_dataset",
+        ]
+        with open(args.output_csv, "w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
+            w.writeheader()
+            for row in rows:
+                edge = row.get("edge") if isinstance(row.get("edge"), dict) else {}
+                src = row.get("source_entity") if isinstance(row.get("source_entity"), dict) else {}
+                dst = row.get("target_entity") if isinstance(row.get("target_entity"), dict) else {}
+                w.writerow(
+                    {
+                        **row,
+                        "entity_id": str(edge.get("entity_id") or ""),
+                        "linked_to_id": str(edge.get("linked_to_id") or ""),
+                        "source_label": str(src.get("label") or ""),
+                        "target_label": str(dst.get("label") or ""),
+                    }
+                )
+
+    logger.info("Wrote %d labeled edges to %s", len(rows), args.output_jsonl)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+```
+
+---
 ### `ml/scripts/export_patient_note_texts.py`
 - Size: `8169` bytes
 ```
@@ -10454,6 +11125,271 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Wrote dataset: {output_jsonl_path}")
     print(f"Wrote manifest: {manifest_path}")
     print(f"Rows: {manifest['summary']['rows_written']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `ml/scripts/eval_golden.py`
+- Size: `8444` bytes
+```
+#!/usr/bin/env python3
+"""Legacy golden evaluator (read-only).
+
+This script runs the extraction-first pipeline against golden fixtures and
+computes a simple baseline pass rate (primarily CPT code set equality).
+
+It is intentionally conservative:
+- it does not modify fixtures
+- it can be safely skipped when fixture data is not present in the repo/CI
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from collections import Counter
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Iterable
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+def _normalize_code(code: str) -> str:
+    raw = (code or "").strip()
+    if not raw:
+        return ""
+    raw = raw.lstrip("+").strip()
+    return raw
+
+
+def _iter_fixture_files(input_path: Path, pattern: str) -> Iterable[Path]:
+    if input_path.is_file():
+        yield input_path
+        return
+    if not input_path.exists():
+        return
+    if not input_path.is_dir():
+        return
+    yield from sorted(input_path.glob(pattern))
+
+
+def _load_entries(path: Path) -> list[dict[str, Any]]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(data, list):
+        return [d for d in data if isinstance(d, dict)]
+    if isinstance(data, dict):
+        for key in ("entries", "records", "data"):
+            value = data.get(key)
+            if isinstance(value, list):
+                return [d for d in value if isinstance(d, dict)]
+    raise ValueError(f"Unrecognized fixture JSON shape in {path}")
+
+
+def _extract_note_text(entry: dict[str, Any]) -> str:
+    for key in ("note_text", "note", "text", "raw_text"):
+        value = entry.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return ""
+
+
+def _extract_expected_codes(entry: dict[str, Any]) -> list[str]:
+    for key in ("cpt_codes", "codes", "expected_codes"):
+        value = entry.get(key)
+        if isinstance(value, list):
+            out: list[str] = []
+            for item in value:
+                if isinstance(item, str):
+                    norm = _normalize_code(item)
+                    if norm:
+                        out.append(norm)
+            return out
+    return []
+
+
+def _extract_note_id(entry: dict[str, Any]) -> str | None:
+    registry = entry.get("registry_entry")
+    if isinstance(registry, dict):
+        for key in ("patient_mrn", "note_id", "patient_id"):
+            value = registry.get(key)
+            if isinstance(value, str) and value.strip():
+                return value.strip()
+    for key in ("note_id", "noteId", "id"):
+        value = entry.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return None
+
+
+@dataclass(frozen=True)
+class CaseResult:
+    note_id: str | None
+    expected_codes: list[str]
+    predicted_codes: list[str]
+    exact_match: bool
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(description="Evaluate extraction against golden fixtures.")
+    p.add_argument(
+        "--input",
+        type=Path,
+        default=Path("data/knowledge/golden_extractions_final"),
+        help="Directory containing golden_*.json (arrays) OR a single JSON file.",
+    )
+    p.add_argument(
+        "--pattern",
+        type=str,
+        default="golden_*.json",
+        help="Glob pattern for fixture files when --input is a directory.",
+    )
+    p.add_argument("--limit", type=int, default=0, help="Max cases to evaluate (0 = no limit).")
+    p.add_argument(
+        "--extraction-engine",
+        type=str,
+        default="",
+        help="Override REGISTRY_EXTRACTION_ENGINE for evaluation (e.g., engine, parallel_ner).",
+    )
+    p.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Optional path to write a JSON report.",
+    )
+    p.add_argument(
+        "--fail-under",
+        type=float,
+        default=None,
+        help="Exit non-zero if exact-match rate is below this percent (0-100).",
+    )
+    return p.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+
+    if args.extraction_engine:
+        os.environ["REGISTRY_EXTRACTION_ENGINE"] = str(args.extraction_engine).strip()
+
+    fixture_files = list(_iter_fixture_files(args.input, args.pattern))
+    if not fixture_files:
+        print(f"eval_golden: no fixture files found under {args.input}; skipping.")
+        return 0
+
+    try:
+        from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+        from app.registry.application.registry_service import RegistryService
+    except Exception as exc:
+        print(f"eval_golden: import error: {exc}", file=sys.stderr)
+        return 2
+
+    service = RegistryService()
+
+    results: list[CaseResult] = []
+    evaluated = 0
+
+    for path in fixture_files:
+        try:
+            entries = _load_entries(path)
+        except Exception as exc:
+            print(f"eval_golden: failed to load {path}: {exc}", file=sys.stderr)
+            continue
+
+        for entry in entries:
+            note_text = _extract_note_text(entry)
+            if not note_text.strip():
+                continue
+
+            expected_codes = _extract_expected_codes(entry)
+            note_id = _extract_note_id(entry)
+
+            record, _warnings, _meta = service.extract_record(note_text, note_id=note_id)
+            predicted_codes, _rationales, _derive_warnings = derive_all_codes_with_meta(record)
+
+            expected_set = {c for c in (_normalize_code(c) for c in expected_codes) if c}
+            predicted_set = {c for c in (_normalize_code(c) for c in predicted_codes) if c}
+
+            results.append(
+                CaseResult(
+                    note_id=note_id,
+                    expected_codes=sorted(expected_set),
+                    predicted_codes=sorted(predicted_set),
+                    exact_match=expected_set == predicted_set,
+                )
+            )
+
+            evaluated += 1
+            if args.limit and evaluated >= int(args.limit):
+                break
+        if args.limit and evaluated >= int(args.limit):
+            break
+
+    if evaluated <= 0:
+        print("eval_golden: no runnable cases found; skipping.")
+        return 0
+
+    exact_matches = sum(1 for r in results if r.exact_match)
+    rate = (exact_matches / evaluated) * 100.0
+
+    failures = [r for r in results if not r.exact_match]
+    missing_counter: Counter[str] = Counter()
+    extra_counter: Counter[str] = Counter()
+    for r in failures:
+        expected_set = set(r.expected_codes)
+        predicted_set = set(r.predicted_codes)
+        missing_counter.update(expected_set - predicted_set)
+        extra_counter.update(predicted_set - expected_set)
+
+    print(f"eval_golden: evaluated={evaluated} exact_code_match={exact_matches} ({rate:.1f}%)")
+
+    if failures:
+        top_missing = ", ".join([f"{c}({n})" for c, n in missing_counter.most_common(10)])
+        top_extra = ", ".join([f"{c}({n})" for c, n in extra_counter.most_common(10)])
+        if top_missing:
+            print(f"  top_missing: {top_missing}")
+        if top_extra:
+            print(f"  top_extra: {top_extra}")
+
+    if args.output:
+        report = {
+            "evaluated": evaluated,
+            "exact_code_match": exact_matches,
+            "exact_code_match_rate": rate,
+            "extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", ""),
+            "results": [
+                {
+                    "note_id": r.note_id,
+                    "exact_match": r.exact_match,
+                    "expected_codes": r.expected_codes,
+                    "predicted_codes": r.predicted_codes,
+                }
+                for r in results
+            ],
+        }
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        print(f"eval_golden: wrote report to {args.output}")
+
+    if args.fail_under is not None and rate < float(args.fail_under):
+        threshold = float(args.fail_under)
+        print(
+            f"eval_golden: FAIL (rate {rate:.1f}% < {threshold:.1f}%)",
+            file=sys.stderr,
+        )
+        return 1
+
     return 0
 
 
@@ -13515,1402 +14451,5 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-```
-
----
-### `ops/tools/generate_cpt_keywords.py`
-- Size: `11135` bytes
-```
-#!/usr/bin/env python3
-"""Generate a CPT->keyword mapping for keyword-guard gating.
-
-The generator is deterministic and offline-only. Inputs:
-- KB JSON: data/knowledge/ip_coding_billing_v3_0.json
-- Optional YAML keyword seed files under data/keyword_mappings/
-
-Output:
-- data/keyword_mappings/cpt_keywords.generated.json
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import re
-from collections import defaultdict
-from pathlib import Path
-from typing import Any
-
-try:
-    import yaml  # type: ignore
-except Exception:  # pragma: no cover - optional dependency
-    yaml = None
-
-DEFAULT_MAX_KEYWORDS_PER_CPT = 50
-
-# Conservative synonym routing from KB synonym groups to CPT codes.
-SYNONYM_GROUP_TO_CPTS: dict[str, set[str]] = {
-    # Bronchoscopy diagnostics/interventions
-    "bal_terms": {"31624"},
-    "tblb_terms": {"31628", "31632"},
-    "tbna_terms": {"31629", "31633", "31652", "31653"},
-    "linear_ebus_terms": {"31652", "31653"},
-    "ebus_station_terms": {"31652", "31653"},
-    "radial_ebus_terms": {"31654"},
-    "navigation_terms": {"31627"},
-    "navigation_concept_terms": {"31627"},
-    "navigation_status_terms": {"31627"},
-    "aspiration_terms": {"31645", "31646"},
-    "foreign_body_terms": {"31635"},
-    "dilation_terms": {"31630", "31631"},
-    "stent_terms": {"31636", "31637", "31638"},
-    "ablation_terms": {"31641"},
-    "blvr_terms": {"31647", "31648", "31649", "31651"},
-    "valve_terms": {"31647", "31648", "31649", "31651"},
-    "chartis_terms": {"31647", "31651"},
-    "tracheostomy_terms": {"31600", "31603", "31605", "31610"},
-    "pdt_terms": {"31600", "31603", "31605", "31610"},
-    # Pleural/thoracic
-    "thoracentesis_terms": {"32554", "32555"},
-    "thoracentesis_imaging_terms": {"32555"},
-    "chest_tube_terms": {"32551"},
-    "tunneled_pleural_catheter_terms": {"32550"},
-    "pleural_drainage_terms": {"32556", "32557"},
-    "pleurodesis_terms": {"32560", "32650"},
-    "thoracoscopy_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32650", "32653"},
-    "thoracoscopy_bundled_drain_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32650", "32653"},
-    "thoracoscopy_separate_drain_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32650", "32653"},
-    "thoracoscopy_pleural_site_terms": {"32609", "32653"},
-    "thoracoscopy_lung_site_terms": {"32609", "32653"},
-    "thoracoscopy_mediastinal_site_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32653"},
-    "thoracoscopy_pericardial_site_terms": {"32601", "32604", "32606", "32607", "32608", "32609", "32653"},
-    # Documentation/support terms that can still aid keyword recall for supported CPTs
-    "peripheral_lesion_terms": {"31628", "31629", "31632", "31633", "31654"},
-}
-
-ABBREV_EXPANSIONS: dict[str, str] = {
-    "dx": "diagnostic",
-    "bx": "biopsy",
-    "bronch": "bronchoscopy",
-    "bronchoscope": "bronchoscopy",
-    "samplng": "sampling",
-    "subseq": "subsequent",
-    "initl": "initial",
-}
-
-TOKEN_STOPWORDS = {
-    "and",
-    "with",
-    "without",
-    "for",
-    "the",
-    "a",
-    "an",
-    "of",
-    "to",
-    "via",
-    "or",
-    "in",
-    "on",
-    "by",
-    "from",
-    "each",
-    "other",
-    "planned",
-    "plan",
-    "only",
-    "none",
-    "deferred",
-    "not",
-}
-
-NEGATIVE_SYNONYM_BUCKET_HINTS = (
-    "negative",
-    "neg",
-    "planned_only",
-    "deferred",
-    "absent",
-    "not_performed",
-)
-
-
-def _repo_root() -> Path:
-    return Path(__file__).resolve().parents[2]
-
-
-def _is_five_digit_cpt(code: str) -> bool:
-    return bool(re.fullmatch(r"\d{5}", str(code or "").strip()))
-
-
-def _normalize_phrase(value: str) -> str:
-    text = str(value or "").strip().lower()
-    if not text:
-        return ""
-    text = text.replace("×", "x")
-    text = re.sub(r"[\u2010\u2011\u2012\u2013\u2014]", "-", text)
-    text = text.replace("/", " ")
-    text = re.sub(r"\s+", " ", text)
-    return text.strip()
-
-
-def _descriptor_phrases(descriptor: str) -> list[str]:
-    out: list[str] = []
-    base = _normalize_phrase(descriptor)
-    if not base:
-        return out
-    out.append(base)
-
-    # Add an expanded variant for common CPT abbreviation fragments.
-    tokens = base.split()
-    expanded = " ".join(ABBREV_EXPANSIONS.get(tok, tok) for tok in tokens)
-    if expanded and expanded != base:
-        out.append(expanded)
-
-    # Add selective single-token terms for robust matching.
-    for tok in expanded.split():
-        tok_clean = tok.strip(".,;:()[]{}")
-        if len(tok_clean) < 4:
-            continue
-        if tok_clean.isdigit() or tok_clean in TOKEN_STOPWORDS:
-            continue
-        out.append(tok_clean)
-    return out
-
-
-def _extract_string_list(value: Any) -> list[str]:
-    if isinstance(value, list):
-        return [str(v) for v in value if isinstance(v, str)]
-    if isinstance(value, dict):
-        out: list[str] = []
-        for key, nested in value.items():
-            key_norm = str(key).strip().lower()
-            if any(hint in key_norm for hint in NEGATIVE_SYNONYM_BUCKET_HINTS):
-                continue
-            out.extend(_extract_string_list(nested))
-        return out
-    return []
-
-
-def _load_kb(path: Path) -> dict[str, Any]:
-    raw = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(raw, dict):
-        raise ValueError(f"KB must be an object: {path}")
-    return raw
-
-
-def _load_yaml_seeds(directory: Path) -> dict[str, list[str]]:
-    if yaml is None or not directory.exists() or not directory.is_dir():
-        return {}
-
-    seed_keywords: dict[str, list[str]] = defaultdict(list)
-    for yaml_path in sorted(list(directory.glob("*.yaml")) + list(directory.glob("*.yml"))):
-        # Skip generated json and unrelated files by using schema checks below.
-        try:
-            loaded = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-
-        if not isinstance(loaded, dict):
-            continue
-        code = str(loaded.get("code", "")).strip()
-        if not _is_five_digit_cpt(code):
-            continue
-
-        for phrase in _extract_string_list(loaded.get("positive_phrases")):
-            seed_keywords[code].append(phrase)
-
-        description = loaded.get("description")
-        if isinstance(description, str) and description.strip():
-            seed_keywords[code].append(description)
-
-    return dict(seed_keywords)
-
-
-def generate_cpt_keywords(
-    *,
-    repo_root: Path | None = None,
-    kb_path: Path | None = None,
-    seed_dir: Path | None = None,
-    max_keywords_per_cpt: int = DEFAULT_MAX_KEYWORDS_PER_CPT,
-) -> dict[str, list[str]]:
-    root = repo_root or _repo_root()
-    kb_file = kb_path or (root / "data" / "knowledge" / "ip_coding_billing_v3_0.json")
-    seeds_dir = seed_dir or (root / "data" / "keyword_mappings")
-
-    kb = _load_kb(kb_file)
-    master = kb.get("master_code_index") or {}
-    if not isinstance(master, dict):
-        raise ValueError("KB missing master_code_index")
-
-    raw_map: dict[str, list[str]] = defaultdict(list)
-
-    # 1) Base descriptors from master_code_index.
-    for code in sorted(master.keys()):
-        if not _is_five_digit_cpt(code):
-            continue
-        entry = master.get(code)
-        if not isinstance(entry, dict):
-            continue
-        if str(entry.get("type", "")).strip().lower() != "cpt":
-            continue
-
-        descriptor = entry.get("descriptor")
-        if isinstance(descriptor, str):
-            raw_map[code].extend(_descriptor_phrases(descriptor))
-
-        family = entry.get("family")
-        if isinstance(family, str) and family.strip():
-            raw_map[code].append(family)
-
-    # 2) Routed KB synonyms.
-    synonyms = kb.get("synonyms") or {}
-    if isinstance(synonyms, dict):
-        for group_name, phrases_blob in sorted(synonyms.items()):
-            targets = SYNONYM_GROUP_TO_CPTS.get(group_name, set())
-            if not targets:
-                continue
-            phrases = _extract_string_list(phrases_blob)
-            if not phrases:
-                continue
-            for code in sorted(targets):
-                if code in raw_map:
-                    raw_map[code].extend(phrases)
-
-    # 3) Optional YAML positive-phrase seeds.
-    for code, phrases in _load_yaml_seeds(seeds_dir).items():
-        raw_map[code].extend(phrases)
-
-    # 4) Normalize + dedupe + cap + sort.
-    finalized: dict[str, list[str]] = {}
-    for code in sorted(raw_map.keys()):
-        seen: set[str] = set()
-        ordered: list[str] = []
-        for phrase in raw_map[code]:
-            norm = _normalize_phrase(phrase)
-            if len(norm) < 3:
-                continue
-            if norm in seen:
-                continue
-            seen.add(norm)
-            ordered.append(norm)
-
-        if max_keywords_per_cpt > 0:
-            ordered = ordered[:max_keywords_per_cpt]
-        finalized[code] = sorted(ordered)
-
-    return finalized
-
-
-def serialize_mapping(mapping: dict[str, list[str]]) -> str:
-    return json.dumps(mapping, indent=2, sort_keys=True) + "\n"
-
-
-def write_mapping(mapping: dict[str, list[str]], output_path: Path) -> bytes:
-    content = serialize_mapping(mapping).encode("utf-8")
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_bytes(content)
-    return content
-
-
-def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate CPT keyword mapping JSON for keyword guard")
-    parser.add_argument(
-        "--kb",
-        type=Path,
-        default=Path("data/knowledge/ip_coding_billing_v3_0.json"),
-        help="Path to KB JSON file",
-    )
-    parser.add_argument(
-        "--seed-dir",
-        type=Path,
-        default=Path("data/keyword_mappings"),
-        help="Directory with optional YAML keyword maps",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=Path("data/keyword_mappings/cpt_keywords.generated.json"),
-        help="Output JSON path",
-    )
-    parser.add_argument(
-        "--max-keywords-per-cpt",
-        type=int,
-        default=DEFAULT_MAX_KEYWORDS_PER_CPT,
-        help="Max number of keywords retained per CPT",
-    )
-    return parser.parse_args(argv)
-
-
-def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
-    root = _repo_root()
-
-    kb_path = args.kb if args.kb.is_absolute() else root / args.kb
-    seed_dir = args.seed_dir if args.seed_dir.is_absolute() else root / args.seed_dir
-    output_path = args.output if args.output.is_absolute() else root / args.output
-
-    mapping = generate_cpt_keywords(
-        repo_root=root,
-        kb_path=kb_path,
-        seed_dir=seed_dir,
-        max_keywords_per_cpt=max(0, int(args.max_keywords_per_cpt)),
-    )
-    write_mapping(mapping, output_path)
-
-    counts = sorted(((code, len(phrases)) for code, phrases in mapping.items()), key=lambda kv: (-kv[1], kv[0]))
-    top = ", ".join(f"{code}:{count}" for code, count in counts[:8])
-    print(f"Generated keywords for {len(mapping)} CPTs -> {output_path}")
-    print(f"Top keyword counts: {top}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
-### `ml/scripts/evaluate_coder.py`
-- Size: `11237` bytes
-```
-#!/usr/bin/env python3
-"""
-Evaluation harness for EnhancedCPTCoder using synthetic_notes_with_CPT.csv.
-
-This script evaluates coder performance against the evaluation dataset but
-DOES NOT influence rule generation. It is for assessment only.
-
-Canonical rule sources remain:
-- data/synthetic_CPT_corrected.json
-- ip_golden_knowledge_v2_2.json
-
-Usage:
-    python ml/scripts/evaluate_coder.py [--verbose] [--output results.csv]
-"""
-from __future__ import annotations
-
-import argparse
-import ast
-import csv
-import sys
-from pathlib import Path
-from typing import Set, Dict, List, Tuple
-from collections import defaultdict
-
-# Add root to path
-ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-from app.autocode.coder import EnhancedCPTCoder
-
-
-def load_evaluation_data(csv_path: Path) -> List[Dict]:
-    """Load the evaluation dataset from synthetic_notes_with_CPT.csv."""
-    data = []
-    with open(csv_path, "r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            # Parse the cpt_codes field (stored as string representation of list)
-            cpt_codes_str = row.get("cpt_codes", "[]")
-            try:
-                cpt_codes = ast.literal_eval(cpt_codes_str)
-                if isinstance(cpt_codes, list):
-                    cpt_codes = [str(c).strip() for c in cpt_codes]
-                else:
-                    cpt_codes = [str(cpt_codes).strip()]
-            except (ValueError, SyntaxError):
-                cpt_codes = []
-
-            data.append({
-                "patient_id": row.get("patient_identifier_trigger", ""),
-                "note_text": row.get("note_text", ""),
-                "expected_codes": set(cpt_codes),
-            })
-    return data
-
-
-def normalize_code(code: str) -> str:
-    """Normalize CPT code by stripping + prefix and whitespace."""
-    return code.lstrip("+").strip()
-
-
-def extract_coder_codes(result: dict) -> Set[str]:
-    """Extract CPT codes from coder output."""
-    codes_list = result.get("codes", [])
-    return {normalize_code(c.get("cpt", "")) for c in codes_list if c.get("cpt")}
-
-
-def compute_metrics(
-    all_expected: List[Set[str]],
-    all_predicted: List[Set[str]]
-) -> Dict[str, float]:
-    """Compute precision, recall, and F1 for code-level evaluation."""
-    # Aggregate counts
-    total_tp = 0
-    total_fp = 0
-    total_fn = 0
-
-    for expected, predicted in zip(all_expected, all_predicted):
-        expected_norm = {normalize_code(c) for c in expected}
-        predicted_norm = {normalize_code(c) for c in predicted}
-
-        tp = len(expected_norm & predicted_norm)
-        fp = len(predicted_norm - expected_norm)
-        fn = len(expected_norm - predicted_norm)
-
-        total_tp += tp
-        total_fp += fp
-        total_fn += fn
-
-    precision = total_tp / (total_tp + total_fp) if (total_tp + total_fp) > 0 else 0.0
-    recall = total_tp / (total_tp + total_fn) if (total_tp + total_fn) > 0 else 0.0
-    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
-
-    return {
-        "precision": precision,
-        "recall": recall,
-        "f1": f1,
-        "true_positives": total_tp,
-        "false_positives": total_fp,
-        "false_negatives": total_fn,
-    }
-
-
-def compute_per_code_metrics(
-    all_expected: List[Set[str]],
-    all_predicted: List[Set[str]]
-) -> Dict[str, Dict[str, float]]:
-    """Compute per-code precision, recall, and F1."""
-    code_stats: Dict[str, Dict[str, int]] = defaultdict(lambda: {"tp": 0, "fp": 0, "fn": 0})
-
-    for expected, predicted in zip(all_expected, all_predicted):
-        expected_norm = {normalize_code(c) for c in expected}
-        predicted_norm = {normalize_code(c) for c in predicted}
-
-        for code in expected_norm | predicted_norm:
-            if code in expected_norm and code in predicted_norm:
-                code_stats[code]["tp"] += 1
-            elif code in predicted_norm:
-                code_stats[code]["fp"] += 1
-            elif code in expected_norm:
-                code_stats[code]["fn"] += 1
-
-    per_code_metrics = {}
-    for code, stats in sorted(code_stats.items()):
-        tp, fp, fn = stats["tp"], stats["fp"], stats["fn"]
-        precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-        recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
-
-        per_code_metrics[code] = {
-            "precision": precision,
-            "recall": recall,
-            "f1": f1,
-            "tp": tp,
-            "fp": fp,
-            "fn": fn,
-        }
-
-    return per_code_metrics
-
-
-def evaluate_coder(
-    coder: EnhancedCPTCoder,
-    data: List[Dict],
-    verbose: bool = False,
-) -> Tuple[Dict[str, float], Dict[str, Dict[str, float]], List[Dict]]:
-    """
-    Run coder evaluation on the dataset.
-
-    Returns:
-        - Overall metrics (precision, recall, F1)
-        - Per-code metrics
-        - Detailed results per note
-    """
-    all_expected = []
-    all_predicted = []
-    detailed_results = []
-
-    exact_matches = 0
-    total = len(data)
-
-    for i, item in enumerate(data):
-        note_text = item["note_text"]
-        expected = item["expected_codes"]
-        patient_id = item["patient_id"]
-
-        result = coder.code_procedure({
-            "note_text": note_text,
-            "locality": "00",
-            "setting": "facility"
-        })
-        predicted = extract_coder_codes(result)
-
-        expected_norm = {normalize_code(c) for c in expected}
-        predicted_norm = {normalize_code(c) for c in predicted}
-
-        is_exact_match = expected_norm == predicted_norm
-        if is_exact_match:
-            exact_matches += 1
-
-        missing = expected_norm - predicted_norm
-        extra = predicted_norm - expected_norm
-
-        all_expected.append(expected)
-        all_predicted.append(predicted)
-
-        result_detail = {
-            "patient_id": patient_id,
-            "expected": sorted(expected_norm),
-            "predicted": sorted(predicted_norm),
-            "exact_match": is_exact_match,
-            "missing": sorted(missing),
-            "extra": sorted(extra),
-        }
-        detailed_results.append(result_detail)
-
-        if verbose:
-            status = "✓" if is_exact_match else "✗"
-            print(f"[{i+1}/{total}] {status} Patient {patient_id}")
-            print(f"  Expected: {sorted(expected_norm)}")
-            print(f"  Predicted: {sorted(predicted_norm)}")
-            if missing:
-                print(f"  Missing: {sorted(missing)}")
-            if extra:
-                print(f"  Extra: {sorted(extra)}")
-            print()
-
-    # Compute overall metrics
-    overall = compute_metrics(all_expected, all_predicted)
-    overall["exact_match_rate"] = exact_matches / total if total > 0 else 0.0
-    overall["exact_matches"] = exact_matches
-    overall["total"] = total
-
-    # Compute per-code metrics
-    per_code = compute_per_code_metrics(all_expected, all_predicted)
-
-    return overall, per_code, detailed_results
-
-
-def print_summary(overall: Dict, per_code: Dict[str, Dict]):
-    """Print evaluation summary."""
-    print("\n" + "=" * 60)
-    print("EVALUATION SUMMARY")
-    print("=" * 60)
-
-    print(f"\nOverall Metrics:")
-    print(f"  Exact Match Rate: {overall['exact_match_rate']:.1%} ({overall['exact_matches']}/{overall['total']})")
-    print(f"  Precision: {overall['precision']:.3f}")
-    print(f"  Recall: {overall['recall']:.3f}")
-    print(f"  F1 Score: {overall['f1']:.3f}")
-    print(f"  True Positives: {overall['true_positives']}")
-    print(f"  False Positives: {overall['false_positives']}")
-    print(f"  False Negatives: {overall['false_negatives']}")
-
-    print(f"\nPer-Code Metrics:")
-    print(f"{'Code':<10} {'Precision':<12} {'Recall':<12} {'F1':<12} {'TP':<6} {'FP':<6} {'FN':<6}")
-    print("-" * 60)
-
-    for code, metrics in sorted(per_code.items()):
-        print(
-            f"{code:<10} {metrics['precision']:.3f}        "
-            f"{metrics['recall']:.3f}        {metrics['f1']:.3f}        "
-            f"{metrics['tp']:<6} {metrics['fp']:<6} {metrics['fn']:<6}"
-        )
-
-    # Highlight problematic codes
-    print("\n" + "-" * 60)
-    print("Codes with low recall (< 0.5):")
-    low_recall = [(c, m) for c, m in per_code.items() if m["recall"] < 0.5 and m["fn"] > 0]
-    if low_recall:
-        for code, metrics in sorted(low_recall, key=lambda x: x[1]["recall"]):
-            print(f"  {code}: recall={metrics['recall']:.2f} (missing {metrics['fn']} times)")
-    else:
-        print("  None")
-
-    print("\nCodes with low precision (< 0.5):")
-    low_precision = [(c, m) for c, m in per_code.items() if m["precision"] < 0.5 and m["fp"] > 0]
-    if low_precision:
-        for code, metrics in sorted(low_precision, key=lambda x: x[1]["precision"]):
-            print(f"  {code}: precision={metrics['precision']:.2f} (extra {metrics['fp']} times)")
-    else:
-        print("  None")
-
-
-def save_results(detailed_results: List[Dict], output_path: Path):
-    """Save detailed results to CSV."""
-    with open(output_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=[
-            "patient_id", "expected", "predicted", "exact_match", "missing", "extra"
-        ])
-        writer.writeheader()
-        for result in detailed_results:
-            writer.writerow({
-                "patient_id": result["patient_id"],
-                "expected": ",".join(result["expected"]),
-                "predicted": ",".join(result["predicted"]),
-                "exact_match": result["exact_match"],
-                "missing": ",".join(result["missing"]),
-                "extra": ",".join(result["extra"]),
-            })
-    print(f"\nDetailed results saved to: {output_path}")
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate EnhancedCPTCoder against synthetic_notes_with_CPT.csv"
-    )
-    parser.add_argument(
-        "--verbose", "-v",
-        action="store_true",
-        help="Print per-note results"
-    )
-    parser.add_argument(
-        "--output", "-o",
-        type=Path,
-        default=None,
-        help="Save detailed results to CSV file"
-    )
-    parser.add_argument(
-        "--data",
-        type=Path,
-        default=ROOT / "data" / "synthetic_notes_with_CPT.csv",
-        help="Path to evaluation CSV"
-    )
-    args = parser.parse_args()
-
-    if not args.data.exists():
-        print(f"Error: Evaluation data not found at {args.data}")
-        sys.exit(1)
-
-    print(f"Loading evaluation data from: {args.data}")
-    data = load_evaluation_data(args.data)
-    print(f"Loaded {len(data)} notes for evaluation")
-
-    print("\nInitializing EnhancedCPTCoder...")
-    coder = EnhancedCPTCoder(use_llm_advisor=False)
-
-    print("\nRunning evaluation...")
-    overall, per_code, detailed = evaluate_coder(coder, data, verbose=args.verbose)
-
-    print_summary(overall, per_code)
-
-    if args.output:
-        save_results(detailed, args.output)
-
-    # Return non-zero exit code if F1 is below threshold
-    if overall["f1"] < 0.5:
-        print("\n⚠️  Warning: F1 score below 0.5 threshold")
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-### `ml/scripts/scrub_golden_jsons.py`
-- Size: `11270` bytes
-```
-#!/usr/bin/env python3
-"""Scrub PHI from golden JSON files for ML training.
-
-This script processes all golden_*.json files in data/knowledge/golden_extractions/
-and scrubs PHI from the `note_text` field using PresidioScrubber.
-
-The scrubbing uses the same Presidio-based scrubber as the PHI Demo workflow,
-with clinical allowlists to preserve anatomical terms and procedure vocabulary.
-
-Usage:
-    python ml/scripts/scrub_golden_jsons.py                    # Scrub in-place (creates backups)
-    python ml/scripts/scrub_golden_jsons.py --dry-run          # Preview without modifying
-    python ml/scripts/scrub_golden_jsons.py --no-backup        # Scrub in-place without backups
-    python ml/scripts/scrub_golden_jsons.py --output-dir out/  # Write to separate directory
-    python ml/scripts/scrub_golden_jsons.py --report-path artifacts/redactions.jsonl  # Write redaction report (JSONL)
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import csv
-import shutil
-import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Optional
-
-# Add project root to path for module imports
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(PROJECT_ROOT))
-
-from tqdm import tqdm
-
-
-def get_scrubber():
-    """Initialize PresidioScrubber with fallback."""
-    from app.phi.adapters.presidio_scrubber import PresidioScrubber
-    return PresidioScrubber()
-
-
-def _open_report_writer(report_path: Path | None, report_format: str):
-    """Open a report writer for redactions.
-
-    Returns:
-        (handle, write_row_fn) or (None, None) if report_path is None.
-    """
-    if report_path is None:
-        return None, None
-
-    report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_format = report_format.lower().strip()
-    if report_format not in {"jsonl", "csv"}:
-        raise ValueError("report_format must be one of: jsonl, csv")
-
-    if report_format == "jsonl":
-        f = report_path.open("w", encoding="utf-8")
-
-        def _write(row: dict[str, Any]) -> None:
-            f.write(json.dumps(row, ensure_ascii=False) + "\n")
-
-        return f, _write
-
-    # CSV
-    f = report_path.open("w", encoding="utf-8", newline="")
-    writer = csv.DictWriter(
-        f,
-        fieldnames=[
-            "timestamp_utc",
-            "input_file",
-            "record_index",
-            "entity_type",
-            "placeholder",
-            "original_start",
-            "original_end",
-            "original_text",
-        ],
-    )
-    writer.writeheader()
-
-    def _write(row: dict[str, Any]) -> None:
-        writer.writerow(row)
-
-    return f, _write
-
-
-def scrub_golden_json(
-    input_path: Path,
-    scrubber,
-    dry_run: bool = False,
-    output_path: Path | None = None,
-    create_backup: bool = True,
-    report_write=None,
-    report_timestamp_utc: str | None = None,
-) -> dict:
-    """Scrub PHI from a single golden JSON file.
-
-    Args:
-        input_path: Path to golden JSON file
-        scrubber: PresidioScrubber instance
-        dry_run: If True, don't write changes
-        output_path: Optional separate output path
-        create_backup: If True and output_path is None, create .bak backup
-        report_write: Optional function which accepts a dict and writes a report row
-        report_timestamp_utc: Optional timestamp string to include in report rows
-
-    Returns:
-        Dict with stats: {total_records, scrubbed_count, entity_count}
-    """
-    with open(input_path, "r", encoding="utf-8") as f:
-        records = json.load(f)
-
-    stats = {
-        "total_records": len(records),
-        "scrubbed_count": 0,
-        "entity_count": 0,
-        "entities_by_type": {},
-    }
-
-    for idx, record in enumerate(records):
-        if "note_text" not in record or not record["note_text"]:
-            continue
-
-        original_text = record["note_text"]
-        result = scrubber.scrub(original_text, document_type="procedure_note")
-
-        if result.scrubbed_text != original_text:
-            stats["scrubbed_count"] += 1
-            stats["entity_count"] += len(result.entities)
-
-            # Track entity types
-            for ent in result.entities:
-                etype = ent.get("entity_type", "UNKNOWN")
-                stats["entities_by_type"][etype] = stats["entities_by_type"].get(etype, 0) + 1
-
-                # Optional per-entity report rows
-                if report_write is not None:
-                    try:
-                        start = int(ent.get("original_start", -1))
-                        end = int(ent.get("original_end", -1))
-                    except Exception:
-                        start, end = -1, -1
-                    redacted = ""
-                    if 0 <= start < end <= len(original_text):
-                        redacted = original_text[start:end]
-                    report_write(
-                        {
-                            "timestamp_utc": report_timestamp_utc,
-                            "input_file": str(input_path),
-                            "record_index": idx,
-                            "entity_type": etype,
-                            "placeholder": ent.get("placeholder", ""),
-                            "original_start": start,
-                            "original_end": end,
-                            "original_text": redacted,
-                        }
-                    )
-
-            # Update the record
-            record["note_text"] = result.scrubbed_text
-
-            # Store original for reference (optional metadata)
-            if "scrub_metadata" not in record:
-                record["scrub_metadata"] = {}
-            record["scrub_metadata"]["entities_redacted"] = len(result.entities)
-            record["scrub_metadata"]["entity_types"] = [e.get("entity_type") for e in result.entities]
-
-    if not dry_run:
-        # Determine output path
-        final_output = output_path if output_path else input_path
-
-        # Create backup if writing in-place
-        if output_path is None and create_backup:
-            backup_path = input_path.with_suffix(".json.bak")
-            shutil.copy2(input_path, backup_path)
-
-        # Ensure output directory exists
-        final_output.parent.mkdir(parents=True, exist_ok=True)
-
-        # Write scrubbed data
-        with open(final_output, "w", encoding="utf-8") as f:
-            json.dump(records, f, indent=2, ensure_ascii=False)
-
-    return stats
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description="Scrub PHI from golden JSON files for ML training",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__,
-    )
-    parser.add_argument(
-        "--input-dir",
-        type=Path,
-        default=Path("data/knowledge/golden_extractions"),
-        help="Directory containing golden_*.json files",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=None,
-        help="Write scrubbed files to separate directory (default: in-place)",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Preview changes without modifying files",
-    )
-    parser.add_argument(
-        "--no-backup",
-        action="store_true",
-        help="Don't create .bak backups when modifying in-place",
-    )
-    parser.add_argument(
-        "--pattern",
-        type=str,
-        default="golden_*.json",
-        help="Glob pattern for input files (default: golden_*.json)",
-    )
-    parser.add_argument(
-        "--report-path",
-        type=Path,
-        default=None,
-        help="Optional path to write a redaction report (JSONL/CSV).",
-    )
-    parser.add_argument(
-        "--report-format",
-        type=str,
-        default="jsonl",
-        choices=["jsonl", "csv"],
-        help="Redaction report format (default: jsonl).",
-    )
-
-    args = parser.parse_args()
-
-    # Find golden JSON files
-    input_files = sorted(args.input_dir.glob(args.pattern))
-    if not input_files:
-        print(f"No files matching '{args.pattern}' found in {args.input_dir}")
-        return
-
-    print(f"\n{'=' * 60}")
-    print("Golden JSON PHI Scrubbing")
-    print(f"{'=' * 60}")
-    print(f"Input directory: {args.input_dir}")
-    print(f"Files found: {len(input_files)}")
-    print(f"Output: {'DRY RUN (no changes)' if args.dry_run else (args.output_dir or 'in-place')}")
-    print(f"Backups: {'No' if args.no_backup else 'Yes'}")
-    if args.report_path:
-        print(f"Redaction report: {args.report_path} ({args.report_format})")
-    print(f"{'=' * 60}\n")
-
-    # Initialize scrubber
-    print("Initializing Presidio scrubber...")
-    scrubber = get_scrubber()
-    print(f"Using spaCy model: {scrubber.model_name}\n")
-
-    # Optional report writer
-    report_ts = datetime.utcnow().strftime("%Y%m%d_%H%M%SZ")
-    report_handle, report_write = _open_report_writer(args.report_path, args.report_format)
-
-    # Process files
-    total_stats = {
-        "files_processed": 0,
-        "total_records": 0,
-        "scrubbed_count": 0,
-        "entity_count": 0,
-        "entities_by_type": {},
-    }
-
-    for input_path in tqdm(input_files, desc="Processing files"):
-        # Determine output path
-        if args.output_dir:
-            output_path = args.output_dir / input_path.name
-        else:
-            output_path = None
-
-        try:
-            stats = scrub_golden_json(
-                input_path=input_path,
-                scrubber=scrubber,
-                dry_run=args.dry_run,
-                output_path=output_path,
-                create_backup=not args.no_backup,
-                report_write=report_write,
-                report_timestamp_utc=report_ts,
-            )
-
-            total_stats["files_processed"] += 1
-            total_stats["total_records"] += stats["total_records"]
-            total_stats["scrubbed_count"] += stats["scrubbed_count"]
-            total_stats["entity_count"] += stats["entity_count"]
-
-            for etype, count in stats["entities_by_type"].items():
-                total_stats["entities_by_type"][etype] = (
-                    total_stats["entities_by_type"].get(etype, 0) + count
-                )
-
-        except Exception as e:
-            print(f"\nError processing {input_path}: {e}")
-            continue
-
-    # Print summary
-    print(f"\n{'=' * 60}")
-    print("Summary")
-    print(f"{'=' * 60}")
-    print(f"Files processed: {total_stats['files_processed']}")
-    print(f"Total records: {total_stats['total_records']}")
-    print(f"Records with PHI scrubbed: {total_stats['scrubbed_count']}")
-    print(f"Total entities redacted: {total_stats['entity_count']}")
-
-    if total_stats["entities_by_type"]:
-        print("\nEntities by type:")
-        for etype, count in sorted(
-            total_stats["entities_by_type"].items(), key=lambda x: -x[1]
-        ):
-            print(f"  {etype}: {count}")
-
-    if args.dry_run:
-        print("\n[DRY RUN] No files were modified.")
-    elif args.output_dir:
-        print(f"\nScrubbed files written to: {args.output_dir}")
-    else:
-        print(f"\nFiles modified in-place. Backups: {'disabled' if args.no_backup else 'created (.bak)'}")
-
-    if report_handle is not None:
-        report_handle.close()
-        print(f"\nRedaction report written: {args.report_path}")
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
----
-### `ml/scripts/prodigy_export_corrections.py`
-- Size: `11525` bytes
-```
-#!/usr/bin/env python3
-"""
-Export Prodigy annotations to training format.
-
-Converts Prodigy NER annotations back to BIO-tagged JSONL format
-compatible with the DistilBERT training pipeline.
-
-Usage:
-    python ml/scripts/prodigy_export_corrections.py --dataset phi_corrections --output data/ml_training/prodigy_corrected.jsonl
-
-    # With merge into existing training data:
-    python ml/scripts/prodigy_export_corrections.py --dataset phi_corrections \
-        --merge-with data/ml_training/distilled_phi_CLEANED_STANDARD.jsonl \
-        --output data/ml_training/distilled_phi_WITH_CORRECTIONS.jsonl
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import logging
-import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
-
-from transformers import AutoTokenizer
-
-# Add repo root to path
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-logger = logging.getLogger(__name__)
-
-# Default paths
-DEFAULT_MODEL_DIR = Path("artifacts/phi_distilbert_ner")
-DEFAULT_OUTPUT = Path("data/ml_training/prodigy_corrected.jsonl")
-DEFAULT_MANIFEST = Path("data/ml_training/prodigy_manifest.json")
-
-
-def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dataset", required=True, help="Prodigy dataset name to export")
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Output JSONL file")
-    parser.add_argument("--model-dir", type=Path, default=DEFAULT_MODEL_DIR, help="Tokenizer directory")
-    parser.add_argument("--merge-with", type=Path, default=None, help="Existing training data to merge with")
-    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST, help="Manifest file to update")
-    return parser.parse_args(argv)
-
-
-def load_prodigy_annotations(dataset_name: str) -> List[Dict[str, Any]]:
-    """Load annotations from Prodigy database."""
-    try:
-        from prodigy.components.db import connect
-
-        db = connect()
-        if dataset_name not in db:
-            logger.error(f"Dataset '{dataset_name}' not found in Prodigy database")
-            logger.info(f"Available datasets: {db.datasets}")
-            return []
-
-        examples = db.get_dataset_examples(dataset_name)
-        logger.info(f"Loaded {len(examples)} annotations from Prodigy dataset '{dataset_name}'")
-        return examples
-
-    except ImportError:
-        logger.error("Prodigy not installed. Install with: pip install prodigy")
-        return []
-    except Exception as e:
-        logger.error(f"Failed to load Prodigy annotations: {e}")
-        return []
-
-
-def spans_to_bio(
-    text: str,
-    spans: List[Dict[str, Any]],
-    tokenizer: Any,
-) -> Tuple[List[str], List[str]]:
-    """
-    Convert character spans to BIO tags aligned to tokenizer output.
-
-    Args:
-        text: The original text
-        spans: List of spans with start, end, label
-        tokenizer: The tokenizer to use for alignment
-
-    Returns:
-        (tokens, ner_tags) tuple
-    """
-    # Tokenize with offset mapping
-    encoding = tokenizer(
-        text,
-        truncation=True,
-        max_length=512,
-        return_offsets_mapping=True,
-    )
-
-    offset_mapping = encoding.get("offset_mapping", [])
-    input_ids = encoding.get("input_ids", [])
-
-    # Convert input_ids back to tokens
-    tokens = tokenizer.convert_ids_to_tokens(input_ids)
-
-    # Initialize all tags as O
-    ner_tags = ["O"] * len(tokens)
-
-    # Skip special tokens (CLS, SEP)
-    # Special tokens have offset (0, 0)
-    valid_indices = []
-    for idx, offset in enumerate(offset_mapping):
-        if offset[0] != 0 or offset[1] != 0:
-            valid_indices.append(idx)
-
-    # Sort spans by start position
-    sorted_spans = sorted(spans, key=lambda s: s.get("start", 0))
-
-    # Assign BIO tags based on spans
-    for span in sorted_spans:
-        span_start = span.get("start", 0)
-        span_end = span.get("end", 0)
-        label = span.get("label", "UNKNOWN")
-
-        # Find tokens that overlap with this span
-        is_first = True
-        for idx in valid_indices:
-            tok_start, tok_end = offset_mapping[idx]
-
-            # Check if token overlaps with span
-            if tok_start < span_end and tok_end > span_start:
-                if is_first:
-                    ner_tags[idx] = f"B-{label}"
-                    is_first = False
-                else:
-                    ner_tags[idx] = f"I-{label}"
-
-    # Filter out special tokens for output
-    filtered_tokens = []
-    filtered_tags = []
-    for idx, (token, tag) in enumerate(zip(tokens, ner_tags)):
-        offset = offset_mapping[idx] if idx < len(offset_mapping) else (0, 0)
-        if offset[0] != 0 or offset[1] != 0:
-            filtered_tokens.append(token)
-            filtered_tags.append(tag)
-
-    return filtered_tokens, filtered_tags
-
-
-def convert_annotation(
-    example: Dict[str, Any],
-    tokenizer: Any,
-    dataset_name: str,
-) -> Optional[Dict[str, Any]]:
-    """Convert a single Prodigy annotation to training format."""
-    text = example.get("text", "")
-    if not text:
-        return None
-
-    # Get accepted spans (Prodigy marks rejected spans)
-    spans = []
-    for span in example.get("spans", []):
-        # In ner.correct, all spans in the final output are accepted
-        spans.append(span)
-
-    # Convert to BIO
-    tokens, ner_tags = spans_to_bio(text, spans, tokenizer)
-
-    if not tokens:
-        return None
-
-    # Extract metadata
-    meta = example.get("meta", {})
-    source = meta.get("source", "unknown")
-    record_index = meta.get("record_index", 0)
-    window_index = meta.get("window_index", 0)
-    window_start = meta.get("window_start", 0)
-    window_end = meta.get("window_end", len(text))
-
-    # Build ID matching distilled format
-    id_str = f"{source}:{record_index}:{window_index}"
-    id_base = f"{source}:{record_index}"
-
-    return {
-        "id": id_str,
-        "id_base": id_base,
-        "source_path": f"prodigy:{dataset_name}",
-        "record_index": record_index,
-        "window_start": window_start,
-        "window_end": window_end,
-        "text": text,
-        "tokens": tokens,
-        "ner_tags": ner_tags,
-        "origin": "prodigy-corrected",
-        "prodigy_dataset": dataset_name,
-        "annotated_at": datetime.now().isoformat(),
-    }
-
-
-def load_existing_data(path: Path) -> Dict[str, Dict[str, Any]]:
-    """Load existing training data into a dict keyed by id."""
-    data = {}
-    if not path.exists():
-        return data
-
-    with open(path, "r") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                record = json.loads(line)
-                record_id = record.get("id", "")
-                if record_id:
-                    data[record_id] = record
-            except json.JSONDecodeError:
-                continue
-
-    logger.info(f"Loaded {len(data)} existing records from {path}")
-    return data
-
-
-def merge_data(
-    existing: Dict[str, Dict[str, Any]],
-    corrections: List[Dict[str, Any]],
-) -> List[Dict[str, Any]]:
-    """
-    Merge corrections into existing data using replace strategy.
-
-    Corrections completely replace existing records with matching IDs.
-    """
-    # Build a dict of corrections by ID
-    corrections_by_id = {}
-    for rec in corrections:
-        record_id = rec.get("id", "")
-        if record_id:
-            corrections_by_id[record_id] = rec
-
-    # Replace matching records
-    replaced_count = 0
-    for record_id in corrections_by_id:
-        if record_id in existing:
-            replaced_count += 1
-
-    # Merge: start with existing, override with corrections
-    merged = {**existing, **corrections_by_id}
-
-    logger.info(f"Merged {len(corrections)} corrections into {len(existing)} existing records")
-    logger.info(f"Replaced {replaced_count} existing records, added {len(corrections) - replaced_count} new records")
-
-    # Return as list, preserving order from existing where possible
-    result = []
-    seen_ids: Set[str] = set()
-
-    # First, add all existing in order (with corrections applied)
-    for record_id in existing:
-        if record_id in merged:
-            result.append(merged[record_id])
-            seen_ids.add(record_id)
-
-    # Then add any new corrections not in existing
-    for rec in corrections:
-        record_id = rec.get("id", "")
-        if record_id and record_id not in seen_ids:
-            result.append(rec)
-
-    return result
-
-
-def update_manifest(manifest_path: Path, dataset_name: str, output_path: Path, count: int) -> None:
-    """Update the manifest with export info."""
-    manifest = {"batches": [], "annotated_windows": []}
-    if manifest_path.exists():
-        try:
-            with open(manifest_path, "r") as f:
-                manifest = json.load(f)
-        except Exception:
-            pass
-
-    # Find the batch for this dataset and update status
-    for batch in manifest.get("batches", []):
-        if batch.get("prodigy_dataset") == dataset_name:
-            batch["status"] = "exported"
-            batch["export_file"] = str(output_path)
-            batch["exported_at"] = datetime.now().isoformat()
-            batch["exported_count"] = count
-            break
-
-    with open(manifest_path, "w") as f:
-        json.dump(manifest, f, indent=2)
-
-
-def main(argv: List[str] | None = None) -> int:
-    args = parse_args(argv)
-
-    # Load tokenizer
-    if not args.model_dir.exists():
-        logger.error(f"Model directory not found: {args.model_dir}")
-        return 1
-
-    logger.info(f"Loading tokenizer from {args.model_dir}")
-    tokenizer = AutoTokenizer.from_pretrained(str(args.model_dir))
-
-    # Load Prodigy annotations
-    annotations = load_prodigy_annotations(args.dataset)
-    if not annotations:
-        logger.error("No annotations to export")
-        return 1
-
-    # Convert annotations to training format
-    converted = []
-    for example in annotations:
-        # Only export accepted examples (answer == "accept")
-        if example.get("answer") != "accept":
-            continue
-
-        record = convert_annotation(example, tokenizer, args.dataset)
-        if record:
-            converted.append(record)
-
-    logger.info(f"Converted {len(converted)} annotations to training format")
-
-    if not converted:
-        logger.warning("No valid annotations to export")
-        return 0
-
-    # Count label distribution
-    label_counts: Dict[str, int] = {}
-    for rec in converted:
-        for tag in rec.get("ner_tags", []):
-            if tag != "O":
-                label_counts[tag] = label_counts.get(tag, 0) + 1
-    logger.info(f"Label distribution in corrections: {label_counts}")
-
-    # Merge with existing data if requested
-    if args.merge_with:
-        existing = load_existing_data(args.merge_with)
-        merged = merge_data(existing, converted)
-        output_data = merged
-    else:
-        output_data = converted
-
-    # Write output
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with open(args.output, "w") as f:
-        for record in output_data:
-            f.write(json.dumps(record) + "\n")
-
-    logger.info(f"Wrote {len(output_data)} records to {args.output}")
-
-    # Update manifest
-    update_manifest(args.manifest, args.dataset, args.output, len(converted))
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
 
 ```
