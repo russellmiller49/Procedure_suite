@@ -27,37 +27,30 @@ This document is the single source of truth for **Tier 2 research/quality fields
   - Map explicit “abutting/contacting/touching pleura” to `0.0`.
 - **Evidence key pattern:** `granular_data.navigation_targets.{index}.distance_from_pleura_mm`
 
-#### 3) Air bronchogram presence
-- **Path:** `registry.granular_data.navigation_targets[].air_bronchogram_present`
-- **Type:** `bool | null`
-- **Derivation (explicit-only):**
-  - Extract `true` on explicit “air bronchogram(s) present”.
-  - Extract `false` on explicit negation (“no/without/absent air bronchogram”).
-- **Evidence key pattern:** `granular_data.navigation_targets.{index}.air_bronchogram_present`
-
-#### 4) PET SUV max (per target)
+#### 3) PET SUV max (per target)
 - **Path:** `registry.granular_data.navigation_targets[].pet_suv_max`
 - **Type:** `float | null`
 - **Derivation (explicit-only):**
   - Extract numeric `SUV`/`SUV max` values when explicitly present in the target header/section text.
 - **Evidence key pattern:** `granular_data.navigation_targets.{index}.pet_suv_max`
 
-#### 5) Bronchus sign (per target)
+#### 4) Bronchus sign (per target)
 - **Path:** `registry.granular_data.navigation_targets[].bronchus_sign`
 - **Type:** `"Positive" | "Negative" | "Not assessed" | null`
 - **Derivation (explicit-only):**
   - Extract polarity only when the phrase “bronchus sign … positive/negative/present/absent” is explicitly documented.
+  - Treat explicit “air bronchogram present/absent” as bronchus sign positive/negative.
   - Treat explicit “not assessed/unknown/indeterminate” as missing (leave `null`).
 - **Evidence key pattern:** `granular_data.navigation_targets.{index}.bronchus_sign`
 
-#### 6) Registration error (mm)
+#### 5) Registration error (mm)
 - **Path:** `registry.granular_data.navigation_targets[].registration_error_mm`
 - **Type:** `float | null`
 - **Derivation (explicit-only):**
   - Extract numeric `registration … error … X mm` or conservative `error of X mm` when “registration” is also present.
 - **Evidence key pattern:** `granular_data.navigation_targets.{index}.registration_error_mm`
 
-#### 7) Tool-in-lesion confirmation + method (per target)
+#### 6) Tool-in-lesion confirmation + method (per target)
 - **Paths:**
   - `registry.granular_data.navigation_targets[].tool_in_lesion_confirmed`
   - `registry.granular_data.navigation_targets[].confirmation_method`
@@ -72,7 +65,7 @@ This document is the single source of truth for **Tier 2 research/quality fields
   - `granular_data.navigation_targets.{index}.tool_in_lesion_confirmed`
   - `granular_data.navigation_targets.{index}.confirmation_method`
 
-#### 8) Tool-in-lesion roll-up (procedure-level)
+#### 7) Tool-in-lesion roll-up (procedure-level)
 - **Paths:**
   - `registry.procedures_performed.navigational_bronchoscopy.tool_in_lesion_confirmed`
   - `registry.procedures_performed.navigational_bronchoscopy.confirmation_method`
@@ -88,7 +81,7 @@ This document is the single source of truth for **Tier 2 research/quality fields
 
 ### B) Complications (quality-ready)
 
-#### 9) Pneumothorax intervention level
+#### 8) Pneumothorax intervention level
 - **Path:** `registry.complications.pneumothorax.intervention[]`
 - **Type:** `list[ "Observation" | "Aspiration" | "Pigtail catheter" | "Chest tube" | "Heimlich valve" | "Surgery" ] | null`
 - **Derivation (explicit-only, narrative-first):**
@@ -98,7 +91,7 @@ This document is the single source of truth for **Tier 2 research/quality fields
 
 ### C) EBUS station detail (guidelines-ready)
 
-#### 10) Station size + technique evidence attachment
+#### 9) Station size + technique evidence attachment
 - **Paths:**
   - `registry.granular_data.linear_ebus_stations_detail[].short_axis_mm`
   - `registry.granular_data.linear_ebus_stations_detail[].long_axis_mm`
@@ -108,4 +101,3 @@ This document is the single source of truth for **Tier 2 research/quality fields
 - **Derivation:**
   - Values may be extracted/normalized by the station detail deterministic parser; evidence spans are attached when values are derived from station blocks.
 - **Evidence key pattern:** `granular_data.linear_ebus_stations_detail.{index}.{field}`
-

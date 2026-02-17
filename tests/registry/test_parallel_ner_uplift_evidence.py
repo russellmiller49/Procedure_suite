@@ -230,7 +230,7 @@ Radial EBUS showed concentric view of the lesion.
     assert "procedures_performed.radial_ebus.probe_position" in evidence
 
 
-def test_parallel_ner_nav_target_tier2_extracts_ct_characteristics_pleural_distance_suv_and_air_bronchogram_with_evidence(
+def test_parallel_ner_nav_target_tier2_extracts_ct_characteristics_pleural_distance_suv_and_bronchus_sign_with_evidence(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
@@ -243,7 +243,7 @@ def test_parallel_ner_nav_target_tier2_extracts_ct_characteristics_pleural_dista
     note_text = """
 PROCEDURE IN DETAIL:
 Ion robotic bronchoscopy was performed.
-Target 1: RLL subsolid nodule with increasing density, 5 mm from pleura. Air bronchogram present. SUV max 4.2. Bronchus sign positive.
+Target 1: RLL subsolid nodule with increasing density, 5 mm from pleura. Air bronchogram present. SUV max 4.2.
 """.strip()
 
     result = service.extract_fields(note_text)
@@ -256,7 +256,6 @@ Target 1: RLL subsolid nodule with increasing density, 5 mm from pleura. Air bro
     t0 = targets[0]
     assert t0.ct_characteristics == "Part-solid"
     assert t0.distance_from_pleura_mm == 5.0
-    assert t0.air_bronchogram_present is True
     assert t0.pet_suv_max == 4.2
     assert t0.bronchus_sign == "Positive"
 
@@ -264,7 +263,6 @@ Target 1: RLL subsolid nodule with increasing density, 5 mm from pleura. Air bro
     assert evidence, "expected evidence spans to be populated"
     assert "granular_data.navigation_targets.0.ct_characteristics" in evidence
     assert "granular_data.navigation_targets.0.distance_from_pleura_mm" in evidence
-    assert "granular_data.navigation_targets.0.air_bronchogram_present" in evidence
     assert "granular_data.navigation_targets.0.pet_suv_max" in evidence
     assert "granular_data.navigation_targets.0.bronchus_sign" in evidence
 
