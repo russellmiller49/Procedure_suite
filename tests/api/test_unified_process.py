@@ -63,6 +63,12 @@ def test_unified_process_already_scrubbed(mock_registry_service, mock_phi_scrubb
     assert "clinical_context.asa_class" in prompt_paths
     assert "clinical_context.ecog_score" in prompt_paths
 
+    assert all(isinstance(p, dict) and "target_path" in p for p in prompts)
+    age_prompt = next((p for p in prompts if isinstance(p, dict) and p.get("path") == "patient_demographics.age_years"), None)
+    assert age_prompt and age_prompt.get("target_path") == "patient.age"
+    asa_prompt = next((p for p in prompts if isinstance(p, dict) and p.get("path") == "clinical_context.asa_class"), None)
+    assert asa_prompt and asa_prompt.get("target_path") == "risk_assessment.asa_class"
+
     # Verify proper call to service
     mock_registry_service.extract_fields.assert_called_once_with("Already scrubbed text")
 
