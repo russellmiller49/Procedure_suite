@@ -1,0 +1,980 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "FOR OPERATION: [REDACTED] is a 66 year old-year-old male who presents with COPD for bronchoscopic lung volume reduction. The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail. Patient indicated a wish to proceed with surgery and informed consent was signed."
+    },
+    "clinical_context": {
+      "primary_indication": "FOR OPERATION: [REDACTED] is a 66 year old-year-old male who presents with COPD for bronchoscopic lung volume reduction. The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail. Patient indicated a wish to proceed with surgery and informed consent was signed.",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "ETT",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "Vocal Cords: Not assessed due to bronchoscopy introduction through ETT Secretions: Minimal, thin, and clear",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "bal": {
+        "performed": true,
+        "location": "Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3)",
+        "volume_instilled_ml": 60,
+        "volume_recovered_ml": 20
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug",
+        "location": "Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2)"
+      },
+      "foreign_body_removal": {
+        "performed": true
+      },
+      "blvr": {
+        "performed": true,
+        "procedure_type": "Valve placement",
+        "valve_type": "Spiration (Olympus)",
+        "valve_sizes": [
+          "5",
+          "7",
+          "7",
+          "7",
+          "7"
+        ],
+        "number_of_valves": 5,
+        "segments_treated": [
+          "LLL anterior subsegment",
+          "LLL posterior subsegement",
+          "LLL lateral subsegment",
+          "LLL medial/accessory subsegment"
+        ],
+        "collateral_ventilation_assessment": "Chartis negative"
+      },
+      "balloon_occlusion": {
+        "performed": true
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "complication_list": [],
+      "bleeding": {
+        "occurred": false,
+        "bleeding_grade_nashville": 0
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "disposition": "Observation unit",
+      "follow_up_plan_text": "[REDACTED] is a 66 year old-year-old male who presents for bronchoscopy for bronchoscopic lung volume reduction. Endobronchial valves were placed without immediate complication."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Instilled 60 cc",
+              "span": [
+                3959,
+                3974
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage",
+              "span": [
+                3840,
+                3865
+              ],
+              "confidence": 1
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3)",
+              "span": [
+                3840,
+                3956
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "suction returned with 20 cc",
+              "span": [
+                3982,
+                4009
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31635",
+          "description": "Bronchoscopy; with removal of foreign body",
+          "derived_from": [
+            "procedures_performed.foreign_body_removal"
+          ]
+        },
+        {
+          "code": "31646",
+          "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+          "derived_from": [
+            "procedures_performed.therapeutic_aspiration"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "31646",
+              "span": [
+                827,
+                832
+              ],
+              "confidence": 1
+            },
+            {
+              "source": "registry_span",
+              "text": "therapeutic aspiration",
+              "span": [
+                2911,
+                2933
+              ],
+              "confidence": 1
+            }
+          ]
+        },
+        {
+          "code": "31647",
+          "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+          "derived_from": [
+            "procedures_performed.blvr"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "bronchoscopic lung volume reduction",
+              "span": [
+                186,
+                221
+              ],
+              "confidence": 1
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-17T20:05:57.779767+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 3959,
+                "end": 3974,
+                "snippet": "Instilled 60 cc"
+              },
+              {
+                "start": 3840,
+                "end": 3865,
+                "snippet": "Bronchial alveolar lavage"
+              },
+              {
+                "start": 3840,
+                "end": 3956,
+                "snippet": "Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3)"
+              },
+              {
+                "start": 3982,
+                "end": 4009,
+                "snippet": "suction returned with 20 cc"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31635",
+            "description": "Bronchoscopy; with removal of foreign body",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "foreign_body_removal.performed=true",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 3,
+            "code": "31646",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 827,
+                "end": 832,
+                "snippet": "31646"
+              },
+              {
+                "start": 2911,
+                "end": 2933,
+                "snippet": "therapeutic aspiration"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31647",
+            "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "blvr.procedure_type='Valve placement' (lobes=['LLL'])",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 186,
+                "end": 221,
+                "snippet": "bronchoscopic lung volume reduction"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2210,
+                "end": 2244,
+                "snippet": "Initial Airway Inspection Findings"
+              },
+              {
+                "start": 2858,
+                "end": 2894,
+                "snippet": "Secretions: Minimal, thin, and clear"
+              },
+              {
+                "start": 2210,
+                "end": 2244,
+                "snippet": "Initial Airway Inspection Findings"
+              }
+            ]
+          },
+          {
+            "sequence": 6,
+            "code": "31634",
+            "description": "Bronchoscopy; with balloon occlusion, assessment of air leak, airway sizing, and documentation",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Suppressed 31634 (Chartis): bundled with BLVR valve procedure in same lobe(s)=['LLL']",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 186,
+                "end": 221,
+                "snippet": "bronchoscopic lung volume reduction"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Instilled 60 cc",
+                "span": {
+                  "start": 3959,
+                  "end": 3974
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage",
+                "span": {
+                  "start": 3840,
+                  "end": 3865
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3)",
+                "span": {
+                  "start": 3840,
+                  "end": 3956
+                }
+              },
+              {
+                "snippet": "suction returned with 20 cc",
+                "span": {
+                  "start": 3982,
+                  "end": 4009
+                }
+              }
+            ]
+          },
+          {
+            "code": "31635",
+            "summary": "foreign_body_removal.performed=true"
+          },
+          {
+            "code": "31646",
+            "summary": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "documentation_evidence": [
+              {
+                "snippet": "31646",
+                "span": {
+                  "start": 827,
+                  "end": 832
+                }
+              },
+              {
+                "snippet": "therapeutic aspiration",
+                "span": {
+                  "start": 2911,
+                  "end": 2933
+                }
+              }
+            ]
+          },
+          {
+            "code": "31647",
+            "summary": "blvr.procedure_type='Valve placement' (lobes=['LLL'])",
+            "documentation_evidence": [
+              {
+                "snippet": "bronchoscopic lung volume reduction",
+                "span": {
+                  "start": 186,
+                  "end": 221
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 2210,
+                  "end": 2244
+                }
+              },
+              {
+                "snippet": "Secretions: Minimal, thin, and clear",
+                "span": {
+                  "start": 2858,
+                  "end": 2894
+                }
+              },
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 2210,
+                  "end": 2244
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          },
+          {
+            "code": "31634",
+            "summary": "Suppressed 31634 (Chartis): bundled with BLVR valve procedure in same lobe(s)=['LLL']",
+            "documentation_evidence": [
+              {
+                "snippet": "bronchoscopic lung volume reduction",
+                "span": {
+                  "start": 186,
+                  "end": 221
+                }
+              }
+            ],
+            "rule_refs": [
+              "chartis_bundling"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          },
+          {
+            "rule_id": "chartis_bundling",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31634"
+            ],
+            "outcome": "dropped",
+            "details": "Suppressed 31634 (Chartis): bundled with BLVR valve procedure in same lobe(s)=['LLL']"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+          "Suppressed 31634 (Chartis): bundled with BLVR valve procedure in same lobe(s)=['LLL']"
+        ]
+      }
+    },
+    "granular_data": {
+      "blvr_valve_placements": [
+        {
+          "valve_number": 1,
+          "target_lobe": "LLL",
+          "segment": "LLL anterior subsegment",
+          "valve_size": "5",
+          "valve_type": "Spiration (Olympus)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 2,
+          "target_lobe": "LLL",
+          "segment": "LLL posterior subsegement",
+          "valve_size": "7",
+          "valve_type": "Spiration (Olympus)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 3,
+          "target_lobe": "LLL",
+          "segment": "LLL lateral subsegment",
+          "valve_size": "7",
+          "valve_type": "Spiration (Olympus)",
+          "deployment_successful": true
+        },
+        {
+          "valve_number": 4,
+          "target_lobe": "LLL",
+          "segment": "LLL medial/accessory subsegment",
+          "valve_size": "7",
+          "valve_type": "Spiration (Olympus)",
+          "deployment_successful": true
+        }
+      ],
+      "blvr_chartis_measurements": [
+        {
+          "lobe_assessed": "LLL",
+          "cv_result": "CV Negative"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.volume_instilled_ml": [
+        {
+          "text": "Instilled 60 cc",
+          "start": 3959,
+          "end": 3974,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.performed": [
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 3840,
+          "end": 3865
+        }
+      ],
+      "procedures_performed.blvr.performed": [
+        {
+          "text": "bronchoscopic lung volume reduction",
+          "start": 186,
+          "end": 221
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 2210,
+          "end": 2244
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "FOR OPERATION:  [REDACTED] is a 66 year old-year-old male who presents with COPD for bronchoscopic lung volume reduction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+          "start": 101,
+          "end": 419
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "FOR OPERATION:  [REDACTED] is a 66 year old-year-old male who presents with COPD for bronchoscopic lung volume reduction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+          "start": 101,
+          "end": 419
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "ANESTHESIA",
+          "start": 1501,
+          "end": 1511
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "endotracheal tube",
+          "start": 2252,
+          "end": 2269
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "Secretions: Minimal, thin, and clear",
+          "start": 2858,
+          "end": 2894
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 2210,
+          "end": 2244
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.is_subsequent": [
+        {
+          "text": "31646",
+          "start": 827,
+          "end": 832
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31624",
+          "start": 876,
+          "end": 881
+        },
+        {
+          "text": "31635",
+          "start": 915,
+          "end": 920
+        },
+        {
+          "text": "31646",
+          "start": 827,
+          "end": 832
+        },
+        {
+          "text": "31647",
+          "start": 942,
+          "end": 947
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 2911,
+          "end": 2933
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3)",
+          "start": 3840,
+          "end": 3956,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_recovered_ml": [
+        {
+          "text": "suction returned with 20 cc",
+          "start": 3982,
+          "end": 4009,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "No evidence of mass, lesions, bleeding",
+          "start": 2621,
+          "end": 2659,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.volume_instilled_ml": [
+      {
+        "source": "registry_span",
+        "text": "Instilled 60 cc",
+        "span": [
+          3959,
+          3974
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          3840,
+          3865
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.blvr.performed": [
+      {
+        "source": "registry_span",
+        "text": "bronchoscopic lung volume reduction",
+        "span": [
+          186,
+          221
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          2210,
+          2244
+        ],
+        "confidence": 1
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "FOR OPERATION:  [REDACTED] is a 66 year old-year-old male who presents with COPD for bronchoscopic lung volume reduction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+        "span": [
+          101,
+          419
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "FOR OPERATION:  [REDACTED] is a 66 year old-year-old male who presents with COPD for bronchoscopic lung volume reduction.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+        "span": [
+          101,
+          419
+        ],
+        "confidence": 1
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "ANESTHESIA",
+        "span": [
+          1501,
+          1511
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "endotracheal tube",
+        "span": [
+          2252,
+          2269
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "Secretions: Minimal, thin, and clear",
+        "span": [
+          2858,
+          2894
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          2210,
+          2244
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.is_subsequent": [
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          827,
+          832
+        ],
+        "confidence": 1
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31624",
+        "span": [
+          876,
+          881
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31635",
+        "span": [
+          915,
+          920
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          827,
+          832
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31647",
+        "span": [
+          942,
+          947
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          2911,
+          2933
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2) and Anterior Segment of LUL (LB3)",
+        "span": [
+          3840,
+          3956
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_recovered_ml": [
+      {
+        "source": "registry_span",
+        "text": "suction returned with 20 cc",
+        "span": [
+          3982,
+          4009
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "No evidence of mass, lesions, bleeding",
+        "span": [
+          2621,
+          2659
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [
+    {
+      "group": "Global",
+      "path": "patient_demographics.age_years",
+      "target_path": "patient.age",
+      "label": "Patient age (years)",
+      "severity": "required",
+      "message": "Age was not found in the note. Add age in years (e.g., “65-year-old”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.asa_class",
+      "target_path": "risk_assessment.asa_class",
+      "label": "ASA class",
+      "severity": "required",
+      "message": "ASA class was not found in the note. Add ASA 1–6 (e.g., “ASA 3”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.ecog_score",
+      "target_path": "clinical_context.ecog_score",
+      "label": "ECOG/Zubrod performance status",
+      "severity": "required",
+      "message": "ECOG/Zubrod performance status was not found in the note. Add ECOG 0–4 (or a range like 0–1)."
+    }
+  ],
+  "cpt_codes": [
+    "31624",
+    "31635",
+    "31646",
+    "31647"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31635",
+      "description": "Bronchoscopy; with removal of foreign body",
+      "confidence": 0.8,
+      "rationale": "foreign_body_removal.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31647",
+      "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+      "confidence": 0.8,
+      "rationale": "blvr.procedure_type='Valve placement' (lobes=['LLL'])",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 12.65,
+  "estimated_payment": 453.59,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "units": 1,
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 60.46,
+      "facility_payment_before_multiple_endoscopy": 120.91,
+      "multiple_endoscopy_role": "secondary",
+      "multiple_endoscopy_reduction": 60.46
+    },
+    {
+      "cpt_code": "31635",
+      "description": "Bronchoscopy; with removal of foreign body",
+      "units": 1,
+      "work_rvu": 3.33,
+      "total_facility_rvu": 4.74,
+      "facility_payment": 79.16,
+      "facility_payment_before_multiple_endoscopy": 158.32,
+      "multiple_endoscopy_role": "secondary",
+      "multiple_endoscopy_reduction": 79.16
+    },
+    {
+      "cpt_code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "units": 1,
+      "work_rvu": 2.71,
+      "total_facility_rvu": 3.86,
+      "facility_payment": 128.93
+    },
+    {
+      "cpt_code": "31647",
+      "description": "Bronchoscopy; with endobronchial valve placement, initial bronchus",
+      "units": 1,
+      "work_rvu": 4.05,
+      "total_facility_rvu": 5.54,
+      "facility_payment": 185.04,
+      "facility_payment_before_multiple_endoscopy": 185.04,
+      "multiple_endoscopy_role": "primary",
+      "multiple_endoscopy_reduction": 0
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": false,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for bal, balloon_occlusion, blvr, diagnostic_bronchoscopy, therapeutic_aspiration",
+    "31647: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31648: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31649: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31651: ML detected procedure, but specific device/anatomy was not found in text.",
+    "BLVR valve removal noted; setting foreign_body_removal.performed=true",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=0",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "Suppressed 31634 (Chartis): bundled with BLVR valve procedure in same lobe(s)=['LLL']",
+    "MULTIPLE_ENDOSCOPY_RULE: primary=31647; reduced=31624,31635; reduction=50%"
+  ],
+  "validation_errors": [],
+  "review_status": "finalized",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 609.95
+}
