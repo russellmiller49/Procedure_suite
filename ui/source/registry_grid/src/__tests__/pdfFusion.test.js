@@ -53,6 +53,7 @@ describe("pdf fusion arbitration", () => {
     expect(result.sourceDecision).toBe("hybrid");
     expect(result.text).toContain("Procedure Report");
     expect(result.text).toContain("Distal airway narrowing described in detail");
+    expect(result.text.split("\n")).not.toContain("Left upper lobe");
   });
 
   it("deduplicates line content in native+ocr merges", () => {
@@ -89,5 +90,29 @@ describe("pdf fusion arbitration", () => {
 
     expect(cleaned).toContain("Large airway obstruction in the left main stem for one month.");
     expect(cleaned).not.toContain("OOOO 0000");
+  });
+
+  it("trims noisy OCR prefixes and keeps clinical sentence cores", () => {
+    const cleaned = sanitizeOcrText(
+      "MOO 00000 C00 C6 Large airway obstruction in the left main stem for one month.",
+      { mode: "augment" },
+    );
+
+    expect(cleaned).toBe("Large airway obstruction in the left main stem for one month.");
+  });
+
+  it("drops OCR vendor/footer boilerplate in augment mode", () => {
+    const cleaned = sanitizeOcrText(
+      [
+        "PHOTOREPORT",
+        "EndoSoft Surgery Center OMI00C00 00007) OOO",
+        "which the patient appeared to understand and so stated.",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    expect(cleaned).not.toContain("PHOTOREPORT");
+    expect(cleaned).not.toContain("EndoSoft Surgery Center");
+    expect(cleaned).toContain("which the patient appeared to understand and so stated.");
   });
 });
