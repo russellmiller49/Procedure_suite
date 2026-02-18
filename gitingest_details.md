@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-16T11:14:07-08:00`
-Git: `major_update_2_14_26` @ `23bb135`
+Generated: `2026-02-17T18:43:41-08:00`
+Git: `main` @ `c1c8166`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -607,7 +607,6 @@ Git: `major_update_2_14_26` @ `23bb135`
      7850  app/registry/ner_mapping/entity_to_registry.py
      8145  app/coder/adapters/persistence/inmemory_procedure_store.py
      8181  tests/ml_coder/test_registry_predictor.py
-     8210  tests/api/test_unified_process.py
      8223  tests/coder/test_rules_engine.py
      8320  tests/api/test_phi_redactor_ui.py
      8411  app/registry/inference_pytorch.py
@@ -618,6 +617,7 @@ Git: `major_update_2_14_26` @ `23bb135`
      8648  app/coder/application/procedure_type_detector.py
      8691  tests/coding/test_json_rules_parity.py
      8694  app/api/coder_adapter.py
+     8697  tests/api/test_unified_process.py
      9005  app/api/routes/metrics.py
      9276  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9381  app/registry/processing/focus.py
@@ -635,7 +635,7 @@ Git: `major_update_2_14_26` @ `23bb135`
     10712  app/registry/postprocess/template_checkbox_negation.py
     10787  tests/unit/test_inmemory_procedure_store.py
     10930  tests/registry/test_ebus_config_station_count.py
-    11009  app/api/services/unified_pipeline.py
+    11052  app/api/services/unified_pipeline.py
     11177  tests/test_phi_redaction_contract.py
     11289  app/coder/adapters/nlp/keyword_mapping_loader.py
     11290  tests/registry/test_registry_guardrails.py
@@ -663,8 +663,8 @@ Git: `major_update_2_14_26` @ `23bb135`
     14244  ml/lib/ml_coder/registry_predictor.py
     14393  app/registry/ml/models.py
     14462  tests/integration/coder/test_hybrid_policy.py
-    14515  app/api/schemas/base.py
     14585  docs/phi_review_system/backend/models.py
+    14787  app/api/schemas/base.py
     14872  tests/phi/test_veto_regression.py
     14895  proc_schemas/registry/ip_v3.py
     14928  app/registry/schema/adapters/v3_to_v2.py
@@ -711,9 +711,9 @@ Git: `major_update_2_14_26` @ `23bb135`
     19268  app/coder/adapters/persistence/csv_kb_adapter.py
     19382  app/registry/evidence/verifier.py
     19751  tests/integration/api/test_registry_endpoints.py
-    19902  app/registry/completeness/missing_field_prompts.py
     20079  app/registry_cleaning/cpt_utils.py
     20190  tests/registry/test_cao_extraction.py
+    20250  app/registry/completeness/missing_field_prompts.py
     20268  app/coder/parallel_pathway/orchestrator.py
     20422  app/registry/model_bootstrap.py
     20519  app/registry/extractors/llm_detailed.py
@@ -730,7 +730,7 @@ Git: `major_update_2_14_26` @ `23bb135`
     22623  tests/ml_coder/test_registry_data_prep.py
     22694  ml/lib/ml_coder/data_prep.py
     23485  docs/phi_review_system/backend/endpoints.py
-    23501  app/api/routes/reporting.py
+    23556  app/api/routes/reporting.py
     24057  tests/ml_advisor/conftest.py
     24902  tests/integration/api/test_coder_run_endpoint.py
     24968  app/registry/legacy/adapters/airway.py
@@ -1344,8 +1344,8 @@ Git: `major_update_2_14_26` @ `23bb135`
  inline_cap_reached>75  app/registry/inference_onnx.py
  inline_cap_reached>75  app/coder/adapters/persistence/csv_kb_adapter.py
  inline_cap_reached>75  app/registry/evidence/verifier.py
- inline_cap_reached>75  app/registry/completeness/missing_field_prompts.py
  inline_cap_reached>75  app/registry_cleaning/cpt_utils.py
+ inline_cap_reached>75  app/registry/completeness/missing_field_prompts.py
  inline_cap_reached>75  app/coder/parallel_pathway/orchestrator.py
  inline_cap_reached>75  app/registry/model_bootstrap.py
  inline_cap_reached>75  app/registry/extractors/llm_detailed.py
