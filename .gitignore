@@ -45,6 +45,10 @@ dist/registry_bundle/
 # Hugging Face model snapshots (large; keep out of git)
 ui/static/phi_redactor/vendor/**
 !ui/static/phi_redactor/vendor/.gitkeep
+!ui/static/phi_redactor/vendor/pdfjs/
+!ui/static/phi_redactor/vendor/pdfjs/**
+!ui/static/phi_redactor/vendor/tesseract/
+!ui/static/phi_redactor/vendor/tesseract/**
 
 # Hugging Face model snapshots (downloaded locally; keep out of git)
 data/models/hf/**
