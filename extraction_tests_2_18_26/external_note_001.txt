@@ -1,0 +1,91 @@
+external_note_001
+PRE-PROCEDURE DIAGNOSIS:
+Other complications of lung transplant T86.818
+Multifocal post-transplant bronchial stenoses
+
+INDICATION: Obtain diagnosis and Therapeutic
+
+
+PROCEDURE SUMMARY:
+31622 Flexible videobronchoscopy
+31638 Stent Revision
+31641 Tissue/Tumor Destruction
+31630 Dilation
+31636 Bronchial Stent placement
+
+POST-PROCEDURE DIAGNOSIS:
+Same as pre-operative diagnoses
+Existing LMS stent x 2, LUL stent, LLL stent appeared in good position, with
+significant in-stent secretions
+Moderate amount of granulation tissue, distal LMS just before LC2 where there is
+a gap in her stents
+RMS widely patent
+BI stent in good position and widely patent
+RUL could not be identified; possible that it is partially jailed by the BI
+stent, possible that it has firmly fibrosed to obstruction
+RML severe stenosis at its take-off, down to 1 mm
+Successful revision of existing left-sided stents by clearance of in-stent
+secretions
+Successful placement of a 6 x 6 mm Atrium iCast stent in the RML bronchus
+RUL bronchus could not be identified/recanalized
+
+ANESTHESIA:
+TIVA. See separate anesthesia provider documentation. This procedure was
+performed using standard monitoring procedures in Vanderbilt's OR 28.
+
+FINDINGS:
+After adequate local and intravenous anesthesia, bronchoscopy was performed via
+the existing tracheostomy tube with inner cannula removed. The distal trachea
+appeared normal. Inspection of RIGHT bronchial tree to the segmental level
+appeared abnormal: as noted above. Inspection of LEFT bronchial tree to the
+segmental level appeared abnormal: as noted above. Moderate moderately thick
+secretions were present throughout the large airways.
+
+PROCEDURES:
+First using the therapeutic scope, the left-sided stents were revised via
+clearance of significant in-stent secretions which were largely obstructing the
+lumen of her left-sided stents. Once the LMS was cleared, we switched to the
+P-190 4 mm OD scope and inspected the LUL and LLL. LUL was partially stenosed by
+granulation tissue at distal LMS just before LC2. LLL was widely patent
+proximally, with some granulation at the distal aspect of the LLL stent.
+
+Cryoablation was then performed at the granulation tissue in the distal LMS
+using repeated freeze-thaw cycles of the 1.7 mm ERBE flexible cryprobe. At each
+site, 3 freezes were performed for approximately 30 seconds; the tissue was
+allowed to thaw between each freeze. These freeze-thaw cycles were performed at
+a total of 2 near-overlapping sites to cover the area. We then moved to the
+granulation in the LLL bronchus distal to the stent, where another 3 freeze/thaw
+cycles were performed.
+
+Next, we turned our attention to the right side. Using a Merit 6-7-8 x 20 mm
+balloon, the RML was dilated to 6 mm with decent immediate result. We could
+clearly identify the medial and lateral segments. Given this airway has
+progressive stenosed over time, we elected to proceed with stent placement. An
+Atrium iCast 6 mm x 16 mm stent was selected and deployed via its balloon
+deployment catheter in good position. Presenting aspects of the stent
+overhanging the distal BI were bent/flanged over RC2 with the end of the
+flexible scope. Both RML segments could be visualized through the stent and were
+patent.
+
+Finally, we attempted to recover the RUL bronchus. There was a slight
+indentation where the RUL bronchus should have been. This was probed with
+flexible forceps and was firm and would not give. I could not be sure that this
+is the remnant of the RUL or not. There were a few air bubbles coming around the
+proximal aspect of the BI stent, suggesting the residual RUL might be partially
+jailed. I gently pulled the edges of the BI stent down using flexible forceps in
+the region where the RUL take-off should have been and could not identify
+anything that looked like residual RUL. We therefore could not recanalize the
+RUL. At my last bronchoscopy, we were only able to recovery two RUL segments,
+both themselves stenosed, and the RUL bronchus itself was only 10 mm - not clear
+that it would have been stent-able or that stent would have helped even if we
+were able to recover it.
+
+
+SPECIMENS: none
+
+
+COMPLICATIONS: None.
+
+EBL: Minimal, <5 ml
+
+The patient was transported to the PACU in stable condition.

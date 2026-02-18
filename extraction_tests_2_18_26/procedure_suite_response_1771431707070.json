@@ -1,0 +1,658 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "Obtain diagnosis and Therapeutic"
+    },
+    "clinical_context": {
+      "primary_indication": "Obtain diagnosis and Therapeutic",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedures_performed": {
+      "airway_dilation": {
+        "performed": true,
+        "target_anatomy": "Stent expansion",
+        "method": "Balloon",
+        "balloon_diameter_mm": 20
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": true,
+        "action_type": "revision",
+        "action": "Revision/Repositioning",
+        "device_size": "6 x 6 mm",
+        "diameter_mm": 6
+      },
+      "cryotherapy": {
+        "performed": true
+      },
+      "peripheral_ablation": {
+        "performed": true
+      }
+    },
+    "pleural_procedures": {
+      "chest_tube_removal": {
+        "performed": true
+      }
+    },
+    "outcomes": {
+      "procedure_success_status": "Partial success",
+      "aborted_reason": "RUL could not be identified; possible that it is partially jailed by the BI"
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31638",
+          "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+          "derived_from": [
+            "procedures_performed.airway_stent"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "6 x 6 mm",
+              "span": [
+                972,
+                980
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "stent",
+              "span": [
+                405,
+                410
+              ],
+              "confidence": 1
+            }
+          ]
+        },
+        {
+          "code": "31641",
+          "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+          "derived_from": [
+            "procedures_performed.cryotherapy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Cryoablation",
+              "span": [
+                2170,
+                2182
+              ],
+              "confidence": 1
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-18T16:21:43.947426+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31638",
+            "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "airway_stent indicates removal/exchange",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 972,
+                "end": 980,
+                "snippet": "6 x 6 mm"
+              },
+              {
+                "start": 405,
+                "end": 410,
+                "snippet": "stent"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31641",
+            "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "cryotherapy.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2170,
+                "end": 2182,
+                "snippet": "Cryoablation"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 3005,
+                "end": 3052,
+                "snippet": "stent was selected and deployed via its balloon"
+              },
+              {
+                "start": 2749,
+                "end": 2775,
+                "snippet": "balloon, the RML was dilat"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31638",
+            "summary": "airway_stent indicates removal/exchange",
+            "documentation_evidence": [
+              {
+                "snippet": "6 x 6 mm",
+                "span": {
+                  "start": 972,
+                  "end": 980
+                }
+              },
+              {
+                "snippet": "stent",
+                "span": {
+                  "start": 405,
+                  "end": 410
+                }
+              }
+            ]
+          },
+          {
+            "code": "31641",
+            "summary": "cryotherapy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Cryoablation",
+                "span": {
+                  "start": 2170,
+                  "end": 2182
+                }
+              }
+            ]
+          },
+          {
+            "code": "31630",
+            "summary": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+            "documentation_evidence": [
+              {
+                "snippet": "stent was selected and deployed via its balloon",
+                "span": {
+                  "start": 3005,
+                  "end": 3052
+                }
+              },
+              {
+                "snippet": "balloon, the RML was dilat",
+                "span": {
+                  "start": 2749,
+                  "end": 2775
+                }
+              }
+            ],
+            "rule_refs": [
+              "dilation_with_destruction"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "dilation_with_destruction",
+            "rule_type": "local",
+            "codes_affected": [
+              "31630"
+            ],
+            "outcome": "dropped",
+            "details": "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS."
+          }
+        ],
+        "global_comments": [
+          "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS."
+        ]
+      }
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "LLL",
+          "obstruction_type": "Intraluminal",
+          "stent_placed_at_site": true
+        },
+        {
+          "location": "RML",
+          "modalities_applied": [
+            {
+              "modality": "Balloon dilation"
+            }
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.airway_stent.device_size": [
+        {
+          "text": "6 x 6 mm",
+          "start": 972,
+          "end": 980,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.airway_dilation.target_anatomy": [
+        {
+          "text": "stent was selected and deployed via its balloon",
+          "start": 3005,
+          "end": 3052,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "balloon, the RML was dilat",
+          "start": 2749,
+          "end": 2775
+        }
+      ],
+      "procedures_performed.airway_stent.performed": [
+        {
+          "text": "stent",
+          "start": 405,
+          "end": 410
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Obtain diagnosis and Therapeutic",
+          "start": 135,
+          "end": 167
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Obtain diagnosis and Therapeutic",
+          "start": 135,
+          "end": 167
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31622",
+          "start": 193,
+          "end": 198
+        },
+        {
+          "text": "31630",
+          "start": 281,
+          "end": 286
+        },
+        {
+          "text": "31636",
+          "start": 297,
+          "end": 302
+        },
+        {
+          "text": "31638",
+          "start": 227,
+          "end": 232
+        },
+        {
+          "text": "31641",
+          "start": 249,
+          "end": 254
+        }
+      ],
+      "procedures_performed.cryotherapy.performed": [
+        {
+          "text": "Cryoablation",
+          "start": 2170,
+          "end": 2182
+        }
+      ],
+      "procedures_performed.peripheral_ablation.performed": [
+        {
+          "text": "Cryoablation",
+          "start": 2170,
+          "end": 2182
+        }
+      ],
+      "pleural_procedures.chest_tube_removal.performed": [
+        {
+          "text": "tube with inner cannula removed",
+          "start": 1351,
+          "end": 1382
+        }
+      ],
+      "outcomes.procedure_success_status": [
+        {
+          "text": "RUL could not be identified; possible that it is partially jailed by the BI",
+          "start": 670,
+          "end": 746,
+          "confidence": 0.9
+        }
+      ],
+      "outcomes.aborted_reason": [
+        {
+          "text": "RUL could not be identified; possible that it is partially jailed by the BI",
+          "start": 670,
+          "end": 746,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.airway_stent.device_size": [
+      {
+        "source": "registry_span",
+        "text": "6 x 6 mm",
+        "span": [
+          972,
+          980
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.airway_dilation.target_anatomy": [
+      {
+        "source": "registry_span",
+        "text": "stent was selected and deployed via its balloon",
+        "span": [
+          3005,
+          3052
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "balloon, the RML was dilat",
+        "span": [
+          2749,
+          2775
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.airway_stent.performed": [
+      {
+        "source": "registry_span",
+        "text": "stent",
+        "span": [
+          405,
+          410
+        ],
+        "confidence": 1
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Obtain diagnosis and Therapeutic",
+        "span": [
+          135,
+          167
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Obtain diagnosis and Therapeutic",
+        "span": [
+          135,
+          167
+        ],
+        "confidence": 1
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31622",
+        "span": [
+          193,
+          198
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31630",
+        "span": [
+          281,
+          286
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31636",
+        "span": [
+          297,
+          302
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31638",
+        "span": [
+          227,
+          232
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31641",
+        "span": [
+          249,
+          254
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.cryotherapy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Cryoablation",
+        "span": [
+          2170,
+          2182
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.peripheral_ablation.performed": [
+      {
+        "source": "registry_span",
+        "text": "Cryoablation",
+        "span": [
+          2170,
+          2182
+        ],
+        "confidence": 1
+      }
+    ],
+    "pleural_procedures.chest_tube_removal.performed": [
+      {
+        "source": "registry_span",
+        "text": "tube with inner cannula removed",
+        "span": [
+          1351,
+          1382
+        ],
+        "confidence": 1
+      }
+    ],
+    "outcomes.procedure_success_status": [
+      {
+        "source": "registry_span",
+        "text": "RUL could not be identified; possible that it is partially jailed by the BI",
+        "span": [
+          670,
+          746
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "outcomes.aborted_reason": [
+      {
+        "source": "registry_span",
+        "text": "RUL could not be identified; possible that it is partially jailed by the BI",
+        "span": [
+          670,
+          746
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [
+    {
+      "group": "Global",
+      "path": "patient_demographics.age_years",
+      "target_path": "patient.age",
+      "label": "Patient age (years)",
+      "severity": "required",
+      "message": "Age was not found in the note. Add age in years (e.g., “65-year-old”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.asa_class",
+      "target_path": "risk_assessment.asa_class",
+      "label": "ASA class",
+      "severity": "required",
+      "message": "ASA class was not found in the note. Add ASA 1–6 (e.g., “ASA 3”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.ecog_score",
+      "target_path": "clinical_context.ecog_score",
+      "label": "ECOG/Zubrod performance status",
+      "severity": "required",
+      "message": "ECOG/Zubrod performance status was not found in the note. Add ECOG 0–4 (or a range like 0–1)."
+    }
+  ],
+  "cpt_codes": [
+    "31638",
+    "31641"
+  ],
+  "suggestions": [
+    {
+      "code": "31638",
+      "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+      "confidence": 0.8,
+      "rationale": "airway_stent indicates removal/exchange",
+      "review_flag": "required"
+    },
+    {
+      "code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "confidence": 0.8,
+      "rationale": "cryotherapy.performed=true",
+      "review_flag": "required"
+    },
+    {
+      "code": "31622",
+      "description": "Bronchoscopy; diagnostic, with cell washing",
+      "confidence": 0.4,
+      "rationale": "Header explicitly documents this code; deterministic derivation did not support it.",
+      "review_flag": "required"
+    },
+    {
+      "code": "31630",
+      "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+      "confidence": 0.4,
+      "rationale": "Header explicitly documents this code; deterministic derivation did not support it.",
+      "review_flag": "required"
+    },
+    {
+      "code": "31636",
+      "description": "Bronchoscopy; with placement of bronchial stent(s), initial bronchus",
+      "confidence": 0.4,
+      "rationale": "Header explicitly documents this code; deterministic derivation did not support it.",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 9.65,
+  "estimated_payment": 334,
+  "per_code_billing": [
+    {
+      "cpt_code": "31638",
+      "description": "Bronchoscopy; with revision of tracheal or bronchial stent",
+      "units": 1,
+      "work_rvu": 4.76,
+      "total_facility_rvu": 6.56,
+      "facility_payment": 109.55,
+      "facility_payment_before_multiple_endoscopy": 219.11,
+      "multiple_endoscopy_role": "secondary",
+      "multiple_endoscopy_reduction": 109.55
+    },
+    {
+      "cpt_code": "31641",
+      "description": "Bronchoscopy; with destruction of tumor or relief of stenosis by any method",
+      "units": 1,
+      "work_rvu": 4.89,
+      "total_facility_rvu": 6.72,
+      "facility_payment": 224.45,
+      "facility_payment_before_multiple_endoscopy": 224.45,
+      "multiple_endoscopy_role": "primary",
+      "multiple_endoscopy_reduction": 0
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, airway_stent",
+    "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31645: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31646: ML detected procedure, but specific device/anatomy was not found in text.",
+    "HARD_OVERRIDE: Text mentions cryotherapy/cryo debulking but extraction missed it. -> procedures_performed.cryotherapy.performed=true",
+    "HARD_OVERRIDE: Text mentions cryoablation. -> procedures_performed.peripheral_ablation.performed=true",
+    "HARD_OVERRIDE: Text indicates chest tube removal but extraction missed it. -> pleural_procedures.chest_tube_removal.performed=true",
+    "CAO_DETAIL_HEURISTIC: parsed 2 CAO site entries from text",
+    "AUTO_OUTCOMES_STATUS: set outcomes.procedure_success_status='Partial success'",
+    "31630 (dilation) bundled into 31638 (stent). If dilation was performed at a distinct site, add 31630 with modifier 59/XS.",
+    "SELF_CORRECT_SKIPPED: 31630: patch did not derive target CPT",
+    "SELF_CORRECT_SKIPPED: 31636: patch did not derive target CPT",
+    "HEADER_EXPLICIT: header lists ['31622', '31630', '31636'] but deterministic derivation missed them",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31636 (prob=0.60), but deterministic derivation missed it",
+    "MULTIPLE_ENDOSCOPY_RULE: primary=31641; reduced=31638; reduction=50%"
+  ],
+  "validation_errors": [],
+  "review_status": "unverified",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 9554.02
+}
