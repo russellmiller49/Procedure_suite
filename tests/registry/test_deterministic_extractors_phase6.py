@@ -69,7 +69,9 @@ def test_forceps_biopsy_in_cavity_triggers_endobronchial_biopsy() -> None:
         "Multiple forceps biopsies were obtained from the mass within the cavity."
     )
     out = extract_endobronchial_biopsy(note_text)
-    assert out == {"endobronchial_biopsy": {"performed": True}}
+    ebx = out.get("endobronchial_biopsy") or {}
+    assert ebx.get("performed") is True
+    assert ebx.get("locations") == ["RLL"]
 
 
 def test_run_deterministic_extractors_airway_dilation_target_anatomy_with_evidence() -> None:

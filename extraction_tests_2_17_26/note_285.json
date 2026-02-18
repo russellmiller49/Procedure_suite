@@ -1,0 +1,2035 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "FOR OPERATION: [REDACTED] s is a 44 year old-year-old female who presents with inter and intralobular septal thickening as well as groundglass opacities. The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail. Patient indicated a wish to proceed with surgery and informed consent was signed."
+    },
+    "clinical_context": {
+      "primary_indication": "FOR OPERATION: [REDACTED] s is a 44 year old-year-old female who presents with inter and intralobular septal thickening as well as groundglass opacities. The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail. Patient indicated a wish to proceed with surgery and informed consent was signed.",
+      "lesion_size_mm": 10,
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "ETT",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "equipment": {
+      "fluoroscopy_used": true,
+      "navigation_platform": "Ion",
+      "cbct_used": true,
+      "augmented_fluoroscopy": true
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "secretions bilaterally",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "bal": {
+        "performed": true,
+        "location": "Apical Segment of RUL (RB1), Posterior Segment of RUL (RB2), and Anterior Segment of RUL (RB3)",
+        "volume_instilled_ml": 60,
+        "volume_recovered_ml": 20
+      },
+      "peripheral_tbna": {
+        "performed": true,
+        "targets_sampled": [
+          "Anterior Segment of RUL (RB3)"
+        ]
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "4L"
+        ],
+        "needle_gauge": "22G",
+        "elastography_used": true,
+        "node_events": [
+          {
+            "station": "4R",
+            "action": "inspected_only",
+            "evidence_quote": "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node"
+          },
+          {
+            "station": "4L",
+            "action": "needle_aspiration",
+            "passes": 4,
+            "pass_count": 4,
+            "elastography_pattern": "Type 1",
+            "evidence_quote": "Site 1: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. Despite the benign appearance, TBNA was performed to confirm the absence of malignancy and to obtain cytology for diagnostic completeness."
+          },
+          {
+            "station": "7",
+            "action": "inspected_only",
+            "evidence_quote": "Transbronchial cryobiopsy was performed with 1.1mm cryoprobe via the extended working channel catheter. Freeze time of 6 seconds were used. Total 7 samples were collected. Samples sent for Microbiology (Cultures/Viral/Fungal) and Pathology."
+          },
+          {
+            "station": "11R",
+            "action": "inspected_only",
+            "evidence_quote": "11Rs lymph node"
+          },
+          {
+            "station": "11R",
+            "action": "inspected_only",
+            "evidence_quote": "11Ri lymph node"
+          },
+          {
+            "station": "11L",
+            "action": "inspected_only",
+            "evidence_quote": "11L lymph node"
+          }
+        ]
+      },
+      "radial_ebus": {
+        "performed": true,
+        "probe_position": "Concentric"
+      },
+      "navigational_bronchoscopy": {
+        "performed": true
+      },
+      "transbronchial_cryobiopsy": {
+        "performed": true,
+        "locations_biopsied": [
+          "Anterior Segment of RUL (RB3)"
+        ]
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug",
+        "location": "Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2)"
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "[REDACTED] is a 44 year old-year-old female who presents for bronchoscopy for evaluation of diffuse groundglass opacities. The patient underwent robot-assisted bronchoscopy and endobronchial ultrasound with transbronchial needle aspiration without immediate complication."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Instilled 20 cc",
+              "span": [
+                5665,
+                5680
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage",
+              "span": [
+                5574,
+                5599
+              ],
+              "confidence": 1
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage was performed at Apical Segment of RUL (RB1), Posterior Segment of RUL (RB2), and Anterior Segment of RUL (RB3)",
+              "span": [
+                5780,
+                5917
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "suction returned with 20 cc",
+              "span": [
+                5943,
+                5970
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31627",
+          "description": "Navigational bronchoscopy",
+          "derived_from": [
+            "procedures_performed.navigational_bronchoscopy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "navigation bronchoscopy",
+              "span": [
+                3563,
+                3586
+              ],
+              "confidence": 1
+            }
+          ]
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+          "derived_from": [
+            "procedures_performed.transbronchial_cryobiopsy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "cryobiopsy",
+              "span": [
+                5343,
+                5353
+              ],
+              "confidence": 1
+            }
+          ]
+        },
+        {
+          "code": "31629",
+          "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+          "modifiers": [
+            "59"
+          ],
+          "derived_from": [
+            "procedures_performed.peripheral_tbna"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "TBNA",
+              "span": [
+                7464,
+                7468
+              ],
+              "confidence": 1
+            }
+          ]
+        },
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "4R",
+              "span": [
+                6463,
+                6465
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node",
+              "span": [
+                6434,
+                6491
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "4L",
+              "span": [
+                6913,
+                6915
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "4L",
+              "span": [
+                7896,
+                7898
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Site 1: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. Despite the benign appearance, TBNA was performed to confirm the absence of malignancy and to obtain cytology for diagnostic completeness.",
+              "span": [
+                6901,
+                7571
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "- Station 4L TBNA",
+              "span": [
+                7886,
+                7903
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31654",
+          "description": "Bronch ebus ivntj perph les",
+          "derived_from": [
+            "procedures_performed.radial_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Radial EBUS was performed to confirm that the location of the nodule is Concentric",
+              "span": [
+                3883,
+                3965
+              ],
+              "confidence": 1
+            },
+            {
+              "source": "registry_span",
+              "text": "Radial EBUS",
+              "span": [
+                2325,
+                2336
+              ],
+              "confidence": 1
+            }
+          ]
+        },
+        {
+          "code": "76377"
+        },
+        {
+          "code": "76982",
+          "description": "Us elastography 1st target"
+        },
+        {
+          "code": "76983",
+          "description": "Us elastography addl target",
+          "units": 2
+        },
+        {
+          "code": "77012"
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-17T20:14:15.188799+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 5665,
+                "end": 5680,
+                "snippet": "Instilled 20 cc"
+              },
+              {
+                "start": 5574,
+                "end": 5599,
+                "snippet": "Bronchial alveolar lavage"
+              },
+              {
+                "start": 5780,
+                "end": 5917,
+                "snippet": "Bronchial alveolar lavage was performed at Apical Segment of RUL (RB1), Posterior Segment of RUL (RB2), and Anterior Segment of RUL (RB3)"
+              },
+              {
+                "start": 5943,
+                "end": 5970,
+                "snippet": "suction returned with 20 cc"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31627",
+            "description": "Navigational bronchoscopy",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "navigational_bronchoscopy.performed=true",
+            "is_add_on": true,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 3563,
+                "end": 3586,
+                "snippet": "navigation bronchoscopy"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "transbronchial_cryobiopsy.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 5343,
+                "end": 5353,
+                "snippet": "cryobiopsy"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31629",
+            "modifiers": [
+              "59"
+            ],
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 7464,
+                "end": 7468,
+                "snippet": "TBNA"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 6463,
+                "end": 6465,
+                "snippet": "4R"
+              },
+              {
+                "start": 6434,
+                "end": 6491,
+                "snippet": "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node"
+              },
+              {
+                "start": 6913,
+                "end": 6915,
+                "snippet": "4L"
+              },
+              {
+                "start": 7896,
+                "end": 7898,
+                "snippet": "4L"
+              },
+              {
+                "start": 6901,
+                "end": 7571,
+                "snippet": "Site 1: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. Despite the benign appearance, TBNA was performed to confirm the absence of malignancy and to obtain cytology for diagnostic completeness."
+              },
+              {
+                "start": 7886,
+                "end": 7903,
+                "snippet": "- Station 4L TBNA"
+              }
+            ]
+          },
+          {
+            "sequence": 6,
+            "code": "31654",
+            "description": "Bronch ebus ivntj perph les",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "radial_ebus.performed=true",
+            "is_add_on": true,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 3883,
+                "end": 3965,
+                "snippet": "Radial EBUS was performed to confirm that the location of the nodule is Concentric"
+              },
+              {
+                "start": 2325,
+                "end": 2336,
+                "snippet": "Radial EBUS"
+              }
+            ]
+          },
+          {
+            "sequence": 7,
+            "code": "76377",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "equipment.augmented_fluoroscopy=true (3D reconstruction/rendering documented)",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 8,
+            "code": "76982",
+            "description": "Us elastography 1st target",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus elastography used (targets=5)",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 9,
+            "code": "76983",
+            "description": "Us elastography addl target",
+            "units": 2,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus elastography used and targets=5 (units=2; MUE cap=2)",
+            "is_add_on": true,
+            "source": "model"
+          },
+          {
+            "sequence": 10,
+            "code": "77012",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "equipment.cbct_used=true",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 11,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2590,
+                "end": 2624,
+                "snippet": "Initial Airway Inspection Findings"
+              },
+              {
+                "start": 2976,
+                "end": 2986,
+                "snippet": "secretions"
+              },
+              {
+                "start": 2590,
+                "end": 2624,
+                "snippet": "Initial Airway Inspection Findings"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Instilled 20 cc",
+                "span": {
+                  "start": 5665,
+                  "end": 5680
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage",
+                "span": {
+                  "start": 5574,
+                  "end": 5599
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage was performed at Apical Segment of RUL (RB1), Posterior Segment of RUL (RB2), and Anterior Segment of RUL (RB3)",
+                "span": {
+                  "start": 5780,
+                  "end": 5917
+                }
+              },
+              {
+                "snippet": "suction returned with 20 cc",
+                "span": {
+                  "start": 5943,
+                  "end": 5970
+                }
+              }
+            ]
+          },
+          {
+            "code": "31627",
+            "summary": "navigational_bronchoscopy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "navigation bronchoscopy",
+                "span": {
+                  "start": 3563,
+                  "end": 3586
+                }
+              }
+            ]
+          },
+          {
+            "code": "31628",
+            "summary": "transbronchial_cryobiopsy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "cryobiopsy",
+                "span": {
+                  "start": 5343,
+                  "end": 5353
+                }
+              }
+            ]
+          },
+          {
+            "code": "31629",
+            "summary": "peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)",
+            "documentation_evidence": [
+              {
+                "snippet": "TBNA",
+                "span": {
+                  "start": 7464,
+                  "end": 7468
+                }
+              }
+            ],
+            "rule_refs": [
+              "tbna_with_ebus_tbna"
+            ],
+            "qa_flags": [
+              {
+                "severity": "warning",
+                "rule_id": "tbna_with_ebus_tbna",
+                "message": "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling"
+              }
+            ]
+          },
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "4R",
+                "span": {
+                  "start": 6463,
+                  "end": 6465
+                }
+              },
+              {
+                "snippet": "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node",
+                "span": {
+                  "start": 6434,
+                  "end": 6491
+                }
+              },
+              {
+                "snippet": "4L",
+                "span": {
+                  "start": 6913,
+                  "end": 6915
+                }
+              },
+              {
+                "snippet": "4L",
+                "span": {
+                  "start": 7896,
+                  "end": 7898
+                }
+              },
+              {
+                "snippet": "Site 1: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. Despite the benign appearance, TBNA was performed to confirm the absence of malignancy and to obtain cytology for diagnostic completeness.",
+                "span": {
+                  "start": 6901,
+                  "end": 7571
+                }
+              },
+              {
+                "snippet": "- Station 4L TBNA",
+                "span": {
+                  "start": 7886,
+                  "end": 7903
+                }
+              }
+            ],
+            "qa_flags": [
+              {
+                "severity": "info",
+                "message": "Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed)."
+              }
+            ]
+          },
+          {
+            "code": "31654",
+            "summary": "radial_ebus.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Radial EBUS was performed to confirm that the location of the nodule is Concentric",
+                "span": {
+                  "start": 3883,
+                  "end": 3965
+                }
+              },
+              {
+                "snippet": "Radial EBUS",
+                "span": {
+                  "start": 2325,
+                  "end": 2336
+                }
+              }
+            ]
+          },
+          {
+            "code": "76377",
+            "summary": "equipment.augmented_fluoroscopy=true (3D reconstruction/rendering documented)"
+          },
+          {
+            "code": "76982",
+            "summary": "linear_ebus elastography used (targets=5)",
+            "qa_flags": [
+              {
+                "severity": "info",
+                "message": "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983."
+              }
+            ]
+          },
+          {
+            "code": "76983",
+            "summary": "linear_ebus elastography used and targets=5 (units=2; MUE cap=2)",
+            "qa_flags": [
+              {
+                "severity": "info",
+                "message": "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983."
+              }
+            ]
+          },
+          {
+            "code": "77012",
+            "summary": "equipment.cbct_used=true"
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 2590,
+                  "end": 2624
+                }
+              },
+              {
+                "snippet": "secretions",
+                "span": {
+                  "start": 2976,
+                  "end": 2986
+                }
+              },
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 2590,
+                  "end": 2624
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          },
+          {
+            "rule_id": "tbna_with_ebus_tbna",
+            "rule_type": "documentation",
+            "codes_affected": [
+              "31629"
+            ],
+            "outcome": "flagged",
+            "details": "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling"
+          },
+          {
+            "rule_type": "local",
+            "codes_affected": [
+              "76981",
+              "76982",
+              "76983"
+            ],
+            "outcome": "informational",
+            "details": "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983."
+          },
+          {
+            "rule_type": "local",
+            "codes_affected": [
+              "31645",
+              "31652",
+              "31653"
+            ],
+            "outcome": "informational",
+            "details": "Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed)."
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+          "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling",
+          "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983.",
+          "Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed)."
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "4L",
+          "sampled": true,
+          "needle_gauge": 21
+        }
+      ],
+      "navigation_targets": [
+        {
+          "target_number": 1,
+          "target_location_text": "Anterior Segment of RUL (RB3)",
+          "target_lobe": "RUL",
+          "target_segment": "Anterior Segment",
+          "lesion_size_mm": 10,
+          "ct_characteristics": "Ground-glass"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.volume_instilled_ml": [
+        {
+          "text": "Instilled 20 cc",
+          "start": 5665,
+          "end": 5680,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.performed": [
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 5574,
+          "end": 5599
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 2590,
+          "end": 2624
+        }
+      ],
+      "procedures_performed.radial_ebus.probe_position": [
+        {
+          "text": "Radial EBUS was performed to confirm that the location of the nodule is Concentric",
+          "start": 3883,
+          "end": 3965
+        }
+      ],
+      "procedures_performed.radial_ebus.performed": [
+        {
+          "text": "Radial EBUS",
+          "start": 2325,
+          "end": 2336
+        }
+      ],
+      "procedures_performed.navigational_bronchoscopy.performed": [
+        {
+          "text": "navigation bronchoscopy",
+          "start": 3563,
+          "end": 3586
+        }
+      ],
+      "procedures_performed.peripheral_tbna.performed": [
+        {
+          "text": "TBNA",
+          "start": 7464,
+          "end": 7468
+        }
+      ],
+      "procedures_performed.transbronchial_cryobiopsy.performed": [
+        {
+          "text": "cryobiopsy",
+          "start": 5343,
+          "end": 5353
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "FOR OPERATION:  [REDACTED]  s is a 44 year old-year-old female who presents with inter and intralobular septal thickening as well as groundglass opacities.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+          "start": 55,
+          "end": 407
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "FOR OPERATION:  [REDACTED]  s is a 44 year old-year-old female who presents with inter and intralobular septal thickening as well as groundglass opacities.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+          "start": 55,
+          "end": 407
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "ANESTHESIA",
+          "start": 2056,
+          "end": 2066
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "ETT",
+          "start": 2654,
+          "end": 2657
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions",
+          "start": 2976,
+          "end": 2986
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 2590,
+          "end": 2624
+        }
+      ],
+      "equipment.navigation_platform": [
+        {
+          "text": "Ion",
+          "start": 2337,
+          "end": 2340
+        }
+      ],
+      "equipment.cbct_used": [
+        {
+          "text": "Cone Beam CT",
+          "start": 4026,
+          "end": 4038
+        }
+      ],
+      "equipment.augmented_fluoroscopy": [
+        {
+          "text": "3D rendering",
+          "start": 3317,
+          "end": 3329
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31624",
+          "start": 950,
+          "end": 955
+        },
+        {
+          "text": "31627",
+          "start": 1043,
+          "end": 1048
+        },
+        {
+          "text": "31628",
+          "start": 989,
+          "end": 994
+        },
+        {
+          "text": "31629",
+          "start": 1017,
+          "end": 1022
+        },
+        {
+          "text": "31645",
+          "start": 905,
+          "end": 910
+        },
+        {
+          "text": "31652",
+          "start": 1272,
+          "end": 1277
+        },
+        {
+          "text": "31654",
+          "start": 1305,
+          "end": 1310
+        },
+        {
+          "text": "76377",
+          "start": 1171,
+          "end": 1176
+        },
+        {
+          "text": "76981",
+          "start": 1345,
+          "end": 1350
+        },
+        {
+          "text": "76982",
+          "start": 1998,
+          "end": 2003
+        },
+        {
+          "text": "77012",
+          "start": 1095,
+          "end": 1100
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 3014,
+          "end": 3036
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.station": [
+        {
+          "text": "4R",
+          "start": 6463,
+          "end": 6465,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+        {
+          "text": "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node",
+          "start": 6434,
+          "end": 6491,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.station": [
+        {
+          "text": "4L",
+          "start": 6913,
+          "end": 6915,
+          "confidence": 0.9
+        },
+        {
+          "text": "4L",
+          "start": 7896,
+          "end": 7898,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+        {
+          "text": "Site 1: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. Despite the benign appearance, TBNA was performed to confirm the absence of malignancy and to obtain cytology for diagnostic completeness.",
+          "start": 6901,
+          "end": 7571,
+          "confidence": 0.9
+        },
+        {
+          "text": "- Station 4L TBNA",
+          "start": 7886,
+          "end": 7903,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.station": [
+        {
+          "text": "7",
+          "start": 6521,
+          "end": 6522,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+        {
+          "text": "7 (subcarinal) node",
+          "start": 6521,
+          "end": 6540,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.station": [
+        {
+          "text": "11Rs",
+          "start": 6541,
+          "end": 6545,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+        {
+          "text": "11Rs lymph node",
+          "start": 6541,
+          "end": 6556,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.4.station": [
+        {
+          "text": "11Ri",
+          "start": 6557,
+          "end": 6561,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.4.evidence_quote": [
+        {
+          "text": "11Ri lymph node",
+          "start": 6557,
+          "end": 6572,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.5.station": [
+        {
+          "text": "11L",
+          "start": 6573,
+          "end": 6576,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.5.evidence_quote": [
+        {
+          "text": "11L lymph node",
+          "start": 6573,
+          "end": 6587,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.0": [
+        {
+          "text": "4L",
+          "start": 6913,
+          "end": 6915,
+          "confidence": 0.9
+        },
+        {
+          "text": "4L",
+          "start": 7896,
+          "end": 7898,
+          "confidence": 0.9
+        }
+      ],
+      "clinical_context.lesion_size_mm": [
+        {
+          "text": "Target lesion is about 1 cm",
+          "start": 3731,
+          "end": 3758
+        }
+      ],
+      "procedures_performed.linear_ebus.elastography_used": [
+        {
+          "text": "elastography",
+          "start": 1715,
+          "end": 1727
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+        {
+          "text": "21G",
+          "start": 5151,
+          "end": 5154,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22-gauge",
+          "start": 6415,
+          "end": 6423,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "Bronchial alveolar lavage was performed at Apical Segment of RUL (RB1), Posterior Segment of RUL (RB2), and Anterior Segment of RUL (RB3)",
+          "start": 5780,
+          "end": 5917,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_recovered_ml": [
+        {
+          "text": "suction returned with 20 cc",
+          "start": 5943,
+          "end": 5970,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.volume_instilled_ml": [
+      {
+        "source": "registry_span",
+        "text": "Instilled 20 cc",
+        "span": [
+          5665,
+          5680
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          5574,
+          5599
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          2590,
+          2624
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.radial_ebus.probe_position": [
+      {
+        "source": "registry_span",
+        "text": "Radial EBUS was performed to confirm that the location of the nodule is Concentric",
+        "span": [
+          3883,
+          3965
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.radial_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "Radial EBUS",
+        "span": [
+          2325,
+          2336
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.navigational_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "navigation bronchoscopy",
+        "span": [
+          3563,
+          3586
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.peripheral_tbna.performed": [
+      {
+        "source": "registry_span",
+        "text": "TBNA",
+        "span": [
+          7464,
+          7468
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.transbronchial_cryobiopsy.performed": [
+      {
+        "source": "registry_span",
+        "text": "cryobiopsy",
+        "span": [
+          5343,
+          5353
+        ],
+        "confidence": 1
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "FOR OPERATION:  [REDACTED]  s is a 44 year old-year-old female who presents with inter and intralobular septal thickening as well as groundglass opacities.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+        "span": [
+          55,
+          407
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "FOR OPERATION:  [REDACTED]  s is a 44 year old-year-old female who presents with inter and intralobular septal thickening as well as groundglass opacities.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.",
+        "span": [
+          55,
+          407
+        ],
+        "confidence": 1
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "ANESTHESIA",
+        "span": [
+          2056,
+          2066
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "ETT",
+        "span": [
+          2654,
+          2657
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions",
+        "span": [
+          2976,
+          2986
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          2590,
+          2624
+        ],
+        "confidence": 1
+      }
+    ],
+    "equipment.navigation_platform": [
+      {
+        "source": "registry_span",
+        "text": "Ion",
+        "span": [
+          2337,
+          2340
+        ],
+        "confidence": 1
+      }
+    ],
+    "equipment.cbct_used": [
+      {
+        "source": "registry_span",
+        "text": "Cone Beam CT",
+        "span": [
+          4026,
+          4038
+        ],
+        "confidence": 1
+      }
+    ],
+    "equipment.augmented_fluoroscopy": [
+      {
+        "source": "registry_span",
+        "text": "3D rendering",
+        "span": [
+          3317,
+          3329
+        ],
+        "confidence": 1
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31624",
+        "span": [
+          950,
+          955
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31627",
+        "span": [
+          1043,
+          1048
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31628",
+        "span": [
+          989,
+          994
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31629",
+        "span": [
+          1017,
+          1022
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31645",
+        "span": [
+          905,
+          910
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31652",
+        "span": [
+          1272,
+          1277
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "31654",
+        "span": [
+          1305,
+          1310
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "76377",
+        "span": [
+          1171,
+          1176
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "76981",
+        "span": [
+          1345,
+          1350
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "76982",
+        "span": [
+          1998,
+          2003
+        ],
+        "confidence": 1
+      },
+      {
+        "source": "registry_span",
+        "text": "77012",
+        "span": [
+          1095,
+          1100
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          3014,
+          3036
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.station": [
+      {
+        "source": "registry_span",
+        "text": "4R",
+        "span": [
+          6463,
+          6465
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node",
+        "span": [
+          6434,
+          6491
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.station": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          6913,
+          6915
+        ],
+        "confidence": 0.9
+      },
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          7896,
+          7898
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Site 1: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was sampled.. 4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. Despite the benign appearance, TBNA was performed to confirm the absence of malignancy and to obtain cytology for diagnostic completeness.",
+        "span": [
+          6901,
+          7571
+        ],
+        "confidence": 0.9
+      },
+      {
+        "source": "registry_span",
+        "text": "- Station 4L TBNA",
+        "span": [
+          7886,
+          7903
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.station": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          6521,
+          6522
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "7 (subcarinal) node",
+        "span": [
+          6521,
+          6540
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.station": [
+      {
+        "source": "registry_span",
+        "text": "11Rs",
+        "span": [
+          6541,
+          6545
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "11Rs lymph node",
+        "span": [
+          6541,
+          6556
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.4.station": [
+      {
+        "source": "registry_span",
+        "text": "11Ri",
+        "span": [
+          6557,
+          6561
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.4.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "11Ri lymph node",
+        "span": [
+          6557,
+          6572
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.5.station": [
+      {
+        "source": "registry_span",
+        "text": "11L",
+        "span": [
+          6573,
+          6576
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.5.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "11L lymph node",
+        "span": [
+          6573,
+          6587
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          6913,
+          6915
+        ],
+        "confidence": 0.9
+      },
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          7896,
+          7898
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "clinical_context.lesion_size_mm": [
+      {
+        "source": "registry_span",
+        "text": "Target lesion is about 1 cm",
+        "span": [
+          3731,
+          3758
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.linear_ebus.elastography_used": [
+      {
+        "source": "registry_span",
+        "text": "elastography",
+        "span": [
+          1715,
+          1727
+        ],
+        "confidence": 1
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "21G",
+        "span": [
+          5151,
+          5154
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22-gauge",
+        "span": [
+          6415,
+          6423
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage was performed at Apical Segment of RUL (RB1), Posterior Segment of RUL (RB2), and Anterior Segment of RUL (RB3)",
+        "span": [
+          5780,
+          5917
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_recovered_ml": [
+      {
+        "source": "registry_span",
+        "text": "suction returned with 20 cc",
+        "span": [
+          5943,
+          5970
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [
+    {
+      "group": "Global",
+      "path": "patient_demographics.age_years",
+      "target_path": "patient.age",
+      "label": "Patient age (years)",
+      "severity": "required",
+      "message": "Age was not found in the note. Add age in years (e.g., “65-year-old”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.asa_class",
+      "target_path": "risk_assessment.asa_class",
+      "label": "ASA class",
+      "severity": "required",
+      "message": "ASA class was not found in the note. Add ASA 1–6 (e.g., “ASA 3”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.ecog_score",
+      "target_path": "clinical_context.ecog_score",
+      "label": "ECOG/Zubrod performance status",
+      "severity": "required",
+      "message": "ECOG/Zubrod performance status was not found in the note. Add ECOG 0–4 (or a range like 0–1)."
+    },
+    {
+      "group": "Navigation",
+      "path": "granular_data.navigation_targets[*].distance_from_pleura_mm",
+      "target_path": "granular_data.navigation_targets[*].distance_from_pleura_mm",
+      "label": "Distance from pleura (mm)",
+      "severity": "recommended",
+      "message": "Distance from pleura was not captured. Add distance (mm/cm) or state abutting pleura."
+    },
+    {
+      "group": "Navigation",
+      "path": "granular_data.navigation_targets[*].pet_suv_max",
+      "target_path": "granular_data.navigation_targets[*].pet_suv_max",
+      "label": "PET SUV max",
+      "severity": "recommended",
+      "message": "SUV max was not captured. Add SUV (e.g., “SUV max 4.2”) when documented."
+    },
+    {
+      "group": "Navigation",
+      "path": "clinical_context.bronchus_sign",
+      "target_path": "clinical_context.bronchus_sign",
+      "label": "CT bronchus sign",
+      "severity": "recommended",
+      "message": "CT bronchus sign was not captured. Document positive/negative when explicitly stated."
+    },
+    {
+      "group": "Navigation",
+      "path": "granular_data.navigation_targets[*].registration_error_mm",
+      "target_path": "granular_data.navigation_targets[*].registration_error_mm",
+      "label": "Registration error (mm)",
+      "severity": "recommended",
+      "message": "Registration error was not captured. Document registration error (mm) if stated."
+    },
+    {
+      "group": "Navigation",
+      "path": "procedures_performed.navigational_bronchoscopy.tool_in_lesion_confirmed",
+      "target_path": "procedures_performed.navigational_bronchoscopy.tool_in_lesion_confirmed",
+      "label": "Tool-in-lesion confirmation",
+      "severity": "recommended",
+      "message": "Tool-in-lesion confirmation was not captured. Document whether tool-in-lesion was confirmed."
+    },
+    {
+      "group": "Navigation",
+      "path": "procedures_performed.navigational_bronchoscopy.divergence_mm",
+      "target_path": "procedures_performed.navigational_bronchoscopy.divergence_mm",
+      "label": "CT-to-body divergence (mm)",
+      "severity": "recommended",
+      "message": "CT-to-body divergence/registration mismatch was not captured. Document divergence (mm) when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].number_of_passes",
+      "target_path": "granular_data.linear_ebus_stations_detail[*].number_of_passes",
+      "label": "Passes (per station)",
+      "severity": "recommended",
+      "message": "Passes per station were not captured. Document number of passes per station when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].short_axis_mm",
+      "target_path": "granular_data.linear_ebus_stations_detail[*].short_axis_mm",
+      "label": "Node size short axis (mm)",
+      "severity": "recommended",
+      "message": "Short-axis node size was not captured. Document node measurements when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].lymphocytes_present",
+      "target_path": "granular_data.linear_ebus_stations_detail[*].lymphocytes_present",
+      "label": "Adequacy: lymphocytes present",
+      "severity": "recommended",
+      "message": "Station adequacy (lymphocytes present) was not captured. Document ROSE/pathology adequacy when stated."
+    }
+  ],
+  "cpt_codes": [
+    "31624",
+    "31627",
+    "31628",
+    "31629",
+    "31652",
+    "31654",
+    "76377",
+    "76982",
+    "76983",
+    "77012"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31627",
+      "description": "Navigational bronchoscopy",
+      "confidence": 0.8,
+      "rationale": "navigational_bronchoscopy.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31628",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+      "confidence": 0.8,
+      "rationale": "transbronchial_cryobiopsy.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "peripheral_tbna.performed=true (distinct site from EBUS-TBNA; Modifier 59)",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "confidence": 0.8,
+      "rationale": "radial_ebus.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "76377",
+      "description": "",
+      "confidence": 0.8,
+      "rationale": "equipment.augmented_fluoroscopy=true (3D reconstruction/rendering documented)",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "76982",
+      "description": "Us elastography 1st target",
+      "confidence": 0.8,
+      "rationale": "linear_ebus elastography used (targets=5)",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "76983",
+      "description": "Us elastography addl target",
+      "confidence": 0.8,
+      "rationale": "linear_ebus elastography used and targets=5 (units=2; MUE cap=2)",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "77012",
+      "description": "",
+      "confidence": 0.8,
+      "rationale": "equipment.cbct_used=true",
+      "review_flag": "recommended"
+    }
+  ],
+  "total_work_rvu": 18.41,
+  "estimated_payment": 741.01,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "units": 1,
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 60.46,
+      "facility_payment_before_multiple_endoscopy": 120.91,
+      "multiple_endoscopy_role": "secondary",
+      "multiple_endoscopy_reduction": 60.46
+    },
+    {
+      "cpt_code": "31627",
+      "description": "Navigational bronchoscopy",
+      "units": 1,
+      "work_rvu": 1.95,
+      "total_facility_rvu": 2.55,
+      "facility_payment": 85.17
+    },
+    {
+      "cpt_code": "31628",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+      "units": 1,
+      "work_rvu": 3.46,
+      "total_facility_rvu": 4.75,
+      "facility_payment": 79.33,
+      "facility_payment_before_multiple_endoscopy": 158.65,
+      "multiple_endoscopy_role": "secondary",
+      "multiple_endoscopy_reduction": 79.33
+    },
+    {
+      "cpt_code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "units": 1,
+      "work_rvu": 3.66,
+      "total_facility_rvu": 5.04,
+      "facility_payment": 168.34,
+      "facility_payment_before_multiple_endoscopy": 168.34,
+      "multiple_endoscopy_role": "primary",
+      "multiple_endoscopy_reduction": 0
+    },
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "units": 1,
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    },
+    {
+      "cpt_code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "units": 1,
+      "work_rvu": 1.37,
+      "total_facility_rvu": 1.79,
+      "facility_payment": 59.79
+    },
+    {
+      "cpt_code": "76982",
+      "description": "Us elastography 1st target",
+      "units": 1,
+      "work_rvu": 0.59,
+      "total_facility_rvu": 1.57,
+      "facility_payment": 52.44
+    },
+    {
+      "cpt_code": "76983",
+      "description": "Us elastography addl target",
+      "units": 1,
+      "work_rvu": 0.47,
+      "total_facility_rvu": 1.12,
+      "facility_payment": 37.41
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": false,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for bal, diagnostic_bronchoscopy, linear_ebus, navigational_bronchoscopy, peripheral_tbna, radial_ebus, therapeutic_aspiration, transbronchial_cryobiopsy",
+    "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31629: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31633: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+    "HARD_OVERRIDE: Text indicates EBUS elastography but extraction missed it. -> procedures_performed.linear_ebus.elastography_used=true",
+    "NAV_TARGET_HEURISTIC: parsed 1 navigation target(s) from target text",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 1 station detail entry from text",
+    "EBUS_NARRATIVE_RECONCILE: upgraded inspected_only→needle_aspiration for ['7']",
+    "EBUS_SPECIMEN_OVERRIDE: stations_sampled=['4L'] from specimen log TBNA entries.",
+    "AUTO_EBUS_GRANULARITY: populated passes/elastography for ['4L']",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "AUTO_BAL_DETAIL: set BAL location/volumes from explicit 'performed at' statement",
+    "Radial EBUS inferred from radial probe keywords.",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling",
+    "Suppressed 76981: header lists parenchyma elastography but EBUS elastography targets derive 76982/76983.",
+    "Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed).",
+    "SELF_CORRECT_SKIPPED: 31623: keyword guard failed (no keyword hit)",
+    "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31623 (prob=0.56), but deterministic derivation missed it",
+    "MULTIPLE_ENDOSCOPY_RULE: primary=31629; reduced=31624,31628; reduction=50%"
+  ],
+  "validation_errors": [],
+  "review_status": "finalized",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 928.21
+}
