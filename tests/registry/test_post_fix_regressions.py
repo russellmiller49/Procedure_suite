@@ -57,6 +57,10 @@ def test_blvr_checkbox_selection_corrects_valve_type_procedure_type_and_valve_co
     assert blvr.target_lobe == "LLL"
     assert blvr.number_of_valves == 5
     assert blvr.collateral_ventilation_assessment == "Chartis negative"
+    assert blvr.valve_sizes == ["5", "7", "7", "7", "7"]
+    assert blvr.segments_treated is not None
+    assert len(blvr.segments_treated) == 5
+    assert any("SUPERIOR" in str(s).upper() for s in blvr.segments_treated)
 
     # Removal of a placed valve should surface as foreign body removal.
     fbr = updated.procedures_performed.foreign_body_removal
@@ -66,6 +70,12 @@ def test_blvr_checkbox_selection_corrects_valve_type_procedure_type_and_valve_co
     codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
     assert "31647" in codes
     assert "31635" in codes
+
+    assert updated.granular_data is not None
+    assert updated.granular_data.blvr_valve_placements is not None
+    assert len(updated.granular_data.blvr_valve_placements) == 5
+    assert any("SUPERIOR" in str(p.segment or "").upper() for p in updated.granular_data.blvr_valve_placements)
+    assert any(str(p.valve_size) == "7" and "SUPERIOR" in str(p.segment or "").upper() for p in updated.granular_data.blvr_valve_placements)
 
 
 def test_blvr_guardrails_do_not_promote_valve_placement_for_previously_placed_valves_in_inventory_list() -> None:

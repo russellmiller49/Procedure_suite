@@ -82,10 +82,10 @@ def test_enrich_ebus_sampling_details_backfills_node_events_for_site_blocks() ->
     linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
     assert linear.node_events is not None
     assert len(linear.node_events) == 1
-    assert linear.node_events[0].station == "11R"
+    assert linear.node_events[0].station == "11RS"
     assert linear.node_events[0].action == "needle_aspiration"
     assert linear.elastography_used is True
-    assert linear.stations_sampled == ["11R"]
+    assert linear.stations_sampled == ["11RS"]
     assert any("AUTO_EBUS_GRANULARITY: added node_events" in w for w in warnings)
 
     codes, _rationales, derivation_warnings = derive_all_codes_with_meta(record)

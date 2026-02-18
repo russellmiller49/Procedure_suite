@@ -94,3 +94,22 @@ def test_extract_linear_ebus_stations_detail_lymphocytes_present_negative_from_r
 
     assert by_station["7"]["sampled"] is True
     assert by_station["7"]["lymphocytes_present"] is False
+
+
+def test_extract_linear_ebus_stations_detail_prefers_ebus_scoped_gauge_over_peripheral_tbna() -> None:
+    note = (
+        "Robotic navigation bronchoscopy was performed with Ion platform.\n"
+        "Transbronchial needle aspiration was performed with 21G Needle through the catheter. Total 4 samples were collected.\n"
+        "\n"
+        "EBUS-Findings\n"
+        "Lymph node sizing was performed by EBUS and sampling by transbronchial needle aspiration was performed using 22-gauge Needle.\n"
+        "\n"
+        "Station 4L: biopsied with 5 passes.\n"
+    )
+
+    details = extract_linear_ebus_stations_detail(note)
+    by_station = _by_station(details)
+
+    assert by_station["4L"]["sampled"] is True
+    assert by_station["4L"]["needle_gauge"] == 22
+    assert by_station["4L"]["number_of_passes"] == 5
