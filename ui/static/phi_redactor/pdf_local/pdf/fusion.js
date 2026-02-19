@@ -46,6 +46,20 @@ function normalizeLineKey(line) {
     .trim();
 }
 
+const OCR_BOILERPLATE_PATTERNS = Object.freeze([
+  /\bPowered\s+by\s+Provation\b/i,
+  /^\s*Page\s+\d+\s+of\s+\d+\s*$/i,
+  /\bAMA\b.*\bcopyright\b/i,
+  /\bAmerican Medical Association\b/i,
+  /\bProvation\b.*\b(?:Suite|Road|Street|Drive|Avenue|Blvd|Lane|Court|Way)\b/i,
+]);
+
+function isLikelyBoilerplateLine(line) {
+  const text = String(line || "").trim();
+  if (!text) return false;
+  return OCR_BOILERPLATE_PATTERNS.some((pattern) => pattern.test(text));
+}
+
 function tokenizeForOverlap(line) {
   return normalizeLineKey(line)
     .split(/\s+/)
@@ -312,16 +326,20 @@ export function sanitizeOcrText(ocrText, opts = {}) {
   const lines = normalizeLines(ocrText);
   const out = [];
   const seen = new Set();
+  let prevKey = "";
 
   for (const rawLine of lines) {
     const line = cleanupOcrLine(rawLine, mode);
     if (!line) continue;
+    if (isLikelyBoilerplateLine(line)) continue;
     if (isLikelyImageCaptionLine(line)) continue;
     if (shouldDropLineForMerge(line)) continue;
     if (isLikelyOcrNoiseLine(line, mode, rawLine)) continue;
     const key = normalizeLineKey(line);
     if (!key || seen.has(key)) continue;
+    if (key === prevKey) continue;
     seen.add(key);
+    prevKey = key;
     out.push(line.trim());
   }
 
@@ -404,6 +422,7 @@ const CODE_SECTION_IDS = new Set(["icd_codes", "cpt_codes"]);
 function shouldDropLineForMerge(line, sectionId = "__preamble") {
   const text = String(line || "").trim();
   if (!text) return true;
+  if (isLikelyBoilerplateLine(text)) return true;
   if (isLikelyImageCaptionLine(text)) return true;
   if (/\bPHOTOREPORT\b/i.test(text)) return true;
 
