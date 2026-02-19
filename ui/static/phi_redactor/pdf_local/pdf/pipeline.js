@@ -15,6 +15,7 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   qualityMode: "fast",
   scale: 2.05,
   psm: "6",
+  maskImages: "auto",
 });
 
 function normalizeGateOptions(gate) {
@@ -35,6 +36,11 @@ function normalizeOcrOptions(opts = {}) {
   const qualityMode = ocr.qualityMode === "high_accuracy" ? "high_accuracy" : "fast";
   const defaultScale = qualityMode === "high_accuracy" ? 3.1 : 2.05;
   const scale = Number.isFinite(ocr.scale) ? Math.max(1.1, Math.min(4, Number(ocr.scale))) : defaultScale;
+  const maskImages = ocr.maskImages === "off" || ocr.maskImages === "none"
+    ? "off"
+    : ocr.maskImages === "on"
+      ? "on"
+      : "auto";
 
   return {
     ...DEFAULT_OCR_OPTIONS,
@@ -45,6 +51,7 @@ function normalizeOcrOptions(opts = {}) {
     qualityMode,
     scale,
     psm: String(ocr.psm || DEFAULT_OCR_OPTIONS.psm),
+    maskImages,
     workerUrl: ocr.workerUrl,
   };
 }
@@ -279,6 +286,18 @@ async function runOcrPass(file, pageIndexes, opts, push) {
   const workerUrl = ocrOptions.workerUrl || new URL("../workers/ocr.worker.js", import.meta.url);
   const worker = new Worker(workerUrl, { type: "module" });
   const pdfBytes = await file.arrayBuffer();
+  const rawPages = normalizeRawPages(opts.rawPages);
+  const rawPageByIndex = new Map(rawPages.map((page) => [page.pageIndex, page]));
+  const pageHints = pageIndexes.map((pageIndex) => {
+    const rawPage = rawPageByIndex.get(pageIndex);
+    if (!rawPage) return { pageIndex };
+    return {
+      pageIndex,
+      stats: rawPage.stats && typeof rawPage.stats === "object" ? rawPage.stats : undefined,
+      imageRegions: Array.isArray(rawPage.imageRegions) ? rawPage.imageRegions : [],
+      textRegions: Array.isArray(rawPage.textRegions) ? rawPage.textRegions : [],
+    };
+  });
 
   return new Promise((resolve, reject) => {
     let done = false;
@@ -356,11 +375,13 @@ async function runOcrPass(file, pageIndexes, opts, push) {
       type: "ocr_extract",
       pdfBytes,
       pageIndexes,
+      pageHints,
       options: {
         lang: ocrOptions.lang,
         qualityMode: ocrOptions.qualityMode,
         scale: ocrOptions.scale,
         psm: ocrOptions.psm,
+        maskImages: ocrOptions.maskImages,
       },
     }, [pdfBytes]);
   });
@@ -430,7 +451,7 @@ async function* runWorkerExtraction(file, opts = {}, messageType = "extract_adap
               totalPages: ocrTargets.length,
             });
             try {
-              const ocrPages = await runOcrPass(file, ocrTargets, opts, push);
+              const ocrPages = await runOcrPass(file, ocrTargets, { ...opts, rawPages: pages }, push);
               pages = applyOcrResultsToRawPages(pages, ocrPages);
               document = buildPdfDocumentModel(file, pages, {
                 ...opts,

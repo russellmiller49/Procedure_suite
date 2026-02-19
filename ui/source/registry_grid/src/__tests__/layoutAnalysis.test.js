@@ -72,4 +72,29 @@ describe("layoutAnalysis", () => {
     });
     expect(confidence).toBeLessThan(0.72);
   });
+
+  it("reconstructs simple label/value tables by zipping adjacent rows", () => {
+    const items = [
+      // Labels row (y=700)
+      { itemIndex: 0, str: "Patient", x: 40, y: 700, width: 48, height: 10 },
+      { itemIndex: 1, str: "Name:", x: 102, y: 700, width: 44, height: 10 },
+      { itemIndex: 2, str: "Date", x: 220, y: 700, width: 30, height: 10 },
+      { itemIndex: 3, str: "of", x: 254, y: 700, width: 14, height: 10 },
+      { itemIndex: 4, str: "Birth:", x: 272, y: 700, width: 44, height: 10 },
+      { itemIndex: 5, str: "Record", x: 400, y: 700, width: 44, height: 10 },
+      { itemIndex: 6, str: "Number:", x: 456, y: 700, width: 66, height: 10 },
+      // Values row (y=680)
+      { itemIndex: 7, str: "Robert", x: 40, y: 680, width: 42, height: 10 },
+      { itemIndex: 8, str: "Smith", x: 86, y: 680, width: 38, height: 10 },
+      { itemIndex: 9, str: "09/15/1950", x: 220, y: 680, width: 82, height: 10 },
+      { itemIndex: 10, str: "0159834", x: 400, y: 680, width: 56, height: 10 },
+    ];
+
+    const blocks = buildLayoutBlocks(items);
+    const assembled = assembleTextFromBlocks(blocks, { contaminatedByItemIndex: new Set() });
+
+    expect(assembled.text).toContain("Patient Name: Robert Smith");
+    expect(assembled.text).toContain("Date of Birth: 09/15/1950");
+    expect(assembled.text).toContain("Record Number: 0159834");
+  });
 });

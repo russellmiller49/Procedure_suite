@@ -62,6 +62,7 @@ const splitReviewBtn = document.getElementById("splitReviewBtn");
 const toggleDetectionsPaneBtn = document.getElementById("toggleDetectionsPaneBtn");
 const pdfUploadInputEl = document.getElementById("pdfUploadInput");
 const pdfOcrQualitySelectEl = document.getElementById("pdfOcrQualitySelect");
+const pdfOcrMaskSelectEl = document.getElementById("pdfOcrMaskSelect");
 const pdfExtractBtn = document.getElementById("pdfExtractBtn");
 const pdfExtractSummaryEl = document.getElementById("pdfExtractSummary");
 
@@ -7031,6 +7032,11 @@ async function main() {
       const ocrQualityMode = pdfOcrQualitySelectEl?.value === "high_accuracy"
         ? "high_accuracy"
         : "fast";
+      const ocrMaskMode = pdfOcrMaskSelectEl?.value === "on"
+        ? "on"
+        : pdfOcrMaskSelectEl?.value === "off"
+          ? "off"
+          : "auto";
 
       for await (const event of extractPdfAdaptive(file, {
         ocr: {
@@ -7038,6 +7044,7 @@ async function main() {
           enabled: true,
           lang: "eng",
           qualityMode: ocrQualityMode,
+          maskImages: ocrMaskMode,
         },
         gate: {
           minCompletenessConfidence: 0.72,
@@ -7137,11 +7144,12 @@ async function main() {
           ? `${ocrNeededPages} page(s) used OCR/hybrid recovery after layout contamination checks.`
           : "All pages passed native layout safety checks.");
       const ocrModeText = ` OCR mode: ${ocrQualityMode === "high_accuracy" ? "high accuracy" : "fast"}.`;
+      const ocrMaskText = ` OCR mask: ${ocrMaskMode}.`;
       const qualityTail =
         ` Low-confidence pages: ${docModel.qualitySummary?.lowConfidencePages || 0}; ` +
         `contaminated pages: ${docModel.qualitySummary?.contaminatedPages || 0}.`;
       const reasonTail = buildPageReasonSummary(docModel, 2);
-      setPdfExtractSummary(`${summaryText}${ocrModeText}${qualityTail}${reasonTail ? ` ${reasonTail}` : ""}`, "success");
+      setPdfExtractSummary(`${summaryText}${ocrModeText}${ocrMaskText}${qualityTail}${reasonTail ? ` ${reasonTail}` : ""}`, "success");
 
       setStatus("PDF text loaded into editor. Run Detection to use the existing PHI redaction workflow.");
       if (totalPages > 0) {
@@ -7301,6 +7309,7 @@ async function main() {
     if (clearBundleBtn) clearBundleBtn.disabled = busy || !hasBundleDocs;
     if (pdfUploadInputEl) pdfUploadInputEl.disabled = busy;
     if (pdfOcrQualitySelectEl) pdfOcrQualitySelectEl.disabled = busy;
+    if (pdfOcrMaskSelectEl) pdfOcrMaskSelectEl.disabled = busy;
     if (pdfExtractBtn) pdfExtractBtn.disabled = busy || !hasPdfSelected;
   }
 

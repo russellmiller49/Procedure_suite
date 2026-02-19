@@ -115,4 +115,36 @@ describe("pdf fusion arbitration", () => {
     expect(cleaned).not.toContain("EndoSoft Surgery Center");
     expect(cleaned).toContain("which the patient appeared to understand and so stated.");
   });
+
+  it("drops short O/0-heavy OCR garbage lines even with stray stopwords", () => {
+    const cleaned = sanitizeOcrText("Oooo mo0 of '", { mode: "augment" });
+    expect(cleaned).toBe("");
+  });
+
+  it("strips O/0-heavy OCR suffix clusters from narrative lines", () => {
+    const cleaned = sanitizeOcrText(
+      [
+        "The patient was connected to the monitoring devices.",
+        "Continuous oxygen was provided with a nasal cannula and IV medicine administered through an @ Como coo ooo Coo Oooo ooo",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    expect(cleaned).toContain("Continuous oxygen was provided with a nasal cannula");
+    expect(cleaned).toContain("administered through an");
+    expect(cleaned).not.toContain("@");
+    expect(cleaned).not.toMatch(/\bComo\b/);
+    expect(cleaned).not.toMatch(/\bcoo\b/i);
+    expect(cleaned).not.toMatch(/\bOooo\b/);
+  });
+
+  it("strips all-caps O-heavy OCR prefixes from narrative lines", () => {
+    const cleaned = sanitizeOcrText(
+      "OMOMOD Extrinsic compression stricture begins left mainstem bronchus to the left lower lobe extending for the length of 3cm.",
+      { mode: "augment" },
+    );
+
+    expect(cleaned).toContain("Extrinsic compression stricture begins left mainstem bronchus");
+    expect(cleaned).not.toContain("OMOMOD");
+  });
 });

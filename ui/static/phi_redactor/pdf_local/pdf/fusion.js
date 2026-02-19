@@ -89,6 +89,7 @@ function tokenHasClinicalSignal(token) {
   const t = normalizeToken(token);
   if (!t) return false;
   if (/\d+(?:mm|cm|mg|ml|%)$/i.test(t)) return true;
+  if (/^(?:mm|cm|mg|ml|mcg|ug|kg|g|l|dl|cc|%)$/i.test(t)) return true;
   if (/^[A-Z](?!0{2,3}$)\d{2,3}(?:\.\d+)?$/.test(t)) return true;
   if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(t)) return true;
   if (/^(ICD|CPT|MRN|DOB|MD|IV|LUL|LLL|RUL|RLL)$/i.test(t)) return true;
@@ -98,19 +99,72 @@ function tokenHasClinicalSignal(token) {
 function tokenLooksNarrative(token) {
   const t = normalizeToken(token);
   if (!t) return false;
+  if (tokenLooksNoisy(t)) return false;
   return /[a-z]{2,}/.test(t) || tokenHasClinicalSignal(t);
+}
+
+function countMatches(text, re) {
+  if (!text) return 0;
+  const matches = String(text).match(re);
+  return matches ? matches.length : 0;
 }
 
 function tokenLooksNoisy(token) {
   const t = normalizeToken(token);
   if (!t) return true;
   if (tokenHasClinicalSignal(t)) return false;
-  if (/[a-z]{2,}/.test(t)) return false;
-  if (/^[O0CcoIl1]+$/.test(t) && t.length >= 2) return true;
+
+  const lowerToken = t.toLowerCase();
+  if (/^[a-z]$/.test(lowerToken)) {
+    return lowerToken !== "a";
+  }
+
+  const shortWordAllowlist = new Set(["an", "in", "on", "to", "of", "or", "by", "as", "at", "if", "is", "it", "we", "he", "be"]);
+  if (/^[a-z]{2}$/.test(lowerToken) && !shortWordAllowlist.has(lowerToken)) {
+    return true;
+  }
+
+  const len = t.length;
+  const hasLowerWord = /[a-z]{2,}/.test(t);
+  const hasLetters = /[A-Za-z]/.test(t);
+  const hasDigits = /\d/.test(t);
+  const hasZero = /0/.test(t);
+
+  const o0Count = countMatches(t, /[O0o]/g);
+  const ocCount = countMatches(t, /[O0oCc]/g);
+  const o0Ratio = o0Count / Math.max(1, len);
+  const ocRatio = ocCount / Math.max(1, len);
+
+  const isAllCaps = hasLetters && !/[a-z]/.test(t) && /^[A-Z0-9]+$/.test(t);
+
+  // Common OCR garbage: tokens dominated by O/0 (optionally with C/c).
+  if (/^[O0CcoIl1]+$/.test(t) && len >= 3 && o0Ratio >= 0.6) return true;
+  if (len >= 4 && o0Count >= 2 && ocRatio >= 0.75) return true;
+
+  // Mixed letter+digit tokens with 0 are often OCR confusion (e.g., "mo0").
+  if (len >= 3 && hasZero && hasDigits && hasLetters && o0Count >= 1) return true;
+
+  // All-caps tokens with heavy O/0 presence are frequently watermark artifacts (e.g., "OMOMOD").
+  if (isAllCaps && len >= 4 && o0Ratio >= 0.45) return true;
+
+  if (hasLowerWord) return false;
   if (/^[A-Z0-9]{3,}$/.test(t) && /[0-9]/.test(t) && /[O0C]/.test(t)) return true;
   if (/^[A-Z]{1,2}$/.test(t) && !/^(AM|PM|MD|IV)$/i.test(t)) return true;
   if (/^\d{1,3}$/.test(t)) return true;
   return false;
+}
+
+function pruneNoisyEdgeTokens(tokens) {
+  const list = Array.isArray(tokens) ? tokens.slice() : [];
+  if (list.length < 2) return list;
+
+  let start = 0;
+  let end = list.length - 1;
+
+  while (end - start + 1 >= 4 && tokenLooksNoisy(list[start])) start += 1;
+  while (end - start + 1 >= 4 && tokenLooksNoisy(list[end])) end -= 1;
+
+  return list.slice(start, end + 1);
 }
 
 function findNarrativeBoundary(tokens, direction = "start") {
@@ -163,21 +217,25 @@ function cleanupOcrLine(line, mode = "augment") {
   }
 
   const selected = tokens.slice(start, end + 1);
-  const cleaned = selected.join(" ").replace(/\s+/g, " ").trim();
+  const pruned = pruneNoisyEdgeTokens(selected);
+  const cleaned = pruned.join(" ").replace(/\s+/g, " ").trim();
   return cleaned;
 }
 
-function isLikelyOcrNoiseLine(line, mode = "augment") {
+function isLikelyOcrNoiseLine(line, mode = "augment", rawLine = "") {
   const trimmed = String(line || "").trim();
   if (!trimmed) return true;
   if (trimmed.length < 2) return true;
 
-  if (
-    mode === "augment" &&
-    /\b(PHOTOREPORT|ENDOSOFT|Surgery Center|electronically signed off)\b/i.test(trimmed) &&
-    !hasClinicalPattern(trimmed)
-  ) {
-    return true;
+  const rawTrimmed = String(rawLine || "").trim();
+  const vendorScanText = rawTrimmed || trimmed;
+
+  if (mode === "augment" && !hasClinicalPattern(trimmed)) {
+    if (/^PHOTOREPORT$/i.test(trimmed)) return true;
+    if (/\belectronically signed off\b/i.test(vendorScanText)) return true;
+    if (/\bEndoSoft\b/i.test(vendorScanText) && (/[0-9]/.test(vendorScanText) || /[O0]{3,}/.test(vendorScanText))) {
+      return true;
+    }
   }
 
   const chars = trimmed.length;
@@ -231,7 +289,7 @@ export function sanitizeOcrText(ocrText, opts = {}) {
   for (const rawLine of lines) {
     const line = cleanupOcrLine(rawLine, mode);
     if (!line) continue;
-    if (isLikelyOcrNoiseLine(line, mode)) continue;
+    if (isLikelyOcrNoiseLine(line, mode, rawLine)) continue;
     const key = normalizeLineKey(line);
     if (!key || seen.has(key)) continue;
     seen.add(key);
@@ -247,25 +305,108 @@ export function mergeNativeAndOcrText(nativeText, ocrText, opts = {}) {
   const ocrLines = normalizeLines(sanitizeOcrText(ocrText, { mode }));
   const seen = new Set();
   const nativeTokenSets = [];
-  const merged = [];
+  const nativeOut = [];
 
   for (const line of nativeLines) {
     const key = normalizeLineKey(line);
     if (seen.has(key)) continue;
     seen.add(key);
-    merged.push(line);
+    nativeOut.push(line);
     nativeTokenSets.push(new Set(tokenizeForOverlap(line)));
   }
+
+  const anchorDefs = mode === "augment"
+    ? [
+      {
+        id: "indications",
+        nativeRe: /^INDICATIONS FOR EXAMINATION:/i,
+        ocrRe: /\b(obstruction|indication|dyspnea|shortness of breath|cough)\b/i,
+      },
+      {
+        id: "instruments",
+        nativeRe: /^INSTRUMENTS?:/i,
+        ocrRe: /\b(loaner|bronchoscope|scope|catheter|needle|forceps|basket|snare)\b/i,
+      },
+      {
+        id: "medications",
+        nativeRe: /^MEDICATIONS?:/i,
+        ocrRe: /\b(versed|demerol|midazolam|fentanyl|lidocaine|propofol|\d+\s*(?:mg|ml|mcg|ug|%)\b)\b/i,
+      },
+      {
+        id: "technique",
+        nativeRe: /^PROCEDURE TECHNIQUE:/i,
+        ocrRe: /\b(consent was obtained|monitoring devices|nasal cannula|conscious sedation|bronchoscope was inserted|airway examined)\b/i,
+      },
+      {
+        id: "findings",
+        nativeRe: /^FINDINGS?:/i,
+        ocrRe: /\b(stricture|stenosis|erythema|friable|lumen|compression)\b/i,
+      },
+      {
+        id: "diagnosis",
+        nativeRe: /\bDIAGNOSIS:/i,
+        ocrRe: /\b(malignancy|carcinoma|neoplasm|small cell|benign)\b/i,
+      },
+      {
+        id: "codes",
+        nativeRe: /^(ICD\b|ICD 10|CPT Code)/i,
+        ocrRe: /\b([A-Z]\d{2}\.\d+)\b|(?:\bCPT\b|\bICD\b)/i,
+      },
+    ]
+    : [];
+
+  const activeAnchors = new Map();
+  for (const anchor of anchorDefs) {
+    if (nativeOut.some((line) => anchor.nativeRe.test(line))) {
+      activeAnchors.set(anchor.id, anchor);
+    }
+  }
+
+  const ocrByAnchor = new Map();
+  for (const id of activeAnchors.keys()) {
+    ocrByAnchor.set(id, []);
+  }
+  const ocrUnassigned = [];
 
   for (const line of ocrLines) {
     const key = normalizeLineKey(line);
     if (seen.has(key)) continue;
     if (hasHighTokenOverlap(line, nativeTokenSets)) continue;
     seen.add(key);
-    merged.push(line);
+
+    let assigned = false;
+    if (mode === "augment" && activeAnchors.size) {
+      for (const anchor of anchorDefs) {
+        if (!activeAnchors.has(anchor.id)) continue;
+        if (!anchor.ocrRe.test(line)) continue;
+        ocrByAnchor.get(anchor.id)?.push(line);
+        assigned = true;
+        break;
+      }
+    }
+    if (!assigned) ocrUnassigned.push(line);
   }
 
-  return merged.join("\n");
+  if (mode !== "augment" || !activeAnchors.size) {
+    return [...nativeOut, ...ocrUnassigned].join("\n");
+  }
+
+  const out = [];
+  for (const line of nativeOut) {
+    out.push(line);
+    for (const anchor of anchorDefs) {
+      if (!activeAnchors.has(anchor.id)) continue;
+      if (!anchor.nativeRe.test(line)) continue;
+      const extras = ocrByAnchor.get(anchor.id) || [];
+      if (extras.length) {
+        out.push(...extras);
+        extras.length = 0;
+      }
+      break;
+    }
+  }
+  out.push(...ocrUnassigned);
+  return out.join("\n");
 }
 
 /**
@@ -354,9 +495,8 @@ export function arbitratePageText(input = {}) {
 
   const ocrMuchLonger = ocrLen > nativeLen * 1.25;
   const contaminationHigh = contaminationScore >= 0.12;
-  const nativeForMerge = contaminationHigh
-    ? pruneCaptionNoiseFromNativeText(nativeText)
-    : nativeText;
+  const shouldPruneCaptions = contaminationScore >= 0.28 && ocrMuchLonger;
+  const nativeForMerge = shouldPruneCaptions ? pruneCaptionNoiseFromNativeText(nativeText) : nativeText;
 
   if (ocrMuchLonger && contaminationHigh) {
     return {

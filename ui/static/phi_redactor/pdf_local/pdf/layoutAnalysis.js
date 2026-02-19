@@ -441,6 +441,107 @@ export function assembleTextFromBlocks(blocks, contamination, opts = {}) {
   const dropContaminatedNumericTokens = opts.dropContaminatedNumericTokens !== false;
   const contaminatedByItemIndex = contamination?.contaminatedByItemIndex || new Set();
 
+  function median(values) {
+    const nums = (Array.isArray(values) ? values : []).filter((value) => Number.isFinite(value)).sort((a, b) => a - b);
+    if (!nums.length) return 0;
+    const mid = Math.floor(nums.length / 2);
+    return nums.length % 2 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+  }
+
+  function buildSegmentLine(segment) {
+    const segmentItems = [...(segment?.items || [])].sort((a, b) => a.x - b.x);
+    let filteredLine = "";
+    let rawLine = "";
+    let filteredPrev = null;
+    let rawPrev = null;
+    const lineContaminatedSpans = [];
+
+    for (const item of segmentItems) {
+      const token = normalizeToken(item.str);
+      if (!token) continue;
+      totalTokenCount += 1;
+
+      const rawNext = appendTokenWithGap(rawLine, rawPrev, item, token);
+      rawLine = rawNext.text;
+      rawPrev = item;
+
+      const contaminated = contaminatedByItemIndex.has(item.itemIndex);
+      const exclude = dropContaminatedNumericTokens && shouldExcludeContaminatedToken(token, contaminated);
+      if (exclude) {
+        excludedTokenCount += 1;
+        continue;
+      }
+
+      const filteredNext = appendTokenWithGap(filteredLine, filteredPrev, item, token);
+      filteredLine = filteredNext.text;
+      filteredPrev = item;
+
+      if (contaminated) {
+        keptContaminatedCount += 1;
+        lineContaminatedSpans.push({
+          start: filteredNext.start,
+          end: filteredNext.end,
+        });
+      }
+    }
+
+    return {
+      bbox: segment?.bbox || { x: 0, y: 0, width: 0, height: 0 },
+      baselineY: Number(segment?.baselineY) || 0,
+      filteredText: filteredLine,
+      rawText: rawLine,
+      contaminatedSpans: lineContaminatedSpans,
+    };
+  }
+
+  function rowJoiner(previous, current, currentText) {
+    if (!previous) return "";
+
+    const prevText = String(currentText || "");
+    if (prevText.endsWith(":") || prevText.endsWith(": ")) return " ";
+
+    const prevRight = (Number(previous.bbox?.x) || 0) + (Number(previous.bbox?.width) || 0);
+    const nextLeft = Number(current.bbox?.x) || 0;
+    const gap = nextLeft - prevRight;
+    if (gap > 56) return "  ";
+    return " ";
+  }
+
+  function isLabelLike(text) {
+    const trimmed = String(text || "").trim();
+    if (!trimmed) return false;
+    if (!/:$/.test(trimmed)) return false;
+    const tokens = trimmed.split(/\s+/).filter(Boolean);
+    if (!tokens.length || tokens.length > 7) return false;
+    if (trimmed.length > 64) return false;
+    return true;
+  }
+
+  function countLabelSegments(row) {
+    return row.segments.filter((segment) => isLabelLike(segment.filteredText || segment.rawText)).length;
+  }
+
+  function countValueSegments(row) {
+    return row.segments.filter((segment) => !isLabelLike(segment.filteredText || segment.rawText)).length;
+  }
+
+  function shouldZipLabelValueRows(row, nextRow, typicalRowGap) {
+    if (!row || !nextRow) return false;
+
+    const rowGap = (Number(row.baselineY) || 0) - (Number(nextRow.baselineY) || 0);
+    if (!(rowGap > 0 && rowGap <= Math.max(18, typicalRowGap * 1.6))) return false;
+
+    const labelCount = countLabelSegments(row);
+    if (labelCount < 2) return false;
+    if (labelCount / Math.max(1, row.segments.length) < 0.6) return false;
+
+    const nextLabelCount = countLabelSegments(nextRow);
+    if (nextLabelCount / Math.max(1, nextRow.segments.length) > 0.34) return false;
+
+    if (nextRow.segments.length < row.segments.length) return false;
+    return true;
+  }
+
   let text = "";
   let rawText = "";
   const contaminatedSpans = [];
@@ -448,99 +549,158 @@ export function assembleTextFromBlocks(blocks, contamination, opts = {}) {
   let keptContaminatedCount = 0;
   let totalTokenCount = 0;
 
-  const sortedBlocks = [...(Array.isArray(blocks) ? blocks : [])].sort((a, b) => {
-    const dy = b.bbox.y - a.bbox.y;
-    if (Math.abs(dy) > 8) return dy;
-    return a.bbox.x - b.bbox.x;
+  const segments = [];
+  for (const block of Array.isArray(blocks) ? blocks : []) {
+    for (const segment of block?.lines || []) {
+      if (!segment || !Array.isArray(segment.items) || !segment.items.length) continue;
+      segments.push(segment);
+    }
+  }
+
+  const yTolerance = DEFAULT_LINE_Y_TOLERANCE;
+  segments.sort((a, b) => {
+    const dy = (Number(b?.baselineY) || 0) - (Number(a?.baselineY) || 0);
+    if (Math.abs(dy) > yTolerance) return dy;
+    return (Number(a?.bbox?.x) || 0) - (Number(b?.bbox?.x) || 0);
   });
 
-  for (const block of sortedBlocks) {
-    const lines = [...(block.lines || [])].sort((a, b) => {
-      const dy = b.baselineY - a.baselineY;
-      if (Math.abs(dy) > DEFAULT_LINE_Y_TOLERANCE) return dy;
-      return a.bbox.x - b.bbox.x;
-    });
+  const rows = [];
+  for (const segment of segments) {
+    const last = rows[rows.length - 1];
+    const baselineY = Number(segment?.baselineY) || 0;
+    if (!last || Math.abs(last.baselineY - baselineY) > yTolerance) {
+      rows.push({ baselineY, segments: [buildSegmentLine(segment)] });
+    } else {
+      last.segments.push(buildSegmentLine(segment));
+    }
+  }
 
-    const blockFilteredLines = [];
-    const blockRawLines = [];
+  for (const row of rows) {
+    row.segments.sort((a, b) => (Number(a.bbox?.x) || 0) - (Number(b.bbox?.x) || 0));
+  }
 
-    for (const line of lines) {
-      const lineItems = [...(line.items || [])].sort((a, b) => a.x - b.x);
-      let filteredLine = "";
-      let rawLine = "";
-      let filteredPrev = null;
-      let rawPrev = null;
-      const lineContaminatedSpans = [];
+  const rowGaps = [];
+  for (let i = 1; i < rows.length; i += 1) {
+    const gap = (Number(rows[i - 1].baselineY) || 0) - (Number(rows[i].baselineY) || 0);
+    if (gap > 0) rowGaps.push(gap);
+  }
+  const typicalRowGap = median(rowGaps) || 12;
+  const paragraphBreakThreshold = Math.max(18, typicalRowGap * 1.8);
 
-      for (const item of lineItems) {
-        const token = normalizeToken(item.str);
-        if (!token) continue;
-        totalTokenCount += 1;
+  let prevBaseline = null;
+  for (let rowIndex = 0; rowIndex < rows.length; rowIndex += 1) {
+    const row = rows[rowIndex];
+    const nextRow = rows[rowIndex + 1];
 
-        const rawNext = appendTokenWithGap(rawLine, rawPrev, item, token);
-        rawLine = rawNext.text;
-        rawPrev = item;
+    if (text) {
+      const gap = prevBaseline !== null ? prevBaseline - row.baselineY : 0;
+      const separator = gap > paragraphBreakThreshold ? "\n\n" : "\n";
+      text += separator;
+      rawText += separator;
+    }
 
-        const contaminated = contaminatedByItemIndex.has(item.itemIndex);
-        const exclude = dropContaminatedNumericTokens && shouldExcludeContaminatedToken(token, contaminated);
-        if (exclude) {
-          excludedTokenCount += 1;
-          continue;
+    prevBaseline = row.baselineY;
+
+    if (shouldZipLabelValueRows(row, nextRow, typicalRowGap)) {
+      const labelSegments = row.segments;
+      const valueSegments = nextRow.segments;
+      const zippedCount = Math.min(labelSegments.length, valueSegments.length);
+
+      for (let i = 0; i < zippedCount; i += 1) {
+        if (i > 0) {
+          text += "\n";
+          rawText += "\n";
         }
 
-        const filteredNext = appendTokenWithGap(filteredLine, filteredPrev, item, token);
-        filteredLine = filteredNext.text;
-        filteredPrev = item;
+        const label = labelSegments[i];
+        const value = valueSegments[i];
+        const labelText = String(label.filteredText || label.rawText || "").trim();
+        const valueText = String(value.filteredText || value.rawText || "").trim();
 
-        if (contaminated) {
-          keptContaminatedCount += 1;
-          lineContaminatedSpans.push({
-            start: filteredNext.start,
-            end: filteredNext.end,
+        const joiner = labelText.endsWith(":") ? " " : ": ";
+        const combined = `${labelText}${joiner}${valueText}`.trim();
+        const lineStart = text.length;
+        text += combined;
+        rawText += combined;
+
+        for (const span of label.contaminatedSpans) {
+          contaminatedSpans.push({
+            start: lineStart + span.start,
+            end: lineStart + span.end,
+            kind: "image_overlap",
+          });
+        }
+        const valueOffset = labelText.length + joiner.length;
+        for (const span of value.contaminatedSpans) {
+          contaminatedSpans.push({
+            start: lineStart + valueOffset + span.start,
+            end: lineStart + valueOffset + span.end,
+            kind: "image_overlap",
           });
         }
       }
 
-      if (filteredLine) {
-        blockFilteredLines.push({
-          text: filteredLine,
-          contaminatedSpans: lineContaminatedSpans,
-        });
-      }
-      if (rawLine) {
-        blockRawLines.push(rawLine);
-      }
+      rowIndex += 1;
+      prevBaseline = nextRow.baselineY;
+      continue;
     }
 
-    if (!blockFilteredLines.length && !blockRawLines.length) continue;
+    const rowTextParts = [];
+    const rowRawParts = [];
+    const rowContaminatedSpans = [];
+    let rowTextCursor = 0;
 
-    if (text && blockFilteredLines.length) text += "\n\n";
-    if (rawText && blockRawLines.length) rawText += "\n\n";
+    let prevSegment = null;
+    let currentRowText = "";
 
-    for (let lineIndex = 0; lineIndex < blockFilteredLines.length; lineIndex += 1) {
-      if (lineIndex > 0) text += "\n";
-      const line = blockFilteredLines[lineIndex];
-      const lineStart = text.length;
-      text += line.text;
+    for (const segment of row.segments) {
+      const segmentText = String(segment.filteredText || "").trim();
+      const segmentRaw = String(segment.rawText || "").trim();
+      if (!segmentText && !segmentRaw) continue;
 
-      for (const span of line.contaminatedSpans) {
-        contaminatedSpans.push({
-          start: lineStart + span.start,
-          end: lineStart + span.end,
-          kind: "image_overlap",
-        });
+      const joiner = rowTextParts.length ? rowJoiner(prevSegment, segment, currentRowText) : "";
+      if (segmentText) {
+        currentRowText += joiner;
+        const segStart = currentRowText.length;
+        currentRowText += segmentText;
+
+        for (const span of segment.contaminatedSpans) {
+          rowContaminatedSpans.push({
+            start: segStart + span.start,
+            end: segStart + span.end,
+          });
+        }
       }
+
+      if (segmentRaw) {
+        const rawJoiner = rowRawParts.length ? joiner : "";
+        rowRawParts.push(`${rawJoiner}${segmentRaw}`);
+      }
+
+      prevSegment = segment;
+      rowTextCursor = currentRowText.length;
+      rowTextParts.push(segmentText);
     }
 
-    for (let lineIndex = 0; lineIndex < blockRawLines.length; lineIndex += 1) {
-      if (lineIndex > 0) rawText += "\n";
-      rawText += blockRawLines[lineIndex];
+    const finalRowText = currentRowText.trimEnd();
+    const finalRowRaw = rowRawParts.join("").trimEnd();
+
+    const lineStart = text.length;
+    text += finalRowText;
+    rawText += finalRowRaw || finalRowText;
+
+    for (const span of rowContaminatedSpans) {
+      contaminatedSpans.push({
+        start: lineStart + span.start,
+        end: lineStart + span.end,
+        kind: "image_overlap",
+      });
     }
   }
 
   return {
-    text,
-    rawText: rawText || text,
+    text: text.trimEnd(),
+    rawText: (rawText || text).trimEnd(),
     contaminatedSpans: mergeSpanList(contaminatedSpans),
     excludedTokenCount,
     keptContaminatedCount,
