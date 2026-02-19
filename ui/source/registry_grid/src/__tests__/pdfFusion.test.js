@@ -237,4 +237,23 @@ describe("pdf fusion arbitration", () => {
     expect(merged).not.toContain("PHOTOREPORT");
     expect(merged).toContain("31622 Bronchoscopy");
   });
+
+  it("drops Provation footer boilerplate and consecutive duplicate lines", () => {
+    const cleaned = sanitizeOcrText(
+      [
+        "Bronchoscopy performed with moderate sedation.",
+        "Bronchoscopy performed with moderate sedation.",
+        "Powered by Provation MD",
+        "Page 1 of 2",
+        "Follow up with Pulmonology in 2 weeks.",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    expect(cleaned).toContain("Bronchoscopy performed with moderate sedation.");
+    expect(cleaned).toContain("Follow up with Pulmonology in 2 weeks.");
+    expect(cleaned).not.toContain("Powered by Provation");
+    expect(cleaned).not.toContain("Page 1 of 2");
+    expect(cleaned.split("\n").filter((line) => /moderate sedation/i.test(line))).toHaveLength(1);
+  });
 });

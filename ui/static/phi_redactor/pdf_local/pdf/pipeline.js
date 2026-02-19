@@ -1,5 +1,6 @@
 import { arbitratePageText } from "./fusion.js";
 import { clamp01 } from "./layoutAnalysis.js";
+import { computeOcrTextMetrics } from "./ocrMetrics.js";
 import { classifyPage, isUnsafeNativePage, resolvePageSource } from "./pageClassifier.js";
 
 const DEFAULT_GATE_OPTIONS = Object.freeze({
@@ -18,6 +19,11 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   maskImages: "auto",
   cropMode: "auto",
   cropPaddingPx: 14,
+  headerBandFrac: 0.22,
+  headerScaleBoost: 1.8,
+  headerRetryPsms: ["6", "4", "11"],
+  figureOverlapThreshold: 0.35,
+  shortLowConfThreshold: 30,
 });
 
 function normalizeGateOptions(gate) {
@@ -51,6 +57,25 @@ function normalizeOcrOptions(opts = {}) {
   const cropPaddingPx = Number.isFinite(ocr.cropPaddingPx)
     ? Math.max(0, Math.min(120, Number(ocr.cropPaddingPx)))
     : DEFAULT_OCR_OPTIONS.cropPaddingPx;
+  const headerBandFrac = Number.isFinite(ocr.headerBandFrac)
+    ? Math.max(0.12, Math.min(0.35, Number(ocr.headerBandFrac)))
+    : DEFAULT_OCR_OPTIONS.headerBandFrac;
+  const headerScaleBoost = Number.isFinite(ocr.headerScaleBoost)
+    ? Math.max(1, Math.min(3, Number(ocr.headerScaleBoost)))
+    : DEFAULT_OCR_OPTIONS.headerScaleBoost;
+  const rawHeaderRetryPsms = Array.isArray(ocr.headerRetryPsms)
+    ? ocr.headerRetryPsms
+    : DEFAULT_OCR_OPTIONS.headerRetryPsms;
+  const headerRetryPsms = [...new Set(rawHeaderRetryPsms
+    .map((value) => String(value || "").trim())
+    .filter(Boolean))]
+    .slice(0, 6);
+  const figureOverlapThreshold = Number.isFinite(ocr.figureOverlapThreshold)
+    ? Math.max(0, Math.min(1, Number(ocr.figureOverlapThreshold)))
+    : DEFAULT_OCR_OPTIONS.figureOverlapThreshold;
+  const shortLowConfThreshold = Number.isFinite(ocr.shortLowConfThreshold)
+    ? Math.max(0, Math.min(100, Number(ocr.shortLowConfThreshold)))
+    : DEFAULT_OCR_OPTIONS.shortLowConfThreshold;
 
   return {
     ...DEFAULT_OCR_OPTIONS,
@@ -64,6 +89,11 @@ function normalizeOcrOptions(opts = {}) {
     maskImages,
     cropMode,
     cropPaddingPx,
+    headerBandFrac,
+    headerScaleBoost,
+    headerRetryPsms: headerRetryPsms.length ? headerRetryPsms : [...DEFAULT_OCR_OPTIONS.headerRetryPsms],
+    figureOverlapThreshold,
+    shortLowConfThreshold,
     workerUrl: ocr.workerUrl,
   };
 }
@@ -76,6 +106,57 @@ function sourceHeaderLabel(page) {
   if (page.sourceDecision === "hybrid") return "HYBRID";
   if (page.sourceDecision === "ocr" && !page.ocrText) return "OCR_REQUIRED";
   return page.sourceDecision.toUpperCase();
+}
+
+function normalizeMetricValue(value, fallback = null) {
+  return Number.isFinite(value) ? Number(value) : fallback;
+}
+
+function looksLowConfidenceByFinalMetrics(metrics) {
+  if (!metrics || typeof metrics !== "object") return true;
+  const charCount = Number(metrics.charCount) || 0;
+  const alphaRatio = Number(metrics.alphaRatio) || 0;
+  const meanLineConf = Number.isFinite(metrics.meanLineConf) ? Number(metrics.meanLineConf) : null;
+  const lowConfLineFrac = Number.isFinite(metrics.lowConfLineFrac) ? Number(metrics.lowConfLineFrac) : null;
+
+  if (charCount < 80) return true;
+  if (alphaRatio < 0.38) return true;
+  if (Number.isFinite(meanLineConf) && meanLineConf < 38) return true;
+  if (Number.isFinite(lowConfLineFrac) && lowConfLineFrac > 0.62) return true;
+  return false;
+}
+
+function buildPageQualityMetrics(pageText, rawPage, sourceDecision) {
+  const safeText = typeof pageText === "string" ? pageText : "";
+  const ocrMeta = rawPage?.ocrMeta && typeof rawPage.ocrMeta === "object"
+    ? rawPage.ocrMeta
+    : null;
+  const ocrLines = Array.isArray(ocrMeta?.lines) ? ocrMeta.lines : [];
+  const stageMetrics = ocrMeta?.metrics && typeof ocrMeta.metrics === "object"
+    ? ocrMeta.metrics
+    : {};
+
+  const finalMetrics = computeOcrTextMetrics({ text: safeText });
+  const postFilter = stageMetrics.postFilter && typeof stageMetrics.postFilter === "object"
+    ? stageMetrics.postFilter
+    : null;
+
+  if (sourceDecision !== "native" && postFilter) {
+    finalMetrics.meanLineConf = normalizeMetricValue(postFilter.meanLineConf, finalMetrics.meanLineConf);
+    finalMetrics.lowConfLineFrac = normalizeMetricValue(postFilter.lowConfLineFrac, finalMetrics.lowConfLineFrac);
+  }
+
+  return {
+    ...finalMetrics,
+    lowConfidence: looksLowConfidenceByFinalMetrics(finalMetrics),
+    stages: {
+      preMask: stageMetrics.preMask,
+      preFilter: stageMetrics.preFilter,
+      postOcr: stageMetrics.postOcr,
+      postFilter: stageMetrics.postFilter,
+      postHybrid: finalMetrics,
+    },
+  };
 }
 
 function pageUnsafeReason(page, gateOptions) {
@@ -135,6 +216,7 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
 
   let lowConfidencePages = 0;
   let contaminatedPages = 0;
+  const pageMetricLines = [];
 
   for (const rawPage of normalizeRawPages(rawPages)) {
     const rawText = typeof rawPage.rawText === "string" ? rawPage.rawText : (rawPage.text || "");
@@ -146,9 +228,6 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
     });
     pageStats.completenessConfidence = classification.completenessConfidence;
 
-    if (classification.completenessConfidence < gateOptions.minCompletenessConfidence) {
-      lowConfidencePages += 1;
-    }
     if ((pageStats.contaminationScore || 0) >= gateOptions.maxContaminationScore) {
       contaminatedPages += 1;
     }
@@ -169,7 +248,9 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
     });
 
     let sourceDecision = fusion.sourceDecision;
-    if (resolvedSource.source === "ocr" && !rawPage.ocrText) {
+    const hasAnyOcrText = typeof rawPage.ocrText === "string";
+    const hasOcrText = typeof rawPage.ocrText === "string" && rawPage.ocrText.trim().length > 0;
+    if (resolvedSource.source === "ocr" && !hasAnyOcrText) {
       sourceDecision = "ocr";
     }
 
@@ -190,9 +271,22 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
     ]);
     if (blockedReason) qualityFlags.add("BLOCKED_UNSAFE_NATIVE");
 
-    const pageText = sourceDecision === "ocr" && typeof rawPage.ocrText === "string"
+    const pageText = sourceDecision === "ocr" && hasOcrText
       ? rawPage.ocrText
       : fusion.text || nativeText;
+    const qualityMetrics = buildPageQualityMetrics(pageText, rawPage, sourceDecision);
+    if (qualityMetrics.lowConfidence) {
+      lowConfidencePages += 1;
+    }
+    const meanLineConf = Number.isFinite(qualityMetrics.meanLineConf)
+      ? qualityMetrics.meanLineConf.toFixed(1)
+      : "n/a";
+    const lowConfLineFrac = Number.isFinite(qualityMetrics.lowConfLineFrac)
+      ? qualityMetrics.lowConfLineFrac.toFixed(2)
+      : "n/a";
+    pageMetricLines.push(
+      `p${rawPage.pageIndex + 1}: chars=${qualityMetrics.charCount}, alpha=${qualityMetrics.alphaRatio.toFixed(2)}, conf=${meanLineConf}, lowConf=${lowConfLineFrac}, lines=${qualityMetrics.numLines}, medTok=${qualityMetrics.medianTokenLen.toFixed(1)}, footer=${qualityMetrics.footerBoilerplateHits}`,
+    );
 
     const page = {
       pageIndex: rawPage.pageIndex,
@@ -212,6 +306,7 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
       blockedReason,
       ocrText: typeof rawPage.ocrText === "string" ? rawPage.ocrText : undefined,
       ocrMeta: rawPage.ocrMeta && typeof rawPage.ocrMeta === "object" ? rawPage.ocrMeta : undefined,
+      qualityMetrics,
     };
 
     const header = `\n===== PAGE ${page.pageIndex + 1} (${sourceHeaderLabel(page)}) =====\n`;
@@ -246,6 +341,7 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
     qualitySummary: {
       lowConfidencePages,
       contaminatedPages,
+      pageMetrics: pageMetricLines,
     },
     gate,
   };
@@ -396,6 +492,11 @@ async function runOcrPass(file, pageIndexes, opts, push) {
         maskImages: ocrOptions.maskImages,
         cropMode: ocrOptions.cropMode,
         cropPaddingPx: ocrOptions.cropPaddingPx,
+        headerBandFrac: ocrOptions.headerBandFrac,
+        headerScaleBoost: ocrOptions.headerScaleBoost,
+        headerRetryPsms: ocrOptions.headerRetryPsms,
+        figureOverlapThreshold: ocrOptions.figureOverlapThreshold,
+        shortLowConfThreshold: ocrOptions.shortLowConfThreshold,
       },
     }, [pdfBytes]);
   });

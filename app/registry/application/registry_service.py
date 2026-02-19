@@ -1452,10 +1452,37 @@ class RegistryService:
                                         abnormalities.append("Vocal cord abnormality")
                                         found.append("vocal_cord_abnormality")
 
+                            # Blood/clot mentions (often missed by the LLM when templated under "Findings").
+                            # Be conservative: require "clot" in an airway/obstruction context.
+                            if "Blood" not in abnormalities:
+                                if re.search(r"(?i)\b(?:blood|blot)\s+clot\b", full_text) or re.search(
+                                    r"(?i)\bclot\b[^.\n]{0,80}\b(?:obstruct|occlud|block|plug|remov|evacuat|extract)\w*\b",
+                                    full_text,
+                                ):
+                                    abnormalities.append("Blood")
+                                    found.append("blood_clot")
+
+                            # Extrinsic compression / submucosal infiltration (malignant airway disease burden).
+                            if "Extrinsic compression" not in abnormalities:
+                                if re.search(
+                                    r"(?i)\bextrin(?:sic|sec)\s+compression\b|\bexternal\s+compression\b",
+                                    full_text,
+                                ):
+                                    abnormalities.append("Extrinsic compression")
+                                    found.append("extrinsic_compression")
+                            if "Mucosal abnormality" not in abnormalities:
+                                if re.search(r"(?i)\bsubmucosal\s+infiltrat\w*\b", full_text):
+                                    abnormalities.append("Mucosal abnormality")
+                                    found.append("submucosal_infiltration")
+
                             findings_changed = False
-                            if abnormalities and proc.get("airway_abnormalities") in (None, [], {}):
+                            existing_raw = proc.get("airway_abnormalities")
+                            existing_list = existing_raw if isinstance(existing_raw, list) else None
+                            if abnormalities and existing_list != abnormalities:
                                 proc["airway_abnormalities"] = abnormalities
                                 findings_changed = True
+
+                            if findings_changed:
                                 # Evidence anchors for the abnormalities
                                 if "secretions" in found:
                                     _add_first_span_skip_cpt_headers(
@@ -1482,6 +1509,27 @@ class RegistryService:
                                         [
                                             r"\bvocal\s+cords?\b[^.\n]{0,120}\b(?:abnormal|paraly|paralysis|immobil|immobile|lesion|dysfunction)\w*\b"
                                         ],
+                                    )
+                                if "blood_clot" in found:
+                                    _add_first_span_skip_cpt_headers(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        [
+                                            r"\b(?:blood|blot)\s+clot\b",
+                                            r"\bclot\b[^.\n]{0,80}\b(?:removed|evacuated|obstruct|occlud)\w*\b",
+                                        ],
+                                    )
+                                if "extrinsic_compression" in found:
+                                    _add_first_span_skip_cpt_headers(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        [
+                                            r"\bextrin(?:sic|sec)\s+compression\b",
+                                            r"\bexternal\s+compression\b",
+                                        ],
+                                    )
+                                if "submucosal_infiltration" in found:
+                                    _add_first_span_skip_cpt_headers(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        [r"\bsubmucosal\s+infiltrat\w*\b"],
                                     )
 
                             if not proc.get("inspection_findings"):

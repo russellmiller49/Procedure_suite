@@ -11,6 +11,18 @@
  */
 
 /**
+ * @typedef {{text:string,conf:number|null,bbox:Region}} OcrWord
+ */
+
+/**
+ * @typedef {{text:string,confidence:number|null,bbox:Region,words:OcrWord[],pageIndex:number}} OcrLine
+ */
+
+/**
+ * @typedef {{lines:OcrLine[],fullText:string,pageIndex:number}} OcrPage
+ */
+
+/**
  * @typedef {{start:number,end:number,kind?:string}} Span
  */
 
@@ -87,8 +99,39 @@
  * mode?:string,
  * reason?:string,
  * box?:number[]
- * }
+ * },
+ * header?:{
+ * psmUsed?:string,
+ * scaleUsed?:number,
+ * retries?:number,
+ * retryNeeded?:boolean
+ * },
+ * filterMode?:{
+ * disableFigureOverlap?:boolean,
+ * reason?:string
+ * },
+ * metrics?:{
+ * preMask?:object,
+ * preFilter?:object,
+ * postOcr?:object,
+ * postFilter?:object
+ * },
+ * lines?:OcrLine[],
+ * droppedLineSummary?:Record<string,number>,
+ * droppedLines?:Array<{reason:string,text:string,confidence?:number,overlapRatio?:number}>,
+ * figureRegions?:Region[]
  * }} [ocrMeta]
+ * @property {{
+ * charCount:number,
+ * alphaRatio:number,
+ * meanLineConf:number|null,
+ * lowConfLineFrac:number|null,
+ * numLines:number,
+ * medianTokenLen:number,
+ * footerBoilerplateHits:number,
+ * lowConfidence:boolean,
+ * stages?:object
+ * }} [qualityMetrics]
  */
 
 /**
@@ -110,7 +153,7 @@
  * @property {boolean} requiresOcr
  * @property {boolean} blocked
  * @property {string} [blockReason]
- * @property {{lowConfidencePages:number,contaminatedPages:number}} qualitySummary
+ * @property {{lowConfidencePages:number,contaminatedPages:number,pageMetrics?:string[]}} qualitySummary
  * @property {PdfExtractionGate} gate
  */
 

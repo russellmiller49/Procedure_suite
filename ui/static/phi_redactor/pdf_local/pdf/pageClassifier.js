@@ -4,7 +4,8 @@ export const DEFAULT_CLASSIFIER_THRESHOLDS = Object.freeze({
   charCount: 80,
   singleCharItemRatio: 0.55,
   nonPrintableRatio: 0.08,
-  garbageRatio: 0.35,
+  alphaRatioMin: 0.38,
+  medianTokenLenMin: 2.2,
   imageOpCount: 5,
   imageTextCharMax: 1800,
   overlapRatio: 0.08,
@@ -13,22 +14,52 @@ export const DEFAULT_CLASSIFIER_THRESHOLDS = Object.freeze({
   classifierDecisionScore: 0.5,
 });
 
-function computeGarbageRatio(text) {
+function computeTextQualityStats(text) {
   const trimmed = typeof text === "string" ? text.trim() : "";
-  if (!trimmed) return 1;
-
-  const tokens = trimmed.split(/\s+/).filter(Boolean);
-  if (!tokens.length) return 1;
-
-  let bad = 0;
-  for (const token of tokens) {
-    const clean = token.replace(/[\u2010-\u2015]/g, "-");
-    const isShortSymbol = clean.length <= 2 && /^[^A-Za-z0-9]+$/.test(clean);
-    const isLongNoise = /^[^A-Za-z0-9]{3,}$/.test(clean);
-    if (isShortSymbol || isLongNoise) bad += 1;
+  if (!trimmed) {
+    return {
+      alphaRatio: 0,
+      medianTokenLen: 0,
+    };
   }
 
-  return bad / tokens.length;
+  const tokens = trimmed.split(/\s+/).filter(Boolean);
+  const chars = [...trimmed];
+  const alphaCount = chars.filter((ch) => /[A-Za-z]/.test(ch)).length;
+
+  const tokenLens = tokens
+    .map((token) => token.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, ""))
+    .filter(Boolean)
+    .map((token) => token.length)
+    .sort((a, b) => a - b);
+  const mid = Math.floor(tokenLens.length / 2);
+  const medianTokenLen = tokenLens.length
+    ? (tokenLens.length % 2 ? tokenLens[mid] : (tokenLens[mid - 1] + tokenLens[mid]) / 2)
+    : 0;
+
+  return {
+    alphaRatio: chars.length ? clamp01(alphaCount / chars.length) : 0,
+    medianTokenLen,
+  };
+}
+
+function addTextQualitySignals(scoreState, textStats, thresholds) {
+  const { reasons, qualityFlags } = scoreState;
+  let score = scoreState.score;
+
+  if (textStats.alphaRatio < thresholds.alphaRatioMin) {
+    score += 0.15;
+    reasons.push(`low alpha ratio (${textStats.alphaRatio.toFixed(2)})`);
+    qualityFlags.push("LOW_ALPHA_RATIO");
+  }
+
+  if (textStats.medianTokenLen > 0 && textStats.medianTokenLen < thresholds.medianTokenLenMin) {
+    score += 0.1;
+    reasons.push(`short median token length (${textStats.medianTokenLen.toFixed(1)})`);
+    qualityFlags.push("SHORT_TOKENS");
+  }
+
+  return score;
 }
 
 function mergeThresholds(override) {
@@ -57,7 +88,7 @@ export function classifyPage(stats, text, opts = {}) {
   const imageOpCount = Math.max(0, Number(safeStats.imageOpCount) || 0);
   const overlapRatio = clamp01(Number(safeStats.overlapRatio) || 0);
   const contaminationScore = clamp01(Number(safeStats.contaminationScore) || 0);
-  const garbageRatio = computeGarbageRatio(text);
+  const textStats = computeTextQualityStats(text);
   const completenessConfidence = Number.isFinite(safeStats.completenessConfidence)
     ? clamp01(safeStats.completenessConfidence)
     : estimateCompletenessConfidence(safeStats, {
@@ -86,11 +117,7 @@ export function classifyPage(stats, text, opts = {}) {
     qualityFlags.push("NON_PRINTABLE_TEXT");
   }
 
-  if (garbageRatio >= thresholds.garbageRatio) {
-    score += 0.15;
-    reasons.push(`garbage-text ratio (${garbageRatio.toFixed(2)})`);
-    qualityFlags.push("GARBAGE_TEXT");
-  }
+  score = addTextQualitySignals({ score, reasons, qualityFlags }, textStats, thresholds);
 
   if (imageOpCount >= thresholds.imageOpCount && charCount <= thresholds.imageTextCharMax) {
     score += 0.32;

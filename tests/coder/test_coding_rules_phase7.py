@@ -60,6 +60,7 @@ def make_record(**kwargs) -> MagicMock:
         "foreign_body_removal",
         "airway_dilation",
         "airway_stent",
+        "airway_stent_revision",
         "thermal_ablation",
         "cryotherapy",
         "blvr",
@@ -77,6 +78,11 @@ def make_record(**kwargs) -> MagicMock:
             proc.performed = True
         else:
             proc.performed = False
+        # Prevent MagicMock attribute string representations (e.g. "...airway_stent_revision.action")
+        # from being misinterpreted as real action evidence in coding rules.
+        if name in {"airway_stent", "airway_stent_revision"}:
+            proc.action = None
+            proc.airway_stent_removal = False
         setattr(procedures_performed, name, proc)
 
     # Ensure common list-like fields are real lists (avoids MagicMock iteration surprises).

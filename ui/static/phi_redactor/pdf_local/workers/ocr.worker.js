@@ -3,6 +3,12 @@ import * as pdfjs from "../../vendor/pdfjs/pdf.mjs";
 import Tesseract from "../../vendor/tesseract/tesseract.esm.min.js";
 import { clamp01, mergeRegions, normalizeRect, rectArea } from "../pdf/layoutAnalysis.js";
 import { computeOcrCropRect } from "../pdf/ocrRegions.js";
+import { computeOcrTextMetrics } from "../pdf/ocrMetrics.js";
+import {
+  composeOcrPageText,
+  dedupeConsecutiveLines,
+  filterOcrLinesDetailed,
+} from "../pdf/ocrPostprocess.js";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "../../vendor/pdfjs/pdf.worker.mjs",
@@ -19,6 +25,11 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   maxMaskRegions: 12,
   cropMode: "auto",
   cropPaddingPx: 14,
+  headerBandFrac: 0.22,
+  headerScaleBoost: 1.8,
+  headerRetryPsms: ["6", "4", "11"],
+  figureOverlapThreshold: 0.35,
+  shortLowConfThreshold: 30,
 });
 
 let activeJobId = 0;
@@ -51,6 +62,25 @@ function resolveOcrOptions(options = {}) {
   const cropPaddingPx = Number.isFinite(merged.cropPaddingPx)
     ? Math.max(0, Number(merged.cropPaddingPx))
     : 14;
+  const headerBandFrac = Number.isFinite(merged.headerBandFrac)
+    ? clamp01(Number(merged.headerBandFrac))
+    : DEFAULT_OCR_OPTIONS.headerBandFrac;
+  const headerScaleBoost = Number.isFinite(merged.headerScaleBoost)
+    ? Math.max(1, Math.min(3, Number(merged.headerScaleBoost)))
+    : DEFAULT_OCR_OPTIONS.headerScaleBoost;
+  const rawHeaderRetryPsms = Array.isArray(merged.headerRetryPsms)
+    ? merged.headerRetryPsms
+    : DEFAULT_OCR_OPTIONS.headerRetryPsms;
+  const headerRetryPsms = [...new Set(rawHeaderRetryPsms
+    .map((value) => String(value || "").trim())
+    .filter(Boolean))]
+    .slice(0, 6);
+  const figureOverlapThreshold = Number.isFinite(merged.figureOverlapThreshold)
+    ? clamp01(Number(merged.figureOverlapThreshold))
+    : DEFAULT_OCR_OPTIONS.figureOverlapThreshold;
+  const shortLowConfThreshold = Number.isFinite(merged.shortLowConfThreshold)
+    ? Math.max(0, Math.min(100, Number(merged.shortLowConfThreshold)))
+    : DEFAULT_OCR_OPTIONS.shortLowConfThreshold;
 
   return {
     lang: typeof merged.lang === "string" && merged.lang.trim() ? merged.lang.trim() : "eng",
@@ -62,6 +92,11 @@ function resolveOcrOptions(options = {}) {
     maxMaskRegions,
     cropMode,
     cropPaddingPx,
+    headerBandFrac: Math.max(0.12, Math.min(0.35, headerBandFrac || DEFAULT_OCR_OPTIONS.headerBandFrac)),
+    headerScaleBoost,
+    headerRetryPsms: headerRetryPsms.length ? headerRetryPsms : [...DEFAULT_OCR_OPTIONS.headerRetryPsms],
+    figureOverlapThreshold,
+    shortLowConfThreshold,
   };
 }
 
@@ -70,7 +105,7 @@ function toAssetUrl(path) {
 }
 
 async function getTesseractWorker(options, pageIndex, totalPages) {
-  const configKey = `${options.lang}:${options.psm}`;
+  const configKey = `${options.lang}`;
   if (tesseractWorker && configKey === tesseractConfigKey) {
     return tesseractWorker;
   }
@@ -119,11 +154,11 @@ async function getTesseractWorker(options, pageIndex, totalPages) {
 
   await worker.setParameters({
     preserve_interword_spaces: "1",
-    tessedit_pageseg_mode: options.psm,
   });
 
   tesseractWorker = worker;
   tesseractConfigKey = configKey;
+  activePsm = "";
   return worker;
 }
 
@@ -219,6 +254,403 @@ class WorkerFilterFactory {
   destroy() {
     // no-op for worker fallback filter factory.
   }
+}
+
+const HEADER_BAND_FRAC = 0.22;
+const HEADER_RETRY_PSMS = Object.freeze(["6", "4", "11"]);
+
+function sortByReadingOrder(a, b) {
+  const ay = Number(a?.bbox?.y) || 0;
+  const by = Number(b?.bbox?.y) || 0;
+  if (Math.abs(ay - by) > 4) return ay - by;
+  const ax = Number(a?.bbox?.x) || 0;
+  const bx = Number(b?.bbox?.x) || 0;
+  return ax - bx;
+}
+
+function coerceConfidence(value) {
+  if (!Number.isFinite(value)) return null;
+  const conf = Number(value);
+  if (!Number.isFinite(conf)) return null;
+  if (conf < 0) return null;
+  return Math.max(0, Math.min(100, conf));
+}
+
+function normalizeBboxFromTesseract(rawBBox, offsetX = 0, offsetY = 0, scaleFactor = 1) {
+  const scale = Number.isFinite(scaleFactor) && scaleFactor > 0 ? scaleFactor : 1;
+  const invScale = 1 / scale;
+  if (!rawBBox || typeof rawBBox !== "object") {
+    return { x: offsetX, y: offsetY, width: 0, height: 0 };
+  }
+
+  const x0 = Number.isFinite(rawBBox.x0) ? Number(rawBBox.x0) : Number(rawBBox.x) || 0;
+  const y0 = Number.isFinite(rawBBox.y0) ? Number(rawBBox.y0) : Number(rawBBox.y) || 0;
+  const x1 = Number.isFinite(rawBBox.x1)
+    ? Number(rawBBox.x1)
+    : Number.isFinite(rawBBox.w)
+      ? x0 + Number(rawBBox.w)
+      : x0;
+  const y1 = Number.isFinite(rawBBox.y1)
+    ? Number(rawBBox.y1)
+    : Number.isFinite(rawBBox.h)
+      ? y0 + Number(rawBBox.h)
+      : y0;
+
+  return normalizeRect({
+    x: offsetX + Math.min(x0, x1) * invScale,
+    y: offsetY + Math.min(y0, y1) * invScale,
+    width: Math.abs(x1 - x0) * invScale,
+    height: Math.abs(y1 - y0) * invScale,
+  });
+}
+
+function extractWordsFromLine(rawLine, offsetX, offsetY, scaleFactor) {
+  const words = [];
+  for (const rawWord of Array.isArray(rawLine?.words) ? rawLine.words : []) {
+    const text = String(rawWord?.text || "").replace(/\s+/g, " ").trim();
+    if (!text) continue;
+    words.push({
+      text,
+      conf: coerceConfidence(rawWord?.confidence ?? rawWord?.conf),
+      bbox: normalizeBboxFromTesseract(rawWord?.bbox || rawWord, offsetX, offsetY, scaleFactor),
+    });
+  }
+  return words;
+}
+
+function groupWordsIntoLines(words = []) {
+  const buckets = new Map();
+  for (const rawWord of Array.isArray(words) ? words : []) {
+    const text = String(rawWord?.text || "").replace(/\s+/g, " ").trim();
+    if (!text) continue;
+    const block = Number(rawWord?.block_num) || 0;
+    const paragraph = Number(rawWord?.par_num) || 0;
+    const line = Number(rawWord?.line_num) || 0;
+    const key = `${block}:${paragraph}:${line}`;
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(rawWord);
+  }
+  return [...buckets.values()];
+}
+
+function buildLineFromWords(rawWords, pageIndex, offsetX, offsetY, scaleFactor) {
+  const words = [];
+  let bbox = null;
+  const confValues = [];
+  for (const rawWord of Array.isArray(rawWords) ? rawWords : []) {
+    const text = String(rawWord?.text || "").replace(/\s+/g, " ").trim();
+    if (!text) continue;
+    const wordBBox = normalizeBboxFromTesseract(rawWord?.bbox || rawWord, offsetX, offsetY, scaleFactor);
+    bbox = bbox
+      ? normalizeRect({
+        x: Math.min(bbox.x, wordBBox.x),
+        y: Math.min(bbox.y, wordBBox.y),
+        width: Math.max(bbox.x + bbox.width, wordBBox.x + wordBBox.width) - Math.min(bbox.x, wordBBox.x),
+        height: Math.max(bbox.y + bbox.height, wordBBox.y + wordBBox.height) - Math.min(bbox.y, wordBBox.y),
+      })
+      : wordBBox;
+
+    const conf = coerceConfidence(rawWord?.confidence ?? rawWord?.conf);
+    if (Number.isFinite(conf)) confValues.push(conf);
+    words.push({ text, conf, bbox: wordBBox });
+  }
+
+  const text = words.map((word) => word.text).join(" ").replace(/\s+/g, " ").trim();
+  if (!text) return null;
+  const confidence = confValues.length
+    ? confValues.reduce((acc, value) => acc + value, 0) / confValues.length
+    : null;
+
+  return {
+    text,
+    confidence,
+    bbox: bbox || { x: offsetX, y: offsetY, width: 0, height: 0 },
+    words,
+    pageIndex,
+  };
+}
+
+function extractStructuredOcrLines(data, opts = {}) {
+  const pageIndex = Number.isFinite(opts.pageIndex) ? Number(opts.pageIndex) : 0;
+  const offsetX = Number(opts.offsetX) || 0;
+  const offsetY = Number(opts.offsetY) || 0;
+  const scaleFactor = Number.isFinite(opts.scaleFactor) && opts.scaleFactor > 0 ? opts.scaleFactor : 1;
+
+  const out = [];
+  const rawLines = Array.isArray(data?.lines) ? data.lines : [];
+
+  for (const rawLine of rawLines) {
+    const text = String(rawLine?.text || "").replace(/\s+/g, " ").trim();
+    if (!text) continue;
+    const words = extractWordsFromLine(rawLine, offsetX, offsetY, scaleFactor);
+    const wordConf = words.map((word) => word.conf).filter((value) => Number.isFinite(value));
+    const confidence = Number.isFinite(rawLine?.confidence)
+      ? coerceConfidence(rawLine.confidence)
+      : Number.isFinite(rawLine?.conf)
+        ? coerceConfidence(rawLine.conf)
+        : (wordConf.length
+          ? wordConf.reduce((acc, value) => acc + value, 0) / wordConf.length
+          : null);
+    out.push({
+      text,
+      confidence,
+      bbox: normalizeBboxFromTesseract(rawLine?.bbox || rawLine, offsetX, offsetY, scaleFactor),
+      words,
+      pageIndex,
+    });
+  }
+
+  if (!out.length && Array.isArray(data?.words) && data.words.length) {
+    const grouped = groupWordsIntoLines(data.words);
+    for (const group of grouped) {
+      const line = buildLineFromWords(group, pageIndex, offsetX, offsetY, scaleFactor);
+      if (line) out.push(line);
+    }
+  }
+
+  out.sort(sortByReadingOrder);
+  return dedupeConsecutiveLines(out);
+}
+
+function cropCanvas(sourceCanvas, rect) {
+  const normalized = normalizeRect(rect);
+  const x = Math.max(0, Math.floor(normalized.x));
+  const y = Math.max(0, Math.floor(normalized.y));
+  const width = Math.max(1, Math.floor(normalized.width));
+  const height = Math.max(1, Math.floor(normalized.height));
+  const canvas = new OffscreenCanvas(width, height);
+  const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
+  if (!ctx) return null;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(sourceCanvas, x, y, width, height, 0, 0, width, height);
+  return canvas;
+}
+
+function scaleCanvas(sourceCanvas, multiplier) {
+  const factor = Number.isFinite(multiplier) ? Math.max(1, Number(multiplier)) : 1;
+  if (factor <= 1.01) {
+    return { canvas: sourceCanvas, scaleFactor: 1 };
+  }
+  const width = Math.max(1, Math.floor(sourceCanvas.width * factor));
+  const height = Math.max(1, Math.floor(sourceCanvas.height * factor));
+  const canvas = new OffscreenCanvas(width, height);
+  const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
+  if (!ctx) {
+    return { canvas: sourceCanvas, scaleFactor: 1 };
+  }
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(sourceCanvas, 0, 0, sourceCanvas.width, sourceCanvas.height, 0, 0, width, height);
+  return { canvas, scaleFactor: factor };
+}
+
+async function buildOcrInputFromCanvas(canvas) {
+  let ocrInput = canvas;
+  if (typeof canvas.convertToBlob === "function") {
+    try {
+      ocrInput = await canvas.convertToBlob({ type: "image/png" });
+    } catch {
+      ocrInput = canvas;
+    }
+  }
+  return { ocrInput, fallbackOcrInput: canvas };
+}
+
+function detectFigureRegionsFromCanvas(canvas) {
+  if (!canvas || canvas.width < 2 || canvas.height < 2) return [];
+  const sourceWidth = Math.max(1, canvas.width);
+  const sourceHeight = Math.max(1, canvas.height);
+  const targetWidth = Math.max(64, Math.min(256, sourceWidth));
+  const scale = targetWidth / sourceWidth;
+  const targetHeight = Math.max(64, Math.floor(sourceHeight * scale));
+
+  const sampleCanvas = new OffscreenCanvas(targetWidth, targetHeight);
+  const sampleCtx = sampleCanvas.getContext("2d", { alpha: false, willReadFrequently: true });
+  if (!sampleCtx) return [];
+  sampleCtx.fillStyle = "#ffffff";
+  sampleCtx.fillRect(0, 0, targetWidth, targetHeight);
+  sampleCtx.drawImage(canvas, 0, 0, sourceWidth, sourceHeight, 0, 0, targetWidth, targetHeight);
+
+  let imageData;
+  try {
+    imageData = sampleCtx.getImageData(0, 0, targetWidth, targetHeight);
+  } catch {
+    return [];
+  }
+
+  const data = imageData.data;
+  const gray = new Uint8Array(targetWidth * targetHeight);
+  let idx = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    gray[idx] = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
+    idx += 1;
+  }
+
+  const cellSize = 8;
+  const gridW = Math.max(1, Math.ceil(targetWidth / cellSize));
+  const gridH = Math.max(1, Math.ceil(targetHeight / cellSize));
+  const edgeCounts = new Uint16Array(gridW * gridH);
+  const midCounts = new Uint16Array(gridW * gridH);
+  const totals = new Uint16Array(gridW * gridH);
+
+  for (let y = 1; y < targetHeight - 1; y += 1) {
+    for (let x = 1; x < targetWidth - 1; x += 1) {
+      const p = y * targetWidth + x;
+      const gx = Math.abs(gray[p + 1] - gray[p - 1]);
+      const gy = Math.abs(gray[p + targetWidth] - gray[p - targetWidth]);
+      const gradient = gx + gy;
+      const cellX = Math.min(gridW - 1, Math.floor(x / cellSize));
+      const cellY = Math.min(gridH - 1, Math.floor(y / cellSize));
+      const cellIndex = cellY * gridW + cellX;
+      totals[cellIndex] += 1;
+      if (gradient >= 54) edgeCounts[cellIndex] += 1;
+      const intensity = gray[p];
+      if (intensity >= 35 && intensity <= 225) midCounts[cellIndex] += 1;
+    }
+  }
+
+  const candidates = new Uint8Array(gridW * gridH);
+  for (let i = 0; i < candidates.length; i += 1) {
+    const total = Math.max(1, totals[i]);
+    const edgeDensity = edgeCounts[i] / total;
+    const midRatio = midCounts[i] / total;
+    if (edgeDensity >= 0.16 && midRatio >= 0.32) {
+      candidates[i] = 1;
+    }
+  }
+
+  const visited = new Uint8Array(candidates.length);
+  const out = [];
+  const queue = [];
+  for (let i = 0; i < candidates.length; i += 1) {
+    if (!candidates[i] || visited[i]) continue;
+    visited[i] = 1;
+    queue.length = 0;
+    queue.push(i);
+    let minX = Number.POSITIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+    let maxX = Number.NEGATIVE_INFINITY;
+    let maxY = Number.NEGATIVE_INFINITY;
+    let pixelCells = 0;
+
+    while (queue.length) {
+      const current = queue.pop();
+      const x = current % gridW;
+      const y = Math.floor(current / gridW);
+      pixelCells += 1;
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x);
+      maxY = Math.max(maxY, y);
+
+      const neighbors = [
+        [x - 1, y],
+        [x + 1, y],
+        [x, y - 1],
+        [x, y + 1],
+      ];
+      for (const [nx, ny] of neighbors) {
+        if (nx < 0 || ny < 0 || nx >= gridW || ny >= gridH) continue;
+        const next = ny * gridW + nx;
+        if (visited[next] || !candidates[next]) continue;
+        visited[next] = 1;
+        queue.push(next);
+      }
+    }
+
+    const cellAreaRatio = pixelCells / Math.max(1, gridW * gridH);
+    if (cellAreaRatio < 0.05) continue;
+
+    const sampleRect = normalizeRect({
+      x: minX * cellSize,
+      y: minY * cellSize,
+      width: (maxX - minX + 1) * cellSize,
+      height: (maxY - minY + 1) * cellSize,
+    });
+    const widthRatio = sampleRect.width / Math.max(1, targetWidth);
+    const heightRatio = sampleRect.height / Math.max(1, targetHeight);
+    if (widthRatio < 0.2 && heightRatio < 0.2) continue;
+
+    out.push(normalizeRect({
+      x: sampleRect.x / scale,
+      y: sampleRect.y / scale,
+      width: sampleRect.width / scale,
+      height: sampleRect.height / scale,
+    }));
+  }
+
+  return mergeRegions(out, { mergeGap: 8 });
+}
+
+function evaluateHeaderFieldQuality(text) {
+  const source = String(text || "");
+  const dobValid = /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/.test(source);
+  const ageToken = source.match(/\bAge\b[:\s]*([0-9]{1,3})\b/i) ||
+    source.match(/\b([0-9]{1,3})\s*(?:y\/?o|years?\s*old)\b/i);
+  const ageValue = ageToken ? Number(ageToken[1]) : null;
+  const ageHasLabel = /\bAge\b/i.test(source);
+  const ageValid = ageToken ? ageValue >= 0 && ageValue <= 120 : !ageHasLabel;
+  return {
+    dobValid,
+    ageValid,
+    retryNeeded: !dobValid || !ageValid,
+  };
+}
+
+let activePsm = "";
+
+async function setWorkerPsm(worker, psm) {
+  const normalizedPsm = String(psm || "6");
+  if (normalizedPsm === activePsm) return;
+  await worker.setParameters({
+    tessedit_pageseg_mode: normalizedPsm,
+  });
+  activePsm = normalizedPsm;
+}
+
+async function recognizeCanvas(worker, canvas, psm) {
+  await setWorkerPsm(worker, psm);
+  const { ocrInput, fallbackOcrInput } = await buildOcrInputFromCanvas(canvas);
+
+  try {
+    return await worker.recognize(ocrInput);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const canRetryWithCanvas = fallbackOcrInput && fallbackOcrInput !== ocrInput;
+    if (!canRetryWithCanvas || !/createElement/i.test(message)) {
+      throw error;
+    }
+    return worker.recognize(fallbackOcrInput);
+  }
+}
+
+function computeHeaderBodyRects(cropRect, pageWidth, pageHeight, options) {
+  const workingRect = cropRect
+    ? normalizeRect(cropRect)
+    : normalizeRect({ x: 0, y: 0, width: pageWidth, height: pageHeight });
+
+  const headerBand = Math.max(24, Math.floor(pageHeight * (options.headerBandFrac || HEADER_BAND_FRAC)));
+  const headerRect = normalizeRect({
+    x: workingRect.x,
+    y: 0,
+    width: workingRect.width,
+    height: Math.min(pageHeight, headerBand),
+  });
+
+  const workingBottom = Math.min(pageHeight, workingRect.y + workingRect.height);
+  let bodyTop = Math.max(workingRect.y, headerRect.y + headerRect.height);
+  if (workingBottom - bodyTop < 28) {
+    bodyTop = workingRect.y;
+  }
+  const bodyRect = normalizeRect({
+    x: workingRect.x,
+    y: bodyTop,
+    width: workingRect.width,
+    height: Math.max(1, workingBottom - bodyTop),
+  });
+
+  return { headerRect, bodyRect, workingRect };
 }
 
 function toViewportRect(region, viewport) {
@@ -516,6 +948,12 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
   }).promise;
 
   const viewportHintRegions = buildViewportHintRegions(viewport, width, height, hint, options);
+  const heuristicFigureRegions = detectFigureRegionsFromCanvas(canvas);
+  const figureRegions = mergeRegions([
+    ...viewportHintRegions.imageRegions,
+    ...heuristicFigureRegions,
+  ], { mergeGap: 8 });
+
   const masking = selectMaskRects(canvas, hint, options, viewportHintRegions);
   if (masking.rects.length) {
     context.fillStyle = "#ffffff";
@@ -537,58 +975,195 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
       paddingPx: options.cropPaddingPx,
     },
   );
-
-  let sourceCanvas = canvas;
-  let sourceWidth = width;
-  let sourceHeight = height;
-  if (crop.rect && crop.meta?.applied) {
-    const cropWidth = Math.max(1, Math.floor(crop.rect.width));
-    const cropHeight = Math.max(1, Math.floor(crop.rect.height));
-    const cropX = Math.max(0, Math.floor(crop.rect.x));
-    const cropY = Math.max(0, Math.floor(crop.rect.y));
-    const cropCanvas = new OffscreenCanvas(cropWidth, cropHeight);
-    const cropCtx = cropCanvas.getContext("2d", { alpha: false, willReadFrequently: true });
-    if (cropCtx) {
-      cropCtx.fillStyle = "#ffffff";
-      cropCtx.fillRect(0, 0, cropWidth, cropHeight);
-      cropCtx.drawImage(
-        canvas,
-        cropX,
-        cropY,
-        cropWidth,
-        cropHeight,
-        0,
-        0,
-        cropWidth,
-        cropHeight,
-      );
-      sourceCanvas = cropCanvas;
-      sourceWidth = cropWidth;
-      sourceHeight = cropHeight;
-    }
-  }
-
-  // tesseract.js in worker mode reliably accepts OffscreenCanvas/Blob inputs.
-  // Avoid ImageData here; some runtimes fail with "Error attempting to read image."
-  let ocrInput = sourceCanvas;
-  const fallbackOcrInput = sourceCanvas;
-  if (typeof sourceCanvas.convertToBlob === "function") {
-    try {
-      ocrInput = await sourceCanvas.convertToBlob({ type: "image/png" });
-    } catch {
-      // Fall back to canvas when blob conversion is unavailable.
-      ocrInput = sourceCanvas;
-    }
-  }
+  const appliedCropRect = crop.rect && crop.meta?.applied
+    ? normalizeRect(crop.rect)
+    : null;
+  const { headerRect, bodyRect, workingRect } = computeHeaderBodyRects(appliedCropRect, width, height, options);
+  const headerCanvas = cropCanvas(canvas, headerRect);
+  const bodyCanvas = cropCanvas(canvas, bodyRect) || cropCanvas(canvas, workingRect);
 
   return {
-    ocrInput,
-    fallbackOcrInput,
-    width: sourceWidth,
-    height: sourceHeight,
+    pageCanvas: canvas,
+    headerCanvas: headerCanvas || canvas,
+    bodyCanvas: bodyCanvas || canvas,
+    width,
+    height,
     scale: safeScale,
-    masking: masking.meta,
+    masking: {
+      ...masking.meta,
+      chosenMode: masking.meta?.mode || options.maskImages,
+      selectedRegionCount: masking.rects.length,
+    },
     crop: crop.meta,
+    figureRegions,
+    figureCoverageRatio: computeCoverageRatio(figureRegions, width, height),
+    headerRect,
+    bodyRect,
+    workingRect,
+    preMaskFigureRegionCount: figureRegions.length,
+    nativeCharCount: Number(hint?.stats?.charCount) || 0,
+  };
+}
+
+function summarizeDropReasons(droppedLines) {
+  const out = {};
+  for (const dropped of Array.isArray(droppedLines) ? droppedLines : []) {
+    const reason = String(dropped?.reason || "unknown");
+    out[reason] = (out[reason] || 0) + 1;
+  }
+  return out;
+}
+
+function chooseFigureFilterMode(renderInfo, options) {
+  const figureCoverageRatio = Number(renderInfo?.figureCoverageRatio) || 0;
+  const nativeCharCount = Number(renderInfo?.nativeCharCount) || 0;
+  const maskReason = String(renderInfo?.masking?.reason || "");
+  const scannedLike = maskReason === "likely_scanned_page" ||
+    (figureCoverageRatio >= 0.74 && nativeCharCount <= 260);
+
+  return {
+    disableFigureOverlap: scannedLike,
+    reason: scannedLike ? "scanned_like_page" : "normal",
+  };
+}
+
+function buildHeaderPsmAttempts(options) {
+  const configured = Array.isArray(options?.headerRetryPsms) && options.headerRetryPsms.length
+    ? options.headerRetryPsms
+    : HEADER_RETRY_PSMS;
+  const basePsm = String(options?.psm || configured[0] || "6");
+  const psms = [...new Set([basePsm, ...configured.map((value) => String(value || "").trim()).filter(Boolean)])];
+  const attempts = psms.map((psm, index) => ({
+    psm,
+    scale: index === 0 ? Math.max(1, Number(options?.headerScaleBoost) || 1.8) : Math.max(1.8, Number(options?.headerScaleBoost) || 1.8),
+  }));
+  attempts.push({
+    psm: basePsm,
+    scale: Math.max(2.2, Number(options?.headerScaleBoost) || 1.8),
+  });
+  return attempts;
+}
+
+async function ocrHeaderThenBody(worker, renderInfo, pageIndex, options) {
+  const headerAttempts = buildHeaderPsmAttempts(options);
+  let attemptsUsed = 0;
+  let bestHeader = {
+    lines: [],
+    text: "",
+    score: Number.NEGATIVE_INFINITY,
+    retryNeeded: true,
+    psm: String(options.psm || "6"),
+    scale: 1,
+  };
+
+  for (const attempt of headerAttempts) {
+    attemptsUsed += 1;
+    const scaled = scaleCanvas(renderInfo.headerCanvas, attempt.scale);
+    const recognized = await recognizeCanvas(worker, scaled.canvas, attempt.psm);
+    const lines = extractStructuredOcrLines(recognized?.data, {
+      pageIndex,
+      offsetX: renderInfo.headerRect.x,
+      offsetY: renderInfo.headerRect.y,
+      scaleFactor: scaled.scaleFactor,
+    });
+    const text = composeOcrPageText(lines);
+    const quality = evaluateHeaderFieldQuality(text);
+    const metrics = computeOcrTextMetrics({ text, lines });
+    const score = (quality.dobValid ? 2 : 0) +
+      (quality.ageValid ? 1 : 0) +
+      (Number.isFinite(metrics.meanLineConf) ? metrics.meanLineConf / 100 : 0) +
+      Math.min(0.9, metrics.charCount / 1400);
+
+    if (score > bestHeader.score) {
+      bestHeader = {
+        lines,
+        text,
+        score,
+        retryNeeded: quality.retryNeeded,
+        psm: attempt.psm,
+        scale: attempt.scale,
+      };
+    }
+    if (!quality.retryNeeded) break;
+  }
+
+  const bodyRecognized = await recognizeCanvas(worker, renderInfo.bodyCanvas, options.psm);
+  const bodyLines = extractStructuredOcrLines(bodyRecognized?.data, {
+    pageIndex,
+    offsetX: renderInfo.bodyRect.x,
+    offsetY: renderInfo.bodyRect.y,
+    scaleFactor: 1,
+  });
+
+  const rawLines = dedupeConsecutiveLines([
+    ...bestHeader.lines,
+    ...bodyLines,
+  ]).sort(sortByReadingOrder);
+  const preFilterText = composeOcrPageText(rawLines);
+  const preFilterMetrics = computeOcrTextMetrics({ text: preFilterText, lines: rawLines });
+
+  const filterMode = chooseFigureFilterMode(renderInfo, options);
+  let filtered = filterOcrLinesDetailed(rawLines, renderInfo.figureRegions, {
+    overlapThreshold: options.figureOverlapThreshold,
+    shortLowConfThreshold: options.shortLowConfThreshold,
+    dropCaptions: true,
+    dropBoilerplate: true,
+    disableFigureOverlap: filterMode.disableFigureOverlap,
+  });
+  let filteredLines = dedupeConsecutiveLines(filtered.lines).sort(sortByReadingOrder);
+  let filteredText = composeOcrPageText(filteredLines);
+  let postFilterMetrics = computeOcrTextMetrics({ text: filteredText, lines: filteredLines });
+
+  // Safety fallback: if figure suppression erased OCR output, retry without overlap suppression.
+  const needsFallback = !filterMode.disableFigureOverlap &&
+    postFilterMetrics.charCount < 32 &&
+    preFilterMetrics.charCount >= 140;
+  if (needsFallback) {
+    const relaxed = filterOcrLinesDetailed(rawLines, [], {
+      overlapThreshold: options.figureOverlapThreshold,
+      shortLowConfThreshold: options.shortLowConfThreshold,
+      dropCaptions: true,
+      dropBoilerplate: true,
+      disableFigureOverlap: true,
+    });
+    const relaxedLines = dedupeConsecutiveLines(relaxed.lines).sort(sortByReadingOrder);
+    const relaxedText = composeOcrPageText(relaxedLines);
+    const relaxedMetrics = computeOcrTextMetrics({ text: relaxedText, lines: relaxedLines });
+    if (relaxedMetrics.charCount > postFilterMetrics.charCount * 1.8) {
+      filtered = relaxed;
+      filteredLines = relaxedLines;
+      filteredText = relaxedText;
+      postFilterMetrics = relaxedMetrics;
+      filterMode.reason = "fallback_disable_overlap";
+      filterMode.disableFigureOverlap = true;
+    }
+  }
+
+  const meanLineConf = Number.isFinite(postFilterMetrics.meanLineConf)
+    ? postFilterMetrics.meanLineConf
+    : Number.isFinite(bodyRecognized?.data?.confidence)
+      ? Number(bodyRecognized.data.confidence)
+      : null;
+
+  return {
+    text: filteredText,
+    lines: filteredLines,
+    rawLines,
+    droppedLines: filtered.dropped,
+    confidence: meanLineConf,
+    header: {
+      psmUsed: bestHeader.psm,
+      scaleUsed: bestHeader.scale,
+      retries: attemptsUsed,
+      retryNeeded: bestHeader.retryNeeded,
+    },
+    metrics: {
+      preMask: preFilterMetrics,
+      preFilter: preFilterMetrics,
+      postOcr: preFilterMetrics,
+      postFilter: postFilterMetrics,
+    },
+    filterMode,
   };
 }
 
@@ -655,22 +1230,10 @@ async function runOcrForPages(pdfBytes, pageIndexes, pageHints, options, jobId) 
     });
 
     const startedAt = Date.now();
-    let recognized;
-    try {
-      recognized = await worker.recognize(render.ocrInput);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      const canRetryWithCanvas = render.fallbackOcrInput && render.fallbackOcrInput !== render.ocrInput;
-      if (!canRetryWithCanvas || !/createElement/i.test(message)) {
-        throw error;
-      }
-      recognized = await worker.recognize(render.fallbackOcrInput);
-    }
+    const structured = await ocrHeaderThenBody(worker, render, pageIndex, options);
     const durationMs = Date.now() - startedAt;
-    const text = typeof recognized?.data?.text === "string" ? recognized.data.text : "";
-    const confidence = Number.isFinite(recognized?.data?.confidence)
-      ? Number(recognized.data.confidence)
-      : null;
+    const text = structured.text;
+    const confidence = structured.confidence;
 
     const pageResult = {
       pageIndex,
@@ -684,6 +1247,20 @@ async function runOcrForPages(pdfBytes, pageIndexes, pageHints, options, jobId) 
         durationMs,
         masking: render.masking,
         crop: render.crop,
+        header: structured.header,
+        filterMode: structured.filterMode,
+        metrics: structured.metrics,
+        lines: structured.lines,
+        droppedLineSummary: summarizeDropReasons(structured.droppedLines),
+        droppedLines: (Array.isArray(structured.droppedLines) ? structured.droppedLines : [])
+          .slice(0, 64)
+          .map((entry) => ({
+            reason: entry.reason,
+            text: String(entry.line?.text || "").slice(0, 220),
+            confidence: Number.isFinite(entry.line?.confidence) ? Number(entry.line.confidence) : null,
+            overlapRatio: Number.isFinite(entry.overlapRatio) ? Number(entry.overlapRatio) : null,
+          })),
+        figureRegions: render.figureRegions,
       },
     };
 
