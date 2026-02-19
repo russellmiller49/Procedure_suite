@@ -67,7 +67,28 @@
  * @property {string} sourceReason
  * @property {string} [blockedReason]
  * @property {string} [ocrText]
- * @property {{confidence?:number,source?:string,width?:number,height?:number,scale?:number,durationMs?:number}} [ocrMeta]
+ * @property {{
+ * confidence?:number,
+ * source?:string,
+ * width?:number,
+ * height?:number,
+ * scale?:number,
+ * durationMs?:number,
+ * masking?:{
+ * applied?:boolean,
+ * mode?:string,
+ * reason?:string,
+ * coverageRatio?:number,
+ * candidateCount?:number,
+ * maskedCount?:number
+ * },
+ * crop?:{
+ * applied?:boolean,
+ * mode?:string,
+ * reason?:string,
+ * box?:number[]
+ * }
+ * }} [ocrMeta]
  */
 
 /**

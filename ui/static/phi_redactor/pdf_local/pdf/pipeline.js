@@ -16,6 +16,8 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   scale: 2.05,
   psm: "6",
   maskImages: "auto",
+  cropMode: "auto",
+  cropPaddingPx: 14,
 });
 
 function normalizeGateOptions(gate) {
@@ -41,6 +43,14 @@ function normalizeOcrOptions(opts = {}) {
     : ocr.maskImages === "on"
       ? "on"
       : "auto";
+  const cropMode = ocr.cropMode === "off" || ocr.cropMode === false
+    ? "off"
+    : ocr.cropMode === "on" || ocr.cropMode === true
+      ? "on"
+      : "auto";
+  const cropPaddingPx = Number.isFinite(ocr.cropPaddingPx)
+    ? Math.max(0, Math.min(120, Number(ocr.cropPaddingPx)))
+    : DEFAULT_OCR_OPTIONS.cropPaddingPx;
 
   return {
     ...DEFAULT_OCR_OPTIONS,
@@ -52,6 +62,8 @@ function normalizeOcrOptions(opts = {}) {
     scale,
     psm: String(ocr.psm || DEFAULT_OCR_OPTIONS.psm),
     maskImages,
+    cropMode,
+    cropPaddingPx,
     workerUrl: ocr.workerUrl,
   };
 }
@@ -382,6 +394,8 @@ async function runOcrPass(file, pageIndexes, opts, push) {
         scale: ocrOptions.scale,
         psm: ocrOptions.psm,
         maskImages: ocrOptions.maskImages,
+        cropMode: ocrOptions.cropMode,
+        cropPaddingPx: ocrOptions.cropPaddingPx,
       },
     }, [pdfBytes]);
   });

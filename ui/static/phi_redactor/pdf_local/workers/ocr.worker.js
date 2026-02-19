@@ -2,6 +2,7 @@ import "../../vendor/pdfjs/pdf.worker.mjs";
 import * as pdfjs from "../../vendor/pdfjs/pdf.mjs";
 import Tesseract from "../../vendor/tesseract/tesseract.esm.min.js";
 import { clamp01, mergeRegions, normalizeRect, rectArea } from "../pdf/layoutAnalysis.js";
+import { computeOcrCropRect } from "../pdf/ocrRegions.js";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "../../vendor/pdfjs/pdf.worker.mjs",
@@ -16,6 +17,8 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   maskImages: "auto",
   maskMarginPx: 6,
   maxMaskRegions: 12,
+  cropMode: "auto",
+  cropPaddingPx: 14,
 });
 
 let activeJobId = 0;
@@ -40,6 +43,14 @@ function resolveOcrOptions(options = {}) {
   const maxMaskRegions = Number.isFinite(merged.maxMaskRegions)
     ? Math.max(0, Math.min(40, Math.floor(Number(merged.maxMaskRegions))))
     : 12;
+  const cropMode = merged.cropMode === "off" || merged.cropMode === false
+    ? "off"
+    : merged.cropMode === "on" || merged.cropMode === true
+      ? "on"
+      : "auto";
+  const cropPaddingPx = Number.isFinite(merged.cropPaddingPx)
+    ? Math.max(0, Number(merged.cropPaddingPx))
+    : 14;
 
   return {
     lang: typeof merged.lang === "string" && merged.lang.trim() ? merged.lang.trim() : "eng",
@@ -49,6 +60,8 @@ function resolveOcrOptions(options = {}) {
     maskImages,
     maskMarginPx,
     maxMaskRegions,
+    cropMode,
+    cropPaddingPx,
   };
 }
 
@@ -122,6 +135,92 @@ function getViewportScale(page, baseScale) {
   return Math.max(1.2, 2800 / maxDimension);
 }
 
+const OFFSCREEN_CANVAS_FACTORY = {
+  create(width, height) {
+    const safeWidth = Math.max(1, Math.floor(Number(width) || 0));
+    const safeHeight = Math.max(1, Math.floor(Number(height) || 0));
+    const canvas = new OffscreenCanvas(safeWidth, safeHeight);
+    const context = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
+    if (!context) {
+      throw new Error("Unable to acquire 2D context for PDF render canvas.");
+    }
+    return { canvas, context };
+  },
+
+  reset(canvasAndContext, width, height) {
+    if (!canvasAndContext?.canvas) {
+      return this.create(width, height);
+    }
+    canvasAndContext.canvas.width = Math.max(1, Math.floor(Number(width) || 0));
+    canvasAndContext.canvas.height = Math.max(1, Math.floor(Number(height) || 0));
+    return canvasAndContext;
+  },
+
+  destroy(canvasAndContext) {
+    if (!canvasAndContext?.canvas) return;
+    canvasAndContext.canvas.width = 0;
+    canvasAndContext.canvas.height = 0;
+    canvasAndContext.canvas = null;
+    canvasAndContext.context = null;
+  },
+};
+
+class WorkerCanvasFactory {
+  constructor({ enableHWA = false } = {}) {
+    this._enableHWA = Boolean(enableHWA);
+  }
+
+  create(width, height) {
+    const safeWidth = Math.max(1, Math.floor(Number(width) || 0));
+    const safeHeight = Math.max(1, Math.floor(Number(height) || 0));
+    const canvas = new OffscreenCanvas(safeWidth, safeHeight);
+    const context = canvas.getContext("2d", { willReadFrequently: !this._enableHWA });
+    if (!context) {
+      throw new Error("Unable to acquire 2D context for WorkerCanvasFactory.");
+    }
+    return { canvas, context };
+  }
+
+  reset(canvasAndContext, width, height) {
+    if (!canvasAndContext?.canvas) {
+      return this.create(width, height);
+    }
+    canvasAndContext.canvas.width = Math.max(1, Math.floor(Number(width) || 0));
+    canvasAndContext.canvas.height = Math.max(1, Math.floor(Number(height) || 0));
+    return canvasAndContext;
+  }
+
+  destroy(canvasAndContext) {
+    if (!canvasAndContext?.canvas) return;
+    canvasAndContext.canvas.width = 0;
+    canvasAndContext.canvas.height = 0;
+    canvasAndContext.canvas = null;
+    canvasAndContext.context = null;
+  }
+}
+
+class WorkerFilterFactory {
+  addFilter() {
+    return "none";
+  }
+
+  addHCMFilter() {
+    return "none";
+  }
+
+  addAlphaFilter() {
+    return "none";
+  }
+
+  addLuminosityFilter() {
+    return "none";
+  }
+
+  destroy() {
+    // no-op for worker fallback filter factory.
+  }
+}
+
 function toViewportRect(region, viewport) {
   const normalized = normalizeRect(region);
   const x1 = normalized.x;
@@ -163,6 +262,39 @@ function expandRectPx(rect, marginPx) {
     y: normalized.y - m,
     width: normalized.width + m * 2,
     height: normalized.height + m * 2,
+  };
+}
+
+function buildViewportHintRegions(viewport, canvasWidth, canvasHeight, hint, options) {
+  const imageRegions = [];
+  const rawImageRegions = Array.isArray(hint?.imageRegions) ? hint.imageRegions : [];
+  for (const region of rawImageRegions) {
+    const vr = toViewportRect(region, viewport);
+    if (!vr) continue;
+    const clamped = clampRectToCanvas(vr, canvasWidth, canvasHeight);
+    if (!clamped) continue;
+    imageRegions.push(clamped);
+  }
+
+  const textRegions = [];
+  const rawTextRegions = Array.isArray(hint?.textRegions) ? hint.textRegions : [];
+  for (const region of rawTextRegions) {
+    const vr = toViewportRect(region, viewport);
+    if (!vr) continue;
+    const clamped = clampRectToCanvas(vr, canvasWidth, canvasHeight);
+    if (!clamped) continue;
+    textRegions.push(clamped);
+  }
+
+  const maskRegions = imageRegions
+    .map((region) => expandRectPx(region, options.maskMarginPx))
+    .map((region) => clampRectToCanvas(region, canvasWidth, canvasHeight))
+    .filter(Boolean);
+
+  return {
+    imageRegions: mergeRegions(imageRegions, { mergeGap: 2 }),
+    textRegions: mergeRegions(textRegions, { mergeGap: 2 }),
+    maskRegions: mergeRegions(maskRegions, { mergeGap: 4 }),
   };
 }
 
@@ -226,34 +358,22 @@ function shouldMaskRegion(metrics, areaRatio) {
   return { mask: false, reason: looksLikeTextScan ? "text_like" : "uncertain" };
 }
 
-function selectMaskRects(canvas, viewport, hint, options) {
+function selectMaskRects(canvas, hint, options, viewportHintRegions = null) {
   const mode = options.maskImages;
   if (mode === "off") {
     return { rects: [], meta: { applied: false, mode, reason: "disabled" } };
   }
 
-  const pdfRegions = Array.isArray(hint?.imageRegions) ? hint.imageRegions : [];
-  if (!pdfRegions.length) {
+  const viewportRegions = Array.isArray(viewportHintRegions?.maskRegions)
+    ? viewportHintRegions.maskRegions
+    : [];
+  if (!viewportRegions.length) {
     return { rects: [], meta: { applied: false, mode, reason: "no_image_regions" } };
   }
 
   const width = Math.max(1, canvas.width);
   const height = Math.max(1, canvas.height);
   const pageArea = width * height;
-
-  const viewportRegions = [];
-  for (const region of pdfRegions) {
-    const vr = toViewportRect(region, viewport);
-    if (!vr) continue;
-    const expanded = expandRectPx(vr, options.maskMarginPx);
-    const clamped = clampRectToCanvas(expanded, width, height);
-    if (!clamped) continue;
-    viewportRegions.push(clamped);
-  }
-
-  if (!viewportRegions.length) {
-    return { rects: [], meta: { applied: false, mode, reason: "no_valid_regions" } };
-  }
 
   const mergedRegions = mergeRegions(viewportRegions, { mergeGap: 4 });
   const coverageRatio = computeCoverageRatio(mergedRegions, width, height);
@@ -392,9 +512,11 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
   await page.render({
     canvasContext: context,
     viewport,
+    canvasFactory: OFFSCREEN_CANVAS_FACTORY,
   }).promise;
 
-  const masking = selectMaskRects(canvas, viewport, hint, options);
+  const viewportHintRegions = buildViewportHintRegions(viewport, width, height, hint, options);
+  const masking = selectMaskRects(canvas, hint, options, viewportHintRegions);
   if (masking.rects.length) {
     context.fillStyle = "#ffffff";
     for (const rect of masking.rects) {
@@ -402,24 +524,71 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
     }
   }
 
+  const crop = computeOcrCropRect(
+    {
+      canvasWidth: width,
+      canvasHeight: height,
+      textRegions: viewportHintRegions.textRegions,
+      imageRegions: viewportHintRegions.imageRegions,
+      nativeCharCount: Number(hint?.stats?.charCount) || 0,
+    },
+    {
+      mode: options.cropMode,
+      paddingPx: options.cropPaddingPx,
+    },
+  );
+
+  let sourceCanvas = canvas;
+  let sourceWidth = width;
+  let sourceHeight = height;
+  if (crop.rect && crop.meta?.applied) {
+    const cropWidth = Math.max(1, Math.floor(crop.rect.width));
+    const cropHeight = Math.max(1, Math.floor(crop.rect.height));
+    const cropX = Math.max(0, Math.floor(crop.rect.x));
+    const cropY = Math.max(0, Math.floor(crop.rect.y));
+    const cropCanvas = new OffscreenCanvas(cropWidth, cropHeight);
+    const cropCtx = cropCanvas.getContext("2d", { alpha: false, willReadFrequently: true });
+    if (cropCtx) {
+      cropCtx.fillStyle = "#ffffff";
+      cropCtx.fillRect(0, 0, cropWidth, cropHeight);
+      cropCtx.drawImage(
+        canvas,
+        cropX,
+        cropY,
+        cropWidth,
+        cropHeight,
+        0,
+        0,
+        cropWidth,
+        cropHeight,
+      );
+      sourceCanvas = cropCanvas;
+      sourceWidth = cropWidth;
+      sourceHeight = cropHeight;
+    }
+  }
+
   // tesseract.js in worker mode reliably accepts OffscreenCanvas/Blob inputs.
   // Avoid ImageData here; some runtimes fail with "Error attempting to read image."
-  let ocrInput = canvas;
-  if (typeof canvas.convertToBlob === "function") {
+  let ocrInput = sourceCanvas;
+  const fallbackOcrInput = sourceCanvas;
+  if (typeof sourceCanvas.convertToBlob === "function") {
     try {
-      ocrInput = await canvas.convertToBlob({ type: "image/png" });
+      ocrInput = await sourceCanvas.convertToBlob({ type: "image/png" });
     } catch {
       // Fall back to canvas when blob conversion is unavailable.
-      ocrInput = canvas;
+      ocrInput = sourceCanvas;
     }
   }
 
   return {
     ocrInput,
-    width,
-    height,
+    fallbackOcrInput,
+    width: sourceWidth,
+    height: sourceHeight,
     scale: safeScale,
     masking: masking.meta,
+    crop: crop.meta,
   };
 }
 
@@ -428,6 +597,10 @@ async function runOcrForPages(pdfBytes, pageIndexes, pageHints, options, jobId) 
     data: pdfBytes,
     isEvalSupported: false,
     useWorkerFetch: false,
+    // Worker-safe rendering: avoid DOM factories and font-face paths that call `document.createElement`.
+    CanvasFactory: WorkerCanvasFactory,
+    FilterFactory: WorkerFilterFactory,
+    disableFontFace: true,
   });
   const doc = await loadingTask.promise;
 
@@ -482,7 +655,17 @@ async function runOcrForPages(pdfBytes, pageIndexes, pageHints, options, jobId) 
     });
 
     const startedAt = Date.now();
-    const recognized = await worker.recognize(render.ocrInput);
+    let recognized;
+    try {
+      recognized = await worker.recognize(render.ocrInput);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      const canRetryWithCanvas = render.fallbackOcrInput && render.fallbackOcrInput !== render.ocrInput;
+      if (!canRetryWithCanvas || !/createElement/i.test(message)) {
+        throw error;
+      }
+      recognized = await worker.recognize(render.fallbackOcrInput);
+    }
     const durationMs = Date.now() - startedAt;
     const text = typeof recognized?.data?.text === "string" ? recognized.data.text : "";
     const confidence = Number.isFinite(recognized?.data?.confidence)
@@ -500,6 +683,7 @@ async function runOcrForPages(pdfBytes, pageIndexes, pageHints, options, jobId) 
         scale: render.scale,
         durationMs,
         masking: render.masking,
+        crop: render.crop,
       },
     };
 

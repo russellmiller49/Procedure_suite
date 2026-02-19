@@ -1,0 +1,461 @@
+{
+  "registry": {
+    "patient_demographics": {
+      "age_years": 1,
+      "gender": "Female"
+    },
+    "patient": {
+      "age": 1,
+      "sex": "F"
+    },
+    "procedure": {
+      "indication": "Collapsed left lung, lef main stem airway stent occlusion. Airway stent placed on [DATE: REDACTED]"
+    },
+    "risk_assessment": {
+      "asa_class": 3
+    },
+    "clinical_context": {
+      "asa_class": 3,
+      "ecog_score": 3,
+      "primary_indication": "Collapsed left lung, lef main stem airway stent occlusion. Airway stent placed on [DATE: REDACTED]",
+      "bronchus_sign": "Not assessed"
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "secretions",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action_type": "removal",
+        "action": "Assessment only"
+      },
+      "therapeutic_outcomes": {
+        "pre_obstruction_pct": 90
+      },
+      "rigid_bronchoscopy": {
+        "performed": true
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "complication_list": [],
+      "bleeding": {
+        "occurred": false,
+        "bleeding_grade_nashville": 0
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "Attending Participation: I was present and participated during the entire procedure, including non-key portions. Page 1 of 2"
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "LMS",
+          "pre_obstruction_pct": 90
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Bronchoscopy",
+          "start": 239,
+          "end": 251,
+          "confidence": 0.6101734836896261
+        },
+        {
+          "text": "Jet ventilation",
+          "start": 397,
+          "end": 412,
+          "confidence": 0.8148572047551473
+        },
+        {
+          "text": "stent",
+          "start": 1559,
+          "end": 1564,
+          "confidence": 0.3744329512119293
+        },
+        {
+          "text": "stent",
+          "start": 1794,
+          "end": 1799,
+          "confidence": 0.5387327075004578
+        },
+        {
+          "text": "stent",
+          "start": 1872,
+          "end": 1877,
+          "confidence": 0.41347360610961914
+        },
+        {
+          "text": "removed",
+          "start": 1981,
+          "end": 1988,
+          "confidence": 0.5461879968643188
+        },
+        {
+          "text": "stent",
+          "start": 2095,
+          "end": 2100,
+          "confidence": 0.48488709330558777
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "bronchoscope was introduced",
+          "start": 1293,
+          "end": 1320
+        }
+      ],
+      "procedures_performed.rigid_bronchoscopy.performed": [
+        {
+          "text": "rigid bronchoscop",
+          "start": 1333,
+          "end": 1350
+        }
+      ],
+      "patient_demographics.age_years": [
+        {
+          "text": "1",
+          "start": 11,
+          "end": 12
+        }
+      ],
+      "patient_demographics.gender": [
+        {
+          "text": "Female",
+          "start": 62,
+          "end": 68
+        }
+      ],
+      "patient.age": [
+        {
+          "text": "1",
+          "start": 11,
+          "end": 12
+        }
+      ],
+      "patient.sex": [
+        {
+          "text": "Female",
+          "start": 62,
+          "end": 68
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Collapsed left lung, lef main stem airway stent occlusion. Airway stent placed on [DATE: REDACTED]",
+          "start": 265,
+          "end": 363
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Collapsed left lung, lef main stem airway stent occlusion. Airway stent placed on [DATE: REDACTED]",
+          "start": 265,
+          "end": 363
+        }
+      ],
+      "clinical_context.ecog_score": [
+        {
+          "text": "ECOG performance status: 3",
+          "start": 661,
+          "end": 687
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 377,
+          "end": 395
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions",
+          "start": 1943,
+          "end": 1953
+        }
+      ],
+      "procedures_performed.airway_stent.performed": [
+        {
+          "text": "airway stent",
+          "start": 1552,
+          "end": 1564,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.therapeutic_outcomes.pre_obstruction_pct": [
+        {
+          "text": "90%\nobstructed",
+          "start": 2154,
+          "end": 2168
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "no significant bleeding",
+          "start": 1995,
+          "end": 2018,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Bronchoscopy",
+        "span": [
+          239,
+          251
+        ],
+        "confidence": 0.6101734836896261
+      },
+      {
+        "source": "ner_span",
+        "text": "Jet ventilation",
+        "span": [
+          397,
+          412
+        ],
+        "confidence": 0.8148572047551473
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          1559,
+          1564
+        ],
+        "confidence": 0.3744329512119293
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          1794,
+          1799
+        ],
+        "confidence": 0.5387327075004578
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          1872,
+          1877
+        ],
+        "confidence": 0.41347360610961914
+      },
+      {
+        "source": "ner_span",
+        "text": "removed",
+        "span": [
+          1981,
+          1988
+        ],
+        "confidence": 0.5461879968643188
+      },
+      {
+        "source": "ner_span",
+        "text": "stent",
+        "span": [
+          2095,
+          2100
+        ],
+        "confidence": 0.48488709330558777
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "bronchoscope was introduced",
+        "span": [
+          1293,
+          1320
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.rigid_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "rigid bronchoscop",
+        "span": [
+          1333,
+          1350
+        ],
+        "confidence": 1
+      }
+    ],
+    "patient_demographics.age_years": [
+      {
+        "source": "registry_span",
+        "text": "1",
+        "span": [
+          11,
+          12
+        ],
+        "confidence": 1
+      }
+    ],
+    "patient_demographics.gender": [
+      {
+        "source": "registry_span",
+        "text": "Female",
+        "span": [
+          62,
+          68
+        ],
+        "confidence": 1
+      }
+    ],
+    "patient.age": [
+      {
+        "source": "registry_span",
+        "text": "1",
+        "span": [
+          11,
+          12
+        ],
+        "confidence": 1
+      }
+    ],
+    "patient.sex": [
+      {
+        "source": "registry_span",
+        "text": "Female",
+        "span": [
+          62,
+          68
+        ],
+        "confidence": 1
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Collapsed left lung, lef main stem airway stent occlusion. Airway stent placed on [DATE: REDACTED]",
+        "span": [
+          265,
+          363
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Collapsed left lung, lef main stem airway stent occlusion. Airway stent placed on [DATE: REDACTED]",
+        "span": [
+          265,
+          363
+        ],
+        "confidence": 1
+      }
+    ],
+    "clinical_context.ecog_score": [
+      {
+        "source": "registry_span",
+        "text": "ECOG performance status: 3",
+        "span": [
+          661,
+          687
+        ],
+        "confidence": 1
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          377,
+          395
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions",
+        "span": [
+          1943,
+          1953
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.airway_stent.performed": [
+      {
+        "source": "registry_span",
+        "text": "airway stent",
+        "span": [
+          1552,
+          1564
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.therapeutic_outcomes.pre_obstruction_pct": [
+      {
+        "source": "registry_span",
+        "text": "90%\nobstructed",
+        "span": [
+          2154,
+          2168
+        ],
+        "confidence": 1
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "no significant bleeding",
+        "span": [
+          1995,
+          2018
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [],
+  "suggestions": [],
+  "per_code_billing": [],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for diagnostic_bronchoscopy, rigid_bronchoscopy",
+    "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31645: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31646: ML detected procedure, but specific device/anatomy was not found in text.",
+    "CAO_DETAIL_HEURISTIC: parsed 1 CAO site entry from text",
+    "Stent removal/revision not supported by text; treating as assessment only.",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=0",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 949.69
+}

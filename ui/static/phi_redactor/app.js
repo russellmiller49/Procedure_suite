@@ -6997,6 +6997,45 @@ async function main() {
     return reasons.join(" | ");
   }
 
+  function buildOcrDebugSummary(docModel, maxPages = 2) {
+    if (!docModel || !Array.isArray(docModel.pages)) return "";
+    const ocrPages = docModel.pages.filter((page) => page?.sourceDecision !== "native" && page?.ocrMeta);
+    if (!ocrPages.length) return "";
+
+    const maskModes = new Set();
+    let imageRegionCandidates = 0;
+    let maskedPages = 0;
+    let coverageTotal = 0;
+    let coverageCount = 0;
+    const cropBoxes = [];
+
+    for (const page of ocrPages) {
+      const masking = page.ocrMeta?.masking;
+      if (masking?.mode) maskModes.add(String(masking.mode));
+      if (masking?.applied) maskedPages += 1;
+      if (Number.isFinite(masking?.candidateCount)) {
+        imageRegionCandidates += Number(masking.candidateCount);
+      }
+      if (Number.isFinite(masking?.coverageRatio)) {
+        coverageTotal += Number(masking.coverageRatio);
+        coverageCount += 1;
+      }
+
+      const crop = page.ocrMeta?.crop;
+      if (crop?.applied && Array.isArray(crop.box) && crop.box.length === 4 && cropBoxes.length < maxPages) {
+        const [x0, y0, x1, y1] = crop.box.map((value) => Math.round(Number(value) || 0));
+        cropBoxes.push(`p${page.pageIndex + 1}[${x0},${y0},${x1},${y1}]`);
+      }
+    }
+
+    const maskModeText = maskModes.size ? [...maskModes].join("/") : "n/a";
+    const avgCoveragePct = coverageCount ? Math.round((coverageTotal / coverageCount) * 100) : null;
+    const coverageText = avgCoveragePct !== null ? `, maskedArea~${avgCoveragePct}%` : "";
+    const cropText = cropBoxes.length ? `, crop=${cropBoxes.join(" | ")}` : ", crop=none";
+
+    return ` OCR debug: mask=${maskModeText}, imageRegions=${imageRegionCandidates}, maskedPages=${maskedPages}/${ocrPages.length}${coverageText}${cropText}.`;
+  }
+
   function resetPdfUploadUi() {
     if (pdfUploadInputEl) pdfUploadInputEl.value = "";
     setPdfExtractSummary(PDF_UPLOAD_HELP_TEXT, "neutral");
@@ -7148,8 +7187,9 @@ async function main() {
       const qualityTail =
         ` Low-confidence pages: ${docModel.qualitySummary?.lowConfidencePages || 0}; ` +
         `contaminated pages: ${docModel.qualitySummary?.contaminatedPages || 0}.`;
+      const debugTail = buildOcrDebugSummary(docModel, 2);
       const reasonTail = buildPageReasonSummary(docModel, 2);
-      setPdfExtractSummary(`${summaryText}${ocrModeText}${ocrMaskText}${qualityTail}${reasonTail ? ` ${reasonTail}` : ""}`, "success");
+      setPdfExtractSummary(`${summaryText}${ocrModeText}${ocrMaskText}${qualityTail}${debugTail}${reasonTail ? ` ${reasonTail}` : ""}`, "success");
 
       setStatus("PDF text loaded into editor. Run Detection to use the existing PHI redaction workflow.");
       if (totalPages > 0) {

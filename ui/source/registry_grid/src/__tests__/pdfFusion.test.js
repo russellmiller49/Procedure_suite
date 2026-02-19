@@ -147,4 +147,94 @@ describe("pdf fusion arbitration", () => {
     expect(cleaned).toContain("Extrinsic compression stricture begins left mainstem bronchus");
     expect(cleaned).not.toContain("OMOMOD");
   });
+
+  it("anchors OCR lines under matching section headers instead of floating between sections", () => {
+    const nativeText = [
+      "INSTRUMENTS: Loaner",
+      "MEDICATIONS: Demerol 25 mg, Versed 1 mg",
+      "PROCEDURE TECHNIQUE:",
+      "FINDINGS:",
+    ].join("\n");
+
+    const ocrText = [
+      "PROCEDURE TECHNIQUE:",
+      "consent was obtained from the patient and monitoring devices were connected.",
+      "FINDINGS:",
+      "Extrinsic compression stricture extends for the length of 3cm and lumen was 8mm.",
+    ].join("\n");
+
+    const merged = mergeNativeAndOcrText(nativeText, ocrText, { mode: "augment" });
+    const mergedLines = merged.split("\n");
+    const techniqueHeaderIdx = mergedLines.findIndex((line) => /^PROCEDURE TECHNIQUE:/i.test(line));
+    const findingsHeaderIdx = mergedLines.findIndex((line) => /^FINDINGS:/i.test(line));
+
+    expect(techniqueHeaderIdx).toBeGreaterThan(-1);
+    expect(findingsHeaderIdx).toBeGreaterThan(techniqueHeaderIdx);
+    expect(mergedLines[techniqueHeaderIdx + 1]).toMatch(/consent was obtained/i);
+    expect(mergedLines[findingsHeaderIdx + 1]).toMatch(/Extrinsic compression stricture/i);
+  });
+
+  it("drops side-column anatomy caption lines from OCR merges", () => {
+    const merged = mergeNativeAndOcrText(
+      "PROCEDURE TECHNIQUE:\nThe bronchoscope was advanced.",
+      [
+        "Right Lower Lobe Entrance",
+        "Left Mainstem",
+        "The patient was connected to monitoring devices and oxygen was provided.",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    expect(merged).toContain("The patient was connected to monitoring devices");
+    expect(merged).not.toContain("Right Lower Lobe Entrance");
+    expect(merged).not.toContain("Left Mainstem");
+  });
+
+  it("routes narrative preamble lines to technique/findings instead of instruments", () => {
+    const nativeText = [
+      "INSTRUMENTS: Loaner",
+      "MEDICATIONS: Demerol 25 mg, Versed 1 mg",
+      "PROCEDURE TECHNIQUE:",
+      "FINDINGS:",
+    ].join("\n");
+    const ocrText = [
+      "anesthesia and conscious sedation. The bronchoscope was inserted and the airway examined.",
+      "for the length of 3cm. Scope could be advanced beyond the stricture. The estimated diameter of the lumen was 4mm.",
+    ].join("\n");
+
+    const merged = mergeNativeAndOcrText(nativeText, ocrText, { mode: "augment" });
+    const mergedLines = merged.split("\n");
+    const instrumentsIdx = mergedLines.findIndex((line) => /^INSTRUMENTS:/i.test(line));
+    const techniqueIdx = mergedLines.findIndex((line) => /^PROCEDURE TECHNIQUE:/i.test(line));
+    const findingsIdx = mergedLines.findIndex((line) => /^FINDINGS:/i.test(line));
+
+    expect(instrumentsIdx).toBeGreaterThan(-1);
+    expect(techniqueIdx).toBeGreaterThan(-1);
+    expect(findingsIdx).toBeGreaterThan(techniqueIdx);
+    expect(mergedLines[instrumentsIdx + 1]).toMatch(/^MEDICATIONS:/i);
+    expect(mergedLines[techniqueIdx + 1]).toMatch(/anesthesia and conscious sedation/i);
+    expect(mergedLines[findingsIdx + 1]).toMatch(/estimated diameter of the lumen was 4mm/i);
+  });
+
+  it("drops PHOTOREPORT and O/0-heavy code junk lines during merge", () => {
+    const merged = mergeNativeAndOcrText(
+      [
+        "ICD 10 Codes:",
+        "CPT Code:",
+        "31622 Bronchoscopy",
+      ].join("\n"),
+      [
+        "ICD 10 Codes:",
+        "O10 COM OC",
+        "O77 O00",
+        "5/18/2024, 08:56:49 AM By Debbie Doe, MD PHOTOREPORT",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    expect(merged).not.toContain("O10 COM OC");
+    expect(merged).not.toContain("O77 O00");
+    expect(merged).not.toContain("PHOTOREPORT");
+    expect(merged).toContain("31622 Bronchoscopy");
+  });
 });

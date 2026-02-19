@@ -18,18 +18,18 @@ function hasText(value) {
 
 function isLikelyImageCaptionLine(line) {
   const text = String(line || "").trim();
-  if (!text || text.length > 48) return false;
+  if (!text || text.length > 56) return false;
   if (/[.:;%]/.test(text)) return false;
+  if (/\d/.test(text)) return false;
 
   const tokens = text.split(/\s+/).filter(Boolean);
-  if (tokens.length < 2 || tokens.length > 6) return false;
+  if (tokens.length < 2 || tokens.length > 7) return false;
 
-  const anatomyTokenPattern = /^(left|right|upper|lower|lobe|mainstem|entrance|segment|bronchus|airway|LUL|LLL|RUL|RLL)$/i;
+  const anatomyTokenPattern = /^(left|right|upper|lower|middle|lobe|lobar|mainstem|entrance|segment|bronchus|airway|carina|trachea|lingula|LUL|LLL|RUL|RML|RLL)$/i;
   const anatomyCount = tokens.filter((token) => anatomyTokenPattern.test(token)).length;
   if (anatomyCount < 2) return false;
-
-  const allAnatomyTokens = tokens.every((token) => anatomyTokenPattern.test(token));
-  return allAnatomyTokens;
+  if (tokens.length <= 4) return true;
+  return anatomyCount / Math.max(1, tokens.length) >= 0.72;
 }
 
 function pruneCaptionNoiseFromNativeText(nativeText) {
@@ -154,6 +154,31 @@ function tokenLooksNoisy(token) {
   return false;
 }
 
+function isLikelyCodeNoiseLine(line) {
+  const text = String(line || "").trim();
+  if (!text) return true;
+  if (/^(?:ICD\b|CPT\b)/i.test(text)) return false;
+
+  const tokens = text.split(/\s+/).map(normalizeToken).filter(Boolean);
+  if (!tokens.length) return true;
+
+  const lowerWordCount = tokens.filter((token) => /[a-z]{2,}/.test(token)).length;
+  if (lowerWordCount > 0) return false;
+
+  const shortRatio = tokens.filter((token) => token.length <= 4).length / Math.max(1, tokens.length);
+  const noisyRatio = tokens.filter((token) => tokenLooksNoisy(token)).length / Math.max(1, tokens.length);
+  const compact = tokens.join("");
+  const oZeroRatio = countMatches(compact, /[O0o]/g) / Math.max(1, compact.length);
+  const codeLikeCount = tokens.filter((token) => /^[A-Z]\d{2}(?:\.[A-Z0-9]{1,4})?$/.test(token) || /^\d{5}$/.test(token)).length;
+
+  if (tokens.length >= 2 && shortRatio >= 0.8 && oZeroRatio >= 0.28 && codeLikeCount <= 1) return true;
+  if (tokens.length >= 2 && shortRatio >= 0.9 && oZeroRatio >= 0.35 && tokens.every((token) => /^[A-Z0-9.]{1,5}$/.test(token))) {
+    return true;
+  }
+  if (tokens.length >= 2 && noisyRatio >= 0.55 && shortRatio >= 0.7) return true;
+  return false;
+}
+
 function pruneNoisyEdgeTokens(tokens) {
   const list = Array.isArray(tokens) ? tokens.slice() : [];
   if (list.length < 2) return list;
@@ -229,6 +254,7 @@ function isLikelyOcrNoiseLine(line, mode = "augment", rawLine = "") {
 
   const rawTrimmed = String(rawLine || "").trim();
   const vendorScanText = rawTrimmed || trimmed;
+  if (mode === "augment" && /\bPHOTOREPORT\b/i.test(vendorScanText)) return true;
 
   if (mode === "augment" && !hasClinicalPattern(trimmed)) {
     if (/^PHOTOREPORT$/i.test(trimmed)) return true;
@@ -265,6 +291,7 @@ function isLikelyOcrNoiseLine(line, mode = "augment", rawLine = "") {
   if (chars >= 10 && alphaNumRatio < 0.34) return true;
   if (chars >= 12 && punctuationRatio > 0.3 && !clinicalPattern) return true;
   if (chars >= 10 && oZeroRatio > 0.42 && lower <= 1 && !clinicalPattern) return true;
+  if (chars >= 8 && oZeroRatio > 0.5 && lower <= 1 && tokens.length >= 2 && !/[.]/.test(trimmed)) return true;
   if (tokens.length >= 8 && singleCharTokenRatio > 0.5) return true;
   if (tokens.length >= 6 && symbolicTokenRatio > 0.45) return true;
   if (tokens.length >= 5 && noisyTokenRatio >= 0.42 && !clinicalPattern) return true;
@@ -289,6 +316,8 @@ export function sanitizeOcrText(ocrText, opts = {}) {
   for (const rawLine of lines) {
     const line = cleanupOcrLine(rawLine, mode);
     if (!line) continue;
+    if (isLikelyImageCaptionLine(line)) continue;
+    if (shouldDropLineForMerge(line)) continue;
     if (isLikelyOcrNoiseLine(line, mode, rawLine)) continue;
     const key = normalizeLineKey(line);
     if (!key || seen.has(key)) continue;
@@ -299,113 +328,415 @@ export function sanitizeOcrText(ocrText, opts = {}) {
   return out.join("\n");
 }
 
+const SECTION_DEFS = Object.freeze([
+  {
+    id: "procedure_performed",
+    header: "PROCEDURE PERFORMED:",
+    headerRe: /^PROCEDURE PERFORMED:/i,
+    keywordRe: /\b(bronchoscopy|ebus|biopsy|lavage|tbna|procedure performed)\b/i,
+  },
+  {
+    id: "indications",
+    header: "INDICATIONS FOR EXAMINATION:",
+    headerRe: /^INDICATIONS FOR EXAMINATION:/i,
+    keywordRe: /\b(obstruction|indication|dyspnea|shortness of breath|cough)\b/i,
+  },
+  {
+    id: "instruments",
+    header: "INSTRUMENTS:",
+    headerRe: /^INSTRUMENTS?:/i,
+    keywordRe: /\b(instrument|loaner|bronchoscope|catheter|needle|forceps|snare|basket)\b/i,
+  },
+  {
+    id: "medications",
+    header: "MEDICATIONS:",
+    headerRe: /^MEDICATIONS?:/i,
+    keywordRe: /\b(versed|demerol|midazolam|fentanyl|lidocaine|propofol|\d+\s*(?:mg|ml|mcg|ug|%)\b)\b/i,
+  },
+  {
+    id: "procedure_technique",
+    header: "PROCEDURE TECHNIQUE:",
+    headerRe: /^PROCEDURE TECHNIQUE:/i,
+    keywordRe: /\b(consent was obtained|monitoring|nasal cannula|conscious sedation|anesthesia|bronchoscope was inserted|airway examined|indwelling iv catheter|benefits and alternatives|patient appeared to understand)\b/i,
+  },
+  {
+    id: "findings",
+    header: "FINDINGS:",
+    headerRe: /^FINDINGS?:/i,
+    keywordRe: /\b(stricture|stenosis|erythema|friable|lumen|compression|submucosal|fibrosis|carcinoma|scope could be advanced|estimated diameter)\b/i,
+  },
+  {
+    id: "diagnosis",
+    header: "PULMONOLOGIST DIAGNOSIS:",
+    headerRe: /^(?:PULMONOLOGIST\s+)?DIAGNOSIS:/i,
+    keywordRe: /\b(malignancy|carcinoma|neoplasm|small cell|benign|diagnosis)\b/i,
+  },
+  {
+    id: "recommendations",
+    header: "RECOMMENDATIONS:",
+    headerRe: /^RECOMMENDATIONS?:/i,
+    keywordRe: /\b(follow-up|follow up|primary care|return|recommend)\b/i,
+  },
+  {
+    id: "icd_codes",
+    header: "ICD 10 Codes:",
+    headerRe: /^(?:ICD\b|ICD[-\s]*10\b).*:/i,
+    keywordRe: /\b[A-Z](?!0{2,3}\b)\d{2}(?:\.\d+)?\b|\bICD\b/i,
+  },
+  {
+    id: "cpt_codes",
+    header: "CPT Code:",
+    headerRe: /^CPT(?:\s+Code)?\s*:/i,
+    keywordRe: /\b(?:\d{5}|CPT)\b/i,
+  },
+]);
+
+const NARRATIVE_SECTION_IDS = new Set([
+  "indications",
+  "procedure_technique",
+  "findings",
+  "diagnosis",
+  "recommendations",
+]);
+
+const CODE_SECTION_IDS = new Set(["icd_codes", "cpt_codes"]);
+
+function shouldDropLineForMerge(line, sectionId = "__preamble") {
+  const text = String(line || "").trim();
+  if (!text) return true;
+  if (isLikelyImageCaptionLine(text)) return true;
+  if (/\bPHOTOREPORT\b/i.test(text)) return true;
+
+  if (CODE_SECTION_IDS.has(sectionId) && isLikelyCodeNoiseLine(text)) {
+    return true;
+  }
+
+  const tokens = text.split(/\s+/).map(normalizeToken).filter(Boolean);
+  if (!tokens.length) return true;
+
+  const lowerWordCount = tokens.filter((token) => /[a-z]{2,}/.test(token)).length;
+  if (lowerWordCount > 0) return false;
+
+  const noisyRatio = tokens.filter((token) => tokenLooksNoisy(token)).length / Math.max(1, tokens.length);
+  const shortRatio = tokens.filter((token) => token.length <= 4).length / Math.max(1, tokens.length);
+  const compact = tokens.join("");
+  const symbolRatio = countMatches(text, /[^A-Za-z0-9\s]/g) / Math.max(1, text.length);
+  const oZeroRatio = countMatches(compact, /[O0o]/g) / Math.max(1, compact.length);
+
+  if (tokens.length >= 2 && noisyRatio >= 0.6 && (oZeroRatio >= 0.26 || symbolRatio >= 0.25)) return true;
+  return false;
+}
+
+function dedupeLines(lines) {
+  const out = [];
+  const seen = new Set();
+  for (const line of Array.isArray(lines) ? lines : []) {
+    const key = normalizeLineKey(line);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(line);
+  }
+  return out;
+}
+
+function matchSectionHeader(line) {
+  for (const section of SECTION_DEFS) {
+    if (section.headerRe.test(line)) return section;
+  }
+  return null;
+}
+
+function buildSectionBuckets(lines) {
+  const sections = new Map([["__preamble", []]]);
+  const headers = new Map();
+  const order = ["__preamble"];
+  let currentId = "__preamble";
+
+  for (const line of dedupeLines(lines)) {
+    const section = matchSectionHeader(line);
+    if (section) {
+      currentId = section.id;
+      if (!sections.has(currentId)) {
+        sections.set(currentId, []);
+        order.push(currentId);
+      }
+      headers.set(currentId, String(line).trim());
+      continue;
+    }
+
+    if (shouldDropLineForMerge(line, currentId)) continue;
+    sections.get(currentId)?.push(String(line).trim());
+  }
+
+  return { sections, headers, order };
+}
+
+function pushUniqueLine(out, line, seen) {
+  const key = normalizeLineKey(line);
+  if (!key || seen.has(key)) return false;
+  seen.add(key);
+  out.push(line);
+  return true;
+}
+
+function buildTokenSets(lines) {
+  return (Array.isArray(lines) ? lines : [])
+    .map((line) => new Set(tokenizeForOverlap(line)))
+    .filter((tokens) => tokens.size > 0);
+}
+
+function lineHasNarrativeSignal(line) {
+  const text = String(line || "").trim();
+  if (!text) return false;
+  const tokens = text.split(/\s+/).filter(Boolean);
+  const lowerWordCount = tokens.filter((token) => /[a-z]{2,}/.test(normalizeToken(token))).length;
+  if (lowerWordCount >= 3 && tokens.length >= 5) return true;
+  if (/\b(consent|monitoring|sedation|anesthesia|airway examined|stricture|stenosis|lumen|compression|follow-up|recommend)\b/i.test(text)) {
+    return true;
+  }
+  if (/\b\d+(?:mm|cm|mg|ml|%)\b/i.test(text) && lowerWordCount >= 2) return true;
+  return false;
+}
+
+function sectionLooksTruncated(lines, sectionId) {
+  const list = Array.isArray(lines) ? lines : [];
+  if (!list.length) return true;
+  const text = list.join(" ").replace(/\s+/g, " ").trim();
+  if (!text) return true;
+
+  if (sectionId === "__preamble" && text.length < 80) {
+    return true;
+  }
+
+  if (NARRATIVE_SECTION_IDS.has(sectionId)) {
+    if (text.length < 90) return true;
+    if (/\b(?:an|and|the|of|to|for|with|through|in|on)\.?$/i.test(text)) return true;
+    if (!/[.!?]$/.test(text) && text.length < 160) return true;
+  }
+
+  if ((sectionId === "instruments" || sectionId === "medications") && text.length < 24) {
+    return true;
+  }
+
+  return false;
+}
+
+function shouldKeepOcrLineForSection(line, sectionId) {
+  const text = String(line || "").trim();
+  if (!text) return false;
+  if (shouldDropLineForMerge(text, sectionId)) return false;
+  if (isLikelyOcrNoiseLine(text, "augment", text)) return false;
+  if (NARRATIVE_SECTION_IDS.has(sectionId)) {
+    return lineHasNarrativeSignal(text) || (hasClinicalPattern(text) && /[a-z]{2,}/.test(text));
+  }
+  if (sectionId === "cpt_codes") {
+    return /\b(?:\d{5}|CPT)\b/i.test(text);
+  }
+  if (sectionId === "icd_codes") {
+    return /\b(?:ICD|[A-Z]\d{2}(?:\.[A-Z0-9]{1,4})?)\b/i.test(text) && !isLikelyCodeNoiseLine(text);
+  }
+  return true;
+}
+
+function scoreSectionGuess(line, section) {
+  const text = String(line || "").trim();
+  if (!text || !section?.keywordRe?.test(text)) return Number.NEGATIVE_INFINITY;
+  if (shouldDropLineForMerge(text, section.id)) return Number.NEGATIVE_INFINITY;
+
+  const narrative = lineHasNarrativeSignal(text);
+  let score = 1;
+
+  if (NARRATIVE_SECTION_IDS.has(section.id) && narrative) {
+    score += 2;
+  }
+
+  if (section.id === "procedure_technique") {
+    if (/\b(consent|monitoring|sedation|anesthesia|nasal cannula|indwelling iv|benefits and alternatives|patient appeared to understand)\b/i.test(text)) {
+      score += 2;
+    }
+  }
+
+  if (section.id === "findings") {
+    if (/\b(stricture|stenosis|lumen|compression|fibrosis|erythema|friable|scope could be advanced|estimated diameter|carcinoma)\b/i.test(text)) {
+      score += 2;
+    }
+  }
+
+  if (section.id === "diagnosis") {
+    if (/\b(malignancy|diagnosis|neoplasm|carcinoma|benign|small cell)\b/i.test(text)) {
+      score += 1.5;
+    }
+  }
+
+  if (section.id === "instruments" || section.id === "medications") {
+    if (narrative) score -= 2.5;
+    const tokenCount = text.split(/\s+/).filter(Boolean).length;
+    if (tokenCount <= 6) score += 0.8;
+    if (/[,:;]/.test(text)) score += 0.4;
+  }
+
+  if (section.id === "cpt_codes") {
+    if (!/\b\d{5}\b|\bCPT\b/i.test(text)) return Number.NEGATIVE_INFINITY;
+    score += 1.2;
+  }
+  if (section.id === "icd_codes") {
+    if (!/\b[A-Z]\d{2}(?:\.[A-Z0-9]{1,4})?\b|\bICD\b/i.test(text) || isLikelyCodeNoiseLine(text)) {
+      return Number.NEGATIVE_INFINITY;
+    }
+    score += 1.2;
+  }
+
+  return score;
+}
+
+function guessSectionForLine(line, preferredIds = []) {
+  const preferredSet = new Set(Array.isArray(preferredIds) ? preferredIds : []);
+  const sections = [];
+  for (const id of preferredSet) {
+    const section = SECTION_DEFS.find((entry) => entry.id === id);
+    if (section) sections.push(section);
+  }
+  for (const section of SECTION_DEFS) {
+    if (!preferredSet.has(section.id)) sections.push(section);
+  }
+
+  let bestId = null;
+  let bestScore = Number.NEGATIVE_INFINITY;
+  for (const section of sections) {
+    const score = scoreSectionGuess(line, section);
+    if (score > bestScore) {
+      bestScore = score;
+      bestId = section.id;
+    }
+  }
+
+  return bestScore > 0 ? bestId : null;
+}
+
+function mergeSectionLines(sectionId, nativeLines, ocrLines) {
+  const native = dedupeLines(nativeLines);
+  const nativeTokenSets = buildTokenSets(native);
+  const filteredOcr = [];
+  const seenOcr = new Set();
+
+  for (const line of dedupeLines(ocrLines)) {
+    if (!pushUniqueLine(filteredOcr, line, seenOcr)) continue;
+  }
+
+  const selectedOcr = filteredOcr
+    .filter((line) => shouldKeepOcrLineForSection(line, sectionId))
+    .filter((line) => !hasHighTokenOverlap(line, nativeTokenSets));
+
+  if (!selectedOcr.length) return native;
+
+  const nativeChars = native.join(" ").length;
+  const ocrChars = selectedOcr.join(" ").length;
+  const replaceThreshold = sectionId === "__preamble"
+    ? Math.max(36, nativeChars * 1.15)
+    : Math.max(80, nativeChars * 1.25);
+  const replaceWithOcr = sectionLooksTruncated(native, sectionId) &&
+    ocrChars > replaceThreshold;
+
+  if (replaceWithOcr) {
+    return selectedOcr;
+  }
+
+  const merged = [...native];
+  const mergedTokenSets = buildTokenSets(merged);
+  for (const line of selectedOcr) {
+    if (hasHighTokenOverlap(line, mergedTokenSets)) continue;
+    merged.push(line);
+    mergedTokenSets.push(new Set(tokenizeForOverlap(line)));
+  }
+  return merged;
+}
+
 export function mergeNativeAndOcrText(nativeText, ocrText, opts = {}) {
   const mode = opts.mode === "augment" ? "augment" : "full";
-  const nativeLines = normalizeLines(nativeText);
-  const ocrLines = normalizeLines(sanitizeOcrText(ocrText, { mode }));
-  const seen = new Set();
-  const nativeTokenSets = [];
-  const nativeOut = [];
+  const nativeLines = dedupeLines(normalizeLines(nativeText).filter((line) => !shouldDropLineForMerge(line)));
+  const ocrLines = dedupeLines(normalizeLines(sanitizeOcrText(ocrText, { mode })));
 
-  for (const line of nativeLines) {
-    const key = normalizeLineKey(line);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    nativeOut.push(line);
-    nativeTokenSets.push(new Set(tokenizeForOverlap(line)));
+  if (mode !== "augment") {
+    const out = [];
+    const seen = new Set();
+    for (const line of nativeLines) pushUniqueLine(out, line, seen);
+    for (const line of ocrLines) pushUniqueLine(out, line, seen);
+    return out.join("\n");
   }
 
-  const anchorDefs = mode === "augment"
-    ? [
-      {
-        id: "indications",
-        nativeRe: /^INDICATIONS FOR EXAMINATION:/i,
-        ocrRe: /\b(obstruction|indication|dyspnea|shortness of breath|cough)\b/i,
-      },
-      {
-        id: "instruments",
-        nativeRe: /^INSTRUMENTS?:/i,
-        ocrRe: /\b(loaner|bronchoscope|scope|catheter|needle|forceps|basket|snare)\b/i,
-      },
-      {
-        id: "medications",
-        nativeRe: /^MEDICATIONS?:/i,
-        ocrRe: /\b(versed|demerol|midazolam|fentanyl|lidocaine|propofol|\d+\s*(?:mg|ml|mcg|ug|%)\b)\b/i,
-      },
-      {
-        id: "technique",
-        nativeRe: /^PROCEDURE TECHNIQUE:/i,
-        ocrRe: /\b(consent was obtained|monitoring devices|nasal cannula|conscious sedation|bronchoscope was inserted|airway examined)\b/i,
-      },
-      {
-        id: "findings",
-        nativeRe: /^FINDINGS?:/i,
-        ocrRe: /\b(stricture|stenosis|erythema|friable|lumen|compression)\b/i,
-      },
-      {
-        id: "diagnosis",
-        nativeRe: /\bDIAGNOSIS:/i,
-        ocrRe: /\b(malignancy|carcinoma|neoplasm|small cell|benign)\b/i,
-      },
-      {
-        id: "codes",
-        nativeRe: /^(ICD\b|ICD 10|CPT Code)/i,
-        ocrRe: /\b([A-Z]\d{2}\.\d+)\b|(?:\bCPT\b|\bICD\b)/i,
-      },
-    ]
-    : [];
+  const nativeBuckets = buildSectionBuckets(nativeLines);
+  const ocrBuckets = buildSectionBuckets(ocrLines);
 
-  const activeAnchors = new Map();
-  for (const anchor of anchorDefs) {
-    if (nativeOut.some((line) => anchor.nativeRe.test(line))) {
-      activeAnchors.set(anchor.id, anchor);
-    }
+  const nativeSectionIds = nativeBuckets.order.filter((id) => id !== "__preamble");
+  const ocrAssigned = new Map();
+  const ocrOrphan = [];
+
+  for (const [sectionId, lines] of ocrBuckets.sections.entries()) {
+    if (sectionId === "__preamble") continue;
+    ocrAssigned.set(sectionId, dedupeLines(lines));
   }
 
-  const ocrByAnchor = new Map();
-  for (const id of activeAnchors.keys()) {
-    ocrByAnchor.set(id, []);
-  }
-  const ocrUnassigned = [];
-
-  for (const line of ocrLines) {
-    const key = normalizeLineKey(line);
-    if (seen.has(key)) continue;
-    if (hasHighTokenOverlap(line, nativeTokenSets)) continue;
-    seen.add(key);
-
-    let assigned = false;
-    if (mode === "augment" && activeAnchors.size) {
-      for (const anchor of anchorDefs) {
-        if (!activeAnchors.has(anchor.id)) continue;
-        if (!anchor.ocrRe.test(line)) continue;
-        ocrByAnchor.get(anchor.id)?.push(line);
-        assigned = true;
-        break;
+  const preferredSectionIds = nativeSectionIds.length
+    ? nativeSectionIds
+    : SECTION_DEFS.map((section) => section.id);
+  const fallbackNarrativeSection = preferredSectionIds.includes("procedure_technique")
+    ? "procedure_technique"
+    : preferredSectionIds.find((id) => NARRATIVE_SECTION_IDS.has(id)) || null;
+  for (const line of ocrBuckets.sections.get("__preamble") || []) {
+    const guessed = guessSectionForLine(line, preferredSectionIds);
+    if (!guessed) {
+      if (fallbackNarrativeSection && lineHasNarrativeSignal(line)) {
+        const current = ocrAssigned.get(fallbackNarrativeSection) || [];
+        current.push(line);
+        ocrAssigned.set(fallbackNarrativeSection, dedupeLines(current));
+        continue;
       }
+      ocrOrphan.push(line);
+      continue;
     }
-    if (!assigned) ocrUnassigned.push(line);
-  }
-
-  if (mode !== "augment" || !activeAnchors.size) {
-    return [...nativeOut, ...ocrUnassigned].join("\n");
+    const current = ocrAssigned.get(guessed) || [];
+    current.push(line);
+    ocrAssigned.set(guessed, dedupeLines(current));
   }
 
   const out = [];
-  for (const line of nativeOut) {
-    out.push(line);
-    for (const anchor of anchorDefs) {
-      if (!activeAnchors.has(anchor.id)) continue;
-      if (!anchor.nativeRe.test(line)) continue;
-      const extras = ocrByAnchor.get(anchor.id) || [];
-      if (extras.length) {
-        out.push(...extras);
-        extras.length = 0;
-      }
-      break;
+  const seenOut = new Set();
+
+  const pushSection = (sectionId, nativeSectionLines, ocrSectionLines, headerText) => {
+    if (sectionId !== "__preamble" && headerText) {
+      pushUniqueLine(out, headerText, seenOut);
     }
+
+    const merged = mergeSectionLines(sectionId, nativeSectionLines, ocrSectionLines);
+    for (const line of merged) {
+      pushUniqueLine(out, line, seenOut);
+    }
+  };
+
+  for (const sectionId of nativeBuckets.order) {
+    const nativeSectionLines = nativeBuckets.sections.get(sectionId) || [];
+    const ocrSectionLines = ocrAssigned.get(sectionId) || [];
+    const headerText = sectionId === "__preamble"
+      ? null
+      : (nativeBuckets.headers.get(sectionId) || SECTION_DEFS.find((section) => section.id === sectionId)?.header || null);
+    pushSection(sectionId, nativeSectionLines, ocrSectionLines, headerText);
   }
-  out.push(...ocrUnassigned);
+
+  const nativeSectionSet = new Set(nativeSectionIds);
+  for (const section of SECTION_DEFS) {
+    if (nativeSectionSet.has(section.id)) continue;
+    const ocrSectionLines = ocrAssigned.get(section.id) || [];
+    if (!ocrSectionLines.length) continue;
+    const headerText = ocrBuckets.headers.get(section.id) || section.header;
+    pushSection(section.id, [], ocrSectionLines, headerText);
+  }
+
+  for (const line of ocrOrphan) {
+    if (shouldDropLineForMerge(line)) continue;
+    if (!lineHasNarrativeSignal(line)) continue;
+    pushUniqueLine(out, line, seenOut);
+  }
+
   return out.join("\n");
 }
 
