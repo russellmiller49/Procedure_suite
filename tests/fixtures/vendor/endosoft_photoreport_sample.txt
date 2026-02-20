@@ -1,0 +1,55 @@
+===== PAGE 1 (NATIVE) =====
+EndoSoft PHOTOREPORT
+Procedure Report
+Patient Name: TEST, PATIENT
+Date of Birth: 01/02/1970
+Record Number: 00012345
+Date / Time of Procedure: 02/20/2026 10:15
+
+PROCEDURE PERFORMED:
+Diagnostic bronchoscopy with BAL.
+
+INDICATIONS FOR EXAMINATION:
+Abnormal CT.
+
+PROCEDURE TECHNIQUE:
+The bronchoscope was advanced through the airway.
+
+FINDINGS:
+Trachea normal. RUL lesion biopsied.
+
+FINDINGS:
+Trachea normal. RUL lesion biopsied.
+
+RECOMMENDATIONS:
+Follow up pathology.
+
+ICD 10 Codes:
+R91.1
+C34.11
+
+CPT Code:
+31622
+31624
+31625
+
+PHOTOREPORT
+Electronically signed off
+Page 1 of 2
+All rights reserved
+(555) 555-5555
+
+===== PAGE 2 (NATIVE) =====
+PHOTOREPORT
+1
+2
+3
+Right upper lobe
+Left lower lobe
+1 A1 RUL
+2 B2 LLL
+Jar 1 - biopsy specimen: RUL
+Electronically signed off
+Page 2 of 2
+All rights reserved
+
