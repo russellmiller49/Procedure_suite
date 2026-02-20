@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { composeOcrPageText, filterOcrLinesDetailed } from "../../../../static/phi_redactor/pdf_local/pdf/ocrPostprocess.js";
+import {
+  applyClinicalOcrHeuristics,
+  composeOcrPageText,
+  filterOcrLinesDetailed,
+} from "../../../../static/phi_redactor/pdf_local/pdf/ocrPostprocess.js";
 
 function countLowConfidenceLines(lines, threshold = 20) {
   return (Array.isArray(lines) ? lines : []).filter((line) => Number(line?.confidence) < threshold).length;
@@ -38,5 +42,59 @@ describe("provation OCR hardening fixtures", () => {
     expect(text).toContain("Extrinsic compression noted in the left mainstem.");
 
     expect(lowConfAfter).toBeLessThanOrEqual(Math.floor(lowConfBefore * 0.5));
+  });
+
+  it("applies clinical OCR dosage and terminology corrections", () => {
+    const corrected = applyClinicalOcrHeuristics(
+      [
+        "Lidocaine 49% sprayed to airway.",
+        "Atropine 9.5 mg given once.",
+        "Persistent lrynphadenopathy with hytnph node enlargement.",
+        "tracheobronchlal narrowing noted.",
+      ].join(" "),
+    );
+
+    expect(corrected).toContain("Lidocaine 4%");
+    expect(corrected).toContain("Atropine 0.5 mg");
+    expect(corrected).toContain("lymphadenopathy");
+    expect(corrected).toContain("lymph node enlargement");
+    expect(corrected).toContain("tracheobronchial narrowing");
+  });
+
+  it("does not over-correct non-target Atropine doses", () => {
+    const corrected = applyClinicalOcrHeuristics("Atropine 19.5 mg was charted by anesthesia.");
+    expect(corrected).toContain("Atropine 19.5 mg");
+    expect(corrected).not.toContain("Atropine 0.5 mg");
+  });
+
+  it("drops garbled account and birch header lines while keeping valid DOB text", () => {
+    const filtered = filterOcrLinesDetailed([
+      {
+        text: "Aeecrnimt #2: IIENOI IW",
+        confidence: 45,
+        bbox: { x: 28, y: 32, width: 320, height: 20 },
+        zoneId: "header_left",
+        zoneOrder: 0,
+      },
+      {
+        text: "Date nf Birch: 19/9G/4GA1",
+        confidence: 41,
+        bbox: { x: 620, y: 32, width: 340, height: 20 },
+        zoneId: "header_right",
+        zoneOrder: 1,
+      },
+      {
+        text: "Date of Birth: 09/15/1950",
+        confidence: 86,
+        bbox: { x: 26, y: 60, width: 250, height: 18 },
+        zoneId: "header_left",
+        zoneOrder: 0,
+      },
+    ], []);
+
+    const text = composeOcrPageText(filtered.lines);
+    expect(text).toContain("Date of Birth: 09/15/1950");
+    expect(text).not.toContain("Aeecrnimt");
+    expect(text).not.toContain("Date nf Birch");
   });
 });

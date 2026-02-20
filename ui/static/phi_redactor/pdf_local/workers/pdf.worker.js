@@ -191,6 +191,11 @@ function computeQualityFlags(stats, assembly) {
 async function analyzePage(page, pageIndex, totalPages, options = {}) {
   self.postMessage({ type: "stage", stage: "layout_analysis", pageIndex, totalPages });
 
+  const viewport = page.getViewport({ scale: 1 });
+  const pageWidth = Math.max(1, Math.abs(Number(viewport?.width) || 0));
+  const pageHeight = Math.max(1, Math.abs(Number(viewport?.height) || 0));
+  const pageArea = Math.max(1, pageWidth * pageHeight);
+
   const textContent = await page.getTextContent({
     includeMarkedContent: false,
     disableNormalization: false,
@@ -228,6 +233,10 @@ async function analyzePage(page, pageIndex, totalPages, options = {}) {
 
   const stats = {
     ...textStats,
+    pageWidth,
+    pageHeight,
+    pageArea,
+    nativeTextDensity: textStats.charCount / pageArea,
     imageOpCount: opStats.imageOpCount,
     textShowOpCount: opStats.textShowOpCount,
     layoutBlockCount: blocks.length,

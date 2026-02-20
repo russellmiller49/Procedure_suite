@@ -1,4 +1,4 @@
-const DEFAULT_LINE_Y_TOLERANCE = 2.5;
+const DEFAULT_LINE_Y_TOLERANCE = 4;
 const DEFAULT_SEGMENT_GAP_MIN = 14;
 const DEFAULT_REGION_MARGIN = 3;
 
@@ -50,6 +50,92 @@ export function expandRect(rect, margin = DEFAULT_REGION_MARGIN) {
     y: normalized.y - m,
     width: normalized.width + m * 2,
     height: normalized.height + m * 2,
+  };
+}
+
+function clampRectToBounds(rect, bounds) {
+  const r = normalizeRect(rect);
+  const b = normalizeRect(bounds);
+  const left = Math.max(b.x, r.x);
+  const top = Math.max(b.y, r.y);
+  const right = Math.min(b.x + b.width, r.x + r.width);
+  const bottom = Math.min(b.y + b.height, r.y + r.height);
+  const width = Math.max(0, right - left);
+  const height = Math.max(0, bottom - top);
+  return { x: left, y: top, width, height };
+}
+
+/**
+ * Find a vertical split for two-column header OCR regions.
+ *
+ * @param {Array<{x:number,y:number,width:number,height:number}>} rects
+ * @param {{x:number,y:number,width:number,height:number}} bounds
+ * @param {{minGapPx?:number,minColumnWidthPx?:number}} [opts]
+ * @returns {{splitX:number,gapPx:number,usedSignal:boolean,minGapPx:number,minColumnWidthPx:number,rectCount:number}}
+ */
+export function deriveVerticalSplitFromRects(rects, bounds, opts = {}) {
+  const normalizedBounds = normalizeRect(bounds || { x: 0, y: 0, width: 0, height: 0 });
+  const fallbackSplit = normalizedBounds.x + normalizedBounds.width / 2;
+  if (normalizedBounds.width <= 2 || normalizedBounds.height <= 2) {
+    return {
+      splitX: fallbackSplit,
+      gapPx: 0,
+      usedSignal: false,
+      minGapPx: 0,
+      minColumnWidthPx: 0,
+      rectCount: 0,
+    };
+  }
+
+  const normalizedRects = (Array.isArray(rects) ? rects : [])
+    .map((rect) => clampRectToBounds(rect, normalizedBounds))
+    .filter((rect) => rect.width > 1 && rect.height > 1)
+    .sort((a, b) => a.x - b.x);
+
+  const minGapPx = Number.isFinite(opts.minGapPx)
+    ? Math.max(8, Number(opts.minGapPx))
+    : Math.max(24, normalizedBounds.width * 0.04);
+  const minColumnWidthPx = Number.isFinite(opts.minColumnWidthPx)
+    ? Math.max(16, Number(opts.minColumnWidthPx))
+    : Math.max(32, normalizedBounds.width * 0.24);
+
+  let splitX = fallbackSplit;
+  let gapPx = 0;
+  let usedSignal = false;
+
+  if (normalizedRects.length >= 2) {
+    for (let i = 0; i < normalizedRects.length - 1; i += 1) {
+      const leftRightEdge = normalizedRects[i].x + normalizedRects[i].width;
+      const rightLeftEdge = normalizedRects[i + 1].x;
+      const gap = rightLeftEdge - leftRightEdge;
+      if (gap <= gapPx) continue;
+      gapPx = gap;
+      splitX = leftRightEdge + gap / 2;
+    }
+
+    if (gapPx >= minGapPx) {
+      usedSignal = true;
+    } else {
+      splitX = fallbackSplit;
+      gapPx = 0;
+    }
+  }
+
+  const minSplit = normalizedBounds.x + minColumnWidthPx;
+  const maxSplit = normalizedBounds.x + normalizedBounds.width - minColumnWidthPx;
+  if (minSplit < maxSplit) {
+    splitX = Math.min(maxSplit, Math.max(minSplit, splitX));
+  } else {
+    splitX = fallbackSplit;
+  }
+
+  return {
+    splitX,
+    gapPx,
+    usedSignal,
+    minGapPx,
+    minColumnWidthPx,
+    rectCount: normalizedRects.length,
   };
 }
 
@@ -219,9 +305,12 @@ export function buildLayoutBlocks(items, opts = {}) {
   for (const item of normalizedItems) {
     const last = lines[lines.length - 1];
     if (!last || Math.abs(last.y - item.y) > yTolerance) {
-      lines.push({ y: item.y, items: [item] });
+      lines.push({ y: item.y, sampleCount: 1, items: [item] });
     } else {
       last.items.push(item);
+      last.sampleCount += 1;
+      // Keep line centroid stable when neighboring glyphs vary by a few pixels.
+      last.y = ((last.y * (last.sampleCount - 1)) + item.y) / last.sampleCount;
     }
   }
 
@@ -569,9 +658,12 @@ export function assembleTextFromBlocks(blocks, contamination, opts = {}) {
     const last = rows[rows.length - 1];
     const baselineY = Number(segment?.baselineY) || 0;
     if (!last || Math.abs(last.baselineY - baselineY) > yTolerance) {
-      rows.push({ baselineY, segments: [buildSegmentLine(segment)] });
+      rows.push({ baselineY, sampleCount: 1, segments: [buildSegmentLine(segment)] });
     } else {
       last.segments.push(buildSegmentLine(segment));
+      last.sampleCount += 1;
+      // Same-row drift handling for native text layers with tiny y jitter.
+      last.baselineY = ((last.baselineY * (last.sampleCount - 1)) + baselineY) / last.sampleCount;
     }
   }
 

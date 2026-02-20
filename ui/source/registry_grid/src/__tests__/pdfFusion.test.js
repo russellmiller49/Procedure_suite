@@ -34,6 +34,22 @@ describe("pdf fusion arbitration", () => {
     expect(result.blocked).toBe(false);
   });
 
+  it("prefers native text when native density indicates a digital text layer", () => {
+    const nativeText = Array.from({ length: 35 }, (_, i) => `Narrative line ${i + 1} with detailed bronchoscopy findings.`).join("\n");
+    const result = arbitratePageText({
+      nativeText,
+      ocrText: "Noisy OCR variant",
+      requestedSource: "ocr",
+      ocrAvailable: true,
+      classification: { needsOcr: true, nativeTextDensity: 0.0048 },
+      stats: { nativeTextDensity: 0.0048, completenessConfidence: 0.92, contaminationScore: 0.18 },
+    });
+
+    expect(result.sourceDecision).toBe("native");
+    expect(result.text).toContain("Narrative line 1");
+    expect(result.reason).toMatch(/native text density/i);
+  });
+
   it("uses hybrid merge when OCR recovers substantially more content on contaminated page", () => {
     const nativeText = "Procedure Report\nLeft upper lobe";
     const ocrText = [

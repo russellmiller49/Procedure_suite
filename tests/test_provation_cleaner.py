@@ -49,3 +49,24 @@ def test_provation_cleaner_masks_boilerplate_captions_and_keeps_clinical_lines()
     # Dedupe: repeated recommendations line should only appear once.
     assert after.count("Follow up pathology.") == 1
 
+
+def test_provation_cleaner_strips_header_gibberish_noise() -> None:
+    pages = [
+        "\n".join(
+            [
+                "Aeecrnimt #2: IIENOI IW",
+                "Date nf Birch: 19/9G/4GA1",
+                "Date of Birth: 09/15/1950",
+                "Procedure performed with moderate sedation.",
+            ]
+        )
+    ]
+
+    cleaned = clean_provation(pages, ["procedure_report"])[0]
+    text = cleaned.clean_text
+
+    assert "Aeecrnimt #2: IIENOI IW" not in text
+    assert "Date nf Birch: 19/9G/4GA1" not in text
+    assert "Date of Birth: 09/15/1950" in text
+    assert "Procedure performed with moderate sedation." in text
+    assert cleaned.metrics.get("masked_header_noise_lines", 0) >= 2

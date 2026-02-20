@@ -19,7 +19,7 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   maskImages: "auto",
   cropMode: "auto",
   cropPaddingPx: 14,
-  headerBandFrac: 0.22,
+  headerBandFrac: 0.25,
   headerScaleBoost: 1.8,
   headerRetryPsms: ["6", "4", "11"],
   figureOverlapThreshold: 0.35,
@@ -58,7 +58,7 @@ function normalizeOcrOptions(opts = {}) {
     ? Math.max(0, Math.min(120, Number(ocr.cropPaddingPx)))
     : DEFAULT_OCR_OPTIONS.cropPaddingPx;
   const headerBandFrac = Number.isFinite(ocr.headerBandFrac)
-    ? Math.max(0.12, Math.min(0.35, Number(ocr.headerBandFrac)))
+    ? Math.max(0.2, Math.min(0.35, Number(ocr.headerBandFrac)))
     : DEFAULT_OCR_OPTIONS.headerBandFrac;
   const headerScaleBoost = Number.isFinite(ocr.headerScaleBoost)
     ? Math.max(1, Math.min(3, Number(ocr.headerScaleBoost)))

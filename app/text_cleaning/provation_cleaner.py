@@ -20,6 +20,8 @@ _CAPTION_NUMBER_PREFIX_RE = re.compile(r"^\s*\d+\s+.{1,60}$")
 _SHORT_ANATOMY_LABEL_RE = re.compile(
     r"(?i)^(left|right|upper|lower|middle|mainstem|entrance|segment|bronchus|airway|carina|trachea|lingula)(\s+\w+){0,8}$"
 )
+_HEADER_DOB_BIRCH_RE = re.compile(r"(?i)\b(?:data|date)\s+(?:of|nf)\s+birch\b")
+_HEADER_ACCOUNT_LABEL_RE = re.compile(r"(?i)\b(?:account|acct)\b")
 
 _GUARD_VERBS: tuple[str, ...] = (
     "performed",
@@ -51,6 +53,59 @@ def _normalize_line(text: str) -> str:
 
 def _normalize_block(text: str) -> str:
     return re.sub(r"\s+", " ", text or "").strip().lower()
+
+
+def _normalize_letters(text: str) -> str:
+    return re.sub(r"[^a-z]", "", (text or "").lower())
+
+
+def _token_similarity(left: str, right: str) -> float:
+    if not left or not right:
+        return 0.0
+    return difflib.SequenceMatcher(a=left, b=right).ratio()
+
+
+def _looks_like_garbled_account_token(token: str) -> bool:
+    normalized = _normalize_letters(token)
+    if len(normalized) < 6:
+        return False
+    if normalized.startswith("aeecrnimt"):
+        return True
+    return _token_similarity(normalized, "aeecrnimt") >= 0.72
+
+
+def _looks_like_account_token(token: str) -> bool:
+    normalized = _normalize_letters(token)
+    if len(normalized) < 5:
+        return False
+    return _token_similarity(normalized, "account") >= 0.66
+
+
+def _is_corrupt_dob_value(text: str) -> bool:
+    clean = (text or "").strip()
+    if not clean:
+        return False
+    if re.search(r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", clean):
+        return False
+    return bool(re.search(r"[0-9][A-Za-z]|[A-Za-z][0-9]", clean))
+
+
+def _looks_like_header_noise(line: str) -> bool:
+    clean = (line or "").strip()
+    if not clean:
+        return False
+    tokens = re.findall(r"[A-Za-z0-9#]+", clean)
+    first = tokens[0] if tokens else ""
+
+    if _looks_like_garbled_account_token(first):
+        return True
+    if _HEADER_ACCOUNT_LABEL_RE.search(clean):
+        return True
+    if _looks_like_account_token(first) and re.search(r"(?i)#|number|num|acct", clean):
+        return True
+    if _HEADER_DOB_BIRCH_RE.search(clean) and _is_corrupt_dob_value(clean):
+        return True
+    return False
 
 
 def _is_guarded_clinical_line(line: str) -> bool:
@@ -131,6 +186,7 @@ def clean_provation_page(text: str, page_type: str, *, page_num: int = 1) -> Pag
     removed: list[dict[str, Any]] = []
 
     masked_boilerplate = 0
+    masked_header_noise = 0
     masked_captions = 0
     masked_line_dupes = 0
     masked_block_dupes = 0
@@ -138,6 +194,12 @@ def clean_provation_page(text: str, page_type: str, *, page_num: int = 1) -> Pag
     # 1) Boilerplate + caption stripping (offset-preserving)
     for i, line in enumerate(lines):
         no_nl = line.rstrip("\r\n")
+        if _looks_like_header_noise(no_nl):
+            out_lines[i] = _mask_non_newline_chars(line)
+            masked_header_noise += 1
+            removed.append({"reason": "header_noise", "line": (no_nl.strip()[:200] if no_nl.strip() else "")})
+            continue
+
         if _looks_like_boilerplate(no_nl):
             out_lines[i] = _mask_non_newline_chars(line)
             masked_boilerplate += 1
@@ -221,6 +283,7 @@ def clean_provation_page(text: str, page_type: str, *, page_num: int = 1) -> Pag
         removed_lines=removed,
         metrics={
             "masked_boilerplate_lines": masked_boilerplate,
+            "masked_header_noise_lines": masked_header_noise,
             "masked_caption_lines": masked_captions,
             "masked_consecutive_line_dupes": masked_line_dupes,
             "masked_block_dupes": masked_block_dupes,

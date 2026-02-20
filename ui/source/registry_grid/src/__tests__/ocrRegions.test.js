@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { computeOcrCropRect } from "../../../../static/phi_redactor/pdf_local/pdf/ocrRegions.js";
+import {
+  computeHeaderZoneColumns,
+  computeOcrCropRect,
+  computeProvationDiagramSkipRegions,
+} from "../../../../static/phi_redactor/pdf_local/pdf/ocrRegions.js";
 
 describe("ocr region cropping", () => {
   it("crops OCR to the left-column when image strip exists on the right", () => {
@@ -15,7 +19,7 @@ describe("ocr region cropping", () => {
           { x: 45, y: 240, width: 410, height: 20 },
           { x: 46, y: 300, width: 425, height: 20 },
           // Right-column caption-like text should not expand the final crop.
-          { x: 760, y: 220, width: 180, height: 18 },
+          { x: 700, y: 220, width: 140, height: 18 },
         ],
         imageRegions: [
           { x: 710, y: 140, width: 250, height: 420 },
@@ -62,5 +66,65 @@ describe("ocr region cropping", () => {
 
     expect(result.meta.applied).toBe(false);
     expect(result.meta.reason).toBe("low_text_signal");
+  });
+
+  it("keeps full-page OCR when right-margin text reaches page edge", () => {
+    const result = computeOcrCropRect(
+      {
+        canvasWidth: 1000,
+        canvasHeight: 1400,
+        nativeCharCount: 1400,
+        textRegions: [
+          { x: 40, y: 120, width: 900, height: 20 },
+          { x: 42, y: 180, width: 920, height: 20 },
+          { x: 46, y: 240, width: 910, height: 20 },
+          { x: 45, y: 300, width: 920, height: 20 },
+        ],
+        imageRegions: [{ x: 220, y: 760, width: 170, height: 220 }],
+      },
+      { mode: "auto", paddingPx: 12 },
+    );
+
+    expect(result.meta.applied).toBe(false);
+    expect(result.meta.reason).toBe("right_margin_text");
+  });
+
+  it("splits top header zone into distinct left/right bounding boxes for two-column layouts", () => {
+    const mockCanvas = { width: 1200, height: 1600 };
+    const header = computeHeaderZoneColumns({
+      canvas: mockCanvas,
+      textRegions: [
+        { x: 40, y: 40, width: 320, height: 22 },
+        { x: 44, y: 94, width: 338, height: 22 },
+        { x: 700, y: 44, width: 360, height: 22 },
+        { x: 708, y: 92, width: 352, height: 22 },
+      ],
+    });
+
+    expect(header.headerZoneRect.height).toBe(400);
+    expect(header.columns).toHaveLength(2);
+    expect(header.columns[0].rect.x).toBe(0);
+    expect(header.columns[0].rect.x + header.columns[0].rect.width).toBeLessThanOrEqual(header.columns[1].rect.x);
+    expect(header.columns[1].rect.x + header.columns[1].rect.width).toBe(1200);
+  });
+
+  it("detects provation right-side diagram region for OCR skip", () => {
+    const skip = computeProvationDiagramSkipRegions({
+      canvasWidth: 1000,
+      canvasHeight: 1400,
+      nativeCharCount: 520,
+      pageIndex: 0,
+      figureRegions: [
+        { x: 640, y: 280, width: 300, height: 560 },
+        { x: 660, y: 220, width: 240, height: 130 },
+      ],
+      textRegions: [
+        { x: 40, y: 60, width: 420, height: 220 },
+      ],
+    });
+
+    expect(skip.meta.applied).toBe(true);
+    expect(skip.meta.reason).toBe("provation_tree_diagram");
+    expect(skip.regions.length).toBeGreaterThan(0);
   });
 });

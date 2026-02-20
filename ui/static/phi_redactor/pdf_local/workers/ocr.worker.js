@@ -2,7 +2,11 @@ import "../../vendor/pdfjs/pdf.worker.mjs";
 import * as pdfjs from "../../vendor/pdfjs/pdf.mjs";
 import Tesseract from "../../vendor/tesseract/tesseract.esm.min.js";
 import { clamp01, mergeRegions, normalizeRect, rectArea } from "../pdf/layoutAnalysis.js";
-import { computeOcrCropRect } from "../pdf/ocrRegions.js";
+import {
+  computeHeaderZoneColumns,
+  computeOcrCropRect,
+  computeProvationDiagramSkipRegions,
+} from "../pdf/ocrRegions.js";
 import { computeOcrTextMetrics } from "../pdf/ocrMetrics.js";
 import {
   composeOcrPageText,
@@ -25,7 +29,7 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   maxMaskRegions: 12,
   cropMode: "auto",
   cropPaddingPx: 14,
-  headerBandFrac: 0.22,
+  headerBandFrac: 0.25,
   headerScaleBoost: 1.8,
   headerRetryPsms: ["6", "4", "11"],
   figureOverlapThreshold: 0.35,
@@ -92,7 +96,7 @@ function resolveOcrOptions(options = {}) {
     maxMaskRegions,
     cropMode,
     cropPaddingPx,
-    headerBandFrac: Math.max(0.12, Math.min(0.35, headerBandFrac || DEFAULT_OCR_OPTIONS.headerBandFrac)),
+    headerBandFrac: Math.max(0.2, Math.min(0.35, headerBandFrac || DEFAULT_OCR_OPTIONS.headerBandFrac)),
     headerScaleBoost,
     headerRetryPsms: headerRetryPsms.length ? headerRetryPsms : [...DEFAULT_OCR_OPTIONS.headerRetryPsms],
     figureOverlapThreshold,
@@ -256,7 +260,6 @@ class WorkerFilterFactory {
   }
 }
 
-const HEADER_BAND_FRAC = 0.22;
 const HEADER_RETRY_PSMS = Object.freeze(["6", "4", "11"]);
 
 function sortByReadingOrder(a, b) {
@@ -416,8 +419,13 @@ function cropCanvas(sourceCanvas, rect) {
   const normalized = normalizeRect(rect);
   const x = Math.max(0, Math.floor(normalized.x));
   const y = Math.max(0, Math.floor(normalized.y));
-  const width = Math.max(1, Math.floor(normalized.width));
-  const height = Math.max(1, Math.floor(normalized.height));
+  const maxWidth = Math.max(1, sourceCanvas?.width || 1);
+  const maxHeight = Math.max(1, sourceCanvas?.height || 1);
+  if (x >= maxWidth || y >= maxHeight) return null;
+  const unclampedWidth = Math.max(1, Math.ceil(normalized.width));
+  const unclampedHeight = Math.max(1, Math.ceil(normalized.height));
+  const width = Math.max(1, Math.min(unclampedWidth, maxWidth - x));
+  const height = Math.max(1, Math.min(unclampedHeight, maxHeight - y));
   const canvas = new OffscreenCanvas(width, height);
   const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
   if (!ctx) return null;
@@ -623,34 +631,6 @@ async function recognizeCanvas(worker, canvas, psm) {
     }
     return worker.recognize(fallbackOcrInput);
   }
-}
-
-function computeHeaderBodyRects(cropRect, pageWidth, pageHeight, options) {
-  const workingRect = cropRect
-    ? normalizeRect(cropRect)
-    : normalizeRect({ x: 0, y: 0, width: pageWidth, height: pageHeight });
-
-  const headerBand = Math.max(24, Math.floor(pageHeight * (options.headerBandFrac || HEADER_BAND_FRAC)));
-  const headerRect = normalizeRect({
-    x: workingRect.x,
-    y: 0,
-    width: workingRect.width,
-    height: Math.min(pageHeight, headerBand),
-  });
-
-  const workingBottom = Math.min(pageHeight, workingRect.y + workingRect.height);
-  let bodyTop = Math.max(workingRect.y, headerRect.y + headerRect.height);
-  if (workingBottom - bodyTop < 28) {
-    bodyTop = workingRect.y;
-  }
-  const bodyRect = normalizeRect({
-    x: workingRect.x,
-    y: bodyTop,
-    width: workingRect.width,
-    height: Math.max(1, workingBottom - bodyTop),
-  });
-
-  return { headerRect, bodyRect, workingRect };
 }
 
 function toViewportRect(region, viewport) {
@@ -922,15 +902,16 @@ function selectMaskRects(canvas, hint, options, viewportHintRegions = null) {
   };
 }
 
-async function renderPageImageForOcr(page, requestedScale, hint, options) {
+async function renderPageImageForOcr(page, pageIndex, requestedScale, hint, options) {
   if (typeof OffscreenCanvas === "undefined") {
     throw new Error("OffscreenCanvas is unavailable in this browser; OCR rendering cannot run in worker.");
   }
 
   const safeScale = getViewportScale(page, requestedScale);
   const viewport = page.getViewport({ scale: safeScale });
-  const width = Math.max(1, Math.floor(viewport.width));
-  const height = Math.max(1, Math.floor(viewport.height));
+  const baseViewport = page.getViewport({ scale: 1 });
+  const width = Math.max(1, Math.ceil(viewport.width));
+  const height = Math.max(1, Math.ceil(viewport.height));
 
   const canvas = new OffscreenCanvas(width, height);
   const context = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
@@ -949,9 +930,26 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
 
   const viewportHintRegions = buildViewportHintRegions(viewport, width, height, hint, options);
   const heuristicFigureRegions = detectFigureRegionsFromCanvas(canvas);
+  const diagramSkip = computeProvationDiagramSkipRegions(
+    {
+      canvasWidth: width,
+      canvasHeight: height,
+      viewportWidth: baseViewport.width * safeScale,
+      viewportHeight: baseViewport.height * safeScale,
+      devicePixelRatio: 1,
+      figureRegions: [
+        ...viewportHintRegions.imageRegions,
+        ...heuristicFigureRegions,
+      ],
+      textRegions: viewportHintRegions.textRegions,
+      nativeCharCount: Number(hint?.stats?.charCount) || 0,
+      pageIndex,
+    },
+  );
   const figureRegions = mergeRegions([
     ...viewportHintRegions.imageRegions,
     ...heuristicFigureRegions,
+    ...(Array.isArray(diagramSkip.regions) ? diagramSkip.regions : []),
   ], { mergeGap: 8 });
 
   const masking = selectMaskRects(canvas, hint, options, viewportHintRegions);
@@ -961,11 +959,20 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
       context.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
   }
+  if (diagramSkip.regions?.length) {
+    context.fillStyle = "#ffffff";
+    for (const rect of diagramSkip.regions) {
+      context.fillRect(rect.x, rect.y, rect.width, rect.height);
+    }
+  }
 
   const crop = computeOcrCropRect(
     {
       canvasWidth: width,
       canvasHeight: height,
+      viewportWidth: baseViewport.width * safeScale,
+      viewportHeight: baseViewport.height * safeScale,
+      devicePixelRatio: 1,
       textRegions: viewportHintRegions.textRegions,
       imageRegions: viewportHintRegions.imageRegions,
       nativeCharCount: Number(hint?.stats?.charCount) || 0,
@@ -978,13 +985,40 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
   const appliedCropRect = crop.rect && crop.meta?.applied
     ? normalizeRect(crop.rect)
     : null;
-  const { headerRect, bodyRect, workingRect } = computeHeaderBodyRects(appliedCropRect, width, height, options);
-  const headerCanvas = cropCanvas(canvas, headerRect);
+  const workingRect = appliedCropRect
+    ? normalizeRect(appliedCropRect)
+    : normalizeRect({ x: 0, y: 0, width, height });
+  const headerLayout = computeHeaderZoneColumns(
+    {
+      canvasWidth: width,
+      canvasHeight: height,
+      textRegions: viewportHintRegions.textRegions,
+      workingRect,
+    },
+    {
+      topFraction: options.headerBandFrac,
+    },
+  );
+  const headerRect = normalizeRect(headerLayout.headerZoneRect);
+  const headerZones = (Array.isArray(headerLayout.columns) && headerLayout.columns.length
+    ? headerLayout.columns
+    : [{ id: "header_full", order: 0, rect: headerRect }])
+    .map((zone) => ({
+      ...zone,
+      rect: normalizeRect(zone.rect),
+    }))
+    .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0))
+    .map((zone) => ({
+      ...zone,
+      canvas: cropCanvas(canvas, zone.rect) || cropCanvas(canvas, headerRect) || canvas,
+    }));
+
+  const bodyRect = normalizeRect(headerLayout.bodyRect);
   const bodyCanvas = cropCanvas(canvas, bodyRect) || cropCanvas(canvas, workingRect);
 
   return {
     pageCanvas: canvas,
-    headerCanvas: headerCanvas || canvas,
+    headerZones,
     bodyCanvas: bodyCanvas || canvas,
     width,
     height,
@@ -997,7 +1031,9 @@ async function renderPageImageForOcr(page, requestedScale, hint, options) {
     crop: crop.meta,
     figureRegions,
     figureCoverageRatio: computeCoverageRatio(figureRegions, width, height),
+    diagramSkip: diagramSkip.meta,
     headerRect,
+    headerLayout: headerLayout.meta,
     bodyRect,
     workingRect,
     preMaskFigureRegionCount: figureRegions.length,
@@ -1046,45 +1082,82 @@ function buildHeaderPsmAttempts(options) {
 
 async function ocrHeaderThenBody(worker, renderInfo, pageIndex, options) {
   const headerAttempts = buildHeaderPsmAttempts(options);
+  const headerZones = (Array.isArray(renderInfo?.headerZones) && renderInfo.headerZones.length
+    ? renderInfo.headerZones
+    : [{
+      id: "header_full",
+      order: 0,
+      rect: renderInfo?.headerRect || { x: 0, y: 0, width: renderInfo?.width || 0, height: renderInfo?.height || 0 },
+      canvas: renderInfo?.pageCanvas || null,
+    }])
+    .sort((a, b) => (Number(a?.order) || 0) - (Number(b?.order) || 0));
+
   let attemptsUsed = 0;
-  let bestHeader = {
-    lines: [],
-    text: "",
-    score: Number.NEGATIVE_INFINITY,
-    retryNeeded: true,
-    psm: String(options.psm || "6"),
-    scale: 1,
-  };
+  const headerZoneSummaries = [];
+  const headerLines = [];
 
-  for (const attempt of headerAttempts) {
-    attemptsUsed += 1;
-    const scaled = scaleCanvas(renderInfo.headerCanvas, attempt.scale);
-    const recognized = await recognizeCanvas(worker, scaled.canvas, attempt.psm);
-    const lines = extractStructuredOcrLines(recognized?.data, {
-      pageIndex,
-      offsetX: renderInfo.headerRect.x,
-      offsetY: renderInfo.headerRect.y,
-      scaleFactor: scaled.scaleFactor,
-    });
-    const text = composeOcrPageText(lines);
-    const quality = evaluateHeaderFieldQuality(text);
-    const metrics = computeOcrTextMetrics({ text, lines });
-    const score = (quality.dobValid ? 2 : 0) +
-      (quality.ageValid ? 1 : 0) +
-      (Number.isFinite(metrics.meanLineConf) ? metrics.meanLineConf / 100 : 0) +
-      Math.min(0.9, metrics.charCount / 1400);
+  for (const zone of headerZones) {
+    const zoneRect = normalizeRect(zone?.rect || renderInfo?.headerRect || { x: 0, y: 0, width: 0, height: 0 });
+    const zoneCanvas = zone?.canvas || cropCanvas(renderInfo.pageCanvas, zoneRect) || renderInfo.pageCanvas;
+    let attemptsForZone = 0;
+    let bestHeader = {
+      lines: [],
+      text: "",
+      score: Number.NEGATIVE_INFINITY,
+      retryNeeded: true,
+      psm: String(options.psm || "6"),
+      scale: 1,
+    };
 
-    if (score > bestHeader.score) {
-      bestHeader = {
-        lines,
-        text,
-        score,
-        retryNeeded: quality.retryNeeded,
-        psm: attempt.psm,
-        scale: attempt.scale,
-      };
+    for (const attempt of headerAttempts) {
+      attemptsUsed += 1;
+      attemptsForZone += 1;
+      const scaled = scaleCanvas(zoneCanvas, attempt.scale);
+      const recognized = await recognizeCanvas(worker, scaled.canvas, attempt.psm);
+      const lines = extractStructuredOcrLines(recognized?.data, {
+        pageIndex,
+        offsetX: zoneRect.x,
+        offsetY: zoneRect.y,
+        scaleFactor: scaled.scaleFactor,
+      }).map((line) => ({
+        ...line,
+        zoneId: String(zone?.id || "header"),
+        zoneOrder: Number.isFinite(zone?.order) ? Number(zone.order) : 0,
+      }));
+      const text = composeOcrPageText(lines);
+      const quality = evaluateHeaderFieldQuality(text);
+      const metrics = computeOcrTextMetrics({ text, lines });
+      const score = (quality.dobValid ? 2 : 0) +
+        (quality.ageValid ? 1 : 0) +
+        (Number.isFinite(metrics.meanLineConf) ? metrics.meanLineConf / 100 : 0) +
+        Math.min(0.9, metrics.charCount / 1400);
+
+      if (score > bestHeader.score) {
+        bestHeader = {
+          lines,
+          text,
+          score,
+          retryNeeded: quality.retryNeeded,
+          psm: attempt.psm,
+          scale: attempt.scale,
+        };
+      }
+      const confidentEnough = metrics.charCount >= 28 &&
+        Number.isFinite(metrics.meanLineConf) &&
+        metrics.meanLineConf >= 62;
+      if ((!quality.retryNeeded && metrics.charCount >= 16) || confidentEnough) break;
     }
-    if (!quality.retryNeeded) break;
+
+    headerZoneSummaries.push({
+      id: String(zone?.id || "header"),
+      order: Number.isFinite(zone?.order) ? Number(zone.order) : 0,
+      psmUsed: bestHeader.psm,
+      scaleUsed: bestHeader.scale,
+      retries: attemptsForZone,
+      retryNeeded: bestHeader.retryNeeded,
+      charCount: bestHeader.text.length,
+    });
+    headerLines.push(...bestHeader.lines);
   }
 
   const bodyRecognized = await recognizeCanvas(worker, renderInfo.bodyCanvas, options.psm);
@@ -1093,12 +1166,16 @@ async function ocrHeaderThenBody(worker, renderInfo, pageIndex, options) {
     offsetX: renderInfo.bodyRect.x,
     offsetY: renderInfo.bodyRect.y,
     scaleFactor: 1,
-  });
+  }).map((line) => ({
+    ...line,
+    zoneId: "body",
+    zoneOrder: headerZones.length,
+  }));
 
   const rawLines = dedupeConsecutiveLines([
-    ...bestHeader.lines,
+    ...headerLines,
     ...bodyLines,
-  ]).sort(sortByReadingOrder);
+  ]);
   const preFilterText = composeOcrPageText(rawLines);
   const preFilterMetrics = computeOcrTextMetrics({ text: preFilterText, lines: rawLines });
 
@@ -1110,7 +1187,7 @@ async function ocrHeaderThenBody(worker, renderInfo, pageIndex, options) {
     dropBoilerplate: true,
     disableFigureOverlap: filterMode.disableFigureOverlap,
   });
-  let filteredLines = dedupeConsecutiveLines(filtered.lines).sort(sortByReadingOrder);
+  let filteredLines = dedupeConsecutiveLines(filtered.lines);
   let filteredText = composeOcrPageText(filteredLines);
   let postFilterMetrics = computeOcrTextMetrics({ text: filteredText, lines: filteredLines });
 
@@ -1126,7 +1203,7 @@ async function ocrHeaderThenBody(worker, renderInfo, pageIndex, options) {
       dropBoilerplate: true,
       disableFigureOverlap: true,
     });
-    const relaxedLines = dedupeConsecutiveLines(relaxed.lines).sort(sortByReadingOrder);
+    const relaxedLines = dedupeConsecutiveLines(relaxed.lines);
     const relaxedText = composeOcrPageText(relaxedLines);
     const relaxedMetrics = computeOcrTextMetrics({ text: relaxedText, lines: relaxedLines });
     if (relaxedMetrics.charCount > postFilterMetrics.charCount * 1.8) {
@@ -1141,9 +1218,10 @@ async function ocrHeaderThenBody(worker, renderInfo, pageIndex, options) {
 
   const meanLineConf = Number.isFinite(postFilterMetrics.meanLineConf)
     ? postFilterMetrics.meanLineConf
-    : Number.isFinite(bodyRecognized?.data?.confidence)
-      ? Number(bodyRecognized.data.confidence)
-      : null;
+      : Number.isFinite(bodyRecognized?.data?.confidence)
+        ? Number(bodyRecognized.data.confidence)
+        : null;
+  const firstHeaderZone = headerZoneSummaries[0] || {};
 
   return {
     text: filteredText,
@@ -1152,10 +1230,12 @@ async function ocrHeaderThenBody(worker, renderInfo, pageIndex, options) {
     droppedLines: filtered.dropped,
     confidence: meanLineConf,
     header: {
-      psmUsed: bestHeader.psm,
-      scaleUsed: bestHeader.scale,
+      psmUsed: String(firstHeaderZone.psmUsed || options.psm || "6"),
+      scaleUsed: Number.isFinite(firstHeaderZone.scaleUsed) ? Number(firstHeaderZone.scaleUsed) : 1,
       retries: attemptsUsed,
-      retryNeeded: bestHeader.retryNeeded,
+      retryNeeded: headerZoneSummaries.some((zone) => Boolean(zone.retryNeeded)),
+      zoneCount: headerZoneSummaries.length,
+      zones: headerZoneSummaries,
     },
     metrics: {
       preMask: preFilterMetrics,
@@ -1219,7 +1299,7 @@ async function runOcrForPages(pdfBytes, pageIndexes, pageHints, options, jobId) 
     });
 
     const hint = hintMap.get(pageIndex) || null;
-    const render = await renderPageImageForOcr(page, options.scale, hint, options);
+    const render = await renderPageImageForOcr(page, pageIndex, options.scale, hint, options);
 
     self.postMessage({
       type: "ocr_stage",
@@ -1248,6 +1328,13 @@ async function runOcrForPages(pdfBytes, pageIndexes, pageHints, options, jobId) 
         masking: render.masking,
         crop: render.crop,
         header: structured.header,
+        headerLayout: render.headerLayout,
+        diagramSkip: render.diagramSkip,
+        headerColumns: (Array.isArray(render.headerZones) ? render.headerZones : []).map((zone) => ({
+          id: zone.id,
+          order: zone.order,
+          rect: zone.rect,
+        })),
         filterMode: structured.filterMode,
         metrics: structured.metrics,
         lines: structured.lines,

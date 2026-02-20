@@ -69,4 +69,25 @@ describe("pageClassifier", () => {
     expect(evalResult.unsafe).toBe(true);
     expect(evalResult.completenessConfidence).toBeLessThan(0.72);
   });
+
+  it("short-circuits OCR when native text density is high", () => {
+    const stats = {
+      charCount: 2400,
+      pageArea: 480000,
+      nativeTextDensity: 0.005,
+      singleCharItemRatio: 0.04,
+      nonPrintableRatio: 0,
+      imageOpCount: 5,
+      overlapRatio: 0.14,
+      contaminationScore: 0.29,
+      completenessConfidence: 0.91,
+    };
+
+    const classification = classifyPage(stats, "Detailed digitally generated bronchoscopy procedure narrative text.");
+    expect(classification.needsOcr).toBe(false);
+    expect(classification.qualityFlags).toContain("NATIVE_DENSE_TEXT");
+
+    const unsafeEval = isUnsafeNativePage(stats, "Detailed digitally generated bronchoscopy procedure narrative text.");
+    expect(unsafeEval.unsafe).toBe(false);
+  });
 });

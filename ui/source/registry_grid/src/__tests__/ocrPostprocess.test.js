@@ -81,4 +81,13 @@ describe("ocrPostprocess", () => {
     expect(relaxed.lines).toHaveLength(1);
     expect(relaxed.lines[0].text).toContain("Procedure Date");
   });
+
+  it("keeps short anatomy lines when they include clinical verbs", () => {
+    const filtered = filterOcrLinesDetailed([
+      { text: "Left Mainstem", confidence: 74, bbox: { x: 24, y: 24, width: 120, height: 14 } },
+      { text: "Trachea was inspected", confidence: 78, bbox: { x: 24, y: 44, width: 180, height: 16 } },
+    ], []);
+
+    expect(filtered.lines.map((line) => line.text)).toEqual(["Trachea was inspected"]);
+  });
 });

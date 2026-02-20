@@ -59,3 +59,20 @@ def test_endosoft_cleaner_masks_footers_captions_and_dedupes() -> None:
     # Guardrail: specimen/jar lines should be preserved.
     assert "Jar 1 - biopsy specimen: RUL" in after
 
+
+def test_endosoft_cleaner_drops_short_anatomy_labels_but_keeps_clinical_lines() -> None:
+    page = "\n".join(
+        [
+            "Left Mainstem",
+            "Right Lower Lobe Entrance",
+            "Trachea was inspected and appeared normal.",
+            "The bronchoscope was advanced into the right lower lobe.",
+        ]
+    )
+
+    cleaned, _meta = clean_endosoft_page_with_meta(page, "procedure_report")
+
+    assert "Left Mainstem" not in cleaned
+    assert "Right Lower Lobe Entrance" not in cleaned
+    assert "Trachea was inspected and appeared normal." in cleaned
+    assert "The bronchoscope was advanced into the right lower lobe." in cleaned

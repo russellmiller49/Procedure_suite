@@ -14,9 +14,32 @@ _PHONE_RE = re.compile(r"\b(?:\(\d{3}\)\s*\d{3}-\d{4}|\d{3}[-.]\d{3}[-.]\d{4})\b
 
 _CAPTION_NUMBER_ONLY_RE = re.compile(r"^\s*\d+\s*$")
 _CAPTION_NUMBER_PREFIX_RE = re.compile(r"^\s*\d+\s+[A-Za-z][A-Za-z0-9/()_-]{0,20}\b.*$")
-_SHORT_ANATOMY_LABEL_RE = re.compile(
-    r"(?i)^(left|right|upper|lower|middle|mainstem|entrance|segment|bronchus|airway|carina|trachea|lingula)(\s+\w+){0,6}$"
+_CAPTION_VERB_RE = re.compile(
+    r"(?i)\b(?:is|are|was|were|be|been|being|shows?|showed|noted?|seen|performed|placed|inserted|advanced|removed|biops(?:y|ied)|lavage|aspirat(?:e|ed)|examined)\b"
 )
+_WORD_RE = re.compile(r"[A-Za-z]+")
+_ANATOMY_LOCATION_TOKENS: set[str] = {
+    "left",
+    "right",
+    "upper",
+    "lower",
+    "middle",
+    "lobe",
+    "lobar",
+    "mainstem",
+    "entrance",
+    "segment",
+    "bronchus",
+    "airway",
+    "carina",
+    "trachea",
+    "lingula",
+    "lul",
+    "lll",
+    "rul",
+    "rml",
+    "rll",
+}
 
 _ALLOWLIST_TOKENS: tuple[str, ...] = (
     "biopsy",
@@ -33,6 +56,29 @@ def _mask_non_newline_chars(text: str) -> str:
 
 def _normalize_block(text: str) -> str:
     return re.sub(r"\s+", " ", text or "").strip().lower()
+
+
+def _looks_like_short_anatomy_label(line: str) -> bool:
+    clean = (line or "").strip()
+    if not clean:
+        return False
+    if re.search(r"[.?!:;,]", clean):
+        return False
+    if _CAPTION_VERB_RE.search(clean):
+        return False
+    if re.search(r"\d", clean):
+        return False
+
+    tokens = [token.lower() for token in _WORD_RE.findall(clean)]
+    if len(tokens) < 2 or len(tokens) > 5:
+        return False
+    if any(token in _ALLOWLIST_TOKENS for token in tokens):
+        return False
+
+    anatomy_count = sum(1 for token in tokens if token in _ANATOMY_LOCATION_TOKENS)
+    if anatomy_count < 2:
+        return False
+    return anatomy_count / max(1, len(tokens)) >= 0.5
 
 
 def _looks_like_boilerplate_footer(line: str) -> bool:
@@ -67,7 +113,7 @@ def _looks_like_caption_noise(line: str) -> bool:
         return True
     if _CAPTION_NUMBER_PREFIX_RE.match(clean) and len(clean) <= 60:
         return True
-    if _SHORT_ANATOMY_LABEL_RE.match(clean) and len(clean) <= 60 and not re.search(r"[.?!:;]", clean):
+    if _looks_like_short_anatomy_label(clean) and len(clean) <= 60:
         return True
     return False
 

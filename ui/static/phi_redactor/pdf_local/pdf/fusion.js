@@ -16,20 +16,43 @@ function hasText(value) {
   return safeText(value).trim().length > 0;
 }
 
+const ANATOMY_LABEL_TOKENS = new Set([
+  "left",
+  "right",
+  "upper",
+  "lower",
+  "middle",
+  "lobe",
+  "lobar",
+  "mainstem",
+  "entrance",
+  "segment",
+  "bronchus",
+  "airway",
+  "carina",
+  "trachea",
+  "lingula",
+  "lul",
+  "lll",
+  "rul",
+  "rml",
+  "rll",
+]);
+
+const CAPTION_VERB_RE = /\b(?:is|are|was|were|has|have|had|shows?|showed|noted?|seen|performed|placed|inserted|advanced|biops(?:y|ied)|lavage|aspirated?)\b/i;
+
 function isLikelyImageCaptionLine(line) {
   const text = String(line || "").trim();
   if (!text || text.length > 56) return false;
-  if (/[.:;%]/.test(text)) return false;
+  if (/[.,;:!?%]/.test(text)) return false;
   if (/\d/.test(text)) return false;
+  if (CAPTION_VERB_RE.test(text)) return false;
 
-  const tokens = text.split(/\s+/).filter(Boolean);
-  if (tokens.length < 2 || tokens.length > 7) return false;
-
-  const anatomyTokenPattern = /^(left|right|upper|lower|middle|lobe|lobar|mainstem|entrance|segment|bronchus|airway|carina|trachea|lingula|LUL|LLL|RUL|RML|RLL)$/i;
-  const anatomyCount = tokens.filter((token) => anatomyTokenPattern.test(token)).length;
+  const tokens = text.split(/\s+/).map((token) => token.replace(/[^A-Za-z]/g, "").toLowerCase()).filter(Boolean);
+  if (tokens.length < 2 || tokens.length > 6) return false;
+  const anatomyCount = tokens.filter((token) => ANATOMY_LABEL_TOKENS.has(token)).length;
   if (anatomyCount < 2) return false;
-  if (tokens.length <= 4) return true;
-  return anatomyCount / Math.max(1, tokens.length) >= 0.72;
+  return anatomyCount / Math.max(1, tokens.length) >= 0.6;
 }
 
 function pruneCaptionNoiseFromNativeText(nativeText) {
@@ -53,6 +76,11 @@ const OCR_BOILERPLATE_PATTERNS = Object.freeze([
   /\bAmerican Medical Association\b/i,
   /\bProvation\b.*\b(?:Suite|Road|Street|Drive|Avenue|Blvd|Lane|Court|Way)\b/i,
 ]);
+
+const NATIVE_DENSITY_BYPASS = Object.freeze({
+  minDensity: 0.0022,
+  minChars: 900,
+});
 
 function isLikelyBoilerplateLine(line) {
   const text = String(line || "").trim();
@@ -97,6 +125,19 @@ function normalizeToken(token) {
   return String(token || "")
     .replace(/^[^A-Za-z0-9]+/, "")
     .replace(/[^A-Za-z0-9]+$/, "");
+}
+
+function hasHighConfidenceNativeDensity(input, nativeLen) {
+  const densityFromStats = Number(input?.stats?.nativeTextDensity);
+  const densityFromClassification = Number(input?.classification?.nativeTextDensity);
+  const nativeDensity = Number.isFinite(densityFromStats)
+    ? Math.max(0, densityFromStats)
+    : Number.isFinite(densityFromClassification)
+      ? Math.max(0, densityFromClassification)
+      : 0;
+  if (nativeLen < NATIVE_DENSITY_BYPASS.minChars) return false;
+  if (nativeDensity < NATIVE_DENSITY_BYPASS.minDensity) return false;
+  return true;
 }
 
 function tokenHasClinicalSignal(token) {
@@ -767,8 +808,8 @@ export function mergeNativeAndOcrText(nativeText, ocrText, opts = {}) {
  * ocrText?:string,
  * requestedSource?:'native'|'ocr',
  * ocrAvailable?:boolean,
- * classification?:{needsOcr?:boolean},
- * stats?:{contaminationScore?:number,completenessConfidence?:number}
+ * classification?:{needsOcr?:boolean,nativeTextDensity?:number},
+ * stats?:{contaminationScore?:number,completenessConfidence?:number,nativeTextDensity?:number}
  * }} input
  * @returns {{sourceDecision:'native'|'ocr'|'hybrid',text:string,reason:string,confidence:number,blocked:boolean}}
  */
@@ -789,6 +830,16 @@ export function arbitratePageText(input = {}) {
   const ocrLen = ocrText.trim().length;
   const nativePresent = nativeLen > 0;
   const ocrPresent = ocrLen > 0;
+
+  if (nativePresent && hasHighConfidenceNativeDensity(input, nativeLen)) {
+    return {
+      sourceDecision: "native",
+      text: nativeText,
+      reason: "high-confidence native text density; OCR arbitration bypassed",
+      confidence: clamp01(Math.max(0.84, completenessConfidence)),
+      blocked: false,
+    };
+  }
 
   if (!ocrAvailable) {
     const blocked = requestedSource === "ocr" || Boolean(input.classification?.needsOcr);

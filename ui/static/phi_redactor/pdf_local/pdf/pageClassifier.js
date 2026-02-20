@@ -12,6 +12,9 @@ export const DEFAULT_CLASSIFIER_THRESHOLDS = Object.freeze({
   contaminationScore: 0.24,
   completenessConfidence: 0.72,
   classifierDecisionScore: 0.5,
+  nativeTextDensityBypass: 0.0022,
+  nativeTextDensityCharFloor: 900,
+  nativeTextDensityAlphaFloor: 0.55,
 });
 
 function computeTextQualityStats(text) {
@@ -73,10 +76,10 @@ function mergeThresholds(override) {
 /**
  * Decide whether a page likely requires OCR.
  *
- * @param {{charCount:number,itemCount:number,nonPrintableRatio:number,singleCharItemRatio:number,imageOpCount?:number,overlapRatio?:number,contaminationScore?:number,completenessConfidence?:number,excludedTokenRatio?:number}} stats
+ * @param {{charCount:number,itemCount:number,nonPrintableRatio:number,singleCharItemRatio:number,imageOpCount?:number,overlapRatio?:number,contaminationScore?:number,completenessConfidence?:number,excludedTokenRatio?:number,pageArea?:number,nativeTextDensity?:number}} stats
  * @param {string} text
  * @param {{thresholds?:Partial<typeof DEFAULT_CLASSIFIER_THRESHOLDS>}} [opts]
- * @returns {{needsOcr:boolean,reason:string,confidence:number,qualityFlags:string[],completenessConfidence:number}}
+ * @returns {{needsOcr:boolean,reason:string,confidence:number,qualityFlags:string[],completenessConfidence:number,nativeTextDensity:number}}
  */
 export function classifyPage(stats, text, opts = {}) {
   const thresholds = mergeThresholds(opts.thresholds);
@@ -88,12 +91,31 @@ export function classifyPage(stats, text, opts = {}) {
   const imageOpCount = Math.max(0, Number(safeStats.imageOpCount) || 0);
   const overlapRatio = clamp01(Number(safeStats.overlapRatio) || 0);
   const contaminationScore = clamp01(Number(safeStats.contaminationScore) || 0);
+  const pageArea = Math.max(0, Number(safeStats.pageArea) || 0);
+  const nativeTextDensity = Number.isFinite(safeStats.nativeTextDensity)
+    ? Math.max(0, Number(safeStats.nativeTextDensity))
+    : (pageArea > 0 ? Math.max(0, charCount / pageArea) : 0);
   const textStats = computeTextQualityStats(text);
   const completenessConfidence = Number.isFinite(safeStats.completenessConfidence)
     ? clamp01(safeStats.completenessConfidence)
     : estimateCompletenessConfidence(safeStats, {
       excludedTokenRatio: Number(safeStats.excludedTokenRatio) || 0,
     });
+
+  const nativeDensityBypass = pageArea > 0 &&
+    charCount >= thresholds.nativeTextDensityCharFloor &&
+    textStats.alphaRatio >= thresholds.nativeTextDensityAlphaFloor &&
+    nativeTextDensity >= thresholds.nativeTextDensityBypass;
+  if (nativeDensityBypass) {
+    return {
+      needsOcr: false,
+      reason: `high native text density (${nativeTextDensity.toFixed(4)} chars/unit^2)`,
+      confidence: clamp01(Math.max(0.85, completenessConfidence)),
+      qualityFlags: ["NATIVE_DENSE_TEXT"],
+      completenessConfidence,
+      nativeTextDensity,
+    };
+  }
 
   let score = 0;
   const reasons = [];
@@ -152,6 +174,7 @@ export function classifyPage(stats, text, opts = {}) {
     confidence,
     qualityFlags: [...new Set(qualityFlags)],
     completenessConfidence,
+    nativeTextDensity,
   };
 }
 
@@ -165,6 +188,14 @@ export function classifyPage(stats, text, opts = {}) {
 export function isUnsafeNativePage(stats, text, opts = {}) {
   const thresholds = mergeThresholds(opts.thresholds);
   const classification = classifyPage(stats, text, { thresholds });
+  if (classification.qualityFlags?.includes("NATIVE_DENSE_TEXT")) {
+    return {
+      unsafe: false,
+      classification,
+      contaminationScore: clamp01(Number(stats?.contaminationScore) || 0),
+      completenessConfidence: classification.completenessConfidence,
+    };
+  }
   const maxContaminationScore = Number.isFinite(opts.maxContaminationScore)
     ? clamp01(opts.maxContaminationScore)
     : thresholds.contaminationScore;
