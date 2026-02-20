@@ -76,3 +76,12 @@ def test_endosoft_cleaner_drops_short_anatomy_labels_but_keeps_clinical_lines() 
     assert "Right Lower Lobe Entrance" not in cleaned
     assert "Trachea was inspected and appeared normal." in cleaned
     assert "The bronchoscope was advanced into the right lower lobe." in cleaned
+
+
+def test_endosoft_cleaner_masks_inline_caption_chunks_from_mixed_lines() -> None:
+    page = "Follow up with surgeon every 4 hours.      Right Lower Lobe Entrance      Left Mainstem\n"
+    cleaned, _meta = clean_endosoft_page_with_meta(page, "procedure_report")
+
+    assert "Follow up with surgeon every 4 hours." in cleaned
+    assert "Right Lower Lobe Entrance" not in cleaned
+    assert "Left Mainstem" not in cleaned

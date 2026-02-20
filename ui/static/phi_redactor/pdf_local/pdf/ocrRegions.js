@@ -31,6 +31,24 @@ const DEFAULT_PROVATION_SKIP_ZONE_OPTIONS = Object.freeze({
   minNativeCharCount: 140,
 });
 
+const DEFAULT_LINE_BAND_OPTIONS = Object.freeze({
+  shortLineCharMax: 28,
+  orphanCharMax: 36,
+  maxBands: 8,
+  yPaddingPx: 12,
+  yPaddingScale: 0.34,
+  maxYPaddingRatio: 0.055,
+  xPaddingRatio: 0.03,
+  xPaddingPxMin: 12,
+  minBandWidthRatio: 0.72,
+  minBandHeightPx: 26,
+  maxBandHeightRatio: 0.12,
+  maxLineHeightRatio: 0.065,
+  contextLineWindow: 1,
+  contextLineDistancePx: 34,
+  mergeGapPx: 8,
+});
+
 function clamp(value, min, max) {
   if (!Number.isFinite(value)) return min;
   if (value < min) return min;
@@ -135,6 +153,259 @@ function buildBox(rect) {
     Math.floor(rect.x + rect.width),
     Math.floor(rect.y + rect.height),
   ];
+}
+
+function isLikelyOrphanContinuationLine(text, options) {
+  const clean = String(text || "").trim();
+  if (!clean) return false;
+  if (clean.length < 3 || clean.length > options.orphanCharMax) return false;
+  if (/[:;]/.test(clean)) return false;
+  if (!/[.?!]$/.test(clean)) return false;
+  if (!/^[a-z0-9]/.test(clean)) return false;
+
+  const words = clean.split(/\s+/).filter(Boolean);
+  if (!words.length || words.length > 7) return false;
+  if (/\b(?:mg|ml|mcg|ug|mm|cm|hours?|mins?|days?|weeks?|nose|mouth)\.$/i.test(clean)) return true;
+  if (words.length <= 2) return true;
+  return words.length <= 4;
+}
+
+function lineLooksRowFragment(prevText, lineText, options) {
+  const prev = String(prevText || "").trim();
+  const current = String(lineText || "").trim();
+  if (!prev || !current) return false;
+  if (/[.?!:]$/.test(prev)) return false;
+  if (prev.length < 12 || prev.length > 78) return false;
+  if (!/[A-Za-z]$/.test(prev)) return false;
+  if (current.length > options.shortLineCharMax + 12) return false;
+  if (!/^[a-z0-9]/.test(current)) return false;
+  return true;
+}
+
+/**
+ * Derive OCR band regions around likely truncated native lines.
+ * Regions are full-width horizontal strips to recover missing prefixes/suffixes.
+ *
+ * @param {{layoutBlocks?:Array,canvasWidth?:number,canvasHeight?:number,viewportWidth?:number,viewportHeight?:number,canvas?:{width:number,height:number}}} input
+ * @param {{shortLineCharMax?:number,orphanCharMax?:number,maxBands?:number,yPaddingPx?:number,yPaddingScale?:number,maxYPaddingRatio?:number,xPaddingRatio?:number,xPaddingPxMin?:number,minBandWidthRatio?:number,minBandHeightPx?:number,maxBandHeightRatio?:number,maxLineHeightRatio?:number,contextLineWindow?:number,contextLineDistancePx?:number,mergeGapPx?:number}} [options]
+ */
+export function getLineBandRegions(input = {}, options = {}) {
+  const { width, height } = resolveCanvasSize(input);
+  const merged = {
+    ...DEFAULT_LINE_BAND_OPTIONS,
+    ...(options && typeof options === "object" ? options : {}),
+  };
+  const yPaddingPx = Math.max(0, Number(merged.yPaddingPx) || DEFAULT_LINE_BAND_OPTIONS.yPaddingPx);
+  const yPaddingScale = clamp(
+    Number(merged.yPaddingScale) || DEFAULT_LINE_BAND_OPTIONS.yPaddingScale,
+    0.15,
+    1.4,
+  );
+  const maxYPaddingRatio = clamp(
+    Number(merged.maxYPaddingRatio) || DEFAULT_LINE_BAND_OPTIONS.maxYPaddingRatio,
+    0.01,
+    0.2,
+  );
+  const xPaddingRatio = clamp(
+    Number(merged.xPaddingRatio) || DEFAULT_LINE_BAND_OPTIONS.xPaddingRatio,
+    0,
+    0.18,
+  );
+  const xPaddingPxMin = Math.max(0, Number(merged.xPaddingPxMin) || DEFAULT_LINE_BAND_OPTIONS.xPaddingPxMin);
+  const minBandWidthRatio = clamp(
+    Number(merged.minBandWidthRatio) || DEFAULT_LINE_BAND_OPTIONS.minBandWidthRatio,
+    0.22,
+    1,
+  );
+  const minBandHeightPx = Math.max(10, Number(merged.minBandHeightPx) || DEFAULT_LINE_BAND_OPTIONS.minBandHeightPx);
+  const maxBandHeightRatio = clamp(
+    Number(merged.maxBandHeightRatio) || DEFAULT_LINE_BAND_OPTIONS.maxBandHeightRatio,
+    0.08,
+    0.6,
+  );
+  const maxLineHeightRatio = clamp(
+    Number(merged.maxLineHeightRatio) || DEFAULT_LINE_BAND_OPTIONS.maxLineHeightRatio,
+    0.02,
+    0.16,
+  );
+  const contextLineWindow = Math.max(
+    0,
+    Math.min(4, Math.floor(Number(merged.contextLineWindow) || DEFAULT_LINE_BAND_OPTIONS.contextLineWindow)),
+  );
+  const contextLineDistancePx = Math.max(
+    12,
+    Number(merged.contextLineDistancePx) || DEFAULT_LINE_BAND_OPTIONS.contextLineDistancePx,
+  );
+  const maxBands = Math.max(1, Math.floor(Number(merged.maxBands) || DEFAULT_LINE_BAND_OPTIONS.maxBands));
+  const mergeGapPx = Math.max(0, Number(merged.mergeGapPx) || DEFAULT_LINE_BAND_OPTIONS.mergeGapPx);
+
+  const rawLines = [];
+  for (const block of Array.isArray(input.layoutBlocks) ? input.layoutBlocks : []) {
+    const blockLines = Array.isArray(block?.lines) ? block.lines : [];
+    for (const line of blockLines) {
+      const text = String(line?.text || "").replace(/\s+/g, " ").trim();
+      const bbox = clampRectToCanvas(line?.bbox, width, height);
+      if (!text || !bbox) continue;
+      rawLines.push({ text, bbox });
+    }
+  }
+
+  if (!rawLines.length) {
+    return {
+      regions: [],
+      meta: {
+        applied: false,
+        reason: "no_line_geometry",
+        candidateCount: 0,
+      },
+    };
+  }
+
+  const lineHeights = rawLines
+    .map((entry) => Number(entry?.bbox?.height) || 0)
+    .filter((value) => value > 0)
+    .sort((a, b) => a - b);
+  const medianLineHeight = lineHeights.length
+    ? lineHeights[Math.floor(lineHeights.length / 2)]
+    : Math.max(14, height * 0.018);
+  const maxLineHeightPx = Math.max(
+    16,
+    Math.min(height * maxLineHeightRatio, medianLineHeight * 2.8),
+  );
+
+  const lines = rawLines.map((entry) => {
+    const box = normalizeRect(entry.bbox);
+    if (box.height <= maxLineHeightPx) return entry;
+    const centerY = box.y + box.height / 2;
+    const boundedHeight = maxLineHeightPx;
+    return {
+      text: entry.text,
+      bbox: normalizeRect({
+        x: box.x,
+        y: centerY - boundedHeight / 2,
+        width: box.width,
+        height: boundedHeight,
+      }),
+    };
+  });
+
+  if (!lines.length) {
+    return {
+      regions: [],
+      meta: {
+        applied: false,
+        reason: "no_line_geometry",
+        candidateCount: 0,
+      },
+    };
+  }
+
+  lines.sort((a, b) => {
+    const dy = b.bbox.y - a.bbox.y;
+    if (Math.abs(dy) > 4) return dy;
+    return a.bbox.x - b.bbox.x;
+  });
+
+  const bands = [];
+  let orphanCount = 0;
+  let rowFragmentCount = 0;
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const current = lines[i];
+    const previous = i > 0 ? lines[i - 1] : null;
+    const shortLine = current.text.length <= merged.shortLineCharMax;
+    const orphan = isLikelyOrphanContinuationLine(current.text, merged);
+    const nearPreviousRow = previous &&
+      Math.abs(previous.bbox.y - current.bbox.y) <= (Math.max(previous.bbox.height, current.bbox.height) * 2.6 + 10);
+    const rowFragment = shortLine && previous && nearPreviousRow &&
+      lineLooksRowFragment(previous.text, current.text, merged);
+    if (!orphan && !rowFragment) continue;
+
+    if (orphan) orphanCount += 1;
+    if (rowFragment) rowFragmentCount += 1;
+
+    let xLeft = current.bbox.x;
+    let xRight = current.bbox.x + current.bbox.width;
+    let yTop = current.bbox.y;
+    let yBottom = current.bbox.y + current.bbox.height;
+    if (rowFragment && previous) {
+      xLeft = Math.min(xLeft, previous.bbox.x);
+      xRight = Math.max(xRight, previous.bbox.x + previous.bbox.width);
+      yTop = Math.min(yTop, previous.bbox.y);
+      yBottom = Math.max(yBottom, previous.bbox.y + previous.bbox.height);
+    } else if (orphan && previous) {
+      // Orphans often trail a longer line in the same row: widen capture around both lines.
+      const nearSameRow = Math.abs(previous.bbox.y - current.bbox.y) <= Math.max(previous.bbox.height, current.bbox.height) * 2.4;
+      if (nearSameRow) {
+        xLeft = Math.min(xLeft, previous.bbox.x);
+        xRight = Math.max(xRight, previous.bbox.x + previous.bbox.width);
+        yTop = Math.min(yTop, previous.bbox.y);
+        yBottom = Math.max(yBottom, previous.bbox.y + previous.bbox.height);
+      }
+    }
+
+    if (contextLineWindow > 0) {
+      for (let offset = -contextLineWindow; offset <= contextLineWindow; offset += 1) {
+        if (!offset) continue;
+        const context = lines[i + offset];
+        if (!context) continue;
+        const withinDistance = Math.abs(context.bbox.y - current.bbox.y) <= contextLineDistancePx;
+        if (!withinDistance) continue;
+        xLeft = Math.min(xLeft, context.bbox.x);
+        xRight = Math.max(xRight, context.bbox.x + context.bbox.width);
+        yTop = Math.min(yTop, context.bbox.y);
+        yBottom = Math.max(yBottom, context.bbox.y + context.bbox.height);
+      }
+    }
+
+    const unclampedHeight = Math.max(minBandHeightPx, yBottom - yTop);
+    const maxBandHeightPx = Math.max(minBandHeightPx, height * maxBandHeightRatio);
+    const desiredHeight = Math.min(unclampedHeight, maxBandHeightPx);
+    const localHeight = Math.max(current.bbox.height, yBottom - yTop);
+    const maxYPaddingPx = Math.max(yPaddingPx, height * maxYPaddingRatio, desiredHeight * 0.65);
+    const localYPadding = Math.min(maxYPaddingPx, Math.max(yPaddingPx, localHeight * yPaddingScale));
+    const center = (yTop + yBottom) / 2;
+    const adjustedTop = center - desiredHeight / 2;
+    const horizontalPad = Math.max(xPaddingPxMin, width * xPaddingRatio);
+    const desiredWidth = Math.max(width * minBandWidthRatio, (xRight - xLeft) + horizontalPad * 2);
+    const centerX = (xLeft + xRight) / 2;
+    const adjustedLeft = centerX - desiredWidth / 2;
+    const bandRect = clampRectToCanvas({
+      x: adjustedLeft,
+      y: adjustedTop - localYPadding,
+      width: desiredWidth,
+      height: desiredHeight + localYPadding * 2,
+    }, width, height);
+    if (!bandRect) continue;
+    bands.push(bandRect);
+  }
+
+  if (!bands.length) {
+    return {
+      regions: [],
+      meta: {
+        applied: false,
+        reason: "no_suspect_lines",
+        candidateCount: 0,
+      },
+    };
+  }
+
+  const mergedBands = mergeRegions(bands, { mergeGap: mergeGapPx })
+    .sort((a, b) => b.y - a.y)
+    .slice(0, maxBands);
+
+  return {
+    regions: mergedBands,
+    meta: {
+      applied: mergedBands.length > 0,
+      reason: mergedBands.length ? "line_backfill_bands" : "no_suspect_lines",
+      candidateCount: bands.length,
+      orphanCount,
+      rowFragmentCount,
+      regionCount: mergedBands.length,
+    },
+  };
 }
 
 /**

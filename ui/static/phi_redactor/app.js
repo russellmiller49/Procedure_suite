@@ -7055,6 +7055,81 @@ async function main() {
     return ` Metrics: ${preview.join(" | ")}`;
   }
 
+  function buildPdfExtractionMetricsReport(docModel, context = {}) {
+    if (!docModel || !Array.isArray(docModel.pages)) return null;
+    const pages = docModel.pages.map((page) => {
+      const metrics = page?.extractionMetrics && typeof page.extractionMetrics === "object"
+        ? page.extractionMetrics
+        : {};
+      const quality = page?.qualityMetrics && typeof page.qualityMetrics === "object"
+        ? page.qualityMetrics
+        : {};
+      const before = Number(metrics.junkScoreBeforeMerge);
+      const after = Number(metrics.junkScoreAfterMerge);
+      return {
+        pageIndex: Number(page?.pageIndex) + 1,
+        nativeTextDensity: Number.isFinite(Number(metrics.nativeTextDensity)) ? Number(metrics.nativeTextDensity) : 0,
+        backfillVotes: Number(metrics.backfillVotes) || 0,
+        backfillStrongVotes: Number(metrics.backfillStrongVotes) || 0,
+        backfillScore: Number(metrics.backfillScore) || 0,
+        backfillSignals: Array.isArray(metrics.backfillSignals) ? metrics.backfillSignals : [],
+        needsOcrBackfill: Boolean(metrics.needsOcrBackfill),
+        mode: String(metrics.mode || "native_only"),
+        ocrRoiCount: Number(metrics.ocrRoiCount) || 0,
+        ocrRoiAreaPx: Number(metrics.ocrRoiAreaPx) || 0,
+        ocrRoiAreaRatio: Number.isFinite(Number(metrics.ocrRoiAreaRatio)) ? Number(metrics.ocrRoiAreaRatio) : 0,
+        junkScoreBeforeMerge: Number.isFinite(before)
+          ? before
+          : (Number.isFinite(quality.junkScoreBeforeMerge) ? Number(quality.junkScoreBeforeMerge) : 0),
+        junkScoreAfterMerge: Number.isFinite(after)
+          ? after
+          : (Number.isFinite(quality.junkScoreAfterMerge) ? Number(quality.junkScoreAfterMerge) : Number(quality.junkScore) || 0),
+      };
+    });
+
+    const byMode = pages.reduce((acc, page) => {
+      const key = String(page.mode || "unknown");
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+    const backfillPages = pages.filter((page) => page.needsOcrBackfill).map((page) => page.pageIndex);
+    const fullOcrPages = pages
+      .filter((page) => page.mode === "full_ocr")
+      .map((page) => page.pageIndex);
+
+    return {
+      generatedAt: new Date().toISOString(),
+      status: context.status || (docModel.blocked ? "blocked" : "success"),
+      blocked: Boolean(docModel.blocked),
+      blockReason: docModel.blockReason || "",
+      fileName: String(docModel.fileName || context.fileName || ""),
+      pageCount: pages.length,
+      context: {
+        ocrQualityMode: context.ocrQualityMode || "",
+        ocrMaskMode: context.ocrMaskMode || "",
+      },
+      byMode,
+      backfillPages,
+      fullOcrPages,
+      pages,
+    };
+  }
+
+  function publishPdfExtractionMetricsReport(report) {
+    if (!report) return;
+    try {
+      window.__lastPdfExtractionMetrics = report;
+      const history = Array.isArray(window.__pdfExtractionMetricsHistory)
+        ? window.__pdfExtractionMetricsHistory
+        : [];
+      history.push(report);
+      window.__pdfExtractionMetricsHistory = history.slice(-20);
+      console.info("[pdf_extract_metrics]", report);
+    } catch {
+      // Ignore diagnostics write failures.
+    }
+  }
+
   function resetPdfUploadUi() {
     if (pdfUploadInputEl) pdfUploadInputEl.value = "";
     setPdfExtractSummary(PDF_UPLOAD_HELP_TEXT, "neutral");
@@ -7071,6 +7146,11 @@ async function main() {
     }
 
     extractingPdf = true;
+    publishPdfExtractionMetricsReport({
+      generatedAt: new Date().toISOString(),
+      status: "running",
+      fileName: file?.name || "",
+    });
     if (runBtn) runBtn.disabled = true;
     if (cancelBtn) cancelBtn.disabled = true;
     if (applyBtn) applyBtn.disabled = true;
@@ -7179,6 +7259,12 @@ async function main() {
             ? `PDF extraction blocked after ${completedPages}/${totalPages} pages`
             : "PDF extraction blocked",
         );
+        publishPdfExtractionMetricsReport(buildPdfExtractionMetricsReport(docModel, {
+          fileName: file.name,
+          ocrQualityMode,
+          ocrMaskMode,
+          status: "blocked",
+        }));
         return;
       }
 
@@ -7210,6 +7296,12 @@ async function main() {
       const metricTail = buildPageMetricsSummary(docModel, 2);
       const reasonTail = buildPageReasonSummary(docModel, 2);
       setPdfExtractSummary(`${summaryText}${ocrModeText}${ocrMaskText}${qualityTail}${debugTail}${metricTail}${reasonTail ? ` ${reasonTail}` : ""}`, "success");
+      publishPdfExtractionMetricsReport(buildPdfExtractionMetricsReport(docModel, {
+        fileName: file.name,
+        ocrQualityMode,
+        ocrMaskMode,
+        status: "success",
+      }));
 
       setStatus("PDF text loaded into editor. Run Detection to use the existing PHI redaction workflow.");
       if (totalPages > 0) {
@@ -7222,6 +7314,12 @@ async function main() {
       setStatus(`PDF extraction failed: ${msg}`);
       setPdfExtractSummary(`PDF extraction failed: ${msg}`, "error");
       setProgress("");
+      publishPdfExtractionMetricsReport({
+        generatedAt: new Date().toISOString(),
+        status: "error",
+        fileName: file?.name || "",
+        error: msg,
+      });
     } finally {
       extractingPdf = false;
       if (runBtn) runBtn.disabled = extractingPdf || !workerReady;

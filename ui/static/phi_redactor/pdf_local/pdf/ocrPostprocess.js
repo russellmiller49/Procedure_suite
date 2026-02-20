@@ -8,6 +8,8 @@ function safeText(value) {
 const EXACT_CLINICAL_REPLACEMENTS = Object.freeze([
   { re: /\bLidocaine\s+49\%(?=$|[\s,.;:])/gi, replace: "Lidocaine 4%" },
   { re: /\bAtropine\s+9\.5\s+mg\b/gi, replace: "Atropine 0.5 mg" },
+  { re: /\bfrom the mouth\s+nose\b/gi, replace: "from the mouth or nose" },
+  { re: /\bmouth\s+nose\b/gi, replace: "mouth or nose" },
   { re: /\blyrnphadenopathy\b/gi, replace: "lymphadenopathy" },
   { re: /\bhytnph/gi, replace: "lymph" },
 ]);
@@ -254,10 +256,14 @@ function isBoilerplateLine(text) {
 function isLikelyCaptionLine(text) {
   if (!text || text.length > 58) return false;
   if (/[.,;:!?]/.test(text)) return false;
-  if (/\d/.test(text)) return false;
   if (CAPTION_VERB_RE.test(text)) return false;
-  const tokens = text
-    .split(/\s+/)
+
+  const rawTokens = text.split(/\s+/).filter(Boolean);
+  const hasNumericPrefix = /^[#(]?\d+[).:-]?$/.test(rawTokens[0] || "");
+  if (/\d/.test(text) && !hasNumericPrefix) return false;
+
+  const tokens = rawTokens
+    .slice(hasNumericPrefix ? 1 : 0)
     .map((token) => token.replace(/[^A-Za-z]/g, "").toLowerCase())
     .filter(Boolean);
   if (tokens.length < 2 || tokens.length > 5) return false;

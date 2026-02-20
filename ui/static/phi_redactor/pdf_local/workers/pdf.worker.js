@@ -173,6 +173,13 @@ function summarizeLayoutBlocks(blocks) {
     bbox: block.bbox,
     lineCount: Number(block.lineCount) || 0,
     textPreview: (block.text || "").slice(0, 140),
+    lines: (Array.isArray(block.lines) ? block.lines : [])
+      .map((line) => ({
+        bbox: line?.bbox,
+        baselineY: Number.isFinite(line?.baselineY) ? Number(line.baselineY) : null,
+        text: String(line?.text || "").slice(0, 220),
+      }))
+      .filter((line) => line.text && line.bbox),
   }));
 }
 
@@ -221,6 +228,7 @@ async function analyzePage(page, pageIndex, totalPages, options = {}) {
 
   const assembly = assembleTextFromBlocks(blocks, contamination, {
     dropContaminatedNumericTokens: options.dropContaminatedNumericTokens !== false,
+    lineYTolerance: Number.isFinite(options.lineYTolerance) ? Number(options.lineYTolerance) : undefined,
   });
 
   const textStats = computeTextStats(items, assembly.text);

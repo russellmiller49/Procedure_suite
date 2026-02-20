@@ -97,4 +97,58 @@ describe("layoutAnalysis", () => {
     expect(assembled.text).toContain("Date of Birth: 09/15/1950");
     expect(assembled.text).toContain("Record Number: 0159834");
   });
+
+  it("preserves overflow value segments when zipping label/value rows", () => {
+    const items = [
+      // Labels row
+      { itemIndex: 0, str: "Discharge", x: 40, y: 700, width: 62, height: 10 },
+      { itemIndex: 1, str: "Instructions:", x: 108, y: 700, width: 92, height: 10 },
+      { itemIndex: 2, str: "Nose", x: 320, y: 700, width: 30, height: 10 },
+      { itemIndex: 3, str: "Care:", x: 354, y: 700, width: 38, height: 10 },
+      // Values row
+      { itemIndex: 4, str: "Follow", x: 40, y: 684, width: 36, height: 10 },
+      { itemIndex: 5, str: "up", x: 80, y: 684, width: 14, height: 10 },
+      { itemIndex: 6, str: "with", x: 98, y: 684, width: 26, height: 10 },
+      { itemIndex: 7, str: "surgeon", x: 128, y: 684, width: 48, height: 10 },
+      { itemIndex: 8, str: "every", x: 180, y: 684, width: 34, height: 10 },
+      { itemIndex: 9, str: "4", x: 218, y: 684, width: 8, height: 10 },
+      { itemIndex: 10, str: "hours.", x: 230, y: 684, width: 40, height: 10 },
+      { itemIndex: 11, str: "Use", x: 320, y: 684, width: 24, height: 10 },
+      { itemIndex: 12, str: "saline", x: 348, y: 684, width: 34, height: 10 },
+      { itemIndex: 13, str: "spray", x: 386, y: 684, width: 30, height: 10 },
+      { itemIndex: 14, str: "for", x: 420, y: 684, width: 18, height: 10 },
+      { itemIndex: 15, str: "nose.", x: 442, y: 684, width: 30, height: 10 },
+      // Extra unpaired value segment that previously could be dropped.
+      { itemIndex: 16, str: "Call", x: 540, y: 684, width: 24, height: 10 },
+      { itemIndex: 17, str: "if", x: 568, y: 684, width: 10, height: 10 },
+      { itemIndex: 18, str: "bleeding", x: 582, y: 684, width: 46, height: 10 },
+      { itemIndex: 19, str: "worsens.", x: 632, y: 684, width: 50, height: 10 },
+    ];
+
+    const blocks = buildLayoutBlocks(items);
+    const assembled = assembleTextFromBlocks(blocks, { contaminatedByItemIndex: new Set() });
+
+    expect(assembled.text).toMatch(/Discharge Instructions: Follow up with surgeon every\s?4 hours\./);
+    expect(assembled.text).toContain("Nose Care: Use saline spray for nose.");
+    expect(assembled.text).toContain("Call if bleeding worsens.");
+  });
+
+  it("keeps same-line tokens together despite moderate Y jitter", () => {
+    const items = [
+      { itemIndex: 0, str: "Use", x: 40, y: 700, width: 24, height: 10 },
+      { itemIndex: 1, str: "saline", x: 68, y: 705, width: 34, height: 10 },
+      { itemIndex: 2, str: "spray", x: 106, y: 701, width: 30, height: 10 },
+      { itemIndex: 3, str: "every", x: 140, y: 704, width: 34, height: 10 },
+      { itemIndex: 4, str: "4", x: 178, y: 702, width: 8, height: 10 },
+      { itemIndex: 5, str: "hours.", x: 190, y: 706, width: 40, height: 10 },
+      { itemIndex: 6, str: "for", x: 40, y: 684, width: 18, height: 10 },
+      { itemIndex: 7, str: "nose.", x: 62, y: 684, width: 30, height: 10 },
+    ];
+
+    const blocks = buildLayoutBlocks(items);
+    const assembled = assembleTextFromBlocks(blocks, { contaminatedByItemIndex: new Set() });
+
+    expect(assembled.text).toMatch(/Use saline spray every\s?4 hours\./);
+    expect(assembled.text).toContain("for nose.");
+  });
 });

@@ -90,4 +90,15 @@ describe("ocrPostprocess", () => {
 
     expect(filtered.lines.map((line) => line.text)).toEqual(["Trachea was inspected"]);
   });
+
+  it("drops numeric-prefix anatomy caption lines", () => {
+    const filtered = filterOcrLinesDetailed([
+      { text: "1 Right Lower Lobe Entrance", confidence: 71, bbox: { x: 24, y: 24, width: 220, height: 16 } },
+      { text: "2 Left Mainstem", confidence: 69, bbox: { x: 24, y: 44, width: 160, height: 16 } },
+      { text: "Findings: No endobronchial lesion.", confidence: 84, bbox: { x: 24, y: 64, width: 320, height: 16 } },
+    ], []);
+
+    expect(filtered.lines.map((line) => line.text)).toEqual(["Findings: No endobronchial lesion."]);
+    expect(filtered.dropped.filter((entry) => entry.reason === "caption")).toHaveLength(2);
+  });
 });

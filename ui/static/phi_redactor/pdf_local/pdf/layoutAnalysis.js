@@ -1,4 +1,4 @@
-const DEFAULT_LINE_Y_TOLERANCE = 4;
+const DEFAULT_LINE_Y_TOLERANCE = 5.5;
 const DEFAULT_SEGMENT_GAP_MIN = 14;
 const DEFAULT_REGION_MARGIN = 3;
 
@@ -301,17 +301,62 @@ export function buildLayoutBlocks(items, opts = {}) {
     }))
     .sort((a, b) => lineSort(a, b, yTolerance));
 
+  const itemHeights = normalizedItems
+    .map((item) => item.height)
+    .filter((height) => Number.isFinite(height) && height > 0)
+    .sort((a, b) => a - b);
+  const medianItemHeight = itemHeights.length
+    ? (itemHeights.length % 2
+      ? itemHeights[Math.floor(itemHeights.length / 2)]
+      : (itemHeights[itemHeights.length / 2 - 1] + itemHeights[itemHeights.length / 2]) / 2)
+    : 0;
+
+  function resolveDynamicLineTolerance(itemHeight, line) {
+    const fromBase = yTolerance;
+    const fromItem = Number.isFinite(itemHeight) && itemHeight > 0
+      ? Math.max(fromBase, Math.min(10, itemHeight * 0.55))
+      : fromBase;
+    const fromMedian = medianItemHeight > 0
+      ? Math.max(fromBase, Math.min(10, medianItemHeight * 0.5))
+      : fromBase;
+    const fromLine = Number.isFinite(line?.avgHeight) && line.avgHeight > 0
+      ? Math.max(fromBase, Math.min(10, line.avgHeight * 0.55))
+      : fromBase;
+    return Math.max(fromBase, fromItem, fromMedian, fromLine);
+  }
+
   const lines = [];
   for (const item of normalizedItems) {
-    const last = lines[lines.length - 1];
-    if (!last || Math.abs(last.y - item.y) > yTolerance) {
-      lines.push({ y: item.y, sampleCount: 1, items: [item] });
-    } else {
-      last.items.push(item);
-      last.sampleCount += 1;
-      // Keep line centroid stable when neighboring glyphs vary by a few pixels.
-      last.y = ((last.y * (last.sampleCount - 1)) + item.y) / last.sampleCount;
+    let bestLine = null;
+    let bestDistance = Number.POSITIVE_INFINITY;
+
+    for (const line of lines) {
+      const tolerance = resolveDynamicLineTolerance(item.height, line);
+      const distance = Math.abs(line.y - item.y);
+      if (distance > tolerance) continue;
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestLine = line;
+      }
     }
+
+    if (!bestLine) {
+      lines.push({
+        y: item.y,
+        sampleCount: 1,
+        heightSamples: 1,
+        avgHeight: item.height,
+        items: [item],
+      });
+      continue;
+    }
+
+    bestLine.items.push(item);
+    bestLine.sampleCount += 1;
+    bestLine.heightSamples += 1;
+    // Baseline clustering keeps each row stable when glyph y-values jitter.
+    bestLine.y = ((bestLine.y * (bestLine.sampleCount - 1)) + item.y) / bestLine.sampleCount;
+    bestLine.avgHeight = ((bestLine.avgHeight * (bestLine.heightSamples - 1)) + item.height) / bestLine.heightSamples;
   }
 
   const segments = [];
@@ -646,7 +691,17 @@ export function assembleTextFromBlocks(blocks, contamination, opts = {}) {
     }
   }
 
-  const yTolerance = DEFAULT_LINE_Y_TOLERANCE;
+  const baseYTolerance = Number.isFinite(opts.lineYTolerance)
+    ? Math.max(1.5, Number(opts.lineYTolerance))
+    : DEFAULT_LINE_Y_TOLERANCE;
+  const segmentHeights = segments
+    .map((segment) => Number(segment?.bbox?.height) || 0)
+    .filter((height) => height > 0);
+  const medianSegmentHeight = median(segmentHeights);
+  const adaptiveYTolerance = medianSegmentHeight > 0
+    ? Math.max(baseYTolerance, Math.min(8, medianSegmentHeight * 0.55))
+    : baseYTolerance;
+  const yTolerance = adaptiveYTolerance;
   segments.sort((a, b) => {
     const dy = (Number(b?.baselineY) || 0) - (Number(a?.baselineY) || 0);
     if (Math.abs(dy) > yTolerance) return dy;
@@ -698,6 +753,27 @@ export function assembleTextFromBlocks(blocks, contamination, opts = {}) {
       const valueSegments = nextRow.segments;
       const zippedCount = Math.min(labelSegments.length, valueSegments.length);
 
+      function appendSegmentAsLine(segment) {
+        if (!segment) return;
+        const segmentText = String(segment.filteredText || "").trim();
+        const segmentRaw = String(segment.rawText || "").trim();
+        if (!segmentText && !segmentRaw) return;
+        if (text) {
+          text += "\n";
+          rawText += "\n";
+        }
+        const lineStart = text.length;
+        text += segmentText || segmentRaw;
+        rawText += segmentRaw || segmentText;
+        for (const span of segment.contaminatedSpans) {
+          contaminatedSpans.push({
+            start: lineStart + span.start,
+            end: lineStart + span.end,
+            kind: "image_overlap",
+          });
+        }
+      }
+
       for (let i = 0; i < zippedCount; i += 1) {
         if (i > 0) {
           text += "\n";
@@ -730,6 +806,14 @@ export function assembleTextFromBlocks(blocks, contamination, opts = {}) {
             kind: "image_overlap",
           });
         }
+      }
+
+      // Keep any overflow segments instead of silently dropping them.
+      for (let i = zippedCount; i < labelSegments.length; i += 1) {
+        appendSegmentAsLine(labelSegments[i]);
+      }
+      for (let i = zippedCount; i < valueSegments.length; i += 1) {
+        appendSegmentAsLine(valueSegments[i]);
       }
 
       rowIndex += 1;

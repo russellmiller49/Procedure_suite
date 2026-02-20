@@ -45,18 +45,67 @@ function isLikelyImageCaptionLine(line) {
   const text = String(line || "").trim();
   if (!text || text.length > 56) return false;
   if (/[.,;:!?%]/.test(text)) return false;
-  if (/\d/.test(text)) return false;
   if (CAPTION_VERB_RE.test(text)) return false;
 
-  const tokens = text.split(/\s+/).map((token) => token.replace(/[^A-Za-z]/g, "").toLowerCase()).filter(Boolean);
+  const rawTokens = text.split(/\s+/).filter(Boolean);
+  const hasNumericPrefix = /^[#(]?\d+[).:-]?$/.test(rawTokens[0] || "");
+  if (/\d/.test(text) && !hasNumericPrefix) return false;
+
+  const tokens = rawTokens
+    .slice(hasNumericPrefix ? 1 : 0)
+    .map((token) => token.replace(/[^A-Za-z]/g, "").toLowerCase())
+    .filter(Boolean);
   if (tokens.length < 2 || tokens.length > 6) return false;
   const anatomyCount = tokens.filter((token) => ANATOMY_LABEL_TOKENS.has(token)).length;
   if (anatomyCount < 2) return false;
   return anatomyCount / Math.max(1, tokens.length) >= 0.6;
 }
 
+function stripInlineCaptionChunks(line) {
+  const source = String(line || "");
+  if (!source) return "";
+
+  const stripTrailingCaptionSuffix = (value) => {
+    const text = String(value || "").replace(/\s+/g, " ").trim();
+    if (!text) return "";
+    for (const separator of [" @ ", " | "]) {
+      const idx = text.lastIndexOf(separator);
+      if (idx <= 0) continue;
+      const prefix = text.slice(0, idx).trim();
+      const suffix = text.slice(idx + separator.length).trim();
+      if (!prefix || !suffix) continue;
+      if (!isLikelyImageCaptionLine(suffix)) continue;
+      return prefix;
+    }
+    return value;
+  };
+
+  const parts = source.split(/(\s{3,})/);
+  if (parts.length <= 1) return stripTrailingCaptionSuffix(source);
+
+  const out = [];
+  let removed = false;
+  for (const part of parts) {
+    if (/^\s{3,}$/.test(part)) {
+      out.push(part);
+      continue;
+    }
+    const trimmed = part.trim();
+    if (trimmed && isLikelyImageCaptionLine(trimmed)) {
+      out.push(" ");
+      removed = true;
+      continue;
+    }
+    out.push(part);
+  }
+
+  const candidate = removed ? out.join("").replace(/\s+/g, " ").trim() : source;
+  return stripTrailingCaptionSuffix(candidate);
+}
+
 function pruneCaptionNoiseFromNativeText(nativeText) {
   return normalizeLines(nativeText)
+    .map((line) => stripInlineCaptionChunks(line))
     .filter((line) => !isLikelyImageCaptionLine(line))
     .join("\n");
 }
@@ -138,6 +187,29 @@ function hasHighConfidenceNativeDensity(input, nativeLen) {
   if (nativeLen < NATIVE_DENSITY_BYPASS.minChars) return false;
   if (nativeDensity < NATIVE_DENSITY_BYPASS.minDensity) return false;
   return true;
+}
+
+function hasFragmentedNativeSignal(input) {
+  const flags = Array.isArray(input?.classification?.qualityFlags)
+    ? input.classification.qualityFlags
+    : [];
+  if (flags.includes("FRAGMENTED_NATIVE_LINES")) return true;
+  const reason = String(input?.classification?.reason || "");
+  return /fragmented native lines/i.test(reason);
+}
+
+function maybePruneNativeCaptionNoise(nativeText, stats = {}) {
+  const source = safeText(nativeText);
+  if (!source) return "";
+  const hasImageContent = (Number(stats?.imageOpCount) || 0) >= 1 || (Number(stats?.overlapRatio) || 0) >= 0.03;
+  if (!hasImageContent) return source;
+
+  const pruned = pruneCaptionNoiseFromNativeText(source);
+  if (!pruned.trim()) return source;
+  const sourceLen = source.trim().length;
+  const prunedLen = pruned.trim().length;
+  if (sourceLen > 0 && prunedLen / sourceLen < 0.4) return source;
+  return pruned;
 }
 
 function tokenHasClinicalSignal(token) {
@@ -302,6 +374,12 @@ function cleanupOcrLine(line, mode = "augment") {
   return cleaned;
 }
 
+function applyFinalOcrTextRepairs(text) {
+  return String(text || "")
+    .replace(/\bfrom the mouth\s+nose\b/gi, "from the mouth or nose")
+    .replace(/\bmouth\s+nose\b/gi, "mouth or nose");
+}
+
 function isLikelyOcrNoiseLine(line, mode = "augment", rawLine = "") {
   const trimmed = String(line || "").trim();
   if (!trimmed) return true;
@@ -363,28 +441,46 @@ function isLikelyOcrNoiseLine(line, mode = "augment", rawLine = "") {
 }
 
 export function sanitizeOcrText(ocrText, opts = {}) {
-  const mode = opts.mode === "augment" ? "augment" : "full";
+  const mode = opts.mode === "augment" || opts.mode === "repair_only" ? "augment" : "full";
   const lines = normalizeLines(ocrText);
   const out = [];
   const seen = new Set();
-  let prevKey = "";
+  let prevOutKey = "";
 
   for (const rawLine of lines) {
-    const line = cleanupOcrLine(rawLine, mode);
+    const normalizedRaw = stripInlineCaptionChunks(rawLine);
+    const line = cleanupOcrLine(normalizedRaw, mode);
     if (!line) continue;
+
+    if (out.length && shouldJoinRepairCandidate(out[out.length - 1], line)) {
+      const combined = `${out[out.length - 1]} ${line}`.replace(/\s+/g, " ").trim();
+      if (combined) {
+        const lastKey = normalizeLineKey(out[out.length - 1]);
+        if (lastKey) seen.delete(lastKey);
+        out[out.length - 1] = combined;
+        const combinedKey = normalizeLineKey(combined);
+        if (combinedKey) {
+          seen.add(combinedKey);
+          prevOutKey = combinedKey;
+        }
+        continue;
+      }
+    }
+
     if (isLikelyBoilerplateLine(line)) continue;
     if (isLikelyImageCaptionLine(line)) continue;
     if (shouldDropLineForMerge(line)) continue;
     if (isLikelyOcrNoiseLine(line, mode, rawLine)) continue;
     const key = normalizeLineKey(line);
     if (!key || seen.has(key)) continue;
-    if (key === prevKey) continue;
+    if (key === prevOutKey) continue;
     seen.add(key);
-    prevKey = key;
+    prevOutKey = key;
     out.push(line.trim());
   }
 
-  return out.join("\n");
+  const merged = coalesceOcrContinuationLines(out).join("\n");
+  return applyFinalOcrTextRepairs(merged);
 }
 
 const SECTION_DEFS = Object.freeze([
@@ -558,6 +654,310 @@ function lineHasNarrativeSignal(line) {
   return false;
 }
 
+const FRAGMENT_STOPWORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "as",
+  "at",
+  "by",
+  "for",
+  "if",
+  "in",
+  "is",
+  "it",
+  "of",
+  "on",
+  "or",
+  "the",
+  "to",
+  "with",
+]);
+
+function tokenizeFragmentLine(line) {
+  return String(line || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9%/.\- ]+/g, " ")
+    .split(/\s+/)
+    .map((token) => token.replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, ""))
+    .filter(Boolean);
+}
+
+function normalizeFragmentLine(line) {
+  return tokenizeFragmentLine(line).join(" ");
+}
+
+function levenshteinDistance(left, right) {
+  const a = String(left || "");
+  const b = String(right || "");
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+
+  const prev = new Uint16Array(b.length + 1);
+  const curr = new Uint16Array(b.length + 1);
+  for (let j = 0; j <= b.length; j += 1) prev[j] = j;
+
+  for (let i = 1; i <= a.length; i += 1) {
+    curr[0] = i;
+    const ai = a.charCodeAt(i - 1);
+    for (let j = 1; j <= b.length; j += 1) {
+      const substitutionCost = ai === b.charCodeAt(j - 1) ? 0 : 1;
+      const del = prev[j] + 1;
+      const ins = curr[j - 1] + 1;
+      const sub = prev[j - 1] + substitutionCost;
+      curr[j] = Math.min(del, ins, sub);
+    }
+    prev.set(curr);
+  }
+
+  return prev[b.length];
+}
+
+function normalizedStringSimilarity(left, right) {
+  const a = String(left || "");
+  const b = String(right || "");
+  const maxLen = Math.max(a.length, b.length);
+  if (!maxLen) return 1;
+  return 1 - (levenshteinDistance(a, b) / maxLen);
+}
+
+function estimateLineJunkDensity(line) {
+  const text = String(line || "").trim();
+  if (!text) return 0;
+  const tokens = text.split(/\s+/).map(normalizeToken).filter(Boolean);
+  if (!tokens.length) return 0;
+  const noisyTokenRatio = tokens.filter((token) => tokenLooksNoisy(token)).length / tokens.length;
+  const nonAlphaNum = (text.match(/[^A-Za-z0-9\s]/g) || []).length;
+  const nonAlphaNumRatio = nonAlphaNum / Math.max(1, text.length);
+  return Math.max(0, Math.min(1, noisyTokenRatio * 0.72 + nonAlphaNumRatio * 0.45));
+}
+
+function isLikelyJunkDenseLine(line, threshold = 0.48) {
+  return estimateLineJunkDensity(line) >= threshold;
+}
+
+function isLikelyNarrativeFragmentLine(line) {
+  const text = String(line || "").trim();
+  if (!text) return false;
+  if (text.length < 4 || text.length > 64) return false;
+  if (!/^[a-z]/.test(text)) return false;
+  if (!/[.?!]$/.test(text)) return false;
+  if (/[:;]/.test(text)) return false;
+
+  const tokens = tokenizeFragmentLine(text);
+  if (tokens.length < 1 || tokens.length > 8) return false;
+  const informative = tokens.filter((token) => /[a-z]{2,}/.test(token)).length;
+  if (informative < 1) return false;
+
+  if (tokens.length === 1) {
+    const token = tokens[0];
+    if (!token || token.length < 4 || FRAGMENT_STOPWORDS.has(token)) return false;
+  }
+
+  return true;
+}
+
+function scoreFragmentRepairCandidate(nativeLine, ocrLine) {
+  const nativeText = String(nativeLine || "").trim();
+  const ocrText = String(ocrLine || "").trim();
+  if (!nativeText || !ocrText) return Number.NEGATIVE_INFINITY;
+  if (ocrText.length <= nativeText.length + 14) return Number.NEGATIVE_INFINITY;
+
+  const nativeTokens = tokenizeFragmentLine(nativeText);
+  const ocrTokens = tokenizeFragmentLine(ocrText);
+  if (!nativeTokens.length || !ocrTokens.length) return Number.NEGATIVE_INFINITY;
+  if (ocrTokens.length <= nativeTokens.length + 2) return Number.NEGATIVE_INFINITY;
+
+  const nativeKey = nativeTokens.join(" ");
+  const ocrKey = ocrTokens.join(" ");
+  if (!nativeKey || !ocrKey || nativeKey === ocrKey) return Number.NEGATIVE_INFINITY;
+
+  let bestSimilarity = 0;
+  let distanceFromEnd = Number.POSITIVE_INFINITY;
+  const exactIdx = ocrKey.lastIndexOf(nativeKey);
+  if (exactIdx >= 0) {
+    bestSimilarity = 1;
+    distanceFromEnd = ocrKey.length - (exactIdx + nativeKey.length);
+  } else {
+    const nativeLen = nativeTokens.length;
+    const minWindow = Math.max(1, nativeLen - 2);
+    const maxWindow = Math.min(ocrTokens.length, nativeLen + 3);
+    for (let windowSize = minWindow; windowSize <= maxWindow; windowSize += 1) {
+      for (let start = 0; start + windowSize <= ocrTokens.length; start += 1) {
+        const end = start + windowSize;
+        const tailDistance = ocrTokens.length - end;
+        if (tailDistance > 4) continue;
+        const candidateKey = ocrTokens.slice(start, end).join(" ");
+        const similarity = normalizedStringSimilarity(nativeKey, candidateKey);
+        if (
+          similarity > bestSimilarity ||
+          (
+            similarity >= bestSimilarity - 0.01 &&
+            tailDistance < distanceFromEnd
+          )
+        ) {
+          bestSimilarity = similarity;
+          distanceFromEnd = tailDistance * 4;
+        }
+      }
+    }
+  }
+
+  if (distanceFromEnd > 20) return Number.NEGATIVE_INFINITY;
+  if (bestSimilarity < 0.73) return Number.NEGATIVE_INFINITY;
+
+  const overlap = tokenizeForOverlap(nativeText);
+  if (overlap.length <= 1 && nativeTokens.length > 1) return Number.NEGATIVE_INFINITY;
+  const junkDensity = estimateLineJunkDensity(ocrText);
+  if (junkDensity >= 0.52 && bestSimilarity < 0.86) return Number.NEGATIVE_INFINITY;
+
+  return bestSimilarity * 2.2 +
+    (ocrTokens.length - nativeTokens.length) * 0.42 +
+    (ocrText.length - nativeText.length) * 0.025 -
+    distanceFromEnd * 0.16 -
+    junkDensity * 1.15;
+}
+
+function ocrLineExpandsNativeFragment(ocrLine, nativeLines) {
+  const ocrText = String(ocrLine || "").trim();
+  if (!ocrText || ocrText.length < 40) return false;
+  const ocrKey = normalizeFragmentLine(ocrText);
+  if (!ocrKey) return false;
+
+  for (const nativeLine of Array.isArray(nativeLines) ? nativeLines : []) {
+    if (!isLikelyNarrativeFragmentLine(nativeLine)) continue;
+    const nativeKey = normalizeFragmentLine(nativeLine);
+    if (!nativeKey) continue;
+    if (ocrKey === nativeKey) continue;
+    if (!ocrKey.endsWith(nativeKey)) continue;
+    if (ocrKey.length <= nativeKey.length + 16) continue;
+    return true;
+  }
+  return false;
+}
+
+function shouldJoinRepairCandidate(prevLine, currentLine) {
+  const prev = String(prevLine || "").trim();
+  const current = String(currentLine || "").trim();
+  if (!prev || !current) return false;
+  if (prev.length < 12) return false;
+  if (current.length > 84) return false;
+  if (/[.?!:]$/.test(prev)) return false;
+  if (!/^[a-z]/.test(current) && !isLikelyNarrativeFragmentLine(current)) return false;
+  if (!/[A-Za-z]$/.test(prev)) return false;
+  return true;
+}
+
+function buildFragmentRepairCandidates(ocrLines) {
+  const source = Array.isArray(ocrLines) ? ocrLines : [];
+  const out = [];
+
+  for (let i = 0; i < source.length; i += 1) {
+    const current = String(source[i] || "").trim();
+    if (!current) continue;
+    out.push({
+      text: current,
+      sourceIndexes: [i],
+    });
+
+    if (i <= 0) continue;
+    const prev = String(source[i - 1] || "").trim();
+    if (!shouldJoinRepairCandidate(prev, current)) continue;
+    out.push({
+      text: `${prev} ${current}`.replace(/\s+/g, " ").trim(),
+      sourceIndexes: [i - 1, i],
+    });
+  }
+
+  return out;
+}
+
+function coalesceOcrContinuationLines(lines) {
+  const source = Array.isArray(lines) ? lines : [];
+  const out = [];
+
+  for (const rawLine of source) {
+    const line = String(rawLine || "").trim();
+    if (!line) continue;
+    const previous = out[out.length - 1];
+    if (previous && shouldJoinRepairCandidate(previous, line)) {
+      out[out.length - 1] = `${previous} ${line}`.replace(/\s+/g, " ").trim();
+      continue;
+    }
+    out.push(line);
+  }
+
+  return out;
+}
+
+function repairFragmentedNativeLines(nativeLines, ocrLines) {
+  const native = Array.isArray(nativeLines) ? nativeLines : [];
+  const ocr = Array.isArray(ocrLines) ? ocrLines : [];
+  if (!native.length || !ocr.length) {
+    return { lines: native.slice(), usedOcr: new Set(), repairCount: 0 };
+  }
+
+  const candidates = buildFragmentRepairCandidates(ocr);
+  const usedOcr = new Set();
+  let repairCount = 0;
+  const repaired = native.map((line) => {
+    if (!isLikelyNarrativeFragmentLine(line)) return line;
+
+    const nativeKey = normalizeFragmentLine(line);
+    if (!nativeKey) return line;
+
+    let bestCandidate = null;
+    let bestScore = Number.NEGATIVE_INFINITY;
+    for (const candidate of candidates) {
+      if (candidate.sourceIndexes.some((index) => usedOcr.has(index))) continue;
+      const score = scoreFragmentRepairCandidate(line, candidate.text);
+      if (score > bestScore) {
+        bestScore = score;
+        bestCandidate = candidate;
+      }
+    }
+
+    if (!bestCandidate || bestScore <= 0) return line;
+    for (const index of bestCandidate.sourceIndexes) {
+      usedOcr.add(index);
+    }
+    repairCount += 1;
+    return bestCandidate.text;
+  });
+
+  return {
+    lines: repaired,
+    usedOcr,
+    repairCount,
+  };
+}
+
+function pruneFragmentDuplicateLines(lines) {
+  const source = dedupeLines(lines);
+  if (source.length < 2) return source;
+  const normalized = source.map((line) => normalizeFragmentLine(line));
+
+  return source.filter((line, idx) => {
+    if (!isLikelyNarrativeFragmentLine(line)) return true;
+    const fragmentKey = normalized[idx];
+    if (!fragmentKey) return true;
+
+    for (let j = 0; j < source.length; j += 1) {
+      if (j === idx) continue;
+      const candidateKey = normalized[j];
+      if (!candidateKey || candidateKey === fragmentKey) continue;
+      if (candidateKey.length <= fragmentKey.length + 10) continue;
+      const matchIndex = candidateKey.lastIndexOf(fragmentKey);
+      if (matchIndex < 0) continue;
+      const trailingDistance = candidateKey.length - (matchIndex + fragmentKey.length);
+      if (trailingDistance > 16) continue;
+      return false;
+    }
+    return true;
+  });
+}
+
 function sectionLooksTruncated(lines, sectionId) {
   const list = Array.isArray(lines) ? lines : [];
   if (!list.length) return true;
@@ -569,6 +969,8 @@ function sectionLooksTruncated(lines, sectionId) {
   }
 
   if (NARRATIVE_SECTION_IDS.has(sectionId)) {
+    const fragmentLineCount = list.filter((line) => isLikelyNarrativeFragmentLine(line)).length;
+    if (fragmentLineCount >= 1) return true;
     if (text.length < 90) return true;
     if (/\b(?:an|and|the|of|to|for|with|through|in|on)\.?$/i.test(text)) return true;
     if (!/[.!?]$/.test(text) && text.length < 160) return true;
@@ -581,13 +983,34 @@ function sectionLooksTruncated(lines, sectionId) {
   return false;
 }
 
+function computeSectionLineSimilarity(nativeLines, ocrLines) {
+  const native = (Array.isArray(nativeLines) ? nativeLines : [])
+    .map((line) => normalizeFragmentLine(line))
+    .filter((line) => line.length >= 6);
+  const ocr = (Array.isArray(ocrLines) ? ocrLines : [])
+    .map((line) => normalizeFragmentLine(line))
+    .filter((line) => line.length >= 6);
+  if (!native.length || !ocr.length) return 0;
+
+  let best = 0;
+  for (const left of native) {
+    for (const right of ocr) {
+      const similarity = normalizedStringSimilarity(left, right);
+      if (similarity > best) best = similarity;
+    }
+  }
+  return best;
+}
+
 function shouldKeepOcrLineForSection(line, sectionId) {
   const text = String(line || "").trim();
   if (!text) return false;
   if (shouldDropLineForMerge(text, sectionId)) return false;
   if (isLikelyOcrNoiseLine(text, "augment", text)) return false;
   if (NARRATIVE_SECTION_IDS.has(sectionId)) {
-    return lineHasNarrativeSignal(text) || (hasClinicalPattern(text) && /[a-z]{2,}/.test(text));
+    return lineHasNarrativeSignal(text) ||
+      isLikelyNarrativeFragmentLine(text) ||
+      (hasClinicalPattern(text) && /[a-z]{2,}/.test(text));
   }
   if (sectionId === "cpt_codes") {
     return /\b(?:\d{5}|CPT)\b/i.test(text);
@@ -673,7 +1096,11 @@ function guessSectionForLine(line, preferredIds = []) {
   return bestScore > 0 ? bestId : null;
 }
 
-function mergeSectionLines(sectionId, nativeLines, ocrLines) {
+function mergeSectionLines(sectionId, nativeLines, ocrLines, opts = {}) {
+  const mode = opts.mode === "repair_only" ? "repair_only" : "augment";
+  const insertionState = opts.insertionState && typeof opts.insertionState === "object"
+    ? opts.insertionState
+    : { inserted: 0, maxInserted: Number.POSITIVE_INFINITY };
   const native = dedupeLines(nativeLines);
   const nativeTokenSets = buildTokenSets(native);
   const filteredOcr = [];
@@ -683,45 +1110,83 @@ function mergeSectionLines(sectionId, nativeLines, ocrLines) {
     if (!pushUniqueLine(filteredOcr, line, seenOcr)) continue;
   }
 
-  const selectedOcr = filteredOcr
+  const selectedOcrRaw = filteredOcr
     .filter((line) => shouldKeepOcrLineForSection(line, sectionId))
-    .filter((line) => !hasHighTokenOverlap(line, nativeTokenSets));
+    .filter((line) =>
+      !isLikelyJunkDenseLine(line) ||
+      isLikelyNarrativeFragmentLine(line) ||
+      ocrLineExpandsNativeFragment(line, native),
+    )
+    .filter((line) =>
+      !hasHighTokenOverlap(line, nativeTokenSets) ||
+      isLikelyNarrativeFragmentLine(line) ||
+      ocrLineExpandsNativeFragment(line, native),
+    );
+  const selectedOcr = dedupeLines(coalesceOcrContinuationLines(selectedOcrRaw));
 
-  if (!selectedOcr.length) return native;
+  const repaired = repairFragmentedNativeLines(native, selectedOcr);
+  const repairedNative = dedupeLines(repaired.lines);
+  const ocrAfterRepair = selectedOcr.filter((_, idx) => !repaired.usedOcr.has(idx));
 
-  const nativeChars = native.join(" ").length;
+  if (!ocrAfterRepair.length) return pruneFragmentDuplicateLines(repairedNative);
+  if (mode === "repair_only") return pruneFragmentDuplicateLines(repairedNative);
+
+  const nativeChars = repairedNative.join(" ").length;
   const ocrChars = selectedOcr.join(" ").length;
+  const sectionSimilarity = computeSectionLineSimilarity(repairedNative, selectedOcr);
   const replaceThreshold = sectionId === "__preamble"
     ? Math.max(36, nativeChars * 1.15)
     : Math.max(80, nativeChars * 1.25);
-  const replaceWithOcr = sectionLooksTruncated(native, sectionId) &&
-    ocrChars > replaceThreshold;
+  const replaceWithOcr = sectionLooksTruncated(repairedNative, sectionId) &&
+    ocrChars > replaceThreshold &&
+    sectionSimilarity >= 0.58;
 
   if (replaceWithOcr) {
-    return selectedOcr;
+    return pruneFragmentDuplicateLines(selectedOcr);
   }
 
-  const merged = [...native];
+  const merged = [...repairedNative];
   const mergedTokenSets = buildTokenSets(merged);
-  for (const line of selectedOcr) {
+  for (const line of ocrAfterRepair) {
+    if (insertionState.inserted >= insertionState.maxInserted) break;
     if (hasHighTokenOverlap(line, mergedTokenSets)) continue;
     merged.push(line);
     mergedTokenSets.push(new Set(tokenizeForOverlap(line)));
+    insertionState.inserted += 1;
   }
-  return merged;
+  return pruneFragmentDuplicateLines(merged);
 }
 
 export function mergeNativeAndOcrText(nativeText, ocrText, opts = {}) {
-  const mode = opts.mode === "augment" ? "augment" : "full";
+  const mode = opts.mode === "augment"
+    ? "augment"
+    : opts.mode === "repair_only"
+      ? "repair_only"
+      : "full";
+  const sanitizeMode = mode === "full" ? "full" : "augment";
+  const maxInsertedOcrLines = Number.isFinite(opts.maxInsertedOcrLines)
+    ? Math.max(0, Math.floor(Number(opts.maxInsertedOcrLines)))
+    : (mode === "repair_only" ? 0 : 24);
+  const insertionState = {
+    inserted: 0,
+    maxInserted: maxInsertedOcrLines,
+  };
   const nativeLines = dedupeLines(normalizeLines(nativeText).filter((line) => !shouldDropLineForMerge(line)));
-  const ocrLines = dedupeLines(normalizeLines(sanitizeOcrText(ocrText, { mode })));
+  const ocrLines = dedupeLines(normalizeLines(sanitizeOcrText(ocrText, { mode: sanitizeMode })));
 
-  if (mode !== "augment") {
+  if (mode === "full") {
     const out = [];
     const seen = new Set();
     for (const line of nativeLines) pushUniqueLine(out, line, seen);
     for (const line of ocrLines) pushUniqueLine(out, line, seen);
     return out.join("\n");
+  }
+
+  if (mode === "repair_only") {
+    // Keep backfill merge strictly replacement-only, but evaluate OCR candidates
+    // globally so section-guessing cannot hide valid fragment repairs.
+    const repaired = repairFragmentedNativeLines(nativeLines, ocrLines);
+    return pruneFragmentDuplicateLines(repaired.lines).join("\n");
   }
 
   const nativeBuckets = buildSectionBuckets(nativeLines);
@@ -767,7 +1232,10 @@ export function mergeNativeAndOcrText(nativeText, ocrText, opts = {}) {
       pushUniqueLine(out, headerText, seenOut);
     }
 
-    const merged = mergeSectionLines(sectionId, nativeSectionLines, ocrSectionLines);
+    const merged = mergeSectionLines(sectionId, nativeSectionLines, ocrSectionLines, {
+      mode,
+      insertionState,
+    });
     for (const line of merged) {
       pushUniqueLine(out, line, seenOut);
     }
@@ -792,12 +1260,16 @@ export function mergeNativeAndOcrText(nativeText, ocrText, opts = {}) {
   }
 
   for (const line of ocrOrphan) {
+    if (mode === "repair_only") break;
+    if (insertionState.inserted >= insertionState.maxInserted) break;
     if (shouldDropLineForMerge(line)) continue;
     if (!lineHasNarrativeSignal(line)) continue;
-    pushUniqueLine(out, line, seenOut);
+    if (pushUniqueLine(out, line, seenOut)) {
+      insertionState.inserted += 1;
+    }
   }
 
-  return out.join("\n");
+  return pruneFragmentDuplicateLines(out).join("\n");
 }
 
 /**
@@ -814,9 +1286,11 @@ export function mergeNativeAndOcrText(nativeText, ocrText, opts = {}) {
  * @returns {{sourceDecision:'native'|'ocr'|'hybrid',text:string,reason:string,confidence:number,blocked:boolean}}
  */
 export function arbitratePageText(input = {}) {
-  const nativeText = safeText(input.nativeText);
+  const nativeText = maybePruneNativeCaptionNoise(safeText(input.nativeText), input.stats);
   const rawOcrText = safeText(input.ocrText);
   const requestedSource = input.requestedSource === "ocr" ? "ocr" : "native";
+  const mergeMode = input.mergeMode === "repair_only" ? "repair_only" : "augment";
+  const preferRepairMerge = mergeMode === "repair_only";
   const ocrAvailable = Boolean(input.ocrAvailable);
 
   const contaminationScore = clamp01(Number(input.stats?.contaminationScore) || 0);
@@ -831,7 +1305,12 @@ export function arbitratePageText(input = {}) {
   const nativePresent = nativeLen > 0;
   const ocrPresent = ocrLen > 0;
 
-  if (nativePresent && hasHighConfidenceNativeDensity(input, nativeLen)) {
+  if (
+    nativePresent &&
+    hasHighConfidenceNativeDensity(input, nativeLen) &&
+    !hasFragmentedNativeSignal(input) &&
+    !Boolean(input.classification?.needsOcrBackfill)
+  ) {
     return {
       sourceDecision: "native",
       text: nativeText,
@@ -854,7 +1333,7 @@ export function arbitratePageText(input = {}) {
     };
   }
 
-  if (requestedSource === "native" && nativePresent) {
+  if (requestedSource === "native" && nativePresent && !(preferRepairMerge && ocrPresent)) {
     return {
       sourceDecision: "native",
       text: nativeText,
@@ -898,6 +1377,16 @@ export function arbitratePageText(input = {}) {
   const contaminationHigh = contaminationScore >= 0.12;
   const shouldPruneCaptions = contaminationScore >= 0.28 && ocrMuchLonger;
   const nativeForMerge = shouldPruneCaptions ? pruneCaptionNoiseFromNativeText(nativeText) : nativeText;
+
+  if (preferRepairMerge) {
+    return {
+      sourceDecision: "hybrid",
+      text: mergeNativeAndOcrText(nativeForMerge, ocrText, { mode: "repair_only", maxInsertedOcrLines: 0 }),
+      reason: "repair-only OCR backfill for fragmented native extraction",
+      confidence: 0.8,
+      blocked: false,
+    };
+  }
 
   if (ocrMuchLonger && contaminationHigh) {
     return {

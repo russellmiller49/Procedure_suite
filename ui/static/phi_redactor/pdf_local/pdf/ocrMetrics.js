@@ -56,6 +56,32 @@ function median(values) {
   return (list[mid - 1] + list[mid]) / 2;
 }
 
+function computeJunkScore(text, lines) {
+  const joined = normalizeText(text);
+  if (!joined.trim()) return 0;
+  const tokenSource = Array.isArray(lines) && lines.length
+    ? lines.map((line) => normalizeText(line.text)).join(" ")
+    : joined;
+  const tokens = tokenSource.split(/\s+/).filter(Boolean);
+  if (!tokens.length) return 0;
+
+  const weirdTokenCount = tokens.filter((token) => {
+    const trimmed = token.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, "");
+    if (!trimmed) return true;
+    const alpha = (trimmed.match(/[A-Za-z]/g) || []).length;
+    const digits = (trimmed.match(/[0-9]/g) || []).length;
+    if (trimmed.length >= 4 && alpha <= 1) return true;
+    if (trimmed.length >= 5 && digits >= 3 && alpha <= 2) return true;
+    if (/[O0]{3,}/.test(trimmed) && alpha <= 2) return true;
+    return false;
+  }).length;
+
+  const symbolCount = (joined.match(/[^A-Za-z0-9\s]/g) || []).length;
+  const nonAlnumRatio = symbolCount / Math.max(1, joined.length);
+  const weirdTokenRatio = weirdTokenCount / Math.max(1, tokens.length);
+  return clamp01(nonAlnumRatio * 0.55 + weirdTokenRatio * 0.45);
+}
+
 export function countFooterBoilerplateHits(lines) {
   let hits = 0;
   for (const line of Array.isArray(lines) ? lines : []) {
@@ -96,10 +122,12 @@ export function computeOcrTextMetrics(input = {}, opts = {}) {
 
   const tokenLens = tokenize(joinedText).map((token) => token.length);
   const medianTokenLen = tokenLens.length ? median(tokenLens) : 0;
+  const junkScore = computeJunkScore(joinedText, lines);
 
   return {
     charCount,
     alphaRatio,
+    junkScore,
     meanLineConf,
     lowConfLineFrac,
     numLines: lines.length,

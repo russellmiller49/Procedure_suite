@@ -50,6 +50,42 @@ describe("pdf fusion arbitration", () => {
     expect(result.reason).toMatch(/native text density/i);
   });
 
+  it("does not bypass to native when dense text is flagged as fragmented", () => {
+    const nativeText = [
+      ...Array.from(
+        { length: 18 },
+        (_, i) => `Postoperative instruction line ${i + 1} is complete and clinically coherent for patient guidance.`,
+      ),
+      "surgeon every 4 hours.",
+      ...Array.from(
+        { length: 8 },
+        (_, i) => `Follow-up narrative line ${i + 1} remains complete and clinically coherent for discharge education.`,
+      ),
+      "nose.",
+    ].join("\n");
+    const ocrText = [
+      "Call surgeon every 4 hours for bleeding from the nose.",
+      "Continue hydration and follow up with ENT as directed.",
+    ].join("\n");
+
+    const result = arbitratePageText({
+      nativeText,
+      ocrText,
+      requestedSource: "ocr",
+      ocrAvailable: true,
+      classification: {
+        needsOcr: true,
+        nativeTextDensity: 0.0045,
+        qualityFlags: ["FRAGMENTED_NATIVE_LINES"],
+        reason: "fragmented native lines (2/30, orphan=1)",
+      },
+      stats: { nativeTextDensity: 0.0045, completenessConfidence: 0.92, contaminationScore: 0.2 },
+    });
+
+    expect(result.sourceDecision).not.toBe("native");
+    expect(result.text).toContain("Call surgeon every 4 hours");
+  });
+
   it("uses hybrid merge when OCR recovers substantially more content on contaminated page", () => {
     const nativeText = "Procedure Report\nLeft upper lobe";
     const ocrText = [
@@ -154,6 +190,19 @@ describe("pdf fusion arbitration", () => {
     expect(cleaned).not.toMatch(/\bOooo\b/);
   });
 
+  it("repairs joined OCR continuation artifacts for mouth-or-nose phrases", () => {
+    const cleaned = sanitizeOcrText(
+      [
+        "When the tonsil or adenoid scabs fall off, your child may have bleeding from the mouth",
+        "nose.",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    expect(cleaned).toContain("bleeding from the mouth or nose.");
+    expect(cleaned).not.toContain("mouth nose");
+  });
+
   it("strips all-caps O-heavy OCR prefixes from narrative lines", () => {
     const cleaned = sanitizeOcrText(
       "OMOMOD Extrinsic compression stricture begins left mainstem bronchus to the left lower lobe extending for the length of 3cm.",
@@ -206,6 +255,72 @@ describe("pdf fusion arbitration", () => {
     expect(merged).not.toContain("Left Mainstem");
   });
 
+  it("prunes standalone anatomy caption lines from native text on image-heavy pages", () => {
+    const nativeText = [
+      "Procedure performed with moderate sedation.",
+      "Left Mainstem",
+      "Right Lower Lobe Entrance",
+      "Follow up with pulmonology.",
+    ].join("\n");
+
+    const result = arbitratePageText({
+      nativeText,
+      requestedSource: "native",
+      ocrAvailable: true,
+      stats: { imageOpCount: 3, overlapRatio: 0.09, nativeTextDensity: 0.0031, completenessConfidence: 0.91 },
+      classification: { needsOcr: false, nativeTextDensity: 0.0031 },
+    });
+
+    expect(result.sourceDecision).toBe("native");
+    expect(result.text).toContain("Procedure performed with moderate sedation.");
+    expect(result.text).toContain("Follow up with pulmonology.");
+    expect(result.text).not.toContain("Left Mainstem");
+    expect(result.text).not.toContain("Right Lower Lobe Entrance");
+  });
+
+  it("removes inline anatomy caption chunks split by wide spacing", () => {
+    const cleaned = sanitizeOcrText(
+      "Procedure note completed      Left Mainstem      Right Lower Lobe Entrance",
+      { mode: "augment" },
+    );
+
+    expect(cleaned).toContain("Procedure note completed");
+    expect(cleaned).not.toContain("Left Mainstem");
+    expect(cleaned).not.toContain("Right Lower Lobe Entrance");
+  });
+
+  it("removes trailing caption suffixes attached with @ separators", () => {
+    const cleaned = sanitizeOcrText(
+      "EndoSoft Surgery Center @ Right Lower Lobe Entrance",
+      { mode: "augment" },
+    );
+
+    expect(cleaned).toContain("EndoSoft Surgery Center");
+    expect(cleaned).not.toContain("Right Lower Lobe Entrance");
+  });
+
+  it("drops numeric-prefix anatomy captions during native pruning", () => {
+    const result = arbitratePageText({
+      nativeText: [
+        "Procedure Report  Bronchoscopy",
+        "1 Right Lower Lobe Entrance",
+        "2 Left Mainstem",
+        "3 Left Lower Lobe",
+        "Findings: No endobronchial lesion.",
+      ].join("\n"),
+      requestedSource: "native",
+      ocrAvailable: true,
+      stats: { imageOpCount: 6, overlapRatio: 0.24, nativeTextDensity: 0.003, completenessConfidence: 0.9 },
+      classification: { needsOcr: false, nativeTextDensity: 0.003 },
+    });
+
+    expect(result.text).toContain("Procedure Report  Bronchoscopy");
+    expect(result.text).toContain("Findings: No endobronchial lesion.");
+    expect(result.text).not.toContain("1 Right Lower Lobe Entrance");
+    expect(result.text).not.toContain("2 Left Mainstem");
+    expect(result.text).not.toContain("3 Left Lower Lobe");
+  });
+
   it("routes narrative preamble lines to technique/findings instead of instruments", () => {
     const nativeText = [
       "INSTRUMENTS: Loaner",
@@ -230,6 +345,127 @@ describe("pdf fusion arbitration", () => {
     expect(mergedLines[instrumentsIdx + 1]).toMatch(/^MEDICATIONS:/i);
     expect(mergedLines[techniqueIdx + 1]).toMatch(/anesthesia and conscious sedation/i);
     expect(mergedLines[findingsIdx + 1]).toMatch(/estimated diameter of the lumen was 4mm/i);
+  });
+
+  it("replaces truncated native fragments with longer OCR narrative lines", () => {
+    const merged = mergeNativeAndOcrText(
+      [
+        "PROCEDURE TECHNIQUE:",
+        "surgeon every 4 hours.",
+        "Bleeding:",
+        "nose.",
+      ].join("\n"),
+      [
+        "PROCEDURE TECHNIQUE:",
+        "Give the prescribed pain medication Oxycodone and acetaminophen as ordered by your",
+        "surgeon every 4 hours.",
+        "Bleeding:",
+        "When the tonsil or adenoid scabs fall off, your child may have bleeding from the mouth or",
+        "nose.",
+        "If you see blood, call ENT immediately.",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    const mergedLines = merged.split("\n").map((line) => line.trim());
+    expect(merged).toContain("ordered by your surgeon every 4 hours.");
+    expect(merged).toContain("bleeding from the mouth or nose.");
+    expect(mergedLines).not.toContain("surgeon every 4 hours.");
+    expect(mergedLines).not.toContain("nose.");
+  });
+
+  it("keeps repair-only merge bounded when OCR has no fragment match", () => {
+    const nativeText = [
+      "PROCEDURE TECHNIQUE:",
+      "The bronchoscope was advanced to the distal airway.",
+      "Findings remained stable with no bleeding.",
+    ].join("\n");
+    const ocrText = [
+      "PROCEDURE TECHNIQUE:",
+      "The bronchoscope was advanced to the distal airway.",
+      "AEECRNIMT ## 0000 OO0O",
+      "Random footer 12345 0000",
+      "Additional noisy line not tied to native fragment recovery.",
+      "Another extra OCR-only line that should not be imported in repair mode.",
+    ].join("\n");
+
+    const merged = mergeNativeAndOcrText(nativeText, ocrText, { mode: "repair_only" });
+    const growthRatio = merged.length / Math.max(1, nativeText.length);
+
+    expect(merged).toContain("The bronchoscope was advanced to the distal airway.");
+    expect(merged).not.toContain("AEECRNIMT");
+    expect(merged).not.toContain("Additional noisy line");
+    expect(growthRatio).toBeLessThanOrEqual(1.2);
+  });
+
+  it("uses repair-only arbitration for OCR backfill pages", () => {
+    const nativeText = [
+      "PROCEDURE TECHNIQUE:",
+      "surgeon every 4 hours.",
+      "Bleeding:",
+      "nose.",
+    ].join("\n");
+    const ocrText = [
+      "Give the prescribed pain medication Oxycodone and acetaminophen as ordered by your",
+      "surgeon every 4 hours.",
+      "When the tonsil or adenoid scabs fall off, your child may have bleeding from the mouth or",
+      "nose.",
+      "Injected OCR-only noise that should not be appended.",
+    ].join("\n");
+
+    const result = arbitratePageText({
+      nativeText,
+      ocrText,
+      requestedSource: "native",
+      mergeMode: "repair_only",
+      ocrAvailable: true,
+      classification: { needsOcrBackfill: true, needsOcr: true },
+      stats: { contaminationScore: 0.1, completenessConfidence: 0.9 },
+    });
+
+    expect(result.sourceDecision).toBe("hybrid");
+    expect(result.text).toContain("ordered by your surgeon every 4 hours.");
+    expect(result.text).toContain("mouth or nose.");
+    expect(result.text).not.toContain("Injected OCR-only noise");
+  });
+
+  it("rejects low-similarity noisy OCR candidates during fragment repair", () => {
+    const nativeText = [
+      "PROCEDURE TECHNIQUE:",
+      "surgeon every 4 hours.",
+      "Bleeding:",
+      "nose.",
+    ].join("\n");
+    const ocrText = [
+      "AEECRNIMT ## OO0O 111",
+      "Additional unrelated noisy sentence that does not end with the native fragment context.",
+      "ete EIS Val ser a i",
+      "Random footer 0000 OOOO",
+    ].join("\n");
+
+    const merged = mergeNativeAndOcrText(nativeText, ocrText, { mode: "repair_only" });
+    expect(merged).toContain("surgeon every 4 hours.");
+    expect(merged).toContain("nose.");
+    expect(merged).not.toContain("Additional unrelated noisy sentence");
+  });
+
+  it("does not replace valid short uppercase narrative lines during fragment repair", () => {
+    const merged = mergeNativeAndOcrText(
+      [
+        "FINDINGS:",
+        "No bleeding.",
+      ].join("\n"),
+      [
+        "FINDINGS:",
+        "No bleeding.",
+        "Noisy footer 0000 OOOO",
+      ].join("\n"),
+      { mode: "augment" },
+    );
+
+    const mergedLines = merged.split("\n");
+    expect(mergedLines).toContain("No bleeding.");
+    expect(merged).not.toContain("Noisy footer");
   });
 
   it("drops PHOTOREPORT and O/0-heavy code junk lines during merge", () => {

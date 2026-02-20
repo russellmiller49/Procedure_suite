@@ -4,6 +4,7 @@ import {
   computeHeaderZoneColumns,
   computeOcrCropRect,
   computeProvationDiagramSkipRegions,
+  getLineBandRegions,
 } from "../../../../static/phi_redactor/pdf_local/pdf/ocrRegions.js";
 
 describe("ocr region cropping", () => {
@@ -126,5 +127,37 @@ describe("ocr region cropping", () => {
     expect(skip.meta.applied).toBe(true);
     expect(skip.meta.reason).toBe("provation_tree_diagram");
     expect(skip.regions.length).toBeGreaterThan(0);
+  });
+
+  it("builds backfill OCR line bands for truncated native row fragments", () => {
+    const bands = getLineBandRegions({
+      canvasWidth: 1000,
+      canvasHeight: 1400,
+      layoutBlocks: [
+        {
+          id: "block-1",
+          lines: [
+            {
+              text: "When the tonsil or adenoid scabs fall off, your child may have bleeding from the mouth or",
+              bbox: { x: 40, y: 620, width: 720, height: 16 },
+            },
+            {
+              text: "nose.",
+              bbox: { x: 44, y: 598, width: 44, height: 16 },
+            },
+            {
+              text: "Follow-up with ENT in 2 weeks.",
+              bbox: { x: 40, y: 540, width: 220, height: 16 },
+            },
+          ],
+        },
+      ],
+    });
+
+    expect(bands.meta.applied).toBe(true);
+    expect(bands.meta.regionCount).toBeGreaterThan(0);
+    expect(bands.regions[0].x).toBeLessThanOrEqual(20);
+    expect(Math.round(bands.regions[0].width)).toBeGreaterThanOrEqual(720);
+    expect(Math.round(bands.regions[0].x + bands.regions[0].width)).toBeLessThanOrEqual(1000);
   });
 });

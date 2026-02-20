@@ -118,6 +118,38 @@ def _looks_like_caption_noise(line: str) -> bool:
     return False
 
 
+def _mask_caption_chunks_in_line(line: str) -> tuple[str, bool]:
+    """Mask short caption chunks in mixed lines split by wide spacing.
+
+    Some native extraction paths collapse right-side photo labels into the same
+    visual row as narrative text with 3+ spaces between chunks.
+    """
+    if not line:
+        return line, False
+    no_nl = line.rstrip("\r\n")
+    if not re.search(r"\s{3,}", no_nl):
+        return line, False
+
+    line_ending = line[len(no_nl):]
+    parts = re.split(r"(\s{3,})", no_nl)
+    if len(parts) <= 1:
+        return line, False
+
+    changed = False
+    out_parts: list[str] = []
+    for part in parts:
+        if re.fullmatch(r"\s{3,}", part or ""):
+            out_parts.append(part)
+            continue
+        if _looks_like_caption_noise(part):
+            out_parts.append(re.sub(r"[^\s]", " ", part))
+            changed = True
+        else:
+            out_parts.append(part)
+
+    return ("".join(out_parts) + line_ending, changed)
+
+
 @dataclass(slots=True)
 class EndoSoftCleanMeta:
     masked_footer_lines: int = 0
@@ -165,6 +197,12 @@ def clean_endosoft_page_with_meta(text: str, page_type: str) -> tuple[str, EndoS
         if _looks_like_boilerplate_footer(no_nl):
             masked[i] = _mask_non_newline_chars(line)
             meta.masked_footer_lines += 1
+            continue
+
+        chunk_masked_line, chunk_changed = _mask_caption_chunks_in_line(line)
+        if chunk_changed:
+            masked[i] = chunk_masked_line
+            meta.masked_caption_lines += 1
             continue
 
         # On image-heavy pages, be more aggressive (still preserve allowlist tokens).

@@ -49,6 +49,7 @@ describe("provation OCR hardening fixtures", () => {
       [
         "Lidocaine 49% sprayed to airway.",
         "Atropine 9.5 mg given once.",
+        "Child may have bleeding from the mouth nose.",
         "Persistent lrynphadenopathy with hytnph node enlargement.",
         "tracheobronchlal narrowing noted.",
       ].join(" "),
@@ -56,6 +57,7 @@ describe("provation OCR hardening fixtures", () => {
 
     expect(corrected).toContain("Lidocaine 4%");
     expect(corrected).toContain("Atropine 0.5 mg");
+    expect(corrected).toContain("mouth or nose");
     expect(corrected).toContain("lymphadenopathy");
     expect(corrected).toContain("lymph node enlargement");
     expect(corrected).toContain("tracheobronchial narrowing");

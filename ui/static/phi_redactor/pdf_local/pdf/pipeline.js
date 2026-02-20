@@ -1,6 +1,7 @@
 import { arbitratePageText } from "./fusion.js";
-import { clamp01 } from "./layoutAnalysis.js";
+import { clamp01, mergeRegions, rectArea } from "./layoutAnalysis.js";
 import { computeOcrTextMetrics } from "./ocrMetrics.js";
+import { getLineBandRegions } from "./ocrRegions.js";
 import { classifyPage, isUnsafeNativePage, resolvePageSource } from "./pageClassifier.js";
 
 const DEFAULT_GATE_OPTIONS = Object.freeze({
@@ -24,6 +25,14 @@ const DEFAULT_OCR_OPTIONS = Object.freeze({
   headerRetryPsms: ["6", "4", "11"],
   figureOverlapThreshold: 0.35,
   shortLowConfThreshold: 30,
+  backfillScaleBoost: 1.7,
+  backfillBandPaddingPx: 14,
+  backfillBandPaddingRatio: 0.04,
+  backfillBandMinWidthRatio: 0.6,
+  backfillBandMaxRegions: 3,
+  backfillPreprocess: true,
+  backfillThresholdBias: -8,
+  backfillDilate: true,
 });
 
 function normalizeGateOptions(gate) {
@@ -76,6 +85,24 @@ function normalizeOcrOptions(opts = {}) {
   const shortLowConfThreshold = Number.isFinite(ocr.shortLowConfThreshold)
     ? Math.max(0, Math.min(100, Number(ocr.shortLowConfThreshold)))
     : DEFAULT_OCR_OPTIONS.shortLowConfThreshold;
+  const backfillScaleBoost = Number.isFinite(ocr.backfillScaleBoost)
+    ? Math.max(1, Math.min(2.4, Number(ocr.backfillScaleBoost)))
+    : DEFAULT_OCR_OPTIONS.backfillScaleBoost;
+  const backfillBandPaddingPx = Number.isFinite(ocr.backfillBandPaddingPx)
+    ? Math.max(0, Math.min(80, Number(ocr.backfillBandPaddingPx)))
+    : DEFAULT_OCR_OPTIONS.backfillBandPaddingPx;
+  const backfillBandPaddingRatio = Number.isFinite(ocr.backfillBandPaddingRatio)
+    ? Math.max(0, Math.min(0.2, Number(ocr.backfillBandPaddingRatio)))
+    : DEFAULT_OCR_OPTIONS.backfillBandPaddingRatio;
+  const backfillBandMinWidthRatio = Number.isFinite(ocr.backfillBandMinWidthRatio)
+    ? Math.max(0.2, Math.min(1, Number(ocr.backfillBandMinWidthRatio)))
+    : DEFAULT_OCR_OPTIONS.backfillBandMinWidthRatio;
+  const backfillBandMaxRegions = Number.isFinite(ocr.backfillBandMaxRegions)
+    ? Math.max(1, Math.min(16, Math.floor(Number(ocr.backfillBandMaxRegions))))
+    : DEFAULT_OCR_OPTIONS.backfillBandMaxRegions;
+  const backfillThresholdBias = Number.isFinite(ocr.backfillThresholdBias)
+    ? Math.max(-40, Math.min(40, Number(ocr.backfillThresholdBias)))
+    : DEFAULT_OCR_OPTIONS.backfillThresholdBias;
 
   return {
     ...DEFAULT_OCR_OPTIONS,
@@ -94,6 +121,14 @@ function normalizeOcrOptions(opts = {}) {
     headerRetryPsms: headerRetryPsms.length ? headerRetryPsms : [...DEFAULT_OCR_OPTIONS.headerRetryPsms],
     figureOverlapThreshold,
     shortLowConfThreshold,
+    backfillScaleBoost,
+    backfillBandPaddingPx,
+    backfillBandPaddingRatio,
+    backfillBandMinWidthRatio,
+    backfillBandMaxRegions,
+    backfillPreprocess: ocr.backfillPreprocess !== false,
+    backfillThresholdBias,
+    backfillDilate: ocr.backfillDilate !== false,
     workerUrl: ocr.workerUrl,
   };
 }
@@ -106,6 +141,105 @@ function sourceHeaderLabel(page) {
   if (page.sourceDecision === "hybrid") return "HYBRID";
   if (page.sourceDecision === "ocr" && !page.ocrText) return "OCR_REQUIRED";
   return page.sourceDecision.toUpperCase();
+}
+
+function getProcessingMode(page) {
+  const qualityFlags = new Set(Array.isArray(page?.classification?.qualityFlags) ? page.classification.qualityFlags : []);
+  if (qualityFlags.has("NATIVE_DENSE_TEXT") && page?.sourceDecision === "native") {
+    return "native_dense_bypass";
+  }
+  if (page?.classification?.needsOcrBackfill) return "backfill_roi";
+  if (page?.sourceDecision === "ocr" || page?.sourceDecision === "hybrid") return "full_ocr";
+  return "native_only";
+}
+
+function boxAreaFromArray(box) {
+  if (!Array.isArray(box) || box.length < 4) return 0;
+  const x0 = Number(box[0]);
+  const y0 = Number(box[1]);
+  const x1 = Number(box[2]);
+  const y1 = Number(box[3]);
+  if (![x0, y0, x1, y1].every(Number.isFinite)) return 0;
+  return Math.max(0, x1 - x0) * Math.max(0, y1 - y0);
+}
+
+function rectFromBox(box) {
+  if (!Array.isArray(box) || box.length < 4) return null;
+  const x0 = Number(box[0]);
+  const y0 = Number(box[1]);
+  const x1 = Number(box[2]);
+  const y1 = Number(box[3]);
+  if (![x0, y0, x1, y1].every(Number.isFinite)) return null;
+  const width = Math.max(0, x1 - x0);
+  const height = Math.max(0, y1 - y0);
+  if (width <= 0 || height <= 0) return null;
+  return { x: x0, y: y0, width, height };
+}
+
+function resolveOcrAreaToNativeFactor(page, ocrMeta) {
+  const pageArea = Math.max(1, Number(page?.stats?.pageArea) || 0);
+  const renderWidth = Number(ocrMeta?.width) || 0;
+  const renderHeight = Number(ocrMeta?.height) || 0;
+  const renderArea = renderWidth > 0 && renderHeight > 0 ? renderWidth * renderHeight : 0;
+  if (pageArea > 0 && renderArea > 0) {
+    return Math.max(0.01, Math.min(1, pageArea / renderArea));
+  }
+
+  const renderScale = Number(ocrMeta?.scale) || 0;
+  if (renderScale > 0) {
+    return 1 / Math.max(1, renderScale * renderScale);
+  }
+
+  return 1;
+}
+
+function computeOcrRoiMetrics(page, sourceDecision) {
+  const ocrMeta = page?.ocrMeta && typeof page.ocrMeta === "object" ? page.ocrMeta : null;
+  const pageArea = Math.max(1, Number(page?.stats?.pageArea) || 0);
+  const areaToNativeFactor = resolveOcrAreaToNativeFactor(page, ocrMeta);
+  const backfillBands = Array.isArray(ocrMeta?.backfill?.bands) ? ocrMeta.backfill.bands : [];
+  if (Boolean(ocrMeta?.backfill?.enabled) && backfillBands.length) {
+    const mergedRects = mergeRegions(
+      backfillBands
+        .map((band) => rectFromBox(band?.box))
+        .filter(Boolean),
+      { mergeGap: 2 },
+    );
+    const roiAreaPx = mergedRects.reduce((sum, rect) => sum + rectArea(rect), 0) * areaToNativeFactor;
+    return {
+      roiKind: "backfill_bands",
+      roiCount: backfillBands.length,
+      roiAreaPx,
+      roiAreaRatio: pageArea > 0 ? clamp01(roiAreaPx / pageArea) : 0,
+    };
+  }
+
+  const cropBox = Array.isArray(ocrMeta?.crop?.box) ? ocrMeta.crop.box : null;
+  if (ocrMeta?.crop?.applied && cropBox) {
+    const roiAreaPx = boxAreaFromArray(cropBox) * areaToNativeFactor;
+    return {
+      roiKind: "crop_rect",
+      roiCount: roiAreaPx > 0 ? 1 : 0,
+      roiAreaPx,
+      roiAreaRatio: pageArea > 0 ? clamp01(roiAreaPx / pageArea) : 0,
+    };
+  }
+
+  if (sourceDecision === "ocr" || sourceDecision === "hybrid") {
+    return {
+      roiKind: "full_page",
+      roiCount: 1,
+      roiAreaPx: pageArea,
+      roiAreaRatio: 1,
+    };
+  }
+
+  return {
+    roiKind: "none",
+    roiCount: 0,
+    roiAreaPx: 0,
+    roiAreaRatio: 0,
+  };
 }
 
 function normalizeMetricValue(value, fallback = null) {
@@ -243,6 +377,7 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
       ocrText: rawPage.ocrText,
       requestedSource: resolvedSource.source,
       ocrAvailable: ocrOptions.available && ocrOptions.enabled,
+      mergeMode: classification.needsOcrBackfill ? "repair_only" : "augment",
       classification,
       stats: pageStats,
     });
@@ -274,7 +409,26 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
     const pageText = sourceDecision === "ocr" && hasOcrText
       ? rawPage.ocrText
       : fusion.text || nativeText;
+    const nativeMetrics = computeOcrTextMetrics({ text: nativeText });
     const qualityMetrics = buildPageQualityMetrics(pageText, rawPage, sourceDecision);
+    qualityMetrics.junkScoreBeforeMerge = Number(nativeMetrics.junkScore) || 0;
+    qualityMetrics.junkScoreAfterMerge = Number(qualityMetrics.junkScore) || 0;
+    qualityMetrics.junkScoreDelta = qualityMetrics.junkScoreAfterMerge - qualityMetrics.junkScoreBeforeMerge;
+    const backfillSignals = Object.entries(classification.backfill?.signals || {})
+      .filter(([, enabled]) => Boolean(enabled))
+      .map(([name]) => name);
+    const roiMetrics = computeOcrRoiMetrics(
+      {
+        stats: pageStats,
+        ocrMeta: rawPage.ocrMeta,
+      },
+      sourceDecision,
+    );
+    const processingMode = getProcessingMode({
+      classification,
+      sourceDecision,
+      ocrText: rawPage.ocrText,
+    });
     if (qualityMetrics.lowConfidence) {
       lowConfidencePages += 1;
     }
@@ -284,8 +438,12 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
     const lowConfLineFrac = Number.isFinite(qualityMetrics.lowConfLineFrac)
       ? qualityMetrics.lowConfLineFrac.toFixed(2)
       : "n/a";
+    const densityText = Number(classification.nativeTextDensity || pageStats.nativeTextDensity || 0).toFixed(4);
+    const roiAreaPct = Math.round((Number(roiMetrics.roiAreaRatio) || 0) * 100);
+    const junkBefore = (Number(qualityMetrics.junkScoreBeforeMerge) || 0).toFixed(3);
+    const junkAfter = (Number(qualityMetrics.junkScoreAfterMerge) || 0).toFixed(3);
     pageMetricLines.push(
-      `p${rawPage.pageIndex + 1}: chars=${qualityMetrics.charCount}, alpha=${qualityMetrics.alphaRatio.toFixed(2)}, conf=${meanLineConf}, lowConf=${lowConfLineFrac}, lines=${qualityMetrics.numLines}, medTok=${qualityMetrics.medianTokenLen.toFixed(1)}, footer=${qualityMetrics.footerBoilerplateHits}`,
+      `p${rawPage.pageIndex + 1}: mode=${processingMode}, dens=${densityText}, backfill=${classification.backfill?.votes || 0}/${backfillSignals.length ? backfillSignals.join("+") : "none"}, needsBackfill=${Boolean(classification.needsOcrBackfill)}, roi=${roiMetrics.roiCount}/${roiAreaPct}%, junk=${junkBefore}->${junkAfter}, chars=${qualityMetrics.charCount}, alpha=${qualityMetrics.alphaRatio.toFixed(2)}, conf=${meanLineConf}, lowConf=${lowConfLineFrac}, lines=${qualityMetrics.numLines}, medTok=${qualityMetrics.medianTokenLen.toFixed(1)}, footer=${qualityMetrics.footerBoilerplateHits}`,
     );
 
     const page = {
@@ -307,6 +465,21 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
       ocrText: typeof rawPage.ocrText === "string" ? rawPage.ocrText : undefined,
       ocrMeta: rawPage.ocrMeta && typeof rawPage.ocrMeta === "object" ? rawPage.ocrMeta : undefined,
       qualityMetrics,
+      extractionMetrics: {
+        mode: processingMode,
+        nativeTextDensity: Number(classification.nativeTextDensity || pageStats.nativeTextDensity || 0),
+        needsOcrBackfill: Boolean(classification.needsOcrBackfill),
+        backfillVotes: Number(classification.backfill?.votes) || 0,
+        backfillStrongVotes: Number(classification.backfill?.strongVotes) || 0,
+        backfillScore: Number(classification.backfill?.severityScore) || 0,
+        backfillSignals,
+        roiKind: roiMetrics.roiKind,
+        ocrRoiCount: Number(roiMetrics.roiCount) || 0,
+        ocrRoiAreaPx: Number(roiMetrics.roiAreaPx) || 0,
+        ocrRoiAreaRatio: Number(roiMetrics.roiAreaRatio) || 0,
+        junkScoreBeforeMerge: Number(qualityMetrics.junkScoreBeforeMerge) || 0,
+        junkScoreAfterMerge: Number(qualityMetrics.junkScoreAfterMerge) || 0,
+      },
     };
 
     const header = `\n===== PAGE ${page.pageIndex + 1} (${sourceHeaderLabel(page)}) =====\n`;
@@ -318,7 +491,11 @@ export function buildPdfDocumentModel(file, rawPages, opts = {}) {
     pages.push(page);
   }
 
-  const requiresOcr = pages.some((page) => page.classification?.needsOcr || page.sourceDecision !== "native");
+  const requiresOcr = pages.some((page) =>
+    page.classification?.needsOcrBackfill ||
+    page.sourceDecision !== "native" ||
+    page.classification?.needsOcr,
+  );
   const blockReason = summarizeBlockedPages(pages);
   const blocked = Boolean(blockReason);
   const gate = {
@@ -361,7 +538,7 @@ export function selectPagesForOcr(documentModel, opts = {}) {
   }
 
   return pages
-    .filter((page) => page.sourceDecision === "ocr" || page.classification?.needsOcr)
+    .filter((page) => page.sourceDecision === "ocr" || page.classification?.needsOcrBackfill)
     .map((page) => page.pageIndex)
     .filter((index) => Number.isFinite(index));
 }
@@ -396,14 +573,46 @@ async function runOcrPass(file, pageIndexes, opts, push) {
   const pdfBytes = await file.arrayBuffer();
   const rawPages = normalizeRawPages(opts.rawPages);
   const rawPageByIndex = new Map(rawPages.map((page) => [page.pageIndex, page]));
+  const decisionPages = Array.isArray(opts.decisionPages) ? opts.decisionPages : [];
+  const decisionByIndex = new Map(decisionPages.map((page) => [page.pageIndex, page]));
   const pageHints = pageIndexes.map((pageIndex) => {
     const rawPage = rawPageByIndex.get(pageIndex);
     if (!rawPage) return { pageIndex };
+    const decision = decisionByIndex.get(pageIndex);
+    const needsBackfill = Boolean(decision?.classification?.needsOcrBackfill);
+
+    let lineBandRegions = [];
+    let lineBandMeta = { applied: false, reason: "disabled" };
+    if (needsBackfill) {
+      const lineBands = getLineBandRegions(
+        {
+          layoutBlocks: Array.isArray(rawPage.layoutBlocks) ? rawPage.layoutBlocks : [],
+          canvasWidth: rawPage.stats?.pageWidth,
+          canvasHeight: rawPage.stats?.pageHeight,
+          viewportWidth: rawPage.stats?.pageWidth,
+          viewportHeight: rawPage.stats?.pageHeight,
+        },
+        {
+          yPaddingPx: ocrOptions.backfillBandPaddingPx,
+          xPaddingRatio: ocrOptions.backfillBandPaddingRatio,
+          minBandWidthRatio: ocrOptions.backfillBandMinWidthRatio,
+          maxBands: ocrOptions.backfillBandMaxRegions,
+        },
+      );
+      lineBandRegions = Array.isArray(lineBands?.regions) ? lineBands.regions : [];
+      lineBandMeta = lineBands?.meta && typeof lineBands.meta === "object"
+        ? lineBands.meta
+        : lineBandMeta;
+    }
+
     return {
       pageIndex,
       stats: rawPage.stats && typeof rawPage.stats === "object" ? rawPage.stats : undefined,
       imageRegions: Array.isArray(rawPage.imageRegions) ? rawPage.imageRegions : [],
       textRegions: Array.isArray(rawPage.textRegions) ? rawPage.textRegions : [],
+      lineBandRegions,
+      lineBandMeta,
+      ocrMode: needsBackfill && lineBandRegions.length ? "backfill" : "full",
     };
   });
 
@@ -497,6 +706,10 @@ async function runOcrPass(file, pageIndexes, opts, push) {
         headerRetryPsms: ocrOptions.headerRetryPsms,
         figureOverlapThreshold: ocrOptions.figureOverlapThreshold,
         shortLowConfThreshold: ocrOptions.shortLowConfThreshold,
+        backfillScaleBoost: ocrOptions.backfillScaleBoost,
+        backfillPreprocess: ocrOptions.backfillPreprocess,
+        backfillThresholdBias: ocrOptions.backfillThresholdBias,
+        backfillDilate: ocrOptions.backfillDilate,
       },
     }, [pdfBytes]);
   });
@@ -566,7 +779,11 @@ async function* runWorkerExtraction(file, opts = {}, messageType = "extract_adap
               totalPages: ocrTargets.length,
             });
             try {
-              const ocrPages = await runOcrPass(file, ocrTargets, { ...opts, rawPages: pages }, push);
+              const ocrPages = await runOcrPass(file, ocrTargets, {
+                ...opts,
+                rawPages: pages,
+                decisionPages: document.pages,
+              }, push);
               pages = applyOcrResultsToRawPages(pages, ocrPages);
               document = buildPdfDocumentModel(file, pages, {
                 ...opts,
