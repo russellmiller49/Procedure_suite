@@ -90,6 +90,25 @@ const cameraStatusTextEl = document.getElementById("cameraStatusText");
 const cameraProgressTextEl = document.getElementById("cameraProgressText");
 const cameraThumbStripEl = document.getElementById("cameraThumbStrip");
 const cameraWarningListEl = document.getElementById("cameraWarningList");
+const cameraCropPanelEl = document.getElementById("cameraCropPanel");
+const cameraCropPageSelectEl = document.getElementById("cameraCropPageSelect");
+const cameraCropTopRangeEl = document.getElementById("cameraCropTopRange");
+const cameraCropRightRangeEl = document.getElementById("cameraCropRightRange");
+const cameraCropBottomRangeEl = document.getElementById("cameraCropBottomRange");
+const cameraCropLeftRangeEl = document.getElementById("cameraCropLeftRange");
+const cameraCropTopValueEl = document.getElementById("cameraCropTopValue");
+const cameraCropRightValueEl = document.getElementById("cameraCropRightValue");
+const cameraCropBottomValueEl = document.getElementById("cameraCropBottomValue");
+const cameraCropLeftValueEl = document.getElementById("cameraCropLeftValue");
+const cameraCropPreviewStageEl = document.getElementById("cameraCropPreviewStage");
+const cameraCropPreviewImgEl = document.getElementById("cameraCropPreviewImg");
+const cameraCropPreviewBoxEl = document.getElementById("cameraCropPreviewBox");
+const cameraCropZoomWrapEl = document.getElementById("cameraCropZoomWrap");
+const cameraCropZoomImgEl = document.getElementById("cameraCropZoomImg");
+const cameraCropApplyBtn = document.getElementById("cameraCropApplyBtn");
+const cameraCropApplyAllBtn = document.getElementById("cameraCropApplyAllBtn");
+const cameraCropResetBtn = document.getElementById("cameraCropResetBtn");
+const cameraCropResetAllBtn = document.getElementById("cameraCropResetAllBtn");
 const privacyShieldEl = document.getElementById("privacyShield");
 
 let lastServerResponse = null;
@@ -6873,6 +6892,14 @@ function renderRegistryForm(registry) {
 async function main() {
   const editorHost = document.getElementById("editor");
   const fallbackTextarea = document.getElementById("fallbackTextarea");
+  const isMobileSafariBrowser = (() => {
+    const ua = navigator.userAgent || "";
+    const isIOSDevice =
+      /iPad|iPhone|iPod/i.test(ua) || (ua.includes("Mac") && "ontouchend" in document);
+    const isSafari =
+      /Safari/i.test(ua) && !/Chrome|CriOS|FxiOS|EdgiOS|OPR/i.test(ua);
+    return isIOSDevice && isSafari;
+  })();
 
   // Let users paste/typing immediately; Monaco boot can lag on first load.
   if (fallbackTextarea) {
@@ -6888,7 +6915,7 @@ async function main() {
   let model = null;
 
   // Try to boot Monaco quickly, but never hang the app if it stalls.
-  if (window.__monacoReady) {
+  if (!isMobileSafariBrowser && window.__monacoReady) {
     try {
       await Promise.race([
         window.__monacoReady,
@@ -6905,6 +6932,8 @@ async function main() {
     setStatus(
       "Cross-origin isolation is OFF (SharedArrayBuffer unavailable). Running in single-threaded mode."
     );
+  } else if (isMobileSafariBrowser) {
+    setStatus("Mobile Safari detected: using basic editor mode for reliable select/copy behavior.");
   } else if (usingPlainEditor) {
     setStatus("Loading… (basic editor mode; Monaco still initializing)");
   }
@@ -6963,6 +6992,9 @@ async function main() {
     let cameraOcrJobId = "";
     let privacyShieldTeardown = () => {};
     const cameraQueue = createCameraCaptureQueue();
+    let cameraSelectedCropPageIndex = 0;
+    let cameraCropDragState = null;
+    let cameraCropShowZoomPreview = false;
 
   function formatFileSize(bytes) {
     if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
@@ -7191,6 +7223,342 @@ async function main() {
     cameraProgressTextEl.textContent = String(message || "");
   }
 
+  function normalizeCameraCropMargins(input = {}) {
+    return {
+      top: clamp(Number(input.top) || 0, 0, 45),
+      right: clamp(Number(input.right) || 0, 0, 45),
+      bottom: clamp(Number(input.bottom) || 0, 0, 45),
+      left: clamp(Number(input.left) || 0, 0, 45),
+    };
+  }
+
+  function cameraCropRectToMargins(crop) {
+    if (!crop || typeof crop !== "object") {
+      return { top: 0, right: 0, bottom: 0, left: 0 };
+    }
+    const x0 = clamp(Number(crop.x0) || 0, 0, 1);
+    const y0 = clamp(Number(crop.y0) || 0, 0, 1);
+    const x1 = clamp(Number(crop.x1) || 1, 0, 1);
+    const y1 = clamp(Number(crop.y1) || 1, 0, 1);
+    return normalizeCameraCropMargins({
+      top: Math.round(Math.min(y0, y1) * 100),
+      right: Math.round((1 - Math.max(x0, x1)) * 100),
+      bottom: Math.round((1 - Math.max(y0, y1)) * 100),
+      left: Math.round(Math.min(x0, x1) * 100),
+    });
+  }
+
+  function cameraCropMarginsToRect(marginsInput) {
+    const margins = normalizeCameraCropMargins(marginsInput);
+    const x0 = clamp(margins.left / 100, 0, 1);
+    const y0 = clamp(margins.top / 100, 0, 1);
+    const x1 = clamp(1 - margins.right / 100, 0, 1);
+    const y1 = clamp(1 - margins.bottom / 100, 0, 1);
+    const fullPage = margins.top < 0.5 && margins.right < 0.5 && margins.bottom < 0.5 && margins.left < 0.5;
+    if (fullPage) return null;
+    if (x1 - x0 < 0.05 || y1 - y0 < 0.05) return null;
+    return { x0, y0, x1, y1 };
+  }
+
+  function readCameraCropMarginsFromInputs() {
+    return normalizeCameraCropMargins({
+      top: Number(cameraCropTopRangeEl?.value || 0),
+      right: Number(cameraCropRightRangeEl?.value || 0),
+      bottom: Number(cameraCropBottomRangeEl?.value || 0),
+      left: Number(cameraCropLeftRangeEl?.value || 0),
+    });
+  }
+
+  function writeCameraCropMarginsToInputs(marginsInput) {
+    const margins = normalizeCameraCropMargins(marginsInput);
+    if (cameraCropTopRangeEl) cameraCropTopRangeEl.value = String(margins.top);
+    if (cameraCropRightRangeEl) cameraCropRightRangeEl.value = String(margins.right);
+    if (cameraCropBottomRangeEl) cameraCropBottomRangeEl.value = String(margins.bottom);
+    if (cameraCropLeftRangeEl) cameraCropLeftRangeEl.value = String(margins.left);
+    if (cameraCropTopValueEl) cameraCropTopValueEl.textContent = `${Math.round(margins.top)}%`;
+    if (cameraCropRightValueEl) cameraCropRightValueEl.textContent = `${Math.round(margins.right)}%`;
+    if (cameraCropBottomValueEl) cameraCropBottomValueEl.textContent = `${Math.round(margins.bottom)}%`;
+    if (cameraCropLeftValueEl) cameraCropLeftValueEl.textContent = `${Math.round(margins.left)}%`;
+  }
+
+  function normalizeCameraCropRect(input) {
+    if (!input || typeof input !== "object") return { x0: 0, y0: 0, x1: 1, y1: 1 };
+    const x0 = clamp(Number(input.x0) || 0, 0, 1);
+    const y0 = clamp(Number(input.y0) || 0, 0, 1);
+    const x1 = clamp(Number(input.x1) || 1, 0, 1);
+    const y1 = clamp(Number(input.y1) || 1, 0, 1);
+    return {
+      x0: Math.min(x0, x1),
+      y0: Math.min(y0, y1),
+      x1: Math.max(x0, x1),
+      y1: Math.max(y0, y1),
+    };
+  }
+
+  function getCameraCropRectFromInputsOrFull() {
+    const raw = cameraCropMarginsToRect(readCameraCropMarginsFromInputs());
+    return normalizeCameraCropRect(raw || { x0: 0, y0: 0, x1: 1, y1: 1 });
+  }
+
+  function setCameraCropRectToInputs(rect) {
+    writeCameraCropMarginsToInputs(cameraCropRectToMargins(normalizeCameraCropRect(rect)));
+  }
+
+  function getCameraCropFrameRect() {
+    if (!cameraCropPreviewStageEl || !cameraCropPreviewImgEl) return null;
+    if (cameraCropPreviewImgEl.classList.contains("hidden")) return null;
+
+    const stageRect = cameraCropPreviewStageEl.getBoundingClientRect();
+    const imgRect = cameraCropPreviewImgEl.getBoundingClientRect();
+    if (!stageRect?.width || !stageRect?.height || !imgRect?.width || !imgRect?.height) return null;
+
+    let left = imgRect.left - stageRect.left;
+    let top = imgRect.top - stageRect.top;
+    let width = imgRect.width;
+    let height = imgRect.height;
+
+    // The preview image uses object-fit: contain, which can add internal bars.
+    // Map crop coordinates to the actual rendered image content, not the full element box.
+    const naturalWidth = Math.max(0, Number(cameraCropPreviewImgEl.naturalWidth) || 0);
+    const naturalHeight = Math.max(0, Number(cameraCropPreviewImgEl.naturalHeight) || 0);
+    if (naturalWidth > 0 && naturalHeight > 0 && width > 0 && height > 0) {
+      const boxRatio = width / height;
+      const contentRatio = naturalWidth / naturalHeight;
+      const ratioEpsilon = 0.0001;
+      if (contentRatio < boxRatio - ratioEpsilon) {
+        const contentWidth = Math.max(1, height * contentRatio);
+        const padX = Math.max(0, (width - contentWidth) / 2);
+        left += padX;
+        width = contentWidth;
+      } else if (contentRatio > boxRatio + ratioEpsilon) {
+        const contentHeight = Math.max(1, width / contentRatio);
+        const padY = Math.max(0, (height - contentHeight) / 2);
+        top += padY;
+        height = contentHeight;
+      }
+    }
+
+    return {
+      left,
+      top,
+      width,
+      height,
+    };
+  }
+
+  function renderCameraCropZoomPreview() {
+    if (!cameraCropZoomWrapEl || !cameraCropZoomImgEl) return;
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    const page = pages[cameraSelectedCropPageIndex] || null;
+    const activeRect = getCameraCropRectFromInputsOrFull();
+    const hasCrop = activeRect.x1 - activeRect.x0 < 0.999 || activeRect.y1 - activeRect.y0 < 0.999;
+
+    if (!cameraCropShowZoomPreview || !page || !hasCrop) {
+      cameraCropZoomWrapEl.classList.add("hidden");
+      cameraCropZoomImgEl.removeAttribute("src");
+      return;
+    }
+
+    const img = cameraCropPreviewImgEl;
+    const naturalWidth = Math.max(1, Number(img?.naturalWidth) || 0);
+    const naturalHeight = Math.max(1, Number(img?.naturalHeight) || 0);
+    if (!naturalWidth || !naturalHeight || !img?.complete) {
+      cameraCropZoomWrapEl.classList.add("hidden");
+      return;
+    }
+
+    const sx = Math.max(0, Math.floor(activeRect.x0 * naturalWidth));
+    const sy = Math.max(0, Math.floor(activeRect.y0 * naturalHeight));
+    const ex = Math.min(naturalWidth, Math.ceil(activeRect.x1 * naturalWidth));
+    const ey = Math.min(naturalHeight, Math.ceil(activeRect.y1 * naturalHeight));
+    const sw = Math.max(1, ex - sx);
+    const sh = Math.max(1, ey - sy);
+    const maxDim = 900;
+    const scale = Math.min(1, maxDim / Math.max(sw, sh));
+    const outW = Math.max(1, Math.round(sw * scale));
+    const outH = Math.max(1, Math.round(sh * scale));
+
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = outW;
+      canvas.height = outH;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("missing 2d context");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, outW, outH);
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, outW, outH);
+      cameraCropZoomImgEl.src = canvas.toDataURL("image/jpeg", 0.95);
+      cameraCropZoomWrapEl.classList.remove("hidden");
+    } catch {
+      cameraCropZoomWrapEl.classList.add("hidden");
+      cameraCropZoomImgEl.removeAttribute("src");
+    }
+  }
+
+  function beginCameraCropDrag(pointerEvent) {
+    if (!cameraCropPreviewStageEl || !cameraCropPreviewBoxEl) return;
+    if (running || bundleBusy || extractingPdf || extractingCamera) return;
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    if (!pages.length) return;
+
+    const handleEl = pointerEvent.target?.closest?.("[data-crop-handle]");
+    const handleName = String(handleEl?.dataset?.cropHandle || "").toLowerCase();
+    const clickedOnBox = pointerEvent.target === cameraCropPreviewBoxEl || pointerEvent.target?.closest?.("#cameraCropPreviewBox");
+    if (!clickedOnBox) return;
+
+    const mode = ["nw", "ne", "se", "sw"].includes(handleName) ? handleName : "move";
+    const frame = getCameraCropFrameRect();
+    if (!frame) return;
+    const startRect = getCameraCropRectFromInputsOrFull();
+    if (!startRect) return;
+
+    cameraCropDragState = {
+      pointerId: Number(pointerEvent.pointerId),
+      mode,
+      startClientX: Number(pointerEvent.clientX) || 0,
+      startClientY: Number(pointerEvent.clientY) || 0,
+      startRect,
+      frame,
+    };
+    cameraCropShowZoomPreview = false;
+
+    try {
+      cameraCropPreviewStageEl.setPointerCapture(pointerEvent.pointerId);
+    } catch {
+      // ignore
+    }
+    pointerEvent.preventDefault();
+  }
+
+  function updateCameraCropDrag(pointerEvent) {
+    if (!cameraCropDragState) return;
+    if (Number(pointerEvent.pointerId) !== cameraCropDragState.pointerId) return;
+
+    const minSpan = 0.05;
+    const dx = (Number(pointerEvent.clientX) - cameraCropDragState.startClientX) / Math.max(1, cameraCropDragState.frame.width);
+    const dy = (Number(pointerEvent.clientY) - cameraCropDragState.startClientY) / Math.max(1, cameraCropDragState.frame.height);
+    const start = cameraCropDragState.startRect;
+    let next = { ...start };
+
+    if (cameraCropDragState.mode === "move") {
+      const spanX = Math.max(minSpan, start.x1 - start.x0);
+      const spanY = Math.max(minSpan, start.y1 - start.y0);
+      let x0 = start.x0 + dx;
+      let y0 = start.y0 + dy;
+      x0 = clamp(x0, 0, 1 - spanX);
+      y0 = clamp(y0, 0, 1 - spanY);
+      next = { x0, y0, x1: x0 + spanX, y1: y0 + spanY };
+    } else if (cameraCropDragState.mode === "nw") {
+      next.x0 = clamp(start.x0 + dx, 0, start.x1 - minSpan);
+      next.y0 = clamp(start.y0 + dy, 0, start.y1 - minSpan);
+    } else if (cameraCropDragState.mode === "ne") {
+      next.x1 = clamp(start.x1 + dx, start.x0 + minSpan, 1);
+      next.y0 = clamp(start.y0 + dy, 0, start.y1 - minSpan);
+    } else if (cameraCropDragState.mode === "se") {
+      next.x1 = clamp(start.x1 + dx, start.x0 + minSpan, 1);
+      next.y1 = clamp(start.y1 + dy, start.y0 + minSpan, 1);
+    } else if (cameraCropDragState.mode === "sw") {
+      next.x0 = clamp(start.x0 + dx, 0, start.x1 - minSpan);
+      next.y1 = clamp(start.y1 + dy, start.y0 + minSpan, 1);
+    }
+
+    setCameraCropRectToInputs(next);
+    renderCameraCropPreview();
+    pointerEvent.preventDefault();
+  }
+
+  function endCameraCropDrag(pointerEvent) {
+    if (!cameraCropDragState) return;
+    if (pointerEvent && Number(pointerEvent.pointerId) !== cameraCropDragState.pointerId) return;
+    cameraCropDragState = null;
+  }
+
+  function updateCameraCropPreviewFromInputs() {
+    const margins = readCameraCropMarginsFromInputs();
+    writeCameraCropMarginsToInputs(margins);
+    cameraCropShowZoomPreview = false;
+    renderCameraCropPreview();
+  }
+
+  function loadCameraCropControlsFromPage(pageIndex) {
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    const idx = clamp(Number(pageIndex) || 0, 0, Math.max(0, pages.length - 1));
+    cameraSelectedCropPageIndex = idx;
+    cameraCropDragState = null;
+    const page = pages[idx] || null;
+    cameraCropShowZoomPreview = Boolean(page?.crop);
+    writeCameraCropMarginsToInputs(cameraCropRectToMargins(page?.crop || null));
+  }
+
+  function renderCameraCropPreview() {
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    const page = pages[cameraSelectedCropPageIndex] || null;
+    if (!cameraCropPreviewImgEl || !cameraCropPreviewBoxEl || !cameraCropPreviewStageEl) return;
+
+    if (page?.previewUrl) {
+      if (cameraCropPreviewImgEl.getAttribute("src") !== page.previewUrl) {
+        cameraCropPreviewImgEl.src = page.previewUrl;
+      }
+      cameraCropPreviewImgEl.classList.remove("hidden");
+    } else {
+      cameraCropPreviewImgEl.removeAttribute("src");
+      cameraCropPreviewImgEl.classList.add("hidden");
+      cameraCropPreviewBoxEl.classList.add("hidden");
+      renderCameraCropZoomPreview();
+      return;
+    }
+
+    const frame = getCameraCropFrameRect();
+    if (!frame) {
+      cameraCropPreviewBoxEl.classList.add("hidden");
+      renderCameraCropZoomPreview();
+      return;
+    }
+
+    const cropRect = getCameraCropRectFromInputsOrFull();
+    const left = frame.left + cropRect.x0 * frame.width;
+    const top = frame.top + cropRect.y0 * frame.height;
+    const width = Math.max(1, (cropRect.x1 - cropRect.x0) * frame.width);
+    const height = Math.max(1, (cropRect.y1 - cropRect.y0) * frame.height);
+
+    cameraCropPreviewBoxEl.style.left = `${left}px`;
+    cameraCropPreviewBoxEl.style.top = `${top}px`;
+    cameraCropPreviewBoxEl.style.width = `${width}px`;
+    cameraCropPreviewBoxEl.style.height = `${height}px`;
+    cameraCropPreviewBoxEl.classList.remove("hidden");
+    renderCameraCropZoomPreview();
+  }
+
+  function renderCameraCropPanel() {
+    if (!cameraCropPanelEl) return;
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    const hasPages = pages.length > 0;
+    cameraCropPanelEl.classList.toggle("hidden", !hasPages);
+    if (!hasPages) {
+      if (cameraCropPreviewImgEl) {
+        cameraCropPreviewImgEl.removeAttribute("src");
+        cameraCropPreviewImgEl.classList.add("hidden");
+      }
+      if (cameraCropPreviewBoxEl) cameraCropPreviewBoxEl.classList.add("hidden");
+      if (cameraCropZoomWrapEl) cameraCropZoomWrapEl.classList.add("hidden");
+      return;
+    }
+
+    cameraSelectedCropPageIndex = clamp(cameraSelectedCropPageIndex, 0, pages.length - 1);
+    if (cameraCropPageSelectEl) {
+      cameraCropPageSelectEl.innerHTML = "";
+      for (let i = 0; i < pages.length; i += 1) {
+        const option = document.createElement("option");
+        const cropTag = pages[i]?.crop ? " (cropped)" : "";
+        option.value = String(i);
+        option.textContent = `Page ${i + 1}${cropTag}`;
+        cameraCropPageSelectEl.appendChild(option);
+      }
+      cameraCropPageSelectEl.value = String(cameraSelectedCropPageIndex);
+    }
+    renderCameraCropPreview();
+  }
+
   function renderCameraWarnings(warnings = []) {
     if (!cameraWarningListEl) return;
     cameraWarningListEl.innerHTML = "";
@@ -7214,13 +7582,27 @@ async function main() {
       empty.className = "subtle";
       empty.textContent = "No captured pages yet.";
       cameraThumbStripEl.appendChild(empty);
+      renderCameraCropPanel();
       return;
     }
+
+    cameraSelectedCropPageIndex = clamp(cameraSelectedCropPageIndex, 0, pages.length - 1);
 
     for (let i = 0; i < pages.length; i += 1) {
       const page = pages[i];
       const item = document.createElement("div");
       item.className = "camera-thumb-item";
+      if (page?.crop) item.classList.add("cropped");
+      if (i === cameraSelectedCropPageIndex) item.classList.add("selected");
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "camera-thumb-button";
+      button.addEventListener("click", () => {
+        cameraSelectedCropPageIndex = i;
+        loadCameraCropControlsFromPage(i);
+        renderCameraThumbnails();
+      });
 
       const img = document.createElement("img");
       if (page.previewUrl) {
@@ -7232,12 +7614,15 @@ async function main() {
 
       const label = document.createElement("div");
       label.className = "camera-thumb-label";
-      label.textContent = `Page ${i + 1}`;
+      label.textContent = `Page ${i + 1}${page?.crop ? " • Crop" : ""}`;
 
-      item.appendChild(img);
-      item.appendChild(label);
+      button.appendChild(img);
+      button.appendChild(label);
+      item.appendChild(button);
       cameraThumbStripEl.appendChild(item);
     }
+
+    renderCameraCropPanel();
   }
 
   function stopCameraPreviewStream() {
@@ -7250,26 +7635,44 @@ async function main() {
   }
 
   function clearCapturedCameraPages() {
-    cameraQueue.clearAll();
+    const cleared = cameraQueue.clearAll();
+    cameraSelectedCropPageIndex = 0;
+    cameraCropDragState = null;
+    cameraCropShowZoomPreview = false;
+    writeCameraCropMarginsToInputs({ top: 0, right: 0, bottom: 0, left: 0 });
     renderCameraWarnings([]);
     renderCameraThumbnails();
+    return cleared;
   }
 
   function updateCameraControls() {
     const hasPages = Array.isArray(cameraQueue.pages) && cameraQueue.pages.length > 0;
     const hasStream = Boolean(cameraStream);
     const busy = running || bundleBusy || extractingPdf || extractingCamera;
+    const cropDisabled = busy || !hasPages;
 
     if (cameraStartBtn) cameraStartBtn.disabled = busy || hasStream;
     if (cameraCaptureBtn) cameraCaptureBtn.disabled = busy || !hasStream;
     if (cameraRetakeBtn) cameraRetakeBtn.disabled = busy || !hasPages;
     if (cameraClearBtn) cameraClearBtn.disabled = busy || !hasPages;
     if (cameraRunOcrBtn) cameraRunOcrBtn.disabled = busy || !hasPages;
+    if (cameraCropPageSelectEl) cameraCropPageSelectEl.disabled = cropDisabled;
+    if (cameraCropTopRangeEl) cameraCropTopRangeEl.disabled = cropDisabled;
+    if (cameraCropRightRangeEl) cameraCropRightRangeEl.disabled = cropDisabled;
+    if (cameraCropBottomRangeEl) cameraCropBottomRangeEl.disabled = cropDisabled;
+    if (cameraCropLeftRangeEl) cameraCropLeftRangeEl.disabled = cropDisabled;
+    if (cameraCropApplyBtn) cameraCropApplyBtn.disabled = cropDisabled;
+    if (cameraCropApplyAllBtn) cameraCropApplyAllBtn.disabled = cropDisabled;
+    if (cameraCropResetBtn) cameraCropResetBtn.disabled = cropDisabled;
+    if (cameraCropResetAllBtn) cameraCropResetAllBtn.disabled = cropDisabled;
   }
 
   function resetCameraModalUi() {
     setCameraStatus("Start camera to capture pages.");
     setCameraProgress("");
+    cameraCropDragState = null;
+    cameraCropShowZoomPreview = false;
+    writeCameraCropMarginsToInputs({ top: 0, right: 0, bottom: 0, left: 0 });
     renderCameraWarnings([]);
     renderCameraThumbnails();
     updateCameraControls();
@@ -7312,6 +7715,64 @@ async function main() {
       }
     }
     return warnings;
+  }
+
+  function applyCurrentCropToSelectedPage() {
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    if (!pages.length) return;
+    cameraSelectedCropPageIndex = clamp(cameraSelectedCropPageIndex, 0, pages.length - 1);
+    const crop = cameraCropMarginsToRect(readCameraCropMarginsFromInputs());
+    cameraQueue.setPageCrop(cameraSelectedCropPageIndex, crop);
+    cameraCropShowZoomPreview = Boolean(crop);
+    setCameraStatus(
+      crop
+        ? `Applied crop to page ${cameraSelectedCropPageIndex + 1}.`
+        : `Cleared crop on page ${cameraSelectedCropPageIndex + 1}.`,
+    );
+    renderCameraThumbnails();
+    updateCameraControls();
+  }
+
+  function applyCurrentCropToAllPages() {
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    if (!pages.length) return;
+    const crop = cameraCropMarginsToRect(readCameraCropMarginsFromInputs());
+    for (let i = 0; i < pages.length; i += 1) {
+      cameraQueue.setPageCrop(i, crop);
+    }
+    cameraCropShowZoomPreview = Boolean(crop);
+    setCameraStatus(
+      crop
+        ? `Applied crop to all ${pages.length} page(s).`
+        : `Cleared crop on all ${pages.length} page(s).`,
+    );
+    renderCameraThumbnails();
+    updateCameraControls();
+  }
+
+  function resetSelectedPageCrop() {
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    if (!pages.length) return;
+    cameraSelectedCropPageIndex = clamp(cameraSelectedCropPageIndex, 0, pages.length - 1);
+    cameraQueue.setPageCrop(cameraSelectedCropPageIndex, null);
+    cameraCropShowZoomPreview = false;
+    loadCameraCropControlsFromPage(cameraSelectedCropPageIndex);
+    setCameraStatus(`Reset crop on page ${cameraSelectedCropPageIndex + 1}.`);
+    renderCameraThumbnails();
+    updateCameraControls();
+  }
+
+  function resetAllPageCrops() {
+    const cleared = cameraQueue.clearAllCrops();
+    cameraCropShowZoomPreview = false;
+    writeCameraCropMarginsToInputs({ top: 0, right: 0, bottom: 0, left: 0 });
+    if (cleared > 0) {
+      setCameraStatus(`Reset crop on ${cleared} page(s).`);
+    } else {
+      setCameraStatus("No cropped pages to reset.");
+    }
+    renderCameraThumbnails();
+    updateCameraControls();
   }
 
   function closeCameraModal() {
@@ -7381,7 +7842,8 @@ async function main() {
   async function captureCameraPage() {
     if (!cameraPreviewEl || !cameraStream) return;
     try {
-      const frame = await captureFrame(cameraPreviewEl, { maxDim: 2000 });
+      const captureMaxDim = cameraOcrQualitySelectEl?.value === "high_accuracy" ? 3400 : 2500;
+      const frame = await captureFrame(cameraPreviewEl, { maxDim: captureMaxDim });
       cameraQueue.addPage({
         bitmap: frame.bitmap,
         blob: frame.blob,
@@ -7405,13 +7867,17 @@ async function main() {
       setCameraStatus("Capture at least one page before running OCR.");
       return;
     }
+    const croppedPageCount = pagesForOcr.filter((page) => page?.crop).length;
 
     const ocrMode = cameraOcrQualitySelectEl?.value === "high_accuracy" ? "high_accuracy" : "fast";
-    const preprocessMode = cameraEnhanceSelectEl?.value === "bw_high_contrast"
+    const enhanceValue = String(cameraEnhanceSelectEl?.value || "auto");
+    const preprocessMode = enhanceValue === "bw_high_contrast"
       ? "bw_high_contrast"
-      : cameraEnhanceSelectEl?.value === "grayscale"
+      : enhanceValue === "grayscale"
         ? "grayscale"
-        : "off";
+        : enhanceValue === "off"
+          ? "off"
+          : "auto";
 
     extractingCamera = true;
     setCameraStatus("Running local OCR...");
@@ -7465,7 +7931,8 @@ async function main() {
 
       const summary =
         `Loaded ${ocrPages.length} camera page(s). OCR mode: ${ocrMode === "high_accuracy" ? "high accuracy" : "fast"}. ` +
-        `Enhance: ${preprocessMode}.`;
+        `Enhance: ${preprocessMode}.` +
+        (croppedPageCount > 0 ? ` Cropped pages: ${croppedPageCount}/${pagesForOcr.length}.` : "");
       setCameraScanSummary(summary, "success");
       setStatus("Camera OCR text loaded into editor. Run Detection to use existing PHI redaction workflow.");
       setProgress("");
@@ -7779,6 +8246,19 @@ async function main() {
       if (!removed) {
         setCameraStatus("No captured pages to retake.");
       } else {
+        if (cameraQueue.pages.length > 0) {
+          cameraSelectedCropPageIndex = clamp(
+            cameraSelectedCropPageIndex,
+            0,
+            cameraQueue.pages.length - 1,
+          );
+          loadCameraCropControlsFromPage(cameraSelectedCropPageIndex);
+        } else {
+          cameraSelectedCropPageIndex = 0;
+          cameraCropDragState = null;
+          cameraCropShowZoomPreview = false;
+          writeCameraCropMarginsToInputs({ top: 0, right: 0, bottom: 0, left: 0 });
+        }
         setCameraStatus(`Removed last capture. ${cameraQueue.pages.length} page(s) remaining.`);
       }
       renderCameraWarnings([]);
@@ -7789,11 +8269,78 @@ async function main() {
 
   if (cameraClearBtn) {
     cameraClearBtn.addEventListener("click", () => {
-      const count = cameraQueue.clearAll();
+      const count = clearCapturedCameraPages();
       setCameraStatus(count ? `Cleared ${count} captured page(s).` : "No captured pages to clear.");
-      renderCameraWarnings([]);
+      updateCameraControls();
+    });
+  }
+
+  if (cameraCropPageSelectEl) {
+    cameraCropPageSelectEl.addEventListener("change", () => {
+      const nextIndex = Number(cameraCropPageSelectEl.value);
+      loadCameraCropControlsFromPage(nextIndex);
       renderCameraThumbnails();
       updateCameraControls();
+    });
+  }
+
+  const cameraCropRangeInputs = [
+    cameraCropTopRangeEl,
+    cameraCropRightRangeEl,
+    cameraCropBottomRangeEl,
+    cameraCropLeftRangeEl,
+  ].filter(Boolean);
+  for (const input of cameraCropRangeInputs) {
+    input.addEventListener("input", () => {
+      updateCameraCropPreviewFromInputs();
+    });
+  }
+
+  if (cameraCropPreviewImgEl) {
+    cameraCropPreviewImgEl.addEventListener("load", () => {
+      renderCameraCropPreview();
+    });
+  }
+
+  if (cameraCropPreviewStageEl) {
+    cameraCropPreviewStageEl.addEventListener("pointerdown", (event) => {
+      beginCameraCropDrag(event);
+    });
+    cameraCropPreviewStageEl.addEventListener("pointermove", (event) => {
+      updateCameraCropDrag(event);
+    });
+    cameraCropPreviewStageEl.addEventListener("pointerup", (event) => {
+      endCameraCropDrag(event);
+    });
+    cameraCropPreviewStageEl.addEventListener("pointercancel", (event) => {
+      endCameraCropDrag(event);
+    });
+    cameraCropPreviewStageEl.addEventListener("lostpointercapture", () => {
+      cameraCropDragState = null;
+    });
+  }
+
+  if (cameraCropApplyBtn) {
+    cameraCropApplyBtn.addEventListener("click", () => {
+      applyCurrentCropToSelectedPage();
+    });
+  }
+
+  if (cameraCropApplyAllBtn) {
+    cameraCropApplyAllBtn.addEventListener("click", () => {
+      applyCurrentCropToAllPages();
+    });
+  }
+
+  if (cameraCropResetBtn) {
+    cameraCropResetBtn.addEventListener("click", () => {
+      resetSelectedPageCrop();
+    });
+  }
+
+  if (cameraCropResetAllBtn) {
+    cameraCropResetAllBtn.addEventListener("click", () => {
+      resetAllPageCrops();
     });
   }
 
@@ -8073,13 +8620,7 @@ async function main() {
   function shouldForceLegacyWorker() {
     const params = new URLSearchParams(location.search);
     if (params.get("legacy") === "1") return true;
-
-    const ua = navigator.userAgent || "";
-    const isIOSDevice =
-      /iPad|iPhone|iPod/i.test(ua) || (ua.includes("Mac") && "ontouchend" in document);
-    const isSafari =
-      /Safari/i.test(ua) && !/Chrome|CriOS|FxiOS|EdgiOS|OPR/i.test(ua);
-    return isIOSDevice && isSafari;
+    return isMobileSafariBrowser;
   }
 
   function buildWorkerUrl(name) {

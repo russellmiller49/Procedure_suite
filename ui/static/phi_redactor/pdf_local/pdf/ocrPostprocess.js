@@ -10,6 +10,13 @@ const EXACT_CLINICAL_REPLACEMENTS = Object.freeze([
   { re: /\bAtropine\s+9\.5\s+mg\b/gi, replace: "Atropine 0.5 mg" },
   { re: /\bfrom the mouth\s+nose\b/gi, replace: "from the mouth or nose" },
   { re: /\bmouth\s+nose\b/gi, replace: "mouth or nose" },
+  { re: /\bProceduratist\(s\)\b/gi, replace: "Proceduralist(s)" },
+  { re: /\bProceduratist\b/gi, replace: "Proceduralist" },
+  { re: /\bpleurescopy\b/gi, replace: "pleuroscopy" },
+  { re: /\binsion\b/gi, replace: "incision" },
+  { re: /\bFodings\b/gi, replace: "Findings" },
+  { re: /\bwih\b/gi, replace: "with" },
+  { re: /\ballematives\b/gi, replace: "alternatives" },
   { re: /\blyrnphadenopathy\b/gi, replace: "lymphadenopathy" },
   { re: /\bhytnph/gi, replace: "lymph" },
 ]);

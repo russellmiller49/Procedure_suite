@@ -47,6 +47,86 @@ function computeOtsuThreshold(histogram, totalCount) {
   return bestThreshold;
 }
 
+function percentileFromHistogram(histogram, totalCount, percentile) {
+  const total = Math.max(1, Math.floor(safeNumber(totalCount, 1)));
+  const pct = clamp(safeNumber(percentile, 0.5), 0, 1);
+  const target = Math.max(0, Math.min(total - 1, Math.floor(total * pct)));
+  let seen = 0;
+  for (let i = 0; i < 256; i += 1) {
+    seen += histogram[i];
+    if (seen > target) return i;
+  }
+  return 255;
+}
+
+export function computeGrayStats(grayValues) {
+  const gray = grayValues instanceof Uint8ClampedArray
+    ? grayValues
+    : new Uint8ClampedArray(Array.isArray(grayValues) ? grayValues : []);
+  if (!gray.length) {
+    return {
+      p05: 0,
+      p10: 0,
+      p50: 0,
+      p90: 0,
+      p95: 0,
+      dynamicRange: 0,
+      histogram: new Uint32Array(256),
+      pixelCount: 0,
+    };
+  }
+
+  const histogram = buildHistogram(gray);
+  const pixelCount = gray.length;
+  const p05 = percentileFromHistogram(histogram, pixelCount, 0.05);
+  const p10 = percentileFromHistogram(histogram, pixelCount, 0.1);
+  const p50 = percentileFromHistogram(histogram, pixelCount, 0.5);
+  const p90 = percentileFromHistogram(histogram, pixelCount, 0.9);
+  const p95 = percentileFromHistogram(histogram, pixelCount, 0.95);
+
+  return {
+    p05,
+    p10,
+    p50,
+    p90,
+    p95,
+    dynamicRange: Math.max(0, p90 - p10),
+    histogram,
+    pixelCount,
+  };
+}
+
+function applyContrastStretch(grayValues, stats, opts = {}) {
+  const gray = grayValues instanceof Uint8ClampedArray
+    ? grayValues
+    : new Uint8ClampedArray(Array.isArray(grayValues) ? grayValues : []);
+  if (!gray.length) return gray;
+
+  const lowerPct = clamp(safeNumber(opts.lowerPercentile, 0.06), 0, 0.45);
+  const upperPct = clamp(safeNumber(opts.upperPercentile, 0.94), 0.55, 1);
+  const lower = percentileFromHistogram(stats.histogram, stats.pixelCount, lowerPct);
+  const upper = percentileFromHistogram(stats.histogram, stats.pixelCount, upperPct);
+  const span = Math.max(12, upper - lower);
+
+  const out = new Uint8ClampedArray(gray.length);
+  for (let i = 0; i < gray.length; i += 1) {
+    const normalized = ((gray[i] - lower) * 255) / span;
+    out[i] = Math.max(0, Math.min(255, Math.round(normalized)));
+  }
+  return out;
+}
+
+export function resolveAutoPreprocessMode(grayStats, qualityMetrics) {
+  const dynamicRange = safeNumber(grayStats?.dynamicRange, 0);
+  const overexposureRatio = safeNumber(qualityMetrics?.overexposureRatio, 0);
+  const underexposureRatio = safeNumber(qualityMetrics?.underexposureRatio, 0);
+
+  if (overexposureRatio > 0.34) return "bw_high_contrast";
+  if (underexposureRatio > 0.46) return "bw_high_contrast";
+  if (dynamicRange < 54) return "bw_high_contrast";
+  return "grayscale";
+}
+
 export function computeScaledDimensions(width, height, maxDim = 2000) {
   const srcWidth = Math.max(1, Math.floor(safeNumber(width, 1)));
   const srcHeight = Math.max(1, Math.floor(safeNumber(height, 1)));
@@ -64,16 +144,20 @@ export function buildPreprocessPlan(input = {}) {
     ? "bw_high_contrast"
     : input.mode === "grayscale"
       ? "grayscale"
-      : "off";
+      : input.mode === "auto"
+        ? "auto"
+        : "off";
 
   const dims = computeScaledDimensions(input.width, input.height, input.maxDim);
   return {
     mode,
+    resolvedMode: mode,
     targetWidth: dims.width,
     targetHeight: dims.height,
     scale: dims.scale,
-    applyGrayscale: mode === "grayscale" || mode === "bw_high_contrast",
+    applyGrayscale: mode === "grayscale" || mode === "bw_high_contrast" || mode === "auto",
     applyThreshold: mode === "bw_high_contrast",
+    autoTuning: mode === "auto",
   };
 }
 
@@ -90,24 +174,48 @@ function computeGrayFromImageData(data) {
 
 export function applyPreprocessToImageData(imageData, plan) {
   const data = imageData?.data;
-  if (!data || !plan || (!plan.applyGrayscale && !plan.applyThreshold)) {
+  if (!data) {
     return {
       changed: false,
-      gray: data ? computeGrayFromImageData(data) : new Uint8ClampedArray(),
+      gray: new Uint8ClampedArray(),
+      sourceGray: new Uint8ClampedArray(),
       threshold: null,
+      resolvedMode: "off",
+      grayStats: computeGrayStats([]),
     };
   }
 
-  const gray = computeGrayFromImageData(data);
-  let threshold = null;
-  let output = gray;
+  const sourceGray = computeGrayFromImageData(data);
+  const sourceStats = computeGrayStats(sourceGray);
+  const srcWidth = Math.max(1, Math.floor(safeNumber(imageData?.width, 1)));
+  const srcHeight = Math.max(1, Math.floor(safeNumber(imageData?.height, 1)));
 
-  if (plan.applyThreshold) {
-    const histogram = buildHistogram(gray);
-    threshold = computeOtsuThreshold(histogram, gray.length);
-    const binary = new Uint8ClampedArray(gray.length);
-    for (let i = 0; i < gray.length; i += 1) {
-      binary[i] = gray[i] <= threshold ? 0 : 255;
+  let resolvedMode = String(plan?.mode || "off");
+  if (resolvedMode === "auto") {
+    const qualityMetrics = computeCaptureQualityMetrics(sourceGray, srcWidth, srcHeight);
+    resolvedMode = resolveAutoPreprocessMode(sourceStats, qualityMetrics);
+  }
+
+  if (resolvedMode !== "grayscale" && resolvedMode !== "bw_high_contrast") {
+    return {
+      changed: false,
+      gray: sourceGray,
+      sourceGray,
+      threshold: null,
+      resolvedMode: "off",
+      grayStats: sourceStats,
+    };
+  }
+
+  let threshold = null;
+  let output = applyContrastStretch(sourceGray, sourceStats);
+
+  if (resolvedMode === "bw_high_contrast") {
+    const histogram = buildHistogram(output);
+    threshold = computeOtsuThreshold(histogram, output.length);
+    const binary = new Uint8ClampedArray(output.length);
+    for (let i = 0; i < output.length; i += 1) {
+      binary[i] = output[i] <= threshold ? 0 : 255;
     }
     output = binary;
   }
@@ -125,7 +233,10 @@ export function applyPreprocessToImageData(imageData, plan) {
   return {
     changed: true,
     gray: output,
+    sourceGray,
     threshold,
+    resolvedMode,
+    grayStats: computeGrayStats(output),
   };
 }
 
@@ -162,18 +273,27 @@ export function computeCaptureQualityMetrics(gray, width, height, opts = {}) {
   const safeWidth = Math.max(1, Math.floor(safeNumber(width, 1)));
   const safeHeight = Math.max(1, Math.floor(safeNumber(height, 1)));
   const whiteThreshold = clamp(Math.floor(safeNumber(opts.whiteThreshold, 245)), 180, 254);
+  const darkThreshold = clamp(Math.floor(safeNumber(opts.darkThreshold, 32)), 1, 120);
 
   let whiteCount = 0;
+  let darkCount = 0;
   for (let i = 0; i < gray.length; i += 1) {
     if (gray[i] >= whiteThreshold) whiteCount += 1;
+    if (gray[i] <= darkThreshold) darkCount += 1;
   }
 
   const pixelCount = Math.max(1, gray.length);
+  const histogram = buildHistogram(gray);
+  const p10 = percentileFromHistogram(histogram, pixelCount, 0.1);
+  const p90 = percentileFromHistogram(histogram, pixelCount, 0.9);
   const overexposureRatio = whiteCount / pixelCount;
+  const underexposureRatio = darkCount / pixelCount;
   const blurVariance = computeLaplacianVariance(gray, safeWidth, safeHeight);
 
   return {
     overexposureRatio,
+    underexposureRatio,
+    dynamicRange: Math.max(0, p90 - p10),
     blurVariance,
     pixelCount,
   };
@@ -182,6 +302,8 @@ export function computeCaptureQualityMetrics(gray, width, height, opts = {}) {
 export function buildCaptureWarnings(metrics, opts = {}) {
   const blurMinVariance = safeNumber(opts.blurMinVariance, 110);
   const maxOverexposureRatio = safeNumber(opts.maxOverexposureRatio, 0.55);
+  const maxUnderexposureRatio = safeNumber(opts.maxUnderexposureRatio, 0.58);
+  const minDynamicRange = safeNumber(opts.minDynamicRange, 50);
   const warnings = [];
 
   if (safeNumber(metrics.blurVariance, 0) < blurMinVariance) {
@@ -189,6 +311,12 @@ export function buildCaptureWarnings(metrics, opts = {}) {
   }
   if (safeNumber(metrics.overexposureRatio, 0) > maxOverexposureRatio) {
     warnings.push("Image may be overexposed; reduce glare and retake.");
+  }
+  if (safeNumber(metrics.underexposureRatio, 0) > maxUnderexposureRatio) {
+    warnings.push("Image may be underexposed; increase lighting and retake.");
+  }
+  if (safeNumber(metrics.dynamicRange, 999) < minDynamicRange) {
+    warnings.push("Image has low contrast; use flatter lighting or high-contrast enhance mode.");
   }
 
   return warnings;
@@ -224,16 +352,20 @@ export function preprocessCanvasForOcr(canvas, options = {}) {
     ctx.putImageData(imageData, 0, 0);
   }
 
-  const gray = processed.gray.length
-    ? processed.gray
+  const qualityGray = processed.sourceGray.length
+    ? processed.sourceGray
     : computeGrayFromImageData(imageData.data);
-  const metrics = computeCaptureQualityMetrics(gray, plan.targetWidth, plan.targetHeight, options);
+  const metrics = computeCaptureQualityMetrics(qualityGray, plan.targetWidth, plan.targetHeight, options);
   const warnings = buildCaptureWarnings(metrics, options);
 
   return {
     canvas: targetCanvas,
-    plan,
+    plan: {
+      ...plan,
+      resolvedMode: processed.resolvedMode || plan.mode,
+    },
     threshold: processed.threshold,
+    grayStats: processed.grayStats,
     metrics,
     warnings,
   };

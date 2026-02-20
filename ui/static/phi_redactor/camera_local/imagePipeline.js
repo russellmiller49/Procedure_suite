@@ -4,6 +4,29 @@ function hasFunction(value) {
   return typeof value === "function";
 }
 
+function clamp01(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(1, n));
+}
+
+function normalizeCropBox(crop) {
+  if (!crop || typeof crop !== "object") return null;
+  const x0 = Number(crop.x0);
+  const y0 = Number(crop.y0);
+  const x1 = Number(crop.x1);
+  const y1 = Number(crop.y1);
+  if (![x0, y0, x1, y1].every(Number.isFinite)) return null;
+
+  const left = clamp01(Math.min(x0, x1));
+  const right = clamp01(Math.max(x0, x1));
+  const top = clamp01(Math.min(y0, y1));
+  const bottom = clamp01(Math.max(y0, y1));
+  if (right - left < 0.05 || bottom - top < 0.05) return null;
+
+  return { x0: left, y0: top, x1: right, y1: bottom };
+}
+
 function nextCameraJobId() {
   cameraJobCounter += 1;
   return `camera_ocr_${Date.now()}_${cameraJobCounter}`;
@@ -17,6 +40,7 @@ function normalizePages(inputPages) {
       bitmap: page.bitmap,
       width: Number.isFinite(page.width) ? Number(page.width) : 0,
       height: Number.isFinite(page.height) ? Number(page.height) : 0,
+      crop: normalizeCropBox(page.crop),
     }))
     .sort((a, b) => a.pageIndex - b.pageIndex);
 }
@@ -41,6 +65,14 @@ async function clonePagesForWorker(pages) {
       bitmap: clonedBitmap,
       width: page.width,
       height: page.height,
+      crop: page.crop
+        ? {
+            x0: Number(page.crop.x0),
+            y0: Number(page.crop.y0),
+            x1: Number(page.crop.x1),
+            y1: Number(page.crop.y1),
+          }
+        : null,
     });
   }
   return out;
@@ -87,7 +119,9 @@ export async function runCameraOcrJob(worker, pages, options = {}, handlers = {}
           ? "bw_high_contrast"
           : options.preprocess?.mode === "grayscale"
             ? "grayscale"
-            : "off",
+            : options.preprocess?.mode === "off"
+              ? "off"
+              : "auto",
       },
     },
   };

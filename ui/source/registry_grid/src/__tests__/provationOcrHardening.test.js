@@ -52,6 +52,8 @@ describe("provation OCR hardening fixtures", () => {
         "Child may have bleeding from the mouth nose.",
         "Persistent lrynphadenopathy with hytnph node enlargement.",
         "tracheobronchlal narrowing noted.",
+        "Proceduratist(s): Fellow listed for pleurescopy.",
+        "Fodings mention the insion while discussing allematives wih patient.",
       ].join(" "),
     );
 
@@ -61,6 +63,8 @@ describe("provation OCR hardening fixtures", () => {
     expect(corrected).toContain("lymphadenopathy");
     expect(corrected).toContain("lymph node enlargement");
     expect(corrected).toContain("tracheobronchial narrowing");
+    expect(corrected).toContain("Proceduralist(s): Fellow listed for pleuroscopy.");
+    expect(corrected).toContain("Findings mention the incision while discussing alternatives with patient.");
   });
 
   it("does not over-correct non-target Atropine doses", () => {

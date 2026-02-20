@@ -3,7 +3,7 @@
  */
 
 /**
- * @typedef {'off' | 'grayscale' | 'bw_high_contrast'} CameraPreprocessMode
+ * @typedef {'auto' | 'off' | 'grayscale' | 'bw_high_contrast'} CameraPreprocessMode
  */
 
 /**
@@ -23,11 +23,21 @@
  * charCount:number,
  * alphaRatio:number,
  * meanConf:number|null,
+ * meanWordConf?:number|null,
  * lowConfFrac:number|null,
+ * lowConfWordFrac?:number|null,
  * numLines:number,
+ * wordCount?:number,
  * medianTokenLen:number,
  * blurVariance?:number,
  * overexposureRatio?:number,
+ * underexposureRatio?:number,
+ * dynamicRange?:number,
+ * junkScore?:number,
+ * textSource?:string,
+ * selectedPass?:string,
+ * passCount?:number,
+ * preprocessMode?:string,
  * },
  * warnings?:string[],
  * }} CameraOcrPage
