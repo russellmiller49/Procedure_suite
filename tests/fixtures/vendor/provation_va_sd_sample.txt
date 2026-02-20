@@ -1,0 +1,72 @@
+===== PAGE 1 (OCR) =====
+Powered by Provation MD
+VA San Diego Healthcare System
+Patient Name: TEST PATIENT
+MRN: 000999
+DOB: 03/04/1955
+Age: 70
+Sex: M
+Procedure Date: 02/20/2026 13:45
+Location: VA San Diego
+System: Pulmonary
+Note Status: Finalized
+Number of Addenda: 0
+Electronically signed by: JOHN DOE, MD
+Finalized Date/Time: 02/20/2026 14:10
+
+Indications:
+Abnormal CT scan.
+
+Medications:
+Midazolam 2 mg, Fentanyl 50 mcg.
+
+Procedure:
+Flexible bronchoscopy was performed.
+
+Findings:
+Airways normal. Biopsy performed. Returned blood-tinged fluid 20 mL.
+
+Impression:
+No complications.
+
+Recommendations:
+Follow up pathology.
+
+Recommendations:
+Follow up pathology.
+
+Procedure Code(s):
+31622, 31624, 31625, 31652
+
+Diagnosis Code(s):
+R91.1
+C34.11
+
+Page 1 of 3
+
+===== PAGE 2 (OCR) =====
+Add'l Images
+1 Right upper lobe
+2 Left lower lobe
+Right upper lobe
+Left lower lobe
+Powered by Provation MD
+Page 2 of 3
+
+===== PAGE 3 (OCR) =====
+Procedure Code(s):
+31622
+31624
+31625
+31652
+31653
+
+Diagnosis Code(s):
+R91.1
+C34.11
+
+Note Status: Finalized
+Powered by Provation MD
+AMA CPT copyright
+Page 3 of 3
+

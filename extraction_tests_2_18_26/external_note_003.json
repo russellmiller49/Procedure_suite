@@ -1,0 +1,437 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "Atelectasis of the right lower lobe"
+    },
+    "clinical_context": {
+      "primary_indication": "Atelectasis of the right lower lobe",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedures_performed": {
+      "bal": {
+        "performed": true,
+        "location": "the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &; the RLL lateral basal segment (B9) of the lung and sent for cell count,",
+        "volume_instilled_ml": 80
+      },
+      "therapeutic_injection": {
+        "performed": true,
+        "volume_ml": 80
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "any_complication": true,
+      "complication_list": [
+        "Bleeding - Moderate"
+      ],
+      "events": [
+        {
+          "type": "Bleeding",
+          "notes": "Minor mucosa! bleeding from scope trauma controlled with iced saline."
+        }
+      ],
+      "bleeding": {
+        "occurred": true,
+        "bleeding_grade_nashville": 2
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "complication_intervention": "iced saline",
+      "follow_up_plan_text": "RML nodules and RLL consolidation sip BAL in both lobes. Finalized [REDACTED], MD [DATE: REDACTED] [DATE: REDACTED] :40 PM Powered by Provation MD Page"
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31573",
+          "derived_from": [
+            "procedures_performed.therapeutic_injection"
+          ]
+        },
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "bronchoalveolar lavage",
+              "span": [
+                1545,
+                1567
+              ],
+              "confidence": 1
+            },
+            {
+              "source": "registry_span",
+              "text": "BAL was performed in the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &",
+              "span": [
+                1570,
+                1690
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "BAL was performed in the RLL lateral basal segment (B9) of the lung and sent for cell count, bacterial culture, viral",
+              "span": [
+                1793,
+                1911
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "80 ml of fluid were instilled",
+              "span": [
+                1740,
+                1769
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-02-19T18:59:00.920716+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31573",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "therapeutic_injection.performed=true",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 2,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1545,
+                "end": 1567,
+                "snippet": "bronchoalveolar lavage"
+              },
+              {
+                "start": 1570,
+                "end": 1690,
+                "snippet": "BAL was performed in the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &"
+              },
+              {
+                "start": 1793,
+                "end": 1911,
+                "snippet": "BAL was performed in the RLL lateral basal segment (B9) of the lung and sent for cell count, bacterial culture, viral"
+              },
+              {
+                "start": 1740,
+                "end": 1769,
+                "snippet": "80 ml of fluid were instilled"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31573",
+            "summary": "therapeutic_injection.performed=true"
+          },
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "bronchoalveolar lavage",
+                "span": {
+                  "start": 1545,
+                  "end": 1567
+                }
+              },
+              {
+                "snippet": "BAL was performed in the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &",
+                "span": {
+                  "start": 1570,
+                  "end": 1690
+                }
+              },
+              {
+                "snippet": "BAL was performed in the RLL lateral basal segment (B9) of the lung and sent for cell count, bacterial culture, viral",
+                "span": {
+                  "start": 1793,
+                  "end": 1911
+                }
+              },
+              {
+                "snippet": "80 ml of fluid were instilled",
+                "span": {
+                  "start": 1740,
+                  "end": 1769
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "bronchoalveolar lavage",
+          "start": 1545,
+          "end": 1567
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Atelectasis of the right lower lobe",
+          "start": 157,
+          "end": 192
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Atelectasis of the right lower lobe",
+          "start": 157,
+          "end": 192
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "BAL was performed in the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &",
+          "start": 1570,
+          "end": 1690,
+          "confidence": 0.9
+        },
+        {
+          "text": "BAL was performed in the RLL lateral basal segment (B9) of the lung and sent for cell count, bacterial culture, viral",
+          "start": 1793,
+          "end": 1911,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_instilled_ml": [
+        {
+          "text": "80 ml of fluid were instilled",
+          "start": 1740,
+          "end": 1769,
+          "confidence": 0.9
+        }
+      ],
+      "outcomes.complication_duration": [
+        {
+          "text": "Minor mucosa! bleeding from scope trauma controlled with iced saline",
+          "start": 2023,
+          "end": 2091,
+          "confidence": 0.9
+        }
+      ],
+      "outcomes.complication_intervention": [
+        {
+          "text": "Minor mucosa! bleeding from scope trauma controlled with iced saline",
+          "start": 2023,
+          "end": 2091,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "iced saline",
+          "start": 2080,
+          "end": 2091,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "bronchoalveolar lavage",
+        "span": [
+          1545,
+          1567
+        ],
+        "confidence": 1
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Atelectasis of the right lower lobe",
+        "span": [
+          157,
+          192
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Atelectasis of the right lower lobe",
+        "span": [
+          157,
+          192
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "BAL was performed in the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &",
+        "span": [
+          1570,
+          1690
+        ],
+        "confidence": 0.9
+      },
+      {
+        "source": "registry_span",
+        "text": "BAL was performed in the RLL lateral basal segment (B9) of the lung and sent for cell count, bacterial culture, viral",
+        "span": [
+          1793,
+          1911
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_instilled_ml": [
+      {
+        "source": "registry_span",
+        "text": "80 ml of fluid were instilled",
+        "span": [
+          1740,
+          1769
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "outcomes.complication_duration": [
+      {
+        "source": "registry_span",
+        "text": "Minor mucosa! bleeding from scope trauma controlled with iced saline",
+        "span": [
+          2023,
+          2091
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "outcomes.complication_intervention": [
+      {
+        "source": "registry_span",
+        "text": "Minor mucosa! bleeding from scope trauma controlled with iced saline",
+        "span": [
+          2023,
+          2091
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "iced saline",
+        "span": [
+          2080,
+          2091
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [
+    {
+      "group": "Global",
+      "path": "patient_demographics.age_years",
+      "target_path": "patient.age",
+      "label": "Patient age (years)",
+      "severity": "required",
+      "message": "Age was not found in the note. Add age in years (e.g., “65-year-old”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.asa_class",
+      "target_path": "risk_assessment.asa_class",
+      "label": "ASA class",
+      "severity": "required",
+      "message": "ASA class was not found in the note. Add ASA 1–6 (e.g., “ASA 3”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.ecog_score",
+      "target_path": "clinical_context.ecog_score",
+      "label": "ECOG/Zubrod performance status",
+      "severity": "required",
+      "message": "ECOG/Zubrod performance status was not found in the note. Add ECOG 0–4 (or a range like 0–1)."
+    }
+  ],
+  "cpt_codes": [
+    "31573",
+    "31624"
+  ],
+  "suggestions": [
+    {
+      "code": "31573",
+      "description": "",
+      "confidence": 0.8,
+      "rationale": "therapeutic_injection.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 2.56,
+  "estimated_payment": 120.91,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "units": 1,
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 120.91
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": false,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for bal, therapeutic_injection",
+    "AUTO_BAL_DETAIL: set BAL location/volumes from explicit 'performed at' statement",
+    "AUTO_COMPLICATION_DETAILS: populated outcomes complication duration/intervention from note text",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=2"
+  ],
+  "validation_errors": [],
+  "review_status": "finalized",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 860.87
+}

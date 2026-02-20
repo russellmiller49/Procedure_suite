@@ -1,0 +1,112 @@
+Patient Name:
+MRN:
+Account#:
+Admit Type:
+Room:
+[REDACTED]
+Outpatient
+Procedure Room #1
+Note Status: Finalized
+Procedure: Bronchoscopy
+Indications: Atelectasis of the right lower lobe
+Procedure Date:
+SSN:
+Date of Birth:
+Age:
+Gender:
+[DATE: REDACTED] [DATE: REDACTED]
+570-74-4675
+[DATE: REDACTED]
+83
+Male
+Providers: Jorge A [REDACTED], MD (Doctor), [REDACTED], RN, Jamie [REDACTED]
+(Technician)
+Referring MO:
+Requesting Physician:
+Complications: No immediate complications
+Procedure: After obtaining informed consent, the Olympus BF-1TH190 Bronchoscope serial #2328804 was
+introduced through the mouth and advanced to the tracheobronchial tree of both lungs. The procedure
+was accomplished without difficulty.
+Findings:
+The oropharynx appears normal. The larynx appears normal . The vocal cords appear normal. The subglottic space is
+normal. The trachea is of normal caliber. The carina is sharp. The tracheobronchial tree was examined to at least the
+first subsegmental level. Bronchial mucosa and anatomy are normal; there are no endobronchial lesions. Hybrid scope
+used evaluate segmental airways in the RLL which confirmed no endobronchial lesions. EDAC >90% in RLL airway with
+coughing.
+Moderate clear to white secretions bilaterally.
+Therapeutic suctioning was performed in the trachea, at the carina, in the right mainstem bronchus, in the left mainstem
+bronchus and in the bronchus intermedius. Mucus was removed from the airway.
+The bronchoscope was advanced until wedged at the desired location for bronchoalveolar lavage.
+BAL was performed in the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &
+culture, and fungal & AFB analysis and cytology. 80 ml of fluid were instilled. 15 ml were returned.
+BAL was performed in the RLL lateral basal segment (B9) of the lung and sent for cell count, bacterial culture, viral
+smears & culture, and fungal & AFB analysis and cytology. 80 ml of fluid were instilled. 15 ml were returned.
+Minor mucosa! bleeding from scope trauma controlled with iced saline.
+Impression: -Atelectasis of the right lower lobe
+- The airway examination was normal.
+- Therapeutic suctioning was performed.
+- Bronchoalveolar lavage was performed.
+Recommendation: RML nodules and RLL consolidation sip BAL in both lobes.
+Finalized
+[REDACTED], MD
+[DATE: REDACTED] [DATE: REDACTED] :40 PM
+Powered by Provation MD Page
+
+🩺 Extraction Quality Report
+Score: 65 / 100
+Status: ❌ FAIL
+
+1. Accuracy (Precision)
+Hallucinations: * The JSON incorrectly assigns volume_ml: 80 to procedures_performed.therapeutic_injection. The 80 ml volume explicitly refers to the fluid instilled during the Bronchoalveolar Lavage (BAL), not the iced saline used for hemostasis.
+
+Mismatch: * The bal.location field contains a messy, truncated concatenation of raw text ("the RML medial segment (B5) of the lung and sent for cell count, bacterial culture, viral smears &; the RLL lateral basal segment (B9) of the lung and sent for cell count,") rather than a clean array of anatomical targets (e.g., ["RML B5", "RLL B9"]).
+
+The missing_field_prompts object triggers a required warning stating, "Age was not found in the note." However, the raw note explicitly states "Age: 83" in the header.
+
+2. Completeness (Recall)
+Missed Procedures: * Therapeutic Suctioning: The note explicitly details "Therapeutic suctioning was performed in the trachea, at the carina, in the right mainstem bronchus... Mucus was removed from the airway." This is entirely missing from the procedures_performed block.
+
+Missed Details: * BAL Return Volume: The note specifies that for both BAL locations, "15 ml were returned." The JSON captures the instilled volume (80 ml) but completely misses the returned volume.
+
+3. Logic & Coding
+CPT Consistency: * The pipeline derived CPT code 31573 (Bronchoscopy with therapeutic injection) based on the use of "iced saline" to control minor mucosal bleeding from scope trauma. Routine hemostasis for iatrogenic scope trauma is generally considered inclusive to the primary procedure and should not be billed as a separate therapeutic injection.
+
+Schema Compliance: * The bleeding complication was accurately categorized as a Nashville Grade 2 due to the requirement of cold saline intervention, which shows good logical inference. However, the parser's inability to extract basic demographic data (Age) from a standard document header indicates a parsing vulnerability before the clinical NLP even begins.
+
+4. Corrected JSON Snippet
+Here is the corrected representation for the procedures_performed and missing_field_prompts sections to resolve the critical accuracy and recall failures:
+
+JSON
+{
+  "procedures_performed": {
+    "bal": {
+      "performed": true,
+      "location": [
+        "RML medial segment (B5)",
+        "RLL lateral basal segment (B9)"
+      ],
+      "volume_instilled_ml": 80,
+      "volume_returned_ml": 15
+    },
+    "therapeutic_suctioning": {
+      "performed": true,
+      "location": [
+        "trachea",
+        "carina",
+        "right mainstem bronchus",
+        "left mainstem bronchus",
+        "bronchus intermedius"
+      ],
+      "material_removed": "mucus"
+    },
+    "therapeutic_injection": {
+      "performed": true,
+      "substance": "iced saline",
+      "indication": "hemostasis"
+    }
+  },
+  "patient_demographics": {
+    "age_years": 83,
+    "gender": "Male"
+  }
+}

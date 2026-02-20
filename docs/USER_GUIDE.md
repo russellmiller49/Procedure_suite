@@ -334,13 +334,56 @@ python ops/tools/unified_pipeline_batch.py \
 - Validating pipeline behavior after code changes
 - Comparing results across different configurations
 
-### 4. Clean & Normalize Registry
+### 4. Build UMLS Lite Map (IP Domain Terminology)
+
+Extract IP-relevant UMLS terminology from a local UMLS 2025AA installation into a lightweight JSON map for runtime concept linking without the heavy scispaCy UMLS linker (~7 MB vs ~1 GB).
+
+```bash
+# Default: reads ~/UMLS/2025AA/META/, writes data/knowledge/ip_umls_map.json
+python ops/tools/build_ip_umls_map.py
+
+# Custom UMLS directory
+python ops/tools/build_ip_umls_map.py --umls-dir /path/to/UMLS/META
+
+# Include definitions and relationship expansion
+python ops/tools/build_ip_umls_map.py --include-defs --expand-rels
+
+# Verbose progress logging
+python ops/tools/build_ip_umls_map.py --verbose
+```
+
+**Prerequisites:**
+- UMLS 2025AA RRF files (`MRCONSO.RRF`, `MRSTY.RRF`) at `~/UMLS/2025AA/META/` (or specify `--umls-dir`)
+- No additional Python dependencies required (uses stdlib only)
+
+**Output:** `data/knowledge/ip_umls_map.json` containing ~19K concepts across anatomy, procedures, devices, diseases, and pharmacology — filtered to IP-relevant terminology via category-gated pattern matching.
+
+**Runtime usage:** The map is consumed by `proc_nlp/umls_lite.py` which provides a drop-in lightweight alternative to `proc_nlp/umls_linker.py`:
+
+```python
+from proc_nlp.umls_lite import umls_link_lite, lookup_cui, search_terms
+
+# Link clinical text to UMLS concepts
+concepts = umls_link_lite("bronchoscopy with EBUS-TBNA")
+for c in concepts:
+    print(c.cui, c.preferred_name, c.score)
+
+# Direct CUI lookup
+info = lookup_cui("C0006290")  # Bronchoscopy
+
+# Search the term index
+matches = search_terms("cryobiopsy")
+```
+
+The map path is configurable via `IP_UMLS_MAP_PATH` env var (default: `data/knowledge/ip_umls_map.json`).
+
+### 5. Clean & Normalize Registry
 Run the full cleaning pipeline (Schema Norm -> CPT Logic -> Consistency -> Clinical QC) on a raw dataset.
 
 The legacy clean-registry CLI was removed during migration.
 Use the canonical cleaning modules under `app/registry_cleaning/` from your own batch job.
 
-### 5. Generate LLM “repo context” docs (gitingest)
+### 6. Generate LLM "repo context" docs (gitingest)
 When you want to share repo context with an LLM, use the gitingest generator to produce:
 
 - `gitingest.md`: a **lightweight**, curated repo snapshot (structure + a few key files)
@@ -499,6 +542,7 @@ Note: `MODEL_BACKEND=onnx` (the devserver default) may skip the registry ML clas
 ## 📊 Key Files
 
 - **`data/knowledge/ip_coding_billing_v3_0.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
+- **`data/knowledge/ip_umls_map.json`**: Lightweight UMLS concept map (~19K IP-relevant concepts). Built by `ops/tools/build_ip_umls_map.py`, consumed by `proc_nlp/umls_lite.py`.
 - **`schemas/IP_Registry.json`**: The "Law". Defines the valid structure for registry data.
 - **`reports/`**: Where output logs and validation summaries are saved.
 
@@ -518,6 +562,32 @@ The Web UI provides a simple interface for coding procedure notes.
    - **Include financials**: Adds RVU/payment estimates
    - **Explain**: Returns evidence spans for UI display/debugging
 6. **Click "Run Processing"**
+
+### PDF Upload and OCR (Client-Side)
+
+The dashboard PDF path is browser-local (no server-side PDF/OCR):
+
+- Uploading a PDF runs extraction in Web Workers under `ui/static/phi_redactor/pdf_local/`.
+- `workers/pdf.worker.js` performs native pdf.js text extraction plus layout analysis.
+- The UI computes per-page `nativeTextDensity = charCount / pageArea`:
+  - Dense digital pages short-circuit OCR and use native text directly (`NATIVE_DENSE_TEXT` path).
+- Pages that still need OCR are sent to `workers/ocr.worker.js`, which applies:
+  - Image masking (`auto`, `on`, `off`)
+  - Left-column/body crop logic
+  - Header zonal OCR: top 25% of page split into left/right columns, OCRed separately, recombined in order.
+- OCR postprocessing includes figure-overlap filtering and clinical hardening corrections:
+  - `Lidocaine 49%` -> `Lidocaine 4%`
+  - `Atropine 9.5 mg` -> `Atropine 0.5 mg`
+  - `lyrnphadenopathy` -> `lymphadenopathy`
+  - `hytnph` -> `lymph`
+  - Lightweight Levenshtein correction for long clinical terms.
+- Native/OCR fusion is strict: native text is preferred unless OCR recovers clear missing content.
+
+Security constraints:
+
+- Raw PDF bytes and unredacted extraction text stay in-browser.
+- OCR assets are same-origin vendored assets (`ui/static/phi_redactor/vendor/`).
+- Debug logging is metrics-only (no raw clinical text).
 
 ### Understanding the Results
 
@@ -988,6 +1058,8 @@ This generates a markdown report in `data/eval_results/` with:
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
 | `CODER_REQUIRE_PHI_REVIEW` | Require PHI review before coding | `false` |
 | `DEMO_MODE` | Enable demo mode (synthetic data only) | `false` |
+| `ENABLE_UMLS_LINKER` | Enable heavy scispaCy UMLS linker (disable on Railway) | `true` |
+| `IP_UMLS_MAP_PATH` | Path to lightweight UMLS concept map for `umls_lite` | `data/knowledge/ip_umls_map.json` |
 
 ### OpenAI Configuration
 

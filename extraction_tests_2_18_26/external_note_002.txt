@@ -1,0 +1,133 @@
+note: ===== PAGE 1 (NATIVE) =====
+Patient Name: [REDACTED]  Gender: Female
+MRN: [REDACTED]  Age: 70
+Procedure Date: [DATE: REDACTED]
+
+Proceduralist(s): [REDACTED], [REDACTED] (Fellow)
+Requesting Physician: [REDACTED], [REDACTED]
+Procedure Name: Bronchoscopy
+Indications: Collapsed left lung, lef main stem airway stent occlusion. Airway stent placed on [DATE: REDACTED]
+Medications: General Anesthesia, Jet ventilation was used. 2% Lidocaine, tracheobronchial tree 2 mL, See the
+Anesthesia note for documentation of the administered medications
+Procedure Description: Pre-Anesthesia Assessment:
+- ASA Grade Assessment: III - A patient with severe systemic disease.
+- ECOG performance status: 3
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions
+were answered and informed consent was documented as per institutional protocol. A
+history and physical were performed and updated in the preprocedure assessment record.
+Laboratory studies and radiographs were reviewed. A time-out was performed prior to the
+intervention. Following intravenous medications as per the record and topical anesthesia to
+the upper airway and tracheobronchial tree.The Q180 slim video bronchoscope was
+introduced through the mouth and advanced to the trachea. The T180 therapeutic video
+bronchoscope was introduced through the rigid bronchoscope (after telescope was
+removed) and advanced to the tracheobronchial tree. Patient was enrolled on protocol
+2010-0990 comparing normal saline vs. 4.2% bicarbonate solution to clear mucus
+obstruction in airway stent lumen.
+Findings: Larynx: The larynx is normal.
+
+Trachea/Carina Abnormalities: There was no evidence of significant pathology.
+
+Right Lung Abnormalities: There was no evidence of significant pathology.
+
+Left Lung Abnormalities: A stent was found in the left mainstem bronchus (14 mm X 4 cm
+Microvasive). The stent lumen is completely obstructed by a blot clot and clear retained secretions.
+The clot was successfully removed, with no significant bleeding after instilling 10 cc of agent A. There
+was no residual obstruction of the stent lumen. A nearly completely obstructing (greater than 90%
+obstructed) airway abnormality was found in the left lower lobe, due to malignant extrinsec
+compression and submucosal infiltration of the segmental bronchi. A completely obstructing airway
+abnormality was found in the left lower lobe caused by malignant disease. Airway stent is covering the
+left upper lobe take off.
+Complications: No immediate complications
+Estimated Blood Loss: Estimated blood loss: none.
+Post Procedure Diagnosis: - Collapsed left lung
+- A stent is located in the left mainstem bronchus. The lumen is completely obstructed.
+Stent lumen completely patent after 10 cc of agent A.
+- A blood clot was found in the left mainstem bronchus.
+- Nearly completely obstructing (greater than 90% obstructed) airway abnormality in the
+left lower lobe.
+- Completely obstructing airway abnormality in the left lower lobe.
+- No specimens collected.
+Recommendation:
+Attending Participation: I was present and participated during the entire procedure, including non-key portions.
+Page 1 of 2
+
+===== PAGE 2 (OCR_REQUIRED) =====
+
+🩺 Extraction Quality Report
+Score: 60 / 100
+Status: ❌ FAIL
+
+1. Accuracy (Precision)
+Mismatch (Patient Demographics): The JSON extracted age_years: 1. The clinical note explicitly states the patient's age is 70. The extraction engine incorrectly anchored to a random "1" in the text, such as "Page 1 of 2".
+
+Mismatch (Obstruction Details): The cao_interventions_detail maps a 90% obstruction to the LMS (Left Mainstem). This conflates two distinct findings: the text states the left mainstem stent was "completely obstructed," while a separate "greater than 90% obstructed" abnormality was located in the left lower lobe (LLL).
+
+Hallucinated Action (Stent): Under airway_stent, the action_type is listed as "removal". The text clearly states that the blood clot was removed, but the stent remained in place and was cleared.
+
+2. Completeness (Recall)
+Missed Therapeutic Procedure: The therapeutic bronchoscopy for blood clot evacuation was completely missed.
+
+Missed Abnormalities: The airway_abnormalities field only lists "Secretions". It failed to capture the blood clot in the LMS and the "malignant extrinsec compression and submucosal infiltration" in the LLL.
+
+Missed Device Details: The note specifies the existing stent device ("14 mm X 4 cm Microvasive") and the use of "10 cc of agent A", neither of which were captured in the JSON payload.
+
+3. Logic & Coding
+CPT Coding Failure: The "cpt_codes" array is empty ([]). Because the extraction missed the blood clot and its active removal, the pipeline's logic engine dropped CPT 31645 (therapeutic aspiration), which the ML model had accurately suspected but couldn't validate due to missing text spans.
+
+Internal Schema Contradiction: Within the airway_stent object, the airway_stent_removal boolean is false, yet the action_type string is "removal".
+
+Validation Warning Misalignment: The pipeline's audit_warnings correctly flagged "Stent removal/revision not supported by text; treating as assessment only", but the final JSON output still incorrectly populated "removal" in the action_type field.
+
+4. Corrected JSON Snippet
+Here is how the corresponding JSON block should look to accurately reflect the clinical reality:
+
+JSON
+{
+  "registry": {
+    "patient_demographics": {
+      "age_years": 70,
+      "gender": "Female"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "blood clot, clear retained secretions, malignant extrinsec compression, submucosal infiltration",
+        "airway_abnormalities": [
+          "Secretions",
+          "Blood clot",
+          "Malignant compression",
+          "Submucosal infiltration"
+        ]
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action_type": "assessment",
+        "action": "Assessment only",
+        "device_details": "14 mm X 4 cm Microvasive"
+      },
+      "therapeutic_bronchoscopy": {
+        "performed": true,
+        "action": "blood clot removal",
+        "agent_used": "10 cc of agent A"
+      }
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "LMS",
+          "pre_obstruction_pct": 100,
+          "cause": "blood clot and secretions"
+        },
+        {
+          "location": "LLL",
+          "pre_obstruction_pct": 90,
+          "cause": "malignant extrinsic compression"
+        }
+      ]
+    },
+    "cpt_codes": [
+      "31645"
+    ]
+  }
+}

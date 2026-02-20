@@ -14,6 +14,7 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
 - Smoke test (batch): `python ops/tools/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
 - Reporter random seeds (prompt->output): `python ops/tools/run_reporter_random_seeds.py --count 20 --output reporter_tests.txt --include-metadata-json`
 - Reporter findings eval: `python ops/tools/eval_reporter_prompt_llm_findings.py --max-cases 50 --output data/ml_training/reporter_prompt/v1/reporter_prompt_llm_findings_eval_report.json`
+- Build UMLS lite map: `python ops/tools/build_ip_umls_map.py` (requires `~/UMLS/2025AA/META/`)
 
 ## Required Runtime Configuration
 
@@ -50,6 +51,44 @@ Keep secrets (e.g., `OPENAI_API_KEY`) out of git; prefer shell env vars or an un
 - Clinical tables are **registry-driven** (e.g., `registry.*.performed`) and should not hide true clinical events due to billing bundling/suppression
   (non-performed rows/cards may render dimmed when details exist).
 - **Reporter Builder**: `/ui/reporter_builder.html` now enforces client-side PHI steps before seed (`Run Detection` -> `Apply Redactions` -> `Seed Bundle`) and sends `already_scrubbed=true`.
+
+### PDF Extraction Pipeline (Client-Side)
+
+The dashboard PDF upload path is browser-only and runs in workers under `ui/static/phi_redactor/pdf_local/`.
+
+- Native path (`workers/pdf.worker.js`):
+  - pdf.js text extraction + layout/image region analysis.
+  - Computes `nativeTextDensity = charCount / pageArea`.
+  - Dense digital pages short-circuit OCR (`NATIVE_DENSE_TEXT`).
+- OCR path (`workers/ocr.worker.js`), only for pages that still need OCR:
+  - Masking modes: `auto`, `on`, `off`
+  - Crop logic for left-column/body text recovery
+  - Header zonal OCR: top 25% split into left/right bounding boxes, OCRed independently, recombined in zone order.
+  - Figure-overlap suppression + confidence filtering.
+- OCR postprocess hardening (`pdf/ocrPostprocess.js`):
+  - `Lidocaine 49%` -> `Lidocaine 4%`
+  - `Atropine 9.5 mg` -> `Atropine 0.5 mg`
+  - `lyrnphadenopathy` -> `lymphadenopathy`
+  - `hytnph` -> `lymph`
+  - Lightweight Levenshtein correction for long clinical terms.
+- Fusion (`pdf/fusion.js`) is strict-native-first unless OCR recovers clear missing text.
+
+Hard requirements:
+
+- No raw PDF bytes or unredacted OCR text may leave the browser.
+- OCR/model assets must remain same-origin vendored files.
+- Debug logging must be metrics-only (no raw clinical text).
+
+Tests to keep passing when touching this path:
+
+- `ui/source/registry_grid/src/__tests__/layoutAnalysis.test.js`
+- `ui/source/registry_grid/src/__tests__/pageClassifier.test.js`
+- `ui/source/registry_grid/src/__tests__/pdfFusion.test.js`
+- `ui/source/registry_grid/src/__tests__/pdfPipelineOcr.test.js`
+- `ui/source/registry_grid/src/__tests__/ocrRegions.test.js`
+- `ui/source/registry_grid/src/__tests__/ocrPostprocess.test.js`
+- `ui/source/registry_grid/src/__tests__/ocrMetrics.test.js`
+- `ui/source/registry_grid/src/__tests__/provationOcrHardening.test.js`
 
 ## Reporter Seed Strategy (Reporter Builder Only)
 
@@ -140,6 +179,13 @@ See `app/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
   - `python ml/scripts/train_registry_ner.py --data data/ml_training/granular_ner/ner_bio_format_refined.jsonl --output-dir artifacts/registry_biomedbert_ner_v2 ...`
 - Run server with the model:
   - set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner` (in `.env` or shell)
+
+## UMLS Lite (Lightweight Concept Linking)
+
+- Heavy scispaCy UMLS linker is disabled on Railway (`ENABLE_UMLS_LINKER=false`).
+- Lightweight alternative: `proc_nlp/umls_lite.py` loads `data/knowledge/ip_umls_map.json` (~7 MB, ~19K IP-relevant concepts).
+- Map is built offline by `ops/tools/build_ip_umls_map.py` from local UMLS 2025AA RRF files.
+- Override map path: `IP_UMLS_MAP_PATH` env var.
 
 ## Common Pitfalls
 

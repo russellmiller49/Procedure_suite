@@ -53,6 +53,32 @@ Notable workflow features:
 - **Export JSON** downloads the raw server response; **Export Tables** downloads the flattened tables as an Excel-readable `.xls` (HTML).
 - Clinical tables should reflect **clinical reality** from `registry` (performed/details) even when a related CPT code is bundled/suppressed.
 
+### PDF Extraction Pipeline (Client-Side)
+
+For PDF upload in the dashboard, extraction is browser-local and worker-based:
+
+- Native extraction path: `ui/static/phi_redactor/pdf_local/workers/pdf.worker.js`
+  - pdf.js text layer + layout/image region analysis.
+  - Computes per-page `nativeTextDensity = charCount / pageArea`.
+  - High-density native pages short-circuit OCR (`NATIVE_DENSE_TEXT`).
+- OCR path: `ui/static/phi_redactor/pdf_local/workers/ocr.worker.js`
+  - Image masking modes (`auto`, `on`, `off`) + crop logic.
+  - Header zonal OCR: top 25% header split into strict left/right zones, each OCRed independently, recombined by zone order.
+  - Figure overlap suppression/filtering before final text merge.
+- OCR clinical hardening (`ui/static/phi_redactor/pdf_local/pdf/ocrPostprocess.js`):
+  - `Lidocaine 49%` -> `Lidocaine 4%`
+  - `Atropine 9.5 mg` -> `Atropine 0.5 mg`
+  - `lyrnphadenopathy` -> `lymphadenopathy`
+  - `hytnph` -> `lymph`
+  - Lightweight Levenshtein correction for long clinical terms.
+- Fusion/arbitration (`ui/static/phi_redactor/pdf_local/pdf/fusion.js`) prefers native text unless OCR adds missing content.
+
+Hard constraints for this path:
+
+- Raw PDF bytes and unredacted extracted text must not leave the browser.
+- OCR/model assets are same-origin vendored files.
+- Debug logging is metrics-only (no raw clinical text).
+
 ## Reporter Module (Builder + Seeding)
 
 - Reporter Builder UI: `http://localhost:8000/ui/reporter_builder.html`
@@ -150,7 +176,17 @@ The deterministic layer includes guardrails to reduce “keyword-only” halluci
   - `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
   - Look for `Audit high-conf omissions:` and `SELF_CORRECT_SKIPPED:` reasons.
 
-## Files You’ll Touch Most Often
+## UMLS Lite (Lightweight Concept Linking)
+
+The heavy scispaCy UMLS linker (~1 GB memory) is disabled on Railway (`ENABLE_UMLS_LINKER=false`). A lightweight alternative is available:
+
+- **Build tool:** `python ops/tools/build_ip_umls_map.py` — extracts IP-relevant terminology from local UMLS 2025AA RRF files (`~/UMLS/2025AA/META/`) into `data/knowledge/ip_umls_map.json` (~7 MB, ~19K concepts).
+- **Runtime module:** `proc_nlp/umls_lite.py` — drop-in replacement using n-gram matching against the pre-built map. Functions: `umls_link_lite()`, `lookup_cui()`, `search_terms()`.
+- **Env vars:**
+  - `ENABLE_UMLS_LINKER=false` — disables heavy scispaCy linker (set on Railway)
+  - `IP_UMLS_MAP_PATH` — override path to the lightweight map (default: `data/knowledge/ip_umls_map.json`)
+
+## Files You'll Touch Most Often
 
 - API app wiring + startup env validation: `app/api/fastapi_app.py`
 - Unified process endpoint: `app/api/routes/unified_process.py`
@@ -159,6 +195,8 @@ The deterministic layer includes guardrails to reduce “keyword-only” halluci
 - Omission guardrails: `app/registry/self_correction/keyword_guard.py`
 - Clinical postprocessing guardrails: `app/extraction/postprocessing/clinical_guardrails.py`
 - PHI redactor veto rules: `ui/static/phi_redactor/protectedVeto.js`
+- UMLS lite runtime: `proc_nlp/umls_lite.py`
+- UMLS map builder: `ops/tools/build_ip_umls_map.py`
 
 ## Tests
 
