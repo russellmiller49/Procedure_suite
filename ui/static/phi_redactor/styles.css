@@ -1341,6 +1341,25 @@ body.ps-review-split .editorPane .result {
   background: var(--success-light);
 }
 
+.camera-upload-summary {
+  border-top: 0;
+}
+
+.camera-upload-summary.is-warning {
+  border-left: 3px solid var(--warning);
+  background: var(--warning-light);
+}
+
+.camera-upload-summary.is-error {
+  border-left: 3px solid var(--danger);
+  background: var(--danger-light);
+}
+
+.camera-upload-summary.is-success {
+  border-left: 3px solid var(--success);
+  background: var(--success-light);
+}
+
 .inline-toggle {
   display: inline-flex;
   align-items: center;
@@ -1913,6 +1932,109 @@ dialog.modal::backdrop {
   justify-content: flex-end;
   gap: 10px;
   margin-top: 14px;
+}
+
+.camera-modal-content {
+  max-height: 86vh;
+  overflow: auto;
+}
+
+.camera-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.camera-preview-wrap {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #000;
+  overflow: hidden;
+}
+
+#cameraPreview {
+  width: 100%;
+  max-height: 52vh;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+.camera-options-row,
+.camera-actions-row,
+.camera-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.camera-warning-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.camera-warning-item {
+  border-left: 3px solid var(--warning);
+  background: var(--warning-light);
+  color: #b45309;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+
+.camera-thumb-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  min-height: 74px;
+}
+
+.camera-thumb-item {
+  width: 92px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.camera-thumb-item img {
+  width: 92px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: #000;
+}
+
+.camera-thumb-item .camera-thumb-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.privacy-shield {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  display: none;
+  z-index: 999999;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.privacy-shield.active {
+  display: flex;
 }
 
 /* ================================================================

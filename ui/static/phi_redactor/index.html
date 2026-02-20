@@ -102,12 +102,14 @@
               <option value="off">Mask Off</option>
             </select>
             <button id="pdfExtractBtn" class="secondary" type="button" disabled>Extract PDF Text</button>
+            <button id="cameraScanBtn" class="secondary" type="button">Scan Photo</button>
           </div>
         </div>
 
         <div id="pdfExtractSummary" class="subtle pdf-upload-summary">
           Input options: paste note text directly, or upload a PDF for layout-aware local extraction with safety gating before PHI detection.
         </div>
+        <div id="cameraScanSummary" class="subtle pdf-upload-summary camera-upload-summary hidden"></div>
 
         <div class="warning">
           <strong>PHI Policy:</strong> This page runs detection locally in your browser.
@@ -540,5 +542,57 @@
         </div>
       </form>
     </dialog>
+
+    <dialog id="cameraScanModal" class="modal modal-wide">
+      <form method="dialog" class="modal-content camera-modal-content">
+        <h3>Camera Scan (Local OCR)</h3>
+        <p class="subtle">
+          Captured images and OCR run entirely in your browser. No raw camera images or unredacted text are uploaded.
+        </p>
+
+        <div class="camera-modal-body">
+          <div class="camera-preview-wrap">
+            <video id="cameraPreview" autoplay playsinline muted></video>
+          </div>
+
+          <div class="camera-options-row">
+            <label class="manual-label" for="cameraOcrQualitySelect">OCR:</label>
+            <select id="cameraOcrQualitySelect" class="param-select" title="Camera OCR quality mode">
+              <option value="fast" selected>Fast</option>
+              <option value="high_accuracy">High Accuracy</option>
+            </select>
+
+            <label class="manual-label" for="cameraEnhanceSelect">Enhance:</label>
+            <select id="cameraEnhanceSelect" class="param-select" title="Image preprocessing mode">
+              <option value="off" selected>Off</option>
+              <option value="grayscale">Grayscale</option>
+              <option value="bw_high_contrast">B/W High Contrast</option>
+            </select>
+          </div>
+
+          <div class="camera-actions-row">
+            <button id="cameraStartBtn" type="button" class="secondary">Start Camera</button>
+            <button id="cameraCaptureBtn" type="button" class="secondary" disabled>Capture Page</button>
+            <button id="cameraRetakeBtn" type="button" class="secondary" disabled>Retake Last</button>
+            <button id="cameraClearBtn" type="button" class="secondary" disabled>Clear All</button>
+            <button id="cameraRunOcrBtn" type="button" class="primary" disabled>Run OCR</button>
+          </div>
+
+          <div class="camera-status-row">
+            <span id="cameraStatusText" class="subtle">Start camera to capture pages.</span>
+            <span id="cameraProgressText" class="progress"></span>
+          </div>
+
+          <div id="cameraWarningList" class="camera-warning-list"></div>
+          <div id="cameraThumbStrip" class="camera-thumb-strip" aria-live="polite"></div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="cameraCloseBtn" value="close" class="secondary">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="privacyShield" class="privacy-shield" aria-hidden="true" tabindex="0">Private - tap to resume</div>
   </body>
 </html>

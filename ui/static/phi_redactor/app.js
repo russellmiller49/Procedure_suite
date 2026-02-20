@@ -1,5 +1,14 @@
 /* global monaco */
 import { buildPdfDocumentModel, extractPdfAdaptive } from "./pdf_local/pdf/pipeline.js";
+import { canUseCameraScan, captureFrame, startCamera, stopCamera } from "./camera_local/cameraCapture.js";
+import { createCameraCaptureQueue } from "./camera_local/cameraUi.js";
+import {
+  buildCameraOcrDocumentText,
+  cancelCameraOcrJob,
+  makeCameraWorkerUrl,
+  runCameraOcrJob,
+} from "./camera_local/imagePipeline.js";
+import { initPrivacyShield } from "./camera_local/privacyShield.js";
 
 const statusTextEl = document.getElementById("statusText");
 const progressTextEl = document.getElementById("progressText");
@@ -65,6 +74,23 @@ const pdfOcrQualitySelectEl = document.getElementById("pdfOcrQualitySelect");
 const pdfOcrMaskSelectEl = document.getElementById("pdfOcrMaskSelect");
 const pdfExtractBtn = document.getElementById("pdfExtractBtn");
 const pdfExtractSummaryEl = document.getElementById("pdfExtractSummary");
+const cameraScanBtn = document.getElementById("cameraScanBtn");
+const cameraScanSummaryEl = document.getElementById("cameraScanSummary");
+const cameraScanModalEl = document.getElementById("cameraScanModal");
+const cameraPreviewEl = document.getElementById("cameraPreview");
+const cameraStartBtn = document.getElementById("cameraStartBtn");
+const cameraCaptureBtn = document.getElementById("cameraCaptureBtn");
+const cameraRetakeBtn = document.getElementById("cameraRetakeBtn");
+const cameraClearBtn = document.getElementById("cameraClearBtn");
+const cameraRunOcrBtn = document.getElementById("cameraRunOcrBtn");
+const cameraCloseBtn = document.getElementById("cameraCloseBtn");
+const cameraOcrQualitySelectEl = document.getElementById("cameraOcrQualitySelect");
+const cameraEnhanceSelectEl = document.getElementById("cameraEnhanceSelect");
+const cameraStatusTextEl = document.getElementById("cameraStatusText");
+const cameraProgressTextEl = document.getElementById("cameraProgressText");
+const cameraThumbStripEl = document.getElementById("cameraThumbStrip");
+const cameraWarningListEl = document.getElementById("cameraWarningList");
+const privacyShieldEl = document.getElementById("privacyShield");
 
 let lastServerResponse = null;
 let flatTablesBase = null;
@@ -6928,7 +6954,15 @@ async function main() {
     let bundleDocs = [];
     let lastBundleResponse = null;
     let bundleBusy = false;
+    let running = false;
     let extractingPdf = false;
+    let extractingCamera = false;
+    let cameraModalOpen = false;
+    let cameraStream = null;
+    let cameraWorker = null;
+    let cameraOcrJobId = "";
+    let privacyShieldTeardown = () => {};
+    const cameraQueue = createCameraCaptureQueue();
 
   function formatFileSize(bytes) {
     if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
@@ -6949,6 +6983,8 @@ async function main() {
 
   const PDF_UPLOAD_HELP_TEXT =
     "Input options: paste note text directly, or upload a PDF for layout-aware local extraction with safety gating before PHI detection.";
+  const CAMERA_SCAN_HELP_TEXT =
+    "Camera scan captures pages in-memory only. Run OCR locally, then use Run Detection and Apply Redactions.";
 
   function setPdfExtractSummary(message, tone = "neutral") {
     if (!pdfExtractSummaryEl) return;
@@ -6957,6 +6993,16 @@ async function main() {
     if (tone === "warning") pdfExtractSummaryEl.classList.add("is-warning");
     if (tone === "error") pdfExtractSummaryEl.classList.add("is-error");
     if (tone === "success") pdfExtractSummaryEl.classList.add("is-success");
+  }
+
+  function setCameraScanSummary(message, tone = "neutral") {
+    if (!cameraScanSummaryEl) return;
+    cameraScanSummaryEl.classList.remove("hidden");
+    cameraScanSummaryEl.textContent = String(message || "");
+    cameraScanSummaryEl.classList.remove("is-warning", "is-error", "is-success");
+    if (tone === "warning") cameraScanSummaryEl.classList.add("is-warning");
+    if (tone === "error") cameraScanSummaryEl.classList.add("is-error");
+    if (tone === "success") cameraScanSummaryEl.classList.add("is-success");
   }
 
   function formatPdfStage(stage) {
@@ -7135,9 +7181,317 @@ async function main() {
     setPdfExtractSummary(PDF_UPLOAD_HELP_TEXT, "neutral");
   }
 
+  function setCameraStatus(message) {
+    if (!cameraStatusTextEl) return;
+    cameraStatusTextEl.textContent = String(message || "");
+  }
+
+  function setCameraProgress(message) {
+    if (!cameraProgressTextEl) return;
+    cameraProgressTextEl.textContent = String(message || "");
+  }
+
+  function renderCameraWarnings(warnings = []) {
+    if (!cameraWarningListEl) return;
+    cameraWarningListEl.innerHTML = "";
+    for (const warning of Array.isArray(warnings) ? warnings : []) {
+      const text = String(warning || "").trim();
+      if (!text) continue;
+      const item = document.createElement("div");
+      item.className = "camera-warning-item";
+      item.textContent = text;
+      cameraWarningListEl.appendChild(item);
+    }
+  }
+
+  function renderCameraThumbnails() {
+    if (!cameraThumbStripEl) return;
+    cameraThumbStripEl.innerHTML = "";
+
+    const pages = Array.isArray(cameraQueue.pages) ? cameraQueue.pages : [];
+    if (!pages.length) {
+      const empty = document.createElement("div");
+      empty.className = "subtle";
+      empty.textContent = "No captured pages yet.";
+      cameraThumbStripEl.appendChild(empty);
+      return;
+    }
+
+    for (let i = 0; i < pages.length; i += 1) {
+      const page = pages[i];
+      const item = document.createElement("div");
+      item.className = "camera-thumb-item";
+
+      const img = document.createElement("img");
+      if (page.previewUrl) {
+        img.src = page.previewUrl;
+        img.alt = `Captured page ${i + 1}`;
+      } else {
+        img.alt = `Captured page ${i + 1} preview unavailable`;
+      }
+
+      const label = document.createElement("div");
+      label.className = "camera-thumb-label";
+      label.textContent = `Page ${i + 1}`;
+
+      item.appendChild(img);
+      item.appendChild(label);
+      cameraThumbStripEl.appendChild(item);
+    }
+  }
+
+  function stopCameraPreviewStream() {
+    if (cameraPreviewEl) {
+      stopCamera(cameraPreviewEl);
+    } else if (cameraStream) {
+      stopCamera(cameraStream);
+    }
+    cameraStream = null;
+  }
+
+  function clearCapturedCameraPages() {
+    cameraQueue.clearAll();
+    renderCameraWarnings([]);
+    renderCameraThumbnails();
+  }
+
+  function updateCameraControls() {
+    const hasPages = Array.isArray(cameraQueue.pages) && cameraQueue.pages.length > 0;
+    const hasStream = Boolean(cameraStream);
+    const busy = running || bundleBusy || extractingPdf || extractingCamera;
+
+    if (cameraStartBtn) cameraStartBtn.disabled = busy || hasStream;
+    if (cameraCaptureBtn) cameraCaptureBtn.disabled = busy || !hasStream;
+    if (cameraRetakeBtn) cameraRetakeBtn.disabled = busy || !hasPages;
+    if (cameraClearBtn) cameraClearBtn.disabled = busy || !hasPages;
+    if (cameraRunOcrBtn) cameraRunOcrBtn.disabled = busy || !hasPages;
+  }
+
+  function resetCameraModalUi() {
+    setCameraStatus("Start camera to capture pages.");
+    setCameraProgress("");
+    renderCameraWarnings([]);
+    renderCameraThumbnails();
+    updateCameraControls();
+  }
+
+  async function ensureCameraWorker() {
+    if (cameraWorker) return cameraWorker;
+    cameraWorker = new Worker(makeCameraWorkerUrl(), { type: "module" });
+    return cameraWorker;
+  }
+
+  function cancelCameraOcrIfRunning() {
+    if (!extractingCamera) return;
+    if (!cameraWorker || !cameraOcrJobId) return;
+    cancelCameraOcrJob(cameraWorker, cameraOcrJobId);
+  }
+
+  function setCameraCapabilityState() {
+    const support = canUseCameraScan();
+    if (cameraScanBtn) {
+      cameraScanBtn.disabled = !support.ok;
+    }
+
+    if (!support.ok) {
+      setCameraScanSummary(
+        "Camera scan requires HTTPS and a browser with live camera + worker OCR support.",
+        "warning",
+      );
+      return;
+    }
+
+    setCameraScanSummary(CAMERA_SCAN_HELP_TEXT, "neutral");
+  }
+
+  function collectCameraWarnings(pages) {
+    const warnings = [];
+    for (const page of Array.isArray(pages) ? pages : []) {
+      for (const warning of Array.isArray(page?.warnings) ? page.warnings : []) {
+        warnings.push(`Page ${Number(page.pageIndex) + 1}: ${String(warning)}`);
+      }
+    }
+    return warnings;
+  }
+
+  function closeCameraModal() {
+    cameraModalOpen = false;
+    cancelCameraOcrIfRunning();
+    stopCameraPreviewStream();
+    clearCapturedCameraPages();
+    if (cameraScanModalEl?.open) {
+      try {
+        cameraScanModalEl.close();
+      } catch {
+        // ignore
+      }
+    }
+    setCameraStatus("Start camera to capture pages.");
+    setCameraProgress("");
+    updateCameraControls();
+    updateZkControls();
+  }
+
+  function openCameraModal() {
+    const support = canUseCameraScan();
+    if (!support.ok) {
+      setCameraScanSummary(
+        "Camera scan requires HTTPS and a browser with live camera + worker OCR support.",
+        "warning",
+      );
+      setStatus("Camera scan unavailable in this browser.");
+      return;
+    }
+
+    cameraModalOpen = true;
+    resetCameraModalUi();
+    if (!cameraScanModalEl) return;
+    if (!cameraScanModalEl.open) {
+      try {
+        cameraScanModalEl.showModal();
+      } catch {
+        cameraScanModalEl.setAttribute("open", "");
+      }
+    }
+    setCameraStatus("Tap Start Camera to begin.");
+  }
+
+  async function startCameraPreview() {
+    if (running || bundleBusy || extractingPdf || extractingCamera) return;
+    if (!cameraPreviewEl) return;
+
+    try {
+      stopCameraPreviewStream();
+      cameraStream = await startCamera(cameraPreviewEl, {
+        facingMode: "environment",
+        preferredWidth: 1280,
+      });
+      setCameraStatus("Camera ready. Capture one or more pages.");
+      setCameraProgress("");
+      updateCameraControls();
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
+      setCameraStatus(`Camera start failed: ${msg}`);
+      setCameraScanSummary(`Camera start failed: ${msg}`, "error");
+      stopCameraPreviewStream();
+      updateCameraControls();
+    }
+  }
+
+  async function captureCameraPage() {
+    if (!cameraPreviewEl || !cameraStream) return;
+    try {
+      const frame = await captureFrame(cameraPreviewEl, { maxDim: 2000 });
+      cameraQueue.addPage({
+        bitmap: frame.bitmap,
+        blob: frame.blob,
+        width: frame.width,
+        height: frame.height,
+      });
+      renderCameraThumbnails();
+      renderCameraWarnings([]);
+      setCameraStatus(`Captured page ${cameraQueue.pages.length}.`);
+      updateCameraControls();
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
+      setCameraStatus(`Capture failed: ${msg}`);
+    }
+  }
+
+  async function runCameraOcrAndLoadEditor() {
+    if (running || bundleBusy || extractingPdf || extractingCamera) return;
+    const pagesForOcr = cameraQueue.exportForOcr();
+    if (!pagesForOcr.length) {
+      setCameraStatus("Capture at least one page before running OCR.");
+      return;
+    }
+
+    const ocrMode = cameraOcrQualitySelectEl?.value === "high_accuracy" ? "high_accuracy" : "fast";
+    const preprocessMode = cameraEnhanceSelectEl?.value === "bw_high_contrast"
+      ? "bw_high_contrast"
+      : cameraEnhanceSelectEl?.value === "grayscale"
+        ? "grayscale"
+        : "off";
+
+    extractingCamera = true;
+    setCameraStatus("Running local OCR...");
+    setCameraProgress("Preparing OCR worker...");
+    updateCameraControls();
+    updateZkControls();
+
+    const jobId = `camera_job_${Date.now()}`;
+    cameraOcrJobId = jobId;
+
+    try {
+      const worker = await ensureCameraWorker();
+      const result = await runCameraOcrJob(
+        worker,
+        pagesForOcr,
+        {
+          jobId,
+          lang: "eng",
+          mode: ocrMode,
+          preprocess: { mode: preprocessMode },
+        },
+        {
+          onProgress: (event) => {
+            const stage = String(event?.stage || "ocr");
+            const pageText = Number.isFinite(event?.pageIndex) ? ` page ${Number(event.pageIndex) + 1}` : "";
+            const pct = Number.isFinite(event?.pct) ? ` (${Math.round(Number(event.pct) * 100)}%)` : "";
+            setCameraProgress(`${stage}${pageText}${pct}`);
+          },
+        },
+      );
+
+      const ocrPages = Array.isArray(result.pages) ? result.pages : [];
+      const mergedText = buildCameraOcrDocumentText(ocrPages);
+
+      if (!mergedText.trim()) {
+        setCameraStatus("OCR returned no text. Retake images and try again.");
+        return;
+      }
+
+      const warnings = collectCameraWarnings(ocrPages);
+      renderCameraWarnings(warnings);
+
+      setEditorText(mergedText);
+      originalText = mergedText;
+      hasRunDetection = false;
+      setScrubbedConfirmed(false);
+      clearDetections();
+      clearResultsUi();
+      resetFeedbackDraft();
+      resetPdfUploadUi();
+
+      const summary =
+        `Loaded ${ocrPages.length} camera page(s). OCR mode: ${ocrMode === "high_accuracy" ? "high accuracy" : "fast"}. ` +
+        `Enhance: ${preprocessMode}.`;
+      setCameraScanSummary(summary, "success");
+      setStatus("Camera OCR text loaded into editor. Run Detection to use existing PHI redaction workflow.");
+      setProgress("");
+
+      extractingCamera = false;
+      closeCameraModal();
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
+      if (error?.name === "AbortError" || /cancel/i.test(msg)) {
+        setCameraStatus("Camera OCR cancelled.");
+      } else {
+        setCameraStatus(`Camera OCR failed: ${msg}`);
+        setCameraScanSummary(`Camera OCR failed: ${msg}`, "error");
+      }
+    } finally {
+      extractingCamera = false;
+      cameraOcrJobId = "";
+      setCameraProgress("");
+      updateCameraControls();
+      updateZkControls();
+    }
+  }
+
   async function extractSelectedPdfIntoEditor(file) {
     if (!file) return;
-    if (running || bundleBusy || extractingPdf) return;
+    if (running || bundleBusy || extractingPdf || extractingCamera) return;
 
     const looksLikePdf = /\.pdf$/i.test(file.name) || file.type === "application/pdf";
     if (!looksLikePdf) {
@@ -7279,7 +7633,7 @@ async function main() {
       clearDetections();
       clearResultsUi();
       resetFeedbackDraft();
-      if (runBtn) runBtn.disabled = extractingPdf || !workerReady;
+      if (runBtn) runBtn.disabled = extractingPdf || extractingCamera || !workerReady;
 
       const ocrNeededPages = docModel.pages.filter((page) => page.sourceDecision !== "native").length;
       const summaryText =
@@ -7322,7 +7676,7 @@ async function main() {
       });
     } finally {
       extractingPdf = false;
-      if (runBtn) runBtn.disabled = extractingPdf || !workerReady;
+      if (runBtn) runBtn.disabled = extractingPdf || extractingCamera || !workerReady;
       if (applyBtn) applyBtn.disabled = running || !hasRunDetection;
       if (revertBtn) revertBtn.disabled = running || originalText === model.getValue();
       if (submitBtn) submitBtn.disabled = !scrubbedConfirmed || running;
@@ -7397,12 +7751,98 @@ async function main() {
     });
   }
 
+  setCameraCapabilityState();
+  resetCameraModalUi();
+
+  if (cameraScanBtn) {
+    cameraScanBtn.addEventListener("click", () => {
+      openCameraModal();
+      updateZkControls();
+    });
+  }
+
+  if (cameraStartBtn) {
+    cameraStartBtn.addEventListener("click", () => {
+      startCameraPreview();
+    });
+  }
+
+  if (cameraCaptureBtn) {
+    cameraCaptureBtn.addEventListener("click", () => {
+      captureCameraPage();
+    });
+  }
+
+  if (cameraRetakeBtn) {
+    cameraRetakeBtn.addEventListener("click", () => {
+      const removed = cameraQueue.retakeLast();
+      if (!removed) {
+        setCameraStatus("No captured pages to retake.");
+      } else {
+        setCameraStatus(`Removed last capture. ${cameraQueue.pages.length} page(s) remaining.`);
+      }
+      renderCameraWarnings([]);
+      renderCameraThumbnails();
+      updateCameraControls();
+    });
+  }
+
+  if (cameraClearBtn) {
+    cameraClearBtn.addEventListener("click", () => {
+      const count = cameraQueue.clearAll();
+      setCameraStatus(count ? `Cleared ${count} captured page(s).` : "No captured pages to clear.");
+      renderCameraWarnings([]);
+      renderCameraThumbnails();
+      updateCameraControls();
+    });
+  }
+
+  if (cameraRunOcrBtn) {
+    cameraRunOcrBtn.addEventListener("click", () => {
+      runCameraOcrAndLoadEditor();
+    });
+  }
+
+  if (cameraScanModalEl) {
+    cameraScanModalEl.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeCameraModal();
+    });
+    cameraScanModalEl.addEventListener("close", () => {
+      if (cameraModalOpen) closeCameraModal();
+    });
+  }
+
+  if (cameraCloseBtn) {
+    cameraCloseBtn.addEventListener("click", () => {
+      closeCameraModal();
+    });
+  }
+
+  privacyShieldTeardown = initPrivacyShield({
+    shieldEl: privacyShieldEl,
+    shouldActivate: () => cameraModalOpen || Boolean(cameraStream) || extractingCamera,
+    onBackground: () => {
+      stopCameraPreviewStream();
+      cancelCameraOcrIfRunning();
+      if (cameraModalOpen) {
+        setCameraStatus("Privacy shield active. Tap to resume and restart camera if needed.");
+      }
+      updateCameraControls();
+    },
+    onResumeRequested: () => {
+      if (cameraModalOpen) {
+        setCameraStatus("Resumed. Tap Start Camera to restore live preview.");
+      }
+      updateCameraControls();
+    },
+  });
+
   let detections = [];
   let detectionsById = new Map();
   let excluded = new Set();
   let decorations = [];
 
-  let running = false;
   let currentSelection = null;
 
   // Track selection changes for manual redaction
@@ -7455,9 +7895,10 @@ async function main() {
   }
 
   function updateZkControls() {
-    const busy = running || bundleBusy || extractingPdf;
+    const busy = running || bundleBusy || extractingPdf || extractingCamera;
     const hasText = Boolean(model.getValue().trim());
     const hasPdfSelected = Boolean(pdfUploadInputEl?.files && pdfUploadInputEl.files.length > 0);
+    const cameraSupport = canUseCameraScan();
     if (chronoPreviewBtn) chronoPreviewBtn.disabled = busy || !hasRunDetection;
     if (clearCurrentNoteBtn) clearCurrentNoteBtn.disabled = busy || !hasText;
     if (genBundleIdsBtn) genBundleIdsBtn.disabled = busy;
@@ -7469,6 +7910,8 @@ async function main() {
     if (pdfOcrQualitySelectEl) pdfOcrQualitySelectEl.disabled = busy;
     if (pdfOcrMaskSelectEl) pdfOcrMaskSelectEl.disabled = busy;
     if (pdfExtractBtn) pdfExtractBtn.disabled = busy || !hasPdfSelected;
+    if (cameraScanBtn) cameraScanBtn.disabled = busy || !cameraSupport.ok;
+    updateCameraControls();
   }
 
   function clearDetections() {
@@ -7735,7 +8178,7 @@ async function main() {
         workerReady = true;
         setStatus("Ready (local model loaded)");
         setProgress("");
-        runBtn.disabled = extractingPdf || !workerReady;
+        runBtn.disabled = extractingPdf || extractingCamera || !workerReady;
         return;
       }
 
@@ -7787,7 +8230,7 @@ async function main() {
       if (msg.type === "done") {
         running = false;
         cancelBtn.disabled = true;
-        runBtn.disabled = extractingPdf || !workerReady;
+        runBtn.disabled = extractingPdf || extractingCamera || !workerReady;
         applyBtn.disabled = false; // Enable even with 0 detections
         revertBtn.disabled = originalText === model.getValue();
         updateZkControls();
@@ -7822,7 +8265,7 @@ async function main() {
         clearWorkerInitTimer();
         running = false;
         cancelBtn.disabled = true;
-        runBtn.disabled = extractingPdf || !workerReady;
+        runBtn.disabled = extractingPdf || extractingCamera || !workerReady;
         applyBtn.disabled = !hasRunDetection;
         updateZkControls();
         setStatus(`Error: ${msg.message || "unknown"}`);
@@ -7956,7 +8399,7 @@ async function main() {
 	  });
 
     function clearCurrentNote() {
-      if (running || bundleBusy || extractingPdf) return;
+      if (running || bundleBusy || extractingPdf || extractingCamera) return;
       setEditorText("");
       originalText = "";
       hasRunDetection = false;
@@ -7965,9 +8408,14 @@ async function main() {
       clearResultsUi();
       resetPdfUploadUi();
       resetFeedbackDraft();
+      if (cameraModalOpen) closeCameraModal();
+      else {
+        clearCapturedCameraPages();
+        stopCameraPreviewStream();
+      }
       setStatus("Ready for new note");
       setProgress("");
-      if (runBtn) runBtn.disabled = extractingPdf || !workerReady;
+      if (runBtn) runBtn.disabled = extractingPdf || extractingCamera || !workerReady;
       updateZkControls();
     }
 
@@ -8797,7 +9245,7 @@ async function main() {
 
 	  if (newNoteBtn) {
 	    newNoteBtn.addEventListener("click", () => {
-	      if (running || extractingPdf) return;
+	      if (running || extractingPdf || extractingCamera) return;
 	      setEditorText("");
 	      originalText = "";
 	      hasRunDetection = false;
@@ -8806,9 +9254,14 @@ async function main() {
 	      clearResultsUi();
 	      resetPdfUploadUi();
 	      resetFeedbackDraft();
+	      if (cameraModalOpen) closeCameraModal();
+	      else {
+	        clearCapturedCameraPages();
+	        stopCameraPreviewStream();
+	      }
 	      setStatus("Ready for new note");
 	      setProgress("");
-	      if (runBtn) runBtn.disabled = extractingPdf || !workerReady;
+	      if (runBtn) runBtn.disabled = extractingPdf || extractingCamera || !workerReady;
 	    });
 	  }
 
@@ -8820,6 +9273,24 @@ async function main() {
       // ignore
     }
   }
+
+  window.addEventListener("beforeunload", () => {
+    try {
+      privacyShieldTeardown();
+    } catch {
+      // ignore
+    }
+    stopCameraPreviewStream();
+    cameraQueue.clearAll();
+    if (cameraWorker) {
+      try {
+        cameraWorker.terminate();
+      } catch {
+        // ignore
+      }
+      cameraWorker = null;
+    }
+  });
 
   setStatus("Initializing local PHI model (first load downloads ONNX)…");
 
