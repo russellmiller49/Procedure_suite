@@ -16,6 +16,8 @@ from typing import Any, Dict, Iterable, List, Sequence, Tuple, Literal
 from jinja2 import Environment, FileSystemLoader, Template, TemplateNotFound, select_autoescape
 from pydantic import BaseModel
 
+from config.settings import UmlsSettings
+
 import proc_schemas.clinical.airway as airway_schemas
 import proc_schemas.clinical.pleural as pleural_schemas
 from proc_schemas.clinical import (
@@ -106,21 +108,63 @@ _ENV.globals["list_addon_slugs"] = list_addon_slugs
 
 def _enable_umls_linker() -> bool:
     """Return True if UMLS linking should be attempted for report metadata."""
-    return os.getenv("ENABLE_UMLS_LINKER", "true").strip().lower() in ("1", "true", "yes")
+    return UmlsSettings().enable_linker
 
 
-def _safe_umls_link(text: str) -> list[Any]:
-    """Best-effort UMLS linking.
+_UMLS_SKIP_KEYS = {"source_text", "note_text", "raw_note", "narrative"}
+_UMLS_MAX_TERM_LEN = 80
+_UMLS_MAX_TERMS = 80
 
-    We avoid importing scispaCy/spaCy at module import time (startup performance).
-    When disabled via ENABLE_UMLS_LINKER=false, this returns an empty list.
-    """
+
+def _collect_umls_terms_from_payload(obj: Any) -> list[str]:
+    terms: list[str] = []
+    seen: set[str] = set()
+
+    def _add_term(value: str) -> None:
+        if len(terms) >= _UMLS_MAX_TERMS:
+            return
+        clean = re.sub(r"\s+", " ", (value or "").strip())
+        if not clean or len(clean) > _UMLS_MAX_TERM_LEN:
+            return
+        key = clean.casefold()
+        if key in seen:
+            return
+        seen.add(key)
+        terms.append(clean)
+
+    def _walk(node: Any) -> None:
+        if len(terms) >= _UMLS_MAX_TERMS:
+            return
+        if isinstance(node, BaseModel):
+            try:
+                node = node.model_dump(mode="python", exclude_none=True)
+            except Exception:
+                return
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if str(k) in _UMLS_SKIP_KEYS:
+                    continue
+                _walk(v)
+            return
+        if isinstance(node, (list, tuple, set)):
+            for item in node:
+                _walk(item)
+            return
+        if isinstance(node, str):
+            _add_term(node)
+
+    _walk(obj)
+    return terms
+
+
+def _safe_umls_link_terms(terms: Iterable[str]) -> list[Any]:
+    """Best-effort UMLS linking for a small set of short extracted terms."""
     if not _enable_umls_linker():
         return []
     try:
-        from proc_nlp.umls_linker import umls_link as _umls_link  # heavy optional import
+        from proc_nlp.umls_linker import umls_link_terms as _umls_link_terms
 
-        return list(_umls_link(text))
+        return list(_umls_link_terms(list(terms)))
     except Exception:
         # UMLS is optional and should not break report composition.
         return []
@@ -131,7 +175,8 @@ def compose_report_from_text(text: str, hints: Dict[str, Any] | None = None) -> 
     hints = deepcopy(hints or {})
     normalized_core = normalize_dictation(text, hints)
     procedure_core = ProcedureCore(**normalized_core)
-    umls = [_serialize_concept(concept) for concept in _safe_umls_link(text)]
+    umls_terms = _collect_umls_terms_from_payload({"hints": hints, "procedure_core": procedure_core})
+    umls = [_serialize_concept(concept) for concept in _safe_umls_link_terms(umls_terms)]
     paragraph_hashes = _hash_paragraphs(text)
     nlp = NLPTrace(paragraph_hashes=paragraph_hashes, umls=umls)
 
@@ -164,9 +209,12 @@ def compose_report_from_form(form: Dict[str, Any] | ProcedureReport) -> Tuple[Pr
             payload["nlp"] = NLPTrace(**nlp_payload)
         elif not nlp_payload:
             text = _extract_text(payload)
+            umls_terms = _collect_umls_terms_from_payload(
+                {"procedure_core": core, "indication": payload.get("indication"), "postop": payload.get("postop")}
+            )
             payload["nlp"] = NLPTrace(
                 paragraph_hashes=_hash_paragraphs(text),
-                umls=[_serialize_concept(concept) for concept in _safe_umls_link(text)],
+                umls=[_serialize_concept(concept) for concept in _safe_umls_link_terms(umls_terms)],
             )
         report = ProcedureReport(**payload)
     note_md = _render_note(report)
@@ -272,6 +320,10 @@ def _build_structured_env(template_root: Path) -> Environment:
     env.filters["pronoun"] = _pronoun
     env.filters["fmt_ml"] = _fmt_ml
     env.filters["fmt_unit"] = _fmt_unit
+    from app.reporting.umls_filters import umls_cui, umls_pref
+
+    env.filters["umls_pref"] = umls_pref
+    env.filters["umls_cui"] = umls_cui
     # Add addon functions as globals
     env.globals["get_addon_body"] = get_addon_body
     env.globals["get_addon_metadata"] = get_addon_metadata

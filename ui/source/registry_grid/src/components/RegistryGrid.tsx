@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { ColDef, ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
+import { fetchUmlsSuggest, type UmlsSuggestEntry } from "../api/umls";
 import type { EvidenceSpan, RegistryRow, ValueType } from "../types";
 
 type Props = {
@@ -68,6 +69,26 @@ function getDropdown(pointer: string): Array<string | number> | null {
   if (exact) return exact;
   for (const item of DROPDOWN_PATTERNS) {
     if (item.pattern.test(pointer)) return item.options;
+  }
+  return null;
+}
+
+type UmlsAutocompleteConfig = { category?: string; limit?: number };
+
+const UMLS_AUTOCOMPLETE_BY_POINTER: Record<string, UmlsAutocompleteConfig> = {
+  "/registry/clinical_context/lesion_location": { category: "anatomy", limit: 20 },
+};
+
+const UMLS_AUTOCOMPLETE_PATTERNS: Array<{ pattern: RegExp; config: UmlsAutocompleteConfig }> = [
+  { pattern: /^\/registry\/granular_data\/navigation_targets\/\d+\/target_segment$/, config: { category: "anatomy", limit: 20 } },
+  { pattern: /^\/registry\/granular_data\/navigation_targets\/\d+\/nav_target_segment$/, config: { category: "anatomy", limit: 20 } },
+];
+
+function getUmlsAutocomplete(pointer: string): UmlsAutocompleteConfig | null {
+  const exact = UMLS_AUTOCOMPLETE_BY_POINTER[pointer];
+  if (exact) return exact;
+  for (const item of UMLS_AUTOCOMPLETE_PATTERNS) {
+    if (item.pattern.test(pointer)) return item.config;
   }
   return null;
 }
@@ -269,6 +290,101 @@ function NullEditCell({ row, onEditValue, onClearEdit }: NullEditCellProps) {
         }}
         disabled={disabled}
       />
+      {hasEdit ? (
+        <button type="button" className="ps-edit-revert" onClick={revert} title="Revert edit">
+          ↩
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
+function _safeDomId(value: string): string {
+  return String(value || "").replace(/[^a-zA-Z0-9_-]/g, "_");
+}
+
+type UmlsAutocompleteCellProps = {
+  row: RegistryRow;
+  config: UmlsAutocompleteConfig;
+  onEditValue?: (row: RegistryRow, nextValue: unknown) => void;
+  onClearEdit?: (row: RegistryRow) => void;
+};
+
+function UmlsAutocompleteCell({ row, config, onEditValue, onClearEdit }: UmlsAutocompleteCellProps) {
+  const edited = row.editedValueRaw;
+  const hasEdit = edited !== null && edited !== undefined;
+  const extracted = row.extractedValueRaw;
+  const disabled = !onEditValue;
+
+  const current = hasEdit ? String(edited ?? "") : String(extracted ?? "");
+  const placeholder = hasEdit ? "" : String(extracted ?? "");
+
+  const [value, setValue] = useState(current);
+  const [suggestions, setSuggestions] = useState<UmlsSuggestEntry[]>([]);
+
+  useEffect(() => {
+    setValue(current);
+  }, [current, row.id]);
+
+  useEffect(() => {
+    const q = value.trim();
+    if (!q || q.length > 80) {
+      setSuggestions([]);
+      return;
+    }
+
+    const controller = new AbortController();
+    const handle = window.setTimeout(() => {
+      fetchUmlsSuggest(q, {
+        category: config.category ?? null,
+        limit: config.limit ?? 20,
+        signal: controller.signal,
+      })
+        .then((items) => setSuggestions(items))
+        .catch(() => {
+          if (!controller.signal.aborted) setSuggestions([]);
+        });
+    }, 180);
+
+    return () => {
+      controller.abort();
+      window.clearTimeout(handle);
+    };
+  }, [value, config.category, config.limit]);
+
+  const commit = (raw: string) => {
+    if (!onEditValue) return;
+    const input = String(raw ?? "");
+    const key = input.trim().toLowerCase();
+    const match = suggestions.find((s) => String(s.term ?? "").trim().toLowerCase() === key);
+    const nextValue = match ? String(match.preferred_name || input) : input;
+    onEditValue(row, nextValue);
+  };
+
+  const revert = () => onClearEdit?.(row);
+  const listId = `ps-umls-${_safeDomId(row.jsonPointer)}`;
+
+  return (
+    <div className="ps-edit-cell">
+      <input
+        className={hasEdit ? "ps-edit-input ps-edited" : "ps-edit-input"}
+        type="text"
+        list={listId}
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={() => commit(value)}
+        onKeyDown={(e) => {
+          if (e.key !== "Enter") return;
+          (e.target as HTMLInputElement).blur();
+        }}
+        disabled={disabled}
+      />
+      <datalist id={listId}>
+        {suggestions.map((s) => (
+          <option key={`${s.cui}:${s.term}`} value={s.term} label={s.preferred_name} />
+        ))}
+      </datalist>
       {hasEdit ? (
         <button type="button" className="ps-edit-revert" onClick={revert} title="Revert edit">
           ↩
@@ -596,6 +712,18 @@ export function RegistryGrid({
           }
 
           // string
+          const umlsConfig = getUmlsAutocomplete(row.jsonPointer);
+          if (umlsConfig) {
+            return (
+              <UmlsAutocompleteCell
+                key={`${baseKey}:umls:${String(edited ?? "")}`}
+                row={row}
+                config={umlsConfig}
+                onEditValue={onEditValue}
+                onClearEdit={onClearEdit}
+              />
+            );
+          }
           const current = hasEdit ? String(edited ?? "") : String(extracted ?? "");
           const placeholder = hasEdit ? "" : String(extracted ?? "");
           return (

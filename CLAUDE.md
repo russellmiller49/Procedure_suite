@@ -176,15 +176,20 @@ The deterministic layer includes guardrails to reduce “keyword-only” halluci
   - `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
   - Look for `Audit high-conf omissions:` and `SELF_CORRECT_SKIPPED:` reasons.
 
-## UMLS Lite (Lightweight Concept Linking)
+## UMLS (Distilled IP-UMLS Map + Deterministic Linker)
 
-The heavy scispaCy UMLS linker (~1 GB memory) is disabled on Railway (`ENABLE_UMLS_LINKER=false`). A lightweight alternative is available:
+The default UMLS integration is a **distilled deterministic linker** backed by a small IP-focused concept map (no spaCy/scispaCy model loading required). A scispaCy backend remains optional.
 
-- **Build tool:** `python ops/tools/build_ip_umls_map.py` — extracts IP-relevant terminology from local UMLS 2025AA RRF files (`~/UMLS/2025AA/META/`) into `data/knowledge/ip_umls_map.json` (~7 MB, ~19K concepts).
-- **Runtime module:** `proc_nlp/umls_lite.py` — drop-in replacement using n-gram matching against the pre-built map. Functions: `umls_link_lite()`, `lookup_cui()`, `search_terms()`.
-- **Env vars:**
-  - `ENABLE_UMLS_LINKER=false` — disables heavy scispaCy linker (set on Railway)
-  - `IP_UMLS_MAP_PATH` — override path to the lightweight map (default: `data/knowledge/ip_umls_map.json`)
+- **Build tool:** `python ops/tools/build_ip_umls_map.py` → writes `data/knowledge/ip_umls_map.json` (~7 MB, ~19K concepts).
+- **Runtime store:** `app/umls/ip_umls_store.py` (local/S3 resolution + file-locked atomic cache).
+- **Public API:** `proc_nlp/umls_linker.py` (default backend: `distilled`; keep `umls_link()` stable; use `umls_link_terms()` for term-based linking).
+- **Env vars (source resolution: local → S3 → repo fallback):**
+  - `UMLS_ENABLE_LINKER` (alias: `ENABLE_UMLS_LINKER`) — enable/disable integration
+  - `UMLS_LINKER_BACKEND=distilled|scispacy` (default: `distilled`)
+  - `UMLS_IP_UMLS_MAP_LOCAL_PATH` (alias: `IP_UMLS_MAP_PATH`) — explicit local override
+  - `UMLS_IP_UMLS_MAP_S3_URI=s3://procedure-suite-models/ip_umls_map.json` — production source of truth
+  - `UMLS_IP_UMLS_MAP_CACHE_PATH=/tmp/procsuite/ip_umls_map.json` — S3 cache destination
+  - `UMLS_FORCE_REFRESH=true` — redownload on boot even if cache exists
 
 ## Files You'll Touch Most Often
 
@@ -195,7 +200,8 @@ The heavy scispaCy UMLS linker (~1 GB memory) is disabled on Railway (`ENABLE_UM
 - Omission guardrails: `app/registry/self_correction/keyword_guard.py`
 - Clinical postprocessing guardrails: `app/extraction/postprocessing/clinical_guardrails.py`
 - PHI redactor veto rules: `ui/static/phi_redactor/protectedVeto.js`
-- UMLS lite runtime: `proc_nlp/umls_lite.py`
+- UMLS distilled store + cache: `app/umls/ip_umls_store.py`
+- UMLS linker wrapper: `proc_nlp/umls_linker.py`
 - UMLS map builder: `ops/tools/build_ip_umls_map.py`
 
 ## Tests

@@ -48,6 +48,10 @@ def _fake_umls_link(_: str):
     return [{"cui": "C000000", "text": "stub"}]
 
 
+def _fake_umls_link_terms(_: object):
+    return [{"cui": "C000000", "text": "stub"}]
+
+
 @pytest.fixture(autouse=True)
 def stub_umls(monkeypatch):
     # The reporting engine may expose different UMLS integration points over time.
@@ -56,4 +60,6 @@ def stub_umls(monkeypatch):
         monkeypatch.setattr(report_engine, "umls_link", _fake_umls_link)
     elif hasattr(report_engine, "_safe_umls_link"):
         monkeypatch.setattr(report_engine, "_safe_umls_link", _fake_umls_link)
+    elif hasattr(report_engine, "_safe_umls_link_terms"):
+        monkeypatch.setattr(report_engine, "_safe_umls_link_terms", _fake_umls_link_terms)
     yield

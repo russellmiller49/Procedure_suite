@@ -334,9 +334,9 @@ python ops/tools/unified_pipeline_batch.py \
 - Validating pipeline behavior after code changes
 - Comparing results across different configurations
 
-### 4. Build UMLS Lite Map (IP Domain Terminology)
+### 4. Build Distilled IP-UMLS Map (IP Domain Terminology)
 
-Extract IP-relevant UMLS terminology from a local UMLS 2025AA installation into a lightweight JSON map for runtime concept linking without the heavy scispaCy UMLS linker (~7 MB vs ~1 GB).
+Extract IP-relevant UMLS terminology from a local UMLS 2025AA installation into a lightweight JSON map for deterministic runtime concept linking (no spaCy/scispaCy required).
 
 ```bash
 # Default: reads ~/UMLS/2025AA/META/, writes data/knowledge/ip_umls_map.json
@@ -358,24 +358,31 @@ python ops/tools/build_ip_umls_map.py --verbose
 
 **Output:** `data/knowledge/ip_umls_map.json` containing ~19K concepts across anatomy, procedures, devices, diseases, and pharmacology — filtered to IP-relevant terminology via category-gated pattern matching.
 
-**Runtime usage:** The map is consumed by `proc_nlp/umls_lite.py` which provides a drop-in lightweight alternative to `proc_nlp/umls_linker.py`:
+**Runtime usage (default: distilled backend):** `proc_nlp/umls_linker.py` defaults to a distilled deterministic linker backed by this map (no spaCy/scispaCy model loading).
 
 ```python
-from proc_nlp.umls_lite import umls_link_lite, lookup_cui, search_terms
+from proc_nlp.umls_linker import umls_link_terms
 
-# Link clinical text to UMLS concepts
-concepts = umls_link_lite("bronchoscopy with EBUS-TBNA")
+# Link short extracted terms (recommended; avoids whole-note scanning)
+concepts = umls_link_terms(["EBUS TBNA", "Right upper lobe"])
 for c in concepts:
     print(c.cui, c.preferred_name, c.score)
-
-# Direct CUI lookup
-info = lookup_cui("C0006290")  # Bronchoscopy
-
-# Search the term index
-matches = search_terms("cryobiopsy")
 ```
 
-The map path is configurable via `IP_UMLS_MAP_PATH` env var (default: `data/knowledge/ip_umls_map.json`).
+You can also use the store directly for prefix suggestions:
+
+```python
+from app.umls.ip_umls_store import get_ip_umls_store
+
+store = get_ip_umls_store()
+print(store.suggest("rb", category="anatomy", limit=10))
+```
+
+**Configuration / source resolution (local → S3 → fallback):**
+
+- If `UMLS_IP_UMLS_MAP_LOCAL_PATH` is set (alias: `IP_UMLS_MAP_PATH`), use it.
+- Else if `UMLS_IP_UMLS_MAP_S3_URI` is set, download to `UMLS_IP_UMLS_MAP_CACHE_PATH` (file-locked + atomic) and use the cache.
+- Else if `data/knowledge/ip_umls_map.json` exists, auto-use it (dev convenience, no env vars).
 
 ### 5. Clean & Normalize Registry
 Run the full cleaning pipeline (Schema Norm -> CPT Logic -> Consistency -> Clinical QC) on a raw dataset.
@@ -542,7 +549,7 @@ Note: `MODEL_BACKEND=onnx` (the devserver default) may skip the registry ML clas
 ## 📊 Key Files
 
 - **`data/knowledge/ip_coding_billing_v3_0.json`**: The "Brain". Contains all CPT codes, RVUs, and bundling rules.
-- **`data/knowledge/ip_umls_map.json`**: Lightweight UMLS concept map (~19K IP-relevant concepts). Built by `ops/tools/build_ip_umls_map.py`, consumed by `proc_nlp/umls_lite.py`.
+- **`data/knowledge/ip_umls_map.json`**: Distilled IP-UMLS concept map (~19K IP-relevant concepts). Built by `ops/tools/build_ip_umls_map.py`, consumed by `app/umls/ip_umls_store.py` and the default `proc_nlp/umls_linker.py` distilled backend (also exposed via `/api/v1/umls/*`).
 - **`schemas/IP_Registry.json`**: The "Law". Defines the valid structure for registry data.
 - **`reports/`**: Where output logs and validation summaries are saved.
 
@@ -1058,8 +1065,12 @@ This generates a markdown report in `data/eval_results/` with:
 | `PROCSUITE_SKIP_WARMUP` | Skip NLP model loading at startup | `false` |
 | `CODER_REQUIRE_PHI_REVIEW` | Require PHI review before coding | `false` |
 | `DEMO_MODE` | Enable demo mode (synthetic data only) | `false` |
-| `ENABLE_UMLS_LINKER` | Enable heavy scispaCy UMLS linker (disable on Railway) | `true` |
-| `IP_UMLS_MAP_PATH` | Path to lightweight UMLS concept map for `umls_lite` | `data/knowledge/ip_umls_map.json` |
+| `UMLS_ENABLE_LINKER` (alias: `ENABLE_UMLS_LINKER`) | Enable UMLS integration (distilled backend by default) | `true` |
+| `UMLS_LINKER_BACKEND` | `distilled` (default) or `scispacy` | `distilled` |
+| `UMLS_IP_UMLS_MAP_LOCAL_PATH` (alias: `IP_UMLS_MAP_PATH`) | Explicit local map path override | unset |
+| `UMLS_IP_UMLS_MAP_S3_URI` | S3 URI for distilled map (downloaded to cache) | unset |
+| `UMLS_IP_UMLS_MAP_CACHE_PATH` | Cache path for downloaded S3 map | `/tmp/procsuite/ip_umls_map.json` |
+| `UMLS_FORCE_REFRESH` | If true, redownload on boot even if cache exists | `false` |
 
 ### OpenAI Configuration
 

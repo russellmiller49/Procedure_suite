@@ -14,7 +14,7 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
 - Smoke test (batch): `python ops/tools/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
 - Reporter random seeds (prompt->output): `python ops/tools/run_reporter_random_seeds.py --count 20 --output reporter_tests.txt --include-metadata-json`
 - Reporter findings eval: `python ops/tools/eval_reporter_prompt_llm_findings.py --max-cases 50 --output data/ml_training/reporter_prompt/v1/reporter_prompt_llm_findings_eval_report.json`
-- Build UMLS lite map: `python ops/tools/build_ip_umls_map.py` (requires `~/UMLS/2025AA/META/`)
+- Build distilled IP-UMLS map: `python ops/tools/build_ip_umls_map.py` (requires `~/UMLS/2025AA/META/`)
 
 ## Required Runtime Configuration
 
@@ -180,12 +180,18 @@ See `app/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
 - Run server with the model:
   - set `GRANULAR_NER_MODEL_DIR=artifacts/registry_biomedbert_ner` (in `.env` or shell)
 
-## UMLS Lite (Lightweight Concept Linking)
+## UMLS (Distilled IP-UMLS Map + Deterministic Linker)
 
-- Heavy scispaCy UMLS linker is disabled on Railway (`ENABLE_UMLS_LINKER=false`).
-- Lightweight alternative: `proc_nlp/umls_lite.py` loads `data/knowledge/ip_umls_map.json` (~7 MB, ~19K IP-relevant concepts).
-- Map is built offline by `ops/tools/build_ip_umls_map.py` from local UMLS 2025AA RRF files.
-- Override map path: `IP_UMLS_MAP_PATH` env var.
+- Default backend is **distilled** (no spaCy/scispaCy required), backed by `data/knowledge/ip_umls_map.json` (dev) or S3 in production.
+- Store + source resolution (local → S3 → repo fallback): `app/umls/ip_umls_store.py`
+- Linker wrapper (stable imports + term-based linking): `proc_nlp/umls_linker.py` (`umls_link_terms()` preferred)
+- Env vars:
+  - `UMLS_ENABLE_LINKER` (alias: `ENABLE_UMLS_LINKER`)
+  - `UMLS_LINKER_BACKEND=distilled|scispacy` (default: `distilled`)
+  - `UMLS_IP_UMLS_MAP_LOCAL_PATH` (alias: `IP_UMLS_MAP_PATH`)
+  - `UMLS_IP_UMLS_MAP_S3_URI` (prod source of truth; downloaded to cache)
+  - `UMLS_IP_UMLS_MAP_CACHE_PATH` (default: `/tmp/procsuite/ip_umls_map.json`)
+  - `UMLS_FORCE_REFRESH` (redownload on boot)
 
 ## Common Pitfalls
 

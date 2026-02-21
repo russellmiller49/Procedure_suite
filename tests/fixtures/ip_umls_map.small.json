@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "version": "small-fixture"
+  },
+  "concepts": {
+    "C0001": {
+      "preferred_name": "Right upper lobe",
+      "name": "Right upper lobe",
+      "categories": ["anatomy"],
+      "semtypes": ["T017"]
+    },
+    "C0002": {
+      "preferred_name": "EBUS-TBNA",
+      "name": "Endobronchial ultrasound-guided transbronchial needle aspiration",
+      "categories": ["procedure"],
+      "semtypes": ["T060"]
+    },
+    "C0003": {
+      "preferred_name": "Right bronchus segment 1",
+      "name": "Right bronchus segment 1",
+      "categories": ["anatomy"],
+      "semtypes": ["T029"]
+    },
+    "C0004": {
+      "preferred_name": "RB1 device",
+      "name": "RB1 device",
+      "categories": ["device"],
+      "semtypes": ["T074"]
+    }
+  },
+  "term_index": {
+    "right upper lobe": ["C0001"],
+    "ebus-tbna": ["C0002"],
+    "rb1": ["C0004", "C0003"],
+    "rb10": ["C0003"],
+    "rb2": ["C0003"]
+  }
+}
+

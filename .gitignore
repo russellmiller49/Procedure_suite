@@ -42,6 +42,9 @@ artifacts/phi_audit/
 distilled/
 dist/registry_bundle/
 
+# Local UMLS distilled map (large; keep out of git)
+data/knowledge/ip_umls_map.json
+
 # Hugging Face model snapshots (large; keep out of git)
 ui/static/phi_redactor/vendor/**
 !ui/static/phi_redactor/vendor/.gitkeep
