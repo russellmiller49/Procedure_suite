@@ -25,10 +25,11 @@ describe("ocrMetrics", () => {
       lines: [
         { text: "Powered by Provation MD", confidence: 92 },
         { text: "Page 1 of 2", confidence: 92 },
+        { text: "Page 10f3", confidence: 67 },
         { text: "Clinical findings line.", confidence: 90 },
       ],
     });
 
-    expect(metrics.footerBoilerplateHits).toBe(2);
+    expect(metrics.footerBoilerplateHits).toBe(3);
   });
 });

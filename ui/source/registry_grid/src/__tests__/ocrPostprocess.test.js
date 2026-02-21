@@ -61,6 +61,76 @@ describe("ocrPostprocess", () => {
     expect(composeOcrPageText(filtered.lines)).toBe("Procedure:\nBronchoscopy");
   });
 
+  it("drops fuzzy page footer and symbol-only artifact lines", () => {
+    const filtered = filterOcrLinesDetailed([
+      { text: "te. ee ee ora | Page 10f3", confidence: 64, bbox: { x: 20, y: 20, width: 210, height: 14 } },
+      { text: "| ~ _", confidence: 41, bbox: { x: 20, y: 38, width: 50, height: 12 } },
+      { text: "Biopsies were performed in the upper pleura.", confidence: 83, bbox: { x: 20, y: 56, width: 330, height: 16 } },
+    ], []);
+
+    expect(filtered.lines.map((line) => line.text)).toEqual(["Biopsies were performed in the upper pleura."]);
+    expect(filtered.dropped.some((entry) => entry.reason === "artifact")).toBe(true);
+  });
+
+  it("drops long repeated-character gibberish lines", () => {
+    const filtered = filterOcrLinesDetailed([
+      { text: "RGR UUEHHHHHAHIIIHL HHH EEE WHT HW WWIWt", confidence: 61, bbox: { x: 20, y: 22, width: 300, height: 14 } },
+      { text: "Local Anesthesia: entry sites were infiltrated with 30 mL.", confidence: 82, bbox: { x: 20, y: 40, width: 360, height: 16 } },
+    ], []);
+
+    expect(filtered.lines).toHaveLength(1);
+    expect(filtered.lines[0].text).toContain("Local Anesthesia");
+    expect(filtered.dropped.some((entry) => entry.reason === "artifact")).toBe(true);
+  });
+
+  it("drops top-band uppercase garbage while keeping real header lines", () => {
+    const filtered = filterOcrLinesDetailed([
+      { text: "PIAPEPATIPTEPE ERE ELBE ESE FE REE RE", confidence: 78, bbox: { x: 24, y: 18, width: 380, height: 14 } },
+      { text: "THE UNIVERSITY OF TEXAS", confidence: 92, bbox: { x: 24, y: 34, width: 260, height: 18 } },
+      { text: "Patient Name: Power, Richard", confidence: 88, bbox: { x: 24, y: 58, width: 280, height: 18 } },
+    ], []);
+
+    expect(filtered.lines.map((line) => line.text)).toEqual([
+      "THE UNIVERSITY OF TEXAS",
+      "Patient Name: Power, Richard",
+    ]);
+    expect(filtered.dropped.some((entry) => entry.reason === "header_artifact" || entry.reason === "artifact")).toBe(true);
+  });
+
+  it("drops top-edge punctuation/short-token noise while keeping valid header text", () => {
+    const filtered = filterOcrLinesDetailed([
+      { text: ": : 14 ii i A \\", confidence: 68, bbox: { x: 24, y: 8, width: 160, height: 14 } },
+      { text: "THE UNIVERSITY OF TEXAS", confidence: 92, bbox: { x: 24, y: 28, width: 260, height: 18 } },
+      { text: "Patient Name: Power, Richard", confidence: 88, bbox: { x: 24, y: 52, width: 280, height: 18 } },
+    ], []);
+
+    expect(filtered.lines.map((line) => line.text)).toEqual([
+      "THE UNIVERSITY OF TEXAS",
+      "Patient Name: Power, Richard",
+    ]);
+    expect(filtered.dropped.some((entry) => entry.reason === "header_artifact")).toBe(true);
+  });
+
+  it("drops bottom-edge mush lines while keeping nearby clinical lines", () => {
+    const filtered = filterOcrLinesDetailed([
+      {
+        text: "Biopsies of adhesions were performed in the upper pleura using forceps.",
+        confidence: 81,
+        bbox: { x: 24, y: 820, width: 520, height: 18 },
+      },
+      {
+        text: "i eee a een nnnmennmnner ies a",
+        confidence: 67,
+        bbox: { x: 24, y: 900, width: 240, height: 14 },
+      },
+    ], []);
+
+    expect(filtered.lines.map((line) => line.text)).toEqual([
+      "Biopsies of adhesions were performed in the upper pleura using forceps.",
+    ]);
+    expect(filtered.dropped.some((entry) => entry.reason === "footer_artifact")).toBe(true);
+  });
+
   it("can disable figure-overlap suppression for scanned-like pages", () => {
     const lines = [
       {
