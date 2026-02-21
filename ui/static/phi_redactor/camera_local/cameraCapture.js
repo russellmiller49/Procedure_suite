@@ -180,10 +180,7 @@ function canvasToBlob(canvas, quality) {
   });
 }
 
-export async function captureFrame(videoEl, options = {}, env) {
-  const runtime = resolveEnv(env);
-  if (!videoEl) throw new Error("camera preview element is required");
-
+function resolveCaptureDimensions(videoEl, options = {}) {
   const sourceWidth = Math.max(1, Number(videoEl.videoWidth) || 0);
   const sourceHeight = Math.max(1, Number(videoEl.videoHeight) || 0);
   if (!sourceWidth || !sourceHeight) {
@@ -196,27 +193,167 @@ export async function captureFrame(videoEl, options = {}, env) {
   const scale = Math.min(1, maxDim / Math.max(sourceWidth, sourceHeight));
   const width = Math.max(1, Math.round(sourceWidth * scale));
   const height = Math.max(1, Math.round(sourceHeight * scale));
+  return { sourceWidth, sourceHeight, width, height };
+}
 
-  const canvas = createCanvas(width, height, runtime);
-  const context = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
-  if (!context) throw new Error("Unable to acquire 2D context for capture");
-
+function drawVideoFrameToCanvas(context, videoEl, dims) {
   context.fillStyle = "#ffffff";
-  context.fillRect(0, 0, width, height);
-  context.drawImage(videoEl, 0, 0, sourceWidth, sourceHeight, 0, 0, width, height);
+  context.fillRect(0, 0, dims.width, dims.height);
+  context.drawImage(
+    videoEl,
+    0,
+    0,
+    dims.sourceWidth,
+    dims.sourceHeight,
+    0,
+    0,
+    dims.width,
+    dims.height,
+  );
+}
 
+function imageDataFromBuffer(context, buffer, width, height) {
+  if (!context || !buffer) return null;
+  try {
+    if (typeof ImageData === "function") {
+      return new ImageData(buffer, width, height);
+    }
+  } catch {
+    // fall through
+  }
+  if (hasFunction(context.createImageData)) {
+    const imageData = context.createImageData(width, height);
+    imageData.data.set(buffer);
+    return imageData;
+  }
+  return null;
+}
+
+function computeFrameSharpnessScore(imageData) {
+  const data = imageData?.data;
+  const width = Math.max(1, Number(imageData?.width) || 1);
+  const height = Math.max(1, Number(imageData?.height) || 1);
+  if (!data || !data.length) return 0;
+
+  const sampleStride = Math.max(1, Math.floor(Math.max(width, height) / 900));
+  let sum = 0;
+  let sqSum = 0;
+  let colorDeltaSum = 0;
+  let count = 0;
+
+  for (let y = 0; y < height; y += sampleStride) {
+    for (let x = 0; x < width; x += sampleStride) {
+      const i = (y * width + x) * 4;
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+      const delta = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
+      sum += luma;
+      sqSum += luma * luma;
+      colorDeltaSum += delta;
+      count += 1;
+    }
+  }
+
+  if (!count) return 0;
+  const mean = sum / count;
+  const variance = Math.max(0, sqSum / count - mean * mean);
+  const stdDev = Math.sqrt(variance);
+  const meanColorDelta = colorDeltaSum / count;
+
+  // Prefer high contrast while penalizing severe chroma fringing (monitor moire).
+  return stdDev - meanColorDelta * 0.34;
+}
+
+function sleep(ms) {
+  const delay = Math.max(0, Number(ms) || 0);
+  return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+async function finalizeCanvasCapture(canvas, runtime, dims, options = {}) {
   const bitmap = await runtime.createImageBitmap(canvas);
   const quality = Number.isFinite(options.jpegQuality)
     ? clamp(Number(options.jpegQuality), 0.5, 0.98)
     : 0.92;
   const blob = await canvasToBlob(canvas, quality);
-
   return {
     bitmap,
-    width,
-    height,
+    width: dims.width,
+    height: dims.height,
     blob,
-    sourceWidth,
-    sourceHeight,
+    sourceWidth: dims.sourceWidth,
+    sourceHeight: dims.sourceHeight,
   };
+}
+
+export async function captureFrame(videoEl, options = {}, env) {
+  const runtime = resolveEnv(env);
+  if (!videoEl) throw new Error("camera preview element is required");
+  const dims = resolveCaptureDimensions(videoEl, options);
+
+  const canvas = createCanvas(dims.width, dims.height, runtime);
+  const context = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
+  if (!context) throw new Error("Unable to acquire 2D context for capture");
+
+  drawVideoFrameToCanvas(context, videoEl, dims);
+  return finalizeCanvasCapture(canvas, runtime, dims, options);
+}
+
+export async function captureBestFrame(videoEl, options = {}, env) {
+  const runtime = resolveEnv(env);
+  if (!videoEl) throw new Error("camera preview element is required");
+
+  const sampleCount = Number.isFinite(options.framesToSample)
+    ? clamp(Math.round(Number(options.framesToSample)), 2, 9)
+    : 5;
+  if (sampleCount <= 1) {
+    return captureFrame(videoEl, options, runtime);
+  }
+
+  const delayMs = Number.isFinite(options.delayMs)
+    ? clamp(Number(options.delayMs), 40, 400)
+    : 120;
+  const dims = resolveCaptureDimensions(videoEl, options);
+  const canvas = createCanvas(dims.width, dims.height, runtime);
+  const context = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
+  if (!context) throw new Error("Unable to acquire 2D context for burst capture");
+
+  let bestScore = Number.NEGATIVE_INFINITY;
+  let bestBuffer = null;
+  for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex += 1) {
+    drawVideoFrameToCanvas(context, videoEl, dims);
+    const imageData = context.getImageData(0, 0, dims.width, dims.height);
+    const score = computeFrameSharpnessScore(imageData);
+    if (score > bestScore || !bestBuffer) {
+      bestScore = score;
+      bestBuffer = new Uint8ClampedArray(imageData.data);
+    }
+
+    if (hasFunction(options.onProgress)) {
+      try {
+        options.onProgress({
+          sampleIndex: sampleIndex + 1,
+          sampleCount,
+          score,
+          bestScore,
+        });
+      } catch {
+        // ignore callback errors
+      }
+    }
+
+    if (sampleIndex < sampleCount - 1) {
+      await sleep(delayMs);
+    }
+  }
+
+  if (bestBuffer) {
+    const bestImageData = imageDataFromBuffer(context, bestBuffer, dims.width, dims.height);
+    if (bestImageData) {
+      context.putImageData(bestImageData, 0, 0);
+    }
+  }
+
+  return finalizeCanvasCapture(canvas, runtime, dims, options);
 }

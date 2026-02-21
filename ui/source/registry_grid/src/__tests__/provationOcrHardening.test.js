@@ -54,6 +54,10 @@ describe("provation OCR hardening fixtures", () => {
         "tracheobronchlal narrowing noted.",
         "Proceduratist(s): Fellow listed for pleurescopy.",
         "Fodings mention the insion while discussing allematives wih patient.",
+        "Jouroscopy was pe icnaed after mierventon.",
+        "Incrson note: decubwtus pow bon with Chioraprep prep and piyysical exam.",
+        "Specimen sent for hestopathology and eumone.",
+        "Findings: exetenssive adhesions. Veress neédle technique.",
       ].join(" "),
     );
 
@@ -65,6 +69,10 @@ describe("provation OCR hardening fixtures", () => {
     expect(corrected).toContain("tracheobronchial narrowing");
     expect(corrected).toContain("Proceduralist(s): Fellow listed for pleuroscopy.");
     expect(corrected).toContain("Findings mention the incision while discussing alternatives with patient.");
+    expect(corrected).toContain("fluoroscopy was pe icnaed after intervention.");
+    expect(corrected).toContain("Incision note: decubitus pow bon with ChloraPrep prep and physical exam.");
+    expect(corrected).toContain("Specimen sent for histopathology and cultures.");
+    expect(corrected).toContain("Findings: extensive adhesions. Veress needle technique.");
   });
 
   it("does not over-correct non-target Atropine doses", () => {

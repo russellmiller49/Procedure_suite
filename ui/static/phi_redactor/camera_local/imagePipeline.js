@@ -114,6 +114,12 @@ export async function runCameraOcrJob(worker, pages, options = {}, handlers = {}
     options: {
       lang: options.lang === "eng" ? "eng" : "eng",
       mode: options.mode === "high_accuracy" ? "high_accuracy" : "fast",
+      sceneHint: options.sceneHint === "monitor"
+        ? "monitor"
+        : options.sceneHint === "document"
+          ? "document"
+          : "auto",
+      warningProfile: options.warningProfile === "ios_safari" ? "ios_safari" : "default",
       preprocess: {
         mode: options.preprocess?.mode === "bw_high_contrast"
           ? "bw_high_contrast"

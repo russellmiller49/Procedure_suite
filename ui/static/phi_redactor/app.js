@@ -1,6 +1,6 @@
 /* global monaco */
 import { buildPdfDocumentModel, extractPdfAdaptive } from "./pdf_local/pdf/pipeline.js";
-import { canUseCameraScan, captureFrame, startCamera, stopCamera } from "./camera_local/cameraCapture.js";
+import { canUseCameraScan, captureBestFrame, captureFrame, startCamera, stopCamera } from "./camera_local/cameraCapture.js";
 import { createCameraCaptureQueue } from "./camera_local/cameraUi.js";
 import {
   buildCameraOcrDocumentText,
@@ -8,6 +8,11 @@ import {
   makeCameraWorkerUrl,
   runCameraOcrJob,
 } from "./camera_local/imagePipeline.js";
+import {
+  buildCaptureWarnings,
+  computeCaptureQualityMetrics,
+  computeGrayFromImageData,
+} from "./camera_local/imagePreprocess.js";
 import { initPrivacyShield } from "./camera_local/privacyShield.js";
 
 const statusTextEl = document.getElementById("statusText");
@@ -78,6 +83,8 @@ const cameraScanBtn = document.getElementById("cameraScanBtn");
 const cameraScanSummaryEl = document.getElementById("cameraScanSummary");
 const cameraScanModalEl = document.getElementById("cameraScanModal");
 const cameraPreviewEl = document.getElementById("cameraPreview");
+const cameraGuideOverlayEl = document.getElementById("cameraGuideOverlay");
+const cameraGuideHintEl = document.getElementById("cameraGuideHint");
 const cameraStartBtn = document.getElementById("cameraStartBtn");
 const cameraCaptureBtn = document.getElementById("cameraCaptureBtn");
 const cameraRetakeBtn = document.getElementById("cameraRetakeBtn");
@@ -86,6 +93,7 @@ const cameraRunOcrBtn = document.getElementById("cameraRunOcrBtn");
 const cameraCloseBtn = document.getElementById("cameraCloseBtn");
 const cameraOcrQualitySelectEl = document.getElementById("cameraOcrQualitySelect");
 const cameraEnhanceSelectEl = document.getElementById("cameraEnhanceSelect");
+const cameraSceneHintSelectEl = document.getElementById("cameraSceneHintSelect");
 const cameraStatusTextEl = document.getElementById("cameraStatusText");
 const cameraProgressTextEl = document.getElementById("cameraProgressText");
 const cameraThumbStripEl = document.getElementById("cameraThumbStrip");
@@ -110,6 +118,24 @@ const cameraCropApplyAllBtn = document.getElementById("cameraCropApplyAllBtn");
 const cameraCropResetBtn = document.getElementById("cameraCropResetBtn");
 const cameraCropResetAllBtn = document.getElementById("cameraCropResetAllBtn");
 const privacyShieldEl = document.getElementById("privacyShield");
+
+function detectCameraWarningProfile(env = globalThis) {
+  try {
+    const nav = env?.navigator;
+    const ua = String(nav?.userAgent || "");
+    const platform = String(nav?.platform || "");
+    const maxTouchPoints = Number(nav?.maxTouchPoints || 0);
+    const isIOSDevice = /iP(?:hone|ad|od)\b/i.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1);
+    if (!isIOSDevice) return "default";
+    const isSafari = /\bSafari\//.test(ua) && !/\b(?:CriOS|FxiOS|EdgiOS|OPiOS|YaBrowser)\//.test(ua);
+    return isSafari ? "ios_safari" : "default";
+  } catch {
+    return "default";
+  }
+}
+
+const cameraWarningProfile = detectCameraWarningProfile();
+let cameraGuideFrameRafId = 0;
 
 let lastServerResponse = null;
 let flatTablesBase = null;
@@ -7223,6 +7249,127 @@ async function main() {
     cameraProgressTextEl.textContent = String(message || "");
   }
 
+  function resolveCameraSceneHint() {
+    const sceneHintValue = String(cameraSceneHintSelectEl?.value || "auto");
+    if (sceneHintValue === "monitor") return "monitor";
+    if (sceneHintValue === "document") return "document";
+    return "auto";
+  }
+
+  function updateCameraGuideHint() {
+    if (!cameraGuideHintEl) return;
+    const sceneHint = resolveCameraSceneHint();
+    if (sceneHint === "monitor") {
+      cameraGuideHintEl.textContent = "Screen capture: tilt phone ~15 degrees, hold steady, reduce glare.";
+      return;
+    }
+    if (sceneHint === "document") {
+      cameraGuideHintEl.textContent = "Align paper inside frame. Hold steady and avoid shadowing.";
+      return;
+    }
+    cameraGuideHintEl.textContent = "Align document inside frame. Hold steady and reduce glare.";
+  }
+
+  function clearCameraGuideFrameStyle() {
+    if (!cameraGuideOverlayEl) return;
+    cameraGuideOverlayEl.style.removeProperty("--camera-guide-left");
+    cameraGuideOverlayEl.style.removeProperty("--camera-guide-top");
+    cameraGuideOverlayEl.style.removeProperty("--camera-guide-width");
+    cameraGuideOverlayEl.style.removeProperty("--camera-guide-height");
+  }
+
+  function updateCameraGuideFrame() {
+    if (!cameraGuideOverlayEl || !cameraPreviewEl) return;
+    const overlayRect = cameraGuideOverlayEl.getBoundingClientRect();
+    const previewRect = cameraPreviewEl.getBoundingClientRect();
+    if (!overlayRect?.width || !overlayRect?.height || !previewRect?.width || !previewRect?.height) return;
+
+    let left = previewRect.left - overlayRect.left;
+    let top = previewRect.top - overlayRect.top;
+    let width = previewRect.width;
+    let height = previewRect.height;
+    const videoWidth = Math.max(0, Number(cameraPreviewEl.videoWidth) || 0);
+    const videoHeight = Math.max(0, Number(cameraPreviewEl.videoHeight) || 0);
+
+    if (videoWidth > 0 && videoHeight > 0 && width > 0 && height > 0) {
+      const boxRatio = width / height;
+      const videoRatio = videoWidth / videoHeight;
+      const ratioEpsilon = 0.0001;
+      if (videoRatio < boxRatio - ratioEpsilon) {
+        const contentWidth = Math.max(1, height * videoRatio);
+        const padX = Math.max(0, (width - contentWidth) / 2);
+        left += padX;
+        width = contentWidth;
+      } else if (videoRatio > boxRatio + ratioEpsilon) {
+        const contentHeight = Math.max(1, width / videoRatio);
+        const padY = Math.max(0, (height - contentHeight) / 2);
+        top += padY;
+        height = contentHeight;
+      }
+    }
+
+    const insetX = Math.max(6, width * 0.03);
+    const insetY = Math.max(8, height * 0.035);
+    const frameLeft = left + insetX;
+    const frameTop = top + insetY;
+    const frameWidth = Math.max(24, width - insetX * 2);
+    const frameHeight = Math.max(24, height - insetY * 2);
+
+    cameraGuideOverlayEl.style.setProperty("--camera-guide-left", `${frameLeft.toFixed(2)}px`);
+    cameraGuideOverlayEl.style.setProperty("--camera-guide-top", `${frameTop.toFixed(2)}px`);
+    cameraGuideOverlayEl.style.setProperty("--camera-guide-width", `${frameWidth.toFixed(2)}px`);
+    cameraGuideOverlayEl.style.setProperty("--camera-guide-height", `${frameHeight.toFixed(2)}px`);
+  }
+
+  function scheduleCameraGuideFrameUpdate() {
+    if (cameraGuideFrameRafId) {
+      cancelAnimationFrame(cameraGuideFrameRafId);
+      cameraGuideFrameRafId = 0;
+    }
+    cameraGuideFrameRafId = requestAnimationFrame(() => {
+      cameraGuideFrameRafId = 0;
+      updateCameraGuideFrame();
+    });
+  }
+
+  function createCameraProbeCanvas(width, height) {
+    const safeWidth = Math.max(1, Math.floor(Number(width) || 1));
+    const safeHeight = Math.max(1, Math.floor(Number(height) || 1));
+    if (typeof OffscreenCanvas === "function") {
+      return new OffscreenCanvas(safeWidth, safeHeight);
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = safeWidth;
+    canvas.height = safeHeight;
+    return canvas;
+  }
+
+  function evaluateCapturedFrameQuality(frame) {
+    try {
+      const srcWidth = Math.max(1, Number(frame?.width) || 1);
+      const srcHeight = Math.max(1, Number(frame?.height) || 1);
+      const probeMaxDim = 1200;
+      const scale = Math.min(1, probeMaxDim / Math.max(srcWidth, srcHeight));
+      const probeWidth = Math.max(1, Math.round(srcWidth * scale));
+      const probeHeight = Math.max(1, Math.round(srcHeight * scale));
+      const canvas = createCameraProbeCanvas(probeWidth, probeHeight);
+      const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
+      if (!ctx) return { metrics: null, warnings: [] };
+
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, probeWidth, probeHeight);
+      ctx.drawImage(frame.bitmap, 0, 0, srcWidth, srcHeight, 0, 0, probeWidth, probeHeight);
+
+      const imageData = ctx.getImageData(0, 0, probeWidth, probeHeight);
+      const gray = computeGrayFromImageData(imageData.data);
+      const metrics = computeCaptureQualityMetrics(gray, probeWidth, probeHeight);
+      const warnings = buildCaptureWarnings(metrics, { warningProfile: cameraWarningProfile });
+      return { metrics, warnings };
+    } catch {
+      return { metrics: null, warnings: [] };
+    }
+  }
+
   function normalizeCameraCropMargins(input = {}) {
     return {
       top: clamp(Number(input.top) || 0, 0, 45),
@@ -7626,6 +7773,12 @@ async function main() {
   }
 
   function stopCameraPreviewStream() {
+    if (cameraGuideOverlayEl) cameraGuideOverlayEl.classList.remove("active");
+    if (cameraGuideFrameRafId) {
+      cancelAnimationFrame(cameraGuideFrameRafId);
+      cameraGuideFrameRafId = 0;
+    }
+    clearCameraGuideFrameStyle();
     if (cameraPreviewEl) {
       stopCamera(cameraPreviewEl);
     } else if (cameraStream) {
@@ -7670,6 +7823,7 @@ async function main() {
   function resetCameraModalUi() {
     setCameraStatus("Start camera to capture pages.");
     setCameraProgress("");
+    updateCameraGuideHint();
     cameraCropDragState = null;
     cameraCropShowZoomPreview = false;
     writeCameraCropMarginsToInputs({ top: 0, right: 0, bottom: 0, left: 0 });
@@ -7814,6 +7968,8 @@ async function main() {
         cameraScanModalEl.setAttribute("open", "");
       }
     }
+    updateCameraGuideHint();
+    scheduleCameraGuideFrameUpdate();
     setCameraStatus("Tap Start Camera to begin.");
   }
 
@@ -7827,6 +7983,8 @@ async function main() {
         facingMode: "environment",
         preferredWidth: 1280,
       });
+      if (cameraGuideOverlayEl) cameraGuideOverlayEl.classList.add("active");
+      scheduleCameraGuideFrameUpdate();
       setCameraStatus("Camera ready. Capture one or more pages.");
       setCameraProgress("");
       updateCameraControls();
@@ -7843,20 +8001,47 @@ async function main() {
     if (!cameraPreviewEl || !cameraStream) return;
     try {
       const captureMaxDim = cameraOcrQualitySelectEl?.value === "high_accuracy" ? 3400 : 2500;
-      const frame = await captureFrame(cameraPreviewEl, { maxDim: captureMaxDim });
+      const sceneHint = resolveCameraSceneHint();
+      let frame = null;
+      if (sceneHint === "monitor") {
+        const burstSamples = cameraOcrQualitySelectEl?.value === "high_accuracy" ? 6 : 5;
+        setCameraStatus(`Holding steady... sampling ${burstSamples} frames for best monitor capture.`);
+        frame = await captureBestFrame(cameraPreviewEl, {
+          maxDim: captureMaxDim,
+          framesToSample: burstSamples,
+          delayMs: 110,
+          onProgress: (progress) => {
+            const sampleIndex = Number(progress?.sampleIndex) || 0;
+            const sampleCount = Number(progress?.sampleCount) || burstSamples;
+            setCameraProgress(`stabilize (${sampleIndex}/${sampleCount})`);
+          },
+        });
+      } else {
+        frame = await captureFrame(cameraPreviewEl, { maxDim: captureMaxDim });
+      }
+      const quality = evaluateCapturedFrameQuality(frame);
       cameraQueue.addPage({
         bitmap: frame.bitmap,
         blob: frame.blob,
         width: frame.width,
         height: frame.height,
+        warnings: quality.warnings,
       });
       renderCameraThumbnails();
-      renderCameraWarnings([]);
-      setCameraStatus(`Captured page ${cameraQueue.pages.length}.`);
+      renderCameraWarnings(collectCameraWarnings(cameraQueue.pages));
+      if (quality.warnings.length > 0) {
+        setCameraStatus(
+          `Captured page ${cameraQueue.pages.length} with quality warning: ${quality.warnings[0]}`,
+        );
+      } else {
+        setCameraStatus(`Captured page ${cameraQueue.pages.length}.`);
+      }
+      setCameraProgress("");
       updateCameraControls();
     } catch (error) {
       const msg = error instanceof Error ? error.message : String(error);
       setCameraStatus(`Capture failed: ${msg}`);
+      setCameraProgress("");
     }
   }
 
@@ -7878,6 +8063,7 @@ async function main() {
         : enhanceValue === "off"
           ? "off"
           : "auto";
+    const sceneHint = resolveCameraSceneHint();
 
     extractingCamera = true;
     setCameraStatus("Running local OCR...");
@@ -7898,6 +8084,8 @@ async function main() {
           lang: "eng",
           mode: ocrMode,
           preprocess: { mode: preprocessMode },
+          sceneHint,
+          warningProfile: cameraWarningProfile,
         },
         {
           onProgress: (event) => {
@@ -7931,7 +8119,7 @@ async function main() {
 
       const summary =
         `Loaded ${ocrPages.length} camera page(s). OCR mode: ${ocrMode === "high_accuracy" ? "high accuracy" : "fast"}. ` +
-        `Enhance: ${preprocessMode}.` +
+        `Enhance: ${preprocessMode}. Capture: ${sceneHint}.` +
         (croppedPageCount > 0 ? ` Cropped pages: ${croppedPageCount}/${pagesForOcr.length}.` : "");
       setCameraScanSummary(summary, "success");
       setStatus("Camera OCR text loaded into editor. Run Detection to use existing PHI redaction workflow.");
@@ -8234,6 +8422,31 @@ async function main() {
     });
   }
 
+  if (cameraSceneHintSelectEl) {
+    cameraSceneHintSelectEl.addEventListener("change", () => {
+      updateCameraGuideHint();
+      scheduleCameraGuideFrameUpdate();
+    });
+  }
+
+  if (cameraPreviewEl) {
+    cameraPreviewEl.addEventListener("loadedmetadata", () => {
+      scheduleCameraGuideFrameUpdate();
+    });
+    cameraPreviewEl.addEventListener("resize", () => {
+      scheduleCameraGuideFrameUpdate();
+    });
+  }
+
+  window.addEventListener("resize", () => {
+    if (!cameraModalOpen) return;
+    scheduleCameraGuideFrameUpdate();
+  });
+  window.addEventListener("orientationchange", () => {
+    if (!cameraModalOpen) return;
+    scheduleCameraGuideFrameUpdate();
+  });
+
   if (cameraCaptureBtn) {
     cameraCaptureBtn.addEventListener("click", () => {
       captureCameraPage();
@@ -8261,7 +8474,7 @@ async function main() {
         }
         setCameraStatus(`Removed last capture. ${cameraQueue.pages.length} page(s) remaining.`);
       }
-      renderCameraWarnings([]);
+      renderCameraWarnings(collectCameraWarnings(cameraQueue.pages));
       renderCameraThumbnails();
       updateCameraControls();
     });
@@ -8357,6 +8570,9 @@ async function main() {
     });
     cameraScanModalEl.addEventListener("close", () => {
       if (cameraModalOpen) closeCameraModal();
+    });
+    cameraScanModalEl.addEventListener("click", () => {
+      scheduleCameraGuideFrameUpdate();
     });
   }
 

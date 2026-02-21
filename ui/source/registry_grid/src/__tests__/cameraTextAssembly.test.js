@@ -60,11 +60,13 @@ describe("camera OCR text assembly", () => {
           crop: { x0: 0.16, y0: 0.11, x1: 0.79, y1: 0.88 },
         },
       ],
-      { jobId: "crop-forwarding-test" },
+      { jobId: "crop-forwarding-test", warningProfile: "ios_safari", sceneHint: "monitor" },
     );
 
     expect(postedPayload?.type).toBe("camera_ocr_run");
     expect(postedPayload?.pages?.[0]?.crop).toEqual({ x0: 0.16, y0: 0.11, x1: 0.79, y1: 0.88 });
+    expect(postedPayload?.options?.warningProfile).toBe("ios_safari");
+    expect(postedPayload?.options?.sceneHint).toBe("monitor");
     expect(postedTransferList).toHaveLength(1);
     expect(postedTransferList[0]).toBe(bitmap);
   });

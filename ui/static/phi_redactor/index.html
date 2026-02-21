@@ -553,6 +553,10 @@
         <div class="camera-modal-body">
           <div class="camera-preview-wrap">
             <video id="cameraPreview" autoplay playsinline muted></video>
+            <div id="cameraGuideOverlay" class="camera-guide-overlay">
+              <div class="camera-guide-frame"></div>
+              <div id="cameraGuideHint" class="camera-guide-hint">Align document inside frame. Hold steady and reduce glare.</div>
+            </div>
           </div>
 
           <div class="camera-options-row">
@@ -568,6 +572,13 @@
               <option value="grayscale">Grayscale</option>
               <option value="bw_high_contrast">B/W High Contrast</option>
               <option value="off">Off</option>
+            </select>
+
+            <label class="manual-label" for="cameraSceneHintSelect">Capture:</label>
+            <select id="cameraSceneHintSelect" class="param-select" title="Capture source optimization">
+              <option value="auto" selected>Auto (Recommended)</option>
+              <option value="monitor">Computer Monitor</option>
+              <option value="document">Paper Document</option>
             </select>
           </div>
 

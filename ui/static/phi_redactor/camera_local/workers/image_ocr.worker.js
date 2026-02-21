@@ -10,6 +10,8 @@ import { preprocessCanvasForOcr } from "../imagePreprocess.js";
 const DEFAULT_OPTIONS = Object.freeze({
   lang: "eng",
   mode: "fast",
+  sceneHint: "auto",
+  warningProfile: "default",
   preprocess: {
     mode: "auto",
   },
@@ -19,6 +21,7 @@ const OCR_PASS_LIMITS = Object.freeze({
   fast: 3,
   high_accuracy: 4,
 });
+const DEFAULT_MIN_WORD_CONFIDENCE = 45;
 
 let tesseractWorker = null;
 let tesseractConfigKey = "";
@@ -56,8 +59,14 @@ function resolveOptions(input = {}) {
     ...input,
     lang: typeof input?.lang === "string" && input.lang.trim() ? input.lang.trim() : "eng",
     mode: qualityMode,
-    psm: "3",
-    fallbackPsm: "6",
+    sceneHint: input?.sceneHint === "monitor"
+      ? "monitor"
+      : input?.sceneHint === "document"
+        ? "document"
+        : "auto",
+    warningProfile: input?.warningProfile === "ios_safari" ? "ios_safari" : "default",
+    psm: "6",
+    fallbackPsm: "3",
     sparsePsm: "11",
     maxDim: qualityMode === "high_accuracy" ? 3200 : 2600,
     preprocess: {
@@ -134,7 +143,7 @@ async function setWorkerRecognitionProfile(worker, options) {
   if (profileKey === activeProfileKey) return;
   await worker.setParameters({
     preserve_interword_spaces: "1",
-    user_defined_dpi: options.mode === "high_accuracy" ? "360" : "330",
+    user_defined_dpi: options.mode === "high_accuracy" ? "330" : "300",
   });
   activeProfileKey = profileKey;
 }
@@ -173,17 +182,86 @@ function normalizeBbox(rawBBox = {}) {
   };
 }
 
-function extractLines(recognizedData, pageIndex) {
+function cleanCameraOcrLineText(value) {
+  let text = String(value || "").replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  text = text
+    .replace(/^[~|_*=+`]+/g, "")
+    .replace(/[~|_*=+`]+$/g, "")
+    .replace(/[|~_]{2,}/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+  return text;
+}
+
+function rebuildLineTextFromWords(rawWords, minWordConfidence = DEFAULT_MIN_WORD_CONFIDENCE) {
+  const words = Array.isArray(rawWords) ? rawWords : [];
+  if (!words.length) return { text: "", keptWords: 0, totalWords: 0 };
+
+  const keptTokens = [];
+  let totalWords = 0;
+  let keptWords = 0;
+  for (const rawWord of words) {
+    const token = cleanCameraOcrLineText(rawWord?.text);
+    if (!token) continue;
+    totalWords += 1;
+    const conf = coerceConfidence(rawWord?.confidence ?? rawWord?.conf);
+    const tokenLower = token.toLowerCase();
+    const shortMedicalToken = /^(?:ii|iii|iv|v|vi|ml|mg|mm|cm|cc|%|fr)$/i.test(tokenLower);
+    const dosageLikeToken = /^[0-9]+(?:\.[0-9]+)?(?:mg|ml|mm|cm|%|fr)$/i.test(tokenLower);
+    if (!Number.isFinite(conf) || conf >= minWordConfidence || shortMedicalToken || dosageLikeToken) {
+      keptTokens.push(token);
+      keptWords += 1;
+    }
+  }
+
+  return {
+    text: cleanCameraOcrLineText(keptTokens.join(" ")),
+    keptWords,
+    totalWords,
+  };
+}
+
+function extractLines(recognizedData, pageIndex, opts = {}) {
   const rawLines = Array.isArray(recognizedData?.lines) ? recognizedData.lines : [];
+  const minWordConfidence = Number.isFinite(opts?.minWordConfidence)
+    ? Number(opts.minWordConfidence)
+    : DEFAULT_MIN_WORD_CONFIDENCE;
+  const minKeepRatio = Number.isFinite(opts?.minWordKeepRatio)
+    ? clamp01(Number(opts.minWordKeepRatio))
+    : 0.4;
+  const preferWordRebuild = opts?.preferWordRebuild === true;
+  const trustedLinePattern = /\b(?:patient|procedure|mrn|gender|age|date|findings|anesthesia|incision|biopsy|pleura|ultrasound|lidocaine|university|texas|anderson|cancer|center)\b/i;
   const lines = [];
 
   for (const raw of rawLines) {
-    const text = String(raw?.text || "").replace(/\s+/g, " ").trim();
+    const lineConfidence = coerceConfidence(raw?.confidence ?? raw?.conf);
+    const directText = cleanCameraOcrLineText(raw?.text);
+    const rebuilt = rebuildLineTextFromWords(raw?.words, minWordConfidence);
+    const keepRatio = rebuilt.totalWords > 0 ? rebuilt.keptWords / rebuilt.totalWords : 0;
+    const preferWordText = Boolean(rebuilt.text) && (
+      preferWordRebuild ||
+      !directText ||
+      (lineConfidence !== null && lineConfidence < 65) ||
+      (rebuilt.totalWords >= 2 && keepRatio >= minKeepRatio)
+    );
+    const text = cleanCameraOcrLineText(preferWordText ? rebuilt.text : directText || rebuilt.text);
     if (!text) continue;
+
+    if (
+      preferWordRebuild &&
+      rebuilt.totalWords >= 4 &&
+      keepRatio < Math.max(0.32, minKeepRatio * 0.72) &&
+      !trustedLinePattern.test(directText)
+    ) {
+      continue;
+    }
+
     lines.push({
       text,
-      confidence: coerceConfidence(raw?.confidence ?? raw?.conf),
+      confidence: lineConfidence,
       bbox: normalizeBbox(raw?.bbox || raw),
+      words: Array.isArray(raw?.words) ? raw.words : [],
       pageIndex,
     });
   }
@@ -212,6 +290,24 @@ function computeWordConfidenceStats(rawWords) {
     meanWordConf: count ? sumConf / count : null,
     lowConfWordFrac: count ? lowConf / count : null,
   };
+}
+
+function cleanCameraOcrPageText(text) {
+  const lines = String(text || "")
+    .split(/\r?\n/)
+    .map((line) => cleanCameraOcrLineText(line))
+    .filter((line) => {
+      if (!line) return false;
+      if (/^[~|_*=+`]+$/.test(line)) return false;
+      if (/^[^A-Za-z0-9]{0,3}$/.test(line)) return false;
+      return true;
+    });
+
+  return lines
+    .join("\n")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 async function buildOcrInputFromCanvas(canvas) {
@@ -578,13 +674,26 @@ async function runSingleOcrPass(worker, baseCanvas, pageIndex, options, passSpec
   const preprocessResult = preprocessCanvasForOcr(baseCanvas, {
     mode: passSpec.preprocessMode,
     maxDim: options.maxDim,
+    sceneHint: options.sceneHint,
+    warningProfile: options.warningProfile,
   });
 
   await setWorkerPsm(worker, passSpec.psm);
   const ocrInput = await buildOcrInputFromCanvas(preprocessResult.canvas);
   const recognized = await worker.recognize(ocrInput);
 
-  const rawLines = extractLines(recognized?.data, pageIndex);
+  const monitorCapture = options.sceneHint === "monitor";
+  const rawLines = extractLines(recognized?.data, pageIndex, {
+    minWordConfidence: monitorCapture
+      ? options.mode === "high_accuracy"
+        ? 50
+        : 54
+      : options.mode === "high_accuracy"
+        ? 42
+        : 45,
+    minWordKeepRatio: monitorCapture ? 0.5 : 0.38,
+    preferWordRebuild: monitorCapture,
+  });
   const filtered = filterOcrLinesDetailed(rawLines, [], {
     disableFigureOverlap: true,
     dropCaptions: false,
@@ -593,15 +702,20 @@ async function runSingleOcrPass(worker, baseCanvas, pageIndex, options, passSpec
   });
 
   const lines = Array.isArray(filtered?.lines) ? filtered.lines : [];
-  const lineText = composeOcrPageText(lines);
-  const rawText = applyClinicalOcrHeuristics(String(recognized?.data?.text || ""));
+  const lineText = cleanCameraOcrPageText(composeOcrPageText(lines));
+  const rawText = cleanCameraOcrPageText(applyClinicalOcrHeuristics(String(recognized?.data?.text || "")));
 
   let text = lineText;
   let metrics = computeOcrTextMetrics({ text: lineText, lines });
   const rawMetrics = computeOcrTextMetrics({ text: rawText });
   const lineScore = scoreOcrCandidate(metrics);
   const rawScore = scoreOcrCandidate(rawMetrics);
-  if (rawText.trim() && (rawScore > lineScore + 0.03 || !lineText.trim())) {
+  const rawClearlyBetter =
+    rawText.trim() &&
+    (rawScore > lineScore + 0.08 || !lineText.trim()) &&
+    Number(rawMetrics.junkScore || 0) <= Number(metrics.junkScore || 0) + 0.04 &&
+    Number(rawMetrics.footerBoilerplateHits || 0) <= Number(metrics.footerBoilerplateHits || 0);
+  if (rawClearlyBetter) {
     text = rawText;
     metrics = rawMetrics;
     metrics.textSource = "raw";
