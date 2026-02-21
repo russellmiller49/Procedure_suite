@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       include_phi_vendor:
-        description: "Include ui/static/phi_redactor/vendor in mirror payload"
+        description: "Include heavyweight PHI model vendor folders in mirror payload"
         required: false
         default: false
         type: boolean

@@ -24,10 +24,15 @@ The mirror allowlist includes runtime code and deployment dependencies:
 
 ## What is excluded by default
 
-- `ui/static/phi_redactor/vendor` (large model artifacts)
+- heavyweight PHI model artifacts under `ui/static/phi_redactor/vendor/phi_distilbert_ner*`
 - common local/cache artifacts (`__pycache__`, `.pyc`, `.DS_Store`, pytest/mypy/ruff caches)
 
-If you need to include vendor assets in a one-off run:
+Core OCR runtime vendor assets remain included by default:
+
+- `ui/static/phi_redactor/vendor/tesseract`
+- `ui/static/phi_redactor/vendor/pdfjs`
+
+If you need to include the heavyweight PHI model vendor assets in a one-off run:
 
 ```bash
 DEPLOY_MIRROR_INCLUDE_VENDOR=1 bash ops/tools/build_deploy_mirror.sh /tmp/proc-suite-deploy
@@ -63,8 +68,8 @@ Keep the same commands documented in `docs/DEPLOY_RAILWAY.md`:
 - Start: `bash ops/railway_start_gunicorn.sh`
 - Build: `python ops/tools/bootstrap_phi_redactor_vendor_bundle.py && python ops/tools/verify_phi_redactor_vendor_assets.py`
 
-Because vendor assets are excluded by default in the mirror payload, set:
+Because heavyweight PHI model assets are excluded by default in the mirror payload, set:
 
 - `PHI_REDACTOR_VENDOR_BUNDLE_S3_URI`
 
-Without that env var, `verify_phi_redactor_vendor_assets.py` fails when vendor files are absent.
+Without that env var, `verify_phi_redactor_vendor_assets.py` fails when PHI model files are absent.

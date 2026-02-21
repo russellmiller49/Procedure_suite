@@ -4,9 +4,11 @@
 
 If you want faster/lighter Railway deploys, use the deploy mirror workflow documented in `docs/DEPLOY_MIRROR.md`.
 
-The mirror excludes `ui/static/phi_redactor/vendor` by default, so production Railway deployments should set:
+The mirror excludes heavyweight PHI model folders (`ui/static/phi_redactor/vendor/phi_distilbert_ner*`) by default, so production Railway deployments should set:
 
 - `PHI_REDACTOR_VENDOR_BUNDLE_S3_URI`
+
+Core OCR web assets (`vendor/tesseract`, `vendor/pdfjs`) are included in the slim mirror by default.
 
 ## Service roles
 

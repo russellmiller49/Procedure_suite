@@ -1319,7 +1319,7 @@ Runtime code and dependencies only: `app/`, `observability/`, `ml/`, `config/`, 
 
 ### What is excluded
 
-Training data (outside the allowlisted runtime subset), docs, tests, large vendor model artifacts (`ui/static/phi_redactor/vendor`), and local caches.
+Training data (outside the allowlisted runtime subset), docs, tests, heavyweight PHI vendor model artifacts (`ui/static/phi_redactor/vendor/phi_distilbert_ner*`), and local caches.
 
 ### Automatic sync (GitHub Actions)
 
@@ -1353,13 +1353,13 @@ git push -u origin main --force
 
 ### Including PHI vendor assets (one-off)
 
-By default, `ui/static/phi_redactor/vendor/` is excluded. To include it:
+By default, heavyweight PHI model vendor folders are excluded while core OCR web assets (`vendor/tesseract`, `vendor/pdfjs`) are included. To include the heavyweight PHI model folders too:
 
 ```bash
 DEPLOY_MIRROR_INCLUDE_VENDOR=1 bash ops/tools/build_deploy_mirror.sh /tmp/proc-suite-deploy
 ```
 
-Or trigger the workflow manually from the Actions tab and check "Include ui/static/phi_redactor/vendor in mirror payload".
+Or trigger the workflow manually from the Actions tab and check "Include heavyweight PHI model vendor folders in mirror payload".
 
 ### Key files
 
