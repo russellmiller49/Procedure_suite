@@ -91,6 +91,7 @@ def test_phi_redactor_index_has_formatted_report_sections(client: TestClient) ->
     assert 'id="billingSelectedBody"' in resp.text
     assert 'id="evidenceTraceabilityHost"' in resp.text
     assert 'id="registryGridRoot"' in resp.text
+    assert 'id="correctOcrBtn"' in resp.text
     assert 'id="exportEditedBtn"' in resp.text
     assert 'id="exportPatchBtn"' in resp.text
 
