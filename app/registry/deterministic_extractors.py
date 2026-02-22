@@ -347,23 +347,64 @@ def extract_primary_indication(note_text: str) -> Optional[str]:
     """
     text = _maybe_unescape_newlines(note_text or "")
 
-    # Pattern 1: INDICATION: section
+    # Anchor to true section headers (prefer explicit colon) so strings like
+    # "INDICATION FOR OPERATION" do not get parsed as "FOR OPERATION: ..."
     indication_patterns = [
-        r"(?:INDICATION|INDICATIONS)[\s:]+(.+?)(?=\n\n|\n[A-Z]{2,}|\Z)",
-        r"(?:CLINICAL SUMMARY|CLINICAL INDICATION)[\s:]+(.+?)(?=\n\n|\n[A-Z]{2,}|\Z)",
-        r"(?:REASON FOR (?:PROCEDURE|EXAM))[\s:]+(.+?)(?=\n\n|\n[A-Z]{2,}|\Z)",
+        r"(?is)\bINDICATION(?:S)?\s+FOR\s+(?:OPERATION|PROCEDURE|EXAM(?:INATION)?)\s*:\s*"
+        r"(.+?)(?=\n\s*\n|\n\s*[A-Z][A-Z0-9 /()'&\.-]{2,}:\s*|\Z)",
+        r"(?ims)^\s*INDICATION(?:S)?(?:\s+FOR\s+(?:OPERATION|PROCEDURE|EXAM(?:INATION)?))?\s*:\s*"
+        r"(.+?)(?=^\s*[A-Z][A-Z0-9 /()'&\.-]{2,}:\s*|\n\s*\n|\Z)",
+        r"(?ims)^\s*(?:CLINICAL SUMMARY|CLINICAL INDICATION)\s*:\s*"
+        r"(.+?)(?=^\s*[A-Z][A-Z0-9 /()'&\.-]{2,}:\s*|\n\s*\n|\Z)",
+        r"(?ims)^\s*REASON FOR (?:PROCEDURE|EXAM(?:INATION)?)\s*:\s*"
+        r"(.+?)(?=^\s*[A-Z][A-Z0-9 /()'&\.-]{2,}:\s*|\n\s*\n|\Z)",
     ]
 
     for pattern in indication_patterns:
-        match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+        match = re.search(pattern, text, re.IGNORECASE | re.DOTALL | re.MULTILINE)
         if match:
             raw = match.group(1).strip()
             # Drop common "Target:" lines that often follow the indication header.
             lines = [ln.strip() for ln in raw.splitlines() if ln.strip()]
             lines = [ln for ln in lines if not re.match(r"(?i)^target(?:s)?\\b\\s*:?", ln)]
             indication = " ".join(lines).strip()
+
+            # Remove common leading header residue and consent boilerplate.
+            indication = re.sub(r"(?i)^for\s+operation\s*:\s*", "", indication).strip()
+            indication = re.sub(r"(?i)^\[REDACTED\]\s*", "", indication).strip()
+            indication = re.split(
+                r"(?i)\b(?:"
+                r"the\s+nature,\s*purpose,\s*risks?,\s*benefits?\s+and\s+alternatives?"
+                r"|risks?,\s*benefits?,\s*(?:and\s+)?alternatives?"
+                r"|patient(?:\s+or\s+surrogate)?\s+indicated\s+a\s+wish\s+to\s+proceed"
+                r"|informed\s+consent\s+was\s+signed"
+                r"|consent\s+was\s+signed"
+                r")\b",
+                indication,
+                maxsplit=1,
+            )[0].strip(" .,:;-\t")
+            indication = re.split(
+                r"(?i)\b(?:ebus[-\s]*findings|procedure\s+in\s+detail|preoperative\s+diagnosis|postoperative\s+diagnosis|anesthesia|monitoring)\b",
+                indication,
+                maxsplit=1,
+            )[0].strip(" .,:;-\t")
+
+            # For templated "X year old ... who presents with Y", keep Y.
+            presents_match = re.search(r"(?i)\bpresents?\s+with\b", indication)
+            if presents_match:
+                tail = indication[presents_match.end() :].strip(" .,:;-\t")
+                if tail:
+                    indication = tail
+
             # Clean up whitespace
             indication = re.sub(r"\s+", " ", indication)
+            if not indication:
+                continue
+            if re.fullmatch(
+                r"(?i)(diagnostic(?:\s+and\s+staging)?|staging(?:\s+and\s+diagnostic)?|diagnostic\s*/\s*staging)",
+                indication,
+            ):
+                continue
             # Limit length
             if len(indication) > 500:
                 indication = indication[:500] + "..."

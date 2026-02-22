@@ -63,3 +63,27 @@ def test_note300_multilobe_navigation_targets_drive_addon_codes_and_imaging() ->
     assert "77012" in codes
     assert "76377" in codes
 
+
+def test_navigation_targets_support_mass_and_nodule_headers_with_fiducial_outcome_qualifier() -> None:
+    note_text = """
+    Left upper lobe LB1/LB2 mass:
+    Robotic navigation bronchoscopy was performed with Intuitive Ion platform.
+    The Ion robotic catheter was used to engage the Apical-Posterior Segment of LUL (LB1/2).
+    Target lesion is about 7.4 cm in diameter.
+    Fiducial marker (0.8mm x 3mm soft tissue gold CIVCO) was loaded with bone wax and placed under fluoroscopy guidance.
+
+    Right middle lobe RB4 nodule:
+    Robotic navigation bronchoscopy was performed with Intuitive Ion platform.
+    The Ion robotic catheter was used to engage the Lateral Segment of RML (RB4).
+    Target lesion is about 2.3 cm in diameter.
+    Fiducial marker (0.8mm x 3mm soft tissue gold CIVCO) was loaded with bone wax and placed under fluoroscopy guidance. However, this fiducial marker appeared to fall out and did not enter the nodule.
+    """
+
+    targets = extract_navigation_targets(note_text)
+    assert len(targets) == 2
+    assert targets[0]["target_lobe"] == "LUL"
+    assert targets[0]["lesion_size_mm"] == 74.0
+    assert targets[0]["fiducial_marker_placed"] is True
+    assert targets[1]["target_lobe"] == "RML"
+    assert targets[1]["lesion_size_mm"] == 23.0
+    assert targets[1]["fiducial_marker_placed"] is True

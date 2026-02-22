@@ -7,6 +7,7 @@ from app.registry.deterministic_extractors import (
     extract_endobronchial_biopsy,
     extract_ipc,
     extract_navigational_bronchoscopy,
+    extract_primary_indication,
     extract_transbronchial_cryobiopsy,
     run_deterministic_extractors,
 )
@@ -15,6 +16,34 @@ from app.registry.deterministic_extractors import (
 def test_navigation_robotic_bronch_abbrev_triggers():
     text = "Proc: EBUS-TBNA + Robotic Bronch (Galaxy)"
     assert extract_navigational_bronchoscopy(text) == {"navigational_bronchoscopy": {"performed": True}}
+
+
+def test_extract_primary_indication_strips_header_residue_and_consent_boilerplate() -> None:
+    note_text = (
+        "INDICATION FOR OPERATION: [REDACTED]is a 73 year old-year-old male who presents with "
+        "lung mass, multiple lung nodules, mediastinal/hilar lymphadenopathy, and LLL lobar atelectasis. "
+        "The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient "
+        "or surrogate in detail. Patient or surrogate indicated a wish to proceed with surgery and informed consent was signed.\n"
+        "PREOPERATIVE DIAGNOSIS: R91.8\n"
+    )
+
+    indication = extract_primary_indication(note_text)
+    assert indication is not None
+    assert indication.lower().startswith("lung mass")
+    assert "for operation" not in indication.lower()
+    assert "informed consent" not in indication.lower()
+
+
+def test_extract_primary_indication_prefers_operation_header_over_ebus_indications_label() -> None:
+    note_text = (
+        "NOTE_ID: note_032 SOURCE_FILE: note_032.txt INDICATION FOR OPERATION: This is a 73 year old male who presents with "
+        "lung mass and mediastinal adenopathy.\n"
+        "EBUS-Findings\n"
+        "Indications: Diagnostic and Staging\n"
+    )
+
+    indication = extract_primary_indication(note_text)
+    assert indication == "lung mass and mediastinal adenopathy"
 
 
 @pytest.mark.parametrize(

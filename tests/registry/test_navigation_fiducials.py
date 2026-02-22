@@ -48,3 +48,23 @@ def test_apply_navigation_fiducials_overwrites_unknown_target_location() -> None
     assert targets
     assert targets[0].get("target_location_text") != "Unknown target"
     assert targets[0].get("target_lobe") == "RLL"
+
+
+def test_apply_navigation_fiducials_treats_placed_with_failed_retention_as_placed() -> None:
+    data: dict[str, object] = {}
+    note_text = (
+        "Robotic navigation bronchoscopy performed.\n"
+        "The Ion robotic catheter was used to engage the Lateral Segment of RML (RB4).\n"
+        "Fiducial marker (0.8mm x 3mm soft tissue gold CIVCO) was loaded with bone wax and placed under fluoroscopy guidance. "
+        "However, this fiducial marker appeared to fall out and did not enter the nodule.\n"
+    )
+
+    changed = apply_navigation_fiducials(data, note_text)
+
+    assert changed is True
+    granular = data.get("granular_data")
+    assert isinstance(granular, dict)
+    targets = granular.get("navigation_targets")
+    assert isinstance(targets, list)
+    assert targets
+    assert targets[0].get("fiducial_marker_placed") is True

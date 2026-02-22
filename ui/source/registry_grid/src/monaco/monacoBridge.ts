@@ -1,10 +1,14 @@
 type MonacoEditorLike = {
   getModel?: () => { getValue?: () => string; getPositionAt?: (offset: number) => { lineNumber: number; column: number } } | null;
   deltaDecorations?: (oldDecorations: string[], newDecorations: unknown[]) => string[];
+  revealRangeInCenterIfOutsideViewport?: (range: unknown) => void;
   revealRangeInCenter?: (range: unknown) => void;
+  revealRange?: (range: unknown) => void;
   setSelection?: (range: unknown) => void;
   focus?: () => void;
 };
+
+type EvidenceContextHook = ((payload?: { start?: number; end?: number }) => void) | undefined;
 
 let activeDecorationIds: string[] = [];
 
@@ -17,6 +21,52 @@ function asInt(value: unknown): number | null {
 
 function clamp(n: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, n));
+}
+
+function ensureEvidenceContextVisible(start: number, end: number): void {
+  const hook = (globalThis as typeof globalThis & { __ensureEvidenceContextVisible?: EvidenceContextHook })
+    .__ensureEvidenceContextVisible;
+  if (typeof hook === "function") {
+    try {
+      hook({ start, end });
+      return;
+    } catch (err) {
+      console.warn("RegistryGrid: host evidence visibility hook failed (ignored).", err);
+    }
+  }
+
+  if (typeof document === "undefined") return;
+  const el = (document.getElementById("editor") || document.querySelector(".editorPane")) as HTMLElement | null;
+  if (!el || typeof el.scrollIntoView !== "function") return;
+  try {
+    const reduceMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    el.scrollIntoView({
+      block: document.body?.classList.contains("ps-review-split") ? "nearest" : "start",
+      inline: "nearest",
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  } catch {
+    // Ignore scroll failures and continue with Monaco-only navigation.
+  }
+}
+
+function revealRangeInEditor(ed: MonacoEditorLike, range: unknown): void {
+  const reveal = () => {
+    if (typeof ed.revealRangeInCenterIfOutsideViewport === "function") {
+      ed.revealRangeInCenterIfOutsideViewport(range);
+      return;
+    }
+    if (typeof ed.revealRangeInCenter === "function") {
+      ed.revealRangeInCenter(range);
+      return;
+    }
+    if (typeof ed.revealRange === "function") ed.revealRange(range);
+  };
+
+  reveal();
+  if (typeof globalThis.requestAnimationFrame === "function") {
+    globalThis.requestAnimationFrame(() => reveal());
+  }
 }
 
 export function clearHighlight(editor: unknown): void {
@@ -85,6 +135,7 @@ export function highlightSpan(
     endColumn: endPos.column,
   };
 
+  ensureEvidenceContextVisible(s, e);
   clearHighlight(ed);
 
   if (typeof ed.deltaDecorations === "function") {
@@ -107,7 +158,7 @@ export function highlightSpan(
 
   try {
     ed.setSelection?.(range);
-    ed.revealRangeInCenter?.(range);
+    revealRangeInEditor(ed, range);
     ed.focus?.();
   } catch (err) {
     console.warn("RegistryGrid: failed to reveal/select evidence span (ignored).", err);

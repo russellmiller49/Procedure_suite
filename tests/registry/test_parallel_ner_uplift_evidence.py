@@ -459,6 +459,113 @@ def test_parallel_ner_deterministic_uplift_upgrades_stent_action_to_revision(
     assert stent.airway_stent_removal is True
 
 
+def test_parallel_ner_deterministic_uplift_backfills_evidence_for_already_performed_flags(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+    monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
+
+    base_record = RegistryRecord(
+        procedures_performed={
+            "brushings": {"performed": True},
+            "endobronchial_biopsy": {"performed": True},
+            "radial_ebus": {"performed": True},
+            "navigational_bronchoscopy": {"performed": True},
+            "linear_ebus": {"performed": True},
+            "mechanical_debulking": {"performed": True},
+        },
+        equipment={
+            "navigation_platform": "Ion",
+            "cbct_used": False,
+            "augmented_fluoroscopy": False,
+            "fluoroscopy_used": False,
+        },
+    )
+    service = RegistryService(
+        parallel_orchestrator=_StubParallelOrchestratorWithRecord(base_record)
+    )
+    monkeypatch.setattr(service, "_get_registry_ml_predictor", lambda: None)
+
+    def _seed(_text: str):  # type: ignore[no-untyped-def]
+        return {
+            "procedures_performed": {
+                "brushings": {"performed": True},
+                "endobronchial_biopsy": {"performed": True},
+                "radial_ebus": {"performed": True},
+                "navigational_bronchoscopy": {"performed": True},
+                "linear_ebus": {"performed": True},
+                "mechanical_debulking": {"performed": True},
+            }
+        }
+
+    monkeypatch.setattr(
+        "app.registry.deterministic_extractors.run_deterministic_extractors",
+        _seed,
+    )
+
+    note_text = (
+        "Robotic navigation bronchoscopy was performed with Ion platform. "
+        "Radial EBUS was performed and showed concentric view. "
+        "Endobronchial biopsy was performed. Transbronchial brushing was performed with cytology brush. "
+        "Linear EBUS was performed. Tumor was debulked with forceps. "
+        "Cone Beam CT was performed with 3-D reconstructions on Cios Spin system. "
+        "Fiducial marker was loaded and placed under fluoroscopy guidance."
+    )
+
+    record, _warnings, _meta = service.extract_record(note_text)
+
+    evidence = record.evidence
+    assert "procedures_performed.brushings.performed" in evidence
+    assert "procedures_performed.endobronchial_biopsy.performed" in evidence
+    assert "procedures_performed.radial_ebus.performed" in evidence
+    assert "procedures_performed.navigational_bronchoscopy.performed" in evidence
+    assert "procedures_performed.linear_ebus.performed" in evidence
+    assert "procedures_performed.mechanical_debulking.performed" in evidence
+
+    equipment = record.equipment
+    assert equipment is not None
+    assert equipment.cbct_used is True
+    assert equipment.augmented_fluoroscopy is True
+    assert equipment.fluoroscopy_used is True
+
+
+def test_parallel_ner_deterministic_uplift_overrides_generic_indication_placeholder(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+    monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
+
+    base_record = RegistryRecord(
+        clinical_context={"primary_indication": "Diagnostic and Staging"},
+        procedure={"indication": "Diagnostic and Staging"},
+    )
+    service = RegistryService(
+        parallel_orchestrator=_StubParallelOrchestratorWithRecord(base_record)
+    )
+    monkeypatch.setattr(service, "_get_registry_ml_predictor", lambda: None)
+
+    def _seed(_text: str):  # type: ignore[no-untyped-def]
+        return {"primary_indication": "lung mass with mediastinal adenopathy"}
+
+    monkeypatch.setattr(
+        "app.registry.deterministic_extractors.run_deterministic_extractors",
+        _seed,
+    )
+
+    record, _warnings, _meta = service.extract_record(
+        "INDICATION FOR OPERATION: patient presents with lung mass and adenopathy."
+    )
+
+    assert record.clinical_context is not None
+    assert record.clinical_context.primary_indication == "lung mass with mediastinal adenopathy"
+    assert record.procedure is not None
+    assert record.procedure.indication == "lung mass with mediastinal adenopathy"
+
+
 def test_parallel_ner_filters_stale_ml_only_review_reasons_after_uplift(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

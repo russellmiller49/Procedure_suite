@@ -5621,8 +5621,9 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
     if len(locs_in_order) > 1 and (len(instilled_values) > 1 or len(recovered_values) > 1):
         # Multi-site BAL with differing volumes can't be represented perfectly in the
         # single-slot `procedures_performed.bal` schema. When the extractor populated
-        # the BAL slot from a mini-BAL snippet (common), prefer the largest standard
-        # BAL candidate as the representative record.
+        # the BAL slot from a mini-BAL snippet (common), or left BAL detail unset,
+        # prefer the largest standard BAL candidate as the representative record.
+        existing_loc = getattr(bal, "location", None)
         existing_instilled = getattr(bal, "volume_instilled_ml", None)
         existing_recovered = getattr(bal, "volume_recovered_ml", None)
 
@@ -5643,6 +5644,11 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
             and inst_existing <= 30
             and (rec_existing is None or rec_existing <= 10)
         )
+        looks_unset = (
+            (not str(existing_loc or "").strip())
+            and inst_existing is None
+            and rec_existing is None
+        )
 
         best: dict[str, object] | None = None
         for c in candidates:
@@ -5652,12 +5658,17 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
             if best is None or inst > float(best.get("instilled") or 0):
                 best = c
 
-        if looks_like_mini_bal and best:
+        if (looks_like_mini_bal or looks_unset) and best:
             candidates = [best]
             locs_in_order = [str(best.get("loc") or "").strip()] if best.get("loc") else []
             instilled_values = {best.get("instilled")} if isinstance(best.get("instilled"), float) else set()
             recovered_values = {best.get("recovered")} if isinstance(best.get("recovered"), float) else set()
-            warnings.append("BAL_MULTI_SITE: selected largest standard BAL candidate (multi-site volumes differ).")
+            if looks_unset:
+                warnings.append(
+                    "BAL_MULTI_SITE: selected largest standard BAL candidate (multi-site volumes differ; BAL detail was unset)."
+                )
+            else:
+                warnings.append("BAL_MULTI_SITE: selected largest standard BAL candidate (multi-site volumes differ).")
         else:
             warnings.append(
                 "AMBIGUOUS_BAL_DETAIL: multiple standard BAL candidates in note; not overriding bal fields"

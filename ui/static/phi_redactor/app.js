@@ -68,6 +68,7 @@ const registryLegacyRootEl = document.getElementById("registryLegacyRoot");
 const registryLegacyRightRootEl = document.getElementById("registryLegacyRightRoot");
 const completenessPromptsCardEl = document.getElementById("completenessPromptsCard");
 const completenessPromptsBodyEl = document.getElementById("completenessPromptsBody");
+const completenessToggleBtn = document.getElementById("completenessToggleBtn");
 const completenessCopyBtn = document.getElementById("completenessCopyBtn");
 const completenessOpenReporterBtn = document.getElementById("completenessOpenReporterBtn");
 const focusClinicalBtn = document.getElementById("focusClinicalBtn");
@@ -153,6 +154,7 @@ let registryGridMonacoGetter = () => null;
 let registryGridMounted = false;
 let registryGridLoadPromise = null;
 let lastCompletenessPrompts = [];
+let completenessPromptsCollapsed = false;
 let completenessEdits = null; // {edited_patch, edited_fields} generated from completeness inputs
 let completenessRawValueByPath = new Map(); // key: effective dotted path (with indices), value: raw string
 let completenessSelectedIndexByPromptPath = new Map(); // key: prompt.path (with [*]), value: selected index (number)
@@ -240,6 +242,7 @@ function isReactRegistryGridEnabled() {
 const UI_REVIEW_FOCUS_LS_KEY = "ui.reviewFocus";
 const UI_REVIEW_SPLIT_LS_KEY = "ui.reviewSplit";
 const UI_DETECTIONS_COLLAPSED_LS_KEY = "ui.detectionsCollapsed";
+const UI_COMPLETENESS_COLLAPSED_LS_KEY = "ui.completenessCollapsed";
 const REPORTER_DASHBOARD_TRANSFER_KEY = "ps.reporter_to_dashboard_note_v1";
 const DASHBOARD_REPORTER_TRANSFER_KEY = "ps.dashboard_to_reporter_note_v1";
 
@@ -383,6 +386,38 @@ function applyDetectionsCollapsed(enabled, opts = {}) {
   syncLayoutControls();
 }
 
+function syncCompletenessToggle() {
+  if (!completenessToggleBtn) return;
+  const collapsed = Boolean(completenessPromptsCollapsed);
+  completenessToggleBtn.textContent = collapsed ? "Expand" : "Collapse";
+  completenessToggleBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  const label = collapsed ? "Expand suggested missing fields" : "Collapse suggested missing fields";
+  completenessToggleBtn.title = label;
+  completenessToggleBtn.setAttribute("aria-label", label);
+}
+
+function applyCompletenessCollapsed(enabled, opts = {}) {
+  const { persist = true } = opts;
+  completenessPromptsCollapsed = Boolean(enabled);
+  if (completenessPromptsCardEl) {
+    completenessPromptsCardEl.classList.toggle("ps-completeness-collapsed", completenessPromptsCollapsed);
+  }
+  if (persist) {
+    safeSetLocalStorageItem(UI_COMPLETENESS_COLLAPSED_LS_KEY, completenessPromptsCollapsed ? "1" : "0");
+  }
+  syncCompletenessToggle();
+}
+
+function initCompletenessControls() {
+  const collapsed = readBoolSetting("completenessCollapsed", UI_COMPLETENESS_COLLAPSED_LS_KEY, false);
+  applyCompletenessCollapsed(collapsed, { persist: false });
+  if (!completenessToggleBtn) return;
+  completenessToggleBtn.disabled = true;
+  completenessToggleBtn.addEventListener("click", () => {
+    applyCompletenessCollapsed(!completenessPromptsCollapsed);
+  });
+}
+
 function syncLayoutControls() {
   const body = document.body;
   if (!body) return;
@@ -456,6 +491,7 @@ function initLayoutControls() {
 }
 
 applyInitialLayoutPrefs();
+initCompletenessControls();
 
 function showRegistryGridUi() {
   if (registryLegacyRightRootEl) registryLegacyRightRootEl.classList.add("hidden");
@@ -1150,35 +1186,86 @@ function buildDateRedactionReplacement(raw, { translateDates, indexYmd }) {
   return buildDateToken(offsetDays);
 }
 
+function ensureEvidenceContextVisible(opts = {}) {
+  try {
+    const autoEnableSplit = opts?.autoEnableSplit !== false;
+    if (autoEnableSplit && document.body && !document.body.classList.contains("ps-review-split")) {
+      applySplitReview(true);
+    }
+
+    const host = document.getElementById("editor") || document.querySelector(".editorPane");
+    if (!host || typeof host.scrollIntoView !== "function") return;
+    const reduceMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    host.scrollIntoView({
+      block: document.body?.classList.contains("ps-review-split") ? "nearest" : "start",
+      inline: "nearest",
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  } catch (err) {
+    console.warn("Failed to ensure evidence context is visible", err);
+  }
+}
+
 function highlightSpanInEditor(start, end) {
   try {
+    const rawStart = Math.trunc(Number(start));
+    const rawEnd = Math.trunc(Number(end));
+    if (!Number.isFinite(rawStart) || !Number.isFinite(rawEnd) || rawEnd <= rawStart) return;
+
+    ensureEvidenceContextVisible();
+
     // Fallback: if Monaco is still loading/unavailable, highlight in the basic textarea.
     if (!window.editor) {
       const ta = document.getElementById("fallbackTextarea");
       if (!ta) return;
       const textLength = ta.value.length;
-      const s = clamp(Number(start) || 0, 0, textLength);
-      const e = clamp(Number(end) || 0, 0, textLength);
+      const s = clamp(rawStart, 0, textLength);
+      const e = clamp(rawEnd, 0, textLength);
+      if (e <= s) return;
       ta.focus();
       ta.setSelectionRange(s, e);
+      const lineHeightRaw = Number.parseFloat(globalThis.getComputedStyle?.(ta)?.lineHeight || "");
+      const lineHeight = Number.isFinite(lineHeightRaw) && lineHeightRaw > 0 ? lineHeightRaw : 18;
+      const lineNumber = ta.value.slice(0, s).split("\n").length;
+      ta.scrollTop = Math.max(0, (lineNumber - 3) * lineHeight);
       return;
     }
 
     const model = window.editor.getModel();
     if (!model) return;
 
-    const s = model.getPositionAt(Math.max(0, start));
-    const e = model.getPositionAt(Math.max(0, end));
+    const textLength = typeof model.getValue === "function" ? String(model.getValue() || "").length : Number.MAX_SAFE_INTEGER;
+    const startOffset = clamp(rawStart, 0, textLength);
+    const endOffset = clamp(rawEnd, 0, textLength);
+    if (endOffset <= startOffset) return;
+
+    const s = model.getPositionAt(startOffset);
+    const e = model.getPositionAt(endOffset);
     const range = new monaco.Range(s.lineNumber, s.column, e.lineNumber, e.column);
 
     window.editor.setSelection(range);
-    window.editor.revealRangeInCenter(range);
+    const revealRange = () => {
+      if (typeof window.editor.revealRangeInCenterIfOutsideViewport === "function") {
+        window.editor.revealRangeInCenterIfOutsideViewport(range);
+        return;
+      }
+      if (typeof window.editor.revealRangeInCenter === "function") {
+        window.editor.revealRangeInCenter(range);
+        return;
+      }
+      if (typeof window.editor.revealRange === "function") {
+        window.editor.revealRange(range);
+      }
+    };
+    revealRange();
+    if (typeof requestAnimationFrame === "function") requestAnimationFrame(revealRange);
     window.editor.focus();
   } catch (err) {
     console.warn("Failed to highlight evidence span", err);
   }
 }
 
+window.__ensureEvidenceContextVisible = (opts = {}) => ensureEvidenceContextVisible(opts);
 window.__highlightEvidence = (start, end) => highlightSpanInEditor(start, end);
 
 function normalizeSpans(spans) {
@@ -2231,12 +2318,15 @@ function renderCompletenessPrompts(data) {
 
   if (!prompts.length || data?.error) {
     completenessPromptsCardEl.classList.add("hidden");
+    if (completenessToggleBtn) completenessToggleBtn.disabled = true;
     if (completenessCopyBtn) completenessCopyBtn.disabled = true;
     return;
   }
 
   completenessPromptsCardEl.classList.remove("hidden");
+  if (completenessToggleBtn) completenessToggleBtn.disabled = false;
   if (completenessCopyBtn) completenessCopyBtn.disabled = false;
+  applyCompletenessCollapsed(completenessPromptsCollapsed, { persist: false });
 
   const counts = { required: 0, recommended: 0 };
   prompts.forEach((p) => {
@@ -6319,6 +6409,7 @@ function clearResultsUi() {
   lastServerResponse = null;
   lastCompletenessPrompts = [];
   if (completenessPromptsCardEl) completenessPromptsCardEl.classList.add("hidden");
+  if (completenessToggleBtn) completenessToggleBtn.disabled = true;
   if (completenessPromptsBodyEl) clearEl(completenessPromptsBodyEl);
   if (completenessCopyBtn) completenessCopyBtn.disabled = true;
   resetRunState();

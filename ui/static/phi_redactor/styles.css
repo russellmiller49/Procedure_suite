@@ -772,6 +772,10 @@ body.ps-focus-billing .dash-grid > .dash-col:last-child {
   font-size: 12px;
 }
 
+#completenessPromptsCard.ps-completeness-collapsed .dash-card-body {
+  display: none;
+}
+
 .dash-table {
   width: 100%;
   border-collapse: collapse;
