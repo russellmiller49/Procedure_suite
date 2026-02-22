@@ -9,6 +9,10 @@ from app.api.phi_dependencies import get_phi_scrubber
 from app.api.phi_redaction import RedactionResult
 from app.registry.application.registry_service import RegistryExtractionResult, RegistryRecord
 from app.registry.schema.ip_v3_extraction import IPRegistryV3
+from app.text_cleaning.camera_ocr_cleaner import (
+    CameraOcrCleanerUnavailable,
+    CameraOcrSanitizeResult,
+)
 
 client = TestClient(app)
 
@@ -241,3 +245,128 @@ def test_unified_process_include_v3_event_log(mock_registry_service, mock_phi_sc
     assert data["registry_v3_event_log"]["schema_version"] == "v3"
     assert len(data["registry_v3_event_log"]["procedures"]) == 1
     assert data["registry_v3_event_log"]["procedures"][0]["type"] == "airway stent removal"
+
+
+def test_camera_ocr_correction_requires_already_scrubbed() -> None:
+    response = client.post(
+        "/api/v1/ocr/correct",
+        json={
+            "text": "scrubbed text",
+            "already_scrubbed": False,
+            "source_type": "camera_ocr",
+        },
+    )
+    assert response.status_code == 400
+    assert "already_scrubbed" in str(response.json().get("detail", "")).lower()
+
+
+def test_camera_ocr_correction_success() -> None:
+    with patch(
+        "app.api.routes.unified_process.sanitize_camera_ocr_text",
+        return_value=CameraOcrSanitizeResult(
+            cleaned_text="cleaned text",
+            changed=True,
+            correction_applied=True,
+            model="gpt-5-mini",
+            warnings=[],
+        ),
+    ):
+        response = client.post(
+            "/api/v1/ocr/correct",
+            json={
+                "text": "scrubbed text",
+                "already_scrubbed": True,
+                "source_type": "camera_ocr",
+            },
+        )
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["cleaned_text"] == "cleaned text"
+    assert data["changed"] is True
+    assert data["correction_applied"] is True
+    assert data["model"] == "gpt-5-mini"
+
+
+def test_camera_ocr_correction_unavailable_returns_503() -> None:
+    with patch(
+        "app.api.routes.unified_process.sanitize_camera_ocr_text",
+        side_effect=CameraOcrCleanerUnavailable("OpenAI unavailable"),
+    ):
+        response = client.post(
+            "/api/v1/ocr/correct",
+            json={
+                "text": "scrubbed text",
+                "already_scrubbed": True,
+                "source_type": "camera_ocr",
+            },
+        )
+
+    assert response.status_code == 503
+    assert "unavailable" in str(response.json().get("detail", "")).lower()
+
+
+def test_unified_process_camera_ocr_fuzzy_normalization_applies(
+    mock_registry_service, mock_phi_scrubber
+):
+    full_record = RegistryRecord()
+    extraction_result = RegistryExtractionResult(
+        record=full_record,
+        cpt_codes=[],
+        coder_difficulty="LOW_CONF",
+        coder_source="test",
+        mapped_fields={},
+    )
+    mock_registry_service.extract_fields.return_value = extraction_result
+
+    with patch(
+        "app.api.services.unified_pipeline.apply_camera_ocr_fuzzy_normalization",
+        return_value=(
+            "normalized camera note",
+            ["CAMERA_OCR_FUZZY_NORMALIZE: replacements=1"],
+            {"replacement_count": 1},
+        ),
+    ):
+        response = client.post(
+            "/api/v1/process",
+            json={
+                "note": "camera note",
+                "already_scrubbed": True,
+                "source_type": "camera_ocr",
+            },
+        )
+
+    assert response.status_code == 200
+    mock_registry_service.extract_fields.assert_called_once_with("normalized camera note")
+    warnings = response.json().get("audit_warnings") or []
+    assert any("CAMERA_OCR_FUZZY_NORMALIZE" in str(w) for w in warnings)
+
+
+def test_unified_process_non_camera_source_skips_fuzzy_normalization(
+    mock_registry_service, mock_phi_scrubber
+):
+    full_record = RegistryRecord()
+    extraction_result = RegistryExtractionResult(
+        record=full_record,
+        cpt_codes=[],
+        coder_difficulty="LOW_CONF",
+        coder_source="test",
+        mapped_fields={},
+    )
+    mock_registry_service.extract_fields.return_value = extraction_result
+
+    with patch(
+        "app.api.services.unified_pipeline.apply_camera_ocr_fuzzy_normalization",
+        side_effect=AssertionError("fuzzy normalizer should not run"),
+    ):
+        response = client.post(
+            "/api/v1/process",
+            json={
+                "note": "manual text",
+                "already_scrubbed": True,
+                "source_type": "manual_entry",
+            },
+        )
+
+    assert response.status_code == 200
+    mock_registry_service.extract_fields.assert_called_once_with("manual text")
