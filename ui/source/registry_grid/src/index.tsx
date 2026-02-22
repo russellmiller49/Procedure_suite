@@ -6,6 +6,7 @@ import React from "react";
 import { createRoot, type Root } from "react-dom/client";
 
 import { RegistryGridApp } from "./RegistryGridApp";
+import { VaultProvider } from "./context/VaultContext";
 import { clearHighlight } from "./monaco/monacoBridge";
 
 type MountArgs = {
@@ -39,11 +40,13 @@ function mount(args: MountArgs) {
 
   if (root && mountedEl === args.rootEl) {
     root.render(
-      <RegistryGridApp
-        processResponse={args.processResponse}
-        getMonacoEditor={getMonacoEditorFn}
-        onEditsExport={onExportEditedJsonFn}
-      />,
+      <VaultProvider>
+        <RegistryGridApp
+          processResponse={args.processResponse}
+          getMonacoEditor={getMonacoEditorFn}
+          onEditsExport={onExportEditedJsonFn}
+        />
+      </VaultProvider>,
     );
     return;
   }
@@ -51,22 +54,26 @@ function mount(args: MountArgs) {
   mountedEl = args.rootEl;
   root = createRoot(args.rootEl);
   root.render(
-    <RegistryGridApp
-      processResponse={args.processResponse}
-      getMonacoEditor={getMonacoEditorFn}
-      onEditsExport={onExportEditedJsonFn}
-    />,
+    <VaultProvider>
+      <RegistryGridApp
+        processResponse={args.processResponse}
+        getMonacoEditor={getMonacoEditorFn}
+        onEditsExport={onExportEditedJsonFn}
+      />
+    </VaultProvider>,
   );
 }
 
 function update(args: UpdateArgs) {
   if (!root) return;
   root.render(
-    <RegistryGridApp
-      processResponse={args.processResponse}
-      getMonacoEditor={getMonacoEditorFn}
-      onEditsExport={onExportEditedJsonFn}
-    />,
+    <VaultProvider>
+      <RegistryGridApp
+        processResponse={args.processResponse}
+        getMonacoEditor={getMonacoEditorFn}
+        onEditsExport={onExportEditedJsonFn}
+      />
+    </VaultProvider>,
   );
 }
 
@@ -101,3 +108,6 @@ declare global {
 window.RegistryGrid = api;
 
 export { mount, update, unmount };
+export { LockVaultButton } from "./components/LockVaultButton";
+export { UnlockVaultModal } from "./components/UnlockVaultModal";
+export { VaultProvider, useVault } from "./context/VaultContext";

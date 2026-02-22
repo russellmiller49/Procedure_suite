@@ -56,5 +56,23 @@ class RegistryRun(Base):
     processing_time_ms = Column(Integer, nullable=True)
 
 
-__all__ = ["RegistryRun"]
+class RegistryAppendedDocument(Base):
+    __tablename__ = "registry_appended_documents"
 
+    id = Column(UUIDType, primary_key=True, default=uuid.uuid4)
+    created_at = Column(DateTime(timezone=True), default=_utcnow, nullable=False, index=True)
+
+    user_id = Column(String(255), nullable=False, index=True)
+    registry_uuid = Column(UUIDType, nullable=False, index=True)
+
+    # NOTE: MUST be scrubbed-only text.
+    note_text = Column(Text, nullable=False)
+    note_sha256 = Column(String(64), nullable=False, index=True)
+
+    document_kind = Column(String(64), nullable=False, default="pathology")
+    source_type = Column(String(64), nullable=True)
+    ocr_correction_applied = Column(Boolean, nullable=False, default=False)
+    metadata_json = Column("metadata", JSONType, nullable=True, default=dict)
+
+
+__all__ = ["RegistryRun", "RegistryAppendedDocument"]

@@ -8,7 +8,9 @@ __all__ = [
     "phi_demo_cases",
     "procedure_codes",
     "qa",
+    "registry_append",
     "registry_runs",
     "reporting",
     "unified_process",
+    "vault",
 ]

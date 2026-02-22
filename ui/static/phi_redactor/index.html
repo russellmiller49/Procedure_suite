@@ -215,17 +215,51 @@
                   Split view
                 </button>
               </div>
-              <button id="exportBtn" class="secondary" disabled>Export JSON</button>
-              <button id="exportTablesBtn" class="secondary" disabled>Export Tables</button>
-              <button id="exportEditedBtn" class="secondary" disabled>Export Edited JSON</button>
-              <button id="exportPatchBtn" class="secondary" disabled>Export Patch</button>
-            </div>
-          </div>
-		          <div id="resultsContainer" class="resultsContainer hidden">
-		            <div id="statusBannerHost"></div>
+	              <button id="exportBtn" class="secondary" disabled>Export JSON</button>
+	              <button id="exportTablesBtn" class="secondary" disabled>Export Tables</button>
+	              <button id="exportEditedBtn" class="secondary" disabled>Export Edited JSON</button>
+	              <button id="exportPatchBtn" class="secondary" disabled>Export Patch</button>
+	            </div>
+	          </div>
+
+            <details class="raw-json-toggle" id="vaultPanel" open>
+              <summary>Local Vault (Encrypted)</summary>
+              <div class="vault-panel">
+                <div class="vault-grid">
+                  <div class="feedback-field">
+                    <label for="vaultUserIdInput">User ID</label>
+                    <input id="vaultUserIdInput" type="text" placeholder="Stable user id for vault scope" />
+                  </div>
+                  <div class="feedback-field">
+                    <label for="vaultPasswordInput">Vault Password</label>
+                    <input id="vaultPasswordInput" type="password" placeholder="Required to unlock vault" />
+                  </div>
+                  <div class="feedback-field">
+                    <label for="vaultPatientLabelInput">Patient Label (local encrypted)</label>
+                    <input id="vaultPatientLabelInput" type="text" placeholder="e.g., John Doe or MRN 12345" />
+                  </div>
+                </div>
+
+                <div class="vault-actions">
+                  <button id="vaultUnlockBtn" class="secondary">Unlock / Initialize Vault</button>
+                  <button id="vaultLockBtn" class="secondary" disabled>Lock Vault</button>
+                  <button id="vaultSyncBtn" class="secondary" disabled>Sync Patients</button>
+                  <button id="clearAppendTargetBtn" class="secondary" disabled>Clear Append Target</button>
+                  <div class="subtle" id="vaultStatusText">Locked</div>
+                </div>
+
+                <div class="subtle vault-append-target" id="vaultAppendTargetText">Mode: Create new case</div>
+                <div id="vaultPatientsHost" class="vault-patients-host">
+                  Unlock vault to view local encrypted patients.
+                </div>
+              </div>
+            </details>
+
+			          <div id="resultsContainer" class="resultsContainer hidden">
+			            <div id="statusBannerHost"></div>
                 <div id="bundleSummaryHost" class="bundle-summary hidden"></div>
-		            <div id="statCards" class="stat-card-container">
-		            </div>
+			            <div id="statCards" class="stat-card-container">
+			            </div>
 
 		            <div id="registryLegacyRoot">
 		            <div class="dash-grid">

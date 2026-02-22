@@ -60,6 +60,7 @@ def _schema_version() -> str:
 
 def _pipeline_config(payload: UnifiedProcessRequest) -> dict[str, Any]:
     return {
+        "registry_uuid": payload.registry_uuid,
         "already_scrubbed": bool(payload.already_scrubbed),
         "include_financials": bool(payload.include_financials),
         "explain": bool(payload.explain),
@@ -117,6 +118,10 @@ class RegistryRunCreateRequest(BaseModel):
     note: str = Field(
         ...,
         description="Procedure note text (scrubbed-only when already_scrubbed=true)",
+    )
+    registry_uuid: str | None = Field(
+        None,
+        description="Optional client-generated stable case identifier.",
     )
     already_scrubbed: bool = Field(
         False, description="If true, server will skip PHI scrubbing and treat note as scrubbed."
@@ -205,6 +210,7 @@ async def create_registry_run(
 
     unified_payload = UnifiedProcessRequest(
         note=payload.note,
+        registry_uuid=payload.registry_uuid,
         already_scrubbed=payload.already_scrubbed,
         locality=payload.locality,
         include_financials=payload.include_financials,
