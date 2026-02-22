@@ -1838,7 +1838,12 @@ function resolvePromptPath(registry, promptPath) {
   return { effectivePath: base.replaceAll("[*]", `[${idx}]`), hasWildcard: true, wildcardCount: count };
 }
 
+function normalizeCompletenessPromptPath(promptPath) {
+  return String(promptPath || "").trim().replace(/\[\d+\]/g, "[*]");
+}
+
 function getCompletenessInputSpec(promptPath) {
+  const normalizedPromptPath = normalizeCompletenessPromptPath(promptPath);
   const map = {
     "patient_demographics.age_years": { type: "integer", placeholder: "e.g., 67" },
     "patient.age": { type: "integer", placeholder: "e.g., 67" },
@@ -1889,6 +1894,7 @@ function getCompletenessInputSpec(promptPath) {
     "granular_data.linear_ebus_stations_detail[*].number_of_passes": { type: "integer", placeholder: "passes" },
     "granular_data.linear_ebus_stations_detail[*].short_axis_mm": { type: "number", placeholder: "mm" },
     "granular_data.linear_ebus_stations_detail[*].lymphocytes_present": { type: "boolean" },
+    "procedures_performed.linear_ebus.node_events[*].passes": { type: "integer", placeholder: "passes" },
 
     // Pleural / chest ultrasound
     "pleural_procedures.chest_ultrasound.hemithorax": {
@@ -1940,7 +1946,7 @@ function getCompletenessInputSpec(promptPath) {
     },
   };
 
-  return map[String(promptPath || "")] || { type: "string", placeholder: "Enter value" };
+  return map[normalizedPromptPath] || map[String(promptPath || "")] || { type: "string", placeholder: "Enter value" };
 }
 
 function coerceCompletenessValue(spec, rawValue) {
@@ -2145,10 +2151,45 @@ function applyCompletenessValueToFlatTables(targetEffectivePath, coercedValue) {
     const key = ebusMatch[2];
     if (!Number.isFinite(rowIndex) || rowIndex < 0) return false;
     const table = getFlatTableStateById("linear_ebus_stations_detail");
-    if (!table || !Array.isArray(table.rows) || rowIndex >= table.rows.length) return false;
+    if (!table || !Array.isArray(table.rows)) return false;
+    if (rowIndex >= table.rows.length) {
+      for (let i = table.rows.length; i <= rowIndex; i += 1) {
+        const newRow = {};
+        (Array.isArray(table.columns) ? table.columns : []).forEach((col) => {
+          if (!col?.key) return;
+          newRow[col.key] = "";
+        });
+        table.rows.push(newRow);
+      }
+    }
     const row = table.rows[rowIndex];
 
     const baseTable = getFlatTableBaseById("linear_ebus_stations_detail");
+    const baseRow = Array.isArray(baseTable?.rows) ? baseTable.rows[rowIndex] : null;
+
+    if (restoreBase) {
+      row[key] = baseRow ? baseRow[key] ?? "" : "";
+      return true;
+    }
+
+    if (typeof coercedValue === "boolean") row[key] = toYesNo(coercedValue);
+    else if (typeof coercedValue === "number") row[key] = Number.isFinite(coercedValue) ? String(coercedValue) : "";
+    else if (Array.isArray(coercedValue))
+      row[key] = coercedValue.map((v) => String(v || "").trim()).filter((v) => v !== "").join(", ");
+    else row[key] = String(coercedValue ?? "");
+    return true;
+  }
+
+  const ebusNodeEventMatch = path.match(/^procedures_performed\.linear_ebus\.node_events\[(\d+)\]\.([^.]+)$/);
+  if (ebusNodeEventMatch) {
+    const rowIndex = Number.parseInt(ebusNodeEventMatch[1], 10);
+    const key = ebusNodeEventMatch[2];
+    if (!Number.isFinite(rowIndex) || rowIndex < 0) return false;
+    const table = getFlatTableStateById("ebus_node_events");
+    if (!table || !Array.isArray(table.rows) || rowIndex >= table.rows.length) return false;
+    const row = table.rows[rowIndex];
+
+    const baseTable = getFlatTableBaseById("ebus_node_events");
     const baseRow = Array.isArray(baseTable?.rows) ? baseTable.rows[rowIndex] : null;
 
     if (restoreBase) {
@@ -9079,6 +9120,24 @@ async function main() {
         });
       });
 
+  function buildRedactedText(baseText, spans, { translateDates, indexYmd }) {
+    let text = baseText;
+    // Apply replacements from the end so original offsets stay valid.
+    for (const d of spans) {
+      const start = clamp(Number(d.start) || 0, 0, text.length);
+      const end = clamp(Number(d.end) || 0, 0, text.length);
+      if (end <= start) continue;
+      const raw = baseText.slice(start, end);
+      const label = String(d.label || "").toUpperCase().replace(/^[BI]-/, "");
+      const replacement =
+        label === "DATE"
+          ? buildDateRedactionReplacement(raw, { translateDates, indexYmd })
+          : "[REDACTED]";
+      text = `${text.slice(0, start)}${replacement}${text.slice(end)}`;
+    }
+    return text;
+  }
+
   applyBtn.addEventListener("click", () => {
     if (!hasRunDetection) return;
 
@@ -9090,50 +9149,24 @@ async function main() {
     const translateDates = Boolean(translateDatesToggleEl?.checked);
     const indexYmd = parseIsoDateInput(indexDateInputEl?.value);
     const baseText = model.getValue();
+    const redactedText = buildRedactedText(baseText, spans, { translateDates, indexYmd });
 
     suppressDirtyFlag = true;
     try {
       if (!usingPlainEditor && editor) {
-        const lineStarts = buildLineStartOffsets(baseText);
-        const textLength = baseText.length;
-
-        const edits = spans.map((d) => {
-          const startPos = offsetToPosition(d.start, lineStarts, textLength);
-          const endPos = offsetToPosition(d.end, lineStarts, textLength);
-          const raw = baseText.slice(d.start, d.end);
-          const label = String(d.label || "").toUpperCase().replace(/^[BI]-/, "");
-          const replacement =
-            label === "DATE"
-              ? buildDateRedactionReplacement(raw, { translateDates, indexYmd })
-              : "[REDACTED]";
-          return {
-            range: new monaco.Range(
-              startPos.lineNumber,
-              startPos.column,
-              endPos.lineNumber,
-              endPos.column
-            ),
-            text: replacement,
-          };
-        });
-
-        editor.executeEdits("phi-redactor", edits);
-      } else {
-        let text = baseText;
-        // Apply replacements from the end to preserve offsets.
-        for (const d of spans) {
-          const start = clamp(d.start, 0, text.length);
-          const end = clamp(d.end, 0, text.length);
-          if (end <= start) continue;
-          const raw = baseText.slice(start, end);
-          const label = String(d.label || "").toUpperCase().replace(/^[BI]-/, "");
-          const replacement =
-            label === "DATE"
-              ? buildDateRedactionReplacement(raw, { translateDates, indexYmd })
-              : "[REDACTED]";
-          text = `${text.slice(0, start)}${replacement}${text.slice(end)}`;
+        const fullRange =
+          typeof model.getFullModelRange === "function"
+            ? model.getFullModelRange()
+            : new monaco.Range(1, 1, model.getLineCount(), model.getLineMaxColumn(model.getLineCount()));
+        try {
+          // Apply as one edit to avoid Monaco overlap failures on mixed-source detections.
+          editor.executeEdits("phi-redactor", [{ range: fullRange, text: redactedText }]);
+        } catch (err) {
+          console.warn("Monaco edit failed during redaction; falling back to model.setValue", err);
+          model.setValue(redactedText);
         }
-        model.setValue(text);
+      } else {
+        model.setValue(redactedText);
       }
     } finally {
       suppressDirtyFlag = false;

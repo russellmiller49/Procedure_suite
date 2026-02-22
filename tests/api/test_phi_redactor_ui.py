@@ -146,6 +146,52 @@ def test_phi_redactor_legacy_worker_has_same_regression_fixes(client: TestClient
     ), "Expected clinical stoplist gating inside legacy PROCEDURE_FOR_NAME_RE loop"
 
 
+def test_phi_redactor_worker_provider_roles_cover_ebus_headers(client: TestClient) -> None:
+    """Regression: provider role regex should include common EBUS header labels."""
+    resp = client.get("/ui/phi_redactor/redactor.worker.js")
+    assert resp.status_code == 200
+    body = resp.text
+    assert "const PROVIDER_ROLE_LINE_RE" in body
+    assert "Endoscopist" in body
+    assert "Fellow\\/Resident" in body
+    assert "Technician" in body
+    assert "Additional\\s+Fellow" in body
+    assert "Additional\\s+Technician" in body
+    assert "source: \"regex_provider_role\"" in body
+
+
+def test_phi_redactor_worker_has_address_and_zip_regex_detectors(client: TestClient) -> None:
+    """Regression: street address + ZIP context should be captured by deterministic regex."""
+    resp = client.get("/ui/phi_redactor/redactor.worker.js")
+    assert resp.status_code == 200
+    body = resp.text
+    assert "const STREET_ADDRESS_RE" in body
+    assert "const CITY_STATE_ZIP_RE" in body
+    assert "const ZIP_LABEL_RE" in body
+    assert "text.matchAll(STREET_ADDRESS_RE)" in body
+    assert "text.matchAll(CITY_STATE_ZIP_RE)" in body
+    assert "text.matchAll(ZIP_LABEL_RE)" in body
+    assert "source: \"regex_address\"" in body
+    assert "source: \"regex_city_state_zip\"" in body
+    assert "source: \"regex_zip_label\"" in body
+
+
+def test_phi_redactor_legacy_worker_has_address_and_provider_role_detectors(client: TestClient) -> None:
+    """Legacy worker fallback should keep parity for address + provider role coverage."""
+    resp = client.get("/ui/redactor.worker.legacy.js")
+    assert resp.status_code == 200
+    body = resp.text
+    assert "const PROVIDER_ROLE_LINE_RE" in body
+    assert "Endoscopist" in body
+    assert "Fellow\\/Resident" in body
+    assert "Technician" in body
+    assert "const STREET_ADDRESS_RE" in body
+    assert "const CITY_STATE_ZIP_RE" in body
+    assert "const ZIP_LABEL_RE" in body
+    assert "source: \"regex_provider_role\"" in body
+    assert "source: \"regex_address\"" in body
+
+
 def test_unified_process_already_scrubbed_bypasses_server_scrubber(
     monkeypatch, client: TestClient
 ) -> None:

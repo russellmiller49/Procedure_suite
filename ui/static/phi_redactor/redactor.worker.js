@@ -397,9 +397,10 @@ const LOWERCASE_FOR_NAME_RE =
 const LAST_FIRST_INITIAL_RE =
   /\b([A-Z][a-z]+\s*,\s*[A-Z][a-z]+(?:\s+[A-Z]\.?|\s+(?:Jr|Sr|II|III|IV)\.?)?)\b/g;
 
-// Provider/staff role lines: "Staff: Miller", "Fellow: Derek Booth"
+// Provider/staff role lines: "Staff: Miller", "Fellow: Derek Booth", "ENDOSCOPIST: CDR Russell Miller, M.D,"
+// Captures the entire value after the role label on that line so uncommon formats are still redacted.
 const PROVIDER_ROLE_LINE_RE =
-  /^(?:Staff|Fellow|Attending|Proceduralist|Surgeon|Operator|Anesthesiologist|Physician|Provider)\s*:\s*([A-Z][A-Za-z'’.-]+(?:\s+[A-Z][A-Za-z'’.-]+){0,3}|[A-Z]{2,}(?:\s+[A-Z]{2,}){0,5})\b/gim;
+  /^(?:Staff|Fellow|Attending|Proceduralist(?:\(s\))?|Surgeon|Operator|Anesthesiologist|Physician|Provider|Endoscopist|Fellow\/Resident|Technician|Additional\s+Fellow(?:\(S\)|\(s\))?|Additional\s+Technician(?:\(S\)|\(s\))?)\s*:\s*([^\r\n]+?)\s*$/gim;
 
 // Credentialed names: "Derek Booth, DO", "Jane Doe, MD"
 const CREDENTIAL_NAME_RE =
@@ -416,6 +417,21 @@ const SIGNATURE_BLOCK_ALLCAPS_RE =
 // Facility acronyms + city: "NMRTC San Diego"
 const FACILITY_ACRONYM_CITY_RE =
   /\b(?:NMRTC|NMCSD|NMCP|NMCL|NMC)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2}\b/g;
+
+// Street-style address blocks, including optional city/state/ZIP tail.
+// Example: "34800 Bob Wilson Drive, San Diego, CA, 92134"
+const STREET_ADDRESS_RE =
+  /\b\d{1,6}\s+(?:[A-Za-z0-9.'#-]+\s+){0,8}(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Drive|Dr\.?|Boulevard|Blvd\.?|Lane|Ln\.?|Court|Ct\.?|Circle|Cir\.?|Way|Place|Pl\.?|Terrace|Ter\.?|Parkway|Pkwy\.?|Highway|Hwy\.?)\b(?:\s*,\s*[A-Za-z][A-Za-z.'-]*(?:\s+[A-Za-z][A-Za-z.'-]*){0,3})?(?:\s*,\s*[A-Z]{2})?(?:\s*,?\s*\d{5}(?:-\d{4})?)?/g;
+
+// City/state/ZIP tuples when the street line is omitted.
+// Example: "San Diego, CA, 92134"
+const CITY_STATE_ZIP_RE =
+  /\b([A-Za-z][A-Za-z.'-]*(?:\s+[A-Za-z][A-Za-z.'-]*){0,3}\s*,\s*[A-Z]{2}\s*,?\s*\d{5}(?:-\d{4})?)\b/g;
+
+// Labeled ZIP-only fields.
+// Example: "ZIP CODE: 92134"
+const ZIP_LABEL_RE =
+  /\b(?:ZIP|ZIP\s+CODE|Postal\s+Code)\s*[:#-]?\s*(\d{5}(?:-\d{4})?)\b/gi;
 
 // Facility / institution patterns (treated as PHI → GEO)
 // Goal: prevent partial redactions like "[REDACTED] Ridge Medical Center" by capturing the full facility span.
@@ -734,6 +750,9 @@ function runRegexDetectors(text) {
   ALLCAPS_LAST_FIRST_RE.lastIndex = 0;
   SIGNATURE_BLOCK_ALLCAPS_RE.lastIndex = 0;
   FACILITY_ACRONYM_CITY_RE.lastIndex = 0;
+  STREET_ADDRESS_RE.lastIndex = 0;
+  CITY_STATE_ZIP_RE.lastIndex = 0;
+  ZIP_LABEL_RE.lastIndex = 0;
   DATE_DDMMMYYYY_RE.lastIndex = 0;
   DATE_DDMMMYYYY_SPACED_RE.lastIndex = 0;
   DATE_SLASH_RE.lastIndex = 0;
@@ -1488,9 +1507,19 @@ function runRegexDetectors(text) {
     if (nameGroup && match.index != null) {
       const groupOffset = fullMatch.indexOf(nameGroup);
       if (groupOffset !== -1) {
+        const candidate = nameGroup.trim();
+        if (!candidate) continue;
+        if (/^(?:none|n\/a|na|unknown|not\s+documented)$/i.test(candidate)) continue;
+        if (!/[a-z]/i.test(candidate)) continue;
+
+        const leadingTrim = nameGroup.length - nameGroup.trimStart().length;
+        const trailingTrim = nameGroup.length - nameGroup.trimEnd().length;
+        const start = match.index + groupOffset + leadingTrim;
+        const end = match.index + groupOffset + nameGroup.length - trailingTrim;
+
         spans.push({
-          start: match.index + groupOffset,
-          end: match.index + groupOffset + nameGroup.length,
+          start,
+          end,
           label: "PATIENT",
           score: 0.98,
           source: "regex_provider_role",
@@ -1671,6 +1700,50 @@ function runRegexDetectors(text) {
         });
       }
     }
+  }
+
+  // 11b) Street/city ZIP address patterns
+  for (const match of text.matchAll(STREET_ADDRESS_RE)) {
+    if (match.index == null) continue;
+    const raw = match[0];
+    if (!raw || raw.length < 8) continue;
+    spans.push({
+      start: match.index,
+      end: match.index + raw.length,
+      label: "GEO",
+      score: 0.98,
+      source: "regex_address",
+    });
+  }
+
+  for (const match of text.matchAll(CITY_STATE_ZIP_RE)) {
+    const cityZipGroup = match[1];
+    const fullMatch = match[0];
+    if (!cityZipGroup || match.index == null) continue;
+    const groupOffset = fullMatch.indexOf(cityZipGroup);
+    if (groupOffset === -1) continue;
+    spans.push({
+      start: match.index + groupOffset,
+      end: match.index + groupOffset + cityZipGroup.length,
+      label: "GEO",
+      score: 0.96,
+      source: "regex_city_state_zip",
+    });
+  }
+
+  for (const match of text.matchAll(ZIP_LABEL_RE)) {
+    const zipGroup = match[1];
+    const fullMatch = match[0];
+    if (!zipGroup || match.index == null) continue;
+    const groupOffset = fullMatch.indexOf(zipGroup);
+    if (groupOffset === -1) continue;
+    spans.push({
+      start: match.index + groupOffset,
+      end: match.index + groupOffset + zipGroup.length,
+      label: "GEO",
+      score: 0.95,
+      source: "regex_zip_label",
+    });
   }
 
   // 12) Facility/institution names
