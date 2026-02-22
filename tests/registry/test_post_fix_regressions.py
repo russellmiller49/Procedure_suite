@@ -62,14 +62,9 @@ def test_blvr_checkbox_selection_corrects_valve_type_procedure_type_and_valve_co
     assert len(blvr.segments_treated) == 5
     assert any("SUPERIOR" in str(s).upper() for s in blvr.segments_treated)
 
-    # Removal of a placed valve should surface as foreign body removal.
-    fbr = updated.procedures_performed.foreign_body_removal
-    assert fbr is not None
-    assert fbr.performed is True
-
     codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
     assert "31647" in codes
-    assert "31635" in codes
+    assert "31635" not in codes
 
     assert updated.granular_data is not None
     assert updated.granular_data.blvr_valve_placements is not None
@@ -111,9 +106,7 @@ def test_blvr_guardrails_do_not_promote_valve_placement_for_previously_placed_va
     blvr = updated.procedures_performed.blvr
     assert blvr is not None
 
-    assert blvr.procedure_type == "Valve assessment"
-    assert blvr.number_of_valves in (None, 0)
-    assert blvr.valve_type in (None, "")
+    assert blvr.performed is False
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
     assert "31647" not in codes

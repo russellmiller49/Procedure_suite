@@ -18,7 +18,7 @@ PROCEDURE
 
 Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA) (Stations 7)
 
-PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+PROCEDURE IN DETAIL After appropriate local anesthesia and preparation, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
 
 EBUS-TBNA Staging
 

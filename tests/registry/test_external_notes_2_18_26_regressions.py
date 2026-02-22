@@ -88,6 +88,29 @@ def test_enrich_bal_from_procedure_detail_captures_return_volume_and_cleans_loca
     assert "sent for" not in bal.location.lower()
 
 
+def test_enrich_bal_from_procedure_detail_prefers_standard_bal_when_bal_detail_unset() -> None:
+    note = (
+        "Mini Bronchial alveolar lavage was performed via the extended working channel catheter. "
+        "Instilled 10 cc of NS, suction returned with 5 cc of BAL fluid.\n"
+        "Bronchial alveolar lavage was performed at Apical-Posterior Segment of LUL (LB1/2). "
+        "Instilled 40 cc of NS, suction returned with 15 cc of BAL fluid.\n"
+        "Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4). "
+        "Instilled 60 cc of NS, suction returned with 60 cc of NS.\n"
+    )
+    record = RegistryRecord.model_validate({"procedures_performed": {"bal": {"performed": True}}})
+
+    warnings = enrich_bal_from_procedure_detail(record, note)
+
+    assert record.procedures_performed is not None
+    bal = record.procedures_performed.bal
+    assert bal is not None
+    assert bal.performed is True
+    assert bal.location == "Lateral Segment of RML (RB4)"
+    assert bal.volume_instilled_ml == 60
+    assert bal.volume_recovered_ml == 60
+    assert any("selected largest standard BAL candidate" in w for w in warnings)
+
+
 def test_airway_stent_action_type_is_kept_consistent_with_action() -> None:
     record = RegistryRecord.model_validate(
         {"procedures_performed": {"airway_stent": {"performed": True, "action": "Assessment only", "action_type": "removal"}}}

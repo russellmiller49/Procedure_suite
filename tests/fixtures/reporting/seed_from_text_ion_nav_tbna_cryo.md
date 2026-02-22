@@ -20,14 +20,14 @@ Robotic navigational bronchoscopy (Ion) to RUL target
 Tool-in-lesion confirmation
 Transbronchial Cryobiopsy (RUL)
 Cone-beam CT imaging with trajectory adjustment and confirmation
-TBNA
+TBNA of RUL
 
 ATTENDING [Name]
 ASSISTANT [Name]
 SUPPORT STAFF RN: [Name] RT: [Name]
 INSTRUMENTATION Ion robotic bronchoscopy platform; TBNA needles; cryobiopsy system; cone-beam CT system.
 
-ANESTHESIA General anesthesia
+ANESTHESIA Not documented
 
 MONITORING Pulse oximetry, heart rate, telemetry, and blood pressure were continuously monitored by an independent trained observer throughout the procedure.
 
@@ -35,15 +35,15 @@ ESTIMATED BLOOD LOSS Minimal
 
 COMPLICATIONS None
 
-PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+PROCEDURE IN DETAIL After appropriate local anesthesia and preparation, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
 
 Robotic navigation using the Ion platform to RUL target.
-
-Tool-in-lesion was confirmed with Cone Beam CT.
 
 A CBCT/CACT spin was obtained intra-procedurally.
 Image fusion was performed to align intra-op imaging with the pre-procedure CT. The updated overlay demonstrated Cone Beam CT.
 The patient tolerated the imaging without complications.
+
+Tool-in-lesion was confirmed with Cone Beam CT.
 
 TBNA: Transbronchial needle aspiration was performed. Sampling was obtained from the RUL target.
 

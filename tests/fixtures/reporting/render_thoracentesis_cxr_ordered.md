@@ -26,7 +26,7 @@ ESTIMATED BLOOD LOSS Minimal
 
 COMPLICATIONS None
 
-PROCEDURE IN DETAIL After induction of anesthesia, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
+PROCEDURE IN DETAIL After appropriate local anesthesia and preparation, a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
 
 Ultrasound Ultrasound identified a pleural effusion on the left side. Following sterile prep and local anesthesia, thoracentesis was performed at the 7th intercostal space along the mid-axillary line.
 A total of 900 mL of serous fluid was removed. A post-procedure chest x-ray was ordered. The patient tolerated the procedure well without immediate complications.
