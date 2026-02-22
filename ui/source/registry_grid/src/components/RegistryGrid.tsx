@@ -526,6 +526,7 @@ export function RegistryGrid({
         headerName: "Field",
         field: "fieldLabel",
         flex: 2,
+        minWidth: 240,
         cellRenderer: (params: ICellRendererParams<RegistryRow>) => {
           const row = params.data;
           if (!row) return null;
@@ -560,12 +561,14 @@ export function RegistryGrid({
         headerName: "Extracted Value",
         field: "extractedValueDisplay",
         flex: 2,
+        minWidth: 220,
         cellClass: "ps-cell-ellipsis",
       },
       {
         headerName: "Evidence",
         field: "evidence",
         flex: 2,
+        minWidth: 210,
         cellRenderer: (params: ICellRendererParams<RegistryRow>) => {
           const ev = params.data?.evidence ?? [];
           if (!ev || ev.length === 0) return <span className="ps-muted">—</span>;
@@ -595,6 +598,7 @@ export function RegistryGrid({
         headerName: "Edit",
         field: "editedValueDisplay",
         flex: 2,
+        minWidth: 230,
         cellRenderer: (params: ICellRendererParams<RegistryRow>) => {
           const row = params.data;
           if (!row) return <span className="ps-muted">—</span>;

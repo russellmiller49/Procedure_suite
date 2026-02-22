@@ -2120,7 +2120,97 @@ function addSessionNameMatches(spans, text, options = {}) {
   const { debug } = options;
   const log = debug ? console.log.bind(console) : () => {};
 
-  if (!spans || spans.length === 0 || !text) return spans;
+  if (!Array.isArray(spans) || spans.length === 0 || typeof text !== "string" || !text) return spans;
+
+  // Only allow session tracking from trusted seed sources (Phase 1A).
+  const TRUSTED_SEED_SOURCES = new Set([
+    "regex_header",
+    "regex_header_allcaps",
+    "regex_header_greedy",
+    "regex_inline_name",
+    "regex_procedural_name",
+    "regex_pt_mrn",
+    "regex_title_name",
+    "regex_sentence_start",
+    "regex_line_start",
+    "regex_line_start_clinical",
+  ]);
+
+  function isExcludedSeedSource(source) {
+    if (!source) return true;
+    return source.startsWith("regex_provider_") || source.startsWith("regex_session_name");
+  }
+
+  function getLineBoundsAt(index) {
+    const idx = Math.max(0, Math.min(text.length, index));
+    const lineStart = Math.max(0, text.lastIndexOf("\n", idx - 1) + 1);
+    const lineEndRaw = text.indexOf("\n", idx);
+    const lineEnd = lineEndRaw === -1 ? text.length : lineEndRaw;
+    return { start: lineStart, end: lineEnd, text: text.slice(lineStart, lineEnd) };
+  }
+
+  function lineHasDemographicMarkers(lineText) {
+    return /\b(?:patient|pt\b|name|mrn|dob|date\s+of\s+birth|birthdate|age|sex|gender|id|edipi|account)\b/i.test(
+      String(lineText || "")
+    );
+  }
+
+  // Optional: allow ML ("ner") seeding only in header/demographic context (Phase 1C).
+  function isAllowedNerSeed(span) {
+    const start = typeof span?.start === "number" ? span.start : -1;
+    if (start < 0) return false;
+    if (isInHeaderZone(start)) return true;
+    const line = getLineBoundsAt(start);
+    return lineHasDemographicMarkers(line.text) || hasPatientDemographicContext(text, start);
+  }
+
+  // Strict "person-shape" gate for confirmed seeds (Phase 1B).
+  const PERSON_STOPWORDS = new Set(["to", "the", "of", "and", "for"]);
+
+  const UNIT_TOKENS = new Set([
+    "mg",
+    "mcg",
+    "g",
+    "kg",
+    "ml",
+    "l",
+    "cc",
+    "mm",
+    "cm",
+    "m",
+    "fr",
+    "french",
+    "mmhg",
+    "bpm",
+    "lpm",
+    "%",
+  ]);
+
+  function tokenizePersonCandidate(phrase) {
+    return String(phrase || "")
+      .trim()
+      .split(/\s+/)
+      .map((t) => t.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, ""))
+      .filter(Boolean);
+  }
+
+  function passesPersonShapeGate(phrase) {
+    const raw = String(phrase || "").trim();
+    if (raw.length < 4) return false;
+
+    const tokens = tokenizePersonCandidate(raw);
+    if (tokens.length < 2 || tokens.length > 4) return false;
+
+    let hasCapitalStart = false;
+    for (const tok of tokens) {
+      if (/^[A-Z]/.test(tok)) hasCapitalStart = true;
+      const low = tok.toLowerCase();
+      if (PERSON_STOPWORDS.has(low)) return false;
+      if (/\d/.test(tok)) return false;
+      if (UNIT_TOKENS.has(low)) return false;
+    }
+    return hasCapitalStart;
+  }
 
   // Helper: check if a phrase contains clinical terms (should not be session-tracked)
   function containsClinicalTerms(phrase) {
@@ -2142,18 +2232,26 @@ function addSessionNameMatches(spans, text, options = {}) {
     return false;
   }
 
-  // Collect confirmed high-confidence PATIENT names
+  // Collect confirmed PATIENT names from trusted sources only (Phase 1A/1C),
+  // then apply strict person-shape gating (Phase 1B).
   const confirmedNames = new Set();
   for (const span of spans) {
     const labelNorm = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
-    if (labelNorm === "PATIENT" && (span.score ?? 0) >= 0.85) {
-      const nameText = text.slice(span.start, span.end).trim();
-      // Only track names with at least 4 characters (avoid initials)
-      // Phase 1 gating: Skip clinical phrases like "left adrenal", "apical segment"
-      if (nameText.length >= 4 && !containsClinicalTerms(nameText)) {
-        confirmedNames.add(nameText);
-      }
-    }
+    if (labelNorm !== "PATIENT") continue;
+
+    const source = String(span?.source || "");
+    if (isExcludedSeedSource(source)) continue;
+
+    const isTrustedSeed =
+      TRUSTED_SEED_SOURCES.has(source) ||
+      (source === "ner" && (span.score ?? 0) >= 0.85 && isAllowedNerSeed(span));
+    if (!isTrustedSeed) continue;
+
+    const nameText = text.slice(span.start, span.end).trim();
+    if (!passesPersonShapeGate(nameText)) continue;
+    if (containsClinicalTerms(nameText)) continue;
+
+    confirmedNames.add(nameText);
   }
 
   if (confirmedNames.size === 0) {
@@ -2179,7 +2277,11 @@ function addSessionNameMatches(spans, text, options = {}) {
 
   // Scan for undetected occurrences of confirmed names
   for (const name of confirmedNames) {
-    const nameRe = new RegExp(escapeRegex(name), 'gi');
+    const seed = String(name || "").trim();
+    if (!seed) continue;
+    // Normalize whitespace to match across line breaks or multiple spaces.
+    const seedPattern = escapeRegex(seed.replace(/\s+/g, " ")).replace(/\s+/g, "\\s+");
+    const nameRe = new RegExp(seedPattern, "gi");
     let match;
     while ((match = nameRe.exec(text)) !== null) {
       const start = match.index;
@@ -2193,10 +2295,13 @@ function addSessionNameMatches(spans, text, options = {}) {
         start,
         end,
         label: "PATIENT",
-        score: 0.95,
+        // Lower priority + explicit provenance (Phase 1D).
+        score: 0.7,
         source: "regex_session_name",
+        sessionPropagated: true,
         text: match[0],
       });
+      coveredRanges.push({ start, end });
       addedCount++;
     }
   }
@@ -2660,6 +2765,10 @@ self.onmessage = async (e) => {
         merged = addSessionNameMatches(merged, text, { debug });
         if (debug) log("[PHI] afterSessionNames:", merged.length);
 
+        // 9c) Apply veto to session-propagated spans as well (Phase 1D).
+        merged = applyVeto(merged, text, protectedTerms, vetoOpts);
+        if (debug) log("[PHI] afterSessionVeto:", merged.length);
+
         // 10) Final overlap resolution AFTER veto has approved survivors
         merged = finalResolveOverlaps(merged);
         if (debug) log("[PHI] afterFinalResolve:", merged.length);
@@ -2700,6 +2809,10 @@ self.onmessage = async (e) => {
         // 10b) Session-based name tracking for document consistency
         merged = addSessionNameMatches(merged, text, { debug });
         if (debug) log("[PHI] afterSessionNames:", merged.length);
+
+        // 10c) Apply veto to session-propagated spans as well (Phase 1D).
+        merged = applyVeto(merged, text, protectedTerms, vetoOpts);
+        if (debug) log("[PHI] afterSessionVeto:", merged.length);
       }
 
       merged = attachStableIds(merged, text);

@@ -1,0 +1,143 @@
+🩺 Extraction Quality Report: note_045
+Score: 85 / 100
+Status: ⚠️ WARNING
+
+1. Accuracy (Precision)
+Hallucinations: None.
+
+
+Mismatch: The CPT code extracted is 32554 (Thoracentesis without imaging guidance). The clinical note explicitly states the procedure was 32555 Aspirate pleura with imaging (thoracentesis). The text further confirms that based on ultrasound evaluation, the thoracentesis proceeded as planned.
++2
+
+2. Completeness (Recall)
+
+Missed Procedures: The JSON failed to appropriately link the ultrasound guidance to the thoracentesis for coding purposes.
+
+
+Missed Details: No critical granular details missed; the effusion characteristics were captured adequately.
+
+3. Logic & Coding
+
+CPT Consistency: The coding logic derived 32554 because it assigned guidance!='Ultrasound' as the selection reason. This is a logic failure, as the chest ultrasound was positively extracted as performed just above it.
++1
+
+Schema Compliance: Structurally sound.
+
+4. Corrected JSON Snippet
+JSON
+        {
+          "code": "32555",
+          "description": "Thoracentesis, needle or catheter, aspiration of the pleural space; with imaging guidance",
+          "derived_from": [
+            "pleural_procedures.thoracentesis",
+            "procedures_performed.chest_ultrasound"
+          ]
+        }
+🩺 Extraction Quality Report: note_068
+Score: 100 / 100
+Status: ✅ PASS
+
+1. Accuracy (Precision)
+Hallucinations: None.
+
+Mismatch: None. The JSON accurately translates "90% patent" to a pre_obstruction_pct of 10 , and "100% patent" to post_obstruction_pct of 0.
++2
+
+2. Completeness (Recall)
+Missed Procedures: None. Therapeutic aspiration and thermal ablation (APC)  were successfully captured.
++1
+
+
+Missed Details: Airway locations (Trachea, LMS, RMS, BI) were properly assigned to the correct modalities.
+
+3. Logic & Coding
+
+CPT Consistency: CPT codes 31641 and 31645 correctly match the performed thermal ablation and therapeutic aspiration. Diagnostic bronchoscopy (31622) was correctly bundled and dropped.
++3
+
+Schema Compliance: Excellent adherence to the schema.
+
+🩺 Extraction Quality Report: note_117
+Score: 100 / 100
+Status: ✅ PASS
+
+1. Accuracy (Precision)
+Hallucinations: None.
+
+Mismatch: None. EBUS node events (4R, 4L, 7, 11L, 11Ri, 11Rs) accurately reflect the specific actions taken, distinguishing between "inspected_only" and actual sampling.
++4
+
+2. Completeness (Recall)
+Missed Procedures: None. The complex array of navigational bronchoscopy , cryobiopsy , EBUS , and BAL  were exhaustively captured.
++3
+
+
+Missed Details: Needle gauge (22G) , passes , and target lesion sizes  were all successfully scraped.
++2
+
+3. Logic & Coding
+CPT Consistency: Superb logic handling. 31645 (therapeutic aspiration) was identified but correctly suppressed due to NCCI bundling rules with EBUS-TBNA. Modifier 59 was correctly suggested for the peripheral TBNA 31629 since it was distinct from the EBUS-TBNA sampling.
++2
+
+Schema Compliance: Fully compliant.
+
+🩺 Extraction Quality Report: note_237
+Score: 70 / 100
+Status: ❌ FAIL
+
+1. Accuracy (Precision)
+
+Hallucinations: The JSON falsely indicates airway_stent_removal: true and maps the action type to Revision/Repositioning. The clinical note explicitly describes a new stent placement ("decided to place and Aero SEMS"), not a removal or revision.
++1
+
+Mismatch: None outside of the stent hallucination.
+
+2. Completeness (Recall)
+
+Missed Procedures: The model correctly picked up rigid bronchoscopy , mechanical debulking , and thermal ablation.
++2
+
+Missed Details: None.
+
+3. Logic & Coding
+
+CPT Consistency: Due to the hallucinated stent removal, the pipeline selected 31638 (revision of tracheal or bronchial stent). This should be 31636 (placement of bronchial stent).
+
+Schema Compliance: Structurally fine, but data populating the schema is clinically inaccurate.
+
+4. Corrected JSON Snippet
+JSON
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action_type": "placement",
+        "action": "Placement",
+        "stent_type": "Other",
+        "stent_brand": "Aero",
+        "device_size": "12x40 mm",
+        "diameter_mm": 12.0,
+        "length_mm": 40.0,
+        "location": "Left mainstem"
+      }
+🩺 Extraction Quality Report: note_199
+Score: 95 / 100
+Status: ✅ PASS
+
+1. Accuracy (Precision)
+Hallucinations: None.
+
+Mismatch: None.
+
+2. Completeness (Recall)
+Missed Procedures: None. The pipeline correctly identified that Navigational Bronchoscopy , Radial EBUS , Peripheral TBNA , and Transbronchial Biopsy  were performed.
++2
+
+
+Missed Details: The pipeline successfully captured the aborted_reason and flagged the procedure as a "Partial success" due to the software mapping issues.
+
+3. Logic & Coding
+
+CPT Consistency: CPT 31627 (Navigational Bronchoscopy) was billed. The pipeline's audit warning accurately flagged that a Modifier -53 needs verification because the navigation failed and the team converted to conventional bronchoscopy.
++1
+
+Schema Compliance: Excellent.

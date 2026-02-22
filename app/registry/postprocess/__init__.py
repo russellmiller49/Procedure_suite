@@ -2587,12 +2587,12 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
 
 
 _EBUS_SAMPLING_INDICATORS_RE = re.compile(
-    r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+    r"\b(?:needle(?:s)?|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
     re.IGNORECASE,
 )
 
 _EBUS_STRONG_SAMPLING_RE = re.compile(
-    r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+    r"\b(?:needle(?:s)?|tbna|fna|biops(?:y|ied|ies)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
     re.IGNORECASE,
 )
 
@@ -2932,7 +2932,7 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
         return warnings
 
     strong_sampling_re = re.compile(
-        r"\b(?:needle|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es|ing)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+        r"\b(?:needle(?:s)?|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es|ing)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
         re.IGNORECASE,
     )
 
@@ -2952,12 +2952,30 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
         if before_char in {"/", "-"} or after_char in {"/", "-"}:
             return False
 
+        local = line[max(0, start - 60) : min(len(line), end + 60)]
+        if re.search(r"\b\d{1,2}[RL](?:[SI])?\b", local, re.IGNORECASE):
+            return True
+
         lookbehind = line[max(0, start - 24) : start].lower()
         lookahead = line[end : end + 42].lower()
         return bool(
             re.search(r"\b(?:station|level)\b", lookbehind)
             or re.search(r"\b(?:node|ln|lymph|subcarinal|paratracheal)\b|\(", lookahead)
         )
+
+    flat_text = re.sub(r"\s+", " ", full_text or "").strip()
+    each_station_passes: int | None = None
+    each_station_match = re.search(
+        r"(?i)\b(?:a\s+total\s+of\s+)?(?P<n>\d{1,2})\s+(?:biops(?:y|ies)|passes?)\b[^.]{0,140}\b(?:at\s+)?each\s+station\b",
+        flat_text,
+    )
+    if each_station_match:
+        try:
+            n_val = int(each_station_match.group("n"))
+        except Exception:
+            n_val = 0
+        if 1 <= n_val <= 20:
+            each_station_passes = n_val
 
     station_to_quote: dict[str, str] = {}
     for raw_line in (full_text or "").splitlines():
@@ -2990,6 +3008,34 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
             if not station:
                 continue
             station_to_quote.setdefault(station, line)
+
+    # Sentence-level backstop: handle sampling language + station lists split across newlines.
+    if flat_text:
+        for sentence in re.split(r"(?<=[.!?])\s+", flat_text):
+            if not sentence:
+                continue
+            if not _EBUS_STATION_TOKEN_RE.search(sentence):
+                continue
+            if _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(sentence):
+                continue
+            has_strong_sampling = bool(strong_sampling_re.search(sentence))
+            has_criteria = bool(_EBUS_SAMPLING_CRITERIA_RE.search(sentence))
+            if has_criteria and not has_strong_sampling:
+                continue
+            if not has_strong_sampling:
+                continue
+
+            for match in _EBUS_STATION_TOKEN_RE.finditer(sentence):
+                token = match.group(1) or ""
+                if token.isdigit() and not _digit_station_has_node_context(sentence, match.start(1), match.end(1)):
+                    continue
+                station = normalize_station(token) if normalize_station is not None else token.strip().upper()
+                if not station:
+                    continue
+                station = validate_station_format(str(station)) or str(station).strip().upper()
+                if not station:
+                    continue
+                station_to_quote.setdefault(station, sentence)
 
     # Site-block parsing: some notes place the station token in a "Site 1: Station 11L ..."
     # header and document sampling later ("The site was sampled ...") without repeating
@@ -3070,7 +3116,7 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
         if sampling_quote:
             station_to_quote.setdefault(station, sampling_quote)
 
-    if not station_to_quote:
+    if not station_to_quote and each_station_passes is None:
         return warnings
 
     # Upgrade inspected-only events for stations we believe were sampled.
@@ -3143,6 +3189,31 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
         if added:
             warnings.append(
                 f"EBUS_NARRATIVE_RECONCILE: added node_events for sampled stations {sorted(set(added))}"
+            )
+
+    # Passes-per-station backstop (e.g., "5 biopsies performed at each station").
+    passes_set: list[str] = []
+    if each_station_passes is not None:
+        sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+        for event in node_events:
+            action = getattr(event, "action", None)
+            if action not in sampling_actions:
+                continue
+            passes = getattr(event, "passes", None)
+            if passes in (None, "", 0):
+                try:
+                    setattr(event, "passes", int(each_station_passes))
+                except Exception:
+                    continue
+                station = getattr(event, "station", None)
+                if isinstance(station, str) and station.strip():
+                    passes_set.append(station.strip().upper())
+
+        if passes_set and not (upgraded or added):
+            setattr(linear, "node_events", node_events)
+        if passes_set:
+            warnings.append(
+                f"EBUS_NARRATIVE_RECONCILE: set passes={each_station_passes} for stations {sorted(set(passes_set))}"
             )
 
     return warnings

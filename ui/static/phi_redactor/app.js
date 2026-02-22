@@ -5183,6 +5183,9 @@ function renderFlatTablesFromState() {
       header.appendChild(actions);
       section.appendChild(header);
 
+      const tableScroll = document.createElement("div");
+      tableScroll.className = "flat-table-scroll";
+
       const tableEl = document.createElement("table");
       tableEl.className = "flat-table";
 
@@ -5365,7 +5368,8 @@ function renderFlatTablesFromState() {
       }
 
       tableEl.appendChild(tbody);
-      section.appendChild(tableEl);
+      tableScroll.appendChild(tableEl);
+      section.appendChild(tableScroll);
 
       if (table.note) {
         const note = document.createElement("div");

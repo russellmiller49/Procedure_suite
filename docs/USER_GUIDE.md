@@ -297,7 +297,7 @@ python -c "import os; print('LLM_PROVIDER:', os.getenv('LLM_PROVIDER', 'gemini (
 python -c "import os; print('GEMINI_API_KEY:', 'SET' if os.getenv('GEMINI_API_KEY') else 'NOT SET'); print('OPENAI_API_KEY:', 'SET' if os.getenv('OPENAI_API_KEY') else 'NOT SET')"
 
 python ops/tools/unified_pipeline_batch.py \
-  --notes-dir "data/granular annotations/Additional_notes" \
+  --notes-dir "/Users/russellmiller/Projects/proc_suite_notes/data/granular annotations/notes_text" \
   --count 20 \
   --output my_results.txt \
   --real-llm
