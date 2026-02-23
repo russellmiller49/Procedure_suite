@@ -922,6 +922,16 @@ setVaultStatus(
     : "Locked. Optional: unlock to save encrypted patient labels (does not affect extraction)."
 );
 
+// Vault event handlers are registered before `main()` wires full UI control state.
+// Start with a vault-only refresher, then let `main()` replace it with
+// `updateZkControls()` once runtime editor state exists.
+let refreshZkControls = () => {
+  if (vaultUnlockBtn) vaultUnlockBtn.disabled = vaultBusy;
+  if (vaultLockBtn) vaultLockBtn.disabled = !isVaultReady() || vaultBusy;
+  if (vaultSyncBtn) vaultSyncBtn.disabled = !isVaultReady() || vaultBusy;
+  if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = !appendTargetRegistryUuid || vaultBusy;
+};
+
 if (vaultUnlockBtn) {
   vaultUnlockBtn.addEventListener("click", async () => {
     if (vaultBusy) return;
@@ -936,7 +946,7 @@ if (vaultUnlockBtn) {
       return;
     }
     vaultBusy = true;
-    updateZkControls();
+    refreshZkControls();
     setVaultStatus("Unlocking vault…");
     try {
       const { vmk, created } = await unlockOrInitVault({ userId, password });
@@ -957,7 +967,7 @@ if (vaultUnlockBtn) {
       setVaultStatus(`Unlock failed: ${String(err?.message || err)}`);
     } finally {
       vaultBusy = false;
-      updateZkControls();
+      refreshZkControls();
     }
   });
 }
@@ -1147,7 +1157,7 @@ async function syncVaultPatients() {
   const userId = vaultUserId;
   const vmk = vaultVmk;
   vaultBusy = true;
-  updateZkControls();
+  refreshZkControls();
   try {
     const patients = await loadVaultPatients({ userId, vmk });
     vaultPatientMap = patients;
@@ -1158,7 +1168,7 @@ async function syncVaultPatients() {
     setVaultStatus(`Sync failed: ${String(err?.message || err)}`);
   } finally {
     vaultBusy = false;
-    updateZkControls();
+    refreshZkControls();
   }
 }
 
@@ -1198,7 +1208,7 @@ function lockVault(options = {}) {
   if (vaultPasswordInputEl) vaultPasswordInputEl.value = "";
   const reason = String(options.reason || "").trim();
   setVaultStatus(reason ? `Locked (${reason}).` : "Locked.");
-  updateZkControls();
+  refreshZkControls();
 }
 
 function getSubmitterName() {
@@ -9195,6 +9205,7 @@ async function main() {
     updateCameraControls();
     updateOcrCorrectionButton();
   }
+  refreshZkControls = updateZkControls;
 
   function clearDetections() {
     detections = [];
