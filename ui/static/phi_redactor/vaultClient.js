@@ -186,6 +186,23 @@ async function safeJson(response) {
   return JSON.parse(text);
 }
 
+async function safeDetail(response, { maxLen = 280 } = {}) {
+  try {
+    const text = await response.text();
+    if (!text) return "";
+    try {
+      const parsed = JSON.parse(text);
+      const detail = parsed?.detail;
+      if (typeof detail === "string" && detail.trim()) return detail.trim();
+    } catch {
+      // ignore JSON parse failures
+    }
+    return String(text).trim().slice(0, maxLen);
+  } catch {
+    return "";
+  }
+}
+
 export async function unlockOrInitVault({ apiBase = "/api/v1/vault", userId, password }) {
   const settingsRes = await fetch(`${apiBase}/settings`, {
     method: "GET",
@@ -200,13 +217,19 @@ export async function unlockOrInitVault({ apiBase = "/api/v1/vault", userId, pas
       body: JSON.stringify(settingsPayload),
     });
     if (!putRes.ok) {
-      throw new Error(`Failed to save new vault settings (${putRes.status})`);
+      const detail = await safeDetail(putRes);
+      throw new Error(
+        `Failed to save new vault settings (${putRes.status}${detail ? `): ${detail}` : ")"}`,
+      );
     }
     return { vmk, created: true };
   }
 
   if (!settingsRes.ok) {
-    throw new Error(`Failed to load vault settings (${settingsRes.status})`);
+    const detail = await safeDetail(settingsRes);
+    throw new Error(
+      `Failed to load vault settings (${settingsRes.status}${detail ? `): ${detail}` : ")"}`,
+    );
   }
   const settings = await safeJson(settingsRes);
   const vmk = await unlockVault(password, userId, settings);
@@ -218,7 +241,10 @@ export async function loadVaultPatients({ apiBase = "/api/v1/vault", userId, vmk
     method: "GET",
     headers: userHeaders(userId),
   });
-  if (!res.ok) throw new Error(`Failed to load vault records (${res.status})`);
+  if (!res.ok) {
+    const detail = await safeDetail(res);
+    throw new Error(`Failed to load vault records (${res.status}${detail ? `): ${detail}` : ")"}`);
+  }
   const rows = (await safeJson(res)) || [];
   const map = new Map();
   for (const row of rows) {
@@ -237,7 +263,10 @@ export async function upsertVaultPatient({ apiBase = "/api/v1/vault", userId, vm
     headers: userHeaders(userId),
     body: JSON.stringify(payload),
   });
-  if (!res.ok) throw new Error(`Failed to save vault record (${res.status})`);
+  if (!res.ok) {
+    const detail = await safeDetail(res);
+    throw new Error(`Failed to save vault record (${res.status}${detail ? `): ${detail}` : ")"}`);
+  }
   return safeJson(res);
 }
 
@@ -246,7 +275,9 @@ export async function deleteVaultPatient({ apiBase = "/api/v1/vault", userId, re
     method: "DELETE",
     headers: userHeaders(userId),
   });
-  if (!res.ok) throw new Error(`Failed to delete vault record (${res.status})`);
+  if (!res.ok) {
+    const detail = await safeDetail(res);
+    throw new Error(`Failed to delete vault record (${res.status}${detail ? `): ${detail}` : ")"}`);
+  }
   return safeJson(res);
 }
-

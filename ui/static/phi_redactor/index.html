@@ -227,8 +227,8 @@
               <div class="vault-panel">
                 <div class="vault-grid">
                   <div class="feedback-field">
-                    <label for="vaultUserIdInput">User ID</label>
-                    <input id="vaultUserIdInput" type="text" placeholder="Stable user id for vault scope" />
+                    <label for="vaultUserIdInput">Vault User ID</label>
+                    <input id="vaultUserIdInput" type="text" placeholder="Stable ID (not a login)" />
                   </div>
                   <div class="feedback-field">
                     <label for="vaultPasswordInput">Vault Password</label>
@@ -246,6 +246,11 @@
                   <button id="vaultSyncBtn" class="secondary" disabled>Sync Patients</button>
                   <button id="clearAppendTargetBtn" class="secondary" disabled>Clear Append Target</button>
                   <div class="subtle" id="vaultStatusText">Locked</div>
+                </div>
+
+                <div class="subtle vault-help">
+                  Optional. Unlock to save encrypted patient labels (ciphertext-only persistence) and enable append-to-case
+                  workflows. Extraction does not require this.
                 </div>
 
                 <div class="subtle vault-append-target" id="vaultAppendTargetText">Mode: Create new case</div>

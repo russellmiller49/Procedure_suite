@@ -918,8 +918,8 @@ updateAppendTargetUi();
 renderVaultPatients();
 setVaultStatus(
   isVaultRequiredForSubmission()
-    ? "Locked. Enter user id + password to unlock local vault."
-    : "Locked. Vault optional in demo mode; unlock to save local patient labels."
+    ? "Locked. Vault required for submit (vaultRequired=1). Unlock to continue."
+    : "Locked. Optional: unlock to save encrypted patient labels (does not affect extraction)."
 );
 
 if (vaultUnlockBtn) {

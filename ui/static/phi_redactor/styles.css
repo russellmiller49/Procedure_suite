@@ -2186,6 +2186,10 @@ body.ps-review-split .editorPane .result {
   margin-left: auto;
 }
 
+.vault-help {
+  margin-top: 8px;
+}
+
 .vault-append-target {
   margin-top: 8px;
 }

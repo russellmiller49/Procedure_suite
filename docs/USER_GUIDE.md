@@ -555,20 +555,36 @@ Note: `MODEL_BACKEND=onnx` (the devserver default) may skip the registry ML clas
 
 ---
 
-## 🖥️ Using the Web UI (Unicorn Frontend)
+## 🖥️ Using the Web UI (Clinical Dashboard)
 
-The Web UI provides a simple interface for coding procedure notes.
+The main UI at `/ui/` is the **PHI Redactor + Clinical Dashboard**:
+client-side PHI detection/redaction first, then the backend runs extraction on **scrubbed-only** text.
 
 ### Basic Usage
 
 1. **Start the server**: `./ops/devserver.sh`
 2. **Open the UI**: Navigate to [http://localhost:8000/ui/](http://localhost:8000/ui/)
-3. **Select "Unified" tab** (recommended; production-style flow)
-4. **Paste your procedure note** into the text area
-5. **Configure options**:
-   - **Include financials**: Adds RVU/payment estimates
-   - **Explain**: Returns evidence spans for UI display/debugging
-6. **Click "Run Processing"**
+3. **Paste a procedure note** (or use PDF upload / Scan Photo)
+4. **Click `Run Detection`** (client-side PHI detection)
+5. **Click `Apply Redactions`** (generates scrubbed text)
+6. **Click `Submit Scrubbed Note`** (calls `POST /api/v1/process` with `already_scrubbed=true`)
+
+Notes:
+- `Submit Scrubbed Note` stays disabled until you click `Apply Redactions`.
+- The server should only receive scrubbed text (the UI sends `already_scrubbed=true`).
+
+### Local Vault (Encrypted Patient Labels)
+
+The **Local Vault (Encrypted)** panel is **optional for extraction**. It stores patient labels as **client-encrypted**
+ciphertext (persisted server-side) so you can tag and re-open cases without sending plaintext PHI.
+
+How it works:
+- **There is no demo login.** You choose a stable `User ID` and a `Vault Password`.
+- The password never leaves the browser. If you forget it, previously saved labels can’t be decrypted.
+
+Troubleshooting:
+- If the UI says “Unlock local vault first”, you likely enabled the dev override `?vaultRequired=1` (or stored
+  `ps.vault.required=1` in localStorage). Clear it via `?vaultRequired=0` (or remove the localStorage key) and reload.
 
 ### PDF Upload and OCR (Client-Side)
 
@@ -598,7 +614,7 @@ Security constraints:
 
 ### Understanding the Results
 
-In **Unified** mode, the UI runs the PHI workflow and then calls `POST /api/v1/process` with `already_scrubbed=true`.
+In the **Clinical Dashboard** flow, the UI runs the PHI workflow and then calls `POST /api/v1/process` with `already_scrubbed=true`.
 You’ll see:
 
 - **Pipeline metadata**: `pipeline_mode`, `review_status`, `needs_manual_review`
