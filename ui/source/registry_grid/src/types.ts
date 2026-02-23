@@ -6,6 +6,7 @@ export type EvidenceSpan = {
 };
 
 export type ValueType = "null" | "boolean" | "number" | "string" | "array" | "object" | "unknown";
+export type RegistryFieldDomain = "local" | "remote";
 
 export type RegistryRow = {
   id: string;
@@ -21,5 +22,5 @@ export type RegistryRow = {
   evidence: EvidenceSpan[];
   isGroup: boolean;
   parentId: string | null;
+  domain: RegistryFieldDomain;
 };
-

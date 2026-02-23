@@ -6,6 +6,7 @@ import React from "react";
 import { createRoot, type Root } from "react-dom/client";
 
 import { RegistryGridApp } from "./RegistryGridApp";
+import { VaultProvider } from "./context/VaultContext";
 import { clearHighlight } from "./monaco/monacoBridge";
 
 type MountArgs = {
@@ -13,10 +14,18 @@ type MountArgs = {
   getMonacoEditor?: () => unknown;
   processResponse?: unknown;
   onExportEditedJson?: (payload: unknown) => void;
+  registryUuid?: string | null;
+  vaultLocalData?: unknown;
+  remoteCaseData?: unknown;
+  onSaveLocalVaultData?: (payload: unknown) => Promise<unknown> | unknown;
+  onSaveRemotePatch?: (payload: unknown) => Promise<unknown> | unknown;
 };
 
 type UpdateArgs = {
   processResponse?: unknown;
+  registryUuid?: string | null;
+  vaultLocalData?: unknown;
+  remoteCaseData?: unknown;
 };
 
 type RegistryGridApi = {
@@ -29,6 +38,11 @@ let root: Root | null = null;
 let mountedEl: HTMLElement | null = null;
 let getMonacoEditorFn: (() => unknown) | null = null;
 let onExportEditedJsonFn: ((payload: unknown) => void) | null = null;
+let registryUuidValue: string | null = null;
+let vaultLocalDataValue: unknown = null;
+let remoteCaseDataValue: unknown = null;
+let onSaveLocalVaultDataFn: ((payload: unknown) => Promise<unknown> | unknown) | null = null;
+let onSaveRemotePatchFn: ((payload: unknown) => Promise<unknown> | unknown) | null = null;
 
 function mount(args: MountArgs) {
   if (!args?.rootEl) throw new Error("RegistryGrid.mount requires rootEl");
@@ -36,14 +50,27 @@ function mount(args: MountArgs) {
 
   getMonacoEditorFn = typeof args.getMonacoEditor === "function" ? args.getMonacoEditor : null;
   onExportEditedJsonFn = typeof args.onExportEditedJson === "function" ? args.onExportEditedJson : null;
+  registryUuidValue = typeof args.registryUuid === "string" ? args.registryUuid : null;
+  vaultLocalDataValue = args.vaultLocalData ?? null;
+  remoteCaseDataValue = args.remoteCaseData ?? null;
+  onSaveLocalVaultDataFn =
+    typeof args.onSaveLocalVaultData === "function" ? args.onSaveLocalVaultData : null;
+  onSaveRemotePatchFn = typeof args.onSaveRemotePatch === "function" ? args.onSaveRemotePatch : null;
 
   if (root && mountedEl === args.rootEl) {
     root.render(
-      <RegistryGridApp
-        processResponse={args.processResponse}
-        getMonacoEditor={getMonacoEditorFn}
-        onEditsExport={onExportEditedJsonFn}
-      />,
+      <VaultProvider>
+        <RegistryGridApp
+          processResponse={args.processResponse}
+          registryUuid={registryUuidValue}
+          vaultLocalData={vaultLocalDataValue}
+          remoteCaseData={remoteCaseDataValue}
+          getMonacoEditor={getMonacoEditorFn}
+          onEditsExport={onExportEditedJsonFn}
+          onSaveLocalVaultData={onSaveLocalVaultDataFn}
+          onSaveRemotePatch={onSaveRemotePatchFn}
+        />
+      </VaultProvider>,
     );
     return;
   }
@@ -51,22 +78,43 @@ function mount(args: MountArgs) {
   mountedEl = args.rootEl;
   root = createRoot(args.rootEl);
   root.render(
-    <RegistryGridApp
-      processResponse={args.processResponse}
-      getMonacoEditor={getMonacoEditorFn}
-      onEditsExport={onExportEditedJsonFn}
-    />,
+    <VaultProvider>
+      <RegistryGridApp
+        processResponse={args.processResponse}
+        registryUuid={registryUuidValue}
+        vaultLocalData={vaultLocalDataValue}
+        remoteCaseData={remoteCaseDataValue}
+        getMonacoEditor={getMonacoEditorFn}
+        onEditsExport={onExportEditedJsonFn}
+        onSaveLocalVaultData={onSaveLocalVaultDataFn}
+        onSaveRemotePatch={onSaveRemotePatchFn}
+      />
+    </VaultProvider>,
   );
 }
 
 function update(args: UpdateArgs) {
   if (!root) return;
+  if (typeof args.registryUuid === "string") {
+    registryUuidValue = args.registryUuid;
+  } else if (args.registryUuid === null) {
+    registryUuidValue = null;
+  }
+  if ("vaultLocalData" in args) vaultLocalDataValue = args.vaultLocalData ?? null;
+  if ("remoteCaseData" in args) remoteCaseDataValue = args.remoteCaseData ?? null;
   root.render(
-    <RegistryGridApp
-      processResponse={args.processResponse}
-      getMonacoEditor={getMonacoEditorFn}
-      onEditsExport={onExportEditedJsonFn}
-    />,
+    <VaultProvider>
+      <RegistryGridApp
+        processResponse={args.processResponse}
+        registryUuid={registryUuidValue}
+        vaultLocalData={vaultLocalDataValue}
+        remoteCaseData={remoteCaseDataValue}
+        getMonacoEditor={getMonacoEditorFn}
+        onEditsExport={onExportEditedJsonFn}
+        onSaveLocalVaultData={onSaveLocalVaultDataFn}
+        onSaveRemotePatch={onSaveRemotePatchFn}
+      />
+    </VaultProvider>,
   );
 }
 
@@ -88,6 +136,11 @@ function unmount() {
   mountedEl = null;
   getMonacoEditorFn = null;
   onExportEditedJsonFn = null;
+  registryUuidValue = null;
+  vaultLocalDataValue = null;
+  remoteCaseDataValue = null;
+  onSaveLocalVaultDataFn = null;
+  onSaveRemotePatchFn = null;
 }
 
 const api: RegistryGridApi = { mount, update, unmount };
@@ -101,3 +154,6 @@ declare global {
 window.RegistryGrid = api;
 
 export { mount, update, unmount };
+export { LockVaultButton } from "./components/LockVaultButton";
+export { UnlockVaultModal } from "./components/UnlockVaultModal";
+export { VaultProvider, useVault } from "./context/VaultContext";

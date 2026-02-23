@@ -555,20 +555,58 @@ Note: `MODEL_BACKEND=onnx` (the devserver default) may skip the registry ML clas
 
 ---
 
-## 🖥️ Using the Web UI (Unicorn Frontend)
+## 🖥️ Using the Web UI (Clinical Dashboard)
 
-The Web UI provides a simple interface for coding procedure notes.
+The main UI at `/ui/` is the **PHI Redactor + Clinical Dashboard**:
+client-side PHI detection/redaction first, then the backend runs extraction on **scrubbed-only** text.
 
 ### Basic Usage
 
 1. **Start the server**: `./ops/devserver.sh`
 2. **Open the UI**: Navigate to [http://localhost:8000/ui/](http://localhost:8000/ui/)
-3. **Select "Unified" tab** (recommended; production-style flow)
-4. **Paste your procedure note** into the text area
-5. **Configure options**:
-   - **Include financials**: Adds RVU/payment estimates
-   - **Explain**: Returns evidence spans for UI display/debugging
-6. **Click "Run Processing"**
+3. **Paste a procedure note** (or use PDF upload / Scan Photo)
+4. **Click `Run Detection`** (client-side PHI detection)
+5. **Click `Apply Redactions`** (generates scrubbed text)
+6. **Click `Submit Scrubbed Note`** (calls `POST /api/v1/process` with `already_scrubbed=true`)
+
+Notes:
+- `Submit Scrubbed Note` stays disabled until you click `Apply Redactions`.
+- The server should only receive scrubbed text (the UI sends `already_scrubbed=true`).
+
+### Local Vault (Zero-Knowledge Clinical Registry)
+
+The **Local Vault (Encrypted)** panel is **optional for extraction**. It stores local case identity metadata as
+**client-encrypted ciphertext** (persisted server-side) so you can track longitudinal cases without sending plaintext PHI.
+
+How it works:
+- **There is no demo login.** You choose a stable `User ID` and a `Vault Password`.
+- The password never leaves the browser. If you forget it, previously saved labels can’t be decrypted.
+- Vault plaintext now includes:
+  - `patient_label`
+  - `index_date` (kept local, encrypted)
+  - `local_meta` (for optional local-only fields like `mrn`, `custom_notes`)
+- The vault row action is **Add Event** (not pathology-only):
+  - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `procedure`, `clinical_status`)
+  - Use either note mode or structured status mode
+- **Absolute dates are never sent to the server.**
+  - The browser computes signed `relative_day_offset` from local `index_date`
+  - Only `relative_day_offset` is transmitted
+- Structured-only events (`note` empty + `structured_data` present) bypass extraction/pipeline endpoints and persist directly as append events.
+
+Troubleshooting:
+- If the UI says “Unlock local vault first”, you likely enabled the dev override `?vaultRequired=1` (or stored
+  `ps.vault.required=1` in localStorage). Clear it via `?vaultRequired=0` (or remove the localStorage key) and reload.
+
+### Registry Event APIs (Zero-Date Transport)
+
+- `POST /api/v1/registry/{registry_uuid}/append`
+  - Canonical event fields: `event_type`, `relative_day_offset`, optional `structured_data`, optional `note`
+  - Backward-compatible alias: `document_kind`
+  - Transport guarantee: absolute dates are not accepted/sent; use signed offsets only
+- `GET /api/v1/registry/{registry_uuid}`
+  - Returns canonical case snapshot plus append event summaries
+- `PATCH /api/v1/registry/{registry_uuid}`
+  - Applies partial corrections to canonical `registry_json` with optional `expected_version` concurrency check
 
 ### PDF Upload and OCR (Client-Side)
 
@@ -598,7 +636,7 @@ Security constraints:
 
 ### Understanding the Results
 
-In **Unified** mode, the UI runs the PHI workflow and then calls `POST /api/v1/process` with `already_scrubbed=true`.
+In the **Clinical Dashboard** flow, the UI runs the PHI workflow and then calls `POST /api/v1/process` with `already_scrubbed=true`.
 You’ll see:
 
 - **Pipeline metadata**: `pipeline_mode`, `review_status`, `needs_manual_review`
