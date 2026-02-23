@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import Select, select
 from sqlalchemy.orm import Session
 
@@ -29,6 +29,7 @@ _ready_dep = Depends(require_ready)
 _current_user_dep = Depends(get_current_user)
 _db_dep = Depends(get_registry_store_db)
 _phi_scrubber_dep = Depends(get_phi_scrubber)
+ALLOWED_EVENT_TYPES = {"pathology", "imaging", "procedure", "clinical_status"}
 
 
 def _truthy_env(name: str) -> bool:
@@ -44,10 +45,26 @@ def _note_sha256(text: str) -> str:
 
 
 class RegistryAppendRequest(BaseModel):
-    note: str = Field(..., description="Appended scrubbed note text (or raw when already_scrubbed=false).")
+    model_config = ConfigDict(extra="forbid")
+
+    note: str | None = Field(
+        None,
+        description=(
+            "Optional appended scrubbed note text "
+            "(or raw when already_scrubbed=false). May be omitted for structured-only events."
+        ),
+    )
     already_scrubbed: bool = Field(
         True,
         description="If false, server performs PHI scrubbing before persistence.",
+    )
+    event_type: str | None = Field(
+        None,
+        description="Canonical event type (pathology, imaging, procedure, clinical_status).",
+    )
+    structured_data: dict[str, Any] | None = Field(
+        default=None,
+        description="Optional structured event payload for note-less status updates.",
     )
     source_type: str | None = Field(
         None,
@@ -60,7 +77,17 @@ class RegistryAppendRequest(BaseModel):
     document_kind: str = Field(
         "pathology",
         max_length=64,
-        description="Document kind label for this append (default: pathology).",
+        description=(
+            "Legacy alias for event type. New clients should send event_type; "
+            "document_kind is kept for backward compatibility."
+        ),
+    )
+    relative_day_offset: int | None = Field(
+        None,
+        description=(
+            "Relative day offset from client-held index date. Signed integer; "
+            "absolute dates must not be sent to the server."
+        ),
     )
     metadata: dict[str, Any] | None = Field(
         default=None,
@@ -77,6 +104,17 @@ class RegistryAppendResponse(BaseModel):
     ocr_correction_applied: bool = False
     note_sha256: str
     created_at: str
+
+
+def _normalize_event_type(event_type: str | None, document_kind: str | None) -> str:
+    candidate = str(event_type or document_kind or "pathology").strip().lower()
+    if candidate not in ALLOWED_EVENT_TYPES:
+        allowed = ", ".join(sorted(ALLOWED_EVENT_TYPES))
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported event_type '{candidate}'. Allowed: {allowed}",
+        )
+    return candidate
 
 
 @router.post(
@@ -104,10 +142,18 @@ def append_registry_document(
             detail="Registry case not found for this user",
         )
 
-    if payload.already_scrubbed:
-        note_text = payload.note
+    note_input = str(payload.note or "")
+    if not note_input.strip() and payload.structured_data is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Either note or structured_data is required for append events",
+        )
+    normalized_event_type = _normalize_event_type(payload.event_type, payload.document_kind)
+
+    if payload.already_scrubbed or not note_input.strip():
+        note_text = note_input
     else:
-        redaction = apply_phi_redaction(payload.note, phi_scrubber)
+        redaction = apply_phi_redaction(note_input, phi_scrubber)
         note_text = redaction.text
 
     phi_risk_reasons = scan_text_for_phi_risk(note_text)
@@ -120,6 +166,9 @@ def append_registry_document(
                 "reasons": phi_risk_reasons,
             },
         )
+    metadata_payload = dict(payload.metadata or {})
+    if payload.structured_data is not None:
+        metadata_payload["structured_data"] = payload.structured_data
 
     row = RegistryAppendedDocument(
         id=uuid.uuid4(),
@@ -127,10 +176,12 @@ def append_registry_document(
         registry_uuid=registry_uuid,
         note_text=note_text,
         note_sha256=_note_sha256(note_text),
-        document_kind=(payload.document_kind or "pathology").strip() or "pathology",
+        event_type=normalized_event_type,
+        document_kind=normalized_event_type,
         source_type=(payload.source_type or None),
+        relative_day_offset=payload.relative_day_offset,
         ocr_correction_applied=bool(payload.ocr_correction_applied),
-        metadata_json=payload.metadata or None,
+        metadata_json=metadata_payload or None,
         created_at=_utcnow(),
     )
     db.add(row)

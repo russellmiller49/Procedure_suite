@@ -20,6 +20,14 @@
   color: var(--text-secondary, #475569);
 }
 
+.ps-registry-grid-savebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
 .ps-registry-grid-meta {
   padding: 8px 10px;
   border: 1px dashed var(--border-color, #e2e8f0);
@@ -173,6 +181,35 @@
   font-weight: 700;
   letter-spacing: 0.01em;
   text-transform: uppercase;
+}
+
+.ps-domain-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.ps-domain-local {
+  background: rgba(22, 163, 74, 0.11);
+  border-color: rgba(22, 163, 74, 0.32);
+  color: rgba(21, 94, 44, 0.95);
+}
+
+.ps-domain-remote {
+  background: rgba(59, 130, 246, 0.11);
+  border-color: rgba(59, 130, 246, 0.32);
+  color: rgba(30, 64, 175, 0.95);
+}
+
+.ps-row-local .ag-cell {
+  background: rgba(22, 163, 74, 0.035);
 }
 
 .ps-row-edited .ag-cell {

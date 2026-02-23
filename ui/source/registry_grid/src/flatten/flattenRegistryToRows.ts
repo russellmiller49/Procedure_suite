@@ -114,6 +114,7 @@ type AddRowArgs = {
   extractedValueRaw: unknown;
   extractedValueDisplay: string;
   evidence: EvidenceSpan[];
+  domain?: "local" | "remote";
 };
 
 function makeRow(args: AddRowArgs): RegistryRow {
@@ -133,6 +134,7 @@ function makeRow(args: AddRowArgs): RegistryRow {
     evidence: args.evidence,
     isGroup: args.isGroup,
     parentId: args.parentId,
+    domain: args.domain ?? "remote",
   };
 }
 

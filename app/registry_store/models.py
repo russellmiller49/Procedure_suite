@@ -69,10 +69,30 @@ class RegistryAppendedDocument(Base):
     note_text = Column(Text, nullable=False)
     note_sha256 = Column(String(64), nullable=False, index=True)
 
+    event_type = Column(String(64), nullable=False, default="pathology", index=True)
     document_kind = Column(String(64), nullable=False, default="pathology")
     source_type = Column(String(64), nullable=True)
+    relative_day_offset = Column(Integer, nullable=True)
     ocr_correction_applied = Column(Boolean, nullable=False, default=False)
     metadata_json = Column("metadata", JSONType, nullable=True, default=dict)
 
 
-__all__ = ["RegistryRun", "RegistryAppendedDocument"]
+class RegistryCaseRecord(Base):
+    __tablename__ = "registry_case_records"
+
+    registry_uuid = Column(UUIDType, primary_key=True)
+    registry_json = Column(JSONType, nullable=False, default=dict)
+    schema_version = Column(String(32), nullable=False, default="v3")
+    version = Column(Integer, nullable=False, default=1)
+    source_run_id = Column(UUIDType, nullable=True, index=True)
+    created_at = Column(DateTime(timezone=True), default=_utcnow, nullable=False, index=True)
+    updated_at = Column(
+        DateTime(timezone=True),
+        default=_utcnow,
+        onupdate=_utcnow,
+        nullable=False,
+        index=True,
+    )
+
+
+__all__ = ["RegistryRun", "RegistryAppendedDocument", "RegistryCaseRecord"]

@@ -21,7 +21,7 @@ from typing import Any, Iterator
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import Select, and_, desc, select
 from sqlalchemy.orm import Session
 
@@ -33,7 +33,7 @@ from app.api.services.unified_pipeline import run_unified_pipeline_logic
 from app.coder.application.coding_service import CodingService
 from app.registry.application.registry_service import RegistryService
 from app.registry_store.dependencies import get_registry_store_db
-from app.registry_store.models import RegistryRun
+from app.registry_store.models import RegistryCaseRecord, RegistryRun
 from app.registry_store.phi_gate import scan_text_for_phi_risk
 
 
@@ -105,6 +105,16 @@ def _serialize_run(run: RegistryRun) -> dict[str, Any]:
     }
 
 
+def _parse_registry_uuid(value: str | None) -> uuid.UUID | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        return uuid.UUID(raw)
+    except ValueError:
+        return None
+
+
 router = APIRouter(tags=["registry-runs"])
 
 _ready_dep = Depends(require_ready)
@@ -115,6 +125,8 @@ _registry_store_db_dep = Depends(get_registry_store_db)
 
 
 class RegistryRunCreateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     note: str = Field(
         ...,
         description="Procedure note text (scrubbed-only when already_scrubbed=true)",
@@ -269,6 +281,22 @@ async def create_registry_run(
     )
 
     db.add(run)
+    case_registry_uuid = _parse_registry_uuid(payload.registry_uuid)
+    if case_registry_uuid:
+        registry_json = result.registry if isinstance(result.registry, dict) else {}
+        case_record = db.get(RegistryCaseRecord, case_registry_uuid)
+        if case_record is None:
+            case_record = RegistryCaseRecord(
+                registry_uuid=case_registry_uuid,
+                registry_json=registry_json,
+                schema_version=_schema_version(),
+                version=1,
+                source_run_id=run.id,
+                created_at=_utcnow(),
+                updated_at=_utcnow(),
+            )
+        db.add(case_record)
+
     db.commit()
 
     return RegistryRunCreateResponse(run_id=str(run.id), result=result)

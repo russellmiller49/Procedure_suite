@@ -54,6 +54,7 @@ from app.api.routes.procedure_codes import router as procedure_codes_router
 from app.api.routes.process_bundle import router as process_bundle_router
 from app.api.routes.qa import router as qa_router
 from app.api.routes.registry_append import router as registry_append_router
+from app.api.routes.registry_case import router as registry_case_router
 from app.api.routes.registry_runs import router as registry_runs_router
 from app.api.routes.reporting import router as reporting_router
 from app.api.routes.unified_process import router as unified_process_router
@@ -139,6 +140,8 @@ app.include_router(registry_extract_router, tags=["registry"])
 app.include_router(registry_runs_router, prefix="/api", tags=["registry-runs"])
 # Registry case append router (pathology/additional docs)
 app.include_router(registry_append_router, prefix="/api", tags=["registry-append"])
+# Registry canonical case record router (GET/PATCH)
+app.include_router(registry_case_router, prefix="/api", tags=["registry-case"])
 # Unified process router (UI entry point)
 app.include_router(unified_process_router, prefix="/api")
 # UMLS term suggestion / concept lookup

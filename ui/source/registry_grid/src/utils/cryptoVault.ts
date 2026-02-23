@@ -18,6 +18,15 @@ export type VaultRecordPayload = {
   crypto_version: typeof CRYPTO_VERSION;
 };
 
+export type CanonicalVaultPatient = {
+  schema_version: 2;
+  patient_label: string;
+  index_date: string | null;
+  local_meta: Record<string, unknown>;
+  registry_uuid: string;
+  saved_at: string;
+};
+
 type VaultRecordLike = {
   ciphertext_b64: string;
   iv_b64: string;
@@ -29,6 +38,7 @@ const RECORD_AAD_SCOPE = "vault-record";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 function getSubtle(): SubtleCrypto {
   const subtle = globalThis.crypto?.subtle;
@@ -36,6 +46,59 @@ function getSubtle(): SubtleCrypto {
     throw new Error("WebCrypto SubtleCrypto is unavailable");
   }
   return subtle;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function asTrimmedString(value: unknown): string {
+  return String(value ?? "").trim();
+}
+
+function normalizeIndexDate(value: unknown): string | null {
+  const text = asTrimmedString(value);
+  if (!text) return null;
+  return ISO_DATE_RE.test(text) ? text : null;
+}
+
+function normalizeSavedAt(value: unknown): string {
+  const text = asTrimmedString(value);
+  if (text) return text;
+  return new Date().toISOString();
+}
+
+function normalizePatientLabel(raw: Record<string, unknown>, registryUuid: string): string {
+  const direct = asTrimmedString(raw.patient_label);
+  if (direct) return direct;
+  const fallback = asTrimmedString(raw.display_name || raw.name || raw.mrn);
+  if (fallback) return fallback;
+  const prefix = asTrimmedString(registryUuid).slice(0, 8) || "unknown";
+  return `Case ${prefix}`;
+}
+
+export function normalizeVaultPatientData(
+  patientJson: unknown,
+  registryUuid: string,
+): CanonicalVaultPatient {
+  const raw = isRecord(patientJson) ? patientJson : {};
+  const localMeta: Record<string, unknown> = isRecord(raw.local_meta) ? { ...raw.local_meta } : {};
+
+  const legacyMrn = asTrimmedString(raw.mrn);
+  if (legacyMrn && localMeta.mrn === undefined) localMeta.mrn = legacyMrn;
+
+  const legacyCustomNotes = asTrimmedString(raw.custom_notes);
+  if (legacyCustomNotes && localMeta.custom_notes === undefined) localMeta.custom_notes = legacyCustomNotes;
+
+  const normalizedRegistryUuid = asTrimmedString(raw.registry_uuid) || asTrimmedString(registryUuid);
+  return {
+    schema_version: 2,
+    patient_label: normalizePatientLabel(raw, normalizedRegistryUuid),
+    index_date: normalizeIndexDate(raw.index_date),
+    local_meta: localMeta,
+    registry_uuid: normalizedRegistryUuid,
+    saved_at: normalizeSavedAt(raw.saved_at),
+  };
 }
 
 function getBufferCtor():
@@ -213,7 +276,8 @@ export async function encryptPatientData(
 ): Promise<VaultRecordPayload> {
   const subtle = getSubtle();
   const iv = randomBytes(12);
-  const plaintext = encoder.encode(JSON.stringify(patientJson));
+  const normalized = normalizeVaultPatientData(patientJson, registryUuid);
+  const plaintext = encoder.encode(JSON.stringify(normalized));
   const ciphertext = await subtle.encrypt(
     {
       name: "AES-GCM",
@@ -238,7 +302,7 @@ export async function decryptPatientData(
   userId: string,
   registryUuid: string,
   record: VaultRecordLike,
-): Promise<unknown> {
+): Promise<CanonicalVaultPatient> {
   if (record.crypto_version !== CRYPTO_VERSION) {
     throw new Error(`Unsupported crypto_version: ${record.crypto_version}`);
   }
@@ -256,5 +320,6 @@ export async function decryptPatientData(
     asBufferSource(ciphertext),
   );
 
-  return JSON.parse(decoder.decode(plaintext));
+  const parsed: unknown = JSON.parse(decoder.decode(plaintext));
+  return normalizeVaultPatientData(parsed, registryUuid);
 }

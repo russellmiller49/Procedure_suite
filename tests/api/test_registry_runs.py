@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 from unittest.mock import MagicMock
+import uuid
 
 import pytest
 from fastapi.testclient import TestClient
@@ -11,7 +12,7 @@ from app.api.dependencies import get_coding_service, get_registry_service
 from app.api.fastapi_app import app
 from app.phi.db import Base
 from app.registry_store.dependencies import get_registry_store_engine
-from app.registry_store.models import RegistryRun
+from app.registry_store.models import RegistryCaseRecord, RegistryRun
 
 
 @pytest.fixture
@@ -236,3 +237,47 @@ def test_persistence_phi_gate_can_allow_persist_with_flag(
     assert row is not None
     assert row.review_status == "phi_risk"
     assert row.needs_manual_review is True
+
+
+def test_registry_case_record_initialized_once_from_first_run(
+    client: TestClient,
+    registry_store_db,
+    mock_registry_service,
+    stub_coding_service,
+):
+    mock_registry_service.extract_fields.side_effect = _stub_extract_fields
+    registry_uuid_obj = uuid.uuid4()
+    registry_uuid = str(registry_uuid_obj)
+
+    first = client.post(
+        "/api/v1/registry/runs",
+        json={
+            "note": "Scrubbed note text",
+            "registry_uuid": registry_uuid,
+            "already_scrubbed": True,
+            "include_financials": False,
+        },
+    )
+    assert first.status_code == 200
+    first_run_id = first.json()["run_id"]
+
+    case_row = registry_store_db.get(RegistryCaseRecord, registry_uuid_obj)
+    assert case_row is not None
+    assert case_row.version == 1
+    assert str(case_row.source_run_id) == first_run_id
+
+    second = client.post(
+        "/api/v1/registry/runs",
+        json={
+            "note": "Another scrubbed note text",
+            "registry_uuid": registry_uuid,
+            "already_scrubbed": True,
+            "include_financials": False,
+        },
+    )
+    assert second.status_code == 200
+
+    case_row_after = registry_store_db.get(RegistryCaseRecord, registry_uuid_obj)
+    assert case_row_after is not None
+    assert case_row_after.version == 1
+    assert str(case_row_after.source_run_id) == first_run_id

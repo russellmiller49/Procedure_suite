@@ -9,6 +9,7 @@ __all__ = [
     "procedure_codes",
     "qa",
     "registry_append",
+    "registry_case",
     "registry_runs",
     "reporting",
     "unified_process",

@@ -80,9 +80,12 @@ def test_append_succeeds_and_is_user_scoped(client: TestClient, append_db) -> No
         json={
             "note": "Pathology follow-up note (scrubbed).",
             "already_scrubbed": True,
+            "event_type": "pathology",
             "source_type": "camera_ocr",
             "ocr_correction_applied": True,
             "document_kind": "pathology",
+            "relative_day_offset": 5,
+            "structured_data": {"hospital_admission": False},
             "metadata": {"specimen_count": 2},
         },
     )
@@ -96,10 +99,13 @@ def test_append_succeeds_and_is_user_scoped(client: TestClient, append_db) -> No
     assert row.user_id == "user_a"
     assert str(row.registry_uuid) == str(case_id)
     assert row.note_text == "Pathology follow-up note (scrubbed)."
+    assert row.event_type == "pathology"
+    assert row.relative_day_offset == 5
     assert row.source_type == "camera_ocr"
     assert row.ocr_correction_applied is True
     assert isinstance(row.metadata_json, dict)
     assert row.metadata_json.get("specimen_count") == 2
+    assert row.metadata_json.get("structured_data", {}).get("hospital_admission") is False
 
     # Different user cannot append to user_a case.
     res_other = client.post(
@@ -109,3 +115,55 @@ def test_append_succeeds_and_is_user_scoped(client: TestClient, append_db) -> No
     )
     assert res_other.status_code == 404
 
+
+def test_append_supports_structured_only_pipeline_bypass(client: TestClient, append_db) -> None:
+    case_id = uuid.uuid4()
+    _seed_case(append_db, user_id="user_a", registry_uuid=case_id)
+
+    res = client.post(
+        f"/api/v1/registry/{case_id}/append",
+        headers=_auth("user_a"),
+        json={
+            "already_scrubbed": True,
+            "event_type": "clinical_status",
+            "relative_day_offset": -3,
+            "structured_data": {"hospital_admission": True, "deceased": False},
+        },
+    )
+    assert res.status_code == 200
+    row = append_db.query(RegistryAppendedDocument).filter_by(id=uuid.UUID(res.json()["append_id"])).one()
+    assert row.note_text == ""
+    assert row.event_type == "clinical_status"
+    assert row.relative_day_offset == -3
+    assert row.metadata_json.get("structured_data", {}).get("hospital_admission") is True
+
+
+def test_append_rejects_when_note_and_structured_data_missing(client: TestClient, append_db) -> None:
+    case_id = uuid.uuid4()
+    _seed_case(append_db, user_id="user_a", registry_uuid=case_id)
+    res = client.post(
+        f"/api/v1/registry/{case_id}/append",
+        headers=_auth("user_a"),
+        json={"already_scrubbed": True, "event_type": "procedure"},
+    )
+    assert res.status_code == 400
+
+
+def test_append_accepts_legacy_document_kind_alias(client: TestClient, append_db) -> None:
+    case_id = uuid.uuid4()
+    _seed_case(append_db, user_id="user_a", registry_uuid=case_id)
+    res = client.post(
+        f"/api/v1/registry/{case_id}/append",
+        headers=_auth("user_a"),
+        json={
+            "note": "Imaging follow-up note",
+            "already_scrubbed": True,
+            "document_kind": "imaging",
+            "relative_day_offset": -7,
+        },
+    )
+    assert res.status_code == 200
+    row = append_db.query(RegistryAppendedDocument).filter_by(id=uuid.UUID(res.json()["append_id"])).one()
+    assert row.document_kind == "imaging"
+    assert row.event_type == "imaging"
+    assert row.relative_day_offset == -7

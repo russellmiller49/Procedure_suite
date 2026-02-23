@@ -7,6 +7,7 @@ import {
   decryptPatientData,
   encryptPatientData,
   initNewVault,
+  normalizeVaultPatientData,
   unlockVault,
 } from "../utils/cryptoVault";
 
@@ -33,9 +34,11 @@ describe("cryptoVault", () => {
     const password = "Correct-Horse-Battery-Staple!";
     const registryUuid = "11111111-1111-1111-1111-111111111111";
     const patientJson = {
-      patient_name: "Jane Doe",
-      mrn: "123456",
-      dob: "1970-01-01",
+      patient_label: "Jane Doe",
+      index_date: "2026-02-23",
+      local_meta: { mrn: "123456" },
+      registry_uuid: registryUuid,
+      saved_at: "2026-02-23T12:00:00.000Z",
     };
 
     const { settingsPayload, vmk } = await initNewVault(password, userId);
@@ -43,7 +46,14 @@ describe("cryptoVault", () => {
     const record = await encryptPatientData(vmk, userId, registryUuid, patientJson);
     const decrypted = await decryptPatientData(wrappedVmk, userId, registryUuid, record);
 
-    expect(decrypted).toEqual(patientJson);
+    expect(decrypted).toEqual({
+      schema_version: 2,
+      patient_label: "Jane Doe",
+      index_date: "2026-02-23",
+      local_meta: { mrn: "123456" },
+      registry_uuid: registryUuid,
+      saved_at: "2026-02-23T12:00:00.000Z",
+    });
   });
 
   it("fails decrypt when registry_uuid in AAD mismatches", async () => {
@@ -68,5 +78,24 @@ describe("cryptoVault", () => {
     const { settingsPayload } = await initNewVault("right-password", userId);
     await expect(unlockVault("wrong-password", userId, settingsPayload)).rejects.toThrow();
   });
-});
 
+  it("normalizes legacy vault payloads", () => {
+    const registryUuid = "55555555-5555-5555-5555-555555555555";
+    const normalized = normalizeVaultPatientData(
+      {
+        name: "Legacy Name",
+        mrn: "MRN-9",
+        saved_at: "2026-01-01T00:00:00.000Z",
+      },
+      registryUuid,
+    );
+    expect(normalized).toEqual({
+      schema_version: 2,
+      patient_label: "Legacy Name",
+      index_date: null,
+      local_meta: { mrn: "MRN-9" },
+      registry_uuid: registryUuid,
+      saved_at: "2026-01-01T00:00:00.000Z",
+    });
+  });
+});

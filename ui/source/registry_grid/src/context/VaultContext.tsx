@@ -9,9 +9,11 @@ import React, {
 } from "react";
 
 import {
+  type CanonicalVaultPatient,
   decryptPatientData,
   encryptPatientData,
   initNewVault,
+  normalizeVaultPatientData,
   type VaultRecordPayload,
   type VaultSettingsPayload,
   unlockVault,
@@ -27,7 +29,7 @@ type VaultContextValue = {
   isLocked: boolean;
   isUnlocking: boolean;
   unlockedUserId: string | null;
-  patientMap: ReadonlyMap<string, unknown>;
+  patientMap: ReadonlyMap<string, CanonicalVaultPatient>;
   unlock: (params: { userId: string; password: string }) => Promise<void>;
   lock: () => void;
   upsertPatient: (registryUuid: string, patientJson: unknown) => Promise<void>;
@@ -120,7 +122,7 @@ export function VaultProvider({
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [unlockedUserId, setUnlockedUserId] = useState<string | null>(null);
   const [vmk, setVmk] = useState<CryptoKey | null>(null);
-  const [patientMap, setPatientMap] = useState<Map<string, unknown>>(new Map());
+  const [patientMap, setPatientMap] = useState<Map<string, CanonicalVaultPatient>>(new Map());
 
   const idleTimerRef = useRef<number | null>(null);
   const isLocked = vmk === null;
@@ -162,7 +164,7 @@ export function VaultProvider({
         }
 
         const rows = await fetchRecords(apiBasePath, userId);
-        const nextMap = new Map<string, unknown>();
+        const nextMap = new Map<string, CanonicalVaultPatient>();
         for (const row of rows) {
           const decrypted = await decryptPatientData(resolvedVmk, userId, row.registry_uuid, row);
           nextMap.set(row.registry_uuid, decrypted);
@@ -186,7 +188,8 @@ export function VaultProvider({
   const upsertPatient = useCallback(
     async (registryUuid: string, patientJson: unknown) => {
       if (!vmk || !unlockedUserId) throw new Error("Vault is locked");
-      const payload = await encryptPatientData(vmk, unlockedUserId, registryUuid, patientJson);
+      const normalizedPatient = normalizeVaultPatientData(patientJson, registryUuid);
+      const payload = await encryptPatientData(vmk, unlockedUserId, registryUuid, normalizedPatient);
       const res = await fetch(`${apiBasePath}/record`, {
         method: "PUT",
         headers: buildUserHeaders(unlockedUserId),
@@ -198,7 +201,7 @@ export function VaultProvider({
 
       setPatientMap((prev) => {
         const next = new Map(prev);
-        next.set(registryUuid, patientJson);
+        next.set(registryUuid, normalizedPatient);
         return next;
       });
       armIdleTimer();
@@ -286,4 +289,3 @@ export function useVault(): VaultContextValue {
   }
   return ctx;
 }
-

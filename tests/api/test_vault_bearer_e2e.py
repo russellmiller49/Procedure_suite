@@ -117,8 +117,10 @@ def test_bearer_unlock_view_append_pathology_flow(client: TestClient, bearer_db)
     append_payload = {
         "note": "Pathology follow-up note (scrubbed)",
         "already_scrubbed": True,
+        "event_type": "pathology",
         "document_kind": "pathology",
         "source_type": "camera_ocr",
+        "relative_day_offset": 10,
         "ocr_correction_applied": True,
         "metadata": {"synced_from": "vault_e2e_test"},
     }
@@ -139,6 +141,8 @@ def test_bearer_unlock_view_append_pathology_flow(client: TestClient, bearer_db)
     )
     assert str(append_row.registry_uuid) == registry_uuid
     assert append_row.user_id == "user_a"
+    assert append_row.event_type == "pathology"
+    assert append_row.relative_day_offset == 10
     assert append_row.document_kind == "pathology"
 
     user_b_append = client.post(

@@ -573,18 +573,40 @@ Notes:
 - `Submit Scrubbed Note` stays disabled until you click `Apply Redactions`.
 - The server should only receive scrubbed text (the UI sends `already_scrubbed=true`).
 
-### Local Vault (Encrypted Patient Labels)
+### Local Vault (Zero-Knowledge Clinical Registry)
 
-The **Local Vault (Encrypted)** panel is **optional for extraction**. It stores patient labels as **client-encrypted**
-ciphertext (persisted server-side) so you can tag and re-open cases without sending plaintext PHI.
+The **Local Vault (Encrypted)** panel is **optional for extraction**. It stores local case identity metadata as
+**client-encrypted ciphertext** (persisted server-side) so you can track longitudinal cases without sending plaintext PHI.
 
 How it works:
 - **There is no demo login.** You choose a stable `User ID` and a `Vault Password`.
 - The password never leaves the browser. If you forget it, previously saved labels can’t be decrypted.
+- Vault plaintext now includes:
+  - `patient_label`
+  - `index_date` (kept local, encrypted)
+  - `local_meta` (for optional local-only fields like `mrn`, `custom_notes`)
+- The vault row action is **Add Event** (not pathology-only):
+  - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `procedure`, `clinical_status`)
+  - Use either note mode or structured status mode
+- **Absolute dates are never sent to the server.**
+  - The browser computes signed `relative_day_offset` from local `index_date`
+  - Only `relative_day_offset` is transmitted
+- Structured-only events (`note` empty + `structured_data` present) bypass extraction/pipeline endpoints and persist directly as append events.
 
 Troubleshooting:
 - If the UI says “Unlock local vault first”, you likely enabled the dev override `?vaultRequired=1` (or stored
   `ps.vault.required=1` in localStorage). Clear it via `?vaultRequired=0` (or remove the localStorage key) and reload.
+
+### Registry Event APIs (Zero-Date Transport)
+
+- `POST /api/v1/registry/{registry_uuid}/append`
+  - Canonical event fields: `event_type`, `relative_day_offset`, optional `structured_data`, optional `note`
+  - Backward-compatible alias: `document_kind`
+  - Transport guarantee: absolute dates are not accepted/sent; use signed offsets only
+- `GET /api/v1/registry/{registry_uuid}`
+  - Returns canonical case snapshot plus append event summaries
+- `PATCH /api/v1/registry/{registry_uuid}`
+  - Applies partial corrections to canonical `registry_json` with optional `expected_version` concurrency check
 
 ### PDF Upload and OCR (Client-Side)
 

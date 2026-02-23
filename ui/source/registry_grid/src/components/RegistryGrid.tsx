@@ -447,6 +447,10 @@ function formatEvidenceLabel(ev: EvidenceSpan): string {
   return `${source}${conf}`;
 }
 
+function formatDomainLabel(domain: string): string {
+  return domain === "local" ? "Local (Vault)" : "Remote (Registry)";
+}
+
 export function RegistryGrid({
   rows,
   onEvidenceClick,
@@ -554,6 +558,21 @@ export function RegistryGrid({
               </span>
               {isEdited ? <span className="ps-edit-badge">edited</span> : null}
             </div>
+          );
+        },
+      },
+      {
+        headerName: "Domain",
+        field: "domain",
+        minWidth: 150,
+        maxWidth: 200,
+        cellRenderer: (params: ICellRendererParams<RegistryRow>) => {
+          const row = params.data;
+          const domain = row?.domain === "local" ? "local" : "remote";
+          return (
+            <span className={domain === "local" ? "ps-domain-badge ps-domain-local" : "ps-domain-badge ps-domain-remote"}>
+              {formatDomainLabel(domain)}
+            </span>
           );
         },
       },
@@ -838,7 +857,13 @@ export function RegistryGrid({
           suppressCellFocus
           rowSelection="single"
           getRowId={(p) => p.data.id}
-          getRowClass={(p) => (p.data && editedIds.has(p.data.id) ? "ps-row-edited" : "")}
+          getRowClass={(p) => {
+            const classes: string[] = [];
+            if (p.data?.domain === "local") classes.push("ps-row-local");
+            if (p.data?.domain === "remote") classes.push("ps-row-remote");
+            if (p.data && editedIds.has(p.data.id)) classes.push("ps-row-edited");
+            return classes.join(" ");
+          }}
           headerHeight={34}
           rowHeight={34}
           animateRows={false}
