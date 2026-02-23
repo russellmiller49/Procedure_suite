@@ -52,6 +52,19 @@ Common:
 - `CODER_VERSION` (optional; returned in `/qa/run`)
 - `REPORTER_VERSION` (optional; returned in `/qa/run`)
 
+### Troubleshooting: `DuplicateTable` during `alembic upgrade head`
+
+If boot logs show errors like `relation "phi_vault" already exists` while running
+revision `a1b2c3d4e5f6`, your DB likely has tables created outside Alembic (no
+`alembic_version` stamp yet).
+
+One-time recovery on that database:
+
+1. `alembic stamp head`
+2. `alembic upgrade head`
+
+Then redeploy with `PROCSUITE_RUN_MIGRATIONS_ON_START=true`.
+
 ### Local dev (recommended)
 
 - `MODEL_BACKEND=pytorch`
