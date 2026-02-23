@@ -65,6 +65,20 @@ One-time recovery on that database:
 
 Then redeploy with `PROCSUITE_RUN_MIGRATIONS_ON_START=true`.
 
+### Troubleshooting: Vault `401` (`X-User-Id auth disabled; use Bearer token`)
+
+`/api/v1/vault/*` defaults to Bearer auth in production mode (`PROCSUITE_ENV=production`
+or `CODER_REQUIRE_PHI_REVIEW=true`).
+
+If you are using the static `/ui/` redactor without JWT wiring, set:
+
+- `VAULT_AUTH_ALLOW_X_USER_ID=true`
+
+If you want Bearer auth instead, configure one of:
+
+- `SUPABASE_JWT_SECRET`
+- `SUPABASE_URL` (or `SUPABASE_JWKS_URL`)
+
 ### Local dev (recommended)
 
 - `MODEL_BACKEND=pytorch`
