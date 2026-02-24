@@ -55,8 +55,8 @@ def test_ebus_passes_from_node_events_suppress_pass_prompt() -> None:
     assert "Passes (station 7)" not in labels
     assert "Passes (station 11RI)" not in labels
     assert "Passes (station 11RS)" not in labels
-    assert "Per-station detail row (station 11RI)" in labels
-    assert "Per-station detail row (station 11RS)" in labels
+    assert "Per-station detail row (station 11RI)" not in labels
+    assert "Per-station detail row (station 11RS)" not in labels
 
 
 def test_ebus_pass_prompt_is_station_specific_for_missing_station_only() -> None:

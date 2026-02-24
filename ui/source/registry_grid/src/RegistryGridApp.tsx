@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { RegistryGrid } from "./components/RegistryGrid";
 import { resolveEditRoute } from "./grid/domainRouting";
 import type { RegistryGridEditsExport } from "./edits/types";
+import { hostPatchSignature, sanitizeHostPatchOps } from "./edits/hostPatch";
 import { usePatchStore } from "./edits/usePatchStore";
 import { buildEvidenceIndex } from "./evidence/buildEvidenceIndex";
 import { flattenRegistryToRows } from "./flatten/flattenRegistryToRows";
@@ -19,6 +20,7 @@ type Props = {
   onEditsExport?: ((payload: RegistryGridEditsExport | null) => void) | null;
   onSaveLocalVaultData?: ((payload: unknown) => Promise<unknown> | unknown) | null;
   onSaveRemotePatch?: ((payload: unknown) => Promise<unknown> | unknown) | null;
+  hostEditedPatch?: unknown;
 };
 
 type LocalFieldDef = {
@@ -38,6 +40,92 @@ const LOCAL_FIELD_DEFS: LocalFieldDef[] = [
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function deepClone<T>(value: T): T {
+  if (typeof globalThis.structuredClone === "function") return globalThis.structuredClone(value);
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function decodeJsonPointerSegment(seg: string): string {
+  // JSON Pointer (RFC 6901): "~1" => "/", "~0" => "~" (order matters).
+  return String(seg || "").replace(/~1/g, "/").replace(/~0/g, "~");
+}
+
+function looksLikeArrayIndex(seg: string): boolean {
+  if (!seg) return false;
+  if (!/^\d+$/.test(seg)) return false;
+  const idx = Number(seg);
+  return Number.isInteger(idx) && idx >= 0;
+}
+
+function ensureRegistryPointerPathExists(registry: Record<string, unknown>, pointer: string): void {
+  const path = String(pointer || "").trim();
+  if (!path || path === "/registry") return;
+  if (!path.startsWith("/registry/")) return;
+
+  const parts = path.split("/").slice(2).map(decodeJsonPointerSegment).filter((p) => p !== "");
+  if (parts.length === 0) return;
+
+  let curr: unknown = registry;
+  for (let i = 0; i < parts.length; i += 1) {
+    const key = parts[i];
+    const isLast = i === parts.length - 1;
+    const nextKey = parts[i + 1] ?? "";
+
+    if (Array.isArray(curr)) {
+      const idx = Number(key);
+      if (!Number.isInteger(idx) || idx < 0) return;
+      if (curr[idx] === undefined) {
+        if (isLast) {
+          curr[idx] = null;
+          return;
+        }
+        curr[idx] = looksLikeArrayIndex(nextKey) ? [] : {};
+      }
+
+      if (isLast) return;
+      const next = curr[idx];
+      if (next === null || typeof next !== "object") {
+        curr[idx] = looksLikeArrayIndex(nextKey) ? [] : {};
+      }
+      curr = curr[idx];
+      continue;
+    }
+
+    if (!isRecord(curr)) return;
+    if (curr[key] === undefined) {
+      if (isLast) {
+        curr[key] = null;
+        return;
+      }
+      curr[key] = looksLikeArrayIndex(nextKey) ? [] : {};
+    }
+
+    if (isLast) return;
+    const next = curr[key];
+    if (next === null || typeof next !== "object") {
+      curr[key] = looksLikeArrayIndex(nextKey) ? [] : {};
+    }
+    curr = curr[key];
+  }
+}
+
+function buildRemoteRegistryRowsInput(
+  remoteRegistry: unknown,
+  hostPatchOps: Array<{ op: string; path: string }>,
+): unknown {
+  if (!isRecord(remoteRegistry)) return remoteRegistry;
+  if (!hostPatchOps.length) return remoteRegistry;
+
+  const clone = deepClone(remoteRegistry);
+  for (const op of hostPatchOps) {
+    if (!op || typeof op !== "object") continue;
+    // Only materialize paths for adds/replaces (removals don't need placeholder rows).
+    if (op.op === "remove") continue;
+    ensureRegistryPointerPathExists(clone, op.path);
+  }
+  return clone;
 }
 
 function asText(value: unknown): string {
@@ -199,8 +287,10 @@ export function RegistryGridApp({
   onEditsExport,
   onSaveLocalVaultData,
   onSaveRemotePatch,
+  hostEditedPatch,
 }: Props) {
   const patchStore = usePatchStore();
+  const lastAppliedHostPatchSignatureRef = useRef<string>("");
 
   const resolvedRegistryUuid = useMemo(
     () => resolveRegistryUuid(registryUuid, vaultLocalData, remoteCaseData),
@@ -263,8 +353,18 @@ export function RegistryGridApp({
     return Number.isInteger(raw) ? Number(raw) : null;
   }, [effectiveRemoteCase]);
 
+  const hostPatchOps = useMemo(() => sanitizeHostPatchOps(hostEditedPatch), [hostEditedPatch]);
+  const hostPatchOpsSignature = useMemo(() => hostPatchSignature(hostPatchOps), [hostPatchOps]);
+
   const evidenceIndex = useMemo(() => buildEvidenceIndex(processResponse), [processResponse]);
-  const remoteBaseRows = useMemo(() => flattenRegistryToRows(remoteRegistry, evidenceIndex), [remoteRegistry, evidenceIndex]);
+  const remoteRegistryRowsInput = useMemo(
+    () => buildRemoteRegistryRowsInput(remoteRegistry, hostPatchOps),
+    [remoteRegistry, hostPatchOpsSignature, hostPatchOps],
+  );
+  const remoteBaseRows = useMemo(
+    () => flattenRegistryToRows(remoteRegistryRowsInput, evidenceIndex),
+    [remoteRegistryRowsInput, evidenceIndex],
+  );
   const remoteRowsWithDomain = useMemo(() => withRemoteDomainRows(remoteBaseRows), [remoteBaseRows]);
 
   const remoteRows = useMemo(() => {
@@ -280,6 +380,15 @@ export function RegistryGridApp({
       };
     });
   }, [patchStore.editedValueByPath, patchStore.hasEdits, remoteRowsWithDomain]);
+
+  const remoteLeafRowByPointer = useMemo(() => {
+    const out = new Map<string, RegistryRow>();
+    remoteRowsWithDomain.forEach((row) => {
+      if (row.domain !== "remote" || row.isGroup) return;
+      out.set(row.jsonPointer, row);
+    });
+    return out;
+  }, [remoteRowsWithDomain]);
 
   const localRows = useMemo(
     () => buildLocalRows(localDraft, localCommitted),
@@ -299,6 +408,32 @@ export function RegistryGridApp({
     // New response/case => clear prior remote edits.
     patchStore.clearAll();
   }, [processResponse, resolvedRegistryUuid, patchStore.clearAll]);
+
+  useEffect(() => {
+    // New response/case should accept the latest host patch as fresh input.
+    lastAppliedHostPatchSignatureRef.current = "";
+  }, [processResponse, resolvedRegistryUuid]);
+
+  useEffect(() => {
+    if (hostPatchOpsSignature === lastAppliedHostPatchSignatureRef.current) return;
+    lastAppliedHostPatchSignatureRef.current = hostPatchOpsSignature;
+    if (!hostPatchOps.length) return;
+
+    hostPatchOps.forEach((op) => {
+      if (op.op === "remove") {
+        patchStore.clearEditedValue(op.path);
+        return;
+      }
+      const row = remoteLeafRowByPointer.get(op.path);
+      patchStore.setEditedValue(op.path, row?.extractedValueRaw, op.value);
+    });
+  }, [
+    hostPatchOps,
+    hostPatchOpsSignature,
+    patchStore.clearEditedValue,
+    patchStore.setEditedValue,
+    remoteLeafRowByPointer,
+  ]);
 
   const onEvidenceClick = useCallback(
     (ev: EvidenceSpan) => {
@@ -459,4 +594,3 @@ export function RegistryGridApp({
     </div>
   );
 }
-

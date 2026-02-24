@@ -13,6 +13,7 @@ type MountArgs = {
   rootEl: HTMLElement;
   getMonacoEditor?: () => unknown;
   processResponse?: unknown;
+  hostEditedPatch?: unknown;
   onExportEditedJson?: (payload: unknown) => void;
   registryUuid?: string | null;
   vaultLocalData?: unknown;
@@ -23,6 +24,7 @@ type MountArgs = {
 
 type UpdateArgs = {
   processResponse?: unknown;
+  hostEditedPatch?: unknown;
   registryUuid?: string | null;
   vaultLocalData?: unknown;
   remoteCaseData?: unknown;
@@ -38,6 +40,8 @@ let root: Root | null = null;
 let mountedEl: HTMLElement | null = null;
 let getMonacoEditorFn: (() => unknown) | null = null;
 let onExportEditedJsonFn: ((payload: unknown) => void) | null = null;
+let processResponseValue: unknown = null;
+let hostEditedPatchValue: unknown = null;
 let registryUuidValue: string | null = null;
 let vaultLocalDataValue: unknown = null;
 let remoteCaseDataValue: unknown = null;
@@ -50,6 +54,8 @@ function mount(args: MountArgs) {
 
   getMonacoEditorFn = typeof args.getMonacoEditor === "function" ? args.getMonacoEditor : null;
   onExportEditedJsonFn = typeof args.onExportEditedJson === "function" ? args.onExportEditedJson : null;
+  processResponseValue = args.processResponse;
+  hostEditedPatchValue = args.hostEditedPatch ?? null;
   registryUuidValue = typeof args.registryUuid === "string" ? args.registryUuid : null;
   vaultLocalDataValue = args.vaultLocalData ?? null;
   remoteCaseDataValue = args.remoteCaseData ?? null;
@@ -61,10 +67,11 @@ function mount(args: MountArgs) {
     root.render(
       <VaultProvider>
         <RegistryGridApp
-          processResponse={args.processResponse}
+          processResponse={processResponseValue}
           registryUuid={registryUuidValue}
           vaultLocalData={vaultLocalDataValue}
           remoteCaseData={remoteCaseDataValue}
+          hostEditedPatch={hostEditedPatchValue}
           getMonacoEditor={getMonacoEditorFn}
           onEditsExport={onExportEditedJsonFn}
           onSaveLocalVaultData={onSaveLocalVaultDataFn}
@@ -80,10 +87,11 @@ function mount(args: MountArgs) {
   root.render(
     <VaultProvider>
       <RegistryGridApp
-        processResponse={args.processResponse}
+        processResponse={processResponseValue}
         registryUuid={registryUuidValue}
         vaultLocalData={vaultLocalDataValue}
         remoteCaseData={remoteCaseDataValue}
+        hostEditedPatch={hostEditedPatchValue}
         getMonacoEditor={getMonacoEditorFn}
         onEditsExport={onExportEditedJsonFn}
         onSaveLocalVaultData={onSaveLocalVaultDataFn}
@@ -95,6 +103,8 @@ function mount(args: MountArgs) {
 
 function update(args: UpdateArgs) {
   if (!root) return;
+  if ("processResponse" in args) processResponseValue = args.processResponse;
+  if ("hostEditedPatch" in args) hostEditedPatchValue = args.hostEditedPatch ?? null;
   if (typeof args.registryUuid === "string") {
     registryUuidValue = args.registryUuid;
   } else if (args.registryUuid === null) {
@@ -105,10 +115,11 @@ function update(args: UpdateArgs) {
   root.render(
     <VaultProvider>
       <RegistryGridApp
-        processResponse={args.processResponse}
+        processResponse={processResponseValue}
         registryUuid={registryUuidValue}
         vaultLocalData={vaultLocalDataValue}
         remoteCaseData={remoteCaseDataValue}
+        hostEditedPatch={hostEditedPatchValue}
         getMonacoEditor={getMonacoEditorFn}
         onEditsExport={onExportEditedJsonFn}
         onSaveLocalVaultData={onSaveLocalVaultDataFn}
@@ -136,6 +147,8 @@ function unmount() {
   mountedEl = null;
   getMonacoEditorFn = null;
   onExportEditedJsonFn = null;
+  processResponseValue = null;
+  hostEditedPatchValue = null;
   registryUuidValue = null;
   vaultLocalDataValue = null;
   remoteCaseDataValue = null;

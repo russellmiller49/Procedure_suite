@@ -288,6 +288,35 @@ def test_camera_ocr_correction_success() -> None:
     assert data["model"] == "gpt-5-mini"
 
 
+def test_pdf_ocr_correction_success() -> None:
+    with patch(
+        "app.api.routes.unified_process.sanitize_camera_ocr_text",
+        return_value=CameraOcrSanitizeResult(
+            cleaned_text="pdf cleaned text",
+            changed=True,
+            correction_applied=True,
+            model="gpt-5-mini",
+            warnings=[],
+        ),
+    ):
+        response = client.post(
+            "/api/v1/ocr/correct",
+            json={
+                "text": "pdf scrubbed text",
+                "already_scrubbed": True,
+                "source_type": "pdf_local",
+            },
+        )
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["cleaned_text"] == "pdf cleaned text"
+    assert data["source_type"] == "pdf_local"
+    assert data["changed"] is True
+    assert data["correction_applied"] is True
+    assert data["model"] == "gpt-5-mini"
+
+
 def test_camera_ocr_correction_unavailable_returns_503() -> None:
     with patch(
         "app.api.routes.unified_process.sanitize_camera_ocr_text",
@@ -304,6 +333,19 @@ def test_camera_ocr_correction_unavailable_returns_503() -> None:
 
     assert response.status_code == 503
     assert "unavailable" in str(response.json().get("detail", "")).lower()
+
+
+def test_ocr_correction_rejects_unsupported_source_type() -> None:
+    response = client.post(
+        "/api/v1/ocr/correct",
+        json={
+            "text": "scrubbed text",
+            "already_scrubbed": True,
+            "source_type": "manual_entry",
+        },
+    )
+
+    assert response.status_code == 422
 
 
 def test_unified_process_camera_ocr_fuzzy_normalization_applies(

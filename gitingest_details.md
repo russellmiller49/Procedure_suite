@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-23T16:47:30-08:00`
-Git: `main` @ `3d29009`
+Generated: `2026-02-23T20:07:41-08:00`
+Git: `main` @ `bfcd6e3`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -827,8 +827,9 @@ Git: `main` @ `3d29009`
    177807  app/registry/application/registry_service.py
    189371  app/registry/deterministic_extractors.py
        39  ui/source/registry_grid/src/vite-env.d.ts
+       94  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
       118  tests/fixtures/regression_suite/README.md
-      125  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
+      181  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
       240  app/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  app/reporting/templates/addons/eus_b.jinja
       247  app/reporting/templates/addons/peg_removal_exchange.jinja
@@ -877,6 +878,7 @@ Git: `main` @ `3d29009`
       543  app/reporting/templates/addons/chest_tube_removal.jinja
       548  tests/fixtures/reporting/template_adapter_thoracentesis.md
       565  app/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
+      580  app/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
       582  app/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
       584  app/reporting/templates/addons/ion_registration_complete.jinja
       586  app/reporting/templates/addons/tool_in_lesion_confirmation.jinja
@@ -900,6 +902,8 @@ Git: `main` @ `3d29009`
       689  app/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
       690  app/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
       692  app/reporting/templates/addons/tracheostomy_tube_change.jinja
+      695  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
+      695  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
       707  app/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
       708  app/reporting/templates/addons/tracheostomy_downsizing_fenestrated_tube_placement.jinja
       714  app/reporting/templates/addons/endobronchial_sealant_application_for_bronchopleural_fistula_bpf.jinja
@@ -914,6 +918,7 @@ Git: `main` @ `3d29009`
       746  app/reporting/templates/addons/thoracentesis_with_pleural_manometry.jinja
       750  app/reporting/templates/addons/endobronchial_valve_placement_for_persistent_air_leak_bpf.jinja
       762  tests/fixtures/thora_bilateral.txt
+      764  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/ort_config.json
       765  app/reporting/templates/addons/electromagnetic_navigation_bronchoscopy.jinja
       768  app/reporting/templates/addons/intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d.jinja
       778  app/reporting/templates/addons/ion_registration_registration_drift_mismatch.jinja
@@ -934,6 +939,7 @@ Git: `main` @ `3d29009`
       920  app/reporting/templates/addons/radial_ebus_guided_sampling_with_guide_sheath.jinja
       942  tests/fixtures/stent_rmb_and_dilation_lul.txt
       951  ui/static/phi_redactor/vendor/phi_distilbert_ner/config.json
+      951  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
       965  ui/source/registry_grid/vite.config.ts
       982  app/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
       984  ui/source/registry_grid/src/__tests__/dateMath.test.ts
@@ -947,6 +953,7 @@ Git: `main` @ `3d29009`
      1216  tests/fixtures/reporting/seed_from_text_ebus_station7.md
      1224  ui/source/registry_grid/src/__tests__/patchStoreCore.test.ts
      1227  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
+     1227  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
      1308  docs/KNOWLEDGE_RELEASE_CHECKLIST.md
      1316  ui/source/registry_grid/src/api/umls.ts
      1359  app/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
@@ -970,11 +977,12 @@ Git: `main` @ `3d29009`
      2342  app/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
      2460  ui/source/registry_grid/src/__tests__/monacoBridge.test.ts
      2553  ui/source/registry_grid/src/__tests__/regexDetectors.test.js
-     2612  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
      2615  ui/source/registry_grid/src/__tests__/endosoftOcrHardening.test.js
      2670  docs/DEPLOY_MIRROR.md
      2800  docs/REGISTRY_RUNS.md
      2804  tests/fixtures/reporting/seed_from_text_ion_nav_tbna_cryo.md
+     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
+     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/protected_terms.json
      2954  tests/fixtures/notes/note_315.txt
      2964  ui/static/phi_redactor/pdf_local/redaction/applyRedactions.js
      2988  ui/static/phi_redactor/camera_local/privacyShield.js
@@ -1517,8 +1525,10 @@ Git: `main` @ `3d29009`
      too_large>200000B  app/registry/postprocess/__init__.py
     binary_or_non_utf8  docs/ARCHITECTURE.md
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
+     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
      too_large>200000B  ui/static/phi_redactor/app.js
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
+     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
      too_large>200000B  ui/static/phi_redactor/transformers.legacy.js
      too_large>200000B  ui/static/phi_redactor/transformers.min.js
      too_large>200000B  ui/static/phi_redactor/registry_grid/registry_grid.iife.js
