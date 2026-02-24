@@ -37,6 +37,18 @@ describe("detectRegexPhi", () => {
     expect(spansOfType(spans, "DATE").length).toBeGreaterThanOrEqual(3);
   });
 
+  it("detects MRN#: and partial DOB when OCR drops month digits", () => {
+    const text = [
+      "Name: Demo, Demonstration DOB: /16/1964 MRN#: 23902380",
+      "DATE OF BIRTH: /16/1964",
+    ].join("\n");
+
+    const spans = detectRegexPhi(text);
+
+    expect(spansOfType(spans, "MRN").length).toBe(1);
+    expect(spansOfType(spans, "DATE").length).toBeGreaterThanOrEqual(2);
+  });
+
   it("detects URL and IPv4", () => {
     const text = "Portal https://hospital.example.org and device at 10.24.3.99";
     const spans = detectRegexPhi(text);
