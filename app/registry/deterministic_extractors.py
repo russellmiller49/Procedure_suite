@@ -2788,6 +2788,12 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
             r"\b(?:ablat|destroy|debulk|devitaliz|recanaliz|stenos(?:is|ed)|tumou?r)\w*\b",
             re.IGNORECASE,
         )
+        # Cryoprobe is also used therapeutically for cryo-extraction (e.g., clot / mucus plug removal).
+        cryo_extraction_context_re = re.compile(
+            r"\b(?:clot|mucus\s+plug|plug)\b[^\n]{0,60}\b(?:remov|extract|retriev|debrid)\w*\b"
+            r"|\b(?:remov|extract|retriev|debrid)\w*\b[^\n]{0,60}\b(?:clot|mucus\s+plug|plug)\b",
+            re.IGNORECASE,
+        )
 
         saw_biopsy_only = False
         saw_therapeutic = False
@@ -2800,7 +2806,7 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
             biopsy_context = bool(
                 biopsy_token_re.search(local_lower) or specimen_context or sent_to_path_re.search(local_lower)
             )
-            therapeutic_context = bool(therapeutic_context_re.search(local_lower))
+            therapeutic_context = bool(therapeutic_context_re.search(local_lower) or cryo_extraction_context_re.search(local_lower))
 
             if therapeutic_context:
                 saw_therapeutic = True
@@ -2808,6 +2814,10 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
                 saw_biopsy_only = True
 
         if saw_biopsy_only and not saw_therapeutic:
+            return {}
+        # Generic cryoprobe mentions without explicit therapeutic intent are common in diagnostic
+        # cryobiopsy workflows; do not assert cryotherapy unless therapeutic context is present.
+        if not saw_therapeutic:
             return {}
         return {"cryotherapy": {"performed": True}}
 
@@ -3310,7 +3320,7 @@ def extract_transbronchial_cryobiopsy(note_text: str) -> Dict[str, Any]:
     nodal_context_re = re.compile(r"(?i)\b(?:intranodal|lymph\s+node|stations?|mediastin(?:al|um)|hilar)\b")
     access_tract_re = re.compile(r"(?i)\b(?:tract|tunnel|needle\s*knife|access)\b")
     pulmonary_context_re = re.compile(
-        r"(?i)\b(?:transbronchial|lung|pulmonary|parenchymal|nodule|mass|lesion|segment|subsegment|rb\d{1,2}|lb\d{1,2})\b"
+        r"(?i)\b(?:transbronchial|lung|pulmonary|parenchymal|nodule|mass|lesion|segment(?:s)?|subsegment(?:s)?|rul|rml|rll|lul|lll|rb\d{1,2}|lb\d{1,2})\b"
     )
 
     for pattern in TRANSBRONCHIAL_CRYOBIOPSY_PATTERNS:
@@ -3361,13 +3371,16 @@ def extract_transbronchial_cryobiopsy(note_text: str) -> Dict[str, Any]:
     cryo_matches = list(re.finditer(CRYOPROBE_PATTERN, raw_text, re.IGNORECASE))
     if cryo_matches:
         therapeutic_context_re = re.compile(
-            r"\b(?:ablat|destroy|debulk|devitaliz|recanaliz|stenos(?:is|ed)|tumou?r)\w*\b",
+            r"\b(?:ablat|destroy|debulk|devitaliz|recanaliz|stenos(?:is|ed)|obstruction|tumou?r)\w*\b",
             re.IGNORECASE,
         )
         specimen_any_re = re.compile(r"\b(?:specimen(?:s)?|histolog(?:y|ic))\b", re.IGNORECASE)
         specimen_none_re = re.compile(r"\bspecimen(?:s)?\b[^.\n]{0,60}\b(?:none|n/?a|na)\b", re.IGNORECASE)
         biopsy_token_re = re.compile(r"\bbiops(?:y|ies|ied)\b", re.IGNORECASE)
         sent_to_path_re = re.compile(r"\bsent\b[^.\n]{0,40}\bpatholog(?:y|ic)\b", re.IGNORECASE)
+        ild_context_re = re.compile(r"\b(?:ild|uip|nsip|interstitial\s+lung)\b", re.IGNORECASE)
+        freeze_context_re = re.compile(r"\bfreeze\b", re.IGNORECASE)
+        sample_context_re = re.compile(r"\b(?:sample(?:s)?|site\s*\d+)\b", re.IGNORECASE)
 
         for cryo_match in cryo_matches:
             local = raw_text[max(0, cryo_match.start() - 240) : min(len(raw_text), cryo_match.end() + 260)]
@@ -3382,6 +3395,17 @@ def extract_transbronchial_cryobiopsy(note_text: str) -> Dict[str, Any]:
 
             if biopsy_context and pulmonary_context and not therapeutic_context:
                 return {"transbronchial_cryobiopsy": {"performed": True}}
+
+        # ILD cryobiopsy backstop: some bullet-style notes omit biopsy/pathology tokens but
+        # still describe cryobiopsy via cryoprobe + freeze cycles + sampled sites.
+        if (
+            ild_context_re.search(raw_text)
+            and freeze_context_re.search(raw_text)
+            and sample_context_re.search(raw_text)
+            and pulmonary_context_re.search(raw_text)
+            and not therapeutic_context_re.search(text_lower)
+        ):
+            return {"transbronchial_cryobiopsy": {"performed": True}}
     return {}
 
 

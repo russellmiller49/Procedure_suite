@@ -21,6 +21,7 @@ def patch_clinical_update(
     registry_json: dict[str, Any],
     *,
     extracted: dict[str, Any],
+    event_id: str,
     event_title: str | None,
     manual_overrides: dict[str, Any] | None,
 ) -> tuple[bool, list[str]]:
@@ -32,6 +33,7 @@ def patch_clinical_update(
 
     update = extracted.get("clinical_update")
     if isinstance(update, dict):
+        update["source_event_id"] = event_id
         if event_title:
             update["event_title"] = compact_text(event_title, max_chars=120)
         key = _dedupe_key(update, event_title)
@@ -52,6 +54,11 @@ def patch_clinical_update(
                 "treatment_change_text": update.get("treatment_change_text"),
                 "complication_text": update.get("complication_text"),
                 "summary_text": update.get("summary_text"),
+                "hospital_admission": update.get("hospital_admission"),
+                "icu_admission": update.get("icu_admission"),
+                "deceased": update.get("deceased"),
+                "disease_status": update.get("disease_status"),
+                "source_event_id": event_id,
             }
             if clinical_course.get("current_state") != next_state:
                 clinical_course["current_state"] = next_state

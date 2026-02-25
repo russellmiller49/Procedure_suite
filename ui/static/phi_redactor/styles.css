@@ -319,10 +319,109 @@ html, body {
   color: var(--text-secondary);
 }
 
+.status-context-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid #f59e0b55;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
 .topbar-links {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.vault-case-events {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.vault-case-events-title {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.vault-case-events-host {
+  font-size: 12px;
+}
+
+.vault-events-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.vault-events-table th,
+.vault-events-table td {
+  padding: 6px 8px;
+  border-top: 1px solid var(--border-color);
+  vertical-align: top;
+}
+
+.vault-events-table th {
+  color: var(--text-secondary);
+  font-weight: 700;
+  text-align: left;
+  background: #f8fafc;
+}
+
+.vault-event-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vault-event-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.vault-event-type-badge.pathology {
+  border-color: #f59e0b55;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.vault-event-type-badge.imaging {
+  border-color: #38bdf855;
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.vault-event-type-badge.clinical {
+  border-color: #22c55e55;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.vault-event-type-badge.procedure {
+  border-color: #a78bfa55;
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.vault-event-muted {
+  color: var(--text-secondary);
 }
 
 .topbar-link {
@@ -2197,6 +2296,10 @@ body.ps-review-split .editorPane .result {
 }
 
 .vault-append-target {
+  margin-top: 8px;
+}
+
+.vault-context-line {
   margin-top: 8px;
 }
 

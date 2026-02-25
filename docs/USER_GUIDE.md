@@ -585,14 +585,25 @@ How it works:
   - `patient_label`
   - `index_date` (kept local, encrypted)
   - `local_meta` (for optional local-only fields like `mrn`, `custom_notes`)
+- **Active case** controls where baseline procedure submissions go:
+  - If an active case is selected, `Submit Scrubbed Note` targets that `registry_uuid`.
+  - If no active case is selected, `Submit Scrubbed Note` creates a new case UUID.
+  - Use `Load Case` (from the patient table) or `Create Local Case` to set the active case.
+  - Use `Save Case Metadata` to persist updates to the active case label/MRN/index date.
+- **Event mode** controls append submissions:
+  - Confirming `Add Event` arms Event mode for that case; subsequent `Submit` appends the event instead of treating the note as a procedure report.
+  - Use `Clear Event Mode` to return to baseline procedure submission behavior.
 - The vault row action is **Add Event** (not pathology-only):
   - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `clinical_update`, `treatment_update`, `complication`, `procedure_addendum`, `other`)
   - Legacy aliases (`procedure`, `clinical_status`) are still accepted and normalized server-side
   - Use either note mode or structured status mode
+  - In note mode, the Add Event modal includes its own **Event Note** box (paste text) plus local PDF extraction into that box
+  - Confirming Add Event with note text loads that note into the main editor so you can run `Run Detection` -> `Apply Redactions` before submit
 - **Absolute dates are never sent to the server.**
   - The browser computes signed `relative_day_offset` from local `index_date`
   - Only `relative_day_offset` is transmitted
 - Structured-only events (`note` empty + `structured_data` present) bypass extraction/pipeline endpoints and persist directly as append events.
+- Pathology/imaging/clinical-status note events are submitted as **contextual append-only** updates (case aggregation) to avoid treating those notes as procedure reports.
 
 Troubleshooting:
 - If the UI says “Unlock local vault first”, you likely enabled the dev override `?vaultRequired=1` (or stored

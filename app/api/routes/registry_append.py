@@ -24,7 +24,7 @@ from app.api.services.bundle_processing import count_date_like_strings
 from app.registry.application.case_aggregator import CaseAggregator
 from app.registry.schema import RegistryRecord
 from app.registry_store.dependencies import get_registry_store_db
-from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord
+from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord, RegistryRun
 from app.registry_store.phi_gate import scan_text_for_phi_risk
 from app.vault.models import UserPatientVault
 
@@ -368,7 +368,8 @@ def append_registry_document(
     db.refresh(case_record)
 
     append_rows = _append_rows_for_case(db, user_id=current_user.id, registry_uuid=registry_uuid)
-    case_response = _build_case_response(case_record=case_record, append_rows=append_rows)
+    source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    case_response = _build_case_response(case_record=case_record, append_rows=append_rows, source_run=source_run)
 
     response_payload = {
         **case_response.model_dump(),

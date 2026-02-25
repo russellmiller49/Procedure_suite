@@ -76,6 +76,7 @@ def test_clinical_updates_dedupe_by_title_key() -> None:
     changed_1, _ = patch_clinical_update(
         registry_json,
         extracted=extracted,
+        event_id="00000000-0000-0000-0000-000000000001",
         event_title="Clinic Follow-up",
         manual_overrides={},
     )
@@ -93,6 +94,7 @@ def test_clinical_updates_dedupe_by_title_key() -> None:
     changed_2, _ = patch_clinical_update(
         registry_json,
         extracted=extracted_again,
+        event_id="00000000-0000-0000-0000-000000000002",
         event_title="Clinic Follow-up",
         manual_overrides={},
     )

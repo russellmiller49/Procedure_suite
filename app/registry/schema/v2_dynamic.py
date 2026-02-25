@@ -131,6 +131,11 @@ class ClinicalUpdate(BaseModel):
     treatment_change_text: str | None = None
     complication_text: str | None = None
     summary_text: str | None = None
+    hospital_admission: bool | None = None
+    icu_admission: bool | None = None
+    deceased: bool | None = None
+    disease_status: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
+    source_event_id: UUID | None = None
     qa_flags: list[str] = Field(default_factory=list)
 
 
@@ -143,6 +148,11 @@ class ClinicalState(BaseModel):
     treatment_change_text: str | None = None
     complication_text: str | None = None
     summary_text: str | None = None
+    hospital_admission: bool | None = None
+    icu_admission: bool | None = None
+    deceased: bool | None = None
+    disease_status: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
+    source_event_id: UUID | None = None
 
 
 class ClinicalCourse(BaseModel):

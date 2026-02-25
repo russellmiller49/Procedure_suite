@@ -6716,6 +6716,44 @@
                 ],
                 "maxLength": 300
               },
+              "hospital_admission": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "icu_admission": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "deceased": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "disease_status": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "Progression",
+                  "Stable",
+                  "Response",
+                  "Mixed",
+                  "Indeterminate",
+                  null
+                ]
+              },
+              "source_event_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
               "qa_flags": {
                 "type": [
                   "array",
@@ -6779,6 +6817,44 @@
                 "null"
               ],
               "maxLength": 300
+            },
+            "hospital_admission": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "icu_admission": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "deceased": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "disease_status": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "Progression",
+                "Stable",
+                "Response",
+                "Mixed",
+                "Indeterminate",
+                null
+              ]
+            },
+            "source_event_id": {
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         }

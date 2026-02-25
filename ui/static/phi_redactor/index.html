@@ -48,6 +48,7 @@
       </div>
       <div class="status">
         <span id="statusText">Loading...</span>
+        <span id="contextualAppendBadge" class="status-context-badge hidden">Contextual append-only mode active</span>
         <span id="progressText" class="progress"></span>
       </div>
     </header>
@@ -193,7 +194,10 @@
                   <button id="vaultUnlockBtn" class="secondary">Unlock / Initialize Vault</button>
                   <button id="vaultLockBtn" class="secondary" disabled>Lock Vault</button>
                   <button id="vaultSyncBtn" class="secondary" disabled>Sync Patients</button>
-                  <button id="clearAppendTargetBtn" class="secondary" disabled>Clear Append Target</button>
+                  <button id="vaultCreateCaseBtn" class="secondary" disabled>Create Local Case</button>
+                  <button id="vaultSaveCaseBtn" class="secondary" disabled>Save Case Metadata</button>
+                  <button id="vaultClearActiveCaseBtn" class="secondary" disabled>Clear Active Case</button>
+                  <button id="clearAppendTargetBtn" class="secondary" disabled>Clear Event Mode</button>
                   <div class="subtle" id="vaultStatusText">Locked</div>
                 </div>
 
@@ -202,9 +206,16 @@
                   workflows. Extraction does not require this.
                 </div>
 
-                <div class="subtle vault-append-target" id="vaultAppendTargetText">Mode: Create new index case</div>
+                <div class="subtle vault-context-line" id="vaultActiveCaseText">Active case: (none)</div>
+                <div class="subtle vault-context-line" id="vaultEventModeText">Event mode: (none)</div>
                 <div id="vaultPatientsHost" class="vault-patients-host">
                   Unlock vault to view local encrypted patients.
+                </div>
+                <div class="vault-case-events">
+                  <div class="vault-case-events-title">Case Events</div>
+                  <div id="vaultCaseEventsHost" class="vault-case-events-host subtle">
+                    Load a case to view events.
+                  </div>
                 </div>
               </div>
             </details>
@@ -568,6 +579,57 @@
           </select>
         </div>
 
+        <div id="addEventNoteFields" class="feedback-field">
+          <label for="addEventTitleInput">Event Title (optional)</label>
+          <input
+            id="addEventTitleInput"
+            type="text"
+            class="form-control"
+            placeholder="Optional short label (e.g., PET-CT follow-up)"
+          />
+
+          <div id="addEventImagingMetaFields" class="hidden" style="margin-top: 8px;">
+            <label>Imaging Metadata</label>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <select id="addEventImagingModalitySelect" class="param-select" title="Imaging modality">
+                <option value="ct" selected>CT</option>
+                <option value="pet_ct">PET-CT</option>
+                <option value="mri">MRI</option>
+                <option value="other">Other</option>
+              </select>
+              <select id="addEventImagingSubtypeSelect" class="param-select" title="Imaging timing/subtype">
+                <option value="followup" selected>Follow-up</option>
+                <option value="preop">Pre-op baseline</option>
+                <option value="restaging">Restaging</option>
+                <option value="surveillance">Surveillance</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="addEventNoteInput">Event Note (scrubbed text)</label>
+          <textarea
+            id="addEventNoteInput"
+            class="form-control"
+            rows="8"
+            placeholder="Paste the event note here (e.g., pathology or imaging report)..."
+          ></textarea>
+          <div class="pdf-upload-group" style="margin-top: 8px;">
+            <label class="manual-label" for="addEventPdfInput">PDF:</label>
+            <input id="addEventPdfInput" type="file" accept="application/pdf,.pdf" />
+            <select id="addEventPdfMaskSelect" class="param-select" title="Mask photo regions before OCR (local-only)">
+              <option value="auto" selected>Mask Auto</option>
+              <option value="on">Mask On</option>
+              <option value="off">Mask Off</option>
+            </select>
+            <button id="addEventPdfExtractBtn" class="secondary" type="button" disabled>
+              Extract PDF Into Event Note
+            </button>
+          </div>
+          <div id="addEventNoteStatus" class="subtle">
+            Optional: paste a scrubbed event note or extract local PDF text into this box.
+          </div>
+        </div>
+
         <div id="addEventStructuredFields" class="feedback-field hidden">
           <label>Structured Status Fields</label>
           <label class="inline-toggle">
@@ -582,6 +644,15 @@
             <input id="addEventDeceasedToggle" type="checkbox" />
             Deceased
           </label>
+          <label for="addEventDiseaseStatusSelect">Disease status (optional)</label>
+          <select id="addEventDiseaseStatusSelect" class="param-select">
+            <option value="" selected>—</option>
+            <option value="Progression">Progression</option>
+            <option value="Stable">Stable</option>
+            <option value="Response">Response</option>
+            <option value="Mixed">Mixed</option>
+            <option value="Indeterminate">Indeterminate</option>
+          </select>
           <label for="addEventStatusCommentInput">Status Comment (optional)</label>
           <input id="addEventStatusCommentInput" type="text" placeholder="Optional structured status note" />
         </div>

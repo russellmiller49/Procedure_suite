@@ -16,7 +16,7 @@ from app.api.auth import AuthenticatedUser, get_current_user
 from app.api.readiness import require_ready
 from app.registry.schema import RegistryRecord
 from app.registry_store.dependencies import get_registry_store_db
-from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord
+from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord, RegistryRun
 from app.vault.models import UserPatientVault
 
 
@@ -122,6 +122,7 @@ class RegistryCaseEventSummary(BaseModel):
     created_at: str
     event_type: str
     document_kind: str
+    is_synthetic: bool = False
     source_type: str | None = None
     source_modality: str | None = None
     event_subtype: str | None = None
@@ -174,12 +175,66 @@ def _build_event_summary(row: RegistryAppendedDocument) -> RegistryCaseEventSumm
     )
 
 
+def _safe_parse_iso_datetime(value: str) -> datetime | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _build_synthetic_procedure_event(
+    *,
+    case_record: RegistryCaseRecord,
+    source_run: RegistryRun | None,
+) -> RegistryCaseEventSummary | None:
+    if not case_record.source_run_id:
+        return None
+
+    run_id = str(case_record.source_run_id)
+    created_at: str | None = None
+    has_note_text = True
+    if source_run is not None:
+        created_at = source_run.created_at.isoformat() if source_run.created_at else None
+        has_note_text = bool(str(source_run.note_text or "").strip())
+
+    if not created_at:
+        created_at = case_record.created_at.isoformat() if case_record.created_at else _utcnow().isoformat()
+
+    return RegistryCaseEventSummary(
+        id=run_id,
+        append_id=run_id,
+        created_at=created_at,
+        event_type="procedure_report",
+        document_kind="procedure_report",
+        is_synthetic=True,
+        source_type="registry_run",
+        source_modality=None,
+        event_subtype=None,
+        relative_day_offset=0,
+        event_title=None,
+        has_note_text=has_note_text,
+        has_structured_data=False,
+    )
+
+
 def _build_case_response(
     *,
     case_record: RegistryCaseRecord,
     append_rows: list[RegistryAppendedDocument],
+    source_run: RegistryRun | None = None,
 ) -> RegistryCaseResponse:
     events = [_build_event_summary(row) for row in append_rows]
+    synthetic_procedure = _build_synthetic_procedure_event(case_record=case_record, source_run=source_run)
+    if synthetic_procedure is not None:
+        events.append(synthetic_procedure)
+
+    events.sort(
+        key=lambda ev: _safe_parse_iso_datetime(ev.created_at) or datetime.min.replace(tzinfo=UTC),
+        reverse=True,
+    )
     registry_json = dict(case_record.registry_json or {})
     manual_overrides = dict(case_record.manual_overrides or {})
 
@@ -227,7 +282,8 @@ def get_registry_case(
         .limit(200)
     )
     append_rows = db.execute(append_stmt).scalars().all()
-    return _build_case_response(case_record=case_record, append_rows=append_rows)
+    source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    return _build_case_response(case_record=case_record, append_rows=append_rows, source_run=source_run)
 
 
 @router.patch(
@@ -302,7 +358,8 @@ def patch_registry_case(
         .limit(200)
     )
     append_rows = db.execute(append_stmt).scalars().all()
-    return _build_case_response(case_record=case_record, append_rows=append_rows)
+    source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    return _build_case_response(case_record=case_record, append_rows=append_rows, source_run=source_run)
 
 
 __all__ = ["router", "RegistryCaseResponse", "RegistryCaseEventSummary"]

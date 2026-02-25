@@ -30,6 +30,7 @@ import {
 } from "./completenessHelpers.js";
 
 const statusTextEl = document.getElementById("statusText");
+const contextualAppendBadgeEl = document.getElementById("contextualAppendBadge");
 const progressTextEl = document.getElementById("progressText");
 const detectionsListEl = document.getElementById("detectionsList");
 const detectionsCountEl = document.getElementById("detectionsCount");
@@ -69,20 +70,36 @@ const vaultCustomNotesInputEl = document.getElementById("vaultCustomNotesInput")
 const vaultUnlockBtn = document.getElementById("vaultUnlockBtn");
 const vaultLockBtn = document.getElementById("vaultLockBtn");
 const vaultSyncBtn = document.getElementById("vaultSyncBtn");
+const vaultCreateCaseBtn = document.getElementById("vaultCreateCaseBtn");
+const vaultSaveCaseBtn = document.getElementById("vaultSaveCaseBtn");
+const vaultClearActiveCaseBtn = document.getElementById("vaultClearActiveCaseBtn");
 const clearAppendTargetBtn = document.getElementById("clearAppendTargetBtn");
 const vaultStatusTextEl = document.getElementById("vaultStatusText");
 const vaultPatientsHostEl = document.getElementById("vaultPatientsHost");
-const vaultAppendTargetTextEl = document.getElementById("vaultAppendTargetText");
+const vaultCaseEventsHostEl = document.getElementById("vaultCaseEventsHost");
+const vaultActiveCaseTextEl = document.getElementById("vaultActiveCaseText");
+const vaultEventModeTextEl = document.getElementById("vaultEventModeText");
 const phiConfirmModalEl = document.getElementById("phiConfirmModal");
 const addEventModalEl = document.getElementById("addEventModal");
 const addEventRegistryTextEl = document.getElementById("addEventRegistryText");
 const addEventDateInputEl = document.getElementById("addEventDateInput");
 const addEventTypeSelectEl = document.getElementById("addEventTypeSelect");
 const addEventModeSelectEl = document.getElementById("addEventModeSelect");
+const addEventNoteFieldsEl = document.getElementById("addEventNoteFields");
+const addEventTitleInputEl = document.getElementById("addEventTitleInput");
+const addEventImagingMetaFieldsEl = document.getElementById("addEventImagingMetaFields");
+const addEventImagingModalitySelectEl = document.getElementById("addEventImagingModalitySelect");
+const addEventImagingSubtypeSelectEl = document.getElementById("addEventImagingSubtypeSelect");
+const addEventNoteInputEl = document.getElementById("addEventNoteInput");
+const addEventPdfInputEl = document.getElementById("addEventPdfInput");
+const addEventPdfMaskSelectEl = document.getElementById("addEventPdfMaskSelect");
+const addEventPdfExtractBtn = document.getElementById("addEventPdfExtractBtn");
+const addEventNoteStatusEl = document.getElementById("addEventNoteStatus");
 const addEventStructuredFieldsEl = document.getElementById("addEventStructuredFields");
 const addEventHospitalAdmissionToggleEl = document.getElementById("addEventHospitalAdmissionToggle");
 const addEventIcuAdmissionToggleEl = document.getElementById("addEventIcuAdmissionToggle");
 const addEventDeceasedToggleEl = document.getElementById("addEventDeceasedToggle");
+const addEventDiseaseStatusSelectEl = document.getElementById("addEventDiseaseStatusSelect");
 const addEventStatusCommentInputEl = document.getElementById("addEventStatusCommentInput");
 const bundlePanelEl = document.getElementById("bundlePanel");
 const indexDateInputEl = document.getElementById("indexDateInput");
@@ -192,8 +209,11 @@ let vaultUnlocked = false;
 let vaultBusy = false;
 let vaultUserId = null;
 let vaultPatientMap = new Map(); // registry_uuid -> decrypted local patient identity object
-let appendTargetRegistryUuid = null;
-let appendEventConfig = null; // { registry_uuid, event_type, mode, relative_day_offset, structured_data, event_date }
+let activeCaseRegistryUuid = null;
+let appendEventConfig = null; // { registry_uuid, event_type, mode, relative_day_offset, event_title, source_modality, event_subtype, structured_data, event_date, note_draft_text, note_source_type }
+let addEventTargetRegistryUuid = null;
+let addEventDraftSourceType = "manual_entry";
+let loadAppendEventDraftIntoEditor = null;
 let lastSubmittedRegistryUuid = null;
 let registryCaseSnapshotByUuid = new Map(); // registry_uuid -> canonical remote case snapshot
 let vaultIdleTimerId = null;
@@ -767,6 +787,8 @@ async function saveRegistryGridLocalVaultData(payload) {
     patientJson: normalized,
   });
   vaultPatientMap.set(registryUuid, normalized);
+  activeCaseRegistryUuid = registryUuid;
+  hydrateVaultInputsFromCase(registryUuid);
   renderVaultPatients();
   updateAppendTargetUi();
   noteVaultActivity();
@@ -1152,7 +1174,11 @@ let refreshZkControls = () => {
   if (vaultUnlockBtn) vaultUnlockBtn.disabled = vaultBusy;
   if (vaultLockBtn) vaultLockBtn.disabled = !isVaultReady() || vaultBusy;
   if (vaultSyncBtn) vaultSyncBtn.disabled = !isVaultReady() || vaultBusy;
-  if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = !appendTargetRegistryUuid || vaultBusy;
+  if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = !isVaultReady() || vaultBusy;
+  if (vaultSaveCaseBtn) vaultSaveCaseBtn.disabled = !isVaultReady() || !activeCaseRegistryUuid || vaultBusy;
+  if (vaultClearActiveCaseBtn)
+    vaultClearActiveCaseBtn.disabled = !activeCaseRegistryUuid || vaultBusy;
+  if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = !appendEventConfig || vaultBusy;
 };
 
 if (vaultUnlockBtn) {
@@ -1207,12 +1233,75 @@ if (vaultSyncBtn) {
   });
 }
 
-if (clearAppendTargetBtn) {
-  clearAppendTargetBtn.addEventListener("click", () => {
-    appendTargetRegistryUuid = null;
+if (vaultCreateCaseBtn) {
+  vaultCreateCaseBtn.addEventListener("click", async () => {
+    if (vaultBusy) return;
+    if (!isVaultReady()) {
+      setStatus("Unlock vault first to create a local case.");
+      return;
+    }
+
+    const registryUuid = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    activeCaseRegistryUuid = registryUuid;
+    appendEventConfig = null;
     updateAppendTargetUi();
     renderVaultPatients();
-    setStatus("Append target cleared. Submitting now creates a new case.");
+    renderCaseEvents(null);
+    noteVaultActivity();
+
+    try {
+      await saveLocalPatientIdentity(registryUuid);
+      setStatus(`Local case created: ${registryUuid}. Submit a baseline procedure note to extract into this case.`);
+    } catch (err) {
+      setStatus(`Create local case failed: ${String(err?.message || err)}`);
+    }
+  });
+}
+
+if (vaultSaveCaseBtn) {
+  vaultSaveCaseBtn.addEventListener("click", async () => {
+    if (vaultBusy) return;
+    if (!isVaultReady()) {
+      setStatus("Unlock vault first to save case metadata.");
+      return;
+    }
+    const registryUuid = String(activeCaseRegistryUuid || "").trim();
+    if (!registryUuid) {
+      setStatus("No active case selected. Click Load Case or Create Local Case first.");
+      return;
+    }
+    try {
+      await saveLocalPatientIdentity(registryUuid);
+      setStatus(`Saved local case metadata for ${registryUuid}.`);
+    } catch (err) {
+      setStatus(`Save case metadata failed: ${String(err?.message || err)}`);
+    }
+  });
+}
+
+if (vaultClearActiveCaseBtn) {
+  vaultClearActiveCaseBtn.addEventListener("click", () => {
+    activeCaseRegistryUuid = null;
+    appendEventConfig = null;
+    clearVaultPatientInputs();
+    updateAppendTargetUi();
+    renderVaultPatients();
+    renderCaseEvents(null);
+    setStatus("Active case cleared. Submitting now creates a new case.");
+    noteVaultActivity();
+  });
+}
+
+if (clearAppendTargetBtn) {
+  clearAppendTargetBtn.addEventListener("click", () => {
+    appendEventConfig = null;
+    updateAppendTargetUi();
+    renderVaultPatients();
+    setStatus(
+      activeCaseRegistryUuid
+        ? `Event mode cleared. Baseline submissions will target active case ${activeCaseRegistryUuid}.`
+        : "Event mode cleared. No active case selected; submitting will create a new case.",
+    );
     noteVaultActivity();
   });
 }
@@ -1268,6 +1357,43 @@ function noteVaultActivity() {
   armVaultIdleTimer();
 }
 
+function clearVaultPatientInputs() {
+  if (vaultPatientLabelInputEl) vaultPatientLabelInputEl.value = "";
+  if (vaultIndexDateInputEl) vaultIndexDateInputEl.value = toLocalDateYmd();
+  if (vaultMrnInputEl) vaultMrnInputEl.value = "";
+  if (vaultCustomNotesInputEl) vaultCustomNotesInputEl.value = "";
+}
+
+function hydrateVaultInputsFromCase(registryUuid) {
+  const safeRegistryUuid = String(registryUuid || "").trim();
+  if (!safeRegistryUuid) return;
+  const patient = vaultPatientMap.get(safeRegistryUuid) || null;
+  if (!patient) return;
+
+  if (vaultPatientLabelInputEl) {
+    vaultPatientLabelInputEl.value = String(patient?.patient_label || "");
+  }
+  if (vaultIndexDateInputEl) {
+    const indexRaw = String(patient?.index_date || "").trim();
+    vaultIndexDateInputEl.value = parseIsoDateInput(indexRaw) ? indexRaw : "";
+  }
+  if (vaultMrnInputEl) {
+    vaultMrnInputEl.value = String(patient?.local_meta?.mrn || "");
+  }
+  if (vaultCustomNotesInputEl) {
+    vaultCustomNotesInputEl.value = String(patient?.local_meta?.custom_notes || "");
+  }
+}
+
+function setAddEventNoteStatus(text, tone = "neutral") {
+  if (!addEventNoteStatusEl) return;
+  addEventNoteStatusEl.textContent = String(text || "");
+  addEventNoteStatusEl.classList.remove("is-warning", "is-error", "is-success");
+  if (tone === "warning") addEventNoteStatusEl.classList.add("is-warning");
+  if (tone === "error") addEventNoteStatusEl.classList.add("is-error");
+  if (tone === "success") addEventNoteStatusEl.classList.add("is-success");
+}
+
 function normalizeEventType(value) {
   const candidate = String(value || "").trim().toLowerCase();
   if (!candidate) return "pathology";
@@ -1284,18 +1410,72 @@ function formatEventTypeLabel(value) {
   return "Pathology";
 }
 
+function isContextualAppendEventType(value) {
+  const normalized = normalizeEventType(value);
+  return normalized === "pathology" || normalized === "imaging" || normalized === "clinical_status";
+}
+
+function isPathOrImagingEventType(value) {
+  const normalized = normalizeEventType(value);
+  return normalized === "pathology" || normalized === "imaging";
+}
+
+function buildAppendOnlyDashboardResponse(registryUuid, remoteCaseData, mode) {
+  const registry = isPlainObject(remoteCaseData?.registry) ? remoteCaseData.registry : {};
+  const billingItems = Array.isArray(registry?.billing?.cpt_codes) ? registry.billing.cpt_codes : [];
+  const cptCodes = billingItems
+    .map((item) => normalizeCptCode(item?.code))
+    .filter(Boolean);
+  return {
+    registry_uuid: String(registryUuid || "").trim() || null,
+    registry,
+    cpt_codes: cptCodes,
+    suggestions: [],
+    audit_warnings: [],
+    validation_errors: [],
+    coder_difficulty: "APPEND_ONLY",
+    needs_manual_review: false,
+    review_status: "finalized",
+    pipeline_mode: mode,
+    total_work_rvu: null,
+    estimated_payment: null,
+    per_code_billing: [],
+    missing_field_prompts: [],
+  };
+}
+
 function syncAddEventModeUi() {
+  const eventType = normalizeEventType(addEventTypeSelectEl?.value);
+  const structuredAllowed = eventType === "clinical_status";
+
+  if (addEventModeSelectEl) {
+    const structuredOpt = addEventModeSelectEl.querySelector('option[value="structured"]');
+    if (structuredOpt) structuredOpt.disabled = !structuredAllowed;
+    if (!structuredAllowed && String(addEventModeSelectEl.value) === "structured") {
+      addEventModeSelectEl.value = "note";
+    }
+  }
+
   const mode = String(addEventModeSelectEl?.value || "note");
+  if (addEventNoteFieldsEl) {
+    addEventNoteFieldsEl.classList.toggle("hidden", mode !== "note");
+  }
   if (addEventStructuredFieldsEl) {
-    addEventStructuredFieldsEl.classList.toggle("hidden", mode !== "structured");
+    addEventStructuredFieldsEl.classList.toggle("hidden", mode !== "structured" || !structuredAllowed);
+  }
+  if (addEventImagingMetaFieldsEl) {
+    const showImagingMeta = mode === "note" && eventType === "imaging";
+    addEventImagingMetaFieldsEl.classList.toggle("hidden", !showImagingMeta);
   }
 }
 
 function buildStructuredEventPayload() {
+  const diseaseRaw = String(addEventDiseaseStatusSelectEl?.value || "").trim();
   return {
-    hospital_admission: Boolean(addEventHospitalAdmissionToggleEl?.checked),
-    icu_admission: Boolean(addEventIcuAdmissionToggleEl?.checked),
-    deceased: Boolean(addEventDeceasedToggleEl?.checked),
+    hospital_admission: addEventHospitalAdmissionToggleEl?.checked ? true : null,
+    icu_admission: addEventIcuAdmissionToggleEl?.checked ? true : null,
+    deceased: addEventDeceasedToggleEl?.checked ? true : null,
+    disease_status: diseaseRaw || null,
     comment: String(addEventStatusCommentInputEl?.value || "").trim() || null,
   };
 }
@@ -1308,10 +1488,9 @@ async function loadVaultCaseView(registryUuid) {
     return;
   }
 
-  appendTargetRegistryUuid = safeRegistryUuid;
-  if (!appendEventConfig || appendEventConfig.registry_uuid !== safeRegistryUuid) {
-    appendEventConfig = null;
-  }
+  activeCaseRegistryUuid = safeRegistryUuid;
+  if (appendEventConfig && appendEventConfig.registry_uuid !== safeRegistryUuid) appendEventConfig = null;
+  hydrateVaultInputsFromCase(safeRegistryUuid);
   updateAppendTargetUi();
   renderVaultPatients();
   noteVaultActivity();
@@ -1328,11 +1507,6 @@ async function loadVaultCaseView(registryUuid) {
   }
 
   const localData = vaultPatientMap.get(safeRegistryUuid) || null;
-  const fallbackResponse = {
-    registry: isPlainObject(remoteCaseData?.registry) ? remoteCaseData.registry : {},
-    registry_uuid: safeRegistryUuid,
-  };
-  const gridResponse = isPlainObject(lastServerResponse) ? lastServerResponse : fallbackResponse;
 
   const container = document.getElementById("resultsContainer");
   if (container) container.classList.remove("hidden");
@@ -1342,12 +1516,6 @@ async function loadVaultCaseView(registryUuid) {
   setFeedbackStatus("Loaded saved case view. No new data submitted.");
   resetEditedState();
 
-  await maybeRenderRegistryGrid(gridResponse, {
-    registryUuid: safeRegistryUuid,
-    vaultLocalData: localData,
-    remoteCaseData,
-  });
-
   if (serverResponseEl) {
     serverResponseEl.textContent = JSON.stringify(
       {
@@ -1355,6 +1523,8 @@ async function loadVaultCaseView(registryUuid) {
         registry_uuid: safeRegistryUuid,
         has_remote_case: Boolean(remoteCaseData),
         remote_case_version: remoteCaseData?.version ?? null,
+        remote_case_updated_at: remoteCaseData?.updated_at ?? null,
+        remote_event_count: Array.isArray(remoteCaseData?.events) ? remoteCaseData.events.length : 0,
       },
       null,
       2,
@@ -1362,19 +1532,37 @@ async function loadVaultCaseView(registryUuid) {
   }
 
   if (!remoteCaseData) {
+    renderCaseEvents(null);
     setStatus(
       `Loaded local case ${safeRegistryUuid}. No canonical remote registry record exists yet for this case.`,
     );
     return;
   }
+
+  const appendOnlyData = buildAppendOnlyDashboardResponse(safeRegistryUuid, remoteCaseData, "loaded_case");
+  await renderResults(appendOnlyData, {
+    rawData: {
+      mode: "loaded_saved_case",
+      registry_uuid: safeRegistryUuid,
+      remote_case: {
+        registry_uuid: remoteCaseData.registry_uuid,
+        version: remoteCaseData.version,
+        updated_at: remoteCaseData.updated_at,
+      },
+    },
+    registryUuid: safeRegistryUuid,
+    remoteCaseData,
+  });
+  renderCaseEvents(remoteCaseData);
   setStatus(`Loaded saved case ${safeRegistryUuid} (remote version ${remoteCaseData.version}).`);
 }
 
 function openAddEventModal(registryUuid) {
+  addEventTargetRegistryUuid = registryUuid;
   const existingConfig =
     appendEventConfig && appendEventConfig.registry_uuid === registryUuid ? appendEventConfig : null;
   const structuredData = existingConfig?.structured_data || {};
-  appendTargetRegistryUuid = registryUuid;
+  const noteDraft = String(existingConfig?.note_draft_text || "");
 
   if (addEventRegistryTextEl) {
     addEventRegistryTextEl.textContent = `Case: ${registryUuid}`;
@@ -1391,6 +1579,40 @@ function openAddEventModal(registryUuid) {
     addEventModeSelectEl.value = existingConfig?.mode === "structured" ? "structured" : "note";
     syncAddEventModeUi();
   }
+  if (addEventTitleInputEl) {
+    addEventTitleInputEl.value = String(existingConfig?.event_title || "");
+  }
+  if (addEventImagingModalitySelectEl) {
+    const modality = String(existingConfig?.source_modality || "ct").trim().toLowerCase();
+    addEventImagingModalitySelectEl.value = ["ct", "pet_ct", "mri", "other"].includes(modality) ? modality : "ct";
+  }
+  if (addEventImagingSubtypeSelectEl) {
+    const subtype = String(existingConfig?.event_subtype || "followup").trim().toLowerCase();
+    addEventImagingSubtypeSelectEl.value = ["followup", "preop", "restaging", "surveillance"].includes(subtype)
+      ? subtype
+      : "followup";
+  }
+  if (addEventNoteInputEl) {
+    addEventNoteInputEl.value = noteDraft;
+  }
+  addEventDraftSourceType = String(existingConfig?.note_source_type || "manual_entry").trim() || "manual_entry";
+  if (addEventPdfInputEl) {
+    addEventPdfInputEl.value = "";
+  }
+  if (addEventPdfExtractBtn) {
+    addEventPdfExtractBtn.disabled = true;
+  }
+  if (addEventPdfMaskSelectEl) {
+    addEventPdfMaskSelectEl.value = "auto";
+  }
+  if (noteDraft) {
+    setAddEventNoteStatus("Using saved event-note draft. You can edit or replace it.", "success");
+  } else {
+    setAddEventNoteStatus(
+      "Optional: paste a scrubbed event note or extract local PDF text into this box.",
+      "neutral",
+    );
+  }
   if (addEventHospitalAdmissionToggleEl) {
     addEventHospitalAdmissionToggleEl.checked = Boolean(structuredData.hospital_admission);
   }
@@ -1400,17 +1622,37 @@ function openAddEventModal(registryUuid) {
   if (addEventDeceasedToggleEl) {
     addEventDeceasedToggleEl.checked = Boolean(structuredData.deceased);
   }
+  if (addEventDiseaseStatusSelectEl) {
+    const disease = String(structuredData.disease_status || "").trim();
+    addEventDiseaseStatusSelectEl.value = ["", "Progression", "Stable", "Response", "Mixed", "Indeterminate"].includes(disease)
+      ? disease
+      : "";
+  }
   if (addEventStatusCommentInputEl) {
     addEventStatusCommentInputEl.value = String(structuredData.comment || "");
   }
 
-  updateAppendTargetUi();
-  renderVaultPatients();
-
   if (!addEventModalEl || typeof addEventModalEl.showModal !== "function") {
-    setStatus(
-      `Add Event selected for ${registryUuid}. Browser dialog support unavailable; defaulting to pathology note append on submit.`
-    );
+    appendEventConfig =
+      existingConfig || {
+        registry_uuid: registryUuid,
+        event_type: "pathology",
+        mode: "note",
+        relative_day_offset: 0,
+        event_title: null,
+        source_modality: null,
+        event_subtype: null,
+        structured_data: null,
+        event_date: toLocalDateYmd(),
+        note_draft_text: noteDraft || null,
+        note_source_type: addEventDraftSourceType || "manual_entry",
+      };
+    activeCaseRegistryUuid = registryUuid;
+    hydrateVaultInputsFromCase(registryUuid);
+    updateAppendTargetUi();
+    renderVaultPatients();
+    setStatus(`Event configured for ${registryUuid}. Run Detection, Apply Redactions, then Submit.`);
+    addEventTargetRegistryUuid = null;
     return;
   }
   addEventModalEl.showModal();
@@ -1423,9 +1665,16 @@ if (addEventModeSelectEl) {
   });
 }
 
+if (addEventTypeSelectEl) {
+  addEventTypeSelectEl.addEventListener("change", () => {
+    syncAddEventModeUi();
+  });
+}
+
 if (addEventModalEl) {
   addEventModalEl.addEventListener("close", () => {
-    const registryUuid = String(appendTargetRegistryUuid || "").trim();
+    const registryUuid = String(addEventTargetRegistryUuid || "").trim();
+    addEventTargetRegistryUuid = null;
     if (!registryUuid) return;
     noteVaultActivity();
 
@@ -1433,6 +1682,10 @@ if (addEventModalEl) {
 
     const eventType = normalizeEventType(addEventTypeSelectEl?.value);
     const mode = String(addEventModeSelectEl?.value || "note") === "structured" ? "structured" : "note";
+    if (mode === "structured" && eventType !== "clinical_status") {
+      setStatus("Add Event failed: Structured mode is only supported for Clinical Status events.");
+      return;
+    }
     const eventDate = String(addEventDateInputEl?.value || "").trim() || toLocalDateYmd();
     const eventYmd = parseIsoDateInput(eventDate);
     if (!eventYmd) {
@@ -1441,7 +1694,11 @@ if (addEventModalEl) {
     }
 
     const patient = vaultPatientMap.get(registryUuid) || {};
-    const indexDateRaw = String(patient?.index_date || "").trim();
+    const activeIndexDateRaw =
+      registryUuid === activeCaseRegistryUuid ? String(vaultIndexDateInputEl?.value || "").trim() : "";
+    const indexDateRaw = parseIsoDateInput(activeIndexDateRaw)
+      ? activeIndexDateRaw
+      : String(patient?.index_date || "").trim();
     const indexYmd = parseIsoDateInput(indexDateRaw);
     const computedOffset = indexYmd ? diffDaysUtcNoon(indexYmd, eventYmd) : null;
     const relativeDayOffset = Number.isFinite(computedOffset) ? Number(computedOffset) : 0;
@@ -1454,11 +1711,24 @@ if (addEventModalEl) {
     }
 
     const structuredData = mode === "structured" ? buildStructuredEventPayload() : null;
+    const eventTitle = mode === "note" ? String(addEventTitleInputEl?.value || "").trim() : "";
+    const imagingModality =
+      mode === "note" && eventType === "imaging"
+        ? String(addEventImagingModalitySelectEl?.value || "").trim().toLowerCase()
+        : "";
+    const imagingSubtype =
+      mode === "note" && eventType === "imaging"
+        ? String(addEventImagingSubtypeSelectEl?.value || "").trim().toLowerCase()
+        : "";
+    const noteDraftText = mode === "note" ? String(addEventNoteInputEl?.value || "").trim() : "";
+    const noteSourceType =
+      mode === "note" ? String(addEventDraftSourceType || "manual_entry").trim() || "manual_entry" : null;
     if (mode === "structured") {
       const hasSignal = Boolean(
         structuredData?.hospital_admission ||
           structuredData?.icu_admission ||
           structuredData?.deceased ||
+          String(structuredData?.disease_status || "").trim() ||
           String(structuredData?.comment || "").trim(),
       );
       if (!hasSignal) {
@@ -1472,47 +1742,91 @@ if (addEventModalEl) {
       event_type: eventType,
       mode,
       relative_day_offset: relativeDayOffset,
+      event_title: eventTitle || null,
+      source_modality: imagingModality || null,
+      event_subtype: imagingSubtype || null,
       structured_data: structuredData,
       event_date: eventDate,
+      note_draft_text: noteDraftText || null,
+      note_source_type: noteSourceType,
     };
+    activeCaseRegistryUuid = registryUuid;
+    hydrateVaultInputsFromCase(registryUuid);
 
     updateAppendTargetUi();
     renderVaultPatients();
     refreshZkControls();
 
+    let loadedDraft = false;
+    if (mode === "note" && noteDraftText && typeof loadAppendEventDraftIntoEditor === "function") {
+      loadedDraft = Boolean(
+        loadAppendEventDraftIntoEditor({
+          noteText: noteDraftText,
+          sourceType: noteSourceType || "manual_entry",
+        }),
+      );
+    }
+
     const baseMessage = `Event configured: ${formatEventTypeLabel(eventType)} (${mode}) at ${formatTOffset(
       relativeDayOffset,
     )} DAYS for case ${registryUuid}.`;
-    setStatus(offsetWarning ? `${baseMessage} ${offsetWarning}` : baseMessage);
+    const noteMessage =
+      mode !== "note"
+        ? ""
+        : loadedDraft
+          ? " Event note loaded into the editor. Run Detection, then Apply Redactions, then Submit."
+          : noteDraftText
+            ? " Event note draft saved for this case."
+            : " Using current editor text for this event.";
+    const message = `${baseMessage}${noteMessage}`.trim();
+    setStatus(offsetWarning ? `${message} ${offsetWarning}` : message);
   });
 }
 
 function updateAppendTargetUi() {
-  if (!vaultAppendTargetTextEl) return;
-  if (appendTargetRegistryUuid) {
-    const activeConfig =
-      appendEventConfig && appendEventConfig.registry_uuid === appendTargetRegistryUuid
-        ? appendEventConfig
-        : null;
-    const eventLabel = activeConfig
-      ? `${formatEventTypeLabel(activeConfig.event_type)} @ ${formatTOffset(
-          Number(activeConfig.relative_day_offset || 0)
-        )} DAYS`
-      : "event not configured";
-    vaultAppendTargetTextEl.textContent = `Mode: Add event to case ${appendTargetRegistryUuid} (${eventLabel})`;
-  } else {
-    vaultAppendTargetTextEl.textContent = "Mode: Create new index case";
+  if (vaultActiveCaseTextEl) {
+    if (activeCaseRegistryUuid) {
+      const patient = vaultPatientMap.get(activeCaseRegistryUuid) || null;
+      const label = patient ? getPatientRowLabel(patient, activeCaseRegistryUuid) : `Case ${activeCaseRegistryUuid.slice(0, 8)}`;
+      vaultActiveCaseTextEl.textContent = `Active case: ${label} (${activeCaseRegistryUuid})`;
+    } else {
+      vaultActiveCaseTextEl.textContent = "Active case: (none). Baseline submit will create a new case.";
+    }
   }
+
+  const activeConfig =
+    appendEventConfig && String(appendEventConfig.registry_uuid || "").trim() ? appendEventConfig : null;
+  if (vaultEventModeTextEl) {
+    if (activeConfig) {
+      const uuid = String(activeConfig.registry_uuid || "").trim();
+      const modeLabel = activeConfig.mode === "structured" ? "structured" : "note";
+      const eventLabel = `${formatEventTypeLabel(activeConfig.event_type)} (${modeLabel}) @ ${formatTOffset(
+        Number(activeConfig.relative_day_offset || 0),
+      )} DAYS`;
+      vaultEventModeTextEl.textContent = `Event mode: ${eventLabel} for case ${uuid}.`;
+    } else {
+      vaultEventModeTextEl.textContent = "Event mode: (none).";
+    }
+  }
+
   if (clearAppendTargetBtn) {
-    clearAppendTargetBtn.disabled = !appendTargetRegistryUuid;
+    clearAppendTargetBtn.disabled = !activeConfig || vaultBusy;
+  }
+
+  if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = !isVaultReady() || vaultBusy;
+  if (vaultSaveCaseBtn) vaultSaveCaseBtn.disabled = !isVaultReady() || !activeCaseRegistryUuid || vaultBusy;
+  if (vaultClearActiveCaseBtn) vaultClearActiveCaseBtn.disabled = !activeCaseRegistryUuid || vaultBusy;
+
+  if (contextualAppendBadgeEl) {
+    const showBadge = Boolean(activeConfig && activeConfig.mode === "note" && isPathOrImagingEventType(activeConfig.event_type));
+    contextualAppendBadgeEl.classList.toggle("hidden", !showBadge);
   }
 }
 
 function isStructuredOnlyAppendConfigured() {
   return Boolean(
-    appendTargetRegistryUuid &&
-      appendEventConfig &&
-      appendEventConfig.registry_uuid === appendTargetRegistryUuid &&
+    appendEventConfig &&
+      String(appendEventConfig.registry_uuid || "").trim() &&
       appendEventConfig.mode === "structured" &&
       appendEventConfig.structured_data,
   );
@@ -1535,17 +1849,139 @@ function getPatientMrn(patient) {
   return v || "—";
 }
 
+function formatCaseEventTypeLabel(eventType) {
+  const raw = String(eventType || "").trim();
+  if (!raw) return "Other";
+  const normalized = raw.toLowerCase();
+  if (normalized === "procedure_report") return "Procedure";
+  return raw
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function caseEventBadgeClass(eventType) {
+  const normalized = String(eventType || "").trim().toLowerCase();
+  if (normalized === "pathology") return "pathology";
+  if (normalized === "imaging") return "imaging";
+  if (normalized === "procedure_report" || normalized === "procedure" || normalized === "procedure_addendum")
+    return "procedure";
+  if (normalized.includes("clinical") || normalized === "treatment_update" || normalized === "complication")
+    return "clinical";
+  return "";
+}
+
+function formatCaseEventCreatedAt(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "—";
+  const d = new Date(raw);
+  if (!Number.isFinite(d.getTime())) return raw;
+  return d.toLocaleString();
+}
+
+function renderCaseEvents(remoteCaseData) {
+  if (!vaultCaseEventsHostEl) return;
+  clearEl(vaultCaseEventsHostEl);
+
+  if (!remoteCaseData || typeof remoteCaseData !== "object") {
+    vaultCaseEventsHostEl.textContent = "Load a case to view events.";
+    return;
+  }
+
+  const events = Array.isArray(remoteCaseData?.events) ? remoteCaseData.events : [];
+  if (events.length === 0) {
+    vaultCaseEventsHostEl.textContent = "No events saved for this case yet.";
+    return;
+  }
+
+  const table = document.createElement("table");
+  table.className = "vault-events-table";
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>T offset</th>
+        <th>Created</th>
+        <th>Source</th>
+        <th>Has note</th>
+        <th>Has structured</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+  const tbody = table.querySelector("tbody");
+  if (!tbody) return;
+
+  (Array.isArray(events) ? events : []).forEach((ev) => {
+    const tr = document.createElement("tr");
+
+    const typeTd = document.createElement("td");
+    const typeWrap = document.createElement("div");
+    typeWrap.className = "vault-event-type";
+    const badge = document.createElement("span");
+    badge.className = `vault-event-type-badge ${caseEventBadgeClass(ev?.event_type)}`.trim();
+    badge.textContent = formatCaseEventTypeLabel(ev?.event_type);
+    typeWrap.appendChild(badge);
+    if (ev?.is_synthetic) {
+      const muted = document.createElement("span");
+      muted.className = "vault-event-muted";
+      muted.textContent = "(synthetic)";
+      typeWrap.appendChild(muted);
+    }
+    typeTd.appendChild(typeWrap);
+    const title = String(ev?.event_title || "").trim();
+    if (title) {
+      const titleEl = document.createElement("div");
+      titleEl.className = "vault-event-muted";
+      titleEl.textContent = title;
+      typeTd.appendChild(titleEl);
+    }
+    tr.appendChild(typeTd);
+
+    const offsetTd = document.createElement("td");
+    offsetTd.textContent = formatTOffset(ev?.relative_day_offset || 0);
+    tr.appendChild(offsetTd);
+
+    const createdTd = document.createElement("td");
+    createdTd.textContent = formatCaseEventCreatedAt(ev?.created_at);
+    tr.appendChild(createdTd);
+
+    const sourceTd = document.createElement("td");
+    const sourceParts = [];
+    if (ev?.source_type) sourceParts.push(String(ev.source_type));
+    if (ev?.source_modality) sourceParts.push(String(ev.source_modality));
+    if (ev?.event_subtype) sourceParts.push(String(ev.event_subtype));
+    sourceTd.textContent = sourceParts.length ? sourceParts.join(" / ") : "—";
+    tr.appendChild(sourceTd);
+
+    const noteTd = document.createElement("td");
+    noteTd.textContent = fmtBool(Boolean(ev?.has_note_text));
+    tr.appendChild(noteTd);
+
+    const structuredTd = document.createElement("td");
+    structuredTd.textContent = fmtBool(Boolean(ev?.has_structured_data));
+    tr.appendChild(structuredTd);
+
+    tbody.appendChild(tr);
+  });
+
+  vaultCaseEventsHostEl.appendChild(table);
+}
+
 async function removeVaultPatient(registryUuid) {
   if (!isVaultReady()) return;
   try {
     await deleteVaultPatient({ userId: vaultUserId, registryUuid });
     vaultPatientMap.delete(registryUuid);
-    if (appendTargetRegistryUuid === registryUuid) {
-      appendTargetRegistryUuid = null;
-      appendEventConfig = null;
+    if (activeCaseRegistryUuid === registryUuid) {
+      activeCaseRegistryUuid = null;
+      clearVaultPatientInputs();
     }
+    if (appendEventConfig && appendEventConfig.registry_uuid === registryUuid) appendEventConfig = null;
     renderVaultPatients();
     updateAppendTargetUi();
+    renderCaseEvents(
+      activeCaseRegistryUuid ? registryCaseSnapshotByUuid.get(activeCaseRegistryUuid) || null : null,
+    );
     noteVaultActivity();
   } catch (err) {
     setVaultStatus(`Delete failed: ${String(err?.message || err)}`);
@@ -1557,11 +1993,13 @@ function renderVaultPatients() {
   vaultPatientsHostEl.innerHTML = "";
   if (!isVaultReady()) {
     vaultPatientsHostEl.textContent = "Unlock vault to view local encrypted patients.";
+    renderCaseEvents(null);
     return;
   }
 
   if (!vaultPatientMap || vaultPatientMap.size === 0) {
-    vaultPatientsHostEl.textContent = "No local patients yet. Submit a new case to create one.";
+    vaultPatientsHostEl.textContent = "No local patients yet. Create Local Case or submit a new case to create one.";
+    renderCaseEvents(null);
     return;
   }
 
@@ -1585,7 +2023,7 @@ function renderVaultPatients() {
   const rows = Array.from(vaultPatientMap.entries()).sort((a, b) => String(a[0]).localeCompare(String(b[0])));
   for (const [registryUuid, patient] of rows) {
     const tr = document.createElement("tr");
-    if (appendTargetRegistryUuid === registryUuid) tr.classList.add("active");
+    if (activeCaseRegistryUuid === registryUuid) tr.classList.add("active");
 
     const labelTd = document.createElement("td");
     labelTd.textContent = getPatientRowLabel(patient, registryUuid);
@@ -1617,7 +2055,8 @@ function renderVaultPatients() {
     const addEventBtn = document.createElement("button");
     addEventBtn.type = "button";
     addEventBtn.className = "secondary";
-    addEventBtn.textContent = appendTargetRegistryUuid === registryUuid ? "Selected…" : "Add Event";
+    addEventBtn.textContent =
+      appendEventConfig && appendEventConfig.registry_uuid === registryUuid ? "Edit Event" : "Add Event";
     addEventBtn.style.marginLeft = "8px";
     addEventBtn.addEventListener("click", () => {
       openAddEventModal(registryUuid);
@@ -1650,13 +2089,20 @@ async function syncVaultPatients() {
   try {
     const patients = await loadVaultPatients({ userId, vmk });
     vaultPatientMap = patients;
-    if (appendTargetRegistryUuid && !vaultPatientMap.has(appendTargetRegistryUuid)) {
-      appendTargetRegistryUuid = null;
+    if (activeCaseRegistryUuid && !vaultPatientMap.has(activeCaseRegistryUuid)) {
+      activeCaseRegistryUuid = null;
+      clearVaultPatientInputs();
+    }
+    if (!activeCaseRegistryUuid && vaultPatientMap.size === 1) {
+      activeCaseRegistryUuid = Array.from(vaultPatientMap.keys())[0] || null;
+    }
+    if (appendEventConfig && !vaultPatientMap.has(String(appendEventConfig.registry_uuid || ""))) {
       appendEventConfig = null;
     }
     setVaultStatus(`Unlocked. ${patients.size} patient${patients.size === 1 ? "" : "s"} loaded.`);
     renderVaultPatients();
     updateAppendTargetUi();
+    if (activeCaseRegistryUuid) hydrateVaultInputsFromCase(activeCaseRegistryUuid);
     noteVaultActivity();
   } catch (err) {
     setVaultStatus(`Sync failed: ${String(err?.message || err)}`);
@@ -1670,16 +2116,34 @@ async function saveLocalPatientIdentity(registryUuid) {
   if (!isVaultReady()) return;
   const safeRegistryUuid = String(registryUuid || "").trim();
   if (!safeRegistryUuid) return;
-  const patientLabel = String(vaultPatientLabelInputEl?.value || "").trim();
-  const label = patientLabel || `Case ${safeRegistryUuid.slice(0, 8)}`;
+  const existing = vaultPatientMap.get(safeRegistryUuid) || null;
+
+  // Fill-missing-only semantics: don't overwrite existing local identity with blanks.
+  const inputLabel = String(vaultPatientLabelInputEl?.value || "").trim();
+  const label =
+    inputLabel ||
+    String(existing?.patient_label || "").trim() ||
+    `Case ${safeRegistryUuid.slice(0, 8)}`;
+
   const indexDateRaw = String(vaultIndexDateInputEl?.value || "").trim();
-  const indexDate = parseIsoDateInput(indexDateRaw) ? indexDateRaw : toLocalDateYmd();
-  const localMrn = String(vaultMrnInputEl?.value || "").trim();
-  const localCustomNotes = String(vaultCustomNotesInputEl?.value || "").trim();
+  const existingIndexRaw = String(existing?.index_date || "").trim();
+  const indexDate = parseIsoDateInput(indexDateRaw)
+    ? indexDateRaw
+    : parseIsoDateInput(existingIndexRaw)
+      ? existingIndexRaw
+      : null;
+
+  const inputMrn = String(vaultMrnInputEl?.value || "").trim();
+  const existingMrn = String(existing?.local_meta?.mrn || "").trim();
+  const localMrn = inputMrn || existingMrn;
+
+  const inputCustomNotes = String(vaultCustomNotesInputEl?.value || "").trim();
+  const existingCustomNotes = String(existing?.local_meta?.custom_notes || "").trim();
+  const localCustomNotes = inputCustomNotes || existingCustomNotes;
   const payload = {
     schema_version: 2,
     patient_label: label,
-    index_date: indexDate || null,
+    index_date: indexDate,
     local_meta: {
       mrn: localMrn || null,
       custom_notes: localCustomNotes || null,
@@ -1696,10 +2160,12 @@ async function saveLocalPatientIdentity(registryUuid) {
     patientJson: normalized,
   });
   vaultPatientMap.set(safeRegistryUuid, normalized);
-  if (vaultPatientLabelInputEl) vaultPatientLabelInputEl.value = "";
+  activeCaseRegistryUuid = safeRegistryUuid;
+  hydrateVaultInputsFromCase(safeRegistryUuid);
   renderVaultPatients();
   updateAppendTargetUi();
   noteVaultActivity();
+  return normalized;
 }
 
 function lockVault(options = {}) {
@@ -1708,8 +2174,9 @@ function lockVault(options = {}) {
   vaultVmk = null;
   vaultBusy = false;
   vaultPatientMap = new Map();
-  appendTargetRegistryUuid = null;
+  activeCaseRegistryUuid = null;
   appendEventConfig = null;
+  addEventTargetRegistryUuid = null;
   updateAppendTargetUi();
   renderVaultPatients();
   if (vaultPasswordInputEl) vaultPasswordInputEl.value = "";
@@ -2375,6 +2842,41 @@ function getBillingByCode(data) {
 function deepClone(value) {
   if (typeof structuredClone === "function") return structuredClone(value);
   return JSON.parse(JSON.stringify(value));
+}
+
+function jsonStructuresEqual(left, right) {
+  try {
+    return JSON.stringify(left) === JSON.stringify(right);
+  } catch {
+    return false;
+  }
+}
+
+function mergeRegistriesPreferOverlay(baseValue, overlayValue) {
+  if (Array.isArray(overlayValue)) return deepClone(overlayValue);
+  if (!isPlainObject(overlayValue)) return deepClone(overlayValue);
+
+  const baseObj = isPlainObject(baseValue) ? baseValue : {};
+  const out = {};
+  const keys = new Set([...Object.keys(baseObj), ...Object.keys(overlayValue)]);
+  keys.forEach((key) => {
+    const baseNext = baseObj[key];
+    const overlayNext = overlayValue[key];
+    if (overlayNext === undefined) {
+      out[key] = deepClone(baseNext);
+      return;
+    }
+    if (isPlainObject(overlayNext) && isPlainObject(baseNext)) {
+      out[key] = mergeRegistriesPreferOverlay(baseNext, overlayNext);
+      return;
+    }
+    if (Array.isArray(overlayNext)) {
+      out[key] = deepClone(overlayNext);
+      return;
+    }
+    out[key] = deepClone(overlayNext);
+  });
+  return out;
 }
 
 function decodeJsonPointerSegment(seg) {
@@ -9292,15 +9794,16 @@ async function main() {
   }
 
   async function extractSelectedPdfIntoEditor(file) {
-    if (!file) return;
-    if (running || bundleBusy || extractingPdf || extractingCamera || correctingCameraOcr) return;
+    if (!file) return false;
+    if (running || bundleBusy || extractingPdf || extractingCamera || correctingCameraOcr) return false;
 
     const looksLikePdf = /\.pdf$/i.test(file.name) || file.type === "application/pdf";
     if (!looksLikePdf) {
       setStatus("Please choose a PDF file.");
-      return;
+      return false;
     }
 
+    let succeeded = false;
     extractingPdf = true;
     publishPdfExtractionMetricsReport({
       generatedAt: new Date().toISOString(),
@@ -9375,7 +9878,7 @@ async function main() {
         setStatus("No text could be extracted from that PDF.");
         setPdfExtractSummary("No extractable text was found in this PDF.", "warning");
         setProgress("");
-        return;
+        return false;
       }
 
       if (!docModel) {
@@ -9419,7 +9922,7 @@ async function main() {
           ocrMaskMode,
           status: "blocked",
         }));
-        return;
+        return false;
       }
 
       const normalizedText = docModel.fullText.startsWith("\n")
@@ -9465,6 +9968,7 @@ async function main() {
       } else {
         setProgress("");
       }
+      succeeded = true;
     } catch (error) {
       const msg = error instanceof Error ? error.message : String(error);
       setStatus(`PDF extraction failed: ${msg}`);
@@ -9476,6 +9980,7 @@ async function main() {
         fileName: file?.name || "",
         error: msg,
       });
+      return false;
     } finally {
       extractingPdf = false;
       if (runBtn) runBtn.disabled = extractingPdf || extractingCamera || correctingCameraOcr || !workerReady;
@@ -9487,7 +9992,84 @@ async function main() {
       }
       updateZkControls();
     }
+    return succeeded;
   }
+
+  function updateAddEventPdfControls() {
+    const busy = running || bundleBusy || extractingPdf || extractingCamera || correctingCameraOcr || vaultBusy;
+    const hasPdfSelected = Boolean(addEventPdfInputEl?.files && addEventPdfInputEl.files.length > 0);
+    if (addEventPdfInputEl) addEventPdfInputEl.disabled = busy;
+    if (addEventPdfMaskSelectEl) addEventPdfMaskSelectEl.disabled = busy;
+    if (addEventPdfExtractBtn) addEventPdfExtractBtn.disabled = busy || !hasPdfSelected;
+  }
+
+  if (addEventNoteInputEl) {
+    addEventNoteInputEl.addEventListener("input", () => {
+      addEventDraftSourceType = "manual_entry";
+      if (!String(addEventNoteInputEl.value || "").trim()) {
+        setAddEventNoteStatus(
+          "Optional: paste a scrubbed event note or extract local PDF text into this box.",
+          "neutral",
+        );
+      }
+    });
+  }
+
+  if (addEventPdfInputEl) {
+    addEventPdfInputEl.addEventListener("change", () => {
+      const file = addEventPdfInputEl.files && addEventPdfInputEl.files[0];
+      if (!file) {
+        setAddEventNoteStatus(
+          "Optional: paste a scrubbed event note or extract local PDF text into this box.",
+          "neutral",
+        );
+        updateAddEventPdfControls();
+        return;
+      }
+      const looksLikePdf = /\.pdf$/i.test(file.name) || file.type === "application/pdf";
+      if (!looksLikePdf) {
+        setAddEventNoteStatus(`Selected file is not a PDF: ${file.name}`, "error");
+      } else {
+        setAddEventNoteStatus(
+          `Selected PDF: ${file.name} (${formatFileSize(file.size)}). Click "Extract PDF Into Event Note".`,
+          "neutral",
+        );
+      }
+      updateAddEventPdfControls();
+    });
+  }
+
+  if (addEventPdfExtractBtn) {
+    addEventPdfExtractBtn.addEventListener("click", async () => {
+      const file = addEventPdfInputEl?.files?.[0];
+      if (!file) {
+        setAddEventNoteStatus("Choose a PDF first.", "warning");
+        return;
+      }
+
+      const prevMask = String(pdfOcrMaskSelectEl?.value || "auto");
+      if (pdfOcrMaskSelectEl && addEventPdfMaskSelectEl) {
+        pdfOcrMaskSelectEl.value = String(addEventPdfMaskSelectEl.value || "auto");
+      }
+
+      setAddEventNoteStatus("Extracting PDF locally into event note draft…", "neutral");
+      const ok = await extractSelectedPdfIntoEditor(file);
+      if (pdfOcrMaskSelectEl) pdfOcrMaskSelectEl.value = prevMask;
+      updateAddEventPdfControls();
+      if (!ok) {
+        setAddEventNoteStatus("PDF extraction failed. See status panel for details.", "error");
+        return;
+      }
+
+      if (addEventNoteInputEl) {
+        addEventNoteInputEl.value = String(model.getValue() || "");
+      }
+      addEventDraftSourceType = "pdf_local";
+      setAddEventNoteStatus("PDF text loaded into event note draft and main editor.", "success");
+    });
+  }
+
+  updateAddEventPdfControls();
 
   if (completenessApplyInlineBtn) {
     updateCompletenessApplyButtonState();
@@ -9870,11 +10452,15 @@ async function main() {
     if (pdfUploadInputEl) pdfUploadInputEl.disabled = busy;
     if (pdfOcrMaskSelectEl) pdfOcrMaskSelectEl.disabled = busy;
     if (pdfExtractBtn) pdfExtractBtn.disabled = busy || !hasPdfSelected;
+    updateAddEventPdfControls();
     if (cameraScanBtn) cameraScanBtn.disabled = busy || !cameraSupport.ok;
     if (vaultUnlockBtn) vaultUnlockBtn.disabled = vaultBusy;
     if (vaultLockBtn) vaultLockBtn.disabled = !isVaultReady() || vaultBusy;
     if (vaultSyncBtn) vaultSyncBtn.disabled = !isVaultReady() || vaultBusy;
-    if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = !appendTargetRegistryUuid || vaultBusy;
+    if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = !isVaultReady() || vaultBusy;
+    if (vaultSaveCaseBtn) vaultSaveCaseBtn.disabled = !isVaultReady() || !activeCaseRegistryUuid || vaultBusy;
+    if (vaultClearActiveCaseBtn) vaultClearActiveCaseBtn.disabled = !activeCaseRegistryUuid || vaultBusy;
+    if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = !appendEventConfig || vaultBusy;
     updateCameraControls();
     updateOcrCorrectionButton();
   }
@@ -9898,6 +10484,21 @@ async function main() {
     clearResultsUi();
     updateZkControls();
   }
+
+  loadAppendEventDraftIntoEditor = ({ noteText, sourceType } = {}) => {
+    const draft = String(noteText || "");
+    if (!draft.trim()) return false;
+
+    setEditorText(draft);
+    originalText = draft;
+    hasRunDetection = false;
+    ocrCorrectionApplied = false;
+    setNoteSourceType(sourceType || "manual_entry");
+    setScrubbedConfirmed(false);
+    clearDetections();
+    resetFeedbackDraft();
+    return true;
+  };
 
   function updateDecorations() {
     if (usingPlainEditor || !editor) return;
@@ -10970,29 +11571,50 @@ async function main() {
       noteVaultActivity();
       const submitterName = getSubmitterName();
       const noteText = model.getValue();
-      const isAppendFlow = Boolean(appendTargetRegistryUuid);
+      const activeAppendConfig =
+        appendEventConfig && String(appendEventConfig.registry_uuid || "").trim() ? appendEventConfig : null;
+      const isAppendFlow = Boolean(activeAppendConfig);
+      const activeCaseUuid = String(activeCaseRegistryUuid || "").trim();
       const registryUuid = isAppendFlow
-        ? String(appendTargetRegistryUuid)
-        : (globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`);
+        ? String(activeAppendConfig.registry_uuid)
+        : (activeCaseUuid || (globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`));
       lastSubmittedRegistryUuid = registryUuid;
-      const resolvedAppendConfig = isAppendFlow
-        ? appendEventConfig && appendEventConfig.registry_uuid === registryUuid
-          ? appendEventConfig
-          : {
-              registry_uuid: registryUuid,
-              event_type: "pathology",
-              mode: "note",
-              relative_day_offset: 0,
-              structured_data: null,
-              event_date: toLocalDateYmd(),
-            }
-        : null;
+      activeCaseRegistryUuid = registryUuid;
+      const resolvedAppendConfig = activeAppendConfig;
       const appendEventType = normalizeEventType(resolvedAppendConfig?.event_type || "pathology");
       const appendMode = resolvedAppendConfig?.mode === "structured" ? "structured" : "note";
       const isStructuredOnlyAppend = Boolean(isAppendFlow && appendMode === "structured");
+      const isContextualAppendOnly = Boolean(
+        isAppendFlow && appendMode === "note" && isContextualAppendEventType(appendEventType),
+      );
+      const configuredDraftNote = String(resolvedAppendConfig?.note_draft_text || "").trim();
+      const appendNoteSourceType = String(
+        resolvedAppendConfig?.note_source_type || noteSourceType || "manual_entry",
+      ).trim() || "manual_entry";
       const normalizedOffset = Number.isFinite(Number(resolvedAppendConfig?.relative_day_offset))
         ? Math.trunc(Number(resolvedAppendConfig.relative_day_offset))
         : 0;
+      if (isAppendFlow && appendMode === "note" && configuredDraftNote) {
+        const editorNote = String(noteText || "").trim();
+        if (!editorNote) {
+          const loaded = typeof loadAppendEventDraftIntoEditor === "function"
+            ? loadAppendEventDraftIntoEditor({
+                noteText: configuredDraftNote,
+                sourceType: appendNoteSourceType,
+              })
+            : false;
+          if (loaded) {
+            setStatus(
+              `${formatEventTypeLabel(appendEventType)} event note loaded into editor. Run Detection, Apply Redactions, then Submit.`,
+            );
+          } else {
+            setStatus(
+              `${formatEventTypeLabel(appendEventType)} event note not loaded into editor. Run Detection, Apply Redactions, then Submit.`,
+            );
+          }
+          return;
+        }
+      }
       if (!isStructuredOnlyAppend && !String(noteText || "").trim()) {
         setStatus("Submit blocked: note text is required for note-based extraction.");
         return;
@@ -11002,13 +11624,13 @@ async function main() {
         return;
       }
 
-	      const processBody = {
-	        note: noteText,
+		      const processBody = {
+		        note: noteText,
           registry_uuid: registryUuid,
-	        already_scrubbed: true,
-          source_type: noteSourceType,
+		        already_scrubbed: true,
+          source_type: appendNoteSourceType,
           ocr_correction_applied: Boolean(ocrCorrectionApplied),
-	      };
+		      };
 	      // Force backend to return evidence spans
 	      processBody.explain = true;
         assertNoLocalPayloadFields(processBody, "process");
@@ -11031,12 +11653,21 @@ async function main() {
         const appendPayload = {
           note: isStructuredOnlyAppend ? null : noteText,
           already_scrubbed: true,
-          source_type: noteSourceType,
+          source_type: appendNoteSourceType,
           ocr_correction_applied: Boolean(ocrCorrectionApplied),
           event_type: appendEventType,
           document_kind: appendEventType,
           relative_day_offset: normalizedOffset,
         };
+        if (resolvedAppendConfig?.event_title) {
+          appendPayload.event_title = String(resolvedAppendConfig.event_title);
+        }
+        if (resolvedAppendConfig?.source_modality) {
+          appendPayload.source_modality = String(resolvedAppendConfig.source_modality);
+        }
+        if (resolvedAppendConfig?.event_subtype) {
+          appendPayload.event_subtype = String(resolvedAppendConfig.event_subtype);
+        }
         if (resolvedAppendConfig?.structured_data) {
           appendPayload.structured_data = resolvedAppendConfig.structured_data;
         }
@@ -11060,40 +11691,187 @@ async function main() {
             null,
             2
           );
-          setStatus(`Append failed (${appendRes.status})`);
+          const detail = parsedAppendData?.detail;
+          const detailMsg =
+            typeof detail === "string"
+              ? detail
+              : typeof detail?.message === "string"
+                ? detail.message
+                : "";
+          const detailLower = String(detailMsg || "").toLowerCase();
+          if (appendRes.status === 400 && detailLower.includes("absolute date-like")) {
+            setStatus(
+              "Append rejected: absolute dates detected. Run Detection + Apply Redactions to remove dates/identifiers before append.",
+            );
+          } else if (appendRes.status === 400 && detailLower.includes("allow_absolute_dates")) {
+            setStatus(
+              "Append rejected: allow_absolute_dates override is blocked. Remove absolute dates or enable PROCSUITE_ALLOW_ABSOLUTE_DATES=1 for an audited override.",
+            );
+          } else if (appendRes.status === 400 && detailLower.includes("phi risk")) {
+            setStatus(
+              "Append rejected: PHI risk detected. Run Detection + Apply Redactions to remove identifiers before append.",
+            );
+          } else {
+            setStatus(`Append failed (${appendRes.status})`);
+          }
           return;
         }
         appendData = parsedAppendData;
       }
 
-      if (isStructuredOnlyAppend) {
-        const remoteCaseData = await fetchRegistryCaseSnapshot(registryUuid, { silent: true });
-        serverResponseEl.textContent = JSON.stringify(
-          {
-            mode: "structured_append_only",
-            append: appendData,
-            remote_case: remoteCaseData
-              ? {
-                  registry_uuid: remoteCaseData.registry_uuid,
-                  version: remoteCaseData.version,
-                  updated_at: remoteCaseData.updated_at,
-                }
-              : null,
-          },
-          null,
-          2,
-        );
-
-        if (lastServerResponse) {
-          await maybeRenderRegistryGrid(lastServerResponse, {
-            registryUuid,
-            vaultLocalData: vaultPatientMap.get(registryUuid) || null,
-            remoteCaseData,
+      if (isStructuredOnlyAppend || isContextualAppendOnly) {
+        const preAppendSnapshot = registryCaseSnapshotByUuid.get(registryUuid) || null;
+        const appendRegistry = isPlainObject(appendData?.registry)
+          ? appendData.registry
+          : isPlainObject(appendData?.registry_json)
+            ? appendData.registry_json
+            : null;
+        let remoteCaseData = null;
+        if (appendRegistry) {
+          remoteCaseData = {
+            registry_uuid: String(appendData?.registry_uuid || registryUuid),
+            version: Number.isFinite(Number(appendData?.version)) ? Number(appendData.version) : null,
+            updated_at: appendData?.updated_at || null,
+            registry: appendRegistry,
+          };
+          registryCaseSnapshotByUuid.set(registryUuid, {
+            registry_uuid: String(appendData?.registry_uuid || registryUuid),
+            schema_version: String(appendData?.schema_version || "v3"),
+            version: Number.isFinite(Number(appendData?.version)) ? Number(appendData.version) : 1,
+            source_run_id: appendData?.source_run_id || null,
+            updated_at: appendData?.updated_at || null,
+            registry: appendRegistry,
+            registry_json: appendRegistry,
+            manual_overrides: isPlainObject(appendData?.manual_overrides) ? appendData.manual_overrides : {},
+            events: Array.isArray(appendData?.events) ? appendData.events : [],
+            recent_events: Array.isArray(appendData?.recent_events) ? appendData.recent_events : [],
           });
+        } else {
+          remoteCaseData = await fetchRegistryCaseSnapshot(registryUuid, { silent: true });
         }
-        setStatus(
-          `${formatEventTypeLabel(appendEventType)} structured event saved (append-only; extraction pipeline bypassed).`,
+
+        let effectiveRegistry = isPlainObject(remoteCaseData?.registry) ? deepClone(remoteCaseData.registry) : {};
+        let preservedProcedureContext = false;
+        const cachedRegistry = isPlainObject(preAppendSnapshot?.registry)
+          ? preAppendSnapshot.registry
+          : null;
+        const previousRegistry = isPlainObject(lastServerResponse?.registry) ? lastServerResponse.registry : null;
+        const baselineRegistry = cachedRegistry || previousRegistry;
+        if (isContextualAppendOnly && baselineRegistry) {
+          effectiveRegistry = mergeRegistriesPreferOverlay(baselineRegistry, effectiveRegistry);
+          preservedProcedureContext = true;
+        }
+        let remoteCaseForRender = remoteCaseData
+          ? { ...remoteCaseData, registry: effectiveRegistry }
+          : {
+              registry_uuid: registryUuid,
+              version: null,
+              updated_at: null,
+              registry: effectiveRegistry,
+            };
+        if (isContextualAppendOnly && baselineRegistry && remoteCaseData) {
+          const remoteRegistryBaseline = isPlainObject(remoteCaseData.registry) ? remoteCaseData.registry : {};
+          const shouldReconcileServerCase = !jsonStructuresEqual(remoteRegistryBaseline, effectiveRegistry);
+          if (shouldReconcileServerCase) {
+            try {
+              const patchPayload = { registry_patch: effectiveRegistry };
+              const expectedVersion = Number(remoteCaseForRender.version);
+              if (Number.isInteger(expectedVersion) && expectedVersion > 0) {
+                patchPayload.expected_version = expectedVersion;
+              }
+              const reconcileRes = await fetch(`/api/v1/registry/${encodeURIComponent(registryUuid)}`, {
+                method: "PATCH",
+                headers: getVaultAuthHeaders(),
+                body: JSON.stringify(patchPayload),
+              });
+              const reconcileData = await parseJsonResponseSafe(reconcileRes);
+              if (reconcileRes.ok && isPlainObject(reconcileData)) {
+                const patchedRegistry = isPlainObject(reconcileData.registry)
+                  ? reconcileData.registry
+                  : effectiveRegistry;
+                effectiveRegistry = deepClone(patchedRegistry);
+                remoteCaseForRender = {
+                  registry_uuid: String(reconcileData.registry_uuid || remoteCaseForRender.registry_uuid || registryUuid),
+                  version: Number.isFinite(Number(reconcileData.version))
+                    ? Number(reconcileData.version)
+                    : remoteCaseForRender.version,
+                  updated_at: reconcileData.updated_at || remoteCaseForRender.updated_at || null,
+                  registry: patchedRegistry,
+                };
+              } else {
+                const detail = typeof reconcileData?.detail === "string"
+                  ? reconcileData.detail
+                  : reconcileData?.detail?.message || reconcileRes.statusText || `status ${reconcileRes.status}`;
+                console.warn(`Contextual append reconciliation patch failed (${detail}).`);
+              }
+            } catch (patchErr) {
+              console.warn("Contextual append reconciliation patch error:", patchErr);
+            }
+          }
+        }
+        registryCaseSnapshotByUuid.set(registryUuid, {
+          registry_uuid: String(remoteCaseForRender?.registry_uuid || registryUuid),
+          schema_version: String(appendData?.schema_version || preAppendSnapshot?.schema_version || "v3"),
+          version: Number.isFinite(Number(remoteCaseForRender?.version)) ? Number(remoteCaseForRender.version) : 1,
+          source_run_id: appendData?.source_run_id || preAppendSnapshot?.source_run_id || null,
+          updated_at:
+            remoteCaseForRender?.updated_at || appendData?.updated_at || preAppendSnapshot?.updated_at || null,
+          registry: effectiveRegistry,
+          registry_json: effectiveRegistry,
+          manual_overrides: isPlainObject(appendData?.manual_overrides)
+            ? appendData.manual_overrides
+            : isPlainObject(preAppendSnapshot?.manual_overrides)
+              ? preAppendSnapshot.manual_overrides
+              : {},
+          events: Array.isArray(appendData?.events)
+            ? appendData.events
+            : Array.isArray(preAppendSnapshot?.events)
+              ? preAppendSnapshot.events
+              : [],
+          recent_events: Array.isArray(appendData?.recent_events)
+            ? appendData.recent_events
+            : Array.isArray(preAppendSnapshot?.recent_events)
+              ? preAppendSnapshot.recent_events
+              : [],
+        });
+
+        const mode = isStructuredOnlyAppend ? "structured_append_only" : "contextual_append_only";
+        const rawAppendPayload = {
+          mode,
+          event_type: appendEventType,
+          append: appendData,
+          remote_case: remoteCaseForRender
+            ? {
+                registry_uuid: remoteCaseForRender.registry_uuid,
+                version: remoteCaseForRender.version,
+                updated_at: remoteCaseForRender.updated_at,
+              }
+            : null,
+        };
+        const appendOnlyData = buildAppendOnlyDashboardResponse(registryUuid, remoteCaseForRender, mode);
+        await renderResults(appendOnlyData, {
+          rawData: rawAppendPayload,
+          registryUuid,
+          remoteCaseData: remoteCaseForRender,
+        });
+        renderCaseEvents(registryCaseSnapshotByUuid.get(registryUuid) || remoteCaseForRender || null);
+        setRunId(null);
+        setFeedbackStatus(
+          isStructuredOnlyAppend
+            ? "Structured append saved. Extraction pipeline bypassed."
+            : `${formatEventTypeLabel(appendEventType)} append saved in event context (procedure extraction skipped).`,
         );
+        if (isStructuredOnlyAppend) {
+          setStatus(
+            `${formatEventTypeLabel(appendEventType)} structured event saved (append-only; extraction pipeline bypassed).`,
+          );
+        } else {
+          setStatus(
+            preservedProcedureContext
+              ? `${formatEventTypeLabel(appendEventType)} event saved (contextual append-only mode; preserved existing procedure context).`
+              : `${formatEventTypeLabel(appendEventType)} event saved (contextual append-only mode).`,
+          );
+        }
         noteVaultActivity();
         renderVaultPatients();
         return;
@@ -11143,15 +11921,18 @@ async function main() {
           setFeedbackStatus("Run persisted. You can submit feedback and save corrections.");
           const remoteCaseData = await fetchRegistryCaseSnapshot(registryUuid, { silent: true });
           await renderResults(result, { registryUuid, remoteCaseData });
+          renderCaseEvents(remoteCaseData);
           if (!isAppendFlow) {
             if (isVaultReady()) {
               await saveLocalPatientIdentity(registryUuid);
-              setStatus("Submitted + persisted (new case saved to local vault)");
+              setStatus(`Submitted + persisted and saved to local vault for case ${registryUuid}.`);
             } else {
               setStatus("Submitted + persisted");
             }
           } else {
-            setStatus(`${formatEventTypeLabel(appendEventType)} event appended + submitted + persisted`);
+            setStatus(
+              `${formatEventTypeLabel(appendEventType)} event appended + submitted + persisted (case ${registryUuid}).`,
+            );
           }
           noteVaultActivity();
           renderVaultPatients();
@@ -11236,15 +12017,18 @@ async function main() {
 	      });
         const remoteCaseData = await fetchRegistryCaseSnapshot(registryUuid, { silent: true });
 	      await renderResults(data, { registryUuid, remoteCaseData });
+        renderCaseEvents(remoteCaseData);
         if (!isAppendFlow) {
           if (isVaultReady()) {
             await saveLocalPatientIdentity(registryUuid);
-            setStatus("Submitted (not persisted) and saved to local vault");
+            setStatus(`Submitted (not persisted) and saved to local vault for case ${registryUuid}.`);
           } else {
             setStatus("Submitted (not persisted)");
           }
         } else {
-          setStatus(`${formatEventTypeLabel(appendEventType)} event appended + submitted (not persisted)`);
+          setStatus(
+            `${formatEventTypeLabel(appendEventType)} event appended + submitted (not persisted) (case ${registryUuid}).`,
+          );
         }
         noteVaultActivity();
         renderVaultPatients();
