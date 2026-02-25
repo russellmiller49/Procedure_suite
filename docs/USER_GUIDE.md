@@ -586,7 +586,8 @@ How it works:
   - `index_date` (kept local, encrypted)
   - `local_meta` (for optional local-only fields like `mrn`, `custom_notes`)
 - The vault row action is **Add Event** (not pathology-only):
-  - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `procedure`, `clinical_status`)
+  - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `clinical_update`, `treatment_update`, `complication`, `procedure_addendum`, `other`)
+  - Legacy aliases (`procedure`, `clinical_status`) are still accepted and normalized server-side
   - Use either note mode or structured status mode
 - **Absolute dates are never sent to the server.**
   - The browser computes signed `relative_day_offset` from local `index_date`
@@ -600,13 +601,17 @@ Troubleshooting:
 ### Registry Event APIs (Zero-Date Transport)
 
 - `POST /api/v1/registry/{registry_uuid}/append`
-  - Canonical event fields: `event_type`, `relative_day_offset`, optional `structured_data`, optional `note`
+  - Canonical event fields: `event_type`, `relative_day_offset`, `already_scrubbed`, optional `structured_data`, optional `text`/`note`
+  - Optional metadata: `source_modality`, `event_subtype`, `event_title`
+  - Strict ZK guard: with `PROCSUITE_STRICT_ZK=1`, `already_scrubbed=false` is rejected
+  - Absolute-date guard: date-like strings in `text`/`event_title`/`structured_data` are rejected by default; override requires both `allow_absolute_dates=true` and `PROCSUITE_ALLOW_ABSOLUTE_DATES=1`
   - Backward-compatible alias: `document_kind`
-  - Transport guarantee: absolute dates are not accepted/sent; use signed offsets only
+  - On success, append triggers deterministic case aggregation (default `REGISTRY_AGGREGATE_ON_APPEND=1`) and returns the updated case snapshot
 - `GET /api/v1/registry/{registry_uuid}`
-  - Returns canonical case snapshot plus append event summaries
+  - Returns canonical case snapshot, `manual_overrides` lock map, and `recent_events`
 - `PATCH /api/v1/registry/{registry_uuid}`
   - Applies partial corrections to canonical `registry_json` with optional `expected_version` concurrency check
+  - Every changed leaf path is written to `manual_overrides` (field-level lock); subsequent aggregation will not overwrite locked fields
 
 ### PDF Upload and OCR (Client-Side)
 

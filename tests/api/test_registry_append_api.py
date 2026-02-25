@@ -133,7 +133,7 @@ def test_append_supports_structured_only_pipeline_bypass(client: TestClient, app
     assert res.status_code == 200
     row = append_db.query(RegistryAppendedDocument).filter_by(id=uuid.UUID(res.json()["append_id"])).one()
     assert row.note_text == ""
-    assert row.event_type == "clinical_status"
+    assert row.event_type == "clinical_update"
     assert row.relative_day_offset == -3
     assert row.metadata_json.get("structured_data", {}).get("hospital_admission") is True
 

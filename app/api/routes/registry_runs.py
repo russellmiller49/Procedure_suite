@@ -292,6 +292,7 @@ async def create_registry_run(
                 schema_version=_schema_version(),
                 version=1,
                 source_run_id=run.id,
+                manual_overrides={},
                 created_at=_utcnow(),
                 updated_at=_utcnow(),
             )

@@ -45,6 +45,64 @@ def _deep_merge_dict(base: dict[str, Any], patch: dict[str, Any]) -> dict[str, A
     return out
 
 
+def _escape_pointer_token(token: str) -> str:
+    return str(token).replace("~", "~0").replace("/", "~1")
+
+
+def _collect_leaf_paths(value: Any, path: str) -> list[str]:
+    if isinstance(value, dict):
+        if not value:
+            return [path or "/"]
+        out: list[str] = []
+        for key, child in value.items():
+            child_path = f"{path}/{_escape_pointer_token(key)}" if path else f"/{_escape_pointer_token(key)}"
+            out.extend(_collect_leaf_paths(child, child_path))
+        return out
+
+    if isinstance(value, list):
+        if not value:
+            return [path or "/"]
+        out: list[str] = []
+        for idx, child in enumerate(value):
+            child_path = f"{path}/{idx}" if path else f"/{idx}"
+            out.extend(_collect_leaf_paths(child, child_path))
+        return out
+
+    return [path or "/"]
+
+
+def _changed_leaf_paths(old: Any, new: Any, path: str = "") -> list[str]:
+    if isinstance(old, dict) and isinstance(new, dict):
+        changed: list[str] = []
+        keys = set(old.keys()) | set(new.keys())
+        for key in sorted(keys):
+            child_path = f"{path}/{_escape_pointer_token(key)}" if path else f"/{_escape_pointer_token(key)}"
+            if key not in old:
+                changed.extend(_collect_leaf_paths(new[key], child_path))
+                continue
+            if key not in new:
+                changed.extend(_collect_leaf_paths(old[key], child_path))
+                continue
+            changed.extend(_changed_leaf_paths(old[key], new[key], child_path))
+        return changed
+
+    if isinstance(old, list) and isinstance(new, list):
+        if old == new:
+            return []
+        if len(old) != len(new):
+            return [path or "/"]
+
+        changed: list[str] = []
+        for idx, (left, right) in enumerate(zip(old, new, strict=False)):
+            child_path = f"{path}/{idx}" if path else f"/{idx}"
+            changed.extend(_changed_leaf_paths(left, right, child_path))
+        return changed
+
+    if old != new:
+        return [path or "/"]
+    return []
+
+
 def _ensure_case_ownership(db: Session, *, user_id: str, registry_uuid: uuid.UUID) -> None:
     case_stmt: Select[tuple[UserPatientVault]] = select(UserPatientVault).where(
         UserPatientVault.user_id == user_id,
@@ -59,12 +117,16 @@ def _ensure_case_ownership(db: Session, *, user_id: str, registry_uuid: uuid.UUI
 
 
 class RegistryCaseEventSummary(BaseModel):
+    id: str
     append_id: str
     created_at: str
     event_type: str
     document_kind: str
     source_type: str | None = None
+    source_modality: str | None = None
+    event_subtype: str | None = None
     relative_day_offset: int | None = None
+    event_title: str | None = None
     has_note_text: bool = False
     has_structured_data: bool = False
 
@@ -76,7 +138,10 @@ class RegistryCaseResponse(BaseModel):
     source_run_id: str | None = None
     updated_at: str
     registry: dict[str, Any]
+    registry_json: dict[str, Any]
+    manual_overrides: dict[str, Any] = Field(default_factory=dict)
     events: list[RegistryCaseEventSummary] = Field(default_factory=list)
+    recent_events: list[RegistryCaseEventSummary] = Field(default_factory=list)
 
 
 class RegistryCasePatchRequest(BaseModel):
@@ -90,32 +155,45 @@ class RegistryCasePatchRequest(BaseModel):
     )
 
 
+def _build_event_summary(row: RegistryAppendedDocument) -> RegistryCaseEventSummary:
+    metadata = row.metadata_json if isinstance(row.metadata_json, dict) else {}
+    event_id = str(row.id)
+    return RegistryCaseEventSummary(
+        id=event_id,
+        append_id=event_id,
+        created_at=row.created_at.isoformat(),
+        event_type=str(getattr(row, "event_type", row.document_kind or "pathology")),
+        document_kind=str(row.document_kind or ""),
+        source_type=row.source_type,
+        source_modality=getattr(row, "source_modality", None),
+        event_subtype=getattr(row, "event_subtype", None),
+        relative_day_offset=getattr(row, "relative_day_offset", None),
+        event_title=getattr(row, "event_title", None),
+        has_note_text=bool(str(row.note_text or "").strip()),
+        has_structured_data=bool(metadata.get("structured_data")),
+    )
+
+
 def _build_case_response(
     *,
     case_record: RegistryCaseRecord,
     append_rows: list[RegistryAppendedDocument],
 ) -> RegistryCaseResponse:
-    events = [
-        RegistryCaseEventSummary(
-            append_id=str(row.id),
-            created_at=row.created_at.isoformat(),
-            event_type=str(getattr(row, "event_type", row.document_kind or "pathology")),
-            document_kind=str(row.document_kind or ""),
-            source_type=row.source_type,
-            relative_day_offset=getattr(row, "relative_day_offset", None),
-            has_note_text=bool(str(row.note_text or "").strip()),
-            has_structured_data=bool((row.metadata_json or {}).get("structured_data")),
-        )
-        for row in append_rows
-    ]
+    events = [_build_event_summary(row) for row in append_rows]
+    registry_json = dict(case_record.registry_json or {})
+    manual_overrides = dict(case_record.manual_overrides or {})
+
     return RegistryCaseResponse(
         registry_uuid=str(case_record.registry_uuid),
         schema_version=str(case_record.schema_version or _schema_version()),
         version=int(case_record.version or 1),
         source_run_id=str(case_record.source_run_id) if case_record.source_run_id else None,
         updated_at=case_record.updated_at.isoformat(),
-        registry=dict(case_record.registry_json or {}),
+        registry=registry_json,
+        registry_json=registry_json,
+        manual_overrides=manual_overrides,
         events=events,
+        recent_events=events,
     )
 
 
@@ -186,6 +264,7 @@ def patch_registry_case(
 
     base_registry = dict(case_record.registry_json or {})
     merged_registry = _deep_merge_dict(base_registry, payload.registry_patch)
+
     try:
         validated = RegistryRecord(**merged_registry)
     except Exception as exc:  # noqa: BLE001
@@ -194,7 +273,18 @@ def patch_registry_case(
             detail=f"Invalid registry patch: {exc}",
         ) from exc
 
-    case_record.registry_json = validated.model_dump(exclude_none=True)
+    changed_paths = sorted(set(_changed_leaf_paths(base_registry, merged_registry)))
+    now_iso = _utcnow().isoformat()
+    manual_overrides = dict(case_record.manual_overrides or {})
+    for path in changed_paths:
+        manual_overrides[path] = {
+            "locked": True,
+            "updated_at": now_iso,
+            "source": "manual",
+        }
+
+    case_record.registry_json = validated.model_dump(exclude_none=True, mode="json")
+    case_record.manual_overrides = manual_overrides
     case_record.schema_version = _schema_version()
     case_record.version = current_version + 1
     case_record.updated_at = _utcnow()
@@ -215,4 +305,4 @@ def patch_registry_case(
     return _build_case_response(case_record=case_record, append_rows=append_rows)
 
 
-__all__ = ["router"]
+__all__ = ["router", "RegistryCaseResponse", "RegistryCaseEventSummary"]
