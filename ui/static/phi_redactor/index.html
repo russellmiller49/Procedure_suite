@@ -34,27 +34,30 @@
     </script>
     <script type="module" src="./app.js"></script>
   </head>
-  <body>
-    <header class="topbar">
-      <div class="title">
-        <div class="h1">Procedure Suite - Clinical Dashboard</div>
-        <div class="subtle">
-          Client-side PHI detection. Scrub notes before submission.
-        </div>
-      </div>
-      <div class="topbar-links">
-        <a class="topbar-link" href="./reporter_builder.html">Reporter Builder</a>
-        <a class="topbar-link" href="./workflow.html">Workflow</a>
-      </div>
-      <div class="status">
-        <span id="statusText">Loading...</span>
-        <span id="contextualAppendBadge" class="status-context-badge hidden">Contextual append-only mode active</span>
-        <span id="progressText" class="progress"></span>
-      </div>
-    </header>
+	  <body>
+	    <header class="topbar">
+	      <div class="title">
+	        <div class="h1">Procedure Suite - Clinical Dashboard</div>
+	        <div class="subtle">
+	          Client-side PHI detection. Scrub notes before submission.
+	        </div>
+	      </div>
+	      <div class="topbar-links">
+	        <a class="topbar-link" href="./reporter_builder.html">Reporter Builder</a>
+	        <a class="topbar-link" href="./workflow.html">Workflow</a>
+	      </div>
+	      <div class="status">
+	        <span id="statusText">Loading...</span>
+	        <span id="contextualAppendBadge" class="status-context-badge hidden">Contextual append-only mode active</span>
+	        <span id="progressText" class="progress"></span>
+	      </div>
+	    </header>
+	    <div id="vaultIdentityBanner" class="vault-identity-banner vault-identity-banner--locked">
+	      Vault: Locked. Unlock to enable local encrypted identity + device snapshot cache.
+	    </div>
 
-    <main class="layout">
-      <section class="editorPane">
+	    <main class="layout">
+	      <section class="editorPane">
         <!-- Section 1: De-identify Note -->
         <div class="section-header">
           <div class="section-title">
@@ -160,22 +163,18 @@
 	            </div>
 	          </div>
 
-            <details class="raw-json-toggle" id="vaultPanel" open>
-              <summary>Local Vault (Encrypted)</summary>
-              <div class="vault-panel">
-                <div class="vault-grid">
-                  <div class="feedback-field">
-                    <label for="vaultUserIdInput">Vault User ID</label>
-                    <input id="vaultUserIdInput" type="text" placeholder="Stable ID (not a login)" />
-                  </div>
-                  <div class="feedback-field">
-                    <label for="vaultPasswordInput">Vault Password</label>
-                    <input id="vaultPasswordInput" type="password" placeholder="Required to unlock vault" />
-                  </div>
-                  <div class="feedback-field">
-                    <label for="vaultPatientLabelInput">Patient Label (local encrypted)</label>
-                    <input id="vaultPatientLabelInput" type="text" placeholder="e.g., John Doe or MRN 12345" />
-                  </div>
+		            <details class="raw-json-toggle" id="vaultPanel" open>
+		              <summary>Local Vault (Encrypted)</summary>
+		              <div class="vault-panel">
+		                <div class="vault-grid">
+		                  <div class="feedback-field">
+		                    <label for="vaultUserIdInput">Vault User ID</label>
+		                    <input id="vaultUserIdInput" type="text" placeholder="Stable ID (not a login)" />
+		                  </div>
+		                  <div class="feedback-field">
+		                    <label for="vaultPatientLabelInput">Patient Label (local encrypted)</label>
+		                    <input id="vaultPatientLabelInput" type="text" placeholder="e.g., John Doe or MRN 12345" />
+		                  </div>
                   <div class="feedback-field">
                     <label for="vaultIndexDateInput">Index Procedure Date (local encrypted)</label>
                     <input id="vaultIndexDateInput" type="date" />
@@ -404,8 +403,8 @@
 		                      </button>
 		                    </div>
 		                  </div>
-		                  <div id="completenessPromptsContent" class="dash-card-body padded">
-		                    <div class="completeness-inline-actions no-print">
+			                  <div id="completenessPromptsContent" class="dash-card-body padded">
+			                    <div class="completeness-inline-actions no-print">
 		                      <button
 		                        id="completenessApplyInlineBtn"
 		                        type="button"
@@ -416,25 +415,25 @@
 		                        Update Table
 		                      </button>
 		                    </div>
-		                    <div id="completenessPromptsBody"></div>
-		                  </div>
-		                </div>
-		                <div id="registryGridRoot" class="hidden"></div>
-		                <div id="registryLegacyRightRoot">
-		                  <div id="proceduresSummaryCard" class="dash-card clinical-hero-card">
-		                    <div class="dash-card-header">
-		                      <div class="section-title">
-		                        <span class="section-number">8</span>
-		                        Procedures Performed
-		                      </div>
-		                    </div>
-		                    <div class="dash-card-body" id="proceduresSummaryHost"></div>
-		                  </div>
+			                    <div id="completenessPromptsBody"></div>
+			                  </div>
+			                </div>
+			                <div id="proceduresSummaryCard" class="dash-card clinical-hero-card">
+			                  <div class="dash-card-header">
+			                    <div class="section-title">
+			                      <span class="section-number">8</span>
+			                      Procedure Summary
+			                    </div>
+			                  </div>
+			                  <div class="dash-card-body" id="proceduresSummaryHost"></div>
+			                </div>
 
-		                  <div id="clinicalContextCard" class="dash-card">
-		                    <div class="dash-card-header">
-		                      <div class="section-title">
-		                        <span class="section-number">9</span>
+			                <div id="registryGridRoot" class="hidden"></div>
+			                <div id="registryLegacyRightRoot">
+			                  <div id="clinicalContextCard" class="dash-card">
+			                    <div class="dash-card-header">
+			                      <div class="section-title">
+			                        <span class="section-number">9</span>
 		                        Patient &amp; Clinical Context
 		                      </div>
 		                    </div>
@@ -540,9 +539,9 @@
       </aside>
     </main>
 
-    <dialog id="phiConfirmModal" class="modal">
-      <form method="dialog" class="modal-content">
-        <h3>Confirm PHI removal before persistence</h3>
+	    <dialog id="phiConfirmModal" class="modal">
+	      <form method="dialog" class="modal-content">
+	        <h3>Confirm PHI removal before persistence</h3>
         <p class="subtle">
           You are about to save this note + results on the server for training/review. The server
           must store <strong>scrubbed-only</strong> text. Confirm you have removed PHI.
@@ -555,11 +554,34 @@
           <button value="confirm" class="primary">Confirm PHI removal</button>
         </div>
       </form>
-    </dialog>
+	    </dialog>
 
-    <dialog id="addEventModal" class="modal">
-      <form method="dialog" class="modal-content">
-        <h3>Add Event (Zero-Knowledge)</h3>
+	    <dialog id="vaultUnlockDialog" class="modal">
+	      <form method="dialog" class="modal-content">
+	        <h3>Unlock Local Vault</h3>
+	        <p class="subtle">
+	          The vault stores small encrypted local-only identity fields and enables device snapshot caching for deterministic reload.
+	          The server never receives these plaintext values.
+	        </p>
+	        <div class="feedback-field">
+	          <label for="vaultUnlockUserIdInput">Vault User ID</label>
+	          <input id="vaultUnlockUserIdInput" type="text" placeholder="Stable ID (not a login)" />
+	        </div>
+	        <div class="feedback-field">
+	          <label for="vaultUnlockPasswordInput">Vault Password</label>
+	          <input id="vaultUnlockPasswordInput" type="password" placeholder="Required to unlock vault" />
+	        </div>
+	        <div class="modal-actions">
+	          <button value="cancel" class="secondary">Cancel</button>
+	          <button id="vaultUnlockDialogSubmitBtn" type="button" class="primary">Unlock</button>
+	        </div>
+	        <div class="subtle" id="vaultUnlockDialogStatus"></div>
+	      </form>
+	    </dialog>
+
+	    <dialog id="addEventModal" class="modal">
+	      <form method="dialog" class="modal-content">
+	        <h3>Add Event (Zero-Knowledge)</h3>
         <p class="subtle" id="addEventRegistryText">Case: —</p>
         <div class="feedback-field">
           <label for="addEventDateInput">Event Date (client-side only)</label>

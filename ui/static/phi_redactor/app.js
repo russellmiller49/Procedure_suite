@@ -21,6 +21,8 @@ import {
   unlockOrInitVault,
   upsertVaultPatient,
 } from "./vaultClient.js";
+import { listCaseSnapshotMeta, loadCaseSnapshot, persistCaseSnapshot } from "./caseSnapshotStore.js";
+import { buildJoinedTargetSummary, renderProcedureSummaryCard } from "./procedureSummaryRenderer.js";
 import {
   buildCompletenessCandidatePaths,
   buildCompletenessEbusStationHintsByIndex,
@@ -61,8 +63,8 @@ const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
 const saveCorrectionsBtn = document.getElementById("saveCorrectionsBtn");
 const feedbackStatusEl = document.getElementById("feedbackStatus");
 const vaultPanelEl = document.getElementById("vaultPanel");
+const vaultIdentityBannerEl = document.getElementById("vaultIdentityBanner");
 const vaultUserIdInputEl = document.getElementById("vaultUserIdInput");
-const vaultPasswordInputEl = document.getElementById("vaultPasswordInput");
 const vaultPatientLabelInputEl = document.getElementById("vaultPatientLabelInput");
 const vaultIndexDateInputEl = document.getElementById("vaultIndexDateInput");
 const vaultMrnInputEl = document.getElementById("vaultMrnInput");
@@ -80,6 +82,11 @@ const vaultCaseEventsHostEl = document.getElementById("vaultCaseEventsHost");
 const vaultCaseEventDetailHostEl = document.getElementById("vaultCaseEventDetailHost");
 const vaultActiveCaseTextEl = document.getElementById("vaultActiveCaseText");
 const vaultEventModeTextEl = document.getElementById("vaultEventModeText");
+const vaultUnlockDialogEl = document.getElementById("vaultUnlockDialog");
+const vaultUnlockUserIdInputEl = document.getElementById("vaultUnlockUserIdInput");
+const vaultUnlockPasswordInputEl = document.getElementById("vaultUnlockPasswordInput");
+const vaultUnlockDialogSubmitBtn = document.getElementById("vaultUnlockDialogSubmitBtn");
+const vaultUnlockDialogStatusEl = document.getElementById("vaultUnlockDialogStatus");
 const phiConfirmModalEl = document.getElementById("phiConfirmModal");
 const addEventModalEl = document.getElementById("addEventModal");
 const addEventRegistryTextEl = document.getElementById("addEventRegistryText");
@@ -225,6 +232,7 @@ let lastVaultActivityMs = 0;
 let registryGridMonacoGetter = () => null;
 let registryGridMounted = false;
 let registryGridLoadPromise = null;
+let registryGridRenderToken = 0;
 let lastCompletenessPrompts = [];
 let completenessPromptsCollapsed = false;
 let completenessEdits = null; // {edited_patch, edited_fields} generated from completeness inputs
@@ -621,10 +629,26 @@ function setRegistryGridLoadingPlaceholder(message) {
 function loadRegistryGridBundle() {
   if (registryGridLoadPromise) return registryGridLoadPromise;
 
+  const overallTimeoutMs = 15_000;
   registryGridLoadPromise = new Promise((resolve, reject) => {
+    let settled = false;
+    const finish =
+      (fn) =>
+      (value) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timerId);
+        fn(value);
+      };
+    const onResolve = finish(resolve);
+    const onReject = finish(reject);
+    const timerId = setTimeout(() => {
+      onReject(new Error("RegistryGrid bundle load timed out"));
+    }, overallTimeoutMs);
+
     try {
       if (window.RegistryGrid && typeof window.RegistryGrid.mount === "function") {
-        resolve(window.RegistryGrid);
+        onResolve(window.RegistryGrid);
         return;
       }
 
@@ -646,11 +670,11 @@ function loadRegistryGridBundle() {
         const start = Date.now();
         const tick = () => {
           if (window.RegistryGrid && typeof window.RegistryGrid.mount === "function") {
-            resolve(window.RegistryGrid);
+            onResolve(window.RegistryGrid);
             return;
           }
           if (Date.now() - start > maxWaitMs) {
-            reject(new Error("RegistryGrid bundle tag present but global did not initialize"));
+            onReject(new Error("RegistryGrid bundle tag present but global did not initialize"));
             return;
           }
           setTimeout(tick, 50);
@@ -665,15 +689,15 @@ function loadRegistryGridBundle() {
       script.async = true;
       script.onload = () => {
         if (window.RegistryGrid && typeof window.RegistryGrid.mount === "function") {
-          resolve(window.RegistryGrid);
+          onResolve(window.RegistryGrid);
         } else {
-          reject(new Error("RegistryGrid bundle loaded but window.RegistryGrid is missing"));
+          onReject(new Error("RegistryGrid bundle loaded but window.RegistryGrid is missing"));
         }
       };
-      script.onerror = () => reject(new Error("Failed to load /ui/registry_grid/registry_grid.iife.js"));
+      script.onerror = () => onReject(new Error("Failed to load /ui/registry_grid/registry_grid.iife.js"));
       document.head.appendChild(script);
     } catch (e) {
-      reject(e);
+      onReject(e);
     }
   }).catch((e) => {
     // Allow retry on the next render (e.g., after a fresh build or transient network failure).
@@ -794,6 +818,7 @@ async function saveRegistryGridLocalVaultData(payload) {
   hydrateVaultInputsFromCase(registryUuid);
   renderVaultPatients();
   updateAppendTargetUi();
+  updateVaultBanner();
   noteVaultActivity();
   return { ok: true, registry_uuid: registryUuid };
 }
@@ -802,10 +827,50 @@ async function fetchRegistryCaseSnapshot(registryUuid, opts = {}) {
   const safeRegistryUuid = String(registryUuid || "").trim();
   if (!safeRegistryUuid || !vaultUserId) return null;
   const silent = Boolean(opts.silent);
+  const forceRemote = Boolean(opts.forceRemote);
+
+  if (!forceRemote && isVaultReady()) {
+    try {
+      const cached = await loadCaseSnapshot(vaultVmk, vaultUserId, safeRegistryUuid);
+      if (cached && typeof cached === "object") {
+        const cachedRegistry = isPlainObject(cached?.registry) ? cached.registry : null;
+        const cachedRegistryUuid = String(cached?.registry_uuid || cached?.registryUuid || safeRegistryUuid).trim();
+        const cachedEvents = Array.isArray(cached?.events) ? cached.events : null;
+
+        if (cachedRegistry && cachedEvents) {
+          // Cached canonical registry case response.
+          registryCaseSnapshotByUuid.set(safeRegistryUuid, cached);
+          return cached;
+        }
+
+        if (cachedRegistry) {
+          // Cached UI snapshot (process response). Coerce into the remote-case shape so RegistryGrid can still render.
+          const emulated = {
+            registry_uuid: cachedRegistryUuid || safeRegistryUuid,
+            schema_version: String(cached?.schema_version || cachedRegistry?.schema_version || "").trim() || null,
+            version: null,
+            source_run_id: String(cached?.run_id || cached?.source_run_id || "").trim() || null,
+            updated_at: String(cached?.updated_at || "").trim() || new Date().toISOString(),
+            registry: cachedRegistry,
+            registry_json: cachedRegistry,
+            manual_overrides: {},
+            events: [],
+            recent_events: [],
+            cache_source: "client_snapshot_cache",
+          };
+          registryCaseSnapshotByUuid.set(safeRegistryUuid, emulated);
+          return emulated;
+        }
+      }
+    } catch {
+      // Ignore corrupt/stale snapshot cache entries.
+    }
+  }
 
   try {
     const res = await fetch(`/api/v1/registry/${encodeURIComponent(safeRegistryUuid)}`, {
       method: "GET",
+      cache: "no-store",
       headers: getVaultAuthHeaders(),
     });
     if (res.status === 404) return null;
@@ -833,6 +898,10 @@ async function saveRegistryGridRemotePatch(payload) {
   const registryUuid = String(payload?.registry_uuid || "").trim();
   if (!registryUuid) throw new Error("Missing registry_uuid for remote patch");
   if (!vaultUserId) throw new Error("Missing user context for remote patch");
+  const activeUuid = String(activeCaseRegistryUuid || "").trim();
+  if (!activeUuid || activeUuid !== registryUuid) {
+    throw new Error("Remote patch requires an active loaded case.");
+  }
 
   const expectedVersionRaw = payload?.expected_version;
   const expectedVersion = Number.isInteger(expectedVersionRaw) ? Number(expectedVersionRaw) : null;
@@ -873,14 +942,14 @@ async function maybeRenderRegistryGrid(data, options = {}) {
     return false;
   }
 
-  showRegistryGridUi();
-  setRegistryGridLoadingPlaceholder("Loading registry grid…");
+  const renderToken = Number.isInteger(options?.renderToken) ? options.renderToken : null;
 
   try {
     const api = await loadRegistryGridBundle();
     if (!api || typeof api.mount !== "function") {
       throw new Error("RegistryGrid API missing mount()");
     }
+    if (renderToken !== null && renderToken !== registryGridRenderToken) return false;
     const hostEditedPatch = Object.prototype.hasOwnProperty.call(options || {}, "hostEditedPatch")
       ? options.hostEditedPatch
       : null;
@@ -899,12 +968,15 @@ async function maybeRenderRegistryGrid(data, options = {}) {
     };
 
     if (!registryGridMounted) {
+      showRegistryGridUi();
+      setRegistryGridLoadingPlaceholder("Loading registry grid…");
       api.mount(mountArgs);
       registryGridMounted = true;
       return true;
     }
 
     if (typeof api.update === "function") {
+      showRegistryGridUi();
       api.update({
         processResponse: data,
         hostEditedPatch,
@@ -916,6 +988,8 @@ async function maybeRenderRegistryGrid(data, options = {}) {
     }
 
     // Back-compat: if update() isn't present yet, re-mount.
+    showRegistryGridUi();
+    setRegistryGridLoadingPlaceholder("Loading registry grid…");
     api.mount(mountArgs);
     return true;
   } catch (e) {
@@ -1184,6 +1258,7 @@ if (submitterNameEl) submitterNameEl.addEventListener("input", updateFeedbackBut
 if (vaultUserIdInputEl) {
   const savedUserId = safeGetLocalStorageItem(VAULT_USER_ID_LS_KEY);
   if (savedUserId) vaultUserIdInputEl.value = savedUserId;
+  if (vaultUnlockUserIdInputEl && savedUserId) vaultUnlockUserIdInputEl.value = savedUserId;
 }
 if (vaultIndexDateInputEl && !String(vaultIndexDateInputEl.value || "").trim()) {
   vaultIndexDateInputEl.value = toLocalDateYmd();
@@ -1200,6 +1275,9 @@ setVaultStatus(
     ? "Locked. Vault required for submit (vaultRequired=1). Unlock to continue."
     : "Locked. Optional: unlock to save encrypted local metadata and add events (does not affect extraction)."
 );
+updateVaultBanner();
+syncVaultIdentityBannerOffset();
+window.addEventListener("resize", () => syncVaultIdentityBannerOffset(), { passive: true });
 
 // Vault event handlers are registered before `main()` wires full UI control state.
 // Start with a vault-only refresher, then let `main()` replace it with
@@ -1216,42 +1294,77 @@ let refreshZkControls = () => {
 };
 
 if (vaultUnlockBtn) {
-  vaultUnlockBtn.addEventListener("click", async () => {
+  vaultUnlockBtn.addEventListener("click", () => {
     if (vaultBusy) return;
-    const userId = String(vaultUserIdInputEl?.value || "").trim();
-    const password = String(vaultPasswordInputEl?.value || "");
-    if (!userId) {
-      setVaultStatus("User ID is required.");
+
+    const savedUserId = safeGetLocalStorageItem(VAULT_USER_ID_LS_KEY);
+    const candidateUserId = String(vaultUserIdInputEl?.value || vaultUserId || savedUserId || "").trim();
+    if (vaultUnlockUserIdInputEl) vaultUnlockUserIdInputEl.value = candidateUserId;
+    if (vaultUnlockPasswordInputEl) vaultUnlockPasswordInputEl.value = "";
+    setVaultUnlockDialogStatus("");
+
+    if (vaultUnlockDialogEl && typeof vaultUnlockDialogEl.showModal === "function") {
+      vaultUnlockDialogEl.showModal();
       return;
     }
-    if (!password) {
-      setVaultStatus("Vault password is required.");
-      return;
-    }
-    vaultBusy = true;
+
+    // Fallback: no <dialog> support.
+    setVaultStatus("Vault unlock dialog is unavailable in this browser.");
+  });
+}
+
+async function submitVaultUnlockDialog() {
+  if (vaultBusy) return;
+  const userId = String(vaultUnlockUserIdInputEl?.value || vaultUserIdInputEl?.value || "").trim();
+  const password = String(vaultUnlockPasswordInputEl?.value || "");
+  if (!userId) {
+    setVaultUnlockDialogStatus("User ID is required.");
+    return;
+  }
+  if (!password) {
+    setVaultUnlockDialogStatus("Vault password is required.");
+    return;
+  }
+
+  vaultBusy = true;
+  refreshZkControls();
+  setVaultUnlockDialogStatus("Unlocking vault…");
+  setVaultStatus("Unlocking vault…");
+  try {
+    const { vmk, created } = await unlockOrInitVault({ userId, password });
+    vaultUserId = userId;
+    vaultVmk = vmk;
+    vaultUnlocked = true;
+    safeSetLocalStorageItem(VAULT_USER_ID_LS_KEY, userId);
+    if (vaultUserIdInputEl) vaultUserIdInputEl.value = userId;
+    if (vaultUnlockPasswordInputEl) vaultUnlockPasswordInputEl.value = "";
+    await syncVaultPatients();
+    setVaultStatus(created ? `Vault initialized and unlocked for ${userId}.` : `Vault unlocked for ${userId}.`);
+    setVaultUnlockDialogStatus("");
+    updateVaultBanner();
+    if (vaultUnlockDialogEl && typeof vaultUnlockDialogEl.close === "function") vaultUnlockDialogEl.close();
+    noteVaultActivity();
+  } catch (err) {
+    lockVault({ reason: "unlock failed" });
+    const message = `Unlock failed: ${String(err?.message || err)}`;
+    setVaultStatus(message);
+    setVaultUnlockDialogStatus(message);
+  } finally {
+    vaultBusy = false;
     refreshZkControls();
-    setVaultStatus("Unlocking vault…");
-    try {
-      const { vmk, created } = await unlockOrInitVault({ userId, password });
-      vaultUserId = userId;
-      vaultVmk = vmk;
-      vaultUnlocked = true;
-      safeSetLocalStorageItem(VAULT_USER_ID_LS_KEY, userId);
-      if (vaultPasswordInputEl) vaultPasswordInputEl.value = "";
-      await syncVaultPatients();
-      setVaultStatus(
-        created
-          ? `Vault initialized and unlocked for ${userId}.`
-          : `Vault unlocked for ${userId}.`
-      );
-      noteVaultActivity();
-    } catch (err) {
-      lockVault({ reason: "unlock failed" });
-      setVaultStatus(`Unlock failed: ${String(err?.message || err)}`);
-    } finally {
-      vaultBusy = false;
-      refreshZkControls();
-    }
+  }
+}
+
+if (vaultUnlockDialogSubmitBtn) {
+  vaultUnlockDialogSubmitBtn.addEventListener("click", () => {
+    void submitVaultUnlockDialog();
+  });
+}
+
+if (vaultUnlockDialogEl) {
+  vaultUnlockDialogEl.addEventListener("close", () => {
+    setVaultUnlockDialogStatus("");
+    if (vaultUnlockPasswordInputEl) vaultUnlockPasswordInputEl.value = "";
   });
 }
 
@@ -1281,6 +1394,7 @@ if (vaultCreateCaseBtn) {
     updateAppendTargetUi();
     renderVaultPatients();
     renderCaseEvents(null);
+    updateVaultBanner();
     noteVaultActivity();
 
     try {
@@ -1321,6 +1435,7 @@ if (vaultClearActiveCaseBtn) {
     updateAppendTargetUi();
     renderVaultPatients();
     renderCaseEvents(null);
+    updateVaultBanner();
     setStatus("Active case cleared. Submitting now creates a new case.");
     noteVaultActivity();
   });
@@ -1368,6 +1483,72 @@ function setVaultStatus(text) {
 
 function isVaultReady() {
   return Boolean(vaultUnlocked && vaultVmk && vaultUserId);
+}
+
+function setVaultUnlockDialogStatus(text) {
+  if (!vaultUnlockDialogStatusEl) return;
+  vaultUnlockDialogStatusEl.textContent = String(text || "");
+}
+
+function setVaultBannerState(state, primaryText, secondaryText = "") {
+  if (!vaultIdentityBannerEl) return;
+  vaultIdentityBannerEl.classList.remove(
+    "vault-identity-banner--locked",
+    "vault-identity-banner--unlocked-nocase",
+    "vault-identity-banner--unlocked-active",
+  );
+  if (state === "unlocked-active") vaultIdentityBannerEl.classList.add("vault-identity-banner--unlocked-active");
+  else if (state === "unlocked-nocase") vaultIdentityBannerEl.classList.add("vault-identity-banner--unlocked-nocase");
+  else vaultIdentityBannerEl.classList.add("vault-identity-banner--locked");
+
+  vaultIdentityBannerEl.innerHTML = "";
+  const primary = document.createElement("span");
+  primary.textContent = String(primaryText || "");
+  vaultIdentityBannerEl.appendChild(primary);
+  const secondary = String(secondaryText || "").trim();
+  if (secondary) {
+    const extra = document.createElement("span");
+    extra.className = "vault-banner-secondary";
+    extra.textContent = secondary;
+    vaultIdentityBannerEl.appendChild(extra);
+  }
+}
+
+function updateVaultBanner() {
+  if (!vaultIdentityBannerEl) return;
+  if (!isVaultReady()) {
+    const requiredHint = isVaultRequiredForSubmission()
+      ? "Vault required for submit (vaultRequired=1)."
+      : "Unlock to enable local identity + device snapshot cache.";
+    setVaultBannerState("locked", "Vault: Locked.", requiredHint);
+    return;
+  }
+
+  const userId = String(vaultUserId || "").trim();
+  const safeRegistryUuid = String(activeCaseRegistryUuid || "").trim();
+  if (!safeRegistryUuid) {
+    setVaultBannerState("unlocked-nocase", `Vault: Unlocked as ${userId || "(unknown)"}.`, "No active case selected.");
+    return;
+  }
+  const patient = vaultPatientMap.get(safeRegistryUuid) || null;
+  const label = patient ? getPatientRowLabel(patient, safeRegistryUuid) : `Case ${safeRegistryUuid.slice(0, 8)}`;
+  setVaultBannerState(
+    "unlocked-active",
+    `Vault: Unlocked as ${userId || "(unknown)"}.`,
+    `Active case: ${label} (${safeRegistryUuid}).`,
+  );
+}
+
+function syncVaultIdentityBannerOffset() {
+  if (!vaultIdentityBannerEl) return;
+  try {
+    const topbar = document.querySelector(".topbar");
+    const height = topbar ? topbar.getBoundingClientRect().height : 0;
+    const px = Number.isFinite(height) ? Math.max(0, Math.round(height)) : 0;
+    vaultIdentityBannerEl.style.top = `${px}px`;
+  } catch {
+    vaultIdentityBannerEl.style.top = "0px";
+  }
 }
 
 function clearVaultIdleTimer() {
@@ -1552,6 +1733,7 @@ async function rebuildVaultCase(registryUuid) {
   hydrateVaultInputsFromCase(safeRegistryUuid);
   updateAppendTargetUi();
   renderVaultPatients();
+  updateVaultBanner();
 
   if (remoteCaseData && typeof remoteCaseData === "object") {
     registryCaseSnapshotByUuid.set(safeRegistryUuid, remoteCaseData);
@@ -1588,48 +1770,95 @@ async function loadVaultCaseView(registryUuid) {
   hydrateVaultInputsFromCase(safeRegistryUuid);
   updateAppendTargetUi();
   renderVaultPatients();
+  updateVaultBanner();
   noteVaultActivity();
-
-  setStatus(`Loading saved case ${safeRegistryUuid}…`);
-
-  let remoteCaseData = null;
-  try {
-    remoteCaseData = await fetchRegistryCaseSnapshot(safeRegistryUuid, { silent: false });
-  } catch (err) {
-    const message = String(err?.message || err || "Unknown error");
-    setStatus(`Case load failed: ${message}`);
-    return;
-  }
-
-  const localData = vaultPatientMap.get(safeRegistryUuid) || null;
-
-  const container = document.getElementById("resultsContainer");
-  if (container) container.classList.remove("hidden");
 
   // Loading a saved case is a view/switch action, not a persisted run.
   setRunId(null);
   setFeedbackStatus("Loaded saved case view. No new data submitted.");
   resetEditedState();
 
-  if (serverResponseEl) {
-    serverResponseEl.textContent = JSON.stringify(
-      {
+  let cachedSnapshot = null;
+  let cacheError = null;
+  try {
+    cachedSnapshot = await loadCaseSnapshot(vaultVmk, vaultUserId, safeRegistryUuid);
+  } catch (err) {
+    cacheError = err;
+    cachedSnapshot = null;
+  }
+
+  if (cachedSnapshot && typeof cachedSnapshot === "object") {
+    await renderResults(cachedSnapshot, {
+      rawData: {
         mode: "loaded_saved_case",
+        source: "client_snapshot_cache",
         registry_uuid: safeRegistryUuid,
-        has_remote_case: Boolean(remoteCaseData),
-        remote_case_version: remoteCaseData?.version ?? null,
-        remote_case_updated_at: remoteCaseData?.updated_at ?? null,
-        remote_event_count: Array.isArray(remoteCaseData?.events) ? remoteCaseData.events.length : 0,
+        has_remote_case: null,
       },
-      null,
-      2,
+      registryUuid: safeRegistryUuid,
+      remoteCaseData: null,
+      skipRemoteCaseLookup: true,
+      skipSnapshotPersist: true,
+    });
+    setStatus(`Loaded case ${safeRegistryUuid} from device cache. Refreshing canonical remote snapshot…`);
+  } else if (cacheError) {
+    setStatus(
+      `Device snapshot cache is invalid for ${safeRegistryUuid}: ${String(cacheError?.message || cacheError)}. Loading canonical remote snapshot…`,
     );
+  } else {
+    setStatus(`Loading saved case ${safeRegistryUuid}…`);
+  }
+
+  let remoteCaseData = null;
+  try {
+    remoteCaseData = await fetchRegistryCaseSnapshot(safeRegistryUuid, {
+      silent: Boolean(cachedSnapshot),
+      forceRemote: true,
+    });
+  } catch (err) {
+    const message = String(err?.message || err || "Unknown error");
+    renderCaseEvents(null);
+    setStatus(`Case load failed: ${message}`);
+    return;
   }
 
   if (!remoteCaseData) {
     renderCaseEvents(null);
+    if (cachedSnapshot) {
+      setStatus(
+        `Loaded case ${safeRegistryUuid} from cache. No canonical remote registry record exists (or it is currently unavailable).`,
+      );
+      return;
+    }
     setStatus(
       `Loaded local case ${safeRegistryUuid}. No canonical remote registry record exists yet for this case.`,
+    );
+    return;
+  }
+
+  renderCaseEvents(remoteCaseData);
+
+  if (cachedSnapshot && typeof cachedSnapshot === "object") {
+    await renderResults(cachedSnapshot, {
+      rawData: {
+        mode: "loaded_saved_case",
+        source: "client_snapshot_cache",
+        registry_uuid: safeRegistryUuid,
+        has_remote_case: true,
+        remote_case_version: remoteCaseData?.version ?? null,
+        remote_case_updated_at: remoteCaseData?.updated_at ?? null,
+        remote_event_count: Array.isArray(remoteCaseData?.events) ? remoteCaseData.events.length : 0,
+      },
+      registryUuid: safeRegistryUuid,
+      remoteCaseData,
+      skipRemoteCaseLookup: true,
+      skipSnapshotPersist: true,
+    });
+    const ver = Number.isInteger(remoteCaseData?.version) ? Number(remoteCaseData.version) : null;
+    setStatus(
+      ver != null
+        ? `Loaded case ${safeRegistryUuid} from cache (remote version ${ver}).`
+        : `Loaded case ${safeRegistryUuid} from cache (remote snapshot available).`,
     );
     return;
   }
@@ -1640,8 +1869,8 @@ async function loadVaultCaseView(registryUuid) {
     registryUuid: safeRegistryUuid,
     remoteCaseData,
   });
-  renderCaseEvents(remoteCaseData);
-  setStatus(`Loaded saved case ${safeRegistryUuid} (remote version ${remoteCaseData.version}).`);
+  const ver = Number.isInteger(remoteCaseData?.version) ? Number(remoteCaseData.version) : null;
+  setStatus(ver != null ? `Loaded saved case ${safeRegistryUuid} (remote version ${ver}).` : `Loaded saved case ${safeRegistryUuid}.`);
 }
 
 function openAddEventModal(registryUuid) {
@@ -1738,6 +1967,7 @@ function openAddEventModal(registryUuid) {
     hydrateVaultInputsFromCase(registryUuid);
     updateAppendTargetUi();
     renderVaultPatients();
+    updateVaultBanner();
     setStatus(`Event configured for ${registryUuid}. Run Detection, Apply Redactions, then Submit.`);
     addEventTargetRegistryUuid = null;
     return;
@@ -1842,6 +2072,7 @@ if (addEventModalEl) {
 
     updateAppendTargetUi();
     renderVaultPatients();
+    updateVaultBanner();
     refreshZkControls();
 
     let loadedDraft = false;
@@ -2343,6 +2574,8 @@ function renderCaseEventDetails(eventRow, remoteCaseData = null) {
     try {
       showCaseBtn.disabled = true;
       await restoreActiveCaseSnapshotView();
+    } catch (err) {
+      setStatus(`Failed to restore case snapshot view: ${String(err?.message || err)}`);
     } finally {
       showCaseBtn.disabled = !String(activeCaseRegistryUuid || "").trim();
     }
@@ -2353,42 +2586,204 @@ function renderCaseEventDetails(eventRow, remoteCaseData = null) {
 
   const extractedPayload = isPlainObject(eventRow?.extracted_json) ? eventRow.extracted_json : null;
   const structuredPayload = isPlainObject(eventRow?.structured_data) ? eventRow.structured_data : null;
+  const reviewType = normalizeCaseEventReviewType(eventRow?.event_type);
 
-  if (structuredPayload) {
-    const block = document.createElement("div");
-    block.className = "vault-case-event-detail-block";
-    const label = document.createElement("div");
-    label.className = "vault-case-event-detail-label";
-    label.textContent = "Structured payload";
+  const appendRawJson = (labelText, payload) => {
+    const details = document.createElement("details");
+    details.className = "dash-details";
+    const summary = document.createElement("summary");
+    summary.textContent = labelText;
+    details.appendChild(summary);
     const pre = document.createElement("pre");
     pre.className = "vault-case-event-detail-pre";
-    pre.textContent = JSON.stringify(structuredPayload, null, 2);
-    block.appendChild(label);
-    block.appendChild(pre);
-    vaultCaseEventDetailHostEl.appendChild(block);
+    pre.textContent = JSON.stringify(payload, null, 2);
+    details.appendChild(pre);
+    vaultCaseEventDetailHostEl.appendChild(details);
+  };
+
+  const renderSimpleTable = (headers, rows) => {
+    const table = document.createElement("table");
+    table.className = "dash-table striped";
+    const thead = document.createElement("thead");
+    const tr = document.createElement("tr");
+    headers.forEach((h) => {
+      const th = document.createElement("th");
+      th.textContent = h;
+      tr.appendChild(th);
+    });
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    const tbody = document.createElement("tbody");
+    rows.forEach((cells) => {
+      const rowTr = document.createElement("tr");
+      cells.forEach((cell) => {
+        const td = document.createElement("td");
+        td.textContent = String(cell ?? "—");
+        rowTr.appendChild(td);
+      });
+      tbody.appendChild(rowTr);
+    });
+    table.appendChild(tbody);
+    return table;
+  };
+
+  if (reviewType === "clinical") {
+    const update = isPlainObject(extractedPayload?.clinical_update)
+      ? extractedPayload.clinical_update
+      : structuredPayload || null;
+    if (update) {
+      const block = document.createElement("div");
+      block.className = "vault-case-event-detail-block";
+      const label = document.createElement("div");
+      label.className = "vault-case-event-detail-label";
+      label.textContent = "Clinical status summary";
+      block.appendChild(label);
+      const rows = [
+        ["Hospital admission", update.hospital_admission === true ? "Yes" : update.hospital_admission === false ? "No" : "—"],
+        ["ICU admission", update.icu_admission === true ? "Yes" : update.icu_admission === false ? "No" : "—"],
+        ["Deceased", update.deceased === true ? "Yes" : update.deceased === false ? "No" : "—"],
+        ["Disease status", String(update.disease_status || "—")],
+        ["Comment", String(update.comment || update.summary_text || "—")],
+      ];
+      const table = document.createElement("table");
+      table.className = "dash-table kv-table";
+      const tbody = document.createElement("tbody");
+      rows.forEach(([k, v]) => {
+        const tr = document.createElement("tr");
+        const tdK = document.createElement("td");
+        tdK.textContent = k;
+        const tdV = document.createElement("td");
+        tdV.textContent = v;
+        tr.appendChild(tdK);
+        tr.appendChild(tdV);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      block.appendChild(table);
+      vaultCaseEventDetailHostEl.appendChild(block);
+    }
+  } else if (reviewType === "pathology" && extractedPayload) {
+    const nodeUpdates = Array.isArray(extractedPayload?.node_updates) ? extractedPayload.node_updates : [];
+    const peripheralUpdates = Array.isArray(extractedPayload?.peripheral_updates) ? extractedPayload.peripheral_updates : [];
+
+    if (nodeUpdates.length > 0) {
+      const block = document.createElement("div");
+      block.className = "vault-case-event-detail-block";
+      const label = document.createElement("div");
+      label.className = "vault-case-event-detail-label";
+      label.textContent = "Pathology (LN stations)";
+      block.appendChild(label);
+      const rows = nodeUpdates
+        .filter((r) => r && typeof r === "object")
+        .map((r) => [String(r.station || "—"), String(r.path_result || "—"), String(r.path_diagnosis_text || "—")]);
+      block.appendChild(renderSimpleTable(["Station", "Result", "Diagnosis"], rows));
+      vaultCaseEventDetailHostEl.appendChild(block);
+    }
+
+    if (peripheralUpdates.length > 0) {
+      const block = document.createElement("div");
+      block.className = "vault-case-event-detail-block";
+      const label = document.createElement("div");
+      label.className = "vault-case-event-detail-label";
+      label.textContent = "Pathology (peripheral targets)";
+      block.appendChild(label);
+      const rows = peripheralUpdates
+        .filter((r) => r && typeof r === "object")
+        .map((r) => [
+          String(r.target_key || [r.laterality, r.lobe, r.segment].filter(Boolean).join(" ") || "—"),
+          String(r.path_result || "—"),
+          String(r.path_diagnosis_text || "—"),
+        ]);
+      block.appendChild(renderSimpleTable(["Target", "Result", "Diagnosis"], rows));
+      vaultCaseEventDetailHostEl.appendChild(block);
+    }
+  } else if (reviewType === "imaging" && extractedPayload) {
+    const snap = isPlainObject(extractedPayload?.imaging_snapshot) ? extractedPayload.imaging_snapshot : {};
+    const targetsUpdate = isPlainObject(extractedPayload?.targets_update) ? extractedPayload.targets_update : {};
+    const mediastinalTargets = Array.isArray(targetsUpdate?.mediastinal_targets) ? targetsUpdate.mediastinal_targets : [];
+    const peripheralTargets = Array.isArray(targetsUpdate?.peripheral_targets) ? targetsUpdate.peripheral_targets : [];
+
+    const snapBlock = document.createElement("div");
+    snapBlock.className = "vault-case-event-detail-block";
+    const snapLabel = document.createElement("div");
+    snapLabel.className = "vault-case-event-detail-label";
+    snapLabel.textContent = "Imaging summary";
+    snapBlock.appendChild(snapLabel);
+    const snapRows = [
+      ["Modality", String(snap.modality || eventRow?.source_modality || "—")],
+      ["Subtype", String(snap.subtype || eventRow?.event_subtype || "—")],
+      ["Response", String(snap.response || "—")],
+      ["Impression", String(snap.overall_impression_text || "—")],
+    ];
+    const table = document.createElement("table");
+    table.className = "dash-table kv-table";
+    const tbody = document.createElement("tbody");
+    snapRows.forEach(([k, v]) => {
+      const tr = document.createElement("tr");
+      const tdK = document.createElement("td");
+      tdK.textContent = k;
+      const tdV = document.createElement("td");
+      tdV.textContent = v;
+      tr.appendChild(tdK);
+      tr.appendChild(tdV);
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    snapBlock.appendChild(table);
+    vaultCaseEventDetailHostEl.appendChild(snapBlock);
+
+    if (mediastinalTargets.length > 0) {
+      const block = document.createElement("div");
+      block.className = "vault-case-event-detail-block";
+      const label = document.createElement("div");
+      label.className = "vault-case-event-detail-label";
+      label.textContent = "Mediastinal targets";
+      block.appendChild(label);
+      const rows = mediastinalTargets
+        .filter((r) => r && typeof r === "object")
+        .map((r) => [
+          String(r.station || "—"),
+          r.short_axis_mm ?? "—",
+          typeof r.pet_avid === "boolean" ? (r.pet_avid ? "Yes" : "No") : "—",
+          r.pet_suvmax ?? "—",
+          String(r.comparative_change || "—"),
+        ]);
+      block.appendChild(renderSimpleTable(["Station", "Short axis (mm)", "PET avid", "SUVmax", "Change"], rows));
+      vaultCaseEventDetailHostEl.appendChild(block);
+    }
+
+    if (peripheralTargets.length > 0) {
+      const block = document.createElement("div");
+      block.className = "vault-case-event-detail-block";
+      const label = document.createElement("div");
+      label.className = "vault-case-event-detail-label";
+      label.textContent = "Peripheral targets";
+      block.appendChild(label);
+      const rows = peripheralTargets
+        .filter((r) => r && typeof r === "object")
+        .map((r) => [
+          String(r.target_key || [r.laterality, r.lobe, r.segment].filter(Boolean).join(" ") || "—"),
+          r.size_mm_long ?? "—",
+          r.size_mm_short ?? "—",
+          r.pet_suvmax ?? "—",
+          String(r.comparative_change || "—"),
+        ]);
+      block.appendChild(renderSimpleTable(["Target", "Long (mm)", "Short (mm)", "SUVmax", "Change"], rows));
+      vaultCaseEventDetailHostEl.appendChild(block);
+    }
   }
 
-  if (extractedPayload) {
-    const block = document.createElement("div");
-    block.className = "vault-case-event-detail-block";
-    const label = document.createElement("div");
-    label.className = "vault-case-event-detail-label";
-    label.textContent = "Extracted event payload";
-    const pre = document.createElement("pre");
-    pre.className = "vault-case-event-detail-pre";
-    pre.textContent = JSON.stringify(extractedPayload, null, 2);
-    block.appendChild(label);
-    block.appendChild(pre);
-    vaultCaseEventDetailHostEl.appendChild(block);
-    return;
-  }
+  if (structuredPayload) appendRawJson("Structured payload (raw)", structuredPayload);
+  if (extractedPayload) appendRawJson("Extracted payload (raw)", extractedPayload);
 
-  const fallback = document.createElement("div");
-  fallback.className = "subtle";
-  fallback.textContent = eventRow?.is_synthetic
-    ? "Synthetic baseline procedure event; no per-event extraction payload is stored."
-    : "No extracted payload was saved for this event.";
-  vaultCaseEventDetailHostEl.appendChild(fallback);
+  if (!structuredPayload && !extractedPayload) {
+    const fallback = document.createElement("div");
+    fallback.className = "subtle";
+    fallback.textContent = eventRow?.is_synthetic
+      ? "Synthetic baseline procedure event; no per-event extraction payload is stored."
+      : "No extracted payload was saved for this event.";
+    vaultCaseEventDetailHostEl.appendChild(fallback);
+  }
 }
 
 function renderCaseEvents(remoteCaseData) {
@@ -2536,6 +2931,7 @@ async function removeVaultPatient(registryUuid) {
     if (appendEventConfig && appendEventConfig.registry_uuid === registryUuid) appendEventConfig = null;
     renderVaultPatients();
     updateAppendTargetUi();
+    updateVaultBanner();
     renderCaseEvents(
       activeCaseRegistryUuid ? registryCaseSnapshotByUuid.get(activeCaseRegistryUuid) || null : null,
     );
@@ -2560,91 +2956,110 @@ function renderVaultPatients() {
     return;
   }
 
-  const table = document.createElement("table");
-  table.className = "vault-patients-table";
-  table.innerHTML = `
-    <thead>
-      <tr>
-        <th>Patient (local)</th>
-        <th>Index Date</th>
-        <th>MRN (local)</th>
-        <th>Registry UUID</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  `;
-  const tbody = table.querySelector("tbody");
-  if (!tbody) return;
+  const snapshotRows = listCaseSnapshotMeta(vaultUserId);
+  const snapshotMetaByUuid = new Map(snapshotRows.map((row) => [String(row.registry_uuid || ""), row]));
+
+  const formatSavedAt = (iso) => {
+    const raw = String(iso || "").trim();
+    if (!raw) return "—";
+    try {
+      const dt = new Date(raw);
+      if (Number.isNaN(dt.getTime())) return raw;
+      return dt.toLocaleString();
+    } catch {
+      return raw;
+    }
+  };
+
+  const formatRvu = (value) => (Number.isFinite(value) ? Number(value).toFixed(2) : "—");
+
+  const cardsWrap = document.createElement("div");
+  cardsWrap.className = "vault-patient-cards";
 
   const rows = Array.from(vaultPatientMap.entries()).sort((a, b) => String(a[0]).localeCompare(String(b[0])));
   for (const [registryUuid, patient] of rows) {
-    const tr = document.createElement("tr");
-    if (activeCaseRegistryUuid === registryUuid) tr.classList.add("active");
+    const isActive = activeCaseRegistryUuid === registryUuid;
+    const card = document.createElement("div");
+    card.className = `vault-patient-card${isActive ? " active" : ""}`;
 
-    const labelTd = document.createElement("td");
-    labelTd.textContent = getPatientRowLabel(patient, registryUuid);
-    tr.appendChild(labelTd);
+    const title = document.createElement("div");
+    title.className = "vault-patient-card-title";
+    const label = document.createElement("span");
+    label.textContent = getPatientRowLabel(patient, registryUuid);
+    const uuid = document.createElement("span");
+    uuid.className = "vault-patient-uuid";
+    uuid.textContent = registryUuid;
+    title.appendChild(label);
+    title.appendChild(uuid);
+    card.appendChild(title);
 
-    const indexTd = document.createElement("td");
-    indexTd.textContent = getPatientIndexDate(patient);
-    tr.appendChild(indexTd);
+    const meta = document.createElement("div");
+    meta.className = "vault-patient-card-meta";
+    meta.innerHTML = `
+      <span><strong>Index:</strong> ${safeHtml(getPatientIndexDate(patient))}</span>
+      <span><strong>MRN:</strong> ${safeHtml(getPatientMrn(patient))}</span>
+    `;
+    card.appendChild(meta);
 
-    const mrnTd = document.createElement("td");
-    mrnTd.textContent = getPatientMrn(patient);
-    tr.appendChild(mrnTd);
+    const snapshotMeta = snapshotMetaByUuid.get(registryUuid) || null;
+    const snapshot = document.createElement("div");
+    snapshot.className = "vault-snapshot-meta";
+    if (!snapshotMeta) {
+      snapshot.textContent = "No device snapshot cached yet for this case.";
+    } else {
+      const cptCount = Number.isFinite(snapshotMeta?.cpt_count) ? Number(snapshotMeta.cpt_count) : 0;
+      const totalRvu = formatRvu(snapshotMeta?.total_work_rvu);
+      const savedAt = formatSavedAt(snapshotMeta?.saved_at);
+      snapshot.innerHTML = `
+        <span><strong>Snapshot:</strong> ${safeHtml(String(cptCount))} CPT</span>
+        <span><strong>wRVU:</strong> ${safeHtml(totalRvu)}</span>
+        <span><strong>Saved:</strong> ${safeHtml(savedAt)}</span>
+      `;
+    }
+    card.appendChild(snapshot);
 
-    const idTd = document.createElement("td");
-    idTd.textContent = registryUuid;
-    idTd.className = "vault-registry-uuid";
-    tr.appendChild(idTd);
+    const actions = document.createElement("div");
+    actions.className = "vault-patient-card-actions";
 
-    const actionTd = document.createElement("td");
     const loadCaseBtn = document.createElement("button");
     loadCaseBtn.type = "button";
     loadCaseBtn.className = "secondary";
     loadCaseBtn.textContent = "Load Case";
-    loadCaseBtn.addEventListener("click", () => {
-      loadVaultCaseView(registryUuid);
-    });
-    actionTd.appendChild(loadCaseBtn);
+    loadCaseBtn.disabled = vaultBusy;
+    loadCaseBtn.addEventListener("click", () => loadVaultCaseView(registryUuid));
+    actions.appendChild(loadCaseBtn);
 
     const rebuildBtn = document.createElement("button");
     rebuildBtn.type = "button";
     rebuildBtn.className = "secondary";
     rebuildBtn.textContent = "Rebuild";
-    rebuildBtn.style.marginLeft = "8px";
-    rebuildBtn.addEventListener("click", () => {
-      rebuildVaultCase(registryUuid);
-    });
-    actionTd.appendChild(rebuildBtn);
+    rebuildBtn.disabled = vaultBusy;
+    rebuildBtn.addEventListener("click", () => rebuildVaultCase(registryUuid));
+    actions.appendChild(rebuildBtn);
 
     const addEventBtn = document.createElement("button");
     addEventBtn.type = "button";
     addEventBtn.className = "secondary";
     addEventBtn.textContent =
       appendEventConfig && appendEventConfig.registry_uuid === registryUuid ? "Edit Event" : "Add Event";
-    addEventBtn.style.marginLeft = "8px";
-    addEventBtn.addEventListener("click", () => {
-      openAddEventModal(registryUuid);
-    });
-    actionTd.appendChild(addEventBtn);
+    addEventBtn.disabled = vaultBusy || !activeCaseRegistryUuid || !isActive;
+    addEventBtn.title = addEventBtn.disabled ? "Load this case to enable Add Event." : "";
+    addEventBtn.addEventListener("click", () => openAddEventModal(registryUuid));
+    actions.appendChild(addEventBtn);
 
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
     removeBtn.className = "secondary";
     removeBtn.textContent = "Remove";
-    removeBtn.style.marginLeft = "8px";
-    removeBtn.addEventListener("click", () => {
-      removeVaultPatient(registryUuid);
-    });
-    actionTd.appendChild(removeBtn);
+    removeBtn.disabled = vaultBusy;
+    removeBtn.addEventListener("click", () => removeVaultPatient(registryUuid));
+    actions.appendChild(removeBtn);
 
-    tr.appendChild(actionTd);
-    tbody.appendChild(tr);
+    card.appendChild(actions);
+    cardsWrap.appendChild(card);
   }
 
-  vaultPatientsHostEl.appendChild(table);
+  vaultPatientsHostEl.appendChild(cardsWrap);
 }
 
 async function syncVaultPatients() {
@@ -2667,8 +3082,6 @@ async function syncVaultPatients() {
       appendEventConfig = null;
     }
     setVaultStatus(`Unlocked. ${patients.size} patient${patients.size === 1 ? "" : "s"} loaded.`);
-    renderVaultPatients();
-    updateAppendTargetUi();
     if (activeCaseRegistryUuid) hydrateVaultInputsFromCase(activeCaseRegistryUuid);
     noteVaultActivity();
   } catch (err) {
@@ -2676,6 +3089,9 @@ async function syncVaultPatients() {
   } finally {
     vaultBusy = false;
     refreshZkControls();
+    renderVaultPatients();
+    updateAppendTargetUi();
+    updateVaultBanner();
   }
 }
 
@@ -2731,6 +3147,7 @@ async function saveLocalPatientIdentity(registryUuid) {
   hydrateVaultInputsFromCase(safeRegistryUuid);
   renderVaultPatients();
   updateAppendTargetUi();
+  updateVaultBanner();
   noteVaultActivity();
   return normalized;
 }
@@ -2746,9 +3163,11 @@ function lockVault(options = {}) {
   addEventTargetRegistryUuid = null;
   updateAppendTargetUi();
   renderVaultPatients();
-  if (vaultPasswordInputEl) vaultPasswordInputEl.value = "";
+  if (vaultUnlockPasswordInputEl) vaultUnlockPasswordInputEl.value = "";
+  setVaultUnlockDialogStatus("");
   const reason = String(options.reason || "").trim();
   setVaultStatus(reason ? `Locked (${reason}).` : "Locked.");
+  updateVaultBanner();
   refreshZkControls();
 }
 
@@ -3670,7 +4089,7 @@ function makeEvidenceDetails(spans, summaryText = "Evidence") {
 /**
  * Main Orchestrator: Renders the clean clinical dashboard
  */
-function renderDashboard(data) {
+function renderDashboard(data, options = {}) {
   renderStatusBannerHost(data);
   renderStatCards(data);
 
@@ -3684,7 +4103,7 @@ function renderDashboard(data) {
   renderCompletenessPrompts(data);
 
   // Right column (clinical) - procedures first, then context
-  renderProceduresSummaryTable(data);
+  renderProceduresSummaryTable(data, options);
   renderClinicalContextTable(data);
 
   // Clear detail panels host, then render sub-panels
@@ -5600,12 +6019,25 @@ function summarizeProcedure(procKey, procObj) {
   return parts.join(" · ") || "—";
 }
 
-function renderProceduresSummaryTable(data) {
+function renderProceduresSummaryTable(data, options = {}) {
   const host = document.getElementById("proceduresSummaryHost");
   if (!host) return;
   clearEl(host);
 
   const registry = getRegistry(data);
+  const remoteEvents = Array.isArray(options?.remoteCaseData?.events) ? options.remoteCaseData.events : [];
+  try {
+    const joined = buildJoinedTargetSummary(registry, remoteEvents);
+    host.innerHTML = renderProcedureSummaryCard(registry, joined, remoteEvents);
+  } catch {
+    host.innerHTML = '<div class="dash-empty" style="padding: 10px 12px;">Failed to render case summary.</div>';
+  }
+
+  const details = document.createElement("details");
+  details.className = "dash-details";
+  const detailsSummary = document.createElement("summary");
+  detailsSummary.textContent = "Procedures performed (registry)";
+  details.appendChild(detailsSummary);
   const procs = registry?.procedures_performed;
   const pleural = registry?.pleural_procedures;
   const hasProcs = procs && typeof procs === "object";
@@ -5616,7 +6048,8 @@ function renderProceduresSummaryTable(data) {
     empty.className = "dash-empty";
     empty.style.padding = "10px 12px";
     empty.textContent = "No procedures available.";
-    host.appendChild(empty);
+    details.appendChild(empty);
+    host.appendChild(details);
     return;
   }
 
@@ -5643,7 +6076,8 @@ function renderProceduresSummaryTable(data) {
     empty.className = "dash-empty";
     empty.style.padding = "10px 12px";
     empty.textContent = "No procedures found.";
-    host.appendChild(empty);
+    details.appendChild(empty);
+    host.appendChild(details);
     return;
   }
 
@@ -5723,7 +6157,8 @@ function renderProceduresSummaryTable(data) {
   });
 
   table.appendChild(tbody);
-  host.appendChild(table);
+  details.appendChild(table);
+  host.appendChild(details);
 }
 
 function toggleCard(cardId, visible) {
@@ -8747,14 +9182,16 @@ async function renderResults(data, options = {}) {
   const preferGrid = isReactRegistryGridEnabled() && Boolean(registryGridRootEl && registryLegacyRightRootEl);
 
   // Always render the legacy dashboard (CPT + RVU tables stay on the left).
-  renderDashboard(data);
+  renderDashboard(data, { registryUuid, remoteCaseData });
   renderFlattenedTables(data);
 
   if (preferGrid) {
-    await maybeRenderRegistryGrid(data, {
+    registryGridRenderToken += 1;
+    void maybeRenderRegistryGrid(data, {
       registryUuid: registryUuid || null,
       vaultLocalData,
       remoteCaseData,
+      renderToken: registryGridRenderToken,
     });
   } else {
     unmountRegistryGrid();
@@ -8763,6 +9200,13 @@ async function renderResults(data, options = {}) {
 
   if (serverResponseEl) {
     serverResponseEl.textContent = JSON.stringify(rawData, null, 2);
+  }
+
+  const skipSnapshotPersist = Boolean(options?.skipSnapshotPersist);
+  if (!skipSnapshotPersist && isVaultReady() && registryUuid) {
+    void persistCaseSnapshot(vaultVmk, vaultUserId, registryUuid, data).catch(() => {
+      // Snapshot persistence is best-effort; ignore quota/crypto failures.
+    });
   }
 }
 
@@ -12524,7 +12968,7 @@ async function main() {
       let appendData = null;
       if (isAppendFlow) {
         if (isContextualAppendOnly) {
-          const preflightCase = await fetchRegistryCaseSnapshot(registryUuid, { silent: true });
+          const preflightCase = await fetchRegistryCaseSnapshot(registryUuid, { silent: true, forceRemote: true });
           const hasBaselineSourceRun = Boolean(String(preflightCase?.source_run_id || "").trim());
           if (!hasBaselineSourceRun) {
             setStatus(
