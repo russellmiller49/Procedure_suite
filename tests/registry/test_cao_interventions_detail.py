@@ -129,3 +129,21 @@ def test_extract_cao_interventions_detail_myer_cotton_classification_is_attached
     by_loc = _by_location(details)
     assert by_loc["Trachea"]["pre_obstruction_pct"] == 80
     assert "myer" in str(by_loc["Trachea"].get("classification") or "").lower()
+
+
+def test_extract_cao_interventions_detail_rigid_bronchoscope_hint_survives_addl_images_trim() -> None:
+    note = (
+        "Procedure: Rigid bronchoscope used.\n"
+        "Left Lung Abnormalities: A partially obstructing (about 40% obstructed) airway abnormality was found in the left lower lobe.\n"
+        "Coagulation for tumor destruction using an electrocautery snare was successful.\n"
+        "Upon completion LLL was 100% open.\n"
+        "Add'l Images: Trachea: Laser/Plasma Ablation.\n"
+    )
+
+    details = extract_cao_interventions_detail(note)
+    by_loc = _by_location(details)
+    assert by_loc["LLL"]["pre_obstruction_pct"] == 40
+    assert by_loc["LLL"]["post_obstruction_pct"] == 0
+
+    modalities = [m.get("modality") for m in (by_loc["LLL"].get("modalities_applied") or []) if isinstance(m, dict)]
+    assert "Electrocautery - snare" in modalities

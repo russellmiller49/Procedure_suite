@@ -11,7 +11,15 @@ import re
 from uuid import UUID
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, create_model, field_serializer, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    create_model,
+    field_serializer,
+    field_validator,
+    model_validator,
+)
 
 from config.settings import KnowledgeSettings
 from app.common.spans import Span
@@ -55,6 +63,93 @@ class LinearEBUSProcedure(BaseModel):
         default_factory=list,
         description="Per-station interactions, including inspected-only vs sampled actions.",
     )
+
+
+ThermalAblationModality = Literal[
+    "APC",
+    "Electrocautery",
+    "Laser (Nd:YAG)",
+    "Laser (CO2)",
+    "Laser (Diode)",
+]
+
+
+class ThermalAblationProcedure(BaseModel):
+    """Custom type override for procedures_performed.thermal_ablation.
+
+    The JSON schema currently models a single modality, but real-world cases can
+    include multiple modalities (e.g., APC + electrocautery). This override
+    normalizes incoming values into a list of enum modalities.
+    """
+
+    model_config = ConfigDict(extra="ignore")
+
+    performed: bool | None = None
+    modality: list[ThermalAblationModality] | None = None
+    location: str | None = None
+    indication: Literal[
+        "Tumor debulking",
+        "Hemostasis",
+        "Granulation tissue",
+        "Web/stenosis",
+        "Other",
+    ] | None = None
+    power_setting_watts: float | None = Field(default=None, ge=0)
+    apc_flow_rate: float | None = Field(default=None, ge=0)
+
+    @field_validator("modality", mode="before")
+    @classmethod
+    def normalize_thermal_ablation_modality(cls, v):
+        if v is None:
+            return None
+
+        def _normalize_one(raw: str) -> ThermalAblationModality | None:
+            s = str(raw or "").strip()
+            if not s:
+                return None
+            lowered = s.lower()
+            if lowered in {"apc", "argon plasma", "argon plasma coagulation"}:
+                return "APC"
+            if "argon plasma" in lowered or lowered == "apc":
+                return "APC"
+            if "electrocaut" in lowered or re.search(r"\bcauter(y|iz)", lowered):
+                return "Electrocautery"
+            if "nd" in lowered and "yag" in lowered or "nd:yag" in lowered:
+                return "Laser (Nd:YAG)"
+            if "co2" in lowered:
+                return "Laser (CO2)"
+            if "diode" in lowered:
+                return "Laser (Diode)"
+            # Allow already-normalized canonical values.
+            canonical = {
+                "apc": "APC",
+                "electrocautery": "Electrocautery",
+                "laser (nd:yag)": "Laser (Nd:YAG)",
+                "laser (co2)": "Laser (CO2)",
+                "laser (diode)": "Laser (Diode)",
+            }.get(lowered)
+            return canonical  # type: ignore[return-value]
+
+        if isinstance(v, str):
+            split_re = re.compile(r"\s*(?:;|,|/|\band\b)\s*", re.IGNORECASE)
+            tokens = [tok for tok in split_re.split(v) if tok and tok.strip()]
+            out: list[ThermalAblationModality] = []
+            for tok in tokens:
+                norm = _normalize_one(tok)
+                if norm and norm not in out:
+                    out.append(norm)
+            return out or None
+
+        if isinstance(v, list):
+            out: list[ThermalAblationModality] = []
+            for item in v:
+                norm = _normalize_one(str(item))
+                if norm and norm not in out:
+                    out.append(norm)
+            return out or None
+
+        # Unsupported type; leave as-is for downstream validation to handle.
+        return v
 
 
 class PeripheralTarget(BaseModel):
@@ -170,6 +265,7 @@ CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "airway_stent")] =
 CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "airway_stent_revision")] = AirwayStentProcedure
 CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "linear_ebus")] = LinearEBUSProcedure
 CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "linear_ebus", "stations_detail")] = list[dict[str, Any]]
+CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "thermal_ablation")] = ThermalAblationProcedure
 CUSTOM_FIELD_TYPES[("RegistryRecord", "targets")] = CaseTargets
 CUSTOM_FIELD_TYPES[("RegistryRecord", "imaging_summary")] = ImagingSummary
 CUSTOM_FIELD_TYPES[("RegistryRecord", "clinical_course")] = ClinicalCourse
