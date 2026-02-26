@@ -75,6 +75,7 @@ def _seed_user_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
             relative_day_offset=2,
             ocr_correction_applied=False,
             metadata_json={"structured_data": {"hospital_admission": False}},
+            extracted_json={"qa_flags": ["deterministic"], "node_updates": [{"station": "7", "path_result": "Positive"}]},
             created_at=now,
         )
     )
@@ -100,6 +101,8 @@ def test_registry_case_get_is_user_scoped(client: TestClient, case_db) -> None:
     assert len(body["events"]) == 1
     assert body["events"][0]["event_type"] == "pathology"
     assert body["events"][0]["relative_day_offset"] == 2
+    assert body["events"][0]["structured_data"] == {"hospital_admission": False}
+    assert body["events"][0]["extracted_json"]["node_updates"][0]["station"] == "7"
 
     res_other = client.get(f"/api/v1/registry/{case_id}", headers=_auth("user_b"))
     assert res_other.status_code == 404

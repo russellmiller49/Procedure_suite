@@ -15,9 +15,14 @@ from app.registry.aggregation.sanitize import compact_text
 
 
 _SPECIMEN_BLOCK_RE = re.compile(r"(?ims)^\s*[A-Z]\.\s*(.+?)(?=^\s*[A-Z]\.\s*|\Z)")
+_SECTION_HEADING_RE = re.compile(r"(?im)^[ \t]*[A-Z][A-Z0-9 /()\-:]{2,}[ \t]*$")
+_FINAL_DIAGNOSIS_HEADING_RE = re.compile(r"(?im)^[ \t]*FINAL\s+DIAGNOSIS\b.*$")
 _LINE_SPLIT_RE = re.compile(r"[\r\n]+")
 
-_NEGATIVE_RE = re.compile(r"negative\s+for\s+malignan", re.IGNORECASE)
+_NEGATIVE_RE = re.compile(
+    r"(?:negative\s+for\s+malignan|no\s+evidence\s+of\s+malignan|no\s+malignan\w*\s+(?:identified|seen))",
+    re.IGNORECASE,
+)
 _POSITIVE_RE = re.compile(
     r"\b(?:diagnostic\s+category\s*:\s*malignant|positive\s+for\s+malignan|malignan\w*|adenocarcinoma|carcinoma)\b",
     re.IGNORECASE,
@@ -38,6 +43,40 @@ def _split_blocks(text: str) -> list[str]:
         return blocks
     stripped = (text or "").strip()
     return [stripped] if stripped else []
+
+
+def _extract_section_after_heading(text: str, heading_re: re.Pattern[str]) -> str | None:
+    value = text or ""
+    heading_match = heading_re.search(value)
+    if not heading_match:
+        return None
+
+    tail = value[heading_match.end() :]
+    next_heading = _SECTION_HEADING_RE.search(tail)
+    section = tail[: next_heading.start()] if next_heading else tail
+    clean = section.strip()
+    return clean or None
+
+
+def _split_prefer_final_diagnosis_blocks(text: str) -> tuple[list[str], bool]:
+    final_section = _extract_section_after_heading(text, _FINAL_DIAGNOSIS_HEADING_RE)
+    if final_section:
+        blocks = _split_blocks(final_section)
+        if blocks:
+            return blocks, True
+    return _split_blocks(text), False
+
+
+def _station_tokens_for_block(block: str, *, header_only: bool) -> list[str]:
+    lines = [line.strip() for line in _LINE_SPLIT_RE.split(block or "") if line.strip()]
+    if not lines:
+        return []
+    header_tokens = find_station_tokens(lines[0])
+    if header_tokens:
+        return header_tokens
+    if header_only:
+        return []
+    return find_station_tokens(block)
 
 
 def _classify_path_result(block: str) -> str | None:
@@ -110,11 +149,15 @@ def extract_pathology_event(text: str) -> dict[str, Any]:
     peripheral_updates: list[dict[str, Any]] = []
     qa_flags: list[str] = []
 
-    for block in _split_blocks(text):
+    blocks, using_final_diagnosis_blocks = _split_prefer_final_diagnosis_blocks(text)
+    for block in blocks:
         path_result = _classify_path_result(block)
         diagnosis = _extract_diagnosis_text(block, path_result)
 
-        stations = find_station_tokens(block)
+        stations = _station_tokens_for_block(block, header_only=using_final_diagnosis_blocks)
+        if using_final_diagnosis_blocks and not stations:
+            qa_flags.append("station_not_found_in_final_diagnosis_block")
+
         for station in stations:
             node_updates.append(
                 {

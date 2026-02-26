@@ -37,3 +37,17 @@ def test_extract_pathology_peripheral_malignant_adeno() -> None:
     assert row["laterality"] == "R"
     assert row["path_result"] == "Positive"
     assert "Adenocarcinoma" in (row.get("path_diagnosis_text") or "")
+
+
+def test_extract_pathology_final_diagnosis_keeps_station_specific_outcomes() -> None:
+    payload = extract_pathology_event(_read("path_ebus_station_specific_final_diagnosis.txt"))
+    stations = {row["station"]: row for row in payload["node_updates"]}
+
+    assert stations["4R"]["path_result"] == "Negative"
+    assert stations["4L"]["path_result"] == "Negative"
+    assert stations["7"]["path_result"] == "Positive"
+    assert stations["11RS"]["path_result"] == "Non-diagnostic"
+
+    assert "adenocarcinoma" in str(stations["7"]["path_diagnosis_text"]).lower()
+    assert "adenocarcinoma" not in str(stations["4R"]["path_diagnosis_text"]).lower()
+    assert "adenocarcinoma" not in str(stations["4L"]["path_diagnosis_text"]).lower()

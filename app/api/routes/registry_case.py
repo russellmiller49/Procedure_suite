@@ -131,6 +131,8 @@ class RegistryCaseEventSummary(BaseModel):
     event_title: str | None = None
     has_note_text: bool = False
     has_structured_data: bool = False
+    structured_data: dict[str, Any] | None = None
+    extracted_json: dict[str, Any] | None = None
 
 
 class RegistryCaseResponse(BaseModel):
@@ -168,6 +170,8 @@ class RegistryCaseRebuildRequest(BaseModel):
 
 def _build_event_summary(row: RegistryAppendedDocument) -> RegistryCaseEventSummary:
     metadata = row.metadata_json if isinstance(row.metadata_json, dict) else {}
+    structured_data = metadata.get("structured_data") if isinstance(metadata.get("structured_data"), dict) else None
+    extracted_json = row.extracted_json if isinstance(row.extracted_json, dict) else None
     event_id = str(row.id)
     return RegistryCaseEventSummary(
         id=event_id,
@@ -181,7 +185,9 @@ def _build_event_summary(row: RegistryAppendedDocument) -> RegistryCaseEventSumm
         relative_day_offset=getattr(row, "relative_day_offset", None),
         event_title=getattr(row, "event_title", None),
         has_note_text=bool(str(row.note_text or "").strip()),
-        has_structured_data=bool(metadata.get("structured_data")),
+        has_structured_data=bool(structured_data),
+        structured_data=structured_data,
+        extracted_json=extracted_json,
     )
 
 

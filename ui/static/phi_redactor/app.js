@@ -77,6 +77,7 @@ const clearAppendTargetBtn = document.getElementById("clearAppendTargetBtn");
 const vaultStatusTextEl = document.getElementById("vaultStatusText");
 const vaultPatientsHostEl = document.getElementById("vaultPatientsHost");
 const vaultCaseEventsHostEl = document.getElementById("vaultCaseEventsHost");
+const vaultCaseEventDetailHostEl = document.getElementById("vaultCaseEventDetailHost");
 const vaultActiveCaseTextEl = document.getElementById("vaultActiveCaseText");
 const vaultEventModeTextEl = document.getElementById("vaultEventModeText");
 const phiConfirmModalEl = document.getElementById("phiConfirmModal");
@@ -216,6 +217,8 @@ let addEventDraftSourceType = "manual_entry";
 let loadAppendEventDraftIntoEditor = null;
 let lastSubmittedRegistryUuid = null;
 let registryCaseSnapshotByUuid = new Map(); // registry_uuid -> canonical remote case snapshot
+let selectedCaseEventId = null;
+let activeCaseEventReviewId = null;
 let vaultIdleTimerId = null;
 let lastVaultActivityMs = 0;
 
@@ -1031,6 +1034,14 @@ const EBUS_ACTION_OPTIONS = [
   { value: "forceps_biopsy", label: "Forceps biopsy" },
   { value: "other", label: "Other" },
 ];
+const PATH_RESULT_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Positive", label: "Positive" },
+  { value: "Negative", label: "Negative" },
+  { value: "Non-diagnostic", label: "Non-diagnostic" },
+  { value: "Atypical", label: "Atypical" },
+  { value: "Suspicious", label: "Suspicious" },
+];
 const DISPOSITION_OPTIONS = [
   { value: "", label: "—" },
   { value: "Outpatient discharge", label: "Outpatient discharge" },
@@ -1042,6 +1053,29 @@ const DISPOSITION_OPTIONS = [
   { value: "Transfer to another facility", label: "Transfer to another facility" },
   { value: "OR", label: "OR" },
   { value: "Death", label: "Death" },
+];
+const RESPONSE_STATUS_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Progression", label: "Progression" },
+  { value: "Stable", label: "Stable" },
+  { value: "Response", label: "Response" },
+  { value: "Mixed", label: "Mixed" },
+  { value: "Indeterminate", label: "Indeterminate" },
+];
+const IMAGING_MODALITY_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "ct", label: "CT" },
+  { value: "pet_ct", label: "PET-CT" },
+  { value: "cta", label: "CTA" },
+  { value: "mri", label: "MRI" },
+  { value: "other", label: "Other" },
+];
+const IMAGING_SUBTYPE_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "preop", label: "Preop" },
+  { value: "followup", label: "Follow-up" },
+  { value: "restaging", label: "Restaging" },
+  { value: "surveillance", label: "Surveillance" },
 ];
 
 const HEMITHORAX_OPTIONS = [
@@ -1513,6 +1547,7 @@ async function rebuildVaultCase(registryUuid) {
   }
 
   activeCaseRegistryUuid = safeRegistryUuid;
+  activeCaseEventReviewId = null;
   appendEventConfig = null;
   hydrateVaultInputsFromCase(safeRegistryUuid);
   updateAppendTargetUi();
@@ -1522,16 +1557,7 @@ async function rebuildVaultCase(registryUuid) {
     registryCaseSnapshotByUuid.set(safeRegistryUuid, remoteCaseData);
     const appendOnlyData = buildAppendOnlyDashboardResponse(safeRegistryUuid, remoteCaseData, "rebuilt_case");
     await renderResults(appendOnlyData, {
-      rawData: {
-        mode: "rebuilt_saved_case",
-        registry_uuid: safeRegistryUuid,
-        remote_case: {
-          registry_uuid: remoteCaseData.registry_uuid,
-          version: remoteCaseData.version,
-          updated_at: remoteCaseData.updated_at,
-          source_run_id: remoteCaseData.source_run_id || null,
-        },
-      },
+      rawData: appendOnlyData,
       registryUuid: safeRegistryUuid,
       remoteCaseData,
     });
@@ -1557,6 +1583,7 @@ async function loadVaultCaseView(registryUuid) {
   }
 
   activeCaseRegistryUuid = safeRegistryUuid;
+  activeCaseEventReviewId = null;
   if (appendEventConfig && appendEventConfig.registry_uuid !== safeRegistryUuid) appendEventConfig = null;
   hydrateVaultInputsFromCase(safeRegistryUuid);
   updateAppendTargetUi();
@@ -1609,15 +1636,7 @@ async function loadVaultCaseView(registryUuid) {
 
   const appendOnlyData = buildAppendOnlyDashboardResponse(safeRegistryUuid, remoteCaseData, "loaded_case");
   await renderResults(appendOnlyData, {
-    rawData: {
-      mode: "loaded_saved_case",
-      registry_uuid: safeRegistryUuid,
-      remote_case: {
-        registry_uuid: remoteCaseData.registry_uuid,
-        version: remoteCaseData.version,
-        updated_at: remoteCaseData.updated_at,
-      },
-    },
+    rawData: appendOnlyData,
     registryUuid: safeRegistryUuid,
     remoteCaseData,
   });
@@ -1946,18 +1965,450 @@ function formatCaseEventCreatedAt(value) {
   return d.toLocaleString();
 }
 
+function formatCaseEventSource(ev) {
+  const sourceParts = [];
+  if (ev?.source_type) sourceParts.push(String(ev.source_type));
+  if (ev?.source_modality) sourceParts.push(String(ev.source_modality));
+  if (ev?.event_subtype) sourceParts.push(String(ev.event_subtype));
+  return sourceParts.length ? sourceParts.join(" / ") : "—";
+}
+
+function normalizeCaseEventReviewType(eventType) {
+  const normalized = String(eventType || "").trim().toLowerCase();
+  if (normalized === "pathology" || normalized === "imaging") return normalized;
+  if (
+    normalized === "clinical_status" ||
+    normalized === "clinical_update" ||
+    normalized === "treatment_update" ||
+    normalized === "complication"
+  ) {
+    return "clinical";
+  }
+  return normalized;
+}
+
+function normalizeCaseEventStationToken(value) {
+  return String(value || "").replace(/[^0-9A-Za-z]/g, "").toUpperCase().trim();
+}
+
+function toIntOrNull(value) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return null;
+  return Math.trunc(num);
+}
+
+function normalizeImagingModality(value) {
+  const raw = String(value || "").trim().toLowerCase();
+  return ["ct", "pet_ct", "cta", "mri", "other"].includes(raw) ? raw : "other";
+}
+
+function normalizeImagingSubtype(value) {
+  const raw = String(value || "").trim().toLowerCase();
+  return ["preop", "followup", "restaging", "surveillance"].includes(raw) ? raw : null;
+}
+
+function normalizeResponseStatus(value) {
+  const raw = String(value || "").trim();
+  return ["Progression", "Stable", "Response", "Mixed", "Indeterminate"].includes(raw) ? raw : null;
+}
+
+function buildPathologyEventRegistryPreview(eventRow, extracted, remoteCaseData) {
+  const registry = {};
+  const eventId = String(eventRow?.id || "").trim() || null;
+  const eventOffset = toIntOrNull(eventRow?.relative_day_offset);
+  const remoteRegistry = isPlainObject(remoteCaseData?.registry) ? remoteCaseData.registry : {};
+
+  const pathologyResults = isPlainObject(extracted?.pathology_results_update)
+    ? deepClone(extracted.pathology_results_update)
+    : null;
+  if (pathologyResults && Object.keys(pathologyResults).length) {
+    registry.pathology_results = pathologyResults;
+  }
+
+  const remoteNodeEvents = Array.isArray(remoteRegistry?.procedures_performed?.linear_ebus?.node_events)
+    ? remoteRegistry.procedures_performed.linear_ebus.node_events
+    : [];
+  const remoteNodeByStation = new Map();
+  remoteNodeEvents.forEach((node) => {
+    const key = normalizeCaseEventStationToken(node?.station);
+    if (key && !remoteNodeByStation.has(key)) remoteNodeByStation.set(key, node);
+  });
+
+  const nodeUpdates = Array.isArray(extracted?.node_updates) ? extracted.node_updates : [];
+  const nodeEvents = nodeUpdates
+    .filter((row) => isPlainObject(row))
+    .map((row) => {
+      const stationRaw = String(row?.station || "").trim().toUpperCase();
+      const stationKey = normalizeCaseEventStationToken(stationRaw);
+      const base = stationKey ? remoteNodeByStation.get(stationKey) || {} : {};
+      return {
+        station: stationRaw || String(base?.station || "").trim().toUpperCase() || null,
+        action: base?.action || null,
+        passes: toIntOrNull(base?.passes),
+        elastography_pattern: String(base?.elastography_pattern || "").trim() || null,
+        evidence_quote: String(base?.evidence_quote || "").trim() || null,
+        path_result: String(row?.path_result || "").trim() || null,
+        path_diagnosis_text: String(row?.path_diagnosis_text || "").trim() || null,
+        path_source_event_id: eventId,
+        path_relative_day_offset: eventOffset,
+      };
+    })
+    .filter((row) => row.station);
+
+  if (nodeEvents.length) {
+    registry.procedures_performed = {
+      linear_ebus: {
+        performed: true,
+        stations_sampled: nodeEvents.map((row) => row.station),
+        node_events: nodeEvents,
+      },
+    };
+  }
+
+  const peripheralUpdates = Array.isArray(extracted?.peripheral_updates) ? extracted.peripheral_updates : [];
+  const peripheralTargets = peripheralUpdates
+    .filter((row) => isPlainObject(row))
+    .map((row, idx) => {
+      const fallbackKey = `event_target_${idx + 1}`;
+      return {
+        target_key: String(row?.target_key || "").trim() || fallbackKey,
+        laterality: String(row?.laterality || "").trim() || null,
+        lobe: String(row?.lobe || "").trim() || null,
+        segment: String(row?.segment || "").trim() || null,
+        path_result: String(row?.path_result || "").trim() || null,
+        path_diagnosis_text: String(row?.path_diagnosis_text || "").trim() || null,
+        path_source_event_id: eventId,
+        path_relative_day_offset: eventOffset,
+      };
+    });
+  if (peripheralTargets.length) {
+    registry.targets = registry.targets || {};
+    registry.targets.peripheral_targets = peripheralTargets;
+  }
+
+  return registry;
+}
+
+function buildImagingEventRegistryPreview(eventRow, extracted) {
+  const registry = {};
+  const eventId = String(eventRow?.id || "").trim() || null;
+  const eventOffset = toIntOrNull(eventRow?.relative_day_offset);
+
+  const snapshotRaw = isPlainObject(extracted?.imaging_snapshot) ? extracted.imaging_snapshot : {};
+  const snapshotOffset = toIntOrNull(snapshotRaw?.relative_day_offset);
+  const snapshot = {
+    relative_day_offset: snapshotOffset !== null ? snapshotOffset : eventOffset !== null ? eventOffset : 0,
+    modality: normalizeImagingModality(snapshotRaw?.modality || eventRow?.source_modality || "ct"),
+    subtype: normalizeImagingSubtype(snapshotRaw?.subtype || eventRow?.event_subtype),
+    event_title: String(snapshotRaw?.event_title || eventRow?.event_title || "").trim() || null,
+    response: normalizeResponseStatus(snapshotRaw?.response),
+    overall_impression_text: String(snapshotRaw?.overall_impression_text || "").trim() || null,
+    qa_flags: Array.isArray(snapshotRaw?.qa_flags)
+      ? snapshotRaw.qa_flags.map((flag) => String(flag || "").trim()).filter(Boolean)
+      : [],
+  };
+
+  registry.imaging_summary =
+    snapshot.subtype === "preop"
+      ? { baseline: snapshot, followups: [] }
+      : { baseline: null, followups: [snapshot] };
+
+  const targetsUpdate = isPlainObject(extracted?.targets_update) ? extracted.targets_update : {};
+  const peripheralTargetsRaw = Array.isArray(targetsUpdate?.peripheral_targets) ? targetsUpdate.peripheral_targets : [];
+  const mediastinalTargetsRaw = Array.isArray(targetsUpdate?.mediastinal_targets)
+    ? targetsUpdate.mediastinal_targets
+    : [];
+
+  const peripheralTargets = peripheralTargetsRaw
+    .filter((row) => isPlainObject(row))
+    .map((row, idx) => ({
+      target_key: String(row?.target_key || "").trim() || `event_target_${idx + 1}`,
+      laterality: String(row?.laterality || "").trim() || null,
+      lobe: String(row?.lobe || "").trim() || null,
+      segment: String(row?.segment || "").trim() || null,
+      size_mm_long: toIntOrNull(row?.size_mm_long),
+      size_mm_short: toIntOrNull(row?.size_mm_short),
+      size_mm_cc: toIntOrNull(row?.size_mm_cc),
+      density: String(row?.density || "").trim() || null,
+      pet_avid: typeof row?.pet_avid === "boolean" ? row.pet_avid : null,
+      pet_suvmax: Number.isFinite(Number(row?.pet_suvmax)) ? Number(row.pet_suvmax) : null,
+      pet_delayed_suvmax: Number.isFinite(Number(row?.pet_delayed_suvmax)) ? Number(row.pet_delayed_suvmax) : null,
+      comparative_change: String(row?.comparative_change || "").trim() || null,
+      source_event_id: eventId,
+      source_relative_day_offset: eventOffset,
+    }));
+  const mediastinalTargets = mediastinalTargetsRaw
+    .filter((row) => isPlainObject(row))
+    .map((row) => ({
+      station: String(row?.station || "").trim() || null,
+      location_text: String(row?.location_text || "").trim() || null,
+      short_axis_mm: toIntOrNull(row?.short_axis_mm),
+      pet_avid: typeof row?.pet_avid === "boolean" ? row.pet_avid : null,
+      pet_suvmax: Number.isFinite(Number(row?.pet_suvmax)) ? Number(row.pet_suvmax) : null,
+      pet_delayed_suvmax: Number.isFinite(Number(row?.pet_delayed_suvmax)) ? Number(row.pet_delayed_suvmax) : null,
+      comparative_change: String(row?.comparative_change || "").trim() || null,
+      source_event_id: eventId,
+      source_relative_day_offset: eventOffset,
+    }));
+
+  if (peripheralTargets.length || mediastinalTargets.length) {
+    registry.targets = {};
+    if (peripheralTargets.length) registry.targets.peripheral_targets = peripheralTargets;
+    if (mediastinalTargets.length) registry.targets.mediastinal_targets = mediastinalTargets;
+  }
+
+  return registry;
+}
+
+function buildClinicalEventRegistryPreview(eventRow, extracted) {
+  const registry = {};
+  const eventId = String(eventRow?.id || "").trim() || null;
+  const eventOffset = toIntOrNull(eventRow?.relative_day_offset);
+  const extractedUpdate = isPlainObject(extracted?.clinical_update) ? deepClone(extracted.clinical_update) : null;
+  const structured = isPlainObject(eventRow?.structured_data) ? eventRow.structured_data : null;
+  const update = extractedUpdate || (structured ? deepClone(structured) : null);
+  if (!update) return registry;
+
+  update.relative_day_offset =
+    toIntOrNull(update?.relative_day_offset) !== null
+      ? toIntOrNull(update.relative_day_offset)
+      : eventOffset !== null
+        ? eventOffset
+        : 0;
+  update.update_type = String(update?.update_type || "clinical_update").trim() || "clinical_update";
+  update.event_title = String(update?.event_title || eventRow?.event_title || "").trim() || null;
+  update.source_event_id = String(update?.source_event_id || eventId || "").trim() || null;
+  update.summary_text = String(update?.summary_text || update?.comment || "").trim() || null;
+  update.disease_status = normalizeResponseStatus(update?.disease_status);
+  update.hospital_admission = typeof update?.hospital_admission === "boolean" ? update.hospital_admission : null;
+  update.icu_admission = typeof update?.icu_admission === "boolean" ? update.icu_admission : null;
+  update.deceased = typeof update?.deceased === "boolean" ? update.deceased : null;
+
+  registry.clinical_course = {
+    updates: [update],
+    current_state: {
+      relative_day_offset: update.relative_day_offset,
+      summary_text: update.summary_text,
+      hospital_admission: update.hospital_admission,
+      icu_admission: update.icu_admission,
+      deceased: update.deceased,
+      disease_status: update.disease_status,
+      source_event_id: update.source_event_id,
+    },
+  };
+  return registry;
+}
+
+function buildCaseEventRegistryPreview(eventRow, remoteCaseData) {
+  const extracted = isPlainObject(eventRow?.extracted_json) ? eventRow.extracted_json : {};
+  const reviewType = normalizeCaseEventReviewType(eventRow?.event_type);
+  if (reviewType === "pathology") return buildPathologyEventRegistryPreview(eventRow, extracted, remoteCaseData);
+  if (reviewType === "imaging") return buildImagingEventRegistryPreview(eventRow, extracted);
+  if (reviewType === "clinical") return buildClinicalEventRegistryPreview(eventRow, extracted);
+  return {};
+}
+
+function canOpenCaseEventReview(eventRow) {
+  if (!eventRow || typeof eventRow !== "object") return false;
+  const reviewType = normalizeCaseEventReviewType(eventRow?.event_type);
+  if (!["pathology", "imaging", "clinical"].includes(reviewType)) return false;
+  if (reviewType === "clinical") {
+    return isPlainObject(eventRow?.extracted_json) || isPlainObject(eventRow?.structured_data);
+  }
+  return isPlainObject(eventRow?.extracted_json);
+}
+
+function buildCaseEventDashboardResponse(eventRow, remoteCaseData) {
+  const extracted = isPlainObject(eventRow?.extracted_json) ? eventRow.extracted_json : {};
+  const reviewType = normalizeCaseEventReviewType(eventRow?.event_type);
+  const registry = buildCaseEventRegistryPreview(eventRow, remoteCaseData);
+  const qaFlags = Array.isArray(extracted?.qa_flags)
+    ? extracted.qa_flags.map((flag) => String(flag || "").trim()).filter(Boolean)
+    : [];
+  const auditWarnings = qaFlags.map((flag) => `EVENT_QA: ${flag}`);
+  const needsReview = auditWarnings.length > 0;
+
+  return {
+    registry_uuid: null,
+    registry,
+    cpt_codes: [],
+    suggestions: [],
+    audit_warnings: auditWarnings,
+    warnings: auditWarnings,
+    validation_errors: [],
+    coder_difficulty: "EVENT_REVIEW",
+    needs_manual_review: needsReview,
+    review_status: needsReview ? "manual_review" : "finalized",
+    pipeline_mode: `case_event_review_${reviewType || "other"}`,
+    total_work_rvu: null,
+    estimated_payment: null,
+    per_code_billing: [],
+    missing_field_prompts: [],
+    evidence: isPlainObject(extracted?.evidence) ? extracted.evidence : {},
+  };
+}
+
+async function openCaseEventInReviewPanel(eventRow, remoteCaseData) {
+  if (!canOpenCaseEventReview(eventRow)) {
+    setStatus("Selected event does not yet have a tabular event-preview payload.");
+    return;
+  }
+
+  const reviewData = buildCaseEventDashboardResponse(eventRow, remoteCaseData);
+  const rawPayload = {
+    mode: "case_event_review",
+    event_type: String(eventRow?.event_type || "other"),
+    event: deepClone(eventRow),
+    extracted: isPlainObject(eventRow?.extracted_json) ? eventRow.extracted_json : null,
+    structured_data: isPlainObject(eventRow?.structured_data) ? eventRow.structured_data : null,
+    event_review_registry: reviewData.registry,
+    source_case_registry_uuid: String(activeCaseRegistryUuid || "").trim() || null,
+  };
+
+  await renderResults(reviewData, {
+    rawData: rawPayload,
+    registryUuid: "",
+    remoteCaseData: null,
+    skipRemoteCaseLookup: true,
+  });
+  activeCaseEventReviewId = String(eventRow?.id || "").trim() || null;
+  setRunId(null);
+  setFeedbackStatus("Viewing selected event extraction snapshot (preview mode).");
+  setStatus(`${formatCaseEventTypeLabel(eventRow?.event_type)} event loaded in review panel (preview).`);
+}
+
+async function restoreActiveCaseSnapshotView() {
+  const registryUuid = String(activeCaseRegistryUuid || "").trim();
+  if (!registryUuid) {
+    setStatus("No active case selected.");
+    return;
+  }
+  activeCaseEventReviewId = null;
+  await loadVaultCaseView(registryUuid);
+}
+
+function renderCaseEventDetails(eventRow, remoteCaseData = null) {
+  if (!vaultCaseEventDetailHostEl) return;
+  clearEl(vaultCaseEventDetailHostEl);
+
+  if (!eventRow || typeof eventRow !== "object") {
+    vaultCaseEventDetailHostEl.textContent = "Select an event to inspect extraction details.";
+    return;
+  }
+
+  const titleEl = document.createElement("div");
+  titleEl.className = "vault-case-event-detail-title";
+  titleEl.textContent = `${formatCaseEventTypeLabel(eventRow?.event_type)} event details`;
+  vaultCaseEventDetailHostEl.appendChild(titleEl);
+
+  const metaGrid = document.createElement("div");
+  metaGrid.className = "vault-case-event-detail-meta";
+  [
+    ["Event ID", String(eventRow?.id || "—")],
+    ["Created", formatCaseEventCreatedAt(eventRow?.created_at)],
+    ["T offset", formatTOffset(eventRow?.relative_day_offset || 0)],
+    ["Source", formatCaseEventSource(eventRow)],
+    ["Title", String(eventRow?.event_title || "—")],
+  ].forEach(([label, value]) => {
+    const item = document.createElement("div");
+    item.innerHTML = `<strong>${safeHtml(label)}:</strong> ${safeHtml(value)}`;
+    metaGrid.appendChild(item);
+  });
+  vaultCaseEventDetailHostEl.appendChild(metaGrid);
+
+  const actions = document.createElement("div");
+  actions.className = "vault-case-event-detail-actions";
+
+  const openReviewBtn = document.createElement("button");
+  openReviewBtn.type = "button";
+  openReviewBtn.className = "secondary";
+  openReviewBtn.textContent = "Open Event In Review Panel";
+  openReviewBtn.disabled = !canOpenCaseEventReview(eventRow);
+  openReviewBtn.addEventListener("click", async () => {
+    try {
+      openReviewBtn.disabled = true;
+      await openCaseEventInReviewPanel(eventRow, remoteCaseData);
+    } finally {
+      openReviewBtn.disabled = !canOpenCaseEventReview(eventRow);
+    }
+  });
+  actions.appendChild(openReviewBtn);
+
+  const showCaseBtn = document.createElement("button");
+  showCaseBtn.type = "button";
+  showCaseBtn.className = "secondary";
+  showCaseBtn.textContent = "Show Full Case Snapshot";
+  showCaseBtn.disabled = !String(activeCaseRegistryUuid || "").trim();
+  showCaseBtn.addEventListener("click", async () => {
+    try {
+      showCaseBtn.disabled = true;
+      await restoreActiveCaseSnapshotView();
+    } finally {
+      showCaseBtn.disabled = !String(activeCaseRegistryUuid || "").trim();
+    }
+  });
+  actions.appendChild(showCaseBtn);
+
+  vaultCaseEventDetailHostEl.appendChild(actions);
+
+  const extractedPayload = isPlainObject(eventRow?.extracted_json) ? eventRow.extracted_json : null;
+  const structuredPayload = isPlainObject(eventRow?.structured_data) ? eventRow.structured_data : null;
+
+  if (structuredPayload) {
+    const block = document.createElement("div");
+    block.className = "vault-case-event-detail-block";
+    const label = document.createElement("div");
+    label.className = "vault-case-event-detail-label";
+    label.textContent = "Structured payload";
+    const pre = document.createElement("pre");
+    pre.className = "vault-case-event-detail-pre";
+    pre.textContent = JSON.stringify(structuredPayload, null, 2);
+    block.appendChild(label);
+    block.appendChild(pre);
+    vaultCaseEventDetailHostEl.appendChild(block);
+  }
+
+  if (extractedPayload) {
+    const block = document.createElement("div");
+    block.className = "vault-case-event-detail-block";
+    const label = document.createElement("div");
+    label.className = "vault-case-event-detail-label";
+    label.textContent = "Extracted event payload";
+    const pre = document.createElement("pre");
+    pre.className = "vault-case-event-detail-pre";
+    pre.textContent = JSON.stringify(extractedPayload, null, 2);
+    block.appendChild(label);
+    block.appendChild(pre);
+    vaultCaseEventDetailHostEl.appendChild(block);
+    return;
+  }
+
+  const fallback = document.createElement("div");
+  fallback.className = "subtle";
+  fallback.textContent = eventRow?.is_synthetic
+    ? "Synthetic baseline procedure event; no per-event extraction payload is stored."
+    : "No extracted payload was saved for this event.";
+  vaultCaseEventDetailHostEl.appendChild(fallback);
+}
+
 function renderCaseEvents(remoteCaseData) {
   if (!vaultCaseEventsHostEl) return;
   clearEl(vaultCaseEventsHostEl);
 
   if (!remoteCaseData || typeof remoteCaseData !== "object") {
     vaultCaseEventsHostEl.textContent = "Load a case to view events.";
+    selectedCaseEventId = null;
+    activeCaseEventReviewId = null;
+    renderCaseEventDetails(null);
     return;
   }
 
   const events = Array.isArray(remoteCaseData?.events) ? remoteCaseData.events : [];
   if (events.length === 0) {
     vaultCaseEventsHostEl.textContent = "No events saved for this case yet.";
+    selectedCaseEventId = null;
+    activeCaseEventReviewId = null;
+    renderCaseEventDetails(null);
     return;
   }
 
@@ -1979,8 +2430,31 @@ function renderCaseEvents(remoteCaseData) {
   const tbody = table.querySelector("tbody");
   if (!tbody) return;
 
-  (Array.isArray(events) ? events : []).forEach((ev) => {
+  const eventRows = Array.isArray(events) ? events : [];
+  const rowById = new Map();
+
+  const applySelection = (eventId, options = {}) => {
+    const openReview = Boolean(options?.openReview);
+    const id = String(eventId || "").trim();
+    selectedCaseEventId = id || null;
+    rowById.forEach((rowEl, rowId) => {
+      rowEl.classList.toggle("is-selected", rowId === selectedCaseEventId);
+    });
+    const selected =
+      eventRows.find((ev) => String(ev?.id || "").trim() === selectedCaseEventId) || eventRows[0] || null;
+    if (selected && !selectedCaseEventId) {
+      selectedCaseEventId = String(selected?.id || "").trim() || null;
+    }
+    renderCaseEventDetails(selected, remoteCaseData);
+    if (openReview && selected) {
+      void openCaseEventInReviewPanel(selected, remoteCaseData);
+    }
+  };
+
+  eventRows.forEach((ev) => {
     const tr = document.createElement("tr");
+    tr.className = "vault-event-row";
+    tr.tabIndex = 0;
 
     const typeTd = document.createElement("td");
     const typeWrap = document.createElement("div");
@@ -2014,11 +2488,7 @@ function renderCaseEvents(remoteCaseData) {
     tr.appendChild(createdTd);
 
     const sourceTd = document.createElement("td");
-    const sourceParts = [];
-    if (ev?.source_type) sourceParts.push(String(ev.source_type));
-    if (ev?.source_modality) sourceParts.push(String(ev.source_modality));
-    if (ev?.event_subtype) sourceParts.push(String(ev.event_subtype));
-    sourceTd.textContent = sourceParts.length ? sourceParts.join(" / ") : "—";
+    sourceTd.textContent = formatCaseEventSource(ev);
     tr.appendChild(sourceTd);
 
     const noteTd = document.createElement("td");
@@ -2029,10 +2499,29 @@ function renderCaseEvents(remoteCaseData) {
     structuredTd.textContent = fmtBool(Boolean(ev?.has_structured_data));
     tr.appendChild(structuredTd);
 
+    const eventId = String(ev?.id || "").trim();
+    if (eventId) {
+      rowById.set(eventId, tr);
+      tr.addEventListener("click", () => applySelection(eventId, { openReview: true }));
+      tr.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          applySelection(eventId, { openReview: true });
+        }
+      });
+    }
+
     tbody.appendChild(tr);
   });
 
   vaultCaseEventsHostEl.appendChild(table);
+
+  const preservedSelection = String(selectedCaseEventId || "").trim();
+  const firstEventId = String(eventRows[0]?.id || "").trim();
+  const defaultSelection =
+    preservedSelection && rowById.has(preservedSelection) ? preservedSelection : firstEventId;
+  if (defaultSelection) applySelection(defaultSelection, { openReview: false });
+  else renderCaseEventDetails(eventRows[0] || null, remoteCaseData);
 }
 
 async function removeVaultPatient(registryUuid) {
@@ -6409,6 +6898,233 @@ function buildFlattenedTables(data) {
     emptyMessage: outcomesHasAny ? "" : "No outcomes documented.",
   });
 
+  const pathologyResults =
+    registry?.pathology_results && typeof registry.pathology_results === "object" ? registry.pathology_results : {};
+  const molecularMarkersSummary =
+    pathologyResults?.molecular_markers && typeof pathologyResults.molecular_markers === "object"
+      ? Object.entries(pathologyResults.molecular_markers)
+          .map(([k, v]) => `${k}: ${String(v ?? "").trim()}`)
+          .filter((line) => !line.endsWith(":"))
+          .join("; ")
+      : "";
+  const pathologyHasAny =
+    pathologyResults && typeof pathologyResults === "object" && Object.keys(pathologyResults).length > 0;
+  tables.push({
+    id: "pathology_results_summary",
+    title: "Pathology Results (Summary)",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Final diagnosis",
+        value: pathologyResults?.final_diagnosis || "",
+        __meta: { path: "registry.pathology_results.final_diagnosis", valueType: "text" },
+      },
+      {
+        field: "Final staging",
+        value: pathologyResults?.final_staging || "",
+        __meta: { path: "registry.pathology_results.final_staging", valueType: "text" },
+      },
+      {
+        field: "Histology",
+        value: pathologyResults?.histology || "",
+        __meta: { path: "registry.pathology_results.histology", valueType: "text" },
+      },
+      {
+        field: "PD-L1 TPS %",
+        value: Number.isFinite(pathologyResults?.pdl1_tps_percent) ? String(pathologyResults.pdl1_tps_percent) : "",
+        __meta: { path: "registry.pathology_results.pdl1_tps_percent", valueType: "number" },
+      },
+      {
+        field: "PD-L1 TPS text",
+        value: pathologyResults?.pdl1_tps_text || "",
+        __meta: { path: "registry.pathology_results.pdl1_tps_text", valueType: "text" },
+      },
+      {
+        field: "Microbiology results",
+        value: pathologyResults?.microbiology_results || "",
+        __meta: { path: "registry.pathology_results.microbiology_results", valueType: "text" },
+      },
+      {
+        field: "Pathology result date",
+        value: pathologyResults?.pathology_result_date || "",
+        __meta: { path: "registry.pathology_results.pathology_result_date", valueType: "text" },
+      },
+      {
+        field: "Molecular markers",
+        value: molecularMarkersSummary,
+        __meta: { valueType: "text" },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+    emptyMessage: pathologyHasAny ? "" : "No pathology summary fields populated.",
+  });
+
+  const imagingSummary =
+    registry?.imaging_summary && typeof registry.imaging_summary === "object" ? registry.imaging_summary : {};
+  const imagingBaseline =
+    imagingSummary?.baseline && typeof imagingSummary.baseline === "object" ? imagingSummary.baseline : null;
+  const imagingFollowups = Array.isArray(imagingSummary?.followups) ? imagingSummary.followups : [];
+  const latestImaging = imagingFollowups.length
+    ? imagingFollowups[imagingFollowups.length - 1]
+    : imagingBaseline || null;
+  const latestPrefix = imagingFollowups.length
+    ? `registry.imaging_summary.followups[${imagingFollowups.length - 1}]`
+    : "registry.imaging_summary.baseline";
+  tables.push({
+    id: "imaging_summary",
+    title: "Imaging Summary",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Baseline modality",
+        value: imagingBaseline?.modality || "",
+        __meta: {
+          path: "registry.imaging_summary.baseline.modality",
+          valueType: "text",
+          inputType: "select",
+          options: IMAGING_MODALITY_OPTIONS,
+        },
+      },
+      {
+        field: "Baseline subtype",
+        value: imagingBaseline?.subtype || "",
+        __meta: {
+          path: "registry.imaging_summary.baseline.subtype",
+          valueType: "text",
+          inputType: "select",
+          options: IMAGING_SUBTYPE_OPTIONS,
+        },
+      },
+      {
+        field: "Baseline response",
+        value: imagingBaseline?.response || "",
+        __meta: {
+          path: "registry.imaging_summary.baseline.response",
+          valueType: "text",
+          inputType: "select",
+          options: RESPONSE_STATUS_OPTIONS,
+        },
+      },
+      {
+        field: "Baseline impression",
+        value: imagingBaseline?.overall_impression_text || "",
+        __meta: { path: "registry.imaging_summary.baseline.overall_impression_text", valueType: "text" },
+      },
+      {
+        field: "Follow-up count",
+        value: String(imagingFollowups.length),
+        __meta: { valueType: "text" },
+      },
+      {
+        field: "Latest response",
+        value: latestImaging?.response || "",
+        __meta: {
+          path: `${latestPrefix}.response`,
+          valueType: "text",
+          inputType: "select",
+          options: RESPONSE_STATUS_OPTIONS,
+        },
+      },
+      {
+        field: "Latest impression",
+        value: latestImaging?.overall_impression_text || "",
+        __meta: { path: `${latestPrefix}.overall_impression_text`, valueType: "text" },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+    emptyMessage: "No imaging summary fields populated.",
+  });
+
+  const clinicalCourse =
+    registry?.clinical_course && typeof registry.clinical_course === "object" ? registry.clinical_course : {};
+  const currentState =
+    clinicalCourse?.current_state && typeof clinicalCourse.current_state === "object"
+      ? clinicalCourse.current_state
+      : {};
+  const updates = Array.isArray(clinicalCourse?.updates) ? clinicalCourse.updates : [];
+  tables.push({
+    id: "clinical_followup_summary",
+    title: "Clinical Follow-up (Current State)",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Disease status",
+        value: currentState?.disease_status || "",
+        __meta: {
+          path: "registry.clinical_course.current_state.disease_status",
+          valueType: "text",
+          inputType: "select",
+          options: RESPONSE_STATUS_OPTIONS,
+        },
+      },
+      {
+        field: "Hospital admission",
+        value: toYesNo(currentState?.hospital_admission),
+        __meta: {
+          path: "registry.clinical_course.current_state.hospital_admission",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "ICU admission",
+        value: toYesNo(currentState?.icu_admission),
+        __meta: {
+          path: "registry.clinical_course.current_state.icu_admission",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Deceased",
+        value: toYesNo(currentState?.deceased),
+        __meta: {
+          path: "registry.clinical_course.current_state.deceased",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Current summary",
+        value: currentState?.summary_text || "",
+        __meta: {
+          path: "registry.clinical_course.current_state.summary_text",
+          valueType: "text",
+        },
+      },
+      {
+        field: "Current source event",
+        value: currentState?.source_event_id || "",
+        __meta: {
+          path: "registry.clinical_course.current_state.source_event_id",
+          valueType: "text",
+        },
+      },
+      {
+        field: "Follow-up update count",
+        value: String(updates.length),
+        __meta: { valueType: "text" },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+    emptyMessage: "No clinical follow-up fields populated.",
+  });
+
   const ebus = registry?.procedures_performed?.linear_ebus || {};
   const ebusPerformed = isPerformedProcedure(ebus);
   tables.push({
@@ -6464,6 +7180,10 @@ function buildFlattenedTables(data) {
       { key: "action", label: "Action", type: "select", options: EBUS_ACTION_OPTIONS },
       { key: "passes", label: "Passes", type: "number" },
       { key: "elastography_pattern", label: "Elastography", type: "text" },
+      { key: "path_result", label: "Path Result", type: "select", options: PATH_RESULT_OPTIONS },
+      { key: "path_diagnosis_text", label: "Path Diagnosis", type: "text" },
+      { key: "path_source_event_id", label: "Path Source Event", readOnly: true },
+      { key: "path_relative_day_offset", label: "Path T Offset", readOnly: true },
       { key: "evidence_quote", label: "Evidence", type: "text" },
     ],
     rows: nodeEvents.map((ev) => ({
@@ -6471,6 +7191,13 @@ function buildFlattenedTables(data) {
       action: ev?.action || "",
       passes: Number.isFinite(ev?.passes) ? String(ev.passes) : "",
       elastography_pattern: ev?.elastography_pattern || "",
+      path_result: ev?.path_result || "",
+      path_diagnosis_text: ev?.path_diagnosis_text || "",
+      path_source_event_id: ev?.path_source_event_id ? String(ev.path_source_event_id) : "",
+      path_relative_day_offset:
+        Number.isFinite(ev?.path_relative_day_offset) || ev?.path_relative_day_offset === 0
+          ? String(ev.path_relative_day_offset)
+          : "",
       evidence_quote: ev?.evidence_quote || "",
     })),
     allowAdd: true,
@@ -6784,8 +7511,9 @@ function getFlatTableGroupId(tableId) {
   if (id.startsWith("coding_") || id === "rules_applied" || id === "financial_summary") return "coding";
   if (id === "audit_flags") return "quality";
   if (id === "complications_details") return "quality";
-  if (id === "clinical_context") return "patient";
-  if (id === "diagnostic_findings") return "diagnostics";
+  if (id === "clinical_context" || id === "clinical_followup_summary") return "patient";
+  if (id === "diagnostic_findings" || id === "pathology_results_summary" || id === "imaging_summary")
+    return "diagnostics";
   if (id === "evidence_traceability") return "evidence";
   return "procedures";
 }
@@ -7357,6 +8085,51 @@ function applyEditsToPayload(payload, tables) {
     setByPath(payload, meta.path, value);
   });
 
+  const pathologySummaryRows = tableMap.get("pathology_results_summary")?.rows || [];
+  pathologySummaryRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "boolean") value = parseYesNo(value);
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
+  const imagingSummaryRows = tableMap.get("imaging_summary")?.rows || [];
+  imagingSummaryRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "boolean") value = parseYesNo(value);
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
+  const clinicalFollowupRows = tableMap.get("clinical_followup_summary")?.rows || [];
+  clinicalFollowupRows.forEach((row) => {
+    const meta = row.__meta || {};
+    if (!meta.path) return;
+    let value = row.value;
+    if (meta.valueType === "boolean") value = parseYesNo(value);
+    if (meta.valueType === "number") value = parseNumber(value);
+    if (meta.valueType === "list") value = parseList(value);
+    if (meta.valueType === "text") {
+      const trimmed = String(value || "").trim();
+      value = trimmed ? trimmed : null;
+    }
+    setByPath(payload, meta.path, value);
+  });
+
   const navAggRows = tableMap.get("navigation_bronchoscopy_details")?.rows || [];
   navAggRows.forEach((row) => {
     const meta = row.__meta || {};
@@ -7440,9 +8213,25 @@ function applyEditsToPayload(payload, tables) {
         action: row?.action || null,
         passes: parseNumber(row?.passes),
         elastography_pattern: row?.elastography_pattern || null,
+        path_result: String(row?.path_result || "").trim() || null,
+        path_diagnosis_text: String(row?.path_diagnosis_text || "").trim() || null,
+        path_source_event_id: String(row?.path_source_event_id || "").trim() || null,
+        path_relative_day_offset: parseNumber(row?.path_relative_day_offset),
         evidence_quote: row?.evidence_quote || null,
       }))
-      .filter((row) => row.station || row.action || row.passes || row.elastography_pattern || row.evidence_quote);
+      .filter(
+        (row) =>
+          row.station ||
+          row.action ||
+          row.passes ||
+          row.elastography_pattern ||
+          row.path_result ||
+          row.path_diagnosis_text ||
+          row.path_source_event_id ||
+          row.path_relative_day_offset === 0 ||
+          row.path_relative_day_offset ||
+          row.evidence_quote,
+      );
   }
 
   const navRows = tableMap.get("navigation_targets")?.rows || [];
@@ -7933,15 +8722,18 @@ async function renderResults(data, options = {}) {
   if (!container) return;
 
   const rawData = options?.rawData ?? data;
-  const registryUuid = String(
-    options?.registryUuid || data?.registry_uuid || data?.registryUuid || lastSubmittedRegistryUuid || "",
-  ).trim();
+  const hasRegistryUuidOverride = Object.prototype.hasOwnProperty.call(options || {}, "registryUuid");
+  const registryUuidRaw = hasRegistryUuidOverride
+    ? options?.registryUuid
+    : data?.registry_uuid || data?.registryUuid || lastSubmittedRegistryUuid || "";
+  const registryUuid = String(registryUuidRaw || "").trim();
+  const skipRemoteCaseLookup = Boolean(options?.skipRemoteCaseLookup);
   let remoteCaseData =
     options?.remoteCaseData || (registryUuid ? registryCaseSnapshotByUuid.get(registryUuid) || null : null);
-  if (!remoteCaseData && registryUuid) {
+  if (!skipRemoteCaseLookup && !remoteCaseData && registryUuid) {
     remoteCaseData = await fetchRegistryCaseSnapshot(registryUuid, { silent: true });
   }
-  if (remoteCaseData && registryUuid) {
+  if (!skipRemoteCaseLookup && remoteCaseData && registryUuid) {
     registryCaseSnapshotByUuid.set(registryUuid, remoteCaseData);
   }
   const vaultLocalData = registryUuid ? vaultPatientMap.get(registryUuid) || null : null;
@@ -7985,6 +8777,7 @@ function clearResultsUi() {
     bundleSummaryHostEl.innerHTML = "";
   }
   lastServerResponse = null;
+  activeCaseEventReviewId = null;
   lastCompletenessPrompts = [];
   if (completenessPromptsCardEl) completenessPromptsCardEl.classList.add("hidden");
   if (completenessToggleBtn) completenessToggleBtn.disabled = true;
@@ -11926,19 +12719,12 @@ async function main() {
         });
 
         const mode = isStructuredOnlyAppend ? "structured_append_only" : "contextual_append_only";
+        const appendOnlyData = buildAppendOnlyDashboardResponse(registryUuid, remoteCaseForRender, mode);
         const rawAppendPayload = {
-          mode,
+          ...appendOnlyData,
           event_type: appendEventType,
           append: appendData,
-          remote_case: remoteCaseForRender
-            ? {
-                registry_uuid: remoteCaseForRender.registry_uuid,
-                version: remoteCaseForRender.version,
-                updated_at: remoteCaseForRender.updated_at,
-              }
-            : null,
         };
-        const appendOnlyData = buildAppendOnlyDashboardResponse(registryUuid, remoteCaseForRender, mode);
         await renderResults(appendOnlyData, {
           rawData: rawAppendPayload,
           registryUuid,
