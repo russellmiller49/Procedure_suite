@@ -593,6 +593,8 @@ How it works:
 - **Event mode** controls append submissions:
   - Confirming `Add Event` arms Event mode for that case; subsequent `Submit` appends the event instead of treating the note as a procedure report.
   - Use `Clear Event Mode` to return to baseline procedure submission behavior.
+  - Contextual pathology/imaging append requires a persisted index procedure run for that case. If persistence is disabled, append is blocked to prevent path-only timelines.
+- **Rebuild** (per-case action in the vault table) replays baseline + all appended events to repair timeline drift.
 - The vault row action is **Add Event** (not pathology-only):
   - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `clinical_update`, `treatment_update`, `complication`, `procedure_addendum`, `other`)
   - Legacy aliases (`procedure`, `clinical_status`) are still accepted and normalized server-side
@@ -608,6 +610,7 @@ How it works:
 Troubleshooting:
 - If the UI says “Unlock local vault first”, you likely enabled the dev override `?vaultRequired=1` (or stored
   `ps.vault.required=1` in localStorage). Clear it via `?vaultRequired=0` (or remove the localStorage key) and reload.
+- If the UI reports registry persistence disabled, set `REGISTRY_RUNS_PERSIST_ENABLED=1` and restart `./ops/devserver.sh`.
 
 ### Registry Event APIs (Zero-Date Transport)
 
@@ -623,6 +626,9 @@ Troubleshooting:
 - `PATCH /api/v1/registry/{registry_uuid}`
   - Applies partial corrections to canonical `registry_json` with optional `expected_version` concurrency check
   - Every changed leaf path is written to `manual_overrides` (field-level lock); subsequent aggregation will not overwrite locked fields
+- `POST /api/v1/registry/{registry_uuid}/rebuild`
+  - Resets canonical snapshot and replays baseline persisted run + all appended events for that case
+  - Useful for repairing timelines when index context and appended events drift out of sync
 
 ### PDF Upload and OCR (Client-Side)
 

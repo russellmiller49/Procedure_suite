@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 
 from app.api.auth import AuthenticatedUser, get_current_user
 from app.api.readiness import require_ready
+from app.registry.application.case_aggregator import CaseAggregator
 from app.registry.schema import RegistryRecord
 from app.registry_store.dependencies import get_registry_store_db
 from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord, RegistryRun
@@ -153,6 +154,15 @@ class RegistryCasePatchRequest(BaseModel):
     expected_version: int | None = Field(
         default=None,
         description="Optional optimistic concurrency check against current case version.",
+    )
+
+
+class RegistryCaseRebuildRequest(BaseModel):
+    reset_manual_overrides: bool = Field(
+        default=False,
+        description=(
+            "If true, clear manual override locks before replaying baseline + appended events."
+        ),
     )
 
 
@@ -360,6 +370,81 @@ def patch_registry_case(
     append_rows = db.execute(append_stmt).scalars().all()
     source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
     return _build_case_response(case_record=case_record, append_rows=append_rows, source_run=source_run)
+
+
+@router.post(
+    "/v1/registry/{registry_uuid}/rebuild",
+    response_model=RegistryCaseResponse,
+    summary="Rebuild canonical case snapshot from baseline run + all appended events",
+)
+def rebuild_registry_case(
+    registry_uuid: uuid.UUID,
+    payload: RegistryCaseRebuildRequest | None = None,
+    _ready: None = _ready_dep,
+    current_user: AuthenticatedUser = _current_user_dep,
+    db: Session = _db_dep,
+) -> RegistryCaseResponse:
+    _ensure_case_ownership(db, user_id=current_user.id, registry_uuid=registry_uuid)
+
+    case_record = db.get(RegistryCaseRecord, registry_uuid)
+    if case_record is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Canonical registry case record not found",
+        )
+
+    rebuild_opts = payload or RegistryCaseRebuildRequest()
+
+    # Reset canonical snapshot so replay starts from baseline/default rather than stale merged state.
+    case_record.registry_json = RegistryRecord().model_dump(exclude_none=True, mode="json")
+    case_record.schema_version = _schema_version()
+    case_record.source_run_id = None
+    if rebuild_opts.reset_manual_overrides:
+        case_record.manual_overrides = {}
+    case_record.updated_at = _utcnow()
+    db.add(case_record)
+
+    append_stmt_all: Select[tuple[RegistryAppendedDocument]] = (
+        select(RegistryAppendedDocument)
+        .where(
+            RegistryAppendedDocument.user_id == current_user.id,
+            RegistryAppendedDocument.registry_uuid == registry_uuid,
+        )
+        .order_by(RegistryAppendedDocument.created_at.asc(), RegistryAppendedDocument.id.asc())
+    )
+    append_rows_all = list(db.execute(append_stmt_all).scalars().all())
+    for row in append_rows_all:
+        row.aggregated_at = None
+        row.aggregation_version = None
+        row.extracted_json = None
+        db.add(row)
+
+    aggregator = CaseAggregator(strategy="reprocess_all")
+    case_record = aggregator.aggregate(
+        db=db,
+        registry_uuid=registry_uuid,
+        user_id=current_user.id,
+    )
+
+    db.commit()
+    db.refresh(case_record)
+
+    append_stmt_recent: Select[tuple[RegistryAppendedDocument]] = (
+        select(RegistryAppendedDocument)
+        .where(
+            RegistryAppendedDocument.user_id == current_user.id,
+            RegistryAppendedDocument.registry_uuid == registry_uuid,
+        )
+        .order_by(RegistryAppendedDocument.created_at.desc())
+        .limit(200)
+    )
+    append_rows_recent = db.execute(append_stmt_recent).scalars().all()
+    source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    return _build_case_response(
+        case_record=case_record,
+        append_rows=append_rows_recent,
+        source_run=source_run,
+    )
 
 
 __all__ = ["router", "RegistryCaseResponse", "RegistryCaseEventSummary"]

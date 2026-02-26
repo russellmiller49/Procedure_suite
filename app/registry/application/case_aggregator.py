@@ -25,7 +25,7 @@ from app.registry.aggregation.pathology.patch_pathology_results import patch_pat
 from app.registry.aggregation.sanitize import compact_text
 from app.registry.application.pathology_extraction import apply_pathology_extraction
 from app.registry.schema import RegistryRecord
-from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord
+from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord, RegistryRun
 
 
 logger = logging.getLogger(__name__)
@@ -100,6 +100,16 @@ def _merge_fill_missing(base: dict[str, Any], overlay: dict[str, Any]) -> dict[s
         if value is None:
             continue
         if _is_missing_scalar(out.get(key)):
+            out[key] = value
+    return out
+
+
+def _deep_merge_dict(base: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
+    out = dict(base)
+    for key, value in overlay.items():
+        if isinstance(value, dict) and isinstance(out.get(key), dict):
+            out[key] = _deep_merge_dict(out[key], value)
+        else:
             out[key] = value
     return out
 
@@ -260,12 +270,31 @@ class CaseAggregator:
 
         registry_json = dict(case_record.registry_json or {})
         manual_overrides = dict(case_record.manual_overrides or {})
+        bootstrap_changed = False
+
+        if not case_record.source_run_id:
+            latest = self._find_latest_registry_run_snapshot(db=db, registry_uuid=registry_uuid)
+            if latest is not None:
+                run_id, run_registry = latest
+                merged_registry = _deep_merge_dict(run_registry, registry_json)
+                if merged_registry != registry_json:
+                    registry_json = merged_registry
+                    bootstrap_changed = True
+                if case_record.source_run_id != run_id:
+                    case_record.source_run_id = run_id
+                    bootstrap_changed = True
+                if bootstrap_changed:
+                    case_record.registry_json = registry_json
 
         events = self._load_events(db=db, registry_uuid=registry_uuid, user_id=user_id)
         if not events:
+            if bootstrap_changed:
+                case_record.version = int(case_record.version or 1) + 1
+                case_record.updated_at = _utcnow()
+                db.add(case_record)
             return case_record
 
-        changed = False
+        changed = bootstrap_changed
         processed_ids: list[str] = []
 
         for event_row in events:
@@ -316,6 +345,53 @@ class CaseAggregator:
             changed,
         )
         return case_record
+
+    def _find_latest_registry_run_snapshot(
+        self,
+        *,
+        db: Session,
+        registry_uuid: uuid.UUID,
+    ) -> tuple[uuid.UUID, dict[str, Any]] | None:
+        target = str(registry_uuid).strip().lower()
+        if not target:
+            return None
+
+        # RegistryRun doesn't store registry_uuid as a dedicated column yet; scan recent runs.
+        stmt: Select[tuple[RegistryRun]] = (
+            select(RegistryRun)
+            .order_by(RegistryRun.created_at.desc(), RegistryRun.id.desc())
+            .limit(500)
+        )
+        runs = list(db.execute(stmt).scalars().all())
+        for run in runs:
+            raw = run.raw_response_json if isinstance(run.raw_response_json, dict) else {}
+            candidates = [raw]
+            maybe_result = raw.get("result") if isinstance(raw, dict) else None
+            if isinstance(maybe_result, dict):
+                candidates.append(maybe_result)
+
+            for payload in candidates:
+                candidate_uuid = str(payload.get("registry_uuid") or "").strip().lower()
+                if candidate_uuid != target:
+                    continue
+
+                candidate_registry = payload.get("registry")
+                if not isinstance(candidate_registry, dict):
+                    candidate_registry = payload.get("registry_json")
+                if not isinstance(candidate_registry, dict):
+                    continue
+
+                try:
+                    validated = RegistryRecord(**candidate_registry).model_dump(
+                        exclude_none=True,
+                        mode="json",
+                    )
+                except Exception:  # noqa: BLE001
+                    continue
+
+                return run.id, validated
+
+        return None
 
     def _load_events(
         self,

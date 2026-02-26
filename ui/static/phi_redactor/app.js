@@ -1480,6 +1480,74 @@ function buildStructuredEventPayload() {
   };
 }
 
+async function rebuildVaultCase(registryUuid) {
+  const safeRegistryUuid = String(registryUuid || "").trim();
+  if (!safeRegistryUuid) return;
+  if (!isVaultReady()) {
+    setStatus("Unlock vault first to rebuild a saved case.");
+    return;
+  }
+
+  noteVaultActivity();
+  setStatus(`Rebuilding case ${safeRegistryUuid} from baseline + all events…`);
+
+  let remoteCaseData = null;
+  try {
+    const res = await fetch(`/api/v1/registry/${encodeURIComponent(safeRegistryUuid)}/rebuild`, {
+      method: "POST",
+      headers: getVaultAuthHeaders(),
+      body: JSON.stringify({}),
+    });
+    const body = await parseJsonResponseSafe(res);
+    if (!res.ok) {
+      const detail =
+        typeof body?.detail === "string"
+          ? body.detail
+          : body?.detail?.message || body?.message || res.statusText || "unknown error";
+      throw new Error(`Rebuild failed (${res.status}): ${String(detail)}`);
+    }
+    remoteCaseData = body && typeof body === "object" ? body : null;
+  } catch (err) {
+    setStatus(String(err?.message || err || "Case rebuild failed"));
+    return;
+  }
+
+  activeCaseRegistryUuid = safeRegistryUuid;
+  appendEventConfig = null;
+  hydrateVaultInputsFromCase(safeRegistryUuid);
+  updateAppendTargetUi();
+  renderVaultPatients();
+
+  if (remoteCaseData && typeof remoteCaseData === "object") {
+    registryCaseSnapshotByUuid.set(safeRegistryUuid, remoteCaseData);
+    const appendOnlyData = buildAppendOnlyDashboardResponse(safeRegistryUuid, remoteCaseData, "rebuilt_case");
+    await renderResults(appendOnlyData, {
+      rawData: {
+        mode: "rebuilt_saved_case",
+        registry_uuid: safeRegistryUuid,
+        remote_case: {
+          registry_uuid: remoteCaseData.registry_uuid,
+          version: remoteCaseData.version,
+          updated_at: remoteCaseData.updated_at,
+          source_run_id: remoteCaseData.source_run_id || null,
+        },
+      },
+      registryUuid: safeRegistryUuid,
+      remoteCaseData,
+    });
+    renderCaseEvents(remoteCaseData);
+    if (String(remoteCaseData.source_run_id || "").trim()) {
+      setStatus(`Rebuilt case ${safeRegistryUuid}. Baseline procedure + appended events reloaded.`);
+    } else {
+      setStatus(
+        `Rebuilt case ${safeRegistryUuid}, but no persisted baseline run was found. Re-submit baseline procedure, then append events.`,
+      );
+    }
+  } else {
+    await loadVaultCaseView(safeRegistryUuid);
+  }
+}
+
 async function loadVaultCaseView(registryUuid) {
   const safeRegistryUuid = String(registryUuid || "").trim();
   if (!safeRegistryUuid) return;
@@ -2051,6 +2119,16 @@ function renderVaultPatients() {
       loadVaultCaseView(registryUuid);
     });
     actionTd.appendChild(loadCaseBtn);
+
+    const rebuildBtn = document.createElement("button");
+    rebuildBtn.type = "button";
+    rebuildBtn.className = "secondary";
+    rebuildBtn.textContent = "Rebuild";
+    rebuildBtn.style.marginLeft = "8px";
+    rebuildBtn.addEventListener("click", () => {
+      rebuildVaultCase(registryUuid);
+    });
+    actionTd.appendChild(rebuildBtn);
 
     const addEventBtn = document.createElement("button");
     addEventBtn.type = "button";
@@ -11548,6 +11626,9 @@ async function main() {
 
   submitBtn.addEventListener("click", async () => {
     const structuredAppendReady = isStructuredOnlyAppendConfigured();
+    const preSubmitRegistrySnapshot = isPlainObject(lastServerResponse?.registry)
+      ? deepClone(lastServerResponse.registry)
+      : null;
     if (!scrubbedConfirmed && !structuredAppendReady) {
       console.warn("Submit blocked: redactions not confirmed. Click 'Apply redactions' first.");
       setStatus("Error: Apply redactions before submitting");
@@ -11649,6 +11730,16 @@ async function main() {
 
       let appendData = null;
       if (isAppendFlow) {
+        if (isContextualAppendOnly) {
+          const preflightCase = await fetchRegistryCaseSnapshot(registryUuid, { silent: true });
+          const hasBaselineSourceRun = Boolean(String(preflightCase?.source_run_id || "").trim());
+          if (!hasBaselineSourceRun) {
+            setStatus(
+              `Cannot append ${formatEventTypeLabel(appendEventType)} yet: this case has no persisted index procedure run. Submit the baseline procedure first (with persistence enabled), then append events.`,
+            );
+            return;
+          }
+        }
         setStatus(`Adding ${formatEventTypeLabel(appendEventType)} event to case ${registryUuid}…`);
         const appendPayload = {
           note: isStructuredOnlyAppend ? null : noteText,
@@ -11755,8 +11846,7 @@ async function main() {
         const cachedRegistry = isPlainObject(preAppendSnapshot?.registry)
           ? preAppendSnapshot.registry
           : null;
-        const previousRegistry = isPlainObject(lastServerResponse?.registry) ? lastServerResponse.registry : null;
-        const baselineRegistry = cachedRegistry || previousRegistry;
+        const baselineRegistry = cachedRegistry || preSubmitRegistrySnapshot;
         if (isContextualAppendOnly && baselineRegistry) {
           effectiveRegistry = mergeRegistriesPreferOverlay(baselineRegistry, effectiveRegistry);
           preservedProcedureContext = true;
@@ -11967,6 +12057,19 @@ async function main() {
           return;
         }
 
+        if (isVaultReady()) {
+          const workflowLabel = isAppendFlow
+            ? `${formatEventTypeLabel(appendEventType)} append`
+            : "baseline case submit";
+          setFeedbackStatus(
+            "Registry persistence is disabled. Local Vault workflows require /api/v1/registry/runs persistence.",
+          );
+          setStatus(
+            `${workflowLabel} blocked: REGISTRY_RUNS_PERSIST_ENABLED is off. Enable persistence and resubmit to keep index events visible in Case Events.`,
+          );
+          return;
+        }
+
         console.warn("Persistence unavailable; falling back to /api/v1/process", persistRes.status);
         setFeedbackStatus(
           "Persistence unavailable (REGISTRY_RUNS_PERSIST_ENABLED may be off). Falling back to stateless /api/v1/process."
@@ -12021,7 +12124,9 @@ async function main() {
         if (!isAppendFlow) {
           if (isVaultReady()) {
             await saveLocalPatientIdentity(registryUuid);
-            setStatus(`Submitted (not persisted) and saved to local vault for case ${registryUuid}.`);
+            setStatus(
+              `Submitted (not persisted) for case ${registryUuid}. Local metadata saved, but this note will not appear in Case Events until persistence is enabled.`,
+            );
           } else {
             setStatus("Submitted (not persisted)");
           }

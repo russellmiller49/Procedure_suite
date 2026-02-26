@@ -29,6 +29,8 @@ fi
 # Local UI vault flow uses X-User-Id headers.
 # Default this on for devserver even if .env enables production gating.
 export VAULT_AUTH_ALLOW_X_USER_ID="${VAULT_AUTH_ALLOW_X_USER_ID:-true}"
+# Local Vault longitudinal workflows require persisted registry runs.
+export REGISTRY_RUNS_PERSIST_ENABLED="${REGISTRY_RUNS_PERSIST_ENABLED:-1}"
 
 # Fast mode toggle (keeps extraction deterministic and avoids self-correction LLM calls)
 if [[ "${PROCSUITE_FAST_MODE:-0}" == "1" ]]; then
@@ -87,6 +89,7 @@ echo "[devserver] UMLS_IP_UMLS_MAP_CACHE_PATH=${UMLS_IP_UMLS_MAP_CACHE_PATH}"
 echo "[devserver] UMLS_FORCE_REFRESH=${UMLS_FORCE_REFRESH}"
 echo "[devserver] ENABLE_UMLS_LINKER=${ENABLE_UMLS_LINKER} (legacy alias)"
 echo "[devserver] VAULT_AUTH_ALLOW_X_USER_ID=${VAULT_AUTH_ALLOW_X_USER_ID}"
+echo "[devserver] REGISTRY_RUNS_PERSIST_ENABLED=${REGISTRY_RUNS_PERSIST_ENABLED}"
 echo "[devserver] OMP_NUM_THREADS=${OMP_NUM_THREADS}"
 echo "[devserver] =============================================="
 
