@@ -10,6 +10,9 @@ Implementation lives in `app.registry.schema.v2_dynamic` while this file keeps
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
+
+from pydantic import BaseModel, Field
 
 # Allow `app.registry.schema.<submodule>` imports even though this file is a module.
 # This lets us keep backwards compatibility while adding an `app/registry/schema/` folder.
@@ -25,13 +28,31 @@ from app.registry.schema.v2_dynamic import (
     DestructionEvent,
     EnhancedDilationEvent,
     LinearEBUSProcedure,
-    RegistryRecord,
 )
 from app.registry.schema_granular import (
     EnhancedRegistryGranularData,
     derive_aggregate_fields,
     validate_ebus_consistency,
 )
+
+if TYPE_CHECKING:
+    class RegistryRecord(BaseModel):
+        """Typing facade for the dynamically-built runtime model.
+
+        The runtime `RegistryRecord` is created via `create_model`, which mypy
+        treats as a variable assignment and rejects in type positions. This
+        facade preserves strict static typing while runtime imports still use
+        the dynamic model from `v2_dynamic`.
+        """
+
+        evidence: dict[str, list[Any]] = Field(default_factory=dict)
+        procedures_performed: Any | None = None
+        granular_data: Any | None = None
+
+        def __getattr__(self, name: str) -> Any: ...
+
+else:
+    from app.registry.schema.v2_dynamic import RegistryRecord
 
 __all__ = [
     "RegistryRecord",
@@ -41,6 +62,11 @@ __all__ = [
     "AspirationEvent",
     "CaoIntervention",
     "BiopsySite",
+    "LinearEBUSProcedure",
+    "CUSTOM_FIELD_TYPES",
+    "NodeActionType",
+    "NodeInteraction",
+    "NodeOutcomeType",
     # Granular data exports
     "EnhancedRegistryGranularData",
     "validate_ebus_consistency",

@@ -143,8 +143,10 @@ class RenderResponse(BaseModel):
     debug_notes: list[dict[str, Any]] | None = None
 
     @model_serializer(mode="wrap")
-    def _serialize_optional_debug_notes(self, handler):
+    def _serialize_optional_debug_notes(self, handler: Any) -> dict[str, Any]:
         data = handler(self)
+        if not isinstance(data, dict):
+            return {}
         if data.get("debug_notes") is None:
             data.pop("debug_notes", None)
         return data
@@ -189,8 +191,10 @@ class SeedFromTextResponse(BaseModel):
     debug_notes: list[dict[str, Any]] | None = None
 
     @model_serializer(mode="wrap")
-    def _serialize_optional_debug_notes(self, handler):
+    def _serialize_optional_debug_notes(self, handler: Any) -> dict[str, Any]:
         data = handler(self)
+        if not isinstance(data, dict):
+            return {}
         if data.get("debug_notes") is None:
             data.pop("debug_notes", None)
         return data
