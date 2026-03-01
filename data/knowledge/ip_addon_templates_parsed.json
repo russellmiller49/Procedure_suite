@@ -1,6 +1,6 @@
 {
-  "source_file": "comprehensive_ip_procedural_templates9_18.md",
-  "template_count": 85,
+  "source_file": "IP_Comprehensive_Adaptive_Templates.docx",
+  "template_count": 102,
   "categories": [
     "BLVR (BRONCHOSCOPIC LUNG VOLUME REDUCTION) PROCEDURES",
     "CLINICAL ASSESSMENT AND FOLLOW-UP TEMPLATES",
@@ -11,7 +11,12 @@
     "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
     "OTHER INTERVENTIONS",
     "PLEURAL PROCEDURES",
-    "TRACHEOSTOMY / UPPER AIRWAY PROCEDURES"
+    "TRACHEOSTOMY / UPPER AIRWAY PROCEDURES",
+    "CLOSING, COMPLICATIONS, AND DISPOSITION",
+    "PATIENT EDUCATION AND DISCHARGE INSTRUCTIONS",
+    "CONSENT AND PRE-PROCEDURE",
+    "ANESTHESIA AND AIRWAY ACCESS",
+    "AIRWAY EXAMINATION (ADAPTIVE TEMPLATE)"
   ],
   "templates": [
     {
@@ -21,7 +26,7 @@
       "cpt_codes": [
         "12001"
       ],
-      "body": "Minor bleeding was noted from the tracheostomy incision site. Hemostasis did not occur after holding pressure; electrocautery (cautery loop tip) was applied to the bleeding area with FiO\u2082 confirmed at 40%. Bleeding ceased after Bovie application. The patient tolerated the intervention well without immediate complications."
+      "body": "Minor bleeding was noted from the tracheostomy incision site. Hemostasis did not occur after holding pressure; electrocautery (cautery loop tip) was applied to the bleeding area with FiO₂ confirmed at 40%. Bleeding ceased after Bovie application. The patient tolerated the intervention well without immediate complications."
     },
     {
       "slug": "chemical_cauterization_of_granulation_tissue",
@@ -81,11 +86,11 @@
       "cpt_codes": [
         "31502"
       ],
-      "body": "Indication: [tolerated capping/speaking valve; adequate cough; secretion burden acceptable]. The tracheostomy tube [type/size] was removed at bedside after oropharyngeal and tracheal suctioning. The stoma was dressed with occlusive gauze and secured. Patient instructed to apply pressure over stoma during speech/cough. Observation for [hours] with pulse oximetry was uneventful. Follow\u2011up: dressing changes daily; return precautions reviewed."
+      "body": "Indication: [tolerated capping/speaking valve; adequate cough; secretion burden acceptable]. The tracheostomy tube [type/size] was removed at bedside after oropharyngeal and tracheal suctioning. The stoma was dressed with occlusive gauze and secured. Patient instructed to apply pressure over stoma during speech/cough. Observation for [hours] with pulse oximetry was uneventful. Follow‑up: dressing changes daily; return precautions reviewed."
     },
     {
       "slug": "tracheostomy_downsizing_fenestrated_tube_placement",
-      "title": "Tracheostomy Downsizing / Fenestrated Tube Placement  [CPT: 31502 \u2014 verify]",
+      "title": "Tracheostomy Downsizing / Fenestrated Tube Placement  [CPT: 31502 — verify]",
       "category": "TRACHEOSTOMY / UPPER AIRWAY PROCEDURES",
       "cpt_codes": [
         "31502"
@@ -94,7 +99,7 @@
     },
     {
       "slug": "stoma_or_tracheal_granulation_mechanical_debridement",
-      "title": "Stoma or Tracheal Granulation \u2014 Mechanical Debridement  [CPT: verify]",
+      "title": "Stoma or Tracheal Granulation — Mechanical Debridement  [CPT: verify]",
       "category": "TRACHEOSTOMY / UPPER AIRWAY PROCEDURES",
       "cpt_codes": [],
       "body": "Granulation tissue at the [stoma/tracheal] site was identified. Mechanical debridement was performed using [forceps/curette/microdebrider] until healthy mucosa was seen. Topical hemostasis with [silver nitrate/epinephrine/pressure] achieved. The tracheostomy tube was [exchanged/not exchanged]. The patient tolerated the procedure without immediate complications."
@@ -216,28 +221,28 @@
       "title": "Rigid Bronchoscopy (Diagnostic / Therapeutic)  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "After induction of general anesthesia, a rigid bronchoscope [size/model] was introduced via the mouth under direct visualization. High\u2011frequency jet ventilation (HFJV): [Yes/No]. A complete airway survey was performed. The following therapeutic interventions were performed: [debridement/balloon dilation/laser/APC/cryo/stent management/foreign body retrieval]. A flexible bronchoscope was/was not used through the rigid barrel for segmental inspection and suctioning. Hemostasis was confirmed. The bronchoscope and adjunct instruments were withdrawn. The patient tolerated the procedure well without immediate complications. Estimated blood loss: [mL]. Specimens: [list]. Post\u2011procedure plan: [details]."
+      "body": "After induction of general anesthesia, a rigid bronchoscope [size/model] was introduced via the mouth under direct visualization. High‑frequency jet ventilation (HFJV): [Yes/No]. A complete airway survey was performed. The following therapeutic interventions were performed: [debridement/balloon dilation/laser/APC/cryo/stent management/foreign body retrieval]. A flexible bronchoscope was/was not used through the rigid barrel for segmental inspection and suctioning. Hemostasis was confirmed. The bronchoscope and adjunct instruments were withdrawn. The patient tolerated the procedure well without immediate complications. Estimated blood loss: [mL]. Specimens: [list]. Post‑procedure plan: [details]."
     },
     {
       "slug": "foreign_body_removal_flexible_rigid",
-      "title": "Foreign Body Removal \u2013 Flexible/Rigid  [CPT: verify]",
+      "title": "Foreign Body Removal – Flexible/Rigid  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "A suspected foreign body was visualized at the [airway segment]. Retrieval was performed using [forceps/basket/cryoprobe/rigid forceps] with [number] passes. The object was removed [intact/fragmented]. Post\u2011removal inspection showed [no/mild/moderate] mucosal trauma and [no/minimal] bleeding; hemostasis achieved with [topical epinephrine/ice saline/none]. Ventilation and airway patency were confirmed. The patient tolerated the procedure well. CXR ordered: [Yes/No]."
+      "body": "A suspected foreign body was visualized at the [airway segment]. Retrieval was performed using [forceps/basket/cryoprobe/rigid forceps] with [number] passes. The object was removed [intact/fragmented]. Post‑removal inspection showed [no/mild/moderate] mucosal trauma and [no/minimal] bleeding; hemostasis achieved with [topical epinephrine/ice saline/none]. Ventilation and airway patency were confirmed. The patient tolerated the procedure well. CXR ordered: [Yes/No]."
     },
     {
       "slug": "airway_stent_removal_revision",
       "title": "Airway Stent Removal / Revision  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "Indication for stent removal/revision: [mucus plugging/granulation/migration/therapy complete]. Stent details: [brand/type silicone or metallic/AERO/Dumon/Y\u2011stent], size [dimensions], location [airway segment]. Technique: [rigid extraction hook/forceps/snare/cryoadhesion]. The stent was [removed/repositioned/trimmed]. Adjuncts: [balloon dilation/debridement]. Post\u2011intervention inspection showed the airway [patent] with [no/minimal] bleeding. If replaced: A new stent was placed [details]. The patient tolerated the procedure well."
+      "body": "Indication for stent removal/revision: [mucus plugging/granulation/migration/therapy complete]. Stent details: [brand/type silicone or metallic/AERO/Dumon/Y‑stent], size [dimensions], location [airway segment]. Technique: [rigid extraction hook/forceps/snare/cryoadhesion]. The stent was [removed/repositioned/trimmed]. Adjuncts: [balloon dilation/debridement]. Post‑intervention inspection showed the airway [patent] with [no/minimal] bleeding. If replaced: A new stent was placed [details]. The patient tolerated the procedure well."
     },
     {
       "slug": "endobronchial_hemostasis_hemoptysis_control",
       "title": "Endobronchial Hemostasis (Hemoptysis Control)  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "Source of bleeding localized to the [airway segment/lobe]. Hemostatic measures included: iced saline [volume] mL; epinephrine [concentration] at [volume] mL; tranexamic acid [dose/concentration] via bronchoscope; topical thrombin [dose] (if used). Balloon tamponade with [Fogarty size]/[Elation balloon size] at [location] for [duration] seconds \u00d7 [number] cycles. Hemostasis achieved: [Yes/No/Partial]. If active/persistent bleeding: [selective intubation/bronchial blocker placement/IR consultation]. The patient tolerated the procedure [well/with difficulty]; no immediate complications."
+      "body": "Source of bleeding localized to the [airway segment/lobe]. Hemostatic measures included: iced saline [volume] mL; epinephrine [concentration] at [volume] mL; tranexamic acid [dose/concentration] via bronchoscope; topical thrombin [dose] (if used). Balloon tamponade with [Fogarty size]/[Elation balloon size] at [location] for [duration] seconds × [number] cycles. Hemostasis achieved: [Yes/No/Partial]. If active/persistent bleeding: [selective intubation/bronchial blocker placement/IR consultation]. The patient tolerated the procedure [well/with difficulty]; no immediate complications."
     },
     {
       "slug": "endobronchial_blocker_placement_isolation_hemorrhage_control",
@@ -248,21 +253,21 @@
     },
     {
       "slug": "photodynamic_therapy_pdt_light_application",
-      "title": "Photodynamic Therapy (PDT) \u2014 Light Application  [CPT: verify]",
+      "title": "Photodynamic Therapy (PDT) — Light Application  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "Photosensitizer [agent/dose] administered on [date/time]. Under bronchoscopic visualization, a diffuser fiber was positioned across the [lesion site]. Laser activation at [wavelength nm] delivered [fluence J/cm\u00b2] for [time] minutes. Airway was inspected for immediate edema or bleeding; none noted. Standard light\u2011precaution instructions were reviewed. The patient tolerated the procedure well."
+      "body": "Photosensitizer [agent/dose] administered on [date/time]. Under bronchoscopic visualization, a diffuser fiber was positioned across the [lesion site]. Laser activation at [wavelength nm] delivered [fluence J/cm²] for [time] minutes. Airway was inspected for immediate edema or bleeding; none noted. Standard light‑precaution instructions were reviewed. The patient tolerated the procedure well."
     },
     {
       "slug": "photodynamic_therapy_debridement_48_96_hours_post_light",
-      "title": "Photodynamic Therapy \u2014 Debridement (48\u201396 hours post\u2011light)  [CPT: verify]",
+      "title": "Photodynamic Therapy — Debridement (48–96 hours post‑light)  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "A follow\u2011up bronchoscopy was performed. Necrotic tissue at [site] was debrided with [forceps/suction/microdebrider]. Airway patency improved from [pre %] to [post %]. No active bleeding was seen after debridement. The patient tolerated the procedure well."
+      "body": "A follow‑up bronchoscopy was performed. Necrotic tissue at [site] was debrided with [forceps/suction/microdebrider]. Airway patency improved from [pre %] to [post %]. No active bleeding was seen after debridement. The patient tolerated the procedure well."
     },
     {
       "slug": "cryo_extraction_of_mucus_casts_secretions",
-      "title": "Cryo\u2011Extraction of Mucus Casts/Secretions  [CPT: verify]",
+      "title": "Cryo‑Extraction of Mucus Casts/Secretions  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
       "body": "A cryoprobe [1.7/2.4 mm] was applied to adherent secretions at [airway segment] for [seconds] seconds until adherence was achieved; the probe and bronchoscope were withdrawn en bloc. This was repeated for [number] casts/occlusions. The airway was cleared with improved ventilation. No complications occurred."
@@ -272,21 +277,21 @@
       "title": "Awake Fiberoptic Intubation (FOI)  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "After topical anesthesia with [lidocaine % and volume] and sedation with [agent/dose], a flexible bronchoscope loaded with an endotracheal tube [size] was advanced via the [nasal/oral] route. The vocal cords were visualized and the scope advanced into the trachea. The ETT was railroaded over the scope to [depth] cm. Placement was confirmed by end\u2011tidal CO\u2082 and bronchoscopic visualization. The patient tolerated the procedure without immediate complications."
+      "body": "After topical anesthesia with [lidocaine % and volume] and sedation with [agent/dose], a flexible bronchoscope loaded with an endotracheal tube [size] was advanced via the [nasal/oral] route. The vocal cords were visualized and the scope advanced into the trachea. The ETT was railroaded over the scope to [depth] cm. Placement was confirmed by end‑tidal CO₂ and bronchoscopic visualization. The patient tolerated the procedure without immediate complications."
     },
     {
       "slug": "bronchoscopy_guided_double_lumen_tube_dlt_placement_confirmation",
-      "title": "Bronchoscopy\u2011Guided Double\u2011Lumen Tube (DLT) Placement/Confirmation  [CPT: verify]",
+      "title": "Bronchoscopy‑Guided Double‑Lumen Tube (DLT) Placement/Confirmation  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "A [left/right] DLT [size/Fr] was placed by anesthesia. Position was confirmed bronchoscopically: tracheal lumen aligned with the [right] mainstem; bronchial cuff seated [just below] the [left/right] main carina. Leak test performed and adequate seal noted. Adjustments: [advanced/withdrawn/rotated] by [cm/degrees]. Final position re\u2011verified after patient positioning. The patient tolerated the procedure well."
+      "body": "A [left/right] DLT [size/Fr] was placed by anesthesia. Position was confirmed bronchoscopically: tracheal lumen aligned with the [right] mainstem; bronchial cuff seated [just below] the [left/right] main carina. Leak test performed and adequate seal noted. Adjustments: [advanced/withdrawn/rotated] by [cm/degrees]. Final position re‑verified after patient positioning. The patient tolerated the procedure well."
     },
     {
       "slug": "airway_stent_surveillance_bronchoscopy",
       "title": "Airway Stent Surveillance Bronchoscopy  [CPT: verify]",
       "category": "CORE DIAGNOSTIC / THERAPEUTIC BRONCHOSCOPY PROCEDURES",
       "cpt_codes": [],
-      "body": "Surveillance bronchoscopy for previously placed [silicone/metallic] stent at [location]. The stent was inspected for [mucus burden/position/granulation/tumor in\u2011growth]. Interventions performed: [toilet suctioning/debridement/APC/laser/trimming/balloon dilation]. Final patency estimated at [%]. No immediate complications."
+      "body": "Surveillance bronchoscopy for previously placed [silicone/metallic] stent at [location]. The stent was inspected for [mucus burden/position/granulation/tumor in‑growth]. Interventions performed: [toilet suctioning/debridement/APC/laser/trimming/balloon dilation]. Final patency estimated at [%]. No immediate complications."
     },
     {
       "slug": "electromagnetic_navigation_bronchoscopy",
@@ -324,38 +329,38 @@
     },
     {
       "slug": "ion_registration_complete",
-      "title": "Ion Registration \u2014 Complete",
+      "title": "Ion Registration — Complete",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [],
-      "body": "Registration to the pre\u2011procedure CT was completed using [automatic/manual] methods with adequate airway landmark matching (carina, lobar carinas, tertiary bifurcations). Mean fiducial error: [mm]. Global alignment quality: [excellent/good]. No registration drift observed during the case. A confidence sweep confirmed stable targeting throughout the planned trajectory."
+      "body": "Registration to the pre‑procedure CT was completed using [automatic/manual] methods with adequate airway landmark matching (carina, lobar carinas, tertiary bifurcations). Mean fiducial error: [mm]. Global alignment quality: [excellent/good]. No registration drift observed during the case. A confidence sweep confirmed stable targeting throughout the planned trajectory."
     },
     {
       "slug": "ion_registration_partial_efficiency_strategy_ssrab",
-      "title": "Ion Registration \u2014 Partial (Efficiency Strategy, ssRAB)",
+      "title": "Ion Registration — Partial (Efficiency Strategy, ssRAB)",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [],
       "body": "Indication: single primary nodule on the [right/left] [lobe/segment] or multiple ipsilateral nodules where partial strategy is selected to optimize efficiency. Scope of registration: [ipsilateral tracheobronchial tree only to lobar/segmental landmarks]/[custom]. Registered landmarks: [carina], [ipsilateral lobar carinas], [key tertiary bifurcations near target]. Contralateral tree: [not registered/registered later if needed]. Rationale: partial registration to reduce presampling time while maintaining localization performance. Time metrics: Registration start [time], complete [time]; Navigation start [time]; Tool-at-target [time]. Calculated: combined registration + navigation time to primary nodule [min], navigation time to primary nodule [min]. Performance checks: virtual-to-live divergence at primary nodule [%]; rEBUS pattern [concentric/eccentric/adjacent]; tool-in-lesion confirmation [CBCT/CACT overlay/augmented fluoro/rEBUS]; ROSE adequacy [adequate/inadequate]; (if available) diagnostic yield [pending/known %]. Note: For bilateral targets or secondary nodules, document whether full registration was later performed and update plan accordingly."
     },
     {
       "slug": "ion_registration_registration_drift_mismatch",
-      "title": "Ion Registration \u2014 Registration Drift / Mismatch",
+      "title": "Ion Registration — Registration Drift / Mismatch",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [],
-      "body": "During navigation, registration drift/mismatch was noted due to [airway deformation/atelectasis/secretions/ETT position/ventilation changes]. Findings: landmark mismatch at [sites] with mean fiducial error [mm]. Mitigation: [airway toilet/PEEP adjustment/re\u2011inflate lung/re\u2011registration with additional secondary landmarks/segmental re\u2011registration/local plan recalibration]. Post\u2011correction alignment: [improved/adequate/suboptimal]. Proceeded using [shorter trajectory/alternate airway/adjunct imaging] as described."
+      "body": "During navigation, registration drift/mismatch was noted due to [airway deformation/atelectasis/secretions/ETT position/ventilation changes]. Findings: landmark mismatch at [sites] with mean fiducial error [mm]. Mitigation: [airway toilet/PEEP adjustment/re‑inflate lung/re‑registration with additional secondary landmarks/segmental re‑registration/local plan recalibration]. Post‑correction alignment: [improved/adequate/suboptimal]. Proceeded using [shorter trajectory/alternate airway/adjunct imaging] as described."
     },
     {
       "slug": "intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d",
-      "title": "Intra\u2011Procedural CBCT/CACT Fusion & Registration Correction (e.g., NaviLink 3D)",
+      "title": "Intra‑Procedural CBCT/CACT Fusion & Registration Correction (e.g., NaviLink 3D)",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [],
-      "body": "A CBCT/CACT spin was obtained intra\u2011procedurally. NaviLink 3D image fusion was performed to align intra\u2011op imaging with the pre\u2011procedure CT. Registration correction applied: [translation mm] / [rotation degrees] to the catheter path. The updated overlay demonstrated [on\u2011target/adjacent] trajectory; navigation plan was updated accordingly. A confirmatory spin verified corrected alignment. The patient tolerated the imaging without complications."
+      "body": "A CBCT/CACT spin was obtained intra‑procedurally. NaviLink 3D image fusion was performed to align intra‑op imaging with the pre‑procedure CT. Registration correction applied: [translation mm] / [rotation degrees] to the catheter path. The updated overlay demonstrated [on‑target/adjacent] trajectory; navigation plan was updated accordingly. A confirmatory spin verified corrected alignment. The patient tolerated the imaging without complications."
     },
     {
       "slug": "tool_in_lesion_confirmation",
-      "title": "Tool\u2011in\u2011Lesion Confirmation",
+      "title": "Tool‑in‑Lesion Confirmation",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [],
-      "body": "Tool\u2011in\u2011lesion was confirmed by [CBCT overlay/augmented fluoroscopy] showing the sampling tool tip within the lesion volume with a margin of [mm] from the lesion center, and/or radial EBUS pattern [concentric/eccentric] with lesion size [mm]. Fluoroscopy angle: [\u00b0], projection: [AP/oblique]. Screenshots were saved to the record. Proceeded to sampling as detailed."
+      "body": "Tool‑in‑lesion was confirmed by [CBCT overlay/augmented fluoroscopy] showing the sampling tool tip within the lesion volume with a margin of [mm] from the lesion center, and/or radial EBUS pattern [concentric/eccentric] with lesion size [mm]. Fluoroscopy angle: [°], projection: [AP/oblique]. Screenshots were saved to the record. Proceeded to sampling as detailed."
     },
     {
       "slug": "ebus_tbna",
@@ -369,19 +374,19 @@
     },
     {
       "slug": "radial_ebus_guided_sampling_with_guide_sheath",
-      "title": "Radial EBUS\u2013Guided Sampling with Guide Sheath  [CPT: 31654 + sampling codes \u2014 verify]",
+      "title": "Radial EBUS–Guided Sampling with Guide Sheath  [CPT: 31654 + sampling codes — verify]",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [
         "31654"
       ],
-      "body": "After navigation to the target, a radial EBUS probe with guide sheath [diameter] was advanced to the lesion. Ultrasound pattern: [concentric/eccentric/adjacent], lesion size [mm]. The probe was withdrawn leaving the guide sheath in situ. Sampling was performed via the guide sheath using [forceps/brush/needle] with [number] passes for each tool. Fluoroscopy used: [Yes/No]. ROSE (if available): [result]. Hemostasis was confirmed; no pneumothorax was evident on intra\u2011procedure assessment. Specimens: [cytology/histology/microbiology]. Post\u2011procedure CXR: [ordered/not indicated]. The patient tolerated the procedure well."
+      "body": "After navigation to the target, a radial EBUS probe with guide sheath [diameter] was advanced to the lesion. Ultrasound pattern: [concentric/eccentric/adjacent], lesion size [mm]. The probe was withdrawn leaving the guide sheath in situ. Sampling was performed via the guide sheath using [forceps/brush/needle] with [number] passes for each tool. Fluoroscopy used: [Yes/No]. ROSE (if available): [result]. Hemostasis was confirmed; no pneumothorax was evident on intra‑procedure assessment. Specimens: [cytology/histology/microbiology]. Post‑procedure CXR: [ordered/not indicated]. The patient tolerated the procedure well."
     },
     {
       "slug": "cone_beam_ct_cbct_augmented_fluoroscopy_assisted_bronchoscopy",
-      "title": "Cone\u2011Beam CT (CBCT) / Augmented Fluoroscopy\u2013Assisted Bronchoscopy  [CPT: verify]",
+      "title": "Cone‑Beam CT (CBCT) / Augmented Fluoroscopy–Assisted Bronchoscopy  [CPT: verify]",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [],
-      "body": "Following initial navigation, a CBCT spin was acquired with the patient on [ventilation settings]. Three\u2011dimensional reconstruction and overlay were used to confirm catheter\u2011to\u2011target alignment; trajectory adjusted by [mm/degrees] as indicated. A confirmatory CBCT spin showed [on\u2011target/adjacent] position. Sampling was then performed as detailed elsewhere. Radiation parameters recorded: [if available]. The patient tolerated the imaging adjunct without immediate complications."
+      "body": "Following initial navigation, a CBCT spin was acquired with the patient on [ventilation settings]. Three‑dimensional reconstruction and overlay were used to confirm catheter‑to‑target alignment; trajectory adjusted by [mm/degrees] as indicated. A confirmatory CBCT spin showed [on‑target/adjacent] position. Sampling was then performed as detailed elsewhere. Radiation parameters recorded: [if available]. The patient tolerated the imaging adjunct without immediate complications."
     },
     {
       "slug": "transbronchial_dye_marker_placement_for_surgical_localization",
@@ -395,21 +400,21 @@
       "title": "Robotic Navigational Bronchoscopy (Monarch/Auris)  [CPT: verify]",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [],
-      "body": "Robotic navigation bronchoscopy was performed using the Monarch platform. Pre\u2011procedure CT\u2011based plan was loaded and airway registration completed. The robotic catheter and sheath were advanced to the target under navigational guidance. Radial EBUS verified [concentric/eccentric] position. Sampling through the working channel was performed as detailed (brush/forceps/needle/cryobiopsy). If available, CBCT/augmented fluoroscopy was used for trajectory confirmation. Hemostasis was confirmed. The patient tolerated the procedure well."
+      "body": "Robotic navigation bronchoscopy was performed using the Monarch platform. Pre‑procedure CT‑based plan was loaded and airway registration completed. The robotic catheter and sheath were advanced to the target under navigational guidance. Radial EBUS verified [concentric/eccentric] position. Sampling through the working channel was performed as detailed (brush/forceps/needle/cryobiopsy). If available, CBCT/augmented fluoroscopy was used for trajectory confirmation. Hemostasis was confirmed. The patient tolerated the procedure well."
     },
     {
       "slug": "ebus_guided_intranodal_forceps_biopsy_ifb",
-      "title": "EBUS\u2011Guided Intranodal Forceps Biopsy (IFB)  [CPT: 31652/31653 \u2014 verify]",
+      "title": "EBUS‑Guided Intranodal Forceps Biopsy (IFB)  [CPT: 31652/31653 — verify]",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [
         "31652",
         "31653"
       ],
-      "body": "The target lymph node station [#] measured [mm] with [ultrasound features]. The EBUS needle [gauge] was used to create a tract through the bronchial wall and nodal capsule. Mini\u2011forceps were advanced through the tract to obtain [number] core samples. ROSE (if available): [result]. Hemostasis adequate with no immediate complications. Specimens in [formalin/saline] submitted for [histology/microbiology]."
+      "body": "The target lymph node station [#] measured [mm] with [ultrasound features]. The EBUS needle [gauge] was used to create a tract through the bronchial wall and nodal capsule. Mini‑forceps were advanced through the tract to obtain [number] core samples. ROSE (if available): [result]. Hemostasis adequate with no immediate complications. Specimens in [formalin/saline] submitted for [histology/microbiology]."
     },
     {
       "slug": "ebus_guided_19_gauge_core_fine_needle_biopsy_fnb",
-      "title": "EBUS\u2011Guided 19\u2011Gauge Core Fine\u2011Needle Biopsy (FNB)  [CPT: 31652/31653 \u2014 verify]",
+      "title": "EBUS‑Guided 19‑Gauge Core Fine‑Needle Biopsy (FNB)  [CPT: 31652/31653 — verify]",
       "category": "NAVIGATION / ROBOTIC / EBUS PROCEDURES",
       "cpt_codes": [
         "31652",
@@ -432,14 +437,14 @@
       "title": "Endobronchial Valve Removal / Exchange  [CPT: verify]",
       "category": "BLVR (BRONCHOSCOPIC LUNG VOLUME REDUCTION) PROCEDURES",
       "cpt_codes": [],
-      "body": "Indication: [infection/atelectasis/excessive cough/migration/therapy complete/air leak resolved/insufficient clinical response]. Device(s): [Zephyr/Spiration], location(s): [lobe/segment]. Removal performed using [forceps/retrieval tool] with [number] valves removed. Exchange performed for [number] valves sized [sizes]. Mucosa post\u2011removal: [normal/edematous/granulation]. Final airway patency and ventilation verified. The patient tolerated the procedure well."
+      "body": "Indication: [infection/atelectasis/excessive cough/migration/therapy complete/air leak resolved/insufficient clinical response]. Device(s): [Zephyr/Spiration], location(s): [lobe/segment]. Removal performed using [forceps/retrieval tool] with [number] valves removed. Exchange performed for [number] valves sized [sizes]. Mucosa post‑removal: [normal/edematous/granulation]. Final airway patency and ventilation verified. The patient tolerated the procedure well."
     },
     {
       "slug": "post_blvr_management_protocol",
       "title": "Post-BLVR Management Protocol",
       "category": "BLVR (BRONCHOSCOPIC LUNG VOLUME REDUCTION) PROCEDURES",
       "cpt_codes": [],
-      "body": "Post-procedure COPD Endobronchial Valve Management Protocol\n\n25%-40% of patients are expected to develop a pneumothorax\n\nMost within 3-4 days\nThis is an expectation not an adverse event\n\n\nA pneumothorax kit will be at the patient's bedside at all times\nIf there are new symptoms or any concerns:\n\nOrder a stat chest x-ray\nCall the Interventional Pulmonary attending and MICU team while waiting for the CXR\nClinical judgment to place a chest tube may be needed in urgent/emergent situations\n\n\nContinuous pulse oximetry and telemetry\n\nMonitor for persistent desaturation \u22654% of baseline\nMonitor for desaturation <90%\nMonitor for tachypnea, arrhythmias, unexplained tachycardia, or unexplained hypotension\n\n\n\nDay-to-Day Management:\n\nDay 1 (Day of procedure):\n\nChest x-ray immediately post-procedure\nChest x-ray ~4 hours post-procedure\nBedrest\nResume home COPD inhalers/medications\nSteroids and antibiotics given in OR (Day 1/3)\n\n\nDay 2:\n\nChest x-ray at 6:00 am\nAmbulate in the room with physical therapy\nContinue home COPD inhalers/medications\nSteroids and antibiotics PO (Day 2/3)\n\n\nDay 3:\n\nDaily chest x-ray at 6:00 am\nAmbulate outside the room\nContinue home COPD inhalers/medications\nSteroids and antibiotics PO (Day 3/3)\nConsider prolonged course or taper based on patient's condition\n\n\nDay 4:\n\nDaily chest x-ray at 6:00 am\nConsider discharge\nDiscuss with interventional pulmonary before discharge\nSet up clinical f/u with IP in two weeks\nContinue all COPD medications and f/u with primary COPD doctor within 4 weeks\n\n\n\n\n---\n\n7. CRYO PROCEDURES\n\nTransbronchial Cryobiopsy (CPT 31632)"
+      "body": "Post-procedure COPD Endobronchial Valve Management Protocol\n\n25%-40% of patients are expected to develop a pneumothorax\n\nMost within 3-4 days\nThis is an expectation not an adverse event\n\n\nA pneumothorax kit will be at the patient's bedside at all times\nIf there are new symptoms or any concerns:\n\nOrder a stat chest x-ray\nCall the Interventional Pulmonary attending and MICU team while waiting for the CXR\nClinical judgment to place a chest tube may be needed in urgent/emergent situations\n\n\nContinuous pulse oximetry and telemetry\n\nMonitor for persistent desaturation ≥4% of baseline\nMonitor for desaturation <90%\nMonitor for tachypnea, arrhythmias, unexplained tachycardia, or unexplained hypotension\n\n\n\nDay-to-Day Management:\n\nDay 1 (Day of procedure):\n\nChest x-ray immediately post-procedure\nChest x-ray ~4 hours post-procedure\nBedrest\nResume home COPD inhalers/medications\nSteroids and antibiotics given in OR (Day 1/3)\n\n\nDay 2:\n\nChest x-ray at 6:00 am\nAmbulate in the room with physical therapy\nContinue home COPD inhalers/medications\nSteroids and antibiotics PO (Day 2/3)\n\n\nDay 3:\n\nDaily chest x-ray at 6:00 am\nAmbulate outside the room\nContinue home COPD inhalers/medications\nSteroids and antibiotics PO (Day 3/3)\nConsider prolonged course or taper based on patient's condition\n\n\nDay 4:\n\nDaily chest x-ray at 6:00 am\nConsider discharge\nDiscuss with interventional pulmonary before discharge\nSet up clinical f/u with IP in two weeks\nContinue all COPD medications and f/u with primary COPD doctor within 4 weeks\n\n\n\n\n---\n\n7. CRYO PROCEDURES\n\nTransbronchial Cryobiopsy (CPT 31632)"
     },
     {
       "slug": "transbronchial_cryobiopsy",
@@ -448,7 +453,7 @@
       "cpt_codes": [
         "31632"
       ],
-      "body": "Radial EBUS survey confirmed absence of significant vessels at the biopsy site. Transbronchial cryobiopsy was performed using a cryoprobe with freeze\u2013thaw cycles per sample. An endobronchial blocker was positioned for tamponade after each sample. Samples were collected and submitted. No immediate complications."
+      "body": "Radial EBUS survey confirmed absence of significant vessels at the biopsy site. Transbronchial cryobiopsy was performed using a cryoprobe with freeze–thaw cycles per sample. An endobronchial blocker was positioned for tamponade after each sample. Samples were collected and submitted. No immediate complications."
     },
     {
       "slug": "endobronchial_cryoablation",
@@ -457,7 +462,7 @@
       "cpt_codes": [
         "31641"
       ],
-      "body": "Cryoablation of endobronchial tumor/stenosis was performed with a cryoprobe using freeze\u2013thaw cycles across overlapping quadrants. Post-treatment patency improved and hemostasis was adequate."
+      "body": "Cryoablation of endobronchial tumor/stenosis was performed with a cryoprobe using freeze–thaw cycles across overlapping quadrants. Post-treatment patency improved and hemostasis was adequate."
     },
     {
       "slug": "image_guided_chest_tube",
@@ -542,53 +547,53 @@
     },
     {
       "slug": "thoracentesis_with_pleural_manometry",
-      "title": "Thoracentesis with Pleural Manometry  [CPT: 32555 + manometry \u2014 verify]",
+      "title": "Thoracentesis with Pleural Manometry  [CPT: 32555 + manometry — verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [
         "32555"
       ],
-      "body": "Ultrasound confirmed a [side] effusion. The thoracentesis was performed as per sterile protocol. Pleural pressure was measured with a digital/manometer system at baseline and after each [250/500] mL removed. Opening pressure: [cmH\u2082O]. Pressures at volumes: [table]. Stopping criteria: [elastance rise/pressure \u2264 \u201320 cmH\u2082O/symptoms]. Total removed: [mL]. The patient tolerated the procedure without cough, chest pain, or hypotension. Post\u2011procedure ultrasound/CXR: [ordered/not indicated]."
+      "body": "Ultrasound confirmed a [side] effusion. The thoracentesis was performed as per sterile protocol. Pleural pressure was measured with a digital/manometer system at baseline and after each [250/500] mL removed. Opening pressure: [cmH₂O]. Pressures at volumes: [table]. Stopping criteria: [elastance rise/pressure ≤ –20 cmH₂O/symptoms]. Total removed: [mL]. The patient tolerated the procedure without cough, chest pain, or hypotension. Post‑procedure ultrasound/CXR: [ordered/not indicated]."
     },
     {
       "slug": "chemical_pleurodesis_via_chest_tube_talc_slurry_or_doxycycline",
-      "title": "Chemical Pleurodesis via Chest Tube (Talc Slurry or Doxycycline)  [CPT: 32560 \u2014 verify]",
+      "title": "Chemical Pleurodesis via Chest Tube (Talc Slurry or Doxycycline)  [CPT: 32560 — verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [
         "32560"
       ],
-      "body": "Indication: [recurrent malignant effusion/persistent pneumothorax]. Prerequisites: [lung expanded/drainage \u2264150 mL/day/no air leak]. Agent: [talc slurry 4\u20135 g in 50\u2013100 mL NS]/[doxycycline 500 mg in 50 mL NS] with [analgesia/lidocaine] [dose] instilled via chest tube. The tube was clamped for [duration] minutes with patient rotated [positions]. Clamp released and suction set to [\u201320 cmH\u2082O/none]. The patient tolerated the instillation with [no/mild] discomfort. Ongoing management: [analgesia orders/drainage plan]."
+      "body": "Indication: [recurrent malignant effusion/persistent pneumothorax]. Prerequisites: [lung expanded/drainage ≤150 mL/day/no air leak]. Agent: [talc slurry 4–5 g in 50–100 mL NS]/[doxycycline 500 mg in 50 mL NS] with [analgesia/lidocaine] [dose] instilled via chest tube. The tube was clamped for [duration] minutes with patient rotated [positions]. Clamp released and suction set to [–20 cmH₂O/none]. The patient tolerated the instillation with [no/mild] discomfort. Ongoing management: [analgesia orders/drainage plan]."
     },
     {
       "slug": "chemical_pleurodesis_via_tunneled_pleural_catheter_ipc",
       "title": "Chemical Pleurodesis via Tunneled Pleural Catheter (IPC)  [CPT: verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [],
-      "body": "Indication: [autopleurodesis not achieved/recurrent symptomatic effusion]. After complete drainage, [talc slurry/doxycycline] was instilled via IPC: agent [dose], volume [mL]. The catheter was capped and the patient was instructed to rotate through [positions] over [duration]. Drainage was resumed after [hours]. Tolerance was [good/fair/poor]. Follow\u2011up: [drainage schedule/clinic visit]."
+      "body": "Indication: [autopleurodesis not achieved/recurrent symptomatic effusion]. After complete drainage, [talc slurry/doxycycline] was instilled via IPC: agent [dose], volume [mL]. The catheter was capped and the patient was instructed to rotate through [positions] over [duration]. Drainage was resumed after [hours]. Tolerance was [good/fair/poor]. Follow‑up: [drainage schedule/clinic visit]."
     },
     {
       "slug": "indwelling_pleural_catheter_ipc_exchange",
       "title": "Indwelling Pleural Catheter (IPC) Exchange  [CPT: verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [],
-      "body": "Indication for exchange: [occlusion/infection/defect/leak]. The existing IPC was prepped; guidewire inserted through the catheter lumen into the pleural space under ultrasound guidance. The old catheter was removed and a new tunneled catheter [brand/size] was placed over the wire using the standard tunneling and peel\u2011away sheath technique. Position confirmed by aspiration and ultrasound. The catheter was secured and dressed. The patient tolerated the procedure well."
+      "body": "Indication for exchange: [occlusion/infection/defect/leak]. The existing IPC was prepped; guidewire inserted through the catheter lumen into the pleural space under ultrasound guidance. The old catheter was removed and a new tunneled catheter [brand/size] was placed over the wire using the standard tunneling and peel‑away sheath technique. Position confirmed by aspiration and ultrasound. The catheter was secured and dressed. The patient tolerated the procedure well."
     },
     {
       "slug": "chest_tube_exchange_upsizing_over_guidewire",
       "title": "Chest Tube Exchange / Upsizing over Guidewire  [CPT: verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [],
-      "body": "Indication: [clogged tube/persistent air leak/loculated effusion/thick pus]. A guidewire was advanced through the existing tube into the pleural space. The old tube was removed. Serial dilation to [size Fr] was performed and a new [size Fr] [pigtail/surgical] chest tube was inserted over the wire and connected to [water seal/suction at \u201320 cmH\u2082O]. Position confirmed by aspiration and ultrasound/CXR. The patient tolerated the procedure well."
+      "body": "Indication: [clogged tube/persistent air leak/loculated effusion/thick pus]. A guidewire was advanced through the existing tube into the pleural space. The old tube was removed. Serial dilation to [size Fr] was performed and a new [size Fr] [pigtail/surgical] chest tube was inserted over the wire and connected to [water seal/suction at –20 cmH₂O]. Position confirmed by aspiration and ultrasound/CXR. The patient tolerated the procedure well."
     },
     {
       "slug": "chest_tube_removal",
       "title": "Chest Tube Removal  [CPT: verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [],
-      "body": "Criteria met for removal: [no air leak for 24 h/drainage < [mL]/day/lung expanded on CXR]. After sterile prep, the tube was placed to water seal; a Valsalva/inspiratory hold was performed and the tube was removed. The site was closed with [suture/occlusive dressing]. The patient tolerated the procedure well. Post\u2011removal CXR: [ordered/not indicated]."
+      "body": "Criteria met for removal: [no air leak for 24 h/drainage < [mL]/day/lung expanded on CXR]. After sterile prep, the tube was placed to water seal; a Valsalva/inspiratory hold was performed and the tube was removed. The site was closed with [suture/occlusive dressing]. The patient tolerated the procedure well. Post‑removal CXR: [ordered/not indicated]."
     },
     {
       "slug": "ultrasound_guided_pleural_biopsy_closed_core",
-      "title": "Ultrasound\u2011Guided Pleural Biopsy (Closed Core)  [CPT: 32507 \u2014 verify]",
+      "title": "Ultrasound‑Guided Pleural Biopsy (Closed Core)  [CPT: 32507 — verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [
         "32507"
@@ -597,12 +602,12 @@
     },
     {
       "slug": "focused_thoracic_ultrasound_pleura_lung",
-      "title": "Focused Thoracic Ultrasound (Pleura & Lung)  [CPT: 76604 \u2014 verify]",
+      "title": "Focused Thoracic Ultrasound (Pleura & Lung)  [CPT: 76604 — verify]",
       "category": "PLEURAL PROCEDURES",
       "cpt_codes": [
         "76604"
       ],
-      "body": "Focused thoracic ultrasound was performed and archived. Findings \u2014 Right: [effusion size/echogenicity, loculations, lung sliding, B\u2011lines, consolidation, diaphragm motion]. Left: [same]. Impression: [free\u2011flowing vs. loculated effusion/trapped vs. expandable lung/pneumothorax suspected vs. not]. Clinical correlation and procedural planning as documented."
+      "body": "Focused thoracic ultrasound was performed and archived. Findings — Right: [effusion size/echogenicity, loculations, lung sliding, B‑lines, consolidation, diaphragm motion]. Left: [same]. Impression: [free‑flowing vs. loculated effusion/trapped vs. expandable lung/pneumothorax suspected vs. not]. Clinical correlation and procedural planning as documented."
     },
     {
       "slug": "whole_lung_lavage",
@@ -657,7 +662,7 @@
       "title": "Endobronchial Valve Placement for Persistent Air Leak (BPF)  [CPT: verify]",
       "category": "OTHER INTERVENTIONS",
       "cpt_codes": [],
-      "body": "Indication: [post\u2011operative/post\u2011procedural/spontaneous] persistent air leak. Localization by sequential balloon occlusion identified [lobe/segment] as the source. A [Zephyr/Spiration] one\u2011way valve [size] was deployed in [segment]. Immediate reduction in air leak on digital drainage device was [complete/partial/none]. Additional valves placed: [number/segments]. The patient tolerated the procedure well. Post\u2011procedure plan: [suction settings, CXR timing, ambulation]."
+      "body": "Indication: [post‑operative/post‑procedural/spontaneous] persistent air leak. Localization by sequential balloon occlusion identified [lobe/segment] as the source. A [Zephyr/Spiration] one‑way valve [size] was deployed in [segment]. Immediate reduction in air leak on digital drainage device was [complete/partial/none]. Additional valves placed: [number/segments]. The patient tolerated the procedure well. Post‑procedure plan: [suction settings, CXR timing, ambulation]."
     },
     {
       "slug": "endobronchial_sealant_application_for_bronchopleural_fistula_bpf",
@@ -692,7 +697,7 @@
       "title": "Tunneled Pleural Catheter Instructions",
       "category": "CLINICAL ASSESSMENT AND FOLLOW-UP TEMPLATES",
       "cpt_codes": [],
-      "body": "Discharge Instructions for Tunneled Pleural Catheter (PleurX)\nDaily Drainage Instructions:\n\nWash hands thoroughly before handling the catheter\nGather supplies: drainage kit, alcohol pads, gloves\nClean the valve cap with alcohol pad for 15 seconds\nConnect the drainage line to the catheter valve\nOpen the clamp to allow drainage\nMonitor drainage amount and color\nStop drainage when flow stops or if experiencing chest pain/shortness of breath\nClose clamp and disconnect drainage line\nClean valve cap again with alcohol pad\nReplace valve cap securely\nRecord amount and color of fluid drained\n\nWhen to Call:\n\nFever >100.4\u00b0F\nIncreasing shortness of breath\nChest pain during or after drainage\nRedness, swelling, or drainage at catheter site\nCatheter appears to be coming out\nLess than 50ml drainage for 3 consecutive sessions\nSudden increase in drainage amount\n\nEmergency Situations:\n\nCatheter completely falls out\nSevere chest pain or difficulty breathing\nAir leak from catheter (pinch tubing and go to ER immediately)\n\nFollow-up:\n\nScheduled appointment in [timeframe]\nBring drainage log to all appointments\n\nBLVR Discharge"
+      "body": "Discharge Instructions for Tunneled Pleural Catheter (PleurX)\nDaily Drainage Instructions:\n\nWash hands thoroughly before handling the catheter\nGather supplies: drainage kit, alcohol pads, gloves\nClean the valve cap with alcohol pad for 15 seconds\nConnect the drainage line to the catheter valve\nOpen the clamp to allow drainage\nMonitor drainage amount and color\nStop drainage when flow stops or if experiencing chest pain/shortness of breath\nClose clamp and disconnect drainage line\nClean valve cap again with alcohol pad\nReplace valve cap securely\nRecord amount and color of fluid drained\n\nWhen to Call:\n\nFever >100.4°F\nIncreasing shortness of breath\nChest pain during or after drainage\nRedness, swelling, or drainage at catheter site\nCatheter appears to be coming out\nLess than 50ml drainage for 3 consecutive sessions\nSudden increase in drainage amount\n\nEmergency Situations:\n\nCatheter completely falls out\nSevere chest pain or difficulty breathing\nAir leak from catheter (pinch tubing and go to ER immediately)\n\nFollow-up:\n\nScheduled appointment in [timeframe]\nBring drainage log to all appointments\n\nBLVR Discharge"
     },
     {
       "slug": "blvr_discharge",
@@ -714,6 +719,271 @@
       "category": "CLINICAL ASSESSMENT AND FOLLOW-UP TEMPLATES",
       "cpt_codes": [],
       "body": "Patient advised on wound care, flushing protocols, medications, and diet after PEG placement."
+    },
+    {
+      "slug": "ip_adaptive_s14_14_1_procedure_completion",
+      "title": "[14.1] Procedure Completion",
+      "category": "CLOSING, COMPLICATIONS, AND DISPOSITION",
+      "cpt_codes": [],
+      "params": [
+        "bronchoscope",
+        "rigid_bronchoscope",
+        "tolerated_procedure",
+        "complications"
+      ],
+      "body": "The [bronchoscope / catheter / scope / rigid bronchoscope] was [subsequently removed / withdrawn]. The patient tolerated the procedure [well / without evidence of desaturation or complications / with ____ noted]. [The patient was extubated without difficulty / The LMA was removed without difficulty / The patient remained intubated for ongoing respiratory support / The patient was transferred to the recovery room in stable condition].\n▸ All procedure-related images were saved and archived per institutional protocol."
+    },
+    {
+      "slug": "ip_adaptive_s14_14_2_complications",
+      "title": "[14.2] Complications",
+      "category": "CLOSING, COMPLICATIONS, AND DISPOSITION",
+      "cpt_codes": [],
+      "params": [
+        "complications"
+      ],
+      "body": "Complications: [No immediate complications / Pneumothorax / Hemorrhage requiring ____ / Desaturation requiring ____ / Laryngospasm / Bronchospasm / Hypotension / Arrhythmia / Other: ____]."
+    },
+    {
+      "slug": "ip_adaptive_s14_14_3_estimated_blood_loss",
+      "title": "[14.3] Estimated Blood Loss",
+      "category": "CLOSING, COMPLICATIONS, AND DISPOSITION",
+      "cpt_codes": [],
+      "params": [
+        "estimated_blood_loss",
+        "estimated_blood_loss_2"
+      ],
+      "body": "Estimated Blood Loss: [0 / 5 / 10 / 20 / 50 / ____] cc [/ trivial / minimal]."
+    },
+    {
+      "slug": "ip_adaptive_s14_14_4_specimens",
+      "title": "[14.4] Specimens",
+      "category": "CLOSING, COMPLICATIONS, AND DISPOSITION",
+      "cpt_codes": [],
+      "params": [
+        "specimens"
+      ],
+      "body": "Specimen(s): [List all specimens with container and destination]."
+    },
+    {
+      "slug": "ip_adaptive_s14_14_5_post_procedure_diagnosis",
+      "title": "[14.5] Post-Procedure Diagnosis",
+      "category": "CLOSING, COMPLICATIONS, AND DISPOSITION",
+      "cpt_codes": [],
+      "params": [],
+      "body": "Post Procedure Diagnosis:\n• [Technically successful [procedure name].\n• The patient has remained stable and has been transferred in good condition to the [post-surgical monitoring unit / PACU / ICU / ward / recovery room].\n• Will await final [pathology / cytology / microbiology] results."
+    },
+    {
+      "slug": "ip_adaptive_s14_14_6_impression_plan_template",
+      "title": "[14.6] Impression/Plan Template",
+      "category": "CLOSING, COMPLICATIONS, AND DISPOSITION",
+      "cpt_codes": [],
+      "params": [
+        "patient_name",
+        "patient_name_2",
+        "year_old",
+        "sex_who",
+        "presents_underwent",
+        "underwent_procedure",
+        "indication",
+        "indication_2"
+      ],
+      "body": "[Patient Name] is a [Age]-year-old [Sex] who [presents for / underwent] [procedure] for [indication]. [Summary of key findings]. Plan: [await final pathology / follow-up in ____ weeks / post-procedure imaging / admit to ____ / discharge with instructions / other: ____]."
+    },
+    {
+      "slug": "ip_adaptive_s15_15_1_ipc_drainage_instructions",
+      "title": "[15.1] IPC Drainage Instructions",
+      "category": "PATIENT EDUCATION AND DISCHARGE INSTRUCTIONS",
+      "cpt_codes": [],
+      "params": [
+        "initial_instruction",
+        "anticipated_shift",
+        "less_than",
+        "than_ml",
+        "sessions_return",
+        "output_exceeds",
+        "consistently_under",
+        "ml_over",
+        "visit_within",
+        "gather_supplies",
+        "fever_f",
+        "catheter_completely_falls",
+        "cavilon_skin_barrier",
+        "cavilon_skin_barrier_2"
+      ],
+      "body": "Initial instruction for [thrice-weekly / daily / every other day] drainage, with an anticipated shift to [daily] drainage upon receiving sufficient supply of drainage bottles from insurance.\nAdjusting frequency based on output:\nReduce drainage frequency to every other day if output is consistently less than [150 / 200 / ____] mL for [three / ____] consecutive sessions. Return to [daily / previous frequency] drainage if output exceeds [150 / 200 / ____] mL. Cease drainage and contact the pulmonary clinic for outputs consistently under [150 / ____] mL over [three] every-other-day sessions, followed by a chest X-ray and clinic visit within [three / ____] days.\nDaily drainage steps:\nWash hands thoroughly. Gather supplies: drainage kit, alcohol pads, gloves. Clean the valve cap with alcohol pad for 15 seconds. Connect drainage line to catheter valve. Open clamp to allow drainage. Monitor drainage amount and color. Stop drainage when flow stops or if experiencing [chest pain / shortness of breath]. Close clamp and disconnect. Clean valve cap with alcohol pad. Replace valve cap securely. Record amount and color.\nWhen to call:\n[Fever >100.4°F / Increasing shortness of breath / Chest pain during or after drainage / Redness, swelling, or drainage at catheter site / Catheter appears to be coming out / Less than 50ml drainage for 3 consecutive sessions / Sudden increase in drainage amount].\nEmergency situations:\n[Catheter completely falls out / Severe chest pain or difficulty breathing / Air leak from catheter (pinch tubing and go to ER immediately)].\nSkin care:\n[Cavilon skin barrier swabs / skin protective barrier / other: ____] provided to prevent skin irritation from the [Tegaderm / transparent] dressing, with detailed application instructions."
+    },
+    {
+      "slug": "ip_adaptive_s15_15_3_peg_discharge",
+      "title": "[15.3] PEG Discharge",
+      "category": "PATIENT EDUCATION AND DISCHARGE INSTRUCTIONS",
+      "cpt_codes": [],
+      "params": [
+        "patient_advised",
+        "peg_placement",
+        "follow_up"
+      ],
+      "body": "Patient advised on [wound care / flushing protocols / medications / diet after PEG placement]. [PEG can be used for medications [6 / ____] hours post-procedure. Feeds [6 / ____] hours post-procedure if tolerating free water flushing. OK to restart systemic anticoagulation [time] if needed.] Follow-up: [____]."
+    },
+    {
+      "slug": "ip_adaptive_s1_1_1_standard_informed_consent",
+      "title": "[1.1] Standard Informed Consent",
+      "category": "CONSENT AND PRE-PROCEDURE",
+      "cpt_codes": [],
+      "params": [],
+      "body": "The patient provided informed consent for the procedure after receiving an explanation in lay terms about the indications, details of the procedure, potential risks, and alternatives. All questions were addressed, and informed consent was documented in accordance with institutional protocol. A history and physical examination were conducted, and the findings were updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed before the intervention."
+    },
+    {
+      "slug": "ip_adaptive_s1_1_2_surrogate_consent_patient_unable_to_consent",
+      "title": "[1.2] Surrogate Consent — Patient Unable to Consent",
+      "category": "CONSENT AND PRE-PROCEDURE",
+      "cpt_codes": [],
+      "params": [
+        "reason",
+        "reason_2",
+        "reason_3",
+        "reason_4",
+        "reason_5"
+      ],
+      "body": "The patient was unable to provide informed consent due to [altered mental status / intubation and sedation / cognitive impairment / medical decision-making incapacity / other: ____]. The patient’s [surrogate decision-maker / healthcare power of attorney / next of kin / legal guardian], [NAME, RELATIONSHIP], was contacted [in person / by telephone] and provided informed consent on behalf of the patient. The [surrogate / authorized representative] received an explanation in lay terms about the indications, details of the procedure, potential risks, and alternatives. All questions were addressed, and informed surrogate consent was documented in accordance with institutional protocol. A history and physical examination were conducted, and the findings were updated in the pre-procedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed before the intervention."
+    },
+    {
+      "slug": "ip_adaptive_s1_1_3_emergency_procedure_consent_waived",
+      "title": "[1.3] Emergency Procedure — Consent Waived",
+      "category": "CONSENT AND PRE-PROCEDURE",
+      "cpt_codes": [],
+      "params": [
+        "reason",
+        "reason_2",
+        "reason_3",
+        "reason_4"
+      ],
+      "body": "This procedure was performed on an emergent basis. The patient was unable to provide informed consent due to [altered mental status / hemodynamic instability / respiratory failure requiring immediate intervention / active cardiopulmonary resuscitation / sedation and intubation]. [No surrogate decision-maker was available in the time frame required for intervention / Despite reasonable efforts, the surrogate decision-maker could not be reached in the time frame necessary]. In accordance with institutional policy and the emergency exception to informed consent, the procedure was performed to prevent [imminent loss of life / serious impairment of bodily function / irreversible deterioration of the patient’s condition]. The clinical circumstances necessitating emergency intervention and the inability to obtain consent were documented in the medical record. [Two physicians confirmed the emergent nature of the procedure and the need to proceed without consent.] A time-out was performed before the intervention."
+    },
+    {
+      "slug": "ip_adaptive_s1_1_4_abbreviated_consent_bedside",
+      "title": "[1.4] Abbreviated Consent (Bedside)",
+      "category": "CONSENT AND PRE-PROCEDURE",
+      "cpt_codes": [],
+      "params": [],
+      "body": "Consent was obtained from the patient prior to procedure after explanation in lay terms the indications, details of procedure, and potential risks and alternatives. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the preprocedure assessment record. Laboratory studies and radiographs were reviewed. A time-out was performed prior to the intervention."
+    },
+    {
+      "slug": "ip_adaptive_s1_1_5_capacity_based_consent_bedside_procedures",
+      "title": "[1.5] Capacity-Based Consent (Bedside Procedures)",
+      "category": "CONSENT AND PRE-PROCEDURE",
+      "cpt_codes": [],
+      "params": [
+        "patient_consented",
+        "benefits_include",
+        "alternatives_include",
+        "alternatives_include_continued"
+      ],
+      "body": "Patient consented for [PROCEDURE]. Patient is of sound mind and demonstrates capacity. The risks of procedure include infection, pain, bleeding, unintended injury, and need for additional procedure(s), amongst others. Benefits include [BENEFITS]. Alternatives include [continued observation / other: ____]. Patient communicated their [verbal and written / verbal] consent to proceed with physician and treatment team present."
+    },
+    {
+      "slug": "ip_adaptive_s2_2_1_awake_fiberoptic_intubation_foi",
+      "title": "[2.1] Awake fiberoptic intubation (FOI)",
+      "category": "ANESTHESIA AND AIRWAY ACCESS",
+      "cpt_codes": [],
+      "params": [
+        "topical_anesthesia",
+        "ml_sedation",
+        "endotracheal_tube",
+        "advanced_via",
+        "over_scope"
+      ],
+      "body": "After topical anesthesia with [lidocaine ____% / ____ml] and sedation with [agent / dose], a flexible bronchoscope loaded with an endotracheal tube [size ____] was advanced via the [nasal / oral] route. The vocal cords were visualized and the scope advanced into the trachea. The ETT was railroaded over the scope to [depth] cm. Placement was confirmed by end-tidal CO₂ and bronchoscopic visualization. The patient tolerated the procedure without immediate complications."
+    },
+    {
+      "slug": "ip_adaptive_s2_2_2_bronchoscopy_guided_dlt_placement_confirmation",
+      "title": "[2.2] Bronchoscopy-guided DLT placement/confirmation",
+      "category": "ANESTHESIA AND AIRWAY ACCESS",
+      "cpt_codes": [],
+      "params": [
+        "left",
+        "right_dlt",
+        "position_confirmed_bronchoscopically",
+        "position_confirmed_bronchoscopically_2",
+        "position_confirmed_bronchoscopically_3",
+        "adjustments",
+        "adjustments_2"
+      ],
+      "body": "A [left / right] DLT [size/Fr] was placed by anesthesia. Position was confirmed bronchoscopically: tracheal lumen aligned with the [right] mainstem; bronchial cuff seated [just below] the [left / right] main carina. Leak test performed and adequate seal noted. Adjustments: [advanced / withdrawn / rotated] by [cm / degrees]. Final position re-verified after patient positioning. The patient tolerated the procedure well."
+    },
+    {
+      "slug": "ip_adaptive_s2_2_anesthesia_and_airway_access",
+      "title": "[2] Anesthesia and Airway Access",
+      "category": "ANESTHESIA AND AIRWAY ACCESS",
+      "cpt_codes": [],
+      "params": [
+        "patient_received",
+        "care_mac",
+        "airway_flexible",
+        "introduced_through",
+        "per_record",
+        "through_mouth",
+        "before_attaching",
+        "introduced_through_2"
+      ],
+      "body": "Select anesthesia type:\nThe patient received [intravenous medications, as documented in the record / general anesthesia / moderate (conscious) sedation / monitored anesthesia care (MAC)], and [topical anesthesia was applied to the upper airway and tracheobronchial tree / was intubated with an endotracheal tube by anesthesia / a laryngeal mask airway was placed by anesthesia].\nIf topical/moderate sedation (awake bronchoscopy):\nFollowing intravenous medications as per the record and topical anesthesia to the upper airway, the flexible [video bronchoscope / ultrathin bronchoscope] was introduced through the [mouth / right naris / left naris], into the oropharynx.\nIf rigid bronchoscopy — LMA transitioning to rigid:\nFollowing intravenous medications as per the record a laryngeal mask airway was inserted. Topical anesthesia was then applied to the upper airway and the flexible video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position.\nIf rigid bronchoscopy — direct rigid insertion:\nFollowing intravenous medications as per the record a [11 / 12 / 13 / 14] mm ventilating rigid bronchoscope was inserted through the mouth into the [distal trachea / right mainstem / left mainstem] before attaching the [monsoon JET ventilator / mechanical ventilator / Sanders injector].\nIf via tracheostomy:\nThe flexible video bronchoscope was introduced through the [tracheostomy tube / stoma] and advanced into the tracheobronchial tree."
+    },
+    {
+      "slug": "ip_adaptive_s3_3_airway_examination_adaptive_template",
+      "title": "[3] Airway Examination (Adaptive Template)",
+      "category": "AIRWAY EXAMINATION (ADAPTIVE TEMPLATE)",
+      "cpt_codes": [],
+      "params": [
+        "introduced_through",
+        "if_lma",
+        "mask_airway",
+        "if_transnasal_transoral_upper_airway_exam",
+        "oropharynx_larynx",
+        "oropharynx_larynx_well",
+        "normal_vocal_cord",
+        "tree_total",
+        "if_lma_upper_airway_exam",
+        "cords_appeared",
+        "vocal_cords_appeared",
+        "if_ett_tracheostomy",
+        "reason",
+        "trachea",
+        "notable_mucosa",
+        "mucosa_normal_erythematous",
+        "no_lesions_masses",
+        "right_mainstem",
+        "status",
+        "findings",
+        "status_2",
+        "findings_2",
+        "status_3",
+        "findings_3",
+        "if_prior_right_lobectomy",
+        "prior_right",
+        "lobectomy_noted",
+        "if_prior_right_pneumonectomy",
+        "stump_appeared",
+        "left_mainstem",
+        "status_4",
+        "findings_4",
+        "status_5",
+        "findings_5",
+        "status_6",
+        "findings_6",
+        "if_prior_left_lobectomy",
+        "prior_left",
+        "lobectomy_noted_2",
+        "if_prior_left_pneumonectomy",
+        "stump_appeared_2",
+        "endobronchial_lesions",
+        "extrinsic_compression",
+        "airway_narrowing",
+        "dynamic_collapse",
+        "secretions",
+        "bleeding",
+        "normal_tracheobronchial_tree",
+        "field_01"
+      ],
+      "body": "Scope introduction — select airway access:\nThe flexible video bronchoscope was introduced through the [mouth via a laryngeal mask airway / endotracheal tube / tracheostomy tube / mouth / right naris / left naris] and advanced into the tracheobronchial tree.\n[If LMA:]\nThe laryngeal mask airway was [properly positioned / repositioned and confirmed in good position].\n[If transnasal/transoral — upper airway exam:]\nThe oropharynx and larynx were [well visualized and normal / notable for: ____]. There was [normal vocal cord motion / abnormal vocal cord motion: ____] and [no vocal cord lesions / vocal cord lesion noted: ____]. Additional topical anesthesia with 1% lidocaine was applied to the larynx and subsequently throughout the tracheobronchial tree for a total of [XX] cc.\n[If LMA — upper airway exam:]\nThe vocal cords appeared [normal / abnormal: ____], and the subglottic space was [unremarkable / notable for: ____].\n[If ETT/Tracheostomy:]\nPharynx: Not assessed due to bronchoscope introduction via [ETT / tracheostomy tube]. Larynx: Not assessed. Vocal cords: Not assessed.\nTRACHEA\nThe trachea was [normal in caliber and appearance / narrowed / deviated / distorted / notable for: ____]. Mucosa was [normal / erythematous / friable / edematous / other: ____]. [No lesions, masses, or secretions were identified / Findings: ____]. The main carina was [sharp / blunted / widened / deviated / splayed / infiltrated].\nRIGHT-SIDED AIRWAYS\nThe bronchoscope was advanced into the right mainstem bronchus.\nRight mainstem: [normal / narrowed / distorted / post-surgical changes / extrinsic compression].\nRight upper lobe (RUL):\nStatus: [intact / surgically absent / stenotic / obstructed / distorted].\nFindings: [normal mucosa / endobronchial lesion / extrinsic compression / secretions / mucosal edema / granulation tissue / other: ____].\nRight middle lobe (RML):\nStatus: [intact / surgically absent / stenotic / obstructed / distorted].\nFindings: [normal mucosa / endobronchial lesion / extrinsic compression / secretions / mucosal edema / granulation tissue / other: ____].\nRight lower lobe (RLL):\nStatus: [intact / surgically absent / stenotic / obstructed / distorted].\nFindings: [normal mucosa / endobronchial lesion / extrinsic compression / secretions / mucosal edema / granulation tissue / other: ____].\nSegments and subsegments were visualized to the extent permitted by anatomy and airway patency.\n[If prior right lobectomy:] Post-surgical changes consistent with prior right [upper / middle / lower] lobectomy were noted with [well-healed bronchial stump / staple line visible / mild granulation tissue / no evidence of dehiscence / other: ____].\n[If prior right pneumonectomy:] Findings consistent with prior right pneumonectomy. The bronchial stump appeared [well healed / intact / abnormal: ____].\nLEFT-SIDED AIRWAYS\nThe bronchoscope was withdrawn to the trachea and advanced into the left mainstem bronchus.\nLeft mainstem: [normal / narrowed / distorted / post-surgical changes / extrinsic compression].\nLeft upper lobe (LUL):\nStatus: [intact / surgically absent / stenotic / obstructed / distorted].\nFindings: [normal mucosa / endobronchial lesion / extrinsic compression / secretions / mucosal edema / granulation tissue / other: ____].\nLingula:\nStatus: [intact / surgically absent / stenotic / obstructed / distorted].\nFindings: [normal mucosa / endobronchial lesion / extrinsic compression / secretions / mucosal edema / granulation tissue / other: ____].\nLeft lower lobe (LLL):\nStatus: [intact / surgically absent / stenotic / obstructed / distorted].\nFindings: [normal mucosa / endobronchial lesion / extrinsic compression / secretions / mucosal edema / granulation tissue / other: ____].\nSegments and subsegments were visualized to the extent permitted by anatomy and airway patency.\n[If prior left lobectomy:] Post-surgical changes consistent with prior left [upper / lower] lobectomy were noted with [well-healed bronchial stump / staple line visible / no evidence of recurrence / other: ____].\n[If prior left pneumonectomy:] Findings consistent with prior left pneumonectomy. The bronchial stump appeared [well healed / intact / abnormal: ____].\nGLOBAL AIRWAY ASSESSMENT\nEndobronchial lesions: [none identified / present at ____].\nExtrinsic compression: [none identified / present at ____].\nAirway narrowing: [none / mild / moderate / severe at ____].\nDynamic collapse: [absent / present at ____, estimated ____% collapse].\nSecretions: [none / minimal clear / moderate / copious / purulent / bloody / mucopurulent].\nBleeding: [none / minor oozing / active at ____].\nIMPRESSION\n[Normal tracheobronchial tree without visible abnormalities.]\nOR\n[Abnormal airway examination notable for ____ involving the ____ bronchus with ____ characteristics.]"
     }
   ]
 }

@@ -1,0 +1,787 @@
+{
+  "templates": {
+    "ip_adaptive_s4_4_3_bronchoalveolar_lavage_bal": {
+      "ordinals": {
+        "1": "wedge_technique",
+        "2": "target_lobe",
+        "3": "target_segment",
+        "4": "instilled_volume_ml",
+        "5": "instillation_fluid",
+        "6": "aliquot_strategy",
+        "7": "returned_volume_ml",
+        "8": "return_percent",
+        "9": "fluid_appearance",
+        "10": "specimen_tests"
+      }
+    },
+    "ip_adaptive_s5_5_2_systematic_ebus_staging_survey": {
+      "ordinals": {
+        "1": "station_2r_findings",
+        "2": "station_2l_findings",
+        "3": "station_4r_findings",
+        "4": "station_4l_findings",
+        "5": "station_7_findings",
+        "6": "station_10r_findings",
+        "7": "station_10l_findings",
+        "8": "station_11r_findings",
+        "9": "station_11l_findings",
+        "10": "station_12r_findings",
+        "11": "station_12l_findings",
+        "12": "sampling_threshold_mm",
+        "13": "tbna_needle_gauge",
+        "14": "tbna_needle_type",
+        "15": "elastography_used_note",
+        "16": "first_station_sampled",
+        "17": "second_station_sampled",
+        "18": "additional_station_sequence",
+        "19": "passes_per_station",
+        "20": "total_passes_all_stations",
+        "21": "rose_performed",
+        "22": "rose_result_detail",
+        "23": "overall_rose_diagnosis",
+        "24": "specimen_destination",
+        "25": "documentation_station",
+        "26": "documentation_size_mm",
+        "27": "documentation_ct_findings",
+        "28": "documentation_pet_findings",
+        "29": "documentation_tbna_count",
+        "30": "documentation_rose_adequacy",
+        "31": "documentation_rose_impression"
+      }
+    },
+    "ip_adaptive_s6_6_1_electromagnetic_navigation_bronchoscopy_enb": {
+      "ordinals": {
+        "1": "navigation_system",
+        "2": "registration_method",
+        "3": "extended_working_channel_note",
+        "4": "navigation_guidance",
+        "5": "advance_outcome",
+        "6": "target_location",
+        "7": "target_size_cm",
+        "8": "distance_to_target_cm",
+        "9": "confirmation_modality",
+        "10": "confirmation_pattern",
+        "11": "confirmation_relation",
+        "12": "sampling_tools",
+        "13": "imaging_guidance",
+        "14": "total_biopsies_note"
+      }
+    },
+    "ip_adaptive_s6_6_2_robotic_navigational_bronchoscopy_ion_intuitive": {
+      "ordinals": {
+        "1": "target_location",
+        "2": "rebus_pattern",
+        "3": "cbct_verification_note",
+        "4": "vent_mode",
+        "5": "vent_rr",
+        "6": "vent_tv",
+        "7": "vent_peep",
+        "8": "vent_fio2",
+        "9": "vent_flow_rate",
+        "10": "vent_pmean"
+      }
+    },
+    "ip_adaptive_s8_8_1_endobronchial_valve_placement": {
+      "ordinals": {
+        "1": "balloon_occlusion_performed",
+        "2": "chartis_used",
+        "3": "air_leak_reduced_confirmed",
+        "4": "lobe_selection_basis",
+        "5": "target_lobes",
+        "6": "target_lobe_list",
+        "7": "valve_platform",
+        "8": "valve_size_segment_details"
+      }
+    },
+    "ip_adaptive_s10_10_1_percutaneous_tracheostomy_planned_bronchoscopic_assistance": {
+      "ordinals": {
+        "1": "bronchoscope_entry_route",
+        "2": "lidocaine_volume_ml",
+        "3": "skin_incision_orientation",
+        "4": "skin_incision_length",
+        "5": "skin_incision_location",
+        "6": "introducer_needle_note",
+        "7": "introducer_catheter_size",
+        "8": "dilator_type",
+        "9": "dilator_track",
+        "10": "positioning_mark_note",
+        "11": "guiding_catheter_note",
+        "12": "trach_device",
+        "13": "ventilation_transition",
+        "14": "surgicel_note",
+        "15": "lyofoam_note"
+      }
+    },
+    "ip_adaptive_s11_11_2_thoracentesis": {
+      "ordinals": {
+        "1": "patient_position",
+        "2": "arm_position",
+        "3": "imaging_modality",
+        "4": "thoracentesis_feasible",
+        "5": "approach",
+        "6": "side",
+        "7": "intercostal_space",
+        "8": "line_location",
+        "9": "skin_anesthetic_needle",
+        "10": "local_lidocaine_volume",
+        "11": "pleural_anesthetic_needle",
+        "12": "fluid_pattern",
+        "13": "skin_incision_note",
+        "14": "drainage_device",
+        "15": "drained_volume",
+        "16": "fluid_character",
+        "17": "sutured_status",
+        "18": "specimen_tests",
+        "19": "cxr_ordered"
+      }
+    },
+    "ip_adaptive_s11_11_3_thoracentesis_with_pleural_manometry": {
+      "ordinals": {
+        "1": "side",
+        "2": "manometry_system",
+        "3": "measurement_interval_ml",
+        "4": "opening_pressure_cmh2o",
+        "5": "pressure_table_note",
+        "6": "stopping_criteria",
+        "7": "total_removed_ml",
+        "8": "procedure_symptoms",
+        "9": "post_procedure_imaging",
+        "10": "post_procedure_cxr_ordered"
+      }
+    },
+    "ip_adaptive_s11_11_4_small_bore_chest_tube_pigtail_insertion": {
+      "ordinals": {
+        "1": "patient_position",
+        "2": "side",
+        "3": "effusion_size",
+        "4": "effusion_complexity",
+        "5": "pleural_process",
+        "6": "epinephrine_used",
+        "7": "entry_site_basis",
+        "8": "pleural_entry_confirmation",
+        "9": "catheter_wire_sequence",
+        "10": "guidewire_advance_note",
+        "11": "dilation_strategy",
+        "12": "pleural_tract_reference",
+        "13": "catheter_size_fr",
+        "14": "catheter_type",
+        "15": "insertion_technique",
+        "16": "trocar_or_obturator",
+        "17": "fluid_samples_note",
+        "18": "tube_securing_method",
+        "19": "drainage_connection",
+        "20": "onsite_ph",
+        "21": "cxr_ordered"
+      }
+    },
+    "ip_adaptive_s11_11_8_pleurx_tunneled_pleural_catheter_placement": {
+      "ordinals": {
+        "1": "intercostal_space",
+        "2": "line_location",
+        "3": "incision_size_mm",
+        "4": "tunnel_distance_cm",
+        "5": "tunnel_length_cm",
+        "6": "introducer_type",
+        "7": "entry_site_closure",
+        "8": "catheter_securement",
+        "9": "exit_intercostal_space",
+        "10": "exit_location",
+        "11": "secondary_site_direction",
+        "12": "closure_method",
+        "13": "drainage_connection",
+        "14": "drained_volume",
+        "15": "drained_fluid_character",
+        "16": "opening_pressure_cmh2o",
+        "17": "pressure_500ml",
+        "18": "pressure_1000ml",
+        "19": "pressure_1500ml",
+        "20": "pressure_2000ml"
+      }
+    },
+    "ip_adaptive_s13_13_6_endobronchial_valve_placement_for_persistent_air_leak_bpf": {
+      "ordinals": {
+        "1": "air_leak_etiology",
+        "2": "source_location",
+        "3": "valve_platform",
+        "4": "valve_size",
+        "5": "deployment_segment",
+        "6": "air_leak_assessment_mode",
+        "7": "air_leak_reduction",
+        "8": "additional_valves",
+        "9": "post_procedure_plan"
+      }
+    },
+    "ip_adaptive_s10_10_2_percutaneous_tracheostomy_revision": {
+      "ordinals": {
+        "1": "lidocaine_volume_ml",
+        "2": "tube_removal_resistance",
+        "3": "trach_device",
+        "4": "surgicel_note",
+        "5": "lyofoam_note"
+      }
+    },
+    "ip_adaptive_s10_10_3_tracheostomy_tube_change": {
+      "ordinals": {
+        "1": "old_trach_type_size",
+        "2": "stoma_condition",
+        "3": "new_trach_type_size",
+        "4": "cuff_status",
+        "5": "confirmation_method"
+      }
+    },
+    "ip_adaptive_s10_10_4_tracheostomy_downsizing_fenestrated_tube_placement": {
+      "ordinals": {
+        "1": "old_tube_type_size",
+        "2": "replacement_type",
+        "3": "replacement_brand_size",
+        "4": "cuff_status",
+        "5": "indication"
+      }
+    },
+    "ip_adaptive_s10_10_5_tracheostomy_decannulation_bedside": {
+      "ordinals": {
+        "1": "indication",
+        "2": "trach_type_size",
+        "3": "stoma_dressing",
+        "4": "observation_hours"
+      }
+    },
+    "ip_adaptive_s10_10_6_tracheobronchoscopy_via_tracheostomy": {
+      "ordinals": {
+        "1": "procedure_purpose",
+        "2": "findings_note"
+      }
+    },
+    "ip_adaptive_s10_10_7_flexible_fiberoptic_laryngoscopy": {
+      "ordinals": {
+        "1": "nasal_side",
+        "2": "nares",
+        "3": "mucosal_findings",
+        "4": "vocal_fold_findings",
+        "5": "pharyngeal_findings"
+      }
+    },
+    "ip_adaptive_s10_10_2_chemical_cauterization_of_granulation_tissue": {
+      "ordinals": {
+        "1": "granulation_location",
+        "2": "complication_note"
+      }
+    },
+    "ip_adaptive_s10_10_3_stoma_or_tracheal_granulation_mechanical_debridement": {
+      "ordinals": {
+        "1": "site",
+        "2": "debridement_tool",
+        "3": "hemostasis_method",
+        "4": "trach_exchanged"
+      }
+    },
+    "ip_adaptive_s11_11_5_wayne_ptx_chest_tube_insertion": {
+      "ordinals": {
+        "1": "side",
+        "2": "line",
+        "3": "intercostal_space",
+        "4": "aspirate_type",
+        "5": "dilator_size_fr",
+        "6": "drain_size_fr",
+        "7": "placement_confirmation"
+      }
+    },
+    "ip_adaptive_s11_11_6_image_guided_large_bore_chest_tube": {
+      "ordinals": {
+        "1": "side",
+        "2": "skin_incision_length",
+        "3": "intercostal_space",
+        "4": "line",
+        "5": "clamp_type",
+        "6": "tube_type",
+        "7": "tube_size_fr",
+        "8": "tube_direction",
+        "9": "return_character",
+        "10": "securing_suture",
+        "11": "drainage_system",
+        "12": "cxr_ordered"
+      }
+    },
+    "ip_adaptive_s11_11_7_medical_thoracoscopy_pleuroscopy": {
+      "ordinals": {
+        "1": "decubitus_side",
+        "2": "lidocaine_volume_ml",
+        "3": "incision_length_cm",
+        "4": "port_size_mm",
+        "5": "side",
+        "6": "intercostal_space",
+        "7": "axillary_line",
+        "8": "removed_volume_ml",
+        "9": "fluid_character",
+        "10": "parietal_pleura_findings",
+        "11": "visceral_pleura_findings",
+        "12": "adhesion_description",
+        "13": "lung_expansion_note",
+        "14": "biopsy_target",
+        "15": "biopsy_location",
+        "16": "biopsy_tool",
+        "17": "biopsy_count",
+        "18": "biopsy_bleeding",
+        "19": "bleeding_control_note",
+        "20": "catheter_size_fr",
+        "21": "tunneling_note"
+      }
+    },
+    "ip_adaptive_s11_11_9_tunneled_pleural_catheter_removal": {
+      "ordinals": {
+        "1": "tpc_insertion_date",
+        "2": "side",
+        "3": "removal_reason",
+        "4": "catheter_site_note",
+        "5": "skin_assessment",
+        "6": "lidocaine_volume_ml",
+        "7": "catheter_condition",
+        "8": "minor_bleeding_note",
+        "9": "dressing_type",
+        "10": "dressing_instructions",
+        "11": "sutured_status"
+      }
+    },
+    "ip_adaptive_s11_11_10_ipc_exchange": {
+      "ordinals": {
+        "1": "exchange_indication",
+        "2": "replacement_catheter"
+      }
+    },
+    "ip_adaptive_s11_11_11_chest_tube_exchange_upsizing": {
+      "ordinals": {
+        "1": "exchange_indication",
+        "2": "dilated_size_fr",
+        "3": "new_tube_size_fr",
+        "4": "new_tube_type",
+        "5": "connection_mode",
+        "6": "position_confirmation"
+      }
+    },
+    "ip_adaptive_s11_11_12_chest_tube_removal": {
+      "ordinals": {
+        "1": "removal_criteria",
+        "2": "respiratory_maneuver",
+        "3": "closure_method",
+        "4": "post_removal_cxr_ordered"
+      }
+    },
+    "ip_adaptive_s11_11_13_intrapleural_fibrinolysis": {
+      "ordinals": {
+        "1": "tpa_dose",
+        "2": "dnase_dose",
+        "3": "delivery_catheter",
+        "4": "dwell_time_hours",
+        "5": "clamp_release_note",
+        "6": "dose_number_note",
+        "7": "post_unclamp_output",
+        "8": "tolerance"
+      }
+    },
+    "ip_adaptive_s11_11_14_chemical_pleurodesis_via_chest_tube": {
+      "ordinals": {
+        "1": "indication",
+        "2": "prerequisites",
+        "3": "sclerosing_agent",
+        "4": "analgesia",
+        "5": "delivery_catheter",
+        "6": "clamp_duration_minutes",
+        "7": "rotation_strategy",
+        "8": "post_clamp_mode",
+        "9": "discomfort_level",
+        "10": "ongoing_management"
+      }
+    },
+    "ip_adaptive_s11_11_15_ultrasound_guided_pleural_biopsy_closed_core": {
+      "ordinals": {
+        "1": "target_location",
+        "2": "needle_gauge",
+        "3": "needle_brand",
+        "4": "core_count",
+        "5": "hemostasis_method",
+        "6": "container_type",
+        "7": "specimen_destination"
+      }
+    },
+    "ip_adaptive_s11_11_16_thoravent_placement": {
+      "ordinals": {
+        "1": "side",
+        "2": "intercostal_space",
+        "3": "line",
+        "4": "confirmation_method"
+      }
+    },
+    "ip_adaptive_s4_4_1_bronchial_washing": {
+      "ordinals": {
+        "1": "instilled_volume_ml",
+        "2": "target_site",
+        "3": "returned_volume_ml",
+        "4": "specimen_tests"
+      }
+    },
+    "ip_adaptive_s4_4_2_bronchial_brushings": {
+      "ordinals": {
+        "1": "transbronchial_modifier",
+        "2": "brush_type",
+        "3": "target_site",
+        "4": "sample_count",
+        "5": "specimen_tests"
+      }
+    },
+    "ip_adaptive_s4_4_4_endobronchial_biopsy": {
+      "ordinals": {
+        "1": "biopsy_site",
+        "2": "biopsy_tool",
+        "3": "biopsy_count",
+        "4": "hemostasis",
+        "5": "bleeding_severity",
+        "6": "specimen_tests"
+      }
+    },
+    "ip_adaptive_s4_4_5_transbronchial_lung_biopsy_tblb": {
+      "ordinals": {
+        "1": "target_segment",
+        "2": "forceps_type",
+        "3": "fluoroscopy_mode",
+        "4": "sample_count",
+        "5": "specimen_tests",
+        "6": "pneumothorax_note"
+      }
+    },
+    "ip_adaptive_s4_4_6_transbronchial_needle_aspiration_conventional_tbna": {
+      "ordinals": {
+        "1": "target_type",
+        "2": "target_location",
+        "3": "needle_gauge",
+        "4": "sample_count",
+        "5": "rose_status",
+        "6": "specimen_tests"
+      }
+    },
+    "ip_adaptive_s4_4_7_balloon_dilation": {
+      "ordinals": {
+        "1": "target_site",
+        "2": "balloon_type",
+        "3": "dilation_diameter_mm",
+        "4": "inflation_count",
+        "5": "inflation_seconds",
+        "6": "inflation_pressure_atm",
+        "7": "pre_patency_percent",
+        "8": "post_patency_percent",
+        "9": "mucosal_tear",
+        "10": "hemostasis_note"
+      }
+    },
+    "ip_adaptive_s4_4_8_airway_stent_placement": {
+      "ordinals": {
+        "1": "stent_material",
+        "2": "stent_shape",
+        "3": "stent_brand",
+        "4": "stent_diameter_mm",
+        "5": "stent_length_mm",
+        "6": "target_site",
+        "7": "guidance_mode",
+        "8": "deployment_position",
+        "9": "post_patency",
+        "10": "mucosal_trauma"
+      }
+    },
+    "ip_adaptive_s4_4_9_airway_stent_removal_revision": {
+      "ordinals": {
+        "1": "indication",
+        "2": "stent_type",
+        "3": "stent_dimensions",
+        "4": "stent_location",
+        "5": "removal_technique",
+        "6": "removal_outcome",
+        "7": "adjuncts",
+        "8": "airway_patency",
+        "9": "bleeding_level",
+        "10": "replacement_note"
+      }
+    },
+    "ip_adaptive_s4_4_10_airway_stent_surveillance_bronchoscopy": {
+      "ordinals": {
+        "1": "stent_type",
+        "2": "stent_location",
+        "3": "inspection_focus",
+        "4": "interventions",
+        "5": "final_patency_percent"
+      }
+    },
+    "ip_adaptive_s4_4_11_endobronchial_tumor_destruction_ablation": {
+      "ordinals": {
+        "1": "target_site",
+        "2": "ablation_modality",
+        "3": "settings_mode",
+        "4": "treatment_duration",
+        "5": "pre_patency_percent",
+        "6": "post_patency_percent",
+        "7": "hemostasis",
+        "8": "specimens_sent"
+      }
+    },
+    "ip_adaptive_s4_4_12_endobronchial_tumor_excision_mechanical": {
+      "ordinals": {
+        "1": "target_site",
+        "2": "excision_method",
+        "3": "lesion_morphology",
+        "4": "excision_extent",
+        "5": "pre_obstruction_percent",
+        "6": "post_patency_percent",
+        "7": "hemostasis",
+        "8": "specimen_destination"
+      }
+    },
+    "ip_adaptive_s4_4_13_therapeutic_aspiration": {
+      "ordinals": {
+        "1": "aspiration_site",
+        "2": "aspirate_type",
+        "3": "airway_clearance_result"
+      }
+    },
+    "ip_adaptive_s4_4_14_endobronchial_hemostasis_hemoptysis_control": {
+      "ordinals": {
+        "1": "bleeding_source",
+        "2": "hemostatic_measures",
+        "3": "balloon_tamponade_note",
+        "4": "hemostasis_achieved",
+        "5": "escalation_note",
+        "6": "tolerance",
+        "7": "complications_present",
+        "8": "complication_details"
+      }
+    },
+    "ip_adaptive_s4_4_15_endobronchial_blocker_placement": {
+      "ordinals": {
+        "1": "blocker_type",
+        "2": "blocker_size",
+        "3": "side",
+        "4": "target_bronchus",
+        "5": "balloon_volume_ml",
+        "6": "inflation_medium",
+        "7": "indication",
+        "8": "securement"
+      }
+    },
+    "ip_adaptive_s4_4_16_foreign_body_removal": {
+      "ordinals": {
+        "1": "foreign_body_status",
+        "2": "target_site",
+        "3": "retrieval_tool",
+        "4": "pass_count",
+        "5": "removal_integrity",
+        "6": "mucosal_trauma",
+        "7": "bleeding_amount",
+        "8": "hemostasis_method",
+        "9": "cxr_ordered"
+      }
+    },
+    "ip_adaptive_s4_4_17_photodynamic_therapy_pdt_light_application": {
+      "ordinals": {
+        "1": "photosensitizer",
+        "2": "administration_time",
+        "3": "lesion_site",
+        "4": "laser_wavelength_nm",
+        "5": "laser_fluence_j_cm2",
+        "6": "activation_minutes",
+        "7": "airway_findings"
+      }
+    },
+    "ip_adaptive_s4_4_18_photodynamic_therapy_debridement_48_96_hours_post_light": {
+      "ordinals": {
+        "1": "lesion_site",
+        "2": "debridement_method",
+        "3": "pre_patency_percent",
+        "4": "post_patency_percent",
+        "5": "hemostasis_note"
+      }
+    },
+    "ip_adaptive_s5_5_3_directed_ebus_targeted_lymph_node_mass": {
+      "ordinals": {
+        "1": "insertion_route",
+        "2": "target_characteristic",
+        "3": "target_type",
+        "4": "target_location",
+        "5": "needle_gauge",
+        "6": "needle_type",
+        "7": "second_needle_note",
+        "8": "pass_count",
+        "9": "rose_performed",
+        "10": "rose_result",
+        "11": "specimen_destination"
+      }
+    },
+    "ip_adaptive_s5_5_4_ebus_guided_intranodal_forceps_biopsy_ifb": {
+      "ordinals": {
+        "1": "target_station",
+        "2": "node_size_mm",
+        "3": "ultrasound_features",
+        "4": "tract_needle_gauge",
+        "5": "core_sample_count",
+        "6": "rose_result",
+        "7": "preservative",
+        "8": "specimen_destination"
+      }
+    },
+    "ip_adaptive_s5_5_5_ebus_guided_19_gauge_core_fine_needle_biopsy_fnb": {
+      "ordinals": {
+        "1": "target_station",
+        "2": "pass_count",
+        "3": "core_yield",
+        "4": "elastography_pattern",
+        "5": "rose_result",
+        "6": "specimen_destination"
+      }
+    },
+    "ip_adaptive_s5_5_6_eus_b_transesophageal_ebus": {
+      "ordinals": {
+        "1": "insertion_route",
+        "2": "structures_visualized",
+        "3": "sampled_structures",
+        "4": "needle_gauge",
+        "5": "pass_count",
+        "6": "rose_performed",
+        "7": "rose_result",
+        "8": "specimen_destination"
+      }
+    },
+    "ip_adaptive_s5_5_7_radial_ebus_survey": {
+      "ordinals": {
+        "1": "survey_purpose",
+        "2": "target_location",
+        "3": "ultrasound_pattern",
+        "4": "lesion_size_mm",
+        "5": "vascularity_note",
+        "6": "rose_note"
+      }
+    },
+    "ip_adaptive_s5_5_8_radial_ebus_guided_sampling_with_guide_sheath": {
+      "ordinals": {
+        "1": "guide_sheath_diameter",
+        "2": "ultrasound_pattern",
+        "3": "lesion_size_mm",
+        "4": "sampling_tools",
+        "5": "passes_per_tool",
+        "6": "fluoroscopy_used",
+        "7": "rose_result",
+        "8": "specimen_destination",
+        "9": "post_cxr_ordered"
+      }
+    },
+    "ip_adaptive_s6_6_4_ion_registration_partial_efficiency_strategy_ssrab": {
+      "ordinals": {
+        "1": "strategy_indication",
+        "2": "registration_scope",
+        "3": "registered_landmarks",
+        "4": "contralateral_registration",
+        "5": "registration_start_time",
+        "6": "registration_complete_time",
+        "7": "navigation_start_time",
+        "8": "tool_at_target_time",
+        "9": "reg_nav_time_min",
+        "10": "nav_time_to_primary_min",
+        "11": "virtual_live_divergence_percent",
+        "12": "rebus_pattern",
+        "13": "tool_in_lesion_confirmation",
+        "14": "rose_adequacy",
+        "15": "diagnostic_yield"
+      }
+    },
+    "ip_adaptive_s6_6_5_ion_registration_drift_mismatch": {
+      "ordinals": {
+        "1": "mismatch_type",
+        "2": "mismatch_cause",
+        "3": "mismatch_sites",
+        "4": "mean_fiducial_error_mm",
+        "5": "mitigation_actions",
+        "6": "post_correction_alignment",
+        "7": "proceed_strategy"
+      }
+    },
+    "ip_adaptive_s6_6_6_robotic_navigational_bronchoscopy_monarch_auris_j_and_j": {
+      "ordinals": {
+        "1": "rebus_pattern",
+        "2": "sampling_note",
+        "3": "cbct_confirmation_note",
+        "4": "vent_mode",
+        "5": "vent_rr",
+        "6": "vent_tv",
+        "7": "vent_peep",
+        "8": "vent_fio2",
+        "9": "vent_flow",
+        "10": "vent_pmean"
+      }
+    },
+    "ip_adaptive_s6_6_7_intra_procedural_cbct_cact_fusion_and_registration_correction": {
+      "ordinals": {
+        "1": "imaging_modality",
+        "2": "fusion_platform",
+        "3": "registration_correction",
+        "4": "trajectory_result"
+      }
+    },
+    "ip_adaptive_s6_6_9_fiducial_marker_placement": {
+      "ordinals": {
+        "1": "fiducial_type",
+        "2": "loading_note",
+        "3": "guidance_mode",
+        "4": "target_tissue",
+        "5": "target_location",
+        "6": "placement_confirmation",
+        "7": "fiducial_count"
+      }
+    },
+    "ip_adaptive_s7_7_1_transbronchial_cryobiopsy": {
+      "ordinals": {
+        "1": "vessel_safety_assessment",
+        "2": "cryoprobe_size_mm",
+        "3": "target_segment",
+        "4": "freeze_strategy",
+        "5": "blocker_type",
+        "6": "blocker_position",
+        "7": "blocker_volume_cc",
+        "8": "sample_count",
+        "9": "specimen_handling",
+        "10": "rose_note",
+        "11": "complication_note",
+        "12": "post_procedure_imaging",
+        "13": "post_procedure_cxr_ordered"
+      }
+    },
+    "ip_adaptive_s7_7_2_endobronchial_cryoablation": {
+      "ordinals": {
+        "1": "lesion_type",
+        "2": "target_site",
+        "3": "cryoprobe_size_mm",
+        "4": "technique",
+        "5": "freeze_time_sec",
+        "6": "thaw_time_sec",
+        "7": "cycle_count",
+        "8": "post_treatment_patency",
+        "9": "hemostasis"
+      }
+    },
+    "ip_adaptive_s7_7_3_cryo_extraction_of_mucus_casts_secretions": {
+      "ordinals": {
+        "1": "cryoprobe_size_mm",
+        "2": "extracted_material",
+        "3": "target_site",
+        "4": "freeze_seconds",
+        "5": "extraction_count",
+        "6": "complication_note"
+      }
+    },
+    "ip_adaptive_s8_8_2_endobronchial_valve_removal_exchange": {
+      "ordinals": {
+        "1": "indication",
+        "2": "valve_platform",
+        "3": "valve_location",
+        "4": "removal_tool",
+        "5": "valve_count_removed",
+        "6": "exchange_note",
+        "7": "mucosa_post_removal"
+      }
+    }
+  }
+}
