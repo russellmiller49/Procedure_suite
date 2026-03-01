@@ -24,6 +24,7 @@ from app.api.schemas import (
     UnifiedProcessRequest,
     UnifiedProcessResponse,
 )
+from app.api.schemas.base import ReviewStatus
 from app.coder.application.coding_service import CodingService
 from app.coder.phi_gating import is_phi_review_required
 from app.common.exceptions import LLMError
@@ -78,7 +79,7 @@ async def run_unified_pipeline_logic(
     request: Request,
     registry_service: RegistryService,
     coding_service: CodingService,
-    phi_scrubber,
+    phi_scrubber: Any,
 ) -> tuple[UnifiedProcessResponse, str, dict[str, Any]]:
     """Run the unified extraction-first pipeline.
 
@@ -234,7 +235,7 @@ async def run_unified_pipeline_logic(
         units_by_code: dict[str, int] = {}
 
         billing = getattr(record, "billing", None)
-        cpt_items = []
+        cpt_items: list[Any] = []
         if isinstance(billing, dict):
             cpt_items = billing.get("cpt_codes") or []
         else:
@@ -366,13 +367,14 @@ async def run_unified_pipeline_logic(
         umls_normalization = None
 
     needs_manual_review = result.needs_manual_review
+    review_status: ReviewStatus
     if is_phi_review_required():
-        review_status = "pending_phi_review"
+        review_status = ReviewStatus.PENDING_PHI_REVIEW
         needs_manual_review = True
     elif needs_manual_review:
-        review_status = "unverified"
+        review_status = ReviewStatus.UNVERIFIED
     else:
-        review_status = "finalized"
+        review_status = ReviewStatus.FINALIZED
 
     processing_time_ms = (time.time() - start_time) * 1000
 
