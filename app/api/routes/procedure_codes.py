@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
@@ -80,7 +80,7 @@ class ReviewActionRequest(BaseModel):
     """Request body for submitting a review action."""
 
     suggestion_id: str = Field(..., description="ID of the CodeSuggestion being reviewed")
-    action: Literal["accept", "reject", "modify"] = Field(
+    action: str = Field(
         ...,
         description="Review action: 'accept', 'reject', or 'modify'",
     )
@@ -421,6 +421,7 @@ def review_suggestion(
                 "'modify'."
             ),
         )
+    action = cast(Literal["accept", "reject", "modify"], request.action)
 
     # Find the suggestion
     suggestions = store.get_suggestions(proc_id)
@@ -440,7 +441,7 @@ def review_suggestion(
     # Create the review action
     review = ReviewAction(
         suggestion_id=request.suggestion_id,
-        action=request.action,
+        action=action,
         reviewer_id=request.reviewer_id,
         notes=request.notes,
         modified_code=request.modified_code,
@@ -451,7 +452,7 @@ def review_suggestion(
     final_code: FinalCode | None = None
     message = ""
 
-    if request.action == "accept":
+    if action == "accept":
         final_code = FinalCode(
             code=suggestion.code,
             description=suggestion.description,
@@ -463,7 +464,7 @@ def review_suggestion(
         )
         message = f"Code {suggestion.code} accepted and added to final codes."
 
-    elif request.action == "modify":
+    elif action == "modify":
         if not request.modified_code:
             raise HTTPException(
                 status_code=400,
@@ -527,7 +528,7 @@ def review_suggestion(
 
     return ReviewActionResponse(
         suggestion_id=request.suggestion_id,
-        action=request.action,
+        action=action,
         final_code=final_code,
         message=message,
     )

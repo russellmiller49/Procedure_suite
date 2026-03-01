@@ -3982,7 +3982,7 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
         spec_cls = [a for a in get_args(spec_anno) if a is not type(None)][0]
         list_anno = spec_cls.model_fields["specimens_collected"].annotation
         list_cls = [a for a in get_args(list_anno) if a is not type(None)][0]
-        item_cls = list_cls.__args__[0]
+        item_cls = list_cls.__args__[0] if hasattr(list_cls, "__args__") else None
 
         validated: list[object] = []
         seen: set[tuple[str, str]] = set()
@@ -3992,7 +3992,11 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
             if key in seen:
                 continue
             seen.add(key)
-            validated.append(item_cls.model_validate(cand))
+            item_validator = getattr(item_cls, "model_validate", None)
+            if callable(item_validator):
+                validated.append(item_validator(cand))
+            else:
+                validated.append(cand)
 
         if not validated:
             return warnings
