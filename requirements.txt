@@ -58,6 +58,7 @@ cryptography==46.0.4
     # via
     #   -r requirements.in
     #   google-auth
+    #   pyjwt
 cymem==2.0.13
     # via
     #   preshed
@@ -303,6 +304,10 @@ pydantic-settings==2.12.0
     # via -r requirements.in
 pygments==2.19.2
     # via rich
+pyjwt==2.11.0
+    # via
+    #   -r requirements.in
+    #   pyjwt
 pyparsing==3.3.2
     # via httplib2
 pysbd==0.3.4
@@ -483,8 +488,7 @@ xxhash==3.6.0
     # via datasets
 yarl==1.22.0
     # via aiohttp
-PyJWT[crypto]>=2.8.0,<3
-    # via supabase-py
+
 # The following packages are considered to be unsafe in a requirements file:
 setuptools==81.0.0
     # via
