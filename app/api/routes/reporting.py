@@ -523,6 +523,8 @@ async def report_seed_from_text(
                         "type": "llm_findings_seed",
                         "accepted_findings": int(seed.accepted_findings),
                         "dropped_findings": int(seed.dropped_findings),
+                        "parse_error": bool(seed.parse_error),
+                        "used_retries": int(seed.used_retries),
                         "needs_review": bool(seed.needs_review),
                         "derived_cpt_count": int(len(seed.cpt_codes or [])),
                     }

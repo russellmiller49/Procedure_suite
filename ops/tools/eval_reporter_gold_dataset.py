@@ -162,6 +162,7 @@ def evaluate_rows(
 def _build_renderer() -> Callable[[str], str]:
     # Keep evaluation deterministic and offline-friendly by default.
     os.environ.setdefault("PROCSUITE_SKIP_DOTENV", "1")
+    os.environ.setdefault("PROCSUITE_PIPELINE_MODE", "extraction_first")
     os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
     os.environ.setdefault("REPORTER_DISABLE_LLM", "1")
     os.environ.setdefault("QA_REPORTER_ALLOW_SIMPLE_FALLBACK", "0")
@@ -253,4 +254,3 @@ def datetime_now_iso() -> str:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

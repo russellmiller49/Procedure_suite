@@ -12,9 +12,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import os
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
+os.environ.setdefault("PROCSUITE_PIPELINE_MODE", "extraction_first")
 
 from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
 from app.registry.application.registry_service import RegistryService

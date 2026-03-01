@@ -106,11 +106,42 @@ Outputs:
 
 ### Reporter LLM Findings Evaluator
 
+Offline sanity run (no network):
+
+```bash
+python ops/tools/eval_reporter_prompt_llm_findings.py --max-cases 5
+```
+
+Online evaluation with real OpenAI calls:
+
 ```bash
 PROCSUITE_ALLOW_ONLINE=1 \
 LLM_PROVIDER=openai_compat \
 OPENAI_MODEL_STRUCTURER=gpt-5-mini \
 python ops/tools/eval_reporter_prompt_llm_findings.py
+```
+
+Prompt/version controls:
+
+- `REPORTER_FINDINGS_PROMPT_VERSION=v1` (loads `app/reporting/prompts/llm_findings_v1.txt`)
+- `REPORTER_FINDINGS_PROMPT_PATH=/abs/path/to/prompt.txt` (override file for rapid iteration)
+- `REPORTER_LLM_FINDINGS_MAX_RETRIES=2` (parse/schema self-repair retries)
+
+### Reporter Prompt Optimizer
+
+Runs iterative prompt-only optimization under a budget and writes new prompt files to
+`app/reporting/prompts/llm_findings_v{N}.txt` with sidecar metadata.
+
+```bash
+PROCSUITE_ALLOW_ONLINE=1 \
+LLM_PROVIDER=openai_compat \
+OPENAI_MODEL_STRUCTURER=gpt-5-mini \
+OPENAI_API_KEY=... \
+python ops/tools/optimize_llm_findings_prompt.py \
+  --input /Users/russellmiller/Projects/proc_suite_notes/reporter_training/reporter_training/reporter_prompt_valid.jsonl \
+  --base-version v1 \
+  --sample-size 50 \
+  --budget-usd 200
 ```
 
 ## Recent Updates (2026-01-25)

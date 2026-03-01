@@ -6,7 +6,8 @@ masked prompt text -> GPT findings (evidence-cited) -> synthetic NER -> registry
 -> guardrails -> deterministic registry->CPT -> reporter templates.
 
 Safety:
-- This script is OFFLINE by default. To allow real GPT calls, set:
+- This script is OFFLINE by default and uses a deterministic local findings stub.
+- To allow real GPT calls for extraction, set:
   PROCSUITE_ALLOW_ONLINE=1
   LLM_PROVIDER=openai_compat
   OPENAI_API_KEY=...
@@ -20,6 +21,7 @@ import json
 import os
 import random
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -132,12 +134,61 @@ class EvalRow:
     completion_canonical: str
 
 
+class _OfflineFindingsLLM:
+    """Deterministic local stub for offline evaluator sanity runs."""
+
+    def generate(self, _prompt: str, **_kwargs: Any) -> str:
+        return json.dumps(
+            {
+                "version": "reporter_findings_v1",
+                "context": None,
+                "findings": [],
+                "notes": ["offline_stub"],
+            }
+        )
+
+
+def warning_prefix(value: str) -> str:
+    raw = str(value or "").strip()
+    if not raw:
+        return "UNKNOWN"
+    if ":" in raw:
+        return raw.split(":", 1)[0].strip() or "UNKNOWN"
+    if " " in raw:
+        return raw.split(" ", 1)[0].strip() or "UNKNOWN"
+    return raw
+
+
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--max-cases", type=int, default=0)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--prompt-version",
+        default=os.getenv("REPORTER_FINDINGS_PROMPT_VERSION", "v1"),
+        help="Prompt version tag used by app/reporting/prompts/llm_findings_<version>.txt",
+    )
+    parser.add_argument(
+        "--max-retries",
+        type=int,
+        default=2,
+        help="Max parse/schema repair retries for llm_findings extraction.",
+    )
+    parser.add_argument(
+        "--save-failures",
+        type=Path,
+        default=None,
+        help="Optional JSONL output for PHI-safe failure artifacts.",
+    )
     parser.add_argument(
         "--prompt-field",
         default="prompt_text",
@@ -281,10 +332,11 @@ def main(argv: list[str] | None = None) -> int:
     if not args.input.exists():
         raise FileNotFoundError(f"Input dataset not found: {args.input}")
 
-    if not _truthy_env("PROCSUITE_ALLOW_ONLINE"):
-        print("This evaluation requires real GPT calls.")
-        print("Set PROCSUITE_ALLOW_ONLINE=1 and configure OpenAI env vars to run.")
-        print("Refusing to run with offline defaults.")
+    os.environ["REPORTER_FINDINGS_PROMPT_VERSION"] = str(args.prompt_version).strip() or "v1"
+    os.environ["REPORTER_LLM_FINDINGS_MAX_RETRIES"] = str(max(0, int(args.max_retries)))
+    allow_online = _truthy_env("PROCSUITE_ALLOW_ONLINE")
+    if allow_online and not os.getenv("OPENAI_API_KEY"):
+        print("PROCSUITE_ALLOW_ONLINE=1 but OPENAI_API_KEY is not set.")
         return 2
 
     raw_rows = load_jsonl(args.input)
@@ -293,18 +345,29 @@ def main(argv: list[str] | None = None) -> int:
 
     reporter = build_structured_strategy()
     registry_service = RegistryService()
+    offline_llm = None if allow_online else _OfflineFindingsLLM()
+    if allow_online:
+        print("Mode: online (real OpenAI calls allowed)")
+    else:
+        print("Mode: offline (deterministic local findings stub)")
 
     per_case: list[dict[str, Any]] = []
+    failure_artifacts: list[dict[str, Any]] = []
     sim_scores: list[float] = []
     cpt_scores: list[float] = []
     f1_scores: list[float] = []
+    accepted_counts: list[float] = []
     full_shell_count = 0
     failures = 0
     critical_extra_cases = 0
+    parse_error_cases = 0
+    validation_issue_cases = 0
+    parse_validation_issue_cases = 0
+    warning_prefix_counts: Counter[str] = Counter()
 
     for row in rows:
         try:
-            seed = seed_registry_record_from_llm_findings(row.prompt_text)
+            seed = seed_registry_record_from_llm_findings(row.prompt_text, llm=offline_llm)
             record_payload = build_record_payload_for_reporting(seed)
             rendered = reporter.render(
                 text=seed.masked_prompt_text,
@@ -332,6 +395,36 @@ def main(argv: list[str] | None = None) -> int:
 
             cpt_scores.append(cpt_score)
             f1_scores.append(f1)
+            accepted_counts.append(float(seed.accepted_findings))
+
+            seed_warnings = list(seed.warnings or [])
+            seed_warning_prefixes = sorted({warning_prefix(w) for w in seed_warnings if str(w).strip()})
+            for prefix in seed_warning_prefixes:
+                warning_prefix_counts[prefix] += 1
+            has_parse_error = bool(seed.parse_error)
+            has_validation_issue = any(
+                str(w).startswith("LLM_FINDINGS_DROPPED:")
+                or str(w).startswith("LLM_FINDINGS_REPAIR_FAILED:")
+                for w in seed_warnings
+            )
+            if has_parse_error:
+                parse_error_cases += 1
+            if has_validation_issue:
+                validation_issue_cases += 1
+            if has_parse_error or has_validation_issue:
+                parse_validation_issue_cases += 1
+                failure_artifacts.append(
+                    {
+                        "id": row.id,
+                        "error_type": None,
+                        "warning_prefixes": seed_warning_prefixes,
+                        "warning_count": int(len(seed_warnings)),
+                        "accepted_findings": int(seed.accepted_findings),
+                        "dropped_findings": int(seed.dropped_findings),
+                        "parse_error": has_parse_error,
+                        "used_retries": int(seed.used_retries),
+                    }
+                )
 
             per_case.append(
                 {
@@ -343,12 +436,32 @@ def main(argv: list[str] | None = None) -> int:
                     "critical_extra_flags": critical_extra,
                     "flag_false_positive_count": fp,
                     "flag_false_negative_count": fn,
+                    "accepted_findings": int(seed.accepted_findings),
+                    "dropped_findings": int(seed.dropped_findings),
+                    "parse_error": bool(seed.parse_error),
+                    "used_retries": int(seed.used_retries),
+                    "warning_prefixes": seed_warning_prefixes,
                     "seed_warnings_count": int(len(seed.warnings or [])),
                     "error": None,
                 }
             )
         except Exception as exc:  # noqa: BLE001
             failures += 1
+            parse_validation_issue_cases += 1
+            err_prefix = warning_prefix(type(exc).__name__)
+            warning_prefix_counts[err_prefix] += 1
+            failure_artifacts.append(
+                {
+                    "id": row.id,
+                    "error_type": type(exc).__name__,
+                    "warning_prefixes": [err_prefix],
+                    "warning_count": 0,
+                    "accepted_findings": 0,
+                    "dropped_findings": 0,
+                    "parse_error": False,
+                    "used_retries": 0,
+                }
+            )
             per_case.append(
                 {
                     "id": row.id,
@@ -359,6 +472,11 @@ def main(argv: list[str] | None = None) -> int:
                     "critical_extra_flags": [],
                     "flag_false_positive_count": 0,
                     "flag_false_negative_count": 0,
+                    "accepted_findings": 0,
+                    "dropped_findings": 0,
+                    "parse_error": False,
+                    "used_retries": 0,
+                    "warning_prefixes": [err_prefix],
                     "seed_warnings_count": 0,
                     "error": f"{type(exc).__name__}",
                 }
@@ -376,12 +494,24 @@ def main(argv: list[str] | None = None) -> int:
         "avg_cpt_jaccard": round(_avg(cpt_scores), 4),
         "avg_performed_flag_f1": round(_avg(f1_scores), 4),
         "critical_extra_flag_rate": round((critical_extra_cases / successful) if successful else 0.0, 4),
+        "avg_accepted_findings": round(_avg(accepted_counts), 4),
+        "parse_error_rate": round((parse_error_cases / total) if total else 0.0, 4),
+        "validation_issue_rate": round((validation_issue_cases / total) if total else 0.0, 4),
+        "parse_validation_failure_rate": round((parse_validation_issue_cases / total) if total else 0.0, 4),
+        "most_common_warning_prefixes": [
+            {"prefix": prefix, "count": int(count)}
+            for prefix, count in warning_prefix_counts.most_common(10)
+        ],
     }
 
     payload = {
         "created_at": datetime_now_iso(),
         "input_path": str(args.input),
+        "output_path": str(args.output),
         "prompt_field": prompt_field,
+        "prompt_version": str(args.prompt_version),
+        "max_retries": int(args.max_retries),
+        "allow_online": bool(allow_online),
         "row_count": total,
         "environment_defaults_applied": _APPLIED_ENV_DEFAULTS,
         "summary": summary,
@@ -391,6 +521,9 @@ def main(argv: list[str] | None = None) -> int:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if args.save_failures is not None:
+        write_jsonl(args.save_failures, failure_artifacts)
+        print(f"Wrote PHI-safe failures: {args.save_failures}")
 
     print(f"Primary gates passed: {payload['promotion_gate_report']['primary_gates_passed']}")
     print(f"Wrote report: {args.output}")

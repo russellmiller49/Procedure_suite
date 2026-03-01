@@ -29,6 +29,9 @@ def _truthy_env(name: str) -> bool:
 if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
     load_dotenv(override=False)
 
+# Keep CLI tooling aligned with the production direction unless explicitly overridden.
+os.environ.setdefault("PROCSUITE_PIPELINE_MODE", "extraction_first")
+
 # Import after environment setup
 from app.api.adapters.response_adapter import build_v3_evidence_payload  # noqa: E402
 from app.api.dependencies import get_coding_service, get_registry_service  # noqa: E402

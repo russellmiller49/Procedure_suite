@@ -14,15 +14,37 @@ import pytest
 from app.common.exceptions import LLMError
 from app.common.llm import OpenAILLM
 from app.common.openai_responses import (
+    build_responses_payload,
     parse_responses_text,
     parse_responses_json_object,
     ResponsesEndpointNotFound,
 )
+from app.common.structured_output import StructuredOutputSpec
 
 
 # =============================================================================
 # Test A: Responses API succeeds
 # =============================================================================
+
+
+def test_build_responses_payload_includes_text_format_schema() -> None:
+    payload = build_responses_payload(
+        model="gpt-5-mini",
+        prompt="Extract findings",
+        wants_json=True,
+        response_schema=StructuredOutputSpec(
+            name="reporter_findings_v1",
+            schema={"type": "object", "properties": {"version": {"type": "string"}}},
+            strict=True,
+        ),
+    )
+
+    assert "text" in payload
+    fmt = payload["text"]["format"]
+    assert fmt["type"] == "json_schema"
+    assert fmt["name"] == "reporter_findings_v1"
+    assert fmt["strict"] is True
+    assert "Return exactly one JSON object" not in str(payload.get("input") or "")
 
 
 def test_responses_api_succeeds(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -194,6 +216,48 @@ def test_responses_api_retries_on_unsupported_param(
     assert "temperature" not in calls["payloads"][1]
     # PHI safety
     assert prompt not in caplog.text
+
+
+def test_responses_api_retries_on_unsupported_text_format(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+    monkeypatch.setenv("OPENAI_PRIMARY_API", "responses")
+
+    llm = OpenAILLM(api_key="test-key", model="gpt-5-mini")
+    calls = {"count": 0, "payloads": []}
+
+    def _mock_post(self, url, headers=None, json=None, **_kwargs):  # noqa: ANN001
+        calls["count"] += 1
+        calls["payloads"].append(dict(json) if json else {})
+        request = httpx.Request("POST", url)
+        if calls["count"] == 1:
+            return httpx.Response(
+                400,
+                request=request,
+                json={
+                    "error": {
+                        "message": "Unsupported parameter: text.format",
+                        "type": "invalid_request_error",
+                        "param": "text.format",
+                    }
+                },
+            )
+        return httpx.Response(200, request=request, json={"output_text": '{"ok": true}'})
+
+    monkeypatch.setattr(httpx.Client, "post", _mock_post)
+
+    out = llm.generate(
+        "Extract findings",
+        response_schema=StructuredOutputSpec(
+            name="reporter_findings_v1",
+            schema={"type": "object"},
+            strict=True,
+        ),
+    )
+
+    assert out == '{"ok": true}'
+    assert len(calls["payloads"]) == 2
+    assert "text" in calls["payloads"][0]
+    assert "text" not in calls["payloads"][1]
 
 
 # =============================================================================

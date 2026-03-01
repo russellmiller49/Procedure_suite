@@ -18,7 +18,8 @@ import httpx
 
 from app.common.logger import get_logger
 from app.common.exceptions import LLMError
-from app.common.model_capabilities import filter_payload_for_model, is_gpt5
+from app.common.model_capabilities import is_gpt5
+from app.common.structured_output import StructuredOutputSpec
 from app.infra.llm_control import backoff_seconds, llm_slot, parse_retry_after_seconds
 from app.infra.settings import get_infra_settings
 
@@ -57,6 +58,7 @@ def build_responses_payload(
     prompt: str,
     *,
     wants_json: bool = True,
+    response_schema: StructuredOutputSpec | None = None,
     task: str | None = None,
     extra: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
@@ -73,8 +75,9 @@ def build_responses_payload(
         A dict suitable for POST /v1/responses
     """
     # For JSON-required paths, use instruction-first approach (PHI-safe)
+    # when schema-based structured outputs are not configured.
     outgoing_prompt = prompt
-    if wants_json and is_gpt5(model):
+    if wants_json and response_schema is None and is_gpt5(model):
         outgoing_prompt = _prepend_json_object_instruction(prompt)
 
     # Responses API uses "input" field
@@ -83,6 +86,16 @@ def build_responses_payload(
         "model": model,
         "input": outgoing_prompt,
     }
+
+    if response_schema is not None:
+        payload["text"] = {
+            "format": {
+                "type": "json_schema",
+                "name": response_schema.name,
+                "schema": response_schema.schema,
+                "strict": bool(response_schema.strict),
+            }
+        }
 
     # Merge extra params if provided
     if extra:
@@ -305,6 +318,8 @@ def _looks_like_unsupported_parameter_error(
         "parallel_tool_calls",
         "input",
         "instructions",
+        "text",
+        "text.format",
     }:
         return True
 
@@ -360,6 +375,13 @@ def _build_responses_retry_payload(
     # Remove chat-completions-specific params that may have leaked
     for key in ("response_format", "messages"):
         _pop(key)
+
+    # Remove Responses structured output param when rejected by compat endpoint.
+    lower_message = (message or "").lower()
+    if error_param in {"text", "text.format"} or (
+        "text.format" in lower_message or "json_schema" in lower_message
+    ):
+        _pop("text")
 
     return retry_payload, removed
 

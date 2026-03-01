@@ -2,5 +2,7 @@
     "chatgpt.openOnStartup": true,
     "claudeCode.allowDangerouslySkipPermissions": true,
     "claudeCode.environmentVariables": [],
-    "claudeCode.thinkingBudgetTokens": 50000
+    "claudeCode.thinkingBudgetTokens": 50000,
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.terminal.useEnvFile": true
 }

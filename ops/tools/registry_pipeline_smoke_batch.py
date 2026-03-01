@@ -33,6 +33,9 @@ def _truthy_env(name: str) -> bool:
 if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
     load_dotenv(override=False)
 
+# Keep CLI tooling aligned with the production direction unless explicitly overridden.
+os.environ.setdefault("PROCSUITE_PIPELINE_MODE", "extraction_first")
+
 from app.registry.application.registry_service import RegistryService  # noqa: E402
 from app.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
 from app.registry.processing.masking import mask_offset_preserving  # noqa: E402

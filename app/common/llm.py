@@ -23,7 +23,7 @@ except ImportError:  # google-auth is optional unless OAuth is used
 
 from app.common.logger import get_logger
 from app.common.exceptions import LLMError
-from app.common.model_capabilities import filter_payload_for_model, is_gpt5
+from app.common.model_capabilities import capabilities_for, filter_payload_for_model, is_gpt5
 from app.common.openai_responses import (
     get_primary_api,
     is_fallback_enabled,
@@ -32,6 +32,7 @@ from app.common.openai_responses import (
     post_responses,
     ResponsesEndpointNotFound,
 )
+from app.common.structured_output import StructuredOutputSpec, structured_output_cache_token
 from app.infra.cache import get_llm_memory_cache
 from app.infra.llm_control import (
     backoff_seconds,
@@ -394,6 +395,31 @@ def _prepend_json_object_instruction(prompt: str) -> str:
     return f"{instruction}\n\n{prompt}"
 
 
+def _normalize_structured_output_spec(
+    response_schema: StructuredOutputSpec | dict[str, Any] | None,
+) -> StructuredOutputSpec | None:
+    """Normalize legacy dict schemas into StructuredOutputSpec."""
+    if response_schema is None:
+        return None
+    if isinstance(response_schema, StructuredOutputSpec):
+        return response_schema
+    if not isinstance(response_schema, dict):
+        return None
+
+    name = str(response_schema.get("name") or "").strip()
+    schema_obj = response_schema.get("schema")
+    if name and isinstance(schema_obj, dict):
+        strict = bool(response_schema.get("strict", True))
+        return StructuredOutputSpec(name=name, schema=schema_obj, strict=strict)
+
+    # Back-compat: allow raw schema dict without wrapper metadata.
+    return StructuredOutputSpec(
+        name="structured_output",
+        schema=response_schema,
+        strict=True,
+    )
+
+
 class LLMInterface(Protocol):
     def generate(self, prompt: str, **kwargs: Any) -> str:
         ...
@@ -451,7 +477,7 @@ class OpenAILLM:
     def generate(
         self,
         prompt: str,
-        response_schema: dict | None = None,
+        response_schema: StructuredOutputSpec | dict[str, Any] | None = None,
         *,
         task: str | None = None,
         **kwargs,
@@ -463,7 +489,7 @@ class OpenAILLM:
 
         Args:
             prompt: The prompt text
-            response_schema: Currently ignored (Gemini-only schema shape)
+            response_schema: Optional structured output schema
             task: Task identifier for timeout/capability selection
             **kwargs: Optional parameters (best-effort, capability-filtered)
         """
@@ -471,9 +497,13 @@ class OpenAILLM:
             return "{}"
 
         settings = get_infra_settings()
+        normalized_schema = _normalize_structured_output_spec(response_schema)
         prompt_version = str(
             kwargs.pop("prompt_version", "") or os.getenv("LLM_PROMPT_VERSION") or "default"
         ).strip() or "default"
+        schema_cache_token = structured_output_cache_token(normalized_schema)
+        if schema_cache_token:
+            prompt_version = f"{prompt_version}|schema:{schema_cache_token}"
 
         cache_key: str | None = None
         if settings.enable_llm_cache:
@@ -497,20 +527,35 @@ class OpenAILLM:
         # Use Responses API for first-party OpenAI when configured
         if primary_api == "responses" and self._is_openai_endpoint():
             try:
-                response_text, usage = self._generate_via_responses(prompt, task=task_key, **kwargs)
+                response_text, usage = self._generate_via_responses(
+                    prompt,
+                    response_schema=normalized_schema,
+                    task=task_key,
+                    **kwargs,
+                )
             except ResponsesEndpointNotFound:
                 if is_fallback_enabled():
                     logger.info(
                         "Responses API not available; falling back to Chat Completions model=%s",
                         self.model,
                     )
-                    response_text, usage = self._generate_via_chat(prompt, task=task_key, **kwargs)
+                    response_text, usage = self._generate_via_chat(
+                        prompt,
+                        response_schema=normalized_schema,
+                        task=task_key,
+                        **kwargs,
+                    )
                 else:
                     raise
 
         else:
             # Use Chat Completions for compat endpoints or when configured
-            response_text, usage = self._generate_via_chat(prompt, task=task_key, **kwargs)
+            response_text, usage = self._generate_via_chat(
+                prompt,
+                response_schema=normalized_schema,
+                task=task_key,
+                **kwargs,
+            )
 
         if cache_key is not None and response_text:
             get_llm_memory_cache().set(cache_key, response_text, ttl_s=3600)
@@ -543,6 +588,7 @@ class OpenAILLM:
         self,
         prompt: str,
         *,
+        response_schema: StructuredOutputSpec | None = None,
         task: str | None = None,
         **kwargs,
     ) -> tuple[str, dict[str, Any]]:
@@ -564,6 +610,7 @@ class OpenAILLM:
             self.model,
             prompt,
             wants_json=True,
+            response_schema=response_schema,
             task=task,
             extra=extra,
         )
@@ -600,6 +647,7 @@ class OpenAILLM:
         self,
         prompt: str,
         *,
+        response_schema: StructuredOutputSpec | None = None,
         task: str | None = None,
         **kwargs,
     ) -> tuple[str, dict[str, Any]]:
@@ -616,9 +664,20 @@ class OpenAILLM:
             "messages": [{"role": "user", "content": outgoing_prompt}],
         }
 
+        caps = capabilities_for(self.model)
         # Prefer native structured outputs where supported; GPT-5 rejects response_format.
         if wants_json and not is_gpt5(self.model):
-            payload["response_format"] = {"type": "json_object"}
+            if response_schema is not None and caps.supports_response_format_json_schema:
+                payload["response_format"] = {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": response_schema.name,
+                        "schema": response_schema.schema,
+                        "strict": bool(response_schema.strict),
+                    },
+                }
+            elif caps.supports_response_format_json_object:
+                payload["response_format"] = {"type": "json_object"}
 
         # Best-effort optional parameters (ignored when unsupported by the model).
         for float_key in ("temperature", "top_p"):

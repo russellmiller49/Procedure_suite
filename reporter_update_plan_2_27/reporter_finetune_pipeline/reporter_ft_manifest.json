@@ -1,0 +1,34 @@
+{
+  "created_by": "prepare_finetune.py",
+  "train_file": "/home/claude/fine_tuning_scripts/fine_tuning/reporter_ft_train.jsonl",
+  "valid_file": "/home/claude/fine_tuning_scripts/fine_tuning/reporter_ft_valid.jsonl",
+  "train_examples": 8480,
+  "valid_examples": 2120,
+  "dropped_examples": 0,
+  "unique_note_ids": 106,
+  "system_prompt_length_chars": 905,
+  "token_stats": {
+    "train": {
+      "min": 571,
+      "max": 6457,
+      "avg": 1288,
+      "median": 1200,
+      "total": 10920054
+    },
+    "valid": {
+      "min": 573,
+      "max": 6456,
+      "avg": 1288,
+      "median": 1198,
+      "total": 2730093
+    }
+  },
+  "cost_estimates": {
+    "gpt-4o-mini-2024-07-18_2ep": "$6.55",
+    "gpt-4o-mini-2024-07-18_3ep": "$9.83",
+    "gpt-4o-mini-2024-07-18_4ep": "$13.10",
+    "gpt-4o-2024-08-06_2ep": "$65.52",
+    "gpt-4o-2024-08-06_3ep": "$98.28",
+    "gpt-4o-2024-08-06_4ep": "$131.04"
+  }
+}

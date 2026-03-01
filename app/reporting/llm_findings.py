@@ -21,13 +21,15 @@ from __future__ import annotations
 import json
 import os
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.common.spans import Span, dedupe_spans
 from app.common.llm import OpenAILLM, _resolve_openai_model
+from app.common.structured_output import StructuredOutputSpec
 from app.ner.inference import NEREntity, NERExtractionResult
 from app.ner.entity_types import normalize_lobe, normalize_station
 from app.registry.ner_mapping.entity_to_registry import NERToRegistryMapper
@@ -105,6 +107,13 @@ ALLOWED_PROCEDURE_KEYS: set[str] = set(PROCEDURE_MAPPINGS.keys()) | {
     "tracheal_puncture",
 }
 
+REPORTER_FINDINGS_SCHEMA: dict[str, Any] = ReporterFindingsV1.model_json_schema()
+REPORTER_FINDINGS_OUTPUT_SPEC = StructuredOutputSpec(
+    name="reporter_findings_v1",
+    schema=REPORTER_FINDINGS_SCHEMA,
+    strict=True,
+)
+
 
 class ReporterFindingsError(RuntimeError):
     pass
@@ -166,79 +175,120 @@ def _contains_any_keyword(text: str, proc_key: str) -> bool:
     return False
 
 
-def _build_findings_prompt(masked_prompt_text: str) -> str:
+_PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+_DEFAULT_FINDINGS_PROMPT_VERSION = "v1"
+_DEFAULT_FINDINGS_MAX_RETRIES = 2
+_DEFAULT_EVIDENCE_REPAIR_THRESHOLD = 3
+
+
+def _safe_int_env(name: str, default: int) -> int:
+    raw = str(os.getenv(name, str(default)) or "").strip()
+    try:
+        value = int(raw)
+    except ValueError:
+        return int(default)
+    return max(0, value)
+
+
+def _safe_error_summary(exc: Exception, *, max_chars: int = 240) -> str:
+    msg = " ".join(str(exc).split())
+    if len(msg) > max_chars:
+        msg = f"{msg[:max_chars]}..."
+    return f"{type(exc).__name__}: {msg or '<empty>'}"
+
+
+def _resolve_findings_prompt(
+    prompt_version: str | None = None,
+) -> tuple[str, str]:
+    override_raw = str(os.getenv("REPORTER_FINDINGS_PROMPT_PATH", "") or "").strip()
+    if override_raw:
+        override_path = Path(override_raw).expanduser().resolve()
+        if not override_path.exists():
+            raise ReporterFindingsUnavailable(f"Prompt template not found at REPORTER_FINDINGS_PROMPT_PATH={override_path}")
+        try:
+            return override_path.read_text(encoding="utf-8"), f"path:{override_path}"
+        except Exception as exc:  # noqa: BLE001
+            raise ReporterFindingsUnavailable(
+                f"Unable to load prompt template from {override_path}: {type(exc).__name__}"
+            ) from exc
+
+    version = str(
+        prompt_version
+        or os.getenv("REPORTER_FINDINGS_PROMPT_VERSION", _DEFAULT_FINDINGS_PROMPT_VERSION)
+        or _DEFAULT_FINDINGS_PROMPT_VERSION
+    ).strip() or _DEFAULT_FINDINGS_PROMPT_VERSION
+    path = (_PROMPTS_DIR / f"llm_findings_{version}.txt").resolve()
+    if not path.exists():
+        raise ReporterFindingsUnavailable(
+            f"Prompt template not found for version={version!r} at {path}"
+        )
+    try:
+        return path.read_text(encoding="utf-8"), version
+    except Exception as exc:  # noqa: BLE001
+        raise ReporterFindingsUnavailable(
+            f"Unable to load prompt template for version={version!r}: {type(exc).__name__}"
+        ) from exc
+
+
+def load_prompt_template(
+    prompt_version: str | None = None,
+) -> tuple[str, str]:
+    """Load versioned reporter findings prompt template.
+
+    Returns: `(template_text, version_tag)`.
+    """
+    return _resolve_findings_prompt(prompt_version=prompt_version)
+
+
+def _build_findings_prompt(masked_prompt_text: str, *, prompt_version: str | None = None) -> tuple[str, str]:
+    template_text, resolved_version = load_prompt_template(prompt_version=prompt_version)
     keys = ", ".join(sorted(ALLOWED_PROCEDURE_KEYS))
-    schema_hint = {
-        "version": "reporter_findings_v1",
-        "context": {
-            "indication": "Persistent air leak",
-            "preop_diagnosis": "Persistent air leak",
-            "postop_diagnosis": "Persistent air leak",
-            "specimens": "BAL ×2",
-            "plan": "Follow up BAL results; plan valve removal in 6 weeks.",
-            "modifier_22_rationale": "BAL performed in multiple lobes (increased work).",
-        },
-        "findings": [
-            {
-                "procedure_key": "bal",
-                "action": "diagnostic",
-                "anatomy": ["Lingula", "LB4", "LB5"],
-                "finding_text": "BAL performed in Lingula (LB4/LB5)",
-                "evidence_quote": "BAL lingula LB4/LB5",
-                "clinical_details": "BAL was performed with saline instilled and returned; specimens were sent as documented.",
-                "confidence": 0.9,
-            },
-            {
-                "procedure_key": "bpf_sealant",
-                "action": "other",
-                "anatomy": ["RLL posterior subsegment"],
-                "finding_text": "Endobronchial sealant applied for air leak",
-                "evidence_quote": "tisseel 2cc RLL posterior subsegment.",
-                "clinical_details": "2 cc Tisseel sealant was applied to the documented segment for air leak management.",
-                "confidence": 0.85,
-            },
-            {
-                "procedure_key": "blvr",
-                "action": "removal",
-                "anatomy": ["RB10"],
-                "finding_text": "Endobronchial valve removed from RB10",
-                "evidence_quote": "tried size 7 spiration valve RB10 too big removed.",
-                "clinical_details": "A previously attempted endobronchial valve was removed from RB10 as documented.",
-                "confidence": 0.85,
-            },
-        ],
-        "notes": [],
-    }
+    prompt = template_text.format(
+        allowed_keys=keys,
+        masked_prompt_text=(masked_prompt_text or "").strip(),
+    )
+    return prompt, resolved_version
+
+
+def _build_json_repair_prompt(
+    *,
+    masked_prompt_text: str,
+    previous_raw_output: str,
+    error_summary: str,
+) -> str:
     return (
-        "You are a clinical information extraction engine.\n"
-        "Task: Read the clinical prompt text and output global clinical context + atomic performed-procedure findings.\n\n"
-        "Output MUST be exactly one JSON object matching this shape:\n"
-        f"{json.dumps(schema_hint, indent=2)}\n\n"
-        "Rules:\n"
-        "- context.* fields MUST be extracted from the prompt text below. If not explicitly documented, use null.\n"
-        f"- procedure_key MUST be one of: {keys}\n"
-        "- action MUST be one of: placement, removal, revision, ablation, aspiration, inspection, diagnostic, other\n"
-        "- anatomy MUST list only the specific anatomic targets for THIS finding (do not leak anatomy across findings).\n"
-        "- finding_text MUST be short, normalized, and MUST NOT include CPT codes.\n"
-        "- finding_text MUST include a canonical procedure keyword/abbreviation for the procedure_key.\n"
-        "  (Examples: BAL, EBUS, TBNA, TBBx, Cryotherapy, APC, Airway dilation, Stent, Chest ultrasound, Balloon occlusion.)\n"
-        "- evidence_quote MUST be a verbatim substring copied from the prompt text below.\n"
-        "- evidence_quote MUST be >= 10 characters and include enough local context to uniquely support the finding.\n"
-        "- evidence_quote SHOULD include the anatomy tokens (RB4, station 7, Trachea, etc.) that you list in anatomy.\n"
-        "- evidence_quote does NOT need to contain the canonical keyword if the prompt uses shorthand.\n"
-        "  If the prompt says 'cryo', write finding_text as 'Cryotherapy ...' and quote the exact 'cryo ...' evidence.\n"
-        "  If the prompt says 'balloon' for stenosis, write finding_text as 'Airway dilation ...' and quote the balloon evidence.\n"
-        "- clinical_details MUST be 1-3 sentences summarizing the procedure details for this finding using ONLY what is explicitly documented.\n"
-        "  If tools/sizes/settings are documented, include them. If not documented, set clinical_details to null.\n"
-        "- Only include procedures that are explicitly documented as performed.\n"
-        "- If something is planned/considered/denied/inspection-only, OMIT it.\n"
-        "- If uncertain, OMIT it.\n\n"
-        "*** CRITICAL CLINICAL GUARDRAILS (ANTI-HALLUCINATION) ***\n"
-        "1. TOOLS DO NOT EQUAL INTENT: The mere mention of a tool (cryoprobe, snare, forceps) does NOT mean a therapeutic intervention was performed.\n"
-        "2. ACTION-ON-TISSUE REQUIRED: DO NOT output tags for ablation, debulking, or therapeutic aspiration unless there is explicit 'action-on-tissue' language (e.g., 'tissue was destroyed', 'secretions were aspirated' to clear obstruction).\n"
-        "3. INSPECTION IS NOT INTERVENTION: Visualizing a stent or patent airway is NOT a stent placement or mechanical dilation.\n\n"
-        "PROMPT TEXT (use evidence_quote from here):\n"
-        f"{masked_prompt_text.strip()}\n"
+        "You are repairing a failed clinical extraction output.\n"
+        "Your previous output failed JSON/schema validation.\n"
+        f"Failure: {error_summary}\n\n"
+        "Return ONLY valid JSON matching the required schema. No markdown. No code fences.\n"
+        "Do not add commentary.\n\n"
+        "PROMPT TEXT:\n"
+        f"{(masked_prompt_text or '').strip()}\n\n"
+        "PREVIOUS OUTPUT TO REPAIR:\n"
+        f"{(previous_raw_output or '').strip()}\n"
+    )
+
+
+def _build_evidence_repair_prompt(
+    *,
+    masked_prompt_text: str,
+    findings: ReporterFindingsV1,
+    evidence_warnings: list[str],
+) -> str:
+    warning_preview = "\n".join(evidence_warnings[:20]).strip() or "none"
+    previous_json = findings.model_dump_json(indent=2)
+    return (
+        "You are repairing evidence_quote fields only.\n"
+        "Your evidence_quote fields MUST be exact substrings of PROMPT TEXT.\n"
+        "Fix ONLY evidence_quote values and anatomy/evidence alignment when needed.\n"
+        "Do NOT invent new findings. Do NOT add findings. Do NOT remove valid findings unnecessarily.\n"
+        "Return ONLY valid JSON matching the required schema. No markdown.\n\n"
+        "Validation warnings:\n"
+        f"{warning_preview}\n\n"
+        "PROMPT TEXT:\n"
+        f"{(masked_prompt_text or '').strip()}\n\n"
+        "PREVIOUS JSON:\n"
+        f"{previous_json}\n"
     )
 
 
@@ -254,19 +304,86 @@ def _resolve_openai_llm() -> OpenAILLM:
     return OpenAILLM(api_key=os.getenv("OPENAI_API_KEY"), model=model, task="structurer")
 
 
-def extract_reporter_findings_v1(masked_prompt_text: str, *, llm: OpenAILLM | None = None) -> ReporterFindingsV1:
-    llm = llm or _resolve_openai_llm()
-    prompt = _build_findings_prompt(masked_prompt_text)
-    raw = llm.generate(prompt, task="structurer")
+def _parse_findings_response(raw: str) -> ReporterFindingsV1:
     cleaned = _strip_markdown_code_fences(raw)
     try:
         data = json.loads(cleaned)
     except Exception as exc:  # noqa: BLE001
-        raise ReporterFindingsParseError(f"Failed parsing LLM JSON: {type(exc).__name__}") from exc
+        raise ReporterFindingsParseError(f"Failed parsing LLM JSON: {_safe_error_summary(exc)}") from exc
     try:
         return ReporterFindingsV1.model_validate(data)
     except Exception as exc:  # noqa: BLE001
-        raise ReporterFindingsParseError(f"LLM response did not match ReporterFindingsV1: {type(exc).__name__}") from exc
+        raise ReporterFindingsParseError(
+            f"LLM response did not match ReporterFindingsV1: {_safe_error_summary(exc)}"
+        ) from exc
+
+
+def _extract_with_repair(
+    *,
+    llm: OpenAILLM,
+    initial_prompt: str,
+    prompt_version: str,
+    masked_prompt_text: str,
+) -> tuple[ReporterFindingsV1, bool, int]:
+    max_retries = _safe_int_env("REPORTER_LLM_FINDINGS_MAX_RETRIES", _DEFAULT_FINDINGS_MAX_RETRIES)
+    parse_error = False
+    used_retries = 0
+
+    current_prompt = initial_prompt
+    for attempt in range(max_retries + 1):
+        raw = llm.generate(
+            current_prompt,
+            task="structurer",
+            response_schema=REPORTER_FINDINGS_OUTPUT_SPEC,
+            prompt_version=f"reporter_findings:{prompt_version}",
+        )
+        try:
+            return _parse_findings_response(raw), parse_error, used_retries
+        except ReporterFindingsParseError as exc:
+            parse_error = True
+            if attempt >= max_retries:
+                raise
+            used_retries += 1
+            current_prompt = _build_json_repair_prompt(
+                masked_prompt_text=masked_prompt_text,
+                previous_raw_output=raw,
+                error_summary=_safe_error_summary(exc),
+            )
+
+    raise ReporterFindingsParseError("Failed parsing LLM JSON: retries exhausted")
+
+
+@dataclass(frozen=True)
+class ReporterFindingsExtractionResult:
+    findings: ReporterFindingsV1
+    parse_error: bool
+    used_retries: int
+    prompt_version: str
+
+
+def _extract_reporter_findings_v1_with_stats(
+    masked_prompt_text: str,
+    *,
+    llm: OpenAILLM | None = None,
+) -> ReporterFindingsExtractionResult:
+    llm = llm or _resolve_openai_llm()
+    prompt, prompt_version = _build_findings_prompt(masked_prompt_text)
+    findings, parse_error, used_retries = _extract_with_repair(
+        llm=llm,
+        initial_prompt=prompt,
+        prompt_version=prompt_version,
+        masked_prompt_text=masked_prompt_text,
+    )
+    return ReporterFindingsExtractionResult(
+        findings=findings,
+        parse_error=parse_error,
+        used_retries=used_retries,
+        prompt_version=prompt_version,
+    )
+
+
+def extract_reporter_findings_v1(masked_prompt_text: str, *, llm: OpenAILLM | None = None) -> ReporterFindingsV1:
+    return _extract_reporter_findings_v1_with_stats(masked_prompt_text, llm=llm).findings
 
 
 def validate_findings_against_text(
@@ -978,6 +1095,15 @@ def _apply_findings_backfill(
         return record, warnings
 
 
+def _count_evidence_drop_warnings(warnings: list[str]) -> int:
+    prefixes = (
+        "LLM_FINDINGS_DROPPED: missing_evidence_quote",
+        "LLM_FINDINGS_DROPPED: anatomy_not_in_evidence",
+        "LLM_FINDINGS_DROPPED: evidence_too_short",
+    )
+    return sum(1 for warning in (warnings or []) if str(warning).startswith(prefixes))
+
+
 @dataclass(frozen=True)
 class LLMFindingsSeedResult:
     record: RegistryRecord
@@ -989,16 +1115,58 @@ class LLMFindingsSeedResult:
     accepted_items: list[FindingV1]
     accepted_findings: int
     dropped_findings: int
+    parse_error: bool = False
+    used_retries: int = 0
+    telemetry: dict[str, Any] = field(default_factory=dict)
 
 
 def seed_registry_record_from_llm_findings(prompt_text: str, *, llm: OpenAILLM | None = None) -> LLMFindingsSeedResult:
     masked_prompt_text = mask_prompt_cpt_noise(prompt_text or "")
-
-    findings = extract_reporter_findings_v1(masked_prompt_text, llm=llm)
+    llm_client = llm or _resolve_openai_llm()
+    extraction = _extract_reporter_findings_v1_with_stats(masked_prompt_text, llm=llm_client)
+    findings = extraction.findings
+    parse_error = bool(extraction.parse_error)
+    used_retries = int(extraction.used_retries)
     accepted, dropped_warnings = validate_findings_against_text(
         findings,
         masked_prompt_text=masked_prompt_text,
     )
+
+    evidence_threshold = _safe_int_env(
+        "REPORTER_LLM_FINDINGS_EVIDENCE_REPAIR_THRESHOLD",
+        _DEFAULT_EVIDENCE_REPAIR_THRESHOLD,
+    )
+    evidence_drop_count = _count_evidence_drop_warnings(dropped_warnings)
+    should_repair_evidence = bool(findings.findings) and evidence_drop_count > 0 and (
+        len(dropped_warnings) > len(accepted)
+        or evidence_drop_count >= evidence_threshold
+    )
+    if should_repair_evidence:
+        evidence_repair_prompt = _build_evidence_repair_prompt(
+            masked_prompt_text=masked_prompt_text,
+            findings=findings,
+            evidence_warnings=dropped_warnings,
+        )
+        used_retries += 1
+        repaired_raw = llm_client.generate(
+            evidence_repair_prompt,
+            task="structurer",
+            response_schema=REPORTER_FINDINGS_OUTPUT_SPEC,
+            prompt_version=f"reporter_findings:{extraction.prompt_version}:evidence_repair",
+        )
+        try:
+            repaired_findings = _parse_findings_response(repaired_raw)
+            repaired_accepted, repaired_warnings = validate_findings_against_text(
+                repaired_findings,
+                masked_prompt_text=masked_prompt_text,
+            )
+            if len(repaired_accepted) >= len(accepted):
+                findings = repaired_findings
+                accepted = repaired_accepted
+                dropped_warnings = repaired_warnings
+        except ReporterFindingsParseError:
+            parse_error = True
+            dropped_warnings = list(dropped_warnings) + ["LLM_FINDINGS_REPAIR_FAILED: parse_or_schema"]
 
     ner_result = build_synthetic_ner_result(
         masked_prompt_text=masked_prompt_text,
@@ -1033,6 +1201,13 @@ def seed_registry_record_from_llm_findings(prompt_text: str, *, llm: OpenAILLM |
     if derivation.warnings:
         warnings.extend([str(w) for w in derivation.warnings if str(w).strip()])
 
+    telemetry = {
+        "accepted_findings": int(len(accepted)),
+        "dropped_findings": int(len(dropped_warnings)),
+        "parse_error": bool(parse_error),
+        "used_retries": int(used_retries),
+    }
+
     return LLMFindingsSeedResult(
         record=record,
         masked_prompt_text=masked_prompt_text,
@@ -1043,6 +1218,9 @@ def seed_registry_record_from_llm_findings(prompt_text: str, *, llm: OpenAILLM |
         accepted_items=list(accepted),
         accepted_findings=len(accepted),
         dropped_findings=len(dropped_warnings),
+        parse_error=bool(parse_error),
+        used_retries=int(used_retries),
+        telemetry=telemetry,
     )
 
 
@@ -1409,12 +1587,15 @@ def build_record_payload_for_reporting(seed: LLMFindingsSeedResult) -> dict[str,
 
 __all__ = [
     "ALLOWED_PROCEDURE_KEYS",
+    "REPORTER_FINDINGS_SCHEMA",
+    "REPORTER_FINDINGS_OUTPUT_SPEC",
     "FindingV1",
     "ReporterFindingsV1",
     "ReporterFindingsError",
     "ReporterFindingsParseError",
     "ReporterFindingsUnavailable",
     "LLMFindingsSeedResult",
+    "load_prompt_template",
     "build_record_payload_for_reporting",
     "extract_reporter_findings_v1",
     "seed_registry_record_from_llm_findings",

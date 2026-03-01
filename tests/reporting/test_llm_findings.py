@@ -353,6 +353,50 @@ class _StubLLM:
         return json.dumps(self._payload)
 
 
+class _RetryingStubLLM:
+    def __init__(self, outputs: list[str]) -> None:
+        self._outputs = list(outputs)
+        self.calls: list[dict[str, object]] = []
+
+    def generate(self, prompt: str, *args: object, **kwargs: object) -> str:
+        self.calls.append(
+            {
+                "prompt": prompt,
+                "response_schema": kwargs.get("response_schema"),
+                "prompt_version": kwargs.get("prompt_version"),
+            }
+        )
+        idx = min(len(self.calls) - 1, len(self._outputs) - 1)
+        return self._outputs[idx]
+
+
+def test_seed_llm_findings_repairs_parse_error_once() -> None:
+    note = "BAL performed in RUL with saline return."
+    repaired_payload = {
+        "version": "reporter_findings_v1",
+        "findings": [
+            {
+                "procedure_key": "bal",
+                "action": "diagnostic",
+                "anatomy": ["RUL"],
+                "finding_text": "BAL performed in RUL",
+                "evidence_quote": "BAL performed in RUL with saline return.",
+                "confidence": 0.9,
+            }
+        ],
+        "notes": [],
+    }
+    llm = _RetryingStubLLM(outputs=["{", json.dumps(repaired_payload)])
+
+    seed = seed_registry_record_from_llm_findings(note, llm=llm)
+
+    assert seed.accepted_findings == 1
+    assert seed.used_retries == 1
+    assert seed.parse_error is True
+    assert len(llm.calls) == 2
+    assert llm.calls[0]["response_schema"] is not None
+
+
 def test_seed_llm_findings_backfills_lobes_and_stations_without_creating_linear_ebus() -> None:
     note = "\n".join(
         [
