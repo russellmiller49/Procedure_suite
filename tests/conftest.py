@@ -33,6 +33,15 @@ _BASELINE_TEST_ENV: dict[str, str] = {
     # Keep tests offline-friendly by default.
     "REGISTRY_USE_STUB_LLM": "1",
     "GEMINI_OFFLINE": "1",
+    "OPENAI_OFFLINE": "1",
+    "PROCSUITE_ALLOW_ONLINE": "0",
+    # Ensure reporter seeding tests are deterministic/offline unless a test opts in.
+    "REPORTER_SEED_STRATEGY": "registry_extract_fields",
+    "REPORTER_SEED_LLM_STRICT": "0",
+    "REPORTER_DISABLE_LLM": "1",
+    # Avoid inheriting user shell provider/key settings.
+    "LLM_PROVIDER": "gemini",
+    "OPENAI_API_KEY": "",
     # Many UI tests expect static assets to be served.
     "DISABLE_STATIC_FILES": "0",
 }
