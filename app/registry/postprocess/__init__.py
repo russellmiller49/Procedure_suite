@@ -5,7 +5,7 @@ Implementation note: this module is a package to allow submodules for targeted p
 
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, Optional, List
+from typing import Any, Callable, Dict, Optional, List, Literal, cast
 import re
 from datetime import datetime
 import logging
@@ -204,6 +204,7 @@ def normalize_sedation_type(raw: Any) -> str | None:
         "mac anesthesia": "MAC",
     }
 
+    val: str | None
     if text in mapping:
         val = mapping[text]
     else:
@@ -230,7 +231,7 @@ def normalize_sedation_type(raw: Any) -> str | None:
                 "local only": "Local Only",
                 "topical only": "Topical Only",
             }
-            val = lowered_allowed.get(text, None)
+            val = lowered_allowed.get(text)
 
     allowed = {"Moderate", "Deep", "General", "MAC", "Local Only", "Topical Only"}
     return val if val in allowed else None
@@ -452,15 +453,15 @@ def normalize_procedure_date(raw: Any) -> str | None:
     text_raw = _coerce_to_text(raw)
     if text_raw is None:
         return None
-    raw = text_raw.strip()
-    if raw.lower() == "null" or raw == "":
+    raw_text = text_raw.strip()
+    if raw_text.lower() == "null" or raw_text == "":
         return None
 
-    iso_match = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", raw)
+    iso_match = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", raw_text)
     if iso_match:
         try:
-            datetime.strptime(raw, "%Y-%m-%d")
-            return raw
+            datetime.strptime(raw_text, "%Y-%m-%d")
+            return raw_text
         except ValueError:
             return None
 
@@ -478,12 +479,12 @@ def normalize_procedure_date(raw: Any) -> str | None:
     ]
     for fmt in candidates:
         try:
-            dt = datetime.strptime(raw, fmt)
+            dt = datetime.strptime(raw_text, fmt)
             return dt.strftime("%Y-%m-%d")
         except ValueError:
             continue
 
-    date_like = re.search(r"(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})", raw)
+    date_like = re.search(r"(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})", raw_text)
     if date_like:
         text = date_like.group(1)
         for fmt in ["%m/%d/%Y", "%m-%d-%Y", "%m/%d/%y", "%m-%d-%y"]:
@@ -494,7 +495,7 @@ def normalize_procedure_date(raw: Any) -> str | None:
                 continue
 
     # Handle compact formats like 03Nov17 or 3Nov2017
-    compact = re.search(r"(\d{1,2}[A-Za-z]{3}\d{2,4})", raw)
+    compact = re.search(r"(\d{1,2}[A-Za-z]{3}\d{2,4})", raw_text)
     if compact:
         text = compact.group(1)
         for fmt in ["%d%b%Y", "%d%b%y"]:
@@ -2937,10 +2938,12 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
     )
 
     # Collect stations with strong sampling evidence in the same line.
+    normalize_station: Callable[[str], str | None] | None = None
     try:
-        from app.ner.entity_types import normalize_station
+        from app.ner.entity_types import normalize_station as _normalize_station
+        normalize_station = _normalize_station
     except Exception:  # pragma: no cover
-        normalize_station = None  # type: ignore[assignment]
+        normalize_station = None
 
     def _digit_station_has_node_context(line: str, start: int, end: int) -> bool:
         """Return True if a digit-only station token (e.g., '7') appears in nodal/station context.
@@ -3237,10 +3240,12 @@ def reconcile_ebus_inspected_only_stations(record: RegistryRecord, full_text: st
     if not isinstance(node_events, list) or not node_events:
         return warnings
 
+    normalize_station: Callable[[str], str | None] | None = None
     try:
-        from app.ner.entity_types import normalize_station
+        from app.ner.entity_types import normalize_station as _normalize_station
+        normalize_station = _normalize_station
     except Exception:  # pragma: no cover
-        normalize_station = None  # type: ignore[assignment]
+        normalize_station = None
 
     inspected: set[str] = set()
     sampled: set[str] = set()
@@ -3282,9 +3287,9 @@ def reconcile_ebus_inspected_only_stations(record: RegistryRecord, full_text: st
             continue
         if has_inspection:
             inspected.update(stations_in_sentence)
-            quote = re.sub(r"\s+", " ", sentence).strip()
+            sentence_quote = re.sub(r"\s+", " ", sentence).strip()
             for station in stations_in_sentence:
-                station_to_quote.setdefault(station, quote[:280])
+                station_to_quote.setdefault(station, sentence_quote[:280])
             pending_stations = stations_in_sentence
         else:
             pending_stations = stations_in_sentence
@@ -3305,9 +3310,9 @@ def reconcile_ebus_inspected_only_stations(record: RegistryRecord, full_text: st
             if getattr(event, "outcome", None) not in (None, "unknown", ""):
                 setattr(event, "outcome", "unknown")
                 changed = True
-            quote = station_to_quote.get(station_norm)
-            if quote:
-                setattr(event, "evidence_quote", quote)
+            event_quote = station_to_quote.get(station_norm)
+            if event_quote:
+                setattr(event, "evidence_quote", event_quote)
 
     if changed and hasattr(linear, "stations_sampled"):
         existing = getattr(linear, "stations_sampled", None)
@@ -3331,10 +3336,14 @@ def reconcile_aborted_targets(record: RegistryRecord, full_text: str) -> list[st
     )
     target_re = re.compile(r"(?i)\b(?:nodule|lesion|target|segment|lobe|rb\d{1,2}|lb\d{1,2})\b")
 
+    _extract_lung_locations_from_text: Callable[[str], list[str]] | None = None
     try:
-        from app.registry.deterministic_extractors import _extract_lung_locations_from_text
+        from app.registry.deterministic_extractors import (
+            _extract_lung_locations_from_text as _extract_locations,
+        )
+        _extract_lung_locations_from_text = _extract_locations
     except Exception:  # pragma: no cover
-        _extract_lung_locations_from_text = None  # type: ignore[assignment]
+        _extract_lung_locations_from_text = None
 
     segment_token_re = re.compile(r"(?i)\b([LR]B\d{1,2})\b")
 
@@ -3743,45 +3752,53 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
     sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
 
     confirmed_meta: dict[str, dict[str, object]] = {}
-    for station, meta in station_to_meta.items():
+    for station, station_meta in station_to_meta.items():
         token = str(station).strip().upper()
         if token:
             confirmed_meta[token] = {
                 "station": str(station).strip(),
-                "evidence_quote": str(meta.get("evidence_quote") or "").strip(),
-                "token_start": meta.get("token_start"),
-                "token_end": meta.get("token_end"),
-                "line_start": meta.get("line_start"),
-                "line_end": meta.get("line_end"),
+                "evidence_quote": str(station_meta.get("evidence_quote") or "").strip(),
+                "token_start": station_meta.get("token_start"),
+                "token_end": station_meta.get("token_end"),
+                "line_start": station_meta.get("line_start"),
+                "line_end": station_meta.get("line_end"),
             }
 
     from app.registry.schema import NodeInteraction
 
     seen_confirmed: set[str] = set()
     for event in node_events:
-        station = getattr(event, "station", None)
-        if not isinstance(station, str) or not station.strip():
+        station_raw = getattr(event, "station", None)
+        if not isinstance(station_raw, str) or not station_raw.strip():
             continue
-        station_token = station.strip().upper()
-        meta = confirmed_meta.get(station_token)
-        if meta:
+        station_token = station_raw.strip().upper()
+        event_meta = confirmed_meta.get(station_token)
+        if event_meta:
             seen_confirmed.add(station_token)
             setattr(event, "action", "needle_aspiration")
             existing_quote = getattr(event, "evidence_quote", None)
             if not (isinstance(existing_quote, str) and existing_quote.strip()):
-                setattr(event, "evidence_quote", meta.get("evidence_quote") or existing_quote)
+                meta_quote = event_meta.get("evidence_quote")
+                if isinstance(meta_quote, str) and meta_quote.strip():
+                    setattr(event, "evidence_quote", meta_quote)
+                elif isinstance(existing_quote, str) and existing_quote.strip():
+                    setattr(event, "evidence_quote", existing_quote)
         elif getattr(event, "action", None) in sampling_actions:
             setattr(event, "action", "inspected_only")
 
-    for station_token, meta in confirmed_meta.items():
+    for station_token, new_meta in confirmed_meta.items():
         if station_token in seen_confirmed:
             continue
+        station_value = str(new_meta.get("station") or "").strip()
+        if not station_value:
+            continue
+        evidence_quote = str(new_meta.get("evidence_quote") or "").strip()
         node_events.append(
             NodeInteraction(
-                station=meta["station"],
+                station=station_value,
                 action="needle_aspiration",
                 outcome=None,
-                evidence_quote=meta["evidence_quote"] or f"TBNA of {meta['station']} documented in specimen log.",
+                evidence_quote=evidence_quote or f"TBNA of {station_value} documented in specimen log.",
             )
         )
 
@@ -3798,11 +3815,11 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
             evidence = {}
 
         for idx, station in enumerate(confirmed):
-            meta = station_to_meta.get(station) if isinstance(station, str) else None
-            if not isinstance(meta, dict):
+            station_meta_for_span = station_to_meta.get(station) if isinstance(station, str) else None
+            if not isinstance(station_meta_for_span, dict):
                 continue
-            start = meta.get("token_start")
-            end = meta.get("token_end")
+            start = station_meta_for_span.get("token_start")
+            end = station_meta_for_span.get("token_end")
             if isinstance(start, int) and isinstance(end, int) and end > start:
                 evidence.setdefault(
                     f"procedures_performed.linear_ebus.stations_sampled.{idx}",
@@ -3810,23 +3827,23 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
                 ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
 
         for idx, event in enumerate(node_events):
-            station = getattr(event, "station", None)
-            if not isinstance(station, str) or not station.strip():
+            station_raw = getattr(event, "station", None)
+            if not isinstance(station_raw, str) or not station_raw.strip():
                 continue
-            meta = confirmed_meta.get(station.strip().upper())
-            if not isinstance(meta, dict):
+            event_meta = confirmed_meta.get(station_raw.strip().upper())
+            if not isinstance(event_meta, dict):
                 continue
 
-            start = meta.get("token_start")
-            end = meta.get("token_end")
+            start = event_meta.get("token_start")
+            end = event_meta.get("token_end")
             if isinstance(start, int) and isinstance(end, int) and end > start:
                 evidence.setdefault(
                     f"procedures_performed.linear_ebus.node_events.{idx}.station",
                     [],
                 ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
 
-            line_start = meta.get("line_start")
-            line_end = meta.get("line_end")
+            line_start = event_meta.get("line_start")
+            line_end = event_meta.get("line_end")
             if isinstance(line_start, int) and isinstance(line_end, int) and line_end > line_start:
                 evidence.setdefault(
                     f"procedures_performed.linear_ebus.node_events.{idx}.evidence_quote",
@@ -3980,7 +3997,7 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
         if not validated:
             return warnings
 
-        record.specimens = spec_cls.model_validate({"specimens_collected": validated})
+        setattr(record, "specimens", spec_cls.model_validate({"specimens_collected": validated}))
         warnings.append(f"AUTO_SPECIMENS: populated specimens_collected={len(validated)} from SPECIMEN(S) section.")
     except Exception:
         return warnings
@@ -4020,10 +4037,12 @@ def enrich_ebus_node_event_sampling_details(record: RegistryRecord, full_text: s
     if not full_text:
         return warnings
 
+    normalize_station: Callable[[str], str | None] | None = None
     try:
-        from app.ner.entity_types import normalize_station
+        from app.ner.entity_types import normalize_station as _normalize_station
+        normalize_station = _normalize_station
     except Exception:
-        normalize_station = None  # type: ignore[assignment]
+        normalize_station = None
 
     details: dict[str, dict[str, object]] = {}
     site_headers = list(_EBUS_SITE_HEADER_RE.finditer(full_text))
@@ -4104,21 +4123,29 @@ def enrich_ebus_node_event_sampling_details(record: RegistryRecord, full_text: s
 
         created: list[str] = []
         created_sampled: list[str] = []
-        for station, meta in details.items():
-            has_signal = bool(meta.get("sampled")) or isinstance(meta.get("passes"), int) or isinstance(
-                meta.get("elastography_pattern"), str
+        for station, detail_meta in details.items():
+            has_signal = bool(detail_meta.get("sampled")) or isinstance(detail_meta.get("passes"), int) or isinstance(
+                detail_meta.get("elastography_pattern"), str
             )
             if not has_signal:
                 continue
-            action = "needle_aspiration" if bool(meta.get("sampled")) else "inspected_only"
+            action: Literal["inspected_only", "needle_aspiration", "core_biopsy", "forceps_biopsy"] = (
+                "needle_aspiration" if bool(detail_meta.get("sampled")) else "inspected_only"
+            )
+            passes = detail_meta.get("passes")
+            passes_val = passes if isinstance(passes, int) else None
+            elastography_pattern_raw = detail_meta.get("elastography_pattern")
+            elastography_pattern = elastography_pattern_raw if isinstance(elastography_pattern_raw, str) else None
+            evidence_quote_raw = detail_meta.get("evidence_quote")
+            evidence_quote = evidence_quote_raw if isinstance(evidence_quote_raw, str) else ""
             node_events.append(
                 NodeInteraction(
                     station=station,
                     action=action,
                     outcome=None,
-                    passes=meta.get("passes"),
-                    elastography_pattern=meta.get("elastography_pattern"),
-                    evidence_quote=meta.get("evidence_quote"),
+                    passes=passes_val,
+                    elastography_pattern=elastography_pattern,
+                    evidence_quote=evidence_quote,
                 )
             )
             created.append(station)
@@ -4154,29 +4181,31 @@ def enrich_ebus_node_event_sampling_details(record: RegistryRecord, full_text: s
 
     updated: list[str] = []
     for event in node_events:
-        station_raw = getattr(event, "station", None)
-        if not isinstance(station_raw, str) or not station_raw.strip():
+        event_station_raw = getattr(event, "station", None)
+        if not isinstance(event_station_raw, str) or not event_station_raw.strip():
             continue
-        station = station_raw.strip().upper()
+        station = event_station_raw.strip().upper()
         if normalize_station is not None:
-            station = normalize_station(station) or station
+            maybe_station = normalize_station(station)
+            if isinstance(maybe_station, str) and maybe_station.strip():
+                station = maybe_station
         station = validate_station_format(str(station)) or str(station).strip().upper()
         station = station.strip().upper()
-        meta = details.get(station)
-        if not meta:
+        event_meta = details.get(station)
+        if not isinstance(event_meta, dict):
             continue
 
         existing_passes = getattr(event, "passes", None)
-        if existing_passes is None and isinstance(meta.get("passes"), int):
-            setattr(event, "passes", meta["passes"])
+        if existing_passes is None and isinstance(event_meta.get("passes"), int):
+            setattr(event, "passes", event_meta["passes"])
 
         existing_pattern = getattr(event, "elastography_pattern", None)
-        if existing_pattern in (None, "") and isinstance(meta.get("elastography_pattern"), str):
-            setattr(event, "elastography_pattern", meta["elastography_pattern"])
+        if existing_pattern in (None, "") and isinstance(event_meta.get("elastography_pattern"), str):
+            setattr(event, "elastography_pattern", event_meta["elastography_pattern"])
             if getattr(linear, "elastography_used", None) is not True:
                 setattr(linear, "elastography_used", True)
 
-        quote = meta.get("evidence_quote")
+        quote = event_meta.get("evidence_quote")
         if isinstance(quote, str) and quote.strip():
             existing_quote = getattr(event, "evidence_quote", None)
             existing_text = existing_quote.strip().lower() if isinstance(existing_quote, str) else ""
@@ -4189,9 +4218,9 @@ def enrich_ebus_node_event_sampling_details(record: RegistryRecord, full_text: s
                 needs_upgrade = True
             if not existing_text:
                 needs_upgrade = True
-            elif isinstance(meta.get("passes"), int) and "pass" not in existing_text and "biops" not in existing_text:
+            elif isinstance(event_meta.get("passes"), int) and "pass" not in existing_text and "biops" not in existing_text:
                 needs_upgrade = True
-            elif isinstance(meta.get("elastography_pattern"), str) and "type" not in existing_text:
+            elif isinstance(event_meta.get("elastography_pattern"), str) and "type" not in existing_text:
                 needs_upgrade = True
             if needs_upgrade:
                 setattr(event, "evidence_quote", quote)
@@ -4321,7 +4350,9 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
         if not sampling and not inspection:
             continue
 
-        action = "needle_aspiration" if sampling and not negated else "inspected_only"
+        action: Literal["inspected_only", "needle_aspiration", "core_biopsy", "forceps_biopsy"] = (
+            "needle_aspiration" if sampling and not negated else "inspected_only"
+        )
 
         passes_val: int | None = None
         rose_val: str | None = None
@@ -4552,25 +4583,32 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                 meta = station_evidence.get(station)
                 if not isinstance(meta, dict):
                     continue
-                start = meta.get("token_start")
-                end = meta.get("token_end")
-                if isinstance(start, int) and isinstance(end, int) and end > start:
+                ev_token_start = meta.get("token_start")
+                ev_token_end = meta.get("token_end")
+                if isinstance(ev_token_start, int) and isinstance(ev_token_end, int) and ev_token_end > ev_token_start:
                     evidence.setdefault(
                         f"procedures_performed.linear_ebus.node_events.{idx}.station",
                         [],
-                    ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
+                    ).append(
+                        Span(
+                            text=full_text[ev_token_start:ev_token_end],
+                            start=ev_token_start,
+                            end=ev_token_end,
+                            confidence=0.9,
+                        )
+                    )
 
-                quote_start = meta.get("quote_start")
-                quote_end = meta.get("quote_end")
-                if isinstance(quote_start, int) and isinstance(quote_end, int) and quote_end > quote_start:
+                quote_start_val = meta.get("quote_start")
+                quote_end_val = meta.get("quote_end")
+                if isinstance(quote_start_val, int) and isinstance(quote_end_val, int) and quote_end_val > quote_start_val:
                     evidence.setdefault(
                         f"procedures_performed.linear_ebus.node_events.{idx}.evidence_quote",
                         [],
                     ).append(
                         Span(
-                            text=full_text[quote_start:quote_end].strip(),
-                            start=quote_start,
-                            end=quote_end,
+                            text=full_text[quote_start_val:quote_end_val].strip(),
+                            start=quote_start_val,
+                            end=quote_end_val,
                             confidence=0.9,
                         )
                     )
@@ -4613,13 +4651,24 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                 meta = station_evidence.get(station)
                 if not isinstance(meta, dict):
                     continue
-                start = meta.get("token_start")
-                end = meta.get("token_end")
-                if isinstance(start, int) and isinstance(end, int) and end > start:
+                sampled_token_start = meta.get("token_start")
+                sampled_token_end = meta.get("token_end")
+                if (
+                    isinstance(sampled_token_start, int)
+                    and isinstance(sampled_token_end, int)
+                    and sampled_token_end > sampled_token_start
+                ):
                     evidence.setdefault(
                         f"procedures_performed.linear_ebus.stations_sampled.{idx}",
                         [],
-                    ).append(Span(text=full_text[start:end], start=start, end=end, confidence=0.9))
+                    ).append(
+                        Span(
+                            text=full_text[sampled_token_start:sampled_token_end],
+                            start=sampled_token_start,
+                            end=sampled_token_end,
+                            confidence=0.9,
+                        )
+                    )
 
         record.evidence = evidence
     except Exception:
@@ -4913,15 +4962,15 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
         if header:
             tail = section[header.end() :]
             site_lines = list(_EUS_B_SITE_LINE_RE.finditer(tail))
-            for idx, match in enumerate(site_lines):
-                rest = (match.group("rest") or "").strip()
+            for idx, site_match in enumerate(site_lines):
+                rest = (site_match.group("rest") or "").strip()
                 if not rest:
                     continue
 
                 block_end = site_lines[idx + 1].start() if idx + 1 < len(site_lines) else min(
-                    len(tail), match.end() + 300
+                    len(tail), site_match.end() + 300
                 )
-                site_block = tail[match.start() : block_end]
+                site_block = tail[site_match.start() : block_end]
                 sampled_here = bool(_EUS_B_SAMPLING_ACTION_RE.search(site_block)) and not bool(
                     _EUS_B_SAMPLING_NEGATION_RE.search(site_block)
                 )
@@ -4958,10 +5007,10 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
             changed = True
 
     if getattr(eus_b, "needle_gauge", None) in (None, ""):
-        match = _EUS_B_NEEDLE_GAUGE_RE.search(section)
-        if match:
+        gauge_match = _EUS_B_NEEDLE_GAUGE_RE.search(section)
+        if gauge_match:
             try:
-                gauge = int(match.group(1))
+                gauge = int(gauge_match.group(1))
             except Exception:
                 gauge = None
             if gauge in (19, 21, 22, 25):
@@ -4975,9 +5024,9 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
                         evidence = {}
                     evidence.setdefault("procedures_performed.eus_b.needle_gauge", []).append(
                         Span(
-                            text=match.group(0).strip(),
-                            start=base_offset + match.start(),
-                            end=base_offset + match.end(),
+                            text=gauge_match.group(0).strip(),
+                            start=base_offset + gauge_match.start(),
+                            end=base_offset + gauge_match.end(),
                             confidence=0.9,
                         )
                     )
@@ -4986,10 +5035,10 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
                     pass
 
     if getattr(eus_b, "passes", None) in (None, 0):
-        match = _EUS_B_PASSES_RE.search(section)
-        if match:
+        passes_match = _EUS_B_PASSES_RE.search(section)
+        if passes_match:
             try:
-                count = int(match.group("count"))
+                count = int(passes_match.group("count"))
             except Exception:
                 count = None
             if isinstance(count, int) and 1 <= count <= 30:
@@ -5003,9 +5052,9 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
                         evidence = {}
                     evidence.setdefault("procedures_performed.eus_b.passes", []).append(
                         Span(
-                            text=match.group(0).strip(),
-                            start=base_offset + match.start(),
-                            end=base_offset + match.end(),
+                            text=passes_match.group(0).strip(),
+                            start=base_offset + passes_match.start(),
+                            end=base_offset + passes_match.end(),
                             confidence=0.9,
                         )
                     )
@@ -5014,9 +5063,9 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
                     pass
 
     if getattr(eus_b, "rose_result", None) in (None, ""):
-        match = _EUS_B_ROSE_RE.search(section)
-        if match:
-            val = (match.group("val") or "").strip().strip("\"' ")
+        rose_match = _EUS_B_ROSE_RE.search(section)
+        if rose_match:
+            val = (rose_match.group("val") or "").strip().strip("\"' ")
             if val:
                 setattr(eus_b, "rose_result", val)
                 changed = True
@@ -5028,9 +5077,9 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
                         evidence = {}
                     evidence.setdefault("procedures_performed.eus_b.rose_result", []).append(
                         Span(
-                            text=match.group(0).strip(),
-                            start=base_offset + match.start(),
-                            end=base_offset + match.end(),
+                            text=rose_match.group(0).strip(),
+                            start=base_offset + rose_match.start(),
+                            end=base_offset + rose_match.end(),
                             confidence=0.9,
                         )
                     )
@@ -5275,7 +5324,7 @@ def enrich_procedure_success_status(record: RegistryRecord, full_text: str) -> l
     if outcomes is None:
         record_data = record.model_dump()
         record_data["outcomes"] = {}
-        record.outcomes = RegistryRecord.model_validate(record_data).outcomes
+        cast(Any, record).outcomes = RegistryRecord.model_validate(record_data).outcomes
         outcomes = getattr(record, "outcomes", None)
 
     if outcomes is None:
@@ -5347,7 +5396,7 @@ def enrich_outcomes_complication_details(record: RegistryRecord, full_text: str)
     if outcomes is None:
         record_data = record.model_dump()
         record_data["outcomes"] = {}
-        record.outcomes = RegistryRecord.model_validate(record_data).outcomes
+        cast(Any, record).outcomes = RegistryRecord.model_validate(record_data).outcomes
         outcomes = getattr(record, "outcomes", None)
     if outcomes is None:
         return warnings
@@ -5453,6 +5502,25 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
         return warnings
     if not full_text:
         return warnings
+
+    def _to_float(value: object) -> float | None:
+        try:
+            if value is None:
+                return None
+            if isinstance(value, (int, float)):
+                return float(value)
+            text = str(value).strip()
+            if not text:
+                return None
+            return float(text)
+        except Exception:
+            return None
+
+    def _to_int_from_number(value: object) -> int | None:
+        as_float = _to_float(value)
+        if as_float is None:
+            return None
+        return int(as_float)
 
     candidates: list[dict[str, object]] = []
     for match in _BAL_STANDARD_LINE_RE.finditer(full_text):
@@ -5560,10 +5628,7 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
                 instilled_existing not in (None, "", 0)
                 and "procedures_performed.bal.volume_instilled_ml" not in evidence
             ):
-                try:
-                    vol_int = int(float(instilled_existing))
-                except Exception:
-                    vol_int = None
+                vol_int = _to_int_from_number(instilled_existing)
                 if vol_int is not None:
                     m = re.search(
                         rf"(?i)\b(?:instilled|infused)\s+{vol_int}\s*(?:cc|ml)\b",
@@ -5582,10 +5647,7 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
                 recovered_existing not in (None, "", 0)
                 and "procedures_performed.bal.volume_recovered_ml" not in evidence
             ):
-                try:
-                    vol_int = int(float(recovered_existing))
-                except Exception:
-                    vol_int = None
+                vol_int = _to_int_from_number(recovered_existing)
                 if vol_int is not None:
                     m = re.search(
                         rf"(?i)\b(?:returned\s+with|suction\s*returned(?:\s+with)?|recovered)\s+{vol_int}\s*(?:cc|ml)\b",
@@ -5615,8 +5677,15 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
         if loc_val and loc_val not in locs_in_order:
             locs_in_order.append(loc_val)
 
-    instilled_values = {c.get("instilled") for c in candidates if isinstance(c.get("instilled"), float)}
-    recovered_values = {c.get("recovered") for c in candidates if isinstance(c.get("recovered"), float)}
+    instilled_values: set[float] = set()
+    recovered_values: set[float] = set()
+    for candidate in candidates:
+        instilled_candidate = candidate.get("instilled")
+        if isinstance(instilled_candidate, float):
+            instilled_values.add(instilled_candidate)
+        recovered_candidate = candidate.get("recovered")
+        if isinstance(recovered_candidate, float):
+            recovered_values.add(recovered_candidate)
 
     if len(locs_in_order) > 1 and (len(instilled_values) > 1 or len(recovered_values) > 1):
         # Multi-site BAL with differing volumes can't be represented perfectly in the
@@ -5627,18 +5696,8 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
         existing_instilled = getattr(bal, "volume_instilled_ml", None)
         existing_recovered = getattr(bal, "volume_recovered_ml", None)
 
-        def _to_floatish(value: object) -> float | None:
-            try:
-                if value is None:
-                    return None
-                if isinstance(value, (int, float)):
-                    return float(value)
-                return float(str(value).strip())
-            except Exception:
-                return None
-
-        inst_existing = _to_floatish(existing_instilled)
-        rec_existing = _to_floatish(existing_recovered)
+        inst_existing = _to_float(existing_instilled)
+        rec_existing = _to_float(existing_recovered)
         looks_like_mini_bal = (
             inst_existing is not None
             and inst_existing <= 30
@@ -5655,14 +5714,21 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
             inst = c.get("instilled")
             if not isinstance(inst, float):
                 continue
-            if best is None or inst > float(best.get("instilled") or 0):
+            best_instilled = _to_float(best.get("instilled")) if best is not None else None
+            if best is None or best_instilled is None or inst > best_instilled:
                 best = c
 
         if (looks_like_mini_bal or looks_unset) and best:
             candidates = [best]
             locs_in_order = [str(best.get("loc") or "").strip()] if best.get("loc") else []
-            instilled_values = {best.get("instilled")} if isinstance(best.get("instilled"), float) else set()
-            recovered_values = {best.get("recovered")} if isinstance(best.get("recovered"), float) else set()
+            instilled_values = set()
+            recovered_values = set()
+            best_instilled_value = best.get("instilled")
+            best_recovered_value = best.get("recovered")
+            if isinstance(best_instilled_value, float):
+                instilled_values.add(best_instilled_value)
+            if isinstance(best_recovered_value, float):
+                recovered_values.add(best_recovered_value)
             if looks_unset:
                 warnings.append(
                     "BAL_MULTI_SITE: selected largest standard BAL candidate (multi-site volumes differ; BAL detail was unset)."
@@ -5695,13 +5761,15 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
 
     if isinstance(instilled_val, float) and instilled_val > 0:
         existing_instilled = getattr(bal, "volume_instilled_ml", None)
-        if existing_instilled is None or float(existing_instilled) != instilled_val:
+        existing_instilled_float = _to_float(existing_instilled)
+        if existing_instilled_float is None or existing_instilled_float != instilled_val:
             setattr(bal, "volume_instilled_ml", instilled_val)
             changed = True
 
     if isinstance(recovered_val, float) and recovered_val >= 0:
         existing_recovered = getattr(bal, "volume_recovered_ml", None)
-        if existing_recovered is None or float(existing_recovered) != recovered_val:
+        existing_recovered_float = _to_float(existing_recovered)
+        if existing_recovered_float is None or existing_recovered_float != recovered_val:
             setattr(bal, "volume_recovered_ml", recovered_val)
             changed = True
 
@@ -5713,7 +5781,10 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
             evidence = {}
 
         for cand in candidates:
-            start, end = cand.get("span") or (None, None)
+            span = cand.get("span")
+            if not (isinstance(span, tuple) and len(span) == 2):
+                continue
+            start, end = span
             if isinstance(start, int) and isinstance(end, int) and end > start:
                 evidence.setdefault("procedures_performed.bal.location", []).append(
                     Span(text=full_text[start:end].strip(), start=start, end=end, confidence=0.9)
@@ -5749,10 +5820,7 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
         # search the full text for a matching "instilled/returned" phrase.
         instilled_existing = getattr(bal, "volume_instilled_ml", None)
         if instilled_existing not in (None, "", 0) and instilled_key not in evidence:
-            try:
-                vol_int = int(float(instilled_existing))
-            except Exception:
-                vol_int = None
+            vol_int = _to_int_from_number(instilled_existing)
             if vol_int is not None:
                 m = re.search(
                     rf"(?i)\b(?:instilled|infused)\s+{vol_int}\s*(?:cc|ml)\b",
@@ -5768,10 +5836,7 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
 
         recovered_existing = getattr(bal, "volume_recovered_ml", None)
         if recovered_existing not in (None, "", 0) and recovered_key not in evidence:
-            try:
-                vol_int = int(float(recovered_existing))
-            except Exception:
-                vol_int = None
+            vol_int = _to_int_from_number(recovered_existing)
             if vol_int is not None:
                 m = re.search(
                     rf"(?i)\b(?:returned\s+with|suction\s*returned(?:\s+with)?|recovered)\s+{vol_int}\s*(?:cc|ml)\b",
