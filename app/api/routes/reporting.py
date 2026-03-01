@@ -14,6 +14,7 @@ from app.api.phi_dependencies import get_phi_scrubber
 from app.api.phi_redaction import apply_phi_redaction
 from app.api.readiness import require_ready
 from app.api.schemas import (
+    MissingFieldPrompt,
     QuestionsRequest,
     QuestionsResponse,
     RenderRequest,
@@ -469,7 +470,7 @@ async def report_seed_from_text(
     request: Request,
     _ready: None = _ready_dep,
     registry_service: RegistryService = _registry_service_dep,
-    phi_scrubber=_phi_scrubber_dep,
+    phi_scrubber: Any = _phi_scrubber_dep,
 ) -> SeedFromTextResponse:
     debug_enabled = bool(req.debug or req.include_debug)
     debug_notes: list[dict[str, Any]] | None = [] if debug_enabled else None
@@ -570,21 +571,21 @@ async def report_seed_from_text(
 
     bundle, issues, warnings, suggestions, notes = _verify_bundle(bundle, debug_notes=debug_notes)
     warnings = list(seed_warnings) + list(warnings or [])
-    missing_field_prompts: list[dict[str, object]] = []
+    missing_field_prompts: list[MissingFieldPrompt] = []
     try:
         from app.registry.completeness import generate_missing_field_prompts
 
         completeness_prompts = generate_missing_field_prompts(seed_record_for_completeness)
         if completeness_prompts:
             missing_field_prompts = [
-                {
-                    "group": prompt.group,
-                    "path": prompt.path,
-                    "target_path": prompt.target_path,
-                    "label": prompt.label,
-                    "severity": prompt.severity,
-                    "message": prompt.message,
-                }
+                MissingFieldPrompt(
+                    group=prompt.group,
+                    path=prompt.path,
+                    target_path=prompt.target_path,
+                    label=prompt.label,
+                    severity=prompt.severity,
+                    message=prompt.message,
+                )
                 for prompt in completeness_prompts
             ]
             suggestions = list(suggestions or [])
