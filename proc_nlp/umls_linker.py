@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Iterable, List, Sequence, Set
+from typing import Any, Iterable, List, Sequence, Set, cast
 import os
 import warnings
 
@@ -35,16 +35,16 @@ class UmlsConcept:
     end_char: int
 
 
-def _import_scispacy():  # pragma: no cover - exercised by integration
+def _import_scispacy() -> tuple[Any, Any]:  # pragma: no cover - exercised by integration
     try:
-        import spacy  # type: ignore
-        from scispacy.linking import EntityLinker  # type: ignore
+        import spacy
+        from scispacy.linking import EntityLinker  # type: ignore[import-untyped]
     except ImportError as exc:  # pragma: no cover
         raise RuntimeError("spaCy/scispaCy not available - install per README") from exc
     return spacy, EntityLinker
 
 
-def _require_spacy():  # pragma: no cover - exercised by integration
+def _require_spacy() -> Any:  # pragma: no cover - exercised by integration
     spacy, _ = _import_scispacy()
     model_name = os.getenv("PROCSUITE_SPACY_MODEL", "en_core_sci_sm")
     try:
@@ -56,7 +56,7 @@ def _require_spacy():  # pragma: no cover - exercised by integration
 
 
 @lru_cache(maxsize=2)
-def _load_model(model_name: str):
+def _load_model(model_name: str) -> Any:
     spacy, _ = _import_scispacy()
     with warnings.catch_warnings():
         warnings.filterwarnings(
@@ -71,7 +71,7 @@ def _load_model(model_name: str):
             category=FutureWarning,
             module=r"spacy\.language",
         )
-        nlp = spacy.load(model_name)  # type: ignore[union-attr]
+        nlp = spacy.load(model_name)
     if "scispacy_linker" not in nlp.pipe_names:
         nlp.add_pipe(
             "scispacy_linker",
@@ -86,7 +86,7 @@ def _load_model(model_name: str):
 
 
 def _umls_link_scispacy(text: str, allowed_semtypes: Iterable[str] | None = None) -> List[UmlsConcept]:
-    _, EntityLinker = _import_scispacy()
+    _import_scispacy()
     clean_text = (text or "").strip()
     if not clean_text:
         return []
@@ -95,11 +95,11 @@ def _umls_link_scispacy(text: str, allowed_semtypes: Iterable[str] | None = None
     nlp = _require_spacy()
     doc = nlp(clean_text)
     concepts: List[UmlsConcept] = []
-    linker: EntityLinker = nlp.get_pipe("scispacy_linker")  # type: ignore[assignment]
+    linker = nlp.get_pipe("scispacy_linker")
 
     for ent in doc.ents:
-        for cui, score in ent._.kb_ents:  # type: ignore[attr-defined]
-            ent_info = linker.kb.cui_to_entity[cui]
+        for cui, score in ent._.kb_ents:
+            ent_info = cast(Any, linker).kb.cui_to_entity[cui]
             if not semtypes.intersection(ent_info.types):
                 continue
             concepts.append(

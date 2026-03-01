@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import importlib
 import json
 import logging
 import os
@@ -12,7 +13,7 @@ from dataclasses import dataclass, field
 from copy import deepcopy
 import functools
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Sequence, Tuple, Literal
+from typing import Any, Dict, Iterable, List, Sequence, Tuple, Literal, cast
 
 from jinja2 import Environment, FileSystemLoader, Template, TemplateNotFound, select_autoescape
 from pydantic import BaseModel
@@ -434,8 +435,8 @@ class TemplateRegistry:
                 import yaml  # type: ignore
             except ImportError as exc:  # pragma: no cover - optional dep
                 raise RuntimeError("PyYAML is required to load YAML template configs") from exc
-            return yaml.safe_load(path.read_text())
-        return json.loads(path.read_text())
+            return cast(dict[str, Any], yaml.safe_load(path.read_text()))
+        return cast(dict[str, Any], json.loads(path.read_text()))
 
     def find_for_procedure(self, proc_type: str, cpt_codes: Sequence[str | int] | None = None) -> list[TemplateMeta]:
         matches = list(self._by_proc_type.get(proc_type, []))
@@ -752,7 +753,7 @@ class ReporterEngine:
             attending=bundle.encounter.attending,
             location=bundle.encounter.location,
             procedures=procedures_metadata,
-            autocode_payload=autocode_payload or {},
+            autocode_payload=cast(dict[str, Any], autocode_payload or {}),
         )
 
 
@@ -897,7 +898,10 @@ def _try_proc_autocode(bundle: ProcedureBundle) -> dict[str, Any] | None:
     if not note:
         return None
     try:
-        from app.autocode.engine import autocode
+        autocode_module = importlib.import_module("app.autocode.engine")
+        autocode = getattr(autocode_module, "autocode", None)
+        if not callable(autocode):
+            return None
     except Exception:
         return None
     try:
@@ -960,6 +964,7 @@ def apply_bundle_patch(bundle: ProcedureBundle, patch: BundlePatch) -> Procedure
             continue
         data = _normalize_payload(proc.data)
         merged = {**data, **(patch_item.updates or {})}
+        new_data: BaseModel | dict[str, Any]
         if isinstance(proc.data, BaseModel):
             try:
                 new_data = proc.data.__class__(**merged)
@@ -1119,9 +1124,9 @@ def default_schema_registry() -> SchemaRegistry:
     }
 
     for schema_id, model in airway_models.items():
-        registry.register(schema_id, model)
+        registry.register(schema_id, cast(type[BaseModel], model))
     for schema_id, model in pleural_models.items():
-        registry.register(schema_id, model)
+        registry.register(schema_id, cast(type[BaseModel], model))
     registry.register("pre_anesthesia_assessment_v1", PreAnesthesiaAssessment)
     registry.register("ip_or_main_oper_report_shell_v1", OperativeShellInputs)
     return registry
@@ -1287,13 +1292,14 @@ def _extract_sedation_details(raw: dict[str, Any]) -> tuple[SedationInfo | None,
                 anesthesia_desc += "."
             if airway_size_mm not in (None, "", [], {}) and upper in ("ETT", "ENDOTRACHEAL", "ENDOTRACHEAL TUBE"):
                 try:
-                    airway_str = f"{float(airway_size_mm):.1f}mm ETT"
+                    airway_size = float(str(airway_size_mm))
+                    airway_str = f"{airway_size:.1f}mm ETT"
                 except Exception:
                     airway_str = f"{airway_size_mm}mm ETT"
                 anesthesia_desc += f" Airway: {airway_str}."
             if duration_minutes not in (None, "", [], {}):
                 try:
-                    duration_int = int(duration_minutes)
+                    duration_int = int(str(duration_minutes))
                 except Exception:
                     duration_int = None
                 if duration_int and duration_int > 0:
@@ -1341,7 +1347,7 @@ def _coerce_prebuilt_procedures(entries: Any, cpt_candidates: list[str | int]) -
         sequence = None
         if sequence_raw not in (None, "", []):
             try:
-                sequence = int(sequence_raw)
+                sequence = int(str(sequence_raw))
             except Exception:
                 sequence = None
         if proc_type and schema_id:
@@ -1813,11 +1819,11 @@ def build_procedure_bundle_from_extraction(
         if match:
             findings = match.group(1).strip().rstrip(".")
 
-        interventions: list[str] = []
+        thoracoscopy_interventions: list[str] = []
         if re.search(r"(?i)\bevacuated|evacuation", note_text):
-            interventions.append("Evacuation of pleural fluid")
+            thoracoscopy_interventions.append("Evacuation of pleural fluid")
         if re.search(r"(?i)\bchest\s+tube\b", note_text):
-            interventions.append("Chest tube placement")
+            thoracoscopy_interventions.append("Chest tube placement")
 
         _append_proc(
             "medical_thoracoscopy",
@@ -1825,8 +1831,8 @@ def build_procedure_bundle_from_extraction(
             {
                 "side": side,
                 "findings": findings,
-                "interventions": interventions,
-                "specimens": ["Pleural fluid (for analysis)"] if interventions else [],
+                "interventions": thoracoscopy_interventions,
+                "specimens": ["Pleural fluid (for analysis)"] if thoracoscopy_interventions else [],
             },
         )
 
@@ -1895,47 +1901,47 @@ def build_procedure_bundle_from_extraction(
 
             device = str(data.get("drainage_device") or "").strip()
             device_lower = device.lower()
-            size_fr = None
+            tpc_size_fr: str | None = None
             match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*fr\b", device)
             if match:
-                size_fr = match.group(1)
+                tpc_size_fr = match.group(1)
             brand = "PleurX" if "pleurx" in device_lower else None
 
             fluid_ml = data.get("fluid_removed_ml") or raw.get("pleural_volume_drained_ml")
             try:
-                fluid_ml_int = int(fluid_ml) if fluid_ml is not None else None
+                fluid_ml_int = int(str(fluid_ml)) if fluid_ml is not None else None
             except Exception:
                 fluid_ml_int = None
             appearance = str(data.get("fluid_appearance") or raw.get("pleural_fluid_appearance") or "").strip().rstrip(".")
 
-            lines: list[str] = []
+            tunneled_lines: list[str] = []
             desc_parts: list[str] = []
             if side_title:
                 desc_parts.append(side_title)
-            if size_fr:
-                desc_parts.append(f"{size_fr}Fr")
+            if tpc_size_fr:
+                desc_parts.append(f"{tpc_size_fr}Fr")
             desc_parts.append("Indwelling Tunneled Pleural Catheter")
             desc = " ".join(desc_parts).strip()
             if brand:
                 desc += f" ({brand})"
-            lines.append(f"Successful placement of {desc}.")
+            tunneled_lines.append(f"Successful placement of {desc}.")
 
             if fluid_ml_int is not None:
                 liters = fluid_ml_int / 1000
                 liters_str = f"{liters:.1f}"
                 drained = appearance or "pleural fluid"
-                lines.append(f"{liters_str} L of {drained} drained during procedure.")
+                tunneled_lines.append(f"{liters_str} L of {drained} drained during procedure.")
 
             cxr_confirmed = ("cxr" in note_lower and ("good pos" in note_lower or "good position" in note_lower)) or bool(
                 re.search(r"(?i)\bchest\s*x[- ]?ray\b[^\n]{0,80}\bgood\s+pos", note_text)
             )
             if cxr_confirmed:
-                lines.append("Post-procedure chest x-ray confirmed good position.")
+                tunneled_lines.append("Post-procedure chest x-ray confirmed good position.")
             elif data.get("cxr_ordered") is True:
-                lines.append("Post-procedure chest x-ray was ordered.")
+                tunneled_lines.append("Post-procedure chest x-ray was ordered.")
 
-            lines.append("Catheter instructions and drainage kit provided to patient.")
-            impression_plan = "\n\n".join(lines)
+            tunneled_lines.append("Catheter instructions and drainage kit provided to patient.")
+            impression_plan = "\n\n".join(tunneled_lines)
 
     if not impression_plan and "pigtail_catheter" in existing_proc_types:
         side = str(raw.get("pleural_side") or "").strip().lower()
@@ -1945,21 +1951,21 @@ def build_procedure_bundle_from_extraction(
         appearance = str(raw.get("pleural_fluid_appearance") or "").strip().rstrip(".")
         catheter_removed = bool(re.search(r"(?i)\bcatheter\s+removed\b", note_text))
 
-        lines: list[str] = []
+        pigtail_lines: list[str] = []
         effusion_phrase = f"{side_title} pleural effusion".strip() if side_title else "pleural effusion"
         if recurrent:
             effusion_phrase = f"Recurrent {effusion_phrase}".strip()
-        lines.append(f"{effusion_phrase} successfully drained via pigtail catheter.")
+        pigtail_lines.append(f"{effusion_phrase} successfully drained via pigtail catheter.")
         if volume_ml is not None:
             vol_line = f"Total of {volume_ml} mL"
             if appearance:
                 vol_line += f" {appearance}"
             vol_line += " fluid removed."
-            lines.append(vol_line)
+            pigtail_lines.append(vol_line)
         if catheter_removed:
-            lines.append("Catheter removed at the end of the procedure.")
-        lines.append("Post-procedure monitoring per protocol.")
-        impression_plan = "\n\n".join(lines)
+            pigtail_lines.append("Catheter removed at the end of the procedure.")
+        pigtail_lines.append("Post-procedure monitoring per protocol.")
+        impression_plan = "\n\n".join(pigtail_lines)
 
     cryo_payload = raw.get("transbronchial_cryobiopsy")
     if "transbronchial_cryobiopsy" in existing_proc_types and isinstance(cryo_payload, dict) and cryo_payload:
@@ -1992,16 +1998,16 @@ def build_procedure_bundle_from_extraction(
             )
 
         if not impression_plan:
-            lines: list[str] = []
+            cryo_lines: list[str] = []
             if seg_text:
-                lines.append(f"Successful transbronchial cryobiopsy of {seg_text} for ILD evaluation.")
+                cryo_lines.append(f"Successful transbronchial cryobiopsy of {seg_text} for ILD evaluation.")
             else:
-                lines.append(f"Successful transbronchial cryobiopsy of {lobe_label} for ILD evaluation.")
-            lines.append("No pneumothorax or significant bleeding complications.")
-            lines.append(
+                cryo_lines.append(f"Successful transbronchial cryobiopsy of {lobe_label} for ILD evaluation.")
+            cryo_lines.append("No pneumothorax or significant bleeding complications.")
+            cryo_lines.append(
                 "Recover per protocol; obtain post-procedure chest imaging to assess for late pneumothorax per local workflow."
             )
-            impression_plan = "\n\n".join(lines)
+            impression_plan = "\n\n".join(cryo_lines)
 
     # --- Reporter-only synthesis for common robotic navigation / thoracoscopy cases ---
     # Golden/QA examples often omit explicit SPECIMENS and/or a narrative IMPRESSION/PLAN
@@ -2140,7 +2146,7 @@ def build_procedure_bundle_from_extraction(
 
             lobe_token = _first_lobe_token(nav_loc, rebus_loc, raw.get("nav_target_segment"), raw.get("lesion_location"), note_text)
 
-            lines: list[str] = []
+            nav_lines: list[str] = []
 
             ebus_proc = next((p for p in procedures if p.proc_type == "ebus_tbna"), None)
             if ebus_proc:
@@ -2151,28 +2157,28 @@ def build_procedure_bundle_from_extraction(
                         stations.append(str(st["station_name"]))
                 stations = _dedupe_labels([s for s in stations if s])
                 if stations:
-                    lines.append(f"EBUS staging performed at stations {', '.join(stations)}.")
+                    nav_lines.append(f"EBUS staging performed at stations {', '.join(stations)}.")
                 else:
-                    lines.append("EBUS staging performed.")
+                    nav_lines.append("EBUS staging performed.")
 
             if lesion_size not in (None, "", [], {}):
                 try:
-                    num = float(lesion_size)
+                    num = float(str(lesion_size))
                     size_str = str(int(num)) if num.is_integer() else str(round(num, 1))
                 except Exception:
                     size_str = str(lesion_size)
                 if lobe_token:
-                    lines.append(f"{lobe_token} nodule ({size_str}mm) successfully sampled via robotic bronchoscopy.")
+                    nav_lines.append(f"{lobe_token} nodule ({size_str}mm) successfully sampled via robotic bronchoscopy.")
                 elif nav_loc:
-                    lines.append(f"{nav_loc} target ({size_str}mm) successfully sampled via robotic bronchoscopy.")
+                    nav_lines.append(f"{nav_loc} target ({size_str}mm) successfully sampled via robotic bronchoscopy.")
             elif lobe_token:
-                lines.append(f"{lobe_token} target successfully sampled via robotic bronchoscopy.")
+                nav_lines.append(f"{lobe_token} target successfully sampled via robotic bronchoscopy.")
 
             if rebus_loc and rebus_pattern:
-                lines.append(f"Navigated to {rebus_loc} with {rebus_pattern.lower()} rEBUS signal.")
+                nav_lines.append(f"Navigated to {rebus_loc} with {rebus_pattern.lower()} rEBUS signal.")
 
             if any(p.proc_type == "fiducial_marker_placement" for p in procedures):
-                lines.append("Fiducial marker placed.")
+                nav_lines.append("Fiducial marker placed.")
 
             # ROSE summary (best-effort from postop diagnosis or source text).
             rose_text = None
@@ -2188,15 +2194,15 @@ def build_procedure_bundle_from_extraction(
                 cleaned = re.sub(r"(?i)\(final[^)]*pending\)", "", rose_text).strip().rstrip(".")
                 lowered = cleaned.lower()
                 if "negative" in lowered and ("malign" in lowered or "cancer" in lowered):
-                    lines.append("ROSE negative for malignancy.")
-                    lines.append("Await final pathology and cytology.")
+                    nav_lines.append("ROSE negative for malignancy.")
+                    nav_lines.append("Await final pathology and cytology.")
                 elif "lymph" in lowered or "benign" in lowered:
-                    lines.append("ROSE favored benign process (lymphocytes); await final pathology and cytology.")
+                    nav_lines.append("ROSE favored benign process (lymphocytes); await final pathology and cytology.")
                 elif cleaned:
-                    lines.append(f"ROSE {cleaned}.")
-                    lines.append("Await final pathology and cytology.")
+                    nav_lines.append(f"ROSE {cleaned}.")
+                    nav_lines.append("Await final pathology and cytology.")
             else:
-                lines.append("Await final pathology and cytology.")
+                nav_lines.append("Await final pathology and cytology.")
 
             discharge_line = None
             match = re.search(r"(?i)\bdischarg(?:ed|e)\b[^\\.]{0,120}(?:\\.|$)", note_text)
@@ -2205,16 +2211,16 @@ def build_procedure_bundle_from_extraction(
                 if discharge_line and not discharge_line.endswith("."):
                     discharge_line += "."
             if discharge_line:
-                lines.append(discharge_line)
+                nav_lines.append(discharge_line)
 
             if any(p.proc_type == "bal" for p in procedures) and not discharge_line:
-                lines.append(
+                nav_lines.append(
                     "Post-procedure monitoring per protocol; obtain post-procedure chest imaging to assess for PTX per local workflow."
                 )
             else:
-                lines.append("Post-procedure monitoring per protocol.")
+                nav_lines.append("Post-procedure monitoring per protocol.")
 
-            impression_plan = "\n\n".join(_dedupe_labels([line.strip() for line in lines if line.strip()]))
+            impression_plan = "\n\n".join(_dedupe_labels([line.strip() for line in nav_lines if line.strip()]))
 
         elif has_thoracoscopy:
             mt_proc = next((p for p in procedures if p.proc_type == "medical_thoracoscopy"), None)
@@ -2224,17 +2230,19 @@ def build_procedure_bundle_from_extraction(
             findings = str(mt.get("findings") or "").strip().rstrip(".")
             interventions = [str(i).strip() for i in (mt.get("interventions") or []) if str(i).strip()]
 
-            lines = []
+            thoracoscopy_lines: list[str] = []
             if side_title:
-                lines.append(f"{side_title} diagnostic thoracoscopy performed.")
+                thoracoscopy_lines.append(f"{side_title} diagnostic thoracoscopy performed.")
             else:
-                lines.append("Diagnostic thoracoscopy performed.")
+                thoracoscopy_lines.append("Diagnostic thoracoscopy performed.")
             if findings:
-                lines.append(f"Visual findings consistent with {findings.lower()}.")
+                thoracoscopy_lines.append(f"Visual findings consistent with {findings.lower()}.")
             if interventions:
-                lines.append("Fluid evacuated and chest tube placed." if len(interventions) >= 2 else f"{interventions[0]}.")
-            lines.append("Post-procedure monitoring per protocol; obtain post-procedure chest imaging.")
-            impression_plan = "\n\n".join(lines)
+                thoracoscopy_lines.append(
+                    "Fluid evacuated and chest tube placed." if len(interventions) >= 2 else f"{interventions[0]}."
+                )
+            thoracoscopy_lines.append("Post-procedure monitoring per protocol; obtain post-procedure chest imaging.")
+            impression_plan = "\n\n".join(thoracoscopy_lines)
 
     planned_not_performed = _extract_planned_not_performed_lines(note_text)
     if planned_not_performed:
