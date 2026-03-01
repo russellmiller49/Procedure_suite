@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Sequence
+from typing import Any, Sequence
 
 from app.common import knowledge
 from app.common.rules_engine import ncci
@@ -362,7 +362,7 @@ def _get_rule_config() -> RuleConfig:
     return config
 
 
-def _configure_ncci(pairs: Sequence[dict]) -> None:
+def _configure_ncci(pairs: Sequence[dict[str, Any]]) -> None:
     edits: list[ncci.NCCIEdit] = []
     for entry in pairs:
         primary = entry.get("primary")

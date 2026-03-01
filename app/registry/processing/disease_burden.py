@@ -354,9 +354,9 @@ def extract_unambiguous_target_lesion_size_and_axes_mm(
             lesion_span = cand.span
             break
     if lesion_span is None:
-        for cand in single_candidates:
-            if round(cand.value, 1) == round(unique_long, 1):
-                lesion_span = cand.span
+        for single_cand in single_candidates:
+            if round(single_cand.value, 1) == round(unique_long, 1):
+                lesion_span = single_cand.span
                 break
 
     lesion = ExtractedNumeric(value=unique_long, span=lesion_span or single_candidates[0].span)
@@ -479,9 +479,8 @@ def apply_disease_burden_overrides(
             evidence.setdefault("clinical_context.lesion_size_mm", []).append(lesion.span)
 
     if axes is not None:
-        target = clinical.get("target_lesion")
-        if target is None or not isinstance(target, dict):
-            target = {}
+        target_raw = clinical.get("target_lesion")
+        target: dict[str, Any] = target_raw if isinstance(target_raw, dict) else {}
 
         def _override_axis(field: str, new_val: float | None) -> None:
             if new_val is None:
@@ -516,50 +515,48 @@ def apply_disease_burden_overrides(
     warnings.extend(suv_warnings)
     if suv is not None:
         old = clinical.get("suv_max")
-        old_val: float | None
+        old_suv_val: float | None
         try:
-            old_val = None if old is None else float(old)
+            old_suv_val = None if old is None else float(old)
         except (TypeError, ValueError):
-            old_val = None
+            old_suv_val = None
 
-        if old_val is None or round(old_val, 1) != round(suv.value, 1):
-            if old_val is not None:
+        if old_suv_val is None or round(old_suv_val, 1) != round(suv.value, 1):
+            if old_suv_val is not None:
                 warnings.append(
-                    f"OVERRIDE_LLM_NUMERIC: clinical_context.suv_max {round(old_val, 1)} -> {round(suv.value, 1)}"
+                    f"OVERRIDE_LLM_NUMERIC: clinical_context.suv_max {round(old_suv_val, 1)} -> {round(suv.value, 1)}"
                 )
             clinical["suv_max"] = suv.value
             evidence.setdefault("clinical_context.suv_max", []).append(suv.span)
 
-        target = clinical.get("target_lesion")
-        if target is None or not isinstance(target, dict):
-            target = {}
-        old_raw = target.get("suv_max")
-        old_val: float | None
+        target_raw = clinical.get("target_lesion")
+        suv_target: dict[str, Any] = target_raw if isinstance(target_raw, dict) else {}
+        old_raw = suv_target.get("suv_max")
+        old_target_suv_val: float | None
         try:
-            old_val = None if old_raw is None else float(old_raw)
+            old_target_suv_val = None if old_raw is None else float(old_raw)
         except (TypeError, ValueError):
-            old_val = None
-        if old_val is None or round(old_val, 1) != round(suv.value, 1):
-            if old_val is not None:
+            old_target_suv_val = None
+        if old_target_suv_val is None or round(old_target_suv_val, 1) != round(suv.value, 1):
+            if old_target_suv_val is not None:
                 warnings.append(
-                    f"OVERRIDE_LLM_NUMERIC: clinical_context.target_lesion.suv_max {round(old_val, 1)} -> {round(suv.value, 1)}"
+                    f"OVERRIDE_LLM_NUMERIC: clinical_context.target_lesion.suv_max {round(old_target_suv_val, 1)} -> {round(suv.value, 1)}"
                 )
-            target["suv_max"] = suv.value
+            suv_target["suv_max"] = suv.value
             evidence.setdefault("clinical_context.target_lesion.suv_max", []).append(suv.span)
-        clinical["target_lesion"] = target
+        clinical["target_lesion"] = suv_target
 
     morph_terms, morph_spans = _extract_target_lesion_morphology(note_text)
     if morph_terms:
-        target = clinical.get("target_lesion")
-        if target is None or not isinstance(target, dict):
-            target = {}
+        morph_target_raw = clinical.get("target_lesion")
+        morph_target: dict[str, Any] = morph_target_raw if isinstance(morph_target_raw, dict) else {}
 
-        existing = target.get("morphology")
+        existing = morph_target.get("morphology")
         if not isinstance(existing, str) or not existing.strip():
-            target["morphology"] = "; ".join(morph_terms) if len(morph_terms) > 1 else morph_terms[0]
+            morph_target["morphology"] = "; ".join(morph_terms) if len(morph_terms) > 1 else morph_terms[0]
             for span in morph_spans:
                 evidence.setdefault("clinical_context.target_lesion.morphology", []).append(span)
-            clinical["target_lesion"] = target
+            clinical["target_lesion"] = morph_target
 
     if clinical:
         record_data["clinical_context"] = clinical
@@ -659,12 +656,12 @@ def apply_disease_burden_overrides(
                         f"OVERRIDE_LLM_NUMERIC: procedures_performed.therapeutic_outcomes.pre_obstruction_pct {old_val} -> {pre_pct}"
                     )
                 therapeutic["pre_obstruction_pct"] = pre_pct
-                span = _find_pct_span(pre_pct, allow_open=False)
-                if span is not None:
+                pre_span = _find_pct_span(pre_pct, allow_open=False)
+                if pre_span is not None:
                     evidence.setdefault(
                         "procedures_performed.therapeutic_outcomes.pre_obstruction_pct",
                         [],
-                    ).append(span)
+                    ).append(pre_span)
         elif len(pre_union) > 1:
             warnings.append(
                 "AMBIGUOUS_DISEASE_BURDEN: "
@@ -682,12 +679,12 @@ def apply_disease_burden_overrides(
                             f"OVERRIDE_LLM_NUMERIC: procedures_performed.therapeutic_outcomes.post_obstruction_pct {old_val} -> {post_pct}"
                         )
                     therapeutic["post_obstruction_pct"] = post_pct
-                    span = _find_pct_span(post_pct, allow_open=True)
-                    if span is not None:
+                    post_span = _find_pct_span(post_pct, allow_open=True)
+                    if post_span is not None:
                         evidence.setdefault(
                             "procedures_performed.therapeutic_outcomes.post_obstruction_pct",
                             [],
-                        ).append(span)
+                        ).append(post_span)
             elif len(post_union) > 1:
                 warnings.append(
                     "AMBIGUOUS_DISEASE_BURDEN: "
@@ -703,16 +700,16 @@ def apply_disease_burden_overrides(
             granular = {}
 
         existing_raw = granular.get("cao_interventions_detail")
-        existing: list[dict[str, Any]] = []
+        existing_items: list[dict[str, Any]] = []
         if isinstance(existing_raw, list):
-            existing = [dict(item) for item in existing_raw if isinstance(item, dict)]
+            existing_items = [dict(item) for item in existing_raw if isinstance(item, dict)]
 
         def _key(item: dict[str, Any]) -> str:
             return str(item.get("location") or "").strip()
 
         by_loc: dict[str, dict[str, Any]] = {}
         order: list[str] = []
-        for item in existing:
+        for item in existing_items:
             loc = _key(item)
             if not loc:
                 continue

@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from jsonschema import Draft7Validator
+from jsonschema import Draft7Validator  # type: ignore[import-untyped]
 
 from .logging_utils import IssueLogger
 
@@ -187,17 +187,17 @@ class SchemaNormalizer:
                         )
                     continue
             if "number" in allowed_types:
-                coerced = _coerce_float(value)
-                if coerced is not None:
-                    if coerced != value:
-                        entry[field] = coerced
+                coerced_number = _coerce_float(value)
+                if coerced_number is not None:
+                    if coerced_number != value:
+                        entry[field] = coerced_number
                         logger.log(
                             entry_id=entry_id,
                             issue_type="number_coerced",
                             severity="info",
                             action="auto_fixed",
                             field=field,
-                            details={"old": value, "new": coerced},
+                            details={"old": value, "new": coerced_number},
                         )
                     continue
             if "array" in allowed_types and not isinstance(value, list):

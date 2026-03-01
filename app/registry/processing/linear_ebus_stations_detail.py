@@ -705,8 +705,8 @@ def extract_linear_ebus_stations_detail(note_text: str) -> list[dict[str, Any]]:
 
         # Treat bare size lists as measurement-only unless sampling is explicitly stated elsewhere.
         if entry.get("sampled") is None:
-            inferred = _infer_station_sampled_from_text(text, station)
-            entry["sampled"] = False if inferred is None else bool(inferred)
+            sampled_inferred = _infer_station_sampled_from_text(text, station)
+            entry["sampled"] = False if sampled_inferred is None else bool(sampled_inferred)
 
     # Non-station targets (masses/lesions/nodules) are often documented in the same
     # templated section as stations. Capture them as additional entries so CPT
@@ -715,12 +715,12 @@ def extract_linear_ebus_stations_detail(note_text: str) -> list[dict[str, Any]]:
     idx = 0
     while idx < len(lines):
         line = lines[idx]
-        match = _MASS_HEADER_RE.match(line or "")
-        if not match:
+        mass_match = _MASS_HEADER_RE.match(line or "")
+        if not mass_match:
             idx += 1
             continue
 
-        label = _normalize_mass_label(match)
+        label = _normalize_mass_label(mass_match)
         entry = by_station.get(label)
         if entry is None:
             entry = {"station": label}

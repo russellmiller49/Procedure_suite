@@ -193,7 +193,10 @@ def _generate_structured_json(
 
     if isinstance(llm, DeterministicStubLLM):
         prompt = f"{system_prompt.strip()}\n\n{user_prompt.strip()}\n"
-        return json.loads(llm.generate(prompt))
+        payload = json.loads(llm.generate(prompt))
+        if isinstance(payload, dict):
+            return payload
+        raise ValueError("Deterministic stub returned non-object JSON payload")
 
     if isinstance(llm, GeminiLLM):
         prompt = f"{system_prompt.strip()}\n\n{user_prompt.strip()}\n"

@@ -391,7 +391,7 @@ def get_procedure_store() -> ProcedureStore:
             )
 
     # Default: in-memory backend
-    _procedure_store = InMemoryProcedureStore()  # type: ignore[no-untyped-call]
+    _procedure_store = InMemoryProcedureStore()
     logger.info("ProcedureStore initialized with in-memory backend")
     return _procedure_store
 

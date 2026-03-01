@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import typer
 from rich.console import Console
@@ -14,7 +15,7 @@ from app.common.knowledge_cli import print_knowledge_info
 from app.common.text_io import load_note
 from ml.lib.ml_coder.training import MLB_PATH, PIPELINE_PATH, train_model
 
-from .engine import CoderEngine
+from .engine import CoderEngine  # type: ignore[import-not-found]
 
 app = typer.Typer(help="Run the procedure suite CPT coder.")
 console = Console()
@@ -89,7 +90,7 @@ def run(
         _print_explain(result)
 
 
-def _print_summary(result) -> None:
+def _print_summary(result: Any) -> None:
     table = Table(title="CPT Decisions", show_lines=False)
     table.add_column("CPT", style="cyan", no_wrap=True)
     table.add_column("Description")
@@ -150,7 +151,7 @@ def _print_summary(result) -> None:
         console.print(Panel("\n".join(result.warnings), title="Warnings", style="yellow"))
 
 
-def _print_explain(result) -> None:
+def _print_explain(result: Any) -> None:
     trace = Table(title="Rule Trace", show_lines=False)
     trace.add_column("CPT", style="cyan", no_wrap=True)
     trace.add_column("Rules Fired")
@@ -187,7 +188,7 @@ def _print_explain(result) -> None:
         console.print(mer_table)
 
 
-def _format_evidence(spans) -> str:
+def _format_evidence(spans: list[Any] | None) -> str:
     if not spans:
         return "—"
     first = spans[0]

@@ -35,7 +35,7 @@ import time
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated, Any, Iterator
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import StreamingResponse
@@ -250,8 +250,8 @@ def mock_ml_advisor(
     text_lower = input_data.report_text.lower()
     candidate_codes = input_data.autocode_codes.copy()
     code_confidence = {code: 0.85 for code in candidate_codes}
-    additions = []
-    removals = []
+    additions: list[str] = []
+    removals: list[str] = []
 
     # Suggest additional codes based on text analysis
     if "navigation" in text_lower and "31627" not in candidate_codes:
@@ -486,14 +486,15 @@ async def code_with_advisor(
         advisor_suggestion = None
         if config["enabled"] and include_advisor:
             # Prepare advisor input
+            advisor_report_text = request.report_text or (
+                request.structured_report.raw_text if request.structured_report else ""
+            )
             advisor_input = MLAdvisorInput(
                 trace_id=trace_id,
                 report_id=(
                     request.structured_report.report_id if request.structured_report else None
                 ),
-                report_text=request.report_text or (
-                    request.structured_report.raw_text if request.structured_report else ""
-                ),
+                report_text=advisor_report_text or "",
                 structured_report=(
                     request.structured_report.model_dump() if request.structured_report else {}
                 ),
@@ -599,14 +600,15 @@ async def advisor_suggest(
 
     try:
         # Prepare advisor input
+        advisor_report_text = request.report_text or (
+            request.structured_report.raw_text if request.structured_report else ""
+        )
         advisor_input = MLAdvisorInput(
             trace_id=trace_id,
             report_id=(
                 request.structured_report.report_id if request.structured_report else None
             ),
-            report_text=request.report_text or (
-                request.structured_report.raw_text if request.structured_report else ""
-            ),
+            report_text=advisor_report_text or "",
             structured_report=(
                 request.structured_report.model_dump() if request.structured_report else {}
             ),
@@ -776,7 +778,7 @@ async def export_traces(
             detail="No traces found",
         )
 
-    def generate():
+    def generate() -> Iterator[str]:
         with open(trace_path, encoding="utf-8") as f:
             for line in f:
                 if source:

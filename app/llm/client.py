@@ -40,6 +40,7 @@ async def post_json_with_retries(
     deadline = time.monotonic() + float(settings.llm_timeout_s)
 
     last_exc: Exception | None = None
+    resp: httpx.Response | None = None
     attempt = 0
     while True:
         attempt += 1
@@ -63,14 +64,18 @@ async def post_json_with_retries(
         if attempt >= policy.max_retries or time.monotonic() >= deadline:
             if last_exc is not None:
                 raise last_exc
-            return resp  # type: ignore[has-type]
+            if resp is None:
+                raise RuntimeError("LLM request failed before any HTTP response was received")
+            return resp
 
         sleep_s = retry_after if retry_after is not None else backoff_seconds(attempt - 1)
         remaining = max(0.0, deadline - time.monotonic())
         if remaining <= 0:
             if last_exc is not None:
                 raise last_exc
-            return resp  # type: ignore[has-type]
+            if resp is None:
+                raise RuntimeError("LLM request timed out before any HTTP response was received")
+            return resp
 
         # Add small jitter even if Retry-After is provided.
         jitter = random.uniform(0.0, 0.25)

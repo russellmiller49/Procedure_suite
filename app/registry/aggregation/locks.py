@@ -59,16 +59,18 @@ def ensure_dict(parent: dict[str, Any], key: str) -> dict[str, Any]:
     current = parent.get(key)
     if isinstance(current, dict):
         return current
-    parent[key] = {}
-    return parent[key]
+    created: dict[str, Any] = {}
+    parent[key] = created
+    return created
 
 
 def ensure_list(parent: dict[str, Any], key: str) -> list[Any]:
     current = parent.get(key)
     if isinstance(current, list):
         return current
-    parent[key] = []
-    return parent[key]
+    created: list[Any] = []
+    parent[key] = created
+    return created
 
 
 __all__ = [

@@ -12,6 +12,7 @@ we lazily import these symbols on first access.
 
 from __future__ import annotations
 
+from importlib import import_module
 from typing import Any
 
 __all__ = ["CoderEngine", "CoderOutput"]
@@ -19,13 +20,9 @@ __all__ = ["CoderEngine", "CoderOutput"]
 
 def __getattr__(name: str) -> Any:  # pragma: no cover
     if name == "CoderEngine":
-        from .engine import CoderEngine as _CoderEngine
-
-        return _CoderEngine
+        return getattr(import_module("app.coder.engine"), "CoderEngine")
     if name == "CoderOutput":
-        from .schema import CoderOutput as _CoderOutput
-
-        return _CoderOutput
+        return getattr(import_module("app.coder.schema"), "CoderOutput")
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 

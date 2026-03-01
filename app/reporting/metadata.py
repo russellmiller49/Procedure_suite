@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 from dataclasses import dataclass, field, asdict, is_dataclass
-from typing import Any, Literal, TypedDict
+from typing import Any, Literal, TypedDict, cast
 
 
 class ProcedureAutocodeResult(TypedDict, total=False):
@@ -61,7 +61,7 @@ def _serialize(obj: Any) -> Any:
     """Recursively convert dataclass objects to JSON-friendly primitives."""
     if isinstance(obj, dt.date):
         return obj.isoformat()
-    if is_dataclass(obj):
+    if is_dataclass(obj) and not isinstance(obj, type):
         return {key: _serialize(val) for key, val in asdict(obj).items()}
     if isinstance(obj, dict):
         return {key: _serialize(val) for key, val in obj.items()}
@@ -72,7 +72,7 @@ def _serialize(obj: Any) -> Any:
 
 def metadata_to_dict(metadata: ReportMetadata) -> dict[str, Any]:
     """Convert ReportMetadata to a JSON-serializable dict."""
-    return _serialize(metadata)
+    return cast(dict[str, Any], _serialize(metadata))
 
 
 __all__ = [

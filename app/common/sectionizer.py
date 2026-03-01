@@ -62,8 +62,8 @@ class SectionizerService:
 
         # Lazy import heavy optional deps so merely importing this module doesn't pull in spaCy/medspaCy.
         try:  # pragma: no cover - optional dependency
-            import spacy  # type: ignore
-            from medspacy.sectionizer import Sectionizer as MedspacySectionizer  # type: ignore
+            import spacy
+            from medspacy.sectionizer import Sectionizer as MedspacySectionizer  # type: ignore[import-not-found]
 
             self._nlp = spacy.blank("en")
             rules = self._build_rules(self.headings)
@@ -80,7 +80,7 @@ class SectionizerService:
             try:
                 doc = self._sectionizer(self._nlp(text))
                 sections: list[Section] = []
-                for sec in doc._.sections:  # type: ignore[attr-defined]
+                for sec in doc._.sections:
                     sections.append(
                         Section(
                             title=str(sec.category or sec.title).upper(),

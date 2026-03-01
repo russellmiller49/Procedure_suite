@@ -5,21 +5,28 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List
+from typing import Any
 
 from app.common.llm import GeminiLLM
 
 
-def load_cpt_errors(path: str) -> List[dict]:
+def load_cpt_errors(path: str) -> list[dict[str, Any]]:
     error_path = Path(path)
     if not error_path.exists():
         return []
     with error_path.open() as f:
-        return [json.loads(line) for line in f if line.strip()]
+        rows: list[dict[str, Any]] = []
+        for line in f:
+            if not line.strip():
+                continue
+            parsed = json.loads(line)
+            if isinstance(parsed, dict):
+                rows.append(parsed)
+        return rows
 
 
-def group_errors_by_code(errors: List[dict]) -> Dict[str, list[dict]]:
-    grouped: Dict[str, list[dict]] = defaultdict(list)
+def group_errors_by_code(errors: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for err in errors:
         gold = set(err.get("gold_codes", []))
         pred = set(err.get("predicted_codes", []))
@@ -32,7 +39,7 @@ def group_errors_by_code(errors: List[dict]) -> Dict[str, list[dict]]:
     return grouped
 
 
-def build_prompt_for_code(code: str, examples: list[dict]) -> str:
+def build_prompt_for_code(code: str, examples: list[dict[str, Any]]) -> str:
     lines = [
         f"We have a CPT classification model with recurring errors for code {code}.",
         "Provide lexical cues or rule suggestions to improve detection.",
@@ -54,12 +61,15 @@ def build_prompt_for_code(code: str, examples: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def suggest_corrections_for_code(code: str, examples: list[dict]) -> dict:
+def suggest_corrections_for_code(code: str, examples: list[dict[str, Any]]) -> dict[str, Any]:
     prompt = build_prompt_for_code(code, examples)
     llm = GeminiLLM()
     try:
         raw = llm.generate(prompt)
-        return json.loads(raw.strip().strip("`"))
+        parsed = json.loads(raw.strip().strip("`"))
+        if isinstance(parsed, dict):
+            return parsed
+        return {"error": "LLM returned non-object JSON"}
     except Exception as exc:  # noqa: BLE001
         return {"error": f"LLM failed: {exc}"}
 

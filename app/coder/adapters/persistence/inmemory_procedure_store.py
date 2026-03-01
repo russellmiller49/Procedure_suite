@@ -22,7 +22,7 @@ class InMemoryProcedureStore(ProcedureStore):
     with concurrent access, wrap with a lock or use a thread-safe backend.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize empty stores."""
         self._suggestions: dict[str, list[CodeSuggestion]] = {}
         self._coding_results: dict[str, CodingResult] = {}
@@ -150,7 +150,7 @@ class InMemoryProcedureStore(ProcedureStore):
 
         Useful for debugging and testing.
         """
-        ids = set()
+        ids: set[str] = set()
         ids.update(self._suggestions.keys())
         ids.update(self._coding_results.keys())
         ids.update(self._reviews.keys())

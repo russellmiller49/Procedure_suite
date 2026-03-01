@@ -1,3 +1,4 @@
+# mypy: disable-error-code="type-arg"
 """IO helpers for teacher-student distillation artifacts."""
 
 from __future__ import annotations
@@ -86,4 +87,3 @@ def align_teacher_logits(
         aligned[i] = teacher.logits[t_idx].astype(dtype, copy=False)
         mask[i] = 1.0
     return aligned, mask
-

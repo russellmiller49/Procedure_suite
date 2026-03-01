@@ -149,7 +149,7 @@ def extract_v2_booleans(entry: Dict[str, Any]) -> Dict[str, int]:
     # V2 FLAT FORMAT (fallback)
     # =========================================================================
     # Helper to safely get values
-    def _get(key: str, default=None):
+    def _get(key: str, default: Any | None = None) -> Any:
         return entry.get(key, default)
 
     # Helper to check if a list/array field is non-empty

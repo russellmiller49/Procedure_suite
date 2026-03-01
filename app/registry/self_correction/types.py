@@ -17,7 +17,7 @@ class SelfCorrectionTrigger:
 @dataclass(frozen=True)
 class JudgeProposal:
     target_cpt: str
-    patch: list[dict]
+    patch: list[dict[str, Any]]
     evidence_quotes: list[str]
     rationale: str
     model_info: dict[str, Any] = field(default_factory=dict)
@@ -44,4 +44,3 @@ __all__ = [
     "ValidationResult",
     "SelfCorrectionMetadata",
 ]
-

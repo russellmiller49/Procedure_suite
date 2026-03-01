@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped,type-arg,no-any-return"
 """Prediction service for registry procedure flags (multi-label classification).
 
 Provides:

@@ -105,7 +105,7 @@ def get_phi_service(db: Session = _phi_session_dep) -> PHIService:
 
     encryption = _get_encryption_adapter()
     scrubber = _get_scrubber()
-    audit_logger: PHIAuditLoggerPort = DatabaseAuditLogger(db)  # type: ignore[no-untyped-call]
+    audit_logger: PHIAuditLoggerPort = DatabaseAuditLogger(db)
     return PHIService(
         session=db,
         encryption=encryption,

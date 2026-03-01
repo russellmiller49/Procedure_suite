@@ -87,16 +87,16 @@ def merge_ncci_sources(
         if not primary or not secondary:
             continue
 
-        modifier_allowed = _modifier_allowed_from_rule(raw)
-        if modifier_allowed is None:
-            modifier_allowed = False
+        ext_modifier_allowed = _modifier_allowed_from_rule(raw)
+        if ext_modifier_allowed is None:
+            ext_modifier_allowed = False
 
         key = _canonical_pair_key(primary, secondary)
         merged[key] = {
             "column1": primary,
             "column2": secondary,
-            "modifier_indicator": "1" if modifier_allowed else "0",
-            "modifier_allowed": modifier_allowed,
+            "modifier_indicator": "1" if ext_modifier_allowed else "0",
+            "modifier_allowed": ext_modifier_allowed,
             "reason": raw.get("reason"),
             "source": "external",
         }

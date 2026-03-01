@@ -1,15 +1,18 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from fastapi import APIRouter, HTTPException, Query
 
 from config.settings import UmlsSettings
 
+if TYPE_CHECKING:
+    from app.umls.ip_umls_store import DistilledUmlsStore
+
 router = APIRouter(tags=["umls"])
 
 
-def _require_store():
+def _require_store() -> DistilledUmlsStore:
     settings = UmlsSettings()
     if not settings.enable_linker:
         raise HTTPException(status_code=503, detail="UMLS disabled")

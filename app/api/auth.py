@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import os
 from functools import lru_cache
+from typing import Any
 
 import jwt
 from fastapi import Header, HTTPException, status
@@ -56,7 +57,7 @@ def _jwk_client(jwks_url: str) -> jwt.PyJWKClient:
     return jwt.PyJWKClient(jwks_url)
 
 
-def _extract_user_id_from_claims(claims: dict) -> str:
+def _extract_user_id_from_claims(claims: dict[str, Any]) -> str:
     candidate = str(claims.get("sub") or claims.get("user_id") or "").strip()
     if not candidate:
         raise HTTPException(
@@ -70,7 +71,7 @@ def _extract_user_id_from_claims(claims: dict) -> str:
 def _decode_bearer_token(token: str) -> str:
     algorithms = _jwt_algorithms()
     secret = os.getenv("SUPABASE_JWT_SECRET", "").strip()
-    options = {"verify_aud": False}
+    options: Any = {"verify_aud": False}
 
     try:
         if secret:

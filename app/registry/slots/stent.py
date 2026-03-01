@@ -18,14 +18,14 @@ class StentExtractor:
 
     def extract(self, text: str, sections: list[Section]) -> SlotResult:
         site_patterns = get_site_pattern_map()
-        placements: list[dict[str, str]] = []
+        placements: list[dict[str, str | None]] = []
         spans: list[Span] = []
         lower = text.lower()
         if "stent" not in lower:
             return SlotResult([], [], 0.0)
-        
+
         seen_sites = set()
-        
+
         # Strategy 1: Site-based (Site + Stent keyword in same sentence)
         for site, patterns in site_patterns.items():
             for pattern in patterns:
@@ -33,7 +33,7 @@ class StentExtractor:
                     segment = _expand_sentence(text, match.start())
                     if "stent" not in segment.lower():
                         continue
-                        
+
                     if site in seen_sites:
                         continue
 
@@ -46,27 +46,27 @@ class StentExtractor:
             segment = _expand_sentence(text, match.start())
             if "stent" not in segment.lower():
                 continue
-            
+
             # Attempt to find nearest preceding site
             # This is a heuristic: look in the preceding 500 chars
             context_start = max(0, match.start() - 500)
             preceding_text = text[context_start:match.start()]
-            
+
             best_site = None
             best_pos = -1
-            
+
             for site, patterns in site_patterns.items():
                 for p in patterns:
                     for m in p.finditer(preceding_text):
                         if m.start() > best_pos:
                             best_pos = m.start()
                             best_site = site
-            
+
             target_site = best_site or "Airway (Unspecified)"
-            
+
             if target_site in seen_sites:
                 continue
-                
+
             self._extract_from_segment(text, segment, target_site, sections, match.start(), placements, spans)
             seen_sites.add(target_site)
 
@@ -76,12 +76,12 @@ class StentExtractor:
     def _extract_from_segment(
         self,
         text: str,
-        segment: str, 
-        site: str, 
-        sections: list[Section], 
-        offset_base: int, 
-        placements: list[dict[str, str]], 
-        spans: list[Span]
+        segment: str,
+        site: str,
+        sections: list[Section],
+        offset_base: int,
+        placements: list[dict[str, str | None]],
+        spans: list[Span],
     ) -> None:
         segment_lower = segment.lower()
         size = None
@@ -95,7 +95,7 @@ class StentExtractor:
             stent_type = "uncovered"
         if "metal" in segment_lower:
             stent_type = (stent_type + " metallic" if stent_type else "metallic")
-        
+
         # Don't add if generic and no details
         if not size and not stent_type:
             return

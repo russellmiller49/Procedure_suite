@@ -69,13 +69,13 @@ def simplify_billing_cpt_codes(payload: dict[str, Any]) -> None:
     if not isinstance(cpt_data, list) or not cpt_data:
         return
 
-    code_dicts: list[dict[str, Any]] = [
-        c
-        for c in cpt_data
-        if isinstance(c, dict)
-        and isinstance(c.get("code"), str)
-        and c.get("code").strip()
-    ]
+    code_dicts: list[dict[str, Any]] = []
+    for item in cpt_data:
+        if not isinstance(item, dict):
+            continue
+        code_val = item.get("code")
+        if isinstance(code_val, str) and code_val.strip():
+            code_dicts.append(item)
     if not code_dicts:
         return
 
@@ -96,7 +96,8 @@ def simplify_billing_cpt_codes(payload: dict[str, Any]) -> None:
     simplified: list[str] = []
     seen: set[str] = set()
     for item in code_dicts:
-        code = str(item.get("code")).strip()
+        code_val = item.get("code")
+        code = str(code_val).strip() if code_val is not None else ""
         if code and code not in seen:
             simplified.append(code)
             seen.add(code)
@@ -500,19 +501,19 @@ def normalize_registry_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
                     if isinstance(rebus_view, str):
                         text = rebus_view.strip().lower()
                         # Use existing PROBE_POSITION_MAP or fuzzy match
-                        normalized = PROBE_POSITION_MAP.get(text)
-                        if normalized is None:
+                        normalized_rebus: str | None = PROBE_POSITION_MAP.get(text)
+                        if normalized_rebus is None:
                             # Fuzzy matching for descriptive text
                             if "concentric" in text:
-                                normalized = "Concentric"
+                                normalized_rebus = "Concentric"
                             elif "eccentric" in text:
-                                normalized = "Eccentric"
+                                normalized_rebus = "Eccentric"
                             elif "adjacent" in text:
-                                normalized = "Adjacent"
+                                normalized_rebus = "Adjacent"
                             elif "not" in text and ("visual" in text or "seen" in text):
-                                normalized = "Not visualized"
-                        if normalized:
-                            target["rebus_view"] = normalized
+                                normalized_rebus = "Not visualized"
+                        if normalized_rebus:
+                            target["rebus_view"] = normalized_rebus
                         else:
                             # Invalid value - set to None to let schema handle it
                             target["rebus_view"] = None

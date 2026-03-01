@@ -12,6 +12,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime
 from enum import Enum as PyEnum
+from typing import Any
 
 from sqlalchemy import (
     Boolean,
@@ -82,7 +83,7 @@ class ProcedureData(Base):
     original_text_hash = Column(String(64), nullable=False)
     entity_map = Column(JSONType, nullable=False, default=list)
 
-    status = Column(
+    status: Any = Column(
         Enum(ProcessingStatus, name="processingstatus"),
         default=ProcessingStatus.PENDING_REVIEW,
     )
@@ -117,7 +118,7 @@ class AuditLog(Base):
     user_email = Column(String(255), nullable=True)
     user_role = Column(String(100), nullable=True)
 
-    action = Column(Enum(AuditAction, name="auditaction"), nullable=False)
+    action: Any = Column(Enum(AuditAction, name="auditaction"), nullable=False)
     action_detail = Column(Text, nullable=True)
 
     ip_address = Column(String(45), nullable=True)

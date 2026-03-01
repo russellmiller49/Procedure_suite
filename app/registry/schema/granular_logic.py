@@ -626,10 +626,10 @@ def derive_procedures_from_granular(
             seen_tokens: set[str] = set()
 
             for target in navigation_targets:
-                lobe: str | None = _nav_target_lobe_label(target)
-                if lobe and lobe not in seen_tokens:
-                    desired_tokens.append(lobe)
-                    seen_tokens.add(lobe)
+                target_lobe: str | None = _nav_target_lobe_label(target)
+                if target_lobe and target_lobe not in seen_tokens:
+                    desired_tokens.append(target_lobe)
+                    seen_tokens.add(target_lobe)
 
                 loc = target.get("target_location_text")
                 if not isinstance(loc, str) or not loc.strip():
@@ -671,10 +671,10 @@ def derive_procedures_from_granular(
                 primary_parts = _nav_primary_location_parts()
                 tokens = []
                 if primary_parts:
-                    lobe: str | None = primary_parts.get("lobe")
+                    primary_lobe: str | None = primary_parts.get("lobe")
                     bronchus = primary_parts.get("bronchus")
-                    if lobe:
-                        tokens.append(lobe)
+                    if primary_lobe:
+                        tokens.append(primary_lobe)
                     if bronchus and bronchus not in tokens:
                         tokens.append(bronchus)
                 if tokens:

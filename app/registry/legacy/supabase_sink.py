@@ -6,7 +6,7 @@ import hashlib
 import json
 import os
 from contextlib import contextmanager
-from typing import Any, Dict, Iterable
+from typing import Any, Dict, Iterator
 
 import psycopg
 from psycopg import sql
@@ -34,7 +34,7 @@ def upsert_bundle(bundle: Dict[str, Any]) -> None:
 
 
 @contextmanager
-def _get_conn():
+def _get_conn() -> Iterator[psycopg.Connection]:
     conn_str = os.getenv("SUPABASE_DB_URL")
     if not conn_str:
         raise RuntimeError("SUPABASE_DB_URL missing; copy .env.sample -> .env")
@@ -45,7 +45,7 @@ def _get_conn():
         conn.close()
 
 
-def _upsert_record(cur: psycopg.Cursor, table_name: str, payload: Dict[str, Any]):
+def _upsert_record(cur: psycopg.Cursor[Any], table_name: str, payload: Dict[str, Any]) -> None:
     record = dict(payload)
     record.setdefault("lineage", {})
     if "external_id" not in record:

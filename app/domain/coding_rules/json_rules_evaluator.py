@@ -210,7 +210,7 @@ class JSONRulesEvaluator:
             args = predicate["length_gt"]
             value = self._resolve_value(args[0], context)
             threshold = args[1]
-            if isinstance(value, (list, tuple, set)):
+            if isinstance(value, (list, tuple, set)) and isinstance(threshold, (int, float)):
                 return len(value) > threshold
             return False
 
@@ -222,7 +222,9 @@ class JSONRulesEvaluator:
                 codes = matcher["candidates_matching"]
                 candidates = context.get("candidates", set())
                 count = sum(1 for c in codes if c in candidates or f"+{c}" in candidates)
-                return count > threshold
+                if isinstance(threshold, (int, float)):
+                    return count > threshold
+                return False
             return False
 
         if "gte" in predicate:
@@ -247,7 +249,7 @@ class JSONRulesEvaluator:
             args = predicate["eq"]
             left = self._resolve_value(args[0], context)
             right = self._resolve_value(args[1], context)
-            return left == right
+            return bool(left == right)
 
         if "not_in" in predicate:
             args = predicate["not_in"]
@@ -264,7 +266,7 @@ class JSONRulesEvaluator:
             return item in collection
 
         # Fall back to base DSL evaluator for standard operators
-        return evaluate_predicate(predicate, context)
+        return bool(evaluate_predicate(predicate, context))
 
     def _resolve_value(self, value: Any, context: Dict[str, Any]) -> Any:
         """Resolve a value, handling var references."""
@@ -276,7 +278,7 @@ class JSONRulesEvaluator:
     def _get_nested(self, context: Dict[str, Any], path: str) -> Any:
         """Get a nested value from context using dot notation."""
         parts = path.split(".")
-        current = context
+        current: Any = context
         for part in parts:
             if isinstance(current, dict):
                 current = current.get(part)

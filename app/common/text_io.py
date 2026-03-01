@@ -4,9 +4,13 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
-from .knowledge import DEFAULT_KNOWLEDGE_FILE, get_knowledge
+from config.settings import KnowledgeSettings
+
+from .knowledge import get_knowledge
+
+DEFAULT_KNOWLEDGE_FILE = str(KnowledgeSettings().kb_path)
 
 __all__ = [
     "DEFAULT_KNOWLEDGE_FILE",
@@ -57,7 +61,7 @@ def strip_headers(text: str) -> str:
     return "\n".join(lines).strip()
 
 
-def load_knowledge_base(path: str | Path | None = None) -> dict:
+def load_knowledge_base(path: str | Path | None = None) -> dict[str, Any]:
     """Load (and hot-reload) the shared coding knowledge base document."""
 
     return get_knowledge(path)
@@ -83,11 +87,13 @@ def _strip_matching(
     from_start: bool,
 ) -> list[str]:
     working = list(lines)
-    matcher = (lambda line: any(regex.search(line) for regex in patterns))
+
+    def _matches(line: str) -> bool:
+        return any(regex.search(line) for regex in patterns)
 
     while working:
         index = 0 if from_start else -1
-        if matcher(working[index]):
+        if _matches(working[index]):
             working.pop(index)
             continue
         break

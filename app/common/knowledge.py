@@ -13,7 +13,7 @@ from pathlib import Path
 from threading import Lock, Thread
 from typing import Any, cast
 
-from jsonschema import Draft7Validator
+from jsonschema import Draft7Validator  # type: ignore[import-untyped]
 
 from config.settings import KnowledgeSettings
 

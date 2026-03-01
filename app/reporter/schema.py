@@ -20,7 +20,7 @@ class StructuredReport(BaseModel):
     therapeutics: List[str] = Field(default_factory=list)
     complications: List[str] = Field(default_factory=list)
     disposition: str
-    metadata: dict = Field(default_factory=dict)
+    metadata: dict[str, object] = Field(default_factory=dict)
     version: str = "0.1.0"
 
     def summary(self) -> str:
@@ -31,4 +31,3 @@ class StructuredReport(BaseModel):
 
 
 __all__ = ["StructuredReport"]
-

@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped,misc,no-untyped-def"
 """Text preprocessing transformers for ML coder pipeline."""
 
 import re

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 from math import ceil
-from typing import Any
+from typing import Any, cast
 
 CODEC_MARKER_KEY = "__codec__"
 CODEC_VERSION_V1 = "reporter_bundle_v1"
@@ -106,7 +106,8 @@ def _transform_keys(value: Any, *, path: tuple[Any, ...], encode: bool) -> Any:
         key_map = _map_for_path(path, encode=encode)
         out: dict[str, Any] = {}
         for key, child in value.items():
-            mapped_key = key_map.get(key, key)
+            key_str = str(key)
+            mapped_key = key_map.get(key_str, key_str)
             if mapped_key in out:
                 raise ValueError(f"Codec collision at path={path!r}, key={mapped_key!r}")
             out[mapped_key] = _transform_keys(
@@ -138,10 +139,13 @@ def encode_bundle_keys_v1(payload: dict[str, Any]) -> dict[str, Any]:
         raise TypeError("payload must be a dict")
 
     transformed = _transform_keys(payload, path=(), encode=True)
-    if CODEC_MARKER_KEY in transformed:
+    if not isinstance(transformed, dict):
+        raise ValueError("Encoded payload is not a JSON object")
+    transformed_dict = cast(dict[str, Any], transformed)
+    if CODEC_MARKER_KEY in transformed_dict:
         raise ValueError(f"payload already contains reserved marker key {CODEC_MARKER_KEY!r}")
-    transformed[CODEC_MARKER_KEY] = CODEC_VERSION_V1
-    return transformed
+    transformed_dict[CODEC_MARKER_KEY] = CODEC_VERSION_V1
+    return transformed_dict
 
 
 def decode_bundle_keys_v1(payload: dict[str, Any]) -> dict[str, Any]:
@@ -157,7 +161,10 @@ def decode_bundle_keys_v1(payload: dict[str, Any]) -> dict[str, Any]:
 
     raw = dict(payload)
     raw.pop(CODEC_MARKER_KEY, None)
-    return _transform_keys(raw, path=(), encode=False)
+    decoded = _transform_keys(raw, path=(), encode=False)
+    if isinstance(decoded, dict):
+        return cast(dict[str, Any], decoded)
+    return raw
 
 
 def rough_token_len(text: str) -> int:

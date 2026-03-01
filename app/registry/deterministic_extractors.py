@@ -17,7 +17,7 @@ Targets fields identified as systematically missing in v2.8 validation:
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from app.common.spans import Span
 from app.registry.normalization import (
@@ -150,7 +150,8 @@ def extract_demographics(note_text: str) -> Dict[str, Any]:
         def _is_gender_value(line: str) -> str | None:
             raw = (line or "").strip()
             if re.fullmatch(r"(?i)male|female|m|f", raw):
-                return normalize_gender(raw)
+                normalized_gender = normalize_gender(raw)
+                return normalized_gender if isinstance(normalized_gender, str) else None
             return None
 
         # Prefer an explicit "Age:" label as the anchor.
@@ -198,13 +199,15 @@ def extract_asa_class(note_text: str) -> Optional[int]:
     asa_pattern = r"ASA(?:\s+(?:Classification|Class))?[\s:]+([IViv123456]+(?:-E)?)"
     match = re.search(asa_pattern, note_text, re.IGNORECASE)
     if match:
-        return normalize_asa_class(match.group(1))
+        normalized_asa = normalize_asa_class(match.group(1))
+        return normalized_asa if isinstance(normalized_asa, int) else None
 
     # Pattern 2: "ASA III" without explicit "Classification"
     asa_pattern2 = r"\bASA\s+([IViv]+(?:-E)?)\b"
     match = re.search(asa_pattern2, note_text)
     if match:
-        return normalize_asa_class(match.group(1))
+        normalized_asa = normalize_asa_class(match.group(1))
+        return normalized_asa if isinstance(normalized_asa, int) else None
 
     # Default to 3 if ASA not documented (common for IP procedures)
     # This matches the v2.8 synthetic data behavior
@@ -1345,10 +1348,13 @@ def _extract_ln_stations_from_text(note_text: str) -> list[str]:
     if not text_lower.strip():
         return []
 
+    normalize_station_fn: Callable[[str], str | None] | None = None
     try:
-        from app.ner.entity_types import normalize_station
+        from app.ner.entity_types import normalize_station as imported_normalize_station
+
+        normalize_station_fn = imported_normalize_station
     except Exception:
-        normalize_station = None  # type: ignore[assignment]
+        normalize_station_fn = None
 
     sampling_hint_re = re.compile(
         r"\b(?:tbna|fna|aspirat|biops|sampled|sampling|needle|passes?|core|forceps)\b",
@@ -1398,7 +1404,9 @@ def _extract_ln_stations_from_text(note_text: str) -> list[str]:
             candidate = match.group(1)
             if not candidate:
                 continue
-            candidate_norm = normalize_station(candidate) if normalize_station is not None else candidate.strip().upper()
+            candidate_norm = (
+                normalize_station_fn(candidate) if normalize_station_fn is not None else candidate.strip().upper()
+            )
             if not candidate_norm:
                 continue
 
@@ -1592,10 +1600,11 @@ def extract_therapeutic_aspiration(note_text: str) -> Dict[str, Any]:
                     if locs:
                         location = locs
 
-            result = {"therapeutic_aspiration": {"performed": True}}
-            result["therapeutic_aspiration"]["material"] = material
+            aspiration_proc: dict[str, Any] = {"performed": True}
+            result = {"therapeutic_aspiration": aspiration_proc}
+            aspiration_proc["material"] = material
             if location:
-                result["therapeutic_aspiration"]["location"] = location
+                aspiration_proc["location"] = location
             return result
     return {}
 
@@ -1776,7 +1785,12 @@ def _select_stent_brand(text_lower: str, action: str | None) -> tuple[str | None
     else:
         best = max(candidates, key=lambda c: (c["placement_hits"], c["removal_hits"]))
 
-    return best["brand"], best["stent_type"]
+    best_brand = best.get("brand")
+    best_stent_type = best.get("stent_type")
+    return (
+        best_brand if isinstance(best_brand, str) and best_brand else None,
+        best_stent_type if isinstance(best_stent_type, str) and best_stent_type else None,
+    )
 
 
 def extract_airway_dilation(note_text: str) -> Dict[str, Any]:
@@ -2288,18 +2302,24 @@ def extract_airway_stent(note_text: str) -> Dict[str, Any]:
 
     # Exchange/removal + placement in the same session: represent as revision on the primary stent.
     if has_placement and has_removal:
-        proc = result.get("airway_stent") if isinstance(result.get("airway_stent"), dict) else {"performed": True}
-        proc["performed"] = True
-        proc["action"] = "Revision/Repositioning"
-        proc["airway_stent_removal"] = True
-        result["airway_stent"] = proc
+        merged_proc: dict[str, Any]
+        existing_stent_proc = result.get("airway_stent")
+        if isinstance(existing_stent_proc, dict):
+            merged_proc = existing_stent_proc
+        else:
+            merged_proc = {"performed": True}
+        merged_proc["performed"] = True
+        merged_proc["action"] = "Revision/Repositioning"
+        merged_proc["airway_stent_removal"] = True
+        result["airway_stent"] = merged_proc
         result.pop("airway_stent_revision", None)
 
     # Populate action_type for stability in non-validated downstream consumers.
     for key in ("airway_stent", "airway_stent_revision"):
-        proc = result.get(key)
-        if not isinstance(proc, dict):
+        proc_raw = result.get(key)
+        if not isinstance(proc_raw, dict):
             continue
+        proc = proc_raw
         action = str(proc.get("action") or "").strip()
         if action == "Placement":
             proc["action_type"] = "placement"
@@ -2535,9 +2555,9 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
             proc["target_lobe"] = next(iter(lobes))
 
     if not proc.get("target_lobe"):
-        lobes = _extract_lung_locations_from_text(preferred_text)
-        if len(lobes) == 1:
-            proc["target_lobe"] = lobes[0]
+        inferred_lobes = _extract_lung_locations_from_text(preferred_text)
+        if len(inferred_lobes) == 1:
+            proc["target_lobe"] = inferred_lobes[0]
 
     # Collateral ventilation assessment is schema-constrained (Chartis-focused).
     # Only populate when Chartis is explicitly mentioned; rely on evidence text to
@@ -2727,9 +2747,9 @@ def extract_therapeutic_injection(note_text: str) -> Dict[str, Any]:
             proc["dose"] = dose
         if volume_ml is not None:
             proc["volume_ml"] = volume_ml
-        locations = _extract_lung_locations_from_text(sentence)
-        if locations:
-            proc["location"] = locations[0]
+        sentence_locations = _extract_lung_locations_from_text(sentence)
+        if sentence_locations:
+            proc["location"] = sentence_locations[0]
         candidates.append(proc)
 
     if not candidates:
@@ -2742,7 +2762,7 @@ def extract_therapeutic_injection(note_text: str) -> Dict[str, Any]:
     meds: list[str] = []
     doses: list[str] = []
     volumes: list[float] = []
-    locations: list[str] = []
+    merged_locations: list[str] = []
     for cand in candidates:
         med = cand.get("medication")
         if isinstance(med, str) and med and med not in meds:
@@ -2755,7 +2775,7 @@ def extract_therapeutic_injection(note_text: str) -> Dict[str, Any]:
             volumes.append(float(vol))
         loc = cand.get("location")
         if isinstance(loc, str) and loc:
-            locations.append(loc)
+            merged_locations.append(loc)
 
     merged: dict[str, Any] = {"performed": True}
     if meds:
@@ -2764,10 +2784,10 @@ def extract_therapeutic_injection(note_text: str) -> Dict[str, Any]:
         merged["dose"] = "; ".join(doses)
     if len(set(volumes)) == 1:
         merged["volume_ml"] = volumes[0]
-    if locations:
+    if merged_locations:
         # Prefer a single consistent location if available.
         unique_locs = []
-        for loc in locations:
+        for loc in merged_locations:
             if loc not in unique_locs:
                 unique_locs.append(loc)
         if len(unique_locs) == 1:
@@ -2841,9 +2861,9 @@ def extract_endobronchial_biopsy(note_text: str) -> Dict[str, Any]:
                 return None
         m2 = word_re.search(window)
         if m2:
-            val = word_to_int.get((m2.group("word") or "").strip().lower())
-            if val:
-                return val
+            word_val = word_to_int.get((m2.group("word") or "").strip().lower())
+            if word_val:
+                return word_val
         return None
 
     for pattern in ENDOBRONCHIAL_BIOPSY_PATTERNS:
@@ -3657,12 +3677,12 @@ def extract_transbronchial_biopsy(note_text: str) -> Dict[str, Any]:
             proc: dict[str, Any] = {"performed": True}
             detail_window = raw_text[max(0, match.start() - 260) : min(len(raw_text), match.end() + 420)]
 
-            locations: list[str] = []
+            early_locations: list[str] = []
             for lobe in _extract_lung_locations_from_text(detail_window):
-                if lobe and lobe not in locations:
-                    locations.append(lobe)
-            if locations:
-                proc["locations"] = locations
+                if lobe and lobe not in early_locations:
+                    early_locations.append(lobe)
+            if early_locations:
+                proc["locations"] = early_locations
 
             if re.search(r"(?i)\bforceps\b", detail_window) and not cryo_context_re.search(detail_window):
                 proc["forceps_type"] = "Standard"
@@ -3686,12 +3706,12 @@ def extract_transbronchial_biopsy(note_text: str) -> Dict[str, Any]:
                 if re.search(r"(?i)\bendobronchial\s+ultrasound\b[^.\n]{0,120}\bbiops", local):
                     continue
 
-            proc: dict[str, Any] = {"performed": True}
+            tbbx_proc: dict[str, Any] = {"performed": True}
 
             detail_window = raw_text[max(0, match.start() - 260) : min(len(raw_text), match.end() + 420)]
 
             # Best-effort location list extraction for TBBx blocks.
-            locations: list[str] = []
+            tbbx_locations: list[str] = []
             loc_match = re.search(
                 r"(?i)\btransbronchial\s+(?:lung\s+)?biops(?:y|ies)\b[^.\n]{0,320}\bat\s+(?P<locs>[^.\n]{4,500})",
                 raw_text,
@@ -3707,16 +3727,16 @@ def extract_transbronchial_biopsy(note_text: str) -> Dict[str, Any]:
                         r"(?i)\b(?:segment|subsegment|rb\d{1,2}|lb\d{1,2}|lobe|bronch(?:us|i|ial)|mainstem|trachea|carina|lingula)\b",
                         candidate,
                     ):
-                        if candidate not in locations:
-                            locations.append(candidate)
+                        if candidate not in tbbx_locations:
+                            tbbx_locations.append(candidate)
 
-            if not locations:
+            if not tbbx_locations:
                 for lobe in _extract_lung_locations_from_text(detail_window):
-                    if lobe and lobe not in locations:
-                        locations.append(lobe)
+                    if lobe and lobe not in tbbx_locations:
+                        tbbx_locations.append(lobe)
 
-            if locations:
-                proc["locations"] = locations
+            if tbbx_locations:
+                tbbx_proc["locations"] = tbbx_locations
 
             # Explicit sample count (when documented).
             sample_match = re.search(
@@ -3730,18 +3750,18 @@ def extract_transbronchial_biopsy(note_text: str) -> Dict[str, Any]:
                 )
             if sample_match:
                 try:
-                    proc["number_of_samples"] = int(sample_match.group("n"))
+                    tbbx_proc["number_of_samples"] = int(sample_match.group("n"))
                 except Exception:
                     pass
 
             # Forceps family (cryo handled separately by cryobiopsy extractor).
             if not cryo_context_re.search(detail_window):
                 if re.search(r"(?i)\balligator\s+forceps\b", detail_window):
-                    proc["forceps_type"] = "Standard"
+                    tbbx_proc["forceps_type"] = "Standard"
                 elif re.search(r"(?i)\bforceps\b", detail_window):
-                    proc["forceps_type"] = "Standard"
+                    tbbx_proc["forceps_type"] = "Standard"
 
-            return {"transbronchial_biopsy": proc}
+            return {"transbronchial_biopsy": tbbx_proc}
 
     return {}
 
@@ -3902,9 +3922,11 @@ def extract_percutaneous_tracheostomy(note_text: str) -> Dict[str, Any]:
     preferred_text = _strip_cpt_definition_lines(preferred_text)
     text_lower = (preferred_text or "").lower()
 
-    change_cue = re.search(
+    change_cue = bool(
+        re.search(
         r"(?i)\btrach(?:eostomy)?\b[^.\n]{0,60}\b(?:change|exchange|tube\s+change|changed)\b|\bafter\s+establishment\b[^.\n]{0,60}\btract\b",
         text_lower,
+        )
     )
     if not change_cue:
         removed_tube = re.search(
@@ -3985,9 +4007,11 @@ def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
     if not text_lower.strip():
         return {}
 
-    change_cue = re.search(
+    change_cue = bool(
+        re.search(
         r"(?i)\btrach(?:eostomy)?\b[^.\n]{0,60}\b(?:change|exchange|tube\s+change|changed)\b|\bafter\s+establishment\b[^.\n]{0,60}\btract\b",
         text_lower,
+        )
     )
     if not change_cue:
         removed_tube = re.search(
@@ -4748,6 +4772,8 @@ def run_deterministic_extractors(note_text: str) -> Dict[str, Any]:
         )
 
     def _add_bal_volume_span(volume: object) -> None:
+        if not isinstance(volume, (int, float, str)):
+            return
         try:
             vol_int = int(float(volume))  # handles int/float/str numerics
         except Exception:

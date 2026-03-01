@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped,type-arg"
 """Training utilities for the registry multi-label classifier.
 
 This module provides:

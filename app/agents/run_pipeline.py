@@ -4,7 +4,7 @@ This module orchestrates the 3-agent reporter pipeline with proper
 status tracking, error handling, and graceful degradation.
 """
 
-from typing import Literal
+from typing import Any, Literal
 
 from app.agents.contracts import (
     ParserIn,
@@ -25,7 +25,7 @@ from observability.logging_config import get_logger
 logger = get_logger("pipeline")
 
 
-def run_pipeline(note: dict) -> dict:
+def run_pipeline(note: dict[str, Any]) -> dict[str, Any]:
     """Run the full agent pipeline on a single note dict.
 
     Args:
@@ -38,7 +38,7 @@ def run_pipeline(note: dict) -> dict:
     return result.model_dump()
 
 
-def run_pipeline_typed(note: dict) -> PipelineResult:
+def run_pipeline_typed(note: dict[str, Any]) -> PipelineResult:
     """Run the full agent pipeline with typed output.
 
     The pipeline runs through three stages:

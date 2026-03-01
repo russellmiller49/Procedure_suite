@@ -134,9 +134,9 @@ def _parse_signatures(text: str) -> dict[str, Any]:
         signed_dt = (m_dt.group("v") or "").strip() or None
     status = None
     for line in (text or "").splitlines()[:80]:
-        m = _LABEL_LINE_RE.match(line)
-        if m and (m.group("label") or "").strip().lower() == "note status":
-            status = (m.group("value") or "").strip() or None
+        line_match = _LABEL_LINE_RE.match(line)
+        if line_match and (line_match.group("label") or "").strip().lower() == "note status":
+            status = (line_match.group("value") or "").strip() or None
             break
     return {"signed_by": signed_by, "signed_datetime": signed_dt, "note_status": status}
 
